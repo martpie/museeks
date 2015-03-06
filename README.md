@@ -4,6 +4,7 @@ A music player, in development.
 It will use:
 * [io.js](http://iojs.org/) (Node.js fork)
 * [nw.js](http://nwjs.io/)
+* [react.js](https://facebook.github.io/react/)
 
 ===
 ### To-do list
