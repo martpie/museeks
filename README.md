@@ -11,18 +11,28 @@ It will use:
 ===
 ### To-do list
 ##### settings view
-* freeze settings list
-* add/remove music folder
-* refresh library with the given folders
+- [ ] freeze settings list
+- [x] add/remove music folder
+- [x] refresh library with the given folders
 
-##### library view
-* display library by artist -> album -> tracks
+##### library view columns
+- [ ] display library by artist -> album -> tracks
+
+##### library view list
+- [x] list all tracks
+- [ ] manage columns
+- [ ] resize columns
+
+##### others
+
+- [ ] list next tracks
+- [ ] manage next tracks
 
 ##### player
-* make it works ftw !
+- [ ] make it works ftw !
 
 ##### nice to have
-* themes support
-* add languages support
-* advanced sorting in library view
-* auto-updater from releases
+- [ ] themes support
+- [ ] add languages support
+- [ ] auto-updater from Github releases
+- [ ] playlists
