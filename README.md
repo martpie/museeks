@@ -1,5 +1,7 @@
 # museeks
-A music player, in development.
+A music player, in active development. I hope to deliver a first alpha-release before April.
+
+![Screenshot](screenshot.png)
 
 It will use:
 * [io.js](http://iojs.org/) (Node.js fork)
