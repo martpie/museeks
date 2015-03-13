@@ -17,11 +17,13 @@ It will use:
 
 ##### library view columns
 - [ ] display library by artist -> album -> tracks
+- [ ] search
 
 ##### library view list
 - [x] list all tracks
 - [ ] manage columns
 - [ ] resize columns
+- [x] search
 
 ##### others
 
