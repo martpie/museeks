@@ -1,0 +1,26 @@
+{
+  "name": "museeks",
+  "version": "0.0.0-alpha",
+  "description": "A music player based on nw.js",
+  "main": "main.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/KeitIG/museeks"
+  },
+  "author": "Pierre de la Martinière",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/KeitIG/museeks/issues"
+  },
+  "dependencies": {
+    "mime": "^1.3.4",
+    "musicmetadata": "^1.0.0",
+    "nconf": "~0.7.1",
+    "nedb": "~1.1.1",
+    "walk": "^2.3.9"
+  },
+  "devDependencies": {
+    "react-tools": "^0.13.0",
+    "bower": "~1.3.12"
+  }
+}
