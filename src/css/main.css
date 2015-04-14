@@ -1,0 +1,406 @@
+html, body {
+    font-size: 12px;
+    user-select: none;
+    -webkit-user-select: none;
+    height: 100%;
+    overflow: hidden;
+}
+
+body {
+    font-family: OpenSans;
+}
+
+.btn.active.focus,
+.btn.active:focus,
+.btn.focus,
+.btn:active.focus,
+.btn:active:focus,
+.btn:focus {
+    outline: none;
+}
+
+* {
+    -webkit-user-drag: none;
+}
+
+@font-face {
+    font-family: OpenSans;
+    src: url('../components/open-sans-fontface/fonts/Regular/OpenSans-Regular.ttf');
+}
+
+@font-face {
+    font-family: OpenSans;
+    src: url('../components/open-sans-fontface/fonts/Bold/OpenSans-Bold.ttf');
+    font-weight: bold;
+}
+
+@font-face {
+    font-family: OpenSans;
+    src: url('../components/open-sans-fontface/fonts/Light/OpenSans-Light.ttf');
+    font-weight: 100;
+}
+
+.window-controls {
+    padding-right: 10px;
+    cursor: default;
+}
+
+.window-controls .control {
+    display: inline-block;
+    padding: 6px;
+    border-radius: 8px;
+    margin: 19px 3px;
+    cursor: pointer;
+    transition: opacity .15s ease-in-out;
+    border: 0;
+}
+
+.window-controls .control:hover {
+    opacity: .5;
+}
+
+.window-controls .control-close {
+    background-color: #F65543;
+}
+
+.window-controls .control-maximize {
+    background-color: #15CE3D;
+}
+
+.window-controls .control-minimize {
+    background-color: #FEBC02;
+}
+
+header {
+    border-bottom: 1px solid #AAA;
+    -webkit-app-region: drag;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: white;
+}
+
+header .window-controls,
+header .search,
+header .now-playing-bar
+{
+    -webkit-app-region: no-drag;
+}
+
+.view-withpadding {
+    padding: 15px;
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+    background-color: rgba(0, 0, 0, 0.2);
+    border: 0;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+input[nwdirectory] {
+    display: none;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    border-top: 1px solid #AAA;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    background-color: white;
+}
+
+.alerts-container {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+
+/* Bootstrap modifications */
+
+.alert {
+    margin-bottom: 0;
+}
+
+.content .btn .fa {
+    display: inline-block;
+    margin-right: 12px;
+}
+
+.main-content {
+    padding-top: 51px;
+    padding-bottom: 33px;
+}
+
+.content {
+    padding: 0;
+}
+
+.content h2 {
+    margin-top: 0;
+}
+
+.musicfolders-list {
+    margin: 0 0 10px 0;
+    padding: 10px;
+    list-style: none;
+    border: 1px solid lightgrey;
+}
+
+.musicfolders-list .delete-libray-folder {
+    margin-right: 5px;
+}
+
+
+/* Library View */
+
+.view-library-columns .list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    width: 33.33333333%;
+    height: 100%;
+    overflow: auto;
+    display: inline-block;
+}
+
+.view-library-columns .list:not(:last-child) {
+    border-right: solid 1px #AAA;
+}
+
+.view-library-columns .list .artist {
+    border-bottom: 1px solid lightgrey;
+    padding: 10px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.view-library-columns .list .artist.selected,
+.view-library-list .track.selected {
+    background-color: #459CE7;
+    color: white;
+}
+
+
+.view-library-list .row-nowplaying {
+    width: 4%;
+}
+
+.view-library-list .row-track {
+    width: 30%;
+}
+
+.view-library-list .row-duration {
+    width: 6%;
+}
+
+.view-library-list .row-artist {
+    width: 20%;
+}
+
+.view-library-list .row-album {
+    width: 20%;
+}
+
+.view-library-list .row-genre {
+    width: 20%;
+}
+
+.view-library-list table.tracks-list {
+    table-layout: fixed;
+    width: 100%;
+    white-space: nowrap;
+    margin-bottom: 0;
+}
+
+.view-library-list td {
+    cursor: default;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.view-library-list th > div {
+    top: 51px;
+    position: fixed;
+    padding: 4px;
+    width: 100%;
+    background-color: white;
+    border-bottom: solid 1px #DDD;
+}
+
+.view-library-list .table > thead > tr > th {
+    padding-top: 21px;
+    position: relative;
+}
+
+
+
+
+
+/* TEST */
+
+footer {
+    padding: 0;
+}
+
+footer .btn {
+    border-top: 0;
+    border-bottom: 0;
+}
+
+
+
+
+#wrap,
+.main,
+.main-content,
+.content,
+.view,
+.columns {
+    height: 100%;
+    max-height: 100%;
+}
+
+.view {
+    overflow: auto;
+}
+
+
+
+.table>tbody>tr>td,
+.table>tbody>tr>th,
+.table>tfoot>tr>td,
+.table>tfoot>tr>th,
+.table>thead>tr>td,
+.table>thead>tr>th {
+    padding: 4px 0;
+    border-top: 0;
+}
+
+.table>thead>tr>th {
+    border-bottom: 0;
+}
+
+
+.full-message {
+    font-size: 25px;
+    color: #BBB;
+    font-weight: 100;
+    padding: 30px;
+    margin: auto;
+    padding-top: 35vh;
+    text-align: center;
+}
+
+
+
+
+footer .status {
+    font-size: 12px;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    color: #888;
+}
+
+
+footer .playlist {
+    background: white;
+    color: #888;
+    padding: 30px 60px;
+    position: fixed;
+    box-shadow: 0px -1px 3px black;
+    height: 200px;
+    bottom: 33px;
+    right: 15px;
+    -webkit-animation-duration: .3s;
+    -o-animation-duration: .3s;
+    animation-duration: .3s;
+    display: none;
+}
+
+footer .player-controls {
+    position: relative;
+}
+
+.full-message .loading {
+    display: inline-block;
+    margin-right: 10px;
+    font-size: medium;
+}
+
+.search {
+    padding: 10px;
+}
+
+header .progress {
+    height: 5px;
+    margin-bottom: 0;
+    margin-top: 5px;
+    cursor: pointer;
+}
+
+.progress-bar {
+    -webkit-transition: width .0s ease;
+    -o-transition: width .0s ease;
+    transition: width .0s ease;
+}
+
+footer .volume-control,
+footer .player-controls .btn-group {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+footer .volume-control {
+    width: initial;
+    margin-right: 12px;
+}
+
+
+
+/* Input range */
+
+input[type=range]{
+    -webkit-appearance:none;
+    outline: none;
+}
+
+/* volume control */
+
+input[type=range].volume-control::-webkit-slider-thumb {
+    -webkit-appearance:none;
+    height:12px;
+    width:12px;
+    border-radius:6px;
+    background-color: #FFF;
+    border: 1px solid #AAA;
+    position:relative;
+    top:-5px;
+}
+
+input[type=range].volume-control::-webkit-slider-runnable-track {
+    background: #BBB;
+    border: solid 1px #999;
+    border-radius: 5px;
+    height: 5px;
+}
+
+
+
+/* now-plaing */
+
+.now-playing {
+    padding: 10px;
+}
+
+.now-playing .artist,
+.now-playing .album,
+.now-playing .title {
+    font-weight: bold;
+}
