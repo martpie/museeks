@@ -4,9 +4,9 @@ A music player, in active development. The code is still a bit messy, I'm workin
 ![Screenshot](screenshot.png)
 
 It will use:
-* [io.js](http://iojs.org/) (Node.js fork)
-* [nw.js](http://nwjs.io/)
-* [react.js](https://facebook.github.io/react/)
+* [io.js](http://iojs.org/) for back-end
+* [atom-shell](https://github.com/atom/atom-shell/) for embedded browser
+* [react.js](https://facebook.github.io/react/) as front-end framework
 
 ===
 ### To-do list
