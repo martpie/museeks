@@ -246,7 +246,6 @@ var Footer = React.createClass({
                     <div className={'btn-group'}>
                         <a href={'#/settings'} className={'btn btn-default'}><i className={'fa fa-gear'}></i></a>
                         <a href={'#/'} className={'btn btn-default'}><i className={'fa fa-align-justify'}></i></a>
-                        <a href={'#/library-columns'} className={'btn btn-default'}><i className={'fa fa-columns'}></i></a>
                     </div>
                 </div>
                 <div className="status col-sm-5 text-center">
