@@ -27,7 +27,8 @@ var fs     = require('fs'),
 */
 
 var audio = new Audio();
-audio.type = 'audio/mpeg';
+audio.type   = 'audio/mpeg';
+audio.volume = 0.5;
 
 
 
