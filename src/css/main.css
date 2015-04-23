@@ -8,6 +8,7 @@ html, body {
 
 body {
     font-family: OpenSans;
+    border: solid 1px grey;
 }
 
 .btn.active.focus,
@@ -72,11 +73,7 @@ body {
 }
 
 header {
-    border-bottom: 1px solid #AAA;
     -webkit-app-region: drag;
-    position: fixed;
-    top: 0;
-    width: 100%;
     background-color: white;
 }
 
@@ -107,12 +104,11 @@ input[nwdirectory] {
 
 footer {
     position: fixed;
-    bottom: 0;
+    bottom: 1px;
     width: 100%;
     border-top: 1px solid #AAA;
     padding-top: 5px;
     padding-bottom: 5px;
-    background-color: white;
 }
 
 .alerts-container {
@@ -133,8 +129,7 @@ footer {
 }
 
 .main-content {
-    padding-top: 51px;
-    padding-bottom: 33px;
+    padding-bottom: 83px;
 }
 
 .content {
@@ -226,9 +221,9 @@ footer {
 }
 
 .view-library-list th > div {
-    top: 51px;
+    top: 50px;
     position: fixed;
-    padding: 4px;
+    padding: 4px 0;
     width: 100%;
     background-color: white;
     border-bottom: solid 1px #DDD;
