@@ -245,8 +245,7 @@ var Footer = React.createClass({displayName: "Footer",
                 React.createElement("div", {className: 'col-sm-3'}, 
                     React.createElement("div", {className: 'btn-group'}, 
                         React.createElement("a", {href: '#/settings', className: 'btn btn-default'}, React.createElement("i", {className: 'fa fa-gear'})), 
-                        React.createElement("a", {href: '#/', className: 'btn btn-default'}, React.createElement("i", {className: 'fa fa-align-justify'})), 
-                        React.createElement("a", {href: '#/library-columns', className: 'btn btn-default'}, React.createElement("i", {className: 'fa fa-columns'}))
+                        React.createElement("a", {href: '#/', className: 'btn btn-default'}, React.createElement("i", {className: 'fa fa-align-justify'}))
                     )
                 ), 
                 React.createElement("div", {className: "status col-sm-5 text-center"}, 
