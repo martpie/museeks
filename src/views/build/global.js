@@ -94,7 +94,7 @@ var Header = React.createClass({displayName: "Header",
     render: function () {
 
         return (
-            React.createElement("header", {className: "row"}, 
+            React.createElement("header", {className: 'row'}, 
                 React.createElement("div", {className: 'window-controls col-sm-2 text-left'}, 
                     React.createElement("button", {className: 'control control-close', title: 'Close', onClick:  this.win.close}), 
                     React.createElement("button", {className: 'control control-minimize', title: 'Minimize', onClick:  this.win.minimize}), 
@@ -106,7 +106,6 @@ var Header = React.createClass({displayName: "Header",
                 React.createElement("div", {className: 'col-sm-2 col-sm-offset-1 search'}, 
                     React.createElement("input", {type: 'text', className: 'form-control input-sm', placeholder: 'search', onChange:  this.search})
                 )
-
             )
         );
     },
@@ -176,8 +175,8 @@ var PlayingBar = React.createClass({displayName: "PlayingBar",
                         )
                     ), 
                     React.createElement("div", {className: 'now-playing-bar'}, 
-                        React.createElement("div", {className: "progress", onMouseDown:  this.jumpAudioTo}, 
-                            React.createElement("div", {className: "progress-bar", style: { width: elapsedPercent + '%'}})
+                        React.createElement("div", {className: 'progress', onMouseDown:  this.jumpAudioTo}, 
+                            React.createElement("div", {className: 'progress-bar', style: { width: elapsedPercent + '%'}})
                         )
                     )
                 )
@@ -248,11 +247,11 @@ var Footer = React.createClass({displayName: "Footer",
                         React.createElement("a", {href: '#/', className: 'btn btn-default'}, React.createElement("i", {className: 'fa fa-align-justify'}))
                     )
                 ), 
-                React.createElement("div", {className: "status col-sm-5 text-center"}, 
+                React.createElement("div", {className: 'status col-sm-5 text-center'}, 
                      this.props.status
                 ), 
-                React.createElement("div", {className: "col-sm-4 text-right player-controls"}, 
-                    React.createElement("input", {type: "range", name: "range", min: "0", max: "100", className: 'volume-control', onChange:  this.setVolume}), 
+                React.createElement("div", {className: 'col-sm-4 text-right player-controls'}, 
+                    React.createElement("input", {type: 'range', min: '0', max: '100', className: 'volume-control', onChange:  this.setVolume}), 
                     React.createElement("div", {className: 'btn-group'}, 
                         React.createElement("button", {className: 'btn btn-default'}, 
                             React.createElement("i", {className: 'fa fa-fw fa-backward'})
