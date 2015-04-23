@@ -94,7 +94,7 @@ var Header = React.createClass({
     render: function () {
 
         return (
-            <header className="row">
+            <header className={'row'}>
                 <div className={'window-controls col-sm-2 text-left'}>
                     <button className={'control control-close'} title={'Close'} onClick={ this.win.close }></button>
                     <button className={'control control-minimize'} title={'Minimize'} onClick={ this.win.minimize }></button>
@@ -106,7 +106,6 @@ var Header = React.createClass({
                 <div className={'col-sm-2 col-sm-offset-1 search'}>
                     <input type={'text'} className={'form-control input-sm'} placeholder={'search'} onChange={ this.search } />
                 </div>
-
             </header>
         );
     },
@@ -176,8 +175,8 @@ var PlayingBar = React.createClass({
                         </span>
                     </div>
                     <div className={'now-playing-bar'}>
-                        <div className="progress" onMouseDown={ this.jumpAudioTo }>
-                            <div className="progress-bar" style={{ width: elapsedPercent + '%' }}></div>
+                        <div className={'progress'} onMouseDown={ this.jumpAudioTo }>
+                            <div className={'progress-bar'} style={{ width: elapsedPercent + '%' }}></div>
                         </div>
                     </div>
                 </div>
@@ -248,11 +247,11 @@ var Footer = React.createClass({
                         <a href={'#/'} className={'btn btn-default'}><i className={'fa fa-align-justify'}></i></a>
                     </div>
                 </div>
-                <div className="status col-sm-5 text-center">
+                <div className={'status col-sm-5 text-center'}>
                     { this.props.status }
                 </div>
-                <div className="col-sm-4 text-right player-controls">
-                    <input type="range" name="range" min="0" max="100" className={'volume-control'} onChange={ this.setVolume } />
+                <div className={'col-sm-4 text-right player-controls'}>
+                    <input type={'range'} min={'0'} max={'100'} className={'volume-control'} onChange={ this.setVolume } />
                     <div className={'btn-group'}>
                         <button className={'btn btn-default'}>
                             <i className={'fa fa-fw fa-backward'}></i>
