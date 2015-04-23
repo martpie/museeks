@@ -98,18 +98,18 @@ var Header = React.createClass({
     win: {
         // REFACTOR THIS FOR ATOM SHELL
         close: function () {
-            win.close()
+            Window.close()
         },
         minimize: function () {
-            win.minimize()
+            Window.minimize()
         },
         maximize: function () {
-            if (!win.maximized) {
-                win.maximize();
-                win.maximized = true;
+            if (!Window.maximized) {
+                Window.maximize();
+                Window.maximized = true;
             } else {
-                win.unmaximize();
-                win.maximized = false;
+                Window.unmaximize();
+                Window.maximized = false;
             }
         }
     },

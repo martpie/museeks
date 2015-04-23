@@ -8,6 +8,8 @@
 |--------------------------------------------------------------------------
 */
 
+var remote = require('remote');
+
 var fs     = require('fs'),
     path   = require('path'),
     nconf  = require('nconf'),
@@ -59,8 +61,8 @@ var pathConfigFile = path.join(pathConfig, 'config.json');
 var pathApp        = process.cwd();
 var pathSrc        = path.join(pathApp, 'src');
 
-var win = {};
-win.maximized = false;
+var Window = remote.getCurrentWindow();
+Window.maximized = false;
 
 var views = {};
 
