@@ -223,7 +223,7 @@ var Footer = React.createClass({displayName: "Footer",
                      this.props.status
                 ), 
                 React.createElement("div", {className: "col-sm-4 text-right player-controls"}, 
-                    React.createElement("input", {type: "range", name: "range", min: "0", max: "100", className: 'volume-control'}), 
+                    React.createElement("input", {type: "range", name: "range", min: "0", max: "100", className: 'volume-control', onChange:  this.setVolume}), 
                     React.createElement("div", {className: 'btn-group'}, 
                         React.createElement("button", {className: 'btn btn-default'}, 
                             React.createElement("i", {className: 'fa fa-fw fa-backward'})
@@ -241,5 +241,10 @@ var Footer = React.createClass({displayName: "Footer",
                 )
             )
         );
+    },
+
+    setVolume: function (e) {
+
+        audio.volume = e.currentTarget.value / 100;
     }
 });

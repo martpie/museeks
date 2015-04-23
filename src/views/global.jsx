@@ -223,7 +223,7 @@ var Footer = React.createClass({
                     { this.props.status }
                 </div>
                 <div className="col-sm-4 text-right player-controls">
-                    <input type="range" name="range" min="0" max="100" className={'volume-control'} />
+                    <input type="range" name="range" min="0" max="100" className={'volume-control'} onChange={ this.setVolume } />
                     <div className={'btn-group'}>
                         <button className={'btn btn-default'}>
                             <i className={'fa fa-fw fa-backward'}></i>
@@ -241,5 +241,10 @@ var Footer = React.createClass({
                 </div>
             </footer>
         );
+    },
+
+    setVolume: function (e) {
+
+        audio.volume = e.currentTarget.value / 100;
     }
 });
