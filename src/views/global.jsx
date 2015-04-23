@@ -13,7 +13,8 @@ var Museeks = React.createClass({
             library: null,
             view: views.libraryList,
             search: '',
-            nowPlaying: null
+            nowPlaying: null,
+            playerStatus: 'pause'
         }
     },
 
@@ -35,10 +36,11 @@ var Museeks = React.createClass({
                         <this.state.view library={ this.state.library } search={ this.state.search } />
                     </div>
                 </div>
-                <Footer status={ status } />
+                <Footer status={ status } playerStatus={ this.state.playerStatus } />
             </div>
         );
     },
+
     getStatus: function (status) {
 
         return 'an Apple a day, keeps Dr Dre away';
@@ -56,12 +58,26 @@ var Museeks = React.createClass({
             }
         });
     },
+
     play: function(track) {
 
         audio.src = 'file://' + track.path;
         audio.play();
 
-        this.setState({ nowPlaying: track });
+        this.setState({ nowPlaying: track, playerStatus: 'play' });
+    },
+
+    player: {
+        play: function () {
+
+            Instance.setState({ playerStatus: 'play' });
+            audio.play();
+        },
+        pause: function () {
+
+            Instance.setState({ playerStatus: 'pause' });
+            audio.pause();
+        }
     }
 });
 
@@ -144,7 +160,6 @@ var PlayingBar = React.createClass({
 
             if(this.state.elapsed < nowPlaying.duration && audio.paused === false) var elapsedPercent = this.state.elapsed * 100 / nowPlaying.duration;
 
-
             playingBar = (
                 <div className={'now-playing'}>
                     <div className={'track-info'}>
@@ -194,7 +209,7 @@ var PlayingBar = React.createClass({
 
         var jumpTo = (percent * Instance.state.nowPlaying.duration) / 100;
 
-        audio.currentTime = jumpTo
+        audio.currentTime = jumpTo;
     }
 });
 
@@ -209,6 +224,21 @@ var PlayingBar = React.createClass({
 var Footer = React.createClass({
 
     render: function () {
+
+        if (this.props.playerStatus == 'play') {
+            var playButton = (
+                <button className={'btn btn-default'} onClick={ this.pause }>
+                    <i className={'fa fa-fw fa-pause'}></i>
+                </button>
+            );
+        } else if (this.props.playerStatus == 'pause') {
+            var playButton = (
+                <button className={'btn btn-default'} onClick={ this.play }>
+                    <i className={'fa fa-fw fa-play'}></i>
+                </button>
+            );
+        }
+
 
         return (
             <footer className={'row'}>
@@ -228,9 +258,7 @@ var Footer = React.createClass({
                         <button className={'btn btn-default'}>
                             <i className={'fa fa-fw fa-backward'}></i>
                         </button>
-                        <button className={'btn btn-default'}>
-                            <i className={'fa fa-fw fa-play'}></i>
-                        </button>
+                        { playButton }
                         <button className={'btn btn-default'}>
                             <i className={'fa fa-fw fa-forward'}></i>
                         </button>
@@ -246,5 +274,13 @@ var Footer = React.createClass({
     setVolume: function (e) {
 
         audio.volume = e.currentTarget.value / 100;
+    },
+
+    play: function () {
+        Instance.player.play();
+    },
+
+    pause: function () {
+        Instance.player.pause();
     }
 });
