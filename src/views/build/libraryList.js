@@ -26,7 +26,7 @@ views.libraryList = React.createClass({displayName: "libraryList",
         else {
             content = (
                 React.createElement("div", null, 
-                    React.createElement(LibraryListItems, {tracks:  this.props.library, search:  this.props.search})
+                    React.createElement(LibraryListItems, {tracks:  this.props.library, nowPlaying:  this.props.nowPlaying, search:  this.props.search})
                 )
             );
         }
@@ -56,9 +56,11 @@ var LibraryListItems = React.createClass({displayName: "LibraryListItems",
     },
     render: function() {
 
-        var self     = this;
-        var selected = this.state.selected;
-        var tracks   = this.props.tracks;
+        var self       = this;
+        var selected   = this.state.selected;
+        var tracks     = this.props.tracks;
+        var nowPlaying = this.props.nowPlaying;
+        var playing    = null;
 
         var search = self.props.search.toLowerCase();
 
@@ -75,9 +77,12 @@ var LibraryListItems = React.createClass({displayName: "LibraryListItems",
                 }
             }
 
+            if(track == nowPlaying) var playing = (React.createElement("i", {className: 'fa fa-volume-up'}));
+
             return(
                 React.createElement("tr", {className:  index === selected ? 'track selected' : 'track', key: index, onMouseDown:  self.selectTrack.bind(self, index), onDoubleClick:  Instance.play.bind(self, track) }, 
-                    React.createElement("td", null
+                    React.createElement("td", {className: 'text-center'}, 
+                         playing 
                     ), 
                     React.createElement("td", null, 
                          track.title

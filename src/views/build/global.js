@@ -33,7 +33,7 @@ var Museeks = React.createClass({displayName: "Museeks",
                     React.createElement("div", {className: 'alerts-container row'}
                     ), 
                     React.createElement("div", {className: 'content row'}, 
-                        React.createElement(this.state.view, {library:  this.state.library, search:  this.state.search})
+                        React.createElement(this.state.view, {library:  this.state.library, nowPlaying:  this.state.nowPlaying, search:  this.state.search})
                     )
                 ), 
                 React.createElement(Footer, {status:  status, playerStatus:  this.state.playerStatus})

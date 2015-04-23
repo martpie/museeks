@@ -33,7 +33,7 @@ var Museeks = React.createClass({
                     <div className={'alerts-container row'}>
                     </div>
                     <div className={'content row'}>
-                        <this.state.view library={ this.state.library } search={ this.state.search } />
+                        <this.state.view library={ this.state.library } nowPlaying={ this.state.nowPlaying } search={ this.state.search } />
                     </div>
                 </div>
                 <Footer status={ status } playerStatus={ this.state.playerStatus } />
