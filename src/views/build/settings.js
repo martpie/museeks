@@ -5,6 +5,7 @@
 */
 
 views.settings = React.createClass({displayName: "settings",
+
     render: function() {
         return (
             React.createElement("div", {className: 'view view-settings view-withpadding'}, 
@@ -29,12 +30,14 @@ views.settings = React.createClass({displayName: "settings",
 */
 
 var MusicFoldersList = React.createClass({displayName: "MusicFoldersList",
+
     getInitialState: function (){
         return {
             musicFolders      : nconf.get('musicFolders'),
             refreshingLibrary : false
         };
     },
+
     render: function () {
 
 
@@ -58,7 +61,7 @@ var MusicFoldersList = React.createClass({displayName: "MusicFoldersList",
                 ), 
 
                 React.createElement(ButtonGroup, null, 
-                    React.createElement(Button, {onClick:  this.addFolderInput}, 
+                    React.createElement(Button, {onClick:  this.addFolder}, 
                         React.createElement("i", {className: 'fa fa-plus'}), 
                         "Import a folder"
                     ), 
@@ -73,34 +76,31 @@ var MusicFoldersList = React.createClass({displayName: "MusicFoldersList",
             )
         );
     },
-    addFolderInput: function () {
 
-        // multiple folders stuff here
-        var folders = dialog.showOpenDialog({ properties: ['openDirectory', 'multiSelections']});
-        console.log(folders);
-    },
     addFolder: function () {
 
-        var addFolderInput = document.querySelector('.openFolderDialog');
-        var newFolder      = addFolderInput.value;
+        var self    = this;
+        var folders = dialog.showOpenDialog({ properties: ['openDirectory', 'multiSelections']});
 
-        this.setState({
-            musicFolders: this.state.musicFolders.concat([newFolder])
+        folders.forEach(function (folder) {
 
-        }, function () {
-
-            nconf.set('musicFolders', nconf.get('musicFolders').concat(newFolder));
+            nconf.set('musicFolders', nconf.get('musicFolders').concat(folder));
             nconf.save(function (err) {
                 if(!err) {
-                    alerts.add('success', 'The folder ' + newFolder + ' was added to your library.' );
+                    alerts.add('success', 'The folder ' + folder + ' was added to your library.' );
+
+                    self.setState({
+                        musicFolders: self.state.musicFolders.concat([folder])
+                    });
+
                 } else {
-                    alerts.add('danger', 'The folder ' + newFolder + ' could not be added to your library.' );
+                    alerts.add('danger', 'The folder ' + folder + ' could not be added to your library.' );
+                    throw err;
                 }
             });
-
-            addFolderInput.value = '';
         });
     },
+
     removeFolder: function (e) {
 
         var mf = nconf.get('musicFolders');
@@ -119,12 +119,12 @@ var MusicFoldersList = React.createClass({displayName: "MusicFoldersList",
                 }
             });
         });
-
-        /**/
     },
+
     resetLibrary: function () {
         db.reset();
     },
+
     refreshLibrary: function () {
 
         var start   = new Date().getTime();
