@@ -26,7 +26,7 @@ views.libraryList = React.createClass({
         else {
             content = (
                 <div>
-                    <LibraryListItems tracks={ this.props.library } search={ this.props.search } />
+                    <LibraryListItems tracks={ this.props.library } nowPlaying={ this.props.nowPlaying } search={ this.props.search } />
                 </div>
             );
         }
@@ -56,9 +56,11 @@ var LibraryListItems = React.createClass({
     },
     render: function() {
 
-        var self     = this;
-        var selected = this.state.selected;
-        var tracks   = this.props.tracks;
+        var self       = this;
+        var selected   = this.state.selected;
+        var tracks     = this.props.tracks;
+        var nowPlaying = this.props.nowPlaying;
+        var playing    = null;
 
         var search = self.props.search.toLowerCase();
 
@@ -75,9 +77,12 @@ var LibraryListItems = React.createClass({
                 }
             }
 
+            if(track == nowPlaying) var playing = (<i className={'fa fa-volume-up'}></i>);
+
             return(
                 <tr className={ index === selected ? 'track selected' : 'track' } key={index} onMouseDown={ self.selectTrack.bind(self, index) } onDoubleClick={ Instance.play.bind(self, track) }>
-                    <td>
+                    <td className={'text-center'}>
+                        { playing }
                     </td>
                     <td>
                         { track.title }
