@@ -142,7 +142,7 @@ var PlayingBar = React.createClass({
 
         } else {
 
-            if(this.state.elapsed < nowPlaying.duration && audio.paused === false) var elapsed = this.state.elapsed * 100 / nowPlaying.duration;
+            if(this.state.elapsed < nowPlaying.duration && audio.paused === false) var elapsedPercent = this.state.elapsed * 100 / nowPlaying.duration;
 
 
             playingBar = (
@@ -160,9 +160,9 @@ var PlayingBar = React.createClass({
                             { nowPlaying.album }
                         </span>
                     </div>
-                    <div className={'now-playing-bar'} onMouseDown={ this.jumpAudioTo }>
-                        <div className="progress">
-                            <div className="progress-bar" style={{ width: elapsed + '%' }}></div>
+                    <div className={'now-playing-bar'}>
+                        <div className="progress" onMouseDown={ this.jumpAudioTo }>
+                            <div className="progress-bar" style={{ width: elapsedPercent + '%' }}></div>
                         </div>
                     </div>
                 </div>
