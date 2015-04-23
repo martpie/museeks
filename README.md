@@ -5,7 +5,7 @@ A music player, in active development. The code is still a bit messy, I'm workin
 
 It will use:
 * [io.js](http://iojs.org/) for back-end
-* [atom-shell](https://github.com/atom/atom-shell/) for embedded browser
+* [electron (used to be atom-shell)](https://github.com/atom/atom-shell/) for embedded browser
 * [react.js](https://facebook.github.io/react/) as front-end framework
 
 ===
@@ -15,23 +15,17 @@ It will use:
 - [x] add/remove music folder
 - [x] refresh library with the given folders
 
-##### library view columns
-- [ ] display library by artist -> album -> tracks
-- [ ] search
-
 ##### library view list
 - [x] list all tracks
 - [ ] manage columns
 - [ ] resize columns
 - [x] search
 
-##### others
-
+##### player
+- [x] make it works ftw !
+- [ ] read next tracks
 - [ ] list next tracks
 - [ ] manage next tracks
-
-##### player
-- [ ] make it works ftw !
 
 ##### nice to have
 - [ ] themes support
