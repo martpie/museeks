@@ -54,6 +54,7 @@ body {
     cursor: pointer;
     transition: opacity .15s ease-in-out;
     border: 0;
+    outline: 0;
 }
 
 .window-controls .control:hover {

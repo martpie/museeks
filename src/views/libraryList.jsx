@@ -80,7 +80,7 @@ var LibraryListItems = React.createClass({
             if(track == nowPlaying) var playing = (<i className={'fa fa-volume-up'}></i>);
 
             return(
-                <tr className={ index === selected ? 'track selected' : 'track' } key={index} onMouseDown={ self.selectTrack.bind(self, index) } onDoubleClick={ Instance.play.bind(self, track) }>
+                <tr className={ index === selected ? 'track selected' : 'track' } key={index} onMouseDown={ self.selectTrack.bind(null, index) } onDoubleClick={ Instance.play.bind(null, track) }>
                     <td className={'text-center'}>
                         { playing }
                     </td>

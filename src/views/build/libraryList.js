@@ -80,7 +80,7 @@ var LibraryListItems = React.createClass({displayName: "LibraryListItems",
             if(track == nowPlaying) var playing = (React.createElement("i", {className: 'fa fa-volume-up'}));
 
             return(
-                React.createElement("tr", {className:  index === selected ? 'track selected' : 'track', key: index, onMouseDown:  self.selectTrack.bind(self, index), onDoubleClick:  Instance.play.bind(self, track) }, 
+                React.createElement("tr", {className:  index === selected ? 'track selected' : 'track', key: index, onMouseDown:  self.selectTrack.bind(null, index), onDoubleClick:  Instance.play.bind(null, track) }, 
                     React.createElement("td", {className: 'text-center'}, 
                          playing 
                     ), 
