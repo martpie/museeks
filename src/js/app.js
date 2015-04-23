@@ -10,6 +10,8 @@
 
 var remote = require('remote');
 
+var dialog = remote.require('dialog');
+
 var fs     = require('fs'),
     path   = require('path'),
     nconf  = require('nconf'),
