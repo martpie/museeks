@@ -141,8 +141,17 @@ var Museeks = React.createClass({displayName: "Museeks",
         },
 
         previous: function () {
-            var newTrackPlaying = Instance.state.trackPlaying - 1;
-            var newTrack        = Instance.state.tracks[newTrackPlaying];
+
+            if (audio.currentTime < 5) {
+
+                var newTrackPlaying = Instance.state.trackPlaying - 1;
+
+            } else {
+
+                var newTrackPlaying = Instance.state.trackPlaying;
+            }
+
+            var newTrack = Instance.state.tracks[newTrackPlaying];
 
             if (newTrack !== undefined) {
 
