@@ -26,7 +26,7 @@ views.libraryList = React.createClass({displayName: "libraryList",
         else {
             content = (
                 React.createElement("div", null, 
-                    React.createElement(LibraryListItems, {tracks:  this.props.library, nowPlaying:  this.props.nowPlaying, search:  this.props.search})
+                    React.createElement(LibraryListItems, {tracks:  this.props.library, trackPlaying:  this.props.trackPlaying, search:  this.props.search})
                 )
             );
         }
@@ -57,18 +57,18 @@ var LibraryListItems = React.createClass({displayName: "LibraryListItems",
 
     render: function() {
 
-        var self       = this;
-        var selected   = this.state.selected;
-        var tracks     = this.props.tracks;
-        var nowPlaying = this.props.nowPlaying;
-        var playing    = null;
+        var self         = this;
+        var selected     = this.state.selected;
+        var tracks       = this.props.tracks;
+        var trackPlaying = this.props.trackPlaying;
+        var playing      = null;
 
         var list = tracks.map(function(track, index) {
 
-            if(track == nowPlaying) var playing = (React.createElement("i", {className: 'fa fa-volume-up'}));
+            if(index == trackPlaying) var playing = (React.createElement("i", {className: 'fa fa-volume-up'}));
 
             return(
-                React.createElement("tr", {className:  index === selected ? 'track selected' : 'track', key: index, onMouseDown:  self.selectTrack.bind(null, index), onDoubleClick:  Instance.play.bind(null, track) }, 
+                React.createElement("tr", {className:  index === selected ? 'track selected' : 'track', key: index, onMouseDown:  self.selectTrack.bind(null, index), onDoubleClick:  Instance.play.bind(null, index) }, 
                     React.createElement("td", {className: 'text-center'}, 
                          playing 
                     ), 
@@ -95,7 +95,7 @@ var LibraryListItems = React.createClass({displayName: "LibraryListItems",
             React.createElement("table", {className: 'table table-striped list tracks-list'}, 
                 React.createElement("thead", null, 
                     React.createElement("tr", null, 
-                        React.createElement("th", {className: 'row-nowplaying'}, React.createElement("div", null, React.createElement("i", {className: 'fa fa-fw'}))), 
+                        React.createElement("th", {className: 'row-trackPlaying'}, React.createElement("div", null, React.createElement("i", {className: 'fa fa-fw'}))), 
                         React.createElement("th", {className: 'row-track'}, React.createElement("div", null, "Track")), 
                         React.createElement("th", {className: 'row-duration'}, React.createElement("div", null, "Duration")), 
                         React.createElement("th", {className: 'row-artist'}, React.createElement("div", null, "Artist")), 

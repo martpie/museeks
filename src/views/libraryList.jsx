@@ -26,7 +26,7 @@ views.libraryList = React.createClass({
         else {
             content = (
                 <div>
-                    <LibraryListItems tracks={ this.props.library } nowPlaying={ this.props.nowPlaying } search={ this.props.search } />
+                    <LibraryListItems tracks={ this.props.library } trackPlaying={ this.props.trackPlaying } search={ this.props.search } />
                 </div>
             );
         }
@@ -57,18 +57,18 @@ var LibraryListItems = React.createClass({
 
     render: function() {
 
-        var self       = this;
-        var selected   = this.state.selected;
-        var tracks     = this.props.tracks;
-        var nowPlaying = this.props.nowPlaying;
-        var playing    = null;
+        var self         = this;
+        var selected     = this.state.selected;
+        var tracks       = this.props.tracks;
+        var trackPlaying = this.props.trackPlaying;
+        var playing      = null;
 
         var list = tracks.map(function(track, index) {
 
-            if(track == nowPlaying) var playing = (<i className={'fa fa-volume-up'}></i>);
+            if(index == trackPlaying) var playing = (<i className={'fa fa-volume-up'}></i>);
 
             return(
-                <tr className={ index === selected ? 'track selected' : 'track' } key={index} onMouseDown={ self.selectTrack.bind(null, index) } onDoubleClick={ Instance.play.bind(null, track) }>
+                <tr className={ index === selected ? 'track selected' : 'track' } key={index} onMouseDown={ self.selectTrack.bind(null, index) } onDoubleClick={ Instance.play.bind(null, index) }>
                     <td className={'text-center'}>
                         { playing }
                     </td>
@@ -95,7 +95,7 @@ var LibraryListItems = React.createClass({
             <table className={'table table-striped list tracks-list'}>
                 <thead>
                     <tr>
-                        <th className={'row-nowplaying'}><div><i className={'fa fa-fw'}></i></div></th>
+                        <th className={'row-trackPlaying'}><div><i className={'fa fa-fw'}></i></div></th>
                         <th className={'row-track'}><div>Track</div></th>
                         <th className={'row-duration'}><div>Duration</div></th>
                         <th className={'row-artist'}><div>Artist</div></th>

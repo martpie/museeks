@@ -12,8 +12,8 @@ var Museeks = React.createClass({displayName: "Museeks",
         return {
             library      :  null,
             tracks       :  null,
+            trackPlaying :  null,
             view         :  views.libraryList,
-            nowPlaying   :  null,
             playerStatus : 'pause'
         }
     },
@@ -28,12 +28,12 @@ var Museeks = React.createClass({displayName: "Museeks",
 
         return (
             React.createElement("div", {className: 'main'}, 
-                React.createElement(Header, {nowPlaying:  this.state.nowPlaying}), 
+                React.createElement(Header, {trackPlaying:  this.state.trackPlaying}), 
                 React.createElement("div", {className: 'main-content'}, 
                     React.createElement("div", {className: 'alerts-container row'}
                     ), 
                     React.createElement("div", {className: 'content row'}, 
-                        React.createElement(this.state.view, {library:  this.state.tracks, nowPlaying:  this.state.nowPlaying})
+                        React.createElement(this.state.view, {library:  this.state.tracks, trackPlaying:  this.state.trackPlaying})
                     )
                 ), 
                 React.createElement(Footer, {status:  status, playerStatus:  this.state.playerStatus})
@@ -92,12 +92,16 @@ var Museeks = React.createClass({displayName: "Museeks",
         this.setState({ tracks : tracks });
     },
 
-    play: function(track) {
+    play: function(id) {
 
-        audio.src = 'file://' + track.path;
+        var tracks = this.state.tracks;
+
+        audio.src = 'file://' + tracks[id].path;
         audio.play();
 
-        this.setState({ nowPlaying: track, playerStatus: 'play' });
+        audio.addEventListener('ended', Instance.player.next);
+
+        this.setState({ trackPlaying: id, playerStatus: 'play' });
     },
 
     player: {
@@ -112,6 +116,45 @@ var Museeks = React.createClass({displayName: "Museeks",
 
             Instance.setState({ playerStatus: 'pause' });
             audio.pause();
+        },
+
+        next: function (e) {
+
+            if(e !== undefined) e.target.removeEventListener(e.type);
+
+            var newTrackPlaying = Instance.state.trackPlaying + 1;
+            var newTrack        = Instance.state.tracks[newTrackPlaying];
+
+            if (newTrack !== undefined) {
+
+                audio.src = newTrack.path;
+                audio.play();
+
+                Instance.setState({ trackPlaying: newTrackPlaying });
+
+            } else {
+
+                audio.pause();
+                audio.src = '';
+                Instance.setState({ trackPlaying: null });
+            }
+        },
+
+        previous: function () {
+            var newTrackPlaying = Instance.state.trackPlaying - 1;
+            var newTrack        = Instance.state.tracks[newTrackPlaying];
+
+            if (newTrack !== undefined) {
+
+                audio.src = newTrack.path;
+                audio.play();
+
+                Instance.setState({ trackPlaying: newTrackPlaying });
+
+            } else {
+
+                Instance.setState({ trackPlaying: null });
+            }
         }
     }
 });
@@ -136,7 +179,7 @@ var Header = React.createClass({displayName: "Header",
                     React.createElement("button", {className: 'control control-maximize', title: 'Maximize', onClick:  this.win.maximize})
                 ), 
                 React.createElement("div", {className: 'col-sm-6 col-sm-offset-1 text-center'}, 
-                    React.createElement(PlayingBar, {nowPlaying:  this.props.nowPlaying})
+                    React.createElement(PlayingBar, {trackPlaying:  this.props.trackPlaying})
                 ), 
                 React.createElement("div", {className: 'col-sm-2 col-sm-offset-1 search'}, 
                     React.createElement("input", {type: 'text', className: 'form-control input-sm', placeholder: 'search', onChange:  this.search})
@@ -146,13 +189,15 @@ var Header = React.createClass({displayName: "Header",
     },
 
     win: {
-        // REFACTOR THIS FOR ATOM SHELL
+
         close: function () {
             Window.close()
         },
+
         minimize: function () {
             Window.minimize()
         },
+
         maximize: function () {
             if (!Window.maximized) {
                 Window.maximize();
@@ -183,30 +228,32 @@ var PlayingBar = React.createClass({displayName: "PlayingBar",
 
     render: function () {
 
-        var nowPlaying = this.props.nowPlaying;
+        var trackPlaying = this.props.trackPlaying;
         var playingBar;
 
-        if(nowPlaying === null) {
+        if(trackPlaying === null) {
 
             playingBar = React.createElement("div", null);
 
         } else {
 
-            if(this.state.elapsed < nowPlaying.duration && audio.paused === false) var elapsedPercent = this.state.elapsed * 100 / nowPlaying.duration;
+            var track = Instance.state.tracks[trackPlaying];
+
+            if(this.state.elapsed < track.duration && audio.paused === false) var elapsedPercent = this.state.elapsed * 100 / track.duration;
 
             playingBar = (
                 React.createElement("div", {className: 'now-playing'}, 
                     React.createElement("div", {className: 'track-info'}, 
                         React.createElement("span", {className: 'title'}, 
-                             nowPlaying.title
+                             track.title
                         ), 
                         " by ", 
                         React.createElement("span", {className: 'artist'}, 
-                             nowPlaying.artist.join(', ') 
+                             track.artist.join(', ') 
                         ), 
                         " on ", 
                         React.createElement("span", {className: 'album'}, 
-                             nowPlaying.album
+                             track.album
                         )
                     ), 
                     React.createElement("div", {className: 'now-playing-bar'}, 
@@ -241,7 +288,7 @@ var PlayingBar = React.createClass({displayName: "PlayingBar",
         var bar = document.querySelector('.now-playing-bar');
         var percent = ((e.pageX - (bar.offsetLeft + bar.offsetParent.offsetLeft)) / bar.offsetWidth) * 100;
 
-        var jumpTo = (percent * Instance.state.nowPlaying.duration) / 100;
+        var jumpTo = (percent * Instance.state.tracks[Instance.state.trackPlaying].duration) / 100;
 
         audio.currentTime = jumpTo;
     }
@@ -288,11 +335,11 @@ var Footer = React.createClass({displayName: "Footer",
                 React.createElement("div", {className: 'col-sm-4 text-right player-controls'}, 
                     React.createElement("input", {type: 'range', min: '0', max: '100', className: 'volume-control', onChange:  this.setVolume}), 
                     React.createElement("div", {className: 'btn-group'}, 
-                        React.createElement("button", {className: 'btn btn-default'}, 
+                        React.createElement("button", {className: 'btn btn-default', onClick:  this.previous}, 
                             React.createElement("i", {className: 'fa fa-fw fa-backward'})
                         ), 
                          playButton, 
-                        React.createElement("button", {className: 'btn btn-default'}, 
+                        React.createElement("button", {className: 'btn btn-default', onClick:  this.next}, 
                             React.createElement("i", {className: 'fa fa-fw fa-forward'})
                         ), 
                         React.createElement("button", {className: 'btn btn-default'}, 
@@ -310,10 +357,22 @@ var Footer = React.createClass({displayName: "Footer",
     },
 
     play: function () {
+
         Instance.player.play();
     },
 
     pause: function () {
+
         Instance.player.pause();
+    },
+
+    next: function () {
+
+        Instance.player.next();
+    },
+
+    previous: function () {
+
+        Instance.player.previous();
     }
 });
