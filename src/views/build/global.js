@@ -10,11 +10,11 @@ var Museeks = React.createClass({displayName: "Museeks",
 
     getInitialState: function () {
         return {
-            library: null,
-            view: views.libraryList,
-            search: '',
-            nowPlaying: null,
-            playerStatus: 'pause'
+            library      :  null,
+            tracks       :  null,
+            view         :  views.libraryList,
+            nowPlaying   :  null,
+            playerStatus : 'pause'
         }
     },
 
@@ -33,7 +33,7 @@ var Museeks = React.createClass({displayName: "Museeks",
                     React.createElement("div", {className: 'alerts-container row'}
                     ), 
                     React.createElement("div", {className: 'content row'}, 
-                        React.createElement(this.state.view, {library:  this.state.library, nowPlaying:  this.state.nowPlaying, search:  this.state.search})
+                        React.createElement(this.state.view, {library:  this.state.tracks, nowPlaying:  this.state.nowPlaying})
                     )
                 ), 
                 React.createElement(Footer, {status:  status, playerStatus:  this.state.playerStatus})
@@ -47,16 +47,49 @@ var Museeks = React.createClass({displayName: "Museeks",
     },
 
     refreshLibrary: function() {
+
         var self = this;
 
         db.find({}).sort({ lArtist: 1, year: 1, album: 1, disk: 1, track: 1 }).exec(function (err, tracks) {
             if (err) throw err;
             else {
                 self.setState({
-                    library : tracks,
+                    library :  tracks,
                 });
+
+                self.filterSearch();
             }
         });
+    },
+
+    filterSearch: function (search) {
+
+        var library = this.state.library;
+        var tracks  = [];
+
+        for(var i = 0; i < library.length; i++) {
+
+            var track = library[i];
+
+            if(search != '' && search != undefined) {
+
+                if(track.lArtist.indexOf(search) === -1
+                    && track.album.toLowerCase().indexOf(search) === -1
+                    && track.genre.join(', ').toLowerCase().indexOf(search) === -1
+                    && track.title.toLowerCase().indexOf(search) === -1) {
+
+                    continue;
+
+                } else {
+                    tracks.push(track);
+                }
+
+            } else {
+                tracks.push(track);
+            }
+        }
+
+        this.setState({ tracks : tracks });
     },
 
     play: function(track) {
@@ -68,11 +101,13 @@ var Museeks = React.createClass({displayName: "Museeks",
     },
 
     player: {
+
         play: function () {
 
             Instance.setState({ playerStatus: 'play' });
             audio.play();
         },
+
         pause: function () {
 
             Instance.setState({ playerStatus: 'pause' });
@@ -131,7 +166,7 @@ var Header = React.createClass({displayName: "Header",
 
     search: function (e) {
 
-        Instance.setState({ search : e.currentTarget.value });
+        Instance.filterSearch(e.currentTarget.value);
     }
 });
 

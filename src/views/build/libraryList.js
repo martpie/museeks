@@ -36,8 +36,7 @@ views.libraryList = React.createClass({displayName: "libraryList",
                  content 
             )
         );
-    },
-
+    }
 });
 
 
@@ -49,11 +48,13 @@ views.libraryList = React.createClass({displayName: "libraryList",
 */
 
 var LibraryListItems = React.createClass({displayName: "LibraryListItems",
+
     getInitialState: function () {
         return {
             selected: 0
         };
     },
+
     render: function() {
 
         var self       = this;
@@ -62,20 +63,7 @@ var LibraryListItems = React.createClass({displayName: "LibraryListItems",
         var nowPlaying = this.props.nowPlaying;
         var playing    = null;
 
-        var search = self.props.search.toLowerCase();
-
         var list = tracks.map(function(track, index) {
-
-            if(search != '') {
-
-                if(track.lArtist.indexOf(search) === -1
-                    && track.album.toLowerCase().indexOf(search) === -1
-                    && track.genre.join(', ').toLowerCase().indexOf(search) === -1
-                    && track.title.toLowerCase().indexOf(search) === -1) {
-
-                    return null;
-                }
-            }
 
             if(track == nowPlaying) var playing = (React.createElement("i", {className: 'fa fa-volume-up'}));
 
@@ -121,6 +109,7 @@ var LibraryListItems = React.createClass({displayName: "LibraryListItems",
             )
         );
     },
+
     selectTrack: function(index) {
 
         this.setState({selected: index});
