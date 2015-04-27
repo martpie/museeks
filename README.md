@@ -23,7 +23,8 @@ It will use:
 
 ##### player
 - [x] make it works ftw !
-- [ ] read next tracks
+- [x] auto-read next track
+- [x] next/previous button
 - [ ] list next tracks
 - [ ] manage next tracks
 
