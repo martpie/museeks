@@ -3,8 +3,6 @@ var BrowserWindow = require('browser-window');
 
 require('crash-reporter').start();
 
-//var remote        = require('remvuyvote');
-
 var mainWindow = null;
 
 
