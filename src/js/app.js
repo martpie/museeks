@@ -11,6 +11,7 @@
 var remote = require('remote');
 
 var dialog = remote.require('dialog');
+var app    = remote.require('app');
 
 var fs     = require('fs'),
     path   = require('path'),
@@ -59,7 +60,7 @@ var parseDuration = function (duration) {
 
 var defaultConfig = require('./' + path.join('js', 'default.config.json'));
 
-var pathConfig     = '/home/pierre/.config/museeks'
+var pathConfig     = app.getPath('userData');
 var pathConfigFile = path.join(pathConfig, 'config.json');
 var pathApp        = process.cwd();
 var pathSrc        = path.join(pathApp, 'src');
