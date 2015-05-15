@@ -17,7 +17,7 @@ var Museeks = React.createClass({
             trackPlaying  :  null,
             view          :  views.libraryList,
             playerStatus  : 'pause',
-            notifications : []
+            notifications :  {}
         }
     },
 
@@ -27,13 +27,26 @@ var Museeks = React.createClass({
 
     render: function () {
 
-        var status = this.getStatus();
+        var status        = this.getStatus();
+        var notifications = this.state.notifications;
+
+        var notificationsBlock = Object.keys(notifications).reverse().map(function(id, i) {
+            return (
+                <Alert bsStyle={ notifications[id].type } className={ 'notification' }>
+                    { notifications[id].content }
+                </Alert>
+            );
+        });
+
 
         return (
             <div className={'main'}>
                 <Header trackPlaying={ this.state.trackPlaying } />
                 <div className={'main-content'}>
-                    <div className={'alerts-container row'}>
+                    <div className={'alerts-container'}>
+                        <ReactCSSTransitionGroup transitionName='notification'>
+                            { notificationsBlock }
+                        </ReactCSSTransitionGroup>
                     </div>
                     <div className={'content row'}>
                         <this.state.view library={ this.state.tracks } trackPlaying={ this.state.trackPlaying } />
