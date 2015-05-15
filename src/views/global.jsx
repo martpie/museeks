@@ -6,15 +6,18 @@
 |--------------------------------------------------------------------------
 */
 
+var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
+
 var Museeks = React.createClass({
 
     getInitialState: function () {
         return {
-            library      :  null,
-            tracks       :  null,
-            trackPlaying :  null,
-            view         :  views.libraryList,
-            playerStatus : 'pause'
+            library       :  null,
+            tracks        :  null,
+            trackPlaying  :  null,
+            view          :  views.libraryList,
+            playerStatus  : 'pause',
+            notifications : []
         }
     },
 

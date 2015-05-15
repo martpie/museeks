@@ -400,3 +400,16 @@ input[type=range].volume-control::-webkit-slider-runnable-track {
 .now-playing .title {
     font-weight: bold;
 }
+
+/* alerts */
+
+.notification {
+  opacity: 0.00;
+  transform: translateX(200em);
+  transition: all .3s ease-in;
+}
+
+.notification.active {
+  opacity: 1;
+  transform: translateX(0em);
+}
