@@ -113,15 +113,10 @@ footer {
 }
 
 .alerts-container {
-    padding-left: 0;
-    padding-right: 0;
-}
-
-
-/* Bootstrap modifications */
-
-.alert {
-    margin-bottom: 0;
+    position: fixed;
+    right: 11px;
+    z-index: 1;
+    width: 320px;
 }
 
 .content .btn .fa {
@@ -399,17 +394,4 @@ input[type=range].volume-control::-webkit-slider-runnable-track {
 .now-playing .album,
 .now-playing .title {
     font-weight: bold;
-}
-
-/* alerts */
-
-.notification {
-  opacity: 0.00;
-  transform: translateX(200em);
-  transition: all .3s ease-in;
-}
-
-.notification.active {
-  opacity: 1;
-  transform: translateX(0em);
 }

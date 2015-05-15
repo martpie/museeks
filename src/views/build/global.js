@@ -17,7 +17,7 @@ var Museeks = React.createClass({displayName: "Museeks",
             trackPlaying  :  null,
             view          :  views.libraryList,
             playerStatus  : 'pause',
-            notifications : []
+            notifications :  {}
         }
     },
 
@@ -27,13 +27,26 @@ var Museeks = React.createClass({displayName: "Museeks",
 
     render: function () {
 
-        var status = this.getStatus();
+        var status        = this.getStatus();
+        var notifications = this.state.notifications;
+
+        var notificationsBlock = Object.keys(notifications).reverse().map(function(id, i) {
+            return (
+                React.createElement(Alert, {bsStyle:  notifications[id].type, className:  'notification' }, 
+                     notifications[id].content
+                )
+            );
+        });
+
 
         return (
             React.createElement("div", {className: 'main'}, 
                 React.createElement(Header, {trackPlaying:  this.state.trackPlaying}), 
                 React.createElement("div", {className: 'main-content'}, 
-                    React.createElement("div", {className: 'alerts-container row'}
+                    React.createElement("div", {className: 'alerts-container'}, 
+                        React.createElement(ReactCSSTransitionGroup, {transitionName: "notification"}, 
+                             notificationsBlock 
+                        )
                     ), 
                     React.createElement("div", {className: 'content row'}, 
                         React.createElement(this.state.view, {library:  this.state.tracks, trackPlaying:  this.state.trackPlaying})
