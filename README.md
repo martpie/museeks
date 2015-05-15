@@ -10,6 +10,12 @@ It will use:
 
 ===
 ### To-do list
+
+##### general
+
+- [ ] refactor once it's working
+- [ ] use es6 classes instead of React.createClass()
+
 ##### settings view
 - [ ] freeze settings list
 - [x] add/remove music folder
