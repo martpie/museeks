@@ -20,7 +20,7 @@
  * --- Default View ------ *
  * ----------------------- */
 
-var Instance = React.render(
-    React.createElement(Museeks, null),
-    document.getElementById('wrap')
-);
+    var Instance = React.render(
+        React.createElement(Museeks, null),
+        document.getElementById('wrap')
+    );
