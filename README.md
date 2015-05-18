@@ -46,6 +46,8 @@ Please consider **this app is under development, just install it for fun**, I'm 
 - [x] next/previous button
 - [ ] list next tracks
 - [ ] manage next tracks
+- [ ] random
+- [ ] loop
 
 ##### nice to have
 - [ ] themes support
