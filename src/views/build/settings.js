@@ -40,11 +40,48 @@ var MusicFoldersList = React.createClass({displayName: "MusicFoldersList",
 
     render: function () {
 
+        if(!this.state.refreshingLibrary) {
+
+            var buttonsGroup = (
+                React.createElement(ButtonGroup, null, 
+                    React.createElement(Button, {onClick:  this.addFolder}, 
+                        React.createElement("i", {className: 'fa fa-plus'}), 
+                        "Import a folder"
+                    ), 
+                    React.createElement(Button, {onClick:  this.refreshLibrary}, 
+                        React.createElement("i", {className:  !this.state.refreshingLibrary ? 'fa fa-refresh' : 'fa fa-refresh fa-spin'}), 
+                         !this.state.refreshingLibrary ? 'Refresh Library' : 'Refreshing Library'
+                    ), 
+                    React.createElement(Button, {bsStyle: 'danger', onClick:  this.resetLibrary}, 
+                        "Reset library"
+                    )
+                )
+            );
+
+        } else {
+
+            var buttonsGroup = (
+                React.createElement(ButtonGroup, null, 
+                    React.createElement(Button, {disabled: true, onClick:  this.addFolder}, 
+                        React.createElement("i", {className: 'fa fa-plus'}), 
+                        "Import a folder"
+                    ), 
+                    React.createElement(Button, {disabled: true, onClick:  this.refreshLibrary}, 
+                        React.createElement("i", {className:  !this.state.refreshingLibrary ? 'fa fa-refresh' : 'fa fa-refresh fa-spin'}), 
+                         !this.state.refreshingLibrary ? 'Refresh Library' : 'Refreshing Library'
+                    ), 
+                    React.createElement(Button, {disabled: true, bsStyle: 'danger', onClick:  this.resetLibrary}, 
+                        "Reset library"
+                    )
+                )
+            );
+        }
+
 
         var list = this.state.musicFolders.map(function(folder, i) {
             return(
                 React.createElement("li", {key: i}, 
-                    React.createElement(Button, {onClick:  this.removeFolder, "data-target":  i, bsSize: 'xsmall', className: 'delete-libray-folder'}, "Delete folder"), 
+                    React.createElement("i", {onClick:  this.state.refreshingLibrary ? void(0) : this.removeFolder, "data-target":  i, className:  this.state.refreshingLibrary ? 'fa fa-close delete-libray-folder disabled' : 'fa fa-close delete-libray-folder'}), 
                      folder 
                 )
             );
@@ -60,17 +97,7 @@ var MusicFoldersList = React.createClass({displayName: "MusicFoldersList",
                      list 
                 ), 
 
-                React.createElement(ButtonGroup, null, 
-                    React.createElement(Button, {onClick:  this.addFolder}, 
-                        React.createElement("i", {className: 'fa fa-plus'}), 
-                        "Import a folder"
-                    ), 
-                    React.createElement(Button, {onClick:  this.refreshLibrary}, 
-                        React.createElement("i", {className:  !this.state.refreshingLibrary ? 'fa fa-refresh' : 'fa fa-refresh fa-spin'}), 
-                         !this.state.refreshingLibrary ? 'Refresh Library' : 'Refreshing Library'
-                    ), 
-                    React.createElement(Button, {bsStyle: 'danger', onClick:  this.resetLibrary}, "Reset library")
-                ), 
+                 buttonsGroup, 
 
                 React.createElement("hr", null)
             )

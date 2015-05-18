@@ -144,6 +144,13 @@ footer {
 
 .musicfolders-list .delete-libray-folder {
     margin-right: 5px;
+    color: #d9534f;
+    cursor: pointer;
+}
+
+.musicfolders-list .delete-libray-folder.disabled {
+    color: #CCC;
+    cursor: default;
 }
 
 
