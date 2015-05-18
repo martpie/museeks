@@ -3,12 +3,25 @@ A music player, in active development. The code is still a bit messy, I'm workin
 
 ![Screenshot](screenshot.png)
 
-It will use:
+It uses:
 * [io.js](http://iojs.org/) for back-end
 * [electron (used to be atom-shell)](https://github.com/atom/atom-shell/) for embedded browser
 * [react.js](https://facebook.github.io/react/) as front-end framework
 
 ===
+
+### Installation
+
+Please consider **this app is under development, just install it for fun**, I'm aware of multiple bugs and designs issues.
+
+- Download [Electron](https://github.com/atom/electron/releases)
+- Download Museeks source code
+- Put it in a folder called `app` in `[Electron path]/resources`
+- Run Electron
+
+
+===
+
 ### To-do list
 
 ##### general
