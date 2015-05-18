@@ -198,10 +198,7 @@ var Header = React.createClass({displayName: "Header",
 
         return (
             React.createElement("header", {className: 'row'}, 
-                React.createElement("div", {className: 'window-controls col-sm-2 text-left'}, 
-                    React.createElement("button", {className: 'control control-close', title: 'Close', onClick:  this.win.close}), 
-                    React.createElement("button", {className: 'control control-minimize', title: 'Minimize', onClick:  this.win.minimize}), 
-                    React.createElement("button", {className: 'control control-maximize', title: 'Maximize', onClick:  this.win.maximize})
+                React.createElement("div", {className: 'window-controls col-sm-2 text-left'}
                 ), 
                 React.createElement("div", {className: 'col-sm-6 col-sm-offset-1 text-center'}, 
                     React.createElement(PlayingBar, {trackPlaying:  this.props.trackPlaying})
@@ -211,27 +208,6 @@ var Header = React.createClass({displayName: "Header",
                 )
             )
         );
-    },
-
-    win: {
-
-        close: function () {
-            Window.close()
-        },
-
-        minimize: function () {
-            Window.minimize()
-        },
-
-        maximize: function () {
-            if (!Window.maximized) {
-                Window.maximize();
-                Window.maximized = true;
-            } else {
-                Window.unmaximize();
-                Window.maximized = false;
-            }
-        }
     },
 
     search: function (e) {

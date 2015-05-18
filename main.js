@@ -17,7 +17,7 @@ app.on('ready', function() {
     var mainWindowOption = {
         width: 1100,
         height: 650,
-        frame: false
+        frame: true
     };
 
     mainWindow = new BrowserWindow(mainWindowOption);
