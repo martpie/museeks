@@ -8,7 +8,6 @@ html, body {
 
 body {
     font-family: OpenSans;
-    border: solid 1px grey;
 }
 
 .btn.active.focus,
@@ -105,7 +104,7 @@ input[nwdirectory] {
 
 footer {
     position: fixed;
-    bottom: 1px;
+    bottom: 0;
     width: 100%;
     border-top: 1px solid #AAA;
     padding-top: 5px;
@@ -217,7 +216,7 @@ footer {
 }
 
 .view-library-list th > div {
-    top: 50px;
+    top: 49px;
     position: fixed;
     padding: 4px 0;
     width: 100%;

@@ -199,9 +199,6 @@ var Header = React.createClass({
         return (
             <header className={'row'}>
                 <div className={'window-controls col-sm-2 text-left'}>
-                    <button className={'control control-close'} title={'Close'} onClick={ this.win.close }></button>
-                    <button className={'control control-minimize'} title={'Minimize'} onClick={ this.win.minimize }></button>
-                    <button className={'control control-maximize'} title={'Maximize'} onClick={ this.win.maximize }></button>
                 </div>
                 <div className={'col-sm-6 col-sm-offset-1 text-center'}>
                     <PlayingBar trackPlaying={ this.props.trackPlaying } />
@@ -211,27 +208,6 @@ var Header = React.createClass({
                 </div>
             </header>
         );
-    },
-
-    win: {
-
-        close: function () {
-            Window.close()
-        },
-
-        minimize: function () {
-            Window.minimize()
-        },
-
-        maximize: function () {
-            if (!Window.maximized) {
-                Window.maximize();
-                Window.maximized = true;
-            } else {
-                Window.unmaximize();
-                Window.maximized = false;
-            }
-        }
     },
 
     search: function (e) {
