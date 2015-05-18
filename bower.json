@@ -20,9 +20,10 @@
   ],
   "dependencies": {
     "font-awesome": "~4.3.0",
-    "open-sans-fontface": "~1.2.1",
+    "open-sans-fontface": "~1.4.0",
     "bootstrap-css-only": "~3.3.2",
-    "react-bootstrap": "~0.16.1",
-    "react": "~0.13.1"
+    "react-bootstrap": "~0.22.3",
+    "react": "~0.13.3",
+    "animate.css": "~3.3.0"
   }
 }
