@@ -394,3 +394,33 @@ input[type=range].volume-control::-webkit-slider-runnable-track {
 .now-playing .title {
     font-weight: bold;
 }
+
+/* notifications */
+
+.notification {
+    transition: all .3s;
+}
+
+.notification.notification-enter {
+    opacity: 0;
+    transform: scale(0.8);
+}
+
+.notification.notification-enter-active {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.notification.notification-leave {
+    opacity: 0;
+    transform: scale(0.8);
+}
+
+.notification.notification-leave-active {
+    opacity: 0;
+    transform: scale(0);
+}
+
+.notification {
+    margin-bottom: 10px;
+}
