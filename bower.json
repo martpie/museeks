@@ -23,7 +23,6 @@
     "open-sans-fontface": "~1.4.0",
     "bootstrap-css-only": "~3.3.2",
     "react-bootstrap": "~0.22.3",
-    "react": "~0.13.3",
-    "animate.css": "~3.3.0"
+    "react": "~0.13.3"
   }
 }
