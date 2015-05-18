@@ -16,6 +16,6 @@ alerts = {
 
             Instance.setState({ notifications : newNotifications });
 
-        }, 2000);
+        }, 5000);
     }
 };

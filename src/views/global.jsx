@@ -32,7 +32,7 @@ var Museeks = React.createClass({
 
         var notificationsBlock = Object.keys(notifications).reverse().map(function(id, i) {
             return (
-                <Alert bsStyle={ notifications[id].type } className={ 'notification' }>
+                <Alert key={ id } bsStyle={ notifications[id].type } className={ 'notification' }>
                     { notifications[id].content }
                 </Alert>
             );
