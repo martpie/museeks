@@ -40,11 +40,48 @@ var MusicFoldersList = React.createClass({
 
     render: function () {
 
+        if(!this.state.refreshingLibrary) {
+
+            var buttonsGroup = (
+                <ButtonGroup>
+                    <Button onClick={ this.addFolder }>
+                        <i className={'fa fa-plus'}></i>
+                        Import a folder
+                    </Button>
+                    <Button onClick={ this.refreshLibrary }>
+                        <i className={ !this.state.refreshingLibrary ? 'fa fa-refresh' : 'fa fa-refresh fa-spin' }></i>
+                        { !this.state.refreshingLibrary ? 'Refresh Library' : 'Refreshing Library'}
+                    </Button>
+                    <Button bsStyle={'danger'} onClick={ this.resetLibrary }>
+                        Reset library
+                    </Button>
+                </ButtonGroup>
+            );
+
+        } else {
+
+            var buttonsGroup = (
+                <ButtonGroup>
+                    <Button disabled onClick={ this.addFolder }>
+                        <i className={'fa fa-plus'}></i>
+                        Import a folder
+                    </Button>
+                    <Button disabled onClick={ this.refreshLibrary }>
+                        <i className={ !this.state.refreshingLibrary ? 'fa fa-refresh' : 'fa fa-refresh fa-spin' }></i>
+                        { !this.state.refreshingLibrary ? 'Refresh Library' : 'Refreshing Library'}
+                    </Button>
+                    <Button disabled bsStyle={'danger'} onClick={ this.resetLibrary }>
+                        Reset library
+                    </Button>
+                </ButtonGroup>
+            );
+        }
+
 
         var list = this.state.musicFolders.map(function(folder, i) {
             return(
                 <li key={i}>
-                    <Button onClick={ this.removeFolder } data-target={ i } bsSize={'xsmall'} className={'delete-libray-folder'}>Delete folder</Button>
+                    <i onClick={ this.state.refreshingLibrary ? void(0) : this.removeFolder } data-target={ i } className={ this.state.refreshingLibrary ? 'fa fa-close delete-libray-folder disabled' : 'fa fa-close delete-libray-folder' }></i>
                     { folder }
                 </li>
             );
@@ -60,17 +97,7 @@ var MusicFoldersList = React.createClass({
                     { list }
                 </ul>
 
-                <ButtonGroup>
-                    <Button onClick={ this.addFolder }>
-                        <i className={'fa fa-plus'}></i>
-                        Import a folder
-                    </Button>
-                    <Button onClick={ this.refreshLibrary }>
-                        <i className={ !this.state.refreshingLibrary ? 'fa fa-refresh' : 'fa fa-refresh fa-spin' }></i>
-                        { !this.state.refreshingLibrary ? 'Refresh Library' : 'Refreshing Library'}
-                    </Button>
-                    <Button bsStyle={'danger'} onClick={ this.resetLibrary }>Reset library</Button>
-                </ButtonGroup>
+                { buttonsGroup }
 
                 <hr />
             </div>
