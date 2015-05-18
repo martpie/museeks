@@ -128,12 +128,12 @@ var MusicFoldersList = React.createClass({
     refreshLibrary: function () {
 
         var start   = new Date().getTime();
-        var comp    = this;
+        var self    = this;
         var folders = nconf.get('musicFolders');
 
         db.reset();
 
-        comp.setState({
+        self.setState({
             refreshingLibrary: true
         }, function () {
 
@@ -181,15 +181,16 @@ var MusicFoldersList = React.createClass({
                     next();
                 });
                 walker.on("end", function () {
-                    comp.setState({
-                        refreshingLibrary: false
-                    }, function() {
 
-                        if(folders.length - 1 == index) {
+                    if(folders.length - 1 == index) {
+                        self.setState({
+                            refreshingLibrary: false
+                        }, function() {
+
                             var end = new Date().getTime();
                             alerts.add('success', 'Library refreshed in ' + (end - start) + ' ms');
-                        }
-                    });
+                        });
+                    }
                 });
             });
         });
