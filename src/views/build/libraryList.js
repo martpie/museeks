@@ -19,7 +19,7 @@ views.libraryList = React.createClass({displayName: "libraryList",
             );
         }
         else if (this.props.library.length == 0) {
-            return(
+            content = (
                 React.createElement("div", {className: 'full-message'}, "Too bad, there is no music in your library =(")
             );
         }
