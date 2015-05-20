@@ -48,7 +48,7 @@ var Museeks = React.createClass({displayName: "Museeks",
                              notificationsBlock 
                         )
                     ), 
-                    React.createElement("div", {className: 'content row'}, 
+                    React.createElement(Row, {className: 'content'}, 
                         React.createElement(this.state.view, {library:  this.state.tracks, trackPlaying:  this.state.trackPlaying})
                     )
                 ), 
@@ -198,12 +198,12 @@ var Header = React.createClass({displayName: "Header",
 
         return (
             React.createElement("header", {className: 'row'}, 
-                React.createElement("div", {className: 'window-controls col-sm-2 text-left'}
+                React.createElement(Col, {sm: 2, className: 'window-controls text-left'}
                 ), 
-                React.createElement("div", {className: 'col-sm-6 col-sm-offset-1 text-center'}, 
+                React.createElement(Col, {sm: 6, smOffset: 1, className: 'text-center'}, 
                     React.createElement(PlayingBar, {trackPlaying:  this.props.trackPlaying})
                 ), 
-                React.createElement("div", {className: 'col-sm-2 col-sm-offset-1 search'}, 
+                React.createElement(Col, {sm: 2, smOffset: 1, className: 'search'}, 
                     React.createElement("input", {type: 'text', className: 'form-control input-sm', placeholder: 'search', onChange:  this.search})
                 )
             )
@@ -262,9 +262,7 @@ var PlayingBar = React.createClass({displayName: "PlayingBar",
                         )
                     ), 
                     React.createElement("div", {className: 'now-playing-bar'}, 
-                        React.createElement("div", {className: 'progress', onMouseDown:  this.jumpAudioTo}, 
-                            React.createElement("div", {className: 'progress-bar', style: { width: elapsedPercent + '%'}})
-                        )
+                        React.createElement(ProgressBar, {now: elapsedPercent, onMouseDown:  this.jumpAudioTo})
                     )
                 )
             );
@@ -328,18 +326,18 @@ var Footer = React.createClass({displayName: "Footer",
 
         return (
             React.createElement("footer", {className: 'row'}, 
-                React.createElement("div", {className: 'col-sm-3'}, 
-                    React.createElement("div", {className: 'btn-group'}, 
+                React.createElement(Col, {sm: 3}, 
+                    React.createElement(ButtonGroup, null, 
                         React.createElement("a", {href: '#/settings', className: 'btn btn-default'}, React.createElement("i", {className: 'fa fa-gear'})), 
                         React.createElement("a", {href: '#/', className: 'btn btn-default'}, React.createElement("i", {className: 'fa fa-align-justify'}))
                     )
                 ), 
-                React.createElement("div", {className: 'status col-sm-5 text-center'}, 
+                React.createElement(Col, {sm: 5, className: 'status text-center'}, 
                      this.props.status
                 ), 
-                React.createElement("div", {className: 'col-sm-4 text-right player-controls'}, 
+                React.createElement(Col, {sm: 4, className: 'text-right player-controls'}, 
                     React.createElement("input", {type: 'range', min: '0', max: '100', className: 'volume-control', onChange:  this.setVolume}), 
-                    React.createElement("div", {className: 'btn-group'}, 
+                    React.createElement(ButtonGroup, null, 
                         React.createElement(Button, {bsStyle: "default", onClick:  this.previous}, 
                             React.createElement("i", {className: 'fa fa-fw fa-backward'})
                         ), 
