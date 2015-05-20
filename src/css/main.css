@@ -402,6 +402,12 @@ input[type=range].volume-control::-webkit-slider-runnable-track {
     font-weight: bold;
 }
 
+.now-playing .duration {
+    display: inline-block;
+    margin-left: 10px;
+    font-size: 10px;
+}
+
 /* notifications */
 
 .notification {

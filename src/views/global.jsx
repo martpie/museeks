@@ -256,6 +256,10 @@ var PlayingBar = React.createClass({
                         <span className={'album'}>
                             { track.album }
                         </span>
+                        &nbsp;
+                        <span className={'duration'}>
+                            { parseDuration(parseInt(this.state.elapsed)) } / { parseDuration(parseInt(track.duration)) }
+                        </span>
                     </div>
                     <div className={'now-playing-bar'}>
                         <div className={'progress'} onMouseDown={ this.jumpAudioTo }>

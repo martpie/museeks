@@ -255,6 +255,10 @@ var PlayingBar = React.createClass({displayName: "PlayingBar",
                         " on ", 
                         React.createElement("span", {className: 'album'}, 
                              track.album
+                        ), 
+                        " ", 
+                        React.createElement("span", {className: 'duration'}, 
+                             parseDuration(parseInt(this.state.elapsed)), " / ",  parseDuration(parseInt(track.duration)) 
                         )
                     ), 
                     React.createElement("div", {className: 'now-playing-bar'}, 
