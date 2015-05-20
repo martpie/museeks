@@ -216,7 +216,7 @@ var MusicFoldersList = React.createClass({
 
                             var end = new Date().getTime();
                             Instance.refreshLibrary();
-                            alerts.add('success', 'Library refreshed in ' + (end - start) + ' ms');
+                            alerts.add('success', 'Library refreshed in ' + ((end - start) / 1000)  + ' s');
                         });
                     }
                 });
