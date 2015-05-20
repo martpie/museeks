@@ -95,6 +95,8 @@ db.reset = function() {
             }
         });
     });
+
+    Instance.refreshLibrary();
 }
 
 
