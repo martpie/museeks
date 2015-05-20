@@ -313,15 +313,15 @@ var Footer = React.createClass({
 
         if (this.props.playerStatus == 'play') {
             var playButton = (
-                <button className={'btn btn-default'} onClick={ this.pause }>
+                <Button bsStyle='default' onClick={ this.pause }>
                     <i className={'fa fa-fw fa-pause'}></i>
-                </button>
+                </Button>
             );
         } else if (this.props.playerStatus == 'pause') {
             var playButton = (
-                <button className={'btn btn-default'} onClick={ this.play }>
+                <Button bsStyle='default' onClick={ this.play }>
                     <i className={'fa fa-fw fa-play'}></i>
-                </button>
+                </Button>
             );
         }
 
@@ -340,16 +340,16 @@ var Footer = React.createClass({
                 <div className={'col-sm-4 text-right player-controls'}>
                     <input type={'range'} min={'0'} max={'100'} className={'volume-control'} onChange={ this.setVolume } />
                     <div className={'btn-group'}>
-                        <button className={'btn btn-default'} onClick={ this.previous }>
+                        <Button bsStyle='default' onClick={ this.previous }>
                             <i className={'fa fa-fw fa-backward'}></i>
-                        </button>
+                        </Button>
                         { playButton }
-                        <button className={'btn btn-default'} onClick={ this.next }>
+                        <Button bsStyle='default' onClick={ this.next }>
                             <i className={'fa fa-fw fa-forward'}></i>
-                        </button>
-                        <button className={'btn btn-default'}>
+                        </Button>
+                        <Button bsStyle='default' disabled>
                             <i className={'fa fa-fw fa-list'}></i>
-                        </button>
+                        </Button>
                     </div>
                 </div>
             </footer>
