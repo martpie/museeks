@@ -48,9 +48,9 @@ var Museeks = React.createClass({
                             { notificationsBlock }
                         </ReactCSSTransitionGroup>
                     </div>
-                    <div className={'content row'}>
+                    <Row className={'content'}>
                         <this.state.view library={ this.state.tracks } trackPlaying={ this.state.trackPlaying } />
-                    </div>
+                    </Row>
                 </div>
                 <Footer status={ status } playerStatus={ this.state.playerStatus } />
             </div>
@@ -198,14 +198,14 @@ var Header = React.createClass({
 
         return (
             <header className={'row'}>
-                <div className={'window-controls col-sm-2 text-left'}>
-                </div>
-                <div className={'col-sm-6 col-sm-offset-1 text-center'}>
+                <Col sm={2} className={'window-controls text-left'}>
+                </Col>
+                <Col sm={6} smOffset={1} className={'text-center'}>
                     <PlayingBar trackPlaying={ this.props.trackPlaying } />
-                </div>
-                <div className={'col-sm-2 col-sm-offset-1 search'}>
+                </Col>
+                <Col sm={2} smOffset={1} className={'search'}>
                     <input type={'text'} className={'form-control input-sm'} placeholder={'search'} onChange={ this.search } />
-                </div>
+                </Col>
             </header>
         );
     },
@@ -262,9 +262,7 @@ var PlayingBar = React.createClass({
                         </span>
                     </div>
                     <div className={'now-playing-bar'}>
-                        <div className={'progress'} onMouseDown={ this.jumpAudioTo }>
-                            <div className={'progress-bar'} style={{ width: elapsedPercent + '%' }}></div>
-                        </div>
+                        <ProgressBar now={elapsedPercent} onMouseDown={ this.jumpAudioTo } />
                     </div>
                 </div>
             );
@@ -328,18 +326,18 @@ var Footer = React.createClass({
 
         return (
             <footer className={'row'}>
-                <div className={'col-sm-3'}>
-                    <div className={'btn-group'}>
+                <Col sm={3}>
+                    <ButtonGroup>
                         <a href={'#/settings'} className={'btn btn-default'}><i className={'fa fa-gear'}></i></a>
                         <a href={'#/'} className={'btn btn-default'}><i className={'fa fa-align-justify'}></i></a>
-                    </div>
-                </div>
-                <div className={'status col-sm-5 text-center'}>
+                    </ButtonGroup>
+                </Col>
+                <Col sm={5} className={'status text-center'}>
                     { this.props.status }
-                </div>
-                <div className={'col-sm-4 text-right player-controls'}>
+                </Col>
+                <Col sm={4} className={'text-right player-controls'}>
                     <input type={'range'} min={'0'} max={'100'} className={'volume-control'} onChange={ this.setVolume } />
-                    <div className={'btn-group'}>
+                    <ButtonGroup>
                         <Button bsStyle='default' onClick={ this.previous }>
                             <i className={'fa fa-fw fa-backward'}></i>
                         </Button>
@@ -350,8 +348,8 @@ var Footer = React.createClass({
                         <Button bsStyle='default' disabled>
                             <i className={'fa fa-fw fa-list'}></i>
                         </Button>
-                    </div>
-                </div>
+                    </ButtonGroup>
+                </Col>
             </footer>
         );
     },
