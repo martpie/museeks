@@ -215,6 +215,7 @@ var MusicFoldersList = React.createClass({displayName: "MusicFoldersList",
                         }, function() {
 
                             var end = new Date().getTime();
+                            Instance.refreshLibrary();
                             alerts.add('success', 'Library refreshed in ' + (end - start) + ' ms');
                         });
                     }
