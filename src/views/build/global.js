@@ -313,13 +313,13 @@ var Footer = React.createClass({displayName: "Footer",
 
         if (this.props.playerStatus == 'play') {
             var playButton = (
-                React.createElement("button", {className: 'btn btn-default', onClick:  this.pause}, 
+                React.createElement(Button, {bsStyle: "default", onClick:  this.pause}, 
                     React.createElement("i", {className: 'fa fa-fw fa-pause'})
                 )
             );
         } else if (this.props.playerStatus == 'pause') {
             var playButton = (
-                React.createElement("button", {className: 'btn btn-default', onClick:  this.play}, 
+                React.createElement(Button, {bsStyle: "default", onClick:  this.play}, 
                     React.createElement("i", {className: 'fa fa-fw fa-play'})
                 )
             );
@@ -340,14 +340,14 @@ var Footer = React.createClass({displayName: "Footer",
                 React.createElement("div", {className: 'col-sm-4 text-right player-controls'}, 
                     React.createElement("input", {type: 'range', min: '0', max: '100', className: 'volume-control', onChange:  this.setVolume}), 
                     React.createElement("div", {className: 'btn-group'}, 
-                        React.createElement("button", {className: 'btn btn-default', onClick:  this.previous}, 
+                        React.createElement(Button, {bsStyle: "default", onClick:  this.previous}, 
                             React.createElement("i", {className: 'fa fa-fw fa-backward'})
                         ), 
                          playButton, 
-                        React.createElement("button", {className: 'btn btn-default', onClick:  this.next}, 
+                        React.createElement(Button, {bsStyle: "default", onClick:  this.next}, 
                             React.createElement("i", {className: 'fa fa-fw fa-forward'})
                         ), 
-                        React.createElement("button", {className: 'btn btn-default'}, 
+                        React.createElement(Button, {bsStyle: "default", disabled: true}, 
                             React.createElement("i", {className: 'fa fa-fw fa-list'})
                         )
                     )
