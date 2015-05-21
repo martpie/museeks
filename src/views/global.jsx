@@ -180,6 +180,17 @@ var Museeks = React.createClass({
 
                 Instance.setState({ trackPlaying: null });
             }
+        },
+
+        stop: function () {
+
+            audio.pause();
+
+            Instance.setState({
+                library       :  null,
+                tracks        :  null,
+                trackPlaying  :  null,
+            });
         }
     }
 });
