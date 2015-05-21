@@ -108,7 +108,7 @@ var Museeks = React.createClass({displayName: "Museeks",
         this.setState({ tracks : tracks });
     },
 
-    play: function(id) {
+    selectAndPlay: function(id) {
 
         var tracks = this.state.tracks;
 
