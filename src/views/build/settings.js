@@ -190,8 +190,8 @@ var MusicFoldersList = React.createClass({displayName: "MusicFoldersList",
                                     metadata.lArtist = metadata.artist.length === 0 ? ['unknown artist'] : metadata.artist[0].toLowerCase();
 
                                     if(metadata.artist.length === 0) metadata.artist = ['Unknown artist'];
-                                    if(metadata.album === null || metadata.album === '')      metadata.album  =  'Unknown album';
-                                    if(metadata.title === null || metadata.title === '')      metadata.title  =  'Unknown artist';
+                                    if(metadata.album === null || metadata.album === '') metadata.album  =  'Unknown';
+                                    if(metadata.title === null || metadata.title === '') metadata.title  =  'Unknown';
 
                                     db.insert(metadata, function (err, newDoc) {
                                         if(err) throw err;
