@@ -17,6 +17,7 @@ Please consider **this app is under development, just install it for fun**, I'm 
 - Download [Electron](https://github.com/atom/electron/releases)
 - Download Museeks source code
 - Put it in a folder called `app` in `[Electron path]/resources`
+- `bower install && npm install`
 - Run Electron
 
 
