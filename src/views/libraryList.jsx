@@ -68,26 +68,27 @@ var LibraryListItems = React.createClass({
 
         var list = tracks.map(function(track, index) {
 
-            if(index == trackPlaying) var playing = (<i className={'fa fa-volume-up'}></i>);
+            if(index == trackPlaying) var playing = (<i className={'fa fa-fw fa-volume-up'}></i>);
+            if(index == trackPlaying && audio.paused) var playing = (<i className={'fa fa-fw fa-volume-off'}></i>);
 
             return(
                 <tr className={ index === selected ? 'track selected' : 'track' } key={index} onMouseDown={ self.selectTrack.bind(null, index) } onDoubleClick={ Instance.selectAndPlay.bind(null, index) }>
-                    <td className={'text-center'}>
+                    <td className={'row-trackPlaying text-center'}>
                         { playing }
                     </td>
-                    <td>
+                    <td className={'row-track'}>
                         { track.title }
                     </td>
-                    <td>
+                    <td className={'row-duration'}>
                         { parseDuration(track.duration) }
                     </td>
-                    <td>
+                    <td className={'row-artist'}>
                         { track.artist[0] }
                     </td>
-                    <td>
+                    <td className={'row-album'}>
                         { track.album }
                     </td>
-                    <td>
+                    <td className={'row-genre'}>
                         { track.genre.join(', ') }
                     </td>
                 </tr>
@@ -95,21 +96,23 @@ var LibraryListItems = React.createClass({
         });
 
         return (
-            <table className={'table table-striped list tracks-list'}>
-                <thead>
-                    <tr>
-                        <th className={'row-trackPlaying'}><div><i className={'fa fa-fw'}></i></div></th>
-                        <th className={'row-track'}><div>Track</div></th>
-                        <th className={'row-duration'}><div>Duration</div></th>
-                        <th className={'row-artist'}><div>Artist</div></th>
-                        <th className={'row-album'}><div>Album</div></th>
-                        <th className={'row-genre'}><div>Genre</div></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    { list }
-                </tbody>
-            </table>
+            <div className={'tracks-list-container'}>
+                <table className={'table tracks-list'}>
+                    <thead>
+                        <tr>
+                            <th className={'row-trackPlaying'}><div><i className={'fa fa-fw'}></i></div></th>
+                            <th className={'row-track'}><div>Track</div></th>
+                            <th className={'row-duration'}><div>Duration</div></th>
+                            <th className={'row-artist'}><div>Artist</div></th>
+                            <th className={'row-album'}><div>Album</div></th>
+                            <th className={'row-genre'}><div>Genre</div></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        { list }
+                    </tbody>
+                </table>
+            </div>
         );
     },
 

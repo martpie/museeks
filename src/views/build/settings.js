@@ -44,15 +44,15 @@ var MusicFoldersList = React.createClass({displayName: "MusicFoldersList",
 
             var buttonsGroup = (
                 React.createElement(ButtonGroup, null, 
-                    React.createElement(Button, {onClick:  this.addFolder}, 
+                    React.createElement(Button, {bsSize: "small", onClick:  this.addFolder}, 
                         React.createElement("i", {className: 'fa fa-plus'}), 
                         "Import a folder"
                     ), 
-                    React.createElement(Button, {onClick:  this.refreshLibrary}, 
+                    React.createElement(Button, {bsSize: "small", onClick:  this.refreshLibrary}, 
                         React.createElement("i", {className:  !this.state.refreshingLibrary ? 'fa fa-refresh' : 'fa fa-refresh fa-spin'}), 
                          !this.state.refreshingLibrary ? 'Refresh Library' : 'Refreshing Library'
                     ), 
-                    React.createElement(Button, {bsStyle: 'danger', onClick:  this.resetLibrary}, 
+                    React.createElement(Button, {bsSize: "small", bsStyle: 'danger', onClick:  this.resetLibrary}, 
                         "Reset library"
                     )
                 )
@@ -62,15 +62,15 @@ var MusicFoldersList = React.createClass({displayName: "MusicFoldersList",
 
             var buttonsGroup = (
                 React.createElement(ButtonGroup, null, 
-                    React.createElement(Button, {disabled: true, onClick:  this.addFolder}, 
+                    React.createElement(Button, {bsSize: "small", disabled: true, onClick:  this.addFolder}, 
                         React.createElement("i", {className: 'fa fa-plus'}), 
                         "Import a folder"
                     ), 
-                    React.createElement(Button, {disabled: true, onClick:  this.refreshLibrary}, 
+                    React.createElement(Button, {bsSize: "small", disabled: true, onClick:  this.refreshLibrary}, 
                         React.createElement("i", {className:  !this.state.refreshingLibrary ? 'fa fa-refresh' : 'fa fa-refresh fa-spin'}), 
                          !this.state.refreshingLibrary ? 'Refresh Library' : 'Refreshing Library'
                     ), 
-                    React.createElement(Button, {disabled: true, bsStyle: 'danger', onClick:  this.resetLibrary}, 
+                    React.createElement(Button, {bsSize: "small", disabled: true, bsStyle: 'danger', onClick:  this.resetLibrary}, 
                         "Reset library"
                     )
                 )
@@ -81,8 +81,8 @@ var MusicFoldersList = React.createClass({displayName: "MusicFoldersList",
         var list = this.state.musicFolders.map(function(folder, i) {
             return(
                 React.createElement("li", {key: i}, 
-                    React.createElement("i", {onClick:  this.state.refreshingLibrary ? void(0) : this.removeFolder, "data-target":  i, className:  this.state.refreshingLibrary ? 'fa fa-close delete-libray-folder disabled' : 'fa fa-close delete-libray-folder'}), 
-                     folder 
+                    React.createElement("i", {onClick:  this.state.refreshingLibrary ? void(0) : this.removeFolder, "data-target": i, className:  this.state.refreshingLibrary ? 'fa fa-close delete-libray-folder disabled' : 'fa fa-close delete-libray-folder'}), 
+                    folder 
                 )
             );
         }.bind(this));
@@ -94,10 +94,10 @@ var MusicFoldersList = React.createClass({displayName: "MusicFoldersList",
                 React.createElement("p", null, "You currently have ",  this.state.musicFolders.length, " folder",  this.state.musicFolders.length < 2 ? '' : 's', " folders in your library."), 
 
                 React.createElement("ul", {className: "musicfolders-list"}, 
-                     list 
+                    list 
                 ), 
 
-                 buttonsGroup, 
+                buttonsGroup, 
 
                 React.createElement("hr", null)
             )
@@ -190,8 +190,8 @@ var MusicFoldersList = React.createClass({displayName: "MusicFoldersList",
                                     metadata.lArtist = metadata.artist.length === 0 ? ['unknown artist'] : metadata.artist[0].toLowerCase();
 
                                     if(metadata.artist.length === 0) metadata.artist = ['Unknown artist'];
-                                    if(metadata.album === null || metadata.album === '') metadata.album  =  'Unknown';
-                                    if(metadata.title === null || metadata.title === '') metadata.title  =  'Unknown';
+                                    if(metadata.album === null || metadata.album === '') metadata.album = 'Unknown';
+                                    if(metadata.title === null || metadata.title === '') metadata.title = 'Unknown';
 
                                     db.insert(metadata, function (err, newDoc) {
                                         if(err) throw err;
