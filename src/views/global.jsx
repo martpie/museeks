@@ -230,7 +230,10 @@ var Header = React.createClass({
 
         return (
             <header className={'row'}>
-                <Col sm={2} className={'player-controls text-center'}>
+                <Col sm={3} className={'player-controls text-center'}>
+                    <ButtonGroup className={'win-controls'}>
+                        <Button bsSize='small' bsStyle='link' className={'win-close'} onClick={ this.win.close }>&times;</Button>
+                    </ButtonGroup>
                     <ButtonGroup>
                         <Button bsSize='small' bsStyle='link' onClick={ this.previous }>
                             <i className={'fa fa-fw fa-backward'}></i>
@@ -241,7 +244,7 @@ var Header = React.createClass({
                         </Button>
                     </ButtonGroup>
                 </Col>
-                <Col sm={6} smOffset={1} className={'text-center'}>
+                <Col sm={6} className={'text-center'}>
                     <PlayingBar trackPlaying={ this.props.trackPlaying } />
                 </Col>
                 <Col sm={2} smOffset={1} className={'search'}>
@@ -250,6 +253,27 @@ var Header = React.createClass({
             </header>
         );
     },
+
+    win: {
+
+       close: function () {
+           Window.close()
+       },
+
+       minimize: function () {
+           Window.minimize()
+       },
+
+       maximize: function () {
+           if (!Window.maximized) {
+               Window.maximize();
+               Window.maximized = true;
+           } else {
+               Window.unmaximize();
+               Window.maximized = false;
+           }
+       }
+   },
 
     search: function (e) {
 
