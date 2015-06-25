@@ -97,7 +97,7 @@ var LibraryListItems = React.createClass({
 
         return (
             <div className={'tracks-list-container'}>
-                <table className={'table tracks-list'}>
+                <table className={'table table-striped tracks-list'}>
                     <thead>
                         <tr>
                             <th className={'row-trackPlaying'}><div><i className={'fa fa-fw'}></i></div></th>

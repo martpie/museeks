@@ -97,7 +97,7 @@ var LibraryListItems = React.createClass({displayName: "LibraryListItems",
 
         return (
             React.createElement("div", {className: 'tracks-list-container'}, 
-                React.createElement("table", {className: 'table tracks-list'}, 
+                React.createElement("table", {className: 'table table-striped tracks-list'}, 
                     React.createElement("thead", null, 
                         React.createElement("tr", null, 
                             React.createElement("th", {className: 'row-trackPlaying'}, React.createElement("div", null, React.createElement("i", {className: 'fa fa-fw'}))), 
