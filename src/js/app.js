@@ -10,8 +10,9 @@
 
 var remote = require('remote');
 
-var dialog = remote.require('dialog');
-var app    = remote.require('app');
+var dialog         = remote.require('dialog');
+var app            = remote.require('app');
+var globalShortcut = remote.require('global-shortcut');
 
 var fs     = require('fs'),
     path   = require('path'),
@@ -25,7 +26,7 @@ var fs     = require('fs'),
 
 /*
 |--------------------------------------------------------------------------
-| Tests
+| Globals
 |--------------------------------------------------------------------------
 */
 

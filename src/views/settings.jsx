@@ -44,15 +44,15 @@ var MusicFoldersList = React.createClass({
 
             var buttonsGroup = (
                 <ButtonGroup>
-                    <Button onClick={ this.addFolder }>
+                    <Button bsSize='small' onClick={ this.addFolder }>
                         <i className={'fa fa-plus'}></i>
                         Import a folder
                     </Button>
-                    <Button onClick={ this.refreshLibrary }>
+                    <Button bsSize='small' onClick={ this.refreshLibrary }>
                         <i className={ !this.state.refreshingLibrary ? 'fa fa-refresh' : 'fa fa-refresh fa-spin' }></i>
                         { !this.state.refreshingLibrary ? 'Refresh Library' : 'Refreshing Library'}
                     </Button>
-                    <Button bsStyle={'danger'} onClick={ this.resetLibrary }>
+                    <Button bsSize='small' bsStyle={'danger'} onClick={ this.resetLibrary }>
                         Reset library
                     </Button>
                 </ButtonGroup>
@@ -62,15 +62,15 @@ var MusicFoldersList = React.createClass({
 
             var buttonsGroup = (
                 <ButtonGroup>
-                    <Button disabled onClick={ this.addFolder }>
+                    <Button bsSize='small' disabled onClick={ this.addFolder }>
                         <i className={'fa fa-plus'}></i>
                         Import a folder
                     </Button>
-                    <Button disabled onClick={ this.refreshLibrary }>
+                    <Button bsSize='small' disabled onClick={ this.refreshLibrary }>
                         <i className={ !this.state.refreshingLibrary ? 'fa fa-refresh' : 'fa fa-refresh fa-spin' }></i>
                         { !this.state.refreshingLibrary ? 'Refresh Library' : 'Refreshing Library'}
                     </Button>
-                    <Button disabled bsStyle={'danger'} onClick={ this.resetLibrary }>
+                    <Button bsSize='small' disabled bsStyle={'danger'} onClick={ this.resetLibrary }>
                         Reset library
                     </Button>
                 </ButtonGroup>
@@ -190,8 +190,8 @@ var MusicFoldersList = React.createClass({
                                     metadata.lArtist = metadata.artist.length === 0 ? ['unknown artist'] : metadata.artist[0].toLowerCase();
 
                                     if(metadata.artist.length === 0) metadata.artist = ['Unknown artist'];
-                                    if(metadata.album === null || metadata.album === '') metadata.album  =  'Unknown';
-                                    if(metadata.title === null || metadata.title === '') metadata.title  =  'Unknown';
+                                    if(metadata.album === null || metadata.album === '') metadata.album = 'Unknown';
+                                    if(metadata.title === null || metadata.title === '') metadata.title = 'Unknown';
 
                                     db.insert(metadata, function (err, newDoc) {
                                         if(err) throw err;

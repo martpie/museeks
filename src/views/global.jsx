@@ -41,7 +41,7 @@ var Museeks = React.createClass({
 
         return (
             <div className={'main'}>
-                <Header trackPlaying={ this.state.trackPlaying } />
+                <Header playerStatus={ this.state.playerStatus } trackPlaying={ this.state.trackPlaying } />
                 <div className={'main-content'}>
                     <div className={'alerts-container'}>
                         <ReactCSSTransitionGroup transitionName='notification'>
@@ -52,7 +52,7 @@ var Museeks = React.createClass({
                         <this.state.view library={ this.state.tracks } trackPlaying={ this.state.trackPlaying } />
                     </Row>
                 </div>
-                <Footer status={ status } playerStatus={ this.state.playerStatus } />
+                <Footer status={ status } />
             </div>
         );
     },
@@ -124,8 +124,15 @@ var Museeks = React.createClass({
 
         play: function () {
 
-            Instance.setState({ playerStatus: 'play' });
-            audio.play();
+            if(Instance.state.trackPlaying == null) {
+
+                // to-do
+
+            } else {
+
+                Instance.setState({ playerStatus: 'play' });
+                audio.play();
+            }
         },
 
         pause: function () {
@@ -207,9 +214,32 @@ var Header = React.createClass({
 
     render: function () {
 
+        if (this.props.playerStatus == 'play') {
+            var playButton = (
+                <Button bsSize="small" bsStyle='link' onClick={ this.pause }>
+                    <i className={'fa fa-fw fa-pause'}></i>
+                </Button>
+            );
+        } else if (this.props.playerStatus == 'pause') {
+            var playButton = (
+                <Button bsSize="small" bsStyle='link' onClick={ this.play }>
+                    <i className={'fa fa-fw fa-play'}></i>
+                </Button>
+            );
+        }
+
         return (
             <header className={'row'}>
-                <Col sm={2} className={'window-controls text-left'}>
+                <Col sm={2} className={'player-controls text-center'}>
+                    <ButtonGroup>
+                        <Button bsSize='small' bsStyle='link' onClick={ this.previous }>
+                            <i className={'fa fa-fw fa-backward'}></i>
+                        </Button>
+                        { playButton }
+                        <Button bsSize="small" bsStyle='link' onClick={ this.next }>
+                            <i className={'fa fa-fw fa-forward'}></i>
+                        </Button>
+                    </ButtonGroup>
                 </Col>
                 <Col sm={6} smOffset={1} className={'text-center'}>
                     <PlayingBar trackPlaying={ this.props.trackPlaying } />
@@ -224,6 +254,26 @@ var Header = React.createClass({
     search: function (e) {
 
         Instance.filterSearch(e.currentTarget.value);
+    },
+
+    play: function () {
+
+        Instance.player.play();
+    },
+
+    pause: function () {
+
+        Instance.player.pause();
+    },
+
+    next: function () {
+
+        Instance.player.next();
+    },
+
+    previous: function () {
+
+        Instance.player.previous();
     }
 });
 
@@ -346,20 +396,8 @@ var Footer = React.createClass({
                 <Col sm={5} className={'status text-center'}>
                     { this.props.status }
                 </Col>
-                <Col sm={4} className={'text-right player-controls'}>
+                <Col sm={2} smOffset={2} className={'footer-controls'}>
                     <input type={'range'} min={'0'} max={'100'} className={'volume-control'} onChange={ this.setVolume } />
-                    <ButtonGroup>
-                        <Button bsStyle='default' onClick={ this.previous }>
-                            <i className={'fa fa-fw fa-backward'}></i>
-                        </Button>
-                        { playButton }
-                        <Button bsStyle='default' onClick={ this.next }>
-                            <i className={'fa fa-fw fa-forward'}></i>
-                        </Button>
-                        <Button bsStyle='default' disabled>
-                            <i className={'fa fa-fw fa-list'}></i>
-                        </Button>
-                    </ButtonGroup>
                 </Col>
             </footer>
         );
@@ -369,24 +407,4 @@ var Footer = React.createClass({
 
         audio.volume = e.currentTarget.value / 100;
     },
-
-    play: function () {
-
-        Instance.player.play();
-    },
-
-    pause: function () {
-
-        Instance.player.pause();
-    },
-
-    next: function () {
-
-        Instance.player.next();
-    },
-
-    previous: function () {
-
-        Instance.player.previous();
-    }
 });

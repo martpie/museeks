@@ -15,9 +15,11 @@ app.on('window-all-closed', function() {
 app.on('ready', function() {
 
     var mainWindowOption = {
-        width: 1100,
-        height: 650,
-        frame: true
+        'width'      : 1000,
+        'height'     : 600,
+        'min-width'  : 1000,
+        'min-height' : 600,
+        'frame'      : true
     };
 
     mainWindow = new BrowserWindow(mainWindowOption);

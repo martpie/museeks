@@ -32,7 +32,7 @@ var Museeks = React.createClass({displayName: "Museeks",
 
         var notificationsBlock = Object.keys(notifications).reverse().map(function(id, i) {
             return (
-                React.createElement(Alert, {key:  id, bsStyle:  notifications[id].type, className:  'notification' }, 
+                React.createElement(Alert, {key: id, bsStyle:  notifications[id].type, className: 'notification' }, 
                      notifications[id].content
                 )
             );
@@ -41,18 +41,18 @@ var Museeks = React.createClass({displayName: "Museeks",
 
         return (
             React.createElement("div", {className: 'main'}, 
-                React.createElement(Header, {trackPlaying:  this.state.trackPlaying}), 
+                React.createElement(Header, {playerStatus:  this.state.playerStatus, trackPlaying:  this.state.trackPlaying}), 
                 React.createElement("div", {className: 'main-content'}, 
                     React.createElement("div", {className: 'alerts-container'}, 
                         React.createElement(ReactCSSTransitionGroup, {transitionName: "notification"}, 
-                             notificationsBlock 
+                            notificationsBlock 
                         )
                     ), 
                     React.createElement(Row, {className: 'content'}, 
                         React.createElement(this.state.view, {library:  this.state.tracks, trackPlaying:  this.state.trackPlaying})
                     )
                 ), 
-                React.createElement(Footer, {status:  status, playerStatus:  this.state.playerStatus})
+                React.createElement(Footer, {status: status })
             )
         );
     },
@@ -124,8 +124,15 @@ var Museeks = React.createClass({displayName: "Museeks",
 
         play: function () {
 
-            Instance.setState({ playerStatus: 'play' });
-            audio.play();
+            if(Instance.state.trackPlaying == null) {
+
+                // to-do
+
+            } else {
+
+                Instance.setState({ playerStatus: 'play' });
+                audio.play();
+            }
         },
 
         pause: function () {
@@ -207,9 +214,32 @@ var Header = React.createClass({displayName: "Header",
 
     render: function () {
 
+        if (this.props.playerStatus == 'play') {
+            var playButton = (
+                React.createElement(Button, {bsSize: "small", bsStyle: "link", onClick:  this.pause}, 
+                    React.createElement("i", {className: 'fa fa-fw fa-pause'})
+                )
+            );
+        } else if (this.props.playerStatus == 'pause') {
+            var playButton = (
+                React.createElement(Button, {bsSize: "small", bsStyle: "link", onClick:  this.play}, 
+                    React.createElement("i", {className: 'fa fa-fw fa-play'})
+                )
+            );
+        }
+
         return (
             React.createElement("header", {className: 'row'}, 
-                React.createElement(Col, {sm: 2, className: 'window-controls text-left'}
+                React.createElement(Col, {sm: 2, className: 'player-controls text-center'}, 
+                    React.createElement(ButtonGroup, null, 
+                        React.createElement(Button, {bsSize: "small", bsStyle: "link", onClick:  this.previous}, 
+                            React.createElement("i", {className: 'fa fa-fw fa-backward'})
+                        ), 
+                        playButton, 
+                        React.createElement(Button, {bsSize: "small", bsStyle: "link", onClick:  this.next}, 
+                            React.createElement("i", {className: 'fa fa-fw fa-forward'})
+                        )
+                    )
                 ), 
                 React.createElement(Col, {sm: 6, smOffset: 1, className: 'text-center'}, 
                     React.createElement(PlayingBar, {trackPlaying:  this.props.trackPlaying})
@@ -224,6 +254,26 @@ var Header = React.createClass({displayName: "Header",
     search: function (e) {
 
         Instance.filterSearch(e.currentTarget.value);
+    },
+
+    play: function () {
+
+        Instance.player.play();
+    },
+
+    pause: function () {
+
+        Instance.player.pause();
+    },
+
+    next: function () {
+
+        Instance.player.next();
+    },
+
+    previous: function () {
+
+        Instance.player.previous();
     }
 });
 
@@ -346,20 +396,8 @@ var Footer = React.createClass({displayName: "Footer",
                 React.createElement(Col, {sm: 5, className: 'status text-center'}, 
                      this.props.status
                 ), 
-                React.createElement(Col, {sm: 4, className: 'text-right player-controls'}, 
-                    React.createElement("input", {type: 'range', min: '0', max: '100', className: 'volume-control', onChange:  this.setVolume}), 
-                    React.createElement(ButtonGroup, null, 
-                        React.createElement(Button, {bsStyle: "default", onClick:  this.previous}, 
-                            React.createElement("i", {className: 'fa fa-fw fa-backward'})
-                        ), 
-                         playButton, 
-                        React.createElement(Button, {bsStyle: "default", onClick:  this.next}, 
-                            React.createElement("i", {className: 'fa fa-fw fa-forward'})
-                        ), 
-                        React.createElement(Button, {bsStyle: "default", disabled: true}, 
-                            React.createElement("i", {className: 'fa fa-fw fa-list'})
-                        )
-                    )
+                React.createElement(Col, {sm: 2, smOffset: 2, className: 'footer-controls'}, 
+                    React.createElement("input", {type: 'range', min: '0', max: '100', className: 'volume-control', onChange:  this.setVolume})
                 )
             )
         );
@@ -369,24 +407,4 @@ var Footer = React.createClass({displayName: "Footer",
 
         audio.volume = e.currentTarget.value / 100;
     },
-
-    play: function () {
-
-        Instance.player.play();
-    },
-
-    pause: function () {
-
-        Instance.player.pause();
-    },
-
-    next: function () {
-
-        Instance.player.next();
-    },
-
-    previous: function () {
-
-        Instance.player.previous();
-    }
 });
