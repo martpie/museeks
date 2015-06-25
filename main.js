@@ -19,7 +19,7 @@ app.on('ready', function() {
         'height'     : 600,
         'min-width'  : 1000,
         'min-height' : 600,
-        'frame'      : true
+        'frame'      : false
     };
 
     mainWindow = new BrowserWindow(mainWindowOption);

@@ -32,7 +32,7 @@ var Museeks = React.createClass({displayName: "Museeks",
 
         var notificationsBlock = Object.keys(notifications).reverse().map(function(id, i) {
             return (
-                React.createElement(Alert, {key: id, bsStyle:  notifications[id].type, className: 'notification' }, 
+                React.createElement(Alert, {key:  id, bsStyle:  notifications[id].type, className:  'notification' }, 
                      notifications[id].content
                 )
             );
@@ -45,14 +45,14 @@ var Museeks = React.createClass({displayName: "Museeks",
                 React.createElement("div", {className: 'main-content'}, 
                     React.createElement("div", {className: 'alerts-container'}, 
                         React.createElement(ReactCSSTransitionGroup, {transitionName: "notification"}, 
-                            notificationsBlock 
+                             notificationsBlock 
                         )
                     ), 
                     React.createElement(Row, {className: 'content'}, 
                         React.createElement(this.state.view, {library:  this.state.tracks, trackPlaying:  this.state.trackPlaying})
                     )
                 ), 
-                React.createElement(Footer, {status: status })
+                React.createElement(Footer, {status:  status })
             )
         );
     },
@@ -230,18 +230,21 @@ var Header = React.createClass({displayName: "Header",
 
         return (
             React.createElement("header", {className: 'row'}, 
-                React.createElement(Col, {sm: 2, className: 'player-controls text-center'}, 
+                React.createElement(Col, {sm: 3, className: 'player-controls text-center'}, 
+                    React.createElement(ButtonGroup, {className: 'win-controls'}, 
+                        React.createElement(Button, {bsSize: "small", bsStyle: "link", className: 'win-close', onClick:  this.win.close}, "×")
+                    ), 
                     React.createElement(ButtonGroup, null, 
                         React.createElement(Button, {bsSize: "small", bsStyle: "link", onClick:  this.previous}, 
                             React.createElement("i", {className: 'fa fa-fw fa-backward'})
                         ), 
-                        playButton, 
+                         playButton, 
                         React.createElement(Button, {bsSize: "small", bsStyle: "link", onClick:  this.next}, 
                             React.createElement("i", {className: 'fa fa-fw fa-forward'})
                         )
                     )
                 ), 
-                React.createElement(Col, {sm: 6, smOffset: 1, className: 'text-center'}, 
+                React.createElement(Col, {sm: 6, className: 'text-center'}, 
                     React.createElement(PlayingBar, {trackPlaying:  this.props.trackPlaying})
                 ), 
                 React.createElement(Col, {sm: 2, smOffset: 1, className: 'search'}, 
@@ -250,6 +253,27 @@ var Header = React.createClass({displayName: "Header",
             )
         );
     },
+
+    win: {
+
+       close: function () {
+           Window.close()
+       },
+
+       minimize: function () {
+           Window.minimize()
+       },
+
+       maximize: function () {
+           if (!Window.maximized) {
+               Window.maximize();
+               Window.maximized = true;
+           } else {
+               Window.unmaximize();
+               Window.maximized = false;
+           }
+       }
+   },
 
     search: function (e) {
 

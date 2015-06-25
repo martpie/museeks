@@ -8,6 +8,18 @@ html, body {
 
 body {
     font-family: OpenSans;
+    border: 1px solid rgb(182, 182, 182);
+}
+
+header {
+    -webkit-app-region: drag;
+}
+
+header .player-controls > .btn-group,
+header .now-playing-bar,
+header .search > input,
+header .window-control {
+    -webkit-app-region: no-drag;
 }
 
 .btn.active.focus,
@@ -40,39 +52,30 @@ body {
     font-weight: 100;
 }
 
-/*
-.window-controls {
-    padding-right: 10px;
-    cursor: default;
+.win-controls {
+    float: left;
+    font-size: 20px;
 }
 
-.window-controls .control {
-    display: inline-block;
-    padding: 6px;
-    border-radius: 8px;
-    margin: 19px 3px;
-    cursor: pointer;
-    transition: opacity .15s ease-in-out;
-    border: 0;
-    outline: 0;
+.win-controls .btn-link {
+    transition: all .2s ease-in-out;
 }
 
-.window-controls .control:hover {
-    opacity: .5;
+.win-controls .btn-link:hover,
+.win-controls .btn-link:focus,
+.win-controls .btn-link:active {
+    text-decoration: none;
 }
 
-.window-controls .control-close {
-    background-color: #F65543;
+.win-controls .btn-link:active {
+    background-color: #DFDFDF;
+    border: solid 1px #B8B8B8;
 }
 
-.window-controls .control-maximize {
-    background-color: #15CE3D;
+.win-control .win-close {
+    line-height: 22px;
 }
 
-.window-controls .control-minimize {
-    background-color: #FEBC02;
-}
-*/
 header {
     border-bottom: 1px solid rgb(210, 210, 210);
     background-color: rgb(244, 244, 244);
@@ -98,13 +101,12 @@ input[nwdirectory] {
 
 footer {
     position: fixed;
-    bottom: 0;
-    width: 100%;
+    bottom: 1px;
+    width: calc(100% - 2px);
     border-top: 1px solid #AAA;
     padding-top: 5px;
     padding-bottom: 5px;
     background-color: rgb(244, 244, 244);
-    border-bottom: 1px solid rgb(210, 210, 210);
 }
 
 footer .btn {
@@ -124,7 +126,7 @@ footer .btn {
 }
 
 .main-content {
-    padding-bottom: 85px;
+    padding-bottom: 86px;
 }
 
 .content {
