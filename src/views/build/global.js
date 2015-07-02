@@ -32,7 +32,7 @@ var Museeks = React.createClass({displayName: "Museeks",
 
         var notificationsBlock = Object.keys(notifications).reverse().map(function(id, i) {
             return (
-                React.createElement(Alert, {key:  id, bsStyle:  notifications[id].type, className:  'notification' }, 
+                React.createElement(Alert, {key: id, bsStyle:  notifications[id].type, className: 'notification' }, 
                      notifications[id].content
                 )
             );
@@ -45,14 +45,14 @@ var Museeks = React.createClass({displayName: "Museeks",
                 React.createElement("div", {className: 'main-content'}, 
                     React.createElement("div", {className: 'alerts-container'}, 
                         React.createElement(ReactCSSTransitionGroup, {transitionName: "notification"}, 
-                             notificationsBlock 
+                            notificationsBlock 
                         )
                     ), 
                     React.createElement(Row, {className: 'content'}, 
                         React.createElement(this.state.view, {library:  this.state.tracks, trackPlaying:  this.state.trackPlaying})
                     )
                 ), 
-                React.createElement(Footer, {status:  status })
+                React.createElement(Footer, {status: status })
             )
         );
     },
@@ -212,17 +212,23 @@ var Museeks = React.createClass({displayName: "Museeks",
 
 var Header = React.createClass({displayName: "Header",
 
+    getInitialState: function () {
+        return {
+            showVolume : false
+        }
+    },
+
     render: function () {
 
         if (this.props.playerStatus == 'play') {
             var playButton = (
-                React.createElement(Button, {bsSize: "small", bsStyle: "link", onClick:  this.pause}, 
+                React.createElement(Button, {bsSize: "small", bsStyle: "link", className: 'play', onClick:  this.pause}, 
                     React.createElement("i", {className: 'fa fa-fw fa-pause'})
                 )
             );
         } else if (this.props.playerStatus == 'pause') {
             var playButton = (
-                React.createElement(Button, {bsSize: "small", bsStyle: "link", onClick:  this.play}, 
+                React.createElement(Button, {bsSize: "small", bsStyle: "link", className: 'play', onClick:  this.play}, 
                     React.createElement("i", {className: 'fa fa-fw fa-play'})
                 )
             );
@@ -238,9 +244,15 @@ var Header = React.createClass({displayName: "Header",
                         React.createElement(Button, {bsSize: "small", bsStyle: "link", onClick:  this.previous}, 
                             React.createElement("i", {className: 'fa fa-fw fa-backward'})
                         ), 
-                         playButton, 
+                        playButton, 
                         React.createElement(Button, {bsSize: "small", bsStyle: "link", onClick:  this.next}, 
                             React.createElement("i", {className: 'fa fa-fw fa-forward'})
+                        ), 
+                        React.createElement(Button, {bsSize: "small", bsStyle: "link", className: 'volume-control-holder', onMouseEnter:  this.showVolume, onMouseLeave:  this.hideVolume}, 
+                            React.createElement("i", {className: 'fa fa-fw fa-volume-up'}), 
+                            React.createElement("div", {className:  this.state.showVolume ? 'volume-control visible' : 'volume-control'}, 
+                                React.createElement("input", {type: 'range', min: '0', max: '100', onChange:  this.setVolume})
+                            )
                         )
                     )
                 ), 
@@ -298,6 +310,19 @@ var Header = React.createClass({displayName: "Header",
     previous: function () {
 
         Instance.player.previous();
+    },
+
+    setVolume: function (e) {
+
+        audio.volume = e.currentTarget.value / 100;
+    },
+
+    showVolume: function () {
+        this.setState({ showVolume: true });
+    },
+
+    hideVolume: function () {
+        this.setState({ showVolume: false });
     }
 });
 
@@ -330,18 +355,20 @@ var PlayingBar = React.createClass({displayName: "PlayingBar",
             playingBar = (
                 React.createElement("div", {className: 'now-playing'}, 
                     React.createElement("div", {className: 'track-info'}, 
-                        React.createElement("span", {className: 'title'}, 
-                             track.title
+                        React.createElement("div", {className: 'track-info-metas'}, 
+                            React.createElement("span", {className: 'title'}, 
+                                 track.title
+                            ), 
+                            " by ", 
+                            React.createElement("span", {className: 'artist'}, 
+                                 track.artist.join(', ') 
+                            ), 
+                            " on ", 
+                            React.createElement("span", {className: 'album'}, 
+                                 track.album
+                            )
                         ), 
-                        " by ", 
-                        React.createElement("span", {className: 'artist'}, 
-                             track.artist.join(', ') 
-                        ), 
-                        " on ", 
-                        React.createElement("span", {className: 'album'}, 
-                             track.album
-                        ), 
-                        " ", 
+
                         React.createElement("span", {className: 'duration'}, 
                              parseDuration(parseInt(this.state.elapsed)), " / ",  parseDuration(parseInt(track.duration)) 
                         )
@@ -419,16 +446,8 @@ var Footer = React.createClass({displayName: "Footer",
                 ), 
                 React.createElement(Col, {sm: 5, className: 'status text-center'}, 
                      this.props.status
-                ), 
-                React.createElement(Col, {sm: 2, smOffset: 2, className: 'footer-controls'}, 
-                    React.createElement("input", {type: 'range', min: '0', max: '100', className: 'volume-control', onChange:  this.setVolume})
                 )
             )
         );
-    },
-
-    setVolume: function (e) {
-
-        audio.volume = e.currentTarget.value / 100;
-    },
+    }
 });
