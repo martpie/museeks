@@ -212,6 +212,12 @@ var Museeks = React.createClass({
 
 var Header = React.createClass({
 
+    getInitialState: function () {
+        return {
+            showVolume : false
+        }
+    },
+
     render: function () {
 
         if (this.props.playerStatus == 'play') {
@@ -242,9 +248,9 @@ var Header = React.createClass({
                         <Button bsSize="small" bsStyle='link' onClick={ this.next }>
                             <i className={'fa fa-fw fa-forward'}></i>
                         </Button>
-                        <Button bsSize='small' bsStyle='link'>
+                        <Button bsSize='small' bsStyle='link' className={'volume-control-holder'} onMouseEnter={ this.showVolume } onMouseLeave={ this.hideVolume }>
                             <i className={'fa fa-fw fa-volume-up'}></i>
-                            <div className="volume-control">
+                            <div className={ this.state.showVolume ? 'volume-control visible' : 'volume-control' }>
                                 <input type={'range'} min={'0'} max={'100'} onChange={ this.setVolume } />
                             </div>
                         </Button>
@@ -310,6 +316,14 @@ var Header = React.createClass({
 
         audio.volume = e.currentTarget.value / 100;
     },
+
+    showVolume: function () {
+        this.setState({ showVolume: true });
+    },
+
+    hideVolume: function () {
+        this.setState({ showVolume: false });
+    }
 });
 
 
