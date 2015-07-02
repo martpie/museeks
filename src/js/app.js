@@ -30,26 +30,10 @@ var fs     = require('fs'),
 |--------------------------------------------------------------------------
 */
 
+// What plays the music
 var audio = new Audio();
-audio.type   = 'audio/mpeg';
-audio.volume = 0.5;
-
-
-
-/*
-|--------------------------------------------------------------------------
-| Functions
-|--------------------------------------------------------------------------
-*/
-
-var parseDuration = function (duration) {
-    var min = parseInt(duration / 60);
-    var sec = duration - 60 * min;
-
-    if(sec < 10) sec = ('0' + sec).slice(-2)
-
-    return min + ':' + sec;
-};
+    audio.type   = 'audio/mpeg';
+    audio.volume = 0.5;
 
 
 
@@ -67,11 +51,11 @@ var pathApp        = process.cwd();
 var pathSrc        = path.join(pathApp, 'src');
 
 var Window = remote.getCurrentWindow();
-Window.maximized = false;
+    Window.maximized = false;
 
 var views = {};
 
-var supportedFormats = ['audio/mp4', 'audio/mpeg'];
+var supportedFormats = ['audio/mp4', 'audio/mpeg', 'audio/wav'];
 
 
 

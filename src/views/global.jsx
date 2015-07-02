@@ -216,13 +216,13 @@ var Header = React.createClass({
 
         if (this.props.playerStatus == 'play') {
             var playButton = (
-                <Button bsSize="small" bsStyle='link' onClick={ this.pause }>
+                <Button bsSize="small" bsStyle='link' className={'play'} onClick={ this.pause }>
                     <i className={'fa fa-fw fa-pause'}></i>
                 </Button>
             );
         } else if (this.props.playerStatus == 'pause') {
             var playButton = (
-                <Button bsSize="small" bsStyle='link' onClick={ this.play }>
+                <Button bsSize="small" bsStyle='link' className={'play'} onClick={ this.play }>
                     <i className={'fa fa-fw fa-play'}></i>
                 </Button>
             );
@@ -241,6 +241,12 @@ var Header = React.createClass({
                         { playButton }
                         <Button bsSize="small" bsStyle='link' onClick={ this.next }>
                             <i className={'fa fa-fw fa-forward'}></i>
+                        </Button>
+                        <Button bsSize='small' bsStyle='link'>
+                            <i className={'fa fa-fw fa-volume-up'}></i>
+                            <div className="volume-control">
+                                <input type={'range'} min={'0'} max={'100'} onChange={ this.setVolume } />
+                            </div>
                         </Button>
                     </ButtonGroup>
                 </Col>
@@ -298,7 +304,12 @@ var Header = React.createClass({
     previous: function () {
 
         Instance.player.previous();
-    }
+    },
+
+    setVolume: function (e) {
+
+        audio.volume = e.currentTarget.value / 100;
+    },
 });
 
 
@@ -330,18 +341,20 @@ var PlayingBar = React.createClass({
             playingBar = (
                 <div className={'now-playing'}>
                     <div className={'track-info'}>
-                        <span className={'title'}>
-                            { track.title }
-                        </span>
-                        &nbsp;by&nbsp;
-                        <span className={'artist'}>
-                            { track.artist.join(', ') }
-                        </span>
-                        &nbsp;on&nbsp;
-                        <span className={'album'}>
-                            { track.album }
-                        </span>
-                        &nbsp;
+                        <div className={'track-info-metas'}>
+                            <span className={'title'}>
+                                { track.title }
+                            </span>
+                            &nbsp;by&nbsp;
+                            <span className={'artist'}>
+                                { track.artist.join(', ') }
+                            </span>
+                            &nbsp;on&nbsp;
+                            <span className={'album'}>
+                                { track.album }
+                            </span>
+                        </div>
+
                         <span className={'duration'}>
                             { parseDuration(parseInt(this.state.elapsed)) } / { parseDuration(parseInt(track.duration)) }
                         </span>
@@ -420,15 +433,7 @@ var Footer = React.createClass({
                 <Col sm={5} className={'status text-center'}>
                     { this.props.status }
                 </Col>
-                <Col sm={2} smOffset={2} className={'footer-controls'}>
-                    <input type={'range'} min={'0'} max={'100'} className={'volume-control'} onChange={ this.setVolume } />
-                </Col>
             </footer>
         );
-    },
-
-    setVolume: function (e) {
-
-        audio.volume = e.currentTarget.value / 100;
-    },
+    }
 });

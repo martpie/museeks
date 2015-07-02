@@ -14,7 +14,7 @@ views.libraryList = React.createClass({displayName: "libraryList",
             content = (
                 React.createElement("div", {className: 'full-message'}, 
                     React.createElement("i", {className: 'fa fa-circle-o-notch fa-spin loading'}), 
-                     'Loadin\' stuff...' 
+                    'Loadin\' stuff...' 
                 )
             );
         }
@@ -36,7 +36,7 @@ views.libraryList = React.createClass({displayName: "libraryList",
 
         return (
             React.createElement("div", {className: 'view view-library-list'}, 
-                 content 
+                content 
             )
         );
     }
@@ -74,7 +74,7 @@ var LibraryListItems = React.createClass({displayName: "LibraryListItems",
             return(
                 React.createElement("tr", {className:  index === selected ? 'track selected' : 'track', key: index, onMouseDown:  self.selectTrack.bind(null, index), onDoubleClick:  Instance.selectAndPlay.bind(null, index) }, 
                     React.createElement("td", {className: 'row-trackPlaying text-center'}, 
-                         playing 
+                        playing 
                     ), 
                     React.createElement("td", {className: 'row-track'}, 
                          track.title
@@ -109,7 +109,7 @@ var LibraryListItems = React.createClass({displayName: "LibraryListItems",
                         )
                     ), 
                     React.createElement("tbody", null, 
-                         list 
+                        list 
                     )
                 )
             )
