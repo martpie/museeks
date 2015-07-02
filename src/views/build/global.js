@@ -212,6 +212,12 @@ var Museeks = React.createClass({displayName: "Museeks",
 
 var Header = React.createClass({displayName: "Header",
 
+    getInitialState: function () {
+        return {
+            showVolume : false
+        }
+    },
+
     render: function () {
 
         if (this.props.playerStatus == 'play') {
@@ -242,9 +248,9 @@ var Header = React.createClass({displayName: "Header",
                         React.createElement(Button, {bsSize: "small", bsStyle: "link", onClick:  this.next}, 
                             React.createElement("i", {className: 'fa fa-fw fa-forward'})
                         ), 
-                        React.createElement(Button, {bsSize: "small", bsStyle: "link"}, 
+                        React.createElement(Button, {bsSize: "small", bsStyle: "link", className: 'volume-control-holder', onMouseEnter:  this.showVolume, onMouseLeave:  this.hideVolume}, 
                             React.createElement("i", {className: 'fa fa-fw fa-volume-up'}), 
-                            React.createElement("div", {className: "volume-control"}, 
+                            React.createElement("div", {className:  this.state.showVolume ? 'volume-control visible' : 'volume-control'}, 
                                 React.createElement("input", {type: 'range', min: '0', max: '100', onChange:  this.setVolume})
                             )
                         )
@@ -310,6 +316,14 @@ var Header = React.createClass({displayName: "Header",
 
         audio.volume = e.currentTarget.value / 100;
     },
+
+    showVolume: function () {
+        this.setState({ showVolume: true });
+    },
+
+    hideVolume: function () {
+        this.setState({ showVolume: false });
+    }
 });
 
 

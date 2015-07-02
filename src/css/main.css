@@ -33,7 +33,7 @@ header {
     -webkit-app-region: drag;
 }
 
-header .player-controls > .btn-group,
+header .player-controls,
 header .now-playing-bar,
 header .search > input,
 header .window-control {
@@ -436,19 +436,41 @@ input[type=range]{
 
 .volume-control {
     position: absolute;
-    border: solid 1px rgb(210, 210, 210);
-    border-width: 0px 1px 1px 1px;
     z-index: 10;
     background-color: rgb(244, 244, 244);
-    right: 10px;
-    top: 30px;
+    top: 0;
+    right: 40px;
     display: none;
+    padding: 5px 12px;
+}
+
+.volume-control.visible {
+    display: block;
 }
 
 .volume-control input[type=range] {
-    width: 20px;
-    height: 100px;
-    -webkit-appearance: slider-vertical
+    width: 100px;
+    height: 20px;
+    background-color: transparent;
+}
+
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance:none;
+    height:12px;
+    width:12px;
+    border-radius:6px;
+    background-color: #FFF;
+    border: 1px solid #AAA;
+    position:relative;
+    top:-5px;
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+    -webkit-appearance:none;
+    background: #BBB;
+    border: solid 1px #999;
+    border-radius: 5px;
+    height: 5px;
 }
 
 .now-playing {
