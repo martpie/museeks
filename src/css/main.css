@@ -1,3 +1,9 @@
+/*
+|--------------------------------------------------------------------------
+| General
+|--------------------------------------------------------------------------
+*/
+
 html, body {
     font-size: 12px;
     user-select: none;
@@ -11,6 +17,18 @@ body {
     border: 1px solid rgb(182, 182, 182);
 }
 
+* {
+    -webkit-user-drag: none;
+}
+
+
+
+/*
+|--------------------------------------------------------------------------
+| Drag
+|--------------------------------------------------------------------------
+*/
+
 header {
     -webkit-app-region: drag;
 }
@@ -22,18 +40,13 @@ header .window-control {
     -webkit-app-region: no-drag;
 }
 
-.btn.active.focus,
-.btn.active:focus,
-.btn.focus,
-.btn:active.focus,
-.btn:active:focus,
-.btn:focus {
-    outline: none;
-}
 
-* {
-    -webkit-user-drag: none;
-}
+
+/*
+|--------------------------------------------------------------------------
+| Fonts
+|--------------------------------------------------------------------------
+*/
 
 @font-face {
     font-family: OpenSans;
@@ -51,6 +64,46 @@ header .window-control {
     src: url('../components/open-sans-fontface/fonts/Light/OpenSans-Light.ttf');
     font-weight: 100;
 }
+
+
+
+/*
+|--------------------------------------------------------------------------
+| Bootstrap Modification
+|--------------------------------------------------------------------------
+*/
+
+.btn.active.focus,
+.btn.active:focus,
+.btn.focus,
+.btn:active.focus,
+.btn:active:focus,
+.btn:focus {
+    outline: none;
+}
+
+.form-control:focus {
+    border-color: #AAAAAA;
+    box-shadow: none;
+}
+
+
+
+
+
+.track-info-metas {
+    display: inline-block;
+    width: 300px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    vertical-align: middle;
+    width: 380px;
+}
+
+
+
+
 
 .win-controls {
     float: left;
@@ -341,7 +394,7 @@ header .progress-bar {
     transition: width .0s ease;
 }
 
-header .player-controls .btn-group {
+header .btn-group {
     display: inline-block;
     vertical-align: middle;
 }
@@ -350,21 +403,21 @@ header .player-controls {
     padding: 10px;
 }
 
-header .player-controls .btn {
+header .btn {
     padding-top: 4px;
     padding-bottom: 4px;
     color: #555;
     font-size: 14px;
 }
 
-header .player-controls .btn:nth-child(2) {
+header .player-controls .btn.play {
     font-size: 20px;
     padding-top: 0;
     padding-bottom: 0;
 }
 
-header .player-controls .btn.active,
-header .player-controls .btn:active {
+header .btn.active,
+header .btn:active {
     box-shadow: none;
 }
 
@@ -381,22 +434,21 @@ input[type=range]{
     padding: 13px;
 }
 
-input[type=range].volume-control::-webkit-slider-thumb {
-    -webkit-appearance:none;
-    height:12px;
-    width:12px;
-    border-radius:6px;
-    background-color: #FFF;
-    border: 1px solid #AAA;
-    position:relative;
-    top:-5px;
+.volume-control {
+    position: absolute;
+    border: solid 1px rgb(210, 210, 210);
+    border-width: 0px 1px 1px 1px;
+    z-index: 10;
+    background-color: rgb(244, 244, 244);
+    right: 10px;
+    top: 30px;
+    display: none;
 }
 
-input[type=range].volume-control::-webkit-slider-runnable-track {
-    background: #BBB;
-    border: solid 1px #999;
-    border-radius: 5px;
-    height: 5px;
+.volume-control input[type=range] {
+    width: 20px;
+    height: 100px;
+    -webkit-appearance: slider-vertical
 }
 
 .now-playing {
