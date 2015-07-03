@@ -35,7 +35,7 @@ views.libraryList = React.createClass({
         else {
             content = (
                 <div>
-                    <LibraryListItems tracks={ this.props.library } trackPlaying={ this.props.trackPlaying } search={ this.props.search } />
+                    <LibraryListItems tracks={ this.props.tracks } trackPlaying={ this.props.trackPlaying } />
                 </div>
             );
         }
