@@ -253,8 +253,10 @@ header .btn {
 }
 
 header .btn.active,
-header .btn:active {
+header .btn:active,
+header .btn:focus {
     box-shadow: none;
+    color: #555;
 }
 
 
