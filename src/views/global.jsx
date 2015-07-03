@@ -49,7 +49,11 @@ var Museeks = React.createClass({
                         </ReactCSSTransitionGroup>
                     </div>
                     <Row className={'content'}>
-                        <this.state.view library={ this.state.tracks } trackPlaying={ this.state.trackPlaying } />
+                        <this.state.view
+                            tracks={ this.state.tracks }
+                            library={ this.state.library }
+                            trackPlaying={ this.state.trackPlaying }
+                        />
                     </Row>
                 </div>
                 <Footer status={ status } />
@@ -71,9 +75,8 @@ var Museeks = React.createClass({
             else {
                 self.setState({
                     library :  tracks,
+                    tracks  :  tracks
                 });
-
-                self.filterSearch();
             }
         });
     },

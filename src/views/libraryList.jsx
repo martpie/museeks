@@ -13,8 +13,7 @@ views.libraryList = React.createClass({
         if(this.props.library === null) {
             content = (
                 <div className={'full-message'}>
-                    <i className={'fa fa-circle-o-notch fa-spin loading'}></i>
-                    { 'Loadin\' stuff...' }
+                    <p>{ "Loadin\' stuff..." }</p>
                 </div>
             );
         }
@@ -23,6 +22,13 @@ views.libraryList = React.createClass({
                 <div className={'full-message'}>
                     <p>Too bad, there is no music in your library =(</p>
                     <p className='sub-message'>you may need to refresh your library or add folders into it.</p>
+                </div>
+            );
+        }
+        else if (this.props.tracks.length == 0) {
+            content = (
+                <div className={'full-message'}>
+                    <p>Your search returned no results, sorry :/</p>
                 </div>
             );
         }

@@ -49,7 +49,11 @@ var Museeks = React.createClass({displayName: "Museeks",
                         )
                     ), 
                     React.createElement(Row, {className: 'content'}, 
-                        React.createElement(this.state.view, {library:  this.state.tracks, trackPlaying:  this.state.trackPlaying})
+                        React.createElement(this.state.view, {
+                            tracks:  this.state.tracks, 
+                            library:  this.state.library, 
+                            trackPlaying:  this.state.trackPlaying}
+                        )
                     )
                 ), 
                 React.createElement(Footer, {status: status })
@@ -71,9 +75,8 @@ var Museeks = React.createClass({displayName: "Museeks",
             else {
                 self.setState({
                     library :  tracks,
+                    tracks  :  tracks
                 });
-
-                self.filterSearch();
             }
         });
     },
