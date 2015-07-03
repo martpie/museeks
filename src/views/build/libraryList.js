@@ -13,8 +13,7 @@ views.libraryList = React.createClass({displayName: "libraryList",
         if(this.props.library === null) {
             content = (
                 React.createElement("div", {className: 'full-message'}, 
-                    React.createElement("i", {className: 'fa fa-circle-o-notch fa-spin loading'}), 
-                    'Loadin\' stuff...' 
+                    React.createElement("p", null, "Loadin\' stuff..." )
                 )
             );
         }
@@ -23,6 +22,13 @@ views.libraryList = React.createClass({displayName: "libraryList",
                 React.createElement("div", {className: 'full-message'}, 
                     React.createElement("p", null, "Too bad, there is no music in your library =("), 
                     React.createElement("p", {className: "sub-message"}, "you may need to refresh your library or add folders into it.")
+                )
+            );
+        }
+        else if (this.props.tracks.length == 0) {
+            content = (
+                React.createElement("div", {className: 'full-message'}, 
+                    React.createElement("p", null, "Your search returned no results, sorry :/")
                 )
             );
         }
