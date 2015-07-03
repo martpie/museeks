@@ -35,7 +35,7 @@ views.libraryList = React.createClass({displayName: "libraryList",
         else {
             content = (
                 React.createElement("div", null, 
-                    React.createElement(LibraryListItems, {tracks:  this.props.library, trackPlaying:  this.props.trackPlaying, search:  this.props.search})
+                    React.createElement(LibraryListItems, {tracks:  this.props.tracks, trackPlaying:  this.props.trackPlaying})
                 )
             );
         }
