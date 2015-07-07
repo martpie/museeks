@@ -81,8 +81,8 @@ var MusicFoldersList = React.createClass({displayName: "MusicFoldersList",
         var list = this.state.musicFolders.map(function(folder, i) {
             return(
                 React.createElement("li", {key: i}, 
-                    React.createElement("i", {onClick:  this.state.refreshingLibrary ? void(0) : this.removeFolder, "data-target":  i, className:  this.state.refreshingLibrary ? 'fa fa-close delete-libray-folder disabled' : 'fa fa-close delete-libray-folder'}), 
-                     folder 
+                    React.createElement("i", {onClick:  this.state.refreshingLibrary ? void(0) : this.removeFolder, "data-target": i, className:  this.state.refreshingLibrary ? 'fa fa-close delete-libray-folder disabled' : 'fa fa-close delete-libray-folder'}), 
+                    folder 
                 )
             );
         }.bind(this));
@@ -94,10 +94,10 @@ var MusicFoldersList = React.createClass({displayName: "MusicFoldersList",
                 React.createElement("p", null, "You currently have ",  this.state.musicFolders.length, " folder",  this.state.musicFolders.length < 2 ? '' : 's', " folders in your library."), 
 
                 React.createElement("ul", {className: "musicfolders-list"}, 
-                     list 
+                    list 
                 ), 
 
-                 buttonsGroup, 
+                buttonsGroup, 
 
                 React.createElement("hr", null)
             )

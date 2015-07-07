@@ -204,13 +204,19 @@ header .now-playing .duration {
 
 header .track-info-metas {
     display: inline-block;
-    width: 300px;
+    max-width: 80%;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
     vertical-align: middle;
     width: 380px;
 }
+
+
+/*header .now-playing-bar {
+    max-width: 400px;
+    margin: auto;
+}*/
 
 header .progress {
     height: 5px;

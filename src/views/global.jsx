@@ -263,7 +263,7 @@ var Header = React.createClass({
                     <PlayingBar trackPlaying={ this.props.trackPlaying } />
                 </Col>
                 <Col sm={1} className={'playlist-controls'}>
-                    <Button bsSize='small' bsStyle='link'>
+                    <Button disabled bsSize='small' bsStyle='link'>
                         <i className={'fa fa-fw fa-list'}></i>
                     </Button>
                 </Col>
