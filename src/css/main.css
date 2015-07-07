@@ -240,6 +240,10 @@ header .player-controls .btn.play {
     padding-bottom: 0;
 }
 
+header .playlist-controls {
+    padding: 9px;
+}
+
 header .btn-group {
     display: inline-block;
     vertical-align: middle;
@@ -366,7 +370,7 @@ footer .status {
 }
 
 .main-content {
-    padding-bottom: 86px;
+    padding-bottom: 84px;
 }
 
 .content {
