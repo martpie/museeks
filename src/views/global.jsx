@@ -262,7 +262,12 @@ var Header = React.createClass({
                 <Col sm={6} className={'text-center'}>
                     <PlayingBar trackPlaying={ this.props.trackPlaying } />
                 </Col>
-                <Col sm={2} smOffset={1} className={'search'}>
+                <Col sm={1} className={'playlist-controls'}>
+                    <Button bsSize='small' bsStyle='link'>
+                        <i className={'fa fa-fw fa-list'}></i>
+                    </Button>
+                </Col>
+                <Col sm={2} className={'search'}>
                     <input type={'text'} className={'form-control input-sm'} placeholder={'search'} onChange={ this.search } />
                 </Col>
             </header>
