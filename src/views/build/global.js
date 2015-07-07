@@ -32,7 +32,7 @@ var Museeks = React.createClass({displayName: "Museeks",
 
         var notificationsBlock = Object.keys(notifications).reverse().map(function(id, i) {
             return (
-                React.createElement(Alert, {key:  id, bsStyle:  notifications[id].type, className:  'notification' }, 
+                React.createElement(Alert, {key: id, bsStyle:  notifications[id].type, className: 'notification' }, 
                      notifications[id].content
                 )
             );
@@ -45,7 +45,7 @@ var Museeks = React.createClass({displayName: "Museeks",
                 React.createElement("div", {className: 'main-content'}, 
                     React.createElement("div", {className: 'alerts-container'}, 
                         React.createElement(ReactCSSTransitionGroup, {transitionName: "notification"}, 
-                             notificationsBlock 
+                            notificationsBlock 
                         )
                     ), 
                     React.createElement(Row, {className: 'content'}, 
@@ -56,7 +56,7 @@ var Museeks = React.createClass({displayName: "Museeks",
                         )
                     )
                 ), 
-                React.createElement(Footer, {status:  status })
+                React.createElement(Footer, {status: status })
             )
         );
     },
@@ -247,7 +247,7 @@ var Header = React.createClass({displayName: "Header",
                         React.createElement(Button, {bsSize: "small", bsStyle: "link", onClick:  this.previous}, 
                             React.createElement("i", {className: 'fa fa-fw fa-backward'})
                         ), 
-                         playButton, 
+                        playButton, 
                         React.createElement(Button, {bsSize: "small", bsStyle: "link", onClick:  this.next}, 
                             React.createElement("i", {className: 'fa fa-fw fa-forward'})
                         ), 
@@ -263,7 +263,7 @@ var Header = React.createClass({displayName: "Header",
                     React.createElement(PlayingBar, {trackPlaying:  this.props.trackPlaying})
                 ), 
                 React.createElement(Col, {sm: 1, className: 'playlist-controls'}, 
-                    React.createElement(Button, {bsSize: "small", bsStyle: "link"}, 
+                    React.createElement(Button, {disabled: true, bsSize: "small", bsStyle: "link"}, 
                         React.createElement("i", {className: 'fa fa-fw fa-list'})
                     )
                 ), 
