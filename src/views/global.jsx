@@ -12,12 +12,13 @@ var Museeks = React.createClass({
 
     getInitialState: function () {
         return {
-            library       :  null,
-            tracks        :  null,
-            trackPlaying  :  null,
-            view          :  views.libraryList,
-            playerStatus  : 'pause',
-            notifications :  {}
+            library       :  null, // All tracks
+            tracks        :  null, // All tracks shown on the view
+            playlist      :  [],   // Tracks to be played
+            trackPlaying  :  null, // The track actually playing
+            view          :  views.libraryList, // The actual view
+            playerStatus  : 'pause', // Player status
+            notifications :  {} // The array of notifications
         }
     },
 
@@ -41,7 +42,7 @@ var Museeks = React.createClass({
 
         return (
             <div className={'main'}>
-                <Header playerStatus={ this.state.playerStatus } trackPlaying={ this.state.trackPlaying } />
+                <Header playerStatus={ this.state.playerStatus } playlist={ this.state.playlist } trackPlaying={ this.state.trackPlaying } />
                 <div className={'main-content'}>
                     <div className={'alerts-container'}>
                         <ReactCSSTransitionGroup transitionName='notification'>
@@ -70,6 +71,7 @@ var Museeks = React.createClass({
 
         var self = this;
 
+        // Sort tracks by Artist -> year -> album -> disk -> track
         db.find({}).sort({ lArtist: 1, year: 1, album: 1, disk: 1, track: 1 }).exec(function (err, tracks) {
             if (err) throw err;
             else {
@@ -113,14 +115,23 @@ var Museeks = React.createClass({
 
     selectAndPlay: function(id) {
 
-        var tracks = this.state.tracks;
+        var tracks   = this.state.tracks;
+        var playlist = [];
+
+        for (var i = id + 1; i < tracks.length; i++) {
+            playlist.push(tracks[i]);
+        }
 
         audio.src = 'file://' + tracks[id].path;
         audio.play();
 
         audio.addEventListener('ended', Instance.player.next);
 
-        this.setState({ trackPlaying: id, playerStatus: 'play' });
+        this.setState({
+            trackPlaying :  id,
+            playerStatus : 'play',
+            playlist     :  playlist
+        });
     },
 
     player: {
@@ -150,13 +161,19 @@ var Museeks = React.createClass({
 
             var newTrackPlaying = Instance.state.trackPlaying + 1;
             var newTrack        = Instance.state.tracks[newTrackPlaying];
+            var playlist        = Instance.state.playlist;
+
+            playlist.shift();
 
             if (newTrack !== undefined) {
 
                 audio.src = newTrack.path;
                 audio.play();
 
-                Instance.setState({ trackPlaying: newTrackPlaying });
+                Instance.setState({
+                    trackPlaying : newTrackPlaying,
+                    playlist     : playlist
+                });
 
             } else {
 
@@ -217,7 +234,8 @@ var Header = React.createClass({
 
     getInitialState: function () {
         return {
-            showVolume : false
+            showVolume :   false,
+            showPlaylist : false
         }
     },
 
@@ -263,8 +281,9 @@ var Header = React.createClass({
                     <PlayingBar trackPlaying={ this.props.trackPlaying } />
                 </Col>
                 <Col sm={1} className={'playlist-controls'}>
-                    <Button bsSize='small' bsStyle='link'>
+                    <Button bsSize='small' bsStyle='link' className={'show-playlist'} onClick={ this.togglePlaylist }>
                         <i className={'fa fa-fw fa-list'}></i>
+                        <PlayList showPlaylist={ this.state.showPlaylist } playlist={ this.props.playlist } />
                     </Button>
                 </Col>
                 <Col sm={2} className={'search'}>
@@ -296,32 +315,26 @@ var Header = React.createClass({
    },
 
     search: function (e) {
-
         Instance.filterSearch(e.currentTarget.value);
     },
 
     play: function () {
-
         Instance.player.play();
     },
 
     pause: function () {
-
         Instance.player.pause();
     },
 
     next: function () {
-
         Instance.player.next();
     },
 
     previous: function () {
-
         Instance.player.previous();
     },
 
     setVolume: function (e) {
-
         audio.volume = e.currentTarget.value / 100;
     },
 
@@ -331,9 +344,87 @@ var Header = React.createClass({
 
     hideVolume: function () {
         this.setState({ showVolume: false });
+    },
+
+    togglePlaylist: function () {
+        if (this.state.showPlaylist)
+            this.setState({ showPlaylist: false });
+        else
+            this.setState({ showPlaylist: true });
     }
 });
 
+
+
+/*
+|--------------------------------------------------------------------------
+| Header - PlayList
+|--------------------------------------------------------------------------
+*/
+
+var PlayList = React.createClass({
+
+    getInitialState: function () {
+
+        return {};
+    },
+
+    render: function () {
+
+        var playlist = this.props.playlist;
+
+        if(playlist.length == 0) {
+            return playlistContent = (
+                <div className={ this.props.showPlaylist ? 'playlist visible text-left' : 'playlist text-left' }>
+                    <div className={'empty-playlist text-center'}>
+                        queue list is empty
+                    </div>
+                </div>
+            );
+        } else {
+
+            playlist = playlist.slice(0, 20); // Get the 20 next tracks displayed
+
+            var hr = <hr />;
+
+            var playlistContent = playlist.map(function (track, index) {
+
+                if(index == playlist.length - 1) hr = <div></div>;
+
+                return (
+                    <div key={index} className={'track'}>
+                        <div className={'title'}>
+                            { track.title }
+                        </div>
+                        <div className={'other-infos'}>
+                            <span className={'artist'}>{ track.artist }</span> - <span className={'album'}>{ track.album }</span>
+                        </div>
+                        { hr }
+                    </div>
+                );
+            });
+        }
+
+        return (
+            <div className={ this.props.showPlaylist ? 'playlist visible text-left' : 'playlist text-left' }>
+                <div className={'playlist-header'}>
+                    next tracks
+                </div>
+                <div className={'playlist-body'}>
+                    { playlistContent }
+                </div>
+            </div>
+        );
+    }
+});
+
+
+
+/*
+|--------------------------------------------------------------------------
+| Header - PlayingBar
+|--------------------------------------------------------------------------
+*/
 
 
 var PlayingBar = React.createClass({
@@ -342,7 +433,7 @@ var PlayingBar = React.createClass({
 
         return {
             elapsed: 0
-        }
+        };
     },
 
     render: function () {

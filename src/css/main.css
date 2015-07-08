@@ -78,7 +78,8 @@ header {
 header .player-controls,
 header .now-playing-bar,
 header .search > input,
-header .window-control {
+header .window-control,
+header .playlist-controls {
     -webkit-app-region: no-drag;
 }
 
@@ -242,6 +243,67 @@ header .player-controls .btn.play {
 
 header .playlist-controls {
     padding: 9px;
+    position: relative;
+}
+
+header .playlist-controls .playlist {
+    display: none;
+    position: absolute;
+    width: 300px;
+    background: white;
+    border: solid 1px rgb(210, 210, 210);
+    text-overflow: ellipsis;
+    overflow-x: hidden;
+    font-size: 12px;
+    z-index: 10;
+    color: grey;
+    left: -230px;
+    top: 45px;
+}
+
+header .playlist-controls .playlist.visible {
+    display: block;
+}
+
+header .playlist-controls .playlist-header {
+    padding: 5px 10px;
+    background-color: rgb(244, 244, 244);
+}
+
+header .playlist-controls .playlist-body {
+    max-height: 250px;
+    overflow: auto;
+}
+
+header .playlist-controls .empty-playlist {
+    padding: 20px;
+    color: lightgrey;
+}
+
+header .playlist-controls .playlist-body .track {
+    padding-bottom: 5px;
+}
+
+header .playlist-controls .playlist-body .track:first-child {
+    padding-top: 5px;
+}
+
+header .playlist-controls .playlist-body .track .title {
+    font-weight: bold;
+}
+
+header .playlist-controls .playlist-body .track .title,
+header .playlist-controls .playlist-body .track .other-infos {
+    padding: 0 10px;
+    color: rgb(51, 51, 51);
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+header .playlist-controls .playlist-body .track hr {
+    width: 80%;
+    margin-top: 5px;
+    margin-bottom: 0;
 }
 
 header .btn-group {

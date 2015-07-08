@@ -28,7 +28,7 @@ Please consider **this app is under development, just install it for fun**, I'm 
 ##### general
 
 - [ ] refactor once it's working
-- [ ] use es6 classes instead of React.createClass()
+- [ ] ~~use es6 classes instead of React.createClass()~~
 
 ##### settings view
 - [ ] freeze settings list
@@ -45,7 +45,7 @@ Please consider **this app is under development, just install it for fun**, I'm 
 - [x] make it works ftw !
 - [x] auto-read next track
 - [x] next/previous button
-- [ ] list next tracks
+- [x] list next tracks
 - [ ] manage next tracks
 - [ ] random
 - [ ] loop
