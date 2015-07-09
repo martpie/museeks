@@ -12,13 +12,13 @@ var Museeks = React.createClass({
 
     getInitialState: function () {
         return {
-            library       :  null, // All tracks
-            tracks        :  null, // All tracks shown on the view
-            playlist      :  [],   // Tracks to be played
-            trackPlaying  :  null, // The track actually playing
-            view          :  views.libraryList, // The actual view
-            playerStatus  : 'pause', // Player status
-            notifications :  {} // The array of notifications
+            library        :  null, // All tracks
+            tracks         :  null, // All tracks shown on the view
+            playlist       :  [],   // Tracks to be played
+            playlistCursor :  null, // The cursor of the playlist
+            view           :  views.libraryList, // The actual view
+            playerStatus   : 'pause', // Player status
+            notifications  :  {} // The array of notifications
         }
     },
 
@@ -39,10 +39,11 @@ var Museeks = React.createClass({
             );
         });
 
+        var trackPlayingID = (this.state.playlist.length > 0 && this.state.playlistCursor !== null) ? this.state.playlist[this.state.playlistCursor]._id : null;
 
         return (
             <div className={'main'}>
-                <Header playerStatus={ this.state.playerStatus } playlist={ this.state.playlist } trackPlaying={ this.state.trackPlaying } />
+                <Header playerStatus={ this.state.playerStatus } playlist={ this.state.playlist } playlistCursor={ this.state.playlistCursor } />
                 <div className={'main-content'}>
                     <div className={'alerts-container'}>
                         <ReactCSSTransitionGroup transitionName='notification'>
@@ -53,7 +54,7 @@ var Museeks = React.createClass({
                         <this.state.view
                             tracks={ this.state.tracks }
                             library={ this.state.library }
-                            trackPlaying={ this.state.trackPlaying }
+                            trackPlayingID={ trackPlayingID }
                         />
                     </Row>
                 </div>
@@ -115,22 +116,18 @@ var Museeks = React.createClass({
 
     selectAndPlay: function(id) {
 
-        var tracks   = this.state.tracks;
-        var playlist = [];
+        var playlist = this.state.tracks;
+        var playlistCursor = id;
 
-        for (var i = id + 1; i < tracks.length; i++) {
-            playlist.push(tracks[i]);
-        }
-
-        audio.src = 'file://' + tracks[id].path;
+        audio.src = 'file://' + playlist[id].path;
         audio.play();
 
         audio.addEventListener('ended', Instance.player.next);
 
         this.setState({
-            trackPlaying :  id,
-            playerStatus : 'play',
-            playlist     :  playlist
+            playerStatus   : 'play',
+            playlist       :  playlist,
+            playlistCursor :  id
         });
     },
 
@@ -138,9 +135,9 @@ var Museeks = React.createClass({
 
         play: function () {
 
-            if(Instance.state.trackPlaying == null) {
+            if(Instance.state.playlist == null) {
 
-                // to-do
+                // nothing here
 
             } else {
 
@@ -159,53 +156,49 @@ var Museeks = React.createClass({
 
             if(e !== undefined) e.target.removeEventListener(e.type);
 
-            var newTrackPlaying = Instance.state.trackPlaying + 1;
-            var newTrack        = Instance.state.tracks[newTrackPlaying];
-            var playlist        = Instance.state.playlist;
+            var playlist           = Instance.state.playlist;
+            var newPlaylistCursor  = Instance.state.playlistCursor + 1;
 
-            playlist.shift();
+            if (playlist[newPlaylistCursor] !== undefined) {
 
-            if (newTrack !== undefined) {
-
-                audio.src = newTrack.path;
+                audio.src = playlist[newPlaylistCursor].path;
                 audio.play();
 
                 Instance.setState({
-                    trackPlaying : newTrackPlaying,
-                    playlist     : playlist
+                    playlistCursor : newPlaylistCursor
                 });
 
             } else {
 
                 audio.pause();
                 audio.src = '';
-                Instance.setState({ trackPlaying: null });
+                Instance.setState({ playlist : null });
             }
         },
 
-        previous: function () {
+        previous: function () { // TOFIX
 
             if (audio.currentTime < 5) {
 
-                var newTrackPlaying = Instance.state.trackPlaying - 1;
+                var newPlaylistCursor = Instance.state.playlistCursor - 1;
 
             } else {
 
-                var newTrackPlaying = Instance.state.trackPlaying;
+                var newPlaylistCursor = Instance.state.playlistCursor
             }
 
-            var newTrack = Instance.state.tracks[newTrackPlaying];
+            var newTrack = Instance.state.playlist[newPlaylistCursor];
 
             if (newTrack !== undefined) {
 
                 audio.src = newTrack.path;
                 audio.play();
 
-                Instance.setState({ trackPlaying: newTrackPlaying });
+                Instance.setState({ playlistCursor : newPlaylistCursor });
 
             } else {
 
-                Instance.setState({ trackPlaying: null });
+                Instance.setState({ playlist : null });
             }
         },
 
@@ -278,13 +271,13 @@ var Header = React.createClass({
                     </ButtonGroup>
                 </Col>
                 <Col sm={6} className={'text-center'}>
-                    <PlayingBar trackPlaying={ this.props.trackPlaying } />
+                    <PlayingBar playlist={ this.props.playlist } playlistCursor={ this.props.playlistCursor } />
                 </Col>
                 <Col sm={1} className={'playlist-controls'}>
                     <Button bsSize='small' bsStyle='link' className={'show-playlist'} onClick={ this.togglePlaylist }>
                         <i className={'fa fa-fw fa-list'}></i>
-                        <PlayList showPlaylist={ this.state.showPlaylist } playlist={ this.props.playlist } />
                     </Button>
+                    <PlayList showPlaylist={ this.state.showPlaylist } playlist={ this.props.playlist } playlistCursor={ this.props.playlistCursor } />
                 </Col>
                 <Col sm={2} className={'search'}>
                     <input type={'text'} className={'form-control input-sm'} placeholder={'search'} onChange={ this.search } />
@@ -371,19 +364,20 @@ var PlayList = React.createClass({
 
     render: function () {
 
-        var playlist = this.props.playlist;
+        var playlist       = this.props.playlist;
+        var playlistCursor = this.props.playlistCursor;
 
         if(playlist.length == 0) {
             return playlistContent = (
                 <div className={ this.props.showPlaylist ? 'playlist visible text-left' : 'playlist text-left' }>
                     <div className={'empty-playlist text-center'}>
-                        queue list is empty
+                        queue is empty
                     </div>
                 </div>
             );
         } else {
 
-            playlist = playlist.slice(0, 20); // Get the 20 next tracks displayed
+            playlist = playlist.slice(playlistCursor + 1, playlistCursor + 21); // Get the 20 next tracks displayed
 
             var hr = <hr />;
 
@@ -438,42 +432,42 @@ var PlayingBar = React.createClass({
 
     render: function () {
 
-        var trackPlaying = this.props.trackPlaying;
+        var playlist       = this.props.playlist;
+        var playlistCursor = this.props.playlistCursor;
+        var trackPlaying   = playlist[playlistCursor];
         var playingBar;
 
-        if(trackPlaying === null) {
+        if(playlistCursor === null) {
 
             playingBar = <div></div>;
 
         } else {
 
-            var track = Instance.state.tracks[trackPlaying];
-
-            if(this.state.elapsed < track.duration && audio.paused === false) var elapsedPercent = this.state.elapsed * 100 / track.duration;
+            if(this.state.elapsed < trackPlaying.duration && audio.paused === false) var elapsedPercent = this.state.elapsed * 100 / trackPlaying.duration;
 
             playingBar = (
                 <div className={'now-playing'}>
                     <div className={'track-info'}>
                         <div className={'track-info-metas'}>
                             <span className={'title'}>
-                                { track.title }
+                                { trackPlaying.title }
                             </span>
                             &nbsp;by&nbsp;
                             <span className={'artist'}>
-                                { track.artist.join(', ') }
+                                { trackPlaying.artist.join(', ') }
                             </span>
                             &nbsp;on&nbsp;
                             <span className={'album'}>
-                                { track.album }
+                                { trackPlaying.album }
                             </span>
                         </div>
 
                         <span className={'duration'}>
-                            { parseDuration(parseInt(this.state.elapsed)) } / { parseDuration(parseInt(track.duration)) }
+                            { parseDuration(parseInt(this.state.elapsed)) } / { parseDuration(parseInt(trackPlaying.duration)) }
                         </span>
                     </div>
                     <div className={'now-playing-bar'}>
-                        <ProgressBar now={elapsedPercent} onMouseDown={ this.jumpAudioTo } />
+                        <ProgressBar now={ elapsedPercent } onMouseDown={ this.jumpAudioTo } />
                     </div>
                 </div>
             );
@@ -499,10 +493,14 @@ var PlayingBar = React.createClass({
 
     jumpAudioTo: function(e) {
 
+        var playlist       = this.props.playlist;
+        var playlistCursor = this.props.playlistCursor;
+        var trackPlaying   = playlist[playlistCursor];
+
         var bar = document.querySelector('.now-playing-bar');
         var percent = ((e.pageX - (bar.offsetLeft + bar.offsetParent.offsetLeft)) / bar.offsetWidth) * 100;
 
-        var jumpTo = (percent * Instance.state.tracks[Instance.state.trackPlaying].duration) / 100;
+        var jumpTo = (percent * trackPlaying.duration) / 100;
 
         audio.currentTime = jumpTo;
     }

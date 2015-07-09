@@ -35,7 +35,7 @@ views.libraryList = React.createClass({
         else {
             content = (
                 <div>
-                    <LibraryListItems tracks={ this.props.tracks } trackPlaying={ this.props.trackPlaying } />
+                    <LibraryListItems tracks={ this.props.tracks } trackPlayingID={ this.props.trackPlayingID } />
                 </div>
             );
         }
@@ -66,16 +66,18 @@ var LibraryListItems = React.createClass({
 
     render: function() {
 
-        var self         = this;
-        var selected     = this.state.selected;
-        var tracks       = this.props.tracks;
-        var trackPlaying = this.props.trackPlaying;
-        var playing      = null;
+        var self           = this;
+        var selected       = this.state.selected;
+        var tracks         = this.props.tracks;
+        var trackPlayingID = this.props.trackPlayingID;
+        var playing        = null;
 
         var list = tracks.map(function(track, index) {
 
-            if(index == trackPlaying) var playing = (<i className={'fa fa-fw fa-volume-up'}></i>);
-            if(index == trackPlaying && audio.paused) var playing = (<i className={'fa fa-fw fa-volume-off'}></i>);
+            if(trackPlayingID != null) {
+                if(track._id == trackPlayingID) var playing = (<i className={'fa fa-fw fa-volume-up'}></i>);
+                if(track._id == trackPlayingID && audio.paused) var playing = (<i className={'fa fa-fw fa-volume-off'}></i>);
+            }
 
             return(
                 <tr className={ index === selected ? 'track selected' : 'track' } key={index} onMouseDown={ self.selectTrack.bind(null, index) } onDoubleClick={ Instance.selectAndPlay.bind(null, index) }>
