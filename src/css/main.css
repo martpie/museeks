@@ -213,12 +213,6 @@ header .track-info-metas {
     width: 380px;
 }
 
-
-/*header .now-playing-bar {
-    max-width: 400px;
-    margin: auto;
-}*/
-
 header .progress {
     height: 5px;
     margin-bottom: 0;

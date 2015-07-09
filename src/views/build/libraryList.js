@@ -35,7 +35,7 @@ views.libraryList = React.createClass({displayName: "libraryList",
         else {
             content = (
                 React.createElement("div", null, 
-                    React.createElement(LibraryListItems, {tracks:  this.props.tracks, trackPlaying:  this.props.trackPlaying})
+                    React.createElement(LibraryListItems, {tracks:  this.props.tracks, trackPlayingID:  this.props.trackPlayingID})
                 )
             );
         }
@@ -66,16 +66,18 @@ var LibraryListItems = React.createClass({displayName: "LibraryListItems",
 
     render: function() {
 
-        var self         = this;
-        var selected     = this.state.selected;
-        var tracks       = this.props.tracks;
-        var trackPlaying = this.props.trackPlaying;
-        var playing      = null;
+        var self           = this;
+        var selected       = this.state.selected;
+        var tracks         = this.props.tracks;
+        var trackPlayingID = this.props.trackPlayingID;
+        var playing        = null;
 
         var list = tracks.map(function(track, index) {
 
-            if(index == trackPlaying) var playing = (React.createElement("i", {className: 'fa fa-fw fa-volume-up'}));
-            if(index == trackPlaying && audio.paused) var playing = (React.createElement("i", {className: 'fa fa-fw fa-volume-off'}));
+            if(trackPlayingID != null) {
+                if(track._id == trackPlayingID) var playing = (React.createElement("i", {className: 'fa fa-fw fa-volume-up'}));
+                if(track._id == trackPlayingID && audio.paused) var playing = (React.createElement("i", {className: 'fa fa-fw fa-volume-off'}));
+            }
 
             return(
                 React.createElement("tr", {className:  index === selected ? 'track selected' : 'track', key: index, onMouseDown:  self.selectTrack.bind(null, index), onDoubleClick:  Instance.selectAndPlay.bind(null, index) }, 
