@@ -172,7 +172,9 @@ var Museeks = React.createClass({displayName: "Museeks",
 
                 audio.pause();
                 audio.src = '';
-                Instance.setState({ playlist : null });
+                Instance.setState({
+                    playlist       : [],
+                    playlistCursor : null});
             }
         },
 
@@ -271,13 +273,20 @@ var Header = React.createClass({displayName: "Header",
                     )
                 ), 
                 React.createElement(Col, {sm: 6, className: 'text-center'}, 
-                    React.createElement(PlayingBar, {playlist:  this.props.playlist, playlistCursor:  this.props.playlistCursor})
+                    React.createElement(PlayingBar, {
+                        playlist:  this.props.playlist, 
+                        playlistCursor:  this.props.playlistCursor}
+                    )
                 ), 
                 React.createElement(Col, {sm: 1, className: 'playlist-controls'}, 
                     React.createElement(Button, {bsSize: "small", bsStyle: "link", className: 'show-playlist', onClick:  this.togglePlaylist}, 
                         React.createElement("i", {className: 'fa fa-fw fa-list'})
                     ), 
-                    React.createElement(PlayList, {showPlaylist:  this.state.showPlaylist, playlist:  this.props.playlist, playlistCursor:  this.props.playlistCursor})
+                    React.createElement(PlayList, {
+                        showPlaylist:  this.state.showPlaylist, 
+                        playlist:  this.props.playlist, 
+                        playlistCursor:  this.props.playlistCursor}
+                    )
                 ), 
                 React.createElement(Col, {sm: 2, className: 'search'}, 
                     React.createElement("input", {type: 'text', className: 'form-control input-sm', placeholder: 'search', onChange:  this.search})
@@ -367,7 +376,9 @@ var PlayList = React.createClass({displayName: "PlayList",
         var playlist       = this.props.playlist;
         var playlistCursor = this.props.playlistCursor;
 
-        if(playlist.length == 0) {
+        var queue = playlist.slice(playlistCursor + 1, playlistCursor + 21); // Get the 20 next tracks displayed
+
+        if(queue.length == 0) {
             return playlistContent = (
                 React.createElement("div", {className:  this.props.showPlaylist ? 'playlist visible text-left' : 'playlist text-left'}, 
                     React.createElement("div", {className: 'empty-playlist text-center'}, 
@@ -377,11 +388,9 @@ var PlayList = React.createClass({displayName: "PlayList",
             );
         } else {
 
-            playlist = playlist.slice(playlistCursor + 1, playlistCursor + 21); // Get the 20 next tracks displayed
-
             var hr = React.createElement("hr", null);
 
-            var playlistContent = playlist.map(function (track, index) {
+            var playlistContent = queue.map(function (track, index) {
 
                 if(index == playlist.length - 1) hr = React.createElement("div", null);
 
@@ -402,13 +411,25 @@ var PlayList = React.createClass({displayName: "PlayList",
         return (
             React.createElement("div", {className:  this.props.showPlaylist ? 'playlist visible text-left' : 'playlist text-left'}, 
                 React.createElement("div", {className: 'playlist-header'}, 
-                    "next tracks"
+                    React.createElement(Button, {bsSize: "xsmall", bsStyle: "default", className: 'empty-button', onClick:  this.clearPlaylist}, "clear queue")
                 ), 
                 React.createElement("div", {className: 'playlist-body'}, 
                      playlistContent 
                 )
             )
         );
+    },
+
+    clearPlaylist: function () {
+
+        Instance.setState({
+            playlist : React.addons.update(
+                this.props.playlist,
+                {$splice: [
+                    [this.props.playlistCursor + 1, this.props.playlist.length - this.props.playlistCursor]]
+                }
+            )
+        });
     }
 });
 
@@ -531,7 +552,6 @@ var Footer = React.createClass({displayName: "Footer",
                 )
             );
         }
-
 
         return (
             React.createElement("footer", {className: 'row'}, 

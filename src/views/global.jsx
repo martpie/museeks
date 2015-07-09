@@ -172,7 +172,9 @@ var Museeks = React.createClass({
 
                 audio.pause();
                 audio.src = '';
-                Instance.setState({ playlist : null });
+                Instance.setState({
+                    playlist       : [],
+                    playlistCursor : null});
             }
         },
 
@@ -271,13 +273,20 @@ var Header = React.createClass({
                     </ButtonGroup>
                 </Col>
                 <Col sm={6} className={'text-center'}>
-                    <PlayingBar playlist={ this.props.playlist } playlistCursor={ this.props.playlistCursor } />
+                    <PlayingBar
+                        playlist={ this.props.playlist }
+                        playlistCursor={ this.props.playlistCursor }
+                    />
                 </Col>
                 <Col sm={1} className={'playlist-controls'}>
                     <Button bsSize='small' bsStyle='link' className={'show-playlist'} onClick={ this.togglePlaylist }>
                         <i className={'fa fa-fw fa-list'}></i>
                     </Button>
-                    <PlayList showPlaylist={ this.state.showPlaylist } playlist={ this.props.playlist } playlistCursor={ this.props.playlistCursor } />
+                    <PlayList
+                        showPlaylist={ this.state.showPlaylist }
+                        playlist={ this.props.playlist }
+                        playlistCursor={ this.props.playlistCursor }
+                    />
                 </Col>
                 <Col sm={2} className={'search'}>
                     <input type={'text'} className={'form-control input-sm'} placeholder={'search'} onChange={ this.search } />
@@ -367,7 +376,9 @@ var PlayList = React.createClass({
         var playlist       = this.props.playlist;
         var playlistCursor = this.props.playlistCursor;
 
-        if(playlist.length == 0) {
+        var queue = playlist.slice(playlistCursor + 1, playlistCursor + 21); // Get the 20 next tracks displayed
+
+        if(queue.length == 0) {
             return playlistContent = (
                 <div className={ this.props.showPlaylist ? 'playlist visible text-left' : 'playlist text-left' }>
                     <div className={'empty-playlist text-center'}>
@@ -377,11 +388,9 @@ var PlayList = React.createClass({
             );
         } else {
 
-            playlist = playlist.slice(playlistCursor + 1, playlistCursor + 21); // Get the 20 next tracks displayed
-
             var hr = <hr />;
 
-            var playlistContent = playlist.map(function (track, index) {
+            var playlistContent = queue.map(function (track, index) {
 
                 if(index == playlist.length - 1) hr = <div></div>;
 
@@ -402,13 +411,25 @@ var PlayList = React.createClass({
         return (
             <div className={ this.props.showPlaylist ? 'playlist visible text-left' : 'playlist text-left' }>
                 <div className={'playlist-header'}>
-                    next tracks
+                    <Button bsSize='xsmall' bsStyle='default' className={'empty-button'} onClick={ this.clearPlaylist }>clear queue</Button>
                 </div>
                 <div className={'playlist-body'}>
                     { playlistContent }
                 </div>
             </div>
         );
+    },
+
+    clearPlaylist: function () {
+
+        Instance.setState({
+            playlist : React.addons.update(
+                this.props.playlist,
+                {$splice: [
+                    [this.props.playlistCursor + 1, this.props.playlist.length - this.props.playlistCursor]]
+                }
+            )
+        });
     }
 });
 
@@ -531,7 +552,6 @@ var Footer = React.createClass({
                 </Button>
             );
         }
-
 
         return (
             <footer className={'row'}>
