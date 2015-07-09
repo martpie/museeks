@@ -280,6 +280,11 @@ header .playlist-controls .empty-playlist {
     color: lightgrey;
 }
 
+header .playlist-controls .empty-button {
+    font-size: 10px;
+    padding: 1px 5px;
+}
+
 header .playlist-controls .playlist-body .track {
     padding-bottom: 5px;
 }
