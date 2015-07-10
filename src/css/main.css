@@ -287,6 +287,11 @@ header .playlist-controls .empty-button {
 
 header .playlist-controls .playlist-body .track {
     padding-bottom: 5px;
+    padding-top: 5px;
+}
+
+header .playlist-controls .playlist-body .track:not(:last-child) {
+    border-bottom: dashed 1px #D8D8D8;
 }
 
 header .playlist-controls .playlist-body .track:first-child {
@@ -305,11 +310,7 @@ header .playlist-controls .playlist-body .track .other-infos {
     overflow: hidden;
 }
 
-header .playlist-controls .playlist-body .track hr {
-    width: 80%;
-    margin-top: 5px;
-    margin-bottom: 0;
-}
+
 
 header .btn-group {
     display: inline-block;

@@ -388,11 +388,7 @@ var PlayList = React.createClass({
             );
         } else {
 
-            var hr = <hr />;
-
             var playlistContent = queue.map(function (track, index) {
-
-                if(index == playlist.length - 1) hr = <div></div>;
 
                 return (
                     <div key={index} className={'track'}>
@@ -402,7 +398,6 @@ var PlayList = React.createClass({
                         <div className={'other-infos'}>
                             <span className={'artist'}>{ track.artist }</span> - <span className={'album'}>{ track.album }</span>
                         </div>
-                        { hr }
                     </div>
                 );
             });

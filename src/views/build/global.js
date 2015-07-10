@@ -388,11 +388,7 @@ var PlayList = React.createClass({displayName: "PlayList",
             );
         } else {
 
-            var hr = React.createElement("hr", null);
-
             var playlistContent = queue.map(function (track, index) {
-
-                if(index == playlist.length - 1) hr = React.createElement("div", null);
 
                 return (
                     React.createElement("div", {key: index, className: 'track'}, 
@@ -401,8 +397,7 @@ var PlayList = React.createClass({displayName: "PlayList",
                         ), 
                         React.createElement("div", {className: 'other-infos'}, 
                             React.createElement("span", {className: 'artist'},  track.artist), " - ", React.createElement("span", {className: 'album'},  track.album)
-                        ), 
-                         hr 
+                        )
                     )
                 );
             });
