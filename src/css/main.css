@@ -294,10 +294,6 @@ header .playlist-controls .playlist-body .track:not(:last-child) {
     border-bottom: dashed 1px #D8D8D8;
 }
 
-header .playlist-controls .playlist-body .track:first-child {
-    padding-top: 5px;
-}
-
 header .playlist-controls .playlist-body .track .title {
     font-weight: bold;
 }
@@ -308,6 +304,7 @@ header .playlist-controls .playlist-body .track .other-infos {
     color: rgb(51, 51, 51);
     text-overflow: ellipsis;
     overflow: hidden;
+    white-space: nowrap;
 }
 
 header .playlist-controls .playlist-body .track .remove {
