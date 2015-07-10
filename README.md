@@ -28,7 +28,8 @@ Please consider **this app is under development, just install it for fun**, I'm 
 ##### general
 
 - [ ] refactor once it's working
-- [ ] ~~use es6 classes instead of React.createClass()~~
+- [ ] convert JST to babel (see [there](http://facebook.github.io/react/blog/2015/06/12/deprecating-jstransform-and-react-tools.html))
+- [ ] ~~use es6 classes instead of React.createClass()~~ nope, not that usefull
 
 ##### settings view
 - [ ] freeze settings list
