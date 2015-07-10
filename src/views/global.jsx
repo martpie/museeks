@@ -10,11 +10,6 @@
 
 var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
 
-var DragDropContext = ReactDnD.DragDropContext;
-var DragSource      = ReactDnD.DragSource;
-var DragDropTarget  = ReactDnD.DropTarget;
-var DragLayer       = ReactDnD.DragLayer;
-
 
 
 /*
@@ -383,7 +378,9 @@ var PlayList = React.createClass({
 
     getInitialState: function () {
 
-        return {};
+        return {
+            dragOverY : null
+        };
     },
 
     render: function () {
@@ -404,12 +401,10 @@ var PlayList = React.createClass({
             );
         } else {
 
-            // drag&drop stuff
-
             var playlistContent = queue.map(function (track, index) {
 
                 return (
-                    <div key={index} className={'track'} draggable='true' onDragStart={ self.dragStart } onDragEnd={ self.dragEnd } onDoubleClick={ Instance.selectAndPlay.bind(null, self.props.playlistCursor + index + 1) }>
+                    <div key={index} className={'track'} onDoubleClick={ Instance.selectAndPlay.bind(null, self.props.playlistCursor + index + 1) }>
                         <Button bsSize={'xsmall'} bsStyle={'link'} className={'remove'} onClick={ self.removeFromPlaylist.bind(null, index) }>
                             &times;
                         </Button>
@@ -429,7 +424,7 @@ var PlayList = React.createClass({
                 <div className={'playlist-header'}>
                     <Button bsSize='xsmall' bsStyle='default' className={'empty-button'} onClick={ this.clearPlaylist }>clear queue</Button>
                 </div>
-                <div className={'playlist-body'} onDragOver={ this.dragOver }>
+                <div className={'playlist-body'}>
                     { playlistContent }
                 </div>
             </div>
@@ -458,24 +453,6 @@ var PlayList = React.createClass({
                 }
             )
         });
-    },
-
-    dragStart : function (e) {
-
-        console.log('start dragging');
-
-    },
-
-    dragEnd : function (e) {
-
-        console.log('end dragging');
-
-    },
-
-    dragOver : function (e) {
-
-        console.log('dragging');
-
     }
 });
 

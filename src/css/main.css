@@ -289,7 +289,6 @@ header .playlist-controls .playlist-body .track {
     padding-bottom: 5px;
     padding-top: 5px;
     cursor: pointer;
-    -webkit-user-drag: element;
 }
 
 header .playlist-controls .playlist-body .track:not(:last-child) {
