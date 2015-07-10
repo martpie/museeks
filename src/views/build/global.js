@@ -373,6 +373,7 @@ var PlayList = React.createClass({displayName: "PlayList",
 
     render: function () {
 
+        var self           = this;
         var playlist       = this.props.playlist;
         var playlistCursor = this.props.playlistCursor;
 
@@ -392,6 +393,9 @@ var PlayList = React.createClass({displayName: "PlayList",
 
                 return (
                     React.createElement("div", {key: index, className: 'track'}, 
+                        React.createElement(Button, {bsSize: 'xsmall', bsStyle: 'link', className: 'remove', onClick:  self.removeFromPlaylist.bind(null, index) }, 
+                            "×"
+                        ), 
                         React.createElement("div", {className: 'title'}, 
                              track.title
                         ), 
@@ -425,7 +429,19 @@ var PlayList = React.createClass({displayName: "PlayList",
                 }
             )
         });
-    }
+    },
+
+    removeFromPlaylist: function (index) {
+
+        Instance.setState({
+            playlist : React.addons.update(
+                this.props.playlist,
+                {$splice: [
+                    [this.props.playlistCursor + index + 1, 1]]
+                }
+            )
+        });
+    },
 });
 
 

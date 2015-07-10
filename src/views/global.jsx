@@ -373,6 +373,7 @@ var PlayList = React.createClass({
 
     render: function () {
 
+        var self           = this;
         var playlist       = this.props.playlist;
         var playlistCursor = this.props.playlistCursor;
 
@@ -392,6 +393,9 @@ var PlayList = React.createClass({
 
                 return (
                     <div key={index} className={'track'}>
+                        <Button bsSize={'xsmall'} bsStyle={'link'} className={'remove'} onClick={ self.removeFromPlaylist.bind(null, index) }>
+                            &times;
+                        </Button>
                         <div className={'title'}>
                             { track.title }
                         </div>
@@ -425,7 +429,19 @@ var PlayList = React.createClass({
                 }
             )
         });
-    }
+    },
+
+    removeFromPlaylist: function (index) {
+
+        Instance.setState({
+            playlist : React.addons.update(
+                this.props.playlist,
+                {$splice: [
+                    [this.props.playlistCursor + index + 1, 1]]
+                }
+            )
+        });
+    },
 });
 
 
