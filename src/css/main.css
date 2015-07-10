@@ -288,6 +288,8 @@ header .playlist-controls .empty-button {
 header .playlist-controls .playlist-body .track {
     padding-bottom: 5px;
     padding-top: 5px;
+    cursor: pointer;
+    -webkit-user-drag: element;
 }
 
 header .playlist-controls .playlist-body .track:not(:last-child) {
@@ -327,6 +329,12 @@ header .playlist-controls .playlist-body .track .remove:focus,
 header .playlist-controls .playlist-body .track .remove:active {
     color: #555;
     text-decoration: none;
+}
+
+header .playlist-controls .playlist-body  div.placeholder {background: rgb(255,240,120);}
+header .playlist-controls .playlist-body  div.placeholder:before {
+    content: "Drop here";
+    color: rgb(225,210,90);
 }
 
 header .btn-group {

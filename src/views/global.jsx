@@ -364,6 +364,9 @@ var Header = React.createClass({
 |--------------------------------------------------------------------------
 */
 
+var placeholder = document.createElement("li");
+placeholder.className = "placeholder";
+
 var PlayList = React.createClass({
 
     getInitialState: function () {
@@ -389,10 +392,12 @@ var PlayList = React.createClass({
             );
         } else {
 
+            // drag&drop stuff
+
             var playlistContent = queue.map(function (track, index) {
 
                 return (
-                    <div key={index} className={'track'}>
+                    <div key={index} className={'track'} draggable='true' onDragStart={ self.dragStart } onDragEnd={ self.dragEnd } onDoubleClick={ Instance.selectAndPlay.bind(null, self.props.playlistCursor + index + 1) }>
                         <Button bsSize={'xsmall'} bsStyle={'link'} className={'remove'} onClick={ self.removeFromPlaylist.bind(null, index) }>
                             &times;
                         </Button>
@@ -412,7 +417,7 @@ var PlayList = React.createClass({
                 <div className={'playlist-header'}>
                     <Button bsSize='xsmall' bsStyle='default' className={'empty-button'} onClick={ this.clearPlaylist }>clear queue</Button>
                 </div>
-                <div className={'playlist-body'}>
+                <div className={'playlist-body'} onDragOver={ this.dragOver }>
                     { playlistContent }
                 </div>
             </div>
@@ -442,6 +447,40 @@ var PlayList = React.createClass({
             )
         });
     },
+
+    dragStart : function (e) {
+        console.log('start dragging');
+
+        this.dragged = e.currentTarget;
+        e.dataTransfer.effectAllowed = 'move';
+        e.dataTransfer.setData("text/html", e.currentTarget);
+    },
+
+    dragEnd : function (e) {
+        console.log('end dragging');
+/*
+        this.dragged.style.display = "block";
+        this.dragged.parentNode.removeChild(placeholder);
+
+        // Update state
+        var data = this.state.data;
+        var from = Number(this.dragged.dataset.id);
+        var to = Number(this.over.dataset.id);
+        if(from < to) to--;
+        data.splice(to, 0, data.splice(from, 1)[0]);
+        this.setState({data: data});*/
+
+    },
+
+    dragOver : function () {
+        console.log('drag over');
+
+        /*e.preventDefault();
+        this.dragged.style.display = "none";
+        if(e.target.className == "placeholder") return;
+        this.over = e.target;
+        e.target.parentNode.insertBefore(placeholder, e.target);*/
+    }
 });
 
 
