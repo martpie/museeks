@@ -1,12 +1,27 @@
 'use strict';
 
+
+
+/*
+|--------------------------------------------------------------------------
+| Some Varibles
+|--------------------------------------------------------------------------
+*/
+
+var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
+
+var DragDropContext = ReactDnD.DragDropContext;
+var DragSource      = ReactDnD.DragSource;
+var DragDropTarget  = ReactDnD.DropTarget;
+var DragLayer       = ReactDnD.DragLayer;
+
+
+
 /*
 |--------------------------------------------------------------------------
 | The App
 |--------------------------------------------------------------------------
 */
-
-var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
 
 var Museeks = React.createClass({displayName: "Museeks",
 
@@ -364,9 +379,6 @@ var Header = React.createClass({displayName: "Header",
 |--------------------------------------------------------------------------
 */
 
-var placeholder = document.createElement("li");
-placeholder.className = "placeholder";
-
 var PlayList = React.createClass({displayName: "PlayList",
 
     getInitialState: function () {
@@ -449,37 +461,21 @@ var PlayList = React.createClass({displayName: "PlayList",
     },
 
     dragStart : function (e) {
+
         console.log('start dragging');
 
-        this.dragged = e.currentTarget;
-        e.dataTransfer.effectAllowed = 'move';
-        e.dataTransfer.setData("text/html", e.currentTarget);
     },
 
     dragEnd : function (e) {
-        console.log('end dragging');
-/*
-        this.dragged.style.display = "block";
-        this.dragged.parentNode.removeChild(placeholder);
 
-        // Update state
-        var data = this.state.data;
-        var from = Number(this.dragged.dataset.id);
-        var to = Number(this.over.dataset.id);
-        if(from < to) to--;
-        data.splice(to, 0, data.splice(from, 1)[0]);
-        this.setState({data: data});*/
+        console.log('end dragging');
 
     },
 
-    dragOver : function () {
-        console.log('drag over');
+    dragOver : function (e) {
 
-        /*e.preventDefault();
-        this.dragged.style.display = "none";
-        if(e.target.className == "placeholder") return;
-        this.over = e.target;
-        e.target.parentNode.insertBefore(placeholder, e.target);*/
+        console.log('dragging');
+
     }
 });
 
