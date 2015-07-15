@@ -348,7 +348,7 @@ header .btn {
     font-size: 14px;
 }
 
-header .btn.active,
+header .btn.hover,
 header .btn:active,
 header .btn:focus {
     box-shadow: none;
