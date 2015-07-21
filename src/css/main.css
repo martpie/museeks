@@ -330,12 +330,6 @@ header .playlist-controls .playlist-body .track .remove:active {
     text-decoration: none;
 }
 
-header .playlist-controls .playlist-body  div.placeholder {background: rgb(255,240,120);}
-header .playlist-controls .playlist-body  div.placeholder:before {
-    content: "Drop here";
-    color: rgb(225,210,90);
-}
-
 header .btn-group {
     display: inline-block;
     vertical-align: middle;
@@ -348,9 +342,9 @@ header .btn {
     font-size: 14px;
 }
 
-header .btn.hover,
-header .btn:active,
-header .btn:focus {
+header .btn.btn-link:hover,
+header .btn.btn-link:active,
+header .btn.btn-link:focus {
     box-shadow: none;
     color: #555;
 }
