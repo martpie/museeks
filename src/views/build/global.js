@@ -30,7 +30,7 @@ var Museeks = React.createClass({displayName: "Museeks",
             playlist          :  [],   // Tracks to be played
             playlistCursor    :  null, // The cursor of the playlist
             view              :  defaultView, // The actual view
-            playerStatus      : 'pause', // Player status
+            playerStatus      : 'stop', // Player status
             notifications     :  {},     // The array of notifications
             refreshingLibrary :  false   // If the app is currently refreshing the app
         }
@@ -260,6 +260,12 @@ var Header = React.createClass({displayName: "Header",
         } else if (this.props.playerStatus == 'pause') {
             var playButton = (
                 React.createElement(Button, {bsSize: "small", bsStyle: "link", className: 'play', onClick:  this.play}, 
+                    React.createElement("i", {className: 'fa fa-fw fa-play'})
+                )
+            );
+        } else {
+            var playButton = (
+                React.createElement(Button, {bsSize: "small", bsStyle: "link", className: 'play'}, 
                     React.createElement("i", {className: 'fa fa-fw fa-play'})
                 )
             );
