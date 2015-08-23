@@ -7,15 +7,18 @@ alerts = {
 
         notifications[id] = { type: type, content: content };
 
-        Instance.setState({ notifications : notifications });
+        Instance.setState({
+                notifications : notifications
+            }, function () {
+                setTimeout(function () {
 
-        setTimeout(function () {
+                    var newNotifications = Instance.state.notifications;
+                    delete newNotifications[id];
 
-            var newNotifications = Instance.state.notifications;
-            delete newNotifications[id];
+                    Instance.setState({ notifications : newNotifications });
 
-            Instance.setState({ notifications : newNotifications });
-
-        }, 5000);
+                }, 5000);
+            }
+        );
     }
 };
