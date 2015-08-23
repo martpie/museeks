@@ -14,7 +14,7 @@ views.settings = React.createClass({
                 <hr />
 
                 {/* Music folders & library refresh*/}
-                <MusicFoldersList />
+                <MusicFoldersList refreshingLibrary={ this.props.refreshingLibrary } />
 
             </div>
         );
@@ -33,14 +33,13 @@ var MusicFoldersList = React.createClass({
 
     getInitialState: function (){
         return {
-            musicFolders      : nconf.get('musicFolders'),
-            refreshingLibrary : false
+            musicFolders : nconf.get('musicFolders')
         };
     },
 
     render: function () {
 
-        if(!this.state.refreshingLibrary) {
+        if(!this.props.refreshingLibrary) {
 
             var buttonsGroup = (
                 <ButtonGroup>
@@ -49,8 +48,8 @@ var MusicFoldersList = React.createClass({
                         Import a folder
                     </Button>
                     <Button bsSize='small' onClick={ this.refreshLibrary }>
-                        <i className={ !this.state.refreshingLibrary ? 'fa fa-refresh' : 'fa fa-refresh fa-spin' }></i>
-                        { !this.state.refreshingLibrary ? 'Refresh Library' : 'Refreshing Library'}
+                        <i className={ !this.props.refreshingLibrary ? 'fa fa-refresh' : 'fa fa-refresh fa-spin' }></i>
+                        { !this.props.refreshingLibrary ? 'Refresh Library' : 'Refreshing Library'}
                     </Button>
                     <Button bsSize='small' bsStyle={'danger'} onClick={ this.resetLibrary }>
                         Reset library
@@ -67,8 +66,8 @@ var MusicFoldersList = React.createClass({
                         Import a folder
                     </Button>
                     <Button bsSize='small' disabled onClick={ this.refreshLibrary }>
-                        <i className={ !this.state.refreshingLibrary ? 'fa fa-refresh' : 'fa fa-refresh fa-spin' }></i>
-                        { !this.state.refreshingLibrary ? 'Refresh Library' : 'Refreshing Library'}
+                        <i className={ !this.props.refreshingLibrary ? 'fa fa-refresh' : 'fa fa-refresh fa-spin' }></i>
+                        { !this.props.refreshingLibrary ? 'Refresh Library' : 'Refreshing Library'}
                     </Button>
                     <Button bsSize='small' disabled bsStyle={'danger'} onClick={ this.resetLibrary }>
                         Reset library
@@ -81,7 +80,7 @@ var MusicFoldersList = React.createClass({
         var list = this.state.musicFolders.map(function(folder, i) {
             return(
                 <li key={i}>
-                    <i onClick={ this.state.refreshingLibrary ? void(0) : this.removeFolder } data-target={ i } className={ this.state.refreshingLibrary ? 'fa fa-close delete-libray-folder disabled' : 'fa fa-close delete-libray-folder' }></i>
+                    <i onClick={ this.props.refreshingLibrary ? void(0) : this.removeFolder } data-target={ i } className={ this.props.refreshingLibrary ? 'fa fa-close delete-libray-folder disabled' : 'fa fa-close delete-libray-folder' }></i>
                     { folder }
                 </li>
             );
@@ -93,7 +92,7 @@ var MusicFoldersList = React.createClass({
 
                 <p>You currently have { this.state.musicFolders.length } folder{ this.state.musicFolders.length < 2 ? '' : 's' } folders in your library.</p>
 
-                <ul className="musicfolders-list">
+                <ul className={ this.state.musicFolders.length != 0 ? 'musicfolders-list' : 'musicfolders-list empty'}>
                     { list }
                 </ul>
 
@@ -162,7 +161,7 @@ var MusicFoldersList = React.createClass({
 
         db.reset();
 
-        self.setState({
+        Instance.setState({
             refreshingLibrary: true
         }, function () {
 
@@ -212,7 +211,7 @@ var MusicFoldersList = React.createClass({
                 walker.on("end", function () {
 
                     if(folders.length - 1 == index) {
-                        self.setState({
+                        Instance.setState({
                             refreshingLibrary: false
                         }, function() {
 

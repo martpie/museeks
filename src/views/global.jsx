@@ -21,14 +21,18 @@ var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
 var Museeks = React.createClass({
 
     getInitialState: function () {
+
+        var defaultView = views.libraryList;
+
         return {
-            library        :  null, // All tracks
-            tracks         :  null, // All tracks shown on the view
-            playlist       :  [],   // Tracks to be played
-            playlistCursor :  null, // The cursor of the playlist
-            view           :  views.libraryList, // The actual view
-            playerStatus   : 'pause', // Player status
-            notifications  :  {} // The array of notifications
+            library           :  null, // All tracks
+            tracks            :  null, // All tracks shown on the view
+            playlist          :  [],   // Tracks to be played
+            playlistCursor    :  null, // The cursor of the playlist
+            view              :  defaultView, // The actual view
+            playerStatus      : 'pause', // Player status
+            notifications     :  {},     // The array of notifications
+            refreshingLibrary :  false   // If the app is currently refreshing the app
         }
     },
 
@@ -65,10 +69,11 @@ var Museeks = React.createClass({
                             tracks={ this.state.tracks }
                             library={ this.state.library }
                             trackPlayingID={ trackPlayingID }
+                            refreshingLibrary={ this.state.refreshingLibrary }
                         />
                     </Row>
                 </div>
-                <Footer status={ status } />
+                <Footer status={ status } refreshingLibrary={ this.state.refreshingLibrary } />
             </div>
         );
     },
@@ -576,13 +581,26 @@ var Footer = React.createClass({
             );
         }
 
+        if (!this.props.refreshingLibrary) {
+            var navButtons = (
+                <ButtonGroup>
+                    <a href={'#/settings'} className={'btn btn-default'}><i className={'fa fa-gear'}></i></a>
+                    <a href={'#/'} className={'btn btn-default'}><i className={'fa fa-align-justify'}></i></a>
+                </ButtonGroup>
+            );
+        } else {
+            var navButtons = (
+                <ButtonGroup>
+                    <a href={'#/settings'} disabled className={'btn btn-default'}><i className={'fa fa-gear'}></i></a>
+                    <a href={'#/'} disabled className={'btn btn-default'}><i className={'fa fa-align-justify'}></i></a>
+                </ButtonGroup>
+            );
+        }
+
         return (
             <footer className={'row'}>
                 <Col sm={3}>
-                    <ButtonGroup>
-                        <a href={'#/settings'} className={'btn btn-default'}><i className={'fa fa-gear'}></i></a>
-                        <a href={'#/'} className={'btn btn-default'}><i className={'fa fa-align-justify'}></i></a>
-                    </ButtonGroup>
+                    { navButtons }
                 </Col>
                 <Col sm={5} className={'status text-center'}>
                     { this.props.status }
