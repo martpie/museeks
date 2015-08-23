@@ -244,7 +244,7 @@ var Header = React.createClass({
 
     getInitialState: function () {
         return {
-            showVolume :   false,
+            showVolume   : false,
             showPlaylist : false
         }
     },
@@ -310,7 +310,7 @@ var Header = React.createClass({
                     />
                 </Col>
                 <Col sm={2} className={'search'}>
-                    <input type={'text'} className={'form-control input-sm'} placeholder={'search'} onChange={ this.search } />
+                    <input type={'text'} className={'form-control input-sm'} placeholder={'search'} onClick={ this.searchSelect } onChange={ this.search } />
                 </Col>
             </header>
         );
@@ -339,6 +339,10 @@ var Header = React.createClass({
 
     search: function (e) {
         Instance.filterSearch(e.currentTarget.value);
+    },
+
+    searchSelect: function (e) {
+        e.currentTarget.select();
     },
 
     play: function () {
