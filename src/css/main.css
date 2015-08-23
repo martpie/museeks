@@ -502,6 +502,12 @@ footer .status {
     border: 1px solid lightgrey;
 }
 
+.view-settings .musicfolders-list.empty {
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
 .view-settings .musicfolders-list .delete-libray-folder {
     margin-right: 5px;
     color: #d9534f;

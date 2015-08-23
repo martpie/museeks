@@ -14,7 +14,7 @@ views.settings = React.createClass({displayName: "settings",
                 React.createElement("hr", null), 
 
                 /* Music folders & library refresh*/
-                React.createElement(MusicFoldersList, null)
+                React.createElement(MusicFoldersList, {refreshingLibrary:  this.props.refreshingLibrary})
 
             )
         );
@@ -33,14 +33,13 @@ var MusicFoldersList = React.createClass({displayName: "MusicFoldersList",
 
     getInitialState: function (){
         return {
-            musicFolders      : nconf.get('musicFolders'),
-            refreshingLibrary : false
+            musicFolders : nconf.get('musicFolders')
         };
     },
 
     render: function () {
 
-        if(!this.state.refreshingLibrary) {
+        if(!this.props.refreshingLibrary) {
 
             var buttonsGroup = (
                 React.createElement(ButtonGroup, null, 
@@ -49,8 +48,8 @@ var MusicFoldersList = React.createClass({displayName: "MusicFoldersList",
                         "Import a folder"
                     ), 
                     React.createElement(Button, {bsSize: "small", onClick:  this.refreshLibrary}, 
-                        React.createElement("i", {className:  !this.state.refreshingLibrary ? 'fa fa-refresh' : 'fa fa-refresh fa-spin'}), 
-                         !this.state.refreshingLibrary ? 'Refresh Library' : 'Refreshing Library'
+                        React.createElement("i", {className:  !this.props.refreshingLibrary ? 'fa fa-refresh' : 'fa fa-refresh fa-spin'}), 
+                         !this.props.refreshingLibrary ? 'Refresh Library' : 'Refreshing Library'
                     ), 
                     React.createElement(Button, {bsSize: "small", bsStyle: 'danger', onClick:  this.resetLibrary}, 
                         "Reset library"
@@ -67,8 +66,8 @@ var MusicFoldersList = React.createClass({displayName: "MusicFoldersList",
                         "Import a folder"
                     ), 
                     React.createElement(Button, {bsSize: "small", disabled: true, onClick:  this.refreshLibrary}, 
-                        React.createElement("i", {className:  !this.state.refreshingLibrary ? 'fa fa-refresh' : 'fa fa-refresh fa-spin'}), 
-                         !this.state.refreshingLibrary ? 'Refresh Library' : 'Refreshing Library'
+                        React.createElement("i", {className:  !this.props.refreshingLibrary ? 'fa fa-refresh' : 'fa fa-refresh fa-spin'}), 
+                         !this.props.refreshingLibrary ? 'Refresh Library' : 'Refreshing Library'
                     ), 
                     React.createElement(Button, {bsSize: "small", disabled: true, bsStyle: 'danger', onClick:  this.resetLibrary}, 
                         "Reset library"
@@ -81,7 +80,7 @@ var MusicFoldersList = React.createClass({displayName: "MusicFoldersList",
         var list = this.state.musicFolders.map(function(folder, i) {
             return(
                 React.createElement("li", {key: i}, 
-                    React.createElement("i", {onClick:  this.state.refreshingLibrary ? void(0) : this.removeFolder, "data-target":  i, className:  this.state.refreshingLibrary ? 'fa fa-close delete-libray-folder disabled' : 'fa fa-close delete-libray-folder'}), 
+                    React.createElement("i", {onClick:  this.props.refreshingLibrary ? void(0) : this.removeFolder, "data-target":  i, className:  this.props.refreshingLibrary ? 'fa fa-close delete-libray-folder disabled' : 'fa fa-close delete-libray-folder'}), 
                      folder 
                 )
             );
@@ -93,7 +92,7 @@ var MusicFoldersList = React.createClass({displayName: "MusicFoldersList",
 
                 React.createElement("p", null, "You currently have ",  this.state.musicFolders.length, " folder",  this.state.musicFolders.length < 2 ? '' : 's', " folders in your library."), 
 
-                React.createElement("ul", {className: "musicfolders-list"}, 
+                React.createElement("ul", {className:  this.state.musicFolders.length != 0 ? 'musicfolders-list' : 'musicfolders-list empty'}, 
                      list 
                 ), 
 
@@ -162,7 +161,7 @@ var MusicFoldersList = React.createClass({displayName: "MusicFoldersList",
 
         db.reset();
 
-        self.setState({
+        Instance.setState({
             refreshingLibrary: true
         }, function () {
 
@@ -212,7 +211,7 @@ var MusicFoldersList = React.createClass({displayName: "MusicFoldersList",
                 walker.on("end", function () {
 
                     if(folders.length - 1 == index) {
-                        self.setState({
+                        Instance.setState({
                             refreshingLibrary: false
                         }, function() {
 

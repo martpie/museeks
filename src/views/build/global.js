@@ -21,14 +21,18 @@ var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
 var Museeks = React.createClass({displayName: "Museeks",
 
     getInitialState: function () {
+
+        var defaultView = views.libraryList;
+
         return {
-            library        :  null, // All tracks
-            tracks         :  null, // All tracks shown on the view
-            playlist       :  [],   // Tracks to be played
-            playlistCursor :  null, // The cursor of the playlist
-            view           :  views.libraryList, // The actual view
-            playerStatus   : 'pause', // Player status
-            notifications  :  {} // The array of notifications
+            library           :  null, // All tracks
+            tracks            :  null, // All tracks shown on the view
+            playlist          :  [],   // Tracks to be played
+            playlistCursor    :  null, // The cursor of the playlist
+            view              :  defaultView, // The actual view
+            playerStatus      : 'pause', // Player status
+            notifications     :  {},     // The array of notifications
+            refreshingLibrary :  false   // If the app is currently refreshing the app
         }
     },
 
@@ -64,11 +68,12 @@ var Museeks = React.createClass({displayName: "Museeks",
                         React.createElement(this.state.view, {
                             tracks:  this.state.tracks, 
                             library:  this.state.library, 
-                            trackPlayingID:  trackPlayingID }
+                            trackPlayingID:  trackPlayingID, 
+                            refreshingLibrary:  this.state.refreshingLibrary}
                         )
                     )
                 ), 
-                React.createElement(Footer, {status:  status })
+                React.createElement(Footer, {status:  status, refreshingLibrary:  this.state.refreshingLibrary})
             )
         );
     },
@@ -576,13 +581,26 @@ var Footer = React.createClass({displayName: "Footer",
             );
         }
 
+        if (!this.props.refreshingLibrary) {
+            var navButtons = (
+                React.createElement(ButtonGroup, null, 
+                    React.createElement("a", {href: '#/settings', className: 'btn btn-default'}, React.createElement("i", {className: 'fa fa-gear'})), 
+                    React.createElement("a", {href: '#/', className: 'btn btn-default'}, React.createElement("i", {className: 'fa fa-align-justify'}))
+                )
+            );
+        } else {
+            var navButtons = (
+                React.createElement(ButtonGroup, null, 
+                    React.createElement("a", {href: '#/settings', disabled: true, className: 'btn btn-default'}, React.createElement("i", {className: 'fa fa-gear'})), 
+                    React.createElement("a", {href: '#/', disabled: true, className: 'btn btn-default'}, React.createElement("i", {className: 'fa fa-align-justify'}))
+                )
+            );
+        }
+
         return (
             React.createElement("footer", {className: 'row'}, 
                 React.createElement(Col, {sm: 3}, 
-                    React.createElement(ButtonGroup, null, 
-                        React.createElement("a", {href: '#/settings', className: 'btn btn-default'}, React.createElement("i", {className: 'fa fa-gear'})), 
-                        React.createElement("a", {href: '#/', className: 'btn btn-default'}, React.createElement("i", {className: 'fa fa-align-justify'}))
-                    )
+                     navButtons 
                 ), 
                 React.createElement(Col, {sm: 5, className: 'status text-center'}, 
                      this.props.status
