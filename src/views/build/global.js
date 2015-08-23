@@ -60,7 +60,7 @@ var Museeks = React.createClass({displayName: "Museeks",
                 React.createElement(Header, {playerStatus:  this.state.playerStatus, playlist:  this.state.playlist, playlistCursor:  this.state.playlistCursor}), 
                 React.createElement("div", {className: 'main-content'}, 
                     React.createElement("div", {className: 'alerts-container'}, 
-                        React.createElement(ReactCSSTransitionGroup, {transitionName: "notification"}, 
+                        React.createElement("div", null, 
                              notificationsBlock 
                         )
                     ), 

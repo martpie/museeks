@@ -60,9 +60,9 @@ var Museeks = React.createClass({
                 <Header playerStatus={ this.state.playerStatus } playlist={ this.state.playlist } playlistCursor={ this.state.playlistCursor } />
                 <div className={'main-content'}>
                     <div className={'alerts-container'}>
-                        <ReactCSSTransitionGroup transitionName='notification'>
+                        <div>
                             { notificationsBlock }
-                        </ReactCSSTransitionGroup>
+                        </div>
                     </div>
                     <Row className={'content'}>
                         <this.state.view
