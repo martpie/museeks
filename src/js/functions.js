@@ -19,7 +19,3 @@ var parseDuration = function (duration) {
 
     return min + ':' + sec;
 };
-
-
-
-280.56
