@@ -33,7 +33,7 @@ var Museeks = React.createClass({
             playerStatus      : 'stop', // Player status
             notifications     :  {},     // The array of notifications
             refreshingLibrary :  false   // If the app is currently refreshing the app
-        }
+        };
     },
 
     componentWillMount: function () {
