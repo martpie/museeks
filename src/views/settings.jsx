@@ -159,6 +159,8 @@ var MusicFoldersList = React.createClass({
 
         Instance.player.stop();
 
+        Instance.setState({ library : null });
+
         db.reset();
 
         Instance.setState({
