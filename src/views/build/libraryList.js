@@ -129,16 +129,61 @@ var LibraryListItems = React.createClass({displayName: "LibraryListItems",
 
     selectTrack: function(index, e) {
 
-        if(e.button == 0) {
-            if(!e.ctrlKey) {
-                var selected = [];
+        var self = this;
+
+        if(e.button == 0 || (e.button == 2 && this.state.selected.indexOf(index) == -1 )) {
+            if(e.ctrlKey) { // add a track in selected tracks
+                var selected = this.state.selected;
                 selected.push(index);
                 this.setState({ selected : selected });
             }
-            else {
+            else if (e.shiftKey) { // add multiple tracks in selected tracks
                 var selected = this.state.selected;
+
+                switch(selected.length) {
+                    case 0:
+                        selected.push(index);
+                        this.setState({ selected : selected });
+                        break;
+                    case 1:
+                        var onlySelected = selected[0];
+                        for(var i = 1; i <= Math.abs(index - onlySelected); i++) {
+                            if(index < onlySelected) {
+                                selected.push(onlySelected - i);
+                            } else if(index > onlySelected) {
+                                selected.push(onlySelected + i);
+                            }
+                        }
+                        self.setState({ selected : selected });
+                        break;
+                    default:
+                        var base;
+                        var min = Math.min.apply(Math, selected);
+                        var max = Math.max.apply(Math, selected);
+
+                        if(index < min) {
+                            base = max;
+                        } else if (index > max) {
+                            base = min;
+                        } else {
+                            base = min;
+                        }
+                        var newSelected = [];
+                        for(var i = 0; i <= Math.abs(index - base); i++) {
+                            if(index < min) {
+                                newSelected.push(base - i);
+                            } else if (index > max) {
+                                newSelected.push(base + i);
+                            }
+                        }
+                        self.setState({ selected : newSelected });
+                        break;
+                }
+            }
+            else { // simple select
+                var selected = [];
                 selected.push(index);
-                this.setState({ selected : selected })
+                this.setState({ selected : selected });
             }
         }
     },
