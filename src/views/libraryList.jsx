@@ -127,14 +127,28 @@ var LibraryListItems = React.createClass({
         );
     },
 
-    selectTrack: function(index) {
+    selectTrack: function(index, e) {
 
-        this.setState({ selected: index });
+        if(!e.ctrlKey) {
+            var selected = [];
+            selected.push(index);
+            this.setState({ selected : selected });
+        }
+        else {
+            var selected = this.state.selected;
+            selected.push(index);
+            this.setState({ selected : selected })
+        }
     },
 
     showContextMenu: function(e) {
 
         var context = new Menu();
+        var selectedLength = this.state.selected.length;
+
+        context.append(new MenuItem({ label: selectedLength > 1 ? selectedLength + ' tracks selected' : selectedLength + ' track selected', enabled: false } ));
+        context.append(new MenuItem({ type: 'separator' } ));
+
 
         context.append(new MenuItem({ label: 'Add to queue', click: function() { console.log('add to queue'); } }));
         context.append(new MenuItem({ label: 'Play next', click: function() { console.log('play next'); } }));
