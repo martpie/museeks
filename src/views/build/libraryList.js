@@ -147,10 +147,12 @@ var LibraryListItems = React.createClass({displayName: "LibraryListItems",
                         break;
                     case 1:
                         var onlySelected = selected[0];
-                        for(var i = 1; i <= Math.abs(index - onlySelected); i++) {
-                            if(index < onlySelected) {
+                        if(index < onlySelected) {
+                            for(var i = 1; i <= Math.abs(index - onlySelected); i++) {
                                 selected.push(onlySelected - i);
-                            } else if(index > onlySelected) {
+                            }
+                        } else if(index > onlySelected) {
+                            for(var i = 1; i <= Math.abs(index - onlySelected); i++) {
                                 selected.push(onlySelected + i);
                             }
                         }
@@ -163,19 +165,20 @@ var LibraryListItems = React.createClass({displayName: "LibraryListItems",
 
                         if(index < min) {
                             base = max;
-                        } else if (index > max) {
-                            base = min;
                         } else {
                             base = min;
                         }
                         var newSelected = [];
-                        for(var i = 0; i <= Math.abs(index - base); i++) {
-                            if(index < min) {
+                        if(index < min) {
+                            for(var i = 0; i <= Math.abs(index - base); i++) {
                                 newSelected.push(base - i);
-                            } else if (index > max) {
+                            }
+                        } else if(index > max) {
+                            for(var i = 0; i <= Math.abs(index - base); i++) {
                                 newSelected.push(base + i);
                             }
                         }
+
                         self.setState({ selected : newSelected });
                         break;
                 }
