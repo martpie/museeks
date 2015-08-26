@@ -10,9 +10,10 @@
 
 var remote = require('remote');
 
-var dialog         = remote.require('dialog');
-var app            = remote.require('app');
-var globalShortcut = remote.require('global-shortcut');
+var dialog         = remote.require('dialog'),
+    app            = remote.require('app'),
+    Menu           = remote.require('menu'),
+    MenuItem       = remote.require('menu-item');
 
 var fs     = require('fs'),
     path   = require('path'),

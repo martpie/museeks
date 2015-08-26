@@ -5,4 +5,3 @@ var ButtonGroup = ReactBootstrap.ButtonGroup;
 var Alert       = ReactBootstrap.Alert;
 var ProgressBar = ReactBootstrap.ProgressBar;
 var DropdownButton = ReactBootstrap.DropdownButton;
-var MenuItem = ReactBootstrap.MenuItem;
