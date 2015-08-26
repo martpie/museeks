@@ -14,9 +14,9 @@
   },
   "dependencies": {
     "mime": "^1.3.4",
-    "musicmetadata": "^1.0.0",
-    "nconf": "~0.7.1",
-    "nedb": "~1.1.1",
+    "musicmetadata": "^2.0.0",
+    "nconf": "^0.7.2",
+    "nedb": "^1.1.3",
     "walk": "^2.3.9"
   },
   "devDependencies": {
