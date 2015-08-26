@@ -129,15 +129,17 @@ var LibraryListItems = React.createClass({displayName: "LibraryListItems",
 
     selectTrack: function(index, e) {
 
-        if(!e.ctrlKey) {
-            var selected = [];
-            selected.push(index);
-            this.setState({ selected : selected });
-        }
-        else {
-            var selected = this.state.selected;
-            selected.push(index);
-            this.setState({ selected : selected })
+        if(e.button == 0) {
+            if(!e.ctrlKey) {
+                var selected = [];
+                selected.push(index);
+                this.setState({ selected : selected });
+            }
+            else {
+                var selected = this.state.selected;
+                selected.push(index);
+                this.setState({ selected : selected })
+            }
         }
     },
 
