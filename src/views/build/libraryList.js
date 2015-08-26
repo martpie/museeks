@@ -63,7 +63,7 @@ var LibraryListItems = React.createClass({displayName: "LibraryListItems",
 
     getInitialState: function () {
         return {
-            selected: 0
+            selected: []
         };
     },
 
@@ -83,7 +83,7 @@ var LibraryListItems = React.createClass({displayName: "LibraryListItems",
             }
 
             return(
-                React.createElement("tr", {className:  index === selected ? 'track selected' : 'track', key: index, onMouseDown:  self.selectTrack.bind(null, index), onDoubleClick:  Instance.selectAndPlay.bind(null, index), onContextMenu:  self.showContextMenu}, 
+                React.createElement("tr", {className:  selected.indexOf(index) != -1 ? 'track selected' : 'track', key: index, onMouseDown:  self.selectTrack.bind(null, index), onDoubleClick:  Instance.selectAndPlay.bind(null, index, event), onContextMenu:  self.showContextMenu}, 
                     React.createElement("td", {className: 'row-trackPlaying text-center'}, 
                          playing 
                     ), 
