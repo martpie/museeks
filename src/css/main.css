@@ -595,3 +595,22 @@ footer .status {
 .view-library-list  .table>thead>tr>th {
     border-bottom: 0;
 }
+
+.view-library-list .context-menu {
+    position: absolute;
+    width: 200px;
+    z-index: 10;
+    background-color: white;
+    padding: 5px 0;
+    border: solid lightgrey 1px;
+}
+
+.view-library-list .context-menu .action {
+    padding: 3px 8px;
+    cursor: pointer;
+}
+
+.view-library-list .context-menu .action:hover {
+    background-color: #459CE7;
+    color: white;
+}

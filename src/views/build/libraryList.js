@@ -83,7 +83,7 @@ var LibraryListItems = React.createClass({displayName: "LibraryListItems",
             }
 
             return(
-                React.createElement("tr", {className:  index === selected ? 'track selected' : 'track', key: index, onMouseDown:  self.selectTrack.bind(null, index), onDoubleClick:  Instance.selectAndPlay.bind(null, index) }, 
+                React.createElement("tr", {className:  index === selected ? 'track selected' : 'track', key: index, onMouseDown:  self.selectTrack.bind(null, index), onDoubleClick:  Instance.selectAndPlay.bind(null, index), onContextMenu:  self.showContextMenu}, 
                     React.createElement("td", {className: 'row-trackPlaying text-center'}, 
                          playing 
                     ), 
@@ -129,6 +129,16 @@ var LibraryListItems = React.createClass({displayName: "LibraryListItems",
 
     selectTrack: function(index) {
 
-        this.setState({selected: index});
+        this.setState({ selected: index });
+    },
+
+    showContextMenu: function(e) {
+
+        var context = new Menu();
+
+        context.append(new MenuItem({ label: 'Add to queue', click: function() { console.log('add to queue'); } }));
+        context.append(new MenuItem({ label: 'Play next', click: function() { console.log('play next'); } }));
+
+        context.popup(remote.getCurrentWindow());
     }
 });
