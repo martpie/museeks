@@ -19,3 +19,29 @@ var parseDuration = function (duration) {
 
     return min + ':' + sec;
 };
+
+
+
+/**
+ * Sort an array of int by ASC or DESC
+ *
+ * @param array  array of int to be sorted
+ * @param string 'asc' or 'desc' depending of the sort needed
+ * @return array
+ */
+
+var simpleSort = function(array, sorting) {
+
+    if(sorting == 'asc') {
+        array.sort(function(a, b) {
+            return a - b;
+        });
+    }
+    else if (sorting == 'desc') {
+        array.sort(function(a, b) {
+            return b - a;
+        });
+    }
+
+    return array;
+};

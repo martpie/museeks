@@ -135,6 +135,7 @@ var LibraryListItems = React.createClass({
             if(e.ctrlKey) { // add a track in selected tracks
                 var selected = this.state.selected;
                 selected.push(index);
+                simpleSort(selected, 'asc');
                 this.setState({ selected : selected });
             }
             else if (e.shiftKey) { // add multiple tracks in selected tracks
@@ -156,6 +157,8 @@ var LibraryListItems = React.createClass({
                                 selected.push(onlySelected + i);
                             }
                         }
+
+                        simpleSort(selected, 'asc');
                         self.setState({ selected : selected });
                         break;
                     default:
@@ -179,6 +182,7 @@ var LibraryListItems = React.createClass({
                             }
                         }
 
+                        simpleSort(newSelected, 'asc');
                         self.setState({ selected : newSelected });
                         break;
                 }
@@ -193,15 +197,48 @@ var LibraryListItems = React.createClass({
 
     showContextMenu: function(e) {
 
-        var context = new Menu();
-        var selectedLength = this.state.selected.length;
+        var context        = new Menu();
+        var selected       = this.state.selected;
+        var selectedLength = selected.length;
+        var self           = this;
 
         context.append(new MenuItem({ label: selectedLength > 1 ? selectedLength + ' tracks selected' : selectedLength + ' track selected', enabled: false } ));
         context.append(new MenuItem({ type: 'separator' } ));
 
 
-        context.append(new MenuItem({ label: 'Add to queue', click: function() { console.log('add to queue'); } }));
-        context.append(new MenuItem({ label: 'Play next', click: function() { console.log('play next'); } }));
+        context.append(
+            new MenuItem(
+                {
+                    label : 'Add to queue',
+                    click : function() {
+                        var playlist = Instance.state.playlist;
+                        var tracks   = Instance.state.tracks;
+                        var selected =  self.state.selected;
+
+                        for(var i = 0; i < selectedLength; i++) {
+                            playlist.push(tracks[selected[i]]);
+                        }
+
+                        Instance.setState({ playlist : playlist });
+                    }
+                }));
+        context.append(
+            new MenuItem(
+                {
+                    label : 'Play next',
+                    click : function() {
+                        var playlist = Instance.state.playlist;
+                        var tracks   = Instance.state.tracks;
+                        var selected = self.state.selected;
+
+                        /* do the same but with play next */
+                        for(var i = 0; i < selectedLength; i++) {
+                            playlist.push(tracks[selected[i]]);
+                        }
+
+                        Instance.setState({ playlist : playlist });
+                    }
+                }));
 
         context.popup(remote.getCurrentWindow());
     }
