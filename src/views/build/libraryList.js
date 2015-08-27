@@ -212,7 +212,6 @@ var LibraryListItems = React.createClass({displayName: "LibraryListItems",
                     click : function() {
                         var playlist = Instance.state.playlist;
                         var tracks   = Instance.state.tracks;
-                        var selected =  self.state.selected;
 
                         for(var i = 0; i < selectedLength; i++) {
                             playlist.push(tracks[selected[i]]);
@@ -228,11 +227,16 @@ var LibraryListItems = React.createClass({displayName: "LibraryListItems",
                     click : function() {
                         var playlist = Instance.state.playlist;
                         var tracks   = Instance.state.tracks;
-                        var selected = self.state.selected;
+                        var cursor   = Instance.state.playlistCursor;
 
-                        /* do the same but with play next */
                         for(var i = 0; i < selectedLength; i++) {
-                            playlist.push(tracks[selected[i]]);
+
+                            playlist = React.addons.update(
+                                playlist,
+                                {$splice: [
+                                    [cursor + 1, 0, tracks[selected[selectedLength - i - 1]]]]
+                                }
+                            );
                         }
 
                         Instance.setState({ playlist : playlist });
@@ -242,7 +246,3 @@ var LibraryListItems = React.createClass({displayName: "LibraryListItems",
         context.popup(remote.getCurrentWindow());
     }
 });
-
-/* remove duplicate from array */
-/* play next button */
-/* add to queue while no song is played */
