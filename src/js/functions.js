@@ -23,7 +23,7 @@ var parseDuration = function (duration) {
 
 
 /**
- * Sort an array of int by ASC or DESC
+ * Sort an array of int by ASC or DESC, then remove all duplicates
  *
  * @param array  array of int to be sorted
  * @param string 'asc' or 'desc' depending of the sort needed
@@ -43,5 +43,12 @@ var simpleSort = function(array, sorting) {
         });
     }
 
-    return array;
+    var result = [];
+    array.forEach(function(item) {
+         if(result.indexOf(item) < 0) {
+             result.push(item);
+         }
+    });
+
+    return result;
 };

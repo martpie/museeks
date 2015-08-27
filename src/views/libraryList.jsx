@@ -135,7 +135,7 @@ var LibraryListItems = React.createClass({
             if(e.ctrlKey) { // add a track in selected tracks
                 var selected = this.state.selected;
                 selected.push(index);
-                simpleSort(selected, 'asc');
+                selected = simpleSort(selected, 'asc');
                 this.setState({ selected : selected });
             }
             else if (e.shiftKey) { // add multiple tracks in selected tracks
@@ -158,7 +158,7 @@ var LibraryListItems = React.createClass({
                             }
                         }
 
-                        simpleSort(selected, 'asc');
+                        selected = simpleSort(selected, 'asc');
                         self.setState({ selected : selected });
                         break;
                     default:
@@ -182,7 +182,7 @@ var LibraryListItems = React.createClass({
                             }
                         }
 
-                        simpleSort(newSelected, 'asc');
+                        newSelected = simpleSort(newSelected, 'asc');
                         self.setState({ selected : newSelected });
                         break;
                 }
@@ -204,7 +204,6 @@ var LibraryListItems = React.createClass({
 
         context.append(new MenuItem({ label: selectedLength > 1 ? selectedLength + ' tracks selected' : selectedLength + ' track selected', enabled: false } ));
         context.append(new MenuItem({ type: 'separator' } ));
-
 
         context.append(
             new MenuItem(
@@ -243,3 +242,7 @@ var LibraryListItems = React.createClass({
         context.popup(remote.getCurrentWindow());
     }
 });
+
+/* remove duplicate from array */
+/* play next button */
+/* add to queue while no song is played */
