@@ -25,11 +25,14 @@ Please consider **this app is under development, just install it for fun**, I'm 
 
 ### To-do list
 
-##### general
+##### on-deck
 
 - [ ] refactor once it's frozen
 - [ ] move from JST to babel (see [there](http://facebook.github.io/react/blog/2015/06/12/deprecating-jstransform-and-react-tools.html))
 - [ ] use es6 classes instead of React.createClass()
+
+##### general
+- [x] shortcuts & global shortcuts
 
 ##### settings view
 - [ ] freeze settings list
@@ -47,8 +50,8 @@ Please consider **this app is under development, just install it for fun**, I'm 
 - [x] auto-read next track
 - [x] next/previous button
 - [x] list next tracks
-- [ ] manage next tracks
-- [ ] random
+- [ ] manage next tracks (on the road)
+- [ ] shuffle
 - [ ] loop
 
 ##### nice to have
@@ -56,3 +59,4 @@ Please consider **this app is under development, just install it for fun**, I'm 
 - [ ] add languages support
 - [ ] auto-updater from Github releases
 - [ ] playlists
+- [ ] async search
