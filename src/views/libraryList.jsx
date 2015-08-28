@@ -67,6 +67,35 @@ var LibraryListItems = React.createClass({
         };
     },
 
+    mixins: [ReactKeybinding],
+
+    keybindingsPlatformAgnostic: true,
+
+    keybindings: {
+        'up'    : 'up',
+        'down'  : 'down',
+        'enter' : 'enter'
+    },
+
+    keybinding: function(e, action) {
+
+        e.preventDefault();
+
+        switch(action) {
+            case 'up':
+                this.cursorUp();
+                break;
+            case 'down':
+                this.cursorDown();
+                break;
+            case 'enter':
+                var selected = this.state.selected;
+                if(selected != null && selected.length >= 1) {
+                    Instance.selectAndPlay(Math.min.apply(Math, selected));
+                }
+        }
+    },
+
     render: function() {
 
         var self           = this;
@@ -244,5 +273,25 @@ var LibraryListItems = React.createClass({
                 }));
 
         context.popup(remote.getCurrentWindow());
+    },
+
+    cursorUp: function () {
+
+        var selected = this.state.selected;
+
+        if(selected != null && selected.length >= 1) {
+            var selected = [Math.min.apply(Math, selected) - 1];
+            if(selected >= 0) this.setState({ selected : selected });
+        }
+    },
+
+    cursorDown: function () {
+
+        var selected = this.state.selected;
+
+        if(selected != null && selected.length >= 1) {
+            var selected = [Math.max.apply(Math, selected) + 1];
+            if(selected < this.props.tracks.length) this.setState({ selected : selected });
+        }
     }
 });
