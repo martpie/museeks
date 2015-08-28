@@ -56,12 +56,12 @@ var simpleSort = function(array, sorting) {
 
 
 /**
- * Suffle an array with the Fisher–Yates Shuffle algorythm (http://bost.ocks.org/mike/shuffle/)
+ * Suffle an array with the Fisher–Yates Shuffle algorithm (http://bost.ocks.org/mike/shuffle/)
  *
  * @param array the array to be shuffled
  * @return array
  */
-function shuffle(array) {
+var shuffle = function(array) {
     var m = array.length, t, i;
 
     // While there remain elements to shuffle…
@@ -77,4 +77,4 @@ function shuffle(array) {
     }
 
     return array;
-}
+};
