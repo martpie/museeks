@@ -37,7 +37,42 @@ var Museeks = React.createClass({displayName: "Museeks",
     },
 
     componentWillMount: function () {
+
+        // Register global shorcuts
+        var shortcuts = {};
+
+        shortcuts.play = globalShortcut.register('MediaPlayPause', function () {
+            Instance.player.playToggle();
+        });
+
+        shortcuts.previous = globalShortcut.register('MediaPreviousTrack', function () {
+            Instance.player.previous();
+        });
+
+        shortcuts.previous = globalShortcut.register('MediaNextTrack', function () {
+            Instance.player.next();
+        });
+
+        // Refresh the library
         this.refreshLibrary();
+    },
+
+    mixins: [ReactKeybinding],
+
+    keybindingsPlatformAgnostic: true,
+
+    keybindings: {
+        'space': 'space'
+    },
+
+    keybinding: function(e, action) {
+        e.preventDefault();
+
+        switch(action) {
+            case 'space':
+                Instance.player.playToggle();
+                break;
+        }
     },
 
     render: function () {
@@ -148,14 +183,17 @@ var Museeks = React.createClass({displayName: "Museeks",
 
     player: {
 
+        playToggle: function () {
+            if(audio.paused && Instance.state.playlist !== null) {
+                Instance.player.play();
+            } else {
+                Instance.player.pause();
+            }
+        },
+
         play: function () {
 
-            if(Instance.state.playlist == null) {
-
-                // nothing here
-
-            } else {
-
+            if(Instance.state.playlist !== null) {
                 Instance.setState({ playerStatus: 'play' });
                 audio.play();
             }
