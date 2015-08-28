@@ -62,10 +62,11 @@ var Museeks = React.createClass({
     keybindingsPlatformAgnostic: true,
 
     keybindings: {
-        'space': 'space'
+        'space' : 'space'
     },
 
     keybinding: function(e, action) {
+
         e.preventDefault();
 
         switch(action) {
