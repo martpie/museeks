@@ -13,7 +13,8 @@ var remote = require('remote');
 var dialog         = remote.require('dialog'),
     app            = remote.require('app'),
     Menu           = remote.require('menu'),
-    MenuItem       = remote.require('menu-item');
+    MenuItem       = remote.require('menu-item'),
+    globalShortcut = remote.require('global-shortcut');
 
 var fs     = require('fs'),
     path   = require('path'),
@@ -29,6 +30,10 @@ var React           = require('react'),
     ReactKeyBinding = require('react-keybinding'),
     ReactBootstrap  = require('react-bootstrap');
 */
+
+var ReactKeybinding = require('react-keybinding');
+
+
 
 /*
 |--------------------------------------------------------------------------
