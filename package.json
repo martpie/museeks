@@ -17,6 +17,9 @@
     "musicmetadata": "^2.0.0",
     "nconf": "^0.7.2",
     "nedb": "^1.1.3",
+    "react": "^0.13.3",
+    "react-bootstrap": "^0.25.0",
+    "react-keybinding": "^2.0.0",
     "walk": "^2.3.9"
   },
   "devDependencies": {

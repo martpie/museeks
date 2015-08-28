@@ -24,6 +24,11 @@ var fs     = require('fs'),
     mmd    = require('musicmetadata');
 
 
+/* Investigate why performance are poor with that
+var React           = require('react'),
+    ReactKeyBinding = require('react-keybinding'),
+    ReactBootstrap  = require('react-bootstrap');
+*/
 
 /*
 |--------------------------------------------------------------------------

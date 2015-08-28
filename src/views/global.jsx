@@ -8,7 +8,7 @@
 |--------------------------------------------------------------------------
 */
 
-var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
+// nothing here anymore for the moment
 
 
 
