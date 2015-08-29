@@ -15,6 +15,7 @@ html, body {
 body {
     font-family: OpenSans;
     border: 1px solid rgb(182, 182, 182);
+    -webkit-font-smoothing: antialiased;
 }
 
 * {
@@ -76,7 +77,7 @@ header {
 }
 
 header .player-controls,
-header .now-playing-bar,
+header .now-playing__bar,
 header .search > input,
 header .window-control,
 header .playlist-controls {
@@ -141,69 +142,39 @@ header .playlist-controls {
 header {
     border-bottom: 1px solid rgb(210, 210, 210);
     background-color: rgb(244, 244, 244);
-}
 
-header .win-controls {
-    float: left;
-    font-size: 20px;
-}
-
-header .win-controls .btn-link {
-    transition: all .2s ease-in-out;
-}
-
-header .win-controls .btn-link:hover,
-header .win-controls .btn-link:focus,
-header .win-controls .btn-link:active {
-    text-decoration: none;
-}
-
-header .win-controls .btn-link:active {
-    background-color: #DFDFDF;
-    border: solid 1px #B8B8B8;
-}
-
-header .win-control .win-close {
-    line-height: 22px;
-}
-
-header .now-playing {
     padding: 10px;
+
+    /* center all elements in the header vertically */
+    display: flex;
+    align-items: center;
 }
 
-header .volume-control {
-    position: absolute;
-    z-index: 10;
-    background-color: rgb(244, 244, 244);
-    top: 0;
-    right: 40px;
-    display: none;
-    padding: 5px 12px;
+.window-controls {
+    float: left;
+    margin-right: 30px;
 }
 
-header .volume-control.visible {
-    display: block;
-}
-
-header .volume-control input[type=range] {
-    width: 100px;
-    height: 20px;
+.window-controls__button {
+    width: 30px;
+    height: 30px;
+    border-radius: 3px;
+    font-size: 18px;
+    color: rgba(0,0,0,0.3);
+    border: 0;
+    transition: all .2s ease-in-out;
+    text-align: center;
+    line-height: 22px;
     background-color: transparent;
 }
 
-header .now-playing .artist,
-header .now-playing .album,
-header .now-playing .title {
-    font-weight: bold;
-}
-
-header .now-playing .duration {
+.now-playing__info-duration {
     display: inline-block;
     margin-left: 10px;
     font-size: 10px;
 }
 
-header .track-info-metas {
+.now-playing__info-meta {
     display: inline-block;
     max-width: 80%;
     white-space: nowrap;
@@ -213,7 +184,7 @@ header .track-info-metas {
     width: 380px;
 }
 
-header .progress {
+.now-playing__bar .progress {
     height: 5px;
     margin-bottom: 0;
     margin-top: 5px;
@@ -221,29 +192,61 @@ header .progress {
     background-color: rgb(219, 219, 219);
 }
 
-header .progress-bar {
+.now-playing__bar .progress-bar {
     -webkit-transition: width .0s ease;
     -o-transition: width .0s ease;
     transition: width .0s ease;
 }
 
-header .search {
-    padding: 10px;
+.player-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-header .player-controls {
-    padding: 9px;
-}
-
-header .player-controls .btn.play {
+.player-controls__button {
+    border: 0;
+    background: transparent;
     font-size: 20px;
-    padding-top: 0;
-    padding-bottom: 0;
 }
 
-header .playlist-controls {
-    padding: 9px;
-    position: relative;
+.player-controls__button i {
+    display: flex;
+    align-items: center;
+}
+
+.player-controls__button--play {
+    font-size: 26px;
+}
+
+.player-controls__button--highlight {
+    color: #337ab7;
+}
+
+.volume-control {
+    position: absolute;
+    z-index: 10;
+    background-color: rgb(244, 244, 244);
+    top: 0;
+    right: 40px;
+    display: none;
+    padding: 5px 12px;
+}
+
+.volume-control input[type=range] {
+    width: 100px;
+    height: 20px;
+    background-color: transparent;
+}
+
+.volume-control--visible {
+    display: block;
+}
+
+.playlist-controls__button {
+    border: 0;
+    background: transparent;
+    font-size: 18px;
 }
 
 header .playlist-controls .playlist {
@@ -257,8 +260,9 @@ header .playlist-controls .playlist {
     font-size: 12px;
     z-index: 10;
     color: grey;
-    left: -230px;
-    top: 45px;
+    left: -250px;
+    top: 30px;
+    box-shadow: 0 5px 10px -5px rgba(0,0,0,0.5);
 }
 
 header .playlist-controls .playlist.visible {

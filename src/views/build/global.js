@@ -32,7 +32,8 @@ var Museeks = React.createClass({displayName: "Museeks",
             view              :  defaultView, // The actual view
             playerStatus      : 'stop', // Player status
             notifications     :  {},     // The array of notifications
-            refreshingLibrary :  false   // If the app is currently refreshing the app
+            refreshingLibrary :  false,   // If the app is currently refreshing the app
+            repeat            :  false    // the current repeat state (one, all, false) 
         };
     },
 
@@ -93,7 +94,12 @@ var Museeks = React.createClass({displayName: "Museeks",
 
         return (
             React.createElement("div", {className: 'main'}, 
-                React.createElement(Header, {playerStatus:  this.state.playerStatus, playlist:  this.state.playlist, playlistCursor:  this.state.playlistCursor}), 
+                React.createElement(Header, {
+                    playerStatus:  this.state.playerStatus, 
+                    repeat:  this.state.repeat, 
+                    playlist:  this.state.playlist, 
+                    playlistCursor:  this.state.playlistCursor}
+                ), 
                 React.createElement("div", {className: 'main-content'}, 
                     React.createElement("div", {className: 'alerts-container'}, 
                         React.createElement("div", null, 
@@ -210,8 +216,19 @@ var Museeks = React.createClass({displayName: "Museeks",
 
             if(e !== undefined) e.target.removeEventListener(e.type);
 
-            var playlist           = Instance.state.playlist;
-            var newPlaylistCursor  = Instance.state.playlistCursor + 1;
+            var playlist = Instance.state.playlist;
+
+            if(Instance.state.repeat === 'one') {
+                newPlaylistCursor = Instance.state.playlistCursor;
+            } else if (
+                Instance.state.repeat === 'all' && 
+                Instance.state.playlistCursor === playlist.length - 1 // is last track
+            ) {
+                newPlaylistCursor = 0; // start with new track
+            } else {
+                var newPlaylistCursor  = Instance.state.playlistCursor + 1;
+            }
+
 
             if (playlist[newPlaylistCursor] !== undefined) {
 
@@ -267,6 +284,24 @@ var Museeks = React.createClass({displayName: "Museeks",
                 tracks        :  null,
                 trackPlaying  :  null,
             });
+        },
+
+        toggleRepeat: function () {
+
+            var repeatState = Instance.state.repeat;
+            var newRepeatState;
+
+            if(repeatState === 'all') {
+                newRepeatState = 'one';
+            } else if (repeatState === 'one') {
+                newRepeatState = false;
+            } else if (repeatState === false) {
+                newRepeatState = 'all';
+            }
+
+            Instance.setState({
+                repeat: newRepeatState
+            });
         }
     }
 });
@@ -292,41 +327,63 @@ var Header = React.createClass({displayName: "Header",
 
         if (this.props.playerStatus == 'play') {
             var playButton = (
-                React.createElement(Button, {bsSize: "small", bsStyle: "link", className: 'play', onClick:  this.pause}, 
-                    React.createElement("i", {className: 'fa fa-fw fa-pause'})
+                React.createElement("button", {className: 'player-controls__button player-controls__button--play', onClick:  this.pause}, 
+                    React.createElement("i", {className: 'pf pf-pause'})
                 )
             );
         } else if (this.props.playerStatus == 'pause') {
             var playButton = (
-                React.createElement(Button, {bsSize: "small", bsStyle: "link", className: 'play', onClick:  this.play}, 
-                    React.createElement("i", {className: 'fa fa-fw fa-play'})
+                React.createElement("button", {className: 'player-controls__button player-controls__button--play', onClick:  this.play}, 
+                    React.createElement("i", {className: 'pf pf-play'})
                 )
             );
         } else {
             var playButton = (
-                React.createElement(Button, {bsSize: "small", bsStyle: "link", className: 'play'}, 
-                    React.createElement("i", {className: 'fa fa-fw fa-play'})
+                React.createElement("button", {className: 'player-controls__button player-controls__button--play'}, 
+                    React.createElement("i", {className: 'pf pf-play'})
+                )
+            );
+        }
+
+        if (this.props.repeat == 'one') {
+            var repeatButton = (
+                React.createElement("button", {className: 'player-controls__button player-controls__button--highlight', onClick:  this.toggleRepeat}, 
+                    React.createElement("i", {className: 'pf pf-repeat-one'})
+                )
+            );
+        } else if (this.props.repeat === 'all') {
+            var repeatButton = (
+                React.createElement("button", {className: 'player-controls__button player-controls__button--highlight', onClick:  this.toggleRepeat}, 
+                    React.createElement("i", {className: 'pf pf-repeat'})
+                )
+            );
+        } else {
+            var repeatButton = (
+                React.createElement("button", {className: 'player-controls__button', onClick:  this.toggleRepeat}, 
+                    React.createElement("i", {className: 'pf pf-repeat'})
                 )
             );
         }
 
         return (
             React.createElement("header", {className: 'row'}, 
-                React.createElement(Col, {sm: 3, className: 'player-controls text-center'}, 
-                    React.createElement(ButtonGroup, {className: 'win-controls'}, 
-                        React.createElement(Button, {bsSize: "small", bsStyle: "link", className: 'win-close', onClick:  this.win.close}, "×")
+                React.createElement(Col, {sm: 3}, 
+                    React.createElement("div", {className: 'window-controls'}, 
+                        React.createElement("button", {className: 'window-controls__button', onClick:  this.win.close}, "×")
                     ), 
-                    React.createElement(ButtonGroup, null, 
-                        React.createElement(Button, {bsSize: "small", bsStyle: "link", onClick:  this.previous}, 
-                            React.createElement("i", {className: 'fa fa-fw fa-backward'})
+
+                    React.createElement("div", {className: 'player-controls text-center'}, 
+                         repeatButton, 
+                        React.createElement("button", {type: "button", className: 'player-controls__button player-controls__button--rewind', onClick:  this.previous}, 
+                            React.createElement("i", {className: 'pf pf-rewind'})
                         ), 
                          playButton, 
-                        React.createElement(Button, {bsSize: "small", bsStyle: "link", onClick:  this.next}, 
-                            React.createElement("i", {className: 'fa fa-fw fa-forward'})
+                        React.createElement("button", {type: "button", className: 'player-controls__button player-controls__button--fast-forward', onClick:  this.next}, 
+                            React.createElement("i", {className: 'pf pf-fast-forward'})
                         ), 
-                        React.createElement(Button, {bsSize: "small", bsStyle: "link", className: 'volume-control-holder', onMouseEnter:  this.showVolume, onMouseLeave:  this.hideVolume}, 
-                            React.createElement("i", {className: 'fa fa-fw fa-volume-up'}), 
-                            React.createElement("div", {className:  this.state.showVolume ? 'volume-control visible' : 'volume-control'}, 
+                        React.createElement("button", {type: "button", className: 'player-controls__button player-controls__button--volume-control', onMouseEnter:  this.showVolume, onMouseLeave:  this.hideVolume}, 
+                            React.createElement("i", {className: 'pf pf-volume'}), 
+                            React.createElement("div", {className:  this.state.showVolume ? 'volume-control volume-control--visible' : 'volume-control'}, 
                                 React.createElement("input", {type: 'range', min: '0', max: '100', onChange:  this.setVolume})
                             )
                         )
@@ -339,7 +396,7 @@ var Header = React.createClass({displayName: "Header",
                     )
                 ), 
                 React.createElement(Col, {sm: 1, className: 'playlist-controls'}, 
-                    React.createElement(Button, {bsSize: "small", bsStyle: "link", className: 'show-playlist', onClick:  this.togglePlaylist}, 
+                    React.createElement("button", {type: "button", className: 'playlist-controls__button', onClick:  this.togglePlaylist}, 
                         React.createElement("i", {className: 'fa fa-fw fa-list'})
                     ), 
                     React.createElement(PlayList, {
@@ -390,6 +447,10 @@ var Header = React.createClass({displayName: "Header",
 
     pause: function () {
         Instance.player.pause();
+    },
+
+    toggleRepeat: function () {
+        Instance.player.toggleRepeat();
     },
 
     next: function () {
@@ -545,26 +606,26 @@ var PlayingBar = React.createClass({displayName: "PlayingBar",
 
             playingBar = (
                 React.createElement("div", {className: 'now-playing'}, 
-                    React.createElement("div", {className: 'track-info'}, 
-                        React.createElement("div", {className: 'track-info-metas'}, 
-                            React.createElement("span", {className: 'title'}, 
+                    React.createElement("div", {className: 'now-playing__info'}, 
+                        React.createElement("div", {className: 'now-playing__info-meta'}, 
+                            React.createElement("strong", {className: 'now-playing__info-meta-title'}, 
                                  trackPlaying.title
                             ), 
                             " by ", 
-                            React.createElement("span", {className: 'artist'}, 
+                            React.createElement("strong", {className: 'now-playing__info-meta-artist'}, 
                                  trackPlaying.artist.join(', ') 
                             ), 
                             " on ", 
-                            React.createElement("span", {className: 'album'}, 
+                            React.createElement("strong", {className: 'now-playing__info-meta-album'}, 
                                  trackPlaying.album
                             )
                         ), 
 
-                        React.createElement("span", {className: 'duration'}, 
+                        React.createElement("span", {className: 'now-playing__info-duration'}, 
                              parseDuration(parseInt(this.state.elapsed)), " / ",  parseDuration(parseInt(trackPlaying.duration)) 
                         )
                     ), 
-                    React.createElement("div", {className: 'now-playing-bar'}, 
+                    React.createElement("div", {className: 'now-playing__bar'}, 
                         React.createElement(ProgressBar, {now:  elapsedPercent, onMouseDown:  this.jumpAudioTo})
                     )
                 )
@@ -595,7 +656,7 @@ var PlayingBar = React.createClass({displayName: "PlayingBar",
         var playlistCursor = this.props.playlistCursor;
         var trackPlaying   = playlist[playlistCursor];
 
-        var bar = document.querySelector('.now-playing-bar');
+        var bar = document.querySelector('.now-playing__bar');
         var percent = ((e.pageX - (bar.offsetLeft + bar.offsetParent.offsetLeft)) / bar.offsetWidth) * 100;
 
         var jumpTo = (percent * trackPlaying.duration) / 100;
