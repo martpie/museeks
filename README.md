@@ -20,6 +20,8 @@ Please consider **this app is under development, just install it for fun**, I'm 
 - `bower install && npm install`
 - Run Electron
 
+===
+
 ### Contribute
 
 As switching to Babel is on the road, JSTransform is still used for the moment. Using the command line, on the app folder:
@@ -60,7 +62,7 @@ Then commit and PR :)
 - [x] next/previous button
 - [x] list next tracks
 - [ ] manage next tracks (on the road)
-- [ ] shuffle
+- [x] shuffle
 - [ ] loop
 
 ##### nice to have
