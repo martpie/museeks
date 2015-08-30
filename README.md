@@ -20,6 +20,14 @@ Please consider **this app is under development, just install it for fun**, I'm 
 - `bower install && npm install`
 - Run Electron
 
+### Contribute
+
+As switching to Babel is on the road, JSTransform is still used for the moment. Using the command line, on the app folder:
+```bash
+jsx --watch --extension jsx src/views src/views/build
+```
+
+Then commit and PR :)
 
 ===
 
@@ -33,6 +41,7 @@ Please consider **this app is under development, just install it for fun**, I'm 
 
 ##### general
 - [x] shortcuts & global shortcuts
+- [ ] have a real development stack to generate views, scss, etc...
 
 ##### settings view
 - [ ] freeze settings list
