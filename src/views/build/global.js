@@ -31,8 +31,9 @@ var Museeks = React.createClass({displayName: "Museeks",
             playlistCursor    :  null, // The cursor of the playlist
             view              :  defaultView, // The actual view
             playerStatus      : 'stop', // Player status
-            notifications     :  {},     // The array of notifications
-            refreshingLibrary :  false   // If the app is currently refreshing the app
+            notifications     :  {},    // The array of notifications
+            refreshingLibrary :  false, // If the app is currently refreshing the app
+            shuffle           :  false  // If shuffle mode is enabled
         };
     },
 
@@ -93,7 +94,12 @@ var Museeks = React.createClass({displayName: "Museeks",
 
         return (
             React.createElement("div", {className: 'main'}, 
-                React.createElement(Header, {playerStatus:  this.state.playerStatus, playlist:  this.state.playlist, playlistCursor:  this.state.playlistCursor}), 
+                React.createElement(Header, {
+                    playerStatus:  this.state.playerStatus, 
+                    playlist:  this.state.playlist, 
+                    playlistCursor:  this.state.playlistCursor, 
+                    shuffle:  this.state.shuffle}
+                ), 
                 React.createElement("div", {className: 'main-content'}, 
                     React.createElement("div", {className: 'alerts-container'}, 
                         React.createElement("div", null, 
@@ -335,12 +341,15 @@ var Header = React.createClass({displayName: "Header",
                 React.createElement(Col, {sm: 6, className: 'text-center'}, 
                     React.createElement(PlayingBar, {
                         playlist:  this.props.playlist, 
-                        playlistCursor:  this.props.playlistCursor}
+                        playlistCursor:  this.props.playlistCursor, 
+                        shuffle:  this.props.shuffle}
                     )
                 ), 
                 React.createElement(Col, {sm: 1, className: 'playlist-controls'}, 
-                    React.createElement(Button, {bsSize: "small", bsStyle: "link", className: 'show-playlist', onClick:  this.togglePlaylist}, 
-                        React.createElement("i", {className: 'fa fa-fw fa-list'})
+                    React.createElement(ButtonGroup, null, 
+                        React.createElement(Button, {bsSize: "small", bsStyle: "link", className: 'show-playlist', onClick:  this.togglePlaylist}, 
+                            React.createElement("i", {className: 'fa fa-fw fa-list'})
+                        )
                     ), 
                     React.createElement(PlayList, {
                         showPlaylist:  this.state.showPlaylist, 
@@ -476,7 +485,11 @@ var PlayList = React.createClass({displayName: "PlayList",
         return (
             React.createElement("div", {className:  this.props.showPlaylist ? 'playlist visible text-left' : 'playlist text-left'}, 
                 React.createElement("div", {className: 'playlist-header'}, 
-                    React.createElement(Button, {bsSize: "xsmall", bsStyle: "default", className: 'empty-button', onClick:  this.clearPlaylist}, "clear queue")
+                    React.createElement(ButtonGroup, null, 
+                        React.createElement(Button, {bsSize: 'xsmall', bsStyle: 'default', className: 'empty-button', onClick:  this.clearPlaylist}, 
+                            "clear queue"
+                        )
+                    )
                 ), 
                 React.createElement("div", {className: 'playlist-body'}, 
                      playlistContent 
@@ -545,8 +558,15 @@ var PlayingBar = React.createClass({displayName: "PlayingBar",
 
             playingBar = (
                 React.createElement("div", {className: 'now-playing'}, 
-                    React.createElement("div", {className: 'track-info'}, 
-                        React.createElement("div", {className: 'track-info-metas'}, 
+                    React.createElement(Row, {className: 'track-info'}, 
+                        React.createElement(Col, {sm: '2', className: 'text-left'}, 
+                            React.createElement(ButtonGroup, {className: 'player-options'}, 
+                                React.createElement(Button, {bsSize: 'xsmall', bsStyle: 'link', className:  this.props.shuffle ? 'shuffle enabled' : 'shuffle', onClick:  this.shuffle}, 
+                                    React.createElement("i", {className: 'fa fa-fw fa-random'})
+                                )
+                            )
+                        ), 
+                        React.createElement(Col, {sm: '8', className: 'track-info-metas'}, 
                             React.createElement("span", {className: 'title'}, 
                                  trackPlaying.title
                             ), 
@@ -559,9 +579,10 @@ var PlayingBar = React.createClass({displayName: "PlayingBar",
                                  trackPlaying.album
                             )
                         ), 
-
-                        React.createElement("span", {className: 'duration'}, 
-                             parseDuration(parseInt(this.state.elapsed)), " / ",  parseDuration(parseInt(trackPlaying.duration)) 
+                        React.createElement(Col, {sm: '2'}, 
+                            React.createElement("span", {className: 'duration'}, 
+                                 parseDuration(parseInt(this.state.elapsed)), " / ",  parseDuration(parseInt(trackPlaying.duration)) 
+                            )
                         )
                     ), 
                     React.createElement("div", {className: 'now-playing-bar'}, 
@@ -576,7 +597,7 @@ var PlayingBar = React.createClass({displayName: "PlayingBar",
 
     componentDidMount: function() {
 
-        if (this.props.nowPlayin !== null) this.timer = setInterval(this.tick, 150);
+        this.timer = setInterval(this.tick, 350);
     },
 
     componentWillUnmount: function() {
@@ -601,6 +622,12 @@ var PlayingBar = React.createClass({displayName: "PlayingBar",
         var jumpTo = (percent * trackPlaying.duration) / 100;
 
         audio.currentTime = jumpTo;
+    },
+
+    shuffle: function () {
+
+        var shuffle = this.props.shuffle ? false : true;
+        Instance.setState({ shuffle : shuffle });
     }
 });
 
