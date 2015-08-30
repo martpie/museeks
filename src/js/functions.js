@@ -52,29 +52,3 @@ var simpleSort = function(array, sorting) {
 
     return result;
 };
-
-
-
-/**
- * Suffle an array with the Fisher–Yates Shuffle algorithm (http://bost.ocks.org/mike/shuffle/)
- *
- * @param array the array to be shuffled
- * @return array
- */
-var shuffle = function(array) {
-    var m = array.length, t, i;
-
-    // While there remain elements to shuffle…
-    while (m) {
-
-        // Pick a remaining element…
-        i = Math.floor(Math.random() * m--);
-
-        // And swap it with the current element.
-        t = array[m];
-        array[m] = array[i];
-        array[i] = t;
-    }
-
-    return array;
-};
