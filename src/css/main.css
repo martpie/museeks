@@ -191,6 +191,20 @@ header .volume-control input[type=range] {
     background-color: transparent;
 }
 
+header .now-playing .player-options {
+    -webkit-app-region: no-drag;
+}
+
+header .now-playing .player-options .shuffle {
+    font-size: 12px;
+    margin: 0;
+    padding: 0;
+}
+
+header .now-playing .player-options .shuffle.enabled {
+    color: #459CE7;
+}
+
 header .now-playing .artist,
 header .now-playing .album,
 header .now-playing .title {
@@ -205,12 +219,19 @@ header .now-playing .duration {
 
 header .track-info-metas {
     display: inline-block;
-    max-width: 80%;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
     vertical-align: middle;
-    width: 380px;
+}
+
+header .track-info.row {
+    margin: 0;
+}
+
+header .track-info.row > * {
+    padding-right: 0;
+    padding-left: 0;
 }
 
 header .progress {

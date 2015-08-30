@@ -31,8 +31,9 @@ var Museeks = React.createClass({
             playlistCursor    :  null, // The cursor of the playlist
             view              :  defaultView, // The actual view
             playerStatus      : 'stop', // Player status
-            notifications     :  {},     // The array of notifications
-            refreshingLibrary :  false   // If the app is currently refreshing the app
+            notifications     :  {},    // The array of notifications
+            refreshingLibrary :  false, // If the app is currently refreshing the app
+            shuffle           :  false  // If shuffle mode is enabled
         };
     },
 
@@ -93,7 +94,12 @@ var Museeks = React.createClass({
 
         return (
             <div className={'main'}>
-                <Header playerStatus={ this.state.playerStatus } playlist={ this.state.playlist } playlistCursor={ this.state.playlistCursor } />
+                <Header
+                    playerStatus={ this.state.playerStatus }
+                    playlist={ this.state.playlist }
+                    playlistCursor={ this.state.playlistCursor }
+                    shuffle={ this.state.shuffle }
+                />
                 <div className={'main-content'}>
                     <div className={'alerts-container'}>
                         <div>
@@ -336,12 +342,15 @@ var Header = React.createClass({
                     <PlayingBar
                         playlist={ this.props.playlist }
                         playlistCursor={ this.props.playlistCursor }
+                        shuffle={ this.props.shuffle }
                     />
                 </Col>
                 <Col sm={1} className={'playlist-controls'}>
-                    <Button bsSize='small' bsStyle='link' className={'show-playlist'} onClick={ this.togglePlaylist }>
-                        <i className={'fa fa-fw fa-list'}></i>
-                    </Button>
+                    <ButtonGroup>
+                        <Button bsSize='small' bsStyle='link' className={'show-playlist'} onClick={ this.togglePlaylist }>
+                            <i className={'fa fa-fw fa-list'}></i>
+                        </Button>
+                    </ButtonGroup>
                     <PlayList
                         showPlaylist={ this.state.showPlaylist }
                         playlist={ this.props.playlist }
@@ -476,7 +485,11 @@ var PlayList = React.createClass({
         return (
             <div className={ this.props.showPlaylist ? 'playlist visible text-left' : 'playlist text-left' }>
                 <div className={'playlist-header'}>
-                    <Button bsSize='xsmall' bsStyle='default' className={'empty-button'} onClick={ this.clearPlaylist }>clear queue</Button>
+                    <ButtonGroup>
+                        <Button bsSize={'xsmall'} bsStyle={'default'} className={'empty-button'} onClick={ this.clearPlaylist }>
+                            clear queue
+                        </Button>
+                    </ButtonGroup>
                 </div>
                 <div className={'playlist-body'}>
                     { playlistContent }
@@ -545,8 +558,15 @@ var PlayingBar = React.createClass({
 
             playingBar = (
                 <div className={'now-playing'}>
-                    <div className={'track-info'}>
-                        <div className={'track-info-metas'}>
+                    <Row className={'track-info'}>
+                        <Col sm={'2'} className={'text-left'}>
+                            <ButtonGroup className={'player-options'}>
+                                <Button bsSize={'xsmall'} bsStyle={'link'} className={ this.props.shuffle ? 'shuffle enabled' : 'shuffle' } onClick={ this.shuffle }>
+                                    <i className={'fa fa-fw fa-random'}></i>
+                                </Button>
+                            </ButtonGroup>
+                        </Col>
+                        <Col sm={'8'} className={'track-info-metas'}>
                             <span className={'title'}>
                                 { trackPlaying.title }
                             </span>
@@ -558,12 +578,13 @@ var PlayingBar = React.createClass({
                             <span className={'album'}>
                                 { trackPlaying.album }
                             </span>
-                        </div>
-
-                        <span className={'duration'}>
-                            { parseDuration(parseInt(this.state.elapsed)) } / { parseDuration(parseInt(trackPlaying.duration)) }
-                        </span>
-                    </div>
+                        </Col>
+                        <Col sm={'2'}>
+                            <span className={'duration'}>
+                                { parseDuration(parseInt(this.state.elapsed)) } / { parseDuration(parseInt(trackPlaying.duration)) }
+                            </span>
+                        </Col>
+                    </Row>
                     <div className={'now-playing-bar'}>
                         <ProgressBar now={ elapsedPercent } onMouseDown={ this.jumpAudioTo } />
                     </div>
@@ -576,7 +597,7 @@ var PlayingBar = React.createClass({
 
     componentDidMount: function() {
 
-        if (this.props.nowPlayin !== null) this.timer = setInterval(this.tick, 150);
+        this.timer = setInterval(this.tick, 350);
     },
 
     componentWillUnmount: function() {
@@ -601,6 +622,12 @@ var PlayingBar = React.createClass({
         var jumpTo = (percent * trackPlaying.duration) / 100;
 
         audio.currentTime = jumpTo;
+    },
+
+    shuffle: function () {
+
+        var shuffle = this.props.shuffle ? false : true;
+        Instance.setState({ shuffle : shuffle });
     }
 });
 
