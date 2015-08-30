@@ -626,8 +626,43 @@ var PlayingBar = React.createClass({displayName: "PlayingBar",
 
     shuffle: function () {
 
-        var shuffle = this.props.shuffle ? false : true;
-        Instance.setState({ shuffle : shuffle });
+        if(!this.props.shuffle) {
+
+            // Let's shuffle that
+            var playlist       = this.props.playlist.slice();
+            var playlistCursor = this.props.playlistCursor;
+
+            var firstTrack = playlist[playlistCursor];
+
+            var m = playlist.length, t, i;
+            while (m) {
+
+                // Pick a remaining element…
+                i = Math.floor(Math.random() * m--);
+
+                // And swap it with the current element.
+                t = playlist[m];
+                playlist[m] = playlist[i];
+                playlist[i] = t;
+            }
+
+            playlist.unshift(firstTrack);
+
+            Instance.setState({
+                playlist : playlist,
+                shuffle  : true,
+                playlistCursor : 0
+            });
+
+        } else {
+
+            // Let's put it back
+            Instance.selectAndPlay(this.props.playlistCursor);
+
+            Instance.setState({
+                shuffle  : false
+            });
+        }
     }
 });
 
