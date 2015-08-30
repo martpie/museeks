@@ -291,6 +291,13 @@ header .playlist-controls .playlist-header {
     background-color: rgb(244, 244, 244);
 }
 
+header .playlist-controls .playlist-header .playlist-infos {
+    float: right;
+    font-size: 11px;
+    padding-top: 1px;
+    padding-bottom: 1px;
+}
+
 header .playlist-controls .playlist-body {
     max-height: 250px;
     overflow: auto;

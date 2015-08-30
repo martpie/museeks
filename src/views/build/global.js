@@ -454,6 +454,13 @@ var PlayList = React.createClass({displayName: "PlayList",
 
         var queue = playlist.slice(playlistCursor + 1, playlistCursor + 21); // Get the 20 next tracks displayed
 
+        var wholeQueue = playlist.slice(playlistCursor + 1);
+        var wholeQueueDuration = 0;
+
+        for(var i = 0; i < wholeQueue.length; i++) {
+            wholeQueueDuration += wholeQueue[i].duration;
+        }
+
         if(queue.length == 0) {
             return playlistContent = (
                 React.createElement("div", {className:  this.props.showPlaylist ? 'playlist visible text-left' : 'playlist text-left'}, 
@@ -485,6 +492,9 @@ var PlayList = React.createClass({displayName: "PlayList",
         return (
             React.createElement("div", {className:  this.props.showPlaylist ? 'playlist visible text-left' : 'playlist text-left'}, 
                 React.createElement("div", {className: 'playlist-header'}, 
+                    React.createElement("div", {className: 'playlist-infos'}, 
+                         wholeQueue.length, " tracks, ",  parseDuration(wholeQueueDuration) 
+                    ), 
                     React.createElement(ButtonGroup, null, 
                         React.createElement(Button, {bsSize: 'xsmall', bsStyle: 'default', className: 'empty-button', onClick:  this.clearPlaylist}, 
                             "clear queue"
