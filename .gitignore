@@ -1,4 +1,4 @@
 node_modules/
 src/components/
-src/views/build/.module-cache/
+src/views/build
 cache/
