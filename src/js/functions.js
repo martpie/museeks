@@ -11,13 +11,16 @@
  * @return string
  */
 var parseDuration = function (duration) {
-    var min = parseInt(duration / 60); // If the output has miliseconds, it does not matter, modulo is not important
-    var sec = duration - 60 * min;
 
-    sec = parseInt(sec);
-    if(sec < 10) sec = ('0' + sec).slice(-2);
+    var hours   = parseInt(duration / 3600) % 24;
+    var minutes = parseInt(duration / 60) % 60;
+    var seconds = parseInt(duration % 60);
 
-    return min + ':' + sec;
+    hours = hours < 10 ? "0" + hours : hours;
+    var result = hours > 0 ? hours + ':' : '';
+        result += (minutes < 10 ? "0" + minutes : minutes) + ":" + (seconds  < 10 ? "0" + seconds : seconds);
+
+    return result;
 };
 
 
@@ -51,30 +54,4 @@ var simpleSort = function(array, sorting) {
     });
 
     return result;
-};
-
-
-
-/**
- * Suffle an array with the Fisher–Yates Shuffle algorithm (http://bost.ocks.org/mike/shuffle/)
- *
- * @param array the array to be shuffled
- * @return array
- */
-var shuffle = function(array) {
-    var m = array.length, t, i;
-
-    // While there remain elements to shuffle…
-    while (m) {
-
-        // Pick a remaining element…
-        i = Math.floor(Math.random() * m--);
-
-        // And swap it with the current element.
-        t = array[m];
-        array[m] = array[i];
-        array[i] = t;
-    }
-
-    return array;
 };

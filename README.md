@@ -17,9 +17,20 @@ Please consider **this app is under development, just install it for fun**, I'm 
 - Download [Electron](https://github.com/atom/electron/releases)
 - Download Museeks source code
 - Put it in a folder called `app` in `[Electron path]/resources`
-- `bower install && npm install`
+- `bower install && npm install && gulp`
 - Run Electron
 
+===
+
+### Contribute
+
+```bash
+gulp
+```
+
+Gulp will watch for .jsx and .scss files changes.
+
+Then commit and PR :)
 
 ===
 
@@ -33,6 +44,7 @@ Please consider **this app is under development, just install it for fun**, I'm 
 
 ##### general
 - [x] shortcuts & global shortcuts
+- [x] have a real development stack to generate views, scss, etc...
 
 ##### settings view
 - [ ] freeze settings list
@@ -51,7 +63,7 @@ Please consider **this app is under development, just install it for fun**, I'm 
 - [x] next/previous button
 - [x] list next tracks
 - [ ] manage next tracks (on the road)
-- [ ] shuffle
+- [x] shuffle
 - [ ] loop
 
 ##### nice to have
