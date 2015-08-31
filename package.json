@@ -27,6 +27,7 @@
     "gulp": "^3.9.0",
     "gulp-consolidate": "^0.1.2",
     "gulp-iconfont": "^4.0.1",
+    "gulp-sass": "^2.0.4",
     "lodash": "^3.10.1"
   }
 }
