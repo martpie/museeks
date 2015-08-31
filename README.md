@@ -44,7 +44,7 @@ Then commit and PR :)
 
 ##### general
 - [x] shortcuts & global shortcuts
-- [ ] have a real development stack to generate views, scss, etc...
+- [x] have a real development stack to generate views, scss, etc...
 
 ##### settings view
 - [ ] freeze settings list
