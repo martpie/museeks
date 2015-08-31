@@ -1,5 +1,6 @@
 var gulp = require('gulp');
 
+var react       = require('gulp-react')
 var sass        = require('gulp-sass');
 var iconfont    = require('gulp-iconfont');
 var consolidate = require('gulp-consolidate');
@@ -9,12 +10,42 @@ var sassOptions =    {
     outputStyle: 'expanded'
 };
 
+
+
+/*
+|--------------------------------------------------------------------------
+| React
+|--------------------------------------------------------------------------
+*/
+
+gulp.task('react', function () {
+    return gulp.src('./src/views/*.jsx')
+        .pipe(react())
+        .pipe(gulp.dest('./src/dist/jsx'));
+});
+
+
+
+/*
+|--------------------------------------------------------------------------
+| Styles
+|--------------------------------------------------------------------------
+*/
+
 gulp.task('styles', function () {
     return gulp
         .src('./src/styles/*.scss')
         .pipe(sass(sassOptions).on('error', sass.logError))
-        .pipe(gulp.dest('./src/css'));
+        .pipe(gulp.dest('./src/dist/css'));
 });
+
+
+
+/*
+|--------------------------------------------------------------------------
+| Fonts
+|--------------------------------------------------------------------------
+*/
 
 gulp.task('font', function() {
     return gulp
@@ -37,12 +68,20 @@ gulp.task('font', function() {
 
             gulp.src('src/styles/templates/player-font.css')
                 .pipe(consolidate('lodash', options))
-                .pipe(gulp.dest('src/css/'));
+                .pipe(gulp.dest('./src/dist/css/'));
         })
         .pipe(gulp.dest('src/fonts/'));
 });
 
-// Watch task(s)
-gulp.task('default', ['styles', 'font'], function() {
+
+
+/*
+|--------------------------------------------------------------------------
+| Watch Tasks
+|--------------------------------------------------------------------------
+*/
+
+gulp.task('default', ['react', 'styles', 'font'], function() {
     gulp.watch('./src/styles/*.scss',['styles']);
+    gulp.watch('./src/views/*.jsx',['react']);
 });
