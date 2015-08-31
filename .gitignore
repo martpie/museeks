@@ -1,5 +1,4 @@
 node_modules/
 src/components/
-src/views/build
-src/css
+src/dist
 cache/
