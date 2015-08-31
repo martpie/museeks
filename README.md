@@ -24,10 +24,11 @@ Please consider **this app is under development, just install it for fun**, I'm 
 
 ### Contribute
 
-As switching to Babel is on the road, JSTransform is still used for the moment. Using the command line, on the app folder:
 ```bash
-jsx --watch --extension jsx src/views src/views/build
+gulp
 ```
+
+Gulp will watch for .jsx and .scss files changes.
 
 Then commit and PR :)
 
