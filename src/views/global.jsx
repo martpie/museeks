@@ -33,7 +33,8 @@ var Museeks = React.createClass({
             playerStatus      : 'stop', // Player status
             notifications     :  {},     // The array of notifications
             refreshingLibrary :  false,   // If the app is currently refreshing the app
-            repeat            :  false    // the current repeat state (one, all, false) 
+            repeat            :  false,    // the current repeat state (one, all, false) 
+            shuffle           :  false  // If shuffle mode is enabled
         };
     },
 
@@ -97,6 +98,7 @@ var Museeks = React.createClass({
                 <Header 
                     playerStatus={ this.state.playerStatus } 
                     repeat={ this.state.repeat } 
+                    shuffle={ this.state.shuffle }
                     playlist={ this.state.playlist } 
                     playlistCursor={ this.state.playlistCursor } 
                 />
@@ -284,24 +286,6 @@ var Museeks = React.createClass({
                 tracks        :  null,
                 trackPlaying  :  null,
             });
-        },
-
-        toggleRepeat: function () {
-
-            var repeatState = Instance.state.repeat;
-            var newRepeatState;
-
-            if(repeatState === 'all') {
-                newRepeatState = 'one';
-            } else if (repeatState === 'one') {
-                newRepeatState = false;
-            } else if (repeatState === false) {
-                newRepeatState = 'all';
-            }
-
-            Instance.setState({
-                repeat: newRepeatState
-            });
         }
     }
 });
@@ -345,26 +329,6 @@ var Header = React.createClass({
             );
         }
 
-        if (this.props.repeat == 'one') {
-            var repeatButton = (
-                <button className={'player-controls__button player-controls__button--highlight'} onClick={ this.toggleRepeat }>
-                    <i className={'pf pf-repeat-one'}></i>
-                </button>
-            );
-        } else if (this.props.repeat === 'all') {
-            var repeatButton = (
-                <button className={'player-controls__button player-controls__button--highlight'} onClick={ this.toggleRepeat }>
-                    <i className={'pf pf-repeat'}></i>
-                </button>
-            );
-        } else {
-            var repeatButton = (
-                <button className={'player-controls__button'} onClick={ this.toggleRepeat }>
-                    <i className={'pf pf-repeat'}></i>
-                </button>
-            );
-        }
-
         return (
             <header className={'row'}>
                 <Col sm={3}>
@@ -373,7 +337,7 @@ var Header = React.createClass({
                     </div>
 
                     <div className={'player-controls text-center'}>
-                        { repeatButton }
+                        
                         <button type="button" className={'player-controls__button player-controls__button--rewind'} onClick={ this.previous }>
                             <i className={'pf pf-rewind'}></i>
                         </button>
@@ -393,6 +357,8 @@ var Header = React.createClass({
                     <PlayingBar
                         playlist={ this.props.playlist }
                         playlistCursor={ this.props.playlistCursor }
+                        shuffle={ this.props.shuffle }
+                        repeat={ this.props.repeat }
                     />
                 </Col>
                 <Col sm={1} className={'playlist-controls'}>
@@ -506,6 +472,13 @@ var PlayList = React.createClass({
 
         var queue = playlist.slice(playlistCursor + 1, playlistCursor + 21); // Get the 20 next tracks displayed
 
+        var wholeQueue = playlist.slice(playlistCursor + 1);
+        var wholeQueueDuration = 0;
+
+        for(var i = 0; i < wholeQueue.length; i++) {
+            wholeQueueDuration += wholeQueue[i].duration;
+        }
+
         if(queue.length == 0) {
             return playlistContent = (
                 <div className={ this.props.showPlaylist ? 'playlist visible text-left' : 'playlist text-left' }>
@@ -537,7 +510,14 @@ var PlayList = React.createClass({
         return (
             <div className={ this.props.showPlaylist ? 'playlist visible text-left' : 'playlist text-left' }>
                 <div className={'playlist-header'}>
-                    <Button bsSize='xsmall' bsStyle='default' className={'empty-button'} onClick={ this.clearPlaylist }>clear queue</Button>
+                    <div className={'playlist-infos'}>
+                        { wholeQueue.length } tracks, { parseDuration(wholeQueueDuration) }
+                    </div>
+                    <ButtonGroup>
+                        <Button bsSize={'xsmall'} bsStyle={'default'} className={'empty-button'} onClick={ this.clearPlaylist }>
+                            clear queue
+                        </Button>
+                    </ButtonGroup>
                 </div>
                 <div className={'playlist-body'}>
                     { playlistContent }
@@ -597,16 +577,20 @@ var PlayingBar = React.createClass({
         var playingBar;
 
         if(playlistCursor === null) {
-
             playingBar = <div></div>;
-
         } else {
 
-            if(this.state.elapsed < trackPlaying.duration && audio.paused === false) var elapsedPercent = this.state.elapsed * 100 / trackPlaying.duration;
+            if(this.state.elapsed < trackPlaying.duration && audio.paused === false) {
+                var elapsedPercent = this.state.elapsed * 100 / trackPlaying.duration;
+            }
 
             playingBar = (
                 <div className={'now-playing'}>
                     <div className={'now-playing__info'}>
+                        <div className={'now-playing__info-buttons'}>
+                            <RepeatButton repeat={ this.props.repeat }></RepeatButton>
+                            <ShuffleButton shuffle={ this.props.shuffle }></ShuffleButton>
+                        </div>
                         <div className={'now-playing__info-meta'}>
                             <strong className={'now-playing__info-meta-title'}>
                                 { trackPlaying.title }
@@ -637,7 +621,7 @@ var PlayingBar = React.createClass({
 
     componentDidMount: function() {
 
-        if (this.props.nowPlayin !== null) this.timer = setInterval(this.tick, 150);
+        this.timer = setInterval(this.tick, 350);
     },
 
     componentWillUnmount: function() {
@@ -665,6 +649,133 @@ var PlayingBar = React.createClass({
     }
 });
 
+
+
+/*
+|--------------------------------------------------------------------------
+| ShuffleButton
+|--------------------------------------------------------------------------
+*/
+
+var ShuffleButton = React.createClass({
+
+    shuffle: function () {
+
+        if(!this.props.shuffle) {
+
+            // Let's shuffle that
+            var playlist       = this.props.playlist.slice();
+            var playlistCursor = this.props.playlistCursor;
+
+            var firstTrack = playlist[playlistCursor];
+
+            var m = playlist.length, t, i;
+            while (m) {
+
+                // Pick a remaining element…
+                i = Math.floor(Math.random() * m--);
+
+                // And swap it with the current element.
+                t = playlist[m];
+                playlist[m] = playlist[i];
+                playlist[i] = t;
+            }
+
+            playlist.unshift(firstTrack);
+
+            Instance.setState({
+                playlist : playlist,
+                shuffle  : true,
+                playlistCursor : 0
+            });
+
+        } else {
+
+            // Let's put it back
+            Instance.selectAndPlay(this.props.playlistCursor);
+
+            Instance.setState({
+                shuffle  : false
+            });
+        }
+    },
+
+    render: function () {
+
+        var shuffleButton = <button></button>;
+
+        if(this.props.shuffle) {
+            shuffleButton = (
+                <button type="button" className={ 'now-playing__info-button' } onClick={ this.shuffle }>
+                    <i className={'pf pf-shuffle'}></i>
+                </button>
+            );
+        } else {
+            shuffleButton = (
+                <button type="button" className={ 'now-playing__info-button now-playing__info-button--highlight' } onClick={ this.shuffle }>
+                    <i className={'pf pf-shuffle'}></i>
+                </button>
+            );
+        }
+
+        return shuffleButton;
+    }
+});
+
+
+/*
+|--------------------------------------------------------------------------
+| RepeatButton
+|--------------------------------------------------------------------------
+*/
+
+var RepeatButton = React.createClass({
+
+    render: function () {
+
+        var repeatButton = <button></button>;
+
+        if (this.props.repeat == 'one') {
+            repeatButton = (
+                <button className={'now-playing__info-button now-playing__info-button--highlight'} onClick={ this.toggleRepeat }>
+                    <i className={'pf pf-repeat-one'}></i>
+                </button>
+            );
+        } else if (this.props.repeat === 'all') {
+            repeatButton = (
+                <button className={'now-playing__info-button now-playing__info-button--highlight'} onClick={ this.toggleRepeat }>
+                    <i className={'pf pf-repeat'}></i>
+                </button>
+            );
+        } else {
+            repeatButton = (
+                <button className={'now-playing__info-button'} onClick={ this.toggleRepeat }>
+                    <i className={'pf pf-repeat'}></i>
+                </button>
+            );
+        }
+
+        return repeatButton;
+    },
+
+    toggleRepeat: function () {
+
+        var repeatState = Instance.state.repeat;
+        var newRepeatState;
+
+        if(repeatState === 'all') {
+            newRepeatState = 'one';
+        } else if (repeatState === 'one') {
+            newRepeatState = false;
+        } else if (repeatState === false) {
+            newRepeatState = 'all';
+        }
+
+        Instance.setState({
+            repeat: newRepeatState
+        });
+    }
+});
 
 
 /*
