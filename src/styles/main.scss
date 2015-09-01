@@ -280,13 +280,13 @@ header {
     z-index: 10;
     background-color: rgb(244, 244, 244);
     top: 0;
-    right: 50px;
+    left: 50px;
     display: none;
     padding: 4px 12px;
 }
 
 .volume-control input[type=range] {
-    width: 90px;
+    width: 88px;
     height: 20px;
     background-color: transparent;
 }
