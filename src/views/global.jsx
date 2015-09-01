@@ -31,9 +31,9 @@ var Museeks = React.createClass({
             playlistCursor    :  null, // The cursor of the playlist
             view              :  defaultView, // The actual view
             playerStatus      : 'stop', // Player status
-            notifications     :  {},     // The array of notifications
-            refreshingLibrary :  false,   // If the app is currently refreshing the app
-            repeat            :  false,    // the current repeat state (one, all, false)
+            notifications     :  {},    // The array of notifications
+            refreshingLibrary :  false, // If the app is currently refreshing the app
+            repeat            :  false, // the current repeat state (one, all, false)
             shuffle           :  false  // If shuffle mode is enabled
         };
     },
@@ -588,8 +588,8 @@ var PlayingBar = React.createClass({
                 <div className={'now-playing'}>
                     <div className={'now-playing__info'}>
                         <div className={'now-playing__info-buttons'}>
-                            <RepeatButton repeat={ this.props.repeat }></RepeatButton>
-                            <ShuffleButton playlist={ this.props.playlist } shuffle={ this.props.shuffle }></ShuffleButton>
+                            <RepeatButton repeat={ this.props.repeat } />
+                            <ShuffleButton playlist={ this.props.playlist } shuffle={ this.props.shuffle } />
                         </div>
                         <div className={'now-playing__info-meta'}>
                             <strong className={'now-playing__info-meta-title'}>
@@ -663,7 +663,7 @@ var ShuffleButton = React.createClass({
 
         var shuffleButton = <button></button>;
 
-        if(this.props.shuffle) {
+        if(!this.props.shuffle) {
             shuffleButton = (
                 <button type="button" className={ 'now-playing__info-button' } onClick={ this.shuffle }>
                     <i className={'pf pf-shuffle'}></i>
@@ -685,8 +685,8 @@ var ShuffleButton = React.createClass({
         if(!this.props.shuffle) {
 
             // Let's shuffle that
-            var playlist       = this.props.playlist.slice();
-            var playlistCursor = this.props.playlistCursor;
+            var playlist       = Instance.state.playlist.slice();
+            var playlistCursor = Instance.state.playlistCursor;
 
             var firstTrack = playlist[playlistCursor];
 
@@ -713,7 +713,7 @@ var ShuffleButton = React.createClass({
         } else {
 
             // Let's put it back
-            Instance.selectAndPlay(this.props.playlistCursor);
+            Instance.selectAndPlay(Instance.state.playlistCursor);
 
             Instance.setState({
                 shuffle  : false
