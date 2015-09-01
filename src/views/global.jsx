@@ -31,8 +31,9 @@ var Museeks = React.createClass({
             playlistCursor    :  null, // The cursor of the playlist
             view              :  defaultView, // The actual view
             playerStatus      : 'stop', // Player status
-            notifications     :  {},    // The array of notifications
-            refreshingLibrary :  false, // If the app is currently refreshing the app
+            notifications     :  {},     // The array of notifications
+            refreshingLibrary :  false,   // If the app is currently refreshing the app
+            repeat            :  false,    // the current repeat state (one, all, false) 
             shuffle           :  false  // If shuffle mode is enabled
         };
     },
@@ -94,11 +95,12 @@ var Museeks = React.createClass({
 
         return (
             <div className={'main'}>
-                <Header
-                    playerStatus={ this.state.playerStatus }
-                    playlist={ this.state.playlist }
-                    playlistCursor={ this.state.playlistCursor }
+                <Header 
+                    playerStatus={ this.state.playerStatus } 
+                    repeat={ this.state.repeat } 
                     shuffle={ this.state.shuffle }
+                    playlist={ this.state.playlist } 
+                    playlistCursor={ this.state.playlistCursor } 
                 />
                 <div className={'main-content'}>
                     <div className={'alerts-container'}>
@@ -216,8 +218,19 @@ var Museeks = React.createClass({
 
             if(e !== undefined) e.target.removeEventListener(e.type);
 
-            var playlist           = Instance.state.playlist;
-            var newPlaylistCursor  = Instance.state.playlistCursor + 1;
+            var playlist = Instance.state.playlist;
+
+            if(Instance.state.repeat === 'one') {
+                newPlaylistCursor = Instance.state.playlistCursor;
+            } else if (
+                Instance.state.repeat === 'all' && 
+                Instance.state.playlistCursor === playlist.length - 1 // is last track
+            ) {
+                newPlaylistCursor = 0; // start with new track
+            } else {
+                var newPlaylistCursor  = Instance.state.playlistCursor + 1;
+            }
+
 
             if (playlist[newPlaylistCursor] !== undefined) {
 
@@ -298,59 +311,60 @@ var Header = React.createClass({
 
         if (this.props.playerStatus == 'play') {
             var playButton = (
-                <Button bsSize="small" bsStyle='link' className={'play'} onClick={ this.pause }>
-                    <i className={'fa fa-fw fa-pause'}></i>
-                </Button>
+                <button className={'player-controls__button player-controls__button--play'} onClick={ this.pause }>
+                    <i className={'pf pf-pause'}></i>
+                </button>
             );
         } else if (this.props.playerStatus == 'pause') {
             var playButton = (
-                <Button bsSize="small" bsStyle='link' className={'play'} onClick={ this.play }>
-                    <i className={'fa fa-fw fa-play'}></i>
-                </Button>
+                <button className={'player-controls__button player-controls__button--play'} onClick={ this.play }>
+                    <i className={'pf pf-play'}></i>
+                </button>
             );
         } else {
             var playButton = (
-                <Button bsSize="small" bsStyle='link' className={'play'}>
-                    <i className={'fa fa-fw fa-play'}></i>
-                </Button>
+                <button className={'player-controls__button player-controls__button--play'}>
+                    <i className={'pf pf-play'}></i>
+                </button>
             );
         }
 
         return (
             <header className={'row'}>
-                <Col sm={3} className={'player-controls text-center'}>
-                    <ButtonGroup className={'win-controls'}>
-                        <Button bsSize='small' bsStyle='link' className={'win-close'} onClick={ this.win.close }>&times;</Button>
-                    </ButtonGroup>
-                    <ButtonGroup>
-                        <Button bsSize='small' bsStyle='link' onClick={ this.previous }>
-                            <i className={'fa fa-fw fa-backward'}></i>
-                        </Button>
+                <Col sm={3}>
+                    <div className={'window-controls'}>
+                        <button className={'window-controls__button'} onClick={ this.win.close }>&times;</button>
+                    </div>
+
+                    <div className={'player-controls text-center'}>
+                        
+                        <button type="button" className={'player-controls__button player-controls__button--rewind'} onClick={ this.previous }>
+                            <i className={'pf pf-rewind'}></i>
+                        </button>
                         { playButton }
-                        <Button bsSize="small" bsStyle='link' onClick={ this.next }>
-                            <i className={'fa fa-fw fa-forward'}></i>
-                        </Button>
-                        <Button bsSize='small' bsStyle='link' className={'volume-control-holder'} onMouseEnter={ this.showVolume } onMouseLeave={ this.hideVolume }>
-                            <i className={'fa fa-fw fa-volume-up'}></i>
-                            <div className={ this.state.showVolume ? 'volume-control visible' : 'volume-control' }>
+                        <button type="button" className={'player-controls__button player-controls__button--fast-forward'} onClick={ this.next }>
+                            <i className={'pf pf-fast-forward'}></i>
+                        </button>
+                        <button type="button" className={'player-controls__button player-controls__button--volume-control'} onMouseEnter={ this.showVolume } onMouseLeave={ this.hideVolume }>
+                            <i className={'pf pf-volume'}></i>
+                            <div className={ this.state.showVolume ? 'volume-control volume-control--visible' : 'volume-control' }>
                                 <input type={'range'} min={'0'} max={'100'} onChange={ this.setVolume } />
                             </div>
-                        </Button>
-                    </ButtonGroup>
+                        </button>
+                    </div>
                 </Col>
                 <Col sm={6} className={'text-center'}>
                     <PlayingBar
                         playlist={ this.props.playlist }
                         playlistCursor={ this.props.playlistCursor }
                         shuffle={ this.props.shuffle }
+                        repeat={ this.props.repeat }
                     />
                 </Col>
                 <Col sm={1} className={'playlist-controls'}>
-                    <ButtonGroup>
-                        <Button bsSize='small' bsStyle='link' className={'show-playlist'} onClick={ this.togglePlaylist }>
-                            <i className={'fa fa-fw fa-list'}></i>
-                        </Button>
-                    </ButtonGroup>
+                    <button type="button" className={'playlist-controls__button'} onClick={ this.togglePlaylist }>
+                        <i className={'fa fa-fw fa-list'}></i>
+                    </button>
                     <PlayList
                         showPlaylist={ this.state.showPlaylist }
                         playlist={ this.props.playlist }
@@ -399,6 +413,10 @@ var Header = React.createClass({
 
     pause: function () {
         Instance.player.pause();
+    },
+
+    toggleRepeat: function () {
+        Instance.player.toggleRepeat();
     },
 
     next: function () {
@@ -559,43 +577,39 @@ var PlayingBar = React.createClass({
         var playingBar;
 
         if(playlistCursor === null) {
-
             playingBar = <div></div>;
-
         } else {
 
-            if(this.state.elapsed < trackPlaying.duration && audio.paused === false) var elapsedPercent = this.state.elapsed * 100 / trackPlaying.duration;
+            if(this.state.elapsed < trackPlaying.duration && audio.paused === false) {
+                var elapsedPercent = this.state.elapsed * 100 / trackPlaying.duration;
+            }
 
             playingBar = (
                 <div className={'now-playing'}>
-                    <Row className={'track-info'}>
-                        <Col sm={'2'} className={'text-left'}>
-                            <ButtonGroup className={'player-options'}>
-                                <Button bsSize={'xsmall'} bsStyle={'link'} className={ this.props.shuffle ? 'shuffle enabled' : 'shuffle' } onClick={ this.shuffle }>
-                                    <i className={'fa fa-fw fa-random'}></i>
-                                </Button>
-                            </ButtonGroup>
-                        </Col>
-                        <Col sm={'8'} className={'track-info-metas'}>
-                            <span className={'title'}>
+                    <div className={'now-playing__info'}>
+                        <div className={'now-playing__info-buttons'}>
+                            <RepeatButton repeat={ this.props.repeat }></RepeatButton>
+                            <ShuffleButton playlist={ this.props.playlist } shuffle={ this.props.shuffle }></ShuffleButton>
+                        </div>
+                        <div className={'now-playing__info-meta'}>
+                            <strong className={'now-playing__info-meta-title'}>
                                 { trackPlaying.title }
-                            </span>
+                            </strong>
                             &nbsp;by&nbsp;
-                            <span className={'artist'}>
+                            <strong className={'now-playing__info-meta-artist'}>
                                 { trackPlaying.artist.join(', ') }
-                            </span>
+                            </strong>
                             &nbsp;on&nbsp;
-                            <span className={'album'}>
+                            <strong className={'now-playing__info-meta-album'}>
                                 { trackPlaying.album }
-                            </span>
-                        </Col>
-                        <Col sm={'2'}>
-                            <span className={'duration'}>
-                                { parseDuration(parseInt(this.state.elapsed)) } / { parseDuration(parseInt(trackPlaying.duration)) }
-                            </span>
-                        </Col>
-                    </Row>
-                    <div className={'now-playing-bar'}>
+                            </strong>
+                        </div>
+
+                        <span className={'now-playing__info-duration'}>
+                            { parseDuration(parseInt(this.state.elapsed)) } / { parseDuration(parseInt(trackPlaying.duration)) }
+                        </span>
+                    </div>
+                    <div className={'now-playing__bar'}>
                         <ProgressBar now={ elapsedPercent } onMouseDown={ this.jumpAudioTo } />
                     </div>
                 </div>
@@ -626,12 +640,44 @@ var PlayingBar = React.createClass({
         var playlistCursor = this.props.playlistCursor;
         var trackPlaying   = playlist[playlistCursor];
 
-        var bar = document.querySelector('.now-playing-bar');
+        var bar = document.querySelector('.now-playing__bar');
         var percent = ((e.pageX - (bar.offsetLeft + bar.offsetParent.offsetLeft)) / bar.offsetWidth) * 100;
 
         var jumpTo = (percent * trackPlaying.duration) / 100;
 
         audio.currentTime = jumpTo;
+    }
+});
+
+
+
+/*
+|--------------------------------------------------------------------------
+| ShuffleButton
+|--------------------------------------------------------------------------
+*/
+
+var ShuffleButton = React.createClass({
+
+    render: function () {
+
+        var shuffleButton = <button></button>;
+
+        if(this.props.shuffle) {
+            shuffleButton = (
+                <button type="button" className={ 'now-playing__info-button' } onClick={ this.shuffle }>
+                    <i className={'pf pf-shuffle'}></i>
+                </button>
+            );
+        } else {
+            shuffleButton = (
+                <button type="button" className={ 'now-playing__info-button now-playing__info-button--highlight' } onClick={ this.shuffle }>
+                    <i className={'pf pf-shuffle'}></i>
+                </button>
+            );
+        }
+
+        return shuffleButton;
     },
 
     shuffle: function () {
@@ -676,6 +722,60 @@ var PlayingBar = React.createClass({
     }
 });
 
+
+/*
+|--------------------------------------------------------------------------
+| RepeatButton
+|--------------------------------------------------------------------------
+*/
+
+var RepeatButton = React.createClass({
+
+    render: function () {
+
+        var repeatButton = <button></button>;
+
+        if (this.props.repeat == 'one') {
+            repeatButton = (
+                <button className={'now-playing__info-button now-playing__info-button--highlight'} onClick={ this.toggleRepeat }>
+                    <i className={'pf pf-repeat-one'}></i>
+                </button>
+            );
+        } else if (this.props.repeat === 'all') {
+            repeatButton = (
+                <button className={'now-playing__info-button now-playing__info-button--highlight'} onClick={ this.toggleRepeat }>
+                    <i className={'pf pf-repeat'}></i>
+                </button>
+            );
+        } else {
+            repeatButton = (
+                <button className={'now-playing__info-button'} onClick={ this.toggleRepeat }>
+                    <i className={'pf pf-repeat'}></i>
+                </button>
+            );
+        }
+
+        return repeatButton;
+    },
+
+    toggleRepeat: function () {
+
+        var repeatState = Instance.state.repeat;
+        var newRepeatState;
+
+        if(repeatState === 'all') {
+            newRepeatState = 'one';
+        } else if (repeatState === 'one') {
+            newRepeatState = false;
+        } else if (repeatState === false) {
+            newRepeatState = 'all';
+        }
+
+        Instance.setState({
+            repeat: newRepeatState
+        });
+    }
+});
 
 
 /*

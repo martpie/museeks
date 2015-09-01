@@ -56,7 +56,7 @@ gulp.task('font', function() {
             formats: ['ttf', 'eot', 'woff'],
             timestamp: Math.round(Date.now()/1000)
         }))
-        .on('glyphs', function(glyphs, options) {
+        .on('glyphs', function(glyphs) {
             var options = {
                 glyphs: glyphs.map(function(glyph) {
                     return { name: glyph.name, codepoint: glyph.unicode[0].charCodeAt(0) };
@@ -70,7 +70,7 @@ gulp.task('font', function() {
                 .pipe(consolidate('lodash', options))
                 .pipe(gulp.dest('./src/dist/css/'));
         })
-        .pipe(gulp.dest('src/fonts/'));
+        .pipe(gulp.dest('src/dist/fonts/'));
 });
 
 
