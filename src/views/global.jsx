@@ -688,6 +688,9 @@ var ShuffleButton = React.createClass({
             var playlist       = Instance.state.playlist.slice();
             var playlistCursor = Instance.state.playlistCursor;
 
+            // Let's backup that
+            this.oldPlaylistCursor = playlistCursor;
+
             var firstTrack = playlist[playlistCursor];
 
             var m = playlist.length, t, i;
@@ -705,18 +708,19 @@ var ShuffleButton = React.createClass({
             playlist.unshift(firstTrack);
 
             Instance.setState({
-                playlist : playlist,
-                shuffle  : true,
+                shuffle        : true,
+                playlist       : playlist,
                 playlistCursor : 0
             });
 
         } else {
 
-            // Let's put it back
-            Instance.selectAndPlay(Instance.state.playlistCursor);
+            var oldPlaylistCursor = this.oldPlaylistCursor;
 
             Instance.setState({
-                shuffle  : false
+                shuffle : false,
+            }, function () {
+                Instance.selectAndPlay(oldPlaylistCursor);
             });
         }
     }
