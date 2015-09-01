@@ -24,13 +24,16 @@ Please consider **this app is under development, just install it for fun**, I'm 
 
 ### Contribute
 
-```bash
-gulp
-```
-
+- fork and clone
+- `bower install && npm install && gulp`
 Gulp will watch for .jsx and .scss files changes.
 
-Then commit and PR :)
+Please respect a few rules:
+- Make the code readable and comment if needed
+- 4 spaces indent !
+- Before making complex stuff, don't hesitate to open an issue first to discuss about it
+
+Then open a PR :)
 
 ===
 
