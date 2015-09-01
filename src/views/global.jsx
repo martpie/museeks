@@ -33,7 +33,7 @@ var Museeks = React.createClass({
             playerStatus      : 'stop', // Player status
             notifications     :  {},     // The array of notifications
             refreshingLibrary :  false,   // If the app is currently refreshing the app
-            repeat            :  false,    // the current repeat state (one, all, false) 
+            repeat            :  false,    // the current repeat state (one, all, false)
             shuffle           :  false  // If shuffle mode is enabled
         };
     },
@@ -95,12 +95,12 @@ var Museeks = React.createClass({
 
         return (
             <div className={'main'}>
-                <Header 
-                    playerStatus={ this.state.playerStatus } 
-                    repeat={ this.state.repeat } 
+                <Header
+                    playerStatus={ this.state.playerStatus }
+                    repeat={ this.state.repeat }
                     shuffle={ this.state.shuffle }
-                    playlist={ this.state.playlist } 
-                    playlistCursor={ this.state.playlistCursor } 
+                    playlist={ this.state.playlist }
+                    playlistCursor={ this.state.playlistCursor }
                 />
                 <div className={'main-content'}>
                     <div className={'alerts-container'}>
@@ -223,7 +223,7 @@ var Museeks = React.createClass({
             if(Instance.state.repeat === 'one') {
                 newPlaylistCursor = Instance.state.playlistCursor;
             } else if (
-                Instance.state.repeat === 'all' && 
+                Instance.state.repeat === 'all' &&
                 Instance.state.playlistCursor === playlist.length - 1 // is last track
             ) {
                 newPlaylistCursor = 0; // start with new track
@@ -337,7 +337,7 @@ var Header = React.createClass({
                     </div>
 
                     <div className={'player-controls text-center'}>
-                        
+
                         <button type="button" className={'player-controls__button player-controls__button--rewind'} onClick={ this.previous }>
                             <i className={'pf pf-rewind'}></i>
                         </button>
@@ -361,7 +361,7 @@ var Header = React.createClass({
                         repeat={ this.props.repeat }
                     />
                 </Col>
-                <Col sm={1} className={'playlist-controls'}>
+                <Col sm={1} className={'playlist-controls text-center'}>
                     <button type="button" className={'playlist-controls__button'} onClick={ this.togglePlaylist }>
                         <i className={'fa fa-fw fa-list'}></i>
                     </button>
