@@ -26,6 +26,10 @@ body {
     -webkit-user-drag: none;
 }
 
+button {
+    outline: none;
+}
+
 /*
 |--------------------------------------------------------------------------
 | General - Customization
@@ -75,11 +79,11 @@ input[type=range] {
 header {
     -webkit-app-region: drag;
 
-    .player-controls, 
-    .now-playing__bar, 
+    .player-controls,
+    .now-playing__bar,
     .now-playing__info-buttons,
-    .search > input, 
-    .window-control, 
+    .search > input,
+    .window-control,
     .playlist-controls {
         -webkit-app-region: no-drag;
     }
@@ -156,6 +160,10 @@ header {
     /* center all elements in the header vertically */
     display: flex;
     align-items: center;
+
+    div[class*="col-"] {
+        padding: 0;
+    }
 }
 
 .window-controls {
@@ -166,7 +174,6 @@ header {
 .window-controls__button {
     width: 30px;
     height: 30px;
-    border-radius: 3px;
     font-size: 18px;
     color: rgba(0,0,0,0.3);
     border: 0;
@@ -174,6 +181,12 @@ header {
     text-align: center;
     line-height: 22px;
     background-color: transparent;
+    -webkit-app-region: no-drag;
+
+    &:active {
+        background-color: #DFDFDF;
+        border: solid 1px #B8B8B8;
+    }
 }
 
 .now-playing__info {
@@ -181,18 +194,31 @@ header {
     align-items: center;
     justify-content: center;
 
-    & > div,
     & .pf {
         display: flex;
         align-items: center;
         justify-content: center;
     }
+
+    & > div.now-playing__info-buttons {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+    }
 }
 
-.now-playing__info-duration {
-    display: inline-block;
-    margin-left: 10px;
-    font-size: 10px;
+.now-playing__info-buttons {
+    min-width: 100px;
+
+    .now-playing__info-button {
+        border: 0;
+        background: transparent;
+        font-size: 18px;
+    }
+
+    .now-playing__info-button--highlight {
+        color: #337ab7;
+    }
 }
 
 .now-playing__info-meta {
@@ -205,18 +231,12 @@ header {
     width: 380px;
 }
 
-.now-playing__info-buttons {
-    align-self: flex-start;
-}
-
-.now-playing__info-button {
-    border: 0;
-    background: transparent;
-    font-size: 18px;
-}
-
-.now-playing__info-button--highlight {
-    color: #337ab7;
+.now-playing__info-duration {
+    display: inline-block;
+    margin-left: 10px;
+    font-size: 10px;
+    min-width: 100px;
+    text-align: right;
 }
 
 .now-playing__bar .progress {
@@ -236,7 +256,8 @@ header {
 .player-controls {
     display: flex;
     align-items: center;
-    justify-content: center;
+    color: #555;
+    margin-top: 2px;
 }
 
 .player-controls__button {
@@ -251,7 +272,7 @@ header {
 }
 
 .player-controls__button--play {
-    font-size: 26px;
+    font-size: 24px;
 }
 
 .volume-control {
@@ -259,13 +280,13 @@ header {
     z-index: 10;
     background-color: rgb(244, 244, 244);
     top: 0;
-    right: 40px;
+    right: 50px;
     display: none;
-    padding: 5px 12px;
+    padding: 4px 12px;
 }
 
 .volume-control input[type=range] {
-    width: 100px;
+    width: 90px;
     height: 20px;
     background-color: transparent;
 }
@@ -277,7 +298,7 @@ header {
 .playlist-controls__button {
     border: 0;
     background: transparent;
-    font-size: 18px;
+    font-size: 14px;
 }
 
 header .playlist-controls .playlist {
@@ -293,7 +314,7 @@ header .playlist-controls .playlist {
     color: grey;
     left: -250px;
     top: 30px;
-    box-shadow: 0 5px 10px -5px rgba(0,0,0,0.5);
+    box-shadow: 0 5px 3px -5px rgba(0, 0, 0, .5);
 }
 
 header .playlist-controls .playlist.visible {
@@ -303,6 +324,13 @@ header .playlist-controls .playlist.visible {
 header .playlist-controls .playlist-header {
     padding: 5px 10px;
     background-color: rgb(244, 244, 244);
+
+    .playlist-infos {
+        float: right;
+        font-size: 11px;
+        padding-top: 1px;
+        padding-bottom: 1px;
+    }
 }
 
 header .playlist-controls .playlist-body {
