@@ -75,7 +75,12 @@ input[type=range] {
 header {
     -webkit-app-region: drag;
 
-    .player-controls, .now-playing-bar, .search > input, .window-control, .playlist-controls {
+    .player-controls, 
+    .now-playing__bar, 
+    .now-playing__info-buttons,
+    .search > input, 
+    .window-control, 
+    .playlist-controls {
         -webkit-app-region: no-drag;
     }
 }

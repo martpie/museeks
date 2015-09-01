@@ -589,7 +589,7 @@ var PlayingBar = React.createClass({
                     <div className={'now-playing__info'}>
                         <div className={'now-playing__info-buttons'}>
                             <RepeatButton repeat={ this.props.repeat }></RepeatButton>
-                            <ShuffleButton shuffle={ this.props.shuffle }></ShuffleButton>
+                            <ShuffleButton playlist={ this.props.playlist } shuffle={ this.props.shuffle }></ShuffleButton>
                         </div>
                         <div className={'now-playing__info-meta'}>
                             <strong className={'now-playing__info-meta-title'}>
@@ -659,6 +659,27 @@ var PlayingBar = React.createClass({
 
 var ShuffleButton = React.createClass({
 
+    render: function () {
+
+        var shuffleButton = <button></button>;
+
+        if(this.props.shuffle) {
+            shuffleButton = (
+                <button type="button" className={ 'now-playing__info-button' } onClick={ this.shuffle }>
+                    <i className={'pf pf-shuffle'}></i>
+                </button>
+            );
+        } else {
+            shuffleButton = (
+                <button type="button" className={ 'now-playing__info-button now-playing__info-button--highlight' } onClick={ this.shuffle }>
+                    <i className={'pf pf-shuffle'}></i>
+                </button>
+            );
+        }
+
+        return shuffleButton;
+    },
+
     shuffle: function () {
 
         if(!this.props.shuffle) {
@@ -698,27 +719,6 @@ var ShuffleButton = React.createClass({
                 shuffle  : false
             });
         }
-    },
-
-    render: function () {
-
-        var shuffleButton = <button></button>;
-
-        if(this.props.shuffle) {
-            shuffleButton = (
-                <button type="button" className={ 'now-playing__info-button' } onClick={ this.shuffle }>
-                    <i className={'pf pf-shuffle'}></i>
-                </button>
-            );
-        } else {
-            shuffleButton = (
-                <button type="button" className={ 'now-playing__info-button now-playing__info-button--highlight' } onClick={ this.shuffle }>
-                    <i className={'pf pf-shuffle'}></i>
-                </button>
-            );
-        }
-
-        return shuffleButton;
     }
 });
 
