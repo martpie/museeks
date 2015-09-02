@@ -145,32 +145,46 @@ var Museeks = React.createClass({
 
     filterSearch: function (search) {
 
-        var library = this.state.library;
-        var tracks  = [];
+        var now  = window.performance.now();
+        var self = this;
 
-        for(var i = 0; i < library.length; i++) {
+        console.log(now - this.lastFilterSearch);
 
-            var track = library[i];
+        if(now - this.lastFilterSearch < 300) {
+            clearTimeout(this.filterSearchTimeOut);
+        }
 
-            if(search != '' && search != undefined) {
+        this.lastFilterSearch = now;
 
-                if(track.lArtist.indexOf(search) === -1
-                    && track.album.toLowerCase().indexOf(search) === -1
-                    && track.genre.join(', ').toLowerCase().indexOf(search) === -1
-                    && track.title.toLowerCase().indexOf(search) === -1) {
+        this.filterSearchTimeOut = setTimeout(function () {
 
-                    continue;
+            var library = self.state.library;
+            var tracks  = [];
+
+            for(var i = 0; i < library.length; i++) {
+
+                var track = library[i];
+
+                if(search != '' && search != undefined) {
+
+                    if(track.lArtist.indexOf(search) === -1
+                        && track.album.toLowerCase().indexOf(search) === -1
+                        && track.genre.join(', ').toLowerCase().indexOf(search) === -1
+                        && track.title.toLowerCase().indexOf(search) === -1) {
+
+                        continue;
+
+                    } else {
+                        tracks.push(track);
+                    }
 
                 } else {
                     tracks.push(track);
                 }
-
-            } else {
-                tracks.push(track);
             }
-        }
 
-        this.setState({ tracks : tracks });
+            self.setState({ tracks : tracks });
+        }, 300);
     },
 
     selectAndPlay: function(id) {
