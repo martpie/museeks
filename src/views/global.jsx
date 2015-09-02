@@ -365,7 +365,7 @@ var Header = React.createClass({
                     <button type="button" className={'playlist-controls__button'} onClick={ this.togglePlaylist }>
                         <i className={'fa fa-fw fa-list'}></i>
                     </button>
-                    <PlayList
+                    <Queue
                         showPlaylist={ this.state.showPlaylist }
                         playlist={ this.props.playlist }
                         playlistCursor={ this.props.playlistCursor }
@@ -455,7 +455,7 @@ var Header = React.createClass({
 |--------------------------------------------------------------------------
 */
 
-var PlayList = React.createClass({
+var Queue = React.createClass({
 
     getInitialState: function () {
 
@@ -727,6 +727,7 @@ var ShuffleButton = React.createClass({
 });
 
 
+
 /*
 |--------------------------------------------------------------------------
 | RepeatButton
@@ -780,6 +781,7 @@ var RepeatButton = React.createClass({
         });
     }
 });
+
 
 
 /*
