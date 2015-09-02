@@ -39,7 +39,9 @@ Then open a PR :)
 
 ### To-do list
 
-##### on-deck
+This list is not limited. Features findable in issues with the `to-do` tag will be achieved first.
+
+##### discussion
 
 - [ ] refactor once it's frozen
 - [ ] move from JST to babel (see [there](http://facebook.github.io/react/blog/2015/06/12/deprecating-jstransform-and-react-tools.html))
