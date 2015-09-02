@@ -67,7 +67,7 @@ Then open a PR :)
 - [x] list next tracks
 - [ ] manage next tracks (on the road)
 - [x] shuffle
-- [ ] loop
+- [x] loop, single-loop
 
 ##### nice to have
 - [ ] themes support
