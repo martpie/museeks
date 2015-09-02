@@ -132,7 +132,7 @@ var Museeks = React.createClass({
         var self = this;
 
         // Sort tracks by Artist -> year -> album -> disk -> track
-        db.find({}).sort({ lArtist: 1, year: 1, album: 1, disk: 1, track: 1 }).exec(function (err, tracks) {
+        db.find({}).sort({ 'lArtist': 1, 'year': 1, 'album': 1, 'disk': 1, 'track.no': 1 }).exec(function (err, tracks) {
             if (err) throw err;
             else {
                 self.setState({
