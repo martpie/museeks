@@ -375,8 +375,8 @@ var Header = React.createClass({
                         repeat={ this.props.repeat }
                     />
                 </Col>
-                <Col sm={1} className={'playlist-controls text-center'}>
-                    <button type="button" className={'playlist-controls__button'} onClick={ this.togglePlaylist }>
+                <Col sm={1} className={'queue-controls text-center'}>
+                    <button type="button" className={'queue-controls__button'} onClick={ this.togglePlaylist }>
                         <i className={'fa fa-fw fa-list'}></i>
                     </button>
                     <Queue
@@ -465,7 +465,7 @@ var Header = React.createClass({
 
 /*
 |--------------------------------------------------------------------------
-| Header - PlayList
+| Header - Queue
 |--------------------------------------------------------------------------
 */
 
@@ -495,8 +495,8 @@ var Queue = React.createClass({
 
         if(queue.length == 0) {
             return playlistContent = (
-                <div className={ this.props.showPlaylist ? 'playlist visible text-left' : 'playlist text-left' }>
-                    <div className={'empty-playlist text-center'}>
+                <div className={ this.props.showPlaylist ? 'queue visible text-left' : 'queue text-left' }>
+                    <div className={'empty-queue text-center'}>
                         queue is empty
                     </div>
                 </div>
@@ -507,7 +507,7 @@ var Queue = React.createClass({
 
                 return (
                     <div key={index} className={'track'} onDoubleClick={ Instance.selectAndPlay.bind(null, self.props.playlistCursor + index + 1) }>
-                        <Button bsSize={'xsmall'} bsStyle={'link'} className={'remove'} onClick={ self.removeFromPlaylist.bind(null, index) }>
+                        <Button bsSize={'xsmall'} bsStyle={'link'} className={'remove'} onClick={ self.removeFromQueue.bind(null, index) }>
                             &times;
                         </Button>
                         <div className={'title'}>
@@ -522,25 +522,25 @@ var Queue = React.createClass({
         }
 
         return (
-            <div className={ this.props.showPlaylist ? 'playlist visible text-left' : 'playlist text-left' }>
-                <div className={'playlist-header'}>
-                    <div className={'playlist-infos'}>
+            <div className={ this.props.showPlaylist ? 'queue visible text-left' : 'queue text-left' }>
+                <div className={'queue-header'}>
+                    <div className={'queue-infos'}>
                         { wholeQueue.length } tracks, { parseDuration(wholeQueueDuration) }
                     </div>
                     <ButtonGroup>
-                        <Button bsSize={'xsmall'} bsStyle={'default'} className={'empty-button'} onClick={ this.clearPlaylist }>
+                        <Button bsSize={'xsmall'} bsStyle={'default'} className={'empty-button'} onClick={ this.clearQueue }>
                             clear queue
                         </Button>
                     </ButtonGroup>
                 </div>
-                <div className={'playlist-body'}>
+                <div className={'queue-body'}>
                     { playlistContent }
                 </div>
             </div>
         );
     },
 
-    clearPlaylist: function () {
+    clearQueue: function () {
 
         Instance.setState({
             playlist : React.addons.update(
@@ -552,7 +552,7 @@ var Queue = React.createClass({
         });
     },
 
-    removeFromPlaylist: function (index) {
+    removeFromQueue: function (index) {
 
         Instance.setState({
             playlist : React.addons.update(
@@ -825,15 +825,15 @@ var Footer = React.createClass({
         if (!this.props.refreshingLibrary) {
             var navButtons = (
                 <ButtonGroup>
-                    <a href={'#/settings'} className={'btn btn-default'}><i className={'fa fa-gear'}></i></a>
                     <a href={'#/'} className={'btn btn-default'}><i className={'fa fa-align-justify'}></i></a>
+                    <a href={'#/settings'} className={'btn btn-default'}><i className={'fa fa-gear'}></i></a>
                 </ButtonGroup>
             );
         } else {
             var navButtons = (
                 <ButtonGroup>
-                    <a href={'#/settings'} disabled className={'btn btn-default'}><i className={'fa fa-gear'}></i></a>
                     <a href={'#/'} disabled className={'btn btn-default'}><i className={'fa fa-align-justify'}></i></a>
+                    <a href={'#/settings'} disabled className={'btn btn-default'}><i className={'fa fa-gear'}></i></a>
                 </ButtonGroup>
             );
         }

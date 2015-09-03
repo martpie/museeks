@@ -84,7 +84,7 @@ header {
     .now-playing__info-buttons,
     .search > input,
     .window-control,
-    .playlist-controls {
+    .queue-controls {
         -webkit-app-region: no-drag;
     }
 }
@@ -227,13 +227,12 @@ header {
     overflow: hidden;
     vertical-align: middle;
     text-align: center;
-    max-width: 80%;
-    width: 380px;
+    width: calc(100% - 200px);
 }
 
 .now-playing__info-duration {
     display: inline-block;
-    margin-left: 10px;
+    padding: 0 6px;
     font-size: 10px;
     min-width: 100px;
     text-align: right;
@@ -295,13 +294,13 @@ header {
     display: block;
 }
 
-.playlist-controls__button {
+.queue-controls__button {
     border: 0;
     background: transparent;
     font-size: 14px;
 }
 
-header .playlist-controls .playlist {
+header .queue-controls .queue {
     display: none;
     position: absolute;
     width: 300px;
@@ -312,20 +311,20 @@ header .playlist-controls .playlist {
     font-size: 12px;
     z-index: 10;
     color: grey;
-    left: -250px;
+    right: 20%;
     top: 30px;
     box-shadow: 0 5px 3px -5px rgba(0, 0, 0, .5);
 }
 
-header .playlist-controls .playlist.visible {
+header .queue-controls .queue.visible {
     display: block;
 }
 
-header .playlist-controls .playlist-header {
+header .queue-controls .queue-header {
     padding: 5px 10px;
     background-color: rgb(244, 244, 244);
 
-    .playlist-infos {
+    .queue-infos {
         float: right;
         font-size: 11px;
         padding-top: 1px;
@@ -333,37 +332,37 @@ header .playlist-controls .playlist-header {
     }
 }
 
-header .playlist-controls .playlist-body {
+header .queue-controls .queue-body {
     max-height: 250px;
     overflow: auto;
 }
 
-header .playlist-controls .empty-playlist {
+header .queue-controls .empty-queue {
     padding: 20px;
     color: lightgrey;
 }
 
-header .playlist-controls .empty-button {
+header .queue-controls .empty-button {
     font-size: 10px;
     padding: 1px 5px;
 }
 
-header .playlist-controls .playlist-body .track {
+header .queue-controls .queue-body .track {
     padding-bottom: 5px;
     padding-top: 5px;
     cursor: pointer;
 }
 
-header .playlist-controls .playlist-body .track:not(:last-child) {
+header .queue-controls .queue-body .track:not(:last-child) {
     border-bottom: dashed 1px #D8D8D8;
 }
 
-header .playlist-controls .playlist-body .track .title {
+header .queue-controls .queue-body .track .title {
     font-weight: bold;
 }
 
-header .playlist-controls .playlist-body .track .title,
-header .playlist-controls .playlist-body .track .other-infos {
+header .queue-controls .queue-body .track .title,
+header .queue-controls .queue-body .track .other-infos {
     padding: 0 10px;
     color: rgb(51, 51, 51);
     text-overflow: ellipsis;
@@ -371,7 +370,7 @@ header .playlist-controls .playlist-body .track .other-infos {
     white-space: nowrap;
 }
 
-header .playlist-controls .playlist-body .track .remove {
+header .queue-controls .queue-body .track .remove {
     float: right;
     width: 25px;
     height: 25px;
@@ -382,13 +381,13 @@ header .playlist-controls .playlist-body .track .remove {
     visibility: hidden;
 }
 
-header .playlist-controls .playlist-body .track:hover .remove {
+header .queue-controls .queue-body .track:hover .remove {
     visibility: visible;
 }
 
-header .playlist-controls .playlist-body .track .remove:hover,
-header .playlist-controls .playlist-body .track .remove:focus,
-header .playlist-controls .playlist-body .track .remove:active {
+header .queue-controls .queue-body .track .remove:hover,
+header .queue-controls .queue-body .track .remove:focus,
+header .queue-controls .queue-body .track .remove:active {
     color: #555;
     text-decoration: none;
 }
