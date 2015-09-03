@@ -9,13 +9,12 @@ views.settings = React.createClass({
     render: function() {
         return (
             <div className={'view view-settings view-withpadding'}>
-
                 <h2>Settings</h2>
                 <hr />
-
-                {/* Music folders & library refresh*/}
                 <MusicFoldersList refreshingLibrary={ this.props.refreshingLibrary } />
-
+                <hr />
+                <ThemeSelector />
+                <hr />
             </div>
         );
     }
@@ -87,7 +86,7 @@ var MusicFoldersList = React.createClass({
         }.bind(this));
 
         return (
-            <div className="settings-musicfolder">
+            <div className="setting settings-musicfolder">
                 <h4>Library folders</h4>
 
                 <p>You currently have { this.state.musicFolders.length } folder{ this.state.musicFolders.length < 2 ? '' : 's' } folders in your library.</p>
@@ -97,8 +96,6 @@ var MusicFoldersList = React.createClass({
                 </ul>
 
                 { buttonsGroup }
-
-                <hr />
             </div>
         );
     },
@@ -224,6 +221,46 @@ var MusicFoldersList = React.createClass({
                     }
                 });
             });
+        });
+    }
+});
+
+
+
+/*
+|--------------------------------------------------------------------------
+| Child - ThemeSelector - manage theme
+|--------------------------------------------------------------------------
+*/
+
+var ThemeSelector = React.createClass({
+
+    render: function () {
+
+        return (
+            <div className={'setting setting-music-selector'}>
+                <h4>Theme</h4>
+                <div className="checkbox">
+                    <label>
+                       <input type="checkbox" onClick={ this.themeToggle } /> Enable dark theme
+                    </label>
+                </div>
+            </div>
+        );
+    },
+
+    themeToggle: function(e) {
+
+        var theme = e.currentTarget.checked ? 'dark' : 'light';
+
+        nconf.set('theme', theme);
+        nconf.save(function (err) {
+            if(!err) {
+                // change the theme ftw
+            } else {
+                alerts.add('danger', 'Theme could not be saved ');
+                throw err;
+            }
         });
     }
 });
