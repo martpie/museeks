@@ -46,13 +46,14 @@ This list is not limited. Features findable in issues with the `to-do` tag will 
 - [ ] refactor once it's frozen
 - [ ] move from JST to babel (see [there](http://facebook.github.io/react/blog/2015/06/12/deprecating-jstransform-and-react-tools.html))
 - [ ] use es6 classes instead of React.createClass()
+- [ ] build system for each platform (.exe, .app, .deb...) need help on this one
 
 ##### general
 - [x] shortcuts & global shortcuts
 - [x] have a real development stack to generate views, scss, etc...
+- [ ] dark theme
 
 ##### settings view
-- [ ] freeze settings list
 - [x] add/remove music folder
 - [x] refresh library with the given folders
 
@@ -76,4 +77,4 @@ This list is not limited. Features findable in issues with the `to-do` tag will 
 - [ ] add languages support
 - [ ] auto-updater from Github releases
 - [ ] playlists
-- [ ] async search
+- [x] async search
