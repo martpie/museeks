@@ -474,8 +474,9 @@ var Queue = React.createClass({
     getInitialState: function () {
 
         return {
-            dragOverY : null
-        };
+            draggedTrack     : null,
+            draggedOverTrack : null
+        }
     },
 
     render: function () {
@@ -505,8 +506,24 @@ var Queue = React.createClass({
 
             var playlistContent = queue.map(function (track, index) {
 
+                var classes = 'track';
+
+                if(index === self.state.draggedTrack) {
+                    classes = 'track dragged';
+                } else if (index === self.state.draggedOverTrack) {
+                    classes = 'track dragged-over';
+                }
+                else {
+                    classes = 'track';
+                }
+
                 return (
-                    <div key={index} className={'track'} onDoubleClick={ Instance.selectAndPlay.bind(null, self.props.playlistCursor + index + 1) }>
+                    <div key={index}
+                      className={ classes }
+                      onDoubleClick={ Instance.selectAndPlay.bind(null, self.props.playlistCursor + index + 1) }
+                      draggable={'true'}
+                      onDragStart={ self.dragStart.bind(null, index) }
+                      onDragEnd={ self.dragEnd }>
                         <Button bsSize={'xsmall'} bsStyle={'link'} className={'remove'} onClick={ self.removeFromQueue.bind(null, index) }>
                             &times;
                         </Button>
@@ -533,7 +550,7 @@ var Queue = React.createClass({
                         </Button>
                     </ButtonGroup>
                 </div>
-                <div className={'queue-body'}>
+                <div className={'queue-body'} onDragOver={ this.dragOver }>
                     { playlistContent }
                 </div>
             </div>
@@ -562,7 +579,63 @@ var Queue = React.createClass({
                 }
             )
         });
-    }
+    },
+
+    dragStart: function(index, e) {
+
+        var currentTarget = e.currentTarget;
+        var offsetTop     = currentTarget.parentNode.offsetTop + currentTarget.parentNode.parentNode.offsetTop + currentTarget.parentNode.parentNode.parentNode.offsetTop;
+
+        var yStart = e.pageY + currentTarget.parentNode.scrollTop - offsetTop;
+        //console.log(yStart);
+
+        e.dataTransfer.effectAllowed = 'move';
+        e.dataTransfer.setData("text/html", e.currentTarget);
+
+        this.draggedIndex = index;
+
+    },
+
+    dragEnd: function(e) {
+
+        /*var currentTarget = e.currentTarget;
+        var offsetTop     = currentTarget.parentNode.offsetTop + currentTarget.parentNode.parentNode.offsetTop + currentTarget.parentNode.parentNode.parentNode.offsetTop;
+
+        var yEnd = e.pageY + currentTarget.parentNode.scrollTop - offsetTop;*/
+        //console.log(yEnd);
+
+        var playlist       = this.props.playlist;
+        var playlistCursor = this.props.playlistCursor;
+
+        var draggedTrack     = this.state.draggedTrack;
+        var draggedOverTrack = this.state.draggedOverTrack
+
+        var newPlaylist = playlist.slice();
+        var trackToMove = playlist[playlistCursor + 1 + draggedTrack];
+        newPlaylist.splice(playlistCursor + 1 + draggedTrack, 1);
+        newPlaylist.splice(playlistCursor + draggedOverTrack, 0, trackToMove);
+
+        this.setState({
+            draggedOverTrack : null,
+            draggedTrack     : null
+        });
+
+        Instance.setState({
+            playlist: newPlaylist
+        });
+    },
+
+    dragOver: function(e) {
+
+        e.preventDefault();
+
+        var index = this.draggedIndex;
+
+        this.setState({
+            draggedTrack     : index,
+            draggedOverTrack : Math.ceil((e.pageY + document.querySelector('.queue-body').scrollTop - 75) / 45)
+        });
+    },
 });
 
 

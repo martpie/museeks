@@ -351,6 +351,23 @@ header .queue-controls .queue-body .track {
     padding-bottom: 5px;
     padding-top: 5px;
     cursor: pointer;
+    -webkit-user-drag: element;
+}
+
+header .queue-controls .queue-body .track.dragged {
+    display: none;
+}
+
+header .queue-controls .queue-body .track.dragged-over {
+    padding-top: 0;
+}
+
+header .queue-controls .queue-body .track.dragged-over::before {
+    content: '';
+    display: block;
+    margin-bottom: 5px;
+    height: 40px;
+    background-color: #f4f4f4;
 }
 
 header .queue-controls .queue-body .track:not(:last-child) {
