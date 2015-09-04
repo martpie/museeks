@@ -512,11 +512,11 @@ var Queue = React.createClass({
                 if(index === self.state.draggedTrack) {
                     classes = 'track dragged';
                 } else if (index === self.state.draggedOverTrack) {
-                    //if(self.state.draggedBefore) {
+                    if(!self.state.draggedBefore) {
+                        classes = 'track dragged-over-after';
+                    } else {
                         classes = 'track dragged-over';
-                    //} else {
-                    //    classes = 'track dragged-over-after'
-                    //}
+                    }
                 }
                 else {
                     classes = 'track';
@@ -555,7 +555,7 @@ var Queue = React.createClass({
                         </Button>
                     </ButtonGroup>
                 </div>
-                <div className={'queue-body'} onDragOver={ this.dragOver }>
+                <div className={ this.state.draggedTrack === null ? 'queue-body' : 'queue-body dragging'} onDragOver={ this.dragOver }>
                     { playlistContent }
                 </div>
             </div>
@@ -626,17 +626,20 @@ var Queue = React.createClass({
         var offsetTop     = currentTarget.parentNode.offsetTop + currentTarget.parentNode.parentNode.offsetTop;
 
         var yEnd  = e.pageY + currentTarget.scrollTop - offsetTop;
-        var limit = currentTarget.scrollHeight - currentTarget.lastChild.offsetHeight;
+        var limit = currentTarget.scrollHeight - currentTarget.lastChild.offsetHeight / 2;
 
         // If the element is dragged after the half of the last one
         var draggedBefore = yEnd > limit ? false : true;
+        var draggedOverTrack = Math.ceil((e.pageY + document.querySelector('.queue-body').scrollTop - 75) / 45)
 
-        var index = this.draggedIndex; // souldn't change. Is here otherwise dragOver wouldn't be triggered
+        // souldn't change. Is here otherwise dragOver wouldn't be triggered
+        var index = this.draggedIndex;
 
         this.setState({
             draggedTrack     : index,
-            draggedOverTrack : Math.ceil((e.pageY + document.querySelector('.queue-body').scrollTop - 75) / 45),
-            draggedBefore    : draggedBefore
+            draggedOverTrack : draggedOverTrack,
+            draggedBefore    : draggedBefore,
+            dragging         : true
         });
     }
 });
