@@ -583,12 +583,6 @@ var Queue = React.createClass({
 
     dragStart: function(index, e) {
 
-        var currentTarget = e.currentTarget;
-        var offsetTop     = currentTarget.parentNode.offsetTop + currentTarget.parentNode.parentNode.offsetTop + currentTarget.parentNode.parentNode.parentNode.offsetTop;
-
-        var yStart = e.pageY + currentTarget.parentNode.scrollTop - offsetTop;
-        //console.log(yStart);
-
         e.dataTransfer.effectAllowed = 'move';
         e.dataTransfer.setData("text/html", e.currentTarget);
 
@@ -597,12 +591,6 @@ var Queue = React.createClass({
     },
 
     dragEnd: function(e) {
-
-        /*var currentTarget = e.currentTarget;
-        var offsetTop     = currentTarget.parentNode.offsetTop + currentTarget.parentNode.parentNode.offsetTop + currentTarget.parentNode.parentNode.parentNode.offsetTop;
-
-        var yEnd = e.pageY + currentTarget.parentNode.scrollTop - offsetTop;*/
-        //console.log(yEnd);
 
         var playlist       = this.props.playlist;
         var playlistCursor = this.props.playlistCursor;
