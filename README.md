@@ -68,7 +68,7 @@ This list is not limited. Features findable in issues with the `to-do` tag will 
 - [x] auto-read next track
 - [x] next/previous button
 - [x] list next tracks
-- [ ] manage next tracks (on the road)
+- [x] manage next tracks
 - [x] shuffle
 - [x] loop, single-loop
 
