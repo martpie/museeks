@@ -370,6 +370,14 @@ header .queue-controls .queue-body .track.dragged-over::before {
     background-color: #f4f4f4;
 }
 
+/*header .queue-controls .queue-body .track.dragged-over-after::after {
+    content: '';
+    display: block;
+    margin-bottom: 5px;
+    height: 40px;
+    background-color: #f4f4f4;
+}*/
+
 header .queue-controls .queue-body .track:not(:last-child) {
     border-bottom: dashed 1px #D8D8D8;
 }

@@ -475,7 +475,8 @@ var Queue = React.createClass({
 
         return {
             draggedTrack     : null,
-            draggedOverTrack : null
+            draggedOverTrack : null,
+            draggedBefore    : true
         }
     },
 
@@ -511,7 +512,11 @@ var Queue = React.createClass({
                 if(index === self.state.draggedTrack) {
                     classes = 'track dragged';
                 } else if (index === self.state.draggedOverTrack) {
-                    classes = 'track dragged-over';
+                    //if(self.state.draggedBefore) {
+                        classes = 'track dragged-over';
+                    //} else {
+                    //    classes = 'track dragged-over-after'
+                    //}
                 }
                 else {
                     classes = 'track';
@@ -617,13 +622,23 @@ var Queue = React.createClass({
 
         e.preventDefault();
 
-        var index = this.draggedIndex;
+        var currentTarget = e.currentTarget;
+        var offsetTop     = currentTarget.parentNode.offsetTop + currentTarget.parentNode.parentNode.offsetTop;
+
+        var yEnd  = e.pageY + currentTarget.scrollTop - offsetTop;
+        var limit = currentTarget.scrollHeight - currentTarget.lastChild.offsetHeight;
+
+        // If the element is dragged after the half of the last one
+        var draggedBefore = yEnd > limit ? false : true;
+
+        var index = this.draggedIndex; // souldn't change. Is here otherwise dragOver wouldn't be triggered
 
         this.setState({
             draggedTrack     : index,
-            draggedOverTrack : Math.ceil((e.pageY + document.querySelector('.queue-body').scrollTop - 75) / 45)
+            draggedOverTrack : Math.ceil((e.pageY + document.querySelector('.queue-body').scrollTop - 75) / 45),
+            draggedBefore    : draggedBefore
         });
-    },
+    }
 });
 
 
