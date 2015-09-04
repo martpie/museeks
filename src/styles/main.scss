@@ -362,21 +362,22 @@ header .queue-controls .queue-body .track.dragged-over {
     padding-top: 0;
 }
 
-header .queue-controls .queue-body .track.dragged-over::before {
+header .queue-controls .queue-body .track::before,
+header .queue-controls .queue-body .track::after {
     content: '';
     display: block;
-    margin-bottom: 5px;
-    height: 40px;
     background-color: #f4f4f4;
+    padding: 0;
 }
 
-/*header .queue-controls .queue-body .track.dragged-over-after::after {
-    content: '';
-    display: block;
+header .queue-controls .queue-body .track.dragged-over::before {
     margin-bottom: 5px;
-    height: 40px;
-    background-color: #f4f4f4;
-}*/
+    padding: 20px 0;
+}
+
+header .queue-controls .queue-body .track.dragged-over-after::after {
+    padding: 20px 0;
+}
 
 header .queue-controls .queue-body .track:not(:last-child) {
     border-bottom: dashed 1px #D8D8D8;
