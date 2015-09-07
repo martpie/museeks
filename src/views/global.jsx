@@ -29,6 +29,7 @@ var Museeks = React.createClass({
             tracks            :  null, // All tracks shown on the view
             playlist          :  [],   // Tracks to be played
             playlistCursor    :  null, // The cursor of the playlist
+            oldPlaylistCursor :  null, // The last cursor backup (to roll stuff back, e.g. unshuffle)
             view              :  defaultView, // The actual view
             playerStatus      : 'stop', // Player status
             notifications     :  {},    // The array of notifications
@@ -189,18 +190,45 @@ var Museeks = React.createClass({
 
     selectAndPlay: function(id) {
 
-        var playlist = this.state.tracks;
+        var playlist = this.state.tracks.slice();
         var playlistCursor = id;
 
+        // Play it !
         audio.src = 'file://' + playlist[id].path;
         audio.play();
 
         audio.addEventListener('ended', Instance.player.next);
 
+        // Check if we have to shuffle the queue
+        if(this.state.shuffle) {
+            // Let's shuffle that
+
+            var firstTrack = playlist[playlistCursor];
+
+            var m = playlist.length, t, i;
+            while (m) {
+
+                // Pick a remaining element…
+                i = Math.floor(Math.random() * m--);
+
+                // And swap it with the current element.
+                t = playlist[m];
+                playlist[m] = playlist[i];
+                playlist[i] = t;
+            }
+
+            playlist.unshift(firstTrack);
+
+            // Let's set the cursor to 0
+            playlistCursor = 0;
+        }
+
+        // Backup that and change the UI
         this.setState({
-            playerStatus   : 'play',
-            playlist       :  playlist,
-            playlistCursor :  id
+            playerStatus      : 'play',
+            playlist          :  playlist,
+            playlistCursor    :  playlistCursor,
+            oldPlaylistCursor :  id
         });
     },
 
@@ -781,9 +809,6 @@ var ShuffleButton = React.createClass({
             var playlist       = Instance.state.playlist.slice();
             var playlistCursor = Instance.state.playlistCursor;
 
-            // Let's backup that
-            this.oldPlaylistCursor = playlistCursor;
-
             var firstTrack = playlist[playlistCursor];
 
             var m = playlist.length, t, i;
@@ -801,14 +826,15 @@ var ShuffleButton = React.createClass({
             playlist.unshift(firstTrack);
 
             Instance.setState({
-                shuffle        : true,
-                playlist       : playlist,
-                playlistCursor : 0
+                shuffle           : true,
+                playlist          : playlist,
+                playlistCursor    : 0,
+                oldPlaylistCursor : playlist
             });
 
         } else {
 
-            var oldPlaylistCursor = this.oldPlaylistCursor;
+            var oldPlaylistCursor = Instance.state.oldPlaylistCursor;
 
             Instance.setState({
                 shuffle : false,
