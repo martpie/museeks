@@ -149,8 +149,6 @@ var Museeks = React.createClass({
         var now  = window.performance.now();
         var self = this;
 
-        console.log(now - this.lastFilterSearch);
-
         if(now - this.lastFilterSearch < 300) {
             clearTimeout(this.filterSearchTimeOut);
         }
@@ -188,20 +186,24 @@ var Museeks = React.createClass({
         }, 300);
     },
 
-    selectAndPlay: function(id) {
+    selectAndPlay: function(id, noReplay) {
+
+        // Sometimes, noReplay is an event, fix that
+        noReplay = (noReplay === true) ? true : false;
 
         var playlist = this.state.tracks.slice();
         var playlistCursor = id;
 
-        // Play it !
-        audio.src = 'file://' + playlist[id].path;
-        audio.play();
+        // Play it if needed !
+        if(!noReplay) {
+            audio.src = 'file://' + playlist[id].path;
+            audio.play();
 
-        audio.addEventListener('ended', Instance.player.next);
+            audio.addEventListener('ended', Instance.player.next);
+        }
 
         // Check if we have to shuffle the queue
         if(this.state.shuffle) {
-            // Let's shuffle that
 
             var firstTrack = playlist[playlistCursor];
 
@@ -829,7 +831,7 @@ var ShuffleButton = React.createClass({
                 shuffle           : true,
                 playlist          : playlist,
                 playlistCursor    : 0,
-                oldPlaylistCursor : playlist
+                oldPlaylistCursor : playlistCursor
             });
 
         } else {
@@ -839,7 +841,7 @@ var ShuffleButton = React.createClass({
             Instance.setState({
                 shuffle : false,
             }, function () {
-                Instance.selectAndPlay(oldPlaylistCursor);
+                Instance.selectAndPlay(oldPlaylistCursor, true);
             });
         }
     }
