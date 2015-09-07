@@ -112,7 +112,7 @@ var LibraryListItems = React.createClass({
             }
 
             return(
-                <tr className={ selected.indexOf(index) != -1 ? 'track selected' : 'track' } key={index} onMouseDown={ self.selectTrack.bind(null, index) } onDoubleClick={ Instance.selectAndPlay.bind(null, index, event) } onContextMenu={ self.showContextMenu }>
+                <tr className={ selected.indexOf(index) != -1 ? 'track selected' : 'track' } key={index} onMouseDown={ self.selectTrack.bind(null, index) } onDoubleClick={ Instance.selectAndPlay.bind(null, index) } onContextMenu={ self.showContextMenu }>
                     <td className={'row-trackPlaying text-center'}>
                         { playing }
                     </td>
