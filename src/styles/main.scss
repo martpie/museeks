@@ -154,289 +154,277 @@ header {
 header {
     border-bottom: 1px solid rgb(210, 210, 210);
     background-color: rgb(244, 244, 244);
-
     padding: 10px;
-
-    /* center all elements in the header vertically */
     display: flex;
     align-items: center;
 
     div[class*="col-"] {
         padding: 0;
     }
-}
 
-.window-controls {
-    float: left;
-    margin-right: 30px;
-}
+    .main-controls {
 
-.window-controls__button {
-    width: 30px;
-    height: 30px;
-    font-size: 18px;
-    color: rgba(0,0,0,0.3);
-    border: 0;
-    transition: all .2s ease-in-out;
-    text-align: center;
-    line-height: 22px;
-    background-color: transparent;
-    -webkit-app-region: no-drag;
+        .window-controls {
+            float: left;
+            margin-right: 30px;
 
-    &:active {
-        background-color: #DFDFDF;
-        border: solid 1px #B8B8B8;
+            .window-control {
+                width: 30px;
+                height: 30px;
+                font-size: 18px;
+                color: rgba(0,0,0,0.3);
+                border: 0;
+                transition: all .2s ease-in-out;
+                text-align: center;
+                line-height: 22px;
+                background-color: transparent;
+                -webkit-app-region: no-drag;
+
+                &:active {
+                    background-color: #DFDFDF;
+                    border: solid 1px #B8B8B8;
+                }
+            }
+        }
+
+        .player-controls {
+            display: flex;
+            align-items: center;
+            margin-top: 2px;
+
+            .player-control {
+                border: 0;
+                background: transparent;
+                font-size: 20px;
+
+                &.play {
+                    font-size: 24px;
+                }
+
+                i {
+                    display: flex;
+                    align-items: center;
+                }
+            }
+
+            .volume-control {
+                position: absolute;
+                z-index: 10;
+                background-color: rgb(244, 244, 244);
+                top: 0;
+                left: 50px;
+                display: none;
+                padding: 4px 12px;
+
+                &.visible {
+                    display: block;
+                }
+
+                input[type=range] {
+                    width: 88px;
+                    height: 20px;
+                    background-color: transparent;
+                }
+            }
+        }
     }
-}
+    /* .windows-controls */
 
-.now-playing__info {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    .now-playing {
 
-    & .pf {
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        .now-playing-infos {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            & .pf {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .player-options {
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+                min-width: 100px;
+
+                .button {
+                    border: 0;
+                    background: transparent;
+                    font-size: 18px;
+                    -webkit-app-region: no-drag;
+
+                    &.active {
+                        color: #337ab7;
+                    }
+                }
+            }
+
+            .metas {
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                vertical-align: middle;
+                text-align: center;
+                width: calc(100% - 200px);
+            }
+
+            .duration {
+                display: inline-block;
+                padding: 0 6px;
+                font-size: 10px;
+                min-width: 100px;
+                text-align: right;
+            }
+        }
+
+        .now-playing-bar .progress {
+            height: 5px;
+            margin-bottom: 0;
+            margin-top: 5px;
+            cursor: pointer;
+            background-color: rgb(219, 219, 219);
+
+            .progress-bar {
+                background-color: #459CE7;
+                -webkit-transition: none;
+                -o-transition: none;
+                transition: none;
+            }
+        }
+    }
+    /* .now-playing */
+
+    .queue-controls {
+
+        .queue-toggle {
+            border: 0;
+            background: transparent;
+            font-size: 14px;
+        }
+
+        .queue {
+            display: none;
+            position: absolute;
+            width: 300px;
+            background: white;
+            border: solid 1px rgb(210, 210, 210);
+            text-overflow: ellipsis;
+            overflow-x: hidden;
+            font-size: 12px;
+            z-index: 10;
+            color: grey;
+            right: 20%;
+            top: 30px;
+            box-shadow: 0 5px 3px -5px rgba(0, 0, 0, .5);
+
+            &.visible {
+                display: block;
+            }
+
+            .empty-queue {
+                padding: 20px;
+                color: lightgrey;
+            }
+
+            .queue-header {
+                padding: 5px 10px;
+                background-color: rgb(244, 244, 244);
+
+                .queue-infos {
+                    float: right;
+                    font-size: 11px;
+                    padding-top: 1px;
+                    padding-bottom: 1px;
+                }
+
+                .empty-button {
+                    font-size: 10px;
+                    padding: 1px 5px;
+                }
+            }
+
+            .queue-body {
+                max-height: 250px;
+                overflow: auto;
+
+                .track {
+                    padding-bottom: 5px;
+                    padding-top: 5px;
+                    cursor: pointer;
+                    -webkit-user-drag: element;
+
+                    &:not(:last-child) {
+                        border-bottom: dashed 1px #D8D8D8;
+                    }
+
+                    &::before,
+                    &::after {
+                        content: '';
+                        display: block;
+                        background-color: #f4f4f4;
+                        padding: 0;
+                    }
+
+                    &.dragged {
+                            display: none;
+                    }
+
+                    &.dragged-over {
+                        padding-top: 0;
+
+                        &::before {
+                            margin-bottom: 5px;
+                            padding: 20px 0;
+                        }
+                    }
+
+                    &.dragged-over-after::after {
+                        padding: 20px 0;
+                    }
+
+                    .title {
+                        font-weight: bold;
+                    }
+
+                    .title,
+                    .other-infos {
+                        padding: 0 10px;
+                        color: rgb(51, 51, 51);
+                        text-overflow: ellipsis;
+                        overflow: hidden;
+                        white-space: nowrap;
+                    }
+
+                    .remove {
+                        float: right;
+                        width: 25px;
+                        height: 25px;
+                        line-height: 10px;
+                        padding: 3px;
+                        margin-top: 5px;
+                        margin-right: 5px;
+                        visibility: hidden;
+
+                        &:hover,
+                        &:focus,
+                        &:active {
+                            color: #555;
+                            text-decoration: none;
+                        }
+                    }
+
+                    &:hover .remove {
+                        visibility: visible;
+                    }
+                } /* .track */
+            }
+        }
     }
 
-    & > div.now-playing__info-buttons {
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-    }
-}
+} /* header */
 
-.now-playing__info-buttons {
-    min-width: 100px;
-
-    .now-playing__info-button {
-        border: 0;
-        background: transparent;
-        font-size: 18px;
-    }
-
-    .now-playing__info-button--highlight {
-        color: #337ab7;
-    }
-}
-
-.now-playing__info-meta {
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    vertical-align: middle;
-    text-align: center;
-    width: calc(100% - 200px);
-}
-
-.now-playing__info-duration {
-    display: inline-block;
-    padding: 0 6px;
-    font-size: 10px;
-    min-width: 100px;
-    text-align: right;
-}
-
-.now-playing__bar .progress {
-    height: 5px;
-    margin-bottom: 0;
-    margin-top: 5px;
-    cursor: pointer;
-    background-color: rgb(219, 219, 219);
-}
-
-.now-playing__bar .progress-bar {
-    background-color: #459CE7;
-    -webkit-transition: none;
-    -o-transition: none;
-    transition: none;
-}
-
-.player-controls {
-    display: flex;
-    align-items: center;
-    color: #555;
-    margin-top: 2px;
-}
-
-.player-controls__button {
-    border: 0;
-    background: transparent;
-    font-size: 20px;
-}
-
-.player-controls__button i {
-    display: flex;
-    align-items: center;
-}
-
-.player-controls__button--play {
-    font-size: 24px;
-}
-
-.volume-control {
-    position: absolute;
-    z-index: 10;
-    background-color: rgb(244, 244, 244);
-    top: 0;
-    left: 50px;
-    display: none;
-    padding: 4px 12px;
-}
-
-.volume-control input[type=range] {
-    width: 88px;
-    height: 20px;
-    background-color: transparent;
-}
-
-.volume-control--visible {
-    display: block;
-}
-
-.queue-controls__button {
-    border: 0;
-    background: transparent;
-    font-size: 14px;
-}
-
-header .queue-controls .queue {
-    display: none;
-    position: absolute;
-    width: 300px;
-    background: white;
-    border: solid 1px rgb(210, 210, 210);
-    text-overflow: ellipsis;
-    overflow-x: hidden;
-    font-size: 12px;
-    z-index: 10;
-    color: grey;
-    right: 20%;
-    top: 30px;
-    box-shadow: 0 5px 3px -5px rgba(0, 0, 0, .5);
-}
-
-header .queue-controls .queue.visible {
-    display: block;
-}
-
-header .queue-controls .queue-header {
-    padding: 5px 10px;
-    background-color: rgb(244, 244, 244);
-
-    .queue-infos {
-        float: right;
-        font-size: 11px;
-        padding-top: 1px;
-        padding-bottom: 1px;
-    }
-}
-
-header .queue-controls .queue-body {
-    max-height: 250px;
-    overflow: auto;
-}
-
-header .queue-controls .empty-queue {
-    padding: 20px;
-    color: lightgrey;
-}
-
-header .queue-controls .empty-button {
-    font-size: 10px;
-    padding: 1px 5px;
-}
-
-header .queue-controls .queue-body .track {
-    padding-bottom: 5px;
-    padding-top: 5px;
-    cursor: pointer;
-    -webkit-user-drag: element;
-}
-
-header .queue-controls .queue-body .track.dragged {
-    display: none;
-}
-
-header .queue-controls .queue-body .track.dragged-over {
-    padding-top: 0;
-}
-
-header .queue-controls .queue-body .track::before,
-header .queue-controls .queue-body .track::after {
-    content: '';
-    display: block;
-    background-color: #f4f4f4;
-    padding: 0;
-}
-
-header .queue-controls .queue-body .track.dragged-over::before {
-    margin-bottom: 5px;
-    padding: 20px 0;
-}
-
-header .queue-controls .queue-body .track.dragged-over-after::after {
-    padding: 20px 0;
-}
-
-header .queue-controls .queue-body .track:not(:last-child) {
-    border-bottom: dashed 1px #D8D8D8;
-}
-
-header .queue-controls .queue-body .track .title {
-    font-weight: bold;
-}
-
-header .queue-controls .queue-body .track .title,
-header .queue-controls .queue-body .track .other-infos {
-    padding: 0 10px;
-    color: rgb(51, 51, 51);
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
-}
-
-header .queue-controls .queue-body .track .remove {
-    float: right;
-    width: 25px;
-    height: 25px;
-    line-height: 10px;
-    padding: 3px;
-    margin-top: 5px;
-    margin-right: 5px;
-    visibility: hidden;
-}
-
-header .queue-controls .queue-body .track:hover .remove {
-    visibility: visible;
-}
-
-header .queue-controls .queue-body .track .remove:hover,
-header .queue-controls .queue-body .track .remove:focus,
-header .queue-controls .queue-body .track .remove:active {
-    color: #555;
-    text-decoration: none;
-}
-
-header .btn-group {
-    display: inline-block;
-    vertical-align: middle;
-}
-
-header .btn {
-    padding-top: 4px;
-    padding-bottom: 4px;
-    color: #555;
-    font-size: 14px;
-}
-
-header .btn.btn-link:hover,
-header .btn.btn-link:active,
-header .btn.btn-link:focus {
-    box-shadow: none;
-    color: #555;
-}
 
 
 /*
@@ -483,6 +471,7 @@ footer {
 }
 
 .notification {
+    margin-bottom: 10px;
     transition: all .3s;
 
     &.notification-enter {
@@ -504,8 +493,6 @@ footer {
         opacity: 0;
         transform: scale(0);
     }
-
-    margin-bottom: 10px;
 }
 
 /*
@@ -514,7 +501,12 @@ footer {
 |--------------------------------------------------------------------------
 */
 
-#wrap, .main, .main-content, .content, .view, .columns {
+#wrap,
+.main,
+.main-content,
+.content,
+.view,
+.columns {
     height: 100%;
     max-height: 100%;
 }
@@ -528,11 +520,6 @@ footer {
     }
 }
 
-.content .btn .fa {
-    display: inline-block;
-    margin-right: 12px;
-}
-
 .main-content {
     padding-bottom: 84px;
 }
@@ -542,6 +529,11 @@ footer {
 
     h2 {
         margin-top: 0;
+    }
+
+    .btn .fa {
+        display: inline-block;
+        margin-right: 12px;
     }
 }
 
@@ -602,24 +594,27 @@ footer {
 */
 
 .view-library-list {
+
     .track.selected {
         background-color: #459CE7;
         color: white;
     }
 
-    .row-trackPlaying {
+    .column-trackPlaying {
         width: 4%;
     }
 
-    .row-track {
+    .column-track {
         width: 29%;
     }
 
-    .row-duration {
+    .column-duration {
         width: 7%;
     }
 
-    .row-artist, .row-album, .row-genre {
+    .column-artist,
+    .column-album,
+    .column-genre {
         width: 20%;
     }
 
@@ -627,77 +622,50 @@ footer {
         width: 100%;
         white-space: nowrap;
         margin-bottom: 0;
-    }
 
-    td {
-        cursor: default;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-
-    table.tracks-list {
         thead {
             border-bottom: 1px solid rgb(210, 210, 210);
-        }
 
-        th:not(:last-child) > div {
-            border-right: 1px solid rgb(210, 210, 210);
-        }
-    }
-
-    .table {
-        margin-bottom: 0;
-
-        > {
-            tbody > tr > {
-                td, th {
-                    padding: 4px 2px;
-                    border-top: 0;
-                    cursor: default;
-                }
+            td {
+                padding: 4px 2px;
+                border-top: 0;
+                cursor: default;
             }
 
-            tfoot > tr > {
-                td, th {
-                    padding: 4px 2px;
-                    border-top: 0;
-                    cursor: default;
-                }
+            th {
+                padding: 4px 2px;
+                border-top: 0;
+                cursor: default;
+                border-bottom: 0;
             }
 
-            thead > tr > {
-                td {
-                    padding: 4px 2px;
-                    border-top: 0;
-                    cursor: default;
-                }
-
-                th {
-                    padding: 4px 2px;
-                    border-top: 0;
-                    cursor: default;
-                    border-bottom: 0;
-                }
+            &:not(:last-child) > div {
+                border-right: 1px solid rgb(210, 210, 210);
             }
         }
-    }
 
-    .context-menu {
-        position: absolute;
-        width: 200px;
-        z-index: 10;
-        background-color: white;
-        padding: 5px 0;
-        border: solid lightgrey 1px;
+        tbody {
+            td,
+            th {
+                padding: 4px 2px;
+                border-top: 0;
+                cursor: default;
+            }
 
-        .action {
-            padding: 3px 8px;
-            cursor: pointer;
+            td {
+                cursor: default;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+        }
 
-            &:hover {
-                background-color: #459CE7;
-                color: white;
+        tfoot {
+            td,
+            th {
+                padding: 4px 2px;
+                border-top: 0;
+                cursor: default;
             }
         }
     }
