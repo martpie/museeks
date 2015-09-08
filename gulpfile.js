@@ -1,10 +1,11 @@
 var gulp = require('gulp');
 
-var react       = require('gulp-react')
-var sass        = require('gulp-sass');
-var minifycss   = require('gulp-minify-css');
-var iconfont    = require('gulp-iconfont');
-var consolidate = require('gulp-consolidate');
+var react       = require('gulp-react');
+    uglify      = require('gulp-uglify');
+    sass        = require('gulp-sass');
+    minifycss   = require('gulp-minify-css');
+    iconfont    = require('gulp-iconfont');
+    consolidate = require('gulp-consolidate');
 
 var sassOptions =    {
     errLogToConsole: true,
@@ -22,6 +23,7 @@ var sassOptions =    {
 gulp.task('react', function () {
     return gulp.src('./src/views/*.jsx')
         .pipe(react())
+        .pipe(uglify())
         .pipe(gulp.dest('./src/dist/jsx'));
 });
 
