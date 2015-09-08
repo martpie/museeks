@@ -2,6 +2,7 @@ var gulp = require('gulp');
 
 var react       = require('gulp-react')
 var sass        = require('gulp-sass');
+var minifycss   = require('gulp-minify-css');
 var iconfont    = require('gulp-iconfont');
 var consolidate = require('gulp-consolidate');
 
@@ -34,8 +35,9 @@ gulp.task('react', function () {
 
 gulp.task('styles', function () {
     return gulp
-        .src('./src/styles/*.scss')
+        .src('./src/styles/**/*.scss')
         .pipe(sass(sassOptions).on('error', sass.logError))
+        .pipe(minifycss())
         .pipe(gulp.dest('./src/dist/css'));
 });
 
