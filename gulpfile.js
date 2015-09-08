@@ -86,6 +86,6 @@ gulp.task('font', function() {
 */
 
 gulp.task('default', ['react', 'styles', 'font'], function() {
-    gulp.watch('./src/styles/*.scss',['styles']);
-    gulp.watch('./src/views/*.jsx',['react']);
+    gulp.watch('./src/styles/**/*.scss',['styles']);
+    gulp.watch('./src/views/**/*.jsx',['react']);
 });
