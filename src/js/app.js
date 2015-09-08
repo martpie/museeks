@@ -25,26 +25,12 @@ var fs     = require('fs'),
     mmd    = require('musicmetadata');
 
 
-/* Investigate why performance are poor with that
-var React           = require('react'),
+// Investigate why performance are poor with that
+/*var React           = require('react'),
     ReactKeyBinding = require('react-keybinding'),
-    ReactBootstrap  = require('react-bootstrap');
-*/
+    ReactBootstrap  = require('react-bootstrap');*/
 
 var ReactKeybinding = require('react-keybinding');
-
-
-
-/*
-|--------------------------------------------------------------------------
-| Globals
-|--------------------------------------------------------------------------
-*/
-
-// What plays the music
-var audio = new Audio();
-    audio.type   = 'audio/mpeg';
-    audio.volume = 0.5;
 
 
 
@@ -54,12 +40,9 @@ var audio = new Audio();
 |--------------------------------------------------------------------------
 */
 
-var defaultConfig = require('./' + path.join('js', 'default.config.json'));
-
 var pathConfig     = app.getPath('userData');
 var pathConfigFile = path.join(pathConfig, 'config.json');
-var pathApp        = process.cwd();
-var pathSrc        = path.join(pathApp, 'src');
+var pathSrc        = __dirname;
 
 var Window = remote.getCurrentWindow();
     Window.maximized = false;
@@ -67,6 +50,61 @@ var Window = remote.getCurrentWindow();
 var views = {};
 
 var supportedFormats = ['audio/mp4', 'audio/mpeg', 'audio/wav'];
+
+
+
+/*
+|--------------------------------------------------------------------------
+| Config
+|--------------------------------------------------------------------------
+*/
+
+if(fs.existsSync(pathConfigFile)) {
+
+    nconf.argv()
+         .env()
+         .file({ file: pathConfigFile });
+
+} else {
+
+    fs.writeFileSync(pathConfigFile, JSON.stringify(defaultConfig));
+    nconf.argv()
+         .env()
+         .file({ file: pathConfigFile });
+
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| Theme - maybe imagine a better implementation for this feature
+|--------------------------------------------------------------------------
+*/
+
+var themeName = nconf.get('theme');
+
+
+var theme = document.createElement('link');
+theme.type  = 'text/css';
+theme.rel   = 'stylesheet';
+theme.media = 'all';
+theme.href  =  pathSrc + '/dist/css/themes/' + themeName + '/theme-' + themeName + '.css';
+theme.id    = 'theme-stylesheet';
+
+document.querySelector('head').appendChild(theme);
+
+
+
+/*
+|--------------------------------------------------------------------------
+| Audio
+|--------------------------------------------------------------------------
+*/
+
+// What plays the music
+var audio = new Audio();
+    audio.type   = 'audio/mpeg';
+    audio.volume = 0.5;
 
 
 
@@ -94,26 +132,3 @@ db.reset = function() {
 
     Instance.refreshLibrary();
 };
-
-
-
-/*
-|--------------------------------------------------------------------------
-| Others
-|--------------------------------------------------------------------------
-*/
-
-if(fs.existsSync(pathConfigFile)) {
-
-    nconf.argv()
-         .env()
-         .file({ file: pathConfigFile });
-
-} else {
-
-    fs.writeFileSync(pathConfigFile, JSON.stringify(defaultConfig));
-    nconf.argv()
-         .env()
-         .file({ file: pathConfigFile });
-
-}
