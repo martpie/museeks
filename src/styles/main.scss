@@ -247,9 +247,10 @@ header {
 }
 
 .now-playing__bar .progress-bar {
-    -webkit-transition: width .0s ease;
-    -o-transition: width .0s ease;
-    transition: width .0s ease;
+    background-color: #459CE7;
+    -webkit-transition: none;
+    -o-transition: none;
+    transition: none;
 }
 
 .player-controls {
