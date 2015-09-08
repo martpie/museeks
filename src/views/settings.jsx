@@ -242,21 +242,23 @@ var ThemeSelector = React.createClass({
                 <h4>Theme</h4>
                 <div className="checkbox">
                     <label>
-                       <input type="checkbox" onClick={ this.themeToggle } /> Enable dark theme
+                       <input type="checkbox" onClick={ this.switchTheme } /> Enable dark theme
                     </label>
                 </div>
             </div>
         );
     },
 
-    themeToggle: function(e) {
+    switchTheme: function(e) {
 
-        var theme = e.currentTarget.checked ? 'dark' : 'light';
+        var themeName = e.currentTarget.checked ? 'dark' : 'light';
 
-        nconf.set('theme', theme);
+        nconf.set('theme', themeName);
         nconf.save(function (err) {
             if(!err) {
                 // change the theme ftw
+                var theme = document.querySelector('#theme-stylesheet');
+                theme.href  = pathSrc + '/dist/css/themes/' + themeName + '/theme-' + themeName + '.css';
             } else {
                 alerts.add('danger', 'Theme could not be saved ');
                 throw err;
