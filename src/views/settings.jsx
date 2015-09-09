@@ -235,14 +235,29 @@ var MusicFoldersList = React.createClass({
 
 var ThemeSelector = React.createClass({
 
+    getInitialState: function() {
+        return {
+            theme : nconf.get('theme')
+        };
+    },
+
     render: function () {
+
+        var self = this;
+
+        if(this.state.theme === 'light') {
+            var switcher = (<input type="checkbox" onClick={ self.switchTheme } />);
+        } else {
+            var switcher = (<input type="checkbox" checked onClick={ self.switchTheme } />);
+        }
+
 
         return (
             <div className={'setting setting-music-selector'}>
                 <h4>Theme</h4>
                 <div className="checkbox">
                     <label>
-                       <input type="checkbox" onClick={ this.switchTheme } /> Enable dark theme
+                        { switcher } Enable dark theme
                     </label>
                 </div>
             </div>
@@ -250,6 +265,8 @@ var ThemeSelector = React.createClass({
     },
 
     switchTheme: function(e) {
+
+        var self = this;
 
         var themeName = e.currentTarget.checked ? 'dark' : 'light';
 
@@ -259,6 +276,9 @@ var ThemeSelector = React.createClass({
                 // change the theme ftw
                 var theme = document.querySelector('#theme-stylesheet');
                 theme.href  = pathSrc + '/dist/css/themes/' + themeName + '/theme-' + themeName + '.css';
+
+                self.setState({ theme : themeName });
+
             } else {
                 alerts.add('danger', 'Theme could not be saved ');
                 throw err;
