@@ -1,3 +1,102 @@
 /**
  * Dark Theme
  */
+
+body {
+    border-color: #333;
+}
+
+hr {
+    border-top-color: #555;
+}
+
+
+
+ /*
+ |--------------------------------------------------------------------------
+ | Header
+ |--------------------------------------------------------------------------
+ */
+
+header {
+    background-color: #555;
+    border-bottom-color: #333;
+    color: #EEE;
+
+    .search {
+        border-color: #4A4A4A;
+        background-color: #444;
+        color: #EEE;
+    }
+
+    .main-controls .window-controls .window-control {
+        color: #AAA;
+    }
+
+    .now-playing .now-playing-bar .progress {
+        background-color: #444;
+    }
+}
+
+
+
+/*
+|--------------------------------------------------------------------------
+| Footer
+|--------------------------------------------------------------------------
+*/
+
+footer {
+    border-top-color: #333;
+    background-color: #555;
+    color: #EEE;
+
+    .view-switcher .view-link {
+        color: #EEE;
+        border-color: #444;
+
+        &:hover,
+        &:focus,
+        &:active:hover {
+            background-color: #4A4A4A;
+            color: #EEE;
+            border-color: #444;
+        }
+    }
+
+    .status {
+        color: #AAA;
+    }
+}
+
+
+
+/*
+|--------------------------------------------------------------------------
+| View -- General
+|--------------------------------------------------------------------------
+*/
+
+.view {
+    background-color: #444;
+    color: #EEE;
+
+    table.table {
+
+        &.tracks-list thead {
+            border-bottom: 1px solid #333333;
+        }
+
+        &.table-striped>tbody>tr:nth-of-type(odd) {
+            background-color: #555;
+
+            &.selected {
+                background-color: #459CE7;
+            }
+        }
+    }
+
+    &.view-settings .musicfolders-list {
+        border-color: #555;
+    }
+}
