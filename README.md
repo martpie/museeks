@@ -3,6 +3,8 @@ A music player, in active development. The code is still a bit messy, I'm workin
 
 ![Screenshot](screenshot.png)
 
+![Screenshot](screenshot-dark.png)
+
 It uses:
 * [io.js](http://iojs.org/) for back-end
 * [electron (used to be atom-shell)](https://github.com/atom/atom-shell/) for embedded browser
