@@ -355,19 +355,19 @@ var Header = React.createClass({
 
         if (this.props.playerStatus == 'play') {
             var playButton = (
-                <button className={'player-controls__button player-controls__button--play'} onClick={ this.pause }>
+                <button className={'player-control play'} onClick={ this.pause }>
                     <i className={'pf pf-pause'}></i>
                 </button>
             );
         } else if (this.props.playerStatus == 'pause') {
             var playButton = (
-                <button className={'player-controls__button player-controls__button--play'} onClick={ this.play }>
+                <button className={'player-control play'} onClick={ this.play }>
                     <i className={'pf pf-play'}></i>
                 </button>
             );
         } else {
             var playButton = (
-                <button className={'player-controls__button player-controls__button--play'}>
+                <button className={'player-control play'}>
                     <i className={'pf pf-play'}></i>
                 </button>
             );
@@ -375,23 +375,22 @@ var Header = React.createClass({
 
         return (
             <header className={'row'}>
-                <Col sm={3}>
+                <Col sm={3} className={'main-controls'}>
                     <div className={'window-controls'}>
-                        <button className={'window-controls__button'} onClick={ this.win.close }>&times;</button>
+                        <button className={'window-control'} onClick={ this.win.close }>&times;</button>
                     </div>
 
                     <div className={'player-controls text-center'}>
-
-                        <button type="button" className={'player-controls__button player-controls__button--rewind'} onClick={ this.previous }>
+                        <button type="button" className={'player-control previous'} onClick={ this.previous }>
                             <i className={'pf pf-rewind'}></i>
                         </button>
                         { playButton }
-                        <button type="button" className={'player-controls__button player-controls__button--fast-forward'} onClick={ this.next }>
+                        <button type="button" className={'player-control forward'} onClick={ this.next }>
                             <i className={'pf pf-fast-forward'}></i>
                         </button>
-                        <button type="button" className={'player-controls__button player-controls__button--volume-control'} onMouseEnter={ this.showVolume } onMouseLeave={ this.hideVolume }>
+                        <button type="button" className={'player-control volume'} onMouseEnter={ this.showVolume } onMouseLeave={ this.hideVolume }>
                             <i className={'pf pf-volume'}></i>
-                            <div className={ this.state.showVolume ? 'volume-control volume-control--visible' : 'volume-control' }>
+                            <div className={ this.state.showVolume ? 'volume-control visible' : 'volume-control' }>
                                 <input type={'range'} min={'0'} max={'100'} onChange={ this.setVolume } />
                             </div>
                         </button>
@@ -406,7 +405,7 @@ var Header = React.createClass({
                     />
                 </Col>
                 <Col sm={1} className={'queue-controls text-center'}>
-                    <button type="button" className={'queue-controls__button'} onClick={ this.togglePlaylist }>
+                    <button type="button" className={'queue-toggle'} onClick={ this.togglePlaylist }>
                         <i className={'fa fa-fw fa-list'}></i>
                     </button>
                     <Queue
@@ -415,8 +414,8 @@ var Header = React.createClass({
                         playlistCursor={ this.props.playlistCursor }
                     />
                 </Col>
-                <Col sm={2} className={'search'}>
-                    <input type={'text'} className={'form-control input-sm'} placeholder={'search'} onClick={ this.searchSelect } onChange={ this.search } />
+                <Col sm={2}>
+                    <input type={'text'} className={'search form-control input-sm'} placeholder={'search'} onClick={ this.searchSelect } onChange={ this.search } />
                 </Col>
             </header>
         );
@@ -709,30 +708,30 @@ var PlayingBar = React.createClass({
 
             playingBar = (
                 <div className={'now-playing'}>
-                    <div className={'now-playing__info'}>
-                        <div className={'now-playing__info-buttons'}>
+                    <div className={'now-playing-infos'}>
+                        <div className={'player-options'}>
                             <RepeatButton repeat={ this.props.repeat } />
                             <ShuffleButton playlist={ this.props.playlist } shuffle={ this.props.shuffle } />
                         </div>
-                        <div className={'now-playing__info-meta'}>
-                            <strong className={'now-playing__info-meta-title'}>
+                        <div className={'metas'}>
+                            <strong className={'meta-title'}>
                                 { trackPlaying.title }
                             </strong>
                             &nbsp;by&nbsp;
-                            <strong className={'now-playing__info-meta-artist'}>
+                            <strong className={'meta-artist'}>
                                 { trackPlaying.artist.join(', ') }
                             </strong>
                             &nbsp;on&nbsp;
-                            <strong className={'now-playing__info-meta-album'}>
+                            <strong className={'meta-album'}>
                                 { trackPlaying.album }
                             </strong>
                         </div>
 
-                        <span className={'now-playing__info-duration'}>
-                            { parseDuration(parseInt(this.state.elapsed)) } / { parseDuration(parseInt(trackPlaying.duration)) }
+                        <span className={'duration'}>
+                            { parseDuration(this.state.elapsed) } / { parseDuration(trackPlaying.duration) }
                         </span>
                     </div>
-                    <div className={'now-playing__bar'}>
+                    <div className={'now-playing-bar'}>
                         <ProgressBar now={ elapsedPercent } onMouseDown={ this.jumpAudioTo } />
                     </div>
                 </div>
@@ -763,7 +762,7 @@ var PlayingBar = React.createClass({
         var playlistCursor = this.props.playlistCursor;
         var trackPlaying   = playlist[playlistCursor];
 
-        var bar = document.querySelector('.now-playing__bar');
+        var bar = document.querySelector('.now-playing-bar');
         var percent = ((e.pageX - (bar.offsetLeft + bar.offsetParent.offsetLeft)) / bar.offsetWidth) * 100;
 
         var jumpTo = (percent * trackPlaying.duration) / 100;
@@ -788,13 +787,13 @@ var ShuffleButton = React.createClass({
 
         if(!this.props.shuffle) {
             shuffleButton = (
-                <button type="button" className={ 'now-playing__info-button' } onClick={ this.shuffle }>
+                <button type="button" className={ 'button' } onClick={ this.shuffle }>
                     <i className={'pf pf-shuffle'}></i>
                 </button>
             );
         } else {
             shuffleButton = (
-                <button type="button" className={ 'now-playing__info-button now-playing__info-button--highlight' } onClick={ this.shuffle }>
+                <button type="button" className={ 'button active' } onClick={ this.shuffle }>
                     <i className={'pf pf-shuffle'}></i>
                 </button>
             );
@@ -863,19 +862,19 @@ var RepeatButton = React.createClass({
 
         if (this.props.repeat == 'one') {
             repeatButton = (
-                <button className={'now-playing__info-button now-playing__info-button--highlight'} onClick={ this.toggleRepeat }>
+                <button className={'button'} onClick={ this.toggleRepeat }>
                     <i className={'pf pf-repeat-one'}></i>
                 </button>
             );
         } else if (this.props.repeat === 'all') {
             repeatButton = (
-                <button className={'now-playing__info-button now-playing__info-button--highlight'} onClick={ this.toggleRepeat }>
+                <button className={'button repeat active'} onClick={ this.toggleRepeat }>
                     <i className={'pf pf-repeat'}></i>
                 </button>
             );
         } else {
             repeatButton = (
-                <button className={'now-playing__info-button'} onClick={ this.toggleRepeat }>
+                <button className={'button repeat'} onClick={ this.toggleRepeat }>
                     <i className={'pf pf-repeat'}></i>
                 </button>
             );
@@ -931,16 +930,16 @@ var Footer = React.createClass({
 
         if (!this.props.refreshingLibrary) {
             var navButtons = (
-                <ButtonGroup>
-                    <a href={'#/'} className={'btn btn-default'}><i className={'fa fa-align-justify'}></i></a>
-                    <a href={'#/settings'} className={'btn btn-default'}><i className={'fa fa-gear'}></i></a>
+                <ButtonGroup className={'view-switcher'}>
+                    <a href={'#/'} className={'view-link btn btn-default'}><i className={'fa fa-align-justify'}></i></a>
+                    <a href={'#/settings'} className={'view-link btn btn-default'}><i className={'fa fa-gear'}></i></a>
                 </ButtonGroup>
             );
         } else {
             var navButtons = (
                 <ButtonGroup>
-                    <a href={'#/'} disabled className={'btn btn-default'}><i className={'fa fa-align-justify'}></i></a>
-                    <a href={'#/settings'} disabled className={'btn btn-default'}><i className={'fa fa-gear'}></i></a>
+                    <a href={'#/'} disabled className={'view-link btn btn-default'}><i className={'fa fa-align-justify'}></i></a>
+                    <a href={'#/settings'} disabled className={'view-link btn btn-default'}><i className={'fa fa-gear'}></i></a>
                 </ButtonGroup>
             );
         }

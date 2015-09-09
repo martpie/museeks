@@ -80,9 +80,9 @@ header {
     -webkit-app-region: drag;
 
     .player-controls,
-    .now-playing__bar,
-    .now-playing__info-buttons,
-    .search > input,
+    .now-playing-bar,
+    .now-playing-info-buttons,
+    .search,
     .window-control,
     .queue-controls {
         -webkit-app-region: no-drag;
