@@ -51,7 +51,7 @@ This list is not limited. Features findable in issues with the `to-do` tag will 
 ##### general
 - [x] shortcuts & global shortcuts
 - [x] have a real development stack to generate views, scss, etc...
-- [ ] dark theme
+- [x] dark theme
 
 ##### settings view
 - [x] add/remove music folder
@@ -73,7 +73,6 @@ This list is not limited. Features findable in issues with the `to-do` tag will 
 - [x] loop, single-loop
 
 ##### nice to have
-- [ ] themes support
 - [ ] add languages support
 - [ ] auto-updater from Github releases
 - [ ] playlists
