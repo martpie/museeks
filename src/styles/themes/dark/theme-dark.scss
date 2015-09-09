@@ -41,6 +41,49 @@ header {
     .now-playing .now-playing-bar .progress {
         background-color: #444;
     }
+
+    .queue-controls .queue {
+        background-color: #444;
+        border-color: #666;
+        box-shadow: 0 5px 3px -5px rgba(255, 255, 255, .5);
+
+        .queue-header {
+            background-color: #555;
+
+            .queue-infos {
+                color: #DDD;
+            }
+
+            .empty-button {
+                background-color: #555;
+                color: #EEE;
+                border-color: #444;
+            }
+        }
+
+        .queue-body {
+
+            .track {
+                &::before,
+                &::after {
+                    background-color: #555;
+                }
+
+                &:not(:last-child) {
+                    border-bottom-color: #555;
+                }
+
+                .remove {
+                    color: #EEE;
+                }
+
+                .other-infos,
+                .title {
+                    color: #EEE;
+                }
+            }
+        }
+    }
 }
 
 
