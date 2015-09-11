@@ -622,6 +622,7 @@ footer {
         width: 100%;
         white-space: nowrap;
         margin-bottom: 0;
+        table-layout: fixed;
 
         thead {
             border-bottom: 1px solid rgb(210, 210, 210);
