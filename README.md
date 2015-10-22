@@ -1,5 +1,7 @@
 # museeks
-A music player, in active development. The code is still a bit messy, I'm working on it.
+A music player, in active development.
+
+**The main focus is now to rewrite the whole app using Flux, es6 and Babel.**
 
 ![Screenshot](screenshot.png)
 
