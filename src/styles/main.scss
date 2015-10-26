@@ -207,6 +207,7 @@ header {
                 background: transparent;
                 font-size: 16px;
                 color: #555;
+                padding: 0 10px;
 
                 &.play {
                     font-size: 18px;
@@ -223,9 +224,9 @@ header {
                 z-index: 10;
                 background-color: rgb(244, 244, 244);
                 top: 0;
-                left: 50px;
+                left: 60px;
                 display: none;
-                padding: 4px 12px;
+                padding: 5px 12px;
 
                 &.visible {
                     display: block;
