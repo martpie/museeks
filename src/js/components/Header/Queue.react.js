@@ -80,7 +80,7 @@ export default class Queue extends Component {
                             { track.title }
                         </div>
                         <div className='other-infos'>
-                            <span className='artist'}>{ track.artist }</span> - <span className={'album'>{ track.album }</span>
+                            <span className='artist'>{ track.artist }</span> - <span className='album'>{ track.album }</span>
                         </div>
                     </div>
                 );
