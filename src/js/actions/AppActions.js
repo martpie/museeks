@@ -140,7 +140,6 @@ export default {
         addFolders(folders) {
             AppDispatcher.dispatch({
                 actionType : AppConstants.APP_LIBRARY_ADD_FOLDERS,
-                folders    : folders
             });
         },
 

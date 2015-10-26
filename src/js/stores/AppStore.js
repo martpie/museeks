@@ -13,13 +13,14 @@ import fs   from 'fs';
 import path from 'path';
 import mime from 'mime';
 
+import remote from 'remote';
+
 import app from '../constants/app';
 
 import AppDispatcher from '../dispatcher/AppDispatcher';
 import AppConstants  from '../constants/AppConstants';
 
-// Should't be here
-import AppActions from '../actions/AppActions';
+var dialog = remote.require('dialog');
 
 var CHANGE_EVENT = 'change';
 
@@ -173,11 +174,12 @@ AppDispatcher.register(function(payload) {
             break;
 
         case(AppConstants.APP_PLAYER_TOGGLE):
-            if(app.audio.paused && AppStore.playlist !== null) {
+            // TOFIX
+            /*if(app.audio.paused && AppStore.playlist !== null) {
                 AppActions.player.play();
             } else {
                 AppActions.player.pause();
-            }
+            }*/
             AppStore.emit(CHANGE_EVENT);
             break;
 
@@ -301,6 +303,7 @@ AppDispatcher.register(function(payload) {
 
                 var oldPlaylistCursor = AppStore.oldPlaylistCursor;
                 AppStore.shuffle = false;
+                // TOFIX
                 AppActions.selectAndPlay(oldPlaylistCursor, true);
             }
             AppStore.emit(CHANGE_EVENT);
@@ -364,14 +367,15 @@ AppDispatcher.register(function(payload) {
 
         case(AppConstants.APP_LIBRARY_ADD_FOLDERS):
             var config = JSON.parse(localStorage.getItem('config'));
+            var folders = dialog.showOpenDialog({ properties: ['openDirectory', 'multiSelections']});
 
-            payload.folders.forEach(function (folder) {
-                config.musicFolders.push(folder);
-            });
-
-            localStorage.setItem('config', JSON.stringify(config));
-
-            AppStore.emit(CHANGE_EVENT);
+            if(folders !== undefined) {
+                folders.forEach(function (folder) {
+                    config.musicFolders.push(folder);
+                });
+                localStorage.setItem('config', JSON.stringify(config));
+                AppStore.emit(CHANGE_EVENT);
+            }
             break;
 
         case(AppConstants.APP_LIBRARY_REMOVE_FOLDER):
