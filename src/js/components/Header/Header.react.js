@@ -32,40 +32,40 @@ export default class Header extends Component {
 
         if (this.props.playerStatus === 'play') {
             var playButton = (
-                <button className={'player-control play'} onClick={ this.pause.bind(null) }>
+                <button className='player-control play' onClick={ this.pause.bind(null) }>
                     <Icon name='pause' />
                 </button>
             );
         } else if (this.props.playerStatus === 'pause') {
             var playButton = (
-                <button className={'player-control play'} onClick={ this.play.bind(null) }>
+                <button className='player-control play' onClick={ this.play.bind(null) }>
                     <Icon name='play' />
                 </button>
             );
         } else {
             var playButton = (
-                <button className={'player-control play'}>
+                <button className='player-control play'>
                     <Icon name='play' />
                 </button>
             );
         }
 
         return (
-            <header className={'row'}>
-                <Col sm={3} className={'main-controls'}>
-                    <div className={'window-controls'}>
-                        <button className={'window-control'} onClick={ this.winClose.bind(null) }>&times;</button>
+            <header className='row'>
+                <Col sm={3} className='main-controls'>
+                    <div className='window-controls'>
+                        <button className='window-control' onClick={ this.winClose.bind(null) }>&times;</button>
                     </div>
 
-                    <div className={'player-controls text-center'}>
-                        <button type="button" className={'player-control previous'} onClick={ this.previous.bind(null) }>
+                    <div className='player-controls text-center'>
+                        <button type='button' className='player-control previous' onClick={ this.previous.bind(null) }>
                             <Icon name='backward' />
                         </button>
                         { playButton }
-                        <button type="button" className={'player-control forward'} onClick={ this.next.bind(null) }>
+                        <button type='button' className='player-control forward' onClick={ this.next.bind(null) }>
                             <Icon name='forward' />
                         </button>
-                        <button type="button" className={'player-control volume'} onMouseEnter={ this.showVolume.bind(this) } onMouseLeave={ this.hideVolume.bind(this) }>
+                        <button type='button' className='player-control volume' onMouseEnter={ this.showVolume.bind(this) } onMouseLeave={ this.hideVolume.bind(this) }>
                             <Icon name='volume-up' />
                             <div className={ this.state.showVolume ? 'volume-control visible' : 'volume-control' }>
                                 <input type={'range'} min={0} max={100} defaultValue={100} ref='volume' onChange={ this.setVolume.bind(this) } />
@@ -73,7 +73,7 @@ export default class Header extends Component {
                         </button>
                     </div>
                 </Col>
-                <Col sm={6} className={'text-center'}>
+                <Col sm={6} className='text-center'>
                     <PlayingBar
                         playlist={ this.props.playlist }
                         playlistCursor={ this.props.playlistCursor }
@@ -81,9 +81,9 @@ export default class Header extends Component {
                         repeat={ this.props.repeat }
                     />
                 </Col>
-                <Col sm={1} className={'queue-controls text-center'}>
-                    <button type="button" className={'queue-toggle'} onClick={ this.togglePlaylist.bind(this) }>
-                        <i className={'fa fa-fw fa-list'}></i>
+                <Col sm={1} className='queue-controls text-center'>
+                    <button type='button' className='queue-toggle' onClick={ this.togglePlaylist.bind(this) }>
+                        <i className='fa fa-fw fa-list'></i>
                     </button>
                     <Queue
                         showPlaylist={ this.state.showPlaylist }
@@ -92,7 +92,7 @@ export default class Header extends Component {
                     />
                 </Col>
                 <Col sm={2}>
-                    <input type={'text'} className={'search form-control input-sm'} placeholder={'search'} ref='search' onClick={ this.searchSelect.bind(this) } onChange={ this.search.bind(this) } />
+                    <input type={'text'} className='search form-control input-sm'} placeholder={'search' ref='search' onClick={ this.searchSelect.bind(this) } onChange={ this.search.bind(this) } />
                 </Col>
             </header>
         );

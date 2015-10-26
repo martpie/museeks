@@ -24,14 +24,14 @@ export default class Library extends Component {
 
         if(this.props.library === null) {
             content = (
-                <div className={'full-message'}>
-                    <p>{ "Loadin\' stuff..." }</p>
+                <div className='full-message'>
+                    <p>{ 'Loadin\' stuff...' }</p>
                 </div>
             );
         }
         else if (this.props.library.length == 0) {
             content = (
-                <div className={'full-message'}>
+                <div className='full-message'>
                     <p>Too bad, there is no music in your library =(</p>
                     <p className='sub-message'>you may need to refresh your library or add folders into it.</p>
                 </div>
@@ -39,7 +39,7 @@ export default class Library extends Component {
         }
         else if (this.props.tracks.length == 0) {
             content = (
-                <div className={'full-message'}>
+                <div className='full-message'>
                     <p>Your search returned no results</p>
                 </div>
             );
@@ -57,7 +57,7 @@ export default class Library extends Component {
         }
 
         return (
-            <div className={'view view-library-list'} >
+            <div className='view view-library-list' >
                 { content }
             </div>
         );

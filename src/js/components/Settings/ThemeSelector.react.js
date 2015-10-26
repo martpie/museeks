@@ -19,11 +19,11 @@ export default class ThemeSelector extends Component {
     render() {
 
         return (
-            <div className={'setting setting-music-selector'}>
+            <div className='setting setting-music-selector'>
                 <h4>Theme</h4>
-                <div className="checkbox">
+                <div className='checkbox'>
                     <label>
-                        <input type="checkbox" onClick={ this.switchTheme.bind(this) } ref='theme' /> Enable dark theme
+                        <input type='checkbox' onClick={ this.switchTheme.bind(this) } ref='theme' /> Enable dark theme
                     </label>
                 </div>
             </div>
