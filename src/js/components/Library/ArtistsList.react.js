@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Icon from 'react-fontawesome';
 
 import remote from 'remote';
 
@@ -41,8 +42,8 @@ export default class ArtistList extends Component {
         var list = tracks.map(function(track, index) {
 
             if(trackPlayingID != null) {
-                if(track._id == trackPlayingID) var playing = (<i className='fa fa-fw fa-volume-up'></i>);
-                if(track._id == trackPlayingID && app.audio.paused) var playing = (<i className='fa fa-fw fa-volume-off'></i>);
+                if(track._id == trackPlayingID) var playing = <Icon name='volume-up' fixedWidth />;
+                if(track._id == trackPlayingID && app.audio.paused) var playing = <Icon name='volume-off' fixedWidth />;
             }
 
             return(
@@ -74,12 +75,12 @@ export default class ArtistList extends Component {
                 <table className='table table-striped tracks-list'>
                     <thead>
                         <tr>
-                            <th className='column-trackPlaying'><div><i className='fa fa-fw'></i></div></th>
-                            <th className='column-track'><div>Track</div></th>
-                            <th className='column-duration'><div>Duration</div></th>
-                            <th className='column-artist'><div>Artist</div></th>
-                            <th className='column-album'><div>Album</div></th>
-                            <th className='column-genre'><div>Genre</div></th>
+                            <th className='column-trackPlaying'></th>
+                            <th className='column-track'>Track</th>
+                            <th className='column-duration'>Duration</th>
+                            <th className='column-artist'>Artist</th>
+                            <th className='column-album'>Album</th>
+                            <th className='column-genre'>Genre</th>
                         </tr>
                     </thead>
                     <tbody>
