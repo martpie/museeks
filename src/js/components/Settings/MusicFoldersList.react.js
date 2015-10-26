@@ -3,10 +3,6 @@ import { ButtonGroup, Button } from 'react-bootstrap';
 
 import AppActions from '../../actions/AppActions';
 
-import remote from 'remote';
-
-var dialog = remote.require('dialog');
-
 
 
 /*
@@ -91,11 +87,7 @@ export default class MusicFoldersList extends Component {
     }
 
     addFolders() {
-
-        var self    = this;
-        var folders = dialog.showOpenDialog({ properties: ['openDirectory', 'multiSelections']});
-
-        AppActions.library.addFolders(folders);
+        AppActions.library.addFolders();
     }
 
     removeFolder(i) {

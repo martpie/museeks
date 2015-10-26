@@ -38,7 +38,7 @@ export default class Footer extends Component {
         if (!this.props.refreshingLibrary) {
             var navButtons = (
                 <ButtonGroup className='view-switcher'>
-                    <Link to='/'         className='view-link btn btn-default'>
+                    <Link to='/' className='view-link btn btn-default'>
                         <Icon name='align-justify' />
                     </Link>
                     <Link to='/settings' className='view-link btn btn-default'>
