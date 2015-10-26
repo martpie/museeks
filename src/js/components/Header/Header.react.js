@@ -83,7 +83,7 @@ export default class Header extends Component {
                 </Col>
                 <Col sm={1} className='queue-controls text-center'>
                     <button type='button' className='queue-toggle' onClick={ this.togglePlaylist.bind(this) }>
-                        <i className='fa fa-fw fa-list'></i>
+                        <Icon name='list' fixedWidth />
                     </button>
                     <Queue
                         showPlaylist={ this.state.showPlaylist }

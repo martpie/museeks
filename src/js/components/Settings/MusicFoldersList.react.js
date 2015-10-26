@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { ButtonGroup, Button } from 'react-bootstrap';
+import Icon from 'react-fontawesome';
 
 import AppActions from '../../actions/AppActions';
 
@@ -29,12 +30,11 @@ export default class MusicFoldersList extends Component {
             var buttonsGroup = (
                 <ButtonGroup>
                     <Button bsSize='small' onClick={ this.addFolders.bind(this) }>
-                        <i className='fa fa-plus'></i>
+                        <Icon name='plus' fixedWidth />
                         Import a folder
                     </Button>
                     <Button bsSize='small' onClick={ this.refreshLibrary }>
-                        <i className={ !this.props.refreshingLibrary ? 'fa fa-refresh' : 'fa fa-refresh fa-spin' }></i>
-                        { !this.props.refreshingLibrary ? 'Refresh Library' : 'Refreshing Library'}
+                        <Icon name='refresh' /> Refresh Library
                     </Button>
                     <Button bsSize='small' bsStyle={'danger'} onClick={ this.resetLibrary }>
                         Reset library
@@ -47,12 +47,11 @@ export default class MusicFoldersList extends Component {
             var buttonsGroup = (
                 <ButtonGroup>
                     <Button bsSize='small' disabled>
-                        <i className='fa fa-plus'></i>
+                        <Icon name='plus' />
                         Import a folder
                     </Button>
                     <Button bsSize='small' disabled>
-                        <i className={ !this.props.refreshingLibrary ? 'fa fa-refresh' : 'fa fa-refresh fa-spin' }></i>
-                        { !this.props.refreshingLibrary ? 'Refresh Library' : 'Refreshing Library'}
+                        <Icon name='refresh' spin /> Refreshing Library
                     </Button>
                     <Button bsSize='small' disabled bsStyle={'danger'}>
                         Reset library
@@ -65,7 +64,7 @@ export default class MusicFoldersList extends Component {
         var list = musicFolders.map(function(folder, i) {
             return(
                 <li key={i} ref={ 'musicfolder-' + i }>
-                    <i onClick={ this.props.refreshingLibrary ? void(0) : self.removeFolder.bind(self, i) } className={ this.props.refreshingLibrary ? 'fa fa-close delete-libray-folder disabled' : 'fa fa-close delete-libray-folder' }></i>
+                    <Icon name='close' className={ this.props.refreshingLibrary ? 'delete-libray-folder disabled' : 'delete-libray-folder' } onClick={ this.props.refreshingLibrary ? void(0) : self.removeFolder.bind(self, i) }  />
                     { folder }
                 </li>
             );
