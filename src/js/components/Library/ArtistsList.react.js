@@ -74,7 +74,7 @@ export default class ArtistList extends Component {
                 <table className='table table-striped tracks-list'>
                     <thead>
                         <tr>
-                            <th className='column-trackPlaying'}><div><i className={'fa fa-fw'></i></div></th>
+                            <th className='column-trackPlaying'><div><i className='fa fa-fw'></i></div></th>
                             <th className='column-track'><div>Track</div></th>
                             <th className='column-duration'><div>Duration</div></th>
                             <th className='column-artist'><div>Artist</div></th>

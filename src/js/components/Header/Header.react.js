@@ -92,7 +92,7 @@ export default class Header extends Component {
                     />
                 </Col>
                 <Col sm={2}>
-                    <input type={'text'} className='search form-control input-sm'} placeholder={'search' ref='search' onClick={ this.searchSelect.bind(this) } onChange={ this.search.bind(this) } />
+                    <input type='text' className='search form-control input-sm' placeholder='search' ref='search' onClick={ this.searchSelect.bind(this) } onChange={ this.search.bind(this) } />
                 </Col>
             </header>
         );
