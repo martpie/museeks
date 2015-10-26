@@ -36,7 +36,7 @@ export default class Museeks extends Component {
         var status         = 'An apple a day keeps Dr Dre away';
 
         return (
-            <div className={'main'}>
+            <div className='main'>
                 <Header
                     app={ this }
                     playerStatus={ this.state.playerStatus }
@@ -45,8 +45,8 @@ export default class Museeks extends Component {
                     playlist={ this.state.playlist }
                     playlistCursor={ this.state.playlistCursor }
                 />
-                <div className={'main-content'}>
-                    <Row className={'content'}>
+                <div className='main-content'>
+                    <Row className='content'>
                         { React.cloneElement(
                             this.props.children, {
                                 app               : this,

@@ -17,9 +17,9 @@ export default {
         var minutes = parseInt(duration / 60) % 60;
         var seconds = parseInt(duration % 60);
 
-        hours = hours < 10 ? "0" + hours : hours;
+        hours = hours < 10 ? '0' + hours : hours;
         var result = hours > 0 ? hours + ':' : '';
-            result += (minutes < 10 ? "0" + minutes : minutes) + ":" + (seconds  < 10 ? "0" + seconds : seconds);
+            result += (minutes < 10 ? '0' + minutes : minutes) + ':' + (seconds  < 10 ? '0' + seconds : seconds);
 
         return result;
     },

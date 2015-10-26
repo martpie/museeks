@@ -42,7 +42,7 @@ export default class Queue extends Component {
         if(queue.length == 0) {
             return playlistContent = (
                 <div className={ this.props.showPlaylist ? 'queue visible text-left' : 'queue text-left' }>
-                    <div className={'empty-queue text-center'}>
+                    <div className='empty-queue text-center'>
                         queue is empty
                     </div>
                 </div>
@@ -73,14 +73,14 @@ export default class Queue extends Component {
                       draggable={'true'}
                       onDragStart={ self.dragStart.bind(self, index) }
                       onDragEnd={ self.dragEnd.bind(self) }>
-                        <Button bsSize={'xsmall'} bsStyle={'link'} className={'remove'} onClick={ self.removeFromQueue.bind(null, index) }>
+                        <Button bsSize={'xsmall'} bsStyle={'link'} className='remove' onClick={ self.removeFromQueue.bind(null, index) }>
                             &times;
                         </Button>
-                        <div className={'title'}>
+                        <div className='title'>
                             { track.title }
                         </div>
-                        <div className={'other-infos'}>
-                            <span className={'artist'}>{ track.artist }</span> - <span className={'album'}>{ track.album }</span>
+                        <div className='other-infos'>
+                            <span className='artist'}>{ track.artist }</span> - <span className={'album'>{ track.album }</span>
                         </div>
                     </div>
                 );
@@ -89,12 +89,12 @@ export default class Queue extends Component {
 
         return (
             <div className={ this.props.showPlaylist ? 'queue visible text-left' : 'queue text-left' }>
-                <div className={'queue-header'}>
-                    <div className={'queue-infos'}>
+                <div className='queue-header'>
+                    <div className='queue-infos'>
                         { wholeQueue.length } tracks, { utils.parseDuration(wholeQueueDuration) }
                     </div>
                     <ButtonGroup>
-                        <Button bsSize={'xsmall'} bsStyle={'default'} className={'empty-button'} onClick={ this.clearQueue }>
+                        <Button bsSize={'xsmall'} bsStyle={'default'} className='empty-button' onClick={ this.clearQueue }>
                             clear queue
                         </Button>
                     </ButtonGroup>
@@ -118,7 +118,7 @@ export default class Queue extends Component {
     dragStart(index, e) {
 
         e.dataTransfer.effectAllowed = 'move';
-        e.dataTransfer.setData("text/html", e.currentTarget);
+        e.dataTransfer.setData('text/html', e.currentTarget);
 
         this.draggedIndex = index;
     }

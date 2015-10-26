@@ -402,7 +402,7 @@ AppDispatcher.register(function(payload) {
 
                 var walker = walk.walk(folder, { followLinks: false });
 
-                walker.on("file", function (root, fileStat, next) {
+                walker.on('file', function (root, fileStat, next) {
                     fs.readFile(path.resolve(root, fileStat.name), function (buffer) {
 
                         var file = path.join(root, fileStat.name);
@@ -432,14 +432,14 @@ AppDispatcher.register(function(payload) {
                         next();
                     });
                 });
-                walker.on("errors", function (root, nodeStatsArray, next) {
+                walker.on('errors', function (root, nodeStatsArray, next) {
                     nodeStatsArray.forEach(function (n) {
-                        console.error("[ERROR] " + n.name);
-                        console.error(n.error.message || (n.error.code + ": " + n.error.path));
+                        console.error('[ERROR] ' + n.name);
+                        console.error(n.error.message || (n.error.code + ': ' + n.error.path));
                     });
                     next();
                 });
-                walker.on("end", function () {
+                walker.on('end', function () {
                     if(folders.length - 1 === index) {
                         AppStore.refreshingLibrary = false;
                         AppStore.emit(CHANGE_EVENT);

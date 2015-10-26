@@ -43,31 +43,31 @@ export default class PlayingBar extends Component {
             }
 
             playingBar = (
-                <div className={'now-playing'}>
-                    <div className={'now-playing-infos'}>
-                        <div className={'player-options'}>
+                <div className='now-playing'>
+                    <div className='now-playing-infos'>
+                        <div className='player-options'>
                             <ButtonRepeat repeat={ this.props.repeat } />
                             <ButtonShuffle playlist={ this.props.playlist } shuffle={ this.props.shuffle } />
                         </div>
-                        <div className={'metas'}>
-                            <strong className={'meta-title'}>
+                        <div className='metas'>
+                            <strong className='meta-title'>
                                 { trackPlaying.title }
                             </strong>
                             &nbsp;by&nbsp;
-                            <strong className={'meta-artist'}>
+                            <strong className='meta-artist'>
                                 { trackPlaying.artist.join(', ') }
                             </strong>
                             &nbsp;on&nbsp;
-                            <strong className={'meta-album'}>
+                            <strong className='meta-album'>
                                 { trackPlaying.album }
                             </strong>
                         </div>
 
-                        <span className={'duration'}>
+                        <span className='duration'>
                             { utils.parseDuration(this.state.elapsed) } / { utils.parseDuration(trackPlaying.duration) }
                         </span>
                     </div>
-                    <div className={'now-playing-bar'}>
+                    <div className='now-playing-bar'>
                         <ProgressBar now={ elapsedPercent } onMouseDown={ this.jumpAudioTo.bind(this) } />
                     </div>
                 </div>

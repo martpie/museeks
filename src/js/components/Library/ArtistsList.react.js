@@ -41,28 +41,28 @@ export default class ArtistList extends Component {
         var list = tracks.map(function(track, index) {
 
             if(trackPlayingID != null) {
-                if(track._id == trackPlayingID) var playing = (<i className={'fa fa-fw fa-volume-up'}></i>);
-                if(track._id == trackPlayingID && app.audio.paused) var playing = (<i className={'fa fa-fw fa-volume-off'}></i>);
+                if(track._id == trackPlayingID) var playing = (<i className='fa fa-fw fa-volume-up'></i>);
+                if(track._id == trackPlayingID && app.audio.paused) var playing = (<i className='fa fa-fw fa-volume-off'></i>);
             }
 
             return(
                 <tr className={ selected.indexOf(index) != -1 ? 'track selected' : 'track' } key={index} onMouseDown={ self.selectTrack.bind(self, index) } onDoubleClick={ self.selectAndPlay.bind(null, index) } onContextMenu={ self.showContextMenu.bind(self) }>
-                    <td className={'column-trackPlaying text-center'}>
+                    <td className='column-trackPlaying text-center'>
                         { playing }
                     </td>
-                    <td className={'column-track'}>
+                    <td className='column-track'>
                         { track.title }
                     </td>
-                    <td className={'column-duration'}>
+                    <td className='column-duration'>
                         { utils.parseDuration(track.duration) }
                     </td>
-                    <td className={'column-artist'}>
+                    <td className='column-artist'>
                         { track.artist[0] }
                     </td>
-                    <td className={'column-album'}>
+                    <td className='column-album'>
                         { track.album }
                     </td>
-                    <td className={'column-genre'}>
+                    <td className='column-genre'>
                         { track.genre.join(', ') }
                     </td>
                 </tr>
@@ -70,16 +70,16 @@ export default class ArtistList extends Component {
         });
 
         return (
-            <div className={'tracks-list-container'}>
-                <table className={'table table-striped tracks-list'}>
+            <div className='tracks-list-container'>
+                <table className='table table-striped tracks-list'>
                     <thead>
                         <tr>
-                            <th className={'column-trackPlaying'}><div><i className={'fa fa-fw'}></i></div></th>
-                            <th className={'column-track'}><div>Track</div></th>
-                            <th className={'column-duration'}><div>Duration</div></th>
-                            <th className={'column-artist'}><div>Artist</div></th>
-                            <th className={'column-album'}><div>Album</div></th>
-                            <th className={'column-genre'}><div>Genre</div></th>
+                            <th className='column-trackPlaying'}><div><i className={'fa fa-fw'></i></div></th>
+                            <th className='column-track'><div>Track</div></th>
+                            <th className='column-duration'><div>Duration</div></th>
+                            <th className='column-artist'><div>Artist</div></th>
+                            <th className='column-album'><div>Album</div></th>
+                            <th className='column-genre'><div>Genre</div></th>
                         </tr>
                     </thead>
                     <tbody>

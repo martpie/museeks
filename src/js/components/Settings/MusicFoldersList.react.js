@@ -33,7 +33,7 @@ export default class MusicFoldersList extends Component {
             var buttonsGroup = (
                 <ButtonGroup>
                     <Button bsSize='small' onClick={ this.addFolders.bind(this) }>
-                        <i className={'fa fa-plus'}></i>
+                        <i className='fa fa-plus'></i>
                         Import a folder
                     </Button>
                     <Button bsSize='small' onClick={ this.refreshLibrary }>
@@ -51,7 +51,7 @@ export default class MusicFoldersList extends Component {
             var buttonsGroup = (
                 <ButtonGroup>
                     <Button bsSize='small' disabled>
-                        <i className={'fa fa-plus'}></i>
+                        <i className='fa fa-plus'></i>
                         Import a folder
                     </Button>
                     <Button bsSize='small' disabled>
@@ -76,7 +76,7 @@ export default class MusicFoldersList extends Component {
         }.bind(this));
 
         return (
-            <div className="setting settings-musicfolder">
+            <div className='setting settings-musicfolder'>
                 <h4>Library folders</h4>
 
                 <p>You currently have { musicFolders.length } folder{ musicFolders.length < 2 ? '' : 's' } in your library.</p>
