@@ -1,8 +1,6 @@
 # museeks
 A music player, in active development.
 
-**The main focus is now to rewrite the whole app using Flux, es6 and Babel.**
-
 ![Screenshot](screenshot.png)
 
 ![Screenshot](screenshot-dark.png)
@@ -16,12 +14,12 @@ It uses:
 
 ### Installation
 
-Please consider **this app is under development, just install it for fun**, I'm aware of multiple bugs and designs issues.
+Please consider **this app is still under development, just install it for fun**, I'm aware of multiple bugs and designs issues.
 
 - Download [Electron](https://github.com/atom/electron/releases)
 - Download Museeks source code
 - Put it in a folder called `app` in `[Electron path]/resources`
-- `bower install && npm install && gulp`
+- `bower install && npm install && npm run dev`
 - Run Electron
 
 ===
@@ -29,8 +27,9 @@ Please consider **this app is under development, just install it for fun**, I'm 
 ### Contribute
 
 - fork and clone
-- `bower install && npm install && gulp`
-Gulp will watch for .jsx and .scss files changes.
+- You will need `bower` and `webpack` installed globally
+- `bower install && npm install && npm run dev`
+Webpack will watch for JSX and SASS changes.
 
 Please respect a few rules:
 - Make the code readable and comment if needed
@@ -47,9 +46,11 @@ This list is not limited. Features findable in issues with the `to-do` tag will 
 
 ##### discussion
 
-- [ ] refactor once it's frozen
-- [ ] move from JST to babel (see [there](http://facebook.github.io/react/blog/2015/06/12/deprecating-jstransform-and-react-tools.html))
-- [ ] use es6 classes instead of React.createClass()
+- [x] refactor once it's frozen
+- [x] use es6 and Babel
+- [x] `routie.js` to `react-router`
+- [x] `gulp` to `webpack`
+- [x] `nconf` to `localStorage`
 - [ ] build system for each platform (.exe, .app, .deb...) need help on this one
 
 ##### general
