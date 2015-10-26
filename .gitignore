@@ -1,4 +1,4 @@
 node_modules/
-src/components/
 src/dist
+src/assets
 cache/

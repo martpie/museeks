@@ -30,6 +30,8 @@ button {
     outline: none;
 }
 
+
+
 /*
 |--------------------------------------------------------------------------
 | General - Customization
@@ -70,6 +72,9 @@ input[type=range] {
     }
 }
 
+
+
+
 /*
 |--------------------------------------------------------------------------
 | Drag
@@ -89,6 +94,8 @@ header {
     }
 }
 
+
+
 /*
 |--------------------------------------------------------------------------
 | Fonts
@@ -97,22 +104,23 @@ header {
 
 @font-face {
     font-family: OpenSans;
-    src: url('../../components/open-sans-fontface/fonts/Regular/OpenSans-Regular.ttf');
+    src: url('../assets/open-sans-fontface/fonts/Regular/OpenSans-Regular.ttf');
 }
 
 
 @font-face {
     font-family: OpenSans;
-    src: url('../../components/open-sans-fontface/fonts/Bold/OpenSans-Bold.ttf');
+    src: url('../assets/open-sans-fontface/fonts/Bold/OpenSans-Bold.ttf');
     font-weight: bold;
 }
 
 
 @font-face {
     font-family: OpenSans;
-    src: url('../../components/open-sans-fontface/fonts/Light/OpenSans-Light.ttf');
+    src: url('../assets/open-sans-fontface/fonts/Light/OpenSans-Light.ttf');
     font-weight: 100;
 }
+
 
 
 /*
@@ -144,6 +152,8 @@ header {
     border-color: #AAAAAA;
     box-shadow: none;
 }
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -195,10 +205,11 @@ header {
             .player-control {
                 border: 0;
                 background: transparent;
-                font-size: 20px;
+                font-size: 16px;
+                color: #555;
 
                 &.play {
-                    font-size: 24px;
+                    font-size: 18px;
                 }
 
                 i {
@@ -237,10 +248,12 @@ header {
             align-items: center;
             justify-content: center;
 
-            & .pf {
+            .pf {
                 display: flex;
                 align-items: center;
                 justify-content: center;
+                height: 16px;
+                width: 16px;
             }
 
             .player-options {
@@ -457,6 +470,8 @@ footer {
     }
 }
 
+
+
 /*
 |--------------------------------------------------------------------------
 | General - Notifications
@@ -494,6 +509,8 @@ footer {
         transform: scale(0);
     }
 }
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -557,6 +574,8 @@ footer {
     }
 }
 
+
+
 /*
 |--------------------------------------------------------------------------
 | View - Settings
@@ -586,6 +605,8 @@ footer {
         }
     }
 }
+
+
 
 /*
 |--------------------------------------------------------------------------
