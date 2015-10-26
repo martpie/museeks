@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import MusicFoldersList from './MusicFoldersList.react';
 import ThemeSelector    from './ThemeSelector.react';
+import ContributorsList from './ContributorsList.react';
 
 
 /*
@@ -28,6 +29,7 @@ export default class Settings extends Component {
                 <hr />
                 <ThemeSelector />
                 <hr />
+                <ContributorsList />
             </div>
         );
     }
