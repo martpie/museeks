@@ -1,0 +1,152 @@
+/**
+ * Dark Theme
+ */
+
+body.theme-dark {
+    border-color: #333;
+
+    hr {
+        border-top-color: #555;
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Header
+    |--------------------------------------------------------------------------
+    */
+
+   header {
+       background-color: #555;
+       border-bottom-color: #333;
+       color: #EEE;
+
+       .search {
+           border-color: #4A4A4A;
+           background-color: #444;
+           color: #EEE;
+       }
+
+       .main-controls .window-controls .window-control {
+           color: #AAA;
+
+           &:active {
+               background-color: #555;
+               border-color: #444;
+           }
+       }
+
+       .main-controls .player-controls .volume-control{
+           background-color: #555;
+       }
+
+       .now-playing .now-playing-bar .progress {
+           background-color: #444;
+       }
+
+       .queue-controls .queue {
+           background-color: #444;
+           border-color: #666;
+           box-shadow: 0 5px 3px -5px rgba(255, 255, 255, .5);
+
+           .queue-header {
+               background-color: #555;
+
+               .queue-infos {
+                   color: #DDD;
+               }
+
+               .empty-button {
+                   background-color: #555;
+                   color: #EEE;
+                   border-color: #444;
+               }
+           }
+
+           .queue-body {
+
+               .track {
+                   &::before,
+                   &::after {
+                       background-color: #555;
+                   }
+
+                   &:not(:last-child) {
+                       border-bottom-color: #555;
+                   }
+
+                   .remove {
+                       color: #EEE;
+                   }
+
+                   .other-infos,
+                   .title {
+                       color: #EEE;
+                   }
+               }
+           }
+       }
+   }
+
+
+
+   /*
+   |--------------------------------------------------------------------------
+   | Footer
+   |--------------------------------------------------------------------------
+   */
+
+   footer {
+       border-top-color: #333;
+       background-color: #555;
+       color: #EEE;
+
+       .view-switcher .view-link {
+           color: #EEE;
+           border-color: #444;
+
+           &:hover,
+           &:focus,
+           &:active:hover {
+               background-color: #4A4A4A;
+               color: #EEE;
+               border-color: #444;
+           }
+       }
+
+       .status {
+           color: #AAA;
+       }
+   }
+
+
+
+   /*
+   |--------------------------------------------------------------------------
+   | View -- General
+   |--------------------------------------------------------------------------
+   */
+
+   .view {
+       background-color: #444;
+       color: #EEE;
+
+       table.table {
+
+           &.tracks-list thead {
+               border-bottom: 1px solid #333333;
+           }
+
+           &.table-striped>tbody>tr:nth-of-type(odd) {
+               background-color: #555;
+
+               &.selected {
+                   background-color: #459CE7;
+               }
+           }
+       }
+
+       &.view-settings .musicfolders-list {
+           border-color: #555;
+       }
+   }
+}

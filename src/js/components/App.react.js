@@ -89,16 +89,9 @@ export default class Museeks extends Component {
         var self      = this;
 
         // Theme support
-        var themeName = localStorage.getItem('config').theme;
+        var themeName = JSON.parse(localStorage.getItem('config')).theme;
 
-        var theme = document.createElement('link');
-            theme.type  = 'text/css';
-            theme.rel   = 'stylesheet';
-            theme.media = 'all';
-            theme.href  =  app.pathSrc + '/dist/css/themes/' + themeName + '/theme-' + themeName + '.css';
-            theme.id    = 'theme-stylesheet';
-
-        document.querySelector('head').appendChild(theme);
+        document.querySelector('body').classList.add('theme-' + themeName);
 
 
         // Prevent some events
