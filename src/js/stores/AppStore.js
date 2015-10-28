@@ -174,12 +174,13 @@ AppDispatcher.register(function(payload) {
             break;
 
         case(AppConstants.APP_PLAYER_TOGGLE):
-            // TOFIX
-            /*if(app.audio.paused && AppStore.playlist !== null) {
-                AppActions.player.play();
+            if(app.audio.paused && AppStore.playlist !== null) {
+                AppStore.playerStatus = 'play';
+                app.audio.play();
             } else {
-                AppActions.player.pause();
-            }*/
+                AppStore.playerStatus = 'pause';
+                app.audio.pause();
+            }
             AppStore.emit(CHANGE_EVENT);
             break;
 
