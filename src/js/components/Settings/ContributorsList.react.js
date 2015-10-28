@@ -42,7 +42,7 @@ export default class ContributorsList extends Component {
             <div className='setting setting-music-selector'>
                 <h4>Contributors</h4>
                 <div className='contributorsx-list'>
-                    <p>Made with ♥ by Pierre de la Martinière (KeitIG) and a bunch of great guys:</p>
+                    <p>Made with ♥ by Pierre de la Martinière (<a href onClick={ this.openLink.bind(null, 'http://github.com/KeitIG') }>KeitIG</a>) and a bunch of great guys:</p>
                     <ul>
                         { contributorsList }
                     </ul>
