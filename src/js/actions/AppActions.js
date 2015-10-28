@@ -95,6 +95,13 @@ export default {
             AppDispatcher.dispatch({
                 actionType : AppConstants.APP_PLAYER_REPEAT
             });
+        },
+
+        jumpTo: function(to) {
+            AppDispatcher.dispatch({
+                actionType : AppConstants.APP_PLAYER_JUMP_TO,
+                to         : to
+            });
         }
     },
 

@@ -7,6 +7,8 @@ import ButtonRepeat  from './ButtonRepeat.react';
 import app   from '../../constants/app';
 import utils from '../../utils/utils';
 
+import AppActions from '../../actions/AppActions';
+
 
 
 /*
@@ -21,7 +23,8 @@ export default class PlayingBar extends Component {
 
         super(props);
         this.state = {
-            elapsed: 0
+            elapsed: 0,
+            showTooltip: false
         }
         this.tick = this.tick.bind(this);
     }
@@ -77,7 +80,7 @@ export default class PlayingBar extends Component {
     }
 
     componentDidMount() {
-        this.timer = setInterval(this.tick, 350);
+        this.timer = setInterval(this.tick, 100);
     }
 
     componentWillUnmount() {
@@ -89,7 +92,6 @@ export default class PlayingBar extends Component {
     }
 
     jumpAudioTo(e) {
-
         var playlist       = this.props.playlist;
         var playlistCursor = this.props.playlistCursor;
         var trackPlaying   = playlist[playlistCursor];
@@ -99,6 +101,6 @@ export default class PlayingBar extends Component {
 
         var jumpTo = (percent * trackPlaying.duration) / 100;
 
-        app.audio.currentTime = jumpTo;
+        AppActions.player.jumpTo(jumpTo);
     }
 }

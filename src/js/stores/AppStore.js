@@ -325,6 +325,10 @@ AppDispatcher.register(function(payload) {
             AppStore.emit(CHANGE_EVENT);
             break;
 
+        case(AppConstants.APP_PLAYER_JUMP_TO):
+            app.audio.currentTime = payload.to;
+            break;
+
         case(AppConstants.APP_QUEUE_CLEAR):
             AppStore.playlist.splice(AppStore.playlistCursor + 1, AppStore.playlist.length - AppStore.playlistCursor);
             AppStore.emit(CHANGE_EVENT);

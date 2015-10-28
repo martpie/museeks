@@ -14,6 +14,7 @@ export default keymirror({
     APP_PLAYER_STOP           : null,
     APP_PLAYER_NEXT           : null,
     APP_PLAYER_PREVIOUS       : null,
+    APP_PLAYER_JUMP_TO        : null,
 
     APP_PLAYER_SHUFFLE        : null,
     APP_PLAYER_REPEAT         : null,
