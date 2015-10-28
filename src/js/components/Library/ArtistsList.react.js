@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import Icon from 'react-fontawesome';
 
-import remote from 'remote';
-
-var Menu     = remote.require('menu'),
-    MenuItem = remote.require('menu-item');
-
 import AppActions from '../../actions/AppActions';
 
 import app   from '../../constants/app';
 import utils from '../../utils/utils';
+
+import remote from 'remote';
+
+var Menu     = remote.require('menu'),
+    MenuItem = remote.require('menu-item');
 
 
 
@@ -18,8 +18,6 @@ import utils from '../../utils/utils';
 | Child - ArtistList
 |--------------------------------------------------------------------------
 */
-
-
 
 export default class ArtistList extends Component {
 

@@ -15,7 +15,6 @@ import utils from '../../utils/utils';
 |--------------------------------------------------------------------------
 */
 
-
 export default class PlayingBar extends Component {
 
     constructor(props) {
