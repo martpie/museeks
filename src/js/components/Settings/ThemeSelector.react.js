@@ -34,14 +34,15 @@ export default class ThemeSelector extends Component {
 
         var self = this;
 
-        var themeName = this.refs.theme.checked ? 'dark' : 'light';
+        var newTheme = this.refs.theme.checked ? 'dark' : 'light';
 
         var config = JSON.parse(localStorage.getItem('config'));
-            config.theme = themeName;
+
+        document.querySelector('body').classList.remove('theme-' + config.theme);
+        document.querySelector('body').classList.add('theme-' + newTheme);
+
+        config.theme = newTheme;
 
         localStorage.setItem('config', JSON.stringify(config));
-
-        var theme = document.querySelector('#theme-stylesheet');
-        theme.href = pathSrc + '/dist/css/themes/' + themeName + '/theme-' + themeName + '.css';
     }
 }
