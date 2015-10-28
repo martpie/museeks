@@ -113,7 +113,7 @@ export default class Header extends Component {
         this.lastFilterSearch = now;
 
         this.filterSearchTimeOut = setTimeout(function() {
-            AppActions.filterSearch(self.refs.search.value)
+            AppActions.filterSearch(self.refs.search.value.toLowerCase())
         }, 250);
     }
 
