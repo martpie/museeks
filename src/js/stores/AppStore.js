@@ -387,7 +387,7 @@ AppDispatcher.register(function(payload) {
             AppStore.emit(CHANGE_EVENT);
             break;
 
-        case(AppConstants.APP_LIBRARY_RESET):  // TODO
+        case(AppConstants.APP_LIBRARY_RESET):
             app.db.reset();
             break;
 

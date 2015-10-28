@@ -114,7 +114,6 @@ export default class Queue extends Component {
         AppActions.queue.remove(index);
     }
 
-    // TODO
     dragStart(index, e) {
 
         e.dataTransfer.effectAllowed = 'move';
