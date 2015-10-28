@@ -38,7 +38,7 @@ export default class PlayingBar extends Component {
             playingBar = <div></div>;
         } else {
 
-            if(this.state.elapsed < trackPlaying.duration && app.audio.paused === false) {
+            if(this.state.elapsed < trackPlaying.duration) {
                 var elapsedPercent = this.state.elapsed * 100 / trackPlaying.duration;
             }
 
