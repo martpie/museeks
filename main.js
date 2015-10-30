@@ -1,3 +1,5 @@
+process.env.NODE_ENV = 'production'; // Drastically increase performances
+
 var app           = require('app');            // Module to control application life.
 var BrowserWindow = require('browser-window'); // Module to create native browser window.
 

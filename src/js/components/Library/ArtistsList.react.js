@@ -151,8 +151,7 @@ export default class ArtistList extends Component {
                 }
             }
             else { // simple select
-                var selected = [];
-                selected.push(index);
+                var selected = [index];
                 this.setState({ selected : selected });
             }
         }
