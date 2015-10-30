@@ -13,15 +13,21 @@ export default {
      */
     parseDuration: function (duration) {
 
-        var hours   = parseInt(duration / 3600) % 24;
-        var minutes = parseInt(duration / 60) % 60;
-        var seconds = parseInt(duration % 60);
+        if(duration !== null && duration !== undefined) {
 
-        hours = hours < 10 ? '0' + hours : hours;
-        var result = hours > 0 ? hours + ':' : '';
-            result += (minutes < 10 ? '0' + minutes : minutes) + ':' + (seconds  < 10 ? '0' + seconds : seconds);
+            var hours   = parseInt(duration / 3600) % 24;
+            var minutes = parseInt(duration / 60) % 60;
+            var seconds = parseInt(duration % 60);
 
-        return result;
+            hours = hours < 10 ? '0' + hours : hours;
+            var result = hours > 0 ? hours + ':' : '';
+                result += (minutes < 10 ? '0' + minutes : minutes) + ':' + (seconds  < 10 ? '0' + seconds : seconds);
+
+            return result;
+
+        } else {
+            return '00:00';
+        }
     },
 
 
