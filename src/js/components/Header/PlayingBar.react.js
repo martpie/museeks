@@ -23,10 +23,15 @@ export default class PlayingBar extends Component {
 
         super(props);
         this.state = {
-            elapsed: 0,
-            showTooltip: false
+            elapsed     : 0,
+            showTooltip : false,
+            duration    : null,
+            x           : null,
+            y           : null
         }
-        this.tick = this.tick.bind(this);
+
+        this.tick        = this.tick.bind(this);
+        this.showTooltip = this.showTooltip.bind(this);
     }
 
     render() {
@@ -70,7 +75,13 @@ export default class PlayingBar extends Component {
                         </span>
                     </div>
                     <div className='now-playing-bar'>
-                        <ProgressBar now={ elapsedPercent } onMouseDown={ this.jumpAudioTo.bind(this) } />
+                        <div className={ this.state.duration !== null ? 'playing-bar-tooltip' : 'playing-bar-tooltip hidden'} style={{ left: this.state.x }}>{ utils.parseDuration(this.state.duration) }</div>
+                        <ProgressBar
+                            now={ elapsedPercent }
+                            onMouseDown={ this.jumpAudioTo.bind(this) }
+                            onMouseMove={ this.showTooltip.bind(this) }
+                            onMouseLeave={ this.hideTooltip.bind(this) }
+                        />
                     </div>
                 </div>
             );
@@ -102,5 +113,29 @@ export default class PlayingBar extends Component {
         var jumpTo = (percent * trackPlaying.duration) / 100;
 
         AppActions.player.jumpTo(jumpTo);
+    }
+
+    showTooltip(e) {
+
+        var playlist       = this.props.playlist;
+        var playlistCursor = this.props.playlistCursor;
+        var trackPlaying   = playlist[playlistCursor];
+
+        var bar = document.querySelector('.now-playing-bar');
+        var percent = ((e.pageX - (bar.offsetLeft + bar.offsetParent.offsetLeft)) / bar.offsetWidth) * 100;
+
+        var time = (percent * trackPlaying.duration) / 100;
+
+        this.setState({
+            duration : time,
+            x        : e.pageX
+        });
+    }
+
+    hideTooltip() {
+        this.setState({
+            duration : null,
+            x        : null
+        });
     }
 }

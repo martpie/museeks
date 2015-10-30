@@ -39,7 +39,6 @@ export default {
      * @param string 'asc' or 'desc' depending of the sort needed
      * @return array
      */
-
     simpleSort: function(array, sorting) {
 
         if(sorting == 'asc') {
