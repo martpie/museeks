@@ -33,7 +33,7 @@ module.exports = {
             },
             {
                 test: /\.svg$/,
-                loader: 'file',
+                loader: 'svg-inline',
                 exclude: /node_modules/
             }
         ]

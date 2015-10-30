@@ -282,7 +282,15 @@ header {
                     -webkit-app-region: no-drag;
 
                     &.active {
-                        color: #337ab7;
+
+                        svg {
+                            fill: #337ab7;
+                        }
+                    }
+
+                    svg {
+                        width: 16px;
+                        height: auto;
                     }
                 }
             }

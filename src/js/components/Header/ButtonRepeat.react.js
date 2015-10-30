@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import IconSVG from 'svg-inline-loader/lib/component.jsx';
 
 import AppActions from '../../actions/AppActions';
 
@@ -27,21 +28,21 @@ export default class ButtonRepeat extends Component {
             svg = require('../../../images/icons/player-repeat-one.svg');
             repeatButton = (
                 <button className='button repeat active' onClick={ this.toggleRepeat.bind(null) }>
-                    <img src={ svg } className='pf pf-repeat-one' />
+                    <IconSVG src={ svg } className='pf pf-repeat-one' />
                 </button>
             );
         } else if (this.props.repeat === 'all') {
             svg = require('../../../images/icons/player-repeat.svg');
             repeatButton = (
                 <button className='button repeat active' onClick={ this.toggleRepeat.bind(null) }>
-                    <img src={ svg } className='pf pf-repeat' />
+                    <IconSVG src={ svg } className='pf pf-repeat' />
                 </button>
             );
         } else {
             svg = require('../../../images/icons/player-repeat.svg');
             repeatButton = (
                 <button className='button repeat' onClick={ this.toggleRepeat.bind(null) }>
-                    <img src={ svg } className='pf pf-repeat' />
+                    <IconSVG src={ svg } className='pf pf-repeat' />
                 </button>
             );
         }
