@@ -33,19 +33,19 @@ export default class Header extends Component {
         if (this.props.playerStatus === 'play') {
             var playButton = (
                 <button className='player-control play' onClick={ this.pause.bind(null) }>
-                    <Icon name='pause' />
+                    <Icon name='pause' fixedWidth />
                 </button>
             );
         } else if (this.props.playerStatus === 'pause') {
             var playButton = (
                 <button className='player-control play' onClick={ this.play.bind(null) }>
-                    <Icon name='play' />
+                    <Icon name='play' fixedWidth />
                 </button>
             );
         } else {
             var playButton = (
                 <button className='player-control play'>
-                    <Icon name='play' />
+                    <Icon name='play' fixedWidth />
                 </button>
             );
         }
@@ -83,7 +83,7 @@ export default class Header extends Component {
                 </Col>
                 <Col sm={1} className='queue-controls text-center'>
                     <button type='button' className='queue-toggle' onClick={ this.togglePlaylist.bind(this) }>
-                        <Icon name='list' fixedWidth />
+                        <Icon name='list' />
                     </button>
                     <Queue
                         showPlaylist={ this.state.showPlaylist }
