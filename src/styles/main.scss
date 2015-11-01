@@ -323,7 +323,36 @@ header {
                 color: #555;
                 font-size: 10px;
                 padding: 2px 5px;
-                top: 15px;
+                top: 10px;
+
+                &::before,
+                &::after {
+                    content: "";
+                    position: absolute;
+                    width: 0;
+                    height: 0;
+                    border-style: solid;
+                    border-color: transparent;
+                    border-bottom: 0;
+                }
+
+                /* Stroke */
+                &::before {
+                    top: 18px;
+                    left: 5px;
+
+                    /* If 1px darken stroke slightly */
+                    border-top-color: #CECECE;
+                    border-width: 6px;
+                }
+
+                /* Fill */
+                &::after {
+                    top: 18px;
+                    left: 6px;
+                    border-top-color: #FFF;
+                    border-width: 5px;
+                }
             }
 
             .progress {

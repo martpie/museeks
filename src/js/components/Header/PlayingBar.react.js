@@ -75,7 +75,7 @@ export default class PlayingBar extends Component {
                         </span>
                     </div>
                     <div className='now-playing-bar'>
-                        <div className={ this.state.duration !== null ? 'playing-bar-tooltip' : 'playing-bar-tooltip hidden'} style={{ left: this.state.x }}>{ utils.parseDuration(this.state.duration) }</div>
+                        <div className={ this.state.duration !== null ? 'playing-bar-tooltip' : 'playing-bar-tooltip hidden'} style={{ left: this.state.x - 12 }}>{ utils.parseDuration(this.state.duration) }</div>
                         <ProgressBar
                             now={ elapsedPercent }
                             onMouseDown={ this.jumpAudioTo.bind(this) }
