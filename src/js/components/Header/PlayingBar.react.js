@@ -26,8 +26,7 @@ export default class PlayingBar extends Component {
             elapsed     : 0,
             showTooltip : false,
             duration    : null,
-            x           : null,
-            y           : null
+            x           : null
         }
 
         this.tick        = this.tick.bind(this);
