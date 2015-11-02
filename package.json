@@ -33,6 +33,8 @@
   "devDependencies": {
     "babel-core": "^6.0.14",
     "babel-loader": "^6.0.0",
+    "babel-preset-es2015": "^6.0.15",
+    "babel-preset-react": "^6.0.15",
     "css-loader": "^0.21.0",
     "eslint": "^1.8.0",
     "eslint-plugin-react": "^3.6.3",
