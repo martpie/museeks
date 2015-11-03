@@ -63,7 +63,7 @@ export default class MusicFoldersList extends Component {
 
         var list = musicFolders.map(function(folder, i) {
             return(
-                <li key={i} ref={ 'musicfolder-' + i }>
+                <li key={i}>
                     <Icon name='close' className={ this.props.refreshingLibrary ? 'delete-libray-folder disabled' : 'delete-libray-folder' } onClick={ this.props.refreshingLibrary ? void(0) : self.removeFolder.bind(self, i) }  />
                     { folder }
                 </li>
@@ -90,7 +90,7 @@ export default class MusicFoldersList extends Component {
     }
 
     removeFolder(i) {
-        AppActions.library.removeFolder(this.refs['musicfolder' + i]);
+        AppActions.library.removeFolder(i);
     }
 
     resetLibrary() {
