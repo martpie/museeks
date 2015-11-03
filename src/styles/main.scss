@@ -49,16 +49,6 @@ button {
 |--------------------------------------------------------------------------
 */
 
-::-webkit-scrollbar {
-    width: 5px;
-    background-color: rgba(0, 0, 0, 0.2);
-    border: 0;
-}
-
-::-webkit-scrollbar-thumb {
-    background-color: rgba(0, 0, 0, 0.4);
-}
-
 input[type=range] {
     -webkit-appearance: none;
     outline: none;
