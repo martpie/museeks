@@ -121,7 +121,7 @@ export default class Museeks extends Component {
 
 
         // Refresh the library
-        AppActions.refreshLibrary();
+        AppActions.getTracks();
 
     }
 }

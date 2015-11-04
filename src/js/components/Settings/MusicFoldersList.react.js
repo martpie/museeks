@@ -94,6 +94,7 @@ export default class MusicFoldersList extends Component {
     }
 
     resetLibrary() {
+        AppActions.player.stop();
         AppActions.library.reset();
     }
 

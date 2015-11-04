@@ -28,5 +28,6 @@ export default keymirror({
     APP_LIBRARY_ADD_FOLDERS   : null,
     APP_LIBRARY_REMOVE_FOLDER : null,
     APP_LIBRARY_RESET         : null,
-    APP_LIBRARY_REFRESH       : null
+    APP_LIBRARY_REFRESH_START : null,
+    APP_LIBRARY_REFRESH_END   : null
 });

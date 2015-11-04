@@ -7,20 +7,10 @@
 import { EventEmitter } from 'events';
 import objectAssign     from 'object-assign';
 
-import walk from 'walk';
-import mmd  from 'musicmetadata';
-import fs   from 'fs';
-import path from 'path';
-import mime from 'mime';
-
-import remote from 'remote';
-
 import app from '../constants/app';
 
 import AppDispatcher from '../dispatcher/AppDispatcher';
 import AppConstants  from '../constants/AppConstants';
-
-var dialog = remote.require('dialog');
 
 var CHANGE_EVENT = 'change';
 
@@ -84,15 +74,9 @@ AppDispatcher.register(function(payload) {
     switch(payload.actionType) {
 
         case(AppConstants.APP_REFRESH_LIBRARY):
-            // Sort tracks by Artist -> year -> album -> disk -> track
-            app.db.find({}).sort({ 'lArtist': 1, 'year': 1, 'album': 1, 'disk': 1, 'track.no': 1 }).exec(function (err, tracks) {
-                if (err) throw err;
-                else {
-                    AppStore.library = tracks;
-                    AppStore.tracks  = tracks;
-                    AppStore.emit(CHANGE_EVENT);
-                }
-            });
+            AppStore.library = payload.tracks;
+            AppStore.tracks  = payload.tracks;
+            AppStore.emit(CHANGE_EVENT);
             break;
 
         case(AppConstants.APP_SELECT_AND_PLAY):
@@ -392,69 +376,17 @@ AppDispatcher.register(function(payload) {
             break;
 
         case(AppConstants.APP_LIBRARY_RESET):
-            app.db.reset();
+            // nothing here for the moment
             break;
 
-        case(AppConstants.APP_LIBRARY_REFRESH):
-            var start   = new Date().getTime();
-            var self    = this;
-            var folders = JSON.parse(localStorage.getItem('config')).musicFolders;
-
-            app.db.reset();
-
+        case(AppConstants.APP_LIBRARY_REFRESH_START):
             AppStore.refreshingLibrary = true;
             AppStore.emit(CHANGE_EVENT);
+            break;
 
-            // Start the big thing
-
-            folders.forEach(function(folder, index, folders) {
-
-                var walker = walk.walk(folder, { followLinks: false });
-
-                walker.on('file', function (root, fileStat, next) {
-                    fs.readFile(path.resolve(root, fileStat.name), function (buffer) {
-
-                        var file = path.join(root, fileStat.name);
-
-                        if(app.supportedFormats.indexOf(mime.lookup(file)) > -1) {
-                            // store in DB here
-
-                            var parser = mmd(fs.createReadStream(file), { duration: true }, function (err, metadata) {
-
-                                if (err) throw err;
-
-                                else {
-                                    delete metadata.picture;
-                                    metadata.path = file;
-                                    metadata.lArtist = metadata.artist.length === 0 ? ['unknown artist'] : metadata.artist[0].toLowerCase();
-
-                                    if(metadata.artist.length === 0) metadata.artist = ['Unknown artist'];
-                                    if(metadata.album === null || metadata.album === '') metadata.album = 'Unknown';
-                                    if(metadata.title === null || metadata.title === '') metadata.title = 'Unknown';
-
-                                    app.db.insert(metadata, function (err, newDoc) {
-                                        if(err) throw err;
-                                    });
-                                }
-                            });
-                        }
-                        next();
-                    });
-                });
-                walker.on('errors', function (root, nodeStatsArray, next) {
-                    nodeStatsArray.forEach(function (n) {
-                        console.error('[ERROR] ' + n.name);
-                        console.error(n.error.message || (n.error.code + ': ' + n.error.path));
-                    });
-                    next();
-                });
-                walker.on('end', function () {
-                    if(folders.length - 1 === index) {
-                        AppStore.refreshingLibrary = false;
-                        AppStore.emit(CHANGE_EVENT);
-                    }
-                });
-            });
+        case(AppConstants.APP_LIBRARY_REFRESH_END):
+            AppStore.refreshingLibrary = false;
+            AppStore.emit(CHANGE_EVENT);
             break;
     }
 });
