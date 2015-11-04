@@ -48,7 +48,6 @@ export default class Library extends Component {
             content = (
                 <div>
                     <ArtistsList
-                        playlist={ this.props.playlist }
                         tracks={ this.props.tracks }
                         trackPlayingID={ this.props.trackPlayingID }
                     />
