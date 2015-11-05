@@ -15,138 +15,162 @@ body.theme-dark {
     |--------------------------------------------------------------------------
     */
 
-   header {
-       background-color: #555;
-       border-bottom-color: #333;
-       color: #EEE;
+    header {
+        background-color: #555;
+        border-bottom-color: #333;
+        color: #EEE;
 
-       .search {
-           border-color: #4A4A4A;
-           background-color: #444;
-           color: #EEE;
+        .search {
+            border-color: #4A4A4A;
+            background-color: #444;
+            color: #EEE;
+        }
+
+        .main-controls .window-controls .window-control {
+            color: #AAA;
+
+            &:active {
+                background-color: #555;
+                border-color: #444;
+            }
+        }
+
+        .main-controls {
+
+            .player-controls {
+
+                .player-control {
+                    color: #EEE;
+                }
+
+                .volume-control{
+                    background-color: #555;
+                }
+            }
        }
 
-       .main-controls .window-controls .window-control {
-           color: #AAA;
+        .now-playing {
 
-           &:active {
-               background-color: #555;
-               border-color: #444;
-           }
-       }
+           .now-playing-bar .progress {
+               background-color: #444;
+            }
 
-       .main-controls .player-controls .volume-control{
-           background-color: #555;
-       }
+            .now-playing-infos .player-options .button {
 
-       .now-playing .now-playing-bar .progress {
-           background-color: #444;
-       }
+                svg {
+                    fill: #EEE;
+                }
 
-       .queue-controls .queue {
-           background-color: #444;
-           border-color: #666;
-           box-shadow: 0 5px 3px -5px rgba(255, 255, 255, .5);
+                &.active svg {
+                    fill: #337ab7;
+                }
+            }
+        }
 
-           .queue-header {
-               background-color: #555;
+        .queue-controls .queue {
+            background-color: #444;
+            border-color: #666;
+            box-shadow: 0 5px 3px -5px rgba(255, 255, 255, .5);
 
-               .queue-infos {
-                   color: #DDD;
-               }
+            .queue-header {
+                background-color: #555;
 
-               .empty-button {
-                   background-color: #555;
-                   color: #EEE;
-                   border-color: #444;
-               }
-           }
+                .queue-infos {
+                    color: #DDD;
+                }
 
-           .queue-body {
+                .empty-button {
+                    background-color: #555;
+                    color: #EEE;
+                    border-color: #444;
+                }
+            }
 
-               .track {
-                   &::before,
-                   &::after {
-                       background-color: #555;
-                   }
+            .queue-body {
 
-                   &:not(:last-child) {
-                       border-bottom-color: #555;
-                   }
+                .track {
+                    &::before,
+                    &::after {
+                        background-color: #555;
+                    }
 
-                   .remove {
-                       color: #EEE;
-                   }
+                    &:not(:last-child) {
+                        border-bottom-color: #555;
+                    }
 
-                   .other-infos,
-                   .title {
-                       color: #EEE;
-                   }
-               }
-           }
-       }
-   }
+                    .remove {
+                        color: #EEE;
+                    }
 
-
-
-   /*
-   |--------------------------------------------------------------------------
-   | Footer
-   |--------------------------------------------------------------------------
-   */
-
-   footer {
-       border-top-color: #333;
-       background-color: #555;
-       color: #EEE;
-
-       .view-switcher .view-link {
-           color: #EEE;
-           border-color: #444;
-
-           &:hover,
-           &:focus,
-           &:active:hover {
-               background-color: #4A4A4A;
-               color: #EEE;
-               border-color: #444;
-           }
-       }
-
-       .status {
-           color: #AAA;
-       }
-   }
+                    .other-infos,
+                    .title {
+                        color: #EEE;
+                    }
+                }
+            }
+        }
+    }
 
 
 
-   /*
-   |--------------------------------------------------------------------------
-   | View -- General
-   |--------------------------------------------------------------------------
-   */
+    /*
+    |--------------------------------------------------------------------------
+    | Footer
+    |--------------------------------------------------------------------------
+    */
 
-   .view {
-       background-color: #444;
-       color: #EEE;
+    footer {
+        border-top-color: #333;
+        background-color: #555;
+        color: #EEE;
 
-       table.table {
+        .view-switcher .view-link {
+            color: #EEE;
+            border-color: #444;
 
-           &.tracks-list thead {
-               border-bottom: 1px solid #333333;
-           }
+            &:hover,
+            &:focus,
+            &:active:hover {
+                background-color: #4A4A4A;
+                color: #EEE;
+                border-color: #444;
+            }
+        }
 
-           &.table-striped>tbody>tr:nth-of-type(odd) {
-               background-color: #555;
+        .status {
+            color: #AAA;
+        }
+    }
 
-               &.selected {
-                   background-color: #459CE7;
-               }
-           }
-       }
 
-       &.view-settings .musicfolders-list {
-           border-color: #555;
-       }
-   }
+
+    /*
+    |--------------------------------------------------------------------------
+    | View -- General
+    |--------------------------------------------------------------------------
+    */
+
+    .view {
+        background-color: #444;
+        color: #EEE;
+
+        table.table {
+
+            &.tracks-list thead {
+                border-bottom: 1px solid #333333;
+            }
+
+            &.table-striped>tbody>tr:nth-of-type(odd) {
+                background-color: #555;
+
+                &.selected {
+                    background-color: #459CE7;
+                }
+            }
+        }
+
+        &.view-settings .musicfolders-list {
+            border-color: #555;
+        }
+    }
 }
