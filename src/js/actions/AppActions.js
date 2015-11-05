@@ -161,9 +161,15 @@ var AppActions = {
     library: {
 
         addFolders(folders) {
-            AppDispatcher.dispatch({
-                actionType : AppConstants.APP_LIBRARY_ADD_FOLDERS,
-            });
+
+            var folders = dialog.showOpenDialog({ properties: ['openDirectory', 'multiSelections']});
+
+            if(folders !== undefined) {
+                AppDispatcher.dispatch({
+                    actionType : AppConstants.APP_LIBRARY_ADD_FOLDERS,
+                    folders    : folders
+                });
+            }
         },
 
         removeFolder(index) {

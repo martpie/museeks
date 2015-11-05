@@ -355,8 +355,8 @@ AppDispatcher.register(function(payload) {
             break;
 
         case(AppConstants.APP_LIBRARY_ADD_FOLDERS):
-            var config = JSON.parse(localStorage.getItem('config'));
-            var folders = dialog.showOpenDialog({ properties: ['openDirectory', 'multiSelections']});
+            var config  = JSON.parse(localStorage.getItem('config'));
+            var folders = payload.folders;
 
             if(folders !== undefined) {
                 folders.forEach(function (folder) {
