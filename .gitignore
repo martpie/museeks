@@ -2,3 +2,5 @@ node_modules/
 src/dist
 src/assets
 cache/
+build/
+npm-debug.log
