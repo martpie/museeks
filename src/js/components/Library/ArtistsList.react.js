@@ -45,7 +45,7 @@ export default class ArtistList extends Component {
             }
 
             return(
-                <tr className={ selected.indexOf(index) != -1 ? 'track selected' : 'track' } key={index} onMouseDown={ self.selectTrack.bind(self, index) } onDoubleClick={ self.selectAndPlay.bind(null, index) } onContextMenu={ self.showContextMenu.bind(self) }>
+                <tr className={ selected.indexOf(track._id) != -1 ? 'track selected' : 'track' } key={ index } onMouseDown={ self.selectTrack.bind(self, track._id, index) } onDoubleClick={ self.selectAndPlay.bind(null, index) } onContextMenu={ self.showContextMenu.bind(self) }>
                     <td className='column-trackPlaying text-center'>
                         { playing }
                     </td>
@@ -89,15 +89,15 @@ export default class ArtistList extends Component {
         );
     }
 
-    selectTrack(index, e) {
+    selectTrack(id, index, e) {
 
-        var self = this;
+        var self   = this;
+        var tracks = this.props.tracks;
 
-
-        if(e.button == 0 || (e.button == 2 && this.state.selected.indexOf(index) == -1 )) {
-            if(e.ctrlKey) { // add a track in selected tracks
+        if(e.button == 0 || (e.button == 2 && this.state.selected.indexOf(id) == -1 )) {
+            if(e.ctrlKey) { // add one track in selected tracks
                 var selected = this.state.selected;
-                selected.push(index);
+                selected.push(id);
                 selected = utils.simpleSort(selected, 'asc');
                 this.setState({ selected : selected });
             }
@@ -106,28 +106,44 @@ export default class ArtistList extends Component {
 
                 switch(selected.length) {
                     case 0:
-                        selected.push(index);
+                        selected.push(id);
                         this.setState({ selected : selected });
                         break;
                     case 1:
                         var onlySelected = selected[0];
-                        if(index < onlySelected) {
-                            for(var i = 1; i <= Math.abs(index - onlySelected); i++) {
-                                selected.push(onlySelected - i);
-                            }
-                        } else if(index > onlySelected) {
-                            for(var i = 1; i <= Math.abs(index - onlySelected); i++) {
-                                selected.push(onlySelected + i);
+                        var onlySelectedIndex;
+
+                        for(var i = 0, length = tracks.length; i < length; i++) {
+                            if(tracks[i]._id === onlySelected) {
+                                onlySelectedIndex = i;
+                                break;
                             }
                         }
 
-                        selected = utils.simpleSort(selected, 'asc');
+                        if(index < onlySelectedIndex) {
+                            for(var i = 1; i <= Math.abs(index - onlySelectedIndex); i++) {
+                                selected.push(tracks[onlySelectedIndex - i]._id);
+                            }
+                        } else if(index > onlySelectedIndex) {
+                            for(var i = 1; i <= Math.abs(index - onlySelectedIndex); i++) {
+                                selected.push(tracks[onlySelectedIndex + i]._id);
+                            }
+                        }
+
                         self.setState({ selected : selected });
                         break;
                     default:
+                        var selectedInt = [];
+
+                        for(var i = 0, length = tracks.length; i < length; i++) {
+                            if(selected.indexOf(tracks[i]._id) > -1) {
+                                selectedInt.push(i);
+                            }
+                        }
+
                         var base;
-                        var min = Math.min.apply(Math, selected);
-                        var max = Math.max.apply(Math, selected);
+                        var min = Math.min.apply(Math, selectedInt);
+                        var max = Math.max.apply(Math, selectedInt);
 
                         if(index < min) {
                             base = max;
@@ -137,21 +153,20 @@ export default class ArtistList extends Component {
                         var newSelected = [];
                         if(index < min) {
                             for(var i = 0; i <= Math.abs(index - base); i++) {
-                                newSelected.push(base - i);
+                                newSelected.push(tracks[base - i]._id);
                             }
                         } else if(index > max) {
                             for(var i = 0; i <= Math.abs(index - base); i++) {
-                                newSelected.push(base + i);
+                                newSelected.push(tracks[base + i]._id);
                             }
                         }
 
-                        newSelected = utils.simpleSort(newSelected, 'asc');
                         self.setState({ selected : newSelected });
                         break;
                 }
             }
             else { // simple select
-                var selected = [index];
+                var selected = [id];
                 this.setState({ selected : selected });
             }
         }
