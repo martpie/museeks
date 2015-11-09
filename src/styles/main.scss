@@ -168,6 +168,8 @@ header {
     padding: 10px;
     display: flex;
     align-items: center;
+    color: #555;
+
 
     div[class*="col-"] {
         padding: 0;
@@ -207,7 +209,6 @@ header {
                 border: 0;
                 background: transparent;
                 font-size: 16px;
-                color: #555;
                 padding: 0 10px;
 
                 &.play {
@@ -245,6 +246,10 @@ header {
     /* .windows-controls */
 
     .now-playing {
+
+        &.dragging {
+            -webkit-app-region: no-drag;
+        }
 
         .now-playing-infos {
             display: flex;

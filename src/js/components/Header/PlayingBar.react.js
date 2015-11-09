@@ -26,7 +26,8 @@ export default class PlayingBar extends Component {
             elapsed     : 0,
             showTooltip : false,
             duration    : null,
-            x           : null
+            x           : null,
+            dragging    : false
         }
 
         this.tick        = this.tick.bind(this);
@@ -49,7 +50,7 @@ export default class PlayingBar extends Component {
             }
 
             playingBar = (
-                <div className='now-playing'>
+                <div className={ this.state.dragging ? 'now-playing dragging' : 'now-playing'} onMouseMove={ this.dragOver.bind(this) } onMouseLeave={ this.dragEnd.bind(this) } onMouseUp={ this.dragEnd.bind(this) }>
                     <div className='now-playing-infos'>
                         <div className='player-options'>
                             <ButtonRepeat repeat={ this.props.repeat } />
@@ -102,6 +103,9 @@ export default class PlayingBar extends Component {
     }
 
     jumpAudioTo(e) {
+
+        this.setState({ dragging : true });
+
         var playlist       = this.props.playlist;
         var playlistCursor = this.props.playlistCursor;
         var trackPlaying   = playlist[playlistCursor];
@@ -112,6 +116,29 @@ export default class PlayingBar extends Component {
         var jumpTo = (percent * trackPlaying.duration) / 100;
 
         AppActions.player.jumpTo(jumpTo);
+    }
+
+    dragOver(e) {
+        // Chack if it's needed to update currentTime
+        if(this.state.dragging) {
+
+            var playlist       = this.props.playlist;
+            var playlistCursor = this.props.playlistCursor;
+            var trackPlaying   = playlist[playlistCursor];
+
+            var bar = document.querySelector('.now-playing-bar');
+            var percent = ((e.pageX - (bar.offsetLeft + bar.offsetParent.offsetLeft)) / bar.offsetWidth) * 100;
+
+            var jumpTo = (percent * trackPlaying.duration) / 100;
+
+            AppActions.player.jumpTo(jumpTo);
+        }
+    }
+
+    dragEnd() {
+        if(this.state.dragging) {
+            this.setState({ dragging : false });
+        }
     }
 
     showTooltip(e) {
