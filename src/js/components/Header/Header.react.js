@@ -7,7 +7,7 @@ import Queue      from './Queue.react';
 
 import AppActions from '../../actions/AppActions';
 
-import app from '../../constants/app';
+import app from '../../constants/app.js';
 
 
 
@@ -68,7 +68,7 @@ export default class Header extends Component {
                         <button type='button' className='player-control volume' onMouseEnter={ this.showVolume.bind(this) } onMouseLeave={ this.hideVolume.bind(this) }>
                             <Icon name='volume-up' />
                             <div className={ this.state.showVolume ? 'volume-control visible' : 'volume-control' }>
-                                <input type={'range'} min={0} max={100} defaultValue={100} ref='volume' onChange={ this.setVolume.bind(this) } />
+                                <input type={'range'} min={0} max={1} step={0.01} defaultValue={ app.audio.volume } ref='volume' onChange={ this.setVolume.bind(this) } />
                             </div>
                         </button>
                     </div>
@@ -142,7 +142,7 @@ export default class Header extends Component {
     }
 
     setVolume() {
-        app.audio.volume = this.refs.volume.value / 100;
+        AppActions.player.setVolume(this.refs.volume.value);
     }
 
     showVolume() {

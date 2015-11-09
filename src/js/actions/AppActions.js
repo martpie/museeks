@@ -107,6 +107,14 @@ var AppActions = {
             });
         },
 
+        setVolume: function(volume) {
+            app.audio.volume = volume;
+            var config = JSON.parse(localStorage.getItem('config'));
+                config.volume = volume;
+
+            localStorage.setItem('config', JSON.stringify(config));
+        },
+
         repeat: function() {
             AppDispatcher.dispatch({
                 actionType : AppConstants.APP_PLAYER_REPEAT

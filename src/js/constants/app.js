@@ -11,6 +11,47 @@ var app = remote.require('app');
 
 /*
 |--------------------------------------------------------------------------
+| Config - set, get and check
+|--------------------------------------------------------------------------
+*/
+
+var defaultConfig = {
+    theme: 'light',
+    volume: 1,
+    musicFolders: []
+}
+
+var config = JSON.parse(localStorage.getItem('config'));
+
+if(config === null) localStorage.setItem('config', JSON.stringify(defaultConfig));
+else {
+    console.log(1);
+    var configChanged = false;
+
+    if(config.theme === undefined) {
+        config.theme  = defaultConfig.theme;
+        configChanged = true;
+    }
+    if(config.volume === undefined) {
+        console.log(2);
+        config.volume = defaultConfig.volume;
+        configChanged = true;
+    }
+    if(config.musicFolders === undefined) {
+        config.musicFolders = defaultConfig.musicFolders;
+        configChanged = true;
+    };
+
+    // save config if changed
+    if(configChanged) {
+        localStorage.setItem('config', JSON.stringify(config))
+    }
+}
+
+
+
+/*
+|--------------------------------------------------------------------------
 | Variables
 |--------------------------------------------------------------------------
 */
@@ -31,7 +72,7 @@ var supportedFormats = ['audio/mp4', 'audio/mpeg', 'audio/wav'];
 // What plays the music
 var audio = new Audio();
     audio.type   = 'audio/mpeg';
-    audio.volume = 1;
+    audio.volume = config.volume;
 
 audio.addEventListener('ended', AppActions.player.next);
 
