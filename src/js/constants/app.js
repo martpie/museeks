@@ -25,7 +25,6 @@ var config = JSON.parse(localStorage.getItem('config'));
 
 if(config === null) localStorage.setItem('config', JSON.stringify(defaultConfig));
 else {
-    console.log(1);
     var configChanged = false;
 
     if(config.theme === undefined) {
@@ -33,7 +32,6 @@ else {
         configChanged = true;
     }
     if(config.volume === undefined) {
-        console.log(2);
         config.volume = defaultConfig.volume;
         configChanged = true;
     }
