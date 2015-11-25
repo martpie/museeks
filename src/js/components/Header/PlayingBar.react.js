@@ -91,7 +91,7 @@ export default class PlayingBar extends Component {
     }
 
     componentDidMount() {
-        //this.timer = setInterval(this.tick, 100);
+        this.timer = setInterval(this.tick, 100);
     }
 
     componentWillUnmount() {
