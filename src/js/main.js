@@ -18,7 +18,7 @@ import routes from './router/routes';
 |--------------------------------------------------------------------------
 */
 
-var style = require('../styles/main.scss');
+require('../styles/main.scss');
 
 
 
