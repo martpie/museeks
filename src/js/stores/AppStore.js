@@ -362,6 +362,7 @@ AppDispatcher.register(function(payload) {
                 folders.forEach(function (folder) {
                     config.musicFolders.push(folder);
                 });
+                config.musicFolders.sort();
                 localStorage.setItem('config', JSON.stringify(config));
                 AppStore.emit(CHANGE_EVENT);
             }
