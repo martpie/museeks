@@ -6,6 +6,7 @@
 
 import { EventEmitter } from 'events';
 import objectAssign     from 'object-assign';
+import path             from 'path';
 
 import app from '../constants/app';
 
@@ -89,7 +90,13 @@ AppDispatcher.register(function(payload) {
 
             // Play it if needed !
             if(!noReplay) {
-                app.audio.src = 'file://' + playlist[id].path;
+
+                var uri = playlist[id].path.split(path.sep);
+                uri = uri.map((d, i) => i === 0 ? d : encodeURIComponent(d));
+                uri = uri.reduce((a, b) => path.join(a, b));
+
+                app.audio.src = 'file://' + uri;
+
                 app.audio.play();
             }
 
@@ -214,7 +221,11 @@ AppDispatcher.register(function(payload) {
 
             if (playlist[newPlaylistCursor] !== undefined) {
 
-                app.audio.src = playlist[newPlaylistCursor].path;
+                var uri = playlist[newPlaylistCursor].path.split(path.sep);
+                uri = uri.map((d, i) => i === 0 ? d : encodeURIComponent(d));
+                uri = uri.reduce((a, b) => path.join(a, b));
+
+                app.audio.src = 'file://' + uri;
                 app.audio.play();
 
                 AppStore.playlistCursor = newPlaylistCursor;
@@ -244,7 +255,11 @@ AppDispatcher.register(function(payload) {
 
             if (newTrack !== undefined) {
 
-                app.audio.src = newTrack.path;
+                var uri = newTrack.path.split(path.sep);
+                uri = uri.map((d, i) => i === 0 ? d : encodeURIComponent(d));
+                uri = uri.reduce((a, b) => path.join(a, b));
+                app.audio.src = 'file://' + uri;
+
                 app.audio.play();
 
                 AppStore.playlistCursor = newPlaylistCursor;
