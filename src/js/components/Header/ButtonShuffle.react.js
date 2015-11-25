@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import IconSVG from 'svg-inline-loader/lib/component.jsx';
+import InlineSVG from '../Shared/InlineSVG.react';
 
 import AppActions from '../../actions/AppActions';
 
@@ -27,13 +27,13 @@ export default class ButtonShuffle extends Component {
         if(!this.props.shuffle) {
             shuffleButton = (
                 <button type='button' className='button' onClick={ this.shuffle }>
-                    <IconSVG src={ svg } className='pf pf-shuffle' />
+                    <InlineSVG src={ svg } className='pf pf-shuffle' />
                 </button>
             );
         } else {
             shuffleButton = (
                 <button type='button' className='button active' onClick={ this.shuffle }>
-                    <IconSVG src={ svg } className='pf pf-shuffle' />
+                    <InlineSVG src={ svg } className='pf pf-shuffle' />
                 </button>
             );
         }
