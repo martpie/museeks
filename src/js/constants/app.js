@@ -23,7 +23,10 @@ var defaultConfig = {
 
 var config = JSON.parse(localStorage.getItem('config'));
 
-if(config === null) localStorage.setItem('config', JSON.stringify(defaultConfig));
+if(config === null) {
+    localStorage.setItem('config', JSON.stringify(defaultConfig));
+    config = defaultConfig;
+}
 else {
     var configChanged = false;
 
