@@ -30,23 +30,15 @@ if(config === null) {
 else {
     var configChanged = false;
 
-    if(config.theme === undefined) {
-        config.theme  = defaultConfig.theme;
-        configChanged = true;
+    for(var key in defaultConfig) {
+        if(config[key] === undefined) {
+            config[key]   = defaultConfig[key];
+            configChanged = true;
+        }
     }
-    if(config.volume === undefined) {
-        config.volume = defaultConfig.volume;
-        configChanged = true;
-    }
-    if(config.musicFolders === undefined) {
-        config.musicFolders = defaultConfig.musicFolders;
-        configChanged = true;
-    };
 
     // save config if changed
-    if(configChanged) {
-        localStorage.setItem('config', JSON.stringify(config))
-    }
+    if(configChanged) localStorage.setItem('config', JSON.stringify(config));
 }
 
 
