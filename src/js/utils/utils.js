@@ -4,6 +4,10 @@
 |--------------------------------------------------------------------------
 */
 
+import path from 'path';
+
+
+
 export default {
     /**
      * Parse an int to a more readable string
@@ -30,7 +34,15 @@ export default {
         }
     },
 
-
+    /**
+     * Parse an URI, encoding some caracters
+     *
+     * @param string uri
+     * @return string
+     */
+    parseURI: function(uri) {
+        return uri.split(path.sep).map((d, i) => i === 0 ? d : encodeURIComponent(d)).reduce((a, b) => path.join(a, b));
+    },
 
     /**
      * Sort an array of int by ASC or DESC, then remove all duplicates

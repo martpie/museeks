@@ -13,6 +13,8 @@ import app from '../constants/app';
 import AppDispatcher from '../dispatcher/AppDispatcher';
 import AppConstants  from '../constants/AppConstants';
 
+import utils from '../utils/utils';
+
 var CHANGE_EVENT = 'change';
 
 
@@ -91,12 +93,8 @@ AppDispatcher.register(function(payload) {
             // Play it if needed !
             if(!noReplay) {
 
-                var uri = playlist[id].path.split(path.sep);
-                uri = uri.map((d, i) => i === 0 ? d : encodeURIComponent(d));
-                uri = uri.reduce((a, b) => path.join(a, b));
-
+                var uri = utils.parseURI(playlist[id].path);
                 app.audio.src = 'file://' + uri;
-
                 app.audio.play();
             }
 
@@ -221,10 +219,7 @@ AppDispatcher.register(function(payload) {
 
             if (playlist[newPlaylistCursor] !== undefined) {
 
-                var uri = playlist[newPlaylistCursor].path.split(path.sep);
-                uri = uri.map((d, i) => i === 0 ? d : encodeURIComponent(d));
-                uri = uri.reduce((a, b) => path.join(a, b));
-
+                var uri = utils.parseURI(playlist[newPlaylistCursor].path); ;
                 app.audio.src = 'file://' + uri;
                 app.audio.play();
 
@@ -255,9 +250,7 @@ AppDispatcher.register(function(payload) {
 
             if (newTrack !== undefined) {
 
-                var uri = newTrack.path.split(path.sep);
-                uri = uri.map((d, i) => i === 0 ? d : encodeURIComponent(d));
-                uri = uri.reduce((a, b) => path.join(a, b));
+                var uri = utils.parseURI(newTrack.path);
                 app.audio.src = 'file://' + uri;
 
                 app.audio.play();
