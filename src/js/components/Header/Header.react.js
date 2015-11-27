@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Col } from 'react-bootstrap';
 import Icon from 'react-fontawesome';
+import Input from 'react-simple-input';
 
 import PlayingBar from './PlayingBar.react';
 import Queue      from './Queue.react';
@@ -92,7 +93,13 @@ export default class Header extends Component {
                     />
                 </Col>
                 <Col sm={2}>
-                    <input type='text' className='search form-control input-sm' placeholder='search' ref='search' onClick={ this.searchSelect.bind(this) } onChange={ this.search.bind(this) } />
+                    <Input
+                        placeholder='search'
+                        className='form-control input-sm search'
+                        changeTimeout={250}
+                        clearButton
+                        ref='search'
+                        onChange={ this.search.bind(this) } />
                 </Col>
             </header>
         );
@@ -102,19 +109,8 @@ export default class Header extends Component {
         AppActions.app.close();
     }
 
-    search() {
-        var self = this;
-        var now  = window.performance.now();
-
-        if(now - this.lastFilterSearch < 250) {
-            clearTimeout(this.filterSearchTimeOut);
-        }
-
-        this.lastFilterSearch = now;
-
-        this.filterSearchTimeOut = setTimeout(function() {
-            AppActions.filterSearch(self.refs.search.value.toLowerCase())
-        }, 250);
+    search(value) {
+        AppActions.filterSearch(value.toLowerCase())
     }
 
     searchSelect() {
