@@ -94,6 +94,7 @@ export default class Header extends Component {
                 </Col>
                 <Col sm={2}>
                     <Input
+                        selectOnClick
                         placeholder='search'
                         className='form-control input-sm search'
                         changeTimeout={250}
