@@ -79,19 +79,19 @@ audio.addEventListener('ended', AppActions.player.next);
 
 var db = new nedb({
     filename: path.join(pathConfig, 'library.db'),
-    autoload: true,
+    autoload: true
 });
 
 db.reset = function() {
-    db.remove({ }, { multi: true }, function (err, numRemoved) {
+    db.remove({}, { multi: true }, function (err, numRemoved) {
         db.loadDatabase(function (err) {
-            if(err) {
-                throw err
-            }
+            if(err) throw err;
         });
     });
 };
 
+
+fs.writeFile(path.join(pathConfig, '.init'), "", (err) => { if(err) return console.log(err); });
 
 
 /*
