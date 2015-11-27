@@ -90,8 +90,8 @@ db.reset = function() {
     });
 };
 
-
-fs.writeFile(path.join(pathConfig, '.init'), "", (err) => { if(err) return console.log(err); });
+// WTFix, de.loadDatabase() throw an error if the line below is not here
+fs.writeFile(path.join(pathConfig, '.init'), "", (err) => { if(err) throw err; });
 
 
 /*
