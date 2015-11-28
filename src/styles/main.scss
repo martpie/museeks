@@ -52,6 +52,7 @@ button {
 input[type=range] {
     -webkit-appearance: none;
     outline: none;
+    cursor: pointer;
 
     &::-webkit-slider-thumb {
         -webkit-appearance: none;
