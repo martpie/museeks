@@ -26,9 +26,10 @@ Please consider **this app is still under development, just install it for fun**
 
 ### Contribute
 
-- fork and clone
+- Fork and clone
 - You will need `bower` and `webpack` installed globally
 - `bower install && npm install && npm run dev`
+- Don't forget to enable dev mode in the app in the settings view
 Webpack will watch for JSX and SASS changes.
 
 Please respect a few rules:
