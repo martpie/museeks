@@ -331,6 +331,10 @@ var AppActions = {
 
             config.devMode = !config.devMode;
 
+            // Open dev tools if needed
+            if(config.devMode) remote.getCurrentWindow().openDevTools();
+            else remote.getCurrentWindow().closeDevTools();
+
             localStorage.setItem('config', JSON.stringify(config));
 
             AppDispatcher.dispatch({
