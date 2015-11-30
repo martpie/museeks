@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import AppActions from '../../actions/AppActions';
+
 
 
 /*
@@ -23,27 +25,16 @@ export default class ThemeSelector extends Component {
                 <h4>Theme</h4>
                 <div className='checkbox'>
                     <label>
-                        <input type='checkbox' onClick={ this.switchTheme.bind(this) } ref='theme' /> Enable dark theme
+                        <input type='checkbox' onClick={ this.switchTheme } checked={ this.props.theme === 'dark' } ref='theme' /> Enable dark theme
                     </label>
                 </div>
             </div>
         );
     }
 
-    switchTheme() {
+    switchTheme(e) {
 
-        // Move that to AppActions
-        var self = this;
-
-        var newTheme = this.refs.theme.checked ? 'dark' : 'light';
-
-        var config = JSON.parse(localStorage.getItem('config'));
-
-        document.querySelector('body').classList.remove('theme-' + config.theme);
-        document.querySelector('body').classList.add('theme-' + newTheme);
-
-        config.theme = newTheme;
-
-        localStorage.setItem('config', JSON.stringify(config));
+        e.preventDefault();
+        AppActions.settings.toggleDarkTheme();
     }
 }

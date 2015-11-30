@@ -40,6 +40,7 @@ var AppStore = objectAssign({}, EventEmitter.prototype, {
 
     getStore: function() {
         return {
+            config            :  JSON.parse(localStorage.getItem('config')),
             library           :  this.library,
             tracks            :  this.tracks,
             playlist          :  this.playlist,
@@ -79,6 +80,10 @@ AppDispatcher.register(function(payload) {
         case(AppConstants.APP_REFRESH_LIBRARY):
             AppStore.library = payload.tracks;
             AppStore.tracks  = payload.tracks;
+            AppStore.emit(CHANGE_EVENT);
+            break;
+
+        case(AppConstants.APP_REFRESH_CONFIG):
             AppStore.emit(CHANGE_EVENT);
             break;
 

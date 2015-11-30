@@ -22,15 +22,17 @@ export default class Settings extends Component {
 
     render() {
 
+        var config = this.props.config;
+
         return (
             <div className='view view-settings view-withpadding'>
                 <h2>Settings</h2>
                 <hr />
                 <MusicFoldersList musicFolders={ this.props.musicFolders } refreshingLibrary={ this.props.refreshingLibrary } />
                 <hr />
-                <ThemeSelector />
+                <ThemeSelector theme={ config.theme } />
                 <hr />
-                <DevMode />
+                <DevMode devMode={ config.devMode } />
                 <hr />
                 <ContributorsList />
             </div>

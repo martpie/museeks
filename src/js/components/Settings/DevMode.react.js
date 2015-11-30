@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import AppActions from '../../actions/AppActions';
+
 
 
 /*
@@ -23,22 +25,15 @@ export default class DevMode extends Component {
                 <h4>Dev mode</h4>
                 <div className='checkbox'>
                     <label>
-                        <input type='checkbox' onClick={ this.toggleDevMode.bind(this) } ref='devMode' /> Enable dev mode
+                        <input type='checkbox' onClick={ this.toggleDevMode } checked={ this.props.devMode } ref='devMode' /> Enable dev mode
                     </label>
                 </div>
             </div>
         );
     }
 
-    toggleDevMode() {
-
-        // Move that to AppActions
-        var self    = this;
-        var devMode = this.refs.devMode.checked;
-        var config  = JSON.parse(localStorage.getItem('config'));
-
-        config.devMode = devMode;
-
-        localStorage.setItem('config', JSON.stringify(config));
+    toggleDevMode(e) {
+        e.preventDefault();
+        AppActions.settings.toggleDevMode();
     }
 }

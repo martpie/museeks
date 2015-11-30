@@ -102,8 +102,9 @@ fs.writeFile(path.join(pathConfig, '.init'), "", (err) => { if(err) throw err; }
 */
 
 export default {
-    db               : db,
-    supportedFormats : supportedFormats,
-    audio            : audio,
-    pathSrc          : pathSrc
+    initialConfig    : config,           // the config at the start of the application
+    db               : db,               // database
+    supportedFormats : supportedFormats, // supported audio formats
+    audio            : audio,            // HTML5 audio tag
+    pathSrc          : pathSrc           // path of the app
 };

@@ -46,6 +46,7 @@ export default class Museeks extends Component {
                         { React.cloneElement(
                             this.props.children, {
                                 app               : this,
+                                config            : this.state.config,
                                 playlist          : this.state.playlist,
                                 tracks            : this.state.tracks,
                                 library           : this.state.library,

@@ -299,14 +299,43 @@ var AppActions = {
     settings: {
 
         checkTheme: function() {
-
             var themeName = JSON.parse(localStorage.getItem('config')).theme;
             document.querySelector('body').classList.add('theme-' + themeName);
         },
 
-        checkDevMode: function() {
+        toggleDarkTheme: function() {
 
+            var config   = JSON.parse(localStorage.getItem('config'));
+
+            var theme = config.theme === 'light' ? 'dark' : 'light';
+
+            document.querySelector('body').classList.remove('theme-' + config.theme);
+            document.querySelector('body').classList.add('theme-' + theme);
+
+            config.theme = theme;
+
+            localStorage.setItem('config', JSON.stringify(config));
+
+            AppDispatcher.dispatch({
+                actionType : AppConstants.APP_REFRESH_CONFIG
+            });
+        },
+
+        checkDevMode: function() {
             if(JSON.parse(localStorage.getItem('config')).devMode) remote.getCurrentWindow().openDevTools();
+        },
+
+        toggleDevMode: function() {
+
+            var config  = JSON.parse(localStorage.getItem('config'));
+
+            config.devMode = !config.devMode;
+
+            localStorage.setItem('config', JSON.stringify(config));
+
+            AppDispatcher.dispatch({
+                actionType : AppConstants.APP_REFRESH_CONFIG
+            });
         }
     },
 
