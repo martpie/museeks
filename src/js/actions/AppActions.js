@@ -226,7 +226,7 @@ var AppActions = {
         },
 
         refresh() {
-            var start   = new Date().getTime();
+
             var folders = JSON.parse(localStorage.getItem('config')).musicFolders;
 
             AppDispatcher.dispatch({
@@ -250,8 +250,7 @@ var AppActions = {
 
                                     if(app.supportedFormats.indexOf(mime.lookup(file)) > -1) {
                                         // store in DB here
-
-                                        var parser = mmd(fs.createReadStream(file), { duration: true }, function (err, metadata) {
+                                        mmd(fs.createReadStream(file), { duration: true }, function (err, metadata) {
 
                                             if (err) throw err;
 

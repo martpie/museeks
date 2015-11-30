@@ -51,7 +51,6 @@ else {
 */
 
 var pathConfig       = app.getPath('userData');
-var pathConfigFile   = path.join(pathConfig, 'config.json');
 var pathSrc          = __dirname;
 var supportedFormats = ['audio/mp4', 'audio/mpeg', 'audio/wav'];
 

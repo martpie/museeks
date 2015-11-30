@@ -31,17 +31,17 @@ export default class ArtistList extends Component {
 
     render() {
 
-        var self           = this;
-        var selected       = this.state.selected;
-        var tracks         = this.props.tracks;
-        var trackPlayingID = this.props.trackPlayingID;
-        var playing        = null;
+        var self           = this,
+            selected       = this.state.selected,
+            tracks         = this.props.tracks,
+            trackPlayingID = this.props.trackPlayingID,
+            playing;
 
         var list = tracks.map(function(track, index) {
 
             if(trackPlayingID != null) {
-                if(track._id == trackPlayingID) var playing = <Icon name='volume-up' fixedWidth />;
-                if(track._id == trackPlayingID && app.audio.paused) var playing = <Icon name='volume-off' fixedWidth />;
+                if(track._id == trackPlayingID) playing = <Icon name='volume-up' fixedWidth />;
+                if(track._id == trackPlayingID && app.audio.paused) playing = <Icon name='volume-off' fixedWidth />;
             }
 
             return(
