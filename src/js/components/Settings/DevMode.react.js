@@ -25,15 +25,14 @@ export default class DevMode extends Component {
                 <h4>Dev mode</h4>
                 <div className='checkbox'>
                     <label>
-                        <input type='checkbox' onClick={ this.toggleDevMode } checked={ this.props.devMode } ref='devMode' /> Enable dev mode
+                        <input type='checkbox' onClick={ this.toggleDevMode } defaultChecked={ this.props.devMode } ref='devMode' /> Enable dev mode
                     </label>
                 </div>
             </div>
         );
     }
 
-    toggleDevMode(e) {
-        e.preventDefault();
+    toggleDevMode() {
         AppActions.settings.toggleDevMode();
     }
 }

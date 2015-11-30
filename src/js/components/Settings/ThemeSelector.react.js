@@ -25,16 +25,14 @@ export default class ThemeSelector extends Component {
                 <h4>Theme</h4>
                 <div className='checkbox'>
                     <label>
-                        <input type='checkbox' onClick={ this.switchTheme } checked={ this.props.theme === 'dark' } ref='theme' /> Enable dark theme
+                        <input type='checkbox' onClick={ this.switchTheme } defaultChecked={ this.props.theme === 'dark' } ref='theme' /> Enable dark theme
                     </label>
                 </div>
             </div>
         );
     }
 
-    switchTheme(e) {
-
-        e.preventDefault();
+    switchTheme() {
         AppActions.settings.toggleDarkTheme();
     }
 }
