@@ -3,19 +3,38 @@ import AppConstants  from '../constants/AppConstants';
 
 import app from '../constants/app.js';
 
-import remote from 'remote';
-
 import walk from 'walk';
 import mmd  from 'musicmetadata';
 import fs   from 'fs';
 import path from 'path';
 import mime from 'mime';
 
-var dialog = remote.require('dialog');
+import remote from 'remote';
+
+var globalShortcut = remote.require('global-shortcut');
+var dialog         = remote.require('dialog');
 
 
 
 var AppActions = {
+
+    init: function() {
+
+        // Usual tasks
+        this.getTracks();
+        this.settings.checkTheme();
+        this.settings.checkDevMode();
+        this.others.initGlobalShortcuts();
+
+        // Prevent some events
+        window.addEventListener('dragover', function (e) {
+               e.preventDefault();
+           }, false);
+
+        window.addEventListener('drop', function (e) {
+            e.preventDefault();
+        }, false);
+    },
 
     /**
      * Refresh the library
@@ -273,6 +292,38 @@ var AppActions = {
                         });
                     }
                 });
+            });
+        }
+    },
+
+    settings: {
+
+        checkTheme: function() {
+
+            var themeName = JSON.parse(localStorage.getItem('config')).theme;
+            document.querySelector('body').classList.add('theme-' + themeName);
+        },
+
+        checkDevMode: function() {
+
+            if(JSON.parse(localStorage.getItem('config')).devMode) remote.getCurrentWindow().openDevTools();
+        }
+    },
+
+    others: {
+
+        initGlobalShortcuts: function() {
+
+            globalShortcut.register('MediaPlayPause', function () {
+                AppActions.player.playToggle();
+            });
+
+            globalShortcut.register('MediaPreviousTrack', function () {
+                AppActions.player.previous();
+            });
+
+            globalShortcut.register('MediaNextTrack', function () {
+                AppActions.player.next();
             });
         }
     }

@@ -4,11 +4,11 @@ import React, { Component } from 'react';
 
 /*
 |--------------------------------------------------------------------------
-| Child - ThemeSelector - manage theme
+| Child - DevMode
 |--------------------------------------------------------------------------
 */
 
-export default class ThemeSelector extends Component {
+export default class DevMode extends Component {
 
     constructor(props) {
 
@@ -20,29 +20,24 @@ export default class ThemeSelector extends Component {
 
         return (
             <div className='setting setting-music-selector'>
-                <h4>Theme</h4>
+                <h4>Dev mode</h4>
                 <div className='checkbox'>
                     <label>
-                        <input type='checkbox' onClick={ this.switchTheme.bind(this) } ref='theme' /> Enable dark theme
+                        <input type='checkbox' onClick={ this.toggleDevMode.bind(this) } ref='devMode' /> Enable dev mode
                     </label>
                 </div>
             </div>
         );
     }
 
-    switchTheme() {
+    toggleDevMode() {
 
         // Move that to AppActions
-        var self = this;
+        var self    = this;
+        var devMode = this.refs.devMode.checked;
+        var config  = JSON.parse(localStorage.getItem('config'));
 
-        var newTheme = this.refs.theme.checked ? 'dark' : 'light';
-
-        var config = JSON.parse(localStorage.getItem('config'));
-
-        document.querySelector('body').classList.remove('theme-' + config.theme);
-        document.querySelector('body').classList.add('theme-' + newTheme);
-
-        config.theme = newTheme;
+        config.devMode = devMode;
 
         localStorage.setItem('config', JSON.stringify(config));
     }

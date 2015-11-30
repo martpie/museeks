@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import MusicFoldersList from './MusicFoldersList.react';
 import ThemeSelector    from './ThemeSelector.react';
+import DevMode          from './DevMode.react';
 import ContributorsList from './ContributorsList.react';
 
 
@@ -28,6 +29,8 @@ export default class Settings extends Component {
                 <MusicFoldersList musicFolders={ this.props.musicFolders } refreshingLibrary={ this.props.refreshingLibrary } />
                 <hr />
                 <ThemeSelector />
+                <hr />
+                <DevMode />
                 <hr />
                 <ContributorsList />
             </div>

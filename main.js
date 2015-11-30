@@ -35,9 +35,6 @@ app.on('ready', function() {
     mainWindow.loadUrl('file://' + __dirname + '/src/app.html');
     mainWindow.show();
 
-    // Open the devtools.
-    mainWindow.openDevTools();
-
     mainWindow.on('closed', function() {
         // Dereference the window object
         mainWindow = null;

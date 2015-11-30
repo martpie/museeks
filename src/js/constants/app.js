@@ -18,7 +18,8 @@ var app = remote.require('app');
 var defaultConfig = {
     theme: 'light',
     volume: 1,
-    musicFolders: []
+    musicFolders: [],
+    devMode: false
 }
 
 var config = JSON.parse(localStorage.getItem('config'));

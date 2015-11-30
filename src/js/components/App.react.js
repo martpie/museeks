@@ -9,10 +9,6 @@ import Footer from './Footer/Footer.react';
 import AppActions from '../actions/AppActions';
 import AppStore   from '../stores/AppStore';
 
-import remote from 'remote';
-
-var globalShortcut = remote.require('global-shortcut');
-
 
 
 /*
@@ -68,12 +64,9 @@ export default class Museeks extends Component {
         );
     }
 
-    filterSearch(search) {
-        AppActions.filterSearch(search);
-    }
-
     componentDidMount() {
         AppStore.addChangeListener(this.updateState);
+        AppActions.init();
     }
 
     componentWillUnmount() {
@@ -82,46 +75,5 @@ export default class Museeks extends Component {
 
     updateState() {
         this.setState(AppStore.getStore());
-    }
-
-    componentWillMount() {
-
-        var self      = this;
-
-        // Theme support
-        var themeName = JSON.parse(localStorage.getItem('config')).theme;
-
-        document.querySelector('body').classList.add('theme-' + themeName);
-
-
-        // Prevent some events
-        window.addEventListener('dragover', function (e) {
-               e.preventDefault();
-           }, false);
-
-        window.addEventListener('drop', function (e) {
-            e.preventDefault();
-        }, false);
-
-
-        // Register global shorcuts
-        var shortcuts = {};
-
-        shortcuts.play = globalShortcut.register('MediaPlayPause', function () {
-            self.player.playToggle.bind(self);
-        });
-
-        shortcuts.previous = globalShortcut.register('MediaPreviousTrack', function () {
-            self.player.previous.bind(self);
-        });
-
-        shortcuts.previous = globalShortcut.register('MediaNextTrack', function () {
-            self.player.next.bind(self);
-        });
-
-
-        // Refresh the library
-        AppActions.getTracks();
-
     }
 }
