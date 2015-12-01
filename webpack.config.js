@@ -1,5 +1,6 @@
 var webpack           = require('webpack');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var Promise           = require('es6-promise').Promise;
 
 module.exports = {
     entry: {
