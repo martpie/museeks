@@ -34,10 +34,11 @@ export default class ArtistList extends Component {
         var self           = this,
             selected       = this.state.selected,
             tracks         = this.props.tracks,
-            trackPlayingID = this.props.trackPlayingID,
-            playing;
+            trackPlayingID = this.props.trackPlayingID;
 
         var list = tracks.map(function(track, index) {
+
+            var playing = undefined;
 
             if(trackPlayingID != null) {
                 if(track._id == trackPlayingID) playing = <Icon name='volume-up' fixedWidth />;
