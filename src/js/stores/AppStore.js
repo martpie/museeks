@@ -99,7 +99,7 @@ AppDispatcher.register(function(payload) {
             if(!noReplay) {
 
                 var uri = utils.parseURI(playlist[id].path);
-                app.audio.src = 'file://' + uri;
+                app.audio.src = uri;
                 app.audio.play();
             }
 
@@ -225,7 +225,7 @@ AppDispatcher.register(function(payload) {
             if (playlist[newPlaylistCursor] !== undefined) {
 
                 var uri = utils.parseURI(playlist[newPlaylistCursor].path); ;
-                app.audio.src = 'file://' + uri;
+                app.audio.src = uri;
                 app.audio.play();
 
                 AppStore.playlistCursor = newPlaylistCursor;
@@ -256,7 +256,7 @@ AppDispatcher.register(function(payload) {
             if (newTrack !== undefined) {
 
                 var uri = utils.parseURI(newTrack.path);
-                app.audio.src = 'file://' + uri;
+                app.audio.src = uri;
 
                 app.audio.play();
 

@@ -41,7 +41,8 @@ export default {
      * @return string
      */
     parseURI: function(uri) {
-        return uri.split(path.sep).map((d, i) => i === 0 ? d : encodeURIComponent(d)).reduce((a, b) => path.join(a, b));
+        var root = path.parse(uri).root;
+        return 'file://' + root + uri.split(path.sep).map((d, i) => i === 0 ? d : encodeURIComponent(d)).reduce((a, b) => path.join(a, b));
     },
 
     /**
