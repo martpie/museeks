@@ -54,12 +54,11 @@ var AppActions = {
     /**
      * Select and play a track
      */
-    selectAndPlay: function(id, noReplay) {
+    selectAndPlay: function(id) {
 
         AppDispatcher.dispatch({
             actionType : AppConstants.APP_SELECT_AND_PLAY,
-            id         : id,
-            noReplay   : noReplay
+            id         : id
         });
     },
 

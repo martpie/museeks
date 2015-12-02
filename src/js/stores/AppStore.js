@@ -31,6 +31,7 @@ var AppStore = objectAssign({}, EventEmitter.prototype, {
     tracks            :  null,  // All tracks shown on the view
     playlist          :  [],    // Tracks to be played
     playlistCursor    :  null,  // The cursor of the playlist
+    oldPlaylist       :  null,  // Playlist backup
     oldPlaylistCursor :  null,  // The last cursor backup (to roll stuff back, e.g. unshuffle)
     playerStatus      : 'stop', // Player status
     notifications     :  {},    // The array of notifications
@@ -45,7 +46,6 @@ var AppStore = objectAssign({}, EventEmitter.prototype, {
             tracks            :  this.tracks,
             playlist          :  this.playlist,
             playlistCursor    :  this.playlistCursor,
-            oldPlaylistCursor :  this.oldPlaylistCursor,
             playerStatus      :  this.playerStatus,
             notifications     :  this.notifications,
             refreshingLibrary :  this.refreshingLibrary,
@@ -87,20 +87,14 @@ AppDispatcher.register(function(payload) {
             break;
 
         case(AppConstants.APP_SELECT_AND_PLAY):
-            // Sometimes, noReplay is an event, fix that
-            var noReplay = (payload.noReplay === true) ? true : false;
 
             var playlist       = AppStore.tracks.slice();
             var id             = payload.id;
             var playlistCursor = payload.id;
 
-            // Play it if needed !
-            if(!noReplay) {
-
-                var uri = utils.parseURI(playlist[id].path);
+            var uri = utils.parseURI(playlist[id].path);
                 app.audio.src = uri;
                 app.audio.play();
-            }
 
             // Check if we have to shuffle the queue
             if(AppStore.shuffle) {
@@ -269,7 +263,11 @@ AppDispatcher.register(function(payload) {
             break;
 
         case(AppConstants.APP_PLAYER_SHUFFLE):
+
             if(!AppStore.shuffle) {
+
+                AppStore.oldPlaylist       = AppStore.playlist;
+                AppStore.oldPlaylistCursor = AppStore.oldPlaylistCursor;
 
                 // Let's shuffle that
                 var playlist       = AppStore.playlist.slice();
@@ -298,11 +296,12 @@ AppDispatcher.register(function(payload) {
 
             } else {
 
-                var oldPlaylistCursor = AppStore.oldPlaylistCursor;
-                AppStore.shuffle = false;
-                // TOFIX
-                AppActions.selectAndPlay(oldPlaylistCursor, true);
+                AppStore.playlist          = AppStore.oldPlaylist;
+                AppStore.oldPlaylistCursor = AppStore.oldPlaylistCursor;
+                AppStore.shuffle           = false;
+
             }
+
             AppStore.emit(CHANGE_EVENT);
             break;
 
