@@ -52,7 +52,6 @@ export default class Museeks extends Component {
                                 library           : this.state.library,
                                 trackPlayingID    : trackPlayingID,
                                 refreshingLibrary : this.state.refreshingLibrary,
-                                musicFolders      : this.state.musicFolders
                             })
                         }
                     </Row>

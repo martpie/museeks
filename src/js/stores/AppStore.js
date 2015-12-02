@@ -27,11 +27,11 @@ var CHANGE_EVENT = 'change';
 
 var AppStore = objectAssign({}, EventEmitter.prototype, {
 
-    library           :  null, // All tracks
-    tracks            :  null, // All tracks shown on the view
-    playlist          :  [],   // Tracks to be played
-    playlistCursor    :  null, // The cursor of the playlist
-    oldPlaylistCursor :  null, // The last cursor backup (to roll stuff back, e.g. unshuffle)
+    library           :  null,  // All tracks
+    tracks            :  null,  // All tracks shown on the view
+    playlist          :  [],    // Tracks to be played
+    playlistCursor    :  null,  // The cursor of the playlist
+    oldPlaylistCursor :  null,  // The last cursor backup (to roll stuff back, e.g. unshuffle)
     playerStatus      : 'stop', // Player status
     notifications     :  {},    // The array of notifications
     refreshingLibrary :  false, // If the app is currently refreshing the app
@@ -50,8 +50,7 @@ var AppStore = objectAssign({}, EventEmitter.prototype, {
             notifications     :  this.notifications,
             refreshingLibrary :  this.refreshingLibrary,
             repeat            :  this.repeat,
-            shuffle           :  this.shuffle,
-            musicFolders      :  JSON.parse(localStorage.getItem('config')).musicFolders
+            shuffle           :  this.shuffle
         };
     },
 
