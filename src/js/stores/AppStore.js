@@ -270,8 +270,8 @@ AppDispatcher.register(function(payload) {
                 AppStore.oldPlaylistCursor = AppStore.oldPlaylistCursor;
 
                 // Let's shuffle that
-                var playlist       = AppStore.playlist.slice();
                 var playlistCursor = AppStore.playlistCursor;
+                var playlist       = AppStore.playlist.slice().splice(playlistCursor + 1, AppStore.playlist.length - (playlistCursor + 1));
 
                 var firstTrack = playlist[playlistCursor];
 
