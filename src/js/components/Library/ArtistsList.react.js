@@ -27,6 +27,8 @@ export default class ArtistList extends Component {
         this.state = {
             selected : []
         };
+
+        this.showContextMenu = this.showContextMenu.bind(this);
     }
 
     render() {
@@ -46,7 +48,7 @@ export default class ArtistList extends Component {
             }
 
             return(
-                <tr className={ selected.indexOf(track._id) != -1 ? 'track selected' : 'track' } key={ index } onMouseDown={ self.selectTrack.bind(self, track._id, index) } onDoubleClick={ self.selectAndPlay.bind(null, index) } onContextMenu={ self.showContextMenu.bind(self) }>
+                <tr className={ selected.indexOf(track._id) != -1 ? 'track selected' : 'track' } key={ index } onMouseDown={ (e) => self.selectTrack(e, track._id, index) } onDoubleClick={ () => self.selectAndPlay(index) } onContextMenu={ self.showContextMenu }>
                     <td className='column-trackPlaying text-center'>
                         { playing }
                     </td>
@@ -90,7 +92,7 @@ export default class ArtistList extends Component {
         );
     }
 
-    selectTrack(id, index, e) {
+    selectTrack(e, id, index) {
 
         var self   = this;
         var tracks = this.props.tracks;
