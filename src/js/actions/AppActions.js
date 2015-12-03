@@ -246,12 +246,14 @@ var AppActions = {
                             filesList = filesList.concat(walkSync(folder, { directories: false }).map((d) =>  path.join(folder, d)));
                         });
 
+                        var filesListFiltered = [];
+
                         // Get the metadatas of all the files
                         filesList.forEach((file, i) => {
-                            if(!(app.supportedFormats.indexOf(mime.lookup(file)) > -1)) filesList.splice(i, 1);
+                            if(app.supportedFormats.indexOf(mime.lookup(file)) > -1) filesListFiltered.push(file);
                         });
 
-                        filesList.forEach((file, i) => {
+                        filesListFiltered.forEach((file, i) => {
                             // store in DB here
                             mmd(fs.createReadStream(file), { duration: true }, function (err, metadata) {
 
@@ -269,7 +271,7 @@ var AppActions = {
                                 // Let's insert in the data
                                 app.db.insert(metadata, function (err, newDoc) {
                                     if(err) throw err;
-                                    if(i === filesList.length - 1) {
+                                    if(i === filesListFiltered.length - 1) {
                                         AppActions.getTracks();
                                         AppDispatcher.dispatch({
                                             actionType : AppConstants.APP_LIBRARY_REFRESH_END
