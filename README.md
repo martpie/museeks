@@ -1,5 +1,5 @@
 # museeks
-A music player, in active development.
+A cross-platform music player, in active development. **0.1 is will be released soon.**
 
 ![Screenshot](screenshot.png)
 
@@ -9,6 +9,25 @@ It uses:
 * [io.js](http://iojs.org/) for back-end
 * [electron (used to be atom-shell)](https://github.com/atom/atom-shell/) for embedded browser
 * [react.js](https://facebook.github.io/react/) as front-end framework
+
+===
+
+### Features
+
+- Lightweight music player
+- Queue management
+- Shuffle, loop
+- Supported formats:
+    - mp3
+    - ogg
+    - wav
+
+on deck:
+
+- Playlists
+- flac support
+
+
 
 ===
 
