@@ -253,33 +253,43 @@ var AppActions = {
                             if(app.supportedFormats.indexOf(mime.lookup(file)) > -1) filesListFiltered.push(file);
                         });
 
-                        filesListFiltered.forEach((file, i) => {
-                            // store in DB here
-                            mmd(fs.createReadStream(file), { duration: true }, function (err, metadata) {
+                        (function forloop(i){
+                            if(i < filesListFiltered.length) {
 
-                                if (err) console.warn('An error occured while reading ' + file + ' id3 tags.');
+                                var file   = filesListFiltered[i];
+                                var stream = fs.createReadStream(file);
 
-                                delete metadata.picture;
-                                metadata.path = file;
-                                metadata.lArtist = metadata.artist.length === 0 ? ['unknown artist'] : metadata.artist[0].toLowerCase();
+                                // store in DB here
+                                mmd(stream, { duration: true }, function (err, metadata) {
+                                    forloop(i + 1);
+                                    if (err) console.warn('An error occured while reading ' + file + ' id3 tags: ' + err);
 
-                                if(metadata.artist.length === 0) metadata.artist = ['Unknown artist'];
-                                if(metadata.album === null || metadata.album === '') metadata.album = 'Unknown';
-                                if(metadata.title === null || metadata.title === '') metadata.title = path.parse(file).base;
-                                if(metadata.duration == '') metadata.duration = 0;
+                                    delete metadata.picture;
+                                    metadata.path = file;
+                                    metadata.lArtist = metadata.artist.length === 0 ? ['unknown artist'] : metadata.artist[0].toLowerCase();
 
-                                // Let's insert in the data
-                                app.db.insert(metadata, function (err, newDoc) {
-                                    if(err) throw err;
-                                    if(i === filesListFiltered.length - 1) {
-                                        AppActions.getTracks();
-                                        AppDispatcher.dispatch({
-                                            actionType : AppConstants.APP_LIBRARY_REFRESH_END
-                                        });
-                                    }
+                                    if(metadata.artist.length === 0) metadata.artist = ['Unknown artist'];
+                                    if(metadata.album === null || metadata.album === '') metadata.album = 'Unknown';
+                                    if(metadata.title === null || metadata.title === '') metadata.title = path.parse(file).base;
+                                    if(metadata.duration == '') metadata.duration = 0;
+
+                                    // Let's insert in the data
+                                    app.db.insert(metadata, function (err, newDoc) {
+                                        console.log('insert')
+                                        if(err) throw err;
+                                        if(i === filesListFiltered.length - 1) {
+                                            console.log('last insertion')
+                                            AppActions.getTracks();
+                                            AppDispatcher.dispatch({
+                                                actionType : AppConstants.APP_LIBRARY_REFRESH_END
+                                            });
+                                        }
+                                    });
                                 });
-                            });
-                        })
+                            }
+                        })(0);
+
+                        console.log('finished')
                     }
                 });
             });
