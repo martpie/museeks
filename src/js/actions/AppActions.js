@@ -3,11 +3,11 @@ import AppConstants  from '../constants/AppConstants';
 
 import app from '../constants/app.js';
 
-import walk from 'walk';
-import mmd  from 'musicmetadata';
-import fs   from 'fs';
-import path from 'path';
-import mime from 'mime';
+import mmd      from 'musicmetadata';
+import fs       from 'fs';
+import path     from 'path';
+import mime     from 'mime';
+import walkSync from 'walk-sync';
 
 import remote from 'remote';
 
@@ -235,57 +235,47 @@ var AppActions = {
             // Start the big thing
             app.db.remove({ }, { multi: true }, function (err, numRemoved) {
                 app.db.loadDatabase(function (err) {
-                    if(err) {
-                        throw err
-                    } else {
+                    if(err) throw err;
+                    else {
+
+                        var filesList = [];
+
+                        // Loop through folders
                         folders.forEach(function(folder, index, folders) {
+                            // Get the list of files
+                            filesList = filesList.concat(walkSync(folder, { directories: false }).map((d) =>  path.join(folder, d)));
+                        });
 
-                            var walker = walk.walk(folder, { followLinks: false });
+                        // Get the metadatas of all the files
+                        filesList.forEach((file, i) => {
 
-                            walker.on('file', function (root, fileStat, next) {
+                            if(app.supportedFormats.indexOf(mime.lookup(file)) > -1) {
 
-                                if(err) throw err;
+                                // store in DB here
+                                mmd(fs.createReadStream(file), { duration: true }, function (err, metadata) {
 
-                                var file = path.join(root, fileStat.name);
+                                    if (err) console.warn('An error occured while reading ' + file + ' id3 tags.');
 
-                                if(app.supportedFormats.indexOf(mime.lookup(file)) > -1) {
+                                    delete metadata.picture;
+                                    metadata.path = file;
+                                    metadata.lArtist = metadata.artist.length === 0 ? ['unknown artist'] : metadata.artist[0].toLowerCase();
 
-                                    // store in DB here
-                                    mmd(fs.createReadStream(file), { duration: true }, function (err, metadata) {
+                                    if(metadata.artist.length === 0) metadata.artist = ['Unknown artist'];
+                                    if(metadata.album === null || metadata.album === '') metadata.album = 'Unknown';
+                                    if(metadata.title === null || metadata.title === '') metadata.title = path.parse(file).base;
 
-                                        if (err) console.warn('An error occured while reading ' + file + ' id3 tags.');
-
-                                        delete metadata.picture;
-                                        metadata.path = file;
-                                        metadata.lArtist = metadata.artist.length === 0 ? ['unknown artist'] : metadata.artist[0].toLowerCase();
-
-                                        if(metadata.artist.length === 0) metadata.artist = ['Unknown artist'];
-                                        if(metadata.album === null || metadata.album === '') metadata.album = 'Unknown';
-                                        if(metadata.title === null || metadata.title === '') metadata.title = 'Unknown';
-
-                                        app.db.insert(metadata, function (err, newDoc) {
-                                            if(err) throw err;
-                                        });
+                                    // Let's insert in the data
+                                    app.db.insert(metadata, function (err, newDoc) {
+                                        if(err) throw err;
+                                        if(i === filesList.length - 1) {
+                                            AppActions.getTracks();
+                                            AppDispatcher.dispatch({
+                                                actionType : AppConstants.APP_LIBRARY_REFRESH_END
+                                            });
+                                        }
                                     });
-                                }
-                                next();
-                            });
-                            walker.on('errors', function (root, nodeStatsArray, next) {
-                                nodeStatsArray.forEach(function (n) {
-                                    console.error('[ERROR] ' + n.name);
-                                    console.error(n.error.message || (n.error.code + ': ' + n.error.path));
                                 });
-                                next();
-                            });
-                            walker.on('end', function () {
-                                if(folders.length - 1 === index) {
-                                    AppDispatcher.dispatch({
-                                        actionType : AppConstants.APP_LIBRARY_REFRESH_END
-                                    });
-
-                                    AppActions.getTracks();
-                                }
-                            });
+                            }
                         });
                     }
                 });
