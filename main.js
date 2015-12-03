@@ -32,7 +32,7 @@ app.on('ready', function() {
     mainWindow = new BrowserWindow(mainWindowOption);
 
     // ... and load our html page
-    mainWindow.loadUrl('file://' + __dirname + '/src/app.html');
+    mainWindow.loadURL('file://' + __dirname + '/src/app.html');
     mainWindow.show();
 
     mainWindow.on('closed', function() {
