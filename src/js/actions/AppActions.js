@@ -248,36 +248,36 @@ var AppActions = {
 
                         // Get the metadatas of all the files
                         filesList.forEach((file, i) => {
-
-                            if(app.supportedFormats.indexOf(mime.lookup(file)) > -1) {
-
-                                // store in DB here
-                                mmd(fs.createReadStream(file), { duration: true }, function (err, metadata) {
-
-                                    if (err) console.warn('An error occured while reading ' + file + ' id3 tags.');
-
-                                    delete metadata.picture;
-                                    metadata.path = file;
-                                    metadata.lArtist = metadata.artist.length === 0 ? ['unknown artist'] : metadata.artist[0].toLowerCase();
-
-                                    if(metadata.artist.length === 0) metadata.artist = ['Unknown artist'];
-                                    if(metadata.album === null || metadata.album === '') metadata.album = 'Unknown';
-                                    if(metadata.title === null || metadata.title === '') metadata.title = path.parse(file).base;
-                                    if(metadata.duration == '') metadata.duration = 0;
-
-                                    // Let's insert in the data
-                                    app.db.insert(metadata, function (err, newDoc) {
-                                        if(err) throw err;
-                                        if(i === filesList.length - 1) {
-                                            AppActions.getTracks();
-                                            AppDispatcher.dispatch({
-                                                actionType : AppConstants.APP_LIBRARY_REFRESH_END
-                                            });
-                                        }
-                                    });
-                                });
-                            }
+                            if(!(app.supportedFormats.indexOf(mime.lookup(file)) > -1)) filesList.splice(i, 1);
                         });
+
+                        filesList.forEach((file, i) => {
+                            // store in DB here
+                            mmd(fs.createReadStream(file), { duration: true }, function (err, metadata) {
+
+                                if (err) console.warn('An error occured while reading ' + file + ' id3 tags.');
+
+                                delete metadata.picture;
+                                metadata.path = file;
+                                metadata.lArtist = metadata.artist.length === 0 ? ['unknown artist'] : metadata.artist[0].toLowerCase();
+
+                                if(metadata.artist.length === 0) metadata.artist = ['Unknown artist'];
+                                if(metadata.album === null || metadata.album === '') metadata.album = 'Unknown';
+                                if(metadata.title === null || metadata.title === '') metadata.title = path.parse(file).base;
+                                if(metadata.duration == '') metadata.duration = 0;
+
+                                // Let's insert in the data
+                                app.db.insert(metadata, function (err, newDoc) {
+                                    if(err) throw err;
+                                    if(i === filesList.length - 1) {
+                                        AppActions.getTracks();
+                                        AppDispatcher.dispatch({
+                                            actionType : AppConstants.APP_LIBRARY_REFRESH_END
+                                        });
+                                    }
+                                });
+                            });
+                        })
                     }
                 });
             });
