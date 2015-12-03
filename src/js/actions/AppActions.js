@@ -243,33 +243,32 @@ var AppActions = {
                             var walker = walk.walk(folder, { followLinks: false });
 
                             walker.on('file', function (root, fileStat, next) {
-                                fs.readFile(path.resolve(root, fileStat.name), function (buffer) {
 
-                                    var file = path.join(root, fileStat.name);
+                                if(err) throw err;
 
-                                    if(app.supportedFormats.indexOf(mime.lookup(file)) > -1) {
-                                        // store in DB here
-                                        mmd(fs.createReadStream(file), { duration: true }, function (err, metadata) {
+                                var file = path.join(root, fileStat.name);
 
-                                            if (err) throw err;
+                                if(app.supportedFormats.indexOf(mime.lookup(file)) > -1) {
 
-                                            else {
-                                                delete metadata.picture;
-                                                metadata.path = file;
-                                                metadata.lArtist = metadata.artist.length === 0 ? ['unknown artist'] : metadata.artist[0].toLowerCase();
+                                    // store in DB here
+                                    mmd(fs.createReadStream(file), { duration: true }, function (err, metadata) {
 
-                                                if(metadata.artist.length === 0) metadata.artist = ['Unknown artist'];
-                                                if(metadata.album === null || metadata.album === '') metadata.album = 'Unknown';
-                                                if(metadata.title === null || metadata.title === '') metadata.title = 'Unknown';
+                                        if (err) console.warn('An error occured while reading ' + file + ' id3 tags.');
 
-                                                app.db.insert(metadata, function (err, newDoc) {
-                                                    if(err) throw err;
-                                                });
-                                            }
+                                        delete metadata.picture;
+                                        metadata.path = file;
+                                        metadata.lArtist = metadata.artist.length === 0 ? ['unknown artist'] : metadata.artist[0].toLowerCase();
+
+                                        if(metadata.artist.length === 0) metadata.artist = ['Unknown artist'];
+                                        if(metadata.album === null || metadata.album === '') metadata.album = 'Unknown';
+                                        if(metadata.title === null || metadata.title === '') metadata.title = 'Unknown';
+
+                                        app.db.insert(metadata, function (err, newDoc) {
+                                            if(err) throw err;
                                         });
-                                    }
-                                    next();
-                                });
+                                    });
+                                }
+                                next();
                             });
                             walker.on('errors', function (root, nodeStatsArray, next) {
                                 nodeStatsArray.forEach(function (n) {
