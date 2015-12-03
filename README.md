@@ -3,8 +3,6 @@ A cross-platform music player, in active development. **0.1 is will be released 
 
 ![Screenshot](screenshot.png)
 
-![Screenshot](screenshot-dark.png)
-
 It uses:
 * [io.js](http://iojs.org/) for back-end
 * [electron (used to be atom-shell)](https://github.com/atom/atom-shell/) for embedded browser
@@ -17,6 +15,7 @@ It uses:
 - Lightweight music player
 - Queue management
 - Shuffle, loop
+- Dark theme
 - Supported formats:
     - mp3
     - ogg

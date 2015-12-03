@@ -253,6 +253,7 @@ var AppActions = {
                             if(app.supportedFormats.indexOf(mime.lookup(file)) > -1) filesListFiltered.push(file);
                         });
 
+                        // Fake sync async loop
                         (function forloop(i){
                             if(i < filesListFiltered.length) {
 
@@ -275,10 +276,8 @@ var AppActions = {
 
                                     // Let's insert in the data
                                     app.db.insert(metadata, function (err, newDoc) {
-                                        console.log('insert')
                                         if(err) throw err;
                                         if(i === filesListFiltered.length - 1) {
-                                            console.log('last insertion')
                                             AppActions.getTracks();
                                             AppDispatcher.dispatch({
                                                 actionType : AppConstants.APP_LIBRARY_REFRESH_END
@@ -288,8 +287,6 @@ var AppActions = {
                                 });
                             }
                         })(0);
-
-                        console.log('finished')
                     }
                 });
             });
