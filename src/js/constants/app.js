@@ -52,7 +52,19 @@ else {
 
 var pathConfig       = app.getPath('userData');
 var pathSrc          = __dirname;
-var supportedFormats = ['audio/mp4', 'audio/mpeg', 'audio/wav'];
+var supportedFormats = [
+    'audio/mp3',
+    'audio/mpeg3',
+    'audio/x-mpeg-3',
+    'audio/mpeg',
+
+    'audio/wav',
+    'audio-wave',
+    'audio/x-wav',
+    'audio/x-pn-wav',
+
+    'audio/ogg'
+];
 
 
 
