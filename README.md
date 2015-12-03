@@ -24,8 +24,8 @@ It uses:
 
 on deck:
 
-- Playlists
-- flac support
+- Playlists (#22)
+- flac support (#53)
 
 
 
