@@ -82,7 +82,7 @@ AppDispatcher.register(function(payload) {
             var tracks = payload.tracks;
             AppStore.library = tracks;
             AppStore.tracks  = tracks;
-            AppStore.status  = tracks.length + ' tracks (' + utils.parseDuration(tracks.map(d => d.duration).reduce((a, b) => a + b)) + ')';
+            if(tracks !== null && tracks.length > 2) AppStore.status  = tracks.length + ' tracks (' + utils.parseDuration(tracks.map(d => d.duration).reduce((a, b) => a + b)) + ')';
             AppStore.emit(CHANGE_EVENT);
             break;
 
