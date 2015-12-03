@@ -24,10 +24,8 @@ It uses:
 
 on deck:
 
-- Playlists (#22)
-- flac support (#53)
-
-
+- Playlists ([#22](https://github.com/KeitIG/museeks/issues/22))
+- flac support ([#53](https://github.com/KeitIG/museeks/issues/53))
 
 ===
 
