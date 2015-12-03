@@ -29,7 +29,6 @@ export default class Museeks extends Component {
     render() {
 
         var trackPlayingID = (this.state.playlist.length > 0 && this.state.playlistCursor !== null) ? this.state.playlist[this.state.playlistCursor]._id : null;
-        var status         = 'An apple a day keeps Dr Dre away';
 
         return (
             <div className='main'>
@@ -57,7 +56,7 @@ export default class Museeks extends Component {
                     </Row>
                 </div>
                 <Footer
-                    status={ status }
+                    status={ this.state.status }
                     refreshingLibrary={ this.state.refreshingLibrary }
                 />
             </div>

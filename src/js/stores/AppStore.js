@@ -38,19 +38,21 @@ var AppStore = objectAssign({}, EventEmitter.prototype, {
     refreshingLibrary :  false, // If the app is currently refreshing the app
     repeat            :  false, // the current repeat state (one, all, false)
     shuffle           :  false, // If shuffle mode is enabled
+    status            : 'An apple a day keeps Dr Dre away',
 
     getStore: function() {
         return {
-            config            :  JSON.parse(localStorage.getItem('config')),
-            library           :  this.library,
-            tracks            :  this.tracks,
-            playlist          :  this.playlist,
-            playlistCursor    :  this.playlistCursor,
-            playerStatus      :  this.playerStatus,
-            notifications     :  this.notifications,
-            refreshingLibrary :  this.refreshingLibrary,
-            repeat            :  this.repeat,
-            shuffle           :  this.shuffle
+            config            : JSON.parse(localStorage.getItem('config')),
+            library           : this.library,
+            tracks            : this.tracks,
+            playlist          : this.playlist,
+            playlistCursor    : this.playlistCursor,
+            playerStatus      : this.playerStatus,
+            notifications     : this.notifications,
+            refreshingLibrary : this.refreshingLibrary,
+            repeat            : this.repeat,
+            shuffle           : this.shuffle,
+            status            : this.status
         };
     },
 
@@ -77,8 +79,10 @@ AppDispatcher.register(function(payload) {
     switch(payload.actionType) {
 
         case(AppConstants.APP_REFRESH_LIBRARY):
-            AppStore.library = payload.tracks;
-            AppStore.tracks  = payload.tracks;
+            var tracks = payload.tracks;
+            AppStore.library = tracks;
+            AppStore.tracks  = tracks;
+            AppStore.status  = tracks.length + ' tracks (' + utils.parseDuration(tracks.map(d => d.duration).reduce((a, b) => a + b)) + ')';
             AppStore.emit(CHANGE_EVENT);
             break;
 
@@ -394,6 +398,7 @@ AppDispatcher.register(function(payload) {
             break;
 
         case(AppConstants.APP_LIBRARY_REFRESH_START):
+            AppStore.status = 'An apple a day keeps Dr Dre away';
             AppStore.refreshingLibrary = true;
             AppStore.emit(CHANGE_EVENT);
             break;

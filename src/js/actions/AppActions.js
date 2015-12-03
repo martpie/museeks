@@ -263,6 +263,7 @@ var AppActions = {
                                     if(metadata.artist.length === 0) metadata.artist = ['Unknown artist'];
                                     if(metadata.album === null || metadata.album === '') metadata.album = 'Unknown';
                                     if(metadata.title === null || metadata.title === '') metadata.title = path.parse(file).base;
+                                    if(metadata.duration == '') metadata.duration = 0;
 
                                     // Let's insert in the data
                                     app.db.insert(metadata, function (err, newDoc) {
