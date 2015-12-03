@@ -197,9 +197,6 @@ AppDispatcher.register(function(payload) {
             break;
 
         case(AppConstants.APP_PLAYER_NEXT):
-            var e = payload.e;
-
-            if(e !== undefined) e.target.removeEventListener(e.type);
 
             var playlist = AppStore.playlist;
 
@@ -216,7 +213,6 @@ AppDispatcher.register(function(payload) {
 
 
             if (playlist[newPlaylistCursor] !== undefined) {
-
                 var uri = utils.parseURI(playlist[newPlaylistCursor].path); ;
                 app.audio.src = uri;
                 app.audio.play();
@@ -224,12 +220,13 @@ AppDispatcher.register(function(payload) {
                 AppStore.playlistCursor = newPlaylistCursor;
 
             } else {
-
                 app.audio.pause();
                 app.audio.src = '';
-
-                AppStore.playlist = [];
-                AppStore.playlistCursor = null;
+                AppStore.playlist          =  [];
+                AppStore.playlistCursor    =  null;
+                AppStore.oldPlaylistCursor =  null;
+                AppStore.playerStatus      = 'stop'
+                AppStore.emit(CHANGE_EVENT);
             }
             AppStore.emit(CHANGE_EVENT);
             break;
@@ -256,8 +253,13 @@ AppDispatcher.register(function(payload) {
                 AppStore.playlistCursor = newPlaylistCursor;
 
             } else {
-
-                AppStore.playlist = null;
+                app.audio.pause();
+                app.audio.src = '';
+                AppStore.playlist          =  [];
+                AppStore.playlistCursor    =  null;
+                AppStore.oldPlaylistCursor =  null;
+                AppStore.playerStatus      = 'stop'
+                AppStore.emit(CHANGE_EVENT);
             }
             AppStore.emit(CHANGE_EVENT);
             break;
