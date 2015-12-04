@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import InlineSVG from '../Shared/InlineSVG.react';
+import InlineSVG from 'svg-inline-react';
 
 import AppActions from '../../actions/AppActions';
 
