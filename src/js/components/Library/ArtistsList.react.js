@@ -204,7 +204,7 @@ export default class ArtistList extends Component {
                     }
                 }));
 
-        context.popup(remote.getCurrentWindow());
+        context.popup(app.browserWindows.main);
     }
 
     /*cursorUp() {

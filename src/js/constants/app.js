@@ -5,7 +5,19 @@ import remote from 'remote';
 
 import AppActions from '../actions/AppActions';
 
-var app = remote.require('app');
+var app    = remote.require('app');
+var screen = remote.require('screen');
+
+
+
+/*
+|--------------------------------------------------------------------------
+| Browser Windows
+|--------------------------------------------------------------------------
+*/
+
+var browserWindows = {};
+    browserWindows.main = remote.getCurrentWindow();
 
 
 
@@ -15,11 +27,19 @@ var app = remote.require('app');
 |--------------------------------------------------------------------------
 */
 
+var workArea = screen.getPrimaryDisplay().workArea;
+
 var defaultConfig = {
     theme: 'light',
     volume: 1,
     musicFolders: [],
-    devMode: false
+    devMode: false,
+    bounds: {
+        width: 1000,
+        height: 600,
+        x: parseInt(workArea.width / 2),
+        y: parseInt(workArea.height / 2)
+    }
 }
 
 var config = JSON.parse(localStorage.getItem('config'));
@@ -117,5 +137,6 @@ export default {
     db               : db,               // database
     supportedFormats : supportedFormats, // supported audio formats
     audio            : audio,            // HTML5 audio tag
-    pathSrc          : pathSrc           // path of the app
+    pathSrc          : pathSrc,          // path of the app
+    browserWindows   : browserWindows    // Object containing all the windows
 };

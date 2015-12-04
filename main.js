@@ -21,11 +21,13 @@ app.on('ready', function() {
 
     // Browser Window options
     var mainWindowOption = {
-        'width'      : 1000,
-        'height'     : 600,
-        'min-width'  : 1000,
-        'min-height' : 600,
-        'frame'      : false
+        'width'      :  1000,
+        'height'     :  600,
+        'min-width'  :  1000,
+        'min-height' :  600,
+        'frame'      :  false,
+        'title'      : 'Museeks',
+        'show'       :  false
     };
 
     // Create the browser window
@@ -33,7 +35,6 @@ app.on('ready', function() {
 
     // ... and load our html page
     mainWindow.loadURL('file://' + __dirname + '/src/app.html');
-    mainWindow.show();
 
     mainWindow.on('closed', function() {
         // Dereference the window object

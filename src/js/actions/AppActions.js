@@ -21,6 +21,7 @@ var AppActions = {
     init: function() {
 
         // Usual tasks
+        this.app.start();
         this.getTracks();
         this.settings.checkTheme();
         this.settings.checkDevMode();
@@ -34,6 +35,17 @@ var AppActions = {
         window.addEventListener('drop', function (e) {
             e.preventDefault();
         }, false);
+
+        // Remember dimensions and positionning
+        var currentWindow = app.browserWindows.main;
+
+        currentWindow.on('resize', function() {
+            AppActions.app.saveBounds();
+        });
+
+        currentWindow.on('move', function() {
+            AppActions.app.saveBounds();
+        });
     },
 
     /**
@@ -75,8 +87,36 @@ var AppActions = {
 
     app: {
 
+        start: function() {
+            var bounds        = app.initialConfig.bounds;
+            var currentWindow = app.browserWindows.main;
+            currentWindow.setBounds(bounds);
+            currentWindow.show();
+        },
+
         close: function() {
-            remote.getCurrentWindow().close();
+            app.browserWindows.main.close();
+        },
+
+        saveBounds: function() {
+
+            var self = AppActions;
+            var now = window.performance.now();
+
+            if (now - self.lastFilterSearch < 250) {
+                clearTimeout(self.filterSearchTimeOut);
+            }
+
+            self.lastFilterSearch = now;
+
+            self.filterSearchTimeOut = setTimeout(() => {
+
+                var currentWindow = app.browserWindows.main;
+                var config        = JSON.parse(localStorage.getItem('config'));
+                    config.bounds = currentWindow.getBounds();
+
+                localStorage.setItem('config', JSON.stringify(config));
+            }, 250);
         }
     },
 
@@ -322,7 +362,7 @@ var AppActions = {
         },
 
         checkDevMode: function() {
-            if(JSON.parse(localStorage.getItem('config')).devMode) remote.getCurrentWindow().openDevTools();
+            if(JSON.parse(localStorage.getItem('config')).devMode) app.browserWindows.main.openDevTools();
         },
 
         toggleDevMode: function() {
@@ -332,8 +372,8 @@ var AppActions = {
             config.devMode = !config.devMode;
 
             // Open dev tools if needed
-            if(config.devMode) remote.getCurrentWindow().openDevTools();
-            else remote.getCurrentWindow().closeDevTools();
+            if(config.devMode) app.browserWindows.main.openDevTools();
+            else app.browserWindows.main.closeDevTools();
 
             localStorage.setItem('config', JSON.stringify(config));
 
