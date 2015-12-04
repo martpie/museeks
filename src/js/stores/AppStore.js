@@ -362,8 +362,8 @@ AppDispatcher.register(function(payload) {
             var cursor   = AppStore.playlistCursor;
 
             for(var i = 0, length = tracks.length; i < length; i++) {
-                if(selected.indexOf(tracks[i]._id) > -1) {
-                    AppStore.playlist.splice(cursor + 1, 0, tracks[i]);
+                if(selected.indexOf(tracks[length - i - 1]._id) > -1) {
+                    AppStore.playlist.splice(cursor + 1, 0, tracks[length - i - 1]);
                 }
             }
 
