@@ -187,7 +187,16 @@ export default class ArtistList extends Component {
                 console.log('down')
                 break;
             case 13: // enter
-                console.log('enter')
+                var selected = this.state.selected;
+                var tracks   = this.props.tracks;
+                var index;
+                for(var i = 0, length = tracks.length; i < length; i++) {
+                    if(selected.indexOf(tracks[i]._id) > -1) {
+                        index = i;
+                        break;
+                    }
+                }
+                if(index !== undefined) AppActions.selectAndPlay(index);
                 break;
         }
     }
