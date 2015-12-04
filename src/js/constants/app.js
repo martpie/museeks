@@ -12,12 +12,15 @@ var screen = remote.require('screen');
 
 /*
 |--------------------------------------------------------------------------
-| Browser Windows
+| Some variables
 |--------------------------------------------------------------------------
 */
 
 var browserWindows = {};
     browserWindows.main = remote.getCurrentWindow();
+
+var pathUserData     = app.getPath('userData'),
+    pathSrc          = __dirname;
 
 
 
@@ -66,12 +69,10 @@ else {
 
 /*
 |--------------------------------------------------------------------------
-| Variables
+| supported Formats
 |--------------------------------------------------------------------------
 */
 
-var pathConfig       = app.getPath('userData');
-var pathSrc          = __dirname;
 var supportedFormats = [
     'audio/mp3',
     'audio/mpeg3',
@@ -110,7 +111,7 @@ audio.addEventListener('ended', AppActions.player.next);
 */
 
 var db = new nedb({
-    filename: path.join(pathConfig, 'library.db'),
+    filename: path.join(pathUserData, 'library.db'),
     autoload: true
 });
 
@@ -123,7 +124,7 @@ db.reset = function() {
 };
 
 // WTFix, de.loadDatabase() throw an error if the line below is not here
-fs.writeFile(path.join(pathConfig, '.init'), "", (err) => { if(err) throw err; });
+fs.writeFile(path.join(pathUserData, '.init'), "", (err) => { if(err) throw err; });
 
 
 /*
