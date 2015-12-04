@@ -27,7 +27,7 @@ app.on('ready', function() {
         'min-height' :  600,
         'frame'      :  false,
         'title'      : 'Museeks',
-        'show'       :  true
+        'show'       :  false
     };
 
     // Create the browser window
@@ -35,7 +35,6 @@ app.on('ready', function() {
 
     // ... and load our html page
     mainWindow.loadURL('file://' + __dirname + '/src/app.html');
-    mainWindow.openDevTools();
 
     mainWindow.on('closed', function() {
         // Dereference the window object

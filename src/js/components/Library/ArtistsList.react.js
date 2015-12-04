@@ -181,10 +181,13 @@ export default class ArtistList extends Component {
 
         switch(e.keyCode) {
             case 38: // up
+                console.log('up');
                 break;
             case 40: // down
+                console.log('down')
                 break;
             case 13: // enter
+                console.log('enter')
                 break;
         }
     }
