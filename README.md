@@ -21,10 +21,16 @@ It uses:
     - ogg
     - wav
 
-on deck:
+#### on deck:
 
 - Playlists ([#22](https://github.com/KeitIG/museeks/issues/22))
 - flac support ([#53](https://github.com/KeitIG/museeks/issues/53))
+- build system for each platform (.exe, .app, .deb...) need help on this one ([#48](https://github.com/KeitIG/museeks/issues/48))
+
+#### on mind:
+
+- add languages support
+- auto-updater from Github releases
 
 ===
 
@@ -46,56 +52,13 @@ Please consider **this app is still under development, just install it for fun**
 - You will need `bower` and `webpack` installed globally
 - `bower install && npm install && npm run dev`
 - Don't forget to enable dev mode in the app in the settings view
+
 Webpack will watch for JSX and SASS changes.
 
 Please respect a few rules:
+
 - Make the code readable and comment if needed
 - 4 spaces indent !
 - Before making complex stuff, don't hesitate to open an issue first to discuss about it
 
 Then open a PR :)
-
-===
-
-### To-do list
-
-This list is not limited. Features findable in issues with the `to-do` tag will be achieved first.
-
-##### discussion
-
-- [x] refactor once it's frozen
-- [x] use es6 and Babel
-- [x] `routie.js` to `react-router`
-- [x] `gulp` to `webpack`
-- [x] `nconf` to `localStorage`
-- [ ] build system for each platform (.exe, .app, .deb...) need help on this one
-
-##### general
-- [x] shortcuts & global shortcuts
-- [x] have a real development stack to generate views, scss, etc...
-- [x] dark theme
-
-##### settings view
-- [x] add/remove music folder
-- [x] refresh library with the given folders
-
-##### library view list
-- [x] list all tracks
-- [ ] manage columns
-- [ ] resize columns
-- [x] search
-
-##### player
-- [x] make it works ftw !
-- [x] auto-read next track
-- [x] next/previous button
-- [x] list next tracks
-- [x] manage next tracks
-- [x] shuffle
-- [x] loop, single-loop
-
-##### nice to have
-- [ ] add languages support
-- [ ] auto-updater from Github releases
-- [ ] playlists
-- [x] async search
