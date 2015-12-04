@@ -187,7 +187,6 @@ export default class ArtistList extends Component {
             case 13: // enter
                 break;
         }
-
     }
 
     selectAndPlay(index) {

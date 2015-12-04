@@ -342,27 +342,29 @@ AppDispatcher.register(function(payload) {
             AppStore.emit(CHANGE_EVENT);
             break;
 
+        // Prob here
         case(AppConstants.APP_QUEUE_ADD):
             var selected = payload.selected;
-            var playlist = AppStore.playlist.slice();
             var tracks   = AppStore.tracks;
 
-            for(var i = 0; i < selected.length; i++) {
-                playlist.push(tracks[selected[i]]);
+            for(var i = 0, length = tracks.length; i < length; i++) {
+                if(selected.indexOf(tracks[i]._id) > -1) {
+                    AppStore.playlist.push(tracks[i]);
+                }
             }
 
-            AppStore.playlist = playlist;
             AppStore.emit(CHANGE_EVENT);
             break;
 
         case(AppConstants.APP_QUEUE_ADD_NEXT):
             var selected = payload.selected;
-            var playlist = AppStore.playlist;
             var tracks   = AppStore.tracks;
             var cursor   = AppStore.playlistCursor;
 
-            for(var i = 0; i < selected.length; i++) {
-                playlist.splice(cursor + 1, 0, tracks[selected[selected.length - i - 1]]);
+            for(var i = 0, length = tracks.length; i < length; i++) {
+                if(selected.indexOf(tracks[i]._id) > -1) {
+                    AppStore.playlist.splice(cursor + 1, 0, tracks[i]);
+                }
             }
 
             AppStore.emit(CHANGE_EVENT);
