@@ -262,6 +262,9 @@ var AppActions = {
 
                                 // store in DB here
                                 mmd(stream, { duration: true }, function (err, metadata) {
+
+                                    AppActions.settings.refreshProgress(parseInt(i * 100 / filesListFiltered.length));
+
                                     forloop(i + 1);
                                     if (err) console.warn('An error occured while reading ' + file + ' id3 tags: ' + err);
 
@@ -336,6 +339,13 @@ var AppActions = {
 
             AppDispatcher.dispatch({
                 actionType : AppConstants.APP_REFRESH_CONFIG
+            });
+        },
+
+        refreshProgress: function(percentage) {
+            AppDispatcher.dispatch({
+                actionType : AppConstants.APP_LIBRARY_REFRESH_PROGRESS,
+                percentage : percentage
             });
         }
     },

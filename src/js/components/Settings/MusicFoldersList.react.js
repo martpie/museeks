@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ButtonGroup, Button } from 'react-bootstrap';
+import { ButtonGroup, Button, ProgressBar } from 'react-bootstrap';
 import Icon from 'react-fontawesome';
 
 import AppActions from '../../actions/AppActions';
@@ -25,50 +25,29 @@ export default class MusicFoldersList extends Component {
         var self         = this;
         var musicFolders = this.props.musicFolders;
 
-        if(!this.props.refreshingLibrary) {
-
-            var buttonsGroup = (
-                <ButtonGroup>
-                    <Button bsSize='small' onClick={ this.addFolders.bind(this) }>
-                        <Icon name='plus' fixedWidth />
-                        Import a folder
-                    </Button>
-                    <Button bsSize='small' onClick={ this.refreshLibrary }>
-                        <Icon name='refresh' /> Refresh Library
-                    </Button>
-                    <Button bsSize='small' bsStyle={'danger'} onClick={ this.resetLibrary }>
-                        Reset library
-                    </Button>
-                </ButtonGroup>
-            );
-
-        } else {
-
-            var buttonsGroup = (
-                <ButtonGroup>
-                    <Button bsSize='small' disabled>
-                        <Icon name='plus' />
-                        Import a folder
-                    </Button>
-                    <Button bsSize='small' disabled>
-                        <Icon name='refresh' spin /> Refreshing Library
-                    </Button>
-                    <Button bsSize='small' disabled bsStyle={'danger'}>
-                        Reset library
-                    </Button>
-                </ButtonGroup>
-            );
-        }
-
+        var buttonsGroup = (
+            <ButtonGroup>
+                <Button bsSize='small' disabled={ this.props.refreshingLibrary } onClick={ this.addFolders.bind(this) }>
+                    <Icon name='plus' fixedWidth />
+                    Import a folder
+                </Button>
+                <Button bsSize='small' disabled={ this.props.refreshingLibrary } onClick={ this.refreshLibrary }>
+                    <Icon name='refresh' spin={ this.props.refreshingLibrary } /> { this.props.refreshingLibrary ? 'Refreshing Library' : 'Refresh Library' }
+                </Button>
+                <Button bsSize='small' disabled={ this.props.refreshingLibrary } bsStyle={'danger'} onClick={ this.resetLibrary }>
+                    Reset library
+                </Button>
+            </ButtonGroup>
+        );
 
         var list = musicFolders.map(function(folder, i) {
             return(
                 <li key={i}>
-                    <Icon name='close' className={ this.props.refreshingLibrary ? 'delete-libray-folder disabled' : 'delete-libray-folder' } onClick={ this.props.refreshingLibrary ? void(0) : self.removeFolder.bind(self, i) }  />
+                    <Icon name='close' className={ self.props.refreshingLibrary ? 'delete-libray-folder disabled' : 'delete-libray-folder' } onClick={ self.props.refreshingLibrary ? void(0) : self.removeFolder.bind(self, i) }  />
                     { folder }
                 </li>
             );
-        }.bind(this));
+        });
 
         return (
             <div className='setting settings-musicfolder'>
@@ -81,6 +60,8 @@ export default class MusicFoldersList extends Component {
                 </ul>
 
                 { buttonsGroup }
+
+                <ProgressBar className={ this.props.refreshingLibrary ? 'library-refresh-progress' : 'library-refresh-progress hidden'} now={ this.props.refreshProgress } />
             </div>
         );
     }

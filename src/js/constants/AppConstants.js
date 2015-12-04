@@ -29,5 +29,6 @@ export default keymirror({
     APP_LIBRARY_REMOVE_FOLDER : null,
     APP_LIBRARY_RESET         : null,
     APP_LIBRARY_REFRESH_START : null,
-    APP_LIBRARY_REFRESH_END   : null
+    APP_LIBRARY_REFRESH_END   : null,
+    APP_LIBRARY_REFRESH_PROGRESS : null
 });

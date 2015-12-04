@@ -28,7 +28,7 @@ export default class Settings extends Component {
             <div className='view view-settings view-withpadding'>
                 <h2>Settings</h2>
                 <hr />
-                <MusicFoldersList musicFolders={ config.musicFolders } refreshingLibrary={ this.props.refreshingLibrary } />
+                <MusicFoldersList musicFolders={ config.musicFolders } refreshingLibrary={ this.props.refreshingLibrary } refreshProgress={ this.props.refreshProgress } />
                 <hr />
                 <ThemeSelector theme={ config.theme } />
                 <hr />

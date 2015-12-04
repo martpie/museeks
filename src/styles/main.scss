@@ -642,27 +642,38 @@ footer {
 |--------------------------------------------------------------------------
 */
 
-.view-settings .musicfolders-list {
-    margin: 0 0 10px 0;
-    padding: 10px;
-    list-style: none;
-    border: 1px solid lightgrey;
+.view-settings .settings-musicfolder {
 
-    &.empty {
-        margin: 0;
-        padding: 0;
-        border: 0;
+    .musicfolders-list {
+        margin: 0 0 10px 0;
+        padding: 10px;
+        list-style: none;
+        border: 1px solid lightgrey;
+
+        &.empty {
+            margin: 0;
+            padding: 0;
+            border: 0;
+        }
+
+        .delete-libray-folder {
+            margin-right: 5px;
+            color: #d9534f;
+            cursor: pointer;
+
+            &.disabled {
+                color: #CCC;
+                cursor: default;
+            }
+        }
     }
 
-    .delete-libray-folder {
-        margin-right: 5px;
-        color: #d9534f;
-        cursor: pointer;
-
-        &.disabled {
-            color: #CCC;
-            cursor: default;
-        }
+    .library-refresh-progress.progress {
+        display: inline-block;
+        width: 200px;
+        margin: 10px;
+        vertical-align: middle;
+        height: 5px;
     }
 }
 
