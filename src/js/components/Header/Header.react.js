@@ -31,25 +31,11 @@ export default class Header extends Component {
 
     render() {
 
-        if (this.props.playerStatus === 'play') {
-            var playButton = (
-                <button className='player-control play' onClick={ this.pause.bind(null) }>
-                    <Icon name='pause' fixedWidth />
-                </button>
-            );
-        } else if (this.props.playerStatus === 'pause') {
-            var playButton = (
-                <button className='player-control play' onClick={ this.play.bind(null) }>
-                    <Icon name='play' fixedWidth />
-                </button>
-            );
-        } else {
-            var playButton = (
-                <button className='player-control play'>
-                    <Icon name='play' fixedWidth />
-                </button>
-            );
-        }
+        var playButton = (
+            <button className='player-control play' onClick={ () => this.playToggle() }>
+                <Icon name={ this.props.playerStatus === 'play' ? 'pause' : 'play' } fixedWidth />
+            </button>
+        );
 
         return (
             <header className='row'>
@@ -116,6 +102,11 @@ export default class Header extends Component {
 
     searchSelect() {
         this.refs.search.select();
+    }
+
+    playToggle() {
+        if(this.props.playerStatus === 'play') this.pause();
+        else if (this.props.playerStatus === 'pause') this.play();
     }
 
     play() {

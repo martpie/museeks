@@ -25,7 +25,7 @@ var AppActions = {
         this.getTracks();
         this.settings.checkTheme();
         this.settings.checkDevMode();
-        this.others.initGlobalShortcuts();
+        this.app.initShortcuts();
 
         // Prevent some events
         window.addEventListener('dragover', function (e) {
@@ -117,6 +117,22 @@ var AppActions = {
 
                 localStorage.setItem('config', JSON.stringify(config));
             }, 250);
+        },
+
+        initShortcuts: function() {
+
+            // Global shortcuts
+            globalShortcut.register('MediaPlayPause', function () {
+                AppActions.player.playToggle();
+            });
+
+            globalShortcut.register('MediaPreviousTrack', function () {
+                AppActions.player.previous();
+            });
+
+            globalShortcut.register('MediaNextTrack', function () {
+                AppActions.player.next();
+            });
         }
     },
 
@@ -386,24 +402,6 @@ var AppActions = {
             AppDispatcher.dispatch({
                 actionType : AppConstants.APP_LIBRARY_REFRESH_PROGRESS,
                 percentage : percentage
-            });
-        }
-    },
-
-    others: {
-
-        initGlobalShortcuts: function() {
-
-            globalShortcut.register('MediaPlayPause', function () {
-                AppActions.player.playToggle();
-            });
-
-            globalShortcut.register('MediaPreviousTrack', function () {
-                AppActions.player.previous();
-            });
-
-            globalShortcut.register('MediaNextTrack', function () {
-                AppActions.player.next();
             });
         }
     }
