@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Icon from 'react-fontawesome';
+import KeyBinding from 'react-keybinding-component';
 
 import AppActions from '../../actions/AppActions';
 
@@ -73,7 +74,8 @@ export default class ArtistList extends Component {
 
         return (
             <div className='tracks-list-container'>
-                <table className='table table-striped tracks-list'>
+                <KeyBinding onKey={ (e) => { this.onKey(e) } } type='keyup' target={ '.tracks-list' } preventInputConflict />
+                <table className='table table-striped tracks-list' tabIndex='0'>
                     <thead>
                         <tr>
                             <th className='column-trackPlaying'></th>
@@ -175,6 +177,19 @@ export default class ArtistList extends Component {
         }
     }
 
+    onKey(e) {
+
+        switch(e.keyCode) {
+            case 38: // up
+                break;
+            case 40: // down
+                break;
+            case 13: // enter
+                break;
+        }
+
+    }
+
     selectAndPlay(index) {
         AppActions.selectAndPlay(index, false)
     }
@@ -206,24 +221,4 @@ export default class ArtistList extends Component {
 
         context.popup(app.browserWindows.main);
     }
-
-    /*cursorUp() {
-
-        var selected = this.state.selected;
-
-        if(selected != null && selected.length >= 1) {
-            var selected = [Math.min.apply(Math, selected) - 1];
-            if(selected >= 0) this.setState({ selected : selected });
-        }
-    }
-
-    cursorDown() {
-
-        var selected = this.state.selected;
-
-        if(selected != null && selected.length >= 1) {
-            var selected = [Math.max.apply(Math, selected) + 1];
-            if(selected < this.props.tracks.length) this.setState({ selected : selected });
-        }
-    }*/
 }
