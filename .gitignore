@@ -4,3 +4,4 @@ src/assets
 cache/
 build/
 npm-debug.log
+src/js/components/Temp/
