@@ -40,8 +40,8 @@ export default class Queue extends Component {
         }
 
         if(queue.length == 0) {
-            return playlistContent = (
-                <div className={ this.props.showPlaylist ? 'queue visible text-left' : 'queue text-left' }>
+            return queueContent = (
+                <div className={ this.props.showQueue ? 'queue visible text-left' : 'queue text-left' }>
                     <div className='empty-queue text-center'>
                         queue is empty
                     </div>
@@ -49,7 +49,7 @@ export default class Queue extends Component {
             );
         } else {
 
-            var playlistContent = queue.map(function (track, index) {
+            var queueContent = queue.map(function (track, index) {
 
                 var classes = 'track';
 
@@ -88,7 +88,7 @@ export default class Queue extends Component {
         }
 
         return (
-            <div className={ this.props.showPlaylist ? 'queue visible text-left' : 'queue text-left' }>
+            <div className={ this.props.showQueue ? 'queue visible text-left' : 'queue text-left' }>
                 <div className='queue-header'>
                     <div className='queue-infos'>
                         { wholeQueue.length } tracks, { utils.parseDuration(wholeQueueDuration) }
@@ -100,7 +100,7 @@ export default class Queue extends Component {
                     </ButtonGroup>
                 </div>
                 <div className={ this.state.draggedTrack === null ? 'queue-body' : 'queue-body dragging'} onDragOver={ this.dragOver.bind(this) }>
-                    { playlistContent }
+                    { QueueContent }
                 </div>
             </div>
         );

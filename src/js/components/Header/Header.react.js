@@ -24,8 +24,8 @@ export default class Header extends Component {
 
         super(props);
         this.state = {
-            showVolume   : false,
-            showPlaylist : false
+            showVolume : false,
+            showQueue  : false
         }
     }
 
@@ -69,11 +69,11 @@ export default class Header extends Component {
                     />
                 </Col>
                 <Col sm={1} className='queue-controls text-center'>
-                    <button type='button' className='queue-toggle' onClick={ this.togglePlaylist.bind(this) }>
+                    <button type='button' className='queue-toggle' onClick={ this.toggleQueue.bind(this) }>
                         <Icon name='list' />
                     </button>
                     <Queue
-                        showPlaylist={ this.state.showPlaylist }
+                        showQueue={ this.state.showQueue }
                         playlist={ this.props.playlist }
                         playlistCursor={ this.props.playlistCursor }
                     />
@@ -141,10 +141,7 @@ export default class Header extends Component {
         this.setState({ showVolume: false });
     }
 
-    togglePlaylist() {
-        if (this.state.showPlaylist)
-            this.setState({ showPlaylist: false });
-        else
-            this.setState({ showPlaylist: true });
+    toggleQueue() {
+        this.setState({ showQueue: !this.state.showQueue });
     }
 }
