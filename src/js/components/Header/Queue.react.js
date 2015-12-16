@@ -40,7 +40,7 @@ export default class Queue extends Component {
         }
 
         if(queue.length == 0) {
-            return queueContent = (
+            return(
                 <div className={ this.props.showQueue ? 'queue visible text-left' : 'queue text-left' }>
                     <div className='empty-queue text-center'>
                         queue is empty
@@ -100,7 +100,7 @@ export default class Queue extends Component {
                     </ButtonGroup>
                 </div>
                 <div className={ this.state.draggedTrack === null ? 'queue-body' : 'queue-body dragging'} onDragOver={ this.dragOver.bind(this) }>
-                    { QueueContent }
+                    { queueContent }
                 </div>
             </div>
         );
