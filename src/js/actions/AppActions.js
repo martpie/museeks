@@ -29,8 +29,8 @@ var AppActions = {
 
         // Prevent some events
         window.addEventListener('dragover', function (e) {
-               e.preventDefault();
-           }, false);
+            e.preventDefault();
+        }, false);
 
         window.addEventListener('drop', function (e) {
             e.preventDefault();

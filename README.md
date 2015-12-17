@@ -38,7 +38,7 @@ It uses:
 
 Please consider **this app is still under development, just install it for fun**, I'm aware of multiple bugs and designs issues.
 
-- Download [Electron](https://github.com/atom/electron/releases)
+- Download [Electron](https://github.com/atom/electron/releases) **there are crashes problems in 0.36.0, don't use it**
 - Download Museeks source code
 - Put it in a folder called `app` in `[Electron path]/resources`
 - `bower install && npm install && npm run dev`

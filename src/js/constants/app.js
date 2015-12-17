@@ -123,8 +123,9 @@ db.reset = function() {
     });
 };
 
-// WTFix, de.loadDatabase() throw an error if the line below is not here
+// WTFix, db.loadDatabase() throw an error if the line below is not here
 fs.writeFile(path.join(pathUserData, '.init'), "", (err) => { if(err) throw err; });
+
 
 
 /*
