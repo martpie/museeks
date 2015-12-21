@@ -1,7 +1,9 @@
 process.env.NODE_ENV = 'production'; // Drastically increase performances
 
-var app           = require('app');            // Module to control application life.
-var BrowserWindow = require('browser-window'); // Module to create native browser window.
+var electron      = require('electron');
+
+var app           = electron.app,           // Module to control application life.
+    BrowserWindow = electron.BrowserWindow; // Module to create native browser window.
 
 require('crash-reporter').start(); // Report crashes to our server.
 
@@ -21,13 +23,13 @@ app.on('ready', function() {
 
     // Browser Window options
     var mainWindowOption = {
-        'width'      :  1000,
-        'height'     :  600,
-        'min-width'  :  1000,
-        'min-height' :  600,
-        'frame'      :  false,
-        'title'      : 'Museeks',
-        'show'       :  false
+        width     :  1000,
+        height    :  600,
+        minWidth  :  1000,
+        minHeight :  600,
+        frame     :  false,
+        title     : 'Museeks',
+        show      :  false
     };
 
     // Create the browser window
