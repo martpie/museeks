@@ -244,14 +244,14 @@ var AppActions = {
 
         addFolders(folders) {
 
-            var folders = dialog.showOpenDialog({ properties: ['openDirectory', 'multiSelections']});
-
-            if(folders !== undefined) {
-                AppDispatcher.dispatch({
-                    actionType : AppConstants.APP_LIBRARY_ADD_FOLDERS,
-                    folders    : folders
-                });
-            }
+            dialog.showOpenDialog({ properties: ['openDirectory', 'multiSelections']}, (folders) => {
+                if(folders !== undefined) {
+                    AppDispatcher.dispatch({
+                        actionType : AppConstants.APP_LIBRARY_ADD_FOLDERS,
+                        folders    : folders
+                    });
+                }
+            });
         },
 
         removeFolder(index) {
