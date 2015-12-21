@@ -74,4 +74,22 @@ export default {
 
         return result;
     }
+
+    /**
+     * Cut an array in smaller chunks
+     *
+     * @param array the array to be chunked
+     * @param int the length of each chunk
+     * @return array
+     */
+    var chunkArray = function(array, chunkLength) {
+
+        var chunks = [];
+
+        for(var i = 0, length = array.length; i < length; i += chunkLength) {
+            chunks.push(array.slice(i, i+chunkLength));
+        }
+
+        return chunks;
+    }
 }
