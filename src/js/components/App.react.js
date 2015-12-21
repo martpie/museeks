@@ -33,7 +33,7 @@ export default class Museeks extends Component {
 
         return (
             <div className='main'>
-                <KeyBinding onKey={ (e) => this.onKey(e) } type='keyup' preventInputConflict />
+                <KeyBinding onKey={ (e) => this.onKey(e) } preventInputConflict preventDefault stopPropagation />
                 <Header
                     app={ this }
                     playerStatus={ this.state.playerStatus }
