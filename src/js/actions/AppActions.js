@@ -309,43 +309,49 @@ var AppActions = {
                             if(app.supportedFormats.indexOf(mime.lookup(file)) > -1) filesListFiltered.push(file);
                         });
 
-                        // Fake sync async loop
-                        (function forloop(i){
-                            if(i < filesListFiltered.length) {
+                        if(filesListFiltered.length > 0) {
+                            // Fake sync async loop
+                            (function forloop(i){
+                                if(i < filesListFiltered.length) {
 
-                                var file   = filesListFiltered[i];
-                                var stream = fs.createReadStream(file);
+                                    var file   = filesListFiltered[i];
+                                    var stream = fs.createReadStream(file);
 
-                                // store in DB here
-                                mmd(stream, { duration: true }, function (err, metadata) {
+                                    // store in DB here
+                                    mmd(stream, { duration: true }, function (err, metadata) {
 
-                                    AppActions.settings.refreshProgress(parseInt(i * 100 / filesListFiltered.length));
+                                        AppActions.settings.refreshProgress(parseInt(i * 100 / filesListFiltered.length));
 
-                                    forloop(i + 1);
-                                    if (err) console.warn('An error occured while reading ' + file + ' id3 tags: ' + err);
+                                        forloop(i + 1);
+                                        if (err) console.warn('An error occured while reading ' + file + ' id3 tags: ' + err);
 
-                                    delete metadata.picture;
-                                    metadata.path = file;
-                                    metadata.lArtist = metadata.artist.length === 0 ? ['unknown artist'] : metadata.artist[0].toLowerCase();
+                                        delete metadata.picture;
+                                        metadata.path = file;
+                                        metadata.lArtist = metadata.artist.length === 0 ? ['unknown artist'] : metadata.artist[0].toLowerCase();
 
-                                    if(metadata.artist.length === 0) metadata.artist = ['Unknown artist'];
-                                    if(metadata.album === null || metadata.album === '') metadata.album = 'Unknown';
-                                    if(metadata.title === null || metadata.title === '') metadata.title = path.parse(file).base;
-                                    if(metadata.duration == '') metadata.duration = 0;
+                                        if(metadata.artist.length === 0) metadata.artist = ['Unknown artist'];
+                                        if(metadata.album === null || metadata.album === '') metadata.album = 'Unknown';
+                                        if(metadata.title === null || metadata.title === '') metadata.title = path.parse(file).base;
+                                        if(metadata.duration == '') metadata.duration = 0;
 
-                                    // Let's insert in the data
-                                    app.db.insert(metadata, function (err, newDoc) {
-                                        if(err) throw err;
-                                        if(i === filesListFiltered.length - 1) {
-                                            AppActions.getTracks();
-                                            AppDispatcher.dispatch({
-                                                actionType : AppConstants.APP_LIBRARY_REFRESH_END
-                                            });
-                                        }
+                                        // Let's insert in the data
+                                        app.db.insert(metadata, function (err, newDoc) {
+                                            if(err) throw err;
+                                            if(i === filesListFiltered.length - 1) {
+                                                AppActions.getTracks();
+                                                AppDispatcher.dispatch({
+                                                    actionType : AppConstants.APP_LIBRARY_REFRESH_END
+                                                });
+                                            }
+                                        });
                                     });
-                                });
-                            }
-                        })(0);
+                                }
+                            })(0);
+                        } else {
+                            AppDispatcher.dispatch({
+                                actionType : AppConstants.APP_LIBRARY_REFRESH_END
+                            });
+                        }
                     }
                 });
             });

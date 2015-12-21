@@ -75,6 +75,7 @@ else {
 
 var supportedFormats = [
     'audio/mp3',
+    'audio/mp4',
     'audio/mpeg3',
     'audio/x-mpeg-3',
     'audio/mpeg',
