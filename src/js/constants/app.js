@@ -27,39 +27,11 @@ var pathUserData     = app.getPath('userData'),
 
 /*
 |--------------------------------------------------------------------------
-| Config - set, get and check
+| Config
 |--------------------------------------------------------------------------
 */
 
-var workArea = screen.getPrimaryDisplay().workArea;
-
-var defaultConfig = {
-    theme: 'light',
-    volume: 1,
-    musicFolders: [],
-    devMode: false,
-    bounds: {
-        width: 1000,
-        height: 600,
-        x: parseInt(workArea.width / 2),
-        y: parseInt(workArea.height / 2)
-    }
-}
-
-var conf = teeny.loadOrCreateSync(path.join(pathUserData, 'config.json'), defaultConfig);
-
-// Check if config update
-var configChanged = false;
-
-for(var key in defaultConfig) {
-    if(conf.get(key) === undefined) {
-        conf.set(key, defaultConfig[key]);
-        configChanged = true;
-    }
-}
-
-// save config if changed
-if(configChanged) conf.saveSync();
+var conf = teeny.loadOrCreateSync(path.join(pathUserData, 'config.json'), {});
 
 
 

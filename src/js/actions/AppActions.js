@@ -88,10 +88,7 @@ var AppActions = {
     app: {
 
         start: function() {
-            var bounds        = app.initialConfig.bounds;
-            var currentWindow = app.browserWindows.main;
-            currentWindow.setBounds(bounds);
-            currentWindow.show();
+            // nothing here anymore
         },
 
         close: function() {
