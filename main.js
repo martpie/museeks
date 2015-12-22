@@ -34,6 +34,7 @@ app.on('ready', function() {
 
     // Create the browser window
     mainWindow = new BrowserWindow(mainWindowOption);
+    mainWindow.openDevTools();
 
     // ... and load our html page
     mainWindow.loadURL('file://' + __dirname + '/src/app.html');

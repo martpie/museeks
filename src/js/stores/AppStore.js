@@ -43,7 +43,7 @@ var AppStore = objectAssign({}, EventEmitter.prototype, {
 
     getStore: function() {
         return {
-            config            : JSON.parse(localStorage.getItem('config')),
+            config            : app.config.getAll(),
             library           : this.library,
             tracks            : this.tracks,
             playlist          : this.playlist,
@@ -376,23 +376,26 @@ AppDispatcher.register(function(payload) {
             break;
 
         case(AppConstants.APP_LIBRARY_ADD_FOLDERS):
-            var config  = JSON.parse(localStorage.getItem('config'));
-            var folders = payload.folders;
+
+            var musicFolders = app.config.get('musicFolders');
+            var folders      = payload.folders;
 
             if(folders !== undefined) {
                 folders.forEach(function (folder) {
-                    config.musicFolders.push(folder);
+                    musicFolders.push(folder);
                 });
-                config.musicFolders.sort();
-                localStorage.setItem('config', JSON.stringify(config));
+                musicFolders.sort();
+                app.config.set('musicFolders', musicFolders);
+                app.config.saveSync();
                 AppStore.emit(CHANGE_EVENT);
             }
             break;
 
         case(AppConstants.APP_LIBRARY_REMOVE_FOLDER):
-            var config = JSON.parse(localStorage.getItem('config'));
-            config.musicFolders.splice(payload.index, 1);
-            localStorage.setItem('config', JSON.stringify(config));
+            var musicFolders = app.config.get('musicFolders');
+            musicFolders.splice(payload.index, 1);
+            app.config.set('musicFolders', musicFolders);
+            app.config.saveSync();
 
             AppStore.emit(CHANGE_EVENT);
             break;

@@ -111,11 +111,9 @@ var AppActions = {
 
             self.filterSearchTimeOut = setTimeout(() => {
 
-                var currentWindow = app.browserWindows.main;
-                var config        = JSON.parse(localStorage.getItem('config'));
-                    config.bounds = currentWindow.getBounds();
+                app.config.set('bounds', app.browserWindows.main.getBounds());
+                app.config.saveSync();
 
-                localStorage.setItem('config', JSON.stringify(config));
             }, 250);
         },
 
@@ -183,10 +181,8 @@ var AppActions = {
 
         setVolume: function(volume) {
             app.audio.volume = volume;
-            var config = JSON.parse(localStorage.getItem('config'));
-                config.volume = volume;
-
-            localStorage.setItem('config', JSON.stringify(config));
+            app.config.set('volume', volume);
+            app.config.saveSync();
         },
 
         repeat: function() {
@@ -282,7 +278,7 @@ var AppActions = {
 
         refresh() {
 
-            var folders = JSON.parse(localStorage.getItem('config')).musicFolders;
+            var folders = app.config.get('musicFolders');
 
             AppDispatcher.dispatch({
                 actionType : AppConstants.APP_LIBRARY_REFRESH_START
@@ -361,22 +357,20 @@ var AppActions = {
     settings: {
 
         checkTheme: function() {
-            var themeName = JSON.parse(localStorage.getItem('config')).theme;
+            var themeName = app.config.get('theme');
             document.querySelector('body').classList.add('theme-' + themeName);
         },
 
         toggleDarkTheme: function() {
 
-            var config   = JSON.parse(localStorage.getItem('config'));
+            var oldTheme = app.config.get('theme');
+            var newTheme = oldTheme === 'light' ? 'dark' : 'light';
 
-            var theme = config.theme === 'light' ? 'dark' : 'light';
+            document.querySelector('body').classList.remove('theme-' + oldTheme);
+            document.querySelector('body').classList.add('theme-' + newTheme);
 
-            document.querySelector('body').classList.remove('theme-' + config.theme);
-            document.querySelector('body').classList.add('theme-' + theme);
-
-            config.theme = theme;
-
-            localStorage.setItem('config', JSON.stringify(config));
+            app.config.set('theme', newTheme);
+            app.config.saveSync();
 
             AppDispatcher.dispatch({
                 actionType : AppConstants.APP_REFRESH_CONFIG
@@ -384,20 +378,18 @@ var AppActions = {
         },
 
         checkDevMode: function() {
-            if(JSON.parse(localStorage.getItem('config')).devMode) app.browserWindows.main.openDevTools();
+            if(app.config.get('devMode')) app.browserWindows.main.openDevTools();
         },
 
         toggleDevMode: function() {
 
-            var config  = JSON.parse(localStorage.getItem('config'));
-
-            config.devMode = !config.devMode;
+            app.config.set('devMode', !app.config.get('devMode'));
 
             // Open dev tools if needed
-            if(config.devMode) app.browserWindows.main.openDevTools();
+            if(app.config.get('devMode')) app.browserWindows.main.openDevTools();
             else app.browserWindows.main.closeDevTools();
 
-            localStorage.setItem('config', JSON.stringify(config));
+            app.config.saveSync();
 
             AppDispatcher.dispatch({
                 actionType : AppConstants.APP_REFRESH_CONFIG

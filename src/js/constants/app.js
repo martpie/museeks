@@ -2,6 +2,7 @@ import nedb   from 'nedb';
 import fs     from 'fs';
 import path   from 'path';
 import remote from 'remote';
+import teeny  from 'teeny-conf';
 
 import AppActions from '../actions/AppActions';
 
@@ -45,25 +46,20 @@ var defaultConfig = {
     }
 }
 
-var config = JSON.parse(localStorage.getItem('config'));
+var conf = teeny.loadOrCreateSync(path.join(pathUserData, 'config.json'), defaultConfig);
 
-if(config === null) {
-    localStorage.setItem('config', JSON.stringify(defaultConfig));
-    config = defaultConfig;
-}
-else {
-    var configChanged = false;
+// Check if config update
+var configChanged = false;
 
-    for(var key in defaultConfig) {
-        if(config[key] === undefined) {
-            config[key]   = defaultConfig[key];
-            configChanged = true;
-        }
+for(var key in defaultConfig) {
+    if(conf.get(key) === undefined) {
+        conf.set(key, defaultConfig[key]);
+        configChanged = true;
     }
-
-    // save config if changed
-    if(configChanged) localStorage.setItem('config', JSON.stringify(config));
 }
+
+// save config if changed
+if(configChanged) conf.saveSync();
 
 
 
@@ -99,7 +95,7 @@ var supportedFormats = [
 // What plays the music
 var audio = new Audio();
     audio.type   = 'audio/mpeg';
-    audio.volume = config.volume;
+    audio.volume = conf.get('volume')
 
 audio.addEventListener('ended', AppActions.player.next);
 
@@ -136,7 +132,8 @@ fs.writeFile(path.join(pathUserData, '.init'), "", (err) => { if(err) throw err;
 */
 
 export default {
-    initialConfig    : config,           // the config at the start of the application
+    config           : conf,             // teeny-conf
+    initialConfig    : conf.getAll(),    // the config at the start of the application
     db               : db,               // database
     supportedFormats : supportedFormats, // supported audio formats
     audio            : audio,            // HTML5 audio tag
