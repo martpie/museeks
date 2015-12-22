@@ -1,12 +1,12 @@
 # museeks
-A cross-platform music player, in active development. **0.1 is will be released soon.**
+A cross-platform music player, in active development. **0.1 will be released soon.**
 
 ![Screenshot](screenshot.png)
 
 It uses:
-* [io.js](http://iojs.org/) for back-end
+* [Node.js](https://nodejs.org/en/) for back-end
 * [electron (used to be atom-shell)](https://github.com/atom/atom-shell/) for embedded browser
-* [react.js](https://facebook.github.io/react/) as front-end framework
+* [React.js](https://facebook.github.io/react/) as front-end framework
 
 ===
 
@@ -38,7 +38,7 @@ It uses:
 
 Please consider **this app is still under development, just install it for fun**, I'm aware of multiple bugs and designs issues.
 
-- Download [Electron](https://github.com/atom/electron/releases) **there are crashes problems in 0.36.0, don't use it**
+- Download [Electron](https://github.com/atom/electron/releases) **there are crashes problems in 0.36.x, don't use it**
 - Download Museeks source code
 - Put it in a folder called `app` in `[Electron path]/resources`
 - `bower install && npm install && npm run dev`
