@@ -33,7 +33,7 @@ export default class Museeks extends Component {
 
         return (
             <div className='main'>
-                <KeyBinding onKey={ (e) => this.onKey(e) } preventInputConflict preventDefault stopPropagation />
+                <KeyBinding onKey={ (e) => this.onKey(e) } preventInputConflict />
                 <Header
                     app={ this }
                     playerStatus={ this.state.playerStatus }
@@ -69,6 +69,8 @@ export default class Museeks extends Component {
     onKey(e) {
         switch(e.keyCode) {
             case 32:
+                e.preventDefault();
+                e.stopPropagation();
                 if(this.state.playerStatus === 'pause') AppActions.player.play();
                 else if(this.state.playerStatus === 'play') AppActions.player.pause();
                 break;
