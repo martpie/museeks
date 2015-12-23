@@ -74,7 +74,7 @@ export default class ArtistList extends Component {
 
         return (
             <div className='tracks-list-container'>
-                <KeyBinding onKey={ (e) => { this.onKey(e) } } type='keyup' target={ '.tracks-list' } preventInputConflict />
+                <KeyBinding onKey={ (e) => { this.onKey(e) } } target={ '.tracks-list' } preventInputConflict preventDefault />
                 <table className='table table-striped tracks-list' tabIndex='0'>
                     <thead>
                         <tr>
@@ -181,20 +181,37 @@ export default class ArtistList extends Component {
 
         switch(e.keyCode) {
             case 38: // up
-                break;
-            case 40: // down
-                break;
-            case 13: // enter
-                var selected = this.state.selected;
-                var tracks   = this.props.tracks;
-                var index;
-                for(var i = 0, length = tracks.length; i < length; i++) {
-                    if(selected.indexOf(tracks[i]._id) > -1) {
-                        index = i;
-                        break;
-                    }
+                var selected = this.state.selected,
+                    tracks   = this.props.tracks,
+                    i        = 0;
+
+                for(var length = tracks.length; i < length; i ++) {
+                    if(selected.indexOf(tracks[i]._id) > -1) break;
                 }
-                if(index !== undefined) AppActions.selectAndPlay(index);
+
+                if(i - 1 >= 0) this.setState({ selected : tracks[i - 1]._id });
+                break;
+
+            case 40: // down
+                var selected = this.state.selected,
+                    tracks   = this.props.tracks,
+                    i        = 0;
+
+                for(var length = tracks.length; i < length; i ++) {
+                    if(selected.indexOf(tracks[i]._id) > -1) break;
+                }
+
+                if(i + 1 < tracks.length) this.setState({ selected : tracks[i + 1]._id });
+                break;
+
+            case 13: // enter
+                var selected = this.state.selected,
+                    tracks   = this.props.tracks,
+                    i        = 0;
+                for(var length = tracks.length; i < length; i++) {
+                    if(selected.indexOf(tracks[i]._id) > -1) break;
+                }
+                if(i !== undefined) AppActions.selectAndPlay(i);
                 break;
         }
     }
