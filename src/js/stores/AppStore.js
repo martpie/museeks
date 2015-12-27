@@ -7,6 +7,7 @@
 import { EventEmitter } from 'events';
 import objectAssign     from 'object-assign';
 import path             from 'path';
+import fs from 'fs';
 
 import app from '../constants/app';
 
@@ -384,7 +385,7 @@ AppDispatcher.register(function(payload) {
             if(folders !== undefined) {
                 // Add folders
                 folders.forEach((folder) => {
-                    musicFolders.push(folder);
+                    musicFolders.push(fs.realpathSync(folder));
                 });
 
                 // Remove duplicates, useless children, ect...

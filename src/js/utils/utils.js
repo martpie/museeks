@@ -77,15 +77,28 @@ export default {
 
     /**
      * Remove duplicates (realpath) and useless children folders
+     *
+     * @param array the array of folders path
+     * @return array
      */
     removeUselessFolders: function(folders) {
 
         // Remove duplicates
-        var filteredFolders = folders.filter((elem, pos) => {
-            return folders.indexOf(elem) === pos;
+        var filteredFolders = folders.filter((elem, index) => {
+            return folders.indexOf(elem) === index;
         });
 
-        // TODO remove children folders and symlinks problems
+        var foldersToBeRemoved = [];
+
+        filteredFolders.forEach((folder, i) => {
+            filteredFolders.forEach((subfolder, j) => {
+                if(subfolder.indexOf(folder) > -1 && i !== j && foldersToBeRemoved.indexOf(folder) === -1) foldersToBeRemoved.push(subfolder);
+            });
+        });
+
+        filteredFolders = filteredFolders.filter((elem, index) => {
+            return foldersToBeRemoved.indexOf(elem) === -1;
+        });
 
         return filteredFolders;
     },
