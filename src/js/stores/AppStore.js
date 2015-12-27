@@ -377,14 +377,21 @@ AppDispatcher.register(function(payload) {
 
         case(AppConstants.APP_LIBRARY_ADD_FOLDERS):
 
-            var musicFolders = app.config.get('musicFolders');
-            var folders      = payload.folders;
+            var musicFolders = app.config.get('musicFolders'),
+                folders      = payload.folders;
 
+            // Check if we reveived folders
             if(folders !== undefined) {
-                folders.forEach(function (folder) {
+                // Add folders
+                folders.forEach((folder) => {
                     musicFolders.push(folder);
                 });
+
+                // Remove duplicates, useless children, ect...
+                musicFolders = utils.removeUselessFolders(musicFolders);
+
                 musicFolders.sort();
+
                 app.config.set('musicFolders', musicFolders);
                 app.config.saveSync();
                 AppStore.emit(CHANGE_EVENT);
