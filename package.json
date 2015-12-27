@@ -13,7 +13,8 @@
     "url": "https://github.com/KeitIG/museeks/issues"
   },
   "scripts": {
-    "dev": "webpack --config webpack.config.js --progress --colors --watch"
+    "dev": "webpack --config webpack.config.js --progress --colors --watch",
+    "compile": "webpack --config webpack.config.js --progress --colors"
   },
   "dependencies": {
     "flux": "^2.1.1",

@@ -76,6 +76,21 @@ export default {
     },
 
     /**
+     * Remove duplicates (realpath) and useless children folders
+     */
+    removeUselessFolders: function(folders) {
+
+        // Remove duplicates
+        var filteredFolders = folders.filter((elem, pos) => {
+            return folders.indexOf(elem) === pos;
+        });
+
+        // TODO remove children folders and symlinks problems
+
+        return filteredFolders;
+    },
+
+    /**
      * Cut an array in smaller chunks
      *
      * @param array the array to be chunked
