@@ -275,6 +275,8 @@ var AppActions = {
 
         refresh() {
 
+            console.time('lala');
+
             var folders = app.config.get('musicFolders');
 
             AppDispatcher.dispatch({
@@ -319,25 +321,46 @@ var AppActions = {
                                         if (err) console.warn('An error occured while reading ' + file + ' id3 tags: ' + err);
 
                                         delete metadata.picture;
-                                        metadata.path = file;
-                                        metadata.lArtist = metadata.artist.length === 0 ? ['unknown artist'] : metadata.artist[0].toLowerCase();
 
-                                        if(metadata.artist.length === 0) metadata.artist = ['Unknown artist'];
-                                        if(metadata.album === null || metadata.album === '') metadata.album = 'Unknown';
-                                        if(metadata.title === null || metadata.title === '') metadata.title = path.parse(file).base;
-                                        if(metadata.duration == '') metadata.duration = 0;
+                                        fs.realpath(file, (err, realpath) => {
 
-                                        // Let's insert in the data
-                                        app.db.insert(metadata, function (err, newDoc) {
-                                            if(err) throw err;
-                                            if(i === filesListFiltered.length - 1) {
-                                                AppActions.getTracks();
-                                                AppDispatcher.dispatch({
-                                                    actionType : AppConstants.APP_LIBRARY_REFRESH_END
-                                                });
-                                            }
-                                        });
-                                    });
+                                            if(err) console.warn(err);
+
+                                            metadata.path = realpath
+                                            metadata.lArtist = metadata.artist.length === 0 ? ['unknown artist'] : metadata.artist[0].toLowerCase();
+
+                                            if(metadata.artist.length === 0) metadata.artist = ['Unknown artist'];
+                                            if(metadata.album === null || metadata.album === '') metadata.album = 'Unknown';
+                                            if(metadata.title === null || metadata.title === '') metadata.title = path.parse(file).base;
+                                            if(metadata.duration == '') metadata.duration = 0;
+
+                                            app.db.find({ path: metadata.path }, function (err, docs) {
+                                                if(err) console.warn(err);
+                                                if(docs.length === 0) { // Track is not already in database
+                                                    // Let's insert in the data
+                                                    app.db.insert(metadata, function (err, newDoc) {
+                                                        if(err) console.warn(err);
+                                                        if(i === filesListFiltered.length - 1) {
+                                                            console.timeEnd('lala');
+                                                            AppActions.getTracks();
+                                                            AppDispatcher.dispatch({
+                                                                actionType : AppConstants.APP_LIBRARY_REFRESH_END
+                                                            });
+                                                        }
+                                                    });
+                                                } else {
+                                                    if(i === filesListFiltered.length - 1) {
+                                                        console.log('no insert');
+                                                        console.timeEnd('lala');
+                                                        AppActions.getTracks();
+                                                        AppDispatcher.dispatch({
+                                                            actionType : AppConstants.APP_LIBRARY_REFRESH_END
+                                                        });
+                                                    }
+                                                }
+                                            }); // db.find
+                                        }); // fs.realpath
+                                    }); // mmd
                                 }
                             })(0);
                         } else {
