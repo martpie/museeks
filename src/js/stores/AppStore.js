@@ -7,7 +7,7 @@
 import { EventEmitter } from 'events';
 import objectAssign     from 'object-assign';
 import path             from 'path';
-import fs from 'fs';
+import fs               from 'fs';
 
 import app from '../constants/app';
 

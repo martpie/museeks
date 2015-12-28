@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 
-import remote from 'remote';
-
-var shell = remote.require('shell');
+const shell = electron.shell;
 
 
 
@@ -39,9 +37,9 @@ export default class ContributorsList extends Component {
         });
 
         return (
-            <div className='setting setting-music-selector'>
+            <div className='setting setting-contributors-list'>
                 <h4>Contributors</h4>
-                <div className='contributorsx-list'>
+                <div className='contributors-list'>
                     <p>Made with ♥ by Pierre de la Martinière (<a href onClick={ this.openLink.bind(null, 'http://github.com/KeitIG') }>KeitIG</a>) and a bunch of great guys:</p>
                     <ul>
                         { contributorsList }

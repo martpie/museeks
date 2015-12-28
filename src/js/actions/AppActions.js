@@ -9,10 +9,10 @@ import path     from 'path';
 import mime     from 'mime';
 import walkSync from 'walk-sync';
 
-import remote from 'remote';
+const remote = electron.remote;
 
-var globalShortcut = remote.require('global-shortcut');
-var dialog         = remote.require('dialog');
+var globalShortcut = remote.require('global-shortcut'),
+    dialog         = remote.require('dialog');
 
 
 

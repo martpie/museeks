@@ -7,10 +7,8 @@ import AppActions from '../../actions/AppActions';
 import app   from '../../constants/app';
 import utils from '../../utils/utils';
 
-import remote from 'remote';
-
-var Menu     = remote.require('menu'),
-    MenuItem = remote.require('menu-item');
+var ipcRenderer = electron.ipcRenderer,
+    ipcMain     = electron.ipcMain;
 
 
 

@@ -21,7 +21,7 @@ export default class DevMode extends Component {
     render() {
 
         return (
-            <div className='setting setting-music-selector'>
+            <div className='setting setting-dev-mode'>
                 <h4>Dev mode</h4>
                 <div className='checkbox'>
                     <label>

@@ -21,7 +21,7 @@ export default class ThemeSelector extends Component {
     render() {
 
         return (
-            <div className='setting setting-music-selector'>
+            <div className='setting setting-theme-selector'>
                 <h4>Theme</h4>
                 <div className='checkbox'>
                     <label>
