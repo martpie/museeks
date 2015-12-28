@@ -41,6 +41,15 @@ button {
     outline: none;
 }
 
+::-webkit-scrollbar {
+    width: 5px;
+    background-color: #DDD;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, .25);
+}
+
 
 
 /*
@@ -674,6 +683,10 @@ footer {
         margin: 10px;
         vertical-align: middle;
         height: 5px;
+
+        .progress-bar {
+            background-color: #459CE7;
+        }
     }
 }
 
