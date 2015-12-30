@@ -221,27 +221,29 @@ export default class ArtistList extends Component {
     showContextMenu() {
 
         var selected = this.state.selected;
-        var context  = new Menu();
+        var template = [
+            {
+                label: selected.length> 1 ? selected.length + ' tracks selected' : selected.length + ' track selected',
+                enabled: false
+            },
+            {
+                type: 'separator'
+            },
+            {
+                label : 'Add to queue',
+                click :  function() {
+                    AppActions.queue.add(selected)
+                }
+            },
+            {
+                label : 'Play next',
+                click :  function() {
+                    AppActions.queue.addNext(selected)
+                }
+            }
+        ];
 
-        context.append(new MenuItem({ label: selected.length> 1 ? selected.length + ' tracks selected' : selected.length + ' track selected', enabled: false } ));
-        context.append(new MenuItem({ type: 'separator' } ));
-
-        context.append(
-            new MenuItem(
-                {
-                    label : 'Add to queue',
-                    click :  function() {
-                        AppActions.queue.add(selected)
-                    }
-                }));
-        context.append(
-            new MenuItem(
-                {
-                    label : 'Play next',
-                    click :  function() {
-                        AppActions.queue.addNext(selected)
-                    }
-                }));
+        var context = Menu.buildFromTemplate(template);
 
         // Find a better workaround
         setTimeout(() => {
