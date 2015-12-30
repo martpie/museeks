@@ -29,7 +29,7 @@ export default class MusicFoldersList extends Component {
             <ButtonGroup>
                 <Button bsSize='small' disabled={ this.props.refreshingLibrary } onClick={ this.addFolders.bind(this) }>
                     <Icon name='plus' fixedWidth />
-                    Import a folder
+                    Add folder(s)
                 </Button>
                 <Button bsSize='small' disabled={ this.props.refreshingLibrary } onClick={ this.refreshLibrary }>
                     <Icon name='refresh' spin={ this.props.refreshingLibrary } /> { this.props.refreshingLibrary ? 'Refreshing Library' : 'Refresh Library' }
