@@ -1,6 +1,5 @@
 var webpack           = require('webpack');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var Promise           = require('es6-promise').Promise;
 
 module.exports = {
     entry: {
@@ -41,7 +40,7 @@ module.exports = {
         ]
     },
     plugins: [
-        new webpack.optimize.UglifyJsPlugin({ minimize: true }),
+        new webpack.optimize.UglifyJsPlugin({ minimize: true, comments: false, compress: { warnings: false } }),
         new ExtractTextPlugin('main.css', { allChunks: true }),
     ]
 }
