@@ -243,6 +243,9 @@ export default class ArtistList extends Component {
                     }
                 }));
 
-        context.popup();
+        // Find a better workaround
+        setTimeout(() => {
+            context.popup();
+        }, 50);
     }
 }
