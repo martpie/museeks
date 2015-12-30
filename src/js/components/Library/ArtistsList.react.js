@@ -7,8 +7,8 @@ import AppActions from '../../actions/AppActions';
 import app   from '../../constants/app';
 import utils from '../../utils/utils';
 
-var ipcRenderer = electron.ipcRenderer,
-    ipcMain     = electron.ipcMain;
+const Menu     = electron.remote.Menu;
+const MenuItem = electron.remote.MenuItem;
 
 
 
@@ -243,6 +243,6 @@ export default class ArtistList extends Component {
                     }
                 }));
 
-        context.popup(app.browserWindows.main);
+        context.popup();
     }
 }
