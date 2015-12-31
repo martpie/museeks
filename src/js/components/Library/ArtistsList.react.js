@@ -7,8 +7,7 @@ import AppActions from '../../actions/AppActions';
 import app   from '../../constants/app';
 import utils from '../../utils/utils';
 
-const Menu     = electron.remote.Menu;
-const MenuItem = electron.remote.MenuItem;
+const ipcRenderer = electron.ipcRenderer;
 
 
 
@@ -220,34 +219,30 @@ export default class ArtistList extends Component {
 
     showContextMenu() {
 
-        var selected = this.state.selected;
-        var template = [
-            {
-                label: selected.length> 1 ? selected.length + ' tracks selected' : selected.length + ' track selected',
-                enabled: false
-            },
-            {
-                type: 'separator'
-            },
-            {
-                label : 'Add to queue',
-                click :  function() {
-                    AppActions.queue.add(selected)
-                }
-            },
-            {
-                label : 'Play next',
-                click :  function() {
-                    AppActions.queue.addNext(selected)
-                }
+        var items = this.state.selected.length;
+
+        ipcRenderer.send('artistListContextMenu', items);
+    }
+
+    componentDidMount() {
+
+        var self = this;
+
+        ipcRenderer.on('artistListContextMenuReply', (event, reply) => {
+
+            var selected = self.state.selected;
+
+            switch(reply) {
+                case 'addToQueue':
+                    AppActions.queue.add(selected);
+                    break;
+                case 'playNext':
+                    AppActions.queue.addNext(selected);
             }
-        ];
+        });
+    }
 
-        var context = Menu.buildFromTemplate(template);
-
-        // Find a better workaround
-        setTimeout(() => {
-            context.popup();
-        }, 50);
+    componentWillUnmount() {
+        ipcRenderer.removeAllListeners('artistListContextMenuReply');
     }
 }

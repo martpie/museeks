@@ -1,3 +1,5 @@
+'use strict';
+
 process.env.NODE_ENV = 'production'; // Drastically increase performances
 
 var path     = require('path'),
@@ -5,8 +7,9 @@ var path     = require('path'),
     electron = require('electron');
 
 var app           = electron.app,           // Module to control application life.
-    BrowserWindow = electron.BrowserWindow; // Module to create native browser window.
-
+    BrowserWindow = electron.BrowserWindow, // Module to create native browser window.
+    ipcMain       = electron.ipcMain,       // Communication with the renderer process
+    Menu          = electron.Menu;          // Chromium menu API
 
 
 // Keep a global reference of the window object, if you don't, the window will
@@ -81,5 +84,35 @@ app.on('ready', function() {
     mainWindow.on('closed', function() {
         // Dereference the window object
         mainWindow = null;
+    });
+
+    // IPC events
+    ipcMain.on('artistListContextMenu', (event, items) => {
+
+        var template = [
+            {
+                label: items > 1 ? items + ' tracks selected' : items + ' track selected',
+                enabled: false
+            },
+            {
+                type: 'separator'
+            },
+            {
+                label : 'Add to queue',
+                click :  function() {
+                    event.sender.send('artistListContextMenuReply', 'addToQueue');
+                }
+            },
+            {
+                label : 'Play next',
+                click :  function() {
+                    event.sender.send('artistListContextMenuReply', 'playNext');
+                }
+            }
+        ];
+
+        var context = Menu.buildFromTemplate(template);
+
+        context.popup(mainWindow); // Let it appear
     });
 });
