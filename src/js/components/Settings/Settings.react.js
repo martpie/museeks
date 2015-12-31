@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
+import { Tabs, Tab } from 'react-bootstrap';
 
-import MusicFoldersList from './MusicFoldersList.react';
-import ThemeSelector    from './ThemeSelector.react';
-import DevMode          from './DevMode.react';
-import ContributorsList from './ContributorsList.react';
+import SettingsLibrary  from './SettingsLibrary.react';
+import SettingsUI       from './SettingsUI.react';
+import SettingsAdvanced from './SettingsAdvanced.react';
+import SettingsAbout    from './SettingsAbout.react';
+
 
 
 /*
@@ -25,16 +27,21 @@ export default class Settings extends Component {
         var config = this.props.config;
 
         return (
-            <div className='view view-settings view-withpadding'>
-                <h2>Settings</h2>
-                <hr />
-                <MusicFoldersList musicFolders={ config.musicFolders } refreshingLibrary={ this.props.refreshingLibrary } refreshProgress={ this.props.refreshProgress } />
-                <hr />
-                <ThemeSelector theme={ config.theme } />
-                <hr />
-                <DevMode devMode={ config.devMode } />
-                <hr />
-                <ContributorsList />
+            <div className='view view-settings'>
+                <Tabs defaultActiveKey={0} animation={ false } bsStyle='pills' className='settings-switcher'>
+                    <Tab eventKey={0} title='Library'>
+                        <SettingsLibrary musicFolders={ config.musicFolders } refreshingLibrary={ this.props.refreshingLibrary } refreshProgress={ this.props.refreshProgress } />
+                    </Tab>
+                    <Tab eventKey={1} title='Interface'>
+                        <SettingsUI theme={ config.theme } />
+                    </Tab>
+                    <Tab eventKey={2} title='Advanced'>
+                        <SettingsAdvanced devMode={ config.devMode } />
+                    </Tab>
+                    <Tab eventKey={3} title='About'>
+                        <SettingsAbout />
+                    </Tab>
+                </Tabs>
             </div>
         );
     }

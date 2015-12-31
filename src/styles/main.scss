@@ -164,6 +164,30 @@ header {
     box-shadow: none;
 }
 
+.nav-pills>li>a {
+    transition: border-bottom ease-in-out .2s;
+    padding: 5px;
+    outline: none;
+    color: #555;
+    font-weight: bold;
+}
+
+.nav-pills>li:not(:last-child)>a {
+    margin-right: 15px;
+}
+
+.nav-pills>li>a:focus,
+.nav-pills>li>a:hover {
+    background-color: transparent;
+}
+
+.nav-pills>li.active>a,
+.nav-pills>li.active>a:focus,
+.nav-pills>li.active>a:hover {
+    background-color: transparent;
+    color: #459CE7;
+}
+
 
 
 /*
@@ -543,46 +567,6 @@ footer {
 
 /*
 |--------------------------------------------------------------------------
-| General - Notifications
-|--------------------------------------------------------------------------
-*/
-
-.alerts-container {
-    position: fixed;
-    right: 11px;
-    z-index: 1;
-    width: 320px;
-}
-
-.notification {
-    margin-bottom: 10px;
-    transition: all .3s;
-
-    &.notification-enter {
-        opacity: 0;
-        transform: scale(0.8);
-    }
-
-    &.notification-enter-active {
-        opacity: 1;
-        transform: scale(1);
-    }
-
-    &.notification-leave {
-        opacity: 0;
-        transform: scale(0.8);
-    }
-
-    &.notification-leave-active {
-        opacity: 0;
-        transform: scale(0);
-    }
-}
-
-
-
-/*
-|--------------------------------------------------------------------------
 | View - General
 |--------------------------------------------------------------------------
 */
@@ -648,6 +632,41 @@ footer {
 /*
 |--------------------------------------------------------------------------
 | View - Settings
+|--------------------------------------------------------------------------
+*/
+
+.view-settings {
+
+    .settings-switcher .nav.nav-pills {
+        margin: 10px 15px;
+    }
+
+    .tab-content {
+        border-top: 1px solid #d2d2d2;
+        padding: 10px 15px;
+    }
+}
+
+
+
+/*
+|--------------------------------------------------------------------------
+| View - About
+|--------------------------------------------------------------------------
+*/
+
+.view-settings .setting-about {
+
+    .heart {
+        color: #c70000;
+    }
+}
+
+
+
+/*
+|--------------------------------------------------------------------------
+| View - Settings - Library
 |--------------------------------------------------------------------------
 */
 
