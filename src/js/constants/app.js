@@ -6,8 +6,8 @@ import teeny  from 'teeny-conf';
 
 import AppActions from '../actions/AppActions';
 
-var app    = remote.require('app');
-var screen = remote.require('screen');
+const app    = remote.require('app');
+const screen = remote.require('screen');
 
 
 

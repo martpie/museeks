@@ -20,12 +20,14 @@ export default class DevMode extends Component {
 
     render() {
 
+        var config = this.props.config;
+
         return (
             <div className='setting setting-dev-mode'>
                 <h4>Dev mode</h4>
                 <div className='checkbox'>
                     <label>
-                        <input type='checkbox' onClick={ this.toggleDevMode } defaultChecked={ this.props.devMode } ref='devMode' /> Enable dev mode
+                        <input type='checkbox' onClick={ this.toggleDevMode } defaultChecked={ config.devMode } /> Enable dev mode
                     </label>
                 </div>
             </div>

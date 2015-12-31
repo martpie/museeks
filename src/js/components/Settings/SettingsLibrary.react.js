@@ -23,7 +23,7 @@ export default class MusicFoldersList extends Component {
     render() {
 
         var self         = this;
-        var musicFolders = this.props.musicFolders;
+        var musicFolders = this.props.config.musicFolders;
 
         var buttonsGroup = (
             <ButtonGroup>

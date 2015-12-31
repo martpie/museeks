@@ -9,10 +9,9 @@ import path     from 'path';
 import mime     from 'mime';
 import walkSync from 'walk-sync';
 
-const remote = electron.remote;
-
-var globalShortcut = remote.require('global-shortcut'),
-    dialog         = remote.require('dialog');
+const globalShortcut = electron.remote.globalShortcut;
+const dialog         = electron.remote.dialog;
+const ipcRenderer    = electron.ipcRenderer;
 
 
 
@@ -399,6 +398,18 @@ var AppActions = {
 
         checkDevMode: function() {
             if(app.config.get('devMode')) app.browserWindows.main.openDevTools();
+        },
+
+        toggleSleepBlocker: function(mode) {
+
+            app.config.set('sleepBlocker', !app.config.get('sleepBlocker'));
+            app.config.saveSync();
+
+            ipcRenderer.send('toggleSleepBlocker', app.config.get('sleepBlocker'), mode);
+
+            AppDispatcher.dispatch({
+                actionType : AppConstants.APP_REFRESH_CONFIG
+            });
         },
 
         toggleDevMode: function() {

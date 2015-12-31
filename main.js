@@ -2,14 +2,19 @@
 
 process.env.NODE_ENV = 'production'; // Drastically increase performances
 
-var path     = require('path'),
-    teeny    = require('teeny-conf'),
-    electron = require('electron');
+const path     = require('path');
+const teeny    = require('teeny-conf');
+const electron = require('electron');
 
-var app           = electron.app,           // Module to control application life.
-    BrowserWindow = electron.BrowserWindow, // Module to create native browser window.
-    ipcMain       = electron.ipcMain,       // Communication with the renderer process
-    Menu          = electron.Menu;          // Chromium menu API
+const app              = electron.app;               // Module to control application life.
+const BrowserWindow    = electron.BrowserWindow;      // Module to create native browser window.
+const ipcMain          = electron.ipcMain;          // Communication with the renderer process
+const Menu             = electron.Menu;             // Chromium menu API
+const powerSaveBlocker = electron.powerSaveBlocker; // Sleep mode management
+
+
+var instance = {}; // use to keep some variables in mind
+
 
 
 // Keep a global reference of the window object, if you don't, the window will
@@ -36,6 +41,7 @@ app.on('ready', function() {
         theme: 'light',
         volume: 1,
         musicFolders: [],
+        sleepBlocker: false,
         devMode: false,
         bounds: {
             width: 1000,
@@ -60,7 +66,13 @@ app.on('ready', function() {
     // save config if changed
     if(configChanged) conf.saveSync();
 
-    var bounds = conf.get('bounds');
+    var bounds       = conf.get('bounds');
+    var sleepBlocker = conf.get('sleepBlocker');
+
+    // Sleep Blocker
+    if(sleepBlocker) {
+        instance.sleepBlockerID = powerSaveBlocker.start('prevent-app-suspension');
+    }
 
     // Browser Window options
     var mainWindowOption = {
@@ -114,5 +126,16 @@ app.on('ready', function() {
         var context = Menu.buildFromTemplate(template);
 
         context.popup(mainWindow); // Let it appear
+    });
+
+
+    ipcMain.on('toggleSleepBlocker', (event, toggle, mode) => {
+
+        if(toggle) {
+            instance.sleepBlockerID = powerSaveBlocker.start(mode);
+        } else {
+            powerSaveBlocker.stop(instance.sleepBlockerID);
+            delete(instance.sleepBlockerID);
+        }
     });
 });
