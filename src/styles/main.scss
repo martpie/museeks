@@ -732,9 +732,14 @@ footer {
             background-color: white;
 
             .track-cell-header {
-                font-weight: bold;
-                padding: 4px 2px;
+                font-weight: 700;
+                padding: 0 4px;
                 cursor: default;
+                margin: 4px 0;
+
+                &:not(:last-child) {
+                    border-right: 1px solid #D2D2D2;
+                }
             }
         }
 
@@ -754,7 +759,7 @@ footer {
                 }
 
                 .cell {
-                    padding: 4px 2px;
+                    padding: 4px;
                     cursor: default;
                     white-space: nowrap;
                     overflow: hidden;
