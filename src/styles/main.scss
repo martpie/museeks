@@ -764,11 +764,11 @@ footer {
         }
 
         .cell-track-playing {
-            width: 4%;
+            width: 30px;
         }
 
         .cell-track {
-            width: 29%;
+            width: calc(33% - 30px);
         }
 
         .cell-duration {
