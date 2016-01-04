@@ -719,80 +719,61 @@ footer {
 
 .view-library-list {
 
-    .track.selected {
-        background-color: #459CE7;
-        color: white;
-    }
-
-    .column-trackPlaying {
-        width: 4%;
-    }
-
-    .column-track {
-        width: 29%;
-    }
-
-    .column-duration {
-        width: 7%;
-    }
-
-    .column-artist,
-    .column-album,
-    .column-genre {
-        width: 20%;
-    }
-
-    table.tracks-list {
-        width: 100%;
-        white-space: nowrap;
-        margin-bottom: 0;
-        table-layout: fixed;
+    .tracks-list-container {
         outline: none;
 
-        thead {
+        .tracks-list-header {
             border-bottom: 1px solid rgb(210, 210, 210);
+            color: #555;
+            display: flex;
 
-            td {
+            .track-cell-header {
+                font-weight: bold;
                 padding: 4px 2px;
-                border-top: 0;
                 cursor: default;
-            }
-
-            th {
-                padding: 4px 2px;
-                border-top: 0;
-                cursor: default;
-                border-bottom: 0;
-            }
-
-            &:not(:last-child) > div {
-                border-right: 1px solid rgb(210, 210, 210);
             }
         }
 
-        tbody {
-            td,
-            th {
-                padding: 4px 2px;
-                border-top: 0;
-                cursor: default;
-            }
+        .tracks-list-body {
 
-            td {
-                cursor: default;
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
+            .track {
+                display: flex;
+
+                &:nth-child(odd) {
+                    background-color: #FAFAFA;
+                }
+
+                &.selected {
+                    background-color: #459CE7;
+                    color: white;
+                }
+
+                .cell {
+                    padding: 4px 2px;
+                    cursor: default;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
             }
         }
 
-        tfoot {
-            td,
-            th {
-                padding: 4px 2px;
-                border-top: 0;
-                cursor: default;
-            }
+        .cell-track-playing {
+            width: 4%;
+        }
+
+        .cell-track {
+            width: 29%;
+        }
+
+        .cell-duration {
+            width: 7%;
+        }
+
+        .cell-artist,
+        .cell-album,
+        .cell-genre {
+            width: 20%;
         }
     }
 }

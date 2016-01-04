@@ -46,47 +46,43 @@ export default class ArtistList extends Component {
             }
 
             return(
-                <tr className={ selected.indexOf(track._id) != -1 ? 'track selected' : 'track' } key={ index } onMouseDown={ (e) => self.selectTrack(e, track._id, index) } onDoubleClick={ () => self.selectAndPlay(index) } onContextMenu={ self.showContextMenu }>
-                    <td className='column-trackPlaying text-center'>
+                <div className={ selected.indexOf(track._id) != -1 ? 'track selected' : 'track' } key={ index } onMouseDown={ (e) => self.selectTrack(e, track._id, index) } onDoubleClick={ () => self.selectAndPlay(index) } onContextMenu={ self.showContextMenu }>
+                    <div className='cell cell-track-playing text-center'>
                         { playing }
-                    </td>
-                    <td className='column-track'>
+                    </div>
+                    <div className='cell cell-track'>
                         { track.title }
-                    </td>
-                    <td className='column-duration'>
+                    </div>
+                    <div className='cell cell-duration'>
                         { utils.parseDuration(track.duration) }
-                    </td>
-                    <td className='column-artist'>
+                    </div>
+                    <div className='cell cell-artist'>
                         { track.artist[0] }
-                    </td>
-                    <td className='column-album'>
+                    </div>
+                    <div className='cell cell-album'>
                         { track.album }
-                    </td>
-                    <td className='column-genre'>
+                    </div>
+                    <div className='cell cell-genre'>
                         { track.genre.join(', ') }
-                    </td>
-                </tr>
+                    </div>
+                </div>
             );
         });
 
         return (
-            <div className='tracks-list-container'>
-                <KeyBinding onKey={ (e) => { this.onKey(e) } } target={ '.tracks-list' } preventInputConflict preventDefault />
-                <table className='table table-striped tracks-list' tabIndex='0'>
-                    <thead>
-                        <tr>
-                            <th className='column-trackPlaying'></th>
-                            <th className='column-track'>Track</th>
-                            <th className='column-duration'>Duration</th>
-                            <th className='column-artist'>Artist</th>
-                            <th className='column-album'>Album</th>
-                            <th className='column-genre'>Genre</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        { list }
-                    </tbody>
-                </table>
+            <div className='tracks-list-container' tabIndex='0'>
+                <KeyBinding onKey={ (e) => { this.onKey(e) } } target={ '.tracks-list-container' } preventInputConflict preventDefault />
+                <div className='tracks-list-header'>
+                    <div className='track-cell-header cell-track-playing'></div>
+                    <div className='track-cell-header cell-track'>Track</div>
+                    <div className='track-cell-header cell-duration'>Duration</div>
+                    <div className='track-cell-header cell-artist'>Artist</div>
+                    <div className='track-cell-header cell-album'>Album</div>
+                    <div className='track-cell-header cell-genre'>Genre</div>
+                </div>
+                <div className='tracks-list-body'>
+                    { list }
+                </div>
             </div>
         );
     }
