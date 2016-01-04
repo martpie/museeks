@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import ArtistsList from './ArtistsList.react';
+import TracksList from './TracksList.react';
 
 
 
@@ -47,7 +47,7 @@ export default class Library extends Component {
         else {
             content = (
                 <div>
-                    <ArtistsList
+                    <TracksList
                         tracks={ this.props.tracks }
                         trackPlayingID={ this.props.trackPlayingID }
                     />
