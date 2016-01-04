@@ -723,9 +723,13 @@ footer {
         outline: none;
 
         .tracks-list-header {
+            position: fixed;
+            top: 52px;
             border-bottom: 1px solid rgb(210, 210, 210);
             color: #555;
             display: flex;
+            width: calc(100% - 7px);
+            background-color: white;
 
             .track-cell-header {
                 font-weight: bold;
@@ -735,6 +739,7 @@ footer {
         }
 
         .tracks-list-body {
+            margin-top: 26px;
 
             .track {
                 display: flex;
