@@ -5,7 +5,7 @@ A cross-platform music player, in active development. **0.1 will be released soo
 
 It uses:
 * [Node.js](https://nodejs.org/en/) for back-end
-* [electron (used to be atom-shell)](https://github.com/atom/atom-shell/) for embedded browser
+* [electron (used to be atom-shell)](https://github.com/atom/electron/) for embedded browser
 * [React.js](https://facebook.github.io/react/) as front-end framework
 
 ===
@@ -23,14 +23,14 @@ It uses:
 
 #### on deck:
 
-- Playlists ([#22](https://github.com/KeitIG/museeks/issues/22))
+- playlists ([#22](https://github.com/KeitIG/museeks/issues/22))
 - flac support ([#53](https://github.com/KeitIG/museeks/issues/53))
-- build system for each platform (.exe, .app, .deb...) need help on this one ([#48](https://github.com/KeitIG/museeks/issues/48))
+- build app for each platform, need help on this one ([#48](https://github.com/KeitIG/museeks/issues/48))
 
 #### on mind:
 
 - add languages support
-- auto-updater from Github releases
+- create installers
 
 ===
 
@@ -41,7 +41,7 @@ Please consider **this app is still under development, just install it for fun**
 - Download [Electron](https://github.com/atom/electron/releases) **there are crashes problems in 0.36.x, don't use it**
 - Download Museeks source code
 - Put it in a folder called `app` in `[Electron path]/resources`
-- `bower install && npm install && npm run dev`
+- `bower install && npm install && npm run compile`
 - Run Electron
 
 ===
