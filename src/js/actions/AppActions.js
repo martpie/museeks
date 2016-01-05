@@ -94,6 +94,14 @@ var AppActions = {
             app.browserWindows.main.close();
         },
 
+        minimize: function() {
+            app.browserWindows.main.minimize();
+        },
+
+        maximize: function() {
+            app.browserWindows.main.isMaximized() ? app.browserWindows.main.unmaximize() : app.browserWindows.main.maximize();
+        },
+
         saveBounds: function() {
 
             var self = AppActions;
