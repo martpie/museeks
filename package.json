@@ -14,7 +14,8 @@
   },
   "scripts": {
     "dev": "webpack --config webpack.config.js --progress --colors --watch",
-    "compile": "webpack --config webpack.config.js --progress --colors"
+    "compile": "webpack --config webpack.config.js --progress --colors",
+    "build": "node build.js"
   },
   "dependencies": {
     "flux": "^2.1.1",

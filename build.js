@@ -11,7 +11,7 @@ const options = {
     // required
     'dir'           :  './',
     'name'          :  'museeks',
-    'platform'      :  ['win32', 'linux', 'darwin'],
+    'platform'      : ['win32', 'linux', 'darwin'],
     'arch'          :  'ia32',
     'version'       :  '0.36.2',
     'build-version' :  app.version,
@@ -19,7 +19,7 @@ const options = {
 
     // optional
     'prune'     :  true,
-    'ignore'    : '/node_modules\/^((?!teeny-conf).)*$/',
+    'ignore'    : '/node_modules\/+?(?!teeny).+/',
     'out'       : 'build',
     'overwrite' :  true,
 }
@@ -30,15 +30,11 @@ console.time('build');
 
 console.log(JSON.stringify(options, null, " "));
 
-/*fs.readdir('./build', function(files) {
-    console.log(files);
-});*/
-
-/*packager(options, function (err, appPath) {
+packager(options, function (err, appPath) {
     if(err) throw err;
     else {
         console.timeEnd('build');
         console.log('Packages built');
         console.log('Starting app cleanup');
     }
-});*/
+});
