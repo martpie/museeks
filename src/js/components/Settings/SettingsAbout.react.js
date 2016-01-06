@@ -38,15 +38,20 @@ export default class ContributorsList extends Component {
 
         return (
             <div className='setting setting-about'>
-                <h4>About Museeks</h4>
-                <p>Museeks { electron.remote.app.getVersion() } - <a href onClick={ self.openLink.bind(null, 'http://museeks.io') }>museeks.io</a> </p>
-                <h4>Contributors</h4>
-                <div className='contributors-list'>
-                    <p>Made with <span className='heart'>♥</span> by Pierre de la Martinière (<a href onClick={ this.openLink.bind(null, 'http://github.com/KeitIG') }>KeitIG</a>) and a bunch of great guys:</p>
-                    <ul>
-                        { contributorsList }
-                    </ul>
-                <div></div>
+                <div className='setting-section'>
+                    <h4>About Museeks</h4>
+                    <p>
+                        Museeks { electron.remote.app.getVersion() } - <a href onClick={ self.openLink.bind(null, 'http://museeks.io') }>museeks.io</a>
+                    </p>
+                </div>
+                <div className='setting-section'>
+                    <h4>Contributors</h4>
+                    <div className='contributors-list'>
+                        <p>Made with <span className='heart'>♥</span> by Pierre de la Martinière (<a href onClick={ this.openLink.bind(null, 'http://github.com/KeitIG') }>KeitIG</a>) and a bunch of great guys:</p>
+                        <ul>
+                            { contributorsList }
+                        </ul>
+                    </div>
                 </div>
             </div>
         );

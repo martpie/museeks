@@ -24,11 +24,13 @@ export default class DevMode extends Component {
 
         return (
             <div className='setting setting-dev-mode'>
-                <h4>Dev mode</h4>
-                <div className='checkbox'>
-                    <label>
-                        <input type='checkbox' onClick={ this.toggleDevMode } defaultChecked={ config.devMode } /> Enable dev mode
-                    </label>
+                <div className='setting-section'>
+                    <h4>Dev mode</h4>
+                    <div className='checkbox'>
+                        <label>
+                            <input type='checkbox' onClick={ this.toggleDevMode } defaultChecked={ config.devMode } /> Enable dev mode
+                        </label>
+                    </div>
                 </div>
             </div>
         );

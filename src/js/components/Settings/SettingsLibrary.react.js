@@ -51,13 +51,15 @@ export default class MusicFoldersList extends Component {
 
         return (
             <div className='setting settings-musicfolder'>
-                <h4>Folders</h4>
-                <p>You currently have { musicFolders.length } folder{ musicFolders.length < 2 ? '' : 's' } in your library.</p>
-                <ul className={ musicFolders.length != 0 ? 'musicfolders-list' : 'musicfolders-list empty'}>
-                    { list }
-                </ul>
-                { buttonsGroup }
-                <ProgressBar className={ this.props.refreshingLibrary ? 'library-refresh-progress' : 'library-refresh-progress hidden'} now={ this.props.refreshProgress } />
+                <div className='setting-section'>
+                    <h4>Folders</h4>
+                    <p>You currently have { musicFolders.length } folder{ musicFolders.length < 2 ? '' : 's' } in your library.</p>
+                    <ul className={ musicFolders.length != 0 ? 'musicfolders-list' : 'musicfolders-list empty'}>
+                        { list }
+                    </ul>
+                    { buttonsGroup }
+                    <ProgressBar className={ this.props.refreshingLibrary ? 'library-refresh-progress' : 'library-refresh-progress hidden'} now={ this.props.refreshProgress } />
+                </div>
             </div>
         );
     }

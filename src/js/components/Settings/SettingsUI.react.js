@@ -24,17 +24,21 @@ export default class ThemeSelector extends Component {
 
         return (
             <div className='setting setting-theme-selector'>
-                <h4>Theme</h4>
-                <div className='checkbox'>
-                    <label>
-                        <input type='checkbox' onClick={ this.switchTheme } defaultChecked={ config.theme === 'dark' } /> Enable dark theme
-                    </label>
+                <div className='setting-section'>
+                    <h4>Theme</h4>
+                    <div className='checkbox'>
+                        <label>
+                            <input type='checkbox' onClick={ this.switchTheme } defaultChecked={ config.theme === 'dark' } /> Enable dark theme
+                            </label>
+                        </div>
                 </div>
-                <h4>Sleep mode</h4>
-                <div className='checkbox'>
-                    <label>
-                        <input type='checkbox' onClick={ this.toggleSleepBlocker } defaultChecked={ config.sleepBlocker } /> Prevent the computer to go in sleep mode
-                    </label>
+                <div className='setting-section'>
+                    <h4>Sleep mode</h4>
+                    <div className='checkbox'>
+                        <label>
+                            <input type='checkbox' onClick={ this.toggleSleepBlocker } defaultChecked={ config.sleepBlocker } /> Prevent the computer to go in sleep mode
+                            </label>
+                        </div>
                 </div>
             </div>
         );
