@@ -67,12 +67,12 @@ const options = {
 console.log('Starting Museeks ' + app.version + ' build');
 console.time('build');
 
-/*packager(options, function (err, appPath) {
+packager(options, function (err, appPath) {
     if(err) throw err;
     else {
         console.timeEnd('build');
         console.log('Packages built');
-        console.log('Starting app cleanup');*/
+        console.log('Starting app cleanup');
 
         var buildsPathes = getDirectories('./build');
 
@@ -83,5 +83,5 @@ console.time('build');
             rimraf(appPath + 'src/js', {}, function() {});
             rimraf(appPath + 'src/styles', {}, function() {});
         });
-/*    }
-});*/
+   }
+});
