@@ -44,7 +44,7 @@ const options = {
     'dir'           :  './',
     'name'          :  'museeks',
     'platform'      : ['win32', 'linux', 'darwin'],
-    'arch'          :  'ia32',
+    'arch'          : ['ia32', 'x64'],
     'version'       :  '0.36.2',
     'build-version' :  app.version,
     'app-version'   :  app.version,
@@ -71,8 +71,7 @@ packager(options, function (err, appPath) {
     if(err) throw err;
     else {
         console.timeEnd('build');
-        console.log('Packages built');
-        console.log('Starting app cleanup');
+        console.log('Builds cleanup');
 
         var buildsPathes = getDirectories('./build');
 
