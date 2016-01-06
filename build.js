@@ -2,6 +2,8 @@
 
 process.env.NODE_ENV = 'production';
 
+const fs       = require('fs');
+
 const packager = require('electron-packager');
 const app      = require('./package.json');
 
@@ -16,6 +18,7 @@ const options = {
     'app-version'   :  app.version,
 
     // optional
+    'prune'     :  true,
     'ignore'    : '/node_modules\/^((?!teeny-conf).)*$/',
     'out'       : 'build',
     'overwrite' :  true,
@@ -25,11 +28,17 @@ const options = {
 console.log('Starting Museeks ' + app.version + ' build');
 console.time('build');
 
-packager(options, function (err, appPath) {
+console.log(JSON.stringify(options, null, " "));
+
+/*fs.readdir('./build', function(files) {
+    console.log(files);
+});*/
+
+/*packager(options, function (err, appPath) {
     if(err) throw err;
     else {
         console.timeEnd('build');
         console.log('Packages built');
         console.log('Starting app cleanup');
     }
-});
+});*/
