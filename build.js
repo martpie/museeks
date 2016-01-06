@@ -1,20 +1,22 @@
 'use strict';
 
+process.env.NODE_ENV = 'production';
+
 const packager = require('electron-packager');
 const app      = require('./package.json');
 
 const options = {
     // required
     'dir'           :  './',
-    'name'          :  'Museeks',
-    'platform'      : ['linux', 'win32', 'darwin'],
+    'name'          :  'museeks',
+    'platform'      :  ['win32', 'linux', 'darwin'],
     'arch'          :  'ia32',
     'version'       :  '0.36.2',
-    'build-version' :  '1',
-    'app-version'   : 'la',
+    'build-version' :  app.version,
+    'app-version'   :  app.version,
 
     // optional
-    'ignore'    :  new RegExp('/node_modules/^(?!teeny-conf$).*/'),
+    'ignore'    : '/node_modules\/^((?!teeny-conf).)*$/',
     'out'       : 'build',
     'overwrite' :  true,
 }
@@ -27,9 +29,7 @@ packager(options, function (err, appPath) {
     if(err) throw err;
     else {
         console.timeEnd('build');
-        console.log('Package build in directory : ' + appPath);
-        console.log('Starting app compilation');
-
-        // TODO delete everything in folder and import compilated files
+        console.log('Packages built');
+        console.log('Starting app cleanup');
     }
 });
