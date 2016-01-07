@@ -21,16 +21,12 @@ It uses:
     - ogg
     - wav
 
-#### on deck:
+===
 
-- playlists ([#22](https://github.com/KeitIG/museeks/issues/22))
-- flac support ([#53](https://github.com/KeitIG/museeks/issues/53))
-- build app for each platform, need help on this one ([#48](https://github.com/KeitIG/museeks/issues/48))
+### Changelog / Roadmap
 
-#### on mind:
-
-- add languages support
-- create installers
+- [Changelog](CHANGELOG.md#changelog)
+- [React.js](CHANGELOG.md#roadmap)
 
 ===
 
