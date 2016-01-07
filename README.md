@@ -26,7 +26,7 @@ It uses:
 ### Changelog / Roadmap
 
 - [Changelog](CHANGELOG.md#changelog)
-- [React.js](CHANGELOG.md#roadmap)
+- [Roadmap](CHANGELOG.md#roadmap)
 
 ===
 
