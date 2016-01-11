@@ -154,13 +154,19 @@ body.theme-dark {
         background-color: #444;
         color: #EEE;
 
-        table.table {
+        div.tracks-list-container {
 
-            &.tracks-list thead {
+            div.tracks-list-header {
                 border-bottom: 1px solid #333333;
+                background-color: #444;
+                color: #eeeeee;
+
+                .track-cell-header:not(:last-child) {
+                    border-color: #777;
+                }
             }
 
-            &.table-striped>tbody>tr:nth-of-type(odd) {
+            div.tracks-list-body > div.track:nth-of-type(odd) {
                 background-color: #555;
 
                 &.selected {
@@ -172,5 +178,52 @@ body.theme-dark {
         &.view-settings .musicfolders-list {
             border-color: #555;
         }
+    }
+
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | View -- Settings
+    |--------------------------------------------------------------------------
+    */
+
+    .view-settings {
+
+        .nav-pills {
+
+            &>li>a {
+                color: #eeeeee;
+            }
+
+            &>li.active>a,
+            &>li.active>a:focus,
+            &>li.active>a:hover {
+                background-color: transparent;
+                color: #459ce7;
+            }
+        }
+
+        .tab-content {
+            border-top-color: #333;
+        }
+    }
+
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Bootstrap overrides
+    |--------------------------------------------------------------------------
+    */
+
+    a {
+        color: #459ce7;
+    }
+
+    button.btn-default {
+        background-color: #555;
+        color: #eee;
+        border-color: #777;
     }
 }
