@@ -9,6 +9,16 @@ body.theme-dark {
         border-top-color: #555;
     }
 
+    ::-webkit-scrollbar {
+        background-color: #404040;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.2);
+    }
+
+
+
     /*
     |--------------------------------------------------------------------------
     | Header
