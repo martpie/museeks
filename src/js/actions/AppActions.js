@@ -282,8 +282,6 @@ var AppActions = {
 
         refresh() {
 
-            console.time('lala');
-
             var folders = app.config.get('musicFolders');
 
             AppDispatcher.dispatch({
@@ -325,7 +323,7 @@ var AppActions = {
                                         AppActions.settings.refreshProgress(parseInt(i * 100 / filesListFiltered.length));
 
                                         forloop(i + 1);
-                                        if (err) console.warn('An error occured while reading ' + file + ' id3 tags: ' + err);
+                                        if(err) console.warn('An error occured while reading ' + file + ' id3 tags: ' + err);
 
                                         delete metadata.picture;
 
@@ -348,7 +346,6 @@ var AppActions = {
                                                     app.db.insert(metadata, function (err, newDoc) {
                                                         if(err) console.warn(err);
                                                         if(i === filesListFiltered.length - 1) {
-                                                            console.timeEnd('lala');
                                                             AppActions.getTracks();
                                                             AppDispatcher.dispatch({
                                                                 actionType : AppConstants.APP_LIBRARY_REFRESH_END
@@ -357,8 +354,6 @@ var AppActions = {
                                                     });
                                                 } else {
                                                     if(i === filesListFiltered.length - 1) {
-                                                        console.log('no insert');
-                                                        console.timeEnd('lala');
                                                         AppActions.getTracks();
                                                         AppDispatcher.dispatch({
                                                             actionType : AppConstants.APP_LIBRARY_REFRESH_END
