@@ -1,4 +1,6 @@
 # museeks
+
+[![Join the chat at https://gitter.im/KeitIG/museeks](https://badges.gitter.im/KeitIG/museeks.svg)](https://gitter.im/KeitIG/museeks?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 A cross-platform music player, in active development. **0.1 will be released soon.**
 
 ![Screenshot](screenshot.png)
