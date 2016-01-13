@@ -3,7 +3,7 @@
 [![Gitter](https://badges.gitter.im/KeitIG/museeks.svg)](https://gitter.im/KeitIG/museeks?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 ![Dependencies](https://david-dm.org/KeitIG/museeks.svg)
 
-A cross-platform music player, in active development. **0.1 will be released soon.**
+A free, lightweight and cross-platform music player. ([http://museeks.io](http://museeks.io))
 
 ![Screenshot](screenshot.png)
 
@@ -29,14 +29,18 @@ It uses:
 
 ### Changelog / Roadmap
 
-- [Changelog](CHANGELOG.md#changelog)
-- [Roadmap](CHANGELOG.md#roadmap)
+- [Changelog](https://github.com/KeitIG/museeks/releases)
+- [Roadmap](ROADMAP.md)
 
 ===
 
 ### Installation
 
-Please consider **this app is still under development, just install it for fun**, I'm aware of multiple bugs and designs issues.
+#### Classic user-select
+
+Builds can be found [at this page](https://github.com/KeitIG/museeks/releases).
+
+#### Dev (advanced)
 
 - Download [Electron](https://github.com/atom/electron/releases) **there are crashes problems in 0.36.x, don't use it**
 - Download Museeks source code
