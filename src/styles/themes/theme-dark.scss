@@ -27,7 +27,7 @@ body.theme-dark {
 
     header {
         background-color: #555;
-        border-bottom-color: #333;
+        border-bottom-color: #3A3A3A;
         color: #EEE;
 
         .search {
@@ -177,7 +177,7 @@ body.theme-dark {
             }
 
             div.tracks-list-body > div.track:nth-of-type(odd) {
-                background-color: #555;
+                background-color: #4D4D4D;
 
                 &.selected {
                     background-color: #459CE7;
@@ -215,7 +215,7 @@ body.theme-dark {
         }
 
         .tab-content {
-            border-top-color: #333;
+            border-top-color: #3A3A3A;
         }
     }
 
