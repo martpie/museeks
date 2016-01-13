@@ -419,7 +419,7 @@ header {
             text-overflow: ellipsis;
             overflow-x: hidden;
             font-size: 12px;
-            z-index: 10;
+            z-index: 30;
             color: grey;
             right: 20%;
             top: 30px;
@@ -722,9 +722,12 @@ footer {
 */
 
 .view-library-list {
+    overflow: hidden;
 
     .tracks-list-container {
         outline: none;
+        height: calc(100% - 26px);
+        max-height: calc(100% - 26px);
 
         .tracks-list-header {
             position: fixed;
@@ -732,8 +735,9 @@ footer {
             border-bottom: 1px solid rgb(210, 210, 210);
             color: #555;
             display: flex;
-            width: calc(100% - 7px);
+            width: 100%;
             background-color: white;
+            z-index: 20;
 
             .track-cell-header {
                 font-weight: 700;
@@ -744,30 +748,47 @@ footer {
                 &:not(:last-child) {
                     border-right: 1px solid #D2D2D2;
                 }
+
+                &:last-child {
+                    margin-right: 11px;
+                }
             }
         }
 
         .tracks-list-body {
+            height: 100%;
+            max-height: 100%;
             margin-top: 26px;
+            overflow: auto;
 
-            .track {
-                display: flex;
+            .tracks-list-tiles {
+                position: relative;
 
-                &:nth-child(odd) {
-                    background-color: #FAFAFA;
-                }
+                .tracks-list-tile {
+                    position: absolute;
+                    width: calc(100% - 5px);
+                    z-index: 10;
 
-                &.selected {
-                    background-color: #459CE7;
-                    color: white;
-                }
+                    .track {
+                        display: flex;
 
-                .cell {
-                    padding: 4px;
-                    cursor: default;
-                    white-space: nowrap;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
+                        &:nth-child(odd) {
+                            background-color: #FAFAFA;
+                        }
+
+                        &.selected {
+                            background-color: #459CE7;
+                            color: white;
+                        }
+
+                        .cell {
+                            padding: 4px;
+                            cursor: default;
+                            white-space: nowrap;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                        }
+                    }
                 }
             }
         }

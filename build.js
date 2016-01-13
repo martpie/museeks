@@ -43,8 +43,8 @@ const options = {
     // required
     'dir'           :  './',
     'name'          :  'museeks',
-    'platform'      : ['win32', 'linux', 'darwin'],
-    'arch'          : ['ia32', 'x64'],
+    'platform'      : ['linux'],
+    'arch'          : ['x64'],
     'version'       :  '0.36.2',
     'build-version' :  app.version,
     'app-version'   :  app.version,

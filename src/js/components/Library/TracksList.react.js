@@ -23,7 +23,8 @@ export default class ArtistList extends Component {
 
         super(props);
         this.state = {
-            selected : []
+            selected  : [],
+            scrollTop : 0
         };
 
         this.showContextMenu = this.showContextMenu.bind(this);
@@ -36,35 +37,51 @@ export default class ArtistList extends Component {
             tracks         = this.props.tracks,
             trackPlayingID = this.props.trackPlayingID;
 
-        var list = tracks.map(function(track, index) {
+        var chunkLength = 20;
+        var tilesToDisplay = 5;
+        var tileHeight = 25 * chunkLength;
 
-            var playing = undefined;
+        var tracksChunked = utils.chunkArray(tracks, chunkLength);
+        var tilesScrolled = Math.floor(this.state.scrollTop / tileHeight)
 
-            if(trackPlayingID != null) {
-                if(track._id == trackPlayingID) playing = <Icon name='volume-up' fixedWidth />;
-                if(track._id == trackPlayingID && app.audio.paused) playing = <Icon name='volume-off' fixedWidth />;
-            }
+        var trackTiles = tracksChunked.splice(tilesScrolled, tilesToDisplay).map((tracksChunk, indexChunk) => {
 
-            return(
-                <div className={ selected.indexOf(track._id) != -1 ? 'track selected' : 'track' } key={ index } onMouseDown={ (e) => self.selectTrack(e, track._id, index) } onDoubleClick={ () => self.selectAndPlay(index) } onContextMenu={ self.showContextMenu }>
-                    <div className='cell cell-track-playing text-center'>
-                        { playing }
+            var list = tracksChunk.map((track, index) => {
+
+                var playing = undefined;
+
+                if(trackPlayingID != null) {
+                    if(track._id == trackPlayingID) playing = <Icon name='volume-up' fixedWidth />;
+                    if(track._id == trackPlayingID && app.audio.paused) playing = <Icon name='volume-off' fixedWidth />;
+                }
+
+                return(
+                    <div className={ selected.indexOf(track._id) != -1 ? 'track selected' : 'track' } key={ index } onMouseDown={ (e) => self.selectTrack(e, track._id, index) } onDoubleClick={ () => self.selectAndPlay(indexChunk * chunkLength + index) } onContextMenu={ self.showContextMenu }>
+                        <div className='cell cell-track-playing text-center'>
+                            { playing }
+                        </div>
+                        <div className='cell cell-track'>
+                            { track.title }
+                        </div>
+                        <div className='cell cell-duration'>
+                            { utils.parseDuration(track.duration) }
+                        </div>
+                        <div className='cell cell-artist'>
+                            { track.artist[0] }
+                        </div>
+                        <div className='cell cell-album'>
+                            { track.album }
+                        </div>
+                        <div className='cell cell-genre'>
+                            { track.genre.join(', ') }
+                        </div>
                     </div>
-                    <div className='cell cell-track'>
-                        { track.title }
-                    </div>
-                    <div className='cell cell-duration'>
-                        { utils.parseDuration(track.duration) }
-                    </div>
-                    <div className='cell cell-artist'>
-                        { track.artist[0] }
-                    </div>
-                    <div className='cell cell-album'>
-                        { track.album }
-                    </div>
-                    <div className='cell cell-genre'>
-                        { track.genre.join(', ') }
-                    </div>
+                );
+            });
+
+            return (
+                <div className='tracks-list-tile' key={ indexChunk } style={{ transform: 'translate3d(0, ' + ((tilesScrolled * 25 * chunkLength) + (indexChunk * 25 * chunkLength))  + 'px, 0)'}}>
+                    { list }
                 </div>
             );
         });
@@ -80,11 +97,17 @@ export default class ArtistList extends Component {
                     <div className='track-cell-header cell-album'>Album</div>
                     <div className='track-cell-header cell-genre'>Genre</div>
                 </div>
-                <div className='tracks-list-body'>
-                    { list }
+                <div className='tracks-list-body' onScroll={ this.scrollTracksList.bind(this) }>
+                    <div className='tracks-list-tiles' style={{ height : tracks.length * 25 }}>
+                        { trackTiles }
+                    </div>
                 </div>
             </div>
         );
+    }
+
+    scrollTracksList() {
+        this.setState({ scrollTop : document.querySelector('.tracks-list-body').scrollTop });
     }
 
     selectTrack(e, id, index) {
