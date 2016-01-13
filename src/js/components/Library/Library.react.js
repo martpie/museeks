@@ -46,12 +46,10 @@ export default class Library extends Component {
         }
         else {
             content = (
-                <div>
-                    <TracksList
-                        tracks={ this.props.tracks }
-                        trackPlayingID={ this.props.trackPlayingID }
-                    />
-                </div>
+                <TracksList
+                    tracks={ this.props.tracks }
+                    trackPlayingID={ this.props.trackPlayingID }
+                />
             );
         }
 

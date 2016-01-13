@@ -164,9 +164,9 @@ body.theme-dark {
         background-color: #444;
         color: #EEE;
 
-        div.tracks-list-container {
+        .tracks-list-container {
 
-            div.tracks-list-header {
+            .tracks-list-header {
                 border-bottom: 1px solid #333333;
                 background-color: #444;
                 color: #eeeeee;
@@ -176,11 +176,17 @@ body.theme-dark {
                 }
             }
 
-            div.tracks-list-body > div.track:nth-of-type(odd) {
-                background-color: #4D4D4D;
+            .tracks-list-body {
 
-                &.selected {
-                    background-color: #459CE7;
+                .tracks-list-tiles {
+
+                    .track:nth-of-type(odd) {
+                        background-color: #4D4D4D;
+
+                        &.selected {
+                            background-color: #459CE7;
+                        }
+                    }
                 }
             }
         }

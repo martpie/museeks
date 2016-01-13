@@ -1,8 +1,3 @@
-## Changelog
-
-### 0.1
-- Initial release
-
 ## Roadmap
 
 ### 0.2

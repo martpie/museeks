@@ -43,15 +43,15 @@ const options = {
     // required
     'dir'           :  './',
     'name'          :  'museeks',
-    'platform'      : ['win32', 'linux', 'darwin'],
+    'platform'      : ['darwin', 'win32', 'linux'],
     'arch'          : ['ia32', 'x64'],
-    'version'       :  '0.36.2',
+    'version'       :  '0.36.3',
     'build-version' :  app.version,
     'app-version'   :  app.version,
 
     // optional
     'prune'     :  true,
-    'ignore'    : '/node_modules\/+?(?!teeny-conf).+/',
+    'ignore'    : /(build|node_modules\/+?(?!teeny).+)/,
     'out'       : 'build',
     'overwrite' :  true,
 }
