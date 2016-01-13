@@ -6,7 +6,7 @@
 
 import React    from 'react';
 import ReactDOM from 'react-dom';
-import Router   from 'react-router';
+import Router, { hashHistory } from 'react-router';
 
 import routes from './router/routes';
 
@@ -29,6 +29,6 @@ require('../styles/main.scss');
 */
 
 ReactDOM.render(
-    <Router routes={ routes } />,
+    <Router routes={ routes } history={hashHistory} />,
     document.getElementById('wrap')
 );
