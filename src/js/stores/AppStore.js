@@ -98,6 +98,7 @@ AppDispatcher.register(function(payload) {
             var playlist       = AppStore.tracks.slice();
             var id             = payload.id;
             var playlistCursor = payload.id;
+            var oldPlaylist    = playlist;
 
             var uri = utils.parseURI(playlist[id].path);
                 app.audio.src = uri;
@@ -132,7 +133,8 @@ AppDispatcher.register(function(payload) {
             AppStore.playerStatus      = 'play';
             AppStore.playlist          =  playlist;
             AppStore.playlistCursor    =  playlistCursor;
-            AppStore.oldPlaylistCursor =  id;
+            AppStore.oldPlaylist       =  playlist;
+            AppStore.oldPlaylistCursor =  playlistCursor;
             AppStore.emit(CHANGE_EVENT);
             break;
 
@@ -309,9 +311,9 @@ AppDispatcher.register(function(payload) {
 
             } else {
 
-                AppStore.playlist          = AppStore.oldPlaylist;
-                AppStore.oldPlaylistCursor = AppStore.oldPlaylistCursor;
-                AppStore.shuffle           = false;
+                AppStore.playlist       = AppStore.oldPlaylist;
+                AppStore.playlistCursor = AppStore.oldPlaylistCursor;
+                AppStore.shuffle        = false;
 
             }
 
