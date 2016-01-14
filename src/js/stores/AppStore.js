@@ -337,6 +337,22 @@ AppDispatcher.register(function(payload) {
             app.audio.currentTime = payload.to;
             break;
 
+        case(AppConstants.APP_QUEUE_PLAY):
+
+            var playlist       = AppStore.playlist.slice();
+            var playlistCursor = payload.index;
+
+            var uri = utils.parseURI(playlist[playlistCursor].path);
+                app.audio.src = uri;
+                app.audio.play();
+
+            // Backup that and change the UI
+            AppStore.playerStatus      = 'play';
+            AppStore.playlist          =  playlist;
+            AppStore.playlistCursor    =  playlistCursor;
+            AppStore.emit(CHANGE_EVENT);
+            break;
+
         case(AppConstants.APP_QUEUE_CLEAR):
             AppStore.playlist.splice(AppStore.playlistCursor + 1, AppStore.playlist.length - AppStore.playlistCursor);
             AppStore.emit(CHANGE_EVENT);

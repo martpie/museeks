@@ -233,10 +233,7 @@ export default class ArtistList extends Component {
     }
 
     selectAndPlay(index) {
-
-        console.log(index);
-
-        AppActions.selectAndPlay(index, false)
+        AppActions.selectAndPlay(index)
     }
 
     showContextMenu() {

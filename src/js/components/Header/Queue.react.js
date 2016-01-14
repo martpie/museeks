@@ -69,7 +69,7 @@ export default class Queue extends Component {
                 return (
                     <div key={index}
                       className={ classes }
-                      onDoubleClick={ AppActions.selectAndPlay.bind(null, self.props.playlistCursor + index + 1) }
+                      onDoubleClick={ AppActions.queue.selectAndPlay.bind(null, self.props.playlistCursor + index + 1) }
                       draggable={'true'}
                       onDragStart={ self.dragStart.bind(self, index) }
                       onDragEnd={ self.dragEnd.bind(self) }>

@@ -19,6 +19,7 @@ export default keymirror({
     APP_PLAYER_SHUFFLE        : null,
     APP_PLAYER_REPEAT         : null,
 
+    APP_QUEUE_PLAY            : null,
     APP_QUEUE_CLEAR           : null,
     APP_QUEUE_REMOVE          : null,
     APP_QUEUE_ADD             : null,

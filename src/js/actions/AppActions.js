@@ -205,6 +205,13 @@ var AppActions = {
 
     queue: {
 
+        selectAndPlay: function(index) {
+            AppDispatcher.dispatch({
+                actionType : AppConstants.APP_QUEUE_PLAY,
+                index      : index
+            });
+        },
+
         clear: function() {
             AppDispatcher.dispatch({
                 actionType : AppConstants.APP_QUEUE_CLEAR
