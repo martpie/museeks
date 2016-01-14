@@ -91,7 +91,7 @@ app.on('ready', function() {
     mainWindow = new BrowserWindow(mainWindowOption);
 
     // ... and load our html page
-    mainWindow.loadURL('file://' + __dirname + '/src/app.html');
+    mainWindow.loadURL('file://' + __dirname + '/src/app.html#/library');
 
     mainWindow.on('closed', function() {
         // Dereference the window object

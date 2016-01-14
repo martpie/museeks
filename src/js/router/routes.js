@@ -11,7 +11,7 @@ import Settings from '../components/Settings/Settings.react';
 // Router
 var routes = (
     <Route component={ App } path='/'>
-        <IndexRoute             component={ Library } />
+        <Route path='/library'  component={ Library } />
         <Route path='/settings' component={ Settings } />
     </Route>
 );

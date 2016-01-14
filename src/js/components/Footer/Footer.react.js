@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Col, Button, ButtonGroup } from 'react-bootstrap';
-import { Link } from 'react-router';
+import { LinkContainer } from 'react-router-bootstrap';
 import Icon from 'react-fontawesome';
 
 
@@ -21,29 +21,20 @@ export default class Footer extends Component {
 
     render() {
 
-        if (!this.props.refreshingLibrary) {
-            var navButtons = (
-                <ButtonGroup className='view-switcher'>
-                    <Link to='/' className='view-link btn btn-default'>
+        var navButtons = (
+            <ButtonGroup>
+                <LinkContainer to='/library' disabled={ this.props.refreshingLibrary }>
+                    <Button className='view-link'>
                         <Icon name='align-justify' fixedWidth />
-                    </Link>
-                    <Link to='/settings' className='view-link btn btn-default'>
+                    </Button>
+                </LinkContainer>
+                <LinkContainer to='/settings' disabled={ this.props.refreshingLibrary }>
+                    <Button className='view-link'>
                         <Icon name='gear' fixedWidth />
-                    </Link>
-                </ButtonGroup>
-            );
-        } else {
-            var navButtons = (
-                <ButtonGroup>
-                    <Link to='/' disabled className='view-link btn btn-default'>
-                        <Icon name='align-justify' fixedWidth />
-                    </Link>
-                    <Link to='/settings' disabled className='view-link btn btn-default'>
-                        <Icon name='gear' fixedWidth />
-                    </Link>
-                </ButtonGroup>
-            );
-        }
+                    </Button>
+                </LinkContainer>
+            </ButtonGroup>
+        );
 
         return (
             <footer className='row'>

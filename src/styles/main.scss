@@ -558,6 +558,17 @@ footer {
         background-color: transparent;
         border-top: 0;
         border-bottom: 0;
+
+        &.btn-default.active,
+        &.btn-default:active {
+            box-shadow: none;
+            -webkit-box-shadow: none;
+            background-color: #C0C0C0;
+        }
+
+        &.btn-default.active {
+            color: #459CE7;
+        }
     }
 
     .status {
