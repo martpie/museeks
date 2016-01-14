@@ -250,6 +250,11 @@ header {
                     padding: 0 5px;
                 }
 
+                &.volume {
+                    padding: 0;
+                    width: 34px;
+                }
+
                 i {
                     display: flex;
                     align-items: center;

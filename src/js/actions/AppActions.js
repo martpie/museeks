@@ -187,6 +187,9 @@ var AppActions = {
             app.audio.volume = volume;
             app.config.set('volume', volume);
             app.config.saveSync();
+            AppDispatcher.dispatch({
+                actionType : AppConstants.APP_REFRESH_CONFIG
+            });
         },
 
         repeat: function() {
