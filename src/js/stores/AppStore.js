@@ -108,6 +108,8 @@ AppDispatcher.register(function(payload) {
 
                 var firstTrack = playlist[id];
 
+                playlist.splice(id, 1);
+
                 var m = playlist.length, t, i;
                 while (m) {
 
@@ -280,9 +282,11 @@ AppDispatcher.register(function(payload) {
 
                 // Let's shuffle that
                 var playlistCursor = AppStore.playlistCursor;
-                var playlist       = AppStore.playlist.slice().splice(playlistCursor + 1, AppStore.playlist.length - (playlistCursor + 1));
+                var playlist       = AppStore.playlist.slice();
 
-                var firstTrack = playlist[playlistCursor];
+                var firstTrack = playlist[playlistCursor]; // Get the current track
+
+                playlist = playlist.splice(playlistCursor + 1, AppStore.playlist.length - (playlistCursor + 1)); // now get only what we want
 
                 var m = playlist.length, t, i;
                 while (m) {
@@ -296,7 +300,7 @@ AppDispatcher.register(function(payload) {
                     playlist[i] = t;
                 }
 
-                playlist.unshift(firstTrack);
+                playlist.unshift(firstTrack); // Add the current track at the first position
 
                 AppStore.shuffle           = true;
                 AppStore.playlist          = playlist;
