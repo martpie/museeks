@@ -43,8 +43,8 @@ const options = {
     // required
     'dir'           :  './',
     'name'          :  'museeks',
-    'platform'      : ['darwin', 'win32', 'linux'],
-    'arch'          : ['ia32', 'x64'],
+    'platform'      : ['linux'],
+    'arch'          : ['x64'],
     'version'       :  '0.36.3',
     'build-version' :  app.version,
     'app-version'   :  app.version,
@@ -52,7 +52,7 @@ const options = {
     // optional
     'prune'     :  true,
     'ignore'    : /(build|node_modules\/+?(?!teeny).+)/,
-    'out'       : 'build',
+    'out'       :  path.join('build', app.version),
     'overwrite' :  true,
 }
 
@@ -73,7 +73,7 @@ packager(options, function (err, appPath) {
         console.timeEnd('build');
         console.log('Builds cleanup');
 
-        var buildsPathes = getDirectories('./build');
+        var buildsPathes = getDirectories(path.join('./build', app.version));
 
         buildsPathes.forEach(function(folder, index) {
             var appPath = './build/' + folder + '/resources/app/';
