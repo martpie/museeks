@@ -56,7 +56,7 @@ export default class ArtistList extends Component {
                 }
 
                 return(
-                    <div className={ selected.indexOf(track._id) != -1 ? 'track selected' : 'track' } key={ index } onMouseDown={ (e) => self.selectTrack(e, track._id, index) } onDoubleClick={ () => self.selectAndPlay((tilesScrolled + indexChunk) * chunkLength + index) } onContextMenu={ self.showContextMenu }>
+                    <div className={ selected.indexOf(track._id) != -1 ? 'track selected' : 'track' } key={ index } onMouseDown={ (e) => self.selectTrack(e, track._id, (tilesScrolled + indexChunk) * chunkLength + index) } onDoubleClick={ () => self.selectAndPlay((tilesScrolled + indexChunk) * chunkLength + index) } onContextMenu={ self.showContextMenu }>
                         <div className='cell cell-track-playing text-center'>
                             { playing }
                         </div>
