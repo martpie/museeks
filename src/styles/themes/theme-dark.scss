@@ -134,16 +134,21 @@ body.theme-dark {
         background-color: #555;
         color: #EEE;
 
-        .view-switcher .view-link {
+        .view-switcher .btn.btn-default {
             color: #EEE;
-            border-color: #444;
+            border-color: #333;
 
             &:hover,
             &:focus,
-            &:active:hover {
-                background-color: #4A4A4A;
+            &:active:hover,
+            &.active {
+                background-color: #444;
+                border-color: #333;
                 color: #EEE;
-                border-color: #444;
+            }
+
+            &.active {
+                color: #459CE7;
             }
         }
 

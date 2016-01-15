@@ -554,22 +554,26 @@ footer {
     background-color: rgb(244, 244, 244);
     padding: 0;
 
-    .btn {
-        background-color: transparent;
-        border-top: 0;
-        border-bottom: 0;
+    .view-switcher {
 
-        &.btn-default.active,
-        &.btn-default:active {
-            box-shadow: none;
-            -webkit-box-shadow: none;
-            background-color: #C0C0C0;
-        }
+        .btn {
+            background-color: transparent;
+            border-top: 0;
+            border-bottom: 0;
 
-        &.btn-default.active {
-            color: #459CE7;
+            &.btn-default.active,
+            &.btn-default:active {
+                box-shadow: none;
+                -webkit-box-shadow: none;
+                background-color: #e6e6e6;
+            }
+
+            &.btn-default.active {
+                color: #459CE7;
+            }
         }
     }
+
 
     .status {
         font-size: 12px;

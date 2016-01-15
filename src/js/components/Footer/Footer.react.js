@@ -22,7 +22,7 @@ export default class Footer extends Component {
     render() {
 
         var navButtons = (
-            <ButtonGroup>
+            <ButtonGroup className='view-switcher'>
                 <LinkContainer to='/library' disabled={ this.props.refreshingLibrary }>
                     <Button className='view-link'>
                         <Icon name='align-justify' fixedWidth />
