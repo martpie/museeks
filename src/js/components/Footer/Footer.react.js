@@ -24,7 +24,7 @@ export default class Footer extends Component {
     render() {
 
         var tracks = this.props.tracks;
-        var status = (tracks !== null) ? tracks.length + ' tracks, ' + utils.parseDuration(tracks.map(d => d.duration).reduce((a, b) => a + b)) : 'An apple a day keeps Dr Dre away';
+        var status = (tracks !== null) ? utils.getStatus(tracks) : 'An apple a day keeps Dr Dre away';
 
         var navButtons = (
             <ButtonGroup className='view-switcher'>

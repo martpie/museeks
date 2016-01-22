@@ -91,7 +91,7 @@ export default class Queue extends Component {
             <div className={ this.props.showQueue ? 'queue visible text-left' : 'queue text-left' }>
                 <div className='queue-header'>
                     <div className='queue-infos'>
-                        { wholeQueue.length } tracks, { utils.parseDuration(wholeQueueDuration) }
+                        { utils.getStatus(wholeQueue) }
                     </div>
                     <ButtonGroup>
                         <Button bsSize={'xsmall'} bsStyle={'default'} className='empty-button' onClick={ this.clearQueue }>

@@ -35,6 +35,16 @@ export default {
     },
 
     /**
+     * Format a list of tracks to a nice status
+     *
+     * @param array tracks
+     * @return string
+     */
+    getStatus: function(tracks) {
+        return tracks.length + ' tracks, ' + this.parseDuration(tracks.map(d => d.duration).reduce((a, b) => a + b))
+    },
+
+    /**
      * Parse an URI, encoding some caracters
      *
      * @param string uri
