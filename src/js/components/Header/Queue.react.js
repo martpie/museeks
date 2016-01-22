@@ -33,11 +33,6 @@ export default class Queue extends Component {
         var queue = playlist.slice(playlistCursor + 1, playlistCursor + 21); // Get the 20 next tracks displayed
 
         var wholeQueue = playlist.slice(playlistCursor + 1);
-        var wholeQueueDuration = 0;
-
-        for(var i = 0; i < wholeQueue.length; i++) {
-            wholeQueueDuration += wholeQueue[i].duration;
-        }
 
         if(queue.length == 0) {
             return(
