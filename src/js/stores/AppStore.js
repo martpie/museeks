@@ -39,7 +39,6 @@ var AppStore = objectAssign({}, EventEmitter.prototype, {
     refreshingLibrary :  false, // If the app is currently refreshing the app
     repeat            :  false, // the current repeat state (one, all, false)
     shuffle           :  false, // If shuffle mode is enabled
-    status            : 'An apple a day keeps Dr Dre away',
     refreshProgress   : 0, // Progress of the refreshing library
 
     getStore: function() {
@@ -55,7 +54,6 @@ var AppStore = objectAssign({}, EventEmitter.prototype, {
             refreshingLibrary : this.refreshingLibrary,
             repeat            : this.repeat,
             shuffle           : this.shuffle,
-            status            : this.status,
             refreshProgress   : this.refreshProgress
         };
     },
@@ -86,7 +84,6 @@ AppDispatcher.register(function(payload) {
             var tracks = payload.tracks;
             AppStore.library = tracks;
             AppStore.tracks  = tracks;
-            if(tracks !== null && tracks.length > 2) AppStore.status  = tracks.length + ' tracks, ' + utils.parseDuration(tracks.map(d => d.duration).reduce((a, b) => a + b));
             AppStore.emit(CHANGE_EVENT);
             break;
 

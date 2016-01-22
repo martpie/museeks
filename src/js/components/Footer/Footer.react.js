@@ -3,6 +3,8 @@ import { Col, Button, ButtonGroup } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import Icon from 'react-fontawesome';
 
+import utils from '../../utils/utils';
+
 
 
 /*
@@ -20,6 +22,9 @@ export default class Footer extends Component {
     }
 
     render() {
+
+        var tracks = this.props.tracks;
+        var status = (tracks !== null) ? tracks.length + ' tracks, ' + utils.parseDuration(tracks.map(d => d.duration).reduce((a, b) => a + b)) : 'An apple a day keeps Dr Dre away';
 
         var navButtons = (
             <ButtonGroup className='view-switcher'>
@@ -42,7 +47,7 @@ export default class Footer extends Component {
                     { navButtons }
                 </Col>
                 <Col sm={5} className='status text-center'>
-                    { this.props.status }
+                    { status }
                 </Col>
             </footer>
         );

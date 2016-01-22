@@ -60,7 +60,7 @@ export default class Museeks extends Component {
                     </Row>
                 </div>
                 <Footer
-                    status={ this.state.status }
+                    tracks={ this.state.tracks }
                     refreshingLibrary={ this.state.refreshingLibrary }
                 />
                 <Notifications notifications={ this.state.notifications } />
