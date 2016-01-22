@@ -227,13 +227,13 @@ export default class ArtistList extends Component {
                 for(var length = tracks.length; i < length; i++) {
                     if(selected.indexOf(tracks[i]._id) > -1) break;
                 }
-                if(i !== undefined) AppActions.selectAndPlay(i);
+                if(i !== undefined) AppAclibrary.selectAndPlay(i);
                 break;
         }
     }
 
     selectAndPlay(index) {
-        AppActions.selectAndPlay(index)
+        AppActions.library.selectAndPlay(index)
     }
 
     showContextMenu() {

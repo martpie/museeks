@@ -97,7 +97,7 @@ export default class Header extends Component {
     }
 
     search(value) {
-        AppActions.filterSearch(value.toLowerCase())
+        AppActions.library.filterSearch(value.toLowerCase())
     }
 
     searchSelect() {
