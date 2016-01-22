@@ -37,7 +37,7 @@ body.theme-dark {
         }
 
         .main-controls .window-controls .window-control {
-            color: #AAA;
+            color: #EEE;
 
             &:active {
                 background-color: #555;
@@ -137,6 +137,7 @@ body.theme-dark {
         .view-switcher .btn.btn-default {
             color: #EEE;
             border-color: #333;
+            background-color: #555;
 
             &:hover,
             &:focus,
@@ -245,6 +246,14 @@ body.theme-dark {
     button.btn-default {
         background-color: #555;
         color: #eee;
-        border-color: #777;
+        border-color: #3A3A3A;
+
+        &:active,
+        &:focus,
+        &:focus:active {
+            color: #EEE;
+            border-color: #3A3A3A;
+            background-color: #505050;
+        }
     }
 }

@@ -20,11 +20,11 @@ var AppActions = {
     init: function() {
 
         // Usual tasks
-        this.app.start();
         this.getTracks();
         this.settings.checkTheme();
         this.settings.checkDevMode();
         this.app.initShortcuts();
+        this.app.start();
 
         // Prevent some events
         window.addEventListener('dragover', function (e) {
@@ -87,7 +87,7 @@ var AppActions = {
     app: {
 
         start: function() {
-            // nothing here anymore
+            ipcRenderer.send('appReady');
         },
 
         close: function() {

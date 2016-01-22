@@ -84,7 +84,7 @@ app.on('ready', function() {
         minHeight :  600,
         frame     :  false,
         title     : 'Museeks',
-        show      :  true
+        show      :  false
     };
 
     // Create the browser window
@@ -137,5 +137,9 @@ app.on('ready', function() {
             powerSaveBlocker.stop(instance.sleepBlockerID);
             delete(instance.sleepBlockerID);
         }
+    });
+
+    ipcMain.on('appReady', (event, toggle, mode) => {
+        mainWindow.show();
     });
 });
