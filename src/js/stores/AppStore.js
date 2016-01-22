@@ -35,7 +35,7 @@ var AppStore = objectAssign({}, EventEmitter.prototype, {
     oldPlaylist       :  null,  // Playlist backup
     oldPlaylistCursor :  null,  // The last cursor backup (to roll stuff back, e.g. unshuffle)
     playerStatus      : 'stop', // Player status
-    notifications     :  {},    // The array of notifications
+    notifications     : [], // The array of notifications
     refreshingLibrary :  false, // If the app is currently refreshing the app
     repeat            :  false, // the current repeat state (one, all, false)
     shuffle           :  false, // If shuffle mode is enabled
@@ -45,6 +45,7 @@ var AppStore = objectAssign({}, EventEmitter.prototype, {
     getStore: function() {
         return {
             config            : app.config.getAll(),
+            notifications     : this.notifications,
             library           : this.library,
             tracks            : this.tracks,
             playlist          : this.playlist,
@@ -448,6 +449,18 @@ AppDispatcher.register(function(payload) {
 
         case(AppConstants.APP_LIBRARY_REFRESH_PROGRESS):
             AppStore.refreshProgress = payload.percentage;
+            AppStore.emit(CHANGE_EVENT);
+            break;
+
+        case(AppConstants.APP_NOTIFICATION_ADD):
+            AppStore.notifications.push(payload.notification);
+            AppStore.emit(CHANGE_EVENT);
+            break;
+
+        case(AppConstants.APP_NOTIFICATION_REMOVE):
+            AppStore.notifications = AppStore.notifications.filter((elem) => {
+                return elem._id !== payload._id;
+            });
             AppStore.emit(CHANGE_EVENT);
             break;
     }

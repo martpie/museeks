@@ -31,5 +31,8 @@ export default keymirror({
     APP_LIBRARY_RESET         : null,
     APP_LIBRARY_REFRESH_START : null,
     APP_LIBRARY_REFRESH_END   : null,
-    APP_LIBRARY_REFRESH_PROGRESS : null
+    APP_LIBRARY_REFRESH_PROGRESS : null,
+
+    APP_NOTIFICATION_ADD    : null,
+    APP_NOTIFICATION_REMOVE : null
 });

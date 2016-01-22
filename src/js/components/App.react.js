@@ -6,6 +6,7 @@ import app from '../constants/app.js';
 
 import Header from './Header/Header.react';
 import Footer from './Footer/Footer.react';
+import Notifications from './Notifications/Notifications.react';
 
 import AppActions from '../actions/AppActions';
 import AppStore   from '../stores/AppStore';
@@ -62,6 +63,7 @@ export default class Museeks extends Component {
                     status={ this.state.status }
                     refreshingLibrary={ this.state.refreshingLibrary }
                 />
+                <Notifications notifications={ this.state.notifications } />
             </div>
         );
     }
