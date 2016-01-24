@@ -80,8 +80,8 @@ app.on('ready', function() {
         y         :  bounds.y,
         width     :  bounds.width,
         height    :  bounds.height,
-        minWidth  :  1000,
-        minHeight :  600,
+        minWidth  :  900,
+        minHeight :  550,
         frame     :  false,
         title     : 'Museeks',
         show      :  false
