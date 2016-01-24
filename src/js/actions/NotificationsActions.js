@@ -5,7 +5,9 @@ import AppConstants  from '../constants/AppConstants';
 
 export default {
 
-    add: function(type, content) {
+    add: function(type, content, duration) {
+
+        if(duration === undefined) duration = 3000;
         var id = Date.now();
         var notification = { _id: id, type: type, content: content };
         AppDispatcher.dispatch({
@@ -18,6 +20,6 @@ export default {
                 actionType : AppConstants.APP_NOTIFICATION_REMOVE,
                 _id        : id
             });
-        }, 2000);
+        }, duration);
     }
 }
