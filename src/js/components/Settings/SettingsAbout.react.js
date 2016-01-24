@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import { Button } from 'react-bootstrap';
+
+import AppActions from '../../actions/AppActions';
 
 const shell = electron.shell;
 
@@ -42,6 +45,7 @@ export default class ContributorsList extends Component {
                     <h4>About Museeks</h4>
                     <p>
                         Museeks { electron.remote.app.getVersion() } - <a href onClick={ self.openLink.bind(null, 'http://museeks.io') }>museeks.io</a>
+                        <Button bsSize='small'  className='update-checker' onClick={ this.checkForUpdate.bind(null) }>Check for update</Button>
                     </p>
                 </div>
                 <div className='setting-section'>
@@ -60,5 +64,10 @@ export default class ContributorsList extends Component {
     openLink(link, e) {
         e.preventDefault();
         shell.openExternal(link);
+    }
+
+    checkForUpdate() {
+        console.log('go action');
+        AppActions.app.checkForUpdate();
     }
 }

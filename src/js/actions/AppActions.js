@@ -103,6 +103,34 @@ var AppActions = {
             globalShortcut.register('MediaNextTrack', function () {
                 AppActions.player.next();
             });
+        },
+
+        checkForUpdate: function() {
+
+            var currentVersion = electron.remote.app.getVersion();
+
+            var oReq = new XMLHttpRequest();
+
+            oReq.onload = function (e) {
+                var releases = e.target.response.message;
+
+                var updateVersion = null;
+                var isUpdateAvailable = releases.some((release) => {
+                    if(release.tag_name > currentVersion) {
+                        updateVersion = release.tag_name;
+                        return true;
+                    } else {
+                        return false;
+                    }
+                });
+
+                if(isUpdateAvailable) AppActions.notifications.add('success', 'Museeks ' + updateVersion + ' is available, check http://museeks.io !');
+                else AppActions.notifications.add('success', 'Museeks ' + currentVersion + ' is the latest version available.');
+            };
+
+            oReq.open('GET', 'https://api.github.com/repos/KeitIG/museeks/releases', true);
+            oReq.responseType = 'json';
+            oReq.send();
         }
     }
 };
