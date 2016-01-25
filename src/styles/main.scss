@@ -775,7 +775,7 @@ footer {
             border-bottom: 1px solid rgb(210, 210, 210);
             color: #555;
             display: flex;
-            width: 100%;
+            width: calc(100% - 2px);
             background-color: white;
             z-index: 20;
 
