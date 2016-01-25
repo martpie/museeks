@@ -36,9 +36,9 @@ It uses:
 
 ### Installation
 
-#### Classic user-select
+#### Classic
 
-Builds can be found [at this page](https://github.com/KeitIG/museeks/releases).
+Builds can be found [at this page](https://github.com/KeitIG/museeks/releases). Please notive those are only portable versions. Installers may come in the future.
 
 #### Dev (advanced)
 
