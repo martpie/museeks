@@ -30,6 +30,12 @@ export default class ContributorsList extends Component {
                 pseudo: 'mrzmyr',
                 feature: 'repeat feature',
                 url: 'https://github.com/mrzmyr'
+            },
+            {
+                name: 'Jonathan Alpay',
+                pseudo: 'Suriteka',
+                feature: 'icons editing',
+                url: 'http://twitter.com/Suriteka '
             }
         ];
 
