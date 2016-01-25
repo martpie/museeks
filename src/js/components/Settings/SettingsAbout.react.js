@@ -73,7 +73,6 @@ export default class ContributorsList extends Component {
     }
 
     checkForUpdate() {
-        console.log('go action');
         AppActions.app.checkForUpdate();
     }
 }

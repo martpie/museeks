@@ -112,7 +112,8 @@ var AppActions = {
             var oReq = new XMLHttpRequest();
 
             oReq.onload = function (e) {
-                var releases = e.target.response.message;
+
+                var releases = e.currentTarget.response;
 
                 var updateVersion = null;
                 var isUpdateAvailable = releases.some((release) => {
