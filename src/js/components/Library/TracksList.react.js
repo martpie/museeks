@@ -117,12 +117,22 @@ export default class ArtistList extends Component {
 
         if(e.button == 0 || (e.button == 2 && this.state.selected.indexOf(id) == -1 )) {
             if(e.ctrlKey) { // add one track in selected tracks
-                var selected = this.state.selected;
-                selected.push(id);
+
+                var selected = this.state.selected.slice();
+                if(selected.indexOf(id) > -1) {
+                    // remove track
+                    selected.splice(selected.indexOf(id), 1);
+
+                } else {
+                    // add track
+                    selected.push(id);
+                }
+
                 selected = utils.simpleSort(selected, 'asc');
                 this.setState({ selected : selected });
             }
             else if (e.shiftKey) { // add multiple tracks in selected tracks
+
                 var selected = this.state.selected;
 
                 switch(selected.length) {
