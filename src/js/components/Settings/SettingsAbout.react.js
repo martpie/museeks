@@ -24,6 +24,8 @@ export default class ContributorsList extends Component {
     render() {
 
         var self = this;
+        
+        // Don't add yourself here please, I'll do it myself
         var contributors = [
             {
                 name: 'Moritz',
