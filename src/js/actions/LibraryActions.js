@@ -1,5 +1,6 @@
 import AppDispatcher from '../dispatcher/AppDispatcher';
 import AppConstants  from '../constants/AppConstants';
+import AppActions    from './AppActions';
 
 import app from '../constants/app.js';
 
