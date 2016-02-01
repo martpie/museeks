@@ -41,7 +41,7 @@ export default {
      * @return string
      */
     getStatus: function(tracks) {
-        return tracks.length + ' tracks, ' + this.parseDuration(tracks.map(d => d.duration).reduce((a, b) => a + b))
+        return tracks.length + ' tracks, ' + this.parseDuration(tracks.length === 0 ? 0 : tracks.map(d => d.duration).reduce((a, b) => a + b));
     },
 
     /**
