@@ -1,6 +1,6 @@
 // Modules
 import React, { Component } from 'react';
-import ReactRouter, { Route, IndexRoute } from 'react-router';
+import { Route, IndexRoute } from 'react-router';
 
 // Components
 import App      from '../components/App.react';
