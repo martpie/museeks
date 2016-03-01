@@ -17,7 +17,7 @@ const dialog = electron.remote.dialog;
 export default {
 
     refreshTracks: function() {
-        app.db.find({}).sort({ 'lArtist': 1, 'year': 1, 'album': 1, 'disk': 1, 'track.no': 1 }).exec(function (err, tracks) {
+        app.db.find({}).sort({ 'loweredMetas.artist': 1, 'year': 1, 'loweredMetas.album': 1, 'disk.no': 1, 'track.no': 1 }).exec(function (err, tracks) {
             if (err) throw err;
             else {
                 AppDispatcher.dispatch({
@@ -127,19 +127,30 @@ export default {
                                     forloop(i + 1);
                                     if(err) console.warn('An error occured while reading ' + file + ' id3 tags: ' + err);
 
-                                    delete metadata.picture;
-
                                     fs.realpath(file, (err, realpath) => {
 
                                         if(err) console.warn(err);
 
-                                        metadata.path = realpath
-                                        metadata.lArtist = metadata.artist.length === 0 ? ['unknown artist'] : metadata.artist[0].toLowerCase();
+                                        // We don't want it
+                                        delete metadata.picture;
 
+                                        // File path
+                                        metadata.path = realpath;
+
+                                        // Unknown metas
                                         if(metadata.artist.length === 0) metadata.artist = ['Unknown artist'];
                                         if(metadata.album === null || metadata.album === '') metadata.album = 'Unknown';
                                         if(metadata.title === null || metadata.title === '') metadata.title = path.parse(file).base;
-                                        if(metadata.duration == '') metadata.duration = 0;
+                                        if(metadata.duration == '') metadata.duration = 0; // .wav problem
+
+                                        // Formated metas for sorting
+                                        metadata.loweredMetas = {
+                                            artist      : metadata.artist.map(meta => meta.toLowerCase()),
+                                            album       : metadata.album.toLowerCase(),
+                                            albumartist : metadata.albumartist.map(meta => meta.toLowerCase()),
+                                            title       : metadata.title.toLowerCase(),
+                                            genre       : metadata.genre.map(meta => meta.toLowerCase())
+                                        }
 
                                         app.db.find({ path: metadata.path }, function (err, docs) {
                                             if(err) console.warn(err);

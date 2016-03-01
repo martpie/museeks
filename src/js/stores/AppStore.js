@@ -35,11 +35,11 @@ var AppStore = objectAssign({}, EventEmitter.prototype, {
     oldPlaylist       :  null,  // Playlist backup
     oldPlaylistCursor :  null,  // The last cursor backup (to roll stuff back, e.g. unshuffle)
     playerStatus      : 'stop', // Player status
-    notifications     : [], // The array of notifications
+    notifications     :  [],    // The array of notifications
     refreshingLibrary :  false, // If the app is currently refreshing the app
     repeat            :  false, // the current repeat state (one, all, false)
     shuffle           :  false, // If shuffle mode is enabled
-    refreshProgress   : 0, // Progress of the refreshing library
+    refreshProgress   :  0,     // Progress of the refreshing library
 
     getStore: function() {
         return {
@@ -68,6 +68,7 @@ var AppStore = objectAssign({}, EventEmitter.prototype, {
 });
 
 export default AppStore;
+
 
 
 /*
@@ -149,9 +150,9 @@ AppDispatcher.register(function(payload) {
 
                 if(search != '' && search != undefined) {
 
-                    if(track.lArtist.indexOf(search) === -1
+                    if(track.loweredMetas.artist.join(', ').indexOf(search) === -1
                         && track.album.toLowerCase().indexOf(search) === -1
-                        && track.genre.join(', ').toLowerCase().indexOf(search) === -1
+                        && track.loweredMetas.genre.join(', ').toLowerCase().indexOf(search) === -1
                         && track.title.toLowerCase().indexOf(search) === -1) {
 
                         continue;
