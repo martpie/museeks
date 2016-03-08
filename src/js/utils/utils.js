@@ -9,6 +9,7 @@ import path from 'path';
 
 
 export default {
+
     /**
      * Parse an int to a more readable string
      *
@@ -19,7 +20,7 @@ export default {
 
         if(duration !== null && duration !== undefined) {
 
-            var hours   = parseInt(duration / 3600) % 24;
+            var hours   = parseInt(duration / 3600);
             var minutes = parseInt(duration / 60) % 60;
             var seconds = parseInt(duration % 60);
 
