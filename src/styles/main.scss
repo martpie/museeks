@@ -141,11 +141,73 @@ header {
 */
 
 .btn {
+
+    &.btn-default {
+
+        &:hover,
+        &:active,
+        &:focus,
+        &:focus:active {
+            background-color: #FFF;
+        }
+    }
+
+    &.btn-primary {
+
+        &:hover,
+        &:active,
+        &:focus,
+        &:focus:active {
+            background-color: darken(#428bca, 6.5%);
+        }
+    }
+
+    &.btn-success {
+
+        &:hover,
+        &:active,
+        &:focus,
+        &:focus:active {
+            background-color: #5cb85c;
+        }
+    }
+
+    &.btn-info {
+
+        &:hover,
+        &:active,
+        &:focus,
+        &:focus:active {
+            background-color: #5bc0de;
+        }
+    }
+
+    &.btn-danger {
+
+        &:hover,
+        &:active,
+        &:focus,
+        &:focus:active {
+            background-color: #d9534f;
+        }
+    }
+
+    &.btn-warning {
+
+        &:hover,
+        &:active,
+        &:focus,
+        &:focus:active {
+            background-color: #f0ad4e;
+        }
+    }
+
     &.active {
         &.focus, &:focus {
             outline: none;
         }
     }
+
     &.focus {
         outline: none;
     }
@@ -154,6 +216,7 @@ header {
             outline: none;
         }
     }
+
     &:focus {
         outline: none;
     }
