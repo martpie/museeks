@@ -140,7 +140,12 @@ body.theme-dark {
             border-color: #333;
             background-color: #555;
 
-            &:hover,
+            &:hover {
+                color: #EEE;
+                border-color: #333;
+                background-color: #555;
+            }
+
             &:focus,
             &:active:hover,
             &.active {
@@ -254,6 +259,7 @@ body.theme-dark {
         &:focus,
         &:focus:active {
             color: #EEE;
+            background-color: #555;
             border-color: #3A3A3A;
         }
     }
