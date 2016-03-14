@@ -70,6 +70,7 @@ var audio = new Audio();
     audio.volume = conf.get('volume')
 
 audio.addEventListener('ended', AppActions.player.next);
+audio.addEventListener('error', AppActions.player.audioError);
 
 
 

@@ -1,6 +1,8 @@
 import AppDispatcher from '../dispatcher/AppDispatcher';
 import AppConstants  from '../constants/AppConstants';
 
+import NotificationsActions from './NotificationsActions';
+
 import app from '../constants/app.js';
 
 
@@ -70,5 +72,23 @@ export default {
             actionType : AppConstants.APP_PLAYER_JUMP_TO,
             to         : to
         });
+    },
+
+    audioError: function(e) {
+
+        switch (e.target.error.code) {
+            case e.target.error.MEDIA_ERR_ABORTED:
+                NotificationsActions.add('warning', 'The video playback was aborted.');
+                break;
+            case e.target.error.MEDIA_ERR_DECODE:
+                NotificationsActions.add('danger', 'The audio playback was aborted due to a corruption problem.');
+                break;
+            case e.target.error.MEDIA_ERR_SRC_NOT_SUPPORTED:
+                NotificationsActions.add('danger', 'The track file could not be found. It may be due to a file move or an unmounted partition.')
+                break;
+            default:
+                NotificationsActions.add('danger', 'An unknown error occurred.')
+                break;
+        }
     }
 }
