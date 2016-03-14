@@ -140,6 +140,34 @@ header {
 |--------------------------------------------------------------------------
 */
 
+.alert {
+    border-left-width: 5px;
+    background-color: white;
+
+    &.alert-danger,
+    &.alert-info,
+    &.alert-warning,
+    &.alert-success {
+        border-color: #ddd;
+    }
+
+    &.alert-success {
+        border-left-color: #5cb85c;
+    }
+
+    &.alert-info {
+        border-left-color: #5bc0de;
+    }
+
+    &.alert-warning {
+        border-left-color: #f0ad4e;
+    }
+
+    &.alert-danger {
+        border-left-color: #d9534f;
+    }
+}
+
 .btn {
 
     &.btn-default {
@@ -211,6 +239,7 @@ header {
     &.focus {
         outline: none;
     }
+
     &:active {
         &.focus, &:focus {
             outline: none;
@@ -261,10 +290,22 @@ header {
 
 .notifications {
     position: fixed;
-    bottom: 20px;
-    right: 20px;
+    bottom: 40px;
+    right: 12px;
     width: 350px;
     z-index: 1000;
+
+    .alert {
+        box-shadow: 0 5px 3px -5px rgba(0, 0, 0, .5);
+
+        &:not(:last-child) {
+            margin-bottom: 5px;
+        }
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
 }
 
 
@@ -639,6 +680,10 @@ footer {
             background-color: transparent;
             border-top: 0;
             border-bottom: 0;
+
+            &.btn-default:hover {
+                background-color: transparent;
+            }
 
             &.btn-default.active,
             &.btn-default:active {

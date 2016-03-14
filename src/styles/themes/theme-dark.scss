@@ -263,4 +263,26 @@ body.theme-dark {
             border-color: #3A3A3A;
         }
     }
+
+    .alert {
+        border-color: #444;
+        background-color: #555;
+        color: #EEE;
+
+        &.alert-success {
+            border-left-color: #5cb85c;
+        }
+
+        &.alert-info {
+            border-left-color: #5bc0de;
+        }
+
+        &.alert-warning {
+            border-left-color: #f0ad4e;
+        }
+
+        &.alert-danger {
+            border-left-color: #d9534f;
+        }
+    }
 }
