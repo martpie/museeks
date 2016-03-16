@@ -3,7 +3,7 @@ import AppConstants  from '../constants/AppConstants';
 
 import NotificationsActions from './NotificationsActions';
 
-import app from '../constants/app.js';
+import app from '../utils/app';
 
 
 

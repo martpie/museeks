@@ -2,7 +2,7 @@ import AppDispatcher from '../dispatcher/AppDispatcher';
 import AppConstants  from '../constants/AppConstants';
 import AppActions    from './AppActions';
 
-import app from '../constants/app.js';
+import app from '../utils/app';
 
 import mmd      from 'musicmetadata';
 import fs       from 'fs';

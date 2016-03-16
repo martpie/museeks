@@ -9,7 +9,7 @@ import objectAssign     from 'object-assign';
 import path             from 'path';
 import fs               from 'fs';
 
-import app from '../constants/app';
+import app from '../utils/app';
 
 import AppDispatcher from '../dispatcher/AppDispatcher';
 import AppConstants  from '../constants/AppConstants';

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Row } from 'react-bootstrap';
 import KeyBinding from 'react-keybinding-component';
 
-import app from '../constants/app.js';
+import app from '../utils/app';
 
 import Header from './Header/Header.react';
 import Footer from './Footer/Footer.react';

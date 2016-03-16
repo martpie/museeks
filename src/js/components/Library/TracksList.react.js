@@ -4,7 +4,7 @@ import KeyBinding from 'react-keybinding-component';
 
 import AppActions from '../../actions/AppActions';
 
-import app   from '../../constants/app';
+import app   from '../../utils/app';
 import utils from '../../utils/utils';
 
 const ipcRenderer = electron.ipcRenderer;
