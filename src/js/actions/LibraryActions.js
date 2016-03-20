@@ -17,7 +17,7 @@ const dialog = electron.remote.dialog;
 export default {
 
     refreshTracks: function() {
-        app.db.find({}).sort({ 'loweredMetas.artist': 1, 'year': 1, 'loweredMetas.album': 1, 'disk.no': 1, 'track.no': 1 }).exec(function (err, tracks) {
+        app.db.find({ type : 'track' }).sort({ 'loweredMetas.artist': 1, 'year': 1, 'loweredMetas.album': 1, 'disk.no': 1, 'track.no': 1 }).exec(function (err, tracks) {
             if (err) throw err;
             else {
                 AppDispatcher.dispatch({
@@ -134,8 +134,9 @@ export default {
                                         // We don't want it
                                         delete metadata.picture;
 
-                                        // File path
-                                        metadata.path = realpath;
+                                        // File path and scheme type
+                                        metadata.path =  realpath;
+                                        metadata.type = 'track';
 
                                         // Unknown metas
                                         if(metadata.artist.length === 0) metadata.artist = ['Unknown artist'];
