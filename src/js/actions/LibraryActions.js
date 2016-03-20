@@ -143,7 +143,7 @@ export default {
                                         if(metadata.title === null || metadata.title === '') metadata.title = path.parse(file).base;
                                         if(metadata.duration == '') metadata.duration = 0; // .wav problem
 
-                                        meta.playCount = 0;
+                                        metadata.playCount = 0;
 
                                         // Formated metas for sorting
                                         metadata.loweredMetas = {
