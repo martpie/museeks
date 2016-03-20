@@ -30,10 +30,10 @@ var AppStore = objectAssign({}, EventEmitter.prototype, {
 
     library           :  null,  // All tracks
     tracks            :  null,  // All tracks shown on the view
-    playlist          :  [],    // Tracks to be played
-    playlistCursor    :  null,  // The cursor of the playlist
-    oldPlaylist       :  null,  // Playlist backup
-    oldPlaylistCursor :  null,  // The last cursor backup (to roll stuff back, e.g. unshuffle)
+    queue             :  [],    // Tracks to be played
+    queueCursor       :  null,  // The cursor of the queue
+    oldQueue          :  null,  // Queue backup
+    oldQueueCursor    :  null,  // The last cursor backup (to roll stuff back, e.g. unshuffle)
     playerStatus      : 'stop', // Player status
     notifications     :  [],    // The array of notifications
     refreshingLibrary :  false, // If the app is currently refreshing the app
@@ -47,8 +47,8 @@ var AppStore = objectAssign({}, EventEmitter.prototype, {
             notifications     : this.notifications,
             library           : this.library,
             tracks            : this.tracks,
-            playlist          : this.playlist,
-            playlistCursor    : this.playlistCursor,
+            queue             : this.queue,
+            queueCursor       : this.queueCursor,
             playerStatus      : this.playerStatus,
             notifications     : this.notifications,
             refreshingLibrary : this.refreshingLibrary,
@@ -94,46 +94,46 @@ AppDispatcher.register(function(payload) {
 
         case(AppConstants.APP_SELECT_AND_PLAY):
 
-            var playlist       = AppStore.tracks.slice();
-            var id             = payload.id;
-            var playlistCursor = payload.id;
-            var oldPlaylist    = playlist;
+            var queue       = AppStore.tracks.slice();
+            var id          = payload.id;
+            var queueCursor = payload.id;
+            var oldQueue    = queue;
 
-            var uri = utils.parseURI(playlist[id].path);
+            var uri = utils.parseURI(queue[id].path);
                 app.audio.src = uri;
                 app.audio.play();
 
             // Check if we have to shuffle the queue
             if(AppStore.shuffle) {
 
-                var firstTrack = playlist[id];
+                var firstTrack = queue[id];
 
-                playlist.splice(id, 1);
+                queue.splice(id, 1);
 
-                var m = playlist.length, t, i;
+                var m = queue.length, t, i;
                 while (m) {
 
                     // Pick a remaining element…
                     i = Math.floor(Math.random() * m--);
 
                     // And swap it with the current element.
-                    t = playlist[m];
-                    playlist[m] = playlist[i];
-                    playlist[i] = t;
+                    t = queue[m];
+                    queue[m] = queue[i];
+                    queue[i] = t;
                 }
 
-                playlist.unshift(firstTrack);
+                queue.unshift(firstTrack);
 
                 // Let's set the cursor to 0
-                playlistCursor = 0;
+                queueCursor = 0;
             }
 
             // Backup that and change the UI
-            AppStore.playerStatus      = 'play';
-            AppStore.playlist          =  playlist;
-            AppStore.playlistCursor    =  playlistCursor;
-            AppStore.oldPlaylist       =  playlist;
-            AppStore.oldPlaylistCursor =  playlistCursor;
+            AppStore.playerStatus   = 'play';
+            AppStore.queue          =  queue;
+            AppStore.queueCursor    =  queueCursor;
+            AppStore.oldQueue       =  queue;
+            AppStore.oldQueueCursor =  queueCursor;
             AppStore.emit(CHANGE_EVENT);
             break;
 
@@ -171,7 +171,7 @@ AppDispatcher.register(function(payload) {
             break;
 
         case(AppConstants.APP_PLAYER_TOGGLE):
-            if(app.audio.paused && AppStore.playlist !== null) {
+            if(app.audio.paused && AppStore.queue !== null) {
                 AppStore.playerStatus = 'play';
                 app.audio.play();
             } else {
@@ -182,7 +182,7 @@ AppDispatcher.register(function(payload) {
             break;
 
         case(AppConstants.APP_PLAYER_PLAY):
-            if(AppStore.playlist !== null) {
+            if(AppStore.queue !== null) {
                 AppStore.playerStatus = 'play';
                 app.audio.play();
                 AppStore.emit(CHANGE_EVENT);
@@ -197,45 +197,45 @@ AppDispatcher.register(function(payload) {
 
         case(AppConstants.APP_PLAYER_STOP):
             app.audio.pause();
-            AppStore.library           =  null;
-            AppStore.tracks            =  null;
-            AppStore.playlist          =  [];
-            AppStore.playlistCursor    =  null;
-            AppStore.oldPlaylistCursor =  null;
-            AppStore.playerStatus      = 'stop'
+            AppStore.library        =  null;
+            AppStore.tracks         =  null;
+            AppStore.queue          =  [];
+            AppStore.queueCursor    =  null;
+            AppStore.oldQueueCursor =  null;
+            AppStore.playerStatus   = 'stop'
             AppStore.emit(CHANGE_EVENT);
             break;
 
         case(AppConstants.APP_PLAYER_NEXT):
 
-            var playlist = AppStore.playlist;
+            var queue = AppStore.queue;
 
             if(AppStore.repeat === 'one') {
-                newPlaylistCursor = AppStore.playlistCursor;
+                newQueueCursor = AppStore.queueCursor;
             } else if (
                 AppStore.repeat === 'all' &&
-                AppStore.playlistCursor === playlist.length - 1 // is last track
+                AppStore.queueCursor === queue.length - 1 // is last track
             ) {
-                newPlaylistCursor = 0; // start with new track
+                newQueueCursor = 0; // start with new track
             } else {
-                var newPlaylistCursor  = AppStore.playlistCursor + 1;
+                var newQueueCursor  = AppStore.queueCursor + 1;
             }
 
 
-            if (playlist[newPlaylistCursor] !== undefined) {
-                var uri = utils.parseURI(playlist[newPlaylistCursor].path); ;
+            if (queue[newQueueCursor] !== undefined) {
+                var uri = utils.parseURI(queue[newQueueCursor].path); ;
                 app.audio.src = uri;
                 app.audio.play();
 
-                AppStore.playlistCursor = newPlaylistCursor;
+                AppStore.queueCursor = newQueueCursor;
 
             } else {
                 app.audio.pause();
                 app.audio.src = '';
-                AppStore.playlist          =  [];
-                AppStore.playlistCursor    =  null;
-                AppStore.oldPlaylistCursor =  null;
-                AppStore.playerStatus      = 'stop'
+                AppStore.queue          =  [];
+                AppStore.queueCursor    =  null;
+                AppStore.oldQueueCursor =  null;
+                AppStore.playerStatus   = 'stop'
                 AppStore.emit(CHANGE_EVENT);
             }
             AppStore.emit(CHANGE_EVENT);
@@ -244,14 +244,14 @@ AppDispatcher.register(function(payload) {
         case(AppConstants.APP_PLAYER_PREVIOUS):
             if (app.audio.currentTime < 5) {
 
-                var newPlaylistCursor = AppStore.playlistCursor - 1;
+                var newQueueCursor = AppStore.queueCursor - 1;
 
             } else {
 
-                var newPlaylistCursor = AppStore.playlistCursor
+                var newQueueCursor = AppStore.queueCursor
             }
 
-            var newTrack = AppStore.playlist[newPlaylistCursor];
+            var newTrack = AppStore.queue[newQueueCursor];
 
             if (newTrack !== undefined) {
 
@@ -260,15 +260,15 @@ AppDispatcher.register(function(payload) {
 
                 app.audio.play();
 
-                AppStore.playlistCursor = newPlaylistCursor;
+                AppStore.queueCursor = newQueueCursor;
 
             } else {
                 app.audio.pause();
                 app.audio.src = '';
-                AppStore.playlist          =  [];
-                AppStore.playlistCursor    =  null;
-                AppStore.oldPlaylistCursor =  null;
-                AppStore.playerStatus      = 'stop'
+                AppStore.queue          =  [];
+                AppStore.queueCursor    =  null;
+                AppStore.oldQueueCursor =  null;
+                AppStore.playerStatus   = 'stop'
                 AppStore.emit(CHANGE_EVENT);
             }
             AppStore.emit(CHANGE_EVENT);
@@ -278,41 +278,41 @@ AppDispatcher.register(function(payload) {
 
             if(!AppStore.shuffle) {
 
-                AppStore.oldPlaylist       = AppStore.playlist;
-                AppStore.oldPlaylistCursor = AppStore.oldPlaylistCursor;
+                AppStore.oldQueue       = AppStore.queue;
+                AppStore.oldQueueCursor = AppStore.oldQueueCursor;
 
                 // Let's shuffle that
-                var playlistCursor = AppStore.playlistCursor;
-                var playlist       = AppStore.playlist.slice();
+                var queueCursor = AppStore.queueCursor;
+                var queue       = AppStore.queue.slice();
 
-                var firstTrack = playlist[playlistCursor]; // Get the current track
+                var firstTrack = queue[queueCursor]; // Get the current track
 
-                playlist = playlist.splice(playlistCursor + 1, AppStore.playlist.length - (playlistCursor + 1)); // now get only what we want
+                queue = queue.splice(queueCursor + 1, AppStore.queue.length - (queueCursor + 1)); // now get only what we want
 
-                var m = playlist.length, t, i;
+                var m = queue.length, t, i;
                 while (m) {
 
                     // Pick a remaining element…
                     i = Math.floor(Math.random() * m--);
 
                     // And swap it with the current element.
-                    t = playlist[m];
-                    playlist[m] = playlist[i];
-                    playlist[i] = t;
+                    t = queue[m];
+                    queue[m] = queue[i];
+                    queue[i] = t;
                 }
 
-                playlist.unshift(firstTrack); // Add the current track at the first position
+                queue.unshift(firstTrack); // Add the current track at the first position
 
                 AppStore.shuffle           = true;
-                AppStore.playlist          = playlist;
-                AppStore.playlistCursor    = 0;
-                AppStore.oldPlaylistCursor = playlistCursor;
+                AppStore.queue          = queue;
+                AppStore.queueCursor    = 0;
+                AppStore.oldQueueCursor = queueCursor;
 
             } else {
 
-                AppStore.playlist       = AppStore.oldPlaylist;
-                AppStore.playlistCursor = AppStore.oldPlaylistCursor;
-                AppStore.shuffle        = false;
+                AppStore.queue       = AppStore.oldQueue;
+                AppStore.queueCursor = AppStore.oldQueueCursor;
+                AppStore.shuffle     = false;
 
             }
 
@@ -340,27 +340,27 @@ AppDispatcher.register(function(payload) {
 
         case(AppConstants.APP_QUEUE_PLAY):
 
-            var playlist       = AppStore.playlist.slice();
-            var playlistCursor = payload.index;
+            var queue       = AppStore.queue.slice();
+            var queueCursor = payload.index;
 
-            var uri = utils.parseURI(playlist[playlistCursor].path);
+            var uri = utils.parseURI(queue[queueCursor].path);
                 app.audio.src = uri;
                 app.audio.play();
 
             // Backup that and change the UI
-            AppStore.playerStatus      = 'play';
-            AppStore.playlist          =  playlist;
-            AppStore.playlistCursor    =  playlistCursor;
+            AppStore.playerStatus   = 'play';
+            AppStore.queue          =  queue;
+            AppStore.queueCursor    =  queueCursor;
             AppStore.emit(CHANGE_EVENT);
             break;
 
         case(AppConstants.APP_QUEUE_CLEAR):
-            AppStore.playlist.splice(AppStore.playlistCursor + 1, AppStore.playlist.length - AppStore.playlistCursor);
+            AppStore.queue.splice(AppStore.queueCursor + 1, AppStore.queue.length - AppStore.queueCursor);
             AppStore.emit(CHANGE_EVENT);
             break;
 
         case(AppConstants.APP_QUEUE_REMOVE):
-            AppStore.playlist.splice(AppStore.playlistCursor + payload.index + 1, 1)
+            AppStore.queue.splice(AppStore.queueCursor + payload.index + 1, 1)
             AppStore.emit(CHANGE_EVENT);
             break;
 
@@ -371,7 +371,7 @@ AppDispatcher.register(function(payload) {
 
             for(var i = 0, length = tracks.length; i < length; i++) {
                 if(selected.indexOf(tracks[i]._id) > -1) {
-                    AppStore.playlist.push(tracks[i]);
+                    AppStore.queue.push(tracks[i]);
                 }
             }
 
@@ -381,19 +381,19 @@ AppDispatcher.register(function(payload) {
         case(AppConstants.APP_QUEUE_ADD_NEXT):
             var selected = payload.selected;
             var tracks   = AppStore.tracks;
-            var cursor   = AppStore.playlistCursor;
+            var cursor   = AppStore.queueCursor;
 
             for(var i = 0, length = tracks.length; i < length; i++) {
                 if(selected.indexOf(tracks[length - i - 1]._id) > -1) {
-                    AppStore.playlist.splice(cursor + 1, 0, tracks[length - i - 1]);
+                    AppStore.queue.splice(cursor + 1, 0, tracks[length - i - 1]);
                 }
             }
 
             AppStore.emit(CHANGE_EVENT);
             break;
 
-        case(AppConstants.APP_QUEUE_SET_PLAYLIST):
-            AppStore.playlist = payload.playlist;
+        case(AppConstants.APP_QUEUE_SET_QUEUE):
+            AppStore.queue = payload.queue;
             AppStore.emit(CHANGE_EVENT);
             break;
 

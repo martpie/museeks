@@ -62,8 +62,8 @@ export default class Header extends Component {
                 </Col>
                 <Col sm={6} className='text-center'>
                     <PlayingBar
-                        playlist={ this.props.playlist }
-                        playlistCursor={ this.props.playlistCursor }
+                        queue={ this.props.queue }
+                        queueCursor={ this.props.queueCursor }
                         shuffle={ this.props.shuffle }
                         repeat={ this.props.repeat }
                     />
@@ -74,8 +74,8 @@ export default class Header extends Component {
                     </button>
                     <Queue
                         showQueue={ this.state.showQueue }
-                        playlist={ this.props.playlist }
-                        playlistCursor={ this.props.playlistCursor }
+                        queue={ this.props.queue }
+                        queueCursor={ this.props.queueCursor }
                     />
                 </Col>
                 <Col sm={2}>

@@ -24,7 +24,7 @@ export default keymirror({
     APP_QUEUE_REMOVE          : null,
     APP_QUEUE_ADD             : null,
     APP_QUEUE_ADD_NEXT        : null,
-    APP_QUEUE_SET_PLAYLIST    : null,
+    APP_QUEUE_SET_QUEUE    : null,
 
     APP_LIBRARY_ADD_FOLDERS   : null,
     APP_LIBRARY_REMOVE_FOLDER : null,

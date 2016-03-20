@@ -30,7 +30,7 @@ export default class Museeks extends Component {
 
     render() {
 
-        var trackPlayingID = (this.state.playlist.length > 0 && this.state.playlistCursor !== null) ? this.state.playlist[this.state.playlistCursor]._id : null;
+        var trackPlayingID = (this.state.queue.length > 0 && this.state.queueCursor !== null) ? this.state.queue[this.state.queueCursor]._id : null;
 
         return (
             <div className='main'>
@@ -40,8 +40,8 @@ export default class Museeks extends Component {
                     playerStatus={ this.state.playerStatus }
                     repeat={ this.state.repeat }
                     shuffle={ this.state.shuffle }
-                    playlist={ this.state.playlist }
-                    playlistCursor={ this.state.playlistCursor }
+                    queue={ this.state.queue }
+                    queueCursor={ this.state.queueCursor }
                 />
                 <div className='main-content'>
                     <Row className='content'>
@@ -49,7 +49,7 @@ export default class Museeks extends Component {
                             this.props.children, {
                                 app               : this,
                                 config            : this.state.config,
-                                playlist          : this.state.playlist,
+                                queue          : this.state.queue,
                                 tracks            : this.state.tracks,
                                 library           : this.state.library,
                                 trackPlayingID    : trackPlayingID,

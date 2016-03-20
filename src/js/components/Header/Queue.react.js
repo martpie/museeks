@@ -26,13 +26,13 @@ export default class Queue extends Component {
 
     render() {
 
-        var self           = this;
-        var playlist       = this.props.playlist;
-        var playlistCursor = this.props.playlistCursor;
+        var self        = this;
+        var queue       = this.props.queue;
+        var queueCursor = this.props.queueCursor;
 
-        var queue = playlist.slice(playlistCursor + 1, playlistCursor + 21); // Get the 20 next tracks displayed
+        var queue = queue.slice(queueCursor + 1, queueCursor + 21); // Get the 20 next tracks displayed
 
-        var wholeQueue = playlist.slice(playlistCursor + 1);
+        var wholeQueue = queue.slice(queueCursor + 1);
 
         if(queue.length == 0) {
             return(
@@ -64,7 +64,7 @@ export default class Queue extends Component {
                 return (
                     <div key={index}
                       className={ classes }
-                      onDoubleClick={ AppActions.queue.selectAndPlay.bind(null, self.props.playlistCursor + index + 1) }
+                      onDoubleClick={ AppActions.queue.selectAndPlay.bind(null, self.props.queueCursor + index + 1) }
                       draggable={'true'}
                       onDragStart={ self.dragStart.bind(self, index) }
                       onDragEnd={ self.dragEnd.bind(self) }>
@@ -119,23 +119,23 @@ export default class Queue extends Component {
 
     dragEnd(e) {
 
-        var playlist       = this.props.playlist;
-        var playlistCursor = this.props.playlistCursor;
+        var queue       = this.props.queue;
+        var queueCursor = this.props.queueCursor;
 
         var draggedTrack     = this.state.draggedTrack;
         var draggedOverTrack = this.state.draggedOverTrack
 
-        var newPlaylist = playlist.slice();
-        var trackToMove = playlist[playlistCursor + 1 + draggedTrack];
-        newPlaylist.splice(playlistCursor + 1 + draggedTrack, 1);
-        newPlaylist.splice(playlistCursor + draggedOverTrack, 0, trackToMove);
+        var newQueue = queue.slice();
+        var trackToMove = queue[queueCursor + 1 + draggedTrack];
+        newQueue.splice(queueCursor + 1 + draggedTrack, 1);
+        newQueue.splice(queueCursor + draggedOverTrack, 0, trackToMove);
 
         this.setState({
             draggedOverTrack : null,
             draggedTrack     : null
         });
 
-        AppActions.queue.setPlaylist(newPlaylist);
+        AppActions.queue.setQueue(newQueue);
     }
 
     dragOver(e) {

@@ -39,10 +39,10 @@ export default {
         });
     },
 
-    setPlaylist: function(playlist) {
+    setQueue: function(queue) {
         AppDispatcher.dispatch({
-            actionType : AppConstants.APP_QUEUE_SET_PLAYLIST,
-            playlist   : playlist
+            actionType : AppConstants.APP_QUEUE_SET_QUEUE,
+            queue      : queue
         });
     }
 }
