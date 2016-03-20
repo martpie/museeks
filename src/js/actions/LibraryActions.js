@@ -113,7 +113,7 @@ export default {
 
                     if(filesListFiltered.length > 0) {
                         // Fake sync async loop
-                        (function forloop(i){
+                        (function forloop(i) {
                             if(i < filesListFiltered.length) {
 
                                 var file   = filesListFiltered[i];

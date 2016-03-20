@@ -6,8 +6,8 @@ const path     = require('path');
 const teeny    = require('teeny-conf');
 const electron = require('electron');
 
-const app              = electron.app;               // Module to control application life.
-const BrowserWindow    = electron.BrowserWindow;      // Module to create native browser window.
+const app              = electron.app;              // Module to control application life.
+const BrowserWindow    = electron.BrowserWindow;    // Module to create native browser window.
 const ipcMain          = electron.ipcMain;          // Communication with the renderer process
 const Menu             = electron.Menu;             // Chromium menu API
 const powerSaveBlocker = electron.powerSaveBlocker; // Sleep mode management
