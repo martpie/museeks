@@ -215,7 +215,15 @@ export default class ArtistList extends Component {
                     if(selected.indexOf(tracks[i]._id) > -1) break;
                 }
 
-                if(i - 1 >= 0) this.setState({ selected : tracks[i - 1]._id });
+                if(i - 1 >= 0) {
+                    this.setState({ selected : tracks[i - 1]._id });
+
+                    // Scroll if needed
+                    var node = document.querySelector('.tracks-list-container .tracks-list-body .track.selected'); // Get the first selected track
+                    var container = document.querySelector('.tracks-list-container .tracks-list-body');
+
+                    if(node !== null && container !== null && node.getBoundingClientRect().top < container.getBoundingClientRect().top) container.scrollTop -= node.offsetHeight;
+                }
                 break;
 
             case 40: // down
@@ -227,7 +235,15 @@ export default class ArtistList extends Component {
                     if(selected.indexOf(tracks[i]._id) > -1) break;
                 }
 
-                if(i + 1 < tracks.length) this.setState({ selected : tracks[i + 1]._id });
+                if(i + 1 < tracks.length) {
+                    this.setState({ selected : tracks[i + 1]._id });
+
+                    // Scroll if needed
+                    var node = document.querySelector('.tracks-list-container .tracks-list-body .track.selected'); // Get the first selected track
+                    var container = document.querySelector('.tracks-list-container .tracks-list-body');
+
+                    if(node !== null && container !== null && node.getBoundingClientRect().bottom > container.getBoundingClientRect().bottom) container.scrollTop += node.offsetHeight;
+                }
                 break;
 
             case 13: // enter

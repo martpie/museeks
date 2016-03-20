@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import TracksList from './TracksList.react';
+import TracksList from '../Shared/TracksList.react';
 
 
 
