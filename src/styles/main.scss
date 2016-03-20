@@ -7,6 +7,8 @@
 @import 'themes/theme-light';
 @import 'themes/theme-dark';
 
+$main-color: #459CE7;
+
 
 
 /*
@@ -277,7 +279,7 @@ header {
 .nav-pills>li.active>a:focus,
 .nav-pills>li.active>a:hover {
     background-color: transparent;
-    color: #459CE7;
+    color: $main-color;
 }
 
 
@@ -517,7 +519,7 @@ header {
                 background-color: rgb(219, 219, 219);
 
                 .progress-bar {
-                    background-color: #459CE7;
+                    background-color: $main-color;
                     -webkit-transition: none;
                     -o-transition: none;
                     transition: none;
@@ -693,7 +695,7 @@ footer {
             }
 
             &.btn-default.active {
-                color: #459CE7;
+                color: $main-color;
             }
         }
     }
@@ -856,7 +858,7 @@ footer {
         height: 5px;
 
         .progress-bar {
-            background-color: #459CE7;
+            background-color: $main-color;
         }
     }
 }
@@ -925,7 +927,7 @@ footer {
                         }
 
                         &.selected {
-                            background-color: #459CE7;
+                            background-color: $main-color;
                             color: white;
                         }
 
