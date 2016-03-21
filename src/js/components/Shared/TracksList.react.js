@@ -44,7 +44,8 @@ export default class ArtistList extends Component {
         var tracksChunked = utils.chunkArray(tracks, chunkLength);
         var tilesScrolled = Math.floor(this.state.scrollTop / tileHeight)
 
-        var trackTiles = tracksChunked.splice(tilesScrolled, tilesToDisplay).map((tracksChunk, indexChunk) => {
+        // Tiles and chunks
+        var trackTiles = tracksChunked.splice(Math.max(0, tilesScrolled - 1), tilesScrolled > 0 ? tilesToDisplay : tilesToDisplay - 1).map((tracksChunk, indexChunk) => {
 
             var list = tracksChunk.map((track, index) => {
 
@@ -79,8 +80,10 @@ export default class ArtistList extends Component {
                 );
             });
 
+            var invertedTranslation = tilesScrolled > 0 ? 25 * chunkLength : 0;
+
             return (
-                <div className='tracks-list-tile' key={ indexChunk } style={{ transform: 'translate3d(0, ' + ((tilesScrolled * 25 * chunkLength) + (indexChunk * 25 * chunkLength))  + 'px, 0)'}}>
+                <div className='tracks-list-tile' key={ indexChunk } style={{ transform: 'translate3d(0, ' + (((tilesScrolled * 25 * chunkLength) + (indexChunk * 25 * chunkLength)) - invertedTranslation) + 'px, 0)'}}>
                     { list }
                 </div>
             );
@@ -222,6 +225,7 @@ export default class ArtistList extends Component {
                     var node = document.querySelector('.tracks-list-container .tracks-list-body .track.selected'); // Get the first selected track
                     var container = document.querySelector('.tracks-list-container .tracks-list-body');
 
+                    // TODO Problem if container is not drawned
                     if(node !== null && container !== null && node.getBoundingClientRect().top < container.getBoundingClientRect().top) container.scrollTop -= node.offsetHeight;
                 }
                 break;
@@ -266,14 +270,14 @@ export default class ArtistList extends Component {
 
         var items = this.state.selected.length;
 
-        ipcRenderer.send('artistListContextMenu', items);
+        ipcRenderer.send('tracksListContextMenu', items);
     }
 
     componentDidMount() {
 
         var self = this;
 
-        ipcRenderer.on('artistListContextMenuReply', (event, reply) => {
+        ipcRenderer.on('tracksListContextMenuReply', (event, reply) => {
 
             var selected = self.state.selected;
 
