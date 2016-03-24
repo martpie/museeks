@@ -87,6 +87,25 @@ export default {
     },
 
     /**
+     * Strip accent from String. From https://jsperf.com/strip-accents
+     *
+     * @param String str
+     * @return String
+     */
+    stripAccents(str) {
+
+        var accents = "ÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÒÓÔÕÖÙÚÛÜÝàáâãäåçèéêëìíîïðòóôõöùúûüýÿñ",
+            fixes = "aaaaaaceeeeiiiiooooouuuuyaaaaaaceeeeiiiioooooouuuuyyn",
+            reg = new RegExp("(" + accents.split("").join("|") + ")", "g");
+
+        function replacement(a){
+            return fixes[accents.indexOf(a)] || "";
+        }
+
+        return str.replace(reg, replacement).toLowerCase();
+    },
+
+    /**
      * Remove duplicates (realpath) and useless children folders
      *
      * @param array the array of folders path

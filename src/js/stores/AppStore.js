@@ -139,7 +139,7 @@ AppDispatcher.register(function(payload) {
 
         case(AppConstants.APP_FILTER_SEARCH):
 
-            var search = payload.search;
+            var search = utils.stripAccents(payload.search);
 
             var library = AppStore.library;
             var tracks  = [];
@@ -150,10 +150,10 @@ AppDispatcher.register(function(payload) {
 
                 if(search != '' && search != undefined) {
 
-                    if(track.loweredMetas.artist.join(', ').indexOf(search) === -1
-                        && track.album.toLowerCase().indexOf(search) === -1
-                        && track.loweredMetas.genre.join(', ').toLowerCase().indexOf(search) === -1
-                        && track.title.toLowerCase().indexOf(search) === -1) {
+                    if(utils.stripAccents(track.loweredMetas.artist.join(', ')).indexOf(search) === -1
+                        && utils.stripAccents(track.album.toLowerCase()).indexOf(search) === -1
+                        && utils.stripAccents(track.loweredMetas.genre.join(', ')).toLowerCase().indexOf(search) === -1
+                        && utils.stripAccents(track.title.toLowerCase().indexOf(search) === -1) {
 
                         continue;
 
