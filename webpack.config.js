@@ -5,7 +5,7 @@ module.exports = {
     entry: {
         main: ['./src/js/main.js']
     },
-    target: 'atom',
+    target: 'electron',
     output: {
         path: './src/dist',
         filename: 'bundle.js',
