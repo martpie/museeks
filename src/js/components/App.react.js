@@ -49,12 +49,13 @@ export default class Museeks extends Component {
                             this.props.children, {
                                 app               : this,
                                 config            : this.state.config,
-                                queue          : this.state.queue,
+                                queue             : this.state.queue,
                                 tracks            : this.state.tracks,
                                 library           : this.state.library,
-                                trackPlayingID    : trackPlayingID,
+                                playlists         : this.state.playlists,
                                 refreshingLibrary : this.state.refreshingLibrary,
-                                refreshProgress   : this.state.refreshProgress
+                                refreshProgress   : this.state.refreshProgress,
+                                trackPlayingID    : trackPlayingID
                             })
                         }
                     </Row>

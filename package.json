@@ -34,7 +34,8 @@
     "react-simple-input": "0.2.1",
     "svg-inline-react": "0.3.1",
     "teeny-conf": "0.2.1",
-    "walk-sync": "0.2.6"
+    "walk-sync": "0.2.6",
+    "wav-file-info": "0.0.7"
   },
   "devDependencies": {
     "babel-core": "6.6.5",

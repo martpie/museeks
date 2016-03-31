@@ -30,10 +30,15 @@ var AppStore = objectAssign({}, EventEmitter.prototype, {
 
     library           :  null,  // All tracks
     tracks            :  null,  // All tracks shown on the view
+
     queue             :  [],    // Tracks to be played
     queueCursor       :  null,  // The cursor of the queue
+
     oldQueue          :  null,  // Queue backup
     oldQueueCursor    :  null,  // The last cursor backup (to roll stuff back, e.g. unshuffle)
+
+    playlists         :  null,
+
     playerStatus      : 'stop', // Player status
     notifications     :  [],    // The array of notifications
     refreshingLibrary :  false, // If the app is currently refreshing the app
@@ -47,6 +52,7 @@ var AppStore = objectAssign({}, EventEmitter.prototype, {
             notifications     : this.notifications,
             library           : this.library,
             tracks            : this.tracks,
+            playlists         : this.playlists,
             queue             : this.queue,
             queueCursor       : this.queueCursor,
             playerStatus      : this.playerStatus,
@@ -459,6 +465,12 @@ AppDispatcher.register(function(payload) {
             AppStore.notifications = AppStore.notifications.filter((elem) => {
                 return elem._id !== payload._id;
             });
+            AppStore.emit(CHANGE_EVENT);
+            break;
+
+        case(AppConstants.APP_PLAYLISTS_REFRESH):
+            var playlists = payload.playlists;
+            AppStore.playlists = playlists;
             AppStore.emit(CHANGE_EVENT);
             break;
     }

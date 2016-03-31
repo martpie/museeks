@@ -7,6 +7,7 @@ const globalShortcut = electron.remote.globalShortcut;
 const ipcRenderer    = electron.ipcRenderer;
 
 import LibraryActions       from './LibraryActions';
+import PlaylistsActions     from './PlaylistsActions';
 import NotificationsActions from './NotificationsActions';
 import PlayerActions        from './PlayerActions';
 import QueueActions         from './QueueActions';
@@ -17,6 +18,7 @@ import SettingsActions      from './SettingsActions';
 var AppActions = {
 
     player        : PlayerActions,
+    playlists     : PlaylistsActions,
     queue         : QueueActions,
     library       : LibraryActions,
     settings      : SettingsActions,
@@ -26,6 +28,7 @@ var AppActions = {
 
         // Usual tasks
         this.library.refreshTracks();
+        this.playlists.refresh();
         this.settings.checkTheme();
         this.settings.checkDevMode();
         this.app.initShortcuts();

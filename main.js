@@ -99,7 +99,42 @@ app.on('ready', function() {
     });
 
     // IPC events
-    ipcMain.on('artistListContextMenu', (event, items) => {
+    ipcMain.on('tracksListContextMenu', (event, items, playlists) => {
+
+        var playlistTemplate;
+
+        if(playlists === undefined) {
+            playlistTemplate = [
+                {
+                    label: 'Create new playlist...',
+                    click: function() {
+                        event.sender.send('tracksListContextMenuReply', 'createPlaylist')
+                    }
+                },
+                {
+                    type: 'separator'
+                },
+                {
+                    label: 'No playlist',
+                    enabled: false
+                }
+            ]
+        } else {
+            playlistTemplate = [
+                {
+                    label: 'Create new playlist...',
+                    click: function() {
+                        event.sender.send('tracksListContextMenuReply', 'createPlaylist')
+                    }
+                },
+                {
+                    type: 'separator'
+                },
+                {
+                    label: 'List playlists here',
+                }
+            ]
+        }
 
         var template = [
             {
@@ -110,16 +145,23 @@ app.on('ready', function() {
                 type: 'separator'
             },
             {
-                label : 'Add to queue',
-                click :  function() {
-                    event.sender.send('artistListContextMenuReply', 'addToQueue');
+                label: 'Add to queue',
+                click:  function() {
+                    event.sender.send('tracksListContextMenuReply', 'addToQueue');
                 }
             },
             {
-                label : 'Play next',
-                click :  function() {
-                    event.sender.send('artistListContextMenuReply', 'playNext');
+                label: 'Play next',
+                click:  function() {
+                    event.sender.send('tracksListContextMenuReply', 'playNext');
                 }
+            },
+            {
+                type: 'separator'
+            },
+            {
+                label: 'Add to playlist',
+                submenu: playlistTemplate
             }
         ];
 

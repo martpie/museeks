@@ -25,7 +25,7 @@ export default class Library extends Component {
         if(this.props.library === null) {
             content = (
                 <div className='full-message'>
-                    <p>{ 'Loadin\' stuff...' }</p>
+                    <p>Loading library...</p>
                 </div>
             );
         }
@@ -54,7 +54,7 @@ export default class Library extends Component {
         }
 
         return (
-            <div className='view view-library-list' >
+            <div className='view view-library' >
                 { content }
             </div>
         );

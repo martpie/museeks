@@ -33,6 +33,11 @@ export default class Footer extends Component {
                         <Icon name='align-justify' fixedWidth />
                     </Button>
                 </LinkContainer>
+                <LinkContainer to='/playlists' disabled={ this.props.refreshingLibrary }>
+                    <Button className='view-link'>
+                        <Icon name='star' fixedWidth />
+                    </Button>
+                </LinkContainer>
                 <LinkContainer to='/settings' disabled={ this.props.refreshingLibrary }>
                     <Button className='view-link'>
                         <Icon name='gear' fixedWidth />
