@@ -30,16 +30,32 @@ export default class Playlists extends Component {
             );
         }
         else {
+
+            var playlist = null;
+
+            for(var i = 0, length = this.props.playlists.length; i < length; i++) {
+
+                if(this.props.playlists[i]._id === this.props.params.id) {
+                    playlist = this.props.playlists[i];
+                    break;
+                }
+            }
+
             content = (
                 <div className='view view-playlists'>
                     <PlaylistsNav playlists={ this.props.playlists } />
                     { this.props.params.id !== null ? React.cloneElement(this.props.children, {
-                        playlistId : this.props.params.id
+                        playlist : playlist,
+                        trackPlayingID : this.props.trackPlayingID
                     }) : undefined }
                 </div>
             );
         }
 
         return content;
+    }
+
+    componentWillMount() {
+
     }
 }

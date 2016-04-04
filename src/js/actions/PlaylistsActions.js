@@ -9,7 +9,7 @@ var PlaylistsActions = {
 
     refresh: function() {
 
-        app.db.find({ type : 'playlist' }).sort({}).exec(function (err, playlists) {
+        app.db.find({ type : 'playlist' }).sort({ name : 1 }).exec(function (err, playlists) {
             if (err) throw err;
             else {
                 AppDispatcher.dispatch({

@@ -38,17 +38,17 @@ export default class PlaylistsNav extends Component {
 
         return (
             <div className='playlists-nav'>
-                <div className='playlists-nav-header'>
-                    <ButtonGroup>
-                        <Button bsStyle='link' bsSize='xs' onClick={ this.createPlaylist }>
-                            <Icon name='plus' />
-                        </Button>
-                    </ButtonGroup>
-                </div>
                 <div className='playlists-nav-body'>
                     <Nav stacked handleSelect={ () => {} }>
                         { nav }
                     </Nav>
+                </div>
+                <div className='playlists-nav-footer'>
+                    <ButtonGroup className='playlists-management'>
+                        <Button bsStyle='link' bsSize='xs' onClick={ this.createPlaylist }>
+                            <Icon name='plus' />
+                        </Button>
+                    </ButtonGroup>
                 </div>
             </div>
         );
@@ -56,7 +56,7 @@ export default class PlaylistsNav extends Component {
 
     createPlaylist() {
 
-        PlaylistsActions.create('Untitled');
+        PlaylistsActions.create('New playlist');
     }
 
     deletePlaylist(_id) {

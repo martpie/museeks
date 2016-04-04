@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import TracksList from '../Shared/TracksList.react.js'
+
 
 
 /*
@@ -18,11 +20,12 @@ export default class Playlists extends Component {
 
     render() {
 
-        var content;
-
         return (
             <div className='playlist'>
-                { this.props.playlistId }
+                <TracksList
+                    tracks={ [] }
+                    trackPlayingID={ this.props.trackPlayingID }
+                />
             </div>
         );
     }

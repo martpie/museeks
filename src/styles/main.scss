@@ -894,23 +894,52 @@ footer {
         background-color: $generic-lightgrey;
         max-height: 100%;
         overflow: auto;
+        position: relative;
 
-        .playlist-link {
-            margin-top: 0;
+        .playlists-nav-body {
 
-            &.active a {
-                background-color: $main-color;
-                color: $generic-white;
+            .playlist-link {
+                margin-top: 0;
+
+                &.active a {
+                    background-color: $main-color;
+                    color: $generic-white;
+                }
+
+                a {
+                    color: inherit;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    overflow: hidden;
+                }
             }
+        }
 
-            a {
-                color: inherit;
+        .playlists-nav-footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+
+            .playlists-management {
+                margin: 10px;
+                border: solid 1px #CCC;
+
+                button {
+                    text-align: center;
+                    color: #555;
+                    width: 22px;
+                    text-align: center;
+
+                    .fa {
+                        margin-right: 0;
+                    }
+                }
             }
         }
     }
 
     .playlist {
-        width: calc(100% - 75px);
+        width: calc(100% - 240px);
     }
 }
 
