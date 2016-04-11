@@ -1,10 +1,11 @@
 import nedb   from 'nedb';
 import fs     from 'fs';
 import path   from 'path';
-import remote from 'remote';
 import teeny  from 'teeny-conf';
 
 import AppActions from '../actions/AppActions';
+
+const remote = electron.remote;
 
 const app    = remote.require('app');
 const screen = remote.require('screen');
