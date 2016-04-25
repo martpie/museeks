@@ -77,7 +77,7 @@ app.on('ready', function() {
     // Browser Window options
     var mainWindowOption = {
         title     : 'Museeks',
-        icon      : './src/images/logos/museeks.png',
+        icon      :  path.join('src', 'images', 'logos', 'museeks.png'),
         x         :  bounds.x,
         y         :  bounds.y,
         width     :  bounds.width,
