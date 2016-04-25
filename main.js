@@ -76,6 +76,8 @@ app.on('ready', function() {
 
     // Browser Window options
     var mainWindowOption = {
+        title     : 'Museeks',
+        icon      : './src/images/logos/museeks.png',
         x         :  bounds.x,
         y         :  bounds.y,
         width     :  bounds.width,
@@ -83,7 +85,6 @@ app.on('ready', function() {
         minWidth  :  900,
         minHeight :  550,
         frame     :  false,
-        title     : 'Museeks',
         show      :  false
     };
 
