@@ -7,10 +7,11 @@ const teeny    = require('teeny-conf');
 const electron = require('electron');
 
 const app              = electron.app;              // Module to control application life.
-const BrowserWindow    = electron.BrowserWindow;    // Module to create native browser window.
 const ipcMain          = electron.ipcMain;          // Communication with the renderer process
-const Menu             = electron.Menu;             // Chromium menu API
 const powerSaveBlocker = electron.powerSaveBlocker; // Sleep mode management
+const nativeImage      = electron.nativeImage;
+const Menu             = electron.Menu;             // Chromium menu API
+const BrowserWindow    = electron.BrowserWindow;    // Module to create native browser window.
 
 
 var instance = {}; // use to keep some variables in mind
@@ -74,10 +75,12 @@ app.on('ready', function() {
         instance.sleepBlockerID = powerSaveBlocker.start('prevent-app-suspension');
     }
 
+    var museeksIcon = nativeImage.createFromPath(path.join(__dirname, 'src', 'images', 'logos', 'museeks.png'));
+
     // Browser Window options
     var mainWindowOption = {
         title     : 'Museeks',
-        icon      :  path.join('src', 'images', 'logos', 'museeks.png'),
+        icon      :  museeksIcon,
         x         :  bounds.x,
         y         :  bounds.y,
         width     :  bounds.width,
