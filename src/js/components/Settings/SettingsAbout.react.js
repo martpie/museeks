@@ -24,9 +24,15 @@ export default class ContributorsList extends Component {
     render() {
 
         var self = this;
-        
+
         // Don't add yourself here please, I'll do it myself
         var contributors = [
+            {
+                name: 'Alba de Zanet',
+                pseudo: 'Alba',
+                feature: 'Museeks logo',
+                url: 'https://www.behance.net/albadezanet'
+            },
             {
                 name: 'Moritz',
                 pseudo: 'mrzmyr',
@@ -43,7 +49,9 @@ export default class ContributorsList extends Component {
 
         var contributorsList = contributors.map(function(data, index) {
             return (
-                <li key={ index }>{ data.name } (<a href onClick={ self.openLink.bind(null, data.url) }>{ data.pseudo }</a>): { data.feature }</li>
+                <li key={ index }>
+                    { data.name } (<a href onClick={ self.openLink.bind(null, data.url) }>{ data.pseudo }</a>): { data.feature }
+                </li>
             )
         });
 
