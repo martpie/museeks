@@ -4,10 +4,10 @@
 |--------------------------------------------------------------------------
 */
 
-@import 'themes/theme-light';
-@import 'themes/theme-dark';
+@import "themes/theme-light";
+@import "themes/theme-dark";
 
-$main-color: #459CE7;
+@main-color: #459ce7;
 
 
 
@@ -45,11 +45,11 @@ button {
 
 ::-webkit-scrollbar {
     width: 5px;
-    background-color: #DDD;
+    background-color: #dddddd;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: rgba(0, 0, 0, .25);
+    background: rgba(0, 0, 0, 0.25);
 }
 
 
@@ -60,7 +60,7 @@ button {
 |--------------------------------------------------------------------------
 */
 
-input[type=range] {
+input[type="range"] {
     -webkit-appearance: none;
     outline: none;
     cursor: pointer;
@@ -70,16 +70,16 @@ input[type=range] {
         height: 12px;
         width: 12px;
         border-radius: 6px;
-        background-color: #FFF;
-        border: 1px solid #AAA;
+        background-color: #ffffff;
+        border: 1px solid #aaaaaa;
         position: relative;
         top: -5px;
     }
 
     &::-webkit-slider-runnable-track {
         -webkit-appearance: none;
-        background: #BBB;
-        border: solid 1px #999;
+        background: #bbbbbb;
+        border: solid 1px #999999;
         border-radius: 5px;
         height: 5px;
     }
@@ -117,20 +117,20 @@ header {
 
 @font-face {
     font-family: OpenSans;
-    src: url('../dist/assets/open-sans-fontface/fonts/Regular/OpenSans-Regular.ttf');
+    src: url("../dist/assets/open-sans-fontface/fonts/Regular/OpenSans-Regular.ttf");
 }
 
 
 @font-face {
     font-family: OpenSans;
-    src: url('../dist/assets/open-sans-fontface/fonts/Bold/OpenSans-Bold.ttf');
+    src: url("../dist/assets/open-sans-fontface/fonts/Bold/OpenSans-Bold.ttf");
     font-weight: bold;
 }
 
 
 @font-face {
     font-family: OpenSans;
-    src: url('../dist/assets/open-sans-fontface/fonts/Light/OpenSans-Light.ttf');
+    src: url("../dist/assets/open-sans-fontface/fonts/Light/OpenSans-Light.ttf");
     font-weight: 100;
 }
 
@@ -146,11 +146,11 @@ header {
     border-left-width: 5px;
     background-color: white;
 
-    &.alert-danger,
+    &.alert-danger
     &.alert-info,
     &.alert-warning,
     &.alert-success {
-        border-color: #ddd;
+        border-color: #dddddd;
     }
 
     &.alert-success {
@@ -178,7 +178,7 @@ header {
         &:active,
         &:focus,
         &:focus:active {
-            background-color: #FFF;
+            background-color: #ffffff;
         }
     }
 
@@ -254,15 +254,15 @@ header {
 }
 
 .form-control:focus {
-    border-color: #AAAAAA;
+    border-color: #aaaaaa;
     box-shadow: none;
 }
 
 .nav-pills>li>a {
-    transition: border-bottom ease-in-out .2s;
+    transition: border-bottom ease-in-out 0.2s;
     padding: 5px;
     outline: none;
-    color: #555;
+    color: #555555;
     font-weight: bold;
 }
 
@@ -279,7 +279,7 @@ header {
 .nav-pills>li.active>a:focus,
 .nav-pills>li.active>a:hover {
     background-color: transparent;
-    color: $main-color;
+    color: @main-color;
 }
 
 
@@ -298,7 +298,7 @@ header {
     z-index: 1000;
 
     .alert {
-        box-shadow: 0 5px 3px -5px rgba(0, 0, 0, .5);
+        box-shadow: 0 5px 3px -5px rgba(0, 0, 0, 0.5);
 
         &:not(:last-child) {
             margin-bottom: 5px;
@@ -324,7 +324,7 @@ header {
     padding: 10px;
     display: flex;
     align-items: center;
-    color: #555;
+    color: #555555;
 
 
     div[class*="col-"] {
@@ -341,17 +341,17 @@ header {
                 width: 30px;
                 height: 30px;
                 font-size: 18px;
-                color: #555;
+                color: #555555;
                 border: 0;
-                transition: all .2s ease-in-out;
+                transition: all 0.2s ease-in-out;
                 text-align: center;
                 line-height: 22px;
                 background-color: transparent;
                 -webkit-app-region: no-drag;
 
                 &:active {
-                    background-color: #DFDFDF;
-                    border: solid 1px #B8B8B8;
+                    background-color: #dfdfdf;
+                    border: solid 1px #b8b8b8;
                 }
             }
         }
@@ -396,7 +396,7 @@ header {
                     display: block;
                 }
 
-                input[type=range] {
+                input[type="range"] {
                     width: 88px;
                     height: 20px;
                     background-color: transparent;
@@ -474,9 +474,9 @@ header {
 
             .playing-bar-tooltip {
                 position: fixed;
-                background-color: #FFF;
-                border: 1px solid #CECECE;
-                color: #555;
+                background-color: #ffffff;
+                border: 1px solid #cecece;
+                color: #555555;
                 font-size: 10px;
                 padding: 2px 5px;
                 top: 10px;
@@ -498,7 +498,7 @@ header {
                     left: 5px;
 
                     /* If 1px darken stroke slightly */
-                    border-top-color: #CECECE;
+                    border-top-color: #cecece;
                     border-width: 6px;
                 }
 
@@ -506,7 +506,7 @@ header {
                 &::after {
                     top: 18px;
                     left: 6px;
-                    border-top-color: #FFF;
+                    border-top-color: #ffffff;
                     border-width: 5px;
                 }
             }
@@ -519,7 +519,7 @@ header {
                 background-color: rgb(219, 219, 219);
 
                 .progress-bar {
-                    background-color: $main-color;
+                    background-color: @main-color;
                     -webkit-transition: none;
                     -o-transition: none;
                     transition: none;
@@ -550,7 +550,7 @@ header {
             color: grey;
             right: 20%;
             top: 30px;
-            box-shadow: 0 5px 3px -5px rgba(0, 0, 0, .5);
+            box-shadow: 0 5px 3px -5px rgba(0, 0, 0, 0.5);
 
             &.visible {
                 display: block;
@@ -589,12 +589,12 @@ header {
                     -webkit-user-drag: element;
 
                     &:not(:last-child) {
-                        border-bottom: dashed 1px #D8D8D8;
+                        border-bottom: dashed 1px #d8d8d8;
                     }
 
                     &::before,
                     &::after {
-                        content: '';
+                        content: "";
                         display: block;
                         background-color: #f4f4f4;
                         padding: 0;
@@ -643,7 +643,7 @@ header {
                         &:hover,
                         &:focus,
                         &:active {
-                            color: #555;
+                            color: #555555;
                             text-decoration: none;
                         }
                     }
@@ -670,7 +670,7 @@ footer {
     position: fixed;
     bottom: 1px;
     width: calc(100% - 2px);
-    border-top: 1px solid #AAA;
+    border-top: 1px solid #aaaaaa;
     padding-top: 5px;
     padding-bottom: 5px;
     background-color: rgb(244, 244, 244);
@@ -695,7 +695,7 @@ footer {
             }
 
             &.btn-default.active {
-                color: $main-color;
+                color: @main-color;
             }
         }
     }
@@ -705,7 +705,7 @@ footer {
         font-size: 12px;
         padding-top: 7px;
         padding-bottom: 7px;
-        color: #888;
+        color: #888888;
     }
 }
 
@@ -755,7 +755,7 @@ footer {
 
 .full-message {
     font-size: 25px;
-    color: #BBB;
+    color: #bbbbbb;
     font-weight: 100;
     padding: 30px;
     margin: auto;
@@ -844,7 +844,7 @@ footer {
             cursor: pointer;
 
             &.disabled {
-                color: #CCC;
+                color: #cccccc;
                 cursor: default;
             }
         }
@@ -858,7 +858,7 @@ footer {
         height: 5px;
 
         .progress-bar {
-            background-color: $main-color;
+            background-color: @main-color;
         }
     }
 }
@@ -883,7 +883,7 @@ footer {
             position: fixed;
             top: 52px;
             border-bottom: 1px solid rgb(210, 210, 210);
-            color: #555;
+            color: #555555;
             display: flex;
             width: calc(100% - 2px);
             background-color: white;
@@ -896,7 +896,7 @@ footer {
                 margin: 4px 0;
 
                 &:not(:last-child) {
-                    border-right: 1px solid #D2D2D2;
+                    border-right: 1px solid #d2d2d2;
                 }
 
                 &:last-child {
@@ -923,11 +923,11 @@ footer {
                         display: flex;
 
                         &:nth-child(odd) {
-                            background-color: #FAFAFA;
+                            background-color: #fafafa;
                         }
 
                         &.selected {
-                            background-color: $main-color;
+                            background-color: @main-color;
                             color: white;
                         }
 
@@ -976,8 +976,8 @@ footer {
 
     .react-simple-input {
         padding: 6px 12px;
-        border: 1px solid #C7C7C7;
-        color: #555;
+        border: 1px solid #c7c7c7;
+        color: #555555;
     }
 
     .react-simple-input-clear {
@@ -985,7 +985,7 @@ footer {
         right: 6px;
         top: 2px;
         font-size: 16px;
-        color: #777;
+        color: #777777;
         cursor: pointer;
         padding: 2px;
     }
