@@ -2,7 +2,8 @@ import AppDispatcher from '../dispatcher/AppDispatcher';
 import AppConstants  from '../constants/AppConstants';
 import AppActions    from './AppActions';
 
-import app from '../utils/app';
+import app   from '../utils/app';
+import utils from '../utils/utils';
 
 import mmd      from 'musicmetadata';
 import fs       from 'fs';
@@ -148,11 +149,11 @@ export default {
 
                                         // Formated metas for sorting
                                         metadata.loweredMetas = {
-                                            artist      : metadata.artist.map(meta => meta.toLowerCase()),
-                                            album       : metadata.album.toLowerCase(),
-                                            albumartist : metadata.albumartist.map(meta => meta.toLowerCase()),
-                                            title       : metadata.title.toLowerCase(),
-                                            genre       : metadata.genre.map(meta => meta.toLowerCase())
+                                            artist      : metadata.artist.map(meta => utils.stripAccents(meta.toLowerCase())),
+                                            album       : utils.stripAccents(metadata.album.toLowerCase()),
+                                            albumartist : metadata.albumartist.map(meta => utils.stripAccents(meta.toLowerCase())),
+                                            title       : utils.stripAccents(metadata.title.toLowerCase()),
+                                            genre       : metadata.genre.map(meta => utils.stripAccents(meta.toLowerCase()))
                                         }
 
                                         app.db.find({ path: metadata.path }, function (err, docs) {

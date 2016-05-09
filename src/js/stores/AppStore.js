@@ -166,9 +166,9 @@ AppDispatcher.register(function(payload) {
                 if(search != '' && search != undefined) {
 
                     if(utils.stripAccents(track.loweredMetas.artist.join(', ')).indexOf(search) === -1
-                        && utils.stripAccents(track.album.toLowerCase()).indexOf(search) === -1
-                        && utils.stripAccents(track.loweredMetas.genre.join(', ')).toLowerCase().indexOf(search) === -1
-                        && utils.stripAccents(track.title.toLowerCase().indexOf(search) === -1)) {
+                        && track.loweredMetas.album.indexOf(search) === -1
+                        && track.loweredMetas.genre.join(', ').indexOf(search) === -1
+                        && track.loweredMetas.title.indexOf(search) === -1) {
 
                         continue;
 
