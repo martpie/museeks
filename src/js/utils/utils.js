@@ -94,8 +94,6 @@ export default {
      */
     stripAccents(str) {
 
-        console.log(str)
-
         var accents = "ÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÒÓÔÕÖÙÚÛÜÝàáâãäåçèéêëìíîïðòóôõöùúûüýÿñ",
             fixes = "aaaaaaceeeeiiiiooooouuuuyaaaaaaceeeeiiiioooooouuuuyyn",
             reg = new RegExp("(" + accents.split("").join("|") + ")", "g");
