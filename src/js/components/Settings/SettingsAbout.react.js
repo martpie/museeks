@@ -24,6 +24,7 @@ export default class ContributorsList extends Component {
     render() {
 
         var self = this;
+        var museeksLogo = 'dist/' + require('../../../images/logos/museeks.png'); // sth wrong with that, need some check with Webpack
 
         // Don't add yourself here please, I'll do it myself
         var contributors = [
@@ -59,6 +60,7 @@ export default class ContributorsList extends Component {
             <div className='setting setting-about'>
                 <div className='setting-section'>
                     <h4>About Museeks</h4>
+                    <img src={ museeksLogo } className='logo-museeks' alt='Logo' title='Museeks logo' />
                     <p>
                         Museeks { electron.remote.app.getVersion() } - <a href onClick={ self.openLink.bind(null, 'http://museeks.io') }>museeks.io</a>
                         <Button bsSize='small'  className='update-checker' onClick={ this.checkForUpdate.bind(null) }>Check for update</Button>

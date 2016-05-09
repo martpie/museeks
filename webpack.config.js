@@ -9,7 +9,7 @@ module.exports = {
     output: {
         path: './src/dist',
         filename: 'bundle.js',
-        publicPath: './'
+        publicPath: ''
     },
     module: {
         loaders: [
@@ -28,8 +28,13 @@ module.exports = {
                 exclude: /node_modules/
             },
             {
-                test: /\.(eot|woff|ttf|png|jpg)([\?]?.*)$/,
-                loader: 'url-loader?limit=8192',
+                test: /\.(eot|woff|ttf)([\?]?.*)$/,
+                loader: 'url-loader?limit=8192&name=fonts/[name].[ext]',
+                exclude: /node_modules/
+            },
+            {
+                test: /\.(png|jpg)([\?]?.*)$/,
+                loader: 'file-loader?name=img/[name].[ext]',
                 exclude: /node_modules/
             },
             {
