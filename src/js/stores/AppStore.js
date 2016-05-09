@@ -95,46 +95,61 @@ AppDispatcher.register(function(payload) {
         case(AppConstants.APP_SELECT_AND_PLAY):
 
             var queue       = AppStore.tracks.slice();
-            var id          = payload.id;
-            var queueCursor = payload.id;
+            var id          = payload._id;
+            var queueCursor = null; // Clean that variable mess later
             var oldQueue    = queue;
 
-            var uri = utils.parseURI(queue[id].path);
-                app.audio.src = uri;
-                app.audio.play();
+            var queuePosition = null;
 
-            // Check if we have to shuffle the queue
-            if(AppStore.shuffle) {
+            for(var i = 0, length = queue.length; i < length; i++) {
 
-                var firstTrack = queue[id];
-
-                queue.splice(id, 1);
-
-                var m = queue.length, t, i;
-                while (m) {
-
-                    // Pick a remaining element…
-                    i = Math.floor(Math.random() * m--);
-
-                    // And swap it with the current element.
-                    t = queue[m];
-                    queue[m] = queue[i];
-                    queue[i] = t;
+                if(queue[i]._id === id) {
+                    queuePosition = i;
+                    queueCursor = i;
+                    break;
                 }
-
-                queue.unshift(firstTrack);
-
-                // Let's set the cursor to 0
-                queueCursor = 0;
             }
 
-            // Backup that and change the UI
-            AppStore.playerStatus   = 'play';
-            AppStore.queue          =  queue;
-            AppStore.queueCursor    =  queueCursor;
-            AppStore.oldQueue       =  queue;
-            AppStore.oldQueueCursor =  queueCursor;
-            AppStore.emit(CHANGE_EVENT);
+            if(queuePosition !== null) {
+
+                var uri = utils.parseURI(queue[queuePosition].path);
+                    app.audio.src = uri;
+                    app.audio.play();
+
+                // Check if we have to shuffle the queue
+                if(AppStore.shuffle) {
+
+                    var firstTrack = queue[id];
+
+                    queue.splice(id, 1);
+
+                    var m = queue.length, t, i;
+                    while (m) {
+
+                        // Pick a remaining element…
+                        i = Math.floor(Math.random() * m--);
+
+                        // And swap it with the current element.
+                        t = queue[m];
+                        queue[m] = queue[i];
+                        queue[i] = t;
+                    }
+
+                    queue.unshift(firstTrack);
+
+                    // Let's set the cursor to 0
+                    queueCursor = 0;
+                }
+
+                // Backup that and change the UI
+                AppStore.playerStatus   = 'play';
+                AppStore.queue          =  queue;
+                AppStore.queueCursor    =  queueCursor;
+                AppStore.oldQueue       =  queue;
+                AppStore.oldQueueCursor =  queueCursor;
+                AppStore.emit(CHANGE_EVENT);
+            }
+
             break;
 
         case(AppConstants.APP_FILTER_SEARCH):

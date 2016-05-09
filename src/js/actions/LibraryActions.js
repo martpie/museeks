@@ -28,11 +28,11 @@ export default {
         });
     },
 
-    selectAndPlay: function(id) {
+    selectAndPlay: function(_id) {
 
         AppDispatcher.dispatch({
             actionType : AppConstants.APP_SELECT_AND_PLAY,
-            id         : id
+            _id         : _id
         });
     },
 
