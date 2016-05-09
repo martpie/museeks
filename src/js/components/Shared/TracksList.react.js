@@ -298,6 +298,6 @@ export default class ArtistList extends Component {
     }
 
     componentWillUnmount() {
-        ipcRenderer.removeAllListeners('artistListContextMenuReply');
+        ipcRenderer.removeAllListeners('tracksListContextMenuReply');
     }
 }

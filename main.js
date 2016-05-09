@@ -103,7 +103,7 @@ app.on('ready', function() {
     });
 
     // IPC events
-    ipcMain.on('artistListContextMenu', (event, items) => {
+    ipcMain.on('tracksListContextMenu', (event, items) => {
 
         var template = [
             {
@@ -116,13 +116,13 @@ app.on('ready', function() {
             {
                 label : 'Add to queue',
                 click :  function() {
-                    event.sender.send('artistListContextMenuReply', 'addToQueue');
+                    event.sender.send('tracksListContextMenuReply', 'addToQueue');
                 }
             },
             {
                 label : 'Play next',
                 click :  function() {
-                    event.sender.send('artistListContextMenuReply', 'playNext');
+                    event.sender.send('tracksListContextMenuReply', 'playNext');
                 }
             }
         ];
@@ -142,6 +142,7 @@ app.on('ready', function() {
             delete(instance.sleepBlockerID);
         }
     });
+
 
     ipcMain.on('appReady', (event, toggle, mode) => {
         mainWindow.show();
