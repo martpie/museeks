@@ -69,7 +69,7 @@ export default class ContributorsList extends Component {
                 <div className='setting-section'>
                     <h4>Contributors</h4>
                     <div className='contributors-list'>
-                        <p>Made with <span className='heart'>♥</span> by Pierre de la Martinière (<a href onClick={ this.openLink.bind(null, 'http://github.com/KeitIG') }>KeitIG</a>) and a bunch of great guys:</p>
+                        <p>Made with <span className='heart'>♥</span> by Pierre de la Martinière (<a href onClick={ this.openLink.bind(null, 'http://github.com/KeitIG') }>KeitIG</a>) and a bunch of great people:</p>
                         <ul>
                             { contributorsList }
                         </ul>
