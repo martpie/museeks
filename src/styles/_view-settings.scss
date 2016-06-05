@@ -1,0 +1,92 @@
+/*
+|--------------------------------------------------------------------------
+| View - Settings
+|--------------------------------------------------------------------------
+*/
+
+.view-settings {
+
+    .settings-switcher .nav.nav-pills {
+        margin: 10px 15px;
+    }
+
+    .tab-content {
+        border-top: 1px solid #d2d2d2;
+        padding: 10px 15px;
+
+        .setting-section:not(:first-child) {
+            margin-top: 25px;
+        }
+    }
+}
+
+
+
+/*
+|--------------------------------------------------------------------------
+| View - About
+|--------------------------------------------------------------------------
+*/
+
+.view-settings .setting-about {
+
+    .heart {
+        color: #c70000;
+    }
+
+    button.update-checker {
+        margin-left: 10px;
+    }
+
+    .logo-museeks {
+        display: block;
+        width: 70px;
+    }
+}
+
+
+
+/*
+|--------------------------------------------------------------------------
+| View - Settings - Library
+|--------------------------------------------------------------------------
+*/
+
+.view-settings .settings-musicfolder {
+
+    .musicfolders-list {
+        margin: 0 0 10px 0;
+        padding: 10px;
+        list-style: none;
+        border: 1px solid lightgrey;
+
+        &.empty {
+            margin: 0;
+            padding: 0;
+            border: 0;
+        }
+
+        .delete-libray-folder {
+            margin-right: 5px;
+            color: #d9534f;
+            cursor: pointer;
+
+            &.disabled {
+                color: #CCC;
+                cursor: default;
+            }
+        }
+    }
+
+    .library-refresh-progress.progress {
+        display: inline-block;
+        width: 200px;
+        margin: 10px;
+        vertical-align: middle;
+        height: 5px;
+
+        .progress-bar {
+            background-color: $main-color;
+        }
+    }
+}

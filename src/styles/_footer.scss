@@ -1,0 +1,48 @@
+/*
+|--------------------------------------------------------------------------
+| Footer
+|--------------------------------------------------------------------------
+*/
+
+footer {
+    position: fixed;
+    bottom: 1px;
+    width: calc(100% - 2px);
+    border-top: 1px solid #AAA;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    background-color: rgb(244, 244, 244);
+    padding: 0;
+
+    .view-switcher {
+
+        .btn {
+            background-color: transparent;
+            border-top: 0;
+            border-bottom: 0;
+
+            &.btn-default:hover {
+                background-color: transparent;
+            }
+
+            &.btn-default.active,
+            &.btn-default:active {
+                box-shadow: none;
+                -webkit-box-shadow: none;
+                background-color: #e6e6e6;
+            }
+
+            &.btn-default.active {
+                color: $main-color;
+            }
+        }
+    }
+
+
+    .status {
+        font-size: 12px;
+        padding-top: 7px;
+        padding-bottom: 7px;
+        color: #888;
+    }
+}
