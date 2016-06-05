@@ -30,11 +30,11 @@ export default class Queue extends Component {
         var queue       = this.props.queue;
         var queueCursor = this.props.queueCursor;
 
-        var queue = queue.slice(queueCursor + 1, queueCursor + 21); // Get the 20 next tracks displayed
+        var shownQueue = queue.slice(queueCursor + 1, queueCursor + 21); // Get the 20 next tracks displayed
 
-        var wholeQueue = queue.slice(queueCursor + 1);
+        var incomingQueue = queue.slice(queueCursor + 1);
 
-        if(queue.length == 0) {
+        if(shownQueue.length == 0) {
             return(
                 <div className={ this.props.showQueue ? 'queue visible text-left' : 'queue text-left' }>
                     <div className='empty-queue text-center'>
@@ -44,7 +44,7 @@ export default class Queue extends Component {
             );
         } else {
 
-            var queueContent = queue.map(function (track, index) {
+            var queueContent = shownQueue.map(function (track, index) {
 
                 var classes = 'track';
 
@@ -86,7 +86,7 @@ export default class Queue extends Component {
             <div className={ this.props.showQueue ? 'queue visible text-left' : 'queue text-left' }>
                 <div className='queue-header'>
                     <div className='queue-infos'>
-                        { utils.getStatus(wholeQueue) }
+                        { utils.getStatus(incomingQueue) }
                     </div>
                     <ButtonGroup>
                         <Button bsSize={'xsmall'} bsStyle={'default'} className='empty-button' onClick={ this.clearQueue }>
