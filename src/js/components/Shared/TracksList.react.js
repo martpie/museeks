@@ -263,7 +263,7 @@ export default class ArtistList extends Component {
                 for(var length = tracks.length; i < length; i++) {
                     if(selected.indexOf(tracks[i]._id) > -1) break;
                 }
-                if(i !== undefined) AppActions.library.selectAndPlay(i);
+                if(i !== undefined) AppActions.library.selectAndPlay(tracks[i]._id);
                 break;
         }
     }
