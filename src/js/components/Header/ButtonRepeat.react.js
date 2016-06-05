@@ -21,8 +21,8 @@ export default class ButtonRepeat extends Component {
 
     render() {
 
-        var repeatButton = <button></button>;
-        var svg;
+        let repeatButton = <button></button>;
+        let svg;
 
         if (this.props.repeat == 'one') {
             svg = require('../../../images/icons/player-repeat-one.svg');

@@ -23,11 +23,11 @@ export default class ContributorsList extends Component {
 
     render() {
 
-        var self = this;
-        var museeksLogo = 'dist/' + require('../../../images/logos/museeks.png'); // sth wrong with that, need some check with Webpack
+        let self = this;
+        let museeksLogo = 'dist/' + require('../../../images/logos/museeks.png'); // sth wrong with that, need some check with Webpack
 
         // Don't add yourself here please, I'll do it myself
-        var contributors = [
+        let contributors = [
             {
                 name: 'Alba de Zanet',
                 pseudo: 'Alba',
@@ -48,7 +48,7 @@ export default class ContributorsList extends Component {
             }
         ];
 
-        var contributorsList = contributors.map(function(data, index) {
+        let contributorsList = contributors.map(function(data, index) {
             return (
                 <li key={ index }>
                     { data.name } (<a href onClick={ self.openLink.bind(null, data.url) }>{ data.pseudo }</a>): { data.feature }

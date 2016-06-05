@@ -32,24 +32,24 @@ export default class ArtistList extends Component {
 
     render() {
 
-        var self           = this,
+        let self           = this,
             selected       = this.state.selected,
             tracks         = this.props.tracks,
             trackPlayingID = this.props.trackPlayingID;
 
-        var chunkLength = 20;
-        var tilesToDisplay = 5;
-        var tileHeight = 25 * chunkLength;
+        let chunkLength = 20;
+        let tilesToDisplay = 5;
+        let tileHeight = 25 * chunkLength;
 
-        var tracksChunked = utils.chunkArray(tracks, chunkLength);
-        var tilesScrolled = Math.floor(this.state.scrollTop / tileHeight)
+        let tracksChunked = utils.chunkArray(tracks, chunkLength);
+        let tilesScrolled = Math.floor(this.state.scrollTop / tileHeight)
 
         // Tiles and chunks
-        var trackTiles = tracksChunked.splice(Math.max(0, tilesScrolled - 1), tilesScrolled > 0 ? tilesToDisplay : tilesToDisplay - 1).map((tracksChunk, indexChunk) => {
+        let trackTiles = tracksChunked.splice(Math.max(0, tilesScrolled - 1), tilesScrolled > 0 ? tilesToDisplay : tilesToDisplay - 1).map((tracksChunk, indexChunk) => {
 
-            var list = tracksChunk.map((track, index) => {
+            let list = tracksChunk.map((track, index) => {
 
-                var playing = undefined;
+                let playing = undefined;
 
                 if(trackPlayingID != null) {
                     if(track._id == trackPlayingID) playing = <Icon name='volume-up' fixedWidth />;
@@ -86,7 +86,7 @@ export default class ArtistList extends Component {
                 );
             });
 
-            var invertedTranslation = tilesScrolled > 0 ? 25 * chunkLength : 0;
+            let invertedTranslation = tilesScrolled > 0 ? 25 * chunkLength : 0;
 
             return (
                 <div className='tracks-list-tile' key={ indexChunk } style={{ transform: 'translate3d(0, ' + (((tilesScrolled * 25 * chunkLength) + (indexChunk * 25 * chunkLength)) - invertedTranslation) + 'px, 0)'}}>
@@ -121,13 +121,13 @@ export default class ArtistList extends Component {
 
     selectTrack(e, id, index) {
 
-        var self   = this;
-        var tracks = this.props.tracks;
+        let self   = this;
+        let tracks = this.props.tracks;
 
         if(e.button == 0 || (e.button == 2 && this.state.selected.indexOf(id) == -1 )) {
             if(e.ctrlKey) { // add one track in selected tracks
 
-                var selected = this.state.selected.slice();
+                let selected = this.state.selected.slice();
                 if(selected.indexOf(id) > -1) {
                     // remove track
                     selected.splice(selected.indexOf(id), 1);
@@ -142,7 +142,7 @@ export default class ArtistList extends Component {
             }
             else if (e.shiftKey) { // add multiple tracks in selected tracks
 
-                var selected = this.state.selected;
+                let selected = this.state.selected;
 
                 switch(selected.length) {
                     case 0:
@@ -150,10 +150,10 @@ export default class ArtistList extends Component {
                         this.setState({ selected : selected });
                         break;
                     case 1:
-                        var onlySelected = selected[0];
-                        var onlySelectedIndex;
+                        let onlySelected = selected[0];
+                        let onlySelectedIndex;
 
-                        for(var i = 0, length = tracks.length; i < length; i++) {
+                        for(let i = 0, length = tracks.length; i < length; i++) {
                             if(tracks[i]._id === onlySelected) {
                                 onlySelectedIndex = i;
                                 break;
@@ -161,11 +161,11 @@ export default class ArtistList extends Component {
                         }
 
                         if(index < onlySelectedIndex) {
-                            for(var i = 1; i <= Math.abs(index - onlySelectedIndex); i++) {
+                            for(let i = 1; i <= Math.abs(index - onlySelectedIndex); i++) {
                                 selected.push(tracks[onlySelectedIndex - i]._id);
                             }
                         } else if(index > onlySelectedIndex) {
-                            for(var i = 1; i <= Math.abs(index - onlySelectedIndex); i++) {
+                            for(let i = 1; i <= Math.abs(index - onlySelectedIndex); i++) {
                                 selected.push(tracks[onlySelectedIndex + i]._id);
                             }
                         }
@@ -173,30 +173,30 @@ export default class ArtistList extends Component {
                         self.setState({ selected : selected });
                         break;
                     default:
-                        var selectedInt = [];
+                        let selectedInt = [];
 
-                        for(var i = 0, length = tracks.length; i < length; i++) {
+                        for(let i = 0, length = tracks.length; i < length; i++) {
                             if(selected.indexOf(tracks[i]._id) > -1) {
                                 selectedInt.push(i);
                             }
                         }
 
-                        var base;
-                        var min = Math.min.apply(Math, selectedInt);
-                        var max = Math.max.apply(Math, selectedInt);
+                        let base;
+                        let min = Math.min.apply(Math, selectedInt);
+                        let max = Math.max.apply(Math, selectedInt);
 
                         if(index < min) {
                             base = max;
                         } else {
                             base = min;
                         }
-                        var newSelected = [];
+                        let newSelected = [];
                         if(index < min) {
-                            for(var i = 0; i <= Math.abs(index - base); i++) {
+                            for(let i = 0; i <= Math.abs(index - base); i++) {
                                 newSelected.push(tracks[base - i]._id);
                             }
                         } else if(index > max) {
-                            for(var i = 0; i <= Math.abs(index - base); i++) {
+                            for(let i = 0; i <= Math.abs(index - base); i++) {
                                 newSelected.push(tracks[base + i]._id);
                             }
                         }
@@ -206,7 +206,7 @@ export default class ArtistList extends Component {
                 }
             }
             else { // simple select
-                var selected = [id];
+                let selected = [id];
                 this.setState({ selected : selected });
             }
         }
@@ -214,13 +214,14 @@ export default class ArtistList extends Component {
 
     onKey(e) {
 
+        let selected = this.state.selected,
+            tracks   = this.props.tracks,
+            i        = 0;
+
         switch(e.keyCode) {
             case 38: // up
-                var selected = this.state.selected,
-                    tracks   = this.props.tracks,
-                    i        = 0;
 
-                for(var length = tracks.length; i < length; i ++) {
+                for(let length = tracks.length; i < length; i ++) {
                     if(selected.indexOf(tracks[i]._id) > -1) break;
                 }
 
@@ -228,8 +229,8 @@ export default class ArtistList extends Component {
                     this.setState({ selected : tracks[i - 1]._id });
 
                     // Scroll if needed
-                    var node = document.querySelector('.tracks-list-container .tracks-list-body .track.selected'); // Get the first selected track
-                    var container = document.querySelector('.tracks-list-container .tracks-list-body');
+                    let node = document.querySelector('.tracks-list-container .tracks-list-body .track.selected'); // Get the first selected track
+                    let container = document.querySelector('.tracks-list-container .tracks-list-body');
 
                     // TODO Problem if container is not drawned
                     if(node !== null && container !== null && node.getBoundingClientRect().top < container.getBoundingClientRect().top) container.scrollTop -= node.offsetHeight;
@@ -237,11 +238,8 @@ export default class ArtistList extends Component {
                 break;
 
             case 40: // down
-                var selected = this.state.selected,
-                    tracks   = this.props.tracks,
-                    i        = 0;
 
-                for(var length = tracks.length; i < length; i ++) {
+                for(let length = tracks.length; i < length; i ++) {
                     if(selected.indexOf(tracks[i]._id) > -1) break;
                 }
 
@@ -249,18 +247,16 @@ export default class ArtistList extends Component {
                     this.setState({ selected : tracks[i + 1]._id });
 
                     // Scroll if needed
-                    var node = document.querySelector('.tracks-list-container .tracks-list-body .track.selected'); // Get the first selected track
-                    var container = document.querySelector('.tracks-list-container .tracks-list-body');
+                    let node = document.querySelector('.tracks-list-container .tracks-list-body .track.selected'); // Get the first selected track
+                    let container = document.querySelector('.tracks-list-container .tracks-list-body');
 
                     if(node !== null && container !== null && node.getBoundingClientRect().bottom > container.getBoundingClientRect().bottom) container.scrollTop += node.offsetHeight;
                 }
                 break;
 
             case 13: // enter
-                var selected = this.state.selected,
-                    tracks   = this.props.tracks,
-                    i        = 0;
-                for(var length = tracks.length; i < length; i++) {
+
+                for(let length = tracks.length; i < length; i++) {
                     if(selected.indexOf(tracks[i]._id) > -1) break;
                 }
                 if(i !== undefined) AppActions.library.selectAndPlay(tracks[i]._id);
@@ -274,18 +270,18 @@ export default class ArtistList extends Component {
 
     showContextMenu() {
 
-        var items = this.state.selected.length;
+        let items = this.state.selected.length;
 
         ipcRenderer.send('tracksListContextMenu', items);
     }
 
     componentDidMount() {
 
-        var self = this;
+        let self = this;
 
         ipcRenderer.on('tracksListContextMenuReply', (event, reply) => {
 
-            var selected = self.state.selected;
+            let selected = self.state.selected;
 
             switch(reply) {
                 case 'addToQueue':

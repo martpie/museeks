@@ -21,8 +21,8 @@ export default class ButtonShuffle extends Component {
 
     render() {
 
-        var shuffleButton;
-        var svg = require('../../../images/icons/player-shuffle.svg');
+        let shuffleButton;
+        let svg = require('../../../images/icons/player-shuffle.svg');
 
         if(!this.props.shuffle) {
             shuffleButton = (

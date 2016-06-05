@@ -19,7 +19,7 @@ export default class Notifications extends Component {
 
     render() {
 
-        var notifications = this.props.notifications.map((notification, index) => <Notification type={ notification.type } content={ notification.content } key={ index } />);
+        let notifications = this.props.notifications.map((notification, index) => <Notification type={ notification.type } content={ notification.content } key={ index } />);
 
         return (
             <div className='notifications'>

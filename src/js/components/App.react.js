@@ -30,7 +30,7 @@ export default class Museeks extends Component {
 
     render() {
 
-        var trackPlayingID = (this.state.queue.length > 0 && this.state.queueCursor !== null) ? this.state.queue[this.state.queueCursor]._id : null;
+        let trackPlayingID = (this.state.queue.length > 0 && this.state.queueCursor !== null) ? this.state.queue[this.state.queueCursor]._id : null;
 
         return (
             <div className='main'>

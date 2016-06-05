@@ -31,7 +31,7 @@ export default class Header extends Component {
 
     render() {
 
-        var playButton = (
+        let playButton = (
             <button className='player-control play' onClick={ () => this.playToggle() }>
                 <Icon name={ this.props.playerStatus === 'play' ? 'pause' : 'play' } fixedWidth />
             </button>

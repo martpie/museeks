@@ -18,7 +18,7 @@ export default class Notifications extends Component {
 
     render() {
 
-        var type = this.props.type,
+        let type = this.props.type,
             content = this.props.content;
 
         return (

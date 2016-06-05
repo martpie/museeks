@@ -24,7 +24,7 @@ export default class Settings extends Component {
 
     render() {
 
-        var config = this.props.config;
+        let config = this.props.config;
 
         return (
             <div className='view view-settings'>

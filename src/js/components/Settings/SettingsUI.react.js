@@ -20,7 +20,7 @@ export default class ThemeSelector extends Component {
 
     render() {
 
-        var config = this.props.config;
+        let config = this.props.config;
 
         return (
             <div className='setting setting-theme-selector'>
