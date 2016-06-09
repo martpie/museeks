@@ -109,7 +109,7 @@ var AppActions = {
 
         checkForUpdate: function() {
 
-            var currentVersion = electron.remote.app.getVersion();
+            var currentVersion = app.version;
 
             var oReq = new XMLHttpRequest();
 

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
 
+import app   from '../../utils/app';
+
 import AppActions from '../../actions/AppActions';
 
 const shell = electron.shell;
@@ -62,7 +64,7 @@ export default class ContributorsList extends Component {
                     <h4>About Museeks</h4>
                     <img src={ museeksLogo } className='logo-museeks' alt='Logo' title='Museeks logo' />
                     <p>
-                        Museeks { electron.remote.app.getVersion() } - <a href onClick={ self.openLink.bind(null, 'http://museeks.io') }>museeks.io</a>
+                        Museeks { app.version } - <a href onClick={ self.openLink.bind(null, 'http://museeks.io') }>museeks.io</a>
                         <Button bsSize='small'  className='update-checker' onClick={ this.checkForUpdate.bind(null) }>Check for update</Button>
                     </p>
                 </div>

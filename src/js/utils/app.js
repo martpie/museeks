@@ -106,6 +106,7 @@ fs.writeFile(path.join(pathUserData, '.init'), "", (err) => { if(err) throw err;
 */
 
 export default {
+    version          : app.getVersion,   // Museeks version
     config           : conf,             // teeny-conf
     initialConfig    : conf.getAll(),    // the config at the start of the application
     db               : db,               // database
