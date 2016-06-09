@@ -6,6 +6,8 @@ import app from '../utils/app';
 const globalShortcut = electron.remote.globalShortcut;
 const ipcRenderer    = electron.ipcRenderer;
 
+import semver from 'semver';
+
 import LibraryActions       from './LibraryActions';
 import NotificationsActions from './NotificationsActions';
 import PlayerActions        from './PlayerActions';
@@ -111,13 +113,14 @@ var AppActions = {
 
             var oReq = new XMLHttpRequest();
 
-            oReq.onload = function (e) {
+            oReq.onload = (e) => {
 
                 var releases = e.currentTarget.response;
-
                 var updateVersion = null;
+
                 var isUpdateAvailable = releases.some((release) => {
-                    if(release.tag_name > currentVersion) {
+
+                    if(semver.gt(release.tag_name, currentVersion)) {
                         updateVersion = release.tag_name;
                         return true;
                     } else {
