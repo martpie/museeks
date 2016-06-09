@@ -7,8 +7,8 @@ import AppActions from '../actions/AppActions';
 
 const remote = electron.remote;
 
-const app    = remote.require('app');
-const screen = remote.require('screen');
+const app    = remote.app;
+const screen = remote.screen;
 
 
 
