@@ -238,10 +238,12 @@ AppDispatcher.register(function(payload) {
 
 
             if (queue[newQueueCursor] !== undefined) {
+
                 var uri = utils.parseURI(queue[newQueueCursor].path); ;
+
                 app.audio.src = uri;
                 app.audio.play();
-
+                AppStore.playerStatus = 'play';
                 AppStore.queueCursor = newQueueCursor;
 
             } else {
@@ -257,24 +259,21 @@ AppDispatcher.register(function(payload) {
             break;
 
         case(AppConstants.APP_PLAYER_PREVIOUS):
-            if (app.audio.currentTime < 5) {
 
-                var newQueueCursor = AppStore.queueCursor - 1;
+            var newQueueCursor = AppStore.queueCursor;
 
-            } else {
-
-                var newQueueCursor = AppStore.queueCursor
-            }
+            // If track started less than 5 seconds ago, play th previous track, otherwise replay the current one
+            if (app.audio.currentTime < 5) newQueueCursor = AppStore.queueCursor - 1;
 
             var newTrack = AppStore.queue[newQueueCursor];
 
             if (newTrack !== undefined) {
 
                 var uri = utils.parseURI(newTrack.path);
+
                 app.audio.src = uri;
-
                 app.audio.play();
-
+                AppStore.playerStatus = 'play';
                 AppStore.queueCursor = newQueueCursor;
 
             } else {
