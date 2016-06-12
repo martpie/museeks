@@ -5,10 +5,15 @@
 */
 
 import path from 'path';
+import fs      from 'fs';
+
+import mime    from 'mime';
+import mmd     from 'musicmetadata';
+import wavInfo from 'wav-file-info';
 
 
 
-export default {
+let utils = {
 
     /**
      * Parse an int to a more readable string
@@ -149,5 +154,120 @@ export default {
         }
 
         return chunks;
+    },
+
+    /**
+     * Get a file metadata
+     *
+     * @param file (string)
+     * @return object
+     *
+     */
+    getMetadata: function(file, callback) {
+
+        /* output should be something like this:
+            {
+                album        : null,
+                albumartist  : null,
+                artist       : null,
+                disk         : null,
+                duration     : null,
+                genre        : null,
+                loweredMetas : null,
+                path         : null,
+                playCount    : null,
+                title        : null,
+                track        : null,
+                type         : null,
+                year         : null
+            }
+        */
+
+        var type = mime.lookup(file);
+
+        if(['audio/wav', 'audio/x-wav', 'audio/wave', 'audio/x-pn-wav'].indexOf(type) > -1) { // If WAV
+
+            wavInfo.infoByFilename(file, function(err, info){
+
+                if (err) console.warn(err);
+
+                fs.realpath(file, (err, realpath) => {
+
+                    var metadata = {
+                       album        : 'Unknown',
+                       albumartist  : [],
+                       artist       : ['Unknown artist'],
+                       disk         : {
+                           no: 0,
+                           of: 0
+                       },
+                       duration     : info.duration,
+                       genre        : [],
+                       loweredMetas : {},
+                       path         : realpath,
+                       playCount    : 0,
+                       title        : path.parse(file).base,
+                       track        : {
+                           no: 0,
+                           of: 0
+                       },
+                       type         : 'track',
+                       year         : ''
+                   };
+
+                   metadata.loweredMetas = {
+                       artist      : metadata.artist.map(meta => utils.stripAccents(meta.toLowerCase())),
+                       album       : utils.stripAccents(metadata.album.toLowerCase()),
+                       albumartist : metadata.albumartist.map(meta => utils.stripAccents(meta.toLowerCase())),
+                       title       : utils.stripAccents(metadata.title.toLowerCase()),
+                       genre       : metadata.genre.map(meta => utils.stripAccents(meta.toLowerCase()))
+                   }
+
+                    callback(metadata);
+                });
+            });
+
+        } else {
+
+            var stream = fs.createReadStream(file);
+
+            mmd(stream, { duration: true }, function (err, data) {
+
+                if(err) console.warn('An error occured while reading ' + file + ' id3 tags: ' + err);
+
+                fs.realpath(file, (err, realpath) => {
+
+                    if(err) console.warn(err);
+
+                    var metadata = {
+                       album        : data.album === null || data.album === '' ? 'Unknown' : data.album,
+                       albumartist  : data.albumartist,
+                       artist       : data.artist.length === 0 ? ['Unknown artist'] : data.artist,
+                       disk         : data.disk,
+                       duration     : data.duration == '' ? 0 : data.duration,
+                       genre        : data.genre,
+                       loweredMetas : {},
+                       path         : realpath,
+                       playCount    : 0,
+                       title        : data.title === null || data.title === '' ? path.parse(file).base : data.title,
+                       track        : data.track,
+                       type         : 'track',
+                       year         : data.year
+                   };
+
+                    metadata.loweredMetas = {
+                        artist      : data.artist.map(meta => utils.stripAccents(meta.toLowerCase())),
+                        album       : utils.stripAccents(data.album.toLowerCase()),
+                        albumartist : data.albumartist.map(meta => utils.stripAccents(meta.toLowerCase())),
+                        title       : utils.stripAccents(data.title.toLowerCase()),
+                        genre       : data.genre.map(meta => utils.stripAccents(meta.toLowerCase()))
+                    }
+
+                    callback(metadata);
+                });
+            });
+        }
     }
 }
+
+export default utils;

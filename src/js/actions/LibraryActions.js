@@ -5,11 +5,9 @@ import AppActions    from './AppActions';
 import app   from '../utils/app';
 import utils from '../utils/utils';
 
-import mmd      from 'musicmetadata';
-import fs       from 'fs';
 import path     from 'path';
-import mime     from 'mime';
 import walkSync from 'walk-sync';
+import mime     from 'mime';
 
 const dialog = electron.remote.dialog;
 
@@ -118,68 +116,36 @@ export default {
                             if(i < filesListFiltered.length) {
 
                                 var file   = filesListFiltered[i];
-                                var stream = fs.createReadStream(file);
 
-                                // store in DB here
-                                mmd(stream, { duration: true }, function (err, metadata) {
+                                utils.getMetadata(file, (metadata) => {
 
                                     AppActions.settings.refreshProgress(parseInt(i * 100 / filesListFiltered.length));
 
                                     forloop(i + 1);
-                                    if(err) console.warn('An error occured while reading ' + file + ' id3 tags: ' + err);
 
-                                    fs.realpath(file, (err, realpath) => {
-
+                                    app.db.find({ path: metadata.path }, function (err, docs) {
                                         if(err) console.warn(err);
-
-                                        // We don't want it
-                                        delete metadata.picture;
-
-                                        // File path and scheme type
-                                        metadata.path =  realpath;
-                                        metadata.type = 'track';
-
-                                        // Unknown metas
-                                        if(metadata.artist.length === 0) metadata.artist = ['Unknown artist'];
-                                        if(metadata.album === null || metadata.album === '') metadata.album = 'Unknown';
-                                        if(metadata.title === null || metadata.title === '') metadata.title = path.parse(file).base;
-                                        if(metadata.duration == '') metadata.duration = 0; // .wav problem
-
-                                        metadata.playCount = 0;
-
-                                        // Formated metas for sorting
-                                        metadata.loweredMetas = {
-                                            artist      : metadata.artist.map(meta => utils.stripAccents(meta.toLowerCase())),
-                                            album       : utils.stripAccents(metadata.album.toLowerCase()),
-                                            albumartist : metadata.albumartist.map(meta => utils.stripAccents(meta.toLowerCase())),
-                                            title       : utils.stripAccents(metadata.title.toLowerCase()),
-                                            genre       : metadata.genre.map(meta => utils.stripAccents(meta.toLowerCase()))
-                                        }
-
-                                        app.db.find({ path: metadata.path }, function (err, docs) {
-                                            if(err) console.warn(err);
-                                            if(docs.length === 0) { // Track is not already in database
-                                                // Let's insert in the data
-                                                app.db.insert(metadata, function (err, newDoc) {
-                                                    if(err) console.warn(err);
-                                                    if(i === filesListFiltered.length - 1) {
-                                                        AppActions.library.refreshTracks();
-                                                        AppDispatcher.dispatch({
-                                                            actionType : AppConstants.APP_LIBRARY_REFRESH_END
-                                                        });
-                                                    }
-                                                });
-                                            } else {
+                                        if(docs.length === 0) { // Track is not already in database
+                                            // Let's insert in the data
+                                            app.db.insert(metadata, function (err, newDoc) {
+                                                if(err) console.warn(err);
                                                 if(i === filesListFiltered.length - 1) {
                                                     AppActions.library.refreshTracks();
                                                     AppDispatcher.dispatch({
                                                         actionType : AppConstants.APP_LIBRARY_REFRESH_END
                                                     });
                                                 }
+                                            });
+                                        } else {
+                                            if(i === filesListFiltered.length - 1) {
+                                                AppActions.library.refreshTracks();
+                                                AppDispatcher.dispatch({
+                                                    actionType : AppConstants.APP_LIBRARY_REFRESH_END
+                                                });
                                             }
-                                        }); // db.find
-                                    }); // fs.realpath
-                                }); // mmd
+                                        }
+                                    }); // db.find
+                                }); // utils.getMetadata
                             }
                         })(0);
                     } else {
