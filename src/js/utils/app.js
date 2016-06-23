@@ -66,11 +66,10 @@ let supportedFormats = [
 */
 
 // What plays the music
-let audio = new Audio();
 
-let audioOptions = conf.get('audio');
-    audio.volume = audioOptions.volume;
-    audio.playbackRate = audioOptions.playbackRate;
+let audio = new Audio();
+    audio.volume = conf.get('audioVolume');
+    audio.playbackRate = conf.get('audioPlaybackRate');
 
 audio.addEventListener('ended', AppActions.player.next);
 audio.addEventListener('error', AppActions.player.audioError);

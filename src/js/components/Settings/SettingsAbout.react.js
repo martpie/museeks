@@ -11,11 +11,11 @@ const shell = electron.shell;
 
 /*
 |--------------------------------------------------------------------------
-| Child - Contributors List
+| Child - About
 |--------------------------------------------------------------------------
 */
 
-export default class ContributorsList extends Component {
+export default class SettingsAbout extends Component {
 
     constructor(props) {
 

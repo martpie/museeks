@@ -53,12 +53,32 @@ export default {
     },
 
     setVolume: function(volume) {
-        app.audio.volume = volume;
-        app.config.set('volume', volume);
-        app.config.saveSync();
-        AppDispatcher.dispatch({
-            actionType : AppConstants.APP_REFRESH_CONFIG
-        });
+
+        if(!isNaN(parseFloat(volume)) && isFinite(volume)) {
+            console.log(volume);
+            app.audio.volume = volume;
+            app.config.set('audioVolume', volume);
+            app.config.saveSync();
+            AppDispatcher.dispatch({
+                actionType : AppConstants.APP_REFRESH_CONFIG
+            });
+        }
+    },
+
+    setPlaybackRate: function(value) {
+
+        if(!isNaN(parseFloat(value)) && isFinite(value)) { // if is numeric
+
+            if(value > 0.1 && value < 10) { // if in allowed range
+
+                app.audio.playbackRate = value;
+                app.config.set('audioPlaybackRate', value);
+                app.config.saveSync();
+                AppDispatcher.dispatch({
+                    actionType : AppConstants.APP_REFRESH_CONFIG
+                });
+            }
+        }
     },
 
     repeat: function() {

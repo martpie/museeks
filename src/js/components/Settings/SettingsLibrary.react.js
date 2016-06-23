@@ -8,11 +8,11 @@ import AppActions from '../../actions/AppActions';
 
 /*
 |--------------------------------------------------------------------------
-| Child - MusicFoldersList - manage import folders for library
+| Child - SettingsLibrary - manage import folders for library
 |--------------------------------------------------------------------------
 */
 
-export default class MusicFoldersList extends Component {
+export default class SettingsLibrary extends Component {
 
     constructor(props) {
 
