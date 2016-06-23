@@ -40,7 +40,10 @@ app.on('ready', function() {
 
     var defaultConfig = {
         theme: 'light',
-        volume: 1,
+        audio: {
+            volume: 1,
+            playbackRate: 1
+        },
         musicFolders: [],
         sleepBlocker: false,
         devMode: false,

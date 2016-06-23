@@ -67,8 +67,10 @@ var supportedFormats = [
 
 // What plays the music
 var audio = new Audio();
-    audio.type   = 'audio/mpeg';
-    audio.volume = conf.get('volume')
+
+var audioOptions = conf.get('audio');
+    audio.volume = audioOptions.volume;
+    audio.playbackRate = audioOptions.playbackRate;
 
 audio.addEventListener('ended', AppActions.player.next);
 audio.addEventListener('error', AppActions.player.audioError);
