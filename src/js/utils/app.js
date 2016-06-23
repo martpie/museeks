@@ -18,10 +18,10 @@ const screen = remote.screen;
 |--------------------------------------------------------------------------
 */
 
-var browserWindows = {};
+let browserWindows = {};
     browserWindows.main = remote.getCurrentWindow();
 
-var pathUserData     = app.getPath('userData'),
+let pathUserData     = app.getPath('userData'),
     pathSrc          = __dirname;
 
 
@@ -32,7 +32,7 @@ var pathUserData     = app.getPath('userData'),
 |--------------------------------------------------------------------------
 */
 
-var conf = teeny.loadOrCreateSync(path.join(pathUserData, 'config.json'), {});
+let conf = teeny.loadOrCreateSync(path.join(pathUserData, 'config.json'), {});
 
 
 
@@ -42,7 +42,7 @@ var conf = teeny.loadOrCreateSync(path.join(pathUserData, 'config.json'), {});
 |--------------------------------------------------------------------------
 */
 
-var supportedFormats = [
+let supportedFormats = [
     'audio/mp3',
     'audio/mp4',
     'audio/mpeg3',
@@ -66,9 +66,9 @@ var supportedFormats = [
 */
 
 // What plays the music
-var audio = new Audio();
+let audio = new Audio();
 
-var audioOptions = conf.get('audio');
+let audioOptions = conf.get('audio');
     audio.volume = audioOptions.volume;
     audio.playbackRate = audioOptions.playbackRate;
 
@@ -83,7 +83,7 @@ audio.addEventListener('error', AppActions.player.audioError);
 |--------------------------------------------------------------------------
 */
 
-var db = new nedb({
+let db = new nedb({
     filename: path.join(pathUserData, 'library.db'),
     autoload: true
 });
