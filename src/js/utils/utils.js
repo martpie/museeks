@@ -191,40 +191,37 @@ let utils = {
 
                 if (err) console.warn(err);
 
-                fs.realpath(file, (err, realpath) => {
+                let metadata = {
+                   album        : 'Unknown',
+                   albumartist  : [],
+                   artist       : ['Unknown artist'],
+                   disk         : {
+                       no: 0,
+                       of: 0
+                   },
+                   duration     : info.duration,
+                   genre        : [],
+                   loweredMetas : {},
+                   path         : file,
+                   playCount    : 0,
+                   title        : path.parse(file).base,
+                   track        : {
+                       no: 0,
+                       of: 0
+                   },
+                   type         : 'track',
+                   year         : ''
+               };
 
-                    let metadata = {
-                       album        : 'Unknown',
-                       albumartist  : [],
-                       artist       : ['Unknown artist'],
-                       disk         : {
-                           no: 0,
-                           of: 0
-                       },
-                       duration     : info.duration,
-                       genre        : [],
-                       loweredMetas : {},
-                       path         : realpath,
-                       playCount    : 0,
-                       title        : path.parse(file).base,
-                       track        : {
-                           no: 0,
-                           of: 0
-                       },
-                       type         : 'track',
-                       year         : ''
-                   };
+               metadata.loweredMetas = {
+                   artist      : metadata.artist.map(meta => utils.stripAccents(meta.toLowerCase())),
+                   album       : utils.stripAccents(metadata.album.toLowerCase()),
+                   albumartist : metadata.albumartist.map(meta => utils.stripAccents(meta.toLowerCase())),
+                   title       : utils.stripAccents(metadata.title.toLowerCase()),
+                   genre       : metadata.genre.map(meta => utils.stripAccents(meta.toLowerCase()))
+               }
 
-                   metadata.loweredMetas = {
-                       artist      : metadata.artist.map(meta => utils.stripAccents(meta.toLowerCase())),
-                       album       : utils.stripAccents(metadata.album.toLowerCase()),
-                       albumartist : metadata.albumartist.map(meta => utils.stripAccents(meta.toLowerCase())),
-                       title       : utils.stripAccents(metadata.title.toLowerCase()),
-                       genre       : metadata.genre.map(meta => utils.stripAccents(meta.toLowerCase()))
-                   }
-
-                    callback(metadata);
-                });
+                callback(metadata);
             });
 
         } else {
@@ -235,36 +232,31 @@ let utils = {
 
                 if(err) console.warn('An error occured while reading ' + file + ' id3 tags: ' + err);
 
-                fs.realpath(file, (err, realpath) => {
+                let metadata = {
+                   album        : data.album === null || data.album === '' ? 'Unknown' : data.album,
+                   albumartist  : data.albumartist,
+                   artist       : data.artist.length === 0 ? ['Unknown artist'] : data.artist,
+                   disk         : data.disk,
+                   duration     : data.duration == '' ? 0 : data.duration,
+                   genre        : data.genre,
+                   loweredMetas : {},
+                   path         : file,
+                   playCount    : 0,
+                   title        : data.title === null || data.title === '' ? path.parse(file).base : data.title,
+                   track        : data.track,
+                   type         : 'track',
+                   year         : data.year
+               };
 
-                    if(err) console.warn(err);
+                metadata.loweredMetas = {
+                    artist      : data.artist.map(meta => utils.stripAccents(meta.toLowerCase())),
+                    album       : utils.stripAccents(data.album.toLowerCase()),
+                    albumartist : data.albumartist.map(meta => utils.stripAccents(meta.toLowerCase())),
+                    title       : utils.stripAccents(data.title.toLowerCase()),
+                    genre       : data.genre.map(meta => utils.stripAccents(meta.toLowerCase()))
+                }
 
-                    let metadata = {
-                       album        : data.album === null || data.album === '' ? 'Unknown' : data.album,
-                       albumartist  : data.albumartist,
-                       artist       : data.artist.length === 0 ? ['Unknown artist'] : data.artist,
-                       disk         : data.disk,
-                       duration     : data.duration == '' ? 0 : data.duration,
-                       genre        : data.genre,
-                       loweredMetas : {},
-                       path         : realpath,
-                       playCount    : 0,
-                       title        : data.title === null || data.title === '' ? path.parse(file).base : data.title,
-                       track        : data.track,
-                       type         : 'track',
-                       year         : data.year
-                   };
-
-                    metadata.loweredMetas = {
-                        artist      : data.artist.map(meta => utils.stripAccents(meta.toLowerCase())),
-                        album       : utils.stripAccents(data.album.toLowerCase()),
-                        albumartist : data.albumartist.map(meta => utils.stripAccents(meta.toLowerCase())),
-                        title       : utils.stripAccents(data.title.toLowerCase()),
-                        genre       : data.genre.map(meta => utils.stripAccents(meta.toLowerCase()))
-                    }
-
-                    callback(metadata);
-                });
+                callback(metadata);
             });
         }
     }

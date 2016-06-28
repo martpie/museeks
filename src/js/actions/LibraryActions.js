@@ -6,6 +6,7 @@ import app   from '../utils/app';
 import utils from '../utils/utils';
 
 import path     from 'path';
+import fs       from 'fs';
 import walkSync from 'walk-sync';
 import mime     from 'mime';
 
@@ -43,7 +44,7 @@ export default {
         });
     },
 
-    addFolders(folders) {
+    addFolders: function(folders) {
 
         dialog.showOpenDialog({ properties: ['openDirectory', 'multiSelections']}, (folders) => {
             if(folders !== undefined) {
@@ -55,14 +56,14 @@ export default {
         });
     },
 
-    removeFolder(index) {
+    removeFolder: function(index) {
         AppDispatcher.dispatch({
             actionType : AppConstants.APP_LIBRARY_REMOVE_FOLDER,
             index      : index
         });
     },
 
-    reset() {
+    reset: function() {
         AppDispatcher.dispatch({
             actionType : AppConstants.APP_LIBRARY_REFRESH_START,
         });
@@ -81,7 +82,7 @@ export default {
         });
     },
 
-    refresh() {
+    refresh: function() {
 
         let folders = app.config.get('musicFolders');
 
@@ -90,7 +91,7 @@ export default {
         });
 
         // Start the big thing
-        app.db.remove({ }, { multi: true }, function (err, numRemoved) {
+        app.db.remove({}, { multi: true }, function (err, numRemoved) {
             app.db.loadDatabase(function (err) {
                 if(err) throw err;
                 else {
@@ -103,11 +104,11 @@ export default {
                         filesList = filesList.concat(walkSync(folder, { directories: false }).map((d) =>  path.join(folder, d)));
                     });
 
-                    let filesListFiltered = [];
-
                     // Get the metadatas of all the files
-                    filesList.forEach((file, i) => {
-                        if(app.supportedFormats.indexOf(mime.lookup(file)) > -1) filesListFiltered.push(file);
+                    let filesListFiltered = filesList.filter((file, i) => {
+                        return app.supportedFormats.indexOf(mime.lookup(file)) > -1;
+                    }).map((file) => {
+                        return fs.realpathSync(file);
                     });
 
                     if(filesListFiltered.length > 0) {
@@ -115,18 +116,18 @@ export default {
                         (function forloop(i) {
                             if(i < filesListFiltered.length) {
 
-                                let file   = filesListFiltered[i];
+                                let file = filesListFiltered[i];
 
-                                utils.getMetadata(file, (metadata) => {
+                                app.db.find({ path: file }, (err, docs) => {
+                                    if(err) console.warn(err);
 
                                     AppActions.settings.refreshProgress(parseInt(i * 100 / filesListFiltered.length));
-
                                     forloop(i + 1);
 
-                                    app.db.find({ path: metadata.path }, function (err, docs) {
-                                        if(err) console.warn(err);
-                                        if(docs.length === 0) { // Track is not already in database
-                                            // Let's insert in the data
+                                    if(docs.length === 0) { // Track is not already in database
+
+                                        utils.getMetadata(file, (metadata) => {
+
                                             app.db.insert(metadata, function (err, newDoc) {
                                                 if(err) console.warn(err);
                                                 if(i === filesListFiltered.length - 1) {
@@ -136,16 +137,17 @@ export default {
                                                     });
                                                 }
                                             });
-                                        } else {
-                                            if(i === filesListFiltered.length - 1) {
-                                                AppActions.library.refreshTracks();
-                                                AppDispatcher.dispatch({
-                                                    actionType : AppConstants.APP_LIBRARY_REFRESH_END
-                                                });
-                                            }
+                                        });
+                                    } else {
+                                        // Track is already in database
+                                        if(i === filesListFiltered.length - 1) {
+                                            AppActions.library.refreshTracks();
+                                            AppDispatcher.dispatch({
+                                                actionType : AppConstants.APP_LIBRARY_REFRESH_END
+                                            });
                                         }
-                                    }); // db.find
-                                }); // utils.getMetadata
+                                    }
+                                });
                             }
                         })(0);
                     } else {
