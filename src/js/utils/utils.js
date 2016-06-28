@@ -249,12 +249,12 @@ let utils = {
                };
 
                 metadata.loweredMetas = {
-                    artist      : data.artist.map(meta => utils.stripAccents(meta.toLowerCase())),
-                    album       : utils.stripAccents(data.album.toLowerCase()),
-                    albumartist : data.albumartist.map(meta => utils.stripAccents(meta.toLowerCase())),
-                    title       : utils.stripAccents(data.title.toLowerCase()),
-                    genre       : data.genre.map(meta => utils.stripAccents(meta.toLowerCase()))
-                }
+                    artist      : metadata.artist.map(meta => utils.stripAccents(meta.toLowerCase())),
+                    album       : utils.stripAccents(metadata.album.toLowerCase()),
+                    albumartist : metadata.albumartist.map(meta => utils.stripAccents(meta.toLowerCase())),
+                    title       : utils.stripAccents(metadata.title.toLowerCase()),
+                    genre       : metadata.genre.map(meta => utils.stripAccents(meta.toLowerCase()))
+                };
 
                 callback(metadata);
             });
