@@ -53,7 +53,8 @@ app.on('ready', function() {
         }
     }
 
-    let conf = teeny.loadOrCreateSync(path.join(pathUserData, 'config.json'), defaultConfig);
+    let conf = new teeny(path.join(pathUserData, 'config.json'));
+    conf.loadOrCreateSync(defaultConfig);
 
     // Check if config update
     let configChanged = false;

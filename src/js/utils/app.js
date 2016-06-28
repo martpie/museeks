@@ -32,8 +32,16 @@ let pathUserData     = app.getPath('userData'),
 |--------------------------------------------------------------------------
 */
 
-let conf = teeny.loadOrCreateSync(path.join(pathUserData, 'config.json'), {});
+//let conf = teeny.loadOrCreateSync(path.join(pathUserData, 'config.json'), {});
 
+
+let conf = new teeny(path.join(pathUserData, 'config.json'));
+conf.loadOrCreateSync();
+
+/*
+let conf = new teeny(path.join(pathUserData, 'config.json'));
+conf.loadOrCreateSync(defaultConfig);
+*/
 
 
 /*

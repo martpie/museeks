@@ -72,7 +72,7 @@ export default {
             if(value > 0.1 && value < 10) { // if in allowed range
 
                 app.audio.playbackRate = value;
-                app.config.set('audioPlaybackRate', value);
+                app.config.set('audioPlaybackRate', parseFloat(value));
                 app.config.saveSync();
                 AppDispatcher.dispatch({
                     actionType : AppConstants.APP_REFRESH_CONFIG

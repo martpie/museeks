@@ -34,7 +34,7 @@
     "react-simple-input": "0.2.1",
     "semver": "^5.1.0",
     "svg-inline-react": "1.0.1",
-    "teeny-conf": "0.2.1",
+    "teeny-conf": "1.0.1",
     "walk-sync": "0.2.6",
     "wav-file-info": "0.0.7"
   },
