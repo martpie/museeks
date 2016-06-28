@@ -10,14 +10,14 @@ const ipcRenderer = electron.ipcRenderer;
 export default {
 
     checkTheme: function() {
-        var themeName = app.config.get('theme');
+        let themeName = app.config.get('theme');
         document.querySelector('body').classList.add('theme-' + themeName);
     },
 
     toggleDarkTheme: function() {
 
-        var oldTheme = app.config.get('theme');
-        var newTheme = oldTheme === 'light' ? 'dark' : 'light';
+        let oldTheme = app.config.get('theme');
+        let newTheme = oldTheme === 'light' ? 'dark' : 'light';
 
         document.querySelector('body').classList.remove('theme-' + oldTheme);
         document.querySelector('body').classList.add('theme-' + newTheme);

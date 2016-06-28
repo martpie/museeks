@@ -14,13 +14,13 @@ const Menu             = electron.Menu;             // Chromium menu API
 const BrowserWindow    = electron.BrowserWindow;    // Module to create native browser window.
 
 
-var instance = {}; // use to keep some variables in mind
+let instance = {}; // use to keep some variables in mind
 
 
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the javascript object is GCed.
-var mainWindow = null;
+let mainWindow = null;
 
 // Quit when all windows are closed
 app.on('window-all-closed', function() {
@@ -32,13 +32,13 @@ app.on('window-all-closed', function() {
 // initialization and ready for creating browser windows.
 app.on('ready', function() {
 
-    var screen = electron.screen; // Module to get screen size
-    var pathUserData = app.getPath('userData');
+    let screen = electron.screen; // Module to get screen size
+    let pathUserData = app.getPath('userData');
 
     // Config related stuff
-    var workArea = screen.getPrimaryDisplay().workArea;
+    let workArea = screen.getPrimaryDisplay().workArea;
 
-    var defaultConfig = {
+    let defaultConfig = {
         theme: 'light',
         audioVolume: 1,
         audioPlaybackRate: 1,
@@ -53,12 +53,12 @@ app.on('ready', function() {
         }
     }
 
-    var conf = teeny.loadOrCreateSync(path.join(pathUserData, 'config.json'), defaultConfig);
+    let conf = teeny.loadOrCreateSync(path.join(pathUserData, 'config.json'), defaultConfig);
 
     // Check if config update
-    var configChanged = false;
+    let configChanged = false;
 
-    for(var key in defaultConfig) {
+    for(let key in defaultConfig) {
         if(conf.get(key) === undefined) {
             conf.set(key, defaultConfig[key]);
             configChanged = true;
@@ -68,18 +68,18 @@ app.on('ready', function() {
     // save config if changed
     if(configChanged) conf.saveSync();
 
-    var bounds       = conf.get('bounds');
-    var sleepBlocker = conf.get('sleepBlocker');
+    let bounds       = conf.get('bounds');
+    let sleepBlocker = conf.get('sleepBlocker');
 
     // Sleep Blocker
     if(sleepBlocker) {
         instance.sleepBlockerID = powerSaveBlocker.start('prevent-app-suspension');
     }
 
-    var museeksIcon = nativeImage.createFromPath(path.join(__dirname, 'src', 'images', 'logos', 'museeks.png'));
+    let museeksIcon = nativeImage.createFromPath(path.join(__dirname, 'src', 'images', 'logos', 'museeks.png'));
 
     // Browser Window options
-    var mainWindowOption = {
+    let mainWindowOption = {
         title     : 'Museeks',
         icon      :  museeksIcon,
         x         :  bounds.x,
@@ -106,7 +106,7 @@ app.on('ready', function() {
     // IPC events
     ipcMain.on('tracksListContextMenu', (event, items) => {
 
-        var template = [
+        let template = [
             {
                 label: items > 1 ? items + ' tracks selected' : items + ' track selected',
                 enabled: false
@@ -128,7 +128,7 @@ app.on('ready', function() {
             }
         ];
 
-        var context = Menu.buildFromTemplate(template);
+        let context = Menu.buildFromTemplate(template);
 
         context.popup(mainWindow); // Let it appear
     });

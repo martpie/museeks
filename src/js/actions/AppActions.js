@@ -16,7 +16,7 @@ import SettingsActions      from './SettingsActions';
 
 
 
-var AppActions = {
+let AppActions = {
 
     player        : PlayerActions,
     queue         : QueueActions,
@@ -43,7 +43,7 @@ var AppActions = {
         }, false);
 
         // Remember dimensions and positionning
-        var currentWindow = app.browserWindows.main;
+        let currentWindow = app.browserWindows.main;
 
         currentWindow.on('resize', function() {
             AppActions.app.saveBounds();
@@ -74,8 +74,8 @@ var AppActions = {
 
         saveBounds: function() {
 
-            var self = AppActions;
-            var now = window.performance.now();
+            let self = AppActions;
+            let now = window.performance.now();
 
             if (now - self.lastFilterSearch < 250) {
                 clearTimeout(self.filterSearchTimeOut);
@@ -109,16 +109,16 @@ var AppActions = {
 
         checkForUpdate: function() {
 
-            var currentVersion = app.version;
+            let currentVersion = app.version;
 
-            var oReq = new XMLHttpRequest();
+            let oReq = new XMLHttpRequest();
 
             oReq.onload = (e) => {
 
-                var releases = e.currentTarget.response;
-                var updateVersion = null;
+                let releases = e.currentTarget.response;
+                let updateVersion = null;
 
-                var isUpdateAvailable = releases.some((release) => {
+                let isUpdateAvailable = releases.some((release) => {
 
                     if(semver.gt(release.tag_name, currentVersion)) {
                         updateVersion = release.tag_name;

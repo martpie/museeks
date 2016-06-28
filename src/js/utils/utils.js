@@ -25,12 +25,12 @@ let utils = {
 
         if(duration !== null && duration !== undefined) {
 
-            var hours   = parseInt(duration / 3600);
-            var minutes = parseInt(duration / 60) % 60;
-            var seconds = parseInt(duration % 60);
+            let hours   = parseInt(duration / 3600);
+            let minutes = parseInt(duration / 60) % 60;
+            let seconds = parseInt(duration % 60);
 
             hours = hours < 10 ? '0' + hours : hours;
-            var result = hours > 0 ? hours + ':' : '';
+            let result = hours > 0 ? hours + ':' : '';
                 result += (minutes < 10 ? '0' + minutes : minutes) + ':' + (seconds  < 10 ? '0' + seconds : seconds);
 
             return result;
@@ -57,7 +57,7 @@ let utils = {
      * @return string
      */
     parseURI: function(uri) {
-        var root = process.platform === 'win32' ? '' : path.parse(uri).root;
+        let root = process.platform === 'win32' ? '' : path.parse(uri).root;
         return 'file://' + root + uri.split(path.sep).map((d, i) => i === 0 ? d : encodeURIComponent(d)).reduce((a, b) => path.join(a, b));
     },
 
@@ -81,7 +81,7 @@ let utils = {
             });
         }
 
-        var result = [];
+        let result = [];
         array.forEach(function(item) {
             if(result.indexOf(item) < 0) {
                 result.push(item);
@@ -99,7 +99,7 @@ let utils = {
      */
     stripAccents(str) {
 
-        var accents = "ÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÒÓÔÕÖÙÚÛÜÝàáâãäåçèéêëìíîïðòóôõöùúûüýÿñ",
+        let accents = "ÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÒÓÔÕÖÙÚÛÜÝàáâãäåçèéêëìíîïðòóôõöùúûüýÿñ",
             fixes = "aaaaaaceeeeiiiiooooouuuuyaaaaaaceeeeiiiioooooouuuuyyn",
             reg = new RegExp("(" + accents.split("").join("|") + ")", "g");
 
@@ -119,11 +119,11 @@ let utils = {
     removeUselessFolders: function(folders) {
 
         // Remove duplicates
-        var filteredFolders = folders.filter((elem, index) => {
+        let filteredFolders = folders.filter((elem, index) => {
             return folders.indexOf(elem) === index;
         });
 
-        var foldersToBeRemoved = [];
+        let foldersToBeRemoved = [];
 
         filteredFolders.forEach((folder, i) => {
             filteredFolders.forEach((subfolder, j) => {
@@ -147,9 +147,9 @@ let utils = {
      */
     chunkArray: function(array, chunkLength) {
 
-        var chunks = [];
+        let chunks = [];
 
-        for(var i = 0, length = array.length; i < length; i += chunkLength) {
+        for(let i = 0, length = array.length; i < length; i += chunkLength) {
             chunks.push(array.slice(i, i+chunkLength));
         }
 
@@ -183,7 +183,7 @@ let utils = {
             }
         */
 
-        var type = mime.lookup(file);
+        let type = mime.lookup(file);
 
         if(['audio/wav', 'audio/x-wav', 'audio/wave', 'audio/x-pn-wav'].indexOf(type) > -1) { // If WAV
 
@@ -193,7 +193,7 @@ let utils = {
 
                 fs.realpath(file, (err, realpath) => {
 
-                    var metadata = {
+                    let metadata = {
                        album        : 'Unknown',
                        albumartist  : [],
                        artist       : ['Unknown artist'],
@@ -229,7 +229,7 @@ let utils = {
 
         } else {
 
-            var stream = fs.createReadStream(file);
+            let stream = fs.createReadStream(file);
 
             mmd(stream, { duration: true }, function (err, data) {
 
@@ -239,7 +239,7 @@ let utils = {
 
                     if(err) console.warn(err);
 
-                    var metadata = {
+                    let metadata = {
                        album        : data.album === null || data.album === '' ? 'Unknown' : data.album,
                        albumartist  : data.albumartist,
                        artist       : data.artist.length === 0 ? ['Unknown artist'] : data.artist,

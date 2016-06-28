@@ -9,7 +9,7 @@ import Settings from '../components/Settings/Settings.react';
 
 
 // Router
-var routes = (
+let routes = (
     <Route component={ App } path='/'>
         <Route path='/library'  component={ Library } />
         <Route path='/settings' component={ Settings } />

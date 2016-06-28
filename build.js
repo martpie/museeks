@@ -74,10 +74,10 @@ packager(options, function (err, appPath) {
         console.timeEnd('build');
         console.log('Builds cleanup');
 
-        var buildsPathes = getDirectories(path.join('./build', app.version));
+        let buildsPathes = getDirectories(path.join('./build', app.version));
 
         buildsPathes.forEach(function(folder, index) {
-            var appPath = './build/' + folder + '/resources/app/';
+            let appPath = './build/' + folder + '/resources/app/';
 
             rimraf(appPath + 'src/images', {}, function() {});
             rimraf(appPath + 'src/js', {}, function() {});

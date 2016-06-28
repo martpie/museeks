@@ -83,7 +83,7 @@ export default {
 
     refresh() {
 
-        var folders = app.config.get('musicFolders');
+        let folders = app.config.get('musicFolders');
 
         AppDispatcher.dispatch({
             actionType : AppConstants.APP_LIBRARY_REFRESH_START
@@ -95,7 +95,7 @@ export default {
                 if(err) throw err;
                 else {
 
-                    var filesList = [];
+                    let filesList = [];
 
                     // Loop through folders
                     folders.forEach(function(folder, index, folders) {
@@ -103,7 +103,7 @@ export default {
                         filesList = filesList.concat(walkSync(folder, { directories: false }).map((d) =>  path.join(folder, d)));
                     });
 
-                    var filesListFiltered = [];
+                    let filesListFiltered = [];
 
                     // Get the metadatas of all the files
                     filesList.forEach((file, i) => {
@@ -115,7 +115,7 @@ export default {
                         (function forloop(i) {
                             if(i < filesListFiltered.length) {
 
-                                var file   = filesListFiltered[i];
+                                let file   = filesListFiltered[i];
 
                                 utils.getMetadata(file, (metadata) => {
 
