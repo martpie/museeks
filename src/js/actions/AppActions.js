@@ -132,6 +132,11 @@ var AppActions = {
                 else AppActions.notifications.add('success', 'Museeks ' + currentVersion + ' is the latest version available.');
             };
 
+            oReq.onerror = () => {
+
+                AppActions.notifications.add('danger', 'Could not check updates.');
+            };
+
             oReq.open('GET', 'https://api.github.com/repos/KeitIG/museeks/releases', true);
             oReq.responseType = 'json';
             oReq.send();
