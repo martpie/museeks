@@ -5,9 +5,8 @@
 */
 
 import path from 'path';
-import fs      from 'fs';
+import fs   from 'fs';
 
-import mime    from 'mime';
 import mmd     from 'musicmetadata';
 import wavInfo from 'wav-file-info';
 
@@ -159,11 +158,11 @@ let utils = {
     /**
      * Get a file metadata
      *
-     * @param file (string)
+     * @param track (object) { file, mime }
      * @return object
      *
      */
-    getMetadata: function(file, callback) {
+    getMetadata: function(track, callback) {
 
         /* output should be something like this:
             {
@@ -183,11 +182,9 @@ let utils = {
             }
         */
 
-        let type = mime.lookup(file);
+        if(['audio/wav', 'audio/x-wav', 'audio/wave', 'audio/x-pn-wav'].indexOf(track.mime) > -1) { // If WAV
 
-        if(['audio/wav', 'audio/x-wav', 'audio/wave', 'audio/x-pn-wav'].indexOf(type) > -1) { // If WAV
-
-            wavInfo.infoByFilename(file, function(err, info){
+            wavInfo.infoByFilename(track.path, function(err, info){
 
                 if (err) console.warn(err);
 
@@ -202,9 +199,9 @@ let utils = {
                    duration     : info.duration,
                    genre        : [],
                    loweredMetas : {},
-                   path         : file,
+                   path         : track.path,
                    playCount    : 0,
-                   title        : path.parse(file).base,
+                   title        : path.parse(track.path).base,
                    track        : {
                        no: 0,
                        of: 0
@@ -226,11 +223,11 @@ let utils = {
 
         } else {
 
-            let stream = fs.createReadStream(file);
+            let stream = fs.createReadStream(track.path);
 
             mmd(stream, { duration: true }, function (err, data) {
 
-                if(err) console.warn('An error occured while reading ' + file + ' id3 tags: ' + err);
+                if(err) console.warn('An error occured while reading ' + track.path + ' id3 tags: ' + err);
 
                 let metadata = {
                    album        : data.album === null || data.album === '' ? 'Unknown' : data.album,
@@ -240,9 +237,9 @@ let utils = {
                    duration     : data.duration == '' ? 0 : data.duration,
                    genre        : data.genre,
                    loweredMetas : {},
-                   path         : file,
+                   path         : track.path,
                    playCount    : 0,
-                   title        : data.title === null || data.title === '' ? path.parse(file).base : data.title,
+                   title        : data.title === null || data.title === '' ? path.parse(track.path).base : data.title,
                    track        : data.track,
                    type         : 'track',
                    year         : data.year

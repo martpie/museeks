@@ -105,10 +105,13 @@ export default {
                     });
 
                     // Get the metadatas of all the files
-                    let filesListFiltered = filesList.filter((file, i) => {
-                        return app.supportedFormats.indexOf(mime.lookup(file)) > -1;
-                    }).map((file) => {
-                        return fs.realpathSync(file);
+                    let filesListFiltered = filesList.map((file) => {
+                        return {
+                            path: fs.realpathSync(file),
+                            mime: mime.lookup(file)
+                        };
+                    }).filter((track, i) => {
+                        return app.supportedFormats.indexOf(track.mime) > -1;
                     });
 
                     if(filesListFiltered.length > 0) {
@@ -116,9 +119,9 @@ export default {
                         (function forloop(i) {
                             if(i < filesListFiltered.length) {
 
-                                let file = filesListFiltered[i];
+                                let track = filesListFiltered[i];
 
-                                app.db.find({ path: file }, (err, docs) => {
+                                app.db.find({ path: track.path }, (err, docs) => {
                                     if(err) console.warn(err);
 
                                     AppActions.settings.refreshProgress(parseInt(i * 100 / filesListFiltered.length));
@@ -126,9 +129,10 @@ export default {
 
                                     if(docs.length === 0) { // Track is not already in database
 
-                                        utils.getMetadata(file, (metadata) => {
+                                        utils.getMetadata(track, (metadata) => {
 
                                             app.db.insert(metadata, function (err, newDoc) {
+
                                                 if(err) console.warn(err);
                                                 if(i === filesListFiltered.length - 1) {
                                                     AppActions.library.refreshTracks();
