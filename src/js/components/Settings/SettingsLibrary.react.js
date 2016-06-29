@@ -8,11 +8,11 @@ import AppActions from '../../actions/AppActions';
 
 /*
 |--------------------------------------------------------------------------
-| Child - MusicFoldersList - manage import folders for library
+| Child - SettingsLibrary - manage import folders for library
 |--------------------------------------------------------------------------
 */
 
-export default class MusicFoldersList extends Component {
+export default class SettingsLibrary extends Component {
 
     constructor(props) {
 
@@ -22,10 +22,10 @@ export default class MusicFoldersList extends Component {
 
     render() {
 
-        var self         = this;
-        var musicFolders = this.props.config.musicFolders;
+        let self         = this;
+        let musicFolders = this.props.config.musicFolders;
 
-        var buttonsGroup = (
+        let buttonsGroup = (
             <ButtonGroup>
                 <Button bsSize='small' disabled={ this.props.refreshingLibrary } onClick={ this.addFolders.bind(this) }>
                     <Icon name='plus' fixedWidth />
@@ -40,7 +40,7 @@ export default class MusicFoldersList extends Component {
             </ButtonGroup>
         );
 
-        var list = musicFolders.map(function(folder, i) {
+        let list = musicFolders.map(function(folder, i) {
             return(
                 <li key={i}>
                     <Icon name='close' className={ self.props.refreshingLibrary ? 'delete-libray-folder disabled' : 'delete-libray-folder' } onClick={ self.props.refreshingLibrary ? void(0) : self.removeFolder.bind(self, i) }  />

@@ -1,13 +1,14 @@
 import nedb   from 'nedb';
 import fs     from 'fs';
 import path   from 'path';
-import remote from 'remote';
 import teeny  from 'teeny-conf';
 
 import AppActions from '../actions/AppActions';
 
-const app    = remote.require('app');
-const screen = remote.require('screen');
+const remote = electron.remote;
+
+const app    = remote.app;
+const screen = remote.screen;
 
 
 
@@ -17,10 +18,10 @@ const screen = remote.require('screen');
 |--------------------------------------------------------------------------
 */
 
-var browserWindows = {};
+let browserWindows = {};
     browserWindows.main = remote.getCurrentWindow();
 
-var pathUserData     = app.getPath('userData'),
+let pathUserData     = app.getPath('userData'),
     pathSrc          = __dirname;
 
 
@@ -31,8 +32,16 @@ var pathUserData     = app.getPath('userData'),
 |--------------------------------------------------------------------------
 */
 
-var conf = teeny.loadOrCreateSync(path.join(pathUserData, 'config.json'), {});
+//let conf = teeny.loadOrCreateSync(path.join(pathUserData, 'config.json'), {});
 
+
+let conf = new teeny(path.join(pathUserData, 'config.json'));
+conf.loadOrCreateSync();
+
+/*
+let conf = new teeny(path.join(pathUserData, 'config.json'));
+conf.loadOrCreateSync(defaultConfig);
+*/
 
 
 /*
@@ -41,7 +50,7 @@ var conf = teeny.loadOrCreateSync(path.join(pathUserData, 'config.json'), {});
 |--------------------------------------------------------------------------
 */
 
-var supportedFormats = [
+let supportedFormats = [
     'audio/mp3',
     'audio/mp4',
     'audio/mpeg3',
@@ -65,9 +74,10 @@ var supportedFormats = [
 */
 
 // What plays the music
-var audio = new Audio();
-    audio.type   = 'audio/mpeg';
-    audio.volume = conf.get('volume')
+
+let audio = new Audio();
+    audio.volume = conf.get('audioVolume');
+    audio.playbackRate = conf.get('audioPlaybackRate');
 
 audio.addEventListener('ended', AppActions.player.next);
 audio.addEventListener('error', AppActions.player.audioError);
@@ -80,7 +90,7 @@ audio.addEventListener('error', AppActions.player.audioError);
 |--------------------------------------------------------------------------
 */
 
-var db = new nedb({
+let db = new nedb({
     filename: path.join(pathUserData, 'library.db'),
     autoload: true
 });
@@ -105,6 +115,7 @@ fs.writeFile(path.join(pathUserData, '.init'), "", (err) => { if(err) throw err;
 */
 
 export default {
+    version          : app.getVersion,   // Museeks version
     config           : conf,             // teeny-conf
     initialConfig    : conf.getAll(),    // the config at the start of the application
     db               : db,               // database

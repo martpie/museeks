@@ -26,15 +26,16 @@ export default class Queue extends Component {
 
     render() {
 
-        var self        = this;
-        var queue       = this.props.queue;
-        var queueCursor = this.props.queueCursor;
+        let self        = this;
+        let queue       = this.props.queue;
+        let queueCursor = this.props.queueCursor;
 
-        var queue = queue.slice(queueCursor + 1, queueCursor + 21); // Get the 20 next tracks displayed
+        let shownQueue = queue.slice(queueCursor + 1, queueCursor + 21); // Get the 20 next tracks displayed
+        let incomingQueue = queue.slice(queueCursor + 1);
 
-        var wholeQueue = queue.slice(queueCursor + 1);
+        let queueContent;
 
-        if(queue.length == 0) {
+        if(shownQueue.length == 0) {
             return(
                 <div className={ this.props.showQueue ? 'queue visible text-left' : 'queue text-left' }>
                     <div className='empty-queue text-center'>
@@ -44,9 +45,9 @@ export default class Queue extends Component {
             );
         } else {
 
-            var queueContent = queue.map(function (track, index) {
+            queueContent = shownQueue.map(function (track, index) {
 
-                var classes = 'track';
+                let classes = 'track';
 
                 if(index === self.state.draggedTrack) {
                     classes = 'track dragged';
@@ -86,7 +87,7 @@ export default class Queue extends Component {
             <div className={ this.props.showQueue ? 'queue visible text-left' : 'queue text-left' }>
                 <div className='queue-header'>
                     <div className='queue-infos'>
-                        { utils.getStatus(wholeQueue) }
+                        { utils.getStatus(incomingQueue) }
                     </div>
                     <ButtonGroup>
                         <Button bsSize={'xsmall'} bsStyle={'default'} className='empty-button' onClick={ this.clearQueue }>
@@ -119,14 +120,14 @@ export default class Queue extends Component {
 
     dragEnd(e) {
 
-        var queue       = this.props.queue;
-        var queueCursor = this.props.queueCursor;
+        let queue       = this.props.queue;
+        let queueCursor = this.props.queueCursor;
 
-        var draggedTrack     = this.state.draggedTrack;
-        var draggedOverTrack = this.state.draggedOverTrack
+        let draggedTrack     = this.state.draggedTrack;
+        let draggedOverTrack = this.state.draggedOverTrack
 
-        var newQueue = queue.slice();
-        var trackToMove = queue[queueCursor + 1 + draggedTrack];
+        let newQueue = queue.slice();
+        let trackToMove = queue[queueCursor + 1 + draggedTrack];
         newQueue.splice(queueCursor + 1 + draggedTrack, 1);
         newQueue.splice(queueCursor + draggedOverTrack, 0, trackToMove);
 
@@ -142,18 +143,18 @@ export default class Queue extends Component {
 
         e.preventDefault();
 
-        var currentTarget = e.currentTarget;
-        var offsetTop     = currentTarget.parentNode.offsetTop + currentTarget.parentNode.parentNode.offsetTop;
+        let currentTarget = e.currentTarget;
+        let offsetTop     = currentTarget.parentNode.offsetTop + currentTarget.parentNode.parentNode.offsetTop;
 
-        var yEnd  = e.pageY + currentTarget.scrollTop - offsetTop;
-        var limit = currentTarget.scrollHeight - currentTarget.lastChild.offsetHeight / 2;
+        let yEnd  = e.pageY + currentTarget.scrollTop - offsetTop;
+        let limit = currentTarget.scrollHeight - currentTarget.lastChild.offsetHeight / 2;
 
         // If the element is dragged after the half of the last one
-        var draggedBefore = yEnd > limit ? false : true;
-        var draggedOverTrack = Math.ceil((e.pageY + document.querySelector('.queue-body').scrollTop - 75) / 45)
+        let draggedBefore = yEnd > limit ? false : true;
+        let draggedOverTrack = Math.ceil((e.pageY + document.querySelector('.queue-body').scrollTop - 75) / 45)
 
         // souldn't change. Is here otherwise dragOver wouldn't be triggered
-        var index = this.draggedIndex;
+        let index = this.draggedIndex;
 
         this.setState({
             draggedTrack     : index,

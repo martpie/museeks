@@ -6,6 +6,8 @@ import app from '../utils/app';
 const globalShortcut = electron.remote.globalShortcut;
 const ipcRenderer    = electron.ipcRenderer;
 
+import semver from 'semver';
+
 import LibraryActions       from './LibraryActions';
 import PlaylistsActions     from './PlaylistsActions';
 import NotificationsActions from './NotificationsActions';
@@ -15,7 +17,7 @@ import SettingsActions      from './SettingsActions';
 
 
 
-var AppActions = {
+let AppActions = {
 
     player        : PlayerActions,
     playlists     : PlaylistsActions,
@@ -44,7 +46,7 @@ var AppActions = {
         }, false);
 
         // Remember dimensions and positionning
-        var currentWindow = app.browserWindows.main;
+        let currentWindow = app.browserWindows.main;
 
         currentWindow.on('resize', function() {
             AppActions.app.saveBounds();
@@ -75,8 +77,8 @@ var AppActions = {
 
         saveBounds: function() {
 
-            var self = AppActions;
-            var now = window.performance.now();
+            let self = AppActions;
+            let now = window.performance.now();
 
             if (now - self.lastFilterSearch < 250) {
                 clearTimeout(self.filterSearchTimeOut);
@@ -110,17 +112,18 @@ var AppActions = {
 
         checkForUpdate: function() {
 
-            var currentVersion = electron.remote.app.getVersion();
+            let currentVersion = app.version;
 
-            var oReq = new XMLHttpRequest();
+            let oReq = new XMLHttpRequest();
 
-            oReq.onload = function (e) {
+            oReq.onload = (e) => {
 
-                var releases = e.currentTarget.response;
+                let releases = e.currentTarget.response;
+                let updateVersion = null;
 
-                var updateVersion = null;
-                var isUpdateAvailable = releases.some((release) => {
-                    if(release.tag_name > currentVersion) {
+                let isUpdateAvailable = releases.some((release) => {
+
+                    if(semver.gt(release.tag_name, currentVersion)) {
                         updateVersion = release.tag_name;
                         return true;
                     } else {
@@ -130,6 +133,11 @@ var AppActions = {
 
                 if(isUpdateAvailable) AppActions.notifications.add('success', 'Museeks ' + updateVersion + ' is available, check http://museeks.io !');
                 else AppActions.notifications.add('success', 'Museeks ' + currentVersion + ' is the latest version available.');
+            };
+
+            oReq.onerror = () => {
+
+                AppActions.notifications.add('danger', 'Could not check updates.');
             };
 
             oReq.open('GET', 'https://api.github.com/repos/KeitIG/museeks/releases', true);

@@ -5,10 +5,14 @@
 */
 
 import path from 'path';
+import fs   from 'fs';
+
+import mmd     from 'musicmetadata';
+import wavInfo from 'wav-file-info';
 
 
 
-export default {
+let utils = {
 
     /**
      * Parse an int to a more readable string
@@ -20,12 +24,12 @@ export default {
 
         if(duration !== null && duration !== undefined) {
 
-            var hours   = parseInt(duration / 3600);
-            var minutes = parseInt(duration / 60) % 60;
-            var seconds = parseInt(duration % 60);
+            let hours   = parseInt(duration / 3600);
+            let minutes = parseInt(duration / 60) % 60;
+            let seconds = parseInt(duration % 60);
 
             hours = hours < 10 ? '0' + hours : hours;
-            var result = hours > 0 ? hours + ':' : '';
+            let result = hours > 0 ? hours + ':' : '';
                 result += (minutes < 10 ? '0' + minutes : minutes) + ':' + (seconds  < 10 ? '0' + seconds : seconds);
 
             return result;
@@ -52,7 +56,7 @@ export default {
      * @return string
      */
     parseURI: function(uri) {
-        var root = process.platform === 'win32' ? '' : path.parse(uri).root;
+        let root = process.platform === 'win32' ? '' : path.parse(uri).root;
         return 'file://' + root + uri.split(path.sep).map((d, i) => i === 0 ? d : encodeURIComponent(d)).reduce((a, b) => path.join(a, b));
     },
 
@@ -76,7 +80,7 @@ export default {
             });
         }
 
-        var result = [];
+        let result = [];
         array.forEach(function(item) {
             if(result.indexOf(item) < 0) {
                 result.push(item);
@@ -94,7 +98,7 @@ export default {
      */
     stripAccents(str) {
 
-        var accents = "ÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÒÓÔÕÖÙÚÛÜÝàáâãäåçèéêëìíîïðòóôõöùúûüýÿñ",
+        let accents = "ÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÒÓÔÕÖÙÚÛÜÝàáâãäåçèéêëìíîïðòóôõöùúûüýÿñ",
             fixes = "aaaaaaceeeeiiiiooooouuuuyaaaaaaceeeeiiiioooooouuuuyyn",
             reg = new RegExp("(" + accents.split("").join("|") + ")", "g");
 
@@ -114,11 +118,11 @@ export default {
     removeUselessFolders: function(folders) {
 
         // Remove duplicates
-        var filteredFolders = folders.filter((elem, index) => {
+        let filteredFolders = folders.filter((elem, index) => {
             return folders.indexOf(elem) === index;
         });
 
-        var foldersToBeRemoved = [];
+        let foldersToBeRemoved = [];
 
         filteredFolders.forEach((folder, i) => {
             filteredFolders.forEach((subfolder, j) => {
@@ -142,12 +146,117 @@ export default {
      */
     chunkArray: function(array, chunkLength) {
 
-        var chunks = [];
+        let chunks = [];
 
-        for(var i = 0, length = array.length; i < length; i += chunkLength) {
+        for(let i = 0, length = array.length; i < length; i += chunkLength) {
             chunks.push(array.slice(i, i+chunkLength));
         }
 
         return chunks;
+    },
+
+    /**
+     * Get a file metadata
+     *
+     * @param track (object) { file, mime }
+     * @return object
+     *
+     */
+    getMetadata: function(track, callback) {
+
+        /* output should be something like this:
+            {
+                album        : null,
+                albumartist  : null,
+                artist       : null,
+                disk         : null,
+                duration     : null,
+                genre        : null,
+                loweredMetas : null,
+                path         : null,
+                playCount    : null,
+                title        : null,
+                track        : null,
+                type         : null,
+                year         : null
+            }
+        */
+
+        if(['audio/wav', 'audio/x-wav', 'audio/wave', 'audio/x-pn-wav'].indexOf(track.mime) > -1) { // If WAV
+
+            wavInfo.infoByFilename(track.path, function(err, info){
+
+                if (err) console.warn(err);
+
+                let metadata = {
+                   album        : 'Unknown',
+                   albumartist  : [],
+                   artist       : ['Unknown artist'],
+                   disk         : {
+                       no: 0,
+                       of: 0
+                   },
+                   duration     : info.duration,
+                   genre        : [],
+                   loweredMetas : {},
+                   path         : track.path,
+                   playCount    : 0,
+                   title        : path.parse(track.path).base,
+                   track        : {
+                       no: 0,
+                       of: 0
+                   },
+                   type         : 'track',
+                   year         : ''
+               };
+
+               metadata.loweredMetas = {
+                   artist      : metadata.artist.map(meta => utils.stripAccents(meta.toLowerCase())),
+                   album       : utils.stripAccents(metadata.album.toLowerCase()),
+                   albumartist : metadata.albumartist.map(meta => utils.stripAccents(meta.toLowerCase())),
+                   title       : utils.stripAccents(metadata.title.toLowerCase()),
+                   genre       : metadata.genre.map(meta => utils.stripAccents(meta.toLowerCase()))
+               }
+
+                callback(metadata);
+            });
+
+        } else {
+
+            let stream = fs.createReadStream(track.path);
+
+            mmd(stream, { duration: true }, function (err, data) {
+
+                if(err) console.warn('An error occured while reading ' + track.path + ' id3 tags: ' + err);
+
+                let metadata = {
+                   album        : data.album === null || data.album === '' ? 'Unknown' : data.album,
+                   albumartist  : data.albumartist,
+                   artist       : data.artist.length === 0 ? ['Unknown artist'] : data.artist,
+                   disk         : data.disk,
+                   duration     : data.duration == '' ? 0 : data.duration,
+                   genre        : data.genre,
+                   loweredMetas : {},
+                   path         : track.path,
+                   playCount    : 0,
+                   title        : data.title === null || data.title === '' ? path.parse(track.path).base : data.title,
+                   track        : data.track,
+                   type         : 'track',
+                   year         : data.year
+               };
+
+                metadata.loweredMetas = {
+                    artist      : metadata.artist.map(meta => utils.stripAccents(meta.toLowerCase())),
+                    album       : utils.stripAccents(metadata.album.toLowerCase()),
+                    albumartist : metadata.albumartist.map(meta => utils.stripAccents(meta.toLowerCase())),
+                    title       : utils.stripAccents(metadata.title.toLowerCase()),
+                    genre       : metadata.genre.map(meta => utils.stripAccents(meta.toLowerCase()))
+                };
+
+                callback(metadata);
+            });
+        }
     }
 }
+
+export default utils;

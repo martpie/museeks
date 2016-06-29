@@ -6,11 +6,11 @@ import AppActions from '../../actions/AppActions';
 
 /*
 |--------------------------------------------------------------------------
-| Child - ThemeSelector - manage theme
+| Child - UI Settings
 |--------------------------------------------------------------------------
 */
 
-export default class ThemeSelector extends Component {
+export default class SettingsUI extends Component {
 
     constructor(props) {
 
@@ -20,7 +20,7 @@ export default class ThemeSelector extends Component {
 
     render() {
 
-        var config = this.props.config;
+        let config = this.props.config;
 
         return (
             <div className='setting setting-theme-selector'>

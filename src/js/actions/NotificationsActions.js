@@ -9,8 +9,8 @@ export default {
 
         duration = duration || 3000;
 
-        var id = Date.now();
-        var notification = { _id: id, type: type, content: content };
+        let id = Date.now();
+        let notification = { _id: id, type: type, content: content };
 
         AppDispatcher.dispatch({
             actionType   : AppConstants.APP_NOTIFICATION_ADD,

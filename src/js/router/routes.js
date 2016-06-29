@@ -12,7 +12,7 @@ import PlaylistSplash from '../components/Playlists/PlaylistSplash.react';
 
 
 // Router
-var routes = (
+let routes = (
     <Route component={ App } path='/'>
         <Route path='library'   component={ Library } />
         <Route path='settings'  component={ Settings } />

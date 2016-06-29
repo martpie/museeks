@@ -6,11 +6,11 @@ import AppActions from '../../actions/AppActions';
 
 /*
 |--------------------------------------------------------------------------
-| Child - Advanced Settings
+| Child - Audio settings
 |--------------------------------------------------------------------------
 */
 
-export default class SettingsAdvanced extends Component {
+export default class SettingsAudio extends Component {
 
     constructor(props) {
 
@@ -23,20 +23,22 @@ export default class SettingsAdvanced extends Component {
         let config = this.props.config;
 
         return (
-            <div className='setting setting-dev-mode'>
+            <div className='setting setting-audio'>
                 <div className='setting-section'>
-                    <h4>Dev mode</h4>
-                    <div className='checkbox'>
+                    <h4>Playback rate</h4>
+                    <div className='formGroup'>
                         <label>
-                            <input type='checkbox' onClick={ this.toggleDevMode } defaultChecked={ config.devMode } /> Enable dev mode
+                            Increase the playback rate: a value of 2 will play your music at a 2x speed
                         </label>
+                        <input type='number' className='form-control' defaultValue={config.audioPlaybackRate} onChange={this.setPlaybackRate} min='0.5' max='5' step='0.1' />
                     </div>
                 </div>
             </div>
         );
     }
 
-    toggleDevMode() {
-        AppActions.settings.toggleDevMode();
+    setPlaybackRate(e) {
+
+        AppActions.player.setPlaybackRate(e.currentTarget.value);
     }
 }

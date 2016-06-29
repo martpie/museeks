@@ -1,0 +1,145 @@
+/*
+|--------------------------------------------------------------------------
+| Bootstrap Modification
+|--------------------------------------------------------------------------
+*/
+
+.alert {
+    border-left-width: 5px;
+    background-color: white;
+
+    &.alert-danger,
+    &.alert-info,
+    &.alert-warning,
+    &.alert-success {
+        border-color: #ddd;
+    }
+
+    &.alert-success {
+        border-left-color: #5cb85c;
+    }
+
+    &.alert-info {
+        border-left-color: #5bc0de;
+    }
+
+    &.alert-warning {
+        border-left-color: #f0ad4e;
+    }
+
+    &.alert-danger {
+        border-left-color: #d9534f;
+    }
+}
+
+.btn {
+
+    &.btn-default {
+
+        &:hover,
+        &:active,
+        &:focus,
+        &:focus:active {
+            background-color: #FFF;
+        }
+    }
+
+    &.btn-primary {
+
+        &:hover,
+        &:active,
+        &:focus,
+        &:focus:active {
+            background-color: darken(#428bca, 6.5%);
+        }
+    }
+
+    &.btn-success {
+
+        &:hover,
+        &:active,
+        &:focus,
+        &:focus:active {
+            background-color: #5cb85c;
+        }
+    }
+
+    &.btn-info {
+
+        &:hover,
+        &:active,
+        &:focus,
+        &:focus:active {
+            background-color: #5bc0de;
+        }
+    }
+
+    &.btn-danger {
+
+        &:hover,
+        &:active,
+        &:focus,
+        &:focus:active {
+            background-color: #d9534f;
+        }
+    }
+
+    &.btn-warning {
+
+        &:hover,
+        &:active,
+        &:focus,
+        &:focus:active {
+            background-color: #f0ad4e;
+        }
+    }
+
+    &.active {
+        &.focus, &:focus {
+            outline: none;
+        }
+    }
+
+    &.focus {
+        outline: none;
+    }
+
+    &:active {
+        &.focus, &:focus {
+            outline: none;
+        }
+    }
+
+    &:focus {
+        outline: none;
+    }
+}
+
+.form-control:focus {
+    border-color: #AAAAAA;
+    box-shadow: none;
+}
+
+.nav-pills>li>a {
+    transition: border-bottom ease-in-out .2s;
+    padding: 5px;
+    outline: none;
+    color: #555;
+    font-weight: bold;
+}
+
+.nav-pills>li:not(:last-child)>a {
+    margin-right: 15px;
+}
+
+.nav-pills>li>a:focus,
+.nav-pills>li>a:hover {
+    background-color: transparent;
+}
+
+.nav-pills>li.active>a,
+.nav-pills>li.active>a:focus,
+.nav-pills>li.active>a:hover {
+    background-color: transparent;
+    color: $main-color;
+}

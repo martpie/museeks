@@ -36,18 +36,17 @@ export default class PlayingBar extends Component {
 
     render() {
 
-        var queue       = this.props.queue;
-        var queueCursor = this.props.queueCursor;
-        var trackPlaying   = queue[queueCursor];
-        var playingBar;
+        let queue       = this.props.queue;
+        let queueCursor = this.props.queueCursor;
+        let trackPlaying   = queue[queueCursor];
+        let playingBar;
+        let elapsedPercent;
 
         if(queueCursor === null) {
             playingBar = <div></div>;
         } else {
 
-            if(this.state.elapsed < trackPlaying.duration) {
-                var elapsedPercent = this.state.elapsed * 100 / trackPlaying.duration;
-            }
+            if(this.state.elapsed < trackPlaying.duration) elapsedPercent = this.state.elapsed * 100 / trackPlaying.duration;
 
             playingBar = (
                 <div className={ this.state.dragging ? 'now-playing dragging' : 'now-playing'} onMouseMove={ this.dragOver.bind(this) } onMouseLeave={ this.dragEnd.bind(this) } onMouseUp={ this.dragEnd.bind(this) }>
@@ -106,14 +105,14 @@ export default class PlayingBar extends Component {
 
         this.setState({ dragging : true });
 
-        var queue       = this.props.queue;
-        var queueCursor = this.props.queueCursor;
-        var trackPlaying   = queue[queueCursor];
+        let queue       = this.props.queue;
+        let queueCursor = this.props.queueCursor;
+        let trackPlaying   = queue[queueCursor];
 
-        var bar = document.querySelector('.now-playing-bar');
-        var percent = ((e.pageX - (bar.offsetLeft + bar.offsetParent.offsetLeft)) / bar.offsetWidth) * 100;
+        let bar = document.querySelector('.now-playing-bar');
+        let percent = ((e.pageX - (bar.offsetLeft + bar.offsetParent.offsetLeft)) / bar.offsetWidth) * 100;
 
-        var jumpTo = (percent * trackPlaying.duration) / 100;
+        let jumpTo = (percent * trackPlaying.duration) / 100;
 
         AppActions.player.jumpTo(jumpTo);
     }
@@ -122,14 +121,14 @@ export default class PlayingBar extends Component {
         // Chack if it's needed to update currentTime
         if(this.state.dragging) {
 
-            var queue       = this.props.queue;
-            var queueCursor = this.props.queueCursor;
-            var trackPlaying   = queue[queueCursor];
+            let queue       = this.props.queue;
+            let queueCursor = this.props.queueCursor;
+            let trackPlaying   = queue[queueCursor];
 
-            var bar = document.querySelector('.now-playing-bar');
-            var percent = ((e.pageX - (bar.offsetLeft + bar.offsetParent.offsetLeft)) / bar.offsetWidth) * 100;
+            let bar = document.querySelector('.now-playing-bar');
+            let percent = ((e.pageX - (bar.offsetLeft + bar.offsetParent.offsetLeft)) / bar.offsetWidth) * 100;
 
-            var jumpTo = (percent * trackPlaying.duration) / 100;
+            let jumpTo = (percent * trackPlaying.duration) / 100;
 
             AppActions.player.jumpTo(jumpTo);
         }
@@ -143,14 +142,14 @@ export default class PlayingBar extends Component {
 
     showTooltip(e) {
 
-        var queue       = this.props.queue;
-        var queueCursor = this.props.queueCursor;
-        var trackPlaying   = queue[queueCursor];
+        let queue       = this.props.queue;
+        let queueCursor = this.props.queueCursor;
+        let trackPlaying   = queue[queueCursor];
 
-        var bar = document.querySelector('.now-playing-bar');
-        var percent = ((e.pageX - (bar.offsetLeft + bar.offsetParent.offsetLeft)) / bar.offsetWidth) * 100;
+        let bar = document.querySelector('.now-playing-bar');
+        let percent = ((e.pageX - (bar.offsetLeft + bar.offsetParent.offsetLeft)) / bar.offsetWidth) * 100;
 
-        var time = (percent * trackPlaying.duration) / 100;
+        let time = (percent * trackPlaying.duration) / 100;
 
         this.setState({
             duration : time,

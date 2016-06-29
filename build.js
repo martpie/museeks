@@ -45,7 +45,8 @@ const options = {
     'name'          :  'museeks',
     'platform'      : ['darwin', 'win32', 'linux'],
     'arch'          : ['ia32', 'x64'],
-    'version'       :  '0.47.0',
+    'version'       :  '1.2.5',
+    'icon'          :  path.join('src', 'images', 'logos', 'museeks.png'),
     'build-version' :  app.version,
     'app-version'   :  app.version,
 
@@ -73,10 +74,10 @@ packager(options, function (err, appPath) {
         console.timeEnd('build');
         console.log('Builds cleanup');
 
-        var buildsPathes = getDirectories(path.join('./build', app.version));
+        let buildsPathes = getDirectories(path.join('./build', app.version));
 
         buildsPathes.forEach(function(folder, index) {
-            var appPath = './build/' + folder + '/resources/app/';
+            let appPath = './build/' + folder + '/resources/app/';
 
             rimraf(appPath + 'src/images', {}, function() {});
             rimraf(appPath + 'src/js', {}, function() {});

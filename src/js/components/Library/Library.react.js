@@ -20,7 +20,7 @@ export default class Library extends Component {
 
     render() {
 
-        var content;
+        let content;
 
         if(this.props.library === null) {
             content = (
