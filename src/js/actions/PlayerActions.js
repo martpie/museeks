@@ -69,7 +69,7 @@ export default {
 
         if(!isNaN(parseFloat(value)) && isFinite(value)) { // if is numeric
 
-            if(value > 0.1 && value < 10) { // if in allowed range
+            if(value >= 0.5 && value <= 5) { // if in allowed range
 
                 app.audio.playbackRate = value;
                 app.config.set('audioPlaybackRate', parseFloat(value));
