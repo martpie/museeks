@@ -1,0 +1,101 @@
+/*!
+ * bootstrap-sharper v0.1 (http://github.com/KeitIG/bootstrap-sharper)
+ * Copyright 2015 Pierre de la Martinière
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ */
+
+.btn,
+.btn-lg,
+.btn-sm,
+.btn-xs,
+.btn-group-vertical > .btn:first-child:not(:last-child),
+.btn-group-vertical > .btn:last-child:not(:first-child) {
+    border-radius: 0;
+}
+
+.alert {
+    border-radius: 0;
+}
+
+.label {
+    border-radius: 0;
+}
+
+.progress {
+    border-radius: 0;
+}
+
+.well,
+.well-lg,
+.well-sm {
+    border-radius: 0;
+}
+
+.panel,
+.panel-heading {
+    border-radius: 0;
+}
+
+.list-group-item:first-child,
+.list-group-item:last-child {
+    border-radius: 0;
+}
+
+.badge {
+    border-radius: 0;
+}
+
+.nav-pills > li > a {
+    border-radius: 0;
+}
+
+.nav-tabs > li > a {
+    border-radius: 0;
+}
+
+.pager li > a, .pager li > span {
+    border-radius: 0;
+}
+
+.breadcrumb {
+    border-radius: 0;
+}
+
+.pagination,
+.pagination > li:first-child > a,
+.pagination > li:first-child > span,
+.pagination > li:last-child > a,
+.pagination > li:last-child > span {
+    border-radius: 0;
+}
+
+.dropdown-menu {
+    border-radius: 0;
+}
+
+.navbar,
+.navbar-toggle {
+    border-radius: 0;
+}
+
+.form-control {
+    border-radius: 0;
+}
+
+.input-group-addon {
+    border-radius: 0;
+}
+
+.container .jumbotron,
+.container-fluid .jumbotron {
+    border-radius: 0;
+}
+
+.tooltip-inner,
+.popover {
+    border-radius: 0;
+}
+
+.img-thumbnail {
+    border-radius: 0;
+}
