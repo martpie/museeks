@@ -62,7 +62,7 @@
     "style-loader": "0.13.1",
     "svg-inline-loader": "0.4.1",
     "url-loader": "0.5.7",
-    "webpack-dev-server": "1.14.1"
     "webpack": "1.13.0",
+    "webpack-dev-server": "1.14.1"
   }
 }
