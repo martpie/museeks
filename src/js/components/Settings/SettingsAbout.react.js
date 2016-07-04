@@ -47,6 +47,12 @@ export default class SettingsAbout extends Component {
                 pseudo: 'Suriteka',
                 feature: 'icons editing',
                 url: 'http://twitter.com/Suriteka '
+            },
+            {
+                name: 'Yury Solovyov',
+                pseudo: 'YurySolovyov',
+                feature: 'Build improvements',
+                url: 'https://github.com/YurySolovyov'
             }
         ];
 
