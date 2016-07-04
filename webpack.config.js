@@ -23,19 +23,25 @@ module.exports = {
                 loader: 'json',
             },
             {
+                test: /\.css$/,
+                loader: ExtractTextPlugin.extract('css-loader')
+            },
+            {
                 test: /\.scss$/,
-                loader: ExtractTextPlugin.extract('css-loader!sass-loader'),
-                exclude: /node_modules/
+                loader: ExtractTextPlugin.extract('css-loader!sass-loader')
             },
             {
                 test: /\.(eot|woff|ttf)([\?]?.*)$/,
-                loader: 'url-loader?limit=8192&name=fonts/[name].[ext]',
-                exclude: /node_modules/
+                loader: 'url-loader?name=fonts/[name].[ext]',
             },
             {
                 test: /\.(png|jpg)([\?]?.*)$/,
                 loader: 'file-loader?name=img/[name].[ext]',
                 exclude: /node_modules/
+            },
+            {
+                test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+                loader: "url?mimetype=image/svg+xml"
             },
             {
                 test: /\.svg$/,

@@ -18,9 +18,9 @@ import routes from './router/routes';
 |--------------------------------------------------------------------------
 */
 
+require('bootstrap-css-only/css/bootstrap.min.css');
+require('font-awesome/css/font-awesome.css');
 require('../styles/main.scss');
-
-
 
 /*
 |--------------------------------------------------------------------------
