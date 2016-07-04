@@ -45,7 +45,7 @@ Builds can be found [at this page](https://github.com/KeitIG/museeks/releases). 
 - Download [Electron](https://github.com/atom/electron/releases) **there are crashes problems in 0.36.x, don't use it**
 - Download Museeks source code
 - Put it in a folder called `app` in `[Electron path]/resources`
-- `bower install && npm install && npm run compile`
+- `npm install && npm run compile`
 - Run Electron
 
 ===
@@ -53,8 +53,8 @@ Builds can be found [at this page](https://github.com/KeitIG/museeks/releases). 
 ### Contribute
 
 - Fork and clone
-- You will need `bower` and `webpack` installed globally
-- `bower install && npm install && npm run dev`
+- You will need `webpack` installed globally
+- `npm install && npm run dev`
 - Don't forget to enable dev mode in the app in the settings view
 
 Webpack will watch for JSX and SASS changes.
