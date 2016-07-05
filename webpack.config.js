@@ -44,11 +44,11 @@ module.exports = {
             {
                 test: /\.svg$/,
                 loader: 'svg-inline',
-                include: path.resolve(__dirname, "src")
+                include: path.resolve(__dirname, 'src')
             },
             {
                 test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-                loader: "url?mimetype=image/svg+xml",
+                loader: 'url?mimetype=image/svg+xml',
                 include: /node_modules/
             }
         ]
