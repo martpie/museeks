@@ -22,6 +22,8 @@ require('bootstrap-css-only/css/bootstrap.min.css');
 require('font-awesome/css/font-awesome.css');
 require('../styles/main.scss');
 
+
+
 /*
 |--------------------------------------------------------------------------
 | Render the app

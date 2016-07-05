@@ -1,6 +1,8 @@
 var webpack           = require('webpack');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
+var path = require('path');
+
 module.exports = {
     entry: {
         main: ['./src/js/main.js']
@@ -40,13 +42,14 @@ module.exports = {
                 exclude: /node_modules/
             },
             {
-                test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-                loader: "url?mimetype=image/svg+xml"
-            },
-            {
                 test: /\.svg$/,
                 loader: 'svg-inline',
-                exclude: /node_modules/
+                include: path.resolve(__dirname, "src")
+            },
+            {
+                test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+                loader: "url?mimetype=image/svg+xml",
+                include: /node_modules/
             }
         ]
     },
