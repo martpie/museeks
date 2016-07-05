@@ -119,7 +119,18 @@ AppDispatcher.register(function(payload) {
                 // Check if we have to shuffle the queue
                 if(AppStore.shuffle) {
 
-                    var firstTrack = queue[id];
+                    var index = 0;
+
+                    // need to check that later
+                    for(var i = 0, length = queue.length; i < length; i++) {
+
+                        if(queue[i]._id === id) {
+                            index = i;
+                            break;
+                        }
+                    }
+
+                    var firstTrack = queue[index];
 
                     queue.splice(id, 1);
 
