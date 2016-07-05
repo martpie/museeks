@@ -182,15 +182,17 @@ export default class ArtistList extends Component {
                         }
 
                         let base;
-                        let min = Math.min.apply(Math, selectedInt);
-                        let max = Math.max.apply(Math, selectedInt);
+                        let min = Math.min(...selectedInt);
+                        let max = Math.max(...selectedInt);
 
                         if(index < min) {
                             base = max;
                         } else {
                             base = min;
                         }
+
                         let newSelected = [];
+
                         if(index < min) {
                             for(let i = 0; i <= Math.abs(index - base); i++) {
                                 newSelected.push(tracks[base - i]._id);
