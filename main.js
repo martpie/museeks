@@ -3,6 +3,7 @@
 process.env.NODE_ENV = 'production'; // Drastically increase performances
 
 const path     = require('path');
+const os       = require('os');
 const teeny    = require('teeny-conf');
 const electron = require('electron');
 
@@ -77,12 +78,20 @@ app.on('ready', function() {
         instance.sleepBlockerID = powerSaveBlocker.start('prevent-app-suspension');
     }
 
-    let museeksIcon = nativeImage.createFromPath(path.join(__dirname, 'src', 'images', 'logos', 'museeks.png'));
+    let logosPath = path.join(__dirname, 'src', 'images', 'logos');
+    let museeksIcons = {
+        '256': nativeImage.createFromPath(path.join(logosPath, 'museeks.png')),
+        '128': nativeImage.createFromPath(path.join(logosPath, 'museeks-128.png')),
+        '64': nativeImage.createFromPath(path.join(logosPath, 'museeks-64.png')),
+        '48': nativeImage.createFromPath(path.join(logosPath, 'museeks-48.png')),
+        '32': nativeImage.createFromPath(path.join(logosPath, 'museeks-32.png')),
+        'ico': nativeImage.createFromPath(path.join(logosPath, 'museeks.ico'))
+    };
 
     // Browser Window options
     let mainWindowOption = {
         title     : 'Museeks',
-        icon      :  museeksIcon,
+        icon      :  os.platform() === 'win32' ? museeksIcons['ico'] : museeksIcons['256'],
         x         :  bounds.x,
         y         :  bounds.y,
         width     :  bounds.width,
