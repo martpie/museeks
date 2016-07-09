@@ -38,10 +38,6 @@ let pathUserData     = app.getPath('userData'),
 let conf = new teeny(path.join(pathUserData, 'config.json'));
 conf.loadOrCreateSync();
 
-/*
-let conf = new teeny(path.join(pathUserData, 'config.json'));
-conf.loadOrCreateSync(defaultConfig);
-*/
 
 
 /*
@@ -56,6 +52,20 @@ let supportedFormats = [
     'audio/mpeg3',
     'audio/x-mpeg-3',
     'audio/mpeg',
+    'audio/mpeg4-generic',
+    'audio/mp4a',
+    'audio/mp4a-latm',
+    'audio/mpga',
+
+    'audio/aac',
+    'audio/aacp',
+    'audio/x-aac',
+    'audio/x-m4a',
+    'audio/x-m4p',
+    'audio/x-m4b',
+
+    'audio/3gpp',
+    'audio/3gpp2'
 
     'audio/wav',
     'audio-wave',
@@ -104,7 +114,7 @@ db.reset = function() {
 };
 
 // WTFix, db.loadDatabase() throw an error if the line below is not here
-fs.writeFile(path.join(pathUserData, '.init'), "", (err) => { if(err) throw err; });
+fs.writeFile(path.join(pathUserData, '.init'), '', (err) => { if(err) throw err; });
 
 
 
