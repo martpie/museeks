@@ -3,7 +3,7 @@
 [![Gitter](https://badges.gitter.im/KeitIG/museeks.svg)](https://gitter.im/KeitIG/museeks?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 ![Dependencies](https://david-dm.org/KeitIG/museeks.svg)
 
-A free, lightweight and cross-platform music player. ([http://museeks.io](http://museeks.io))
+A lightweight and cross-platform music player. ([http://museeks.io](http://museeks.io))
 
 ![Screenshot](screenshot.png)
 
@@ -17,13 +17,18 @@ It uses:
 ### Features
 
 - Lightweight music player
+- Polished
 - Queue management
 - Shuffle, loop
 - Dark theme
+- Playback speed control
+- Sleep mode blocker
 - Supported formats:
     - mp3
-    - ogg
+    - m4a/aac
     - wav
+    - ogg
+    - 3gpp
 
 ===
 
@@ -40,9 +45,9 @@ It uses:
 
 Builds can be found [at this page](https://github.com/KeitIG/museeks/releases). Please notive those are only portable versions. Installers may come in the future.
 
-#### Dev (advanced)
+#### Build (advanced)
 
-- Download [Electron](https://github.com/atom/electron/releases) **there are crashes problems in 0.36.x, don't use it**
+- Download [Electron](https://github.com/atom/electron/releases)
 - Download Museeks source code
 - Put it in a folder called `app` in `[Electron path]/resources`
 - `npm install && npm run compile`
