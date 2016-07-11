@@ -1,4 +1,4 @@
-import PlaylistsActions from '../../actions/PlaylistsActions';
+import AppActions from '../../actions/AppActions';
 
 import React, { Component } from 'react';
 import { ButtonGroup, Button } from 'react-bootstrap';
@@ -19,7 +19,6 @@ const ipcRenderer = electron.ipcRenderer;
 export default class PlaylistsNav extends Component {
 
     constructor(props) {
-
 
         super(props);
         this.state = {
@@ -84,7 +83,7 @@ export default class PlaylistsNav extends Component {
 
             switch(reply) {
                 case 'delete':
-                    PlaylistsActions.delete(_id);
+                    AppActions.playlists.delete(_id);
                     break;
                 case 'rename':
                     self.setState({ renamed: _id });
@@ -106,11 +105,11 @@ export default class PlaylistsNav extends Component {
     }
 
     createPlaylist() {
-        PlaylistsActions.create('New playlist');
+        AppActions.playlists.create('New playlist');
     }
 
     rename(e) {
-        PlaylistsActions.rename(this.state.renamed, e.currentTarget.value);
+        AppActions.playlists.rename(this.state.renamed, e.currentTarget.value);
     }
 
     blur() {

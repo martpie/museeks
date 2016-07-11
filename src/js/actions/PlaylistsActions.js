@@ -22,8 +22,8 @@ let PlaylistsActions = {
 
     create: function(name) {
 
-        var self = this;
-        var playlist = {
+        let self = this;
+        let playlist = {
             type   : 'playlist',
             name   :  name,
             tracks :  []
@@ -55,6 +55,19 @@ let PlaylistsActions = {
 
     addTracksTo: function(_id, tracks) {
 
+        app.db.findOne({ _id: _id }, function (err, playlist) {
+            if (err) throw err;
+            else {
+                let playlistTracks = playlist.tracks;
+                playlistTracks.push(...tracks);
+
+                app.db.update({ '_id': _id }, { $set: { tracks: playlistTracks }}, { multi: true }, function(err, numReplaced) {
+
+                    if(err) console.warn(err);
+                    else PlaylistsActions.refresh();
+                });
+            }
+        });
     }
 }
 

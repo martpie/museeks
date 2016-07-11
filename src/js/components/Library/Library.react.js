@@ -49,6 +49,7 @@ export default class Library extends Component {
                 <TracksList
                     tracks={ this.props.tracks }
                     trackPlayingID={ this.props.trackPlayingID }
+                    playlists={ this.props.playlists }
                 />
             );
         }

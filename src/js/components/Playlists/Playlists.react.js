@@ -20,7 +20,7 @@ export default class Playlists extends Component {
 
     render() {
 
-        var content;
+        let content;
 
         if(this.props.playlists === null) {
             content = (
@@ -31,9 +31,9 @@ export default class Playlists extends Component {
         }
         else {
 
-            var playlist = null;
+            let playlist = null;
 
-            for(var i = 0, length = this.props.playlists.length; i < length; i++) {
+            for(let i = 0, length = this.props.playlists.length; i < length; i++) {
 
                 if(this.props.playlists[i]._id === this.props.params.id) {
                     playlist = this.props.playlists[i];

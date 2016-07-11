@@ -18,7 +18,7 @@ export default class PlaylistSplash extends Component {
 
     render() {
 
-        var content;
+        let content;
 
         return (
             <div className='playlist'></div>

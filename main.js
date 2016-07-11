@@ -24,14 +24,14 @@ let instance = {}; // use to keep some variables in mind
 let mainWindow = null;
 
 // Quit when all windows are closed
-app.on('window-all-closed', function() {
+app.on('window-all-closed', () => {
     if (process.platform != 'darwin')
         app.quit();
 });
 
 // This method will be called when Electron has done everything
 // initialization and ready for creating browser windows.
-app.on('ready', function() {
+app.on('ready', () => {
 
     let screen = electron.screen; // Module to get screen size
     let pathUserData = app.getPath('userData');
@@ -108,22 +108,47 @@ app.on('ready', function() {
     // ... and load our html page
     mainWindow.loadURL('file://' + __dirname + '/src/app.html#/library');
 
-    mainWindow.on('closed', function() {
+    mainWindow.on('closed', () => {
         // Dereference the window object
         mainWindow = null;
     });
 
     // IPC events
-    ipcMain.on('tracksListContextMenu', (event, items, playlists) => {
+    ipcMain.on('tracksListContextMenu', (event, items, playlistsStringified) => {
 
+        let playlists = JSON.parse(playlistsStringified);
         let playlistTemplate;
 
-        if(playlists === undefined) {
+        if(!!playlists) {
+
             playlistTemplate = [
                 {
                     label: 'Create new playlist...',
-                    click: function() {
-                        event.sender.send('tracksListContextMenuReply', 'createPlaylist')
+                    click: () => {
+                        event.sender.send('tracksListContextMenuReply', 'createPlaylist');
+                    }
+                },
+                {
+                    type: 'separator'
+                }
+            ];
+
+            playlists.forEach((elem) => {
+                playlistTemplate.push({
+                    label: elem.name,
+                    click: () => {
+                        event.sender.send('tracksListContextMenuReply', 'addToPlaylist', elem._id);
+                    }
+                });
+            });
+
+        } else {
+
+            playlistTemplate = [
+                {
+                    label: 'Create new playlist...',
+                    click: () => {
+                        event.sender.send('tracksListContextMenuReply', 'createPlaylist');
                     }
                 },
                 {
@@ -133,22 +158,7 @@ app.on('ready', function() {
                     label: 'No playlist',
                     enabled: false
                 }
-            ]
-        } else {
-            playlistTemplate = [
-                {
-                    label: 'Create new playlist...',
-                    click: function() {
-                        event.sender.send('tracksListContextMenuReply', 'createPlaylist')
-                    }
-                },
-                {
-                    type: 'separator'
-                },
-                {
-                    label: 'List playlists here',
-                }
-            ]
+            ];
         }
 
         let template = [
@@ -161,13 +171,13 @@ app.on('ready', function() {
             },
             {
                 label: 'Add to queue',
-                click: function() {
+                click: () => {
                     event.sender.send('tracksListContextMenuReply', 'addToQueue');
                 }
             },
             {
                 label: 'Play next',
-                click:  function() {
+                click:  () => {
                     event.sender.send('tracksListContextMenuReply', 'playNext');
                 }
             },
@@ -191,13 +201,13 @@ app.on('ready', function() {
         let template = [
             {
                 label: 'Delete',
-                click: function() {
+                click: () => {
                     event.sender.send('playlistContextMenuReply', 'delete', _id);
                 }
             },
             {
                 label: 'Rename',
-                click: function() {
+                click: () => {
                     event.sender.send('playlistContextMenuReply', 'rename', _id);
                 }
             }

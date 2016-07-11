@@ -17,7 +17,7 @@ const ipcRenderer = electron.ipcRenderer;
 |--------------------------------------------------------------------------
 */
 
-export default class ArtistList extends Component {
+export default class TracksList extends Component {
 
     constructor(props) {
 
@@ -274,14 +274,14 @@ export default class ArtistList extends Component {
 
         let items = this.state.selected.length;
 
-        ipcRenderer.send('tracksListContextMenu', items);
+        ipcRenderer.send('tracksListContextMenu', items, JSON.stringify(this.props.playlists));
     }
 
     componentDidMount() {
 
         let self = this;
 
-        ipcRenderer.on('tracksListContextMenuReply', (event, reply) => {
+        ipcRenderer.on('tracksListContextMenuReply', (event, reply, params) => {
 
             let selected = self.state.selected;
 
@@ -291,6 +291,10 @@ export default class ArtistList extends Component {
                     break;
                 case 'playNext':
                     AppActions.queue.addNext(selected);
+                    break;
+                case 'addToPlaylist':
+                    AppActions.playlists.addTracksTo(params, selected);
+                    break;
             }
         });
     }
