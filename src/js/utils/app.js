@@ -65,7 +65,7 @@ let supportedFormats = [
     'audio/x-m4b',
 
     'audio/3gpp',
-    'audio/3gpp2'
+    'audio/3gpp2',
 
     'audio/wav',
     'audio-wave',
