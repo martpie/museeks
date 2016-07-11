@@ -35,7 +35,7 @@ let PlaylistsActions = {
         });
     },
 
-    updateName: function(_id, name) {
+    rename: function(_id, name) {
 
         app.db.update({ '_id': _id }, { $set: { name: name }}, { multi: true }, function(err, numReplaced) {
 

@@ -55,7 +55,6 @@ export default {
     setVolume: function(volume) {
 
         if(!isNaN(parseFloat(volume)) && isFinite(volume)) {
-            console.log(volume);
             app.audio.volume = volume;
             app.config.set('audioVolume', volume);
             app.config.saveSync();

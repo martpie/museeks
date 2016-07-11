@@ -194,6 +194,12 @@ app.on('ready', function() {
                 click: function() {
                     event.sender.send('playlistContextMenuReply', 'delete', _id);
                 }
+            },
+            {
+                label: 'Rename',
+                click: function() {
+                    event.sender.send('playlistContextMenuReply', 'rename', _id);
+                }
             }
         ];
 

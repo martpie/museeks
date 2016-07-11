@@ -17,19 +17,36 @@
 
         .playlists-nav-body {
 
-            .playlist-link {
-                margin-top: 0;
-
-                &.active a {
-                    background-color: $main-color;
-                    color: $generic-white;
-                }
+            .playlist-nav-item {
 
                 a {
+                    display: block;
                     color: inherit;
                     text-overflow: ellipsis;
                     white-space: nowrap;
                     overflow: hidden;
+                    cursor: pointer;
+                    padding: 12px 15px;
+                    text-decoration: none;
+
+                    &:hover {
+                        background-color: #e6e6e6;
+                    }
+
+                    &.active {
+                        background-color: #e6e6e6;
+                        color: $main-color;
+                    }
+                }
+
+                input[type="text"] {
+                    display: block;
+                    width: 100%;
+                    background-color: $generic-white;
+                    color: $main-color;
+                    border: none;
+                    padding: 12px 15px;
+                    outline: none;
                 }
             }
         }

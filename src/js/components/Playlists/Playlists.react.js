@@ -54,8 +54,4 @@ export default class Playlists extends Component {
 
         return content;
     }
-
-    componentWillMount() {
-
-    }
 }
