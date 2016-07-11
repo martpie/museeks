@@ -114,7 +114,42 @@ app.on('ready', function() {
     });
 
     // IPC events
-    ipcMain.on('tracksListContextMenu', (event, items) => {
+    ipcMain.on('tracksListContextMenu', (event, items, playlists) => {
+
+        let playlistTemplate;
+
+        if(playlists === undefined) {
+            playlistTemplate = [
+                {
+                    label: 'Create new playlist...',
+                    click: function() {
+                        event.sender.send('tracksListContextMenuReply', 'createPlaylist')
+                    }
+                },
+                {
+                    type: 'separator'
+                },
+                {
+                    label: 'No playlist',
+                    enabled: false
+                }
+            ]
+        } else {
+            playlistTemplate = [
+                {
+                    label: 'Create new playlist...',
+                    click: function() {
+                        event.sender.send('tracksListContextMenuReply', 'createPlaylist')
+                    }
+                },
+                {
+                    type: 'separator'
+                },
+                {
+                    label: 'List playlists here',
+                }
+            ]
+        }
 
         let template = [
             {
@@ -125,16 +160,23 @@ app.on('ready', function() {
                 type: 'separator'
             },
             {
-                label : 'Add to queue',
-                click :  function() {
+                label: 'Add to queue',
+                click: function() {
                     event.sender.send('tracksListContextMenuReply', 'addToQueue');
                 }
             },
             {
-                label : 'Play next',
-                click :  function() {
+                label: 'Play next',
+                click:  function() {
                     event.sender.send('tracksListContextMenuReply', 'playNext');
                 }
+            },
+            {
+                type: 'separator'
+            },
+            {
+                label: 'Add to playlist',
+                submenu: playlistTemplate
             }
         ];
 

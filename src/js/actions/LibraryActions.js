@@ -91,7 +91,7 @@ export default {
         });
 
         // Start the big thing
-        app.db.remove({}, { multi: true }, function (err, numRemoved) {
+        app.db.remove({ type : 'track' }, { multi: true }, function (err, numRemoved) {
             app.db.loadDatabase(function (err) {
                 if(err) throw err;
                 else {
