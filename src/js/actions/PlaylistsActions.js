@@ -5,7 +5,7 @@ import app from '../utils/app';
 
 
 
-var PlaylistsActions = {
+let PlaylistsActions = {
 
     refresh: function() {
 
@@ -46,12 +46,11 @@ var PlaylistsActions = {
 
     delete: function(_id) {
 
-        app.db.remove({ _id: 'id' }, { multi: true }, function (err, numRemoved) {
+        app.db.remove({ type: 'playlist', _id: _id }, { multi: true }, function (err, numRemoved) {
 
             if(err) console.warn(err);
             else PlaylistsActions.refresh();
         });
-
     },
 
     addTracksTo: function(_id, tracks) {

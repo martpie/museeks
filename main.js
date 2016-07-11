@@ -186,6 +186,23 @@ app.on('ready', function() {
     });
 
 
+    ipcMain.on('playlistContextMenu', (event, _id) => {
+
+        let template = [
+            {
+                label: 'Delete',
+                click: function() {
+                    event.sender.send('playlistContextMenuReply', 'delete', _id);
+                }
+            }
+        ];
+
+        let context = Menu.buildFromTemplate(template);
+
+        context.popup(mainWindow); // Let it appear
+    });
+
+
     ipcMain.on('toggleSleepBlocker', (event, toggle, mode) => {
 
         if(toggle) {

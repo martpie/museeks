@@ -21,8 +21,8 @@ const screen = remote.screen;
 let browserWindows = {};
     browserWindows.main = remote.getCurrentWindow();
 
-let pathUserData     = app.getPath('userData'),
-    pathSrc          = __dirname;
+let pathUserData = app.getPath('userData'),
+    pathSrc      = __dirname;
 
 
 
@@ -31,9 +31,6 @@ let pathUserData     = app.getPath('userData'),
 | Config
 |--------------------------------------------------------------------------
 */
-
-//let conf = teeny.loadOrCreateSync(path.join(pathUserData, 'config.json'), {});
-
 
 let conf = new teeny(path.join(pathUserData, 'config.json'));
 conf.loadOrCreateSync();
