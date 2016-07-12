@@ -15,27 +15,31 @@ import PlaylistSplash from '../components/Playlists/PlaylistSplash.react';
 
 let init = {
 
-    app: (route) => {
+    app: () => {
         AppActions.init();
     },
 
-    library: (route) => {
+    library: () => {
         AppActions.library.load();
     },
 
     playlist: (route) => {
         AppActions.playlists.load(route.params.id);
+    },
+
+    resetTracks: () => {
+        AppActions.library.resetTracks();
     }
 };
 
 // Router
 let routes = (
     <Route component={ App } path='/' onEnter={ init.app }>
-        <Route path='library'   component={ Library } onEnter={ init.library } />
-        <Route path='settings'  component={ Settings } />
+        <Route path='library' component={ Library } onEnter={ init.library } onLeave={ init.resetTracks } />
+        <Route path='settings' component={ Settings } />
         <Route path='playlists' component={ Playlists }>
             <IndexRoute component={ PlaylistSplash } />
-            <Route path=':id' component={ Playlist } onEnter={ init.playlist }/>
+            <Route path=':id' component={ Playlist } onEnter={ init.playlist } onLeave={ init.resetTracks } />
         </Route>
     </Route>
 );

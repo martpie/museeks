@@ -28,6 +28,13 @@ export default {
         });
     },
 
+    resetTracks: function() {
+        AppDispatcher.dispatch({
+            actionType : AppConstants.APP_REFRESH_LIBRARY,
+            tracks     : null
+        });
+    },
+
     selectAndPlay: function(_id) {
 
         AppDispatcher.dispatch({
