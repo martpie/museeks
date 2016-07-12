@@ -58,7 +58,7 @@ Builds can be found [at this page](https://github.com/KeitIG/museeks/releases). 
 ### Contribute
 
 - Fork and clone
-- You will need `webpack` installed globally
+- Master is usually unstable, checkout to a tag to have a stable state of the app
 - `npm install && npm run dev`
 - Don't forget to enable dev mode in the app in the settings view
 
