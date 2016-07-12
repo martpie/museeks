@@ -481,5 +481,10 @@ AppDispatcher.register(function(payload) {
             AppStore.playlists = playlists;
             AppStore.emit(CHANGE_EVENT);
             break;
+
+        case(AppConstants.APP_PLAYLISTS_LOAD_ONE):
+            AppStore.tracks = payload.tracks;
+            AppStore.emit(CHANGE_EVENT);
+            break;
     }
 });

@@ -7,10 +7,25 @@ import app from '../utils/app';
 
 let PlaylistsActions = {
 
+    load: function(_id) {
+
+        app.db.findOne({ _id: _id }, function(err, playlist) {
+            if(err) console.warn(err);
+            else {
+                app.db.find({ type: 'track', _id: { $in: playlist.tracks }}, function(err, tracks) {
+                    AppDispatcher.dispatch({
+                        actionType : AppConstants.APP_PLAYLISTS_LOAD_ONE,
+                        tracks : tracks
+                    });
+                });
+            }
+        });
+    },
+
     refresh: function() {
 
-        app.db.find({ type : 'playlist' }).sort({ name : 1 }).exec(function (err, playlists) {
-            if (err) throw err;
+        app.db.find({ type : 'playlist' }).sort({ name : 1 }).exec(function(err, playlists) {
+            if (err) console.warn(err);
             else {
                 AppDispatcher.dispatch({
                     actionType : AppConstants.APP_PLAYLISTS_REFRESH,
@@ -56,7 +71,7 @@ let PlaylistsActions = {
     addTracksTo: function(_id, tracks) {
 
         app.db.findOne({ _id: _id }, function (err, playlist) {
-            if (err) throw err;
+            if (err) console.warn(err);
             else {
                 let playlistTracks = playlist.tracks;
                 playlistTracks.push(...tracks);

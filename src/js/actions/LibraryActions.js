@@ -18,7 +18,7 @@ export default {
 
     load: function() {
         app.db.find({ type : 'track' }).sort({ 'loweredMetas.artist': 1, 'year': 1, 'loweredMetas.album': 1, 'disk.no': 1, 'track.no': 1 }).exec(function (err, tracks) {
-            if (err) throw err;
+            if (err) console.warn(err);
             else {
                 AppDispatcher.dispatch({
                     actionType : AppConstants.APP_REFRESH_LIBRARY,
@@ -71,7 +71,7 @@ export default {
         app.db.remove({ }, { multi: true }, function (err, numRemoved) {
             app.db.loadDatabase(function (err) {
                 if(err) {
-                    throw err
+                    console.warn(err);
                 } else {
                     AppActions.library.load();
                     AppDispatcher.dispatch({
@@ -93,7 +93,7 @@ export default {
         // Start the big thing
         app.db.remove({ type : 'track' }, { multi: true }, function (err, numRemoved) {
             app.db.loadDatabase(function (err) {
-                if(err) throw err;
+                if(err) console.warn(err);
                 else {
 
                     let filesList = [];

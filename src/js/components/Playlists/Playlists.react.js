@@ -45,7 +45,8 @@ export default class Playlists extends Component {
                 <div className='view view-playlists'>
                     <PlaylistsNav playlists={ this.props.playlists } />
                     { this.props.params.id !== null ? React.cloneElement(this.props.children, {
-                        playlist : playlist,
+                        playlist       : playlist,
+                        tracks         : this.props.tracks,
                         trackPlayingID : this.props.trackPlayingID
                     }) : undefined }
                 </div>

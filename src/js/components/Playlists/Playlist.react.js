@@ -20,13 +20,21 @@ export default class Playlists extends Component {
 
     render() {
 
-        return (
-            <div className='playlist'>
-                <TracksList
-                    tracks={ [] }
-                    trackPlayingID={ this.props.trackPlayingID }
-                />
-            </div>
-        );
+        if(!!this.props.tracks) {
+            return (
+                <div className='playlist'>
+                    <TracksList
+                        tracks={ this.props.tracks }
+                        trackPlayingID={ this.props.trackPlayingID }
+                    />
+                </div>
+            );
+        } else {
+            return (
+                <div className='full-message'>
+                    <p>Empty playlist</p>
+                </div>
+            );
+        }
     }
 }

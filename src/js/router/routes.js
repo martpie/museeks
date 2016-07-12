@@ -21,6 +21,10 @@ let init = {
 
     library: (route) => {
         AppActions.library.load();
+    },
+
+    playlist: (route) => {
+        AppActions.playlists.load(route.params.id);
     }
 };
 
