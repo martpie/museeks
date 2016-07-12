@@ -2,7 +2,7 @@
   "name": "museeks",
   "version": "0.5.0",
   "description": "A music player based on nw.js",
-  "main": "main.js",
+  "main": "./src/main-process/main.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/KeitIG/museeks"
