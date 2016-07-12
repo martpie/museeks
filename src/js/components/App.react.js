@@ -51,7 +51,6 @@ export default class Museeks extends Component {
                                 config            : this.state.config,
                                 queue             : this.state.queue,
                                 tracks            : this.state.tracks,
-                                tracksPlaylist    : this.state.tracksPlaylist,
                                 library           : this.state.library,
                                 playlists         : this.state.playlists,
                                 refreshingLibrary : this.state.refreshingLibrary,

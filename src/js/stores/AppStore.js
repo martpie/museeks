@@ -30,7 +30,6 @@ var AppStore = objectAssign({}, EventEmitter.prototype, {
 
     library           :  null,  // All tracks
     tracks            :  null,  // All tracks shown on the library view
-    tracksPlaylist    :  null,  // Tracks shown on a playlist view
 
     queue             :  [],    // Tracks to be played
     queueCursor       :  null,  // The cursor of the queue
@@ -53,7 +52,6 @@ var AppStore = objectAssign({}, EventEmitter.prototype, {
             notifications     : this.notifications,
             library           : this.library,
             tracks            : this.tracks,
-            tracksPlaylist    : this.tracksPlaylist,
             playlists         : this.playlists,
             queue             : this.queue,
             queueCursor       : this.queueCursor,
@@ -485,7 +483,7 @@ AppDispatcher.register(function(payload) {
             break;
 
         case(AppConstants.APP_PLAYLISTS_LOAD_ONE):
-            AppStore.tracksPlaylist = payload.tracks;
+            AppStore.tracks = payload.tracks;
             AppStore.emit(CHANGE_EVENT);
             break;
     }
