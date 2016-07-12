@@ -26,6 +26,7 @@ export default class Playlists extends Component {
                     <TracksList
                         tracks={ this.props.tracks }
                         trackPlayingID={ this.props.trackPlayingID }
+                        playlists={ this.props.playlists }
                     />
                 </div>
             );
