@@ -20,7 +20,7 @@ export default class Playlists extends Component {
 
     render() {
 
-        if(!!this.props.tracks) {
+        if(!!this.props.tracks && !!this.props.tracks.length && this.props.tracks.length > 0) {
             return (
                 <div className='playlist'>
                     <TracksList
@@ -31,8 +31,10 @@ export default class Playlists extends Component {
             );
         } else {
             return (
-                <div className='full-message'>
-                    <p>Empty playlist</p>
+                <div className='playlist'>
+                    <div className='full-message'>
+                        <p>Empty playlist</p>
+                    </div>
                 </div>
             );
         }
