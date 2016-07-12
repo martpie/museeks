@@ -29,12 +29,16 @@ let AppActions = {
     init: function() {
 
         // Usual tasks
-        this.library.refreshTracks();
+        this.library.load();
         this.playlists.refresh();
         this.settings.checkTheme();
         this.settings.checkDevMode();
         this.app.initShortcuts();
         this.app.start();
+
+        // Audio Events
+        app.audio.addEventListener('ended', AppActions.player.next);
+        app.audio.addEventListener('error', AppActions.player.audioError);
 
         // Prevent some events
         window.addEventListener('dragover', function (e) {

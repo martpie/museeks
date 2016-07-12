@@ -82,7 +82,6 @@ export default class Museeks extends Component {
 
     componentDidMount() {
         AppStore.addChangeListener(this.updateState);
-        AppActions.init();
     }
 
     componentWillUnmount() {

@@ -86,9 +86,6 @@ let audio = new Audio();
     audio.volume = conf.get('audioVolume');
     audio.playbackRate = conf.get('audioPlaybackRate');
 
-audio.addEventListener('ended', AppActions.player.next);
-audio.addEventListener('error', AppActions.player.audioError);
-
 
 
 /*

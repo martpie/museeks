@@ -16,7 +16,7 @@ const dialog = electron.remote.dialog;
 
 export default {
 
-    refreshTracks: function() {
+    load: function() {
         app.db.find({ type : 'track' }).sort({ 'loweredMetas.artist': 1, 'year': 1, 'loweredMetas.album': 1, 'disk.no': 1, 'track.no': 1 }).exec(function (err, tracks) {
             if (err) throw err;
             else {
@@ -73,7 +73,7 @@ export default {
                 if(err) {
                     throw err
                 } else {
-                    AppActions.library.refreshTracks();
+                    AppActions.library.load();
                     AppDispatcher.dispatch({
                         actionType : AppConstants.APP_LIBRARY_REFRESH_END,
                     });
@@ -135,7 +135,7 @@ export default {
 
                                                 if(err) console.warn(err);
                                                 if(i === filesListFiltered.length - 1) {
-                                                    AppActions.library.refreshTracks();
+                                                    AppActions.library.load();
                                                     AppDispatcher.dispatch({
                                                         actionType : AppConstants.APP_LIBRARY_REFRESH_END
                                                     });
@@ -145,7 +145,7 @@ export default {
                                     } else {
                                         // Track is already in database
                                         if(i === filesListFiltered.length - 1) {
-                                            AppActions.library.refreshTracks();
+                                            AppActions.library.load();
                                             AppDispatcher.dispatch({
                                                 actionType : AppConstants.APP_LIBRARY_REFRESH_END
                                             });
