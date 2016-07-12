@@ -107,7 +107,6 @@ app.on('ready', () => {
 
     // ... and load our html page
     mainWindow.loadURL('file://' + __dirname + '/src/app.html#/library');
-    mainWindow.openDevTools();
 
     mainWindow.on('closed', () => {
         // Dereference the window object

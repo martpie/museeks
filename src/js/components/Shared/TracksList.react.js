@@ -295,6 +295,9 @@ export default class TracksList extends Component {
                 case 'addToPlaylist':
                     AppActions.playlists.addTracksTo(params, selected);
                     break;
+                case 'createPlaylist':
+                    AppActions.playlists.create('New playlist');
+                    break;
             }
         });
     }

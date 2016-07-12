@@ -1,7 +1,10 @@
 import AppDispatcher from '../dispatcher/AppDispatcher';
 import AppConstants  from '../constants/AppConstants';
+import AppActions    from './AppActions';
 
 import app from '../utils/app';
+
+import { hashHistory } from 'react-router'
 
 
 
@@ -35,7 +38,7 @@ let PlaylistsActions = {
         });
     },
 
-    create: function(name) {
+    create: function(name, redirect) {
 
         let self = this;
         let playlist = {
@@ -44,9 +47,13 @@ let PlaylistsActions = {
             tracks :  []
         };
 
-        app.db.insert(playlist, function (err, newDoc) {
+        app.db.insert(playlist, function (err, doc) {
             if(err) console.warn(err);
-            else PlaylistsActions.refresh();
+            else {
+                PlaylistsActions.refresh();
+                if(redirect) hashHistory.push('/playlists/' + doc._id);
+                else AppActions.notifications.add('success', 'The playlist "' + name + '" was created');
+            }
         });
     },
 

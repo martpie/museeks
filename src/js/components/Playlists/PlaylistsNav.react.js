@@ -66,7 +66,7 @@ export default class PlaylistsNav extends Component {
                 </div>
                 <div className='playlists-nav-footer'>
                     <ButtonGroup className='playlists-management'>
-                        <Button bsStyle='link' bsSize='xs' onClick={ this.createPlaylist }>
+                        <Button bsStyle='link' bsSize='xs' onClick={ this.createPlaylist.bind(this) }>
                             <Icon name='plus' />
                         </Button>
                     </ButtonGroup>
@@ -105,7 +105,7 @@ export default class PlaylistsNav extends Component {
     }
 
     createPlaylist() {
-        AppActions.playlists.create('New playlist');
+        AppActions.playlists.create('New playlist', true);
     }
 
     rename(e) {
