@@ -47,6 +47,7 @@ export default class Library extends Component {
         else {
             content = (
                 <TracksList
+                    type='library'
                     tracks={ this.props.tracks }
                     trackPlayingID={ this.props.trackPlayingID }
                     playlists={ this.props.playlists }

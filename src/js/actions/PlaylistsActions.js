@@ -80,8 +80,28 @@ let PlaylistsActions = {
         app.db.findOne({ _id: _id }, function (err, playlist) {
             if (err) console.warn(err);
             else {
+
                 let playlistTracks = playlist.tracks;
                 playlistTracks.push(...tracks);
+
+                app.db.update({ '_id': _id }, { $set: { tracks: playlistTracks }}, { multi: true }, function(err, numReplaced) {
+
+                    if(err) console.warn(err);
+                    else PlaylistsActions.refresh();
+                });
+            }
+        });
+    },
+
+    removeTracksFrom: function(_id, tracks) {
+
+        app.db.findOne({ _id: _id }, function(err, playlist) {
+            if(err) console.warn(err);
+            else {
+
+                let playlistTracks = playlist.tracks.filter((elem) => {
+                    return tracks.indexOf(elem) === -1;
+                });
 
                 app.db.update({ '_id': _id }, { $set: { tracks: playlistTracks }}, { multi: true }, function(err, numReplaced) {
 

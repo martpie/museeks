@@ -114,12 +114,12 @@ app.on('ready', () => {
     });
 
     // IPC events
-    ipcMain.on('tracksListContextMenu', (event, items, playlistsStringified) => {
+    ipcMain.on('tracksListContextMenu', (event, data) => {
 
-        let playlists = JSON.parse(playlistsStringified);
+        let options = JSON.parse(data);
         let playlistTemplate;
 
-        if(!!playlists) {
+        if(!!options.playlists) {
 
             playlistTemplate = [
                 {
@@ -133,7 +133,7 @@ app.on('ready', () => {
                 }
             ];
 
-            playlists.forEach((elem) => {
+            options.playlists.forEach((elem) => {
                 playlistTemplate.push({
                     label: elem.name,
                     click: () => {
@@ -163,7 +163,7 @@ app.on('ready', () => {
 
         let template = [
             {
-                label: items > 1 ? items + ' tracks selected' : items + ' track selected',
+                label: options.selectedCount > 1 ? options.selectedCount + ' tracks selected' : options.selectedCount + ' track selected',
                 enabled: false
             },
             {
@@ -177,7 +177,7 @@ app.on('ready', () => {
             },
             {
                 label: 'Play next',
-                click:  () => {
+                click: () => {
                     event.sender.send('tracksListContextMenuReply', 'playNext');
                 }
             },
@@ -189,6 +189,13 @@ app.on('ready', () => {
                 submenu: playlistTemplate
             }
         ];
+
+        if(options.type === 'playlist') template.push({
+            label: 'Remove from playlist',
+            click: () => {
+                event.sender.send('tracksListContextMenuReply', 'removeFromPlaylist');
+            }
+        });
 
         let context = Menu.buildFromTemplate(template);
 

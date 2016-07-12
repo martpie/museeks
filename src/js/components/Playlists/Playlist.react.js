@@ -24,6 +24,8 @@ export default class Playlists extends Component {
             return (
                 <div className='playlist'>
                     <TracksList
+                        type='playlist'
+                        currentPlaylist={ this.props.params.id }
                         tracks={ this.props.tracks }
                         trackPlayingID={ this.props.trackPlayingID }
                         playlists={ this.props.playlists }
