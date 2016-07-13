@@ -51,7 +51,7 @@ export default class SettingsAbout extends Component {
             {
                 name: 'Yury Solovyov',
                 pseudo: 'YurySolovyov',
-                feature: 'build improvements',
+                feature: 'main process and build improvements',
                 url: 'https://github.com/YurySolovyov'
             }
         ];
