@@ -28,6 +28,9 @@
                 padding: 0 4px;
                 cursor: default;
                 margin: 4px 0;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
 
                 &:not(:last-child) {
                     border-right: 1px solid #D2D2D2;
