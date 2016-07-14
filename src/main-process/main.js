@@ -6,8 +6,9 @@ const path     = require('path');
 const os       = require('os');
 const electron = require('electron');
 
-const IpcManager = require('./ipc');                // Manages IPC evens
-const ConfigManager = require('./config');          // Handles config
+const IpcManager         = require('./ipc');             // Manages IPC evens
+const ConfigManager      = require('./config');          // Handles config
+const IntegrationManager = require('./integration');     // Applies various integrations
 
 const app              = electron.app;              // Module to control application life.
 const powerSaveBlocker = electron.powerSaveBlocker; // Sleep mode management
@@ -79,4 +80,8 @@ app.on('ready', () => {
     // IPC events
     const ipcManager = new IpcManager(mainWindow);
     ipcManager.bindEvents();
+
+    // integrations
+    const integrations = new IntegrationManager(mainWindow);
+    integrations.enable();
 });
