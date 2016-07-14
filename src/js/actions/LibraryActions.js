@@ -118,7 +118,7 @@ export default {
                             mime: mime.lookup(file)
                         };
                     }).filter((track, i) => {
-                        return app.supportedFormats.indexOf(track.mime) > -1;
+                        return app.supportedFormats.includes(track.mime);
                     });
 
                     if(filesListFiltered.length > 0) {

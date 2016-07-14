@@ -100,7 +100,7 @@ let PlaylistsActions = {
             else {
 
                 let playlistTracks = playlist.tracks.filter((elem) => {
-                    return tracks.indexOf(elem) === -1;
+                    return !tracks.includes(elem);
                 });
 
                 app.db.update({ '_id': _id }, { $set: { tracks: playlistTracks }}, { multi: true }, function(err, numReplaced) {

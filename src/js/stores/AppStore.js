@@ -16,7 +16,7 @@ import AppConstants  from '../constants/AppConstants';
 
 import utils from '../utils/utils';
 
-var CHANGE_EVENT = 'change';
+const CHANGE_EVENT = 'change';
 
 
 
@@ -26,7 +26,7 @@ var CHANGE_EVENT = 'change';
 |--------------------------------------------------------------------------
 */
 
-var AppStore = objectAssign({}, EventEmitter.prototype, {
+let AppStore = objectAssign({}, EventEmitter.prototype, {
 
     library           :  null,  // All tracks
     tracks            :  null,  // All tracks shown on the library view
@@ -64,11 +64,11 @@ var AppStore = objectAssign({}, EventEmitter.prototype, {
         };
     },
 
-    addChangeListener: function(cb){
+    addChangeListener: function(cb) {
         this.on(CHANGE_EVENT, cb);
     },
 
-    removeChangeListener: function(cb){
+    removeChangeListener: function(cb) {
         this.removeListener(CHANGE_EVENT, cb);
     }
 });
@@ -171,34 +171,23 @@ AppDispatcher.register(function(payload) {
 
         case(AppConstants.APP_FILTER_SEARCH):
 
-            var search = utils.stripAccents(payload.search);
+            if(search != '' && search != undefined) {
 
-            var library = AppStore.library;
-            var tracks  = [];
+                AppStore.tracks = AppStore.library;
 
-            for(var i = 0; i < library.length; i++) {
+            } else {
 
-                var track = library[i];
+                var search = utils.stripAccents(payload.search);
+                var tracks = AppStore.library.filter((track) => { // Problem here
+                    return track.loweredMetas.artist.join(', ').includes(search)
+                        || track.loweredMetas.album.includes(search)
+                        || track.loweredMetas.genre.join(', ').includes(search)
+                        || track.loweredMetas.title.includes(search);
+                });
 
-                if(search != '' && search != undefined) {
-
-                    if(track.loweredMetas.artist.join(', ').indexOf(search) === -1
-                        && track.loweredMetas.album.indexOf(search) === -1
-                        && track.loweredMetas.genre.join(', ').indexOf(search) === -1
-                        && track.loweredMetas.title.indexOf(search) === -1) {
-
-                        continue;
-
-                    } else {
-                        tracks.push(track);
-                    }
-
-                } else {
-                    tracks.push(track);
-                }
+                AppStore.tracks = tracks;
             }
 
-            AppStore.tracks = tracks;
             AppStore.emit(CHANGE_EVENT);
             break;
 

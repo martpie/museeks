@@ -81,8 +81,8 @@ let utils = {
         }
 
         let result = [];
-        array.forEach(function(item) {
-            if(result.indexOf(item) < 0) {
+        array.forEach(function(item) { // TODO
+            if(!result.includes(item)) {
                 result.push(item);
             }
         });
@@ -98,12 +98,12 @@ let utils = {
      */
     stripAccents(str) {
 
-        let accents = "ÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÒÓÔÕÖÙÚÛÜÝàáâãäåçèéêëìíîïðòóôõöùúûüýÿñ",
-            fixes = "aaaaaaceeeeiiiiooooouuuuyaaaaaaceeeeiiiioooooouuuuyyn",
-            reg = new RegExp("(" + accents.split("").join("|") + ")", "g");
+        let accents = 'ÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÒÓÔÕÖÙÚÛÜÝàáâãäåçèéêëìíîïðòóôõöùúûüýÿñ',
+            fixes = 'aaaaaaceeeeiiiiooooouuuuyaaaaaaceeeeiiiioooooouuuuyyn',
+            reg = new RegExp('(' + accents.split('').join('|') + ')', 'g');
 
         function replacement(a){
-            return fixes[accents.indexOf(a)] || "";
+            return fixes[accents.indexOf(a)] || '';
         }
 
         return str.replace(reg, replacement).toLowerCase();
@@ -126,12 +126,12 @@ let utils = {
 
         filteredFolders.forEach((folder, i) => {
             filteredFolders.forEach((subfolder, j) => {
-                if(subfolder.indexOf(folder) > -1 && i !== j && foldersToBeRemoved.indexOf(folder) === -1) foldersToBeRemoved.push(subfolder);
+                if(subfolder.includes(folder) && i !== j && !foldersToBeRemoved.includes(folder)) foldersToBeRemoved.push(subfolder);
             });
         });
 
         filteredFolders = filteredFolders.filter((elem, index) => {
-            return foldersToBeRemoved.indexOf(elem) === -1;
+            return !foldersToBeRemoved.includes(elem);
         });
 
         return filteredFolders;
@@ -158,7 +158,7 @@ let utils = {
     /**
      * Get a file metadata
      *
-     * @param track (object) { file, mime }
+     * @param track (object) { path, mime }
      * @return object
      *
      */
@@ -182,7 +182,7 @@ let utils = {
             }
         */
 
-        if(['audio/wav', 'audio/x-wav', 'audio/wave', 'audio/x-pn-wav'].indexOf(track.mime) > -1) { // If WAV
+        if(['audio/wav', 'audio/x-wav', 'audio/wave', 'audio/x-pn-wav'].includes(track.mime)) { // If WAV
 
             wavInfo.infoByFilename(track.path, function(err, info){
 

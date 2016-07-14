@@ -58,7 +58,7 @@ export default class TracksList extends Component {
 
                 return(
                     <div
-                        className={ selected.indexOf(track._id) != -1 ? 'track selected' : 'track' }
+                        className={ selected.includes(track._id) ? 'track selected' : 'track' }
                         key={ index }
                         onMouseDown={ (e) => self.selectTrack(e, track._id, (tilesScrolled + indexChunk) * chunkLength + index) }
                         onDoubleClick={ () => self.selectAndPlay(track._id) }
@@ -124,11 +124,11 @@ export default class TracksList extends Component {
         let self   = this;
         let tracks = this.props.tracks;
 
-        if(e.button == 0 || (e.button == 2 && this.state.selected.indexOf(id) == -1 )) {
+        if(e.button == 0 || (e.button == 2 && !this.state.selected.includes(id))) {
             if(e.ctrlKey) { // add one track in selected tracks
 
                 let selected = this.state.selected.slice();
-                if(selected.indexOf(id) > -1) {
+                if(selected.includes(id)) {
                     // remove track
                     selected.splice(selected.indexOf(id), 1);
 
@@ -176,7 +176,7 @@ export default class TracksList extends Component {
                         let selectedInt = [];
 
                         for(let i = 0, length = tracks.length; i < length; i++) {
-                            if(selected.indexOf(tracks[i]._id) > -1) {
+                            if(selected.includes(tracks[i]._id)) {
                                 selectedInt.push(i);
                             }
                         }
@@ -224,7 +224,7 @@ export default class TracksList extends Component {
             case 38: // up
 
                 for(let length = tracks.length; i < length; i ++) {
-                    if(selected.indexOf(tracks[i]._id) > -1) break;
+                    if(selected.includes(tracks[i]._id)) break;
                 }
 
                 if(i - 1 >= 0) {
@@ -242,7 +242,7 @@ export default class TracksList extends Component {
             case 40: // down
 
                 for(let length = tracks.length; i < length; i ++) {
-                    if(selected.indexOf(tracks[i]._id) > -1) break;
+                    if(selected.includes(tracks[i]._id)) break;
                 }
 
                 if(i + 1 < tracks.length) {
@@ -259,7 +259,7 @@ export default class TracksList extends Component {
             case 13: // enter
 
                 for(let length = tracks.length; i < length; i++) {
-                    if(selected.indexOf(tracks[i]._id) > -1) break;
+                    if(selected.includes(tracks[i]._id)) break;
                 }
                 if(i !== undefined) AppActions.library.selectAndPlay(tracks[i]._id);
                 break;
