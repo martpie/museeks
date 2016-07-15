@@ -272,12 +272,15 @@ export default class TracksList extends Component {
 
     showContextMenu() {
 
-        let items =
+        let playlistsList = [].concat(this.props.playlists);
+
+        // Hide current playlist if needed
+        if(this.props.type === 'playlist') playlistsList = playlistsList.filter(elem => elem._id !== this.props.currentPlaylist);
 
         ipcRenderer.send('tracksListContextMenu', JSON.stringify({
             type: this.props.type,
             selectedCount: this.state.selected.length,
-            playlists: this.props.playlists
+            playlists: playlistsList
         }));
     }
 
@@ -297,7 +300,8 @@ export default class TracksList extends Component {
                     AppActions.queue.addNext(selected);
                     break;
                 case 'addToPlaylist':
-                    AppActions.playlists.addTracksTo(params, selected);
+                    let isShown = self.props.type === 'playlist' && params === self.props.currentPlaylist;
+                    AppActions.playlists.addTracksTo(params, selected, isShown);
                     break;
                 case 'removeFromPlaylist':
                     if(self.props.type === 'playlist') AppActions.playlists.removeTracksFrom(self.props.currentPlaylist, selected);

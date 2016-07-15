@@ -18,7 +18,7 @@ let PlaylistsActions = {
                 app.db.find({ type: 'track', _id: { $in: playlist.tracks }}, function(err, tracks) {
                     AppDispatcher.dispatch({
                         actionType : AppConstants.APP_PLAYLISTS_LOAD_ONE,
-                        tracks : tracks
+                        tracks     : tracks
                     });
                 });
             }
@@ -75,22 +75,23 @@ let PlaylistsActions = {
         });
     },
 
-    addTracksTo: function(_id, tracks) {
+    addTracksTo: function(_id, tracks, isShown) {
 
-        app.db.findOne({ _id: _id }, function (err, playlist) {
-            if (err) console.warn(err);
-            else {
+        // isShown should never be true, letting it here anyway to remember of a design issue
+        if(!isShown) {
+            app.db.findOne({ _id: _id }, function (err, playlist) {
+                if (err) console.warn(err);
+                else {
 
-                let playlistTracks = playlist.tracks;
-                playlistTracks.push(...tracks);
+                    let playlistTracks = playlist.tracks.concat(tracks);
 
-                app.db.update({ '_id': _id }, { $set: { tracks: playlistTracks }}, { multi: true }, function(err, numReplaced) {
+                    app.db.update({ '_id': _id }, { $set: { tracks: playlistTracks }}, { multi: true }, function(err, numReplaced) {
 
-                    if(err) console.warn(err);
-                    else PlaylistsActions.refresh();
-                });
-            }
-        });
+                        if(err) console.warn(err);
+                    });
+                }
+            });
+        }
     },
 
     removeTracksFrom: function(_id, tracks) {

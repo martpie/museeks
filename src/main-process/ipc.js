@@ -21,11 +21,16 @@ class IpcManager {
                         click: () => {
                             event.sender.send('tracksListContextMenuReply', 'createPlaylist');
                         }
-                    },
-                    {
-                        type: 'separator'
                     }
                 ];
+
+                if(options.playlists.length > 0) {
+                    playlistTemplate.push(
+                        {
+                            type: 'separator'
+                        }
+                    );
+                }
 
                 options.playlists.forEach((elem) => {
                     playlistTemplate.push({
