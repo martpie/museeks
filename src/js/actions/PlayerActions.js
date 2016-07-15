@@ -5,6 +5,8 @@ import NotificationsActions from './NotificationsActions';
 
 import app from '../utils/app';
 
+const ipcRenderer = electron.ipcRenderer;
+
 
 
 export default {

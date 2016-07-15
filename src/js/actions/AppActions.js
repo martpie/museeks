@@ -39,6 +39,12 @@ let AppActions = {
         // Audio Events
         app.audio.addEventListener('ended', AppActions.player.next);
         app.audio.addEventListener('error', AppActions.player.audioError);
+        app.audio.addEventListener('play', () => {
+            ipcRenderer.send('playerAction', 'play');
+        });
+        app.audio.addEventListener('pause', () => {
+            ipcRenderer.send('playerAction', 'pause');
+        });
 
         // Prevent some events
         window.addEventListener('dragover', function (e) {
@@ -58,6 +64,25 @@ let AppActions = {
 
         currentWindow.on('move', function() {
             AppActions.app.saveBounds();
+        });
+
+        // Listen for main-process events
+        ipcRenderer.on('playerAction', (event, reply) => {
+
+            switch(reply) {
+                case 'play':
+                    AppActions.player.play();
+                    break;
+                case 'pause':
+                    AppActions.player.pause();
+                    break;
+                case 'prev':
+                    AppActions.player.previous();
+                    break;
+                case 'next':
+                    AppActions.player.next();
+                    break;
+            }
         });
     },
 
