@@ -12,10 +12,12 @@
         border-right: 1px solid #d2d2d2;
         background-color: $generic-lightgrey;
         max-height: 100%;
-        overflow: auto;
+        overflow: hidden;
         position: relative;
 
         .playlists-nav-body {
+            max-height: 100%;
+            overflow: auto;
 
             .playlist-nav-item {
 
@@ -31,10 +33,6 @@
 
                     input[type="text"] {
                         border-width: 0 0 1px 0;
-
-                        &:focus {
-                            border-width: 0 0 1px 0;
-                        }
                     }
                 }
 
@@ -47,7 +45,8 @@
                     cursor: pointer;
                     padding: 12px 15px;
                     text-decoration: none;
-                    border: solid 1px transparent;
+                    border-style: solid;
+                    border-color: transparent;
                     border-width: 1px 0;
 
                     &:hover {
@@ -55,7 +54,8 @@
                     }
 
                     &.active {
-                        border: 1px solid #d2d2d2;
+                        border-style: solid;
+                        border-color: #d2d2d2;
                         border-width: 1px 0;
                         background-color: #e6e6e6;
                         color: $main-color;
@@ -69,7 +69,8 @@
                     color: $main-color;
                     padding: 12px 15px;
                     outline: none;
-                    border: 1px solid #d2d2d2;
+                    border-style: solid;
+                    border-color: #d2d2d2;
                     border-width: 1px 0;
                 }
             }
@@ -78,7 +79,6 @@
         .playlists-nav-footer {
             position: absolute;
             bottom: 0;
-            width: 100%;
 
             .playlists-management {
                 margin: 10px;

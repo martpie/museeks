@@ -241,6 +241,62 @@ body.theme-dark {
 
     /*
     |--------------------------------------------------------------------------
+    | View -- Playlists
+    |--------------------------------------------------------------------------
+    */
+
+    .view-playlists {
+
+        .playlists-nav {
+            border-right: 1px solid #333;
+            background-color: #555;
+
+
+            .playlists-nav-body {
+
+                .playlist-nav-item {
+
+                    a {
+
+                        &:hover {
+                            background-color: #444;
+                        }
+
+                        &.active {
+                            border-style: solid;
+                            border-color: #333;
+                            background-color: #444;
+                            color: #eee;
+                        }
+                    }
+
+                    input[type="text"] {
+                        background-color: #444;
+                        color: #eee;
+                        border-style: solid;
+                        border-color: #333;
+                    }
+                }
+            }
+
+            .playlists-nav-footer {
+
+                .playlists-management {
+                    border: solid 1px #333;
+
+                    button {
+                        color: #eee;
+                        background-color: #555;
+                    }
+                }
+            }
+        }
+    }
+
+
+
+    /*
+    |--------------------------------------------------------------------------
     | Bootstrap overrides
     |--------------------------------------------------------------------------
     */
