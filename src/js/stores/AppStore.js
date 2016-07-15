@@ -29,7 +29,12 @@ const CHANGE_EVENT = 'change';
 let AppStore = objectAssign({}, EventEmitter.prototype, {
 
     library           :  null,  // All tracks
-    tracks            :  null,  // All tracks shown on the library view
+
+    tracks            :  {
+        all: null,              // All tracks shown on the library view
+        playlist: null          // Tracks shown in the playlist view (to avoid too much reloads)
+    },
+    tracksCursor      : 'all',  // 'all' or 'playlist'
 
     queue             :  [],    // Tracks to be played
     queueCursor       :  null,  // The cursor of the queue
@@ -51,7 +56,7 @@ let AppStore = objectAssign({}, EventEmitter.prototype, {
             config            : app.config.getAll(),
             notifications     : this.notifications,
             library           : this.library,
-            tracks            : this.tracks,
+            tracks            : this.tracks[this.tracksCursor],
             playlists         : this.playlists,
             queue             : this.queue,
             queueCursor       : this.queueCursor,
@@ -90,7 +95,8 @@ AppDispatcher.register(function(payload) {
         case(AppConstants.APP_REFRESH_LIBRARY):
             var tracks = payload.tracks;
             AppStore.library = tracks;
-            AppStore.tracks  = tracks;
+            AppStore.tracks.all = tracks;
+            AppStore.tracks.playlist = [];
             AppStore.emit(CHANGE_EVENT);
             break;
 
@@ -100,7 +106,7 @@ AppDispatcher.register(function(payload) {
 
         case(AppConstants.APP_SELECT_AND_PLAY):
 
-            var queue       = AppStore.tracks.slice();
+            var queue       = [].concat(AppStore.tracks[AppStore.tracksCursor]);
             var id          = payload._id;
             var queueCursor = null; // Clean that variable mess later
             var oldQueue    = queue;
@@ -173,7 +179,7 @@ AppDispatcher.register(function(payload) {
 
             if(search != '' && search != undefined) {
 
-                AppStore.tracks = AppStore.library;
+                AppStore.tracks.all = AppStore.library;
 
             } else {
 
@@ -185,7 +191,7 @@ AppDispatcher.register(function(payload) {
                         || track.loweredMetas.title.includes(search);
                 });
 
-                AppStore.tracks = tracks;
+                AppStore.tracks.all = tracks;
             }
 
             AppStore.emit(CHANGE_EVENT);
@@ -219,7 +225,7 @@ AppDispatcher.register(function(payload) {
         case(AppConstants.APP_PLAYER_STOP):
             app.audio.pause();
             AppStore.library        =  null;
-            AppStore.tracks         =  null;
+            AppStore.tracks         =  { all: null, playlist: null };
             AppStore.queue          =  [];
             AppStore.queueCursor    =  null;
             AppStore.oldQueueCursor =  null;
@@ -423,6 +429,11 @@ AppDispatcher.register(function(payload) {
             }
             break;
 
+        case(AppConstants.APP_LIBRARY_SET_TRACKSCURSOR):
+            AppStore.tracksCursor = payload.cursor;
+            AppStore.emit(CHANGE_EVENT);
+            break;
+
         case(AppConstants.APP_LIBRARY_REMOVE_FOLDER):
             var musicFolders = app.config.get('musicFolders');
             musicFolders.splice(payload.index, 1);
@@ -472,7 +483,7 @@ AppDispatcher.register(function(payload) {
             break;
 
         case(AppConstants.APP_PLAYLISTS_LOAD_ONE):
-            AppStore.tracks = payload.tracks;
+            AppStore.tracks.playlist = payload.tracks;
             AppStore.emit(CHANGE_EVENT);
             break;
     }

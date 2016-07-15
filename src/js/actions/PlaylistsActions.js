@@ -106,10 +106,11 @@ let PlaylistsActions = {
                 app.db.update({ '_id': _id }, { $set: { tracks: playlistTracks }}, { multi: true }, function(err, numReplaced) {
 
                     if(err) console.warn(err);
-                    else PlaylistsActions.refresh();
+                    else PlaylistsActions.load(_id);
                 });
             }
         });
+
     }
 }
 

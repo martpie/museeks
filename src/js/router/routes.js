@@ -20,26 +20,23 @@ let init = {
     },
 
     library: () => {
-        AppActions.library.load();
+        AppActions.library.setTracksCursor('all');
     },
 
     playlist: (route) => {
         AppActions.playlists.load(route.params.id);
-    },
-
-    resetTracks: () => {
-        AppActions.library.resetTracks();
+        AppActions.library.setTracksCursor('playlist');
     }
 };
 
 // Router
 let routes = (
     <Route component={ App } path='/' onEnter={ init.app }>
-        <Route path='library' component={ Library } onEnter={ init.library } onLeave={ init.resetTracks } />
+        <Route path='library' component={ Library } onEnter={ init.library } />
         <Route path='settings' component={ Settings } />
         <Route path='playlists' component={ Playlists }>
             <IndexRoute component={ PlaylistSplash } />
-            <Route path=':id' component={ Playlist } onEnter={ init.playlist } onLeave={ init.resetTracks } />
+            <Route path=':id' component={ Playlist } onEnter={ init.playlist } />
         </Route>
     </Route>
 );

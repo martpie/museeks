@@ -28,6 +28,13 @@ export default {
         });
     },
 
+    setTracksCursor: function(cursor) {
+        AppDispatcher.dispatch({
+            actionType : AppConstants.APP_LIBRARY_SET_TRACKSCURSOR,
+            cursor     : cursor
+        });
+    },
+
     resetTracks: function() {
         AppDispatcher.dispatch({
             actionType : AppConstants.APP_REFRESH_LIBRARY,
