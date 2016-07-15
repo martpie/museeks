@@ -29,28 +29,31 @@ export default class Playlists extends Component {
                 </div>
             );
         }
-        else {
-
-            let playlist = null;
-
-            for(let i = 0, length = this.props.playlists.length; i < length; i++) {
-
-                if(this.props.playlists[i]._id === this.props.params.id) {
-                    playlist = this.props.playlists[i];
-                    break;
-                }
-            }
-
+        else if(this.props.playlists.length === 0) {
             content = (
-                <div className='view view-playlists'>
-                    <PlaylistsNav playlists={ this.props.playlists } />
-                    { this.props.params.id !== null ? React.cloneElement(this.props.children, {
-                        ...this.props
-                    }) : undefined }
+                <div className='full-message'>
+                    <p>You haven't created any playlist yet</p>
                 </div>
             );
         }
+        else if(!this.props.params.id) {
+            content = (
+                <div className='full-message'>
+                    <p>Select a playlist in the menu on the left</p>
+                </div>
+            );
+        }
+        else {
+            content = React.cloneElement(this.props.children, { ...this.props });
+        }
 
-        return content;
+        return (
+            <div className='view view-playlists'>
+                <PlaylistsNav playlists={ this.props.playlists } />
+                <div className='playlist'>
+                    { content }
+                </div>
+            </div>
+        );
     }
 }

@@ -22,22 +22,18 @@ export default class Playlists extends Component {
 
         if(!!this.props.tracks && !!this.props.tracks.length && this.props.tracks.length > 0) {
             return (
-                <div className='playlist'>
-                    <TracksList
-                        type='playlist'
-                        currentPlaylist={ this.props.params.id }
-                        tracks={ this.props.tracks }
-                        trackPlayingID={ this.props.trackPlayingID }
-                        playlists={ this.props.playlists }
-                    />
-                </div>
+                <TracksList
+                    type='playlist'
+                    currentPlaylist={ this.props.params.id }
+                    tracks={ this.props.tracks }
+                    trackPlayingID={ this.props.trackPlayingID }
+                    playlists={ this.props.playlists }
+                />
             );
         } else {
             return (
-                <div className='playlist'>
-                    <div className='full-message'>
-                        <p>Empty playlist</p>
-                    </div>
+                <div className='full-message'>
+                    <p>Empty playlist</p>
                 </div>
             );
         }
