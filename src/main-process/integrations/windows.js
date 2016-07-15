@@ -4,51 +4,68 @@ const { nativeImage, ipcMain } = require('electron');
 const iconsDirectory = path.resolve(__dirname, '../..', 'images', 'icons', 'windows');
 
 class WindowsIntegration {
-    constructor(win) {
-      this.window = win;
-      this.thumbarButtons = {
-          prev: {
-              tooltip: 'Prev',
-              icon: this.createIcon('backward.ico'),
-              click() {
-                  console.log('Prev clicked');
-              }
-          },
-          pause: {
-              tooltip: 'Pause',
-              icon: this.createIcon('pause.ico'),
-              click() {
-                  console.log('Pause clicked');
-              }
-          },
-          play: {
-              tooltip: 'Play',
-              icon: this.createIcon('pause.ico'),
-              click() {
-                  console.log('Play clicked');
-              }
-          },
-          next: {
-            tooltip: 'Next',
-            icon: this.createIcon('forward.ico'),
-            click() {
-                console.log('Next clicked');
-            }
-          }
-      };
-    }
 
-    createIcon(name) {
-      return nativeImage.createFromPath(path.join(iconsDirectory, name));
+    constructor(win) {
+        this.window = win;
+        this.thumbarButtons = {
+            play: {
+                tooltip: 'Play',
+                icon: nativeImage.createFromPath(path.join(iconsDirectory, 'play.ico')),
+                click: () => {
+                    win.webContents.send('playerAction', 'play');
+                }
+            },
+            pause: {
+                tooltip: 'Pause',
+                icon: nativeImage.createFromPath(path.join(iconsDirectory, 'pause.ico')),
+                click: () => {
+                    win.webContents.send('playerAction', 'pause');
+                }
+            },
+            prev: {
+                tooltip: 'Prev',
+                icon: nativeImage.createFromPath(path.join(iconsDirectory, 'backward.ico')),
+                click: () => {
+                    win.webContents.send('playerAction', 'prev');
+                }
+            },
+            next: {
+                tooltip: 'Next',
+                icon: nativeImage.createFromPath(path.join(iconsDirectory, 'forward.ico')),
+                click: () => {
+                    win.webContents.send('playerAction', 'next');
+                }
+            }
+        };
     }
 
     enable() {
+
         ipcMain.on('appReady', () => {
             this.window.setThumbarButtons([
-              this.thumbarButtons.prev,
-              this.thumbarButtons.pause,
-              this.thumbarButtons.next,
+                this.thumbarButtons.prev,
+                this.thumbarButtons.play,
+                this.thumbarButtons.next,
             ]);
+        });
+
+        ipcMain.on('playerAction', (event, arg) => {
+            switch(arg) {
+                case 'play':
+                    this.window.setThumbarButtons([
+                        this.thumbarButtons.prev,
+                        this.thumbarButtons.pause,
+                        this.thumbarButtons.next,
+                    ]);
+                    break;
+                case 'pause':
+                    this.window.setThumbarButtons([
+                        this.thumbarButtons.prev,
+                        this.thumbarButtons.play,
+                        this.thumbarButtons.next,
+                    ]);
+                    break;
+            }
         });
     }
 }
