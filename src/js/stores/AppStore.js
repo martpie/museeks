@@ -5,7 +5,6 @@
 */
 
 import { EventEmitter } from 'events';
-import objectAssign     from 'object-assign';
 import path             from 'path';
 import fs               from 'fs';
 
@@ -26,7 +25,7 @@ const CHANGE_EVENT = 'change';
 |--------------------------------------------------------------------------
 */
 
-let AppStore = objectAssign({}, EventEmitter.prototype, {
+let AppStore = Object.assign({}, EventEmitter.prototype, {
 
     library           :  null,  // All tracks
 
