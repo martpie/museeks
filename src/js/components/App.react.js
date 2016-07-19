@@ -2,15 +2,12 @@ import React, { Component } from 'react';
 import { Row } from 'react-bootstrap';
 import KeyBinding from 'react-keybinding-component';
 
-import app from '../utils/app';
-
 import Header from './Header/Header.react';
 import Footer from './Footer/Footer.react';
 import Notifications from './Notifications/Notifications.react';
 
 import AppActions from '../actions/AppActions';
 import AppStore   from '../stores/AppStore';
-
 
 
 /*
@@ -30,7 +27,7 @@ export default class Museeks extends Component {
 
     render() {
 
-        let trackPlayingID = (this.state.queue.length > 0 && this.state.queueCursor !== null) ? this.state.queue[this.state.queueCursor]._id : null;
+        const trackPlayingId = (this.state.queue.length > 0 && this.state.queueCursor !== null) ? this.state.queue[this.state.queueCursor]._id : null;
 
         return (
             <div className='main'>
@@ -55,7 +52,7 @@ export default class Museeks extends Component {
                                 playlists         : this.state.playlists,
                                 refreshingLibrary : this.state.refreshingLibrary,
                                 refreshProgress   : this.state.refreshProgress,
-                                trackPlayingID    : trackPlayingID
+                                trackPlayingId
                             })
                         }
                     </Row>

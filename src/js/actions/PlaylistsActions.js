@@ -4,21 +4,20 @@ import AppActions    from './AppActions';
 
 import app from '../utils/app';
 
-import { hashHistory } from 'react-router'
+import { hashHistory } from 'react-router';
 
 
-
-let PlaylistsActions = {
+const PlaylistsActions = {
 
     load: function(_id) {
 
-        app.db.findOne({ _id: _id }, function(err, playlist) {
+        app.db.findOne({ _id }, (err, playlist) => {
             if(err) console.warn(err);
             else {
-                app.db.find({ type: 'track', _id: { $in: playlist.tracks }}, function(err, tracks) {
+                app.db.find({ type: 'track', _id: { $in: playlist.tracks } }, (err, tracks) => {
                     AppDispatcher.dispatch({
                         actionType : AppConstants.APP_PLAYLISTS_LOAD_ONE,
-                        tracks     : tracks
+                        tracks
                     });
                 });
             }
@@ -27,12 +26,12 @@ let PlaylistsActions = {
 
     refresh: function() {
 
-        app.db.find({ type : 'playlist' }).sort({ name : 1 }).exec(function(err, playlists) {
+        app.db.find({ type : 'playlist' }).sort({ name : 1 }).exec((err, playlists) => {
             if (err) console.warn(err);
             else {
                 AppDispatcher.dispatch({
                     actionType : AppConstants.APP_PLAYLISTS_REFRESH,
-                    playlists  : playlists
+                    playlists
                 });
             }
         });
@@ -40,26 +39,25 @@ let PlaylistsActions = {
 
     create: function(name, redirect) {
 
-        let self = this;
-        let playlist = {
+        const playlist = {
+            name,
             type   : 'playlist',
-            name   :  name,
             tracks :  []
         };
 
-        app.db.insert(playlist, function (err, doc) {
+        app.db.insert(playlist, (err, doc) => {
             if(err) console.warn(err);
             else {
                 PlaylistsActions.refresh();
-                if(redirect) hashHistory.push('/playlists/' + doc._id);
-                else AppActions.notifications.add('success', 'The playlist "' + name + '" was created');
+                if(redirect) hashHistory.push(`/playlists/${doc._id}`);
+                else AppActions.notifications.add('success', `The playlist "${name}" was created`);
             }
         });
     },
 
     rename: function(_id, name) {
 
-        app.db.update({ '_id': _id }, { $set: { name: name }}, { multi: true }, function(err, numReplaced) {
+        app.db.update({ _id }, { $set: { name } }, { multi: true }, (err) => {
 
             if(err) console.warn(err);
             else PlaylistsActions.refresh();
@@ -68,7 +66,7 @@ let PlaylistsActions = {
 
     delete: function(_id) {
 
-        app.db.remove({ type: 'playlist', _id: _id }, { multi: true }, function (err, numRemoved) {
+        app.db.remove({ _id, type: 'playlist' }, { multi: true }, (err) => {
 
             if(err) console.warn(err);
             else PlaylistsActions.refresh();
@@ -79,13 +77,13 @@ let PlaylistsActions = {
 
         // isShown should never be true, letting it here anyway to remember of a design issue
         if(!isShown) {
-            app.db.findOne({ _id: _id }, function (err, playlist) {
+            app.db.findOne({ _id }, (err, playlist) => {
                 if (err) console.warn(err);
                 else {
 
-                    let playlistTracks = playlist.tracks.concat(tracks);
+                    const playlistTracks = playlist.tracks.concat(tracks);
 
-                    app.db.update({ '_id': _id }, { $set: { tracks: playlistTracks }}, { multi: true }, function(err, numReplaced) {
+                    app.db.update({ _id }, { $set: { tracks: playlistTracks } }, { multi: true }, (err) => {
 
                         if(err) console.warn(err);
                     });
@@ -96,23 +94,22 @@ let PlaylistsActions = {
 
     removeTracksFrom: function(_id, tracks) {
 
-        app.db.findOne({ _id: _id }, function(err, playlist) {
+        app.db.findOne({ _id }, (err, playlist) => {
             if(err) console.warn(err);
             else {
 
-                let playlistTracks = playlist.tracks.filter((elem) => {
+                const playlistTracks = playlist.tracks.filter((elem) => {
                     return !tracks.includes(elem);
                 });
 
-                app.db.update({ '_id': _id }, { $set: { tracks: playlistTracks }}, { multi: true }, function(err, numReplaced) {
+                app.db.update({ _id }, { $set: { tracks: playlistTracks } }, { multi: true }, (err) => {
 
                     if(err) console.warn(err);
                     else PlaylistsActions.load(_id);
                 });
             }
         });
-
     }
-}
+};
 
 export default PlaylistsActions;

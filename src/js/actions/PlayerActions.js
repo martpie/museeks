@@ -5,9 +5,6 @@ import NotificationsActions from './NotificationsActions';
 
 import app from '../utils/app';
 
-const ipcRenderer = electron.ipcRenderer;
-
-
 
 export default {
 
@@ -38,7 +35,7 @@ export default {
     next: function(e) {
         AppDispatcher.dispatch({
             actionType : AppConstants.APP_PLAYER_NEXT,
-            e          : e
+            e
         });
     },
 
@@ -91,7 +88,7 @@ export default {
     jumpTo: function(to) {
         AppDispatcher.dispatch({
             actionType : AppConstants.APP_PLAYER_JUMP_TO,
-            to         : to
+            to
         });
     },
 
@@ -105,11 +102,11 @@ export default {
                 NotificationsActions.add('danger', 'The audio playback was aborted due to a corruption problem.');
                 break;
             case e.target.error.MEDIA_ERR_SRC_NOT_SUPPORTED:
-                NotificationsActions.add('danger', 'The track file could not be found. It may be due to a file move or an unmounted partition.')
+                NotificationsActions.add('danger', 'The track file could not be found. It may be due to a file move or an unmounted partition.');
                 break;
             default:
-                NotificationsActions.add('danger', 'An unknown error occurred.')
+                NotificationsActions.add('danger', 'An unknown error occurred.');
                 break;
         }
     }
-}
+};

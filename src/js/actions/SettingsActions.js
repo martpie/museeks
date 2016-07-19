@@ -6,21 +6,20 @@ import app from '../utils/app';
 const ipcRenderer = electron.ipcRenderer;
 
 
-
 export default {
 
     checkTheme: function() {
-        let themeName = app.config.get('theme');
-        document.querySelector('body').classList.add('theme-' + themeName);
+        const themeName = app.config.get('theme');
+        document.querySelector('body').classList.add(`theme-${themeName}`);
     },
 
     toggleDarkTheme: function() {
 
-        let oldTheme = app.config.get('theme');
-        let newTheme = oldTheme === 'light' ? 'dark' : 'light';
+        const oldTheme = app.config.get('theme');
+        const newTheme = oldTheme === 'light' ? 'dark' : 'light';
 
-        document.querySelector('body').classList.remove('theme-' + oldTheme);
-        document.querySelector('body').classList.add('theme-' + newTheme);
+        document.querySelector('body').classList.remove(`theme-${oldTheme}`);
+        document.querySelector('body').classList.add(`theme-${newTheme}`);
 
         app.config.set('theme', newTheme);
         app.config.saveSync();
@@ -64,7 +63,7 @@ export default {
     refreshProgress: function(percentage) {
         AppDispatcher.dispatch({
             actionType : AppConstants.APP_LIBRARY_REFRESH_PROGRESS,
-            percentage : percentage
+            percentage
         });
     }
-}
+};

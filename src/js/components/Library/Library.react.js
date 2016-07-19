@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import TracksList from '../Shared/TracksList.react';
 
 
-
 /*
 |--------------------------------------------------------------------------
 | Global View
@@ -15,7 +14,7 @@ export default class Library extends Component {
     constructor(props) {
 
         super(props);
-        this.state = {}
+        this.state = {};
     }
 
     render() {
@@ -28,28 +27,25 @@ export default class Library extends Component {
                     <p>Loading library...</p>
                 </div>
             );
-        }
-        else if (this.props.library.length == 0) {
+        } else if (this.props.library.length === 0) {
             content = (
                 <div className='full-message'>
                     <p>Too bad, there is no music in your library =(</p>
                     <p className='sub-message'>you may need to refresh your library or add folders into it.</p>
                 </div>
             );
-        }
-        else if (this.props.tracks.length == 0) {
+        } else if (this.props.tracks.length === 0) {
             content = (
                 <div className='full-message'>
                     <p>Your search returned no results</p>
                 </div>
             );
-        }
-        else {
+        } else {
             content = (
                 <TracksList
                     type='library'
                     tracks={ this.props.tracks }
-                    trackPlayingID={ this.props.trackPlayingID }
+                    trackPlayingId={ this.props.trackPlayingId }
                     playlists={ this.props.playlists }
                 />
             );

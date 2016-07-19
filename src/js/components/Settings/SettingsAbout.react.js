@@ -8,7 +8,6 @@ import AppActions from '../../actions/AppActions';
 const shell = electron.shell;
 
 
-
 /*
 |--------------------------------------------------------------------------
 | Child - About
@@ -25,11 +24,12 @@ export default class SettingsAbout extends Component {
 
     render() {
 
-        let self = this;
-        let museeksLogo = 'dist/' + require('../../../images/logos/museeks.png'); // sth wrong with that, need some check with Webpack
+        const self = this;
+        const museeksLogoRequire = require('../../../images/logos/museeks.png'); // sth wrong with that, need some check with Webpack
+        const museeksLogo = `dist/${museeksLogoRequire}`;
 
         // Don't add yourself here please, I'll do it myself
-        let contributors = [
+        const contributors = [
             {
                 name: 'Alba de Zanet',
                 pseudo: 'Alba',
@@ -56,12 +56,12 @@ export default class SettingsAbout extends Component {
             }
         ];
 
-        let contributorsList = contributors.map(function(data, index) {
+        const contributorsList = contributors.map((data, index) => {
             return (
                 <li key={ index }>
                     { data.name } (<a href onClick={ self.openLink.bind(null, data.url) }>{ data.pseudo }</a>): { data.feature }
                 </li>
-            )
+            );
         });
 
         return (
@@ -71,7 +71,7 @@ export default class SettingsAbout extends Component {
                     <img src={ museeksLogo } className='logo-museeks' alt='Logo' title='Museeks logo' />
                     <p>
                         Museeks { app.version } - <a href onClick={ self.openLink.bind(null, 'http://museeks.io') }>museeks.io</a>
-                        <Button bsSize='small'  className='update-checker' onClick={ this.checkForUpdate.bind(null) }>Check for update</Button>
+                        <Button bsSize='small' className='update-checker' onClick={ this.checkForUpdate.bind(null) }>Check for update</Button>
                     </p>
                 </div>
                 <div className='setting-section'>

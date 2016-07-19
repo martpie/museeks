@@ -17,7 +17,7 @@ class ConfigManager {
         // Check if config update
         let configChanged = false;
 
-        for(let key in defaultConfig) {
+        for(const key in defaultConfig) {
             if(this.conf.get(key) === undefined) {
                 this.conf.set(key, defaultConfig[key]);
                 configChanged = true;
@@ -29,20 +29,20 @@ class ConfigManager {
     }
 
     getDefaultConfig() {
-      return {
-          theme: 'light',
-          audioVolume: 1,
-          audioPlaybackRate: 1,
-          musicFolders: [],
-          sleepBlocker: false,
-          devMode: false,
-          bounds: {
-              width: 1000,
-              height: 600,
-              x: parseInt(this.workArea.width / 2),
-              y: parseInt(this.workArea.height / 2)
-          }
-      }
+        return {
+            theme: 'light',
+            audioVolume: 1,
+            audioPlaybackRate: 1,
+            musicFolders: [],
+            sleepBlocker: false,
+            devMode: false,
+            bounds: {
+                width: 1000,
+                height: 600,
+                x: parseInt(this.workArea.width / 2),
+                y: parseInt(this.workArea.height / 2)
+            }
+        };
     }
 
     getConfig() {

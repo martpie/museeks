@@ -2,12 +2,10 @@ import AppActions from '../../actions/AppActions';
 
 import React, { Component } from 'react';
 import { ButtonGroup, Button } from 'react-bootstrap';
-import { LinkContainer } from 'react-router-bootstrap';
 import Icon from 'react-fontawesome';
 import { Link } from 'react-router';
 
 const ipcRenderer = electron.ipcRenderer;
-
 
 
 /*
@@ -46,7 +44,7 @@ export default class PlaylistsNav extends Component {
                 );
             } else {
                 navItemContent = (
-                    <Link className='playlist-link' activeClassName='active' to={ '/playlists/' + elem._id } onContextMenu={ self.showContextMenu.bind(self, elem._id) }>
+                    <Link className='playlist-link' activeClassName='active' to={ `/playlists/${elem._id}` } onContextMenu={ self.showContextMenu.bind(self, elem._id) }>
                         { elem.name }
                     </Link>
                 );
@@ -77,7 +75,7 @@ export default class PlaylistsNav extends Component {
 
     componentDidMount() {
 
-        let self = this;
+        const self = this;
 
         ipcRenderer.on('playlistContextMenuReply', (event, reply, _id) => {
 

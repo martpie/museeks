@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
-import TracksList from '../Shared/TracksList.react.js'
-
+import TracksList from '../Shared/TracksList.react.js';
 
 
 /*
@@ -26,16 +25,16 @@ export default class Playlists extends Component {
                     type='playlist'
                     currentPlaylist={ this.props.params.id }
                     tracks={ this.props.tracks }
-                    trackPlayingID={ this.props.trackPlayingID }
+                    trackPlayingId={ this.props.trackPlayingId }
                     playlists={ this.props.playlists }
                 />
             );
-        } else {
-            return (
-                <div className='full-message'>
-                    <p>Empty playlist</p>
-                </div>
-            );
         }
+
+        return (
+            <div className='full-message'>
+                <p>Empty playlist</p>
+            </div>
+        );
     }
 }

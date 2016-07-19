@@ -4,13 +4,12 @@ import AppConstants  from '../constants/AppConstants';
 import app from '../utils/app';
 
 
-
 export default {
 
     selectAndPlay: function(index) {
         AppDispatcher.dispatch({
             actionType : AppConstants.APP_QUEUE_PLAY,
-            index      : index
+            index
         });
     },
 
@@ -23,26 +22,25 @@ export default {
     remove: function(index) {
         AppDispatcher.dispatch({
             actionType : AppConstants.APP_QUEUE_REMOVE,
-            index      : index
+            index
         });
     },
 
     add: function(tracksIds) {
-        app.db.find({ type: 'track', _id: { $in: tracksIds }}, (err, tracks) => {
-
+        app.db.find({ type: 'track', _id: { $in: tracksIds } }, (err, tracks) => {
             AppDispatcher.dispatch({
                 actionType : AppConstants.APP_QUEUE_ADD,
-                tracks     : tracks
+                tracks
             });
         });
 
     },
 
     addNext: function(tracksIds) {
-        app.db.find({ type: 'track', _id: { $in: tracksIds }}, (err, tracks) => {
+        app.db.find({ type: 'track', _id: { $in: tracksIds } }, (err, tracks) => {
             AppDispatcher.dispatch({
                 actionType : AppConstants.APP_QUEUE_ADD_NEXT,
-                tracks     : tracks
+                tracks
             });
         });
     },
@@ -50,7 +48,7 @@ export default {
     setQueue: function(queue) {
         AppDispatcher.dispatch({
             actionType : AppConstants.APP_QUEUE_SET_QUEUE,
-            queue      : queue
+            queue
         });
     }
-}
+};

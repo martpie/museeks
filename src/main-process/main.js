@@ -10,15 +10,12 @@ const IpcManager         = require('./ipc');             // Manages IPC evens
 const ConfigManager      = require('./config');          // Handles config
 const IntegrationManager = require('./integration');     // Applies various integrations
 
-const app              = electron.app;              // Module to control application life.
-const powerSaveBlocker = electron.powerSaveBlocker; // Sleep mode management
-const nativeImage      = electron.nativeImage;
-const BrowserWindow    = electron.BrowserWindow;    // Module to create native browser window.
-
-let instance = {}; // use to keep some variables in mind
-
+const app           = electron.app;              // Module to control application life.
+const nativeImage   = electron.nativeImage;
+const BrowserWindow = electron.BrowserWindow;    // Module to create native browser window.
 
 const appRoot = path.resolve(__dirname, '../..'); // app/ directory
+const srcPath = path.join(appRoot, 'src'); // app/src/ directory
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the javascript object is GCed.
@@ -26,7 +23,7 @@ let mainWindow = null;
 
 // Quit when all windows are closed
 app.on('window-all-closed', () => {
-    if (process.platform != 'darwin')
+    if (process.platform !== 'darwin')
         app.quit();
 });
 
@@ -35,15 +32,10 @@ app.on('window-all-closed', () => {
 app.on('ready', () => {
 
     const configManager = new ConfigManager(app);
-    const { bounds, sleepBlocker } = configManager.getConfig();
+    const { bounds } = configManager.getConfig();
 
-    // Sleep Blocker
-    if(sleepBlocker) {
-        instance.sleepBlockerID = powerSaveBlocker.start('prevent-app-suspension');
-    }
-
-    let logosPath = path.join(appRoot, 'src', 'images', 'logos');
-    let museeksIcons = {
+    const logosPath = path.join(appRoot, 'src', 'images', 'logos');
+    const museeksIcons = {
         '256': nativeImage.createFromPath(path.join(logosPath, 'museeks.png')),
         '128': nativeImage.createFromPath(path.join(logosPath, 'museeks-128.png')),
         '64': nativeImage.createFromPath(path.join(logosPath, 'museeks-64.png')),
@@ -53,7 +45,7 @@ app.on('ready', () => {
     };
 
     // Browser Window options
-    let mainWindowOption = {
+    const mainWindowOption = {
         title     : 'Museeks',
         icon      :  os.platform() === 'win32' ? museeksIcons['ico'] : museeksIcons['256'],
         x         :  bounds.x,
@@ -70,7 +62,8 @@ app.on('ready', () => {
     mainWindow = new BrowserWindow(mainWindowOption);
 
     // ... and load our html page
-    mainWindow.loadURL('file://' + path.join(appRoot, 'src') + '/app.html#/library');
+    mainWindow.loadURL(`file://${srcPath}/app.html#/library`);
+    mainWindow.openDevTools();
 
     mainWindow.on('closed', () => {
         // Dereference the window object

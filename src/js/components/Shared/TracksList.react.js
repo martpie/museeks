@@ -10,7 +10,6 @@ import utils from '../../utils/utils';
 const ipcRenderer = electron.ipcRenderer;
 
 
-
 /*
 |--------------------------------------------------------------------------
 | Child - ArtistList
@@ -28,21 +27,22 @@ export default class TracksList extends Component {
         };
 
         this.showContextMenu = this.showContextMenu.bind(this);
+        this.onKey = this.onKey.bind(this);
     }
 
     render() {
 
-        let self           = this,
+        const self           = this,
             selected       = this.state.selected,
             tracks         = this.props.tracks,
-            trackPlayingID = this.props.trackPlayingID;
+            trackPlayingId = this.props.trackPlayingId;
 
-        let chunkLength = 20;
-        let tilesToDisplay = 5;
-        let tileHeight = 25 * chunkLength;
+        const chunkLength = 20;
+        const tilesToDisplay = 5;
+        const tileHeight = 25 * chunkLength;
 
-        let tracksChunked = utils.chunkArray(tracks, chunkLength);
-        let tilesScrolled = Math.floor(this.state.scrollTop / tileHeight)
+        const tracksChunked = utils.chunkArray(tracks, chunkLength);
+        const tilesScrolled = Math.floor(this.state.scrollTop / tileHeight);
 
         // Tiles and chunks
         let trackTiles = tracksChunked.splice(Math.max(0, tilesScrolled - 1), tilesScrolled > 0 ? tilesToDisplay : tilesToDisplay - 1).map((tracksChunk, indexChunk) => {
@@ -51,9 +51,9 @@ export default class TracksList extends Component {
 
                 let playing = undefined;
 
-                if(trackPlayingID != null) {
-                    if(track._id == trackPlayingID) playing = <Icon name='volume-up' fixedWidth />;
-                    if(track._id == trackPlayingID && app.audio.paused) playing = <Icon name='volume-off' fixedWidth />;
+                if(trackPlayingId !== null) {
+                    if(track._id === trackPlayingId) playing = <Icon name='volume-up' fixedWidth />;
+                    if(track._id === trackPlayingId && app.audio.paused) playing = <Icon name='volume-off' fixedWidth />;
                 }
 
                 return(
@@ -86,10 +86,10 @@ export default class TracksList extends Component {
                 );
             });
 
-            let invertedTranslation = tilesScrolled > 0 ? 25 * chunkLength : 0;
+            const invertedTranslation = tilesScrolled > 0 ? 25 * chunkLength : 0;
 
             return (
-                <div className='tracks-list-tile' key={ indexChunk } style={{ transform: 'translate3d(0, ' + (((tilesScrolled * 25 * chunkLength) + (indexChunk * 25 * chunkLength)) - invertedTranslation) + 'px, 0)'}}>
+                <div className='tracks-list-tile' key={ indexChunk } style={{ transform: `translate3d(0, ${(((tilesScrolled * 25 * chunkLength) + (indexChunk * 25 * chunkLength)) - invertedTranslation)}px, 0)` }}>
                     { list }
                 </div>
             );
@@ -97,7 +97,7 @@ export default class TracksList extends Component {
 
         return (
             <div className='tracks-list-container' tabIndex='0'>
-                <KeyBinding onKey={ (e) => { this.onKey(e) } } target={ '.tracks-list-container' } preventInputConflict preventDefault />
+                <KeyBinding onKey={ this.onKey } target={ '.tracks-list-container' } preventInputConflict preventDefault />
                 <div className='tracks-list-header'>
                     <div className='track-cell-header cell-track-playing'></div>
                     <div className='track-cell-header cell-track'>Track</div>
@@ -121,10 +121,10 @@ export default class TracksList extends Component {
 
     selectTrack(e, id, index) {
 
-        let self   = this;
-        let tracks = this.props.tracks;
+        const self   = this;
+        const tracks = this.props.tracks;
 
-        if(e.button == 0 || (e.button == 2 && !this.state.selected.includes(id))) {
+        if(e.button === 0 || (e.button === 2 && !this.state.selected.includes(id))) {
             if(e.ctrlKey) { // add one track in selected tracks
 
                 let selected = this.state.selected.slice();
@@ -138,19 +138,20 @@ export default class TracksList extends Component {
                 }
 
                 selected = utils.simpleSort(selected, 'asc');
-                this.setState({ selected : selected });
-            }
-            else if (e.shiftKey) { // add multiple tracks in selected tracks
+                this.setState({ selected });
 
-                let selected = this.state.selected;
+            } else if (e.shiftKey) { // add multiple tracks in selected tracks
+
+                const selected = this.state.selected;
 
                 switch(selected.length) {
-                    case 0:
+                    case 0: {
                         selected.push(id);
-                        this.setState({ selected : selected });
+                        this.setState({ selected });
                         break;
-                    case 1:
-                        let onlySelected = selected[0];
+                    }
+                    case 1: {
+                        const onlySelected = selected[0];
                         let onlySelectedIndex;
 
                         for(let i = 0, length = tracks.length; i < length; i++) {
@@ -170,10 +171,11 @@ export default class TracksList extends Component {
                             }
                         }
 
-                        self.setState({ selected : selected });
+                        self.setState({ selected });
                         break;
-                    default:
-                        let selectedInt = [];
+                    }
+                    default: {
+                        const selectedInt = [];
 
                         for(let i = 0, length = tracks.length; i < length; i++) {
                             if(selected.includes(tracks[i]._id)) {
@@ -182,8 +184,8 @@ export default class TracksList extends Component {
                         }
 
                         let base;
-                        let min = Math.min(...selectedInt);
-                        let max = Math.max(...selectedInt);
+                        const min = Math.min(...selectedInt);
+                        const max = Math.max(...selectedInt);
 
                         if(index < min) {
                             base = max;
@@ -191,7 +193,7 @@ export default class TracksList extends Component {
                             base = min;
                         }
 
-                        let newSelected = [];
+                        const newSelected = [];
 
                         if(index < min) {
                             for(let i = 0; i <= Math.abs(index - base); i++) {
@@ -205,20 +207,21 @@ export default class TracksList extends Component {
 
                         self.setState({ selected : newSelected });
                         break;
+                    }
                 }
-            }
-            else { // simple select
-                let selected = [id];
-                this.setState({ selected : selected });
+            } else { // simple select
+                const selected = [id];
+                this.setState({ selected });
             }
         }
     }
 
     onKey(e) {
 
-        let selected = this.state.selected,
-            tracks   = this.props.tracks,
-            i        = 0;
+        const selected = this.state.selected,
+            tracks     = this.props.tracks;
+
+        let i = 0;
 
         switch(e.keyCode) {
             case 38: // up
@@ -231,8 +234,8 @@ export default class TracksList extends Component {
                     this.setState({ selected : tracks[i - 1]._id });
 
                     // Scroll if needed
-                    let node = document.querySelector('.tracks-list-container .tracks-list-body .track.selected'); // Get the first selected track
-                    let container = document.querySelector('.tracks-list-container .tracks-list-body');
+                    const node = document.querySelector('.tracks-list-container .tracks-list-body .track.selected'); // Get the first selected track
+                    const container = document.querySelector('.tracks-list-container .tracks-list-body');
 
                     // TODO Problem if container is not drawned
                     if(node !== null && container !== null && node.getBoundingClientRect().top < container.getBoundingClientRect().top) container.scrollTop -= node.offsetHeight;
@@ -249,8 +252,8 @@ export default class TracksList extends Component {
                     this.setState({ selected : tracks[i + 1]._id });
 
                     // Scroll if needed
-                    let node = document.querySelector('.tracks-list-container .tracks-list-body .track.selected'); // Get the first selected track
-                    let container = document.querySelector('.tracks-list-container .tracks-list-body');
+                    const node = document.querySelector('.tracks-list-container .tracks-list-body .track.selected'); // Get the first selected track
+                    const container = document.querySelector('.tracks-list-container .tracks-list-body');
 
                     if(node !== null && container !== null && node.getBoundingClientRect().bottom > container.getBoundingClientRect().bottom) container.scrollTop += node.offsetHeight;
                 }
@@ -267,7 +270,7 @@ export default class TracksList extends Component {
     }
 
     selectAndPlay(_id) {
-        AppActions.library.selectAndPlay(_id)
+        AppActions.library.selectAndPlay(_id);
     }
 
     showContextMenu() {
@@ -275,7 +278,7 @@ export default class TracksList extends Component {
         let playlistsList = [].concat(this.props.playlists);
 
         // Hide current playlist if needed
-        if(this.props.type === 'playlist') playlistsList = playlistsList.filter(elem => elem._id !== this.props.currentPlaylist);
+        if(this.props.type === 'playlist') playlistsList = playlistsList.filter((elem) => elem._id !== this.props.currentPlaylist);
 
         ipcRenderer.send('tracksListContextMenu', JSON.stringify({
             type: this.props.type,
@@ -286,29 +289,34 @@ export default class TracksList extends Component {
 
     componentDidMount() {
 
-        let self = this;
+        const self = this;
 
         ipcRenderer.on('tracksListContextMenuReply', (event, reply, params) => {
 
-            let selected = self.state.selected;
+            const selected = self.state.selected;
 
             switch(reply) {
-                case 'addToQueue':
+                case 'addToQueue': {
                     AppActions.queue.add(selected);
                     break;
-                case 'playNext':
+                }
+                case 'playNext': {
                     AppActions.queue.addNext(selected);
                     break;
-                case 'addToPlaylist':
-                    let isShown = self.props.type === 'playlist' && params === self.props.currentPlaylist;
+                }
+                case 'addToPlaylist': {
+                    const isShown = self.props.type === 'playlist' && params === self.props.currentPlaylist;
                     AppActions.playlists.addTracksTo(params, selected, isShown);
                     break;
-                case 'removeFromPlaylist':
+                }
+                case 'removeFromPlaylist': {
                     if(self.props.type === 'playlist') AppActions.playlists.removeTracksFrom(self.props.currentPlaylist, selected);
                     break;
-                case 'createPlaylist':
+                }
+                case 'createPlaylist': {
                     AppActions.playlists.create('New playlist');
                     break;
+                }
             }
         });
     }

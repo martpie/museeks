@@ -5,7 +5,6 @@
 */
 
 import { EventEmitter } from 'events';
-import path             from 'path';
 import fs               from 'fs';
 
 import app from '../utils/app';
@@ -18,20 +17,19 @@ import utils from '../utils/utils';
 const CHANGE_EVENT = 'change';
 
 
-
 /*
 |--------------------------------------------------------------------------
 | Store
 |--------------------------------------------------------------------------
 */
 
-let AppStore = Object.assign({}, EventEmitter.prototype, {
+const AppStore = Object.assign({}, EventEmitter.prototype, {
 
     library           :  null,  // All tracks
 
     tracks            :  {
-        all: null,              // All tracks shown on the library view
-        playlist: null          // Tracks shown in the playlist view (to avoid too much reloads)
+        all : null,             // All tracks shown on the library view
+        playlist : null         // Tracks shown in the playlist view (to avoid too much reloads)
     },
     tracksCursor      : 'all',  // 'all' or 'playlist'
 
@@ -60,7 +58,6 @@ let AppStore = Object.assign({}, EventEmitter.prototype, {
             queue             : this.queue,
             queueCursor       : this.queueCursor,
             playerStatus      : this.playerStatus,
-            notifications     : this.notifications,
             refreshingLibrary : this.refreshingLibrary,
             repeat            : this.repeat,
             shuffle           : this.shuffle,
@@ -80,39 +77,39 @@ let AppStore = Object.assign({}, EventEmitter.prototype, {
 export default AppStore;
 
 
-
 /*
 |--------------------------------------------------------------------------
 | Dispatcher Listener
 |--------------------------------------------------------------------------
 */
 
-AppDispatcher.register(function(payload) {
+AppDispatcher.register((payload) => {
 
     switch(payload.actionType) {
 
-        case(AppConstants.APP_REFRESH_LIBRARY):
-            var tracks = payload.tracks;
+        case(AppConstants.APP_REFRESH_LIBRARY): {
+            const tracks = payload.tracks;
             AppStore.library = tracks;
             AppStore.tracks.all = tracks;
             AppStore.tracks.playlist = [];
             AppStore.emit(CHANGE_EVENT);
             break;
+        }
 
-        case(AppConstants.APP_REFRESH_CONFIG):
+        case(AppConstants.APP_REFRESH_CONFIG): {
             AppStore.emit(CHANGE_EVENT);
             break;
+        }
 
-        case(AppConstants.APP_SELECT_AND_PLAY):
+        case(AppConstants.APP_SELECT_AND_PLAY): {
 
-            var queue       = [].concat(AppStore.tracks[AppStore.tracksCursor]);
-            var id          = payload._id;
-            var queueCursor = null; // Clean that variable mess later
-            var oldQueue    = queue;
+            const queue       = [].concat(AppStore.tracks[AppStore.tracksCursor]);
+            const id          = payload._id;
 
-            var queuePosition = null;
+            let queueCursor = null; // Clean that variable mess later
+            let queuePosition = null;
 
-            for(var i = 0, length = queue.length; i < length; i++) {
+            for(let i = 0, length = queue.length; i < length; i++) {
 
                 if(queue[i]._id === id) {
                     queuePosition = i;
@@ -123,17 +120,17 @@ AppDispatcher.register(function(payload) {
 
             if(queuePosition !== null) {
 
-                var uri = utils.parseURI(queue[queuePosition].path);
-                    app.audio.src = uri;
-                    app.audio.play();
+                const uri = utils.parseUri(queue[queuePosition].path);
+                app.audio.src = uri;
+                app.audio.play();
 
                 // Check if we have to shuffle the queue
                 if(AppStore.shuffle) {
 
-                    var index = 0;
+                    let index = 0;
 
                     // need to check that later
-                    for(var i = 0, length = queue.length; i < length; i++) {
+                    for(let i = 0, length = queue.length; i < length; i++) {
 
                         if(queue[i]._id === id) {
                             index = i;
@@ -141,11 +138,11 @@ AppDispatcher.register(function(payload) {
                         }
                     }
 
-                    var firstTrack = queue[index];
+                    const firstTrack = queue[index];
 
                     queue.splice(id, 1);
 
-                    var m = queue.length, t, i;
+                    let m = queue.length, t, i;
                     while (m) {
 
                         // Pick a remaining element…
@@ -173,17 +170,18 @@ AppDispatcher.register(function(payload) {
             }
 
             break;
+        }
 
-        case(AppConstants.APP_FILTER_SEARCH):
+        case(AppConstants.APP_FILTER_SEARCH): {
 
-            if(search != '' && search != undefined) {
+            if(payload.search !== '' && payload.search !== undefined) {
 
                 AppStore.tracks.all = AppStore.library;
 
-            } else {
+            } else {
 
-                var search = utils.stripAccents(payload.search);
-                var tracks = AppStore.library.filter((track) => { // Problem here
+                const search = utils.stripAccents(payload.search);
+                const tracks = AppStore.library.filter((track) => { // Problem here
                     return track.loweredMetas.artist.join(', ').includes(search)
                         || track.loweredMetas.album.includes(search)
                         || track.loweredMetas.genre.join(', ').includes(search)
@@ -195,8 +193,10 @@ AppDispatcher.register(function(payload) {
 
             AppStore.emit(CHANGE_EVENT);
             break;
+        }
 
-        case(AppConstants.APP_PLAYER_TOGGLE):
+        case(AppConstants.APP_PLAYER_TOGGLE): {
+
             if(app.audio.paused && AppStore.queue !== null) {
                 AppStore.playerStatus = 'play';
                 app.audio.play();
@@ -206,35 +206,40 @@ AppDispatcher.register(function(payload) {
             }
             AppStore.emit(CHANGE_EVENT);
             break;
+        }
 
-        case(AppConstants.APP_PLAYER_PLAY):
+        case(AppConstants.APP_PLAYER_PLAY): {
             if(AppStore.queue !== null) {
                 AppStore.playerStatus = 'play';
                 app.audio.play();
                 AppStore.emit(CHANGE_EVENT);
             }
             break;
+        }
 
-        case(AppConstants.APP_PLAYER_PAUSE):
+        case(AppConstants.APP_PLAYER_PAUSE): {
             AppStore.playerStatus = 'pause';
             app.audio.pause();
             AppStore.emit(CHANGE_EVENT);
             break;
+        }
 
-        case(AppConstants.APP_PLAYER_STOP):
+        case(AppConstants.APP_PLAYER_STOP): {
             app.audio.pause();
             AppStore.library        =  null;
             AppStore.tracks         =  { all: null, playlist: null };
             AppStore.queue          =  [];
             AppStore.queueCursor    =  null;
             AppStore.oldQueueCursor =  null;
-            AppStore.playerStatus   = 'stop'
+            AppStore.playerStatus   = 'stop';
             AppStore.emit(CHANGE_EVENT);
             break;
+        }
 
-        case(AppConstants.APP_PLAYER_NEXT):
+        case(AppConstants.APP_PLAYER_NEXT): {
 
-            var queue = AppStore.queue;
+            const queue = AppStore.queue;
+            let newQueueCursor;
 
             if(AppStore.repeat === 'one') {
                 newQueueCursor = AppStore.queueCursor;
@@ -244,13 +249,13 @@ AppDispatcher.register(function(payload) {
             ) {
                 newQueueCursor = 0; // start with new track
             } else {
-                var newQueueCursor  = AppStore.queueCursor + 1;
+                newQueueCursor = AppStore.queueCursor + 1;
             }
 
 
             if (queue[newQueueCursor] !== undefined) {
 
-                var uri = utils.parseURI(queue[newQueueCursor].path); ;
+                const uri = utils.parseUri(queue[newQueueCursor].path);
 
                 app.audio.src = uri;
                 app.audio.play();
@@ -263,24 +268,25 @@ AppDispatcher.register(function(payload) {
                 AppStore.queue          =  [];
                 AppStore.queueCursor    =  null;
                 AppStore.oldQueueCursor =  null;
-                AppStore.playerStatus   = 'stop'
+                AppStore.playerStatus   = 'stop';
                 AppStore.emit(CHANGE_EVENT);
             }
             AppStore.emit(CHANGE_EVENT);
             break;
+        }
 
-        case(AppConstants.APP_PLAYER_PREVIOUS):
+        case(AppConstants.APP_PLAYER_PREVIOUS): {
 
-            var newQueueCursor = AppStore.queueCursor;
+            let newQueueCursor = AppStore.queueCursor;
 
             // If track started less than 5 seconds ago, play th previous track, otherwise replay the current one
             if (app.audio.currentTime < 5) newQueueCursor = AppStore.queueCursor - 1;
 
-            var newTrack = AppStore.queue[newQueueCursor];
+            const newTrack = AppStore.queue[newQueueCursor];
 
-            if (newTrack !== undefined) {
+            if(newTrack !== undefined) {
 
-                var uri = utils.parseURI(newTrack.path);
+                const uri = utils.parseUri(newTrack.path);
 
                 app.audio.src = uri;
                 app.audio.play();
@@ -293,28 +299,29 @@ AppDispatcher.register(function(payload) {
                 AppStore.queue          =  [];
                 AppStore.queueCursor    =  null;
                 AppStore.oldQueueCursor =  null;
-                AppStore.playerStatus   = 'stop'
+                AppStore.playerStatus   = 'stop';
                 AppStore.emit(CHANGE_EVENT);
             }
             AppStore.emit(CHANGE_EVENT);
             break;
+        }
 
-        case(AppConstants.APP_PLAYER_SHUFFLE):
-
+        case(AppConstants.APP_PLAYER_SHUFFLE): {
             if(!AppStore.shuffle) {
 
                 AppStore.oldQueue       = AppStore.queue;
                 AppStore.oldQueueCursor = AppStore.oldQueueCursor;
 
                 // Let's shuffle that
-                var queueCursor = AppStore.queueCursor;
-                var queue       = AppStore.queue.slice();
+                const firstTrack  = queue[queueCursor]; // Get the current track
 
-                var firstTrack = queue[queueCursor]; // Get the current track
+                const queueCursor = AppStore.queueCursor;
+                let queue = AppStore.queue.slice();
+
 
                 queue = queue.splice(queueCursor + 1, AppStore.queue.length - (queueCursor + 1)); // now get only what we want
 
-                var m = queue.length, t, i;
+                let m = queue.length, t, i;
                 while (m) {
 
                     // Pick a remaining element…
@@ -328,7 +335,7 @@ AppDispatcher.register(function(payload) {
 
                 queue.unshift(firstTrack); // Add the current track at the first position
 
-                AppStore.shuffle           = true;
+                AppStore.shuffle        = true;
                 AppStore.queue          = queue;
                 AppStore.queueCursor    = 0;
                 AppStore.oldQueueCursor = queueCursor;
@@ -343,10 +350,11 @@ AppDispatcher.register(function(payload) {
 
             AppStore.emit(CHANGE_EVENT);
             break;
+        }
 
-        case(AppConstants.APP_PLAYER_REPEAT):
-            var repeatState = AppStore.repeat;
-            var newRepeatState;
+        case(AppConstants.APP_PLAYER_REPEAT): {
+            const repeatState = AppStore.repeat;
+            let newRepeatState;
 
             if(repeatState === 'all') {
                 newRepeatState = 'one';
@@ -358,57 +366,63 @@ AppDispatcher.register(function(payload) {
             AppStore.repeat = newRepeatState;
             AppStore.emit(CHANGE_EVENT);
             break;
+        }
 
-        case(AppConstants.APP_PLAYER_JUMP_TO):
+        case(AppConstants.APP_PLAYER_JUMP_TO): {
             app.audio.currentTime = payload.to;
             break;
+        }
 
-        case(AppConstants.APP_QUEUE_PLAY):
+        case(AppConstants.APP_QUEUE_PLAY): {
+            const queue       = AppStore.queue.slice();
+            const queueCursor = payload.index;
 
-            var queue       = AppStore.queue.slice();
-            var queueCursor = payload.index;
-
-            var uri = utils.parseURI(queue[queueCursor].path);
-                app.audio.src = uri;
-                app.audio.play();
+            const uri = utils.parseUri(queue[queueCursor].path);
+            app.audio.src = uri;
+            app.audio.play();
 
             // Backup that and change the UI
-            AppStore.playerStatus   = 'play';
-            AppStore.queue          =  queue;
-            AppStore.queueCursor    =  queueCursor;
+            AppStore.playerStatus = 'play';
+            AppStore.queue        =  queue;
+            AppStore.queueCursor  =  queueCursor;
             AppStore.emit(CHANGE_EVENT);
             break;
+        }
 
-        case(AppConstants.APP_QUEUE_CLEAR):
+        case(AppConstants.APP_QUEUE_CLEAR): {
             AppStore.queue.splice(AppStore.queueCursor + 1, AppStore.queue.length - AppStore.queueCursor);
             AppStore.emit(CHANGE_EVENT);
             break;
+        }
 
-        case(AppConstants.APP_QUEUE_REMOVE):
-            AppStore.queue.splice(AppStore.queueCursor + payload.index + 1, 1)
+        case(AppConstants.APP_QUEUE_REMOVE): {
+            AppStore.queue.splice(AppStore.queueCursor + payload.index + 1, 1);
             AppStore.emit(CHANGE_EVENT);
             break;
+        }
 
         // Prob here
-        case(AppConstants.APP_QUEUE_ADD):
+        case(AppConstants.APP_QUEUE_ADD): {
             AppStore.queue = AppStore.queue.concat(payload.tracks);
             AppStore.emit(CHANGE_EVENT);
             break;
+        }
 
-        case(AppConstants.APP_QUEUE_ADD_NEXT):
+        case(AppConstants.APP_QUEUE_ADD_NEXT): {
             AppStore.queue.splice(AppStore.queueCursor + 1, 0, ...payload.tracks);
             AppStore.emit(CHANGE_EVENT);
             break;
+        }
 
-        case(AppConstants.APP_QUEUE_SET_QUEUE):
+        case(AppConstants.APP_QUEUE_SET_QUEUE): {
             AppStore.queue = payload.queue;
             AppStore.emit(CHANGE_EVENT);
             break;
+        }
 
-        case(AppConstants.APP_LIBRARY_ADD_FOLDERS):
-
-            var musicFolders = app.config.get('musicFolders'),
-                folders      = payload.folders;
+        case(AppConstants.APP_LIBRARY_ADD_FOLDERS): {
+            const folders    = payload.folders;
+            let musicFolders = app.config.get('musicFolders');
 
             // Check if we reveived folders
             if(folders !== undefined) {
@@ -427,63 +441,71 @@ AppDispatcher.register(function(payload) {
                 AppStore.emit(CHANGE_EVENT);
             }
             break;
+        }
 
-        case(AppConstants.APP_LIBRARY_SET_TRACKSCURSOR):
+        case(AppConstants.APP_LIBRARY_SET_TRACKSCURSOR): {
             AppStore.tracksCursor = payload.cursor;
             AppStore.emit(CHANGE_EVENT);
             break;
+        }
 
-        case(AppConstants.APP_LIBRARY_REMOVE_FOLDER):
-            var musicFolders = app.config.get('musicFolders');
+        case(AppConstants.APP_LIBRARY_REMOVE_FOLDER): {
+            const musicFolders = app.config.get('musicFolders');
             musicFolders.splice(payload.index, 1);
             app.config.set('musicFolders', musicFolders);
             app.config.saveSync();
 
             AppStore.emit(CHANGE_EVENT);
             break;
+        }
 
-        case(AppConstants.APP_LIBRARY_RESET):
+        case(AppConstants.APP_LIBRARY_RESET): {
             // nothing here for the moment
             break;
+        }
 
-        case(AppConstants.APP_LIBRARY_REFRESH_START):
+        case(AppConstants.APP_LIBRARY_REFRESH_START): {
             AppStore.status = 'An apple a day keeps Dr Dre away';
             AppStore.refreshingLibrary = true;
             AppStore.emit(CHANGE_EVENT);
             break;
+        }
 
-        case(AppConstants.APP_LIBRARY_REFRESH_END):
-            AppStore.refreshingLibrary      = false;
+        case(AppConstants.APP_LIBRARY_REFRESH_END): {
+            AppStore.refreshingLibrary = false;
             AppStore.refreshProgress = 0;
             AppStore.emit(CHANGE_EVENT);
             break;
+        }
 
-        case(AppConstants.APP_LIBRARY_REFRESH_PROGRESS):
+        case(AppConstants.APP_LIBRARY_REFRESH_PROGRESS): {
             AppStore.refreshProgress = payload.percentage;
             AppStore.emit(CHANGE_EVENT);
             break;
+        }
 
-        case(AppConstants.APP_NOTIFICATION_ADD):
+        case(AppConstants.APP_NOTIFICATION_ADD): {
             AppStore.notifications.push(payload.notification);
             AppStore.emit(CHANGE_EVENT);
             break;
+        }
 
-        case(AppConstants.APP_NOTIFICATION_REMOVE):
-            AppStore.notifications = AppStore.notifications.filter((elem) => {
-                return elem._id !== payload._id;
-            });
+        case(AppConstants.APP_NOTIFICATION_REMOVE): {
+            AppStore.notifications = AppStore.notifications.filter((elem) => elem._id !== payload._id);
             AppStore.emit(CHANGE_EVENT);
             break;
+        }
 
-        case(AppConstants.APP_PLAYLISTS_REFRESH):
-            var playlists = payload.playlists;
-            AppStore.playlists = playlists;
+        case(AppConstants.APP_PLAYLISTS_REFRESH): {
+            AppStore.playlists = payload.playlists;
             AppStore.emit(CHANGE_EVENT);
             break;
+        }
 
-        case(AppConstants.APP_PLAYLISTS_LOAD_ONE):
+        case(AppConstants.APP_PLAYLISTS_LOAD_ONE): {
             AppStore.tracks.playlist = payload.tracks;
             AppStore.emit(CHANGE_EVENT);
             break;
+        }
     }
 });
