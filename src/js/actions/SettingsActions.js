@@ -33,7 +33,7 @@ export default {
         if(app.config.get('devMode')) app.browserWindows.main.openDevTools();
     },
 
-    toggleSleepBlocker: function(mode) {
+    toggleSleepBlocker: function(mode = 'prevent-app-suspension') {
 
         app.config.set('sleepBlocker', !app.config.get('sleepBlocker'));
         app.config.saveSync();
@@ -43,6 +43,10 @@ export default {
         AppDispatcher.dispatch({
             actionType : AppConstants.APP_REFRESH_CONFIG
         });
+    },
+
+    checkSleepBlocker: function() {
+        if(app.config.get('sleepBlocker')) ipcRenderer.send('toggleSleepBlocker', true, 'prevent-app-suspension');
     },
 
     toggleDevMode: function() {

@@ -48,6 +48,6 @@ export default class SettingsUI extends Component {
     }
 
     toggleSleepBlocker() {
-        AppActions.settings.toggleSleepBlocker('prevent-app-suspension');
+        AppActions.settings.toggleSleepBlocker();
     }
 }

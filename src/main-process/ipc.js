@@ -9,6 +9,7 @@ class IpcManager {
     }
 
     bindEvents() {
+
         ipcMain.on('tracksListContextMenu', (event, data) => {
 
             const options = JSON.parse(data);
@@ -140,6 +141,7 @@ class IpcManager {
         ipcMain.on('appReady', () => {
             this.window.show();
         });
+
 
         this.window.on('closed', () => {
             // Dereference the window object

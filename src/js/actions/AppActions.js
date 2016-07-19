@@ -29,6 +29,7 @@ const AppActions = {
         this.playlists.refresh();
         this.settings.checkTheme();
         this.settings.checkDevMode();
+        this.settings.checkSleepBlocker();
         this.app.initShortcuts();
         this.app.start();
 
