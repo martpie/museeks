@@ -15,7 +15,8 @@
   "scripts": {
     "dev": "webpack --config webpack.config.js --progress --colors --watch",
     "compile": "webpack --config webpack.config.js --progress --colors",
-    "build": "npm run compile && node build.js"
+    "build": "npm run compile && node build.js",
+    "lint": "./node_modules/.bin/eslint . --config .eslintrc.json --cache"
   },
   "dependencies": {
     "bootstrap-css-only": "3.3.6",
@@ -52,7 +53,7 @@
     "electron-builder": "5.12.1",
     "electron-packager": "7.3.0",
     "eslint-plugin-react": "5.2.2",
-    "eslint": "3.0.1",
+    "eslint": "3.1.1",
     "extract-text-webpack-plugin": "1.0.1",
     "file-loader": "0.9.0",
     "json-loader": "0.5.4",
