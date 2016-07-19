@@ -70,9 +70,8 @@ packager(options, (err) => {
 
         const buildsPathes = getDirectories(path.join('./build', app.version));
 
-        buildsPathes.forEach(() => {
-            const appPath = './build/${folder}/resources/app';
-
+        buildsPathes.forEach((folder) => {
+            const appPath = `./build/${folder}/resources/app`;
             rimraf(`${appPath}/src/images`, {}, () => {});
             rimraf(`${appPath}/src/js`, {}, () => {});
             rimraf(`${appPath}/src/styles`, {}, () => {});
