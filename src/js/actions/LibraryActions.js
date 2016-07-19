@@ -13,16 +13,15 @@ import mime     from 'mime';
 const dialog = electron.remote.dialog;
 
 
-
 export default {
 
     load: function() {
-        app.db.find({ type : 'track' }).sort({ 'loweredMetas.artist': 1, 'year': 1, 'loweredMetas.album': 1, 'disk.no': 1, 'track.no': 1 }).exec(function (err, tracks) {
+        app.db.find({ type : 'track' }).sort({ 'loweredMetas.artist': 1, 'year': 1, 'loweredMetas.album': 1, 'disk.no': 1, 'track.no': 1 }).exec((err, tracks) => {
             if (err) console.warn(err);
             else {
                 AppDispatcher.dispatch({
                     actionType : AppConstants.APP_REFRESH_LIBRARY,
-                    tracks     : tracks
+                    tracks
                 });
             }
         });
@@ -31,7 +30,7 @@ export default {
     setTracksCursor: function(cursor) {
         AppDispatcher.dispatch({
             actionType : AppConstants.APP_LIBRARY_SET_TRACKSCURSOR,
-            cursor     : cursor
+            cursor
         });
     },
 
@@ -46,7 +45,7 @@ export default {
 
         AppDispatcher.dispatch({
             actionType : AppConstants.APP_SELECT_AND_PLAY,
-            _id         : _id
+            _id
         });
     },
 
@@ -54,17 +53,17 @@ export default {
 
         AppDispatcher.dispatch({
             actionType : AppConstants.APP_FILTER_SEARCH,
-            search     : search
+            search
         });
     },
 
-    addFolders: function(folders) {
+    addFolders: function() {
 
-        dialog.showOpenDialog({ properties: ['openDirectory', 'multiSelections']}, (folders) => {
+        dialog.showOpenDialog({ properties: ['openDirectory', 'multiSelections'] }, (folders) => {
             if(folders !== undefined) {
                 AppDispatcher.dispatch({
                     actionType : AppConstants.APP_LIBRARY_ADD_FOLDERS,
-                    folders    : folders
+                    folders
                 });
             }
         });
@@ -73,7 +72,7 @@ export default {
     removeFolder: function(index) {
         AppDispatcher.dispatch({
             actionType : AppConstants.APP_LIBRARY_REMOVE_FOLDER,
-            index      : index
+            index
         });
     },
 
@@ -82,8 +81,9 @@ export default {
             actionType : AppConstants.APP_LIBRARY_REFRESH_START,
         });
 
-        app.db.remove({ }, { multi: true }, function (err, numRemoved) {
-            app.db.loadDatabase(function (err) {
+        app.db.remove({ }, { multi: true }, (err) => {
+            if(err) console.error(err);
+            app.db.loadDatabase((err) => {
                 if(err) {
                     console.warn(err);
                 } else {
@@ -98,33 +98,34 @@ export default {
 
     refresh: function() {
 
-        let folders = app.config.get('musicFolders');
+        const folders = app.config.get('musicFolders');
 
         AppDispatcher.dispatch({
             actionType : AppConstants.APP_LIBRARY_REFRESH_START
         });
 
         // Start the big thing
-        app.db.remove({ type : 'track' }, { multi: true }, function (err, numRemoved) {
-            app.db.loadDatabase(function (err) {
+        app.db.remove({ type : 'track' }, { multi: true }, (err) => {
+            if(err) console.warn(err);
+            app.db.loadDatabase((err) => {
                 if(err) console.warn(err);
                 else {
 
                     let filesList = [];
 
                     // Loop through folders
-                    folders.forEach(function(folder, index, folders) {
+                    folders.forEach((folder) => {
                         // Get the list of files
-                        filesList = filesList.concat(walkSync(folder, { directories: false }).map((d) =>  path.join(folder, d)));
+                        filesList = filesList.concat(walkSync(folder, { directories: false }).map((d) => path.join(folder, d)));
                     });
 
                     // Get the metadatas of all the files
-                    let filesListFiltered = filesList.map((file) => {
+                    const filesListFiltered = filesList.map((file) => {
                         return {
                             path: fs.realpathSync(file),
                             mime: mime.lookup(file)
                         };
-                    }).filter((track, i) => {
+                    }).filter((track) => {
                         return app.supportedFormats.includes(track.mime);
                     });
 
@@ -133,7 +134,7 @@ export default {
                         (function forloop(i) {
                             if(i < filesListFiltered.length) {
 
-                                let track = filesListFiltered[i];
+                                const track = filesListFiltered[i];
 
                                 app.db.find({ path: track.path }, (err, docs) => {
                                     if(err) console.warn(err);
@@ -145,7 +146,7 @@ export default {
 
                                         utils.getMetadata(track, (metadata) => {
 
-                                            app.db.insert(metadata, function (err, newDoc) {
+                                            app.db.insert(metadata, (err) => {
 
                                                 if(err) console.warn(err);
                                                 if(i === filesListFiltered.length - 1) {
@@ -177,4 +178,4 @@ export default {
             });
         });
     }
-}
+};

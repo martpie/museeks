@@ -6,7 +6,6 @@ import Icon from 'react-fontawesome';
 import utils from '../../utils/utils';
 
 
-
 /*
 |--------------------------------------------------------------------------
 | Footer
@@ -23,7 +22,7 @@ export default class Footer extends Component {
 
     render() {
 
-        let tracks = this.props.tracks;
+        const tracks = this.props.tracks;
         let status = (tracks !== null) ? utils.getStatus(tracks) : 'An apple a day keeps Dr Dre away';
 
         let navButtons = (

@@ -8,7 +8,6 @@ import SettingsAdvanced from './SettingsAdvanced.react';
 import SettingsAbout    from './SettingsAbout.react';
 
 
-
 /*
 |--------------------------------------------------------------------------
 | Global View

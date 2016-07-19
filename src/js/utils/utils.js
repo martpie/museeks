@@ -11,8 +11,7 @@ import mmd     from 'musicmetadata';
 import wavInfo from 'wav-file-info';
 
 
-
-let utils = {
+const utils = {
 
     /**
      * Parse an int to a more readable string
@@ -28,15 +27,17 @@ let utils = {
             let minutes = parseInt(duration / 60) % 60;
             let seconds = parseInt(duration % 60);
 
-            hours = hours < 10 ? '0' + hours : hours;
-            let result = hours > 0 ? hours + ':' : '';
-                result += (minutes < 10 ? '0' + minutes : minutes) + ':' + (seconds  < 10 ? '0' + seconds : seconds);
+            hours = hours < 10 ? `0${hours}` : hours;
+            minutes = minutes < 10 ? `0${minutes}` : minutes;
+            seconds = seconds < 10 ? `0${seconds}` : seconds;
+            let result = hours > 0 ? `${hours}:` : '';
+            result += `${minutes}:${seconds}`;
 
             return result;
 
-        } else {
-            return '00:00';
         }
+
+        return '00:00';
     },
 
     /**
@@ -46,7 +47,8 @@ let utils = {
      * @return string
      */
     getStatus: function(tracks) {
-        return tracks.length + ' tracks, ' + this.parseDuration(tracks.length === 0 ? 0 : tracks.map(d => d.duration).reduce((a, b) => a + b));
+        const status = this.parseDuration(tracks.length === 0 ? 0 : tracks.map((d) => d.duration).reduce((a, b) => a + b));
+        return `${tracks.length} tracks, ${status}`;
     },
 
     /**
@@ -55,9 +57,15 @@ let utils = {
      * @param string uri
      * @return string
      */
-    parseURI: function(uri) {
-        let root = process.platform === 'win32' ? '' : path.parse(uri).root;
-        return 'file://' + root + uri.split(path.sep).map((d, i) => i === 0 ? d : encodeURIComponent(d)).reduce((a, b) => path.join(a, b));
+    parseUri: function(uri) {
+        const root = process.platform === 'win32' ? '' : path.parse(uri).root;
+        const location = uri
+            .split(path.sep)
+            .map((d, i) => {
+                return i === 0 ? d : encodeURIComponent(d);
+            })
+            .reduce((a, b) => path.join(a, b));
+        return `file://${root}${location}`;
     },
 
     /**
@@ -69,23 +77,17 @@ let utils = {
      */
     simpleSort: function(array, sorting) {
 
-        if(sorting == 'asc') {
-            array.sort(function(a, b) {
+        if(sorting === 'asc') {
+            array.sort((a, b) => {
                 return a - b;
             });
-        }
-        else if (sorting == 'desc') {
-            array.sort(function(a, b) {
+        } else if (sorting === 'desc') {
+            array.sort((a, b) => {
                 return b - a;
             });
         }
 
-        let result = [];
-        array.forEach(function(item) { // TODO
-            if(!result.includes(item)) {
-                result.push(item);
-            }
-        });
+        const result = array.filter((item) => !result.includes(item));
 
         return result;
     },
@@ -98,11 +100,12 @@ let utils = {
      */
     stripAccents(str) {
 
-        let accents = 'ÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÒÓÔÕÖÙÚÛÜÝàáâãäåçèéêëìíîïðòóôõöùúûüýÿñ',
+        const accents = 'ÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÒÓÔÕÖÙÚÛÜÝàáâãäåçèéêëìíîïðòóôõöùúûüýÿñ',
             fixes = 'aaaaaaceeeeiiiiooooouuuuyaaaaaaceeeeiiiioooooouuuuyyn',
-            reg = new RegExp('(' + accents.split('').join('|') + ')', 'g');
+            split = accents.split('').join('|'),
+            reg = new RegExp(`(${split})`, 'g');
 
-        function replacement(a){
+        function replacement(a) {
             return fixes[accents.indexOf(a)] || '';
         }
 
@@ -122,7 +125,7 @@ let utils = {
             return folders.indexOf(elem) === index;
         });
 
-        let foldersToBeRemoved = [];
+        const foldersToBeRemoved = [];
 
         filteredFolders.forEach((folder, i) => {
             filteredFolders.forEach((subfolder, j) => {
@@ -130,7 +133,7 @@ let utils = {
             });
         });
 
-        filteredFolders = filteredFolders.filter((elem, index) => {
+        filteredFolders = filteredFolders.filter((elem) => {
             return !foldersToBeRemoved.includes(elem);
         });
 
@@ -146,10 +149,10 @@ let utils = {
      */
     chunkArray: function(array, chunkLength) {
 
-        let chunks = [];
+        const chunks = [];
 
         for(let i = 0, length = array.length; i < length; i += chunkLength) {
-            chunks.push(array.slice(i, i+chunkLength));
+            chunks.push(array.slice(i, i + chunkLength));
         }
 
         return chunks;
@@ -184,79 +187,79 @@ let utils = {
 
         if(['audio/wav', 'audio/x-wav', 'audio/wave', 'audio/x-pn-wav'].includes(track.mime)) { // If WAV
 
-            wavInfo.infoByFilename(track.path, function(err, info){
+            wavInfo.infoByFilename(track.path, (err, info) => {
 
                 if (err) console.warn(err);
 
-                let metadata = {
-                   album        : 'Unknown',
-                   albumartist  : [],
-                   artist       : ['Unknown artist'],
-                   disk         : {
-                       no: 0,
-                       of: 0
-                   },
-                   duration     : info.duration,
-                   genre        : [],
-                   loweredMetas : {},
-                   path         : track.path,
-                   playCount    : 0,
-                   title        : path.parse(track.path).base,
-                   track        : {
-                       no: 0,
-                       of: 0
-                   },
-                   type         : 'track',
-                   year         : ''
-               };
+                const metadata = {
+                    album        : 'Unknown',
+                    albumartist  : [],
+                    artist       : ['Unknown artist'],
+                    disk         : {
+                        no: 0,
+                        of: 0
+                    },
+                    duration     : info.duration,
+                    genre        : [],
+                    loweredMetas : {},
+                    path         : track.path,
+                    playCount    : 0,
+                    title        : path.parse(track.path).base,
+                    track        : {
+                        no: 0,
+                        of: 0
+                    },
+                    type         : 'track',
+                    year         : ''
+                };
 
-               metadata.loweredMetas = {
-                   artist      : metadata.artist.map(meta => utils.stripAccents(meta.toLowerCase())),
-                   album       : utils.stripAccents(metadata.album.toLowerCase()),
-                   albumartist : metadata.albumartist.map(meta => utils.stripAccents(meta.toLowerCase())),
-                   title       : utils.stripAccents(metadata.title.toLowerCase()),
-                   genre       : metadata.genre.map(meta => utils.stripAccents(meta.toLowerCase()))
-               }
+                metadata.loweredMetas = {
+                    artist      : metadata.artist.map((meta) => utils.stripAccents(meta.toLowerCase())),
+                    album       : utils.stripAccents(metadata.album.toLowerCase()),
+                    albumartist : metadata.albumartist.map((meta) => utils.stripAccents(meta.toLowerCase())),
+                    title       : utils.stripAccents(metadata.title.toLowerCase()),
+                    genre       : metadata.genre.map((meta) => utils.stripAccents(meta.toLowerCase()))
+                };
 
                 callback(metadata);
             });
 
         } else {
 
-            let stream = fs.createReadStream(track.path);
+            const stream = fs.createReadStream(track.path);
 
-            mmd(stream, { duration: true }, function (err, data) {
+            mmd(stream, { duration: true }, (err, data) => {
 
-                if(err) console.warn('An error occured while reading ' + track.path + ' id3 tags: ' + err);
+                if(err) console.warn(`An error occured while reading ${track.path} id3 tags: ${err}`);
 
-                let metadata = {
-                   album        : data.album === null || data.album === '' ? 'Unknown' : data.album,
-                   albumartist  : data.albumartist,
-                   artist       : data.artist.length === 0 ? ['Unknown artist'] : data.artist,
-                   disk         : data.disk,
-                   duration     : data.duration == '' ? 0 : data.duration,
-                   genre        : data.genre,
-                   loweredMetas : {},
-                   path         : track.path,
-                   playCount    : 0,
-                   title        : data.title === null || data.title === '' ? path.parse(track.path).base : data.title,
-                   track        : data.track,
-                   type         : 'track',
-                   year         : data.year
-               };
+                const metadata = {
+                    album        : data.album === null || data.album === '' ? 'Unknown' : data.album,
+                    albumartist  : data.albumartist,
+                    artist       : data.artist.length === 0 ? ['Unknown artist'] : data.artist,
+                    disk         : data.disk,
+                    duration     : data.duration === '' ? 0 : data.duration,
+                    genre        : data.genre,
+                    loweredMetas : {},
+                    path         : track.path,
+                    playCount    : 0,
+                    title        : data.title === null || data.title === '' ? path.parse(track.path).base : data.title,
+                    track        : data.track,
+                    type         : 'track',
+                    year         : data.year
+                };
 
                 metadata.loweredMetas = {
-                    artist      : metadata.artist.map(meta => utils.stripAccents(meta.toLowerCase())),
+                    artist      : metadata.artist.map((meta) => utils.stripAccents(meta.toLowerCase())),
                     album       : utils.stripAccents(metadata.album.toLowerCase()),
-                    albumartist : metadata.albumartist.map(meta => utils.stripAccents(meta.toLowerCase())),
+                    albumartist : metadata.albumartist.map((meta) => utils.stripAccents(meta.toLowerCase())),
                     title       : utils.stripAccents(metadata.title.toLowerCase()),
-                    genre       : metadata.genre.map(meta => utils.stripAccents(meta.toLowerCase()))
+                    genre       : metadata.genre.map((meta) => utils.stripAccents(meta.toLowerCase()))
                 };
 
                 callback(metadata);
             });
         }
     }
-}
+};
 
 export default utils;

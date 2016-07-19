@@ -9,13 +9,13 @@ if (platform === 'win32') {
 class IntegrationManager {
     constructor(win) {
         if(Integration !== null) {
-          this.integration = new Integration(win);
+            this.integration = new Integration(win);
         }
     }
 
     enable() {
-      if(Integration === null) return;
-      this.integration.enable();
+        if(Integration === null) return;
+        this.integration.enable();
     }
 
 }

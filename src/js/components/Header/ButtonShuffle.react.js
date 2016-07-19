@@ -4,7 +4,6 @@ import InlineSVG from 'svg-inline-react';
 import AppActions from '../../actions/AppActions';
 
 
-
 /*
 |--------------------------------------------------------------------------
 | ShuffleButton
@@ -16,7 +15,7 @@ export default class ButtonShuffle extends Component {
     constructor(props) {
 
         super(props);
-        this.state = {}
+        this.state = {};
     }
 
     render() {

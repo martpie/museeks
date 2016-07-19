@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import AppActions from '../../actions/AppActions';
 
 
-
 /*
 |--------------------------------------------------------------------------
 | Child - UI Settings
@@ -20,7 +19,7 @@ export default class SettingsUI extends Component {
 
     render() {
 
-        let config = this.props.config;
+        const config = this.props.config;
 
         return (
             <div className='setting setting-theme-selector'>
@@ -49,6 +48,6 @@ export default class SettingsUI extends Component {
     }
 
     toggleSleepBlocker() {
-        AppActions.settings.toggleSleepBlocker('prevent-app-suspension');
+        AppActions.settings.toggleSleepBlocker();
     }
 }

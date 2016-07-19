@@ -1,10 +1,4 @@
-import AppDispatcher from '../dispatcher/AppDispatcher';
-import AppConstants  from '../constants/AppConstants';
-
 import app from '../utils/app';
-
-const globalShortcut = electron.remote.globalShortcut;
-const ipcRenderer    = electron.ipcRenderer;
 
 import semver from 'semver';
 
@@ -15,9 +9,11 @@ import PlayerActions        from './PlayerActions';
 import QueueActions         from './QueueActions';
 import SettingsActions      from './SettingsActions';
 
+const globalShortcut = electron.remote.globalShortcut;
+const ipcRenderer    = electron.ipcRenderer;
 
 
-let AppActions = {
+const AppActions = {
 
     player        : PlayerActions,
     playlists     : PlaylistsActions,
@@ -33,6 +29,7 @@ let AppActions = {
         this.playlists.refresh();
         this.settings.checkTheme();
         this.settings.checkDevMode();
+        this.settings.checkSleepBlocker();
         this.app.initShortcuts();
         this.app.start();
 
@@ -47,22 +44,22 @@ let AppActions = {
         });
 
         // Prevent some events
-        window.addEventListener('dragover', function (e) {
+        window.addEventListener('dragover', (e) => {
             e.preventDefault();
         }, false);
 
-        window.addEventListener('drop', function (e) {
+        window.addEventListener('drop', (e) => {
             e.preventDefault();
         }, false);
 
         // Remember dimensions and positionning
-        let currentWindow = app.browserWindows.main;
+        const currentWindow = app.browserWindows.main;
 
-        currentWindow.on('resize', function() {
+        currentWindow.on('resize', () => {
             AppActions.app.saveBounds();
         });
 
-        currentWindow.on('move', function() {
+        currentWindow.on('move', () => {
             AppActions.app.saveBounds();
         });
 
@@ -106,8 +103,8 @@ let AppActions = {
 
         saveBounds: function() {
 
-            let self = AppActions;
-            let now = window.performance.now();
+            const self = AppActions;
+            const now = window.performance.now();
 
             if (now - self.lastFilterSearch < 250) {
                 clearTimeout(self.filterSearchTimeOut);
@@ -126,42 +123,42 @@ let AppActions = {
         initShortcuts: function() {
 
             // Global shortcuts
-            globalShortcut.register('MediaPlayPause', function () {
+            globalShortcut.register('MediaPlayPause', () => {
                 AppActions.player.playToggle();
             });
 
-            globalShortcut.register('MediaPreviousTrack', function () {
+            globalShortcut.register('MediaPreviousTrack', () => {
                 AppActions.player.previous();
             });
 
-            globalShortcut.register('MediaNextTrack', function () {
+            globalShortcut.register('MediaNextTrack', () => {
                 AppActions.player.next();
             });
         },
 
         checkForUpdate: function() {
 
-            let currentVersion = app.version;
+            const currentVersion = app.version;
 
-            let oReq = new XMLHttpRequest();
+            const oReq = new XMLHttpRequest();
 
             oReq.onload = (e) => {
 
-                let releases = e.currentTarget.response;
+                const releases = e.currentTarget.response;
                 let updateVersion = null;
 
-                let isUpdateAvailable = releases.some((release) => {
+                const isUpdateAvailable = releases.some((release) => {
 
                     if(semver.gt(release.tag_name, currentVersion)) {
                         updateVersion = release.tag_name;
                         return true;
-                    } else {
-                        return false;
                     }
+
+                    return false;
                 });
 
-                if(isUpdateAvailable) AppActions.notifications.add('success', 'Museeks ' + updateVersion + ' is available, check http://museeks.io !');
-                else AppActions.notifications.add('success', 'Museeks ' + currentVersion + ' is the latest version available.');
+                if(isUpdateAvailable) AppActions.notifications.add('success', `Museeks ${updateVersion} is available, check http://museeks.io !`);
+                else AppActions.notifications.add('success', `Museeks ${currentVersion} is the latest version available.`);
             };
 
             oReq.onerror = () => {

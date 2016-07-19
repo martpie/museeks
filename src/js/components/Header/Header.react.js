@@ -11,7 +11,6 @@ import AppActions from '../../actions/AppActions';
 import app from '../../utils/app';
 
 
-
 /*
 |--------------------------------------------------------------------------
 | Header
@@ -26,7 +25,8 @@ export default class Header extends Component {
         this.state = {
             showVolume : false,
             showQueue  : false
-        }
+        };
+        this.mute = this.mute.bind(this);
     }
 
     render() {
@@ -52,7 +52,7 @@ export default class Header extends Component {
                         <button type='button' className='player-control forward' onClick={ this.next.bind(null) }>
                             <Icon name='forward' />
                         </button>
-                        <button type='button' className='player-control volume' onMouseEnter={ this.showVolume.bind(this) } onMouseLeave={ this.hideVolume.bind(this) } onClick={ (e) => { this.mute(e) }  }>
+                        <button type='button' className='player-control volume' onMouseEnter={ this.showVolume.bind(this) } onMouseLeave={ this.hideVolume.bind(this) } onClick={ this.mute }>
                             <Icon name={ app.audio.volume === 0 ? 'volume-off' : app.audio.volume > 0.5 ? 'volume-up' : 'volume-down' } />
                             <div className={ this.state.showVolume ? 'volume-control visible' : 'volume-control' }>
                                 <input type={'range'} min={0} max={1} step={0.01} defaultValue={ app.audioVolume } ref='volume' onChange={ this.setVolume.bind(this) } />
@@ -97,7 +97,7 @@ export default class Header extends Component {
     }
 
     search(value) {
-        AppActions.library.filterSearch(value.toLowerCase())
+        AppActions.library.filterSearch(value.toLowerCase());
     }
 
     searchSelect() {
@@ -139,7 +139,7 @@ export default class Header extends Component {
 
     mute(e) {
 
-        if(e.target.classList.contains('player-control') || e.target.classList.contains('fa')) {
+        if(e.target.classList.contains('player-control') || e.target.classList.contains('fa')) {
 
             if(this.oldVolume === undefined) this.oldVolume = app.audio.volume;
             AppActions.player.setVolume(app.audio.volume === 0 ? this.oldVolume : 0);

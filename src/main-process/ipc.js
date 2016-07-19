@@ -1,19 +1,21 @@
 'use strict';
 
-const { Menu, ipcMain } = require('electron');
+const { Menu, ipcMain, powerSaveBlocker } = require('electron');
 
 class IpcManager {
     constructor(window) {
         this.window = window;
+        this.instance = {};
     }
 
     bindEvents() {
+
         ipcMain.on('tracksListContextMenu', (event, data) => {
 
-            let options = JSON.parse(data);
+            const options = JSON.parse(data);
             let playlistTemplate;
 
-            if(!!options.playlists) {
+            if(options.playlists) {
 
                 playlistTemplate = [
                     {
@@ -60,9 +62,9 @@ class IpcManager {
                 ];
             }
 
-            let template = [
+            const template = [
                 {
-                    label: options.selectedCount > 1 ? options.selectedCount + ' tracks selected' : options.selectedCount + ' track selected',
+                    label: options.selectedCount > 1 ? `${options.selectedCount} tracks selected` : `${options.selectedCount} track selected`,
                     enabled: false
                 },
                 {
@@ -96,7 +98,7 @@ class IpcManager {
                 }
             });
 
-            let context = Menu.buildFromTemplate(template);
+            const context = Menu.buildFromTemplate(template);
 
             context.popup(this.window); // Let it appear
         });
@@ -104,7 +106,7 @@ class IpcManager {
 
         ipcMain.on('playlistContextMenu', (event, _id) => {
 
-            let template = [
+            const template = [
                 {
                     label: 'Delete',
                     click: () => {
@@ -119,7 +121,7 @@ class IpcManager {
                 }
             ];
 
-            let context = Menu.buildFromTemplate(template);
+            const context = Menu.buildFromTemplate(template);
 
             context.popup(this.window); // Let it appear
         });
@@ -128,17 +130,18 @@ class IpcManager {
         ipcMain.on('toggleSleepBlocker', (event, toggle, mode) => {
 
             if(toggle) {
-                instance.sleepBlockerID = powerSaveBlocker.start(mode);
+                this.instance.sleepBlockerId = powerSaveBlocker.start(mode);
             } else {
-                powerSaveBlocker.stop(instance.sleepBlockerID);
-                delete(instance.sleepBlockerID);
+                powerSaveBlocker.stop(this.instance.sleepBlockerId);
+                delete(this.instance.sleepBlockerId);
             }
         });
 
 
-        ipcMain.on('appReady', (event, toggle, mode) => {
+        ipcMain.on('appReady', () => {
             this.window.show();
         });
+
 
         this.window.on('closed', () => {
             // Dereference the window object

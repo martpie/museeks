@@ -3,7 +3,6 @@
 process.env.NODE_ENV = 'production';
 
 
-
 /*
 |--------------------------------------------------------------------------
 | Modules
@@ -18,7 +17,6 @@ const rimraf   = require('rimraf');
 const app      = require('./package.json');
 
 
-
 /*
 |--------------------------------------------------------------------------
 | Helpers
@@ -26,11 +24,10 @@ const app      = require('./package.json');
 */
 
 function getDirectories(srcpath) {
-    return fs.readdirSync(srcpath).filter(function(file) {
+    return fs.readdirSync(srcpath).filter((file) => {
         return fs.statSync(path.join(srcpath, file)).isDirectory();
     });
 }
-
 
 
 /*
@@ -55,8 +52,7 @@ const options = {
     'ignore'    : /(build|node_modules\/+?(?!teeny).+)/,
     'out'       :  path.join('build', app.version),
     'overwrite' :  true,
-}
-
+};
 
 
 /*
@@ -65,23 +61,20 @@ const options = {
 |--------------------------------------------------------------------------
 */
 
-console.log('Starting Museeks ' + app.version + ' build');
-console.time('build');
+console.info('Starting Museeks ${app.version} build');
 
-packager(options, function (err, appPath) {
+packager(options, (err) => {
     if(err) throw err;
     else {
-        console.timeEnd('build');
-        console.log('Builds cleanup');
+        console.info('Builds cleanup');
 
-        let buildsPathes = getDirectories(path.join('./build', app.version));
+        const buildsPathes = getDirectories(path.join('./build', app.version));
 
-        buildsPathes.forEach(function(folder, index) {
-            let appPath = './build/' + folder + '/resources/app/';
-
-            rimraf(appPath + 'src/images', {}, function() {});
-            rimraf(appPath + 'src/js', {}, function() {});
-            rimraf(appPath + 'src/styles', {}, function() {});
+        buildsPathes.forEach((folder) => {
+            const appPath = `./build/${folder}/resources/app`;
+            rimraf(`${appPath}/src/images`, {}, () => {});
+            rimraf(`${appPath}/src/js`, {}, () => {});
+            rimraf(`${appPath}/src/styles`, {}, () => {});
         });
-   }
+    }
 });

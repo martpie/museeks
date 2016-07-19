@@ -3,13 +3,9 @@ import fs     from 'fs';
 import path   from 'path';
 import teeny  from 'teeny-conf';
 
-import AppActions from '../actions/AppActions';
-
 const remote = electron.remote;
 
 const app    = remote.app;
-const screen = remote.screen;
-
 
 
 /*
@@ -18,12 +14,11 @@ const screen = remote.screen;
 |--------------------------------------------------------------------------
 */
 
-let browserWindows = {};
-    browserWindows.main = remote.getCurrentWindow();
+const browserWindows = {};
+browserWindows.main = remote.getCurrentWindow();
 
-let pathUserData = app.getPath('userData'),
+const pathUserData = app.getPath('userData'),
     pathSrc      = __dirname;
-
 
 
 /*
@@ -32,9 +27,8 @@ let pathUserData = app.getPath('userData'),
 |--------------------------------------------------------------------------
 */
 
-let conf = new teeny(path.join(pathUserData, 'config.json'));
+const conf = new teeny(path.join(pathUserData, 'config.json'));
 conf.loadOrCreateSync();
-
 
 
 /*
@@ -43,7 +37,7 @@ conf.loadOrCreateSync();
 |--------------------------------------------------------------------------
 */
 
-let supportedFormats = [
+const supportedFormats = [
     'audio/mp3',
     'audio/mp4',
     'audio/mpeg3',
@@ -73,7 +67,6 @@ let supportedFormats = [
 ];
 
 
-
 /*
 |--------------------------------------------------------------------------
 | Audio
@@ -82,10 +75,9 @@ let supportedFormats = [
 
 // What plays the music
 
-let audio = new Audio();
-    audio.volume = conf.get('audioVolume');
-    audio.playbackRate = conf.get('audioPlaybackRate');
-
+const audio = new Audio();
+audio.volume = conf.get('audioVolume');
+audio.playbackRate = conf.get('audioPlaybackRate');
 
 
 /*
@@ -94,22 +86,24 @@ let audio = new Audio();
 |--------------------------------------------------------------------------
 */
 
-let db = new nedb({
+const db = new nedb({
     filename: path.join(pathUserData, 'library.db'),
     autoload: true
 });
 
 db.reset = function() {
-    db.remove({}, { multi: true }, function (err, numRemoved) {
-        db.loadDatabase(function (err) {
+    db.remove({}, { multi: true }, (err) => {
+        if(err) console.warn(err);
+        db.loadDatabase((err) => {
             if(err) throw err;
         });
     });
 };
 
 // WTFix, db.loadDatabase() throw an error if the line below is not here
-fs.writeFile(path.join(pathUserData, '.init'), '', (err) => { if(err) throw err; });
-
+fs.writeFile(path.join(pathUserData, '.init'), '', (err) => {
+    if(err) console.error(err);
+});
 
 
 /*
@@ -119,12 +113,12 @@ fs.writeFile(path.join(pathUserData, '.init'), '', (err) => { if(err) throw err;
 */
 
 export default {
-    version          : app.getVersion,   // Museeks version
-    config           : conf,             // teeny-conf
-    initialConfig    : conf.getAll(),    // the config at the start of the application
-    db               : db,               // database
-    supportedFormats : supportedFormats, // supported audio formats
-    audio            : audio,            // HTML5 audio tag
-    pathSrc          : pathSrc,          // path of the app
-    browserWindows   : browserWindows    // Object containing all the windows
+    db,               // database
+    supportedFormats, // supported audio formats
+    audio,            // HTML5 audio tag
+    pathSrc,          // path of the app
+    browserWindows,   // Object containing all the windows
+    version       : app.getVersion,   // Museeks version
+    config        : conf,             // teeny-conf
+    initialConfig : conf.getAll(),    // the config at the start of the application
 };

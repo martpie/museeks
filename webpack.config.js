@@ -1,7 +1,7 @@
-var webpack           = require('webpack');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
+const webpack           = require('webpack');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-var path = require('path');
+const path = require('path');
 
 module.exports = {
     entry: {
@@ -58,4 +58,4 @@ module.exports = {
         new webpack.DefinePlugin({ 'process.env': { 'NODE_ENV': '"production"' } }),
         new ExtractTextPlugin('main.css', { allChunks: true }),
     ]
-}
+};

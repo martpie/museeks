@@ -1,6 +1,6 @@
 // Modules
-import React, { Component } from 'react';
-import { Route, IndexRoute } from 'react-router';
+import React from 'react';
+import { Route } from 'react-router';
 
 // Actions
 import AppActions from '../actions/AppActions';
@@ -12,7 +12,7 @@ import Settings  from '../components/Settings/Settings.react';
 import Playlists from '../components/Playlists/Playlists.react';
 import Playlist  from '../components/Playlists/Playlist.react';
 
-let init = {
+const init = {
 
     app: () => {
         AppActions.init();
@@ -29,7 +29,7 @@ let init = {
 };
 
 // Router
-let routes = (
+const routes = (
     <Route component={ App } path='/' onEnter={ init.app }>
         <Route path='library' component={ Library } onEnter={ init.library } />
         <Route path='settings' component={ Settings } />
@@ -38,7 +38,6 @@ let routes = (
         </Route>
     </Route>
 );
-
 
 
 export default routes;

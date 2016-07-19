@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import AppActions from '../../actions/AppActions';
 
 
-
 /*
 |--------------------------------------------------------------------------
 | Child - Advanced Settings
@@ -20,7 +19,7 @@ export default class SettingsAdvanced extends Component {
 
     render() {
 
-        let config = this.props.config;
+        const config = this.props.config;
 
         return (
             <div className='setting setting-dev-mode'>
