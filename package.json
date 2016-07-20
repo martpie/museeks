@@ -13,6 +13,8 @@
     "url": "https://github.com/KeitIG/museeks/issues"
   },
   "scripts": {
+    "ci:compile": "./node_modules/.bin/webpack --config webpack.config.js --progress --bail",
+    "ci:eslint": "./node_modules/.bin/eslint . --config .eslintrc",
     "dev": "webpack --config webpack.config.js --progress --colors --watch",
     "compile": "webpack --config webpack.config.js --progress --colors",
     "build": "npm run lint && npm run compile && node build.js",
