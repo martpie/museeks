@@ -1,7 +1,8 @@
 # museeks
 
 [![Gitter](https://badges.gitter.im/KeitIG/museeks.svg)](https://gitter.im/KeitIG/museeks?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
-![Dependencies](https://david-dm.org/KeitIG/museeks.svg)
+[![Dependencies](https://david-dm.org/KeitIG/museeks.svg)](https://github.com/KeitIG/museeks)
+
 
 A lightweight and cross-platform music player. ([http://museeks.io](http://museeks.io))
 
