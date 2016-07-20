@@ -4,7 +4,7 @@
 [![Dependencies](https://david-dm.org/KeitIG/museeks.svg)](https://github.com/KeitIG/museeks)
 [![Gitter](https://badges.gitter.im/KeitIG/museeks.svg)](https://gitter.im/KeitIG/museeks?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
-A lightweight and cross-platform music player. ([http://museeks.io](http://museeks.io))
+A lightweight and cross-platform music player. ([museeks.io](http://museeks.io))
 
 ![Screenshot](screenshot.png)
 
@@ -61,14 +61,14 @@ Builds can be found [at this page](https://github.com/KeitIG/museeks/releases). 
 - Fork and clone
 - Master is usually unstable, checkout to a tag to have a stable state of the app
 - `npm install && npm run dev`
-- Don't forget to enable dev mode in the app in the settings view
+- Enable dev mode in the app in the settings view to show DevTools
 
 Webpack will watch for JSX and SASS changes.
 
 Please respect a few rules:
 
-- Make the code readable and comment if needed
-- 4 spaces indent !
 - Before making complex stuff, don't hesitate to open an issue first to discuss about it
+- Make the code readable and comment if needed
+- Make sure `npm run lint` passes
 
 Then open a PR :)
