@@ -1,6 +1,6 @@
 # museeks
 
-[![Codeship CI status](https://img.shields.io/codeship/0e3dd0f0-3076-0134-158d-029c728c3af4.svg)](https://codeship.com/projects/164162)
+[![Build Status](https://travis-ci.org/KeitIG/museeks.svg?branch=master)](https://travis-ci.org/KeitIG/museeks)
 [![Dependencies](https://david-dm.org/KeitIG/museeks.svg)](https://github.com/KeitIG/museeks)
 [![Gitter](https://badges.gitter.im/KeitIG/museeks.svg)](https://gitter.im/KeitIG/museeks?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
