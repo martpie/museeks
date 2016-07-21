@@ -107,6 +107,7 @@ export default {
         };
         const folders = app.config.get('musicFolders');
         const supportedExtensionsGlob = `**/*.{${ app.supportedExtensions.join() }}`;
+        const fsConcurrency = 64;
 
         const getMetadataAsync = function(track) {
             return new Promise((resolve) => {
@@ -146,7 +147,7 @@ export default {
                     AppActions.settings.refreshProgress(parseInt(filesInLibrary * 100 / supportedFiles.length));
                     filesInLibrary++;
                 });
-            });
+            }, { concurrency: fsConcurrency });
         }).then(() => {
             AppActions.library.load();
             dispatchEnd();
