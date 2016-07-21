@@ -1,6 +1,8 @@
 language: node_js
 node_js:
-  - "6"
+    - "6"
+git:
+  depth: 10
 install:
     - npm install
 script:
