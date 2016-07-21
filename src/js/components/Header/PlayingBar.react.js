@@ -18,6 +18,13 @@ import AppActions from '../../actions/AppActions';
 
 export default class PlayingBar extends Component {
 
+    static propTypes = {
+        queue: React.PropTypes.array,
+        queueCursor: React.PropTypes.number,
+        shuffle: React.PropTypes.bool,
+        repeat: React.PropTypes.string
+    }
+
     constructor(props) {
 
         super(props);

@@ -14,6 +14,12 @@ import utils from '../../utils/utils';
 
 export default class Queue extends Component {
 
+    static propTypes = {
+        queue: React.PropTypes.array,
+        queueCursor: React.PropTypes.number,
+        showQueue: React.PropTypes.bool
+    }
+
     constructor(props) {
 
         super(props);

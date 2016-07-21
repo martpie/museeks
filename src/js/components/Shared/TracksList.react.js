@@ -18,6 +18,14 @@ const ipcRenderer = electron.ipcRenderer;
 
 export default class TracksList extends Component {
 
+    static propTypes = {
+        type: React.PropTypes.string.isRequired,
+        tracks: React.PropTypes.array,
+        trackPlayingId: React.PropTypes.string,
+        playlists: React.PropTypes.array,
+        currentPlaylist: React.PropTypes.string
+    }
+
     constructor(props) {
 
         super(props);
@@ -32,7 +40,7 @@ export default class TracksList extends Component {
 
     render() {
 
-        const self           = this,
+        const self         = this,
             selected       = this.state.selected,
             tracks         = this.props.tracks,
             trackPlayingId = this.props.trackPlayingId;
@@ -113,6 +121,44 @@ export default class TracksList extends Component {
                 </div>
             </div>
         );
+    }
+
+    componentDidMount() {
+
+        const self = this;
+
+        ipcRenderer.on('tracksListContextMenuReply', (event, reply, params) => {
+
+            const selected = self.state.selected;
+
+            switch(reply) {
+                case 'addToQueue': {
+                    AppActions.queue.add(selected);
+                    break;
+                }
+                case 'playNext': {
+                    AppActions.queue.addNext(selected);
+                    break;
+                }
+                case 'addToPlaylist': {
+                    const isShown = self.props.type === 'playlist' && params === self.props.currentPlaylist;
+                    AppActions.playlists.addTracksTo(params, selected, isShown);
+                    break;
+                }
+                case 'removeFromPlaylist': {
+                    if(self.props.type === 'playlist') AppActions.playlists.removeTracksFrom(self.props.currentPlaylist, selected);
+                    break;
+                }
+                case 'createPlaylist': {
+                    AppActions.playlists.create('New playlist');
+                    break;
+                }
+            }
+        });
+    }
+
+    componentWillUnmount() {
+        ipcRenderer.removeAllListeners('tracksListContextMenuReply');
     }
 
     scrollTracksList() {
@@ -285,43 +331,5 @@ export default class TracksList extends Component {
             selectedCount: this.state.selected.length,
             playlists: playlistsList
         }));
-    }
-
-    componentDidMount() {
-
-        const self = this;
-
-        ipcRenderer.on('tracksListContextMenuReply', (event, reply, params) => {
-
-            const selected = self.state.selected;
-
-            switch(reply) {
-                case 'addToQueue': {
-                    AppActions.queue.add(selected);
-                    break;
-                }
-                case 'playNext': {
-                    AppActions.queue.addNext(selected);
-                    break;
-                }
-                case 'addToPlaylist': {
-                    const isShown = self.props.type === 'playlist' && params === self.props.currentPlaylist;
-                    AppActions.playlists.addTracksTo(params, selected, isShown);
-                    break;
-                }
-                case 'removeFromPlaylist': {
-                    if(self.props.type === 'playlist') AppActions.playlists.removeTracksFrom(self.props.currentPlaylist, selected);
-                    break;
-                }
-                case 'createPlaylist': {
-                    AppActions.playlists.create('New playlist');
-                    break;
-                }
-            }
-        });
-    }
-
-    componentWillUnmount() {
-        ipcRenderer.removeAllListeners('tracksListContextMenuReply');
     }
 }

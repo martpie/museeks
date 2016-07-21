@@ -16,6 +16,12 @@ import SettingsAbout    from './SettingsAbout.react';
 
 export default class Settings extends Component {
 
+    static propTypes = {
+        config: React.PropTypes.object.isRequired,
+        refreshingLibrary: React.PropTypes.bool,
+        refreshProgress: React.PropTypes.number
+    }
+
     constructor(props) {
 
         super(props);

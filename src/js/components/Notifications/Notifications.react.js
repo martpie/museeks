@@ -11,6 +11,10 @@ import Notification from './Notification.react';
 
 export default class Notifications extends Component {
 
+    static propTypes = {
+        notifications: React.PropTypes.array
+    }
+
     constructor(props) {
 
         super(props);

@@ -16,6 +16,10 @@ const ipcRenderer = electron.ipcRenderer;
 
 export default class PlaylistsNav extends Component {
 
+    static propTypes = {
+        playlists: React.PropTypes.array
+    }
+
     constructor(props) {
 
         super(props);

@@ -14,6 +14,11 @@ import utils from '../../utils/utils';
 
 export default class Footer extends Component {
 
+    static propTypes = {
+        tracks: React.PropTypes.array,
+        refreshingLibrary: React.PropTypes.bool
+    }
+
     constructor(props) {
 
         super(props);

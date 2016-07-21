@@ -11,6 +11,13 @@ import TracksList from '../Shared/TracksList.react';
 
 export default class Library extends Component {
 
+    static propTypes = {
+        library: React.PropTypes.array,
+        tracks: React.PropTypes.array,
+        trackPlayingId: React.PropTypes.string,
+        playlists: React.PropTypes.array
+    }
+
     constructor(props) {
 
         super(props);

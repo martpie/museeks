@@ -18,6 +18,10 @@ import AppStore   from '../stores/AppStore';
 
 export default class Museeks extends Component {
 
+    static propTypes = {
+        children: React.PropTypes.object
+    }
+
     constructor(props) {
 
         super(props);

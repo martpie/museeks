@@ -12,6 +12,10 @@ import AppActions from '../../actions/AppActions';
 
 export default class ButtonShuffle extends Component {
 
+    static propTypes = {
+        shuffle: React.PropTypes.bool
+    }
+
     constructor(props) {
 
         super(props);

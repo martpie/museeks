@@ -1,5 +1,6 @@
 {
     "extends": "eslint:recommended",
+    "parser": "babel-eslint",
     "parserOptions": {
         "ecmaVersion": 6,
         "sourceType": "module",
@@ -63,6 +64,8 @@
         "react/no-is-mounted": "error",
         "react/no-multi-comp": "error",
         "react/prefer-es6-class": "error",
+        "react/prop-types": "error",
+        "react/require-optimization": 2,
         "react/require-render-return": "error",
         "react/self-closing-comp": "error",
         "import/no-mutable-exports": "error",

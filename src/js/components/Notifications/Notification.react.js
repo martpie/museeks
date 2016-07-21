@@ -9,6 +9,11 @@ import React, { Component } from 'react';
 
 export default class Notifications extends Component {
 
+    static propTypes = {
+        type: React.PropTypes.string,
+        content: React.PropTypes.string
+    }
+
     constructor(props) {
 
         super(props);

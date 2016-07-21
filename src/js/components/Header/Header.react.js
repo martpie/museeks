@@ -19,6 +19,14 @@ import app from '../../utils/app';
 
 export default class Header extends Component {
 
+    static propTypes = {
+        playerStatus: React.PropTypes.string,
+        queue: React.PropTypes.array,
+        queueCursor: React.PropTypes.number,
+        shuffle: React.PropTypes.bool,
+        repeat: React.PropTypes.string
+    }
+
     constructor(props) {
 
         super(props);

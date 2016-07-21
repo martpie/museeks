@@ -12,6 +12,10 @@ import AppActions from '../../actions/AppActions';
 
 export default class ButtonRepeat extends Component {
 
+    static propTypes = {
+        repeat: React.PropTypes.string
+    }
+
     constructor(props) {
 
         super(props);
