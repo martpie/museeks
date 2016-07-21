@@ -39,7 +39,7 @@ export default class Header extends Component {
 
         return (
             <header className='row'>
-                <Col sm={3} className='main-controls'>
+                <Col sm={ 3 } className='main-controls'>
                     <div className='window-controls'>
                         <button className='window-control' onClick={ this.winClose.bind(null) }>&times;</button>
                     </div>
@@ -55,12 +55,12 @@ export default class Header extends Component {
                         <button type='button' className='player-control volume' onMouseEnter={ this.showVolume.bind(this) } onMouseLeave={ this.hideVolume.bind(this) } onClick={ this.mute }>
                             <Icon name={ app.audio.volume === 0 ? 'volume-off' : app.audio.volume > 0.5 ? 'volume-up' : 'volume-down' } />
                             <div className={ this.state.showVolume ? 'volume-control visible' : 'volume-control' }>
-                                <input type={'range'} min={0} max={1} step={0.01} defaultValue={ app.audioVolume } ref='volume' onChange={ this.setVolume.bind(this) } />
+                                <input type={ 'range' } min={ 0 } max={ 1 } step={ 0.01 } defaultValue={ app.audioVolume } ref='volume' onChange={ this.setVolume.bind(this) } />
                             </div>
                         </button>
                     </div>
                 </Col>
-                <Col sm={6} className='text-center'>
+                <Col sm={ 6 } className='text-center'>
                     <PlayingBar
                         queue={ this.props.queue }
                         queueCursor={ this.props.queueCursor }
@@ -68,7 +68,7 @@ export default class Header extends Component {
                         repeat={ this.props.repeat }
                     />
                 </Col>
-                <Col sm={1} className='queue-controls text-center'>
+                <Col sm={ 1 } className='queue-controls text-center'>
                     <button type='button' className='queue-toggle' onClick={ this.toggleQueue.bind(this) }>
                         <Icon name='list' />
                     </button>
@@ -78,15 +78,16 @@ export default class Header extends Component {
                         queueCursor={ this.props.queueCursor }
                     />
                 </Col>
-                <Col sm={2}>
+                <Col sm={ 2 }>
                     <Input
                         selectOnClick
                         placeholder='search'
                         className='form-control input-sm search'
-                        changeTimeout={250}
+                        changeTimeout={ 250 }
                         clearButton
                         ref='search'
-                        onChange={ this.search.bind(null) } />
+                        onChange={ this.search.bind(null) }
+                    />
                 </Col>
             </header>
         );

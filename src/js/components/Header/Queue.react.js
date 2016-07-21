@@ -61,13 +61,14 @@ export default class Queue extends Component {
             }
 
             return (
-                <div key={index}
+                <div key={ index }
                   className={ classes }
                   onDoubleClick={ AppActions.queue.selectAndPlay.bind(null, self.props.queueCursor + index + 1) }
-                  draggable={'true'}
+                  draggable={ 'true' }
                   onDragStart={ self.dragStart.bind(self, index) }
-                  onDragEnd={ self.dragEnd.bind(self) }>
-                    <Button bsSize={'xsmall'} bsStyle={'link'} className='remove' onClick={ self.removeFromQueue.bind(null, index) }>
+                  onDragEnd={ self.dragEnd.bind(self) }
+                >
+                    <Button bsSize={ 'xsmall' } bsStyle={ 'link' } className='remove' onClick={ self.removeFromQueue.bind(null, index) }>
                         &times;
                     </Button>
                     <div className='title'>
@@ -87,12 +88,12 @@ export default class Queue extends Component {
                         { utils.getStatus(incomingQueue) }
                     </div>
                     <ButtonGroup>
-                        <Button bsSize={'xsmall'} bsStyle={'default'} className='empty-button' onClick={ this.clearQueue }>
+                        <Button bsSize={ 'xsmall' } bsStyle={ 'default' } className='empty-button' onClick={ this.clearQueue }>
                             clear queue
                         </Button>
                     </ButtonGroup>
                 </div>
-                <div className={ this.state.draggedTrack === null ? 'queue-body' : 'queue-body dragging'} onDragOver={ this.dragOver.bind(this) }>
+                <div className={ this.state.draggedTrack === null ? 'queue-body' : 'queue-body dragging' } onDragOver={ this.dragOver.bind(this) }>
                     { queueContent }
                 </div>
             </div>

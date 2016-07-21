@@ -49,7 +49,7 @@ export default class PlayingBar extends Component {
             if(this.state.elapsed < trackPlaying.duration) elapsedPercent = this.state.elapsed * 100 / trackPlaying.duration;
 
             playingBar = (
-                <div className={ this.state.dragging ? 'now-playing dragging' : 'now-playing'} onMouseMove={ this.dragOver.bind(this) } onMouseLeave={ this.dragEnd.bind(this) } onMouseUp={ this.dragEnd.bind(this) }>
+                <div className={ this.state.dragging ? 'now-playing dragging' : 'now-playing' } onMouseMove={ this.dragOver.bind(this) } onMouseLeave={ this.dragEnd.bind(this) } onMouseUp={ this.dragEnd.bind(this) }>
                     <div className='now-playing-infos'>
                         <div className='player-options'>
                             <ButtonRepeat repeat={ this.props.repeat } />
@@ -74,7 +74,7 @@ export default class PlayingBar extends Component {
                         </span>
                     </div>
                     <div className='now-playing-bar'>
-                        <div className={ this.state.duration !== null ? 'playing-bar-tooltip' : 'playing-bar-tooltip hidden'} style={{ left: this.state.x - 12 }}>{ utils.parseDuration(this.state.duration) }</div>
+                        <div className={ this.state.duration !== null ? 'playing-bar-tooltip' : 'playing-bar-tooltip hidden' } style={ { left: this.state.x - 12 } }>{ utils.parseDuration(this.state.duration) }</div>
                         <ProgressBar
                             now={ elapsedPercent }
                             onMouseDown={ this.jumpAudioTo.bind(this) }

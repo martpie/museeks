@@ -47,10 +47,10 @@ export default class Footer extends Component {
 
         return (
             <footer className='row'>
-                <Col sm={3}>
+                <Col sm={ 3 }>
                     { navButtons }
                 </Col>
-                <Col sm={5} className='status text-center'>
+                <Col sm={ 5 } className='status text-center'>
                     { status }
                 </Col>
             </footer>

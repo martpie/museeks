@@ -36,9 +36,9 @@ export default class PlaylistsNav extends Component {
                     <input
                         type='text'
                         ref='renamedPlaylist'
-                        defaultValue={elem.name}
-                        onChange={self.rename.bind(self)}
-                        onBlur={self.blur.bind(self)}
+                        defaultValue={ elem.name }
+                        onChange={ self.rename.bind(self) }
+                        onBlur={ self.blur.bind(self) }
                         autofocus
                     />
                 );
@@ -52,7 +52,7 @@ export default class PlaylistsNav extends Component {
 
             return (
                 <div className={ 'playlist-nav-item' } key={ index }>
-                    {navItemContent}
+                    { navItemContent }
                 </div>
             );
         });

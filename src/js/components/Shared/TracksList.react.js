@@ -89,7 +89,7 @@ export default class TracksList extends Component {
             const invertedTranslation = tilesScrolled > 0 ? 25 * chunkLength : 0;
 
             return (
-                <div className='tracks-list-tile' key={ indexChunk } style={{ transform: `translate3d(0, ${(((tilesScrolled * 25 * chunkLength) + (indexChunk * 25 * chunkLength)) - invertedTranslation)}px, 0)` }}>
+                <div className='tracks-list-tile' key={ indexChunk } style={ { transform: `translate3d(0, ${(((tilesScrolled * 25 * chunkLength) + (indexChunk * 25 * chunkLength)) - invertedTranslation)}px, 0)` } }>
                     { list }
                 </div>
             );
@@ -107,7 +107,7 @@ export default class TracksList extends Component {
                     <div className='track-cell-header cell-genre'>Genre</div>
                 </div>
                 <div className='tracks-list-body' onScroll={ this.scrollTracksList.bind(this) }>
-                    <div className='tracks-list-tiles' style={{ height : tracks.length * 25 }}>
+                    <div className='tracks-list-tiles' style={ { height : tracks.length * 25 } }>
                         { trackTiles }
                     </div>
                 </div>

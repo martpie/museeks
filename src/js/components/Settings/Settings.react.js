@@ -28,20 +28,20 @@ export default class Settings extends Component {
 
         return (
             <div className='view view-settings'>
-                <Tabs defaultActiveKey={0} animation={ false } bsStyle='pills' className='settings-switcher'>
-                    <Tab eventKey={0} title='Library'>
+                <Tabs defaultActiveKey={ 0 } animation={ false } bsStyle='pills' className='settings-switcher'>
+                    <Tab eventKey={ 0 } title='Library'>
                         <SettingsLibrary config={ config } refreshingLibrary={ this.props.refreshingLibrary } refreshProgress={ this.props.refreshProgress } />
                     </Tab>
-                    <Tab eventKey={1} title='Audio'>
+                    <Tab eventKey={ 1 } title='Audio'>
                         <SettingsAudio config={ config } />
                     </Tab>
-                    <Tab eventKey={2} title='Interface'>
+                    <Tab eventKey={ 2 } title='Interface'>
                         <SettingsUI config={ config } />
                     </Tab>
-                    <Tab eventKey={3} title='Advanced'>
+                    <Tab eventKey={ 3 } title='Advanced'>
                         <SettingsAdvanced config={ config } />
                     </Tab>
-                    <Tab eventKey={4} title='About'>
+                    <Tab eventKey={ 4 } title='About'>
                         <SettingsAbout />
                     </Tab>
                 </Tabs>
