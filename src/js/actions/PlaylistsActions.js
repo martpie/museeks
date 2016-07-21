@@ -57,7 +57,7 @@ const PlaylistsActions = {
 
     rename: function(_id, name) {
 
-        app.db.update({ _id }, { $set: { name } }, { multi: true }, (err) => {
+        app.db.update({ _id }, { $set: { name } }, (err) => {
 
             if(err) console.warn(err);
             else PlaylistsActions.refresh();
@@ -66,7 +66,7 @@ const PlaylistsActions = {
 
     delete: function(_id) {
 
-        app.db.remove({ _id, type: 'playlist' }, { multi: true }, (err) => {
+        app.db.remove({ _id, type: 'playlist' }, (err) => {
 
             if(err) console.warn(err);
             else PlaylistsActions.refresh();
@@ -83,7 +83,7 @@ const PlaylistsActions = {
 
                     const playlistTracks = playlist.tracks.concat(tracks);
 
-                    app.db.update({ _id }, { $set: { tracks: playlistTracks } }, { multi: true }, (err) => {
+                    app.db.update({ _id }, { $set: { tracks: playlistTracks } }, (err) => {
 
                         if(err) console.warn(err);
                     });
@@ -102,7 +102,7 @@ const PlaylistsActions = {
                     return !tracks.includes(elem);
                 });
 
-                app.db.update({ _id }, { $set: { tracks: playlistTracks } }, { multi: true }, (err) => {
+                app.db.update({ _id }, { $set: { tracks: playlistTracks } }, (err) => {
 
                     if(err) console.warn(err);
                     else PlaylistsActions.load(_id);
