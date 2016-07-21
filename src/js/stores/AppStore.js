@@ -1,6 +1,6 @@
 /*
 |--------------------------------------------------------------------------
-| Requires
+| Imports
 |--------------------------------------------------------------------------
 */
 
@@ -89,8 +89,8 @@ AppDispatcher.register((payload) => {
 
         case(AppConstants.APP_REFRESH_LIBRARY): {
             const tracks = payload.tracks;
-            AppStore.library = tracks;
-            AppStore.tracks.all = tracks;
+            AppStore.library         = [].concat(tracks);
+            AppStore.tracks.all      = [].concat(tracks);
             AppStore.tracks.playlist = [];
             AppStore.emit(CHANGE_EVENT);
             break;
@@ -176,12 +176,12 @@ AppDispatcher.register((payload) => {
 
             if(payload.search !== '' && payload.search !== undefined) {
 
-                AppStore.tracks.all = AppStore.library;
+                AppStore.tracks.all = [].concat(AppStore.library);
 
             } else {
 
                 const search = utils.stripAccents(payload.search);
-                const tracks = AppStore.library.filter((track) => { // Problem here
+                const tracks = [].AppStore.library.filter((track) => { // Problem here
                     return track.loweredMetas.artist.join(', ').includes(search)
                         || track.loweredMetas.album.includes(search)
                         || track.loweredMetas.genre.join(', ').includes(search)
@@ -309,14 +309,14 @@ AppDispatcher.register((payload) => {
         case(AppConstants.APP_PLAYER_SHUFFLE): {
             if(!AppStore.shuffle) {
 
-                AppStore.oldQueue       = AppStore.queue;
+                AppStore.oldQueue       = [].concat(AppStore.queue);
                 AppStore.oldQueueCursor = AppStore.oldQueueCursor;
 
                 // Let's shuffle that
                 const firstTrack  = queue[queueCursor]; // Get the current track
 
                 const queueCursor = AppStore.queueCursor;
-                let queue = AppStore.queue.slice();
+                let queue = [].concat(AppStore.queue);
 
 
                 queue = queue.splice(queueCursor + 1, AppStore.queue.length - (queueCursor + 1)); // now get only what we want
@@ -342,7 +342,7 @@ AppDispatcher.register((payload) => {
 
             } else {
 
-                AppStore.queue       = AppStore.oldQueue;
+                AppStore.queue       = [].concat(AppStore.oldQueue);
                 AppStore.queueCursor = AppStore.oldQueueCursor;
                 AppStore.shuffle     = false;
 
@@ -374,7 +374,7 @@ AppDispatcher.register((payload) => {
         }
 
         case(AppConstants.APP_QUEUE_PLAY): {
-            const queue       = AppStore.queue.slice();
+            const queue       = [].concat(AppStore.queue);
             const queueCursor = payload.index;
 
             const uri = utils.parseUri(queue[queueCursor].path);
@@ -390,26 +390,32 @@ AppDispatcher.register((payload) => {
         }
 
         case(AppConstants.APP_QUEUE_CLEAR): {
-            AppStore.queue.splice(AppStore.queueCursor + 1, AppStore.queue.length - AppStore.queueCursor);
+            const queue = [].concat(AppStore.queue);
+            queue.splice(AppStore.queueCursor + 1, AppStore.queue.length - AppStore.queueCursor);
+            AppStore.queue = queue;
             AppStore.emit(CHANGE_EVENT);
             break;
         }
 
         case(AppConstants.APP_QUEUE_REMOVE): {
-            AppStore.queue.splice(AppStore.queueCursor + payload.index + 1, 1);
+            const queue = [].concat(AppStore.queue);
+            queue.splice(AppStore.queueCursor + payload.index + 1, 1);
+            AppStore.queue = queue;
             AppStore.emit(CHANGE_EVENT);
             break;
         }
 
         // Prob here
         case(AppConstants.APP_QUEUE_ADD): {
-            AppStore.queue = AppStore.queue.concat(payload.tracks);
+            AppStore.queue = [].concat(AppStore.queue).concat(payload.tracks);
             AppStore.emit(CHANGE_EVENT);
             break;
         }
 
         case(AppConstants.APP_QUEUE_ADD_NEXT): {
-            AppStore.queue.splice(AppStore.queueCursor + 1, 0, ...payload.tracks);
+            const queue = [].concat(AppStore.queue);
+            queue.splice(AppStore.queueCursor + 1, 0, ...payload.tracks);
+            AppStore.queue = queue;
             AppStore.emit(CHANGE_EVENT);
             break;
         }
@@ -485,13 +491,13 @@ AppDispatcher.register((payload) => {
         }
 
         case(AppConstants.APP_NOTIFICATION_ADD): {
-            AppStore.notifications.push(payload.notification);
+            AppStore.notifications = [].concat(AppStore.notifications).push(payload.notification);
             AppStore.emit(CHANGE_EVENT);
             break;
         }
 
         case(AppConstants.APP_NOTIFICATION_REMOVE): {
-            AppStore.notifications = AppStore.notifications.filter((elem) => elem._id !== payload._id);
+            AppStore.notifications = [].concat(AppStore.notifications).filter((elem) => elem._id !== payload._id);
             AppStore.emit(CHANGE_EVENT);
             break;
         }
