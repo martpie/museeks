@@ -1,7 +1,8 @@
-import nedb   from 'nedb';
-import fs     from 'fs';
-import path   from 'path';
-import teeny  from 'teeny-conf';
+import nedb     from 'nedb';
+import fs       from 'fs';
+import path     from 'path';
+import teeny    from 'teeny-conf';
+import Promise  from 'bluebird';
 
 const remote = electron.remote;
 
@@ -37,33 +38,14 @@ conf.loadOrCreateSync();
 |--------------------------------------------------------------------------
 */
 
-const supportedFormats = [
-    'audio/mp3',
-    'audio/mp4',
-    'audio/mpeg3',
-    'audio/x-mpeg-3',
-    'audio/mpeg',
-    'audio/mpeg4-generic',
-    'audio/mp4a',
-    'audio/mp4a-latm',
-    'audio/mpga',
-
-    'audio/aac',
-    'audio/aacp',
-    'audio/x-aac',
-    'audio/x-m4a',
-    'audio/x-m4p',
-    'audio/x-m4b',
-
-    'audio/3gpp',
-    'audio/3gpp2',
-
-    'audio/wav',
-    'audio-wave',
-    'audio/x-wav',
-    'audio/x-pn-wav',
-
-    'audio/ogg'
+const supportedExtensions = [
+    'mp3',
+    'mp4',
+    'aac',
+    'm4a',
+    '3gp',
+    'wav',
+    'ogg'
 ];
 
 
@@ -91,6 +73,8 @@ const db = new nedb({
     autoload: true
 });
 
+Promise.promisifyAll(db);
+
 db.reset = function() {
     db.remove({}, { multi: true }, (err) => {
         if(err) console.warn(err);
@@ -113,11 +97,11 @@ fs.writeFile(path.join(pathUserData, '.init'), '', (err) => {
 */
 
 export default {
-    db,               // database
-    supportedFormats, // supported audio formats
-    audio,            // HTML5 audio tag
-    pathSrc,          // path of the app
-    browserWindows,   // Object containing all the windows
+    db,                   // database
+    supportedExtensions,  // supported audio formats
+    audio,                // HTML5 audio tag
+    pathSrc,              // path of the app
+    browserWindows,       // Object containing all the windows
     version       : app.getVersion,   // Museeks version
     config        : conf,             // teeny-conf
     initialConfig : conf.getAll(),    // the config at the start of the application

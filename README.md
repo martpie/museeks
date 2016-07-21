@@ -26,6 +26,7 @@ It uses:
 - Sleep mode blocker
 - Supported formats:
     - mp3
+    - mp4
     - m4a/aac
     - wav
     - ogg
