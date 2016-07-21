@@ -25,13 +25,18 @@ const CHANGE_EVENT = 'change';
 
 const AppStore = Object.assign({}, EventEmitter.prototype, {
 
-    library           :  null,  // All tracks
-
-    tracks            :  {
-        all : null,             // All tracks shown on the library view
-        playlist : null         // Tracks shown in the playlist view (to avoid too much reloads)
+    tracks: {
+        library: { // Tracks of the library view
+            all: null, // All tracks
+            sub: null  // Filtered tracks (e.g search)
+        },
+        playlist: {
+            all: null,
+            sub: null
+        }
     },
-    tracksCursor      : 'all',  // 'all' or 'playlist'
+
+    tracksCursor      : 'library',  // 'library' or 'playlist'
 
     queue             :  [],    // Tracks to be played
     queueCursor       :  null,  // The cursor of the queue
@@ -52,8 +57,8 @@ const AppStore = Object.assign({}, EventEmitter.prototype, {
         return {
             config            : app.config.getAll(),
             notifications     : this.notifications,
-            library           : this.library,
-            tracks            : this.tracks[this.tracksCursor],
+            library           : this.tracks[this.tracksCursor].all,
+            tracks            : this.tracks[this.tracksCursor].sub,
             playlists         : this.playlists,
             queue             : this.queue,
             queueCursor       : this.queueCursor,
@@ -89,9 +94,10 @@ AppDispatcher.register((payload) => {
 
         case(AppConstants.APP_REFRESH_LIBRARY): {
             const tracks = payload.tracks;
-            AppStore.library         = [].concat(tracks);
-            AppStore.tracks.all      = [].concat(tracks);
-            AppStore.tracks.playlist = [];
+            AppStore.tracks.library.all = [].concat(tracks);
+            AppStore.tracks.library.sub = [].concat(tracks);
+            AppStore.tracks.playlist.all = [];
+            AppStore.tracks.playlist.sub = [];
             AppStore.emit(CHANGE_EVENT);
             break;
         }
@@ -103,7 +109,7 @@ AppDispatcher.register((payload) => {
 
         case(AppConstants.APP_SELECT_AND_PLAY): {
 
-            const queue       = [].concat(AppStore.tracks[AppStore.tracksCursor]);
+            const queue       = [].concat(AppStore.tracks[AppStore.tracksCursor].sub);
             const id          = payload._id;
 
             let queueCursor = null; // Clean that variable mess later
@@ -174,21 +180,20 @@ AppDispatcher.register((payload) => {
 
         case(AppConstants.APP_FILTER_SEARCH): {
 
-            if(payload.search !== '' && payload.search !== undefined) {
+            if(!payload.search) {
 
-                AppStore.tracks.all = [].concat(AppStore.library);
+                AppStore.tracks[AppStore.tracksCursor].sub = [].concat(AppStore.tracks[AppStore.tracksCursor].all);
 
             } else {
-
                 const search = utils.stripAccents(payload.search);
-                const tracks = [].AppStore.library.filter((track) => { // Problem here
+                const tracks = [].concat(AppStore.tracks[AppStore.tracksCursor].all).filter((track) => { // Problem here
                     return track.loweredMetas.artist.join(', ').includes(search)
                         || track.loweredMetas.album.includes(search)
                         || track.loweredMetas.genre.join(', ').includes(search)
                         || track.loweredMetas.title.includes(search);
                 });
 
-                AppStore.tracks.all = tracks;
+                AppStore.tracks[AppStore.tracksCursor].sub = tracks;
             }
 
             AppStore.emit(CHANGE_EVENT);
@@ -226,8 +231,16 @@ AppDispatcher.register((payload) => {
 
         case(AppConstants.APP_PLAYER_STOP): {
             app.audio.pause();
-            AppStore.library        =  null;
-            AppStore.tracks         =  { all: null, playlist: null };
+            AppStore.tracks =  {
+                library: {
+                    all: null,
+                    sub: null
+                },
+                playlist: {
+                    all: null,
+                    sub: null
+                }
+            };
             AppStore.queue          =  [];
             AppStore.queueCursor    =  null;
             AppStore.oldQueueCursor =  null;
@@ -509,7 +522,8 @@ AppDispatcher.register((payload) => {
         }
 
         case(AppConstants.APP_PLAYLISTS_LOAD_ONE): {
-            AppStore.tracks.playlist = payload.tracks;
+            AppStore.tracks[AppStore.tracksCursor].all = [].concat(payload.tracks);
+            AppStore.tracks[AppStore.tracksCursor].sub = [].concat(payload.tracks);
             AppStore.emit(CHANGE_EVENT);
             break;
         }

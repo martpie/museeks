@@ -19,7 +19,7 @@ const init = {
     },
 
     library: () => {
-        AppActions.library.setTracksCursor('all');
+        AppActions.library.setTracksCursor('library');
     },
 
     playlist: (route) => {
