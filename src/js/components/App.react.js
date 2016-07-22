@@ -30,23 +30,24 @@ class Museeks extends Component {
     constructor(props) {
 
         super(props);
-        this.state = initialState;
+        this.state = {};
     }
 
     render() {
 
-        const trackPlayingId = (this.state.queue.length > 0 && this.state.queueCursor !== null) ? this.state.queue[this.state.queueCursor]._id : null;
+        const store = this.props.store;
+        const trackPlayingId = (store.queue.length > 0 && store.queueCursor !== null) ? store.queue[store.queueCursor]._id : null;
 
         return (
             <div className='main'>
                 <KeyBinding onKey={ (e) => this.onKey(e) } preventInputConflict />
                 <Header
                     app={ this }
-                    playerStatus={ this.state.playerStatus }
-                    repeat={ this.state.repeat }
-                    shuffle={ this.state.shuffle }
-                    queue={ this.state.queue }
-                    queueCursor={ this.state.queueCursor }
+                    playerStatus={ store.playerStatus }
+                    repeat={ store.repeat }
+                    shuffle={ store.shuffle }
+                    queue={ store.queue }
+                    queueCursor={ store.queueCursor }
                 />
                 <div className='main-content'>
                     <Row className='content'>
@@ -54,22 +55,22 @@ class Museeks extends Component {
                             this.props.children, {
                                 app               : this,
                                 config            : app.config.getAll(),
-                                queue             : this.state.queue,
-                                tracks            : this.state.tracks[this.state.tracksCursor].sub,
-                                library           : this.state.tracks[this.state.tracksCursor].all,
-                                playlists         : this.state.playlists,
-                                refreshingLibrary : this.state.refreshingLibrary,
-                                refreshProgress   : this.state.refreshProgress,
+                                queue             : store.queue,
+                                tracks            : store.tracks[store.tracksCursor].sub,
+                                library           : store.tracks[store.tracksCursor].all,
+                                playlists         : store.playlists,
+                                refreshingLibrary : store.refreshingLibrary,
+                                refreshProgress   : store.refreshProgress,
                                 trackPlayingId
                             })
                         }
                     </Row>
                 </div>
                 <Footer
-                    tracks={ this.state.tracks }
-                    refreshingLibrary={ this.state.refreshingLibrary }
+                    tracks={ store.tracks[store.tracksCursor].sub }
+                    refreshingLibrary={ store.refreshingLibrary }
                 />
-                <Notifications notifications={ this.state.notifications } />
+                <Notifications notifications={ store.notifications } />
             </div>
         );
     }
@@ -79,17 +80,15 @@ class Museeks extends Component {
             case 32:
                 e.preventDefault();
                 e.stopPropagation();
-                if(this.state.playerStatus === 'pause') AppActions.player.play();
-                else if(this.state.playerStatus === 'play') AppActions.player.pause();
+                if(store.playerStatus === 'pause') AppActions.player.play();
+                else if(store.playerStatus === 'play') AppActions.player.pause();
                 break;
         }
     }
 }
 
 function mapStateToProps(state) {
-    return state;
+    return { store: { ...state } };
 }
 
-const MuseeksCo = connect(mapStateToProps)(Museeks);
-
-export default MuseeksCo;
+export default connect(mapStateToProps)(Museeks);
