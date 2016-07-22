@@ -10,8 +10,6 @@ import Notifications from './Notifications/Notifications.react';
 
 import AppActions from '../actions/AppActions';
 
-import initialState from '../reducers/initial-state';
-
 import app from '../utils/app';
 
 
@@ -24,6 +22,7 @@ import app from '../utils/app';
 class Museeks extends Component {
 
     static propTypes = {
+        store: React.PropTypes.object,
         children: React.PropTypes.object
     }
 
@@ -80,8 +79,8 @@ class Museeks extends Component {
             case 32:
                 e.preventDefault();
                 e.stopPropagation();
-                if(store.playerStatus === 'pause') AppActions.player.play();
-                else if(store.playerStatus === 'play') AppActions.player.pause();
+                if(this.props.store.playerStatus === 'pause') AppActions.player.play();
+                else if(this.props.store.playerStatus === 'play') AppActions.player.pause();
                 break;
         }
     }
