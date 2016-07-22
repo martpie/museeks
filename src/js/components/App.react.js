@@ -2,12 +2,17 @@ import React, { Component } from 'react';
 import { Row } from 'react-bootstrap';
 import KeyBinding from 'react-keybinding-component';
 
+import { connect } from 'react-redux';
+
 import Header from './Header/Header.react';
 import Footer from './Footer/Footer.react';
 import Notifications from './Notifications/Notifications.react';
 
 import AppActions from '../actions/AppActions';
-import AppStore   from '../stores/AppStore';
+
+import initialState from '../reducers/initial-state';
+
+import app from '../utils/app';
 
 
 /*
@@ -16,7 +21,7 @@ import AppStore   from '../stores/AppStore';
 |--------------------------------------------------------------------------
 */
 
-export default class Museeks extends Component {
+class Museeks extends Component {
 
     static propTypes = {
         children: React.PropTypes.object
@@ -25,8 +30,7 @@ export default class Museeks extends Component {
     constructor(props) {
 
         super(props);
-        this.state = AppStore.getStore();
-        this.updateState = this.updateState.bind(this);
+        this.state = initialState;
     }
 
     render() {
@@ -49,10 +53,10 @@ export default class Museeks extends Component {
                         { React.cloneElement(
                             this.props.children, {
                                 app               : this,
-                                config            : this.state.config,
+                                config            : app.config.getAll(),
                                 queue             : this.state.queue,
-                                tracks            : this.state.tracks,
-                                library           : this.state.library,
+                                tracks            : this.state.tracks[this.state.tracksCursor].sub,
+                                library           : this.state.tracks[this.state.tracksCursor].all,
                                 playlists         : this.state.playlists,
                                 refreshingLibrary : this.state.refreshingLibrary,
                                 refreshProgress   : this.state.refreshProgress,
@@ -80,16 +84,12 @@ export default class Museeks extends Component {
                 break;
         }
     }
-
-    componentDidMount() {
-        AppStore.addChangeListener(this.updateState);
-    }
-
-    componentWillUnmount() {
-        AppStore.removeChangeListener(this.updateState);
-    }
-
-    updateState() {
-        this.setState(AppStore.getStore());
-    }
 }
+
+function mapStateToProps(state) {
+    return state;
+}
+
+const MuseeksCo = connect(mapStateToProps)(Museeks);
+
+export default MuseeksCo;
