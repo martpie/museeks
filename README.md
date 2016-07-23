@@ -11,7 +11,7 @@ A lightweight and cross-platform music player. ([museeks.io](http://museeks.io))
 It uses:
 * [Node.js](https://nodejs.org/en/) for back-end
 * [electron (used to be atom-shell)](https://github.com/atom/electron/) for embedded browser
-* [React.js](https://facebook.github.io/react/) as front-end framework
+* [React.js](https://facebook.github.io/react/) as front-end framework and [Flux](https://facebook.github.io/flux/) with  [Redux](http://redux.js.org/) as data-flow pattern
 
 ===
 
