@@ -1,4 +1,5 @@
-import AppDispatcher from '../dispatcher/AppDispatcher';
+import store from '../store.js';
+
 import AppConstants  from '../constants/AppConstants';
 import AppActions    from './AppActions';
 
@@ -15,11 +16,12 @@ const dialog = electron.remote.dialog;
 export default {
 
     load: function() {
+
         app.db.find({ type : 'track' }).sort({ 'loweredMetas.artist': 1, 'year': 1, 'loweredMetas.album': 1, 'disk.no': 1, 'track.no': 1 }).exec((err, tracks) => {
             if (err) console.warn(err);
             else {
-                AppDispatcher.dispatch({
-                    actionType : AppConstants.APP_REFRESH_LIBRARY,
+                store.dispatch({
+                    type : AppConstants.APP_REFRESH_LIBRARY,
                     tracks
                 });
             }
@@ -27,31 +29,31 @@ export default {
     },
 
     setTracksCursor: function(cursor) {
-        AppDispatcher.dispatch({
-            actionType : AppConstants.APP_LIBRARY_SET_TRACKSCURSOR,
+        store.dispatch({
+            type : AppConstants.APP_LIBRARY_SET_TRACKSCURSOR,
             cursor
         });
     },
 
     resetTracks: function() {
-        AppDispatcher.dispatch({
-            actionType : AppConstants.APP_REFRESH_LIBRARY,
+        store.dispatch({
+            type : AppConstants.APP_REFRESH_LIBRARY,
             tracks     : null
         });
     },
 
     selectAndPlay: function(_id) {
 
-        AppDispatcher.dispatch({
-            actionType : AppConstants.APP_SELECT_AND_PLAY,
+        store.dispatch({
+            type : AppConstants.APP_SELECT_AND_PLAY,
             _id
         });
     },
 
     filterSearch: function(search) {
 
-        AppDispatcher.dispatch({
-            actionType : AppConstants.APP_FILTER_SEARCH,
+        store.dispatch({
+            type : AppConstants.APP_FILTER_SEARCH,
             search
         });
     },
@@ -60,8 +62,8 @@ export default {
 
         dialog.showOpenDialog({ properties: ['openDirectory', 'multiSelections'] }, (folders) => {
             if(folders !== undefined) {
-                AppDispatcher.dispatch({
-                    actionType : AppConstants.APP_LIBRARY_ADD_FOLDERS,
+                store.dispatch({
+                    type : AppConstants.APP_LIBRARY_ADD_FOLDERS,
                     folders
                 });
             }
@@ -69,15 +71,15 @@ export default {
     },
 
     removeFolder: function(index) {
-        AppDispatcher.dispatch({
-            actionType : AppConstants.APP_LIBRARY_REMOVE_FOLDER,
+        store.dispatch({
+            type : AppConstants.APP_LIBRARY_REMOVE_FOLDER,
             index
         });
     },
 
     reset: function() {
-        AppDispatcher.dispatch({
-            actionType : AppConstants.APP_LIBRARY_REFRESH_START,
+        store.dispatch({
+            type : AppConstants.APP_LIBRARY_REFRESH_START,
         });
 
         app.db.remove({ }, { multi: true }, (err) => {
@@ -87,8 +89,8 @@ export default {
                     console.warn(err);
                 } else {
                     AppActions.library.load();
-                    AppDispatcher.dispatch({
-                        actionType : AppConstants.APP_LIBRARY_REFRESH_END,
+                    store.dispatch({
+                        type : AppConstants.APP_LIBRARY_REFRESH_END,
                     });
                 }
             });
@@ -96,13 +98,13 @@ export default {
     },
 
     refresh: function() {
-        AppDispatcher.dispatch({
-            actionType : AppConstants.APP_LIBRARY_REFRESH_START
+        store.dispatch({
+            type : AppConstants.APP_LIBRARY_REFRESH_START
         });
 
         const dispatchEnd = function() {
-            AppDispatcher.dispatch({
-                actionType : AppConstants.APP_LIBRARY_REFRESH_END
+            store.dispatch({
+                type : AppConstants.APP_LIBRARY_REFRESH_END
             });
         };
         const folders = app.config.get('musicFolders');

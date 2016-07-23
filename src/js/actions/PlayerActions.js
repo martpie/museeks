@@ -1,4 +1,4 @@
-import AppDispatcher from '../dispatcher/AppDispatcher';
+import store from '../store.js';
 import AppConstants  from '../constants/AppConstants';
 
 import NotificationsActions from './NotificationsActions';
@@ -9,45 +9,45 @@ import app from '../utils/app';
 export default {
 
     toggle: function() {
-        AppDispatcher.dispatch({
-            actionType : AppConstants.APP_PLAYER_TOGGLE
+        store.dispatch({
+            type : AppConstants.APP_PLAYER_TOGGLE
         });
     },
 
     play: function() {
-        AppDispatcher.dispatch({
-            actionType : AppConstants.APP_PLAYER_PLAY
+        store.dispatch({
+            type : AppConstants.APP_PLAYER_PLAY
         });
     },
 
     pause: function() {
-        AppDispatcher.dispatch({
-            actionType : AppConstants.APP_PLAYER_PAUSE
+        store.dispatch({
+            type : AppConstants.APP_PLAYER_PAUSE
         });
     },
 
     stop: function() {
-        AppDispatcher.dispatch({
-            actionType : AppConstants.APP_PLAYER_STOP
+        store.dispatch({
+            type : AppConstants.APP_PLAYER_STOP
         });
     },
 
     next: function(e) {
-        AppDispatcher.dispatch({
-            actionType : AppConstants.APP_PLAYER_NEXT,
+        store.dispatch({
+            type : AppConstants.APP_PLAYER_NEXT,
             e
         });
     },
 
     previous: function() {
-        AppDispatcher.dispatch({
-            actionType : AppConstants.APP_PLAYER_PREVIOUS
+        store.dispatch({
+            type : AppConstants.APP_PLAYER_PREVIOUS
         });
     },
 
     shuffle: function() {
-        AppDispatcher.dispatch({
-            actionType : AppConstants.APP_PLAYER_SHUFFLE
+        store.dispatch({
+            type : AppConstants.APP_PLAYER_SHUFFLE
         });
     },
 
@@ -57,8 +57,8 @@ export default {
             app.audio.volume = volume;
             app.config.set('audioVolume', volume);
             app.config.saveSync();
-            AppDispatcher.dispatch({
-                actionType : AppConstants.APP_REFRESH_CONFIG
+            store.dispatch({
+                type : AppConstants.APP_REFRESH_CONFIG
             });
         }
     },
@@ -72,22 +72,22 @@ export default {
                 app.audio.playbackRate = value;
                 app.config.set('audioPlaybackRate', parseFloat(value));
                 app.config.saveSync();
-                AppDispatcher.dispatch({
-                    actionType : AppConstants.APP_REFRESH_CONFIG
+                store.dispatch({
+                    type : AppConstants.APP_REFRESH_CONFIG
                 });
             }
         }
     },
 
     repeat: function() {
-        AppDispatcher.dispatch({
-            actionType : AppConstants.APP_PLAYER_REPEAT
+        store.dispatch({
+            type : AppConstants.APP_PLAYER_REPEAT
         });
     },
 
     jumpTo: function(to) {
-        AppDispatcher.dispatch({
-            actionType : AppConstants.APP_PLAYER_JUMP_TO,
+        store.dispatch({
+            type : AppConstants.APP_PLAYER_JUMP_TO,
             to
         });
     },

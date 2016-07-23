@@ -1,4 +1,4 @@
-import AppDispatcher from '../dispatcher/AppDispatcher';
+import store from '../store.js';
 import AppConstants  from '../constants/AppConstants';
 import AppActions    from './AppActions';
 
@@ -15,8 +15,8 @@ const PlaylistsActions = {
             if(err) console.warn(err);
             else {
                 app.db.find({ type: 'track', _id: { $in: playlist.tracks } }, (err, tracks) => {
-                    AppDispatcher.dispatch({
-                        actionType : AppConstants.APP_PLAYLISTS_LOAD_ONE,
+                    store.dispatch({
+                        type : AppConstants.APP_PLAYLISTS_LOAD_ONE,
                         tracks
                     });
                 });
@@ -29,8 +29,8 @@ const PlaylistsActions = {
         app.db.find({ type : 'playlist' }).sort({ name : 1 }).exec((err, playlists) => {
             if (err) console.warn(err);
             else {
-                AppDispatcher.dispatch({
-                    actionType : AppConstants.APP_PLAYLISTS_REFRESH,
+                store.dispatch({
+                    type : AppConstants.APP_PLAYLISTS_REFRESH,
                     playlists
                 });
             }

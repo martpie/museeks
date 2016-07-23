@@ -1,4 +1,4 @@
-import AppDispatcher from '../dispatcher/AppDispatcher';
+import store from '../store.js';
 import AppConstants  from '../constants/AppConstants';
 
 
@@ -9,14 +9,14 @@ export default {
         const _id = Date.now();
         const notification = { _id, type, content };
 
-        AppDispatcher.dispatch({
-            actionType   : AppConstants.APP_NOTIFICATION_ADD,
+        store.dispatch({
+            type   : AppConstants.APP_NOTIFICATION_ADD,
             notification
         });
 
         setTimeout(() => {
-            AppDispatcher.dispatch({
-                actionType : AppConstants.APP_NOTIFICATION_REMOVE,
+            store.dispatch({
+                type : AppConstants.APP_NOTIFICATION_REMOVE,
                 _id
             });
         }, duration);

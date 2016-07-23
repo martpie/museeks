@@ -1,4 +1,4 @@
-import AppDispatcher from '../dispatcher/AppDispatcher';
+import store from '../store.js';
 import AppConstants  from '../constants/AppConstants';
 
 import app from '../utils/app';
@@ -7,29 +7,29 @@ import app from '../utils/app';
 export default {
 
     selectAndPlay: function(index) {
-        AppDispatcher.dispatch({
-            actionType : AppConstants.APP_QUEUE_PLAY,
+        store.dispatch({
+            type : AppConstants.APP_QUEUE_PLAY,
             index
         });
     },
 
     clear: function() {
-        AppDispatcher.dispatch({
-            actionType : AppConstants.APP_QUEUE_CLEAR
+        store.dispatch({
+            type : AppConstants.APP_QUEUE_CLEAR
         });
     },
 
     remove: function(index) {
-        AppDispatcher.dispatch({
-            actionType : AppConstants.APP_QUEUE_REMOVE,
+        store.dispatch({
+            type : AppConstants.APP_QUEUE_REMOVE,
             index
         });
     },
 
     add: function(tracksIds) {
         app.db.find({ type: 'track', _id: { $in: tracksIds } }, (err, tracks) => {
-            AppDispatcher.dispatch({
-                actionType : AppConstants.APP_QUEUE_ADD,
+            store.dispatch({
+                type : AppConstants.APP_QUEUE_ADD,
                 tracks
             });
         });
@@ -38,16 +38,16 @@ export default {
 
     addNext: function(tracksIds) {
         app.db.find({ type: 'track', _id: { $in: tracksIds } }, (err, tracks) => {
-            AppDispatcher.dispatch({
-                actionType : AppConstants.APP_QUEUE_ADD_NEXT,
+            store.dispatch({
+                type : AppConstants.APP_QUEUE_ADD_NEXT,
                 tracks
             });
         });
     },
 
     setQueue: function(queue) {
-        AppDispatcher.dispatch({
-            actionType : AppConstants.APP_QUEUE_SET_QUEUE,
+        store.dispatch({
+            type : AppConstants.APP_QUEUE_SET_QUEUE,
             queue
         });
     }

@@ -1,4 +1,4 @@
-import AppDispatcher from '../dispatcher/AppDispatcher';
+import store from '../store.js';
 import AppConstants  from '../constants/AppConstants';
 
 import app from '../utils/app';
@@ -24,8 +24,8 @@ export default {
         app.config.set('theme', newTheme);
         app.config.saveSync();
 
-        AppDispatcher.dispatch({
-            actionType : AppConstants.APP_REFRESH_CONFIG
+        store.dispatch({
+            type : AppConstants.APP_REFRESH_CONFIG
         });
     },
 
@@ -40,8 +40,8 @@ export default {
 
         ipcRenderer.send('toggleSleepBlocker', app.config.get('sleepBlocker'), mode);
 
-        AppDispatcher.dispatch({
-            actionType : AppConstants.APP_REFRESH_CONFIG
+        store.dispatch({
+            type : AppConstants.APP_REFRESH_CONFIG
         });
     },
 
@@ -59,14 +59,14 @@ export default {
 
         app.config.saveSync();
 
-        AppDispatcher.dispatch({
-            actionType : AppConstants.APP_REFRESH_CONFIG
+        store.dispatch({
+            type : AppConstants.APP_REFRESH_CONFIG
         });
     },
 
     refreshProgress: function(percentage) {
-        AppDispatcher.dispatch({
-            actionType : AppConstants.APP_LIBRARY_REFRESH_PROGRESS,
+        store.dispatch({
+            type : AppConstants.APP_LIBRARY_REFRESH_PROGRESS,
             percentage
         });
     }

@@ -8,7 +8,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router,  hashHistory } from 'react-router';
 
+import { Provider } from 'react-redux';
+
 import routes from './router/routes';
+import store from './store.js';
 
 
 /*
@@ -29,6 +32,8 @@ require('../styles/main.scss');
 */
 
 ReactDOM.render(
-    <Router routes={ routes } history={ hashHistory } />,
+    <Provider store={ store }>
+        <Router routes={ routes } history={ hashHistory } />
+    </Provider>,
     document.getElementById('wrap')
 );
