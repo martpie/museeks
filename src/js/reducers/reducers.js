@@ -267,20 +267,15 @@ export default (state = {}, payload) => { // payload is basically 'action'
             };
         }
 
-        // TODO
         case(AppConstants.APP_PLAYER_SHUFFLE): {
 
-            /*if(!state.shuffle) {
-
-                state.oldQueue       = [].concat(state.queue);
-                state.oldQueueCursor = state.oldQueueCursor;
+            if(!state.shuffle) {
 
                 // Let's shuffle that
-                const firstTrack  = queue[queueCursor]; // Get the current track
-
                 const queueCursor = state.queueCursor;
-                let queue = [].concat(state.queue);
+                let queue = [...state.queue];
 
+                const firstTrack  = queue[queueCursor]; // Get the current track
 
                 queue = queue.splice(queueCursor + 1, state.queue.length - (queueCursor + 1)); // now get only what we want
 
@@ -298,20 +293,24 @@ export default (state = {}, payload) => { // payload is basically 'action'
 
                 queue.unshift(firstTrack); // Add the current track at the first position
 
-                state.shuffle        = true;
-                state.queue          = queue;
-                state.queueCursor    = 0;
-                state.oldQueueCursor = queueCursor;
+                return {
+                    ...state,
+                    queue,
+                    shuffle: true,
+                    queueCursor: 0,
+                    oldQueue: state.queue,
+                    oldQueueCursor: queueCursor
+                };
 
-            } else {
+            }
 
-                state.queue       = [].concat(state.oldQueue);
-                state.queueCursor = state.oldQueueCursor;
-                state.shuffle     = false;
-
-            }*/
-
-            return state;
+            // Roll back
+            return {
+                ...state,
+                queue: [...state.oldQueue],
+                queueCursor: state.oldQueueCursor,
+                shuffle: false
+            };
         }
 
         case(AppConstants.APP_PLAYER_REPEAT): {
