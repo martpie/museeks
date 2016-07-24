@@ -23,8 +23,8 @@
   "dependencies": {
     "bluebird": "^3.4.1",
     "bootstrap-css-only": "3.3.6",
-    "flux": "2.1.1",
     "font-awesome": "4.6.3",
+    "globby": "^6.0.0",
     "keymirror": "0.1.1",
     "musicmetadata": "2.0.4",
     "nedb": "1.8.0",
