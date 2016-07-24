@@ -149,7 +149,7 @@ const AppActions = {
 
                 const isUpdateAvailable = releases.some((release) => {
 
-                    if(semver.gt(release.tag_name, currentVersion)) {
+                    if(semver.valid(release.tag_name) !== null && semver.gt(release.tag_name, currentVersion)) {
                         updateVersion = release.tag_name;
                         return true;
                     }
@@ -163,7 +163,7 @@ const AppActions = {
 
             oReq.onerror = () => {
 
-                AppActions.notifications.add('danger', 'Could not check updates.');
+                AppActions.notifications.add('danger', 'An error occured while checking updates.');
             };
 
             oReq.open('GET', 'https://api.github.com/repos/KeitIG/museeks/releases', true);

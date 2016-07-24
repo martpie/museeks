@@ -102,7 +102,7 @@ export default {
     audio,                // HTML5 audio tag
     pathSrc,              // path of the app
     browserWindows,       // Object containing all the windows
-    version       : app.getVersion,   // Museeks version
+    version       : app.getVersion(), // Museeks version
     config        : conf,             // teeny-conf
     initialConfig : conf.getAll(),    // the config at the start of the application
 };
