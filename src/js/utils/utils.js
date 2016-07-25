@@ -165,7 +165,7 @@ const utils = {
     /**
      * Get a file metadata
      *
-     * @param track (object) { path, mime }
+     * @param path (string)
      * @return object
      *
      */
@@ -189,9 +189,9 @@ const utils = {
             }
         */
 
-        if(['audio/wav', 'audio/x-wav', 'audio/wave', 'audio/x-pn-wav'].includes(track.mime)) { // If WAV
+        if(path.extname(track) === '.wav') { // If WAV
 
-            wavInfo.infoByFilename(track.path, (err, info) => {
+            wavInfo.infoByFilename(track, (err, info) => {
 
                 if (err) console.warn(err);
 
@@ -206,9 +206,9 @@ const utils = {
                     duration     : info.duration,
                     genre        : [],
                     loweredMetas : {},
-                    path         : track.path,
+                    path         : track,
                     playCount    : 0,
-                    title        : path.parse(track.path).base,
+                    title        : path.parse(track).base,
                     track        : {
                         no: 0,
                         of: 0
@@ -230,11 +230,11 @@ const utils = {
 
         } else {
 
-            const stream = fs.createReadStream(track.path);
+            const stream = fs.createReadStream(track);
 
             mmd(stream, { duration: true }, (err, data) => {
 
-                if(err) console.warn(`An error occured while reading ${track.path} id3 tags: ${err}`);
+                if(err) console.warn(`An error occured while reading ${track} id3 tags: ${err}`);
 
                 const metadata = {
                     album        : data.album === null || data.album === '' ? 'Unknown' : data.album,
@@ -244,9 +244,9 @@ const utils = {
                     duration     : data.duration === '' ? 0 : data.duration,
                     genre        : data.genre,
                     loweredMetas : {},
-                    path         : track.path,
+                    path         : track,
                     playCount    : 0,
-                    title        : data.title === null || data.title === '' ? path.parse(track.path).base : data.title,
+                    title        : data.title === null || data.title === '' ? path.parse(track).base : data.title,
                     track        : data.track,
                     type         : 'track',
                     year         : data.year

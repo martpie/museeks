@@ -140,7 +140,7 @@ export default {
             return Promise.map(supportedFiles, (filePath) => {
                 return app.db.findAsync({ path: filePath }).then((docs) => {
                     if (docs.length === 0) {
-                        return getMetadataAsync({ path: filePath });
+                        return getMetadataAsync(filePath);
                     }
                     return docs[0];
                 }).then((metadata) => {
