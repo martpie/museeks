@@ -19,6 +19,7 @@ It uses:
 
 - Lightweight music player
 - Polished
+- Playlists
 - Queue management
 - Shuffle, loop
 - Dark theme
@@ -34,10 +35,9 @@ It uses:
 
 ===
 
-### Changelog / Roadmap
+### Releases notes
 
-- [Changelog](https://github.com/KeitIG/museeks/releases)
-- [Roadmap](ROADMAP.md)
+- [Releases notes](https://github.com/KeitIG/museeks/releases)
 
 ===
 
@@ -48,6 +48,8 @@ It uses:
 Builds can be found [at this page](https://github.com/KeitIG/museeks/releases). Please notive those are only portable versions. Installers may come in the future.
 
 #### Build (advanced)
+
+Please consider that **`master` is unstable.**
 
 - Download [Electron](https://github.com/atom/electron/releases)
 - Download Museeks source code
