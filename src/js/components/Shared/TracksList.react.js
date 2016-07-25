@@ -140,7 +140,7 @@ export default class TracksList extends Component {
                 }
                 case 'addToPlaylist': {
                     const isShown = self.props.type === 'playlist' && params === self.props.currentPlaylist;
-                    AppActions.playlists.addTracksTo(params, selected, isShown);
+                    AppActions.playlists.addTracksTo(params.playlistId, selected, isShown);
                     break;
                 }
                 case 'removeFromPlaylist': {
@@ -148,7 +148,10 @@ export default class TracksList extends Component {
                     break;
                 }
                 case 'createPlaylist': {
-                    AppActions.playlists.create('New playlist');
+                    AppActions.playlists.create('New playlist', false, (playlistId) => {
+                        const isShown = self.props.type === 'playlist' && params === self.props.currentPlaylist;
+                        AppActions.playlists.addTracksTo(playlistId, selected, isShown);
+                    });
                     break;
                 }
             }

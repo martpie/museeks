@@ -38,7 +38,7 @@ class IpcManager {
                     playlistTemplate.push({
                         label: elem.name,
                         click: () => {
-                            event.sender.send('tracksListContextMenuReply', 'addToPlaylist', elem._id);
+                            event.sender.send('tracksListContextMenuReply', 'addToPlaylist', { playlistId: elem._id });
                         }
                     });
                 });
