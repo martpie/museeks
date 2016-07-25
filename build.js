@@ -61,7 +61,7 @@ const options = {
 |--------------------------------------------------------------------------
 */
 
-console.info('Starting Museeks ${app.version} build');
+console.info(`Starting Museeks ${app.version} build`);
 
 packager(options, (err) => {
     if(err) throw err;
