@@ -221,7 +221,6 @@ export default (state = {}, payload) => { // payload is basically 'action'
             }
 
             app.audio.pause();
-            app.audio.src = '';
 
             // Stop
             return {
@@ -258,6 +257,8 @@ export default (state = {}, payload) => { // payload is basically 'action'
             }
 
             // Stop
+            app.audio.pause();
+
             return {
                 ...state,
                 queue: [],

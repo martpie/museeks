@@ -29,10 +29,6 @@ export default {
         });
     },
 
-    checkDevMode: function() {
-        if(app.config.get('devMode')) app.browserWindows.main.openDevTools();
-    },
-
     toggleSleepBlocker: function(mode = 'prevent-app-suspension') {
 
         app.config.set('sleepBlocker', !app.config.get('sleepBlocker'));
@@ -54,14 +50,18 @@ export default {
         app.config.set('devMode', !app.config.get('devMode'));
 
         // Open dev tools if needed
-        if(app.config.get('devMode')) app.browserWindows.main.openDevTools();
-        else app.browserWindows.main.closeDevTools();
+        if(app.config.get('devMode')) app.browserWindows.main.webContents.openDevTools();
+        else app.browserWindows.main.webContents.closeDevTools();
 
         app.config.saveSync();
 
         store.dispatch({
             type : AppConstants.APP_REFRESH_CONFIG
         });
+    },
+
+    checkDevMode: function() {
+        if(app.config.get('devMode')) app.browserWindows.main.webContents.openDevTools();
     },
 
     refreshProgress: function(percentage) {

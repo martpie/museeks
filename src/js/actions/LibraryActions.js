@@ -38,7 +38,7 @@ export default {
     resetTracks: function() {
         store.dispatch({
             type : AppConstants.APP_REFRESH_LIBRARY,
-            tracks     : null
+            tracks : null
         });
     },
 

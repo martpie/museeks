@@ -3,6 +3,7 @@ import keymirror from 'keymirror';
 export default keymirror({
 
     APP_REFRESH_LIBRARY : null,
+    APP_REFRESH_CONFIG  : null,
 
     APP_SELECT_AND_PLAY : null,
 
