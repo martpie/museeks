@@ -207,8 +207,6 @@ export default class TracksList extends Component {
                             }
                         }
 
-                        console.log(index, onlySelectedIndex);
-
                         if(index < onlySelectedIndex) {
                             for(let i = 1; i <= Math.abs(index - onlySelectedIndex); i++) {
                                 selected.push(tracks[onlySelectedIndex - i]._id);
@@ -271,7 +269,7 @@ export default class TracksList extends Component {
 
         let i = 0;
 
-        switch(e.keyCode) {
+        switch(e.keyCode) { // Todo: fix when node not in dom
             case 38: // up
 
                 for(let length = tracks.length; i < length; i ++) {
@@ -279,14 +277,13 @@ export default class TracksList extends Component {
                 }
 
                 if(i - 1 >= 0) {
-                    this.setState({ selected : tracks[i - 1]._id });
+                    this.setState({ selected : tracks[i - 1]._id }, () => {
 
-                    // Scroll if needed
-                    const node = document.querySelector('.tracks-list-container .tracks-list-body .track.selected'); // Get the first selected track
-                    const container = document.querySelector('.tracks-list-container .tracks-list-body');
+                        const container = document.querySelector('.tracks-list-container .tracks-list-body');
+                        const nodeOffsetTop = (i - 1) * 25;
 
-                    // TODO Problem if container is not drawned
-                    if(node !== null && container !== null && node.getBoundingClientRect().top < container.getBoundingClientRect().top) container.scrollTop -= node.offsetHeight;
+                        if(container.scrollTop > nodeOffsetTop) container.scrollTop = nodeOffsetTop;
+                    });
                 }
                 break;
 
@@ -297,13 +294,13 @@ export default class TracksList extends Component {
                 }
 
                 if(i + 1 < tracks.length) {
-                    this.setState({ selected : tracks[i + 1]._id });
+                    this.setState({ selected : tracks[i + 1]._id }, () => {
 
-                    // Scroll if needed
-                    const node = document.querySelector('.tracks-list-container .tracks-list-body .track.selected'); // Get the first selected track
-                    const container = document.querySelector('.tracks-list-container .tracks-list-body');
+                        const container = document.querySelector('.tracks-list-container .tracks-list-body');
+                        const nodeOffsetTop = (i + 1) * 25;
 
-                    if(node !== null && container !== null && node.getBoundingClientRect().bottom > container.getBoundingClientRect().bottom) container.scrollTop += node.offsetHeight;
+                        if(container.scrollTop + container.offsetHeight <= nodeOffsetTop) container.scrollTop = nodeOffsetTop - container.offsetHeight + 25;
+                    });
                 }
                 break;
 

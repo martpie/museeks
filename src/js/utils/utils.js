@@ -77,7 +77,7 @@ const utils = {
      */
     simpleSort: function(array, sorting) {
 
-        /*if(sorting === 'asc') {
+        if(sorting === 'asc') {
             array.sort((a, b) => {
                 return a - b;
             });
@@ -93,8 +93,7 @@ const utils = {
             if(!result.includes(item)) result.push(item);
         });
 
-        return result;*/
-        return array;
+        return result;
     },
 
     /**
