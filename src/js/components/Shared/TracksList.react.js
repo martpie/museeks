@@ -42,7 +42,7 @@ export default class TracksList extends Component {
 
         const self         = this,
             selected       = this.state.selected,
-            tracks         = this.props.tracks,
+            tracks         = [...this.props.tracks],
             trackPlayingId = this.props.trackPlayingId;
 
         const chunkLength = 20;
@@ -53,7 +53,7 @@ export default class TracksList extends Component {
         const tilesScrolled = Math.floor(this.state.scrollTop / tileHeight);
 
         // Tiles and chunks
-        let trackTiles = tracksChunked.splice(Math.max(0, tilesScrolled - 1), tilesScrolled > 0 ? tilesToDisplay : tilesToDisplay - 1).map((tracksChunk, indexChunk) => {
+        let trackTiles = tracksChunked.splice(tilesScrolled, tilesToDisplay).map((tracksChunk, indexChunk) => {
 
             let list = tracksChunk.map((track, index) => {
 
@@ -94,10 +94,8 @@ export default class TracksList extends Component {
                 );
             });
 
-            const invertedTranslation = tilesScrolled > 0 ? 25 * chunkLength : 0;
-
             return (
-                <div className='tracks-list-tile' key={ indexChunk } style={ { transform: `translate3d(0, ${(((tilesScrolled * 25 * chunkLength) + (indexChunk * 25 * chunkLength)) - invertedTranslation)}px, 0)` } }>
+                <div className='tracks-list-tile' key={ indexChunk } style={ { transform: `translate3d(0, ${(((tilesScrolled * 25 * chunkLength) + (indexChunk * 25 * chunkLength)))}px, 0)` } }>
                     { list }
                 </div>
             );
@@ -173,7 +171,8 @@ export default class TracksList extends Component {
         if(e.button === 0 || (e.button === 2 && !this.state.selected.includes(id))) {
             if(e.ctrlKey) { // add one track in selected tracks
 
-                let selected = this.state.selected.slice();
+                let selected = [...this.state.selected];
+
                 if(selected.includes(id)) {
                     // remove track
                     selected.splice(selected.indexOf(id), 1);
@@ -197,15 +196,18 @@ export default class TracksList extends Component {
                         break;
                     }
                     case 1: {
+
                         const onlySelected = selected[0];
                         let onlySelectedIndex;
 
-                        for(let i = 0, length = tracks.length; i < length; i++) {
+                        for(let i = 0, length = tracks.length; i < length; i++) { // STH wrong here
                             if(tracks[i]._id === onlySelected) {
                                 onlySelectedIndex = i;
                                 break;
                             }
                         }
+
+                        console.log(index, onlySelectedIndex);
 
                         if(index < onlySelectedIndex) {
                             for(let i = 1; i <= Math.abs(index - onlySelectedIndex); i++) {

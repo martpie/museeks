@@ -77,7 +77,7 @@ const utils = {
      */
     simpleSort: function(array, sorting) {
 
-        if(sorting === 'asc') {
+        /*if(sorting === 'asc') {
             array.sort((a, b) => {
                 return a - b;
             });
@@ -87,9 +87,14 @@ const utils = {
             });
         }
 
-        const result = array.filter((item) => !result.includes(item));
 
-        return result;
+        const result = [];
+        array.forEach((item) => {
+            if(!result.includes(item)) result.push(item);
+        });
+
+        return result;*/
+        return array;
     },
 
     /**
