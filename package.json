@@ -1,6 +1,6 @@
 {
   "name": "museeks",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "A music player based on nw.js",
   "main": "./src/main-process/main.js",
   "repository": {
