@@ -31,6 +31,12 @@ export default class SettingsAbout extends Component {
         // Don't add yourself here please, I'll do it myself
         const contributors = [
             {
+                name: 'Yury Solovyov',
+                pseudo: 'YurySolovyov',
+                feature: 'tons of back-end tweaks and build improvements',
+                url: 'https://github.com/YurySolovyov'
+            },
+            {
                 name: 'Alba de Zanet',
                 pseudo: 'Alba',
                 feature: 'Museeks logo',
@@ -46,13 +52,7 @@ export default class SettingsAbout extends Component {
                 name: 'Jonathan Alpay',
                 pseudo: 'Suriteka',
                 feature: 'icons editing',
-                url: 'http://twitter.com/Suriteka '
-            },
-            {
-                name: 'Yury Solovyov',
-                pseudo: 'YurySolovyov',
-                feature: 'main process and build improvements',
-                url: 'https://github.com/YurySolovyov'
+                url: 'http://twitter.com/Suriteka'
             }
         ];
 
@@ -70,7 +70,7 @@ export default class SettingsAbout extends Component {
                     <h4>About Museeks</h4>
                     <img src={ museeksLogo } className='logo-museeks' alt='Logo' title='Museeks logo' />
                     <p>
-                        Museeks { app.version } - <a href onClick={ self.openLink.bind(null, 'http://museeks.io') }>museeks.io</a>
+                        Museeks { app.version } - <a href onClick={ self.openLink.bind(null, 'http://museeks.io') }>museeks.io</a> - <a href onClick={ self.openLink.bind(null, `https://github.com/KeitIG/Museeks/releases/tag/${app.version}`) }>release notes</a>
                         <Button bsSize='small' className='update-checker' onClick={ this.checkForUpdate.bind(null) }>Check for update</Button>
                     </p>
                 </div>
@@ -81,6 +81,12 @@ export default class SettingsAbout extends Component {
                         <ul>
                             { contributorsList }
                         </ul>
+                    </div>
+                </div>
+                <div className='setting-section'>
+                    <h4>Report issue / Ask for a feature</h4>
+                    <div className='contributors-list'>
+                        <p>If Museeks is mostly stable, a few bugs may still occur. Do not hesitate to report them or to ask for features you would like to see on our <a href onClick={ this.openLink.bind(null, 'http://github.com/KeitIG/Museeks/issues') }>issue tracker.</a></p>
                     </div>
                 </div>
             </div>
