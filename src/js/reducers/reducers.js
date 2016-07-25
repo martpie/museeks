@@ -27,7 +27,7 @@ export default (state = {}, payload) => { // payload is basically 'action'
         }
 
         case(AppConstants.APP_REFRESH_CONFIG): {
-            return state;
+            return { ...state };
         }
 
         case(AppConstants.APP_SELECT_AND_PLAY): {
@@ -398,6 +398,13 @@ export default (state = {}, payload) => { // payload is basically 'action'
             };
         }
 
+        case(AppConstants.APP_LIBRARY_SET_TRACKSCURSOR): {
+            return {
+                ...state,
+                tracksCursor: payload.cursor
+            };
+        }
+
         case(AppConstants.APP_LIBRARY_ADD_FOLDERS): {
             const folders    = payload.folders;
             let musicFolders = app.config.get('musicFolders');
@@ -418,14 +425,7 @@ export default (state = {}, payload) => { // payload is basically 'action'
                 app.config.saveSync();
             }
 
-            return state;
-        }
-
-        case(AppConstants.APP_LIBRARY_SET_TRACKSCURSOR): {
-            return {
-                ...state,
-                tracksCursor: payload.cursor
-            };
+            return { ...state };
         }
 
         case(AppConstants.APP_LIBRARY_REMOVE_FOLDER): {
@@ -433,7 +433,7 @@ export default (state = {}, payload) => { // payload is basically 'action'
             musicFolders.splice(payload.index, 1);
             app.config.set('musicFolders', musicFolders);
             app.config.saveSync();
-            return state;
+            return { ...state };
         }
 
         case(AppConstants.APP_LIBRARY_RESET): {
