@@ -99,6 +99,6 @@ export default class SettingsAbout extends Component {
     }
 
     checkForUpdate() {
-        AppActions.app.checkForUpdate();
+        AppActions.settings.checkForUpdate();
     }
 }

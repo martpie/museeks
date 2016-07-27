@@ -1,7 +1,5 @@
 import app from '../utils/app';
 
-import semver from 'semver';
-
 import LibraryActions       from './LibraryActions';
 import PlaylistsActions     from './PlaylistsActions';
 import NotificationsActions from './NotificationsActions';
@@ -27,9 +25,7 @@ const AppActions = {
         // Usual tasks
         this.library.load();
         this.playlists.refresh();
-        this.settings.checkTheme();
-        this.settings.checkDevMode();
-        this.settings.checkSleepBlocker();
+        this.settings.check();
         this.app.initShortcuts();
         this.app.start();
 
@@ -134,41 +130,6 @@ const AppActions = {
             globalShortcut.register('MediaNextTrack', () => {
                 AppActions.player.next();
             });
-        },
-
-        checkForUpdate: function() {
-
-            const currentVersion = app.version;
-
-            const oReq = new XMLHttpRequest();
-
-            oReq.onload = (e) => {
-
-                const releases = e.currentTarget.response;
-                let updateVersion = null;
-
-                const isUpdateAvailable = releases.some((release) => {
-
-                    if(semver.valid(release.tag_name) !== null && semver.gt(release.tag_name, currentVersion)) {
-                        updateVersion = release.tag_name;
-                        return true;
-                    }
-
-                    return false;
-                });
-
-                if(isUpdateAvailable) AppActions.notifications.add('success', `Museeks ${updateVersion} is available, check http://museeks.io !`);
-                else AppActions.notifications.add('success', `Museeks ${currentVersion} is the latest version available.`);
-            };
-
-            oReq.onerror = () => {
-
-                AppActions.notifications.add('danger', 'An error occured while checking updates.');
-            };
-
-            oReq.open('GET', 'https://api.github.com/repos/KeitIG/museeks/releases', true);
-            oReq.responseType = 'json';
-            oReq.send();
         }
     }
 };

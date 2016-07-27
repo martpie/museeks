@@ -5,6 +5,7 @@ const electron = require('electron');
 const path     = require('path');
 
 class ConfigManager {
+
     constructor(app) {
         this.workArea = electron.screen.getPrimaryDisplay().workArea;
 
@@ -35,6 +36,7 @@ class ConfigManager {
             audioPlaybackRate: 1,
             musicFolders: [],
             sleepBlocker: false,
+            autoUpdateChecker: true,
             devMode: false,
             bounds: {
                 width: 1000,
