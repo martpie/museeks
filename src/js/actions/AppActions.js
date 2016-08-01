@@ -39,6 +39,25 @@ const AppActions = {
             ipcRenderer.send('playerAction', 'pause');
         });
 
+        // Listen for main-process events
+        ipcRenderer.on('playerAction', (event, reply) => {
+
+            switch(reply) {
+                case 'play':
+                    AppActions.player.play();
+                    break;
+                case 'pause':
+                    AppActions.player.pause();
+                    break;
+                case 'prev':
+                    AppActions.player.previous();
+                    break;
+                case 'next':
+                    AppActions.player.next();
+                    break;
+            }
+        });
+
         // Prevent some events
         window.addEventListener('dragover', (e) => {
             e.preventDefault();
@@ -57,25 +76,6 @@ const AppActions = {
 
         currentWindow.on('move', () => {
             AppActions.app.saveBounds();
-        });
-
-        // Listen for main-process events
-        ipcRenderer.on('playerAction', (event, reply) => {
-
-            switch(reply) {
-                case 'play':
-                    AppActions.player.play();
-                    break;
-                case 'pause':
-                    AppActions.player.pause();
-                    break;
-                case 'prev':
-                    AppActions.player.previous();
-                    break;
-                case 'next':
-                    AppActions.player.next();
-                    break;
-            }
         });
     },
 

@@ -5,6 +5,8 @@ import NotificationsActions from './NotificationsActions';
 
 import app from '../utils/app';
 
+const ipcRenderer    = electron.ipcRenderer;
+
 
 export default {
 
@@ -30,6 +32,8 @@ export default {
         store.dispatch({
             type : AppConstants.APP_PLAYER_STOP
         });
+
+        ipcRenderer.send('playerAction', 'stop');
     },
 
     next: function(e) {
