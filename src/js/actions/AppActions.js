@@ -30,12 +30,12 @@ const AppActions = {
         this.app.start();
 
         // Audio Events
-        app.audio.addEventListener('ended', AppActions.player.next);
-        app.audio.addEventListener('error', AppActions.player.audioError);
-        app.audio.addEventListener('play', () => {
+        app.audios[1].addEventListener('ended', AppActions.player.next);
+        app.audios[1].addEventListener('error', AppActions.player.audioError);
+        app.audios[1].addEventListener('play', () => {
             ipcRenderer.send('playerAction', 'play');
         });
-        app.audio.addEventListener('pause', () => {
+        app.audios[1].addEventListener('pause', () => {
             ipcRenderer.send('playerAction', 'pause');
         });
 

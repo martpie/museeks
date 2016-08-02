@@ -61,7 +61,7 @@ export default class TracksList extends Component {
 
                 if(trackPlayingId !== null) {
                     if(track._id === trackPlayingId) playing = <Icon name='volume-up' fixedWidth />;
-                    if(track._id === trackPlayingId && app.audio.paused) playing = <Icon name='volume-off' fixedWidth />;
+                    if(track._id === trackPlayingId && app.audios[1].paused) playing = <Icon name='volume-off' fixedWidth />;
                 }
 
                 return(

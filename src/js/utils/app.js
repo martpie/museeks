@@ -57,9 +57,21 @@ const supportedExtensions = [
 
 // What plays the music
 
-const audio = new Audio();
-audio.volume = conf.get('audioVolume');
-audio.playbackRate = conf.get('audioPlaybackRate');
+const volume = conf.get('audioVolume');
+const audioPlaybackRate = conf.get('audioPlaybackRate');
+
+const audios = [
+    new Audio(), // previous
+    new Audio(), // current
+    new Audio()  // next
+];
+
+audios.forEach((elem) => {
+    elem.volume = volume;
+    elem.playbackRate = audioPlaybackRate;
+});
+
+const audio = new AudioContext();
 
 
 /*
@@ -99,7 +111,8 @@ fs.writeFile(path.join(pathUserData, '.init'), '', (err) => {
 export default {
     db,                   // database
     supportedExtensions,  // supported audio formats
-    audio,                // HTML5 audio tag
+    audios,               // object of HTML5 audio element
+    audio,
     pathSrc,              // path of the app
     browserWindows,       // Object containing all the windows
     version       : app.getVersion(), // Museeks version

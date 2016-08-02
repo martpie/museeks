@@ -105,7 +105,7 @@ export default class PlayingBar extends Component {
     }
 
     tick() {
-        this.setState({ elapsed: app.audio.currentTime });
+        this.setState({ elapsed: app.audios[1].currentTime });
     }
 
     jumpAudioTo(e) {
