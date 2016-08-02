@@ -1,3 +1,5 @@
+'use strict';
+
 const teeny    = require('teeny-conf');
 const electron = require('electron');
 const path     = require('path');
@@ -32,7 +34,6 @@ class ConfigManager {
             theme: 'light',
             audioVolume: 1,
             audioPlaybackRate: 1,
-            audioCrossfadeLength: 0,
             musicFolders: [],
             sleepBlocker: false,
             autoUpdateChecker: true,

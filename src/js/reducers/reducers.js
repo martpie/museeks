@@ -47,15 +47,11 @@ export default (state = {}, payload) => { // payload is basically 'action'
                 }
             }
 
-            if(queue[queuePosition]) {
+            if(queuePosition !== null) {
 
-                app.audios[1].src = utils.parseUri(queue[queuePosition].path); // current
-
-                if(queue[queuePosition - 1]) app.audios[0].src = utils.parseUri(queue[queuePosition - 1].path); // previous
-                if(queue[queuePosition + 1]) app.audios[2].src = utils.parseUri(queue[queuePosition + 1].path); // next
-
-                // Play them
-                app.audios[1].play();
+                const uri = utils.parseUri(queue[queuePosition].path);
+                app.audio.src = uri;
+                app.audio.play();
 
                 // Check if we have to shuffle the queue
                 if(state.shuffle) {
@@ -107,17 +103,40 @@ export default (state = {}, payload) => { // payload is basically 'action'
             return state;
         }
 
+        case(AppConstants.APP_FILTER_SEARCH): {
+
+            if(!payload.search) {
+                const newState = { ...state };
+                newState.tracks[state.tracksCursor].sub = [...state.tracks[state.tracksCursor].all];
+
+                return newState;
+            }
+
+            const search = utils.stripAccents(payload.search);
+            const tracks = [].concat(state.tracks[state.tracksCursor].all).filter((track) => { // Problem here
+                return track.loweredMetas.artist.join(', ').includes(search)
+                    || track.loweredMetas.album.includes(search)
+                    || track.loweredMetas.genre.join(', ').includes(search)
+                    || track.loweredMetas.title.includes(search);
+            });
+
+            const newState = { ...state };
+            newState.tracks[state.tracksCursor].sub = tracks;
+
+            return newState;
+        }
+
         case(AppConstants.APP_PLAYER_TOGGLE): {
 
-            if(app.audios[1].paused && state.queue !== null) {
-                app.audios[1].play();
+            if(app.audio.paused && state.queue !== null) {
+                app.audio.play();
                 return {
                     ...state,
                     playerStatus: 'play'
                 };
             }
 
-            app.audios[1].pause();
+            app.audio.pause();
             return {
                 ...state,
                 playerStatus: 'pause'
@@ -127,7 +146,7 @@ export default (state = {}, payload) => { // payload is basically 'action'
         case(AppConstants.APP_PLAYER_PLAY): {
 
             if(state.queue !== null) {
-                app.audios[1].play();
+                app.audio.play();
                 return {
                     ...state,
                     playerStatus: 'play'
@@ -139,7 +158,7 @@ export default (state = {}, payload) => { // payload is basically 'action'
 
         case(AppConstants.APP_PLAYER_PAUSE): {
 
-            app.audios[1].pause();
+            app.audio.pause();
             return {
                 ...state,
                 playerStatus: 'pause'
@@ -148,9 +167,16 @@ export default (state = {}, payload) => { // payload is basically 'action'
 
         case(AppConstants.APP_PLAYER_STOP): {
 
-            app.audios[1].pause();
+            app.audio.pause();
+            const newState = {
+                ...state,
+                queue          :  [],
+                queueCursor    :  null,
+                oldQueueCursor :  null,
+                playerStatus   : 'stop'
+            };
 
-            const defaultTracks = {
+            newState.tracks = {
                 library: {
                     all: null,
                     sub: null
@@ -161,14 +187,7 @@ export default (state = {}, payload) => { // payload is basically 'action'
                 }
             };
 
-            return {
-                ...state,
-                tracks         :  defaultTracks,
-                queue          :  [],
-                queueCursor    :  null,
-                oldQueueCursor :  null,
-                playerStatus   : 'stop'
-            };
+            return newState;
         }
 
         case(AppConstants.APP_PLAYER_NEXT): {
@@ -178,7 +197,10 @@ export default (state = {}, payload) => { // payload is basically 'action'
 
             if(state.repeat === 'one') {
                 newQueueCursor = state.queueCursor;
-            } else if (state.repeat === 'all' && state.queueCursor === queue.length - 1) { // is last track
+            } else if (
+                state.repeat === 'all' &&
+                state.queueCursor === queue.length - 1 // is last track
+            ) {
                 newQueueCursor = 0; // start with new track
             } else {
                 newQueueCursor = state.queueCursor + 1;
@@ -186,13 +208,10 @@ export default (state = {}, payload) => { // payload is basically 'action'
 
             if (queue[newQueueCursor] !== undefined) {
 
-                app.audios.splice(0, 1); // remove first element
-                app.audios.push(new Audio()); // [2]
+                const uri = utils.parseUri(queue[newQueueCursor].path);
 
-                if(queue[newQueueCursor + 1]) app.audios[2].src = utils.parseUri(queue[newQueueCursor + 1].path);
-
-                app.audios[1].play();
-                app.audios[0].pause();
+                app.audio.src = uri;
+                app.audio.play();
 
                 return {
                     ...state,
@@ -201,8 +220,7 @@ export default (state = {}, payload) => { // payload is basically 'action'
                 };
             }
 
-            // If last one
-            app.audios[1].pause();
+            app.audio.pause();
 
             // Stop
             return {
@@ -219,27 +237,27 @@ export default (state = {}, payload) => { // payload is basically 'action'
             let newQueueCursor = state.queueCursor;
 
             // If track started less than 5 seconds ago, play th previous track, otherwise replay the current one
-            if (app.audios[1].currentTime < 5) newQueueCursor = state.queueCursor - 1;
+            if (app.audio.currentTime < 5) newQueueCursor = state.queueCursor - 1;
 
-            if(state.queue[newQueueCursor] !== undefined) {
+            const newTrack = state.queue[newQueueCursor];
 
-                app.audios.pop(); // Remove [2]
-                app.audios.unshift(new Audio());
+            if(newTrack !== undefined) {
 
-                if(state.queue[newQueueCursor]) app.audios[0].src = utils.parseUri(state.queue[newQueueCursor].path);
+                const uri = utils.parseUri(newTrack.path);
 
-                app.audios[1].play();
-                app.audios[2].pause();
+                app.audio.src = uri;
+                app.audio.play();
 
                 return {
                     ...state,
                     playerStatus: 'play',
                     queueCursor: newQueueCursor
                 };
+
             }
 
-            // If first one
-            app.audios[1].pause();
+            // Stop
+            app.audio.pause();
 
             return {
                 ...state,
@@ -316,31 +334,8 @@ export default (state = {}, payload) => { // payload is basically 'action'
         }
 
         case(AppConstants.APP_PLAYER_JUMP_TO): {
-            app.audios[1].currentTime = payload.to;
+            app.audio.currentTime = payload.to;
             return state;
-        }
-
-        case(AppConstants.APP_FILTER_SEARCH): {
-
-            if(!payload.search) {
-                const newState = { ...state };
-                newState.tracks[state.tracksCursor].sub = [...state.tracks[state.tracksCursor].all];
-
-                return newState;
-            }
-
-            const search = utils.stripAccents(payload.search);
-            const tracks = [].concat(state.tracks[state.tracksCursor].all).filter((track) => { // Problem here
-                return track.loweredMetas.artist.join(', ').includes(search)
-                    || track.loweredMetas.album.includes(search)
-                    || track.loweredMetas.genre.join(', ').includes(search)
-                    || track.loweredMetas.title.includes(search);
-            });
-
-            const newState = { ...state };
-            newState.tracks[state.tracksCursor].sub = tracks;
-
-            return newState;
         }
 
         case(AppConstants.APP_QUEUE_PLAY): {
@@ -349,8 +344,8 @@ export default (state = {}, payload) => { // payload is basically 'action'
             const queueCursor = payload.index;
 
             const uri = utils.parseUri(queue[queueCursor].path);
-            app.audios[1].src = uri;
-            app.audios[1].play();
+            app.audio.src = uri;
+            app.audio.play();
 
             // Backup that and change the UI
             return {

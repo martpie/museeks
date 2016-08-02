@@ -1,8 +1,8 @@
-const os = require('os');
+const platform = require('os').platform();
 
 let Integration = null;
 
-if (os.platform() === 'win32') {
+if (platform === 'win32') {
     Integration = require('./integrations/win32');
 }
 

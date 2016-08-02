@@ -28,15 +28,6 @@ export default class SettingsAudio extends Component {
         return (
             <div className='setting setting-audio'>
                 <div className='setting-section'>
-                    <h4>Crossfade songs</h4>
-                    <div className='formGroup'>
-                        <label>
-                            Crossfade between songs, in seconds
-                        </label>
-                        <input type='number' className='form-control' defaultValue={ config.audioCrossfadeLength } onChange={ this.setCrossfadeLength } min='0' max='20' step='0.1' />
-                    </div>
-                </div>
-                <div className='setting-section'>
                     <h4>Playback rate</h4>
                     <div className='formGroup'>
                         <label>
@@ -52,10 +43,5 @@ export default class SettingsAudio extends Component {
     setPlaybackRate(e) {
 
         AppActions.player.setPlaybackRate(e.currentTarget.value);
-    }
-
-    setCrossfadeLength(e) {
-
-        AppActions.player.setCrossfadeLength(e.currentTarget.value);
     }
 }

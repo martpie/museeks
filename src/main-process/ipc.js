@@ -1,3 +1,5 @@
+'use strict';
+
 const { Menu, ipcMain, powerSaveBlocker } = require('electron');
 
 class IpcManager {

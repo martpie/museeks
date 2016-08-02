@@ -58,7 +58,7 @@ export default {
     setVolume: function(volume) {
 
         if(!isNaN(parseFloat(volume)) && isFinite(volume)) {
-            app.audios[1].volume = volume;
+            app.audio.volume = volume;
             app.config.set('audioVolume', volume);
             app.config.saveSync();
             store.dispatch({
@@ -73,24 +73,8 @@ export default {
 
             if(value >= 0.5 && value <= 5) { // if in allowed range
 
-                app.audios[1].playbackRate = value;
+                app.audio.playbackRate = value;
                 app.config.set('audioPlaybackRate', parseFloat(value));
-                app.config.saveSync();
-                store.dispatch({
-                    type : AppConstants.APP_REFRESH_CONFIG
-                });
-            }
-        }
-    },
-
-    setCrossfadeLength: function(value) {
-
-        if(!isNaN(parseFloat(value)) && isFinite(value)) { // if is numeric
-
-            if(value >= 0 && value <= 20) { // if in allowed range
-
-                app.audios[1].playbackRate = value;
-                app.config.set('audioCrossfadeLength', parseFloat(value));
                 app.config.saveSync();
                 store.dispatch({
                     type : AppConstants.APP_REFRESH_CONFIG
