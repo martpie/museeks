@@ -4,7 +4,7 @@ import { ProgressBar } from 'react-bootstrap';
 import ButtonShuffle from './ButtonShuffle.react';
 import ButtonRepeat  from './ButtonRepeat.react';
 
-import app   from '../../utils/app';
+import app   from '../../lib/app';
 import utils from '../../utils/utils';
 
 import AppActions from '../../actions/AppActions';

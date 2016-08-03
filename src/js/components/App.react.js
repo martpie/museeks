@@ -10,7 +10,7 @@ import Notifications from './Notifications/Notifications.react';
 
 import AppActions from '../actions/AppActions';
 
-import app from '../utils/app';
+import app from '../lib/app';
 
 
 /*

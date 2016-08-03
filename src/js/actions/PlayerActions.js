@@ -3,7 +3,7 @@ import AppConstants  from '../constants/AppConstants';
 
 import NotificationsActions from './NotificationsActions';
 
-import app from '../utils/app';
+import app from '../lib/app';
 
 const ipcRenderer    = electron.ipcRenderer;
 

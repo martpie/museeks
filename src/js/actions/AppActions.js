@@ -1,4 +1,4 @@
-import app from '../utils/app';
+import app from '../lib/app';
 
 import LibraryActions       from './LibraryActions';
 import PlaylistsActions     from './PlaylistsActions';

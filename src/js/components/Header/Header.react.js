@@ -8,7 +8,7 @@ import Queue      from './Queue.react';
 
 import AppActions from '../../actions/AppActions';
 
-import app from '../../utils/app';
+import app from '../../lib/app';
 
 
 /*

@@ -1,5 +1,5 @@
 import fs  from 'fs';
-import app from '../utils/app';
+import app from '../lib/app';
 
 import AppConstants  from '../constants/AppConstants';
 

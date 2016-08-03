@@ -2,7 +2,7 @@ import store from '../store.js';
 import AppConstants  from '../constants/AppConstants';
 import AppActions    from './AppActions';
 
-import app from '../utils/app';
+import app from '../lib/app';
 
 import semver from 'semver';
 

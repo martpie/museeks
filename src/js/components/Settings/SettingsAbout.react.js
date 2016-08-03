@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
 
-import app   from '../../utils/app';
+import app   from '../../lib/app';
 
 import AppActions from '../../actions/AppActions';
 

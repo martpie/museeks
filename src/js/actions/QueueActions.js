@@ -1,7 +1,7 @@
 import store from '../store.js';
 import AppConstants  from '../constants/AppConstants';
 
-import app from '../utils/app';
+import app from '../lib/app';
 
 
 export default {
