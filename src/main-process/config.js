@@ -34,6 +34,7 @@ class ConfigManager {
             theme: 'light',
             audioVolume: 1,
             audioPlaybackRate: 1,
+            audioMuted: false,
             musicFolders: [],
             sleepBlocker: false,
             autoUpdateChecker: true,

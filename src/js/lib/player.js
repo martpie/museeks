@@ -25,11 +25,11 @@ class Player {
     }
 
     mute() {
-        this.audio.mute = true;
+        this.audio.muted = true;
     }
 
     unmute() {
-        this.audio.mute = false;
+        this.audio.muted = false;
     }
 
     getAudio() {
@@ -49,7 +49,7 @@ class Player {
     }
 
     setAudioCurrentTime(currentTime) {
-        this.audio.current = currentTime;
+        this.audio.currentTime = currentTime;
     }
 }
 

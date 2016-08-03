@@ -70,6 +70,18 @@ export default {
         }
     },
 
+    setMuted: function(muted = false) {
+
+        if(muted) Player.mute();
+        else Player.unmute();
+
+        app.config.set('audioMuted', muted);
+        app.config.saveSync();
+        store.dispatch({
+            type : AppConstants.APP_REFRESH_CONFIG
+        });
+    },
+
     setPlaybackRate: function(value) {
 
         if(!isNaN(parseFloat(value)) && isFinite(value)) { // if is numeric
