@@ -5,7 +5,6 @@ import teeny    from 'teeny-conf';
 import Promise  from 'bluebird';
 
 const remote = electron.remote;
-
 const app    = remote.app;
 
 
@@ -51,19 +50,6 @@ const supportedExtensions = [
 
 /*
 |--------------------------------------------------------------------------
-| Audio
-|--------------------------------------------------------------------------
-*/
-
-// What plays the music
-
-const audio = new Audio();
-audio.volume = conf.get('audioVolume');
-audio.playbackRate = conf.get('audioPlaybackRate');
-
-
-/*
-|--------------------------------------------------------------------------
 | Database
 |--------------------------------------------------------------------------
 */
@@ -99,7 +85,6 @@ fs.writeFile(path.join(pathUserData, '.init'), '', (err) => {
 export default {
     db,                   // database
     supportedExtensions,  // supported audio formats
-    audio,                // HTML5 audio tag
     pathSrc,              // path of the app
     browserWindows,       // Object containing all the windows
     version       : app.getVersion(), // Museeks version

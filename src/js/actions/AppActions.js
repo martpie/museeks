@@ -1,4 +1,5 @@
-import app from '../lib/app';
+import Player from '../lib/player';
+import app    from '../lib/app';
 
 import LibraryActions       from './LibraryActions';
 import PlaylistsActions     from './PlaylistsActions';
@@ -29,13 +30,14 @@ const AppActions = {
         this.app.initShortcuts();
         this.app.start();
 
+        // Bind player events
         // Audio Events
-        app.audio.addEventListener('ended', AppActions.player.next);
-        app.audio.addEventListener('error', AppActions.player.audioError);
-        app.audio.addEventListener('play', () => {
+        Player.getAudio().addEventListener('ended', AppActions.player.next);
+        Player.getAudio().addEventListener('error', AppActions.player.audioError);
+        Player.getAudio().addEventListener('play', () => {
             ipcRenderer.send('playerAction', 'play');
         });
-        app.audio.addEventListener('pause', () => {
+        Player.getAudio().addEventListener('pause', () => {
             ipcRenderer.send('playerAction', 'pause');
         });
 

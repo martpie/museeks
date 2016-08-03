@@ -4,8 +4,8 @@ import KeyBinding from 'react-keybinding-component';
 
 import AppActions from '../../actions/AppActions';
 
-import app   from '../../lib/app';
-import utils from '../../utils/utils';
+import Player from '../../lib/player';
+import utils  from '../../utils/utils';
 
 const ipcRenderer = electron.ipcRenderer;
 
@@ -61,7 +61,7 @@ export default class TracksList extends Component {
 
                 if(trackPlayingId !== null) {
                     if(track._id === trackPlayingId) playing = <Icon name='volume-up' fixedWidth />;
-                    if(track._id === trackPlayingId && app.audio.paused) playing = <Icon name='volume-off' fixedWidth />;
+                    if(track._id === trackPlayingId && Player.getAudio().paused) playing = <Icon name='volume-off' fixedWidth />;
                 }
 
                 return(

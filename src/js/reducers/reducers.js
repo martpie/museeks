@@ -3,6 +3,7 @@ import app from '../lib/app';
 
 import AppConstants  from '../constants/AppConstants';
 
+import Player from '../lib/player';
 import utils from '../utils/utils';
 
 
@@ -50,8 +51,9 @@ export default (state = {}, payload) => { // payload is basically 'action'
             if(queuePosition !== null) {
 
                 const uri = utils.parseUri(queue[queuePosition].path);
-                app.audio.src = uri;
-                app.audio.play();
+
+                Player.setAudioSrc(uri);
+                Player.play();
 
                 // Check if we have to shuffle the queue
                 if(state.shuffle) {
@@ -128,15 +130,15 @@ export default (state = {}, payload) => { // payload is basically 'action'
 
         case(AppConstants.APP_PLAYER_TOGGLE): {
 
-            if(app.audio.paused && state.queue !== null) {
-                app.audio.play();
+            if(Player.getAudio().paused && state.queue !== null) {
+                Player.play();
                 return {
                     ...state,
                     playerStatus: 'play'
                 };
             }
 
-            app.audio.pause();
+            Player.pause();
             return {
                 ...state,
                 playerStatus: 'pause'
@@ -146,7 +148,7 @@ export default (state = {}, payload) => { // payload is basically 'action'
         case(AppConstants.APP_PLAYER_PLAY): {
 
             if(state.queue !== null) {
-                app.audio.play();
+                Player.play();
                 return {
                     ...state,
                     playerStatus: 'play'
@@ -158,7 +160,7 @@ export default (state = {}, payload) => { // payload is basically 'action'
 
         case(AppConstants.APP_PLAYER_PAUSE): {
 
-            app.audio.pause();
+            Player.pause();
             return {
                 ...state,
                 playerStatus: 'pause'
@@ -167,7 +169,7 @@ export default (state = {}, payload) => { // payload is basically 'action'
 
         case(AppConstants.APP_PLAYER_STOP): {
 
-            app.audio.pause();
+            Player.pause();
             const newState = {
                 ...state,
                 queue          :  [],
@@ -210,8 +212,8 @@ export default (state = {}, payload) => { // payload is basically 'action'
 
                 const uri = utils.parseUri(queue[newQueueCursor].path);
 
-                app.audio.src = uri;
-                app.audio.play();
+                Player.setAudioSrc(uri);
+                Player.play();
 
                 return {
                     ...state,
@@ -220,7 +222,7 @@ export default (state = {}, payload) => { // payload is basically 'action'
                 };
             }
 
-            app.audio.pause();
+            Player.pause();
 
             // Stop
             return {
@@ -237,7 +239,7 @@ export default (state = {}, payload) => { // payload is basically 'action'
             let newQueueCursor = state.queueCursor;
 
             // If track started less than 5 seconds ago, play th previous track, otherwise replay the current one
-            if (app.audio.currentTime < 5) newQueueCursor = state.queueCursor - 1;
+            if (Player.getAudio().currentTime < 5) newQueueCursor = state.queueCursor - 1;
 
             const newTrack = state.queue[newQueueCursor];
 
@@ -245,8 +247,8 @@ export default (state = {}, payload) => { // payload is basically 'action'
 
                 const uri = utils.parseUri(newTrack.path);
 
-                app.audio.src = uri;
-                app.audio.play();
+                Player.setAudioSrc(uri);
+                Player.play();
 
                 return {
                     ...state,
@@ -257,7 +259,7 @@ export default (state = {}, payload) => { // payload is basically 'action'
             }
 
             // Stop
-            app.audio.pause();
+            Player.pause();
 
             return {
                 ...state,
@@ -334,7 +336,7 @@ export default (state = {}, payload) => { // payload is basically 'action'
         }
 
         case(AppConstants.APP_PLAYER_JUMP_TO): {
-            app.audio.currentTime = payload.to;
+            Player.setAudioCurrentTime(payload.to);
             return state;
         }
 
@@ -344,8 +346,8 @@ export default (state = {}, payload) => { // payload is basically 'action'
             const queueCursor = payload.index;
 
             const uri = utils.parseUri(queue[queueCursor].path);
-            app.audio.src = uri;
-            app.audio.play();
+            Player.setAudioSrc(uri);
+            Player.play();
 
             // Backup that and change the UI
             return {

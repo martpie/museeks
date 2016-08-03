@@ -4,6 +4,7 @@ import AppConstants  from '../constants/AppConstants';
 import NotificationsActions from './NotificationsActions';
 
 import app from '../lib/app';
+import Player from '../lib/player';
 
 const ipcRenderer    = electron.ipcRenderer;
 
@@ -58,7 +59,9 @@ export default {
     setVolume: function(volume) {
 
         if(!isNaN(parseFloat(volume)) && isFinite(volume)) {
-            app.audio.volume = volume;
+
+            Player.setAudioVolume(volume);
+
             app.config.set('audioVolume', volume);
             app.config.saveSync();
             store.dispatch({
@@ -73,7 +76,8 @@ export default {
 
             if(value >= 0.5 && value <= 5) { // if in allowed range
 
-                app.audio.playbackRate = value;
+                Player.setAudioPlaybackRate(value);
+
                 app.config.set('audioPlaybackRate', parseFloat(value));
                 app.config.saveSync();
                 store.dispatch({

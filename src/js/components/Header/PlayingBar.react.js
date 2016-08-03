@@ -4,8 +4,8 @@ import { ProgressBar } from 'react-bootstrap';
 import ButtonShuffle from './ButtonShuffle.react';
 import ButtonRepeat  from './ButtonRepeat.react';
 
-import app   from '../../lib/app';
-import utils from '../../utils/utils';
+import Player from '../../lib/player';
+import utils  from '../../utils/utils';
 
 import AppActions from '../../actions/AppActions';
 
@@ -105,7 +105,7 @@ export default class PlayingBar extends Component {
     }
 
     tick() {
-        this.setState({ elapsed: app.audio.currentTime });
+        this.setState({ elapsed: Player.getAudio().currentTime });
     }
 
     jumpAudioTo(e) {
