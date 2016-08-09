@@ -30,7 +30,7 @@ export default class Playlists extends Component {
             return (
                 <TracksList
                     type='playlist'
-                    currentPlaylist={ this.props.params.id }
+                    currentPlaylist={ this.props.params.playlistId }
                     tracks={ this.props.tracks }
                     trackPlayingId={ this.props.trackPlayingId }
                     playlists={ this.props.playlists }
@@ -41,6 +41,7 @@ export default class Playlists extends Component {
         return (
             <div className='full-message'>
                 <p>Empty playlist</p>
+                <p className='sub-message'>You can add tracks from the library view</p>
             </div>
         );
     }

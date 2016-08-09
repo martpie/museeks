@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
+import { Button } from 'react-bootstrap';
 
 import PlaylistsNav from './PlaylistsNav.react';
+
+import AppActions from '../../actions/AppActions';
 
 
 /*
@@ -38,9 +41,17 @@ export default class Playlists extends Component {
             content = (
                 <div className='full-message'>
                     <p>You haven't created any playlist yet</p>
+                    <Button
+                        bsSize='small'
+                        onClick={ () => {
+                            AppActions.playlists.create('New playlist', true);
+                        } }
+                    >
+                        Create a playlist
+                    </Button>
                 </div>
             );
-        } else if(!this.props.params.id) {
+        } else if(!this.props.params.playlistId) {
             content = (
                 <div className='full-message'>
                     <p>Select a playlist in the menu on the left</p>

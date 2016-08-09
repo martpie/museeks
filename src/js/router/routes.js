@@ -23,7 +23,7 @@ const init = {
     },
 
     playlist: (route) => {
-        AppActions.playlists.load(route.params.id);
+        AppActions.playlists.load(route.params.playlistId);
         AppActions.library.setTracksCursor('playlist');
     }
 };
@@ -34,7 +34,7 @@ const routes = (
         <Route path='library' component={ Library } onEnter={ init.library } />
         <Route path='settings' component={ Settings } />
         <Route path='playlists' component={ Playlists }>
-            <Route path=':id' component={ Playlist } onEnter={ init.playlist } />
+            <Route path=':playlistId' component={ Playlist } onEnter={ init.playlist } />
         </Route>
     </Route>
 );
