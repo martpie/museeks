@@ -39,7 +39,7 @@ export default class Library extends Component {
             content = (
                 <div className='full-message'>
                     <p>Too bad, there is no music in your library =(</p>
-                    <p className='sub-message'>nothing found yet, but that's fine, you can always <Link to='/settings'>add your music here</Link></p>
+                    <p className='sub-message'>nothing found yet, but that's fine, you can always <Link to='/settings/library'>add your music here</Link></p>
                 </div>
             );
         } else if (this.props.tracks.length === 0) {
