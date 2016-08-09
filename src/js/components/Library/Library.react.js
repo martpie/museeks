@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Button } from 'react-bootstrap';
-import { LinkContainer } from 'react-router-bootstrap';
+import { Link } from 'react-router';
 
 import TracksList from '../Shared/TracksList.react';
 
@@ -40,12 +39,7 @@ export default class Library extends Component {
             content = (
                 <div className='full-message'>
                     <p>Too bad, there is no music in your library =(</p>
-                    <p className='sub-message'>you may need to refresh your library or add folders into it.</p>
-                    <LinkContainer to='/settings'>
-                        <Button bsSize='small'>
-                            Library settings
-                        </Button>
-                    </LinkContainer>
+                    <p className='sub-message'>nothing found yet, but that's fine, you can always <Link to='/settings'>add your music in the library</Link>.</p>
                 </div>
             );
         } else if (this.props.tracks.length === 0) {

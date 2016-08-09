@@ -47,7 +47,7 @@
     justify-content: center;
     height: 100%;
     font-size: 25px;
-    color: #BBB;
+    color: #AAA;
     font-weight: 100;
     padding: 30px;
     margin: auto;
@@ -57,9 +57,11 @@
         font-size: 70%;
     }
 
-    .btn {
-        margin-top: 15px;
-        margin-left: auto;
-        margin-right: auto;
+    a {
+        cursor: pointer;
+
+        &:hover {
+            text-decoration: none;
+        }
     }
 }

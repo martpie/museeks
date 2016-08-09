@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Button } from 'react-bootstrap';
 
 import PlaylistsNav from './PlaylistsNav.react';
 
@@ -41,14 +40,13 @@ export default class Playlists extends Component {
             content = (
                 <div className='full-message'>
                     <p>You haven't created any playlist yet</p>
-                    <Button
-                        bsSize='small'
-                        onClick={ () => {
+                    <p className='sub-message'>
+                        <a onClick={ () => {
                             AppActions.playlists.create('New playlist', true);
-                        } }
-                    >
-                        Create a playlist
-                    </Button>
+                        } }>
+                            create one now
+                        </a>
+                    </p>
                 </div>
             );
         } else if(!this.props.params.playlistId) {
