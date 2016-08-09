@@ -325,17 +325,21 @@ header {
                         padding: 20px 0;
                     }
 
-                    .title {
-                        font-weight: bold;
-                    }
+                    .track-infos {
+                        width: calc(100% - 40px);
 
-                    .title,
-                    .other-infos {
-                        padding: 0 10px;
-                        color: rgb(51, 51, 51);
-                        text-overflow: ellipsis;
-                        overflow: hidden;
-                        white-space: nowrap;
+                        .title {
+                            font-weight: bold;
+                        }
+
+                        .title,
+                        .other-infos {
+                            padding: 0 10px;
+                            color: rgb(51, 51, 51);
+                            text-overflow: ellipsis;
+                            overflow: hidden;
+                            white-space: nowrap;
+                        }
                     }
 
                     .remove {
