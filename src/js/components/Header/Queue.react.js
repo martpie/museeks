@@ -69,7 +69,6 @@ export default class Queue extends Component {
             return (
                 <div key={ index }
                   className={ classes }
-                  onDoubleClick={ AppActions.queue.selectAndPlay.bind(null, self.props.queueCursor + index + 1) }
                   draggable={ 'true' }
                   onDragStart={ self.dragStart.bind(self, index) }
                   onDragEnd={ self.dragEnd.bind(self) }
@@ -77,11 +76,15 @@ export default class Queue extends Component {
                     <Button bsSize={ 'xsmall' } bsStyle={ 'link' } className='remove' onClick={ self.removeFromQueue.bind(null, index) }>
                         &times;
                     </Button>
-                    <div className='title'>
-                        { track.title }
-                    </div>
-                    <div className='other-infos'>
-                        <span className='artist'>{ track.artist }</span> - <span className='album'>{ track.album }</span>
+                    <div className='track-infos'
+                        onDoubleClick={ AppActions.queue.selectAndPlay.bind(null, self.props.queueCursor + index + 1) }
+                    >
+                        <div className='title'>
+                            { track.title }
+                        </div>
+                        <div className='other-infos'>
+                            <span className='artist'>{ track.artist }</span> - <span className='album'>{ track.album }</span>
+                        </div>
                     </div>
                 </div>
             );
