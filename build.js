@@ -50,7 +50,7 @@ const options = {
     // optional
     'prune'     :  true,
     'ignore'    : /(build|node_modules\/+?(?!teeny).+)/,
-    'out'       :  path.join('build', app.version),
+    'out'       :  path.join('build', 'dist', app.version),
     'overwrite' :  true,
 };
 
@@ -68,10 +68,10 @@ packager(options, (err) => {
     else {
         console.info('Builds cleanup');
 
-        const buildsPathes = getDirectories(path.join('./build', app.version));
+        const buildsPathes = getDirectories(path.join('./build', 'dist', app.version));
 
         buildsPathes.forEach((folder) => {
-            const appPath = `./build/${folder}/resources/app`;
+            const appPath = path.join(__dirname, 'build', 'dist', app.version, folder, 'resources', 'app');
             rimraf(`${appPath}/src/images`, {}, () => {});
             rimraf(`${appPath}/src/js`, {}, () => {});
             rimraf(`${appPath}/src/styles`, {}, () => {});

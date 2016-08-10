@@ -1,9 +1,7 @@
 node_modules/
 src/dist
-src/assets
 cache/
-build/
-src/js/components/Temp/
+build/dist
 
 npm-debug.log
 .eslintcache
