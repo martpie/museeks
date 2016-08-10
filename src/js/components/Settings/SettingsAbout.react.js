@@ -86,7 +86,7 @@ export default class SettingsAbout extends Component {
                 <div className='setting-section'>
                     <h4>Report issue / Ask for a feature</h4>
                     <div className='contributors-list'>
-                        <p>If Museeks is mostly stable, a few bugs may still occur. Do not hesitate to report them or to ask for features you would like to see on our <a href onClick={ this.openLink.bind(null, 'http://github.com/KeitIG/Museeks/issues') }>issue tracker.</a></p>
+                        <p>Although Museeks is mostly stable, a few bugs may still occur. Do not hesitate to report them or to ask for features you would like to see using our <a href onClick={ this.openLink.bind(null, 'http://github.com/KeitIG/Museeks/issues') }>issue tracker.</a></p>
                     </div>
                 </div>
             </div>
