@@ -112,7 +112,7 @@ export default {
 
         oReq.onerror = () => {
 
-            AppActions.notifications.add('danger', 'An error occured while checking updates.');
+            AppActions.notifications.add('danger', 'An error occurred while checking updates.');
         };
 
         oReq.open('GET', 'https://api.github.com/repos/KeitIG/museeks/releases', true);

@@ -39,7 +39,8 @@ export default class SettingsUI extends Component {
                     <h4>Sleep mode blocker</h4>
                     <div className='checkbox'>
                         <label>
-                            <input type='checkbox' onClick={ this.toggleSleepBlocker } defaultChecked={ config.sleepBlocker } /> Prevent the computer to go in sleep mode
+                            <input type='checkbox' onClick={ this.toggleSleepBlocker } defaultChecked={ config.sleepBlocker } /> Prevent the computer from going into sleep
+                             mode
                             </label>
                         </div>
                 </div>
