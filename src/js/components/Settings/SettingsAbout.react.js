@@ -41,7 +41,7 @@ export default class SettingsAbout extends Component {
                 <div className='setting-section'>
                     <h4>Contributors</h4>
                     <div className='contributors-list'>
-                        <p>Made with <span className='heart'>♥</span> by Pierre de la Martinière (<a href onClick={ this.openLink.bind(null, 'http://github.com/KeitIG') }>KeitIG</a>) and a bunch of great people (list is coming soon).</p>
+                        <p>Made with <span className='heart'>♥</span> by Pierre de la Martinière (<a href onClick={ this.openLink.bind(null, 'http://github.com/KeitIG') }>KeitIG</a>) and a bunch of <a href onClick={ this.openLink.bind(null, 'http://museeks.io/#contributors') }>great people</a>.</p>
                     </div>
                 </div>
                 <div className='setting-section'>
