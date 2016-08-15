@@ -59,6 +59,12 @@ Please consider that **`master` is unstable.**
 
 ===
 
+### Bug report
+
+If you want to report a bug, first, thanks a lot. To help us, please indicate your OS, your Museeks version, and how to reproduce it. Adding a screen of the console (Settings -> Advanced -> enable dev mode) is a big help too.
+
+===
+
 ### Contribute
 
 - Fork and clone
