@@ -104,8 +104,8 @@ const utils = {
      */
     stripAccents(str) {
 
-        const accents = 'ÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÒÓÔÕÖÙÚÛÜÝàáâãäåçèéêëìíîïðòóôõöùúûüýÿñ',
-            fixes = 'aaaaaaceeeeiiiiooooouuuuyaaaaaaceeeeiiiioooooouuuuyyn',
+        const accents = 'ÀÁÂÃÄÅàáâãäåÒÓÔÕÕÖØòóôõöøÈÉÊËèéêëðÇçÐÌÍÎÏìíîïÙÚÛÜùúûüÑñŠšŸÿýŽž',
+            fixes = 'AAAAAAaaaaaaOOOOOOOooooooEEEEeeeeeCcDIIIIiiiiUUUUuuuuNnSsYyyZz',
             split = accents.split('').join('|'),
             reg = new RegExp(`(${split})`, 'g');
 
