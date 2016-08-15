@@ -116,7 +116,7 @@ export default (state = {}, payload) => { // payload is basically 'action'
 
             const search = utils.stripAccents(payload.search);
 
-            const tracks = [...state.tracks[state.tracksCursor]].filter((track) => { // Problem here
+            const tracks = [].concat(state.tracks[state.tracksCursor].all).filter((track) => { // Problem here
                 return track.loweredMetas.artist.join(', ').includes(search)
                     || track.loweredMetas.album.includes(search)
                     || track.loweredMetas.genre.join(', ').includes(search)
