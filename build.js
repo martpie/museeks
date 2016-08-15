@@ -72,7 +72,6 @@ packager(options, (err) => {
 
         buildsPathes.forEach((folder) => {
             const appPath = path.join(__dirname, 'build', 'dist', app.version, folder, 'resources', 'app');
-            rimraf(`${appPath}/src/images`, {}, () => {});
             rimraf(`${appPath}/src/js`, {}, () => {});
             rimraf(`${appPath}/src/styles`, {}, () => {});
         });
