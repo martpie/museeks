@@ -28,42 +28,6 @@ export default class SettingsAbout extends Component {
         const museeksLogoRequire = require('../../../images/logos/museeks.png'); // sth wrong with that, need some check with Webpack
         const museeksLogo = `dist/${museeksLogoRequire}`;
 
-        // Don't add yourself here please, I'll do it myself
-        const contributors = [
-            {
-                name: 'Yury Solovyov',
-                pseudo: 'YurySolovyov',
-                feature: 'tons of back-end tweaks and build improvements',
-                url: 'https://github.com/YurySolovyov'
-            },
-            {
-                name: 'Alba de Zanet',
-                pseudo: 'Alba',
-                feature: 'Museeks logo',
-                url: 'https://www.behance.net/albadezanet'
-            },
-            {
-                name: 'Moritz',
-                pseudo: 'mrzmyr',
-                feature: 'repeat feature',
-                url: 'https://github.com/mrzmyr'
-            },
-            {
-                name: 'Jonathan Alpay',
-                pseudo: 'Suriteka',
-                feature: 'icons editing',
-                url: 'http://twitter.com/Suriteka'
-            }
-        ];
-
-        const contributorsList = contributors.map((data, index) => {
-            return (
-                <li key={ index }>
-                    { data.name } (<a href onClick={ self.openLink.bind(null, data.url) }>{ data.pseudo }</a>): { data.feature }
-                </li>
-            );
-        });
-
         return (
             <div className='setting setting-about'>
                 <div className='setting-section'>
@@ -77,10 +41,7 @@ export default class SettingsAbout extends Component {
                 <div className='setting-section'>
                     <h4>Contributors</h4>
                     <div className='contributors-list'>
-                        <p>Made with <span className='heart'>♥</span> by Pierre de la Martinière (<a href onClick={ this.openLink.bind(null, 'http://github.com/KeitIG') }>KeitIG</a>) and a bunch of great people:</p>
-                        <ul>
-                            { contributorsList }
-                        </ul>
+                        <p>Made with <span className='heart'>♥</span> by Pierre de la Martinière (<a href onClick={ this.openLink.bind(null, 'http://github.com/KeitIG') }>KeitIG</a>) and a bunch of great people (list is coming soon).</p>
                     </div>
                 </div>
                 <div className='setting-section'>
