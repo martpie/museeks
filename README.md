@@ -3,7 +3,7 @@
 | Service   | Status |
 | ------------ | ------------- |
 | Travis CI | [![Build Status](https://travis-ci.org/KeitIG/museeks.svg?branch=master)](https://travis-ci.org/KeitIG/museeks)|
-| Appveyor CI | [![Build status](https://ci.appveyor.com/api/projects/status/d5fai1tkj1xrw58p/branch/master?svg=true)](https://ci.appveyor.com/project/YurySolovyov/museeks/branch/master) |
+| Appveyor CI | [![Build status](https://ci.appveyor.com/api/projects/status/2le1pqhidclt3upw/branch/master?svg=true)](https://ci.appveyor.com/project/KeitIG/museeks/branch/master) |
 | Dependencies | [![Dependencies](https://david-dm.org/KeitIG/museeks.svg)](https://github.com/KeitIG/museeks) |
 | Gitter | [![Gitter](https://badges.gitter.im/KeitIG/museeks.svg)](https://gitter.im/KeitIG/museeks?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge) |
 
