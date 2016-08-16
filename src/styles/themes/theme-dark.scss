@@ -37,6 +37,7 @@ body.theme-dark {
         }
 
         .main-controls .window-controls .window-control {
+            border-color: #555;
             color: #EEE;
 
             &:active {
@@ -139,7 +140,12 @@ body.theme-dark {
             border-color: #333;
             background-color: #555;
 
-            &:hover,
+            &:hover {
+                color: #EEE;
+                border-color: #333;
+                background-color: #555;
+            }
+
             &:focus,
             &:active:hover,
             &.active {
@@ -235,6 +241,62 @@ body.theme-dark {
 
     /*
     |--------------------------------------------------------------------------
+    | View -- Playlists
+    |--------------------------------------------------------------------------
+    */
+
+    .view-playlists {
+
+        .playlists-nav {
+            border-right: 1px solid #333;
+            background-color: #555;
+
+
+            .playlists-nav-body {
+
+                .playlist-nav-item {
+
+                    a {
+
+                        &:hover {
+                            background-color: #444;
+                        }
+
+                        &.active {
+                            border-style: solid;
+                            border-color: #333;
+                            background-color: #444;
+                            color: #eee;
+                        }
+                    }
+
+                    input[type="text"] {
+                        background-color: #444;
+                        color: #eee;
+                        border-style: solid;
+                        border-color: #333;
+                    }
+                }
+            }
+
+            .playlists-nav-footer {
+
+                .playlists-management {
+                    border: solid 1px #333;
+
+                    button {
+                        color: #eee;
+                        background-color: #555;
+                    }
+                }
+            }
+        }
+    }
+
+
+
+    /*
+    |--------------------------------------------------------------------------
     | Bootstrap overrides
     |--------------------------------------------------------------------------
     */
@@ -248,12 +310,41 @@ body.theme-dark {
         color: #eee;
         border-color: #3A3A3A;
 
+        &:hover,
         &:active,
         &:focus,
         &:focus:active {
             color: #EEE;
+            background-color: #555;
             border-color: #3A3A3A;
-            background-color: #505050;
         }
+    }
+
+    .alert {
+        border-color: #444;
+        background-color: #555;
+        color: #EEE;
+
+        &.alert-success {
+            border-left-color: #5cb85c;
+        }
+
+        &.alert-info {
+            border-left-color: #5bc0de;
+        }
+
+        &.alert-warning {
+            border-left-color: #f0ad4e;
+        }
+
+        &.alert-danger {
+            border-left-color: #d9534f;
+        }
+    }
+
+    .form-control {
+        border-color: #6D6D6D;
+        background-color: #444;
+        color: #EEE;
     }
 }

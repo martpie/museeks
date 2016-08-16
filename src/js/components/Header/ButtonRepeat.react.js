@@ -4,7 +4,6 @@ import InlineSVG from 'svg-inline-react';
 import AppActions from '../../actions/AppActions';
 
 
-
 /*
 |--------------------------------------------------------------------------
 | RepeatButton
@@ -13,18 +12,22 @@ import AppActions from '../../actions/AppActions';
 
 export default class ButtonRepeat extends Component {
 
+    static propTypes = {
+        repeat: React.PropTypes.string
+    }
+
     constructor(props) {
 
         super(props);
-        this.state = {}
+        this.state = {};
     }
 
     render() {
 
-        var repeatButton = <button></button>;
-        var svg;
+        let repeatButton = <button></button>;
+        let svg;
 
-        if (this.props.repeat == 'one') {
+        if (this.props.repeat === 'one') {
             svg = require('../../../images/icons/player-repeat-one.svg');
             repeatButton = (
                 <button className='button repeat active' onClick={ this.toggleRepeat.bind(null) }>

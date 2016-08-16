@@ -8,8 +8,7 @@ import Queue      from './Queue.react';
 
 import AppActions from '../../actions/AppActions';
 
-import app from '../../constants/app.js';
-
+import Player from '../../lib/player';
 
 
 /*
@@ -20,18 +19,29 @@ import app from '../../constants/app.js';
 
 export default class Header extends Component {
 
+    static propTypes = {
+        playerStatus: React.PropTypes.string,
+        queue: React.PropTypes.array,
+        queueCursor: React.PropTypes.number,
+        shuffle: React.PropTypes.bool,
+        repeat: React.PropTypes.string
+    }
+
     constructor(props) {
 
         super(props);
         this.state = {
             showVolume : false,
             showQueue  : false
-        }
+        };
+        this.mute = this.mute.bind(this);
     }
 
     render() {
 
-        var playButton = (
+        const audio = Player.getAudio();
+
+        let playButton = (
             <button className='player-control play' onClick={ () => this.playToggle() }>
                 <Icon name={ this.props.playerStatus === 'play' ? 'pause' : 'play' } fixedWidth />
             </button>
@@ -39,7 +49,7 @@ export default class Header extends Component {
 
         return (
             <header className='row'>
-                <Col sm={3} className='main-controls'>
+                <Col sm={ 3 } className='main-controls'>
                     <div className='window-controls'>
                         <button className='window-control' onClick={ this.winClose.bind(null) }>&times;</button>
                     </div>
@@ -52,41 +62,42 @@ export default class Header extends Component {
                         <button type='button' className='player-control forward' onClick={ this.next.bind(null) }>
                             <Icon name='forward' />
                         </button>
-                        <button type='button' className='player-control volume' onMouseEnter={ this.showVolume.bind(this) } onMouseLeave={ this.hideVolume.bind(this) } onClick={ (e) => { this.toggleVolume(e) }  }>
-                            <Icon name={ app.audio.volume === 0 ? 'volume-off' : app.audio.volume > 0.5 ? 'volume-up' : 'volume-down' } />
+                        <button type='button' className='player-control volume' onMouseEnter={ this.showVolume.bind(this) } onMouseLeave={ this.hideVolume.bind(this) } onClick={ this.mute }>
+                            <Icon name={ audio.muted || audio.volume === 0 ? 'volume-off' : audio.volume > 0.5 ? 'volume-up' : 'volume-down' } />
                             <div className={ this.state.showVolume ? 'volume-control visible' : 'volume-control' }>
-                                <input type={'range'} min={0} max={1} step={0.01} defaultValue={ app.audio.volume } ref='volume' onChange={ this.setVolume.bind(this) } />
+                                <input type={ 'range' } min={ 0 } max={ 1 } step={ 0.01 } defaultValue={ audio.volume } ref='volume' onChange={ this.setVolume.bind(this) } />
                             </div>
                         </button>
                     </div>
                 </Col>
-                <Col sm={6} className='text-center'>
+                <Col sm={ 6 } className='text-center'>
                     <PlayingBar
-                        playlist={ this.props.playlist }
-                        playlistCursor={ this.props.playlistCursor }
+                        queue={ this.props.queue }
+                        queueCursor={ this.props.queueCursor }
                         shuffle={ this.props.shuffle }
                         repeat={ this.props.repeat }
                     />
                 </Col>
-                <Col sm={1} className='queue-controls text-center'>
+                <Col sm={ 1 } className='queue-controls text-center'>
                     <button type='button' className='queue-toggle' onClick={ this.toggleQueue.bind(this) }>
                         <Icon name='list' />
                     </button>
                     <Queue
                         showQueue={ this.state.showQueue }
-                        playlist={ this.props.playlist }
-                        playlistCursor={ this.props.playlistCursor }
+                        queue={ this.props.queue }
+                        queueCursor={ this.props.queueCursor }
                     />
                 </Col>
-                <Col sm={2}>
+                <Col sm={ 2 }>
                     <Input
                         selectOnClick
                         placeholder='search'
                         className='form-control input-sm search'
-                        changeTimeout={250}
+                        changeTimeout={ 250 }
                         clearButton
                         ref='search'
-                        onChange={ this.search.bind(null) } />
+                        onChange={ this.search.bind(null) }
+                    />
                 </Col>
             </header>
         );
@@ -97,7 +108,7 @@ export default class Header extends Component {
     }
 
     search(value) {
-        AppActions.library.filterSearch(value.toLowerCase())
+        AppActions.library.filterSearch(value.toLowerCase());
     }
 
     searchSelect() {
@@ -130,16 +141,19 @@ export default class Header extends Component {
     }
 
     setVolume() {
-        AppActions.player.setVolume(this.refs.volume.value);
+        AppActions.player.setVolume(parseFloat(this.refs.volume.value));
     }
 
     showVolume() {
         this.setState({ showVolume: true });
     }
 
-    toggleVolume(e) {
-        if(this.oldVolume === undefined) this.oldVolume = app.audio.volume;
-        AppActions.player.setVolume(app.audio.volume === 0 ? this.oldVolume : 0);
+    mute(e) {
+
+        if(e.target.classList.contains('player-control') || e.target.classList.contains('fa')) {
+
+            AppActions.player.setMuted(!Player.getAudio().muted);
+        }
     }
 
     hideVolume() {

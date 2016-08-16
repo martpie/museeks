@@ -1,0 +1,25 @@
+/*
+|--------------------------------------------------------------------------
+| Third Parties
+|--------------------------------------------------------------------------
+*/
+
+.react-simple-input-container {
+    position: relative;
+
+    .react-simple-input {
+        padding: 6px 12px;
+        border: 1px solid #C7C7C7;
+        color: #555;
+    }
+
+    .react-simple-input-clear {
+        position: absolute;
+        right: 6px;
+        top: 2px;
+        font-size: 16px;
+        color: #777;
+        cursor: pointer;
+        padding: 2px;
+    }
+}

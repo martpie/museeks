@@ -14,6 +14,12 @@ import utils from '../../utils/utils';
 
 export default class Queue extends Component {
 
+    static propTypes = {
+        queue: React.PropTypes.array,
+        queueCursor: React.PropTypes.number,
+        showQueue: React.PropTypes.bool
+    }
+
     constructor(props) {
 
         super(props);
@@ -21,20 +27,19 @@ export default class Queue extends Component {
             draggedTrack     : null,
             draggedOverTrack : null,
             draggedBefore    : true
-        }
+        };
     }
 
     render() {
 
-        var self           = this;
-        var playlist       = this.props.playlist;
-        var playlistCursor = this.props.playlistCursor;
+        const self        = this;
+        const queue       = this.props.queue;
+        const queueCursor = this.props.queueCursor;
 
-        var queue = playlist.slice(playlistCursor + 1, playlistCursor + 21); // Get the 20 next tracks displayed
+        const shownQueue = queue.slice(queueCursor + 1, queueCursor + 21); // Get the 20 next tracks displayed
+        const incomingQueue = queue.slice(queueCursor + 1);
 
-        var wholeQueue = playlist.slice(playlistCursor + 1);
-
-        if(queue.length == 0) {
+        if(shownQueue.length === 0) {
             return(
                 <div className={ this.props.showQueue ? 'queue visible text-left' : 'queue text-left' }>
                     <div className='empty-queue text-center'>
@@ -42,35 +47,38 @@ export default class Queue extends Component {
                     </div>
                 </div>
             );
-        } else {
+        }
 
-            var queueContent = queue.map(function (track, index) {
+        // If queue is not empty
+        const queueContent = shownQueue.map((track, index) => {
 
-                var classes = 'track';
+            let classes = 'track';
 
-                if(index === self.state.draggedTrack) {
-                    classes = 'track dragged';
-                } else if (index === self.state.draggedOverTrack) {
-                    if(!self.state.draggedBefore) {
-                        classes = 'track dragged-over-after';
-                    } else {
-                        classes = 'track dragged-over';
-                    }
+            if(index === self.state.draggedTrack) {
+                classes = 'track dragged';
+            } else if (index === self.state.draggedOverTrack) {
+                if(!self.state.draggedBefore) {
+                    classes = 'track dragged-over-after';
+                } else {
+                    classes = 'track dragged-over';
                 }
-                else {
-                    classes = 'track';
-                }
+            } else {
+                classes = 'track';
+            }
 
-                return (
-                    <div key={index}
-                      className={ classes }
-                      onDoubleClick={ AppActions.queue.selectAndPlay.bind(null, self.props.playlistCursor + index + 1) }
-                      draggable={'true'}
-                      onDragStart={ self.dragStart.bind(self, index) }
-                      onDragEnd={ self.dragEnd.bind(self) }>
-                        <Button bsSize={'xsmall'} bsStyle={'link'} className='remove' onClick={ self.removeFromQueue.bind(null, index) }>
-                            &times;
-                        </Button>
+            return (
+                <div key={ index }
+                  className={ classes }
+                  draggable={ 'true' }
+                  onDragStart={ self.dragStart.bind(self, index) }
+                  onDragEnd={ self.dragEnd.bind(self) }
+                >
+                    <Button bsSize={ 'xsmall' } bsStyle={ 'link' } className='remove' onClick={ self.removeFromQueue.bind(null, index) }>
+                        &times;
+                    </Button>
+                    <div className='track-infos'
+                        onDoubleClick={ AppActions.queue.selectAndPlay.bind(null, self.props.queueCursor + index + 1) }
+                    >
                         <div className='title'>
                             { track.title }
                         </div>
@@ -78,23 +86,23 @@ export default class Queue extends Component {
                             <span className='artist'>{ track.artist }</span> - <span className='album'>{ track.album }</span>
                         </div>
                     </div>
-                );
-            });
-        }
+                </div>
+            );
+        });
 
         return (
             <div className={ this.props.showQueue ? 'queue visible text-left' : 'queue text-left' }>
                 <div className='queue-header'>
                     <div className='queue-infos'>
-                        { utils.getStatus(wholeQueue) }
+                        { utils.getStatus(incomingQueue) }
                     </div>
                     <ButtonGroup>
-                        <Button bsSize={'xsmall'} bsStyle={'default'} className='empty-button' onClick={ this.clearQueue }>
+                        <Button bsSize={ 'xsmall' } bsStyle={ 'default' } className='empty-button' onClick={ this.clearQueue }>
                             clear queue
                         </Button>
                     </ButtonGroup>
                 </div>
-                <div className={ this.state.draggedTrack === null ? 'queue-body' : 'queue-body dragging'} onDragOver={ this.dragOver.bind(this) }>
+                <div className={ this.state.draggedTrack === null ? 'queue-body' : 'queue-body dragging' } onDragOver={ this.dragOver.bind(this) }>
                     { queueContent }
                 </div>
             </div>
@@ -117,48 +125,48 @@ export default class Queue extends Component {
         this.draggedIndex = index;
     }
 
-    dragEnd(e) {
+    dragEnd() {
 
-        var playlist       = this.props.playlist;
-        var playlistCursor = this.props.playlistCursor;
+        const queue       = this.props.queue;
+        const queueCursor = this.props.queueCursor;
 
-        var draggedTrack     = this.state.draggedTrack;
-        var draggedOverTrack = this.state.draggedOverTrack
+        const draggedTrack     = this.state.draggedTrack;
+        const draggedOverTrack = this.state.draggedOverTrack;
 
-        var newPlaylist = playlist.slice();
-        var trackToMove = playlist[playlistCursor + 1 + draggedTrack];
-        newPlaylist.splice(playlistCursor + 1 + draggedTrack, 1);
-        newPlaylist.splice(playlistCursor + draggedOverTrack, 0, trackToMove);
+        const newQueue = queue.slice();
+        const trackToMove = queue[queueCursor + 1 + draggedTrack];
+        newQueue.splice(queueCursor + 1 + draggedTrack, 1);
+        newQueue.splice(queueCursor + draggedOverTrack, 0, trackToMove);
 
         this.setState({
             draggedOverTrack : null,
             draggedTrack     : null
         });
 
-        AppActions.queue.setPlaylist(newPlaylist);
+        AppActions.queue.setQueue(newQueue);
     }
 
     dragOver(e) {
 
         e.preventDefault();
 
-        var currentTarget = e.currentTarget;
-        var offsetTop     = currentTarget.parentNode.offsetTop + currentTarget.parentNode.parentNode.offsetTop;
+        const currentTarget = e.currentTarget;
+        const offsetTop     = currentTarget.parentNode.offsetTop + currentTarget.parentNode.parentNode.offsetTop;
 
-        var yEnd  = e.pageY + currentTarget.scrollTop - offsetTop;
-        var limit = currentTarget.scrollHeight - currentTarget.lastChild.offsetHeight / 2;
+        const yEnd  = e.pageY + currentTarget.scrollTop - offsetTop;
+        const limit = currentTarget.scrollHeight - currentTarget.lastChild.offsetHeight / 2;
 
         // If the element is dragged after the half of the last one
-        var draggedBefore = yEnd > limit ? false : true;
-        var draggedOverTrack = Math.ceil((e.pageY + document.querySelector('.queue-body').scrollTop - 75) / 45)
+        const draggedBefore = yEnd > limit ? false : true;
+        const draggedOverTrack = Math.ceil((e.pageY + document.querySelector('.queue-body').scrollTop - 75) / 45);
 
         // souldn't change. Is here otherwise dragOver wouldn't be triggered
-        var index = this.draggedIndex;
+        const index = this.draggedIndex;
 
         this.setState({
+            draggedOverTrack,
+            draggedBefore,
             draggedTrack     : index,
-            draggedOverTrack : draggedOverTrack,
-            draggedBefore    : draggedBefore,
             dragging         : true
         });
     }

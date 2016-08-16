@@ -1,36 +1,43 @@
 # museeks
 
+[![Build Status](https://travis-ci.org/KeitIG/museeks.svg?branch=master)](https://travis-ci.org/KeitIG/museeks)
+[![Dependencies](https://david-dm.org/KeitIG/museeks.svg)](https://github.com/KeitIG/museeks)
 [![Gitter](https://badges.gitter.im/KeitIG/museeks.svg)](https://gitter.im/KeitIG/museeks?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
-![Dependencies](https://david-dm.org/KeitIG/museeks.svg)
 
-A free, lightweight and cross-platform music player. ([http://museeks.io](http://museeks.io))
+A simple, clean and cross-platform music player. ([museeks.io](http://museeks.io))
 
 ![Screenshot](screenshot.png)
 
 It uses:
 * [Node.js](https://nodejs.org/en/) for back-end
 * [electron (used to be atom-shell)](https://github.com/atom/electron/) for embedded browser
-* [React.js](https://facebook.github.io/react/) as front-end framework
+* [React.js](https://facebook.github.io/react/) as front-end framework and [Flux](https://facebook.github.io/flux/) with  [Redux](http://redux.js.org/) as data-flow pattern
 
 ===
 
 ### Features
 
 - Lightweight music player
+- Polished
+- Playlists
 - Queue management
 - Shuffle, loop
 - Dark theme
+- Playback speed control
+- Sleep mode blocker
 - Supported formats:
     - mp3
-    - ogg
+    - mp4
+    - m4a/aac
     - wav
+    - ogg
+    - 3gpp
 
 ===
 
-### Changelog / Roadmap
+### Releases notes
 
-- [Changelog](https://github.com/KeitIG/museeks/releases)
-- [Roadmap](ROADMAP.md)
+- [Releases notes](https://github.com/KeitIG/museeks/releases)
 
 ===
 
@@ -38,31 +45,39 @@ It uses:
 
 #### Classic
 
-Builds can be found [at this page](https://github.com/KeitIG/museeks/releases). Please notive those are only portable versions. Installers may come in the future.
+Builds can be found [at this page](https://github.com/KeitIG/museeks/releases). Please notice those are only portable versions. Installers are on the road.
 
-#### Dev (advanced)
+#### Build (advanced)
 
-- Download [Electron](https://github.com/atom/electron/releases) **there are crashes problems in 0.36.x, don't use it**
+Please consider that **`master` is unstable.**
+
+- Download [Electron](https://github.com/atom/electron/releases)
 - Download Museeks source code
 - Put it in a folder called `app` in `[Electron path]/resources`
-- `bower install && npm install && npm run compile`
+- `npm install && npm run compile`
 - Run Electron
+
+===
+
+### Bug report
+
+If you want to report a bug, first, thanks a lot. To help us, please indicate your OS, your Museeks version, and how to reproduce it. Adding a screen of the console (Settings -> Advanced -> enable dev mode) is a big help too.
 
 ===
 
 ### Contribute
 
 - Fork and clone
-- You will need `bower` and `webpack` installed globally
-- `bower install && npm install && npm run dev`
-- Don't forget to enable dev mode in the app in the settings view
+- Master is usually unstable, checkout to a tag to have a stable state of the app
+- `npm install && npm run dev`
+- Enable dev mode in the app in the settings view to show DevTools
 
 Webpack will watch for JSX and SASS changes.
 
 Please respect a few rules:
 
-- Make the code readable and comment if needed
-- 4 spaces indent !
 - Before making complex stuff, don't hesitate to open an issue first to discuss about it
+- Make the code readable and comment if needed
+- Make sure `npm run lint` passes
 
 Then open a PR :)

@@ -3,14 +3,17 @@ import React, { Component } from 'react';
 import AppActions from '../../actions/AppActions';
 
 
-
 /*
 |--------------------------------------------------------------------------
-| Child - DevMode
+| Child - Advanced Settings
 |--------------------------------------------------------------------------
 */
 
-export default class DevMode extends Component {
+export default class SettingsAdvanced extends Component {
+
+    static propTypes = {
+        config: React.PropTypes.object.isRequired
+    }
 
     constructor(props) {
 
@@ -20,7 +23,7 @@ export default class DevMode extends Component {
 
     render() {
 
-        var config = this.props.config;
+        const config = this.props.config;
 
         return (
             <div className='setting setting-dev-mode'>

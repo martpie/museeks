@@ -11,15 +11,19 @@ import Notification from './Notification.react';
 
 export default class Notifications extends Component {
 
+    static propTypes = {
+        notifications: React.PropTypes.array
+    }
+
     constructor(props) {
 
         super(props);
-        this.state = {}
+        this.state = {};
     }
 
     render() {
 
-        var notifications = this.props.notifications.map((notification, index) => <Notification type={ notification.type } content={ notification.content } key={ index } />);
+        let notifications = this.props.notifications.map((notification, index) => <Notification type={ notification.type } content={ notification.content } key={ index } />);
 
         return (
             <div className='notifications'>

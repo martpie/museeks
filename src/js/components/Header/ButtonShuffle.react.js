@@ -4,7 +4,6 @@ import InlineSVG from 'svg-inline-react';
 import AppActions from '../../actions/AppActions';
 
 
-
 /*
 |--------------------------------------------------------------------------
 | ShuffleButton
@@ -13,16 +12,20 @@ import AppActions from '../../actions/AppActions';
 
 export default class ButtonShuffle extends Component {
 
+    static propTypes = {
+        shuffle: React.PropTypes.bool
+    }
+
     constructor(props) {
 
         super(props);
-        this.state = {}
+        this.state = {};
     }
 
     render() {
 
-        var shuffleButton;
-        var svg = require('../../../images/icons/player-shuffle.svg');
+        let shuffleButton;
+        let svg = require('../../../images/icons/player-shuffle.svg');
 
         if(!this.props.shuffle) {
             shuffleButton = (

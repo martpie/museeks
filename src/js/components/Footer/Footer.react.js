@@ -6,7 +6,6 @@ import Icon from 'react-fontawesome';
 import utils from '../../utils/utils';
 
 
-
 /*
 |--------------------------------------------------------------------------
 | Footer
@@ -14,6 +13,11 @@ import utils from '../../utils/utils';
 */
 
 export default class Footer extends Component {
+
+    static propTypes = {
+        tracks: React.PropTypes.array,
+        refreshingLibrary: React.PropTypes.bool
+    }
 
     constructor(props) {
 
@@ -23,14 +27,19 @@ export default class Footer extends Component {
 
     render() {
 
-        var tracks = this.props.tracks;
-        var status = (tracks !== null) ? utils.getStatus(tracks) : 'An apple a day keeps Dr Dre away';
+        const tracks = this.props.tracks;
+        let status = (tracks !== null) ? utils.getStatus(tracks) : 'An apple a day keeps Dr Dre away';
 
-        var navButtons = (
+        let navButtons = (
             <ButtonGroup className='view-switcher'>
                 <LinkContainer to='/library' disabled={ this.props.refreshingLibrary }>
                     <Button className='view-link'>
                         <Icon name='align-justify' fixedWidth />
+                    </Button>
+                </LinkContainer>
+                <LinkContainer to='/playlists' disabled={ this.props.refreshingLibrary }>
+                    <Button className='view-link'>
+                        <Icon name='star' fixedWidth />
                     </Button>
                 </LinkContainer>
                 <LinkContainer to='/settings' disabled={ this.props.refreshingLibrary }>
@@ -43,10 +52,10 @@ export default class Footer extends Component {
 
         return (
             <footer className='row'>
-                <Col sm={3}>
+                <Col sm={ 3 }>
                     { navButtons }
                 </Col>
-                <Col sm={5} className='status text-center'>
+                <Col sm={ 5 } className='status text-center'>
                     { status }
                 </Col>
             </footer>

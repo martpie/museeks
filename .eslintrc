@@ -1,17 +1,79 @@
 {
-    "ecmaFeatures": {
-        "modules": true,
-        "jsx": true
+    "extends": "eslint:recommended",
+    "parser": "babel-eslint",
+    "parserOptions": {
+        "ecmaVersion": 6,
+        "sourceType": "module",
+        "ecmaFeatures": {
+            "jsx": true,
+            "experimentalObjectRestSpread": true
+        }
     },
     "env": {
         "browser": true,
         "node": true,
         "es6": true
     },
+    "globals": {
+        "electron": true
+    },
     "rules": {
-        "quotes": [0, "double"]
+        "array-bracket-spacing": ["error", "never"],
+        "arrow-parens": ["error", "always"],
+        "arrow-spacing": ["error", { "before": true, "after": true }],
+        "brace-style": ["error", "1tbs"],
+        "comma-style": ["error", "last"],
+        "eqeqeq": "error",
+        "indent": ["error", 4, { "SwitchCase": 1 }],
+        "no-array-constructor": "error",
+        "no-case-declarations": "error",
+        "no-confusing-arrow": "error",
+        "no-console": ["error", { allow: ["info", "warn", "error"] }],
+        "no-else-return": "error",
+        "no-duplicate-imports": "error",
+        "no-multiple-empty-lines": ["error", { "max": 2 }],
+        "no-multi-spaces": ["error", {"exceptions": { "AssignmentExpression": true, "VariableDeclarator": true, "ImportDeclaration": true, "Property": true }}],
+        "no-new-object": "error",
+        "no-param-reassign": "error",
+        "no-unused-vars": ["error", { "vars": "local", "args": "after-used" }],
+        "no-useless-escape": "error",
+        "no-var": 1,
+        "object-curly-spacing": ["error", "always"],
+        "object-shorthand": ["error", "properties"],
+        "prefer-arrow-callback": "error",
+        "prefer-const": "error",
+        "prefer-template": "error",
+        "quotes": ["error", "single"],
+        "semi": ["error", "always"],
+        "space-before-blocks": ["error", "always"],
+        "space-infix-ops": ["error", {"int32Hint": false}],
+        "react/jsx-closing-bracket-location": "error",
+        "react/jsx-curly-spacing": ["error", "always", {"allowMultiline": true}],
+        "react/jsx-filename-extension": ["error", { "extensions": [".react.js", ".js", ".jsx"] }],
+        "react/jsx-no-duplicate-props": "error",
+        "react/jsx-no-undef": "error",
+        "react/jsx-pascal-case": "error",
+        "react/jsx-space-before-closing": "error",
+        "react/jsx-uses-react": "error",
+        "react/jsx-uses-vars": "error",
+        "react/no-danger": "error",
+        "react/no-deprecated": "error",
+        "react/no-did-mount-set-state": "error",
+        "react/no-did-update-set-state": "error",
+        "react/no-direct-mutation-state": "error",
+        "react/no-is-mounted": "error",
+        "react/no-multi-comp": "error",
+        "react/prefer-es6-class": "error",
+        "react/prop-types": "error",
+        "react/require-optimization": 2,
+        "react/require-render-return": "error",
+        "react/self-closing-comp": "error",
+        "import/no-mutable-exports": "error",
+        "import/prefer-default-export": "error",
+        "import/imports-first": "error"
     },
     "plugins": [
-        "react"
+        "react",
+        "import"
     ]
 }

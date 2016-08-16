@@ -1,48 +1,54 @@
-import AppDispatcher from '../dispatcher/AppDispatcher';
+import store from '../store.js';
 import AppConstants  from '../constants/AppConstants';
 
+import app from '../lib/app';
 
 
 export default {
 
     selectAndPlay: function(index) {
-        AppDispatcher.dispatch({
-            actionType : AppConstants.APP_QUEUE_PLAY,
-            index      : index
+        store.dispatch({
+            type : AppConstants.APP_QUEUE_PLAY,
+            index
         });
     },
 
     clear: function() {
-        AppDispatcher.dispatch({
-            actionType : AppConstants.APP_QUEUE_CLEAR
+        store.dispatch({
+            type : AppConstants.APP_QUEUE_CLEAR
         });
     },
 
     remove: function(index) {
-        AppDispatcher.dispatch({
-            actionType : AppConstants.APP_QUEUE_REMOVE,
-            index      : index
+        store.dispatch({
+            type : AppConstants.APP_QUEUE_REMOVE,
+            index
         });
     },
 
-    add: function(selected) {
-        AppDispatcher.dispatch({
-            actionType : AppConstants.APP_QUEUE_ADD,
-            selected   : selected
+    add: function(tracksIds) {
+        app.db.find({ type: 'track', _id: { $in: tracksIds } }, (err, tracks) => {
+            store.dispatch({
+                type : AppConstants.APP_QUEUE_ADD,
+                tracks
+            });
+        });
+
+    },
+
+    addNext: function(tracksIds) {
+        app.db.find({ type: 'track', _id: { $in: tracksIds } }, (err, tracks) => {
+            store.dispatch({
+                type : AppConstants.APP_QUEUE_ADD_NEXT,
+                tracks
+            });
         });
     },
 
-    addNext: function(selected) {
-        AppDispatcher.dispatch({
-            actionType : AppConstants.APP_QUEUE_ADD_NEXT,
-            selected   : selected
-        });
-    },
-
-    setPlaylist: function(playlist) {
-        AppDispatcher.dispatch({
-            actionType : AppConstants.APP_QUEUE_SET_PLAYLIST,
-            playlist   : playlist
+    setQueue: function(queue) {
+        store.dispatch({
+            type : AppConstants.APP_QUEUE_SET_QUEUE,
+            queue
         });
     }
-}
+};

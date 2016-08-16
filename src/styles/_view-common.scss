@@ -1,0 +1,67 @@
+
+/*
+|--------------------------------------------------------------------------
+| View - General
+|--------------------------------------------------------------------------
+*/
+
+#wrap,
+.main,
+.main-content,
+.content,
+.view,
+.columns {
+    height: 100%;
+    max-height: 100%;
+}
+
+.view {
+    overflow: auto;
+    position: relative;
+
+    &.view-withpadding {
+        padding: 15px;
+    }
+}
+
+.main-content {
+    padding-bottom: 84px;
+}
+
+.content {
+    padding: 0;
+
+    h2 {
+        margin-top: 0;
+    }
+
+    .btn .fa {
+        display: inline-block;
+        margin-right: 12px;
+    }
+}
+
+.full-message {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    font-size: 25px;
+    color: #AAA;
+    font-weight: 100;
+    padding: 30px;
+    margin: auto;
+    text-align: center;
+
+    .sub-message {
+        font-size: 70%;
+    }
+
+    a {
+        cursor: pointer;
+
+        &:hover {
+            text-decoration: none;
+        }
+    }
+}

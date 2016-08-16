@@ -1,22 +1,21 @@
-import AppDispatcher from '../dispatcher/AppDispatcher';
-import AppConstants  from '../constants/AppConstants';
-
-import app from '../constants/app.js';
-
-const globalShortcut = electron.remote.globalShortcut;
-const ipcRenderer    = electron.ipcRenderer;
+import Player from '../lib/player';
+import app    from '../lib/app';
 
 import LibraryActions       from './LibraryActions';
+import PlaylistsActions     from './PlaylistsActions';
 import NotificationsActions from './NotificationsActions';
 import PlayerActions        from './PlayerActions';
 import QueueActions         from './QueueActions';
 import SettingsActions      from './SettingsActions';
 
+const globalShortcut = electron.remote.globalShortcut;
+const ipcRenderer    = electron.ipcRenderer;
 
 
-var AppActions = {
+const AppActions = {
 
     player        : PlayerActions,
+    playlists     : PlaylistsActions,
     queue         : QueueActions,
     library       : LibraryActions,
     settings      : SettingsActions,
@@ -25,29 +24,59 @@ var AppActions = {
     init: function() {
 
         // Usual tasks
-        this.library.refreshTracks();
-        this.settings.checkTheme();
-        this.settings.checkDevMode();
+        this.library.load();
+        this.playlists.refresh();
+        this.settings.check();
         this.app.initShortcuts();
         this.app.start();
 
+        // Bind player events
+        // Audio Events
+        Player.getAudio().addEventListener('ended', AppActions.player.next);
+        Player.getAudio().addEventListener('error', AppActions.player.audioError);
+        Player.getAudio().addEventListener('play', () => {
+            ipcRenderer.send('playerAction', 'play');
+        });
+        Player.getAudio().addEventListener('pause', () => {
+            ipcRenderer.send('playerAction', 'pause');
+        });
+
+        // Listen for main-process events
+        ipcRenderer.on('playerAction', (event, reply) => {
+
+            switch(reply) {
+                case 'play':
+                    AppActions.player.play();
+                    break;
+                case 'pause':
+                    AppActions.player.pause();
+                    break;
+                case 'prev':
+                    AppActions.player.previous();
+                    break;
+                case 'next':
+                    AppActions.player.next();
+                    break;
+            }
+        });
+
         // Prevent some events
-        window.addEventListener('dragover', function (e) {
+        window.addEventListener('dragover', (e) => {
             e.preventDefault();
         }, false);
 
-        window.addEventListener('drop', function (e) {
+        window.addEventListener('drop', (e) => {
             e.preventDefault();
         }, false);
 
         // Remember dimensions and positionning
-        var currentWindow = app.browserWindows.main;
+        const currentWindow = app.browserWindows.main;
 
-        currentWindow.on('resize', function() {
+        currentWindow.on('resize', () => {
             AppActions.app.saveBounds();
         });
 
-        currentWindow.on('move', function() {
+        currentWindow.on('move', () => {
             AppActions.app.saveBounds();
         });
     },
@@ -72,8 +101,8 @@ var AppActions = {
 
         saveBounds: function() {
 
-            var self = AppActions;
-            var now = window.performance.now();
+            const self = AppActions;
+            const now = window.performance.now();
 
             if (now - self.lastFilterSearch < 250) {
                 clearTimeout(self.filterSearchTimeOut);
@@ -92,45 +121,17 @@ var AppActions = {
         initShortcuts: function() {
 
             // Global shortcuts
-            globalShortcut.register('MediaPlayPause', function () {
+            globalShortcut.register('MediaPlayPause', () => {
                 AppActions.player.playToggle();
             });
 
-            globalShortcut.register('MediaPreviousTrack', function () {
+            globalShortcut.register('MediaPreviousTrack', () => {
                 AppActions.player.previous();
             });
 
-            globalShortcut.register('MediaNextTrack', function () {
+            globalShortcut.register('MediaNextTrack', () => {
                 AppActions.player.next();
             });
-        },
-
-        checkForUpdate: function() {
-
-            var currentVersion = electron.remote.app.getVersion();
-
-            var oReq = new XMLHttpRequest();
-
-            oReq.onload = function (e) {
-                var releases = e.target.response.message;
-
-                var updateVersion = null;
-                var isUpdateAvailable = releases.some((release) => {
-                    if(release.tag_name > currentVersion) {
-                        updateVersion = release.tag_name;
-                        return true;
-                    } else {
-                        return false;
-                    }
-                });
-
-                if(isUpdateAvailable) AppActions.notifications.add('success', 'Museeks ' + updateVersion + ' is available, check http://museeks.io !');
-                else AppActions.notifications.add('success', 'Museeks ' + currentVersion + ' is the latest version available.');
-            };
-
-            oReq.open('GET', 'https://api.github.com/repos/KeitIG/museeks/releases', true);
-            oReq.responseType = 'json';
-            oReq.send();
         }
     }
 };

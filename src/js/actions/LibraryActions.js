@@ -1,178 +1,160 @@
-import AppDispatcher from '../dispatcher/AppDispatcher';
+import store from '../store.js';
+
 import AppConstants  from '../constants/AppConstants';
+import AppActions    from './AppActions';
 
-import app from '../constants/app.js';
+import app   from '../lib/app';
+import utils from '../utils/utils';
 
-import mmd      from 'musicmetadata';
-import fs       from 'fs';
 import path     from 'path';
-import mime     from 'mime';
-import walkSync from 'walk-sync';
+import globby   from 'globby';
+import Promise  from 'bluebird';
 
 const dialog = electron.remote.dialog;
 
 
-
 export default {
 
-    refreshTracks: function() {
-        app.db.find({}).sort({ 'lArtist': 1, 'year': 1, 'album': 1, 'disk': 1, 'track.no': 1 }).exec(function (err, tracks) {
-            if (err) throw err;
+    load: function() {
+
+        app.db.find({ type : 'track' }).sort({ 'loweredMetas.artist': 1, 'year': 1, 'loweredMetas.album': 1, 'disk.no': 1, 'track.no': 1 }).exec((err, tracks) => {
+            if (err) console.warn(err);
             else {
-                AppDispatcher.dispatch({
-                    actionType : AppConstants.APP_REFRESH_LIBRARY,
-                    tracks     : tracks
+                store.dispatch({
+                    type : AppConstants.APP_REFRESH_LIBRARY,
+                    tracks
                 });
             }
         });
     },
 
-    selectAndPlay: function(id) {
+    setTracksCursor: function(cursor) {
+        store.dispatch({
+            type : AppConstants.APP_LIBRARY_SET_TRACKSCURSOR,
+            cursor
+        });
+    },
 
-        AppDispatcher.dispatch({
-            actionType : AppConstants.APP_SELECT_AND_PLAY,
-            id         : id
+    resetTracks: function() {
+        store.dispatch({
+            type : AppConstants.APP_REFRESH_LIBRARY,
+            tracks : null
+        });
+    },
+
+    selectAndPlay: function(_id) {
+
+        store.dispatch({
+            type : AppConstants.APP_SELECT_AND_PLAY,
+            _id
         });
     },
 
     filterSearch: function(search) {
 
-        AppDispatcher.dispatch({
-            actionType : AppConstants.APP_FILTER_SEARCH,
-            search     : search
+        store.dispatch({
+            type : AppConstants.APP_FILTER_SEARCH,
+            search
         });
     },
 
-    addFolders(folders) {
+    addFolders: function() {
 
-        dialog.showOpenDialog({ properties: ['openDirectory', 'multiSelections']}, (folders) => {
+        dialog.showOpenDialog({ properties: ['openDirectory', 'multiSelections'] }, (folders) => {
             if(folders !== undefined) {
-                AppDispatcher.dispatch({
-                    actionType : AppConstants.APP_LIBRARY_ADD_FOLDERS,
-                    folders    : folders
+                store.dispatch({
+                    type : AppConstants.APP_LIBRARY_ADD_FOLDERS,
+                    folders
                 });
             }
         });
     },
 
-    removeFolder(index) {
-        AppDispatcher.dispatch({
-            actionType : AppConstants.APP_LIBRARY_REMOVE_FOLDER,
-            index      : index
+    removeFolder: function(index) {
+        store.dispatch({
+            type : AppConstants.APP_LIBRARY_REMOVE_FOLDER,
+            index
         });
     },
 
-    reset() {
-        AppDispatcher.dispatch({
-            actionType : AppConstants.APP_LIBRARY_REFRESH_START,
+    reset: function() {
+        store.dispatch({
+            type : AppConstants.APP_LIBRARY_REFRESH_START,
         });
 
-        app.db.remove({ }, { multi: true }, function (err, numRemoved) {
-            app.db.loadDatabase(function (err) {
+        app.db.remove({ }, { multi: true }, (err) => {
+            if(err) console.error(err);
+            app.db.loadDatabase((err) => {
                 if(err) {
-                    throw err
+                    console.warn(err);
                 } else {
-                    AppActions.library.refreshTracks();
-                    AppDispatcher.dispatch({
-                        actionType : AppConstants.APP_LIBRARY_REFRESH_END,
+                    AppActions.library.load();
+                    store.dispatch({
+                        type : AppConstants.APP_LIBRARY_REFRESH_END,
                     });
                 }
             });
         });
     },
 
-    refresh() {
-
-        var folders = app.config.get('musicFolders');
-
-        AppDispatcher.dispatch({
-            actionType : AppConstants.APP_LIBRARY_REFRESH_START
+    refresh: function() {
+        store.dispatch({
+            type : AppConstants.APP_LIBRARY_REFRESH_START
         });
+
+        const dispatchEnd = function() {
+            store.dispatch({
+                type : AppConstants.APP_LIBRARY_REFRESH_END
+            });
+        };
+        const folders = app.config.get('musicFolders');
+        const supportedExtensionsGlob = `**/*.{${ app.supportedExtensions.join() }}`;
+        const fsConcurrency = 64;
+
+        const getMetadataAsync = function(track) {
+            return new Promise((resolve) => {
+                utils.getMetadata(track, resolve);
+            });
+        };
 
         // Start the big thing
-        app.db.remove({ }, { multi: true }, function (err, numRemoved) {
-            app.db.loadDatabase(function (err) {
-                if(err) throw err;
-                else {
-
-                    var filesList = [];
-
-                    // Loop through folders
-                    folders.forEach(function(folder, index, folders) {
-                        // Get the list of files
-                        filesList = filesList.concat(walkSync(folder, { directories: false }).map((d) =>  path.join(folder, d)));
-                    });
-
-                    var filesListFiltered = [];
-
-                    // Get the metadatas of all the files
-                    filesList.forEach((file, i) => {
-                        if(app.supportedFormats.indexOf(mime.lookup(file)) > -1) filesListFiltered.push(file);
-                    });
-
-                    if(filesListFiltered.length > 0) {
-                        // Fake sync async loop
-                        (function forloop(i){
-                            if(i < filesListFiltered.length) {
-
-                                var file   = filesListFiltered[i];
-                                var stream = fs.createReadStream(file);
-
-                                // store in DB here
-                                mmd(stream, { duration: true }, function (err, metadata) {
-
-                                    AppActions.settings.refreshProgress(parseInt(i * 100 / filesListFiltered.length));
-
-                                    forloop(i + 1);
-                                    if(err) console.warn('An error occured while reading ' + file + ' id3 tags: ' + err);
-
-                                    delete metadata.picture;
-
-                                    fs.realpath(file, (err, realpath) => {
-
-                                        if(err) console.warn(err);
-
-                                        metadata.path = realpath
-                                        metadata.lArtist = metadata.artist.length === 0 ? ['unknown artist'] : metadata.artist[0].toLowerCase();
-
-                                        if(metadata.artist.length === 0) metadata.artist = ['Unknown artist'];
-                                        if(metadata.album === null || metadata.album === '') metadata.album = 'Unknown';
-                                        if(metadata.title === null || metadata.title === '') metadata.title = path.parse(file).base;
-                                        if(metadata.duration == '') metadata.duration = 0;
-
-                                        app.db.find({ path: metadata.path }, function (err, docs) {
-                                            if(err) console.warn(err);
-                                            if(docs.length === 0) { // Track is not already in database
-                                                // Let's insert in the data
-                                                app.db.insert(metadata, function (err, newDoc) {
-                                                    if(err) console.warn(err);
-                                                    if(i === filesListFiltered.length - 1) {
-                                                        AppActions.library.refreshTracks();
-                                                        AppDispatcher.dispatch({
-                                                            actionType : AppConstants.APP_LIBRARY_REFRESH_END
-                                                        });
-                                                    }
-                                                });
-                                            } else {
-                                                if(i === filesListFiltered.length - 1) {
-                                                    AppActions.library.refreshTracks();
-                                                    AppDispatcher.dispatch({
-                                                        actionType : AppConstants.APP_LIBRARY_REFRESH_END
-                                                    });
-                                                }
-                                            }
-                                        }); // db.find
-                                    }); // fs.realpath
-                                }); // mmd
-                            }
-                        })(0);
-                    } else {
-                        AppDispatcher.dispatch({
-                            actionType : AppConstants.APP_LIBRARY_REFRESH_END
-                        });
-                    }
-                }
+        app.db.removeAsync({ type : 'track' }, { multi: true }).then(() => {
+            return app.db.loadDatabaseAsync();
+        }).then(() => {
+            return Promise.map(folders, (folder) => {
+                const pattern = path.join(folder, supportedExtensionsGlob);
+                return globby(pattern, { nodir: true, follow: true });
             });
+        }).then((filesArrays) => {
+            return filesArrays.reduce((acc, array) => {
+                return acc.concat(array);
+            }, []);
+        }).then((supportedFiles) => {
+
+            if (supportedFiles.length === 0) {
+                dispatchEnd();
+                return;
+            }
+
+            let filesInLibrary = 0;
+            return Promise.map(supportedFiles, (filePath) => {
+                return app.db.findAsync({ path: filePath }).then((docs) => {
+                    if (docs.length === 0) {
+                        return getMetadataAsync(filePath);
+                    }
+                    return docs[0];
+                }).then((metadata) => {
+                    return app.db.insertAsync(metadata);
+                }).then(() => {
+                    AppActions.settings.refreshProgress(parseInt(filesInLibrary * 100 / supportedFiles.length));
+                    filesInLibrary++;
+                });
+            }, { concurrency: fsConcurrency });
+        }).then(() => {
+            AppActions.library.load();
+            dispatchEnd();
+        }).catch((err) => {
+            console.warn(err);
         });
     }
-}
+};

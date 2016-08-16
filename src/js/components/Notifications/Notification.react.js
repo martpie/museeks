@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
 
-
 /*
 |--------------------------------------------------------------------------
 | Notification
@@ -10,19 +9,24 @@ import React, { Component } from 'react';
 
 export default class Notifications extends Component {
 
+    static propTypes = {
+        type: React.PropTypes.string,
+        content: React.PropTypes.string
+    }
+
     constructor(props) {
 
         super(props);
-        this.state = {}
+        this.state = {};
     }
 
     render() {
 
-        var type = this.props.type,
-            content = this.props.content;
+        const type = this.props.type;
+        const content = this.props.content;
 
         return (
-            <div className={ 'alert alert-' + type }>
+            <div className={ `alert alert-${type}` }>
                 { content }
             </div>
         );

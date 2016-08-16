@@ -3,14 +3,17 @@ import React, { Component } from 'react';
 import AppActions from '../../actions/AppActions';
 
 
-
 /*
 |--------------------------------------------------------------------------
-| Child - ThemeSelector - manage theme
+| Child - UI Settings
 |--------------------------------------------------------------------------
 */
 
-export default class ThemeSelector extends Component {
+export default class SettingsUI extends Component {
+
+    static propTypes = {
+        config: React.PropTypes.object.isRequired
+    }
 
     constructor(props) {
 
@@ -20,10 +23,10 @@ export default class ThemeSelector extends Component {
 
     render() {
 
-        var config = this.props.config;
+        const config = this.props.config;
 
         return (
-            <div className='setting setting-theme-selector'>
+            <div className='setting setting-interface'>
                 <div className='setting-section'>
                     <h4>Theme</h4>
                     <div className='checkbox'>
@@ -33,10 +36,19 @@ export default class ThemeSelector extends Component {
                         </div>
                 </div>
                 <div className='setting-section'>
-                    <h4>Sleep mode</h4>
+                    <h4>Sleep mode blocker</h4>
                     <div className='checkbox'>
                         <label>
-                            <input type='checkbox' onClick={ this.toggleSleepBlocker } defaultChecked={ config.sleepBlocker } /> Prevent the computer to go in sleep mode
+                            <input type='checkbox' onClick={ this.toggleSleepBlocker } defaultChecked={ config.sleepBlocker } /> Prevent the computer from going into sleep
+                             mode
+                            </label>
+                        </div>
+                </div>
+                <div className='setting-section'>
+                    <h4>Auto update check</h4>
+                    <div className='checkbox'>
+                        <label>
+                            <input type='checkbox' onClick={ this.toggleAutoUpdateChecker } defaultChecked={ config.autoUpdateChecker } /> Automatically check for update on startup
                             </label>
                         </div>
                 </div>
@@ -49,6 +61,10 @@ export default class ThemeSelector extends Component {
     }
 
     toggleSleepBlocker() {
-        AppActions.settings.toggleSleepBlocker('prevent-app-suspension');
+        AppActions.settings.toggleSleepBlocker();
+    }
+
+    toggleAutoUpdateChecker() {
+        AppActions.settings.toggleAutoUpdateChecker();
     }
 }

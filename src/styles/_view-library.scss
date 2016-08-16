@@ -1,0 +1,101 @@
+/*
+|--------------------------------------------------------------------------
+| View - LibraryList
+|--------------------------------------------------------------------------
+*/
+
+.view-library,
+.view-playlists {
+    overflow: hidden;
+
+    .tracks-list-container {
+        outline: none;
+        height: calc(100% - 26px);
+        max-height: calc(100% - 26px);
+
+        .tracks-list-header {
+            position: fixed;
+            top: 52px;
+            border-bottom: 1px solid rgb(210, 210, 210);
+            color: #555;
+            display: flex;
+            width: calc(100% - 2px);
+            background-color: white;
+            z-index: 20;
+
+            .track-cell-header {
+                font-weight: 700;
+                padding: 0 4px;
+                cursor: default;
+                margin: 4px 0;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+
+                &:not(:last-child) {
+                    border-right: 1px solid #D2D2D2;
+                }
+
+                &:last-child {
+                    margin-right: 4px;
+                }
+            }
+        }
+
+        .tracks-list-body {
+            height: 100%;
+            max-height: 100%;
+            margin-top: 26px;
+            overflow: auto;
+
+            .tracks-list-tiles {
+                position: relative;
+
+                .tracks-list-tile {
+                    position: absolute;
+                    width: 100%;
+                    z-index: 10;
+
+                    .track {
+                        display: flex;
+
+                        &:nth-child(odd) {
+                            background-color: #FAFAFA;
+                        }
+
+                        &.selected {
+                            background-color: $main-color;
+                            color: white;
+                        }
+
+                        .cell {
+                            padding: 4px;
+                            cursor: default;
+                            white-space: nowrap;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                        }
+                    }
+                }
+            }
+        }
+
+        .cell-track-playing {
+            width: 30px;
+        }
+
+        .cell-track {
+            width: calc(33% - 30px);
+        }
+
+        .cell-duration {
+            width: 7%;
+        }
+
+        .cell-artist,
+        .cell-album,
+        .cell-genre {
+            width: 20%;
+        }
+    }
+}
