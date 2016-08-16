@@ -39,7 +39,7 @@ function getDirectories(srcpath) {
 const options = {
     // required
     'dir'           :  './',
-    'name'          :  'museeks',
+    'name'          :  'Museeks',
     'platform'      : ['darwin', 'win32', 'linux'],
     'arch'          : ['ia32', 'x64'],
     'version'       :  '1.3.3',
