@@ -1,6 +1,6 @@
 {
   "name": "museeks",
-  "version": "0.6.2",
+  "version": "0.6.3",
   "description": "A simple, clean and cross-platform music player, written with Node.js, Electron and React.js.",
   "main": "./src/main-process/main.js",
   "repository": {
