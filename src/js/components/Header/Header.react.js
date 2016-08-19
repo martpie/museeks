@@ -65,7 +65,7 @@ export default class Header extends Component {
                         <button type='button' className='player-control volume' onMouseEnter={ this.showVolume.bind(this) } onMouseLeave={ this.hideVolume.bind(this) } onClick={ this.mute }>
                             <Icon name={ audio.muted || audio.volume === 0 ? 'volume-off' : audio.volume > 0.5 ? 'volume-up' : 'volume-down' } />
                             <div className={ this.state.showVolume ? 'volume-control visible' : 'volume-control' }>
-                                <input type={ 'range' } min={ 0 } max={ 1 } step={ 0.01 } defaultValue={ audio.volume } ref='volume' onChange={ this.setVolume.bind(this) } />
+                                <input type={ 'range' } min={ 0 } max={ 1 } step={ 0.01 } defaultValue={ Math.pow(audio.volume, 1 / 4) } ref='volume' onChange={ this.setVolume.bind(this) } />
                             </div>
                         </button>
                     </div>

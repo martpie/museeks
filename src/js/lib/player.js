@@ -8,7 +8,7 @@ class Player {
         this.audio = new Audio();
 
         this.audio.playbackRate = options.playbackRate || 1;
-        this.audio.volume = options.playbackRate || 1;
+        this.audio.volume = options.volume || 1;
         this.audio.muted = options.muted || false;
     }
 

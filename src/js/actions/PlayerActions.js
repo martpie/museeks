@@ -62,7 +62,7 @@ export default {
 
             Player.setAudioVolume(volume);
 
-            app.config.set('audioVolume', volume);
+            app.config.set('audioVolume', Math.pow(volume, 4));
             app.config.saveSync();
             store.dispatch({
                 type : AppConstants.APP_REFRESH_CONFIG
