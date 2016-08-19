@@ -7,8 +7,9 @@ class Player {
 
         this.audio = new Audio();
 
+        this.audio.defaultPlaybackRate = options.playbackRate || 1;
         this.audio.playbackRate = options.playbackRate || 1;
-        this.audio.volume = options.playbackRate || 1;
+        this.audio.volume = options.volume || 1;
         this.audio.muted = options.muted || false;
     }
 
@@ -42,6 +43,7 @@ class Player {
 
     setAudioPlaybackRate(playbackRate) {
         this.audio.playbackRate = playbackRate;
+        this.audio.defaultPlaybackRate = playbackRate;
     }
 
     setAudioSrc(src) {
