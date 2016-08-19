@@ -68,13 +68,29 @@
 
         .delete-libray-folder {
             margin-right: 5px;
-            color: #d9534f;
+            color: $danger-red;
             cursor: pointer;
 
             &.disabled {
                 color: #CCC;
                 cursor: default;
             }
+        }
+    }
+
+    .library-current-files {
+        margin: 10px 0 10px;
+        padding: 10px;
+        border: 1px solid lightgrey;
+    }
+
+    .library-refresh-errors {
+        border: 1px solid $danger-red;
+        margin: 10px 0 10px;
+        padding: 10px;
+
+        .processing-error {
+
         }
     }
 

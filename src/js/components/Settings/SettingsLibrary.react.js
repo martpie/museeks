@@ -55,6 +55,32 @@ export default class SettingsLibrary extends Component {
             );
         });
 
+        const refreshingFiles = self.props.refreshingFiles === null ? null : (
+          <div>
+              <div className='library-current-files'>
+                  <span>File { self.props.refreshingFiles.index } of { self.props.refreshingFiles.of }. </span>
+                  <span>{ self.props.refreshingFiles.current }</span>
+              </div>
+          </div>
+        );
+
+        const refreshingErrors = self.props.refreshingErrors.length === 0 ? null : (
+            <div className='library-refresh-errors'>
+                <span>There were problems processing these files:</span>
+                {
+                    self.props.refreshingErrors.map((error, index) => {
+                        return (
+                            <div key={ index } className='processing-error'>
+                                <span>{ index + 1 }. </span>
+                                <span>{ error.file }: </span>
+                                <span>{ error.error.message }</span>
+                            </div>
+                        );
+                    })
+                }
+            </div>
+        );
+
         return (
             <div className='setting settings-musicfolder'>
                 <div className='setting-section'>
@@ -65,6 +91,8 @@ export default class SettingsLibrary extends Component {
                     </ul>
                     { buttonsGroup }
                     <ProgressBar className={ this.props.refreshingLibrary ? 'library-refresh-progress' : 'library-refresh-progress hidden' } now={ this.props.refreshProgress } />
+                    { refreshingFiles }
+                    { refreshingErrors }
                 </div>
             </div>
         );
