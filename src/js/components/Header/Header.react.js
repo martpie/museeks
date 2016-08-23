@@ -70,7 +70,7 @@ export default class Header extends Component {
                         </button>
                     </div>
                 </Col>
-                <Col sm={ 6 } className='text-center'>
+                <Col sm={ 6 }>
                     <PlayingBar
                         queue={ this.props.queue }
                         queueCursor={ this.props.queueCursor }

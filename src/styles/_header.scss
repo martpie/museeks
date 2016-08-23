@@ -29,7 +29,8 @@ header {
 header {
     border-bottom: 1px solid rgb(210, 210, 210);
     background-color: rgb(244, 244, 244);
-    padding: 10px;
+    padding: 0 10px;
+    height: 51px;
     display: flex;
     align-items: center;
     color: #555;
@@ -116,21 +117,23 @@ header {
 
     .now-playing {
         display: flex;
+        align-items: center;
 
         &.dragging {
             -webkit-app-region: no-drag;
         }
 
         .now-playing-cover {
-            width: 30px;
-            height: 30px;
+            width: 42px;
+            height: 42px;
             margin-right: 10px;
             background-position: center;
             background-size: cover;
         }
 
         .now-playing-infos {
-            width: calc(100% - 40px);
+            padding: 10px 0;
+            width: calc(100% - 60px);
 
             .now-playing-metas {
                 display: flex;
