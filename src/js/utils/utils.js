@@ -69,6 +69,18 @@ const utils = {
     },
 
     /**
+     * Parse data to be used by img/background-image with base64
+     *
+     * @param string format of the image
+     * @param string data base64 string
+     * @return string
+     */
+    parseBase64: function(format, data) {
+
+        return `data:image/${format};base64,${data}`;
+    },
+
+    /**
      * Sort an array of int by ASC or DESC, then remove all duplicates
      *
      * @param array  array of int to be sorted

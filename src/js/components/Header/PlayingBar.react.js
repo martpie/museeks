@@ -42,7 +42,7 @@ export default class PlayingBar extends Component {
 
         const trackPlaying =  this.props.queue[this.props.queueCursor];
 
-        this.coverBase64 = trackPlaying && trackPlaying.cover ? `data:image/${trackPlaying.cover.format};base64,${trackPlaying.cover.data}` : '';
+        this.coverBase64 = trackPlaying && trackPlaying.cover ? utils.parseBase64(trackPlaying.cover.format, trackPlaying.cover.data) : '';
     }
 
     render() {
@@ -118,7 +118,7 @@ export default class PlayingBar extends Component {
 
         const trackPlaying =  nextProps.queue[nextProps.queueCursor];
 
-        this.coverBase64 = trackPlaying && trackPlaying.cover ? `data:image/${trackPlaying.cover.format};base64,${trackPlaying.cover.data}` : '';
+        this.coverBase64 = trackPlaying && trackPlaying.cover ? utils.parseBase64(trackPlaying.cover.format, trackPlaying.cover.data) : '';
     }
 
     tick() {

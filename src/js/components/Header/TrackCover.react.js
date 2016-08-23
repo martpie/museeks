@@ -20,7 +20,13 @@ export default class PlayingBar extends Component {
 
     render() {
 
-        if(this.props.cover) return <div className='cover' style={ { backgroundImage: `url(${this.props.cover})` } }></div>;
+
+        if(this.props.cover) {
+
+            const styles = { backgroundImage: `url(${this.props.cover})` };
+
+            return <div className='cover' style={ styles }></div>;
+        }
 
         return(
             <div className='cover empty'>
