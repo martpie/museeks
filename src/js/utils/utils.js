@@ -199,6 +199,7 @@ const utils = {
                     album        : 'Unknown',
                     albumartist  : [],
                     artist       : ['Unknown artist'],
+                    cover        : null,
                     disk         : {
                         no: 0,
                         of: 0
@@ -240,6 +241,7 @@ const utils = {
                     album        : data.album === null || data.album === '' ? 'Unknown' : data.album,
                     albumartist  : data.albumartist,
                     artist       : data.artist.length === 0 ? ['Unknown artist'] : data.artist,
+                    cover        : data.picture[0] ? { format: data.picture[0].format, data: data.picture[0].data.toString('base64') } : null,
                     disk         : data.disk,
                     duration     : data.duration === '' ? 0 : data.duration,
                     genre        : data.genre,

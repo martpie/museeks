@@ -115,122 +115,135 @@ header {
     /* .windows-controls */
 
     .now-playing {
+        display: flex;
 
         &.dragging {
             -webkit-app-region: no-drag;
         }
 
-        .now-playing-infos {
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .now-playing-cover {
+            width: 30px;
+            height: 30px;
+            margin-right: 10px;
+            background-position: center;
+            background-size: cover;
+        }
 
-            .pf {
+        .now-playing-infos {
+            width: calc(100% - 40px);
+
+            .now-playing-metas {
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                height: 16px;
-                width: 16px;
-            }
 
-            .player-options {
-                display: flex;
-                align-items: center;
-                justify-content: flex-start;
-                min-width: 100px;
+                .pf {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    height: 16px;
+                    width: 16px;
+                }
 
-                .button {
-                    border: 0;
-                    background: transparent;
-                    font-size: 18px;
-                    -webkit-app-region: no-drag;
+                .player-options {
+                    display: flex;
+                    align-items: center;
+                    justify-content: flex-start;
+                    min-width: 100px;
 
-                    &.active {
+                    .button {
+                        border: 0;
+                        background: transparent;
+                        font-size: 18px;
+                        -webkit-app-region: no-drag;
+
+                        &.active {
+
+                            svg {
+                                fill: #337ab7;
+                            }
+                        }
 
                         svg {
-                            fill: #337ab7;
+                            width: 16px;
+                            height: auto;
                         }
                     }
+                }
 
-                    svg {
-                        width: 16px;
-                        height: auto;
+                .metas {
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    vertical-align: middle;
+                    text-align: center;
+                    width: calc(100% - 200px);
+                }
+
+                .duration {
+                    display: inline-block;
+                    padding: 0 6px;
+                    font-size: 10px;
+                    min-width: 100px;
+                    text-align: right;
+                }
+            }
+
+            .now-playing-bar {
+                padding: 2px;
+
+                .playing-bar-tooltip {
+                    position: fixed;
+                    background-color: #FFF;
+                    border: 1px solid #CECECE;
+                    color: #555;
+                    font-size: 10px;
+                    padding: 2px 5px;
+                    top: 10px;
+
+                    &::before,
+                    &::after {
+                        content: "";
+                        position: absolute;
+                        width: 0;
+                        height: 0;
+                        border-style: solid;
+                        border-color: transparent;
+                        border-bottom: 0;
+                    }
+
+                    /* Stroke */
+                    &::before {
+                        top: 18px;
+                        left: 5px;
+
+                        /* If 1px darken stroke slightly */
+                        border-top-color: #CECECE;
+                        border-width: 6px;
+                    }
+
+                    /* Fill */
+                    &::after {
+                        top: 18px;
+                        left: 6px;
+                        border-top-color: #FFF;
+                        border-width: 5px;
                     }
                 }
-            }
 
-            .metas {
-                white-space: nowrap;
-                text-overflow: ellipsis;
-                overflow: hidden;
-                vertical-align: middle;
-                text-align: center;
-                width: calc(100% - 200px);
-            }
+                .progress {
+                    height: 5px;
+                    margin-bottom: 0;
+                    margin-top: 3px;
+                    cursor: pointer;
+                    background-color: rgb(219, 219, 219);
 
-            .duration {
-                display: inline-block;
-                padding: 0 6px;
-                font-size: 10px;
-                min-width: 100px;
-                text-align: right;
-            }
-        }
-
-        .now-playing-bar {
-            padding: 2px;
-
-            .playing-bar-tooltip {
-                position: fixed;
-                background-color: #FFF;
-                border: 1px solid #CECECE;
-                color: #555;
-                font-size: 10px;
-                padding: 2px 5px;
-                top: 10px;
-
-                &::before,
-                &::after {
-                    content: "";
-                    position: absolute;
-                    width: 0;
-                    height: 0;
-                    border-style: solid;
-                    border-color: transparent;
-                    border-bottom: 0;
-                }
-
-                /* Stroke */
-                &::before {
-                    top: 18px;
-                    left: 5px;
-
-                    /* If 1px darken stroke slightly */
-                    border-top-color: #CECECE;
-                    border-width: 6px;
-                }
-
-                /* Fill */
-                &::after {
-                    top: 18px;
-                    left: 6px;
-                    border-top-color: #FFF;
-                    border-width: 5px;
-                }
-            }
-
-            .progress {
-                height: 5px;
-                margin-bottom: 0;
-                margin-top: 3px;
-                cursor: pointer;
-                background-color: rgb(219, 219, 219);
-
-                .progress-bar {
-                    background-color: $main-color;
-                    -webkit-transition: none;
-                    -o-transition: none;
-                    transition: none;
+                    .progress-bar {
+                        background-color: $main-color;
+                        -webkit-transition: none;
+                        -o-transition: none;
+                        transition: none;
+                    }
                 }
             }
         }
