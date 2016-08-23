@@ -124,11 +124,23 @@ header {
         }
 
         .now-playing-cover {
-            width: 42px;
-            height: 42px;
-            margin-right: 10px;
-            background-position: center;
-            background-size: cover;
+
+            .cover {
+                display: flex;
+                align-items: flex-end;
+                justify-content: center;
+                width: 42px;
+                height: 42px;
+                margin-right: 10px;
+                background-position: center;
+                background-size: cover;
+                text-align: center;
+                border: solid 1px #D2D2D2;
+
+                .note {
+                    font-size: 30px;
+                }
+            }
         }
 
         .now-playing-infos {

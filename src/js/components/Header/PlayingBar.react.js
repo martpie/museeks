@@ -3,6 +3,7 @@ import { ProgressBar } from 'react-bootstrap';
 
 import ButtonShuffle from './ButtonShuffle.react';
 import ButtonRepeat  from './ButtonRepeat.react';
+import TrackCover    from './TrackCover.react';
 
 import Player from '../../lib/player';
 import utils  from '../../utils/utils';
@@ -61,7 +62,9 @@ export default class PlayingBar extends Component {
 
             playingBar = (
                 <div className={ this.state.dragging ? 'now-playing  text-center dragging' : 'now-playing text-center' } onMouseMove={ this.dragOver.bind(this) } onMouseLeave={ this.dragEnd.bind(this) } onMouseUp={ this.dragEnd.bind(this) }>
-                    <div className='now-playing-cover' style={ { backgroundImage: `url(${this.coverBase64})` } }></div>
+                    <div className='now-playing-cover'>
+                        <TrackCover cover={ this.coverBase64 } />
+                    </div>
                     <div className='now-playing-infos'>
                         <div className='now-playing-metas'>
                             <div className='player-options'>
