@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import InlineSVG from 'svg-inline-react';
+import classnames from 'classnames';
 
 import AppActions from '../../actions/AppActions';
 
@@ -23,34 +24,27 @@ export default class ButtonRepeat extends Component {
     }
 
     render() {
+        const svgMap = {
+            one: require('../../../images/icons/player-repeat-one.svg'),
+            all: require('../../../images/icons/player-repeat.svg'),
+            default: require('../../../images/icons/player-repeat.svg')
+        };
 
-        let repeatButton = <button></button>;
-        let svg;
+        const svg = svgMap[this.props.repeat] || svgMap.default;
+        const buttonClasses = classnames('button repeat',{
+            active: this.props.repeat === 'one' || this.props.repeat === 'all'
+        });
 
-        if (this.props.repeat === 'one') {
-            svg = require('../../../images/icons/player-repeat-one.svg');
-            repeatButton = (
-                <button className='button repeat active' onClick={ this.toggleRepeat.bind(null) }>
-                    <InlineSVG src={ svg } className='icon repeat-one' />
-                </button>
-            );
-        } else if (this.props.repeat === 'all') {
-            svg = require('../../../images/icons/player-repeat.svg');
-            repeatButton = (
-                <button className='button repeat active' onClick={ this.toggleRepeat.bind(null) }>
-                    <InlineSVG src={ svg } className='icon repeat' />
-                </button>
-            );
-        } else {
-            svg = require('../../../images/icons/player-repeat.svg');
-            repeatButton = (
-                <button className='button repeat' onClick={ this.toggleRepeat.bind(null) }>
-                    <InlineSVG src={ svg } className='icon repeat' />
-                </button>
-            );
-        }
+        const svgClasses = classnames('icon', {
+            'repeat-one': this.props.repeat === 'one',
+            'repeat': this.props.repeat !== 'one'
+        });
 
-        return repeatButton;
+        return (
+            <button className={ buttonClasses } onClick={ this.toggleRepeat.bind(null) }>
+                <InlineSVG src={ svg } className={ svgClasses } />
+            </button>
+        );
     }
 
     toggleRepeat() {

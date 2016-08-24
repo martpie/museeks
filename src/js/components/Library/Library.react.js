@@ -29,6 +29,7 @@ export default class Library extends Component {
 
         let content;
 
+        // TODO (y.solovyov): All these cases can live as separate components
         if(this.props.library === null) {
             content = (
                 <div className='full-message'>

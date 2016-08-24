@@ -38,6 +38,7 @@ export default class Playlists extends Component {
             );
         }
 
+        // TODO (y.solovyov): make empty playlist a separate component
         return (
             <div className='full-message'>
                 <p>Empty playlist</p>

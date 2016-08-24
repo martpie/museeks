@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import InlineSVG from 'svg-inline-react';
+import classnames from 'classnames';
 
 import AppActions from '../../actions/AppActions';
 
@@ -23,25 +24,17 @@ export default class ButtonShuffle extends Component {
     }
 
     render() {
+        const svg = require('../../../images/icons/player-shuffle.svg');
 
-        let shuffleButton;
-        let svg = require('../../../images/icons/player-shuffle.svg');
+        const buttonClasses = classnames('button', {
+            active: this.props.shuffle
+        });
 
-        if(!this.props.shuffle) {
-            shuffleButton = (
-                <button type='button' className='button' onClick={ this.shuffle }>
-                    <InlineSVG src={ svg } className='icon shuffle' />
-                </button>
-            );
-        } else {
-            shuffleButton = (
-                <button type='button' className='button active' onClick={ this.shuffle }>
-                    <InlineSVG src={ svg } className='icon shuffle' />
-                </button>
-            );
-        }
-
-        return shuffleButton;
+        return (
+            <button type='button' className={ buttonClasses } onClick={ this.shuffle }>
+                <InlineSVG src={ svg } className='icon shuffle' />
+            </button>
+        );
     }
 
     shuffle() {
