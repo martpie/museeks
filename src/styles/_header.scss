@@ -126,9 +126,6 @@ header {
         .now-playing-cover {
 
             .cover {
-                display: flex;
-                align-items: flex-end;
-                justify-content: center;
                 width: 42px;
                 height: 42px;
                 margin-right: 10px;
@@ -139,12 +136,13 @@ header {
 
                 .note {
                     font-size: 30px;
+                    line-height: 28px;
+                    padding: 5px 5px 7px 5px;
                 }
             }
         }
 
         .now-playing-infos {
-            padding: 10px 0;
             width: calc(100% - 60px);
 
             .now-playing-metas {
@@ -164,7 +162,7 @@ header {
                     display: flex;
                     align-items: center;
                     justify-content: flex-start;
-                    min-width: 100px;
+                    width: 80px;
 
                     .button {
                         border: 0;
@@ -192,14 +190,14 @@ header {
                     overflow: hidden;
                     vertical-align: middle;
                     text-align: center;
-                    width: calc(100% - 200px);
+                    width: calc(100% - 160px);
                 }
 
                 .duration {
                     display: inline-block;
                     padding: 0 6px;
                     font-size: 10px;
-                    min-width: 100px;
+                    width: 80px;
                     text-align: right;
                 }
             }

@@ -30,13 +30,13 @@ export default class ButtonShuffle extends Component {
         if(!this.props.shuffle) {
             shuffleButton = (
                 <button type='button' className='button' onClick={ this.shuffle }>
-                    <InlineSVG src={ svg } className='pf pf-shuffle' />
+                    <InlineSVG src={ svg } className='icon shuffle' />
                 </button>
             );
         } else {
             shuffleButton = (
                 <button type='button' className='button active' onClick={ this.shuffle }>
-                    <InlineSVG src={ svg } className='pf pf-shuffle' />
+                    <InlineSVG src={ svg } className='icon shuffle' />
                 </button>
             );
         }
