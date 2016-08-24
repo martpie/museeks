@@ -31,21 +31,21 @@ export default class ButtonRepeat extends Component {
             svg = require('../../../images/icons/player-repeat-one.svg');
             repeatButton = (
                 <button className='button repeat active' onClick={ this.toggleRepeat.bind(null) }>
-                    <InlineSVG src={ svg } className='pf pf-repeat-one' />
+                    <InlineSVG src={ svg } className='icon repeat-one' />
                 </button>
             );
         } else if (this.props.repeat === 'all') {
             svg = require('../../../images/icons/player-repeat.svg');
             repeatButton = (
                 <button className='button repeat active' onClick={ this.toggleRepeat.bind(null) }>
-                    <InlineSVG src={ svg } className='pf pf-repeat' />
+                    <InlineSVG src={ svg } className='icon repeat' />
                 </button>
             );
         } else {
             svg = require('../../../images/icons/player-repeat.svg');
             repeatButton = (
                 <button className='button repeat' onClick={ this.toggleRepeat.bind(null) }>
-                    <InlineSVG src={ svg } className='pf pf-repeat' />
+                    <InlineSVG src={ svg } className='icon repeat' />
                 </button>
             );
         }

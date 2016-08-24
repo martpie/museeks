@@ -69,6 +69,18 @@ const utils = {
     },
 
     /**
+     * Parse data to be used by img/background-image with base64
+     *
+     * @param string format of the image
+     * @param string data base64 string
+     * @return string
+     */
+    parseBase64: function(format, data) {
+
+        return `data:image/${format};base64,${data}`;
+    },
+
+    /**
      * Sort an array of int by ASC or DESC, then remove all duplicates
      *
      * @param array  array of int to be sorted
@@ -199,6 +211,7 @@ const utils = {
                     album        : 'Unknown',
                     albumartist  : [],
                     artist       : ['Unknown artist'],
+                    cover        : null,
                     disk         : {
                         no: 0,
                         of: 0
@@ -240,6 +253,7 @@ const utils = {
                     album        : data.album === null || data.album === '' ? 'Unknown' : data.album,
                     albumartist  : data.albumartist,
                     artist       : data.artist.length === 0 ? ['Unknown artist'] : data.artist,
+                    cover        : data.picture[0] ? { format: data.picture[0].format, data: data.picture[0].data.toString('base64') } : null,
                     disk         : data.disk,
                     duration     : data.duration === '' ? 0 : data.duration,
                     genre        : data.genre,

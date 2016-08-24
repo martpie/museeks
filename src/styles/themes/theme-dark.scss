@@ -62,6 +62,13 @@ body.theme-dark {
 
         .now-playing {
 
+            .now-playing-cover {
+
+                .cover {
+                    border: solid 1px #666;
+                }
+            }
+
            .now-playing-bar .progress {
                background-color: #444;
             }

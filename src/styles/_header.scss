@@ -29,7 +29,8 @@ header {
 header {
     border-bottom: 1px solid rgb(210, 210, 210);
     background-color: rgb(244, 244, 244);
-    padding: 10px;
+    padding: 0 10px;
+    height: 51px;
     display: flex;
     align-items: center;
     color: #555;
@@ -115,122 +116,147 @@ header {
     /* .windows-controls */
 
     .now-playing {
+        display: flex;
+        align-items: center;
 
         &.dragging {
             -webkit-app-region: no-drag;
         }
 
-        .now-playing-infos {
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .now-playing-cover {
 
-            .pf {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                height: 16px;
-                width: 16px;
-            }
-
-            .player-options {
-                display: flex;
-                align-items: center;
-                justify-content: flex-start;
-                min-width: 100px;
-
-                .button {
-                    border: 0;
-                    background: transparent;
-                    font-size: 18px;
-                    -webkit-app-region: no-drag;
-
-                    &.active {
-
-                        svg {
-                            fill: #337ab7;
-                        }
-                    }
-
-                    svg {
-                        width: 16px;
-                        height: auto;
-                    }
-                }
-            }
-
-            .metas {
-                white-space: nowrap;
-                text-overflow: ellipsis;
-                overflow: hidden;
-                vertical-align: middle;
+            .cover {
+                width: 42px;
+                height: 42px;
+                margin-right: 10px;
+                background-position: center;
+                background-size: cover;
                 text-align: center;
-                width: calc(100% - 200px);
-            }
+                border: solid 1px #D2D2D2;
 
-            .duration {
-                display: inline-block;
-                padding: 0 6px;
-                font-size: 10px;
-                min-width: 100px;
-                text-align: right;
+                .note {
+                    font-size: 30px;
+                    line-height: 28px;
+                    padding: 5px 5px 7px 5px;
+                }
             }
         }
 
-        .now-playing-bar {
-            padding: 2px;
+        .now-playing-infos {
+            width: calc(100% - 60px);
 
-            .playing-bar-tooltip {
-                position: fixed;
-                background-color: #FFF;
-                border: 1px solid #CECECE;
-                color: #555;
-                font-size: 10px;
-                padding: 2px 5px;
-                top: 10px;
+            .now-playing-metas {
+                display: flex;
+                align-items: center;
+                justify-content: center;
 
-                &::before,
-                &::after {
-                    content: "";
-                    position: absolute;
-                    width: 0;
-                    height: 0;
-                    border-style: solid;
-                    border-color: transparent;
-                    border-bottom: 0;
+                .icon {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    height: 16px;
+                    width: 16px;
                 }
 
-                /* Stroke */
-                &::before {
-                    top: 18px;
-                    left: 5px;
+                .player-options {
+                    display: flex;
+                    align-items: center;
+                    justify-content: flex-start;
+                    width: 80px;
 
-                    /* If 1px darken stroke slightly */
-                    border-top-color: #CECECE;
-                    border-width: 6px;
+                    .button {
+                        border: 0;
+                        background: transparent;
+                        font-size: 18px;
+                        -webkit-app-region: no-drag;
+
+                        &.active {
+
+                            svg {
+                                fill: #337ab7;
+                            }
+                        }
+
+                        svg {
+                            width: 16px;
+                            height: auto;
+                        }
+                    }
                 }
 
-                /* Fill */
-                &::after {
-                    top: 18px;
-                    left: 6px;
-                    border-top-color: #FFF;
-                    border-width: 5px;
+                .metas {
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    vertical-align: middle;
+                    text-align: center;
+                    width: calc(100% - 160px);
+                }
+
+                .duration {
+                    display: inline-block;
+                    padding: 0 6px;
+                    font-size: 10px;
+                    width: 80px;
+                    text-align: right;
                 }
             }
 
-            .progress {
-                height: 5px;
-                margin-bottom: 0;
-                margin-top: 3px;
-                cursor: pointer;
-                background-color: rgb(219, 219, 219);
+            .now-playing-bar {
+                padding: 2px;
 
-                .progress-bar {
-                    background-color: $main-color;
-                    -webkit-transition: none;
-                    -o-transition: none;
-                    transition: none;
+                .playing-bar-tooltip {
+                    position: fixed;
+                    background-color: #FFF;
+                    border: 1px solid #CECECE;
+                    color: #555;
+                    font-size: 10px;
+                    padding: 2px 5px;
+                    top: 10px;
+
+                    &::before,
+                    &::after {
+                        content: "";
+                        position: absolute;
+                        width: 0;
+                        height: 0;
+                        border-style: solid;
+                        border-color: transparent;
+                        border-bottom: 0;
+                    }
+
+                    /* Stroke */
+                    &::before {
+                        top: 18px;
+                        left: 5px;
+
+                        /* If 1px darken stroke slightly */
+                        border-top-color: #CECECE;
+                        border-width: 6px;
+                    }
+
+                    /* Fill */
+                    &::after {
+                        top: 18px;
+                        left: 6px;
+                        border-top-color: #FFF;
+                        border-width: 5px;
+                    }
+                }
+
+                .progress {
+                    height: 5px;
+                    margin-bottom: 0;
+                    margin-top: 3px;
+                    cursor: pointer;
+                    background-color: rgb(219, 219, 219);
+
+                    .progress-bar {
+                        background-color: $main-color;
+                        -webkit-transition: none;
+                        -o-transition: none;
+                        transition: none;
+                    }
                 }
             }
         }

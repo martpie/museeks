@@ -54,7 +54,7 @@ export default class Header extends Component {
                         <button className='window-control' onClick={ this.winClose.bind(null) }>&times;</button>
                     </div>
 
-                    <div className='player-controls text-center'>
+                    <div className='player-controls'>
                         <button type='button' className='player-control previous' onClick={ this.previous.bind(null) }>
                             <Icon name='backward' />
                         </button>
@@ -70,7 +70,7 @@ export default class Header extends Component {
                         </button>
                     </div>
                 </Col>
-                <Col sm={ 6 } className='text-center'>
+                <Col sm={ 6 }>
                     <PlayingBar
                         queue={ this.props.queue }
                         queueCursor={ this.props.queueCursor }
