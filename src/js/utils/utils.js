@@ -307,9 +307,10 @@ const utils = {
 
         audio.addEventListener('error', (e) => {
 
-            callback(`Error getting audio duration: (${e.target.error.code}) ${path}`, 0);
+            callback(new Error(`Error getting audio duration: (${e.target.error.code}) ${path}`), 0);
         });
 
+        audio.preload = 'metadata';
         audio.src = path;
     }
 };
