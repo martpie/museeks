@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Col } from 'react-bootstrap';
 import Icon from 'react-fontawesome';
 import Input from 'react-simple-input';
+import classnames from 'classnames';
 
 import PlayingBar from './PlayingBar.react';
 import Queue      from './Queue.react';
@@ -41,11 +42,15 @@ export default class Header extends Component {
 
         const audio = Player.getAudio();
 
-        let playButton = (
+        const playButton = (
             <button className='player-control play' onClick={ () => this.playToggle() }>
                 <Icon name={ this.props.playerStatus === 'play' ? 'pause' : 'play' } fixedWidth />
             </button>
         );
+
+        const volumeClasses = classnames('volume-control', {
+            visible: this.state.showVolume
+        });
 
         return (
             <header className='row'>
@@ -62,10 +67,22 @@ export default class Header extends Component {
                         <button type='button' className='player-control forward' onClick={ this.next.bind(null) }>
                             <Icon name='forward' />
                         </button>
-                        <button type='button' className='player-control volume' onMouseEnter={ this.showVolume.bind(this) } onMouseLeave={ this.hideVolume.bind(this) } onClick={ this.mute }>
+                        <button type='button'
+                                className='player-control volume'
+                                onMouseEnter={ this.showVolume.bind(this) }
+                                onMouseLeave={ this.hideVolume.bind(this) }
+                                onClick={ this.mute }
+                        >
                             <Icon name={ audio.muted || audio.volume === 0 ? 'volume-off' : audio.volume > 0.5 ? 'volume-up' : 'volume-down' } />
-                            <div className={ this.state.showVolume ? 'volume-control visible' : 'volume-control' }>
-                                <input type={ 'range' } min={ 0 } max={ 1 } step={ 0.01 } defaultValue={ Math.pow(audio.volume, 1 / 4) } ref='volume' onChange={ this.setVolume.bind(this) } />
+                            <div className={ volumeClasses }>
+                                <input type={ 'range' }
+                                       min={ 0 }
+                                       max={ 1 }
+                                       step={ 0.01 }
+                                       defaultValue={ Math.pow(audio.volume, 1 / 4) }
+                                       ref='volume'
+                                       onChange={ this.setVolume.bind(this) }
+                                />
                             </div>
                         </button>
                     </div>

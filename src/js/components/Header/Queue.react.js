@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { ButtonGroup, Button } from 'react-bootstrap';
+import classnames from 'classnames';
 
 import AppActions from '../../actions/AppActions';
 
@@ -40,8 +41,12 @@ export default class Queue extends Component {
         const incomingQueue = queue.slice(queueCursor + 1);
 
         if(shownQueue.length === 0) {
+            const emptyQueueClasses = classnames('queue text-left', {
+                visible: this.props.showQueue
+            });
+            // TODO (y.solovyov): this could easily be its own component, say, EmptyQueue
             return(
-                <div className={ this.props.showQueue ? 'queue visible text-left' : 'queue text-left' }>
+                <div className={ emptyQueueClasses }>
                     <div className='empty-queue text-center'>
                         queue is empty
                     </div>
@@ -50,26 +55,18 @@ export default class Queue extends Component {
         }
 
         // If queue is not empty
+        // TODO (y.solovyov): make a separate method that returns items
         const queueContent = shownQueue.map((track, index) => {
-
-            let classes = 'track';
-
-            if(index === self.state.draggedTrack) {
-                classes = 'track dragged';
-            } else if (index === self.state.draggedOverTrack) {
-                if(!self.state.draggedBefore) {
-                    classes = 'track dragged-over-after';
-                } else {
-                    classes = 'track dragged-over';
-                }
-            } else {
-                classes = 'track';
-            }
+            const queueContentClasses = classnames('track', {
+                'dragged': index === self.state.draggedTrack,
+                'dragged-over-after': index === self.state.draggedOverTrack && !self.state.draggedBefore,
+                'dragged-over': index === self.state.draggedOverTrack
+            });
 
             return (
                 <div key={ index }
-                  className={ classes }
-                  draggable={ 'true' }
+                  className={ queueContentClasses }
+                  draggable='true'
                   onDragStart={ self.dragStart.bind(self, index) }
                   onDragEnd={ self.dragEnd.bind(self) }
                 >
@@ -90,8 +87,16 @@ export default class Queue extends Component {
             );
         });
 
+        const queueClasses = classnames('queue text-left', {
+            visible: this.props.showQueue
+        });
+
+        const queueBodyClasses = classnames('queue-body', {
+            dragging: this.state.draggedTrack !== null
+        });
+
         return (
-            <div className={ this.props.showQueue ? 'queue visible text-left' : 'queue text-left' }>
+            <div className={ queueClasses }>
                 <div className='queue-header'>
                     <div className='queue-infos'>
                         { utils.getStatus(incomingQueue) }
@@ -102,7 +107,7 @@ export default class Queue extends Component {
                         </Button>
                     </ButtonGroup>
                 </div>
-                <div className={ this.state.draggedTrack === null ? 'queue-body' : 'queue-body dragging' } onDragOver={ this.dragOver.bind(this) }>
+                <div className={ queueBodyClasses } onDragOver={ this.dragOver.bind(this) }>
                     { queueContent }
                 </div>
             </div>

@@ -45,6 +45,7 @@ export default class SettingsLibrary extends Component {
             </ButtonGroup>
         );
 
+        // TODO (y.solovyov): move to separate method that returns items
         const list = musicFolders.map((folder, i) => {
             return(
                 <li key={ i }>

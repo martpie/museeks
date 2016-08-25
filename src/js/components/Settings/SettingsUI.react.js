@@ -25,6 +25,7 @@ export default class SettingsUI extends Component {
 
         const config = this.props.config;
 
+        // TODO (y.solovyov): seems repetitive, might be a good fit for separate component
         return (
             <div className='setting setting-interface'>
                 <div className='setting-section'>

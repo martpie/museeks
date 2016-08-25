@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Icon from 'react-fontawesome';
 import KeyBinding from 'react-keybinding-component';
+import classnames from 'classnames';
 
 import AppActions from '../../actions/AppActions';
 
@@ -55,7 +56,7 @@ export default class TracksList extends Component {
         // Tiles and chunks
         let trackTiles = tracksChunked.splice(tilesScrolled, tilesToDisplay).map((tracksChunk, indexChunk) => {
 
-            let list = tracksChunk.map((track, index) => {
+            const list = tracksChunk.map((track, index) => {
 
                 let playing = undefined;
 
@@ -64,9 +65,14 @@ export default class TracksList extends Component {
                     if(track._id === trackPlayingId && Player.getAudio().paused) playing = <Icon name='volume-off' fixedWidth />;
                 }
 
+                const trackClasses = classnames('track', {
+                    selected: selected.includes(track._id)
+                });
+
+                // TODO (y.solovyov): how about TrackRow and TrackCell components?
                 return(
                     <div
-                        className={ selected.includes(track._id) ? 'track selected' : 'track' }
+                        className={ trackClasses }
                         key={ index }
                         onMouseDown={ (e) => self.selectTrack(e, track._id, (tilesScrolled + indexChunk) * chunkLength + index) }
                         onDoubleClick={ () => self.selectAndPlay(track._id) }
@@ -101,6 +107,7 @@ export default class TracksList extends Component {
             );
         });
 
+        // TODO (y.solovyov): TrackListHeader component?
         return (
             <div className='tracks-list-container' tabIndex='0'>
                 <KeyBinding onKey={ this.onKey } target={ '.tracks-list-container' } preventInputConflict preventDefault />

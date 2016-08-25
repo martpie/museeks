@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { ProgressBar } from 'react-bootstrap';
+import classnames from 'classnames';
 
 import ButtonShuffle from './ButtonShuffle.react';
 import ButtonRepeat  from './ButtonRepeat.react';
@@ -54,14 +55,27 @@ export default class PlayingBar extends Component {
         let playingBar;
         let elapsedPercent;
 
+        // TODO (y.solovyov): we can just return null here and it will render nothing.
         if(queueCursor === null) {
             playingBar = <div></div>;
         } else {
 
             if(this.state.elapsed < trackPlaying.duration) elapsedPercent = this.state.elapsed * 100 / trackPlaying.duration;
 
+            const nowPlayingTextClasses = classnames('now-playing text-center', {
+                dragging: this.state.dragging
+            });
+
+            const nowPlayingTooltipClasses = classnames('playing-bar-tooltip', {
+                hidden: this.state.duration === null
+            });
+
             playingBar = (
-                <div className={ this.state.dragging ? 'now-playing  text-center dragging' : 'now-playing text-center' } onMouseMove={ this.dragOver.bind(this) } onMouseLeave={ this.dragEnd.bind(this) } onMouseUp={ this.dragEnd.bind(this) }>
+                <div className={ nowPlayingTextClasses }
+                     onMouseMove={ this.dragOver.bind(this) }
+                     onMouseLeave={ this.dragEnd.bind(this) }
+                     onMouseUp={ this.dragEnd.bind(this) }
+                >
                     <div className='now-playing-cover'>
                         <TrackCover cover={ this.coverBase64 } />
                     </div>
@@ -90,7 +104,9 @@ export default class PlayingBar extends Component {
                             </span>
                         </div>
                         <div className='now-playing-bar'>
-                            <div className={ this.state.duration !== null ? 'playing-bar-tooltip' : 'playing-bar-tooltip hidden' } style={ { left: this.state.x - 12 } }>{ utils.parseDuration(this.state.duration) }</div>
+                            <div className={ nowPlayingTooltipClasses } style={ { left: this.state.x - 12 } }>
+                                { utils.parseDuration(this.state.duration) }
+                            </div>
                             <ProgressBar
                                 now={ elapsedPercent }
                                 onMouseDown={ this.jumpAudioTo.bind(this) }

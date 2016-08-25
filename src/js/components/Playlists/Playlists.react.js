@@ -30,6 +30,7 @@ export default class Playlists extends Component {
 
         let content;
 
+        // TODO (y.solovyov): move all these cases to separate components
         if(this.props.playlists === null) {
             content = (
                 <div className='full-message'>
