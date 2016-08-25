@@ -125,5 +125,25 @@ export default {
             type : AppConstants.APP_LIBRARY_REFRESH_PROGRESS,
             percentage
         });
+    },
+
+    refreshCurrentFiles: function(file) {
+        store.dispatch({
+            type : AppConstants.APP_LIBRARY_FILE_ADDED,
+            file
+        });
+    },
+
+    addProcessingError: function(error) {
+        store.dispatch({
+            type : AppConstants.APP_LIBRARY_ADD_PROCESSING_ERROR,
+            ...error
+        });
+    },
+
+    resetProcessingErrors: function() {
+        store.dispatch({
+            type : AppConstants.APP_LIBRARY_RESET_PROCESSING_ERRORS,
+        });
     }
 };

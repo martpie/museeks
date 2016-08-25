@@ -203,9 +203,9 @@ const utils = {
 
         if(path.extname(track) === '.wav') { // If WAV
 
-            wavInfo.infoByFilename(track, (err, info) => {
+            wavInfo.infoByFilename(track, (error, info) => {
 
-                if (err) console.warn(err);
+                if (error) console.warn(error);
 
                 const metadata = {
                     album        : 'Unknown',
@@ -238,16 +238,16 @@ const utils = {
                     genre       : metadata.genre.map((meta) => utils.stripAccents(meta.toLowerCase()))
                 };
 
-                callback(metadata);
+                callback({ error, metadata });
             });
 
         } else {
 
             const stream = fs.createReadStream(track);
 
-            mmd(stream, { duration: true }, (err, data) => {
+            mmd(stream, { duration: true }, (error, data) => {
 
-                if(err) console.warn(`An error occured while reading ${track} id3 tags: ${err}`);
+                if(error) console.warn(`An error occured while reading ${track} id3 tags: ${error}`);
 
                 const metadata = {
                     album        : data.album === null || data.album === '' ? 'Unknown' : data.album,
@@ -274,7 +274,7 @@ const utils = {
                     genre       : metadata.genre.map((meta) => utils.stripAccents(meta.toLowerCase()))
                 };
 
-                callback(metadata);
+                callback({ error, metadata });
             });
         }
     }

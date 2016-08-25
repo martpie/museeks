@@ -60,6 +60,8 @@ class Museeks extends Component {
                                 playlists         : store.playlists,
                                 refreshingLibrary : store.refreshingLibrary,
                                 refreshProgress   : store.refreshProgress,
+                                refreshingFiles   : store.refreshingFiles,
+                                refreshingErrors  : store.refreshingErrors,
                                 trackPlayingId
                             })
                         }

@@ -143,10 +143,21 @@ export default {
                         return getMetadataAsync(filePath);
                     }
                     return docs[0];
-                }).then((metadata) => {
-                    return app.db.insertAsync(metadata);
+                }).then((data) => {
+                    if (data.error) {
+                        AppActions.settings.addProcessingError({
+                            error: data.error,
+                            file: path.basename(filePath)
+                        });
+                    }
+                    return app.db.insertAsync(data.metadata);
                 }).then(() => {
                     AppActions.settings.refreshProgress(parseInt(filesInLibrary * 100 / supportedFiles.length));
+                    AppActions.settings.refreshCurrentFiles({
+                        current: path.basename(filePath),
+                        index: filesInLibrary,
+                        of: supportedFiles.length
+                    });
                     filesInLibrary++;
                 });
             }, { concurrency: fsConcurrency });

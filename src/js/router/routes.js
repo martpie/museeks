@@ -19,7 +19,7 @@ import SettingsAdvanced from '../components/Settings/SettingsAdvanced.react';
 import SettingsAbout    from '../components/Settings/SettingsAbout.react';
 
 
-const init = {
+const initializers = {
 
     app: () => {
         AppActions.init();
@@ -35,20 +35,26 @@ const init = {
     }
 };
 
+const disposers = {
+    library: () => {
+        AppActions.settings.resetProcessingErrors();
+    }
+};
+
 // Router
 const routes = (
-    <Route component={ App } path='/' onEnter={ init.app }>
-        <Route path='library' component={ Library } onEnter={ init.library } />
+    <Route component={ App } path='/' onEnter={ initializers.app }>
+        <Route path='library' component={ Library } onEnter={ initializers.library } />
         <Route path='settings' component={ Settings }>
             <IndexRedirect to="library" />
             <Route path='about' component={ SettingsAbout } />
             <Route path='advanced' component={ SettingsAdvanced } />
             <Route path='audio' component={ SettingsAudio } />
             <Route path='interface' component={ SettingsUI } />
-            <Route path='library' component={ SettingsLibrary } />
+            <Route path='library' component={ SettingsLibrary } onLeave={ disposers.library } />
         </Route>
         <Route path='playlists' component={ Playlists }>
-            <Route path=':playlistId' component={ Playlist } onEnter={ init.playlist } />
+            <Route path=':playlistId' component={ Playlist } onEnter={ initializers.playlist } />
         </Route>
     </Route>
 );

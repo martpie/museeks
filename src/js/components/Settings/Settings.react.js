@@ -15,6 +15,8 @@ export default class Settings extends Component {
         config: React.PropTypes.object.isRequired,
         refreshingLibrary: React.PropTypes.bool,
         refreshProgress: React.PropTypes.number,
+        refreshingFiles: React.PropTypes.object,
+        refreshingErrors: React.PropTypes.array,
         children: React.PropTypes.object
     }
 
@@ -53,7 +55,9 @@ export default class Settings extends Component {
                             this.props.children, {
                                 config,
                                 refreshingLibrary : this.props.refreshingLibrary,
-                                refreshProgress: this.props.refreshProgress,
+                                refreshProgress   : this.props.refreshProgress,
+                                refreshingFiles   : this.props.refreshingFiles,
+                                refreshingErrors  : this.props.refreshingErrors
                             })
                         }
                     </div>

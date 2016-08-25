@@ -457,7 +457,8 @@ export default (state = {}, payload) => { // payload is basically 'action'
             return {
                 ...state,
                 refreshingLibrary : false,
-                refreshProgress : 0
+                refreshProgress : 0,
+                refreshingFiles : null
             };
         }
 
@@ -498,6 +499,32 @@ export default (state = {}, payload) => { // payload is basically 'action'
                 sub: [...payload.tracks]
             };
             return newState;
+        }
+
+        case(AppConstants.APP_LIBRARY_FILE_ADDED): {
+            return {
+                ...state,
+                refreshingFiles: {
+                    ...payload.file
+                }
+            };
+        }
+
+        case(AppConstants.APP_LIBRARY_ADD_PROCESSING_ERROR): {
+            return {
+                ...state,
+                refreshingErrors: [...state.refreshingErrors, {
+                    file: payload.file,
+                    error: payload.error
+                }]
+            };
+        }
+
+        case(AppConstants.APP_LIBRARY_RESET_PROCESSING_ERRORS): {
+            return {
+                ...state,
+                refreshingErrors : []
+            };
         }
 
         default: {
