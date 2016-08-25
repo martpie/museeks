@@ -44,8 +44,7 @@
     "redux": "^3.5.2",
     "semver": "5.3.0",
     "svg-inline-react": "1.0.2",
-    "teeny-conf": "1.0.1",
-    "wav-file-info": "0.0.7"
+    "teeny-conf": "1.0.1"
   },
   "devDependencies": {
     "babel-core": "6.11.4",
