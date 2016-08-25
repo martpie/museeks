@@ -59,6 +59,25 @@ Please consider that **`master` is unstable.**
 
 ===
 
+### Troubleshooting
+
+Museeks is currently in development. This implies some things can break after an update (database schemes changes, config...).
+
+If you encounter freezes when starting the app, you can reset Museeks by following these steps:
+
+- Go to the Museeks folder directory
+    - Windows: `%AppData%\museeks`
+    - OSX: `~/Library/Application Support/museeks`
+    - Linux: `~/.config/museeks/` or `$XDG_CONFIG_HOME/museeks`
+- Delete the following files
+    - `library.db`
+    - `config.json`
+- Restart Museeks
+
+If you still get problems after that, please open an issue :)
+
+===
+
 ### Bug report
 
 If you want to report a bug, first, thanks a lot. To help us, please indicate your OS, your Museeks version, and how to reproduce it. Adding a screen of the console (Settings -> Advanced -> enable dev mode) is a big help too.
