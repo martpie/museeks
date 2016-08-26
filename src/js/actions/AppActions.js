@@ -120,7 +120,7 @@ const AppActions = {
 
         initShortcuts: function() {
 
-            // Global shortcuts
+            // Global shortcuts - Player
             globalShortcut.register('MediaPlayPause', () => {
                 AppActions.player.playToggle();
             });
