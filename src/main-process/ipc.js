@@ -143,8 +143,8 @@ class IpcManager {
         });
 
         ipcMain.on('appRestart', () => {
-            app.relaunch({args: process.argv.slice(1) + ['--relaunch']})
-            app.exit(0)
+            app.relaunch({ args: process.argv.slice(1) + ['--relaunch'] });
+            app.exit(0);
         });
 
 
