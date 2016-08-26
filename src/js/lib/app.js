@@ -38,13 +38,13 @@ conf.loadOrCreateSync();
 */
 
 const supportedExtensions = [
-    'mp3',
-    'mp4',
-    'aac',
-    'm4a',
-    '3gp',
-    'wav',
-    'ogg'
+    '.mp3',
+    '.mp4',
+    '.aac',
+    '.m4a',
+    '.3gp',
+    '.wav',
+    '.ogg'
 ];
 
 
