@@ -108,7 +108,6 @@ export default {
             });
         };
         const folders = app.config.get('musicFolders');
-        const supportedExtensionsGlob = `**/*.{${ app.supportedExtensions.join() }}`;
         const fsConcurrency = 64;
 
         const getMetadataAsync = function(track) {
@@ -122,13 +121,16 @@ export default {
             return app.db.loadDatabaseAsync();
         }).then(() => {
             return Promise.map(folders, (folder) => {
-                const pattern = path.join(folder, supportedExtensionsGlob);
+                const pattern = path.join(folder, '**/*.*');
                 return globby(pattern, { nodir: true, follow: true });
             });
         }).then((filesArrays) => {
             return filesArrays.reduce((acc, array) => {
                 return acc.concat(array);
-            }, []);
+            }, []).filter((filePath) => {
+                const extension = path.extname(filePath).toLowerCase();
+                return app.supportedExtensions.includes(extension);
+            });
         }).then((supportedFiles) => {
 
             if (supportedFiles.length === 0) {
