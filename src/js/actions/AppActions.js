@@ -87,6 +87,10 @@ const AppActions = {
             ipcRenderer.send('appReady');
         },
 
+        restart: function() {
+            ipcRenderer.send('appRestart');
+        },
+
         close: function() {
             app.browserWindows.main.close();
         },

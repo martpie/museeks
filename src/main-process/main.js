@@ -32,7 +32,7 @@ app.on('window-all-closed', () => {
 app.on('ready', () => {
 
     const configManager = new ConfigManager(app);
-    const { bounds } = configManager.getConfig();
+    const { bounds, useNativeFrame } = configManager.getConfig();
 
     const logosPath = path.join(appRoot, 'src', 'images', 'logos');
     const museeksIcons = {
@@ -54,7 +54,7 @@ app.on('ready', () => {
         height    :  bounds.height,
         minWidth  :  900,
         minHeight :  550,
-        frame     :  false,
+        frame     :  useNativeFrame,
         show      :  false
     };
 

@@ -25,7 +25,8 @@ export default class Header extends Component {
         queue: React.PropTypes.array,
         queueCursor: React.PropTypes.number,
         shuffle: React.PropTypes.bool,
-        repeat: React.PropTypes.string
+        repeat: React.PropTypes.string,
+        windowControls: React.PropTypes.bool
     }
 
     constructor(props) {
@@ -48,6 +49,8 @@ export default class Header extends Component {
             </button>
         );
 
+        const windowControls = this.props.windowControls ? <button className='window-control' onClick={ this.winClose.bind(null) }>&times;</button> : false;
+
         const volumeClasses = classnames('volume-control', {
             visible: this.state.showVolume
         });
@@ -56,7 +59,7 @@ export default class Header extends Component {
             <header className='row'>
                 <Col sm={ 3 } className='main-controls'>
                     <div className='window-controls'>
-                        <button className='window-control' onClick={ this.winClose.bind(null) }>&times;</button>
+                        { windowControls }
                     </div>
 
                     <div className='player-controls'>
