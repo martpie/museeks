@@ -1,6 +1,6 @@
 'use strict';
 
-const { Menu, ipcMain, powerSaveBlocker } = require('electron');
+const { Menu, ipcMain, powerSaveBlocker, app } = require('electron');
 
 class IpcManager {
     constructor(window) {
@@ -140,6 +140,11 @@ class IpcManager {
 
         ipcMain.on('appReady', () => {
             this.window.show();
+        });
+
+        ipcMain.on('appRestart', () => {
+            app.relaunch({args: process.argv.slice(1) + ['--relaunch']})
+            app.exit(0)
         });
 
 

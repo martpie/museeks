@@ -124,10 +124,7 @@ export default {
 
         app.config.set('useNativeFrame', !app.config.get('useNativeFrame'));
         app.config.saveSync();
-
-        store.dispatch({
-            type : AppConstants.APP_REFRESH_CONFIG
-        });
+        AppActions.app.restart();
     },
 
     refreshProgress: function(percentage) {

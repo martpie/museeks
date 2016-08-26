@@ -40,7 +40,7 @@ export default class SettingsUI extends Component {
                     <h4>Use native frame</h4>
                     <div className='checkbox'>
                         <label>
-                            <input type='checkbox' onClick={ AppActions.settings.toggleNativeFrame } defaultChecked={ config.useNativeFrame } /> Run Museeks with default window controls (need a restart)
+                            <input type='checkbox' onClick={ AppActions.settings.toggleNativeFrame } defaultChecked={ config.useNativeFrame } /> Run Museeks with default window controls (<strong>will restart the app</strong>)
                             </label>
                         </div>
                 </div>
