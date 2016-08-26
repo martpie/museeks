@@ -89,35 +89,22 @@ export default {
 
         const currentVersion = app.version;
 
-        const oReq = new XMLHttpRequest();
-
-        oReq.onload = (e) => {
-
-            const releases = e.currentTarget.response;
-            let updateVersion = null;
-
-            const isUpdateAvailable = releases.some((release) => {
-
-                if(semver.valid(release.tag_name) !== null && semver.gt(release.tag_name, currentVersion)) {
-                    updateVersion = release.tag_name;
-                    return true;
-                }
-
-                return false;
+        fetch('https://api.github.com/repos/KeitIG/museeks/releases').then((res) => {
+            return res.json();
+        }).then((releases) => {
+            const newRelease = releases.find((release) => {
+                return semver.valid(release.tag_name) !== null && semver.gt(release.tag_name, currentVersion);
             });
 
-            if(isUpdateAvailable) AppActions.notifications.add('success', `Museeks ${updateVersion} is available, check http://museeks.io !`);
-            else if(!options.silentFail) AppActions.notifications.add('success', `Museeks ${currentVersion} is the latest version available.`);
-        };
+            if (newRelease) {
+                AppActions.notifications.add('success', `Museeks ${newRelease.tag_name} is available, check http://museeks.io !`);
+            } else if(!options.silentFail) {
+                AppActions.notifications.add('success', `Museeks ${currentVersion} is the latest version available.`);
+            }
 
-        oReq.onerror = () => {
-
+        }).catch(() => {
             AppActions.notifications.add('danger', 'An error occurred while checking updates.');
-        };
-
-        oReq.open('GET', 'https://api.github.com/repos/KeitIG/museeks/releases', true);
-        oReq.responseType = 'json';
-        oReq.send();
+        });
     },
 
     toggleNativeFrame: function() {
