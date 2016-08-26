@@ -11,7 +11,7 @@ const ipcRenderer    = electron.ipcRenderer;
 
 export default {
 
-    toggle: function() {
+    playToggle: function() {
         store.dispatch({
             type : AppConstants.APP_PLAYER_TOGGLE
         });
