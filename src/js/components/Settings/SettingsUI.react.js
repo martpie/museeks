@@ -32,7 +32,15 @@ export default class SettingsUI extends Component {
                     <h4>Theme</h4>
                     <div className='checkbox'>
                         <label>
-                            <input type='checkbox' onClick={ this.switchTheme } defaultChecked={ config.theme === 'dark' } /> Enable dark theme
+                            <input type='checkbox' onClick={ AppActions.settings.toggleDarkTheme } defaultChecked={ config.theme === 'dark' } /> Enable dark theme
+                            </label>
+                        </div>
+                </div>
+                <div className='setting-section'>
+                    <h4>Use native frame</h4>
+                    <div className='checkbox'>
+                        <label>
+                            <input type='checkbox' onClick={ AppActions.settings.toggleNativeFrame } defaultChecked={ config.useNativeFrame } /> Run Museeks with default window controls (need a restart)
                             </label>
                         </div>
                 </div>
@@ -40,32 +48,20 @@ export default class SettingsUI extends Component {
                     <h4>Sleep mode blocker</h4>
                     <div className='checkbox'>
                         <label>
-                            <input type='checkbox' onClick={ this.toggleSleepBlocker } defaultChecked={ config.sleepBlocker } /> Prevent the computer from going into sleep
+                            <input type='checkbox' onClick={ AppActions.settings.toggleSleepBlocker } defaultChecked={ config.sleepBlocker } /> Prevent the computer from going into sleep
                              mode
                             </label>
                         </div>
                 </div>
                 <div className='setting-section'>
-                    <h4>Auto update check</h4>
+                    <h4>Auto update checker</h4>
                     <div className='checkbox'>
                         <label>
-                            <input type='checkbox' onClick={ this.toggleAutoUpdateChecker } defaultChecked={ config.autoUpdateChecker } /> Automatically check for update on startup
+                            <input type='checkbox' onClick={ AppActions.settings.toggleAutoUpdateChecker } defaultChecked={ config.autoUpdateChecker } /> Automatically check for update on startup
                             </label>
                         </div>
                 </div>
             </div>
         );
-    }
-
-    switchTheme() {
-        AppActions.settings.toggleDarkTheme();
-    }
-
-    toggleSleepBlocker() {
-        AppActions.settings.toggleSleepBlocker();
-    }
-
-    toggleAutoUpdateChecker() {
-        AppActions.settings.toggleAutoUpdateChecker();
     }
 }

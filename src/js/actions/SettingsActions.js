@@ -120,6 +120,16 @@ export default {
         oReq.send();
     },
 
+    toggleNativeFrame: function() {
+
+        app.config.set('useNativeFrame', !app.config.get('useNativeFrame'));
+        app.config.saveSync();
+
+        store.dispatch({
+            type : AppConstants.APP_REFRESH_CONFIG
+        });
+    },
+
     refreshProgress: function(percentage) {
         store.dispatch({
             type : AppConstants.APP_LIBRARY_REFRESH_PROGRESS,

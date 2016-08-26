@@ -38,6 +38,7 @@ class ConfigManager {
             musicFolders: [],
             sleepBlocker: false,
             autoUpdateChecker: true,
+            useNativeFrame: false,
             devMode: false,
             bounds: {
                 width: 1000,
@@ -49,10 +50,7 @@ class ConfigManager {
     }
 
     getConfig() {
-        return {
-            bounds: this.conf.get('bounds'),
-            sleepBlocker: this.conf.get('sleepBlocker')
-        };
+        return this.conf.getAll();
     }
 }
 
