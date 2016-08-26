@@ -8,7 +8,6 @@ import path from 'path';
 import fs   from 'fs';
 
 import mmd     from 'musicmetadata';
-import wavInfo from 'wav-file-info';
 
 
 const utils = {
@@ -203,7 +202,7 @@ const utils = {
 
         if(path.extname(track) === '.wav') { // If WAV
 
-            wavInfo.infoByFilename(track, (err, info) => {
+            utils.getAudioDuration(track, (err, audioDuration) => {
 
                 if (err) console.warn(err);
 
@@ -216,7 +215,7 @@ const utils = {
                         no: 0,
                         of: 0
                     },
-                    duration     : info.duration,
+                    duration     : audioDuration,
                     genre        : [],
                     loweredMetas : {},
                     path         : track,
@@ -274,9 +273,45 @@ const utils = {
                     genre       : metadata.genre.map((meta) => utils.stripAccents(meta.toLowerCase()))
                 };
 
-                callback(metadata);
+                if(metadata.duration === 0) {
+
+                    utils.getAudioDuration(track, (err, duration) => {
+
+                        if(err) console.warn(duration);
+
+                        metadata.duration = duration;
+                        callback(metadata);
+                    });
+
+                } else {
+                    callback(metadata);
+                }
             });
         }
+    },
+
+    /**
+     * Get the duration of an audio file with the Audio element
+     *
+     * @param path (string)
+     * @return float
+     */
+    getAudioDuration(path, callback = () => {}) {
+
+        const audio = new Audio;
+
+        audio.addEventListener('loadedmetadata', () => {
+
+            callback(null, audio.duration);
+        });
+
+        audio.addEventListener('error', (e) => {
+
+            callback(new Error(`Error getting audio duration: (${e.target.error.code}) ${path}`), 0);
+        });
+
+        audio.preload = 'metadata';
+        audio.src = path;
     }
 };
 
