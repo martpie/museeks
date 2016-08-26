@@ -47,6 +47,7 @@ class Museeks extends Component {
                     shuffle={ store.shuffle }
                     queue={ store.queue }
                     queueCursor={ store.queueCursor }
+                    config={ app.config.getAll() }
                 />
                 <div className='main-content'>
                     <Row className='content'>
