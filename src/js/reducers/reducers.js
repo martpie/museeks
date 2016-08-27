@@ -116,7 +116,8 @@ export default (state = {}, payload) => { // payload is basically 'action'
 
             const search = utils.stripAccents(payload.search);
 
-            const tracks = [].concat(state.tracks[state.tracksCursor].all).filter((track) => { // Problem here
+            const allCurrentTracks = state.tracks[state.tracksCursor].all;
+            const tracks = [].concat(allCurrentTracks).filter((track) => { // Problem here
                 return track.loweredMetas.artist.join(', ').includes(search)
                     || track.loweredMetas.album.includes(search)
                     || track.loweredMetas.genre.join(', ').includes(search)
@@ -239,8 +240,11 @@ export default (state = {}, payload) => { // payload is basically 'action'
 
             let newQueueCursor = state.queueCursor;
 
-            // If track started less than 5 seconds ago, play th previous track, otherwise replay the current one
-            if (Player.getAudio().currentTime < 5) newQueueCursor = state.queueCursor - 1;
+            // If track started less than 5 seconds ago, play th previous track,
+            // otherwise replay the current one
+            if (Player.getAudio().currentTime < 5) {
+                newQueueCursor = state.queueCursor - 1;
+            }
 
             const newTrack = state.queue[newQueueCursor];
 
@@ -279,9 +283,11 @@ export default (state = {}, payload) => { // payload is basically 'action'
                 const queueCursor = state.queueCursor;
                 let queue = [...state.queue];
 
-                const firstTrack  = queue[queueCursor]; // Get the current track
+                // Get the current track
+                const firstTrack  = queue[queueCursor];
 
-                queue = queue.splice(queueCursor + 1, state.queue.length - (queueCursor + 1)); // now get only what we want
+                // now get only what we want
+                queue = queue.splice(queueCursor + 1, state.queue.length - (queueCursor + 1));
 
                 let m = queue.length, t, i;
                 while (m) {
@@ -477,7 +483,7 @@ export default (state = {}, payload) => { // payload is basically 'action'
         }
 
         case(AppConstants.APP_NOTIFICATION_REMOVE): {
-            const notifications = [...state.notifications].filter((elem) => elem._id !== payload._id);
+            const notifications = [...state.notifications].filter((n) => n._id !== payload._id);
             return {
                 ...state,
                 notifications

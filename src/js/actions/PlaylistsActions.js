@@ -48,7 +48,8 @@ const PlaylistsActions = {
         app.db.insert(playlist, (err, doc) => {
             if(err) console.warn(err);
             else {
-                callback(doc._id); // If a callback was provided (e.g create new playlist with selected tracks)
+                // If a callback was provided (e.g create new playlist with selected tracks)
+                callback(doc._id);
                 PlaylistsActions.refresh();
                 if(redirect) hashHistory.push(`/playlists/${doc._id}`);
                 else AppActions.notifications.add('success', `The playlist "${name}" was created`);

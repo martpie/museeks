@@ -1,3 +1,5 @@
+'use strict';
+
 const path = require('path');
 const { nativeImage, ipcMain } = require('electron');
 

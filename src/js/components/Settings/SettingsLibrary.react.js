@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { ButtonGroup, Button, ProgressBar } from 'react-bootstrap';
 import Icon from 'react-fontawesome';
+import classnames from 'classnames';
 
 import AppActions from '../../actions/AppActions';
 
@@ -46,13 +47,24 @@ export default class SettingsLibrary extends Component {
         );
 
         // TODO (y.solovyov): move to separate method that returns items
+        const removeButtonClasses = classnames('delete-libray-folder', {
+            disabled: self.props.refreshingLibrary
+        });
         const list = musicFolders.map((folder, i) => {
             return(
                 <li key={ i }>
-                    <Icon name='close' className={ self.props.refreshingLibrary ? 'delete-libray-folder disabled' : 'delete-libray-folder' } onClick={ self.props.refreshingLibrary ? void(0) : self.removeFolder.bind(self, i) } />
+                    <Icon name='close' className={ removeButtonClasses } onClick={ self.props.refreshingLibrary ? void(0) : self.removeFolder.bind(self, i) } />
                     { folder }
                 </li>
             );
+        });
+
+        const foldersListClasses = classnames('musicfolders-list', {
+            empty: musicFolders.length === 0
+        });
+
+        const progressBarClasses = classnames('library-refresh-progress', {
+            hidden: !this.props.refreshingLibrary
         });
 
         return (
@@ -60,11 +72,11 @@ export default class SettingsLibrary extends Component {
                 <div className='setting-section'>
                     <h4>Folders</h4>
                     <p>You currently have { musicFolders.length } folder{ musicFolders.length < 2 ? '' : 's' } in your library.</p>
-                    <ul className={ musicFolders.length !== 0 ? 'musicfolders-list' : 'musicfolders-list empty' }>
+                    <ul className={ foldersListClasses }>
                         { list }
                     </ul>
                     { buttonsGroup }
-                    <ProgressBar className={ this.props.refreshingLibrary ? 'library-refresh-progress' : 'library-refresh-progress hidden' } now={ this.props.refreshProgress } />
+                    <ProgressBar className={ progressBarClasses } now={ this.props.refreshProgress } />
                 </div>
             </div>
         );

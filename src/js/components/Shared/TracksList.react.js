@@ -53,8 +53,9 @@ export default class TracksList extends Component {
         const tracksChunked = utils.chunkArray(tracks, chunkLength);
         const tilesScrolled = Math.floor(this.state.scrollTop / tileHeight);
 
+        // TODO (y.solovyov): move to separate method that returns components
         // Tiles and chunks
-        let trackTiles = tracksChunked.splice(tilesScrolled, tilesToDisplay).map((tracksChunk, indexChunk) => {
+        const trackTiles = tracksChunked.splice(tilesScrolled, tilesToDisplay).map((tracksChunk, indexChunk) => {
 
             const list = tracksChunk.map((track, index) => {
 
@@ -100,8 +101,12 @@ export default class TracksList extends Component {
                 );
             });
 
+            const tracksListTileStyles = {
+                transform: `translate3d(0, ${(((tilesScrolled * 25 * chunkLength) + (indexChunk * 25 * chunkLength)))}px, 0)`
+            };
+
             return (
-                <div className='tracks-list-tile' key={ indexChunk } style={ { transform: `translate3d(0, ${(((tilesScrolled * 25 * chunkLength) + (indexChunk * 25 * chunkLength)))}px, 0)` } }>
+                <div className='tracks-list-tile' key={ indexChunk } style={ tracksListTileStyles }>
                     { list }
                 </div>
             );
@@ -151,7 +156,9 @@ export default class TracksList extends Component {
                     break;
                 }
                 case 'removeFromPlaylist': {
-                    if(self.props.type === 'playlist') AppActions.playlists.removeTracksFrom(self.props.currentPlaylist, selected);
+                    if(self.props.type === 'playlist') {
+                        AppActions.playlists.removeTracksFrom(self.props.currentPlaylist, selected);
+                    }
                     break;
                 }
                 case 'createPlaylist': {
@@ -309,7 +316,9 @@ export default class TracksList extends Component {
                         const container = document.querySelector('.tracks-list-container .tracks-list-body');
                         const nodeOffsetTop = (i + 1) * 25;
 
-                        if(container.scrollTop + container.offsetHeight <= nodeOffsetTop) container.scrollTop = nodeOffsetTop - container.offsetHeight + 25;
+                        if(container.scrollTop + container.offsetHeight <= nodeOffsetTop) {
+                            container.scrollTop = nodeOffsetTop - container.offsetHeight + 25;
+                        }
                     });
                 }
                 break;
@@ -333,7 +342,9 @@ export default class TracksList extends Component {
         let playlistsList = [].concat(this.props.playlists);
 
         // Hide current playlist if needed
-        if(this.props.type === 'playlist') playlistsList = playlistsList.filter((elem) => elem._id !== this.props.currentPlaylist);
+        if(this.props.type === 'playlist') {
+            playlistsList = playlistsList.filter((elem) => elem._id !== this.props.currentPlaylist);
+        }
 
         ipcRenderer.send('tracksListContextMenu', JSON.stringify({
             type: this.props.type,

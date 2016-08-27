@@ -49,6 +49,7 @@ export default class Header extends Component {
             </button>
         );
 
+        // TODO (y.solovyov): incapsulate window controls into own component
         const windowControls = this.props.windowControls ? <button className='window-control' onClick={ this.winClose.bind(null) }>&times;</button> : false;
 
         const volumeClasses = classnames('volume-control', {

@@ -8,6 +8,13 @@ import Player from '../lib/player';
 
 const ipcRenderer    = electron.ipcRenderer;
 
+const audioErrors = {
+    aborted:  'The video playback was aborted.',
+    corrupt:  'The audio playback was aborted due to a corruption problem.',
+    notFound: 'The track file could not be found. It may be due to a file move or an unmounted partition.',
+    unknown:  'An unknown error occurred.',
+};
+
 
 export default {
 
@@ -116,16 +123,16 @@ export default {
 
         switch (e.target.error.code) {
             case e.target.error.MEDIA_ERR_ABORTED:
-                NotificationsActions.add('warning', 'The video playback was aborted.');
+                NotificationsActions.add('warning', audioErrors.aborted);
                 break;
             case e.target.error.MEDIA_ERR_DECODE:
-                NotificationsActions.add('danger', 'The audio playback was aborted due to a corruption problem.');
+                NotificationsActions.add('danger', audioErrors.corrupt);
                 break;
             case e.target.error.MEDIA_ERR_SRC_NOT_SUPPORTED:
-                NotificationsActions.add('danger', 'The track file could not be found. It may be due to a file move or an unmounted partition.');
+                NotificationsActions.add('danger', audioErrors.notFound);
                 break;
             default:
-                NotificationsActions.add('danger', 'An unknown error occurred.');
+                NotificationsActions.add('danger', audioErrors.unknown);
                 break;
         }
     }
