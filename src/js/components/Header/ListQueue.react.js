@@ -20,7 +20,7 @@ export default class ListQueue extends Component {
     static propTypes = {
         queue: React.PropTypes.array,
         queueCursor: React.PropTypes.number,
-        showQueue: React.PropTypes.bool
+        shown: React.PropTypes.bool
     }
 
     constructor(props) {
@@ -44,7 +44,7 @@ export default class ListQueue extends Component {
         const incomingQueue = queue.slice(queueCursor + 1);
 
         const queueClasses = classnames('queue text-left', {
-            visible: this.props.showQueue
+            visible: this.props.shown
         });
 
         const queueBodyClasses = classnames('queue-body', {

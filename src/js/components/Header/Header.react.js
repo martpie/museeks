@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
-import { Col } from 'react-bootstrap';
-import Icon from 'react-fontawesome';
 import Input from 'react-simple-input';
 
 import PlayingBar     from './PlayingBar.react';
-import Queue          from './Queue.react';
 import WindowControls from './WindowControls.react';
 import PlayerControls from './PlayerControls.react';
 
@@ -33,42 +30,29 @@ export default class Header extends Component {
     constructor(props) {
 
         super(props);
-        this.state = {
-            showQueue  : false
-        };
     }
 
     render() {
 
         return (
             <header className='row'>
-                <Col sm={ 3 } className='main-controls'>
+                <div className='col-main-controls'>
                     <WindowControls active={ this.props.windowControls } />
 
                     <PlayerControls
                         audio={ Player.getAudio() }
                         playerStatus={ this.props.playerStatus }
                     />
-                </Col>
-                <Col sm={ 6 }>
+                </div>
+                <div className='col-player-infos'>
                     <PlayingBar
                         queue={ this.props.queue }
                         queueCursor={ this.props.queueCursor }
                         shuffle={ this.props.shuffle }
                         repeat={ this.props.repeat }
                     />
-                </Col>
-                <Col sm={ 1 } className='queue-controls text-center'>
-                    <button type='button' className='queue-toggle' onClick={ this.toggleQueue.bind(this) }>
-                        <Icon name='list' />
-                    </button>
-                    <Queue
-                        showQueue={ this.state.showQueue }
-                        queue={ this.props.queue }
-                        queueCursor={ this.props.queueCursor }
-                    />
-                </Col>
-                <Col sm={ 2 }>
+                </div>
+                <div className="col-search-controls">
                     <Input
                         selectOnClick
                         placeholder='search'
@@ -78,7 +62,7 @@ export default class Header extends Component {
                         ref='search'
                         onChange={ this.search.bind(null) }
                     />
-                </Col>
+                </div>
             </header>
         );
     }
@@ -89,9 +73,5 @@ export default class Header extends Component {
 
     search(value) {
         AppActions.library.filterSearch(value.toLowerCase());
-    }
-
-    toggleQueue() {
-        this.setState({ showQueue: !this.state.showQueue });
     }
 }

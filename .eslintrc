@@ -25,7 +25,7 @@
         "comma-style": ["error", "last"],
         "eqeqeq": "error",
         "indent": ["error", 4, { "SwitchCase": 1 }],
-        "max-len": ["warn", 100],
+        "max-len": ["warn", 150],
         "no-array-constructor": "error",
         "no-case-declarations": "error",
         "no-confusing-arrow": "error",

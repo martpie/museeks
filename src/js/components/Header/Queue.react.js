@@ -23,8 +23,9 @@ export default class Queue extends PureComponent {
         const queueCursor = this.props.queueCursor;
 
         const shownQueue = queue.slice(queueCursor + 1, queueCursor + 21);
+
         if(shownQueue.length === 0) {
-            return <EmptyQueue visible={ this.props.showQueue } />;
+            return <EmptyQueue visible={ this.props.shown } />;
         }
 
         return <ListQueue { ...this.props } />;

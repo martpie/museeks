@@ -11,9 +11,9 @@ header {
     .player-controls,
     .now-playing-bar,
     .now-playing-info-buttons,
+    .now-playing-queue,
     .search,
-    .window-control,
-    .queue-controls {
+    .window-controls {
         -webkit-app-region: no-drag;
     }
 }
@@ -33,17 +33,17 @@ header {
     height: 51px;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     color: #555;
 
-
-    div[class*="col-"] {
-        padding: 0;
-    }
-
-    .main-controls {
+    .col-main-controls {
+        width: 200px;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
 
         .window-controls {
-            float: left;
             margin-right: 30px;
 
             .window-control {
@@ -68,7 +68,7 @@ header {
         .player-controls {
             display: flex;
             align-items: center;
-            margin-top: 2px;
+            position: relative;
 
             .player-control {
                 border: 0;
@@ -84,6 +84,7 @@ header {
                 &.volume {
                     padding: 0;
                     width: 34px;
+                    position: relative;
                 }
 
                 i {
@@ -96,8 +97,8 @@ header {
                 position: absolute;
                 z-index: 10;
                 background-color: rgb(244, 244, 244);
-                top: 0;
-                left: 60px;
+                top: -4px;
+                right: 25px;
                 display: none;
                 padding: 5px 12px;
 
@@ -115,282 +116,298 @@ header {
     }
     /* .windows-controls */
 
-    .now-playing {
-        display: flex;
-        align-items: center;
+    .col-player-infos {
+        width: calc(100% - 400px);
 
-        &.dragging {
-            -webkit-app-region: no-drag;
-        }
+        .now-playing {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 600px;
+            margin: auto;
 
-        .now-playing-cover {
+            &.dragging {
+                -webkit-app-region: no-drag;
+            }
 
-            .cover {
-                width: 42px;
-                height: 42px;
-                margin-right: 10px;
-                background-position: center;
-                background-size: cover;
-                text-align: center;
-                border: solid 1px #D2D2D2;
+            .now-playing-cover {
+                width: 60px;
 
-                .note {
-                    font-size: 30px;
-                    line-height: 28px;
-                    padding: 5px 5px 7px 5px;
+                .cover {
+                    width: 42px;
+                    height: 42px;
+                    margin-right: 10px;
+                    background-position: center;
+                    background-size: cover;
+                    text-align: center;
+                    border: solid 1px #D2D2D2;
+
+                    .note {
+                        font-family: monospace; // the sexy one
+                        font-size: 30px;
+                        line-height: 28px;
+                        padding: 5px 5px 7px 5px;
+                    }
                 }
             }
-        }
 
-        .now-playing-infos {
-            width: calc(100% - 60px);
+            .now-playing-infos {
+                width: calc(100% - 120px);
 
-            .now-playing-metas {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-
-                .icon {
+                .now-playing-metas {
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    height: 16px;
-                    width: 16px;
-                }
 
-                .player-options {
-                    display: flex;
-                    align-items: center;
-                    justify-content: flex-start;
-                    width: 80px;
+                    .icon {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        height: 16px;
+                        width: 16px;
+                    }
 
-                    .button {
-                        border: 0;
-                        background: transparent;
-                        font-size: 18px;
-                        -webkit-app-region: no-drag;
+                    .player-options {
+                        display: flex;
+                        align-items: center;
+                        justify-content: flex-start;
+                        width: 80px;
 
-                        &.active {
+                        .button {
+                            border: 0;
+                            background: transparent;
+                            font-size: 18px;
+                            -webkit-app-region: no-drag;
+
+                            &.active {
+
+                                svg {
+                                    fill: #337ab7;
+                                }
+                            }
 
                             svg {
-                                fill: #337ab7;
+                                width: 16px;
+                                height: auto;
                             }
                         }
+                    }
 
-                        svg {
-                            width: 16px;
-                            height: auto;
+                    .metas {
+                        white-space: nowrap;
+                        text-overflow: ellipsis;
+                        overflow: hidden;
+                        vertical-align: middle;
+                        text-align: center;
+                        width: calc(100% - 160px);
+                    }
+
+                    .duration {
+                        display: inline-block;
+                        padding: 0 6px;
+                        font-size: 10px;
+                        width: 80px;
+                        text-align: right;
+                    }
+                }
+
+                .now-playing-bar {
+                    padding: 2px;
+
+                    .playing-bar-tooltip {
+                        position: fixed;
+                        background-color: #FFF;
+                        border: 1px solid #CECECE;
+                        color: #555;
+                        font-size: 10px;
+                        padding: 2px 5px;
+                        top: 10px;
+
+                        &::before,
+                        &::after {
+                            content: "";
+                            position: absolute;
+                            width: 0;
+                            height: 0;
+                            border-style: solid;
+                            border-color: transparent;
+                            border-bottom: 0;
                         }
-                    }
-                }
 
-                .metas {
-                    white-space: nowrap;
-                    text-overflow: ellipsis;
-                    overflow: hidden;
-                    vertical-align: middle;
-                    text-align: center;
-                    width: calc(100% - 160px);
-                }
-
-                .duration {
-                    display: inline-block;
-                    padding: 0 6px;
-                    font-size: 10px;
-                    width: 80px;
-                    text-align: right;
-                }
-            }
-
-            .now-playing-bar {
-                padding: 2px;
-
-                .playing-bar-tooltip {
-                    position: fixed;
-                    background-color: #FFF;
-                    border: 1px solid #CECECE;
-                    color: #555;
-                    font-size: 10px;
-                    padding: 2px 5px;
-                    top: 10px;
-
-                    &::before,
-                    &::after {
-                        content: "";
-                        position: absolute;
-                        width: 0;
-                        height: 0;
-                        border-style: solid;
-                        border-color: transparent;
-                        border-bottom: 0;
-                    }
-
-                    /* Stroke */
-                    &::before {
-                        top: 18px;
-                        left: 5px;
-
-                        /* If 1px darken stroke slightly */
-                        border-top-color: #CECECE;
-                        border-width: 6px;
-                    }
-
-                    /* Fill */
-                    &::after {
-                        top: 18px;
-                        left: 6px;
-                        border-top-color: #FFF;
-                        border-width: 5px;
-                    }
-                }
-
-                .progress {
-                    height: 5px;
-                    margin-bottom: 0;
-                    margin-top: 3px;
-                    cursor: pointer;
-                    background-color: rgb(219, 219, 219);
-
-                    .progress-bar {
-                        background-color: $main-color;
-                        -webkit-transition: none;
-                        -o-transition: none;
-                        transition: none;
-                    }
-                }
-            }
-        }
-    }
-    /* .now-playing */
-
-    .queue-controls {
-
-        .queue-toggle {
-            border: 0;
-            background: transparent;
-            font-size: 14px;
-        }
-
-        .queue {
-            display: none;
-            position: absolute;
-            width: 300px;
-            background: white;
-            border: solid 1px rgb(210, 210, 210);
-            text-overflow: ellipsis;
-            overflow-x: hidden;
-            font-size: 12px;
-            z-index: 30;
-            color: grey;
-            right: 20%;
-            top: 30px;
-            box-shadow: 0 5px 3px -5px rgba(0, 0, 0, .5);
-
-            &.visible {
-                display: block;
-            }
-
-            .empty-queue {
-                padding: 20px;
-                color: lightgrey;
-            }
-
-            .queue-header {
-                padding: 5px 10px;
-                background-color: rgb(244, 244, 244);
-
-                .queue-infos {
-                    float: right;
-                    font-size: 11px;
-                    padding-top: 1px;
-                    padding-bottom: 1px;
-                }
-
-                .empty-button {
-                    font-size: 10px;
-                    padding: 1px 5px;
-                }
-            }
-
-            .queue-body {
-                max-height: 250px;
-                overflow: auto;
-
-                .track {
-                    padding-bottom: 5px;
-                    padding-top: 5px;
-                    cursor: pointer;
-                    -webkit-user-drag: element;
-
-                    &:not(:last-child) {
-                        border-bottom: dashed 1px #D8D8D8;
-                    }
-
-                    &::before,
-                    &::after {
-                        content: '';
-                        display: block;
-                        background-color: #f4f4f4;
-                        padding: 0;
-                    }
-
-                    &.dragged {
-                            display: none;
-                    }
-
-                    &.dragged-over {
-                        padding-top: 0;
-
+                        /* Stroke */
                         &::before {
-                            margin-bottom: 5px;
-                            padding: 20px 0;
+                            top: 18px;
+                            left: 5px;
+
+                            /* If 1px darken stroke slightly */
+                            border-top-color: #CECECE;
+                            border-width: 6px;
+                        }
+
+                        /* Fill */
+                        &::after {
+                            top: 18px;
+                            left: 6px;
+                            border-top-color: #FFF;
+                            border-width: 5px;
                         }
                     }
 
-                    &.dragged-over-after::after {
-                        padding: 20px 0;
-                    }
+                    .progress {
+                        height: 5px;
+                        margin-bottom: 0;
+                        margin-top: 3px;
+                        cursor: pointer;
+                        background-color: rgb(219, 219, 219);
 
-                    .track-infos {
-                        width: calc(100% - 40px);
-
-                        .title {
-                            font-weight: bold;
-                        }
-
-                        .title,
-                        .other-infos {
-                            padding: 0 10px;
-                            color: rgb(51, 51, 51);
-                            text-overflow: ellipsis;
-                            overflow: hidden;
-                            white-space: nowrap;
+                        .progress-bar {
+                            background-color: $main-color;
+                            -webkit-transition: none;
+                            -o-transition: none;
+                            transition: none;
                         }
                     }
+                }
+            }
 
-                    .remove {
-                        float: right;
-                        width: 25px;
-                        height: 25px;
-                        line-height: 10px;
-                        padding: 3px;
-                        margin-top: 5px;
-                        margin-right: 5px;
-                        visibility: hidden;
+            .now-playing-queue {
+                width: 60px;
+                position: relative;
 
-                        &:hover,
-                        &:focus,
-                        &:active {
-                            color: #555;
-                            text-decoration: none;
+                .queue-toggle {
+                    border: 0;
+                    background: transparent;
+                    font-size: 14px;
+                }
+
+                .queue {
+                    display: none;
+                    position: absolute;
+                    width: 300px;
+                    background: white;
+                    border: solid 1px rgb(210, 210, 210);
+                    text-overflow: ellipsis;
+                    overflow-x: hidden;
+                    font-size: 12px;
+                    z-index: 30;
+                    color: grey;
+                    right: 10px;
+                    top: 30px;
+                    box-shadow: 0 5px 3px -5px rgba(0, 0, 0, .5);
+
+                    &.visible {
+                        display: block;
+                    }
+
+                    .empty-queue {
+                        padding: 20px;
+                        color: lightgrey;
+                    }
+
+                    .queue-header {
+                        padding: 5px 10px;
+                        background-color: rgb(244, 244, 244);
+
+                        .queue-infos {
+                            float: right;
+                            font-size: 11px;
+                            padding-top: 1px;
+                            padding-bottom: 1px;
+                        }
+
+                        .empty-button {
+                            font-size: 10px;
+                            padding: 1px 5px;
                         }
                     }
 
-                    &:hover .remove {
-                        visibility: visible;
+                    .queue-body {
+                        max-height: 250px;
+                        overflow: auto;
+
+                        .track {
+                            padding-bottom: 5px;
+                            padding-top: 5px;
+                            cursor: pointer;
+                            -webkit-user-drag: element;
+
+                            &:not(:last-child) {
+                                border-bottom: dashed 1px #D8D8D8;
+                            }
+
+                            &::before,
+                            &::after {
+                                content: '';
+                                display: block;
+                                background-color: #f4f4f4;
+                                padding: 0;
+                            }
+
+                            &.dragged {
+                                    display: none;
+                            }
+
+                            &.dragged-over {
+                                padding-top: 0;
+
+                                &::before {
+                                    margin-bottom: 5px;
+                                    padding: 20px 0;
+                                }
+                            }
+
+                            &.dragged-over-after::after {
+                                padding: 20px 0;
+                            }
+
+                            .track-infos {
+                                width: calc(100% - 40px);
+
+                                .title {
+                                    font-weight: bold;
+                                }
+
+                                .title,
+                                .other-infos {
+                                    padding: 0 10px;
+                                    color: rgb(51, 51, 51);
+                                    text-overflow: ellipsis;
+                                    overflow: hidden;
+                                    white-space: nowrap;
+                                }
+                            }
+
+                            .remove {
+                                float: right;
+                                width: 25px;
+                                height: 25px;
+                                line-height: 10px;
+                                padding: 3px;
+                                margin-top: 5px;
+                                margin-right: 5px;
+                                visibility: hidden;
+
+                                &:hover,
+                                &:focus,
+                                &:active {
+                                    color: #555;
+                                    text-decoration: none;
+                                }
+                            }
+
+                            &:hover .remove {
+                                visibility: visible;
+                            }
+                        } /* .track */
                     }
-                } /* .track */
+                }
             }
         }
+        /* .now-playing */
+    }
+    /* .player-controls */
+
+    .col-search-controls {
+        width: 200px;
     }
 }

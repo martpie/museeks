@@ -1,15 +1,19 @@
 import React, { Component } from 'react';
 import { ProgressBar } from 'react-bootstrap';
-import classnames from 'classnames';
+import Icon from 'react-fontawesome';
+
 
 import ButtonShuffle from './ButtonShuffle.react';
 import ButtonRepeat  from './ButtonRepeat.react';
 import TrackCover    from './TrackCover.react';
+import Queue         from './Queue.react';
 
 import Player from '../../lib/player';
 import utils  from '../../utils/utils';
 
 import AppActions from '../../actions/AppActions';
+
+import classnames from 'classnames';
 
 
 /*
@@ -35,7 +39,8 @@ export default class PlayingBar extends Component {
             showTooltip : false,
             duration    : null,
             x           : null,
-            dragging    : false
+            dragging    : false,
+            showQueue   : false
         };
 
         this.tick        = this.tick.bind(this);
@@ -110,6 +115,16 @@ export default class PlayingBar extends Component {
                             onMouseLeave={ this.hideTooltip.bind(this) }
                         />
                     </div>
+                </div>
+                <div className='now-playing-queue'>
+                    <button type='button' className='queue-toggle' onClick={ this.toggleQueue.bind(this) }>
+                        <Icon name='list' />
+                    </button>
+                    <Queue
+                        shown={ this.state.showQueue }
+                        queue={ this.props.queue }
+                        queueCursor={ this.props.queueCursor }
+                    />
                 </div>
             </div>
         );
@@ -195,5 +210,9 @@ export default class PlayingBar extends Component {
             duration : null,
             x        : null
         });
+    }
+
+    toggleQueue() {
+        this.setState({ showQueue: !this.state.showQueue });
     }
 }
