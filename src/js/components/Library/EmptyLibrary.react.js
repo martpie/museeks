@@ -1,4 +1,4 @@
-import { PureComponent } from 'react';
+import React, { PureComponent } from 'react';
 import { Link } from 'react-router';
 
 import FullViewMessage from '../Shared/FullViewMessage.react';
