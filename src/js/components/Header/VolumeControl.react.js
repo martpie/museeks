@@ -76,6 +76,4 @@ export default class VolumeControl extends PureComponent {
             AppActions.player.setMuted(!Player.getAudio().muted);
         }
     }
-
-
 }

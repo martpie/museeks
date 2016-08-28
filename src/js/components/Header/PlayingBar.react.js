@@ -34,6 +34,7 @@ export default class PlayingBar extends Component {
     constructor(props) {
 
         super(props);
+
         this.state = {
             elapsed     : 0,
             showTooltip : false,

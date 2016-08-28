@@ -20,7 +20,6 @@ export default class ButtonShuffle extends Component {
     constructor(props) {
 
         super(props);
-        this.state = {};
     }
 
     render() {

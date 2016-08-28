@@ -18,6 +18,11 @@ export default class LibraryFolders extends PureComponent {
         refreshingLibrary: React.PropTypes.bool
     }
 
+    constructor(props) {
+
+        super(props);
+    }
+
     render() {
 
         const self = this;

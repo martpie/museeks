@@ -17,6 +17,11 @@ export default class PlayerControls extends PureComponent {
         playerStatus: React.PropTypes.string
     }
 
+    constructor(props) {
+
+        super(props);
+    }
+
     render() {
         return (
             <div className='player-controls'>

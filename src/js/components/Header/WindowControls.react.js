@@ -13,8 +13,15 @@ export default class WindowControls extends PureComponent {
         active: React.PropTypes.bool
     }
 
+    constructor(props) {
+
+        super(props);
+    }
+
     render() {
+
         if(!this.props.active) return null;
+
         return (
             <div className='window-controls'>
                 <button className='window-control' onClick={ this.winClose }>&times;</button>

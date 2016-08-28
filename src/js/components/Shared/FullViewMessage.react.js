@@ -7,6 +7,12 @@ import React, { PureComponent } from 'react';
 */
 
 export default class FullViewMessage extends PureComponent {
+
+    constructor(props) {
+
+        super(props);
+    }
+
     render() {
         return (
             <div className='full-message'>

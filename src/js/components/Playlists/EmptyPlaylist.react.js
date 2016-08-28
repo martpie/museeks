@@ -8,6 +8,12 @@ import FullViewMessage from '../Shared/FullViewMessage.react';
 */
 
 export default class EmptyPlaylist extends PureComponent {
+
+    constructor(props) {
+
+        super(props);
+    }
+
     render() {
         return (
             <FullViewMessage>

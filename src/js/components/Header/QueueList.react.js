@@ -26,6 +26,7 @@ export default class QueueList extends Component {
     constructor(props) {
 
         super(props);
+
         this.state = {
             draggedTrack     : null,
             draggedOverTrack : null,

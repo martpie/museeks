@@ -10,6 +10,12 @@ import FullViewMessage from '../Shared/FullViewMessage.react';
 */
 
 export default class EmptyLibrary extends PureComponent {
+
+    constructor(props) {
+
+        super(props);
+    }
+
     render() {
         return (
             <FullViewMessage>

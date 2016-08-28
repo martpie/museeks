@@ -10,6 +10,11 @@ import classnames from 'classnames';
 
 export default class QueueEmpty extends PureComponent {
 
+    constructor(props) {
+
+        super(props);
+    }
+
     render() {
         const queueClasses = classnames('queue text-left', {
             visible: this.props.visible

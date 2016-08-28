@@ -15,6 +15,11 @@ export default class CheckboxSetting extends PureComponent {
         onClick: React.PropTypes.func
     }
 
+    constructor(props) {
+
+        super(props);
+    }
+
     render() {
 
         return (

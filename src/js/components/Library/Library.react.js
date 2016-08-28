@@ -24,7 +24,6 @@ export default class Library extends Component {
     constructor(props) {
 
         super(props);
-        this.state = {};
     }
 
     getLibraryComponent() {

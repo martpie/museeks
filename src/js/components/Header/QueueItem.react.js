@@ -12,7 +12,14 @@ import AppActions from '../../actions/AppActions';
 */
 
 export default class QueueItem extends PureComponent {
+
+    constructor(props) {
+
+        super(props);
+    }
+
     render() {
+
         const queueContentClasses = classnames('track', {
             'dragged': this.props.dragged,
             'dragged-over': this.props.draggedOver,

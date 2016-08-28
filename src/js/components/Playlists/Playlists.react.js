@@ -24,7 +24,6 @@ export default class Playlists extends Component {
     constructor(props) {
 
         super(props);
-        this.state = {};
     }
 
     createPlaylist() {
