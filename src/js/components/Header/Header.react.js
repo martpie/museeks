@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import { Col } from 'react-bootstrap';
 import Icon from 'react-fontawesome';
 import Input from 'react-simple-input';
-import classnames from 'classnames';
 
 import PlayingBar     from './PlayingBar.react';
 import Queue          from './Queue.react';
 import WindowControls from './WindowControls.react';
+import PlayerControls from './PlayerControls.react';
 
 import AppActions from '../../actions/AppActions';
 
@@ -42,18 +42,6 @@ export default class Header extends Component {
 
     render() {
 
-        const audio = Player.getAudio();
-
-        const playButton = (
-            <button className='player-control play' onClick={ () => this.playToggle() }>
-                <Icon name={ this.props.playerStatus === 'play' ? 'pause' : 'play' } fixedWidth />
-            </button>
-        );
-
-        const volumeClasses = classnames('volume-control', {
-            visible: this.state.showVolume
-        });
-
         return (
             <header className='row'>
                 <Col sm={ 3 } className='main-controls'>
@@ -62,33 +50,18 @@ export default class Header extends Component {
                         onClose={ this.winClose }
                     />
 
-                    <div className='player-controls'>
-                        <button type='button' className='player-control previous' onClick={ this.previous.bind(null) }>
-                            <Icon name='backward' />
-                        </button>
-                        { playButton }
-                        <button type='button' className='player-control forward' onClick={ this.next.bind(null) }>
-                            <Icon name='forward' />
-                        </button>
-                        <button type='button'
-                                className='player-control volume'
-                                onMouseEnter={ this.showVolume.bind(this) }
-                                onMouseLeave={ this.hideVolume.bind(this) }
-                                onClick={ this.mute }
-                        >
-                            <Icon name={ audio.muted || audio.volume === 0 ? 'volume-off' : audio.volume > 0.5 ? 'volume-up' : 'volume-down' } />
-                            <div className={ volumeClasses }>
-                                <input type={ 'range' }
-                                       min={ 0 }
-                                       max={ 1 }
-                                       step={ 0.01 }
-                                       defaultValue={ Math.pow(audio.volume, 1 / 4) }
-                                       ref='volume'
-                                       onChange={ this.setVolume.bind(this) }
-                                />
-                            </div>
-                        </button>
-                    </div>
+                    <PlayerControls
+                        audio={ Player.getAudio() }
+                        showVolume={ this.state.showVolume }
+                        previous={ this.previous }
+                        next={ this.next }
+                        playerStatus={ this.props.playerStatus }
+                        playToggle={ this.playToggle.bind(this) }
+                        onShowVolume={ this.showVolume.bind(this) }
+                        onHideVolume={ this.hideVolume.bind(this) }
+                        onVolumeChange={ this.setVolume.bind(this) }
+                        onMute={ this.mute.bind(this) }
+                    />
                 </Col>
                 <Col sm={ 6 }>
                     <PlayingBar
@@ -160,8 +133,8 @@ export default class Header extends Component {
         AppActions.player.previous();
     }
 
-    setVolume() {
-        AppActions.player.setVolume(parseFloat(this.refs.volume.value));
+    setVolume(e) {
+        AppActions.player.setVolume(parseFloat(e.target.value));
     }
 
     showVolume() {
