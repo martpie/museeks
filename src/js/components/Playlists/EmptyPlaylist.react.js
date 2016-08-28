@@ -10,9 +10,9 @@ import FullViewMessage from '../Shared/FullViewMessage.react';
 export default class EmptyPlaylist extends PureComponent {
     render() {
         return (
-          <FullViewMessage message='Empty playlist'>
-            <span>You can add tracks from the library view</span>
-          </FullViewMessage>
+            <FullViewMessage message='Empty playlist'>
+                <span>You can add tracks from the library view</span>
+            </FullViewMessage>
         );
     }
 }
