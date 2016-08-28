@@ -1,16 +1,24 @@
 import React, { PureComponent } from 'react';
 import Icon from 'react-fontawesome';
-
 import classnames from 'classnames';
+
+
+import AppActions from '../../actions/AppActions';
+import Player from '../../lib/player';
 
 export default class VolumeControl extends PureComponent {
 
     static propTypes = {
-        audio: React.PropTypes.object,
-        onShowVolume: React.PropTypes.func,
-        onHideVolume: React.PropTypes.func,
-        onVolumeChange: React.PropTypes.func,
-        onMute: React.PropTypes.func,
+        audio: React.PropTypes.object
+    }
+
+    constructor(props) {
+
+        super(props);
+        this.state = {
+            showVolume : false
+        };
+        this.mute = this.mute.bind(this);
     }
 
     getVolumeIcon(audio) {
@@ -19,15 +27,15 @@ export default class VolumeControl extends PureComponent {
 
     render() {
         const volumeClasses = classnames('volume-control', {
-            visible: this.props.showVolume
+            visible: this.state.showVolume
         });
 
         return (
             <button type='button'
                     className='player-control volume'
-                    onMouseEnter={ this.props.onShowVolume }
-                    onMouseLeave={ this.props.onHideVolume }
-                    onClick={ this.props.onMute }
+                    onMouseEnter={ this.showVolume.bind(this) }
+                    onMouseLeave={ this.hideVolume.bind(this) }
+                    onClick={ this.mute }
             >
                 <Icon name={ this.getVolumeIcon(this.props.audio) } />
                 <div className={ volumeClasses }>
@@ -37,11 +45,32 @@ export default class VolumeControl extends PureComponent {
                            step={ 0.01 }
                            defaultValue={ Math.pow(this.props.audio.volume, 1 / 4) }
                            ref='volume'
-                           onChange={ this.props.onVolumeChange }
+                           onChange={ this.setVolume }
                     />
                 </div>
             </button>
         );
     }
+
+    setVolume(e) {
+        AppActions.player.setVolume(parseFloat(e.currentTarget.value));
+    }
+
+    showVolume() {
+        this.setState({ showVolume: true });
+    }
+
+    hideVolume() {
+        this.setState({ showVolume: false });
+    }
+
+    mute(e) {
+
+        if(e.target.classList.contains('player-control') || e.target.classList.contains('fa')) {
+
+            AppActions.player.setMuted(!Player.getAudio().muted);
+        }
+    }
+
 
 }

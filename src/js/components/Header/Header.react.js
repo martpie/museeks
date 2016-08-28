@@ -34,10 +34,8 @@ export default class Header extends Component {
 
         super(props);
         this.state = {
-            showVolume : false,
             showQueue  : false
         };
-        this.mute = this.mute.bind(this);
     }
 
     render() {
@@ -53,14 +51,6 @@ export default class Header extends Component {
                     <PlayerControls
                         audio={ Player.getAudio() }
                         playerStatus={ this.props.playerStatus }
-                        showVolume={ this.state.showVolume }
-                        onPrevious={ this.previous }
-                        onNext={ this.next }
-                        onPlayToggle={ this.playToggle.bind(this) }
-                        onShowVolume={ this.showVolume.bind(this) }
-                        onHideVolume={ this.hideVolume.bind(this) }
-                        onVolumeChange={ this.setVolume.bind(this) }
-                        onMute={ this.mute }
                     />
                 </Col>
                 <Col sm={ 6 }>
@@ -96,61 +86,12 @@ export default class Header extends Component {
         );
     }
 
-    winClose() {
-        AppActions.app.close();
-    }
-
-    search(value) {
-        AppActions.library.filterSearch(value.toLowerCase());
-    }
-
-    searchSelect() {
-        this.refs.search.select();
-    }
-
-    playToggle() {
-        if(this.props.playerStatus === 'play') this.pause();
-        else if (this.props.playerStatus === 'pause') this.play();
-    }
-
-    play() {
-        AppActions.player.play();
-    }
-
-    pause() {
-        AppActions.player.pause();
-    }
-
     toggleRepeat() {
         AppActions.player.toggleRepeat();
     }
 
-    next() {
-        AppActions.player.next();
-    }
-
-    previous() {
-        AppActions.player.previous();
-    }
-
-    setVolume(e) {
-        AppActions.player.setVolume(parseFloat(e.currentTarget.value));
-    }
-
-    showVolume() {
-        this.setState({ showVolume: true });
-    }
-
-    mute(e) {
-
-        if(e.target.classList.contains('player-control') || e.target.classList.contains('fa')) {
-
-            AppActions.player.setMuted(!Player.getAudio().muted);
-        }
-    }
-
-    hideVolume() {
-        this.setState({ showVolume: false });
+    search(value) {
+        AppActions.library.filterSearch(value.toLowerCase());
     }
 
     toggleQueue() {
