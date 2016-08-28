@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import PlaylistsNav from './PlaylistsNav.react';
 import FullViewMessage from '../Shared/FullViewMessage.react';
+import FullViewSubMessage from '../Shared/FullViewSubMessage.react';
 
 import AppActions from '../../actions/AppActions';
 
@@ -38,14 +39,17 @@ export default class Playlists extends Component {
 
         if(this.props.playlists.length === 0) {
             return (
-                <FullViewMessage message="You haven't created any playlist yet">
-                    <a onClick={ this.createPlaylist }> create one now </a>
+                <FullViewMessage>
+                    <p>You haven't created any playlist yet</p>
+                    <FullViewSubMessage>
+                        <a onClick={ this.createPlaylist }>create one now</a>
+                    </FullViewSubMessage>
                 </FullViewMessage>
             );
         }
 
         if(!this.props.params.playlistId) {
-            return <FullViewMessage message='Select a playlist in the menu on the left' />;
+            return <FullViewMessage><p>Select a playlist in the menu on the left</p></FullViewMessage>;
         }
 
         return React.cloneElement(this.props.children, { ...this.props });

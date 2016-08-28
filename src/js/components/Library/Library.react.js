@@ -29,13 +29,13 @@ export default class Library extends Component {
 
     getLibraryComponent() {
         if(this.props.library === null) {
-            return <FullViewMessage message='Loading library...' />;
+            return <FullViewMessage><p>Loading library...</p></FullViewMessage>;
         }
         if (this.props.library.length === 0) {
             return <EmptyLibrary />;
         }
         if (this.props.tracks.length === 0) {
-            return <FullViewMessage message='Your search returned no results' />;
+            return <FullViewMessage><p>Your search returned no results</p></FullViewMessage>;
         }
         return (
             <TracksList

@@ -2,16 +2,12 @@ import React, { PureComponent } from 'react';
 
 /*
 |--------------------------------------------------------------------------
-| FullViewMessage
+| FullViewSubMessage
 |--------------------------------------------------------------------------
 */
 
-export default class FullViewMessage extends PureComponent {
+export default class FullViewSubMessage extends PureComponent {
     render() {
-        return (
-            <div className='full-message'>
-                { this.props.children }
-            </div>
-        );
+        return <p className='sub-message'>{ this.props.children }</p>;
     }
 }
