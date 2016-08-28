@@ -4,8 +4,9 @@ import Icon from 'react-fontawesome';
 import Input from 'react-simple-input';
 import classnames from 'classnames';
 
-import PlayingBar from './PlayingBar.react';
-import Queue      from './Queue.react';
+import PlayingBar     from './PlayingBar.react';
+import Queue          from './Queue.react';
+import WindowControls from './WindowControls.react';
 
 import AppActions from '../../actions/AppActions';
 
@@ -49,9 +50,6 @@ export default class Header extends Component {
             </button>
         );
 
-        // TODO (y.solovyov): incapsulate window controls into own component
-        const windowControls = this.props.windowControls ? <button className='window-control' onClick={ this.winClose.bind(null) }>&times;</button> : false;
-
         const volumeClasses = classnames('volume-control', {
             visible: this.state.showVolume
         });
@@ -59,9 +57,10 @@ export default class Header extends Component {
         return (
             <header className='row'>
                 <Col sm={ 3 } className='main-controls'>
-                    <div className='window-controls'>
-                        { windowControls }
-                    </div>
+                    <WindowControls
+                        active={ this.props.windowControls }
+                        onClose={ this.winClose }
+                    />
 
                     <div className='player-controls'>
                         <button type='button' className='player-control previous' onClick={ this.previous.bind(null) }>
