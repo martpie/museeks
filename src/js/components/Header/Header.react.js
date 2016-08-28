@@ -52,15 +52,15 @@ export default class Header extends Component {
 
                     <PlayerControls
                         audio={ Player.getAudio() }
-                        showVolume={ this.state.showVolume }
-                        previous={ this.previous }
-                        next={ this.next }
                         playerStatus={ this.props.playerStatus }
-                        playToggle={ this.playToggle.bind(this) }
+                        showVolume={ this.state.showVolume }
+                        onPrevious={ this.previous }
+                        onNext={ this.next }
+                        onPlayToggle={ this.playToggle.bind(this) }
                         onShowVolume={ this.showVolume.bind(this) }
                         onHideVolume={ this.hideVolume.bind(this) }
                         onVolumeChange={ this.setVolume.bind(this) }
-                        onMute={ this.mute.bind(this) }
+                        onMute={ this.mute }
                     />
                 </Col>
                 <Col sm={ 6 }>
