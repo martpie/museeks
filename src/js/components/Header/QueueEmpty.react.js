@@ -8,7 +8,7 @@ import classnames from 'classnames';
 |--------------------------------------------------------------------------
 */
 
-export default class EmptyQueue extends PureComponent {
+export default class QueueEmpty extends PureComponent {
 
     render() {
         const queueClasses = classnames('queue text-left', {

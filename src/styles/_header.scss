@@ -44,7 +44,7 @@ header {
         justify-content: flex-start;
 
         .window-controls {
-            margin-right: 30px;
+            margin-right: 20px;
 
             .window-control {
                 width: 30px;
@@ -171,7 +171,7 @@ header {
                         display: flex;
                         align-items: center;
                         justify-content: flex-start;
-                        width: 80px;
+                        width: 100px;
 
                         .button {
                             border: 0;
@@ -199,14 +199,14 @@ header {
                         overflow: hidden;
                         vertical-align: middle;
                         text-align: center;
-                        width: calc(100% - 160px);
+                        width: calc(100% - 200px);
                     }
 
                     .duration {
                         display: inline-block;
                         padding: 0 6px;
                         font-size: 10px;
-                        width: 80px;
+                        width: 100px;
                         text-align: right;
                     }
                 }

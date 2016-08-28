@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 
-import EmptyQueue from './EmptyQueue.react';
-import ListQueue from './ListQueue.react';
+import QueueEmpty from './QueueEmpty.react';
+import QueueList from './QueueList.react';
 
 
 /*
@@ -25,9 +25,9 @@ export default class Queue extends PureComponent {
         const shownQueue = queue.slice(queueCursor + 1, queueCursor + 21);
 
         if(shownQueue.length === 0) {
-            return <EmptyQueue visible={ this.props.shown } />;
+            return <QueueEmpty visible={ this.props.shown } />;
         }
 
-        return <ListQueue { ...this.props } />;
+        return <QueueList { ...this.props } />;
     }
 }

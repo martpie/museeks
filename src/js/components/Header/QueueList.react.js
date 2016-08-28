@@ -15,7 +15,7 @@ import utils from '../../utils/utils';
 |--------------------------------------------------------------------------
 */
 
-export default class ListQueue extends Component {
+export default class QueueList extends Component {
 
     static propTypes = {
         queue: React.PropTypes.array,
