@@ -4,6 +4,11 @@ import classnames from 'classnames';
 
 import AppActions from '../../actions/AppActions';
 
+const svgMap = {
+    one: require('../../../images/icons/player-repeat-one.svg'),
+    all: require('../../../images/icons/player-repeat.svg'),
+    default: require('../../../images/icons/player-repeat.svg')
+};
 
 /*
 |--------------------------------------------------------------------------
@@ -24,12 +29,6 @@ export default class ButtonRepeat extends Component {
     }
 
     render() {
-        const svgMap = {
-            one: require('../../../images/icons/player-repeat-one.svg'),
-            all: require('../../../images/icons/player-repeat.svg'),
-            default: require('../../../images/icons/player-repeat.svg')
-        };
-
         const svg = svgMap[this.props.repeat] || svgMap.default;
         const buttonClasses = classnames('button repeat',{
             active: this.props.repeat === 'one' || this.props.repeat === 'all'
