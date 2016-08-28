@@ -7,6 +7,10 @@ import AppActions from '../../actions/AppActions';
 
 const shell = electron.shell;
 
+// sth wrong with that, need some check with Webpack
+const museeksLogoRequire = require('../../../images/logos/museeks.png');
+const museeksLogo = `dist/${museeksLogoRequire}`;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -25,8 +29,6 @@ export default class SettingsAbout extends Component {
     render() {
 
         const self = this;
-        const museeksLogoRequire = require('../../../images/logos/museeks.png'); // sth wrong with that, need some check with Webpack
-        const museeksLogo = `dist/${museeksLogoRequire}`;
 
         return (
             <div className='setting setting-about'>

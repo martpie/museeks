@@ -37,7 +37,8 @@ export default class Queue extends Component {
         const queue       = this.props.queue;
         const queueCursor = this.props.queueCursor;
 
-        const shownQueue = queue.slice(queueCursor + 1, queueCursor + 21); // Get the 20 next tracks displayed
+        // Get the 20 next tracks displayed
+        const shownQueue = queue.slice(queueCursor + 1, queueCursor + 21);
         const incomingQueue = queue.slice(queueCursor + 1);
 
         if(shownQueue.length === 0) {

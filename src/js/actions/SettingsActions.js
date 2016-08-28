@@ -53,7 +53,9 @@ export default {
     },
 
     checkSleepBlocker: function() {
-        if(app.config.get('sleepBlocker')) ipcRenderer.send('toggleSleepBlocker', true, 'prevent-app-suspension');
+        if(app.config.get('sleepBlocker')) {
+            ipcRenderer.send('toggleSleepBlocker', true, 'prevent-app-suspension');
+        }
     },
 
     toggleDevMode: function() {
@@ -96,12 +98,14 @@ export default {
                 return semver.valid(release.tag_name) !== null && semver.gt(release.tag_name, currentVersion);
             });
 
+            let message;
             if (newRelease) {
-                AppActions.notifications.add('success', `Museeks ${newRelease.tag_name} is available, check http://museeks.io !`);
+                message = `Museeks ${newRelease.tag_name} is available, check http://museeks.io !`;
             } else if(!options.silentFail) {
-                AppActions.notifications.add('success', `Museeks ${currentVersion} is the latest version available.`);
+                message = `Museeks ${currentVersion} is the latest version available.`;
             }
 
+            AppActions.notifications.add('success', message);
         }).catch(() => {
             AppActions.notifications.add('danger', 'An error occurred while checking updates.');
         });

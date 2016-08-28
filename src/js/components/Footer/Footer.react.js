@@ -28,9 +28,9 @@ export default class Footer extends Component {
     render() {
 
         const tracks = this.props.tracks;
-        let status = (tracks !== null) ? utils.getStatus(tracks) : 'An apple a day keeps Dr Dre away';
+        const status = (tracks !== null) ? utils.getStatus(tracks) : 'An apple a day keeps Dr Dre away';
 
-        let navButtons = (
+        const navButtons = (
             <ButtonGroup className='view-switcher'>
                 <LinkContainer to='/library' disabled={ this.props.refreshingLibrary }>
                     <Button className='view-link'>

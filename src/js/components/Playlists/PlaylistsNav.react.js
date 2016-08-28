@@ -32,7 +32,7 @@ export default class PlaylistsNav extends Component {
 
         const self = this;
         // TODO (y.solovyov): extract into separate method that returns items
-        let nav = this.props.playlists.map((elem, index) => {
+        const nav = this.props.playlists.map((elem, index) => {
 
             let navItemContent;
 

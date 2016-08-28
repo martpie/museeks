@@ -16,8 +16,15 @@ const dialog = electron.remote.dialog;
 export default {
 
     load: function() {
+        const querySort = {
+            'loweredMetas.artist': 1,
+            'year': 1,
+            'loweredMetas.album': 1,
+            'disk.no': 1,
+            'track.no': 1
+        };
 
-        app.db.find({ type : 'track' }).sort({ 'loweredMetas.artist': 1, 'year': 1, 'loweredMetas.album': 1, 'disk.no': 1, 'track.no': 1 }).exec((err, tracks) => {
+        app.db.find({ type : 'track' }).sort(querySort).exec((err, tracks) => {
             if (err) console.warn(err);
             else {
                 store.dispatch({
@@ -59,8 +66,9 @@ export default {
     },
 
     addFolders: function() {
-
-        dialog.showOpenDialog({ properties: ['openDirectory', 'multiSelections'] }, (folders) => {
+        dialog.showOpenDialog({
+            properties: ['openDirectory', 'multiSelections']
+        }, (folders) => {
             if(folders !== undefined) {
                 store.dispatch({
                     type : AppConstants.APP_LIBRARY_ADD_FOLDERS,
@@ -138,7 +146,8 @@ export default {
                 return;
             }
 
-            let filesInLibrary = 0;
+            let addedFiles = 0;
+            const totalFiles = supportedFiles.length;
             return Promise.map(supportedFiles, (filePath) => {
                 return app.db.findAsync({ path: filePath }).then((docs) => {
                     if (docs.length === 0) {
@@ -148,8 +157,9 @@ export default {
                 }).then((metadata) => {
                     return app.db.insertAsync(metadata);
                 }).then(() => {
-                    AppActions.settings.refreshProgress(parseInt(filesInLibrary * 100 / supportedFiles.length));
-                    filesInLibrary++;
+                    const percent = parseInt(addedFiles * 100 / totalFiles);
+                    AppActions.settings.refreshProgress(percent);
+                    addedFiles++;
                 });
             }, { concurrency: fsConcurrency });
         }).then(() => {

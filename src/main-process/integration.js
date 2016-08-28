@@ -1,3 +1,5 @@
+'use strict';
+
 const platform = require('os').platform();
 
 let Integration = null;

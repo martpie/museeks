@@ -68,10 +68,11 @@ packager(options, (err) => {
     else {
         console.info('Builds cleanup');
 
-        const buildsPathes = getDirectories(path.join('./build', 'dist', app.version));
+        const versionPath = path.join(__dirname, 'build', 'dist', app.version);
+        const buildsPathes = getDirectories(versionPath);
 
         buildsPathes.forEach((folder) => {
-            const appPath = path.join(__dirname, 'build', 'dist', app.version, folder, 'resources', 'app');
+            const appPath = path.join(versionPath, folder, 'resources', 'app');
             rimraf(`${appPath}/src/js`, {}, () => {});
             rimraf(`${appPath}/src/styles`, {}, () => {});
         });

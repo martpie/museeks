@@ -46,7 +46,7 @@ const utils = {
      * @return string
      */
     getStatus: function(tracks) {
-        const status = this.parseDuration(tracks.length === 0 ? 0 : tracks.map((d) => d.duration).reduce((a, b) => a + b));
+        const status = this.parseDuration(tracks.map((d) => d.duration).reduce((a, b) => a + b), 0);
         return `${tracks.length} tracks, ${status}`;
     },
 
@@ -115,10 +115,10 @@ const utils = {
      */
     stripAccents(str) {
 
-        const accents = 'ÀÁÂÃÄÅàáâãäåÒÓÔÕÕÖØòóôõöøÈÉÊËèéêëðÇçÐÌÍÎÏìíîïÙÚÛÜùúûüÑñŠšŸÿýŽž',
-            fixes = 'AAAAAAaaaaaaOOOOOOOooooooEEEEeeeeeCcDIIIIiiiiUUUUuuuuNnSsYyyZz',
-            split = accents.split('').join('|'),
-            reg = new RegExp(`(${split})`, 'g');
+        const accents = 'ÀÁÂÃÄÅàáâãäåÒÓÔÕÕÖØòóôõöøÈÉÊËèéêëðÇçÐÌÍÎÏìíîïÙÚÛÜùúûüÑñŠšŸÿýŽž';
+        const fixes = 'AAAAAAaaaaaaOOOOOOOooooooEEEEeeeeeCcDIIIIiiiiUUUUuuuuNnSsYyyZz';
+        const split = accents.split('').join('|');
+        const reg = new RegExp(`(${split})`, 'g');
 
         function replacement(a) {
             return fixes[accents.indexOf(a)] || '';
@@ -144,7 +144,9 @@ const utils = {
 
         filteredFolders.forEach((folder, i) => {
             filteredFolders.forEach((subfolder, j) => {
-                if(subfolder.includes(folder) && i !== j && !foldersToBeRemoved.includes(folder)) foldersToBeRemoved.push(subfolder);
+                if(subfolder.includes(folder) && i !== j && !foldersToBeRemoved.includes(folder)) {
+                    foldersToBeRemoved.push(subfolder);
+                }
             });
         });
 
@@ -306,8 +308,8 @@ const utils = {
         });
 
         audio.addEventListener('error', (e) => {
-
-            callback(new Error(`Error getting audio duration: (${e.target.error.code}) ${path}`), 0);
+            const message = `Error getting audio duration: (${e.target.error.code}) ${path}`;
+            callback(new Error(message), 0);
         });
 
         audio.preload = 'metadata';
