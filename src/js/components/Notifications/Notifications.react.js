@@ -21,22 +21,18 @@ export default class Notifications extends Component {
         this.state = {};
     }
 
-    getNotifications() {
-        return this.props.notifications.map((notification, index) => {
-            return (
-                <Notification
-                    type={ notification.type }
-                    content={ notification.content }
-                    key={ index }
-                />
-            );
-        });
-    }
-
     render() {
         return (
             <div className='notifications'>
-                { this.getNotifications() }
+                { this.props.notifications.map((notification, index) => {
+                    return (
+                        <Notification
+                            type={ notification.type }
+                            content={ notification.content }
+                            key={ index }
+                        />
+                    );
+                }) }
             </div>
         );
     }

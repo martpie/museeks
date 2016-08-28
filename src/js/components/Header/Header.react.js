@@ -134,7 +134,7 @@ export default class Header extends Component {
     }
 
     setVolume(e) {
-        AppActions.player.setVolume(parseFloat(e.target.value));
+        AppActions.player.setVolume(parseFloat(e.currentTarget.value));
     }
 
     showVolume() {
