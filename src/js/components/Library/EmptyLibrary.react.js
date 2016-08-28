@@ -2,7 +2,6 @@ import { PureComponent } from 'react';
 import { Link } from 'react-router';
 
 import FullViewMessage from '../Shared/FullViewMessage.react';
-import FullViewSubMessage from '../Shared/FullViewSubMessage.react';
 
 /*
 |--------------------------------------------------------------------------
@@ -15,10 +14,10 @@ export default class EmptyLibrary extends PureComponent {
         return (
             <FullViewMessage message='' >
                 <p>Too bad, there is no music in your library =(</p>
-                <FullViewSubMessage>
+                <p className='sub-message'>
                     <span>nothing found yet, but that's fine, you can always </span>
                     <Link to='/settings/library'>add your music here</Link>
-                </FullViewSubMessage>
+                </p>
             </FullViewMessage>
         );
     }

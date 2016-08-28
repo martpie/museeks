@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react';
 import FullViewMessage from '../Shared/FullViewMessage.react';
-import FullViewSubMessage from '../Shared/FullViewSubMessage.react';
 
 /*
 |--------------------------------------------------------------------------
@@ -13,9 +12,7 @@ export default class EmptyPlaylist extends PureComponent {
         return (
             <FullViewMessage>
                 <p>Empty playlist</p>
-                <FullViewSubMessage>
-                  You can add tracks from the library view
-                </FullViewSubMessage>
+                <p className='sub-message'>You can add tracks from the library view</p>
             </FullViewMessage>
         );
     }

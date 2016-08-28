@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 
 import PlaylistsNav from './PlaylistsNav.react';
 import FullViewMessage from '../Shared/FullViewMessage.react';
-import FullViewSubMessage from '../Shared/FullViewSubMessage.react';
 
 import AppActions from '../../actions/AppActions';
 
@@ -41,9 +40,9 @@ export default class Playlists extends Component {
             return (
                 <FullViewMessage>
                     <p>You haven't created any playlist yet</p>
-                    <FullViewSubMessage>
+                    <p className='sub-message'>
                         <a onClick={ this.createPlaylist }>create one now</a>
-                    </FullViewSubMessage>
+                    </p>
                 </FullViewMessage>
             );
         }
