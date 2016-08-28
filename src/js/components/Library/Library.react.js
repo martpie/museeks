@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router';
+
+import EmptyLibrary from './EmptyLibrary.react';
+import NewLibrary from './NewLibrary.react';
 
 import TracksList from '../Shared/TracksList.react';
 
@@ -25,47 +27,30 @@ export default class Library extends Component {
         this.state = {};
     }
 
-    render() {
-
-        let content;
-
-        // TODO (y.solovyov): All these cases can live as separate components
+    getLibraryComponent() {
         if(this.props.library === null) {
-            content = (
-                <div className='full-message'>
-                    <p>Loading library...</p>
-                </div>
-            );
-        } else if (this.props.library.length === 0) {
-            content = (
-                <div className='full-message'>
-                    <p>Too bad, there is no music in your library =(</p>
-                    <p className='sub-message'>
-                        <span>nothing found yet, but that's fine, you can always </span>
-                        <Link to='/settings/library'>add your music here</Link>
-                    </p>
-                </div>
-            );
-        } else if (this.props.tracks.length === 0) {
-            content = (
-                <div className='full-message'>
-                    <p>Your search returned no results</p>
-                </div>
-            );
-        } else {
-            content = (
-                <TracksList
-                    type='library'
-                    tracks={ this.props.tracks }
-                    trackPlayingId={ this.props.trackPlayingId }
-                    playlists={ this.props.playlists }
-                />
-            );
+            return <EmptyLibrary message='Loading library...' />;
         }
+        if (this.props.library.length === 0) {
+            return <NewLibrary />;
+        }
+        if (this.props.tracks.length === 0) {
+            return <EmptyLibrary message='Your search returned no results' />;
+        }
+        return (
+            <TracksList
+                type='library'
+                tracks={ this.props.tracks }
+                trackPlayingId={ this.props.trackPlayingId }
+                playlists={ this.props.playlists }
+            />
+        );
+    }
 
+    render() {
         return (
             <div className='view view-library' >
-                { content }
+                { this.getLibraryComponent() }
             </div>
         );
     }

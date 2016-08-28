@@ -46,7 +46,7 @@ const utils = {
      * @return string
      */
     getStatus: function(tracks) {
-        const status = this.parseDuration(tracks.map((d) => d.duration).reduce((a, b) => a + b), 0);
+        const status = this.parseDuration(tracks.map((d) => d.duration).reduce((a, b) => a + b, 0));
         return `${tracks.length} tracks, ${status}`;
     },
 
