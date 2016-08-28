@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { ButtonGroup, Button } from 'react-bootstrap';
 import classnames from 'classnames';
 
+import EmptyQueue from './EmptyQueue.react';
+import QueueItem  from './QueueItem.react';
+
 import AppActions from '../../actions/AppActions';
 
 import utils from '../../utils/utils';
@@ -31,9 +34,26 @@ export default class Queue extends Component {
         };
     }
 
-    render() {
+    queueContent(shownQueue) {
+        const self = this;
+        return shownQueue.map((track, index) => {
+            return (
+                <QueueItem
+                    index={ index }
+                    track={ track }
+                    dragged={ index === self.state.draggedTrack }
+                    draggedOver={ index === self.state.draggedOverTrack }
+                    draggedOverAfter={ index === self.state.draggedOverTrack && !self.state.draggedBefore }
+                    onDragStart={ self.dragStart.bind(self, index) }
+                    onDragEnd={ self.dragEnd.bind(self) }
+                    onRemove={ self.removeFromQueue.bind(null, index) }
+                    onPlay={ self.play.bind(null, self.props.queueCursor + index + 1) }
+                />
+            );
+        });
+    }
 
-        const self        = this;
+    render() {
         const queue       = this.props.queue;
         const queueCursor = this.props.queueCursor;
 
@@ -42,51 +62,8 @@ export default class Queue extends Component {
         const incomingQueue = queue.slice(queueCursor + 1);
 
         if(shownQueue.length === 0) {
-            const emptyQueueClasses = classnames('queue text-left', {
-                visible: this.props.showQueue
-            });
-            // TODO (y.solovyov): this could easily be its own component, say, EmptyQueue
-            return(
-                <div className={ emptyQueueClasses }>
-                    <div className='empty-queue text-center'>
-                        queue is empty
-                    </div>
-                </div>
-            );
+            return <EmptyQueue visible={ this.props.showQueue } />;
         }
-
-        // If queue is not empty
-        // TODO (y.solovyov): make a separate method that returns items
-        const queueContent = shownQueue.map((track, index) => {
-            const queueContentClasses = classnames('track', {
-                'dragged': index === self.state.draggedTrack,
-                'dragged-over-after': index === self.state.draggedOverTrack && !self.state.draggedBefore,
-                'dragged-over': index === self.state.draggedOverTrack
-            });
-
-            return (
-                <div key={ index }
-                  className={ queueContentClasses }
-                  draggable='true'
-                  onDragStart={ self.dragStart.bind(self, index) }
-                  onDragEnd={ self.dragEnd.bind(self) }
-                >
-                    <Button bsSize={ 'xsmall' } bsStyle={ 'link' } className='remove' onClick={ self.removeFromQueue.bind(null, index) }>
-                        &times;
-                    </Button>
-                    <div className='track-infos'
-                        onDoubleClick={ AppActions.queue.selectAndPlay.bind(null, self.props.queueCursor + index + 1) }
-                    >
-                        <div className='title'>
-                            { track.title }
-                        </div>
-                        <div className='other-infos'>
-                            <span className='artist'>{ track.artist }</span> - <span className='album'>{ track.album }</span>
-                        </div>
-                    </div>
-                </div>
-            );
-        });
 
         const queueClasses = classnames('queue text-left', {
             visible: this.props.showQueue
@@ -109,7 +86,7 @@ export default class Queue extends Component {
                     </ButtonGroup>
                 </div>
                 <div className={ queueBodyClasses } onDragOver={ this.dragOver.bind(this) }>
-                    { queueContent }
+                    { this.queueContent(shownQueue) }
                 </div>
             </div>
         );
@@ -121,6 +98,10 @@ export default class Queue extends Component {
 
     removeFromQueue(index) {
         AppActions.queue.remove(index);
+    }
+
+    play(index) {
+        AppActions.queue.selectAndPlay(index);
     }
 
     dragStart(index, e) {
