@@ -31,13 +31,17 @@ export default class Playlists extends Component {
         AppActions.playlists.create('New playlist', true);
     }
 
-    getContent() {
-        if(this.props.playlists === null) {
-            return <FullViewMessage message='Loading playlists' />;
-        }
+    render() {
+        let playlistContent;
 
-        if(this.props.playlists.length === 0) {
-            return (
+        if(this.props.playlists === null) {
+            playlistContent = (
+                <FullViewMessage>
+                    <p>Loading playlists</p>
+                </FullViewMessage>
+            );
+        } else if(this.props.playlists.length === 0) {
+            playlistContent = (
                 <FullViewMessage>
                     <p>You haven't created any playlist yet</p>
                     <p className='sub-message'>
@@ -45,21 +49,21 @@ export default class Playlists extends Component {
                     </p>
                 </FullViewMessage>
             );
+        } else if(!this.props.params.playlistId) {
+            playlistContent = (
+                <FullViewMessage>
+                    <p>Select a playlist in the menu on the left</p>
+                </FullViewMessage>
+            );
+        } else {
+            playlistContent = React.cloneElement(this.props.children, { ...this.props });
         }
 
-        if(!this.props.params.playlistId) {
-            return <FullViewMessage><p>Select a playlist in the menu on the left</p></FullViewMessage>;
-        }
-
-        return React.cloneElement(this.props.children, { ...this.props });
-    }
-
-    render() {
         return (
             <div className='view view-playlists'>
                 <PlaylistsNav playlists={ this.props.playlists } />
                 <div className='playlist'>
-                    { this.getContent() }
+                    { playlistContent }
                 </div>
             </div>
         );

@@ -12,7 +12,7 @@ import FullViewMessage from '../Shared/FullViewMessage.react';
 export default class EmptyLibrary extends PureComponent {
     render() {
         return (
-            <FullViewMessage message='' >
+            <FullViewMessage>
                 <p>Too bad, there is no music in your library =(</p>
                 <p className='sub-message'>
                     <span>nothing found yet, but that's fine, you can always </span>
