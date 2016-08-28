@@ -34,25 +34,9 @@ export default class Queue extends Component {
         };
     }
 
-    queueContent(shownQueue) {
-        const self = this;
-        return shownQueue.map((track, index) => {
-            return (
-                <QueueItem
-                    index={ index }
-                    track={ track }
-                    queueCursor={ this.props.queueCursor }
-                    dragged={ index === self.state.draggedTrack }
-                    draggedOver={ index === self.state.draggedOverTrack }
-                    draggedOverAfter={ index === self.state.draggedOverTrack && !self.state.draggedBefore }
-                    onDragStart={ self.dragStart.bind(self, index) }
-                    onDragEnd={ self.dragEnd.bind(self) }
-                />
-            );
-        });
-    }
-
     render() {
+        const self = this;
+
         const queue       = this.props.queue;
         const queueCursor = this.props.queueCursor;
 
@@ -85,7 +69,20 @@ export default class Queue extends Component {
                     </ButtonGroup>
                 </div>
                 <div className={ queueBodyClasses } onDragOver={ this.dragOver.bind(this) }>
-                    { this.queueContent(shownQueue) }
+                    { shownQueue.map((track, index) => {
+                        return (
+                            <QueueItem
+                                index={ index }
+                                track={ track }
+                                queueCursor={ this.props.queueCursor }
+                                dragged={ index === self.state.draggedTrack }
+                                draggedOver={ index === self.state.draggedOverTrack }
+                                draggedOverAfter={ index === self.state.draggedOverTrack && !self.state.draggedBefore }
+                                onDragStart={ self.dragStart.bind(self, index) }
+                                onDragEnd={ self.dragEnd.bind(self) }
+                            />
+                        );
+                    }) }
                 </div>
             </div>
         );
