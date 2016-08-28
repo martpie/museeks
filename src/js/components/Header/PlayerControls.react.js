@@ -20,13 +20,13 @@ export default class PlayerControls extends PureComponent {
     render() {
         return (
             <div className='player-controls'>
-                <button type='button' className='player-control previous' onClick={ this.previous }>
+                <button type='button' className='player-control previous' onClick={ AppActions.player.previous }>
                     <Icon name='backward' />
                 </button>
-                <button className='player-control play' onClick={ this.playToggle.bind(this) }>
+                <button className='player-control play' onClick={ AppActions.player.playToggle }>
                     <Icon name={ this.props.playerStatus === 'play' ? 'pause' : 'play' } fixedWidth />
                 </button>
-                <button type='button' className='player-control forward' onClick={ this.next }>
+                <button type='button' className='player-control forward' onClick={ AppActions.player.next }>
                     <Icon name='forward' />
                 </button>
                 <VolumeControl
@@ -36,26 +36,4 @@ export default class PlayerControls extends PureComponent {
         );
 
     }
-
-    playToggle() {
-        if(this.props.playerStatus === 'play') this.pause();
-        else if (this.props.playerStatus === 'pause') this.play();
-    }
-
-    play() {
-        AppActions.player.play();
-    }
-
-    pause() {
-        AppActions.player.pause();
-    }
-
-    next() {
-        AppActions.player.next();
-    }
-
-    previous() {
-        AppActions.player.previous();
-    }
-
 }

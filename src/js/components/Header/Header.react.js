@@ -43,10 +43,7 @@ export default class Header extends Component {
         return (
             <header className='row'>
                 <Col sm={ 3 } className='main-controls'>
-                    <WindowControls
-                        active={ this.props.windowControls }
-                        onClose={ this.winClose }
-                    />
+                    <WindowControls active={ this.props.windowControls } />
 
                     <PlayerControls
                         audio={ Player.getAudio() }
