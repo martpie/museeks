@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import Icon from 'react-fontawesome';
 
 import classnames from 'classnames';
@@ -11,7 +11,7 @@ import AppActions from '../../actions/AppActions';
 |--------------------------------------------------------------------------
 */
 
-export default class LibraryFolders extends PureComponent {
+export default class LibraryFolders extends Component {
 
     static propTypes = {
         folders: React.PropTypes.array,
