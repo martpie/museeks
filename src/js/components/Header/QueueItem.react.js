@@ -3,6 +3,8 @@ import { Button } from 'react-bootstrap';
 
 import classnames from 'classnames';
 
+import AppActions from '../../actions/AppActions';
+
 /*
 |--------------------------------------------------------------------------
 | QueueItem
@@ -27,10 +29,10 @@ export default class QueueItem extends PureComponent {
               onDragStart={ this.props.onDragStart }
               onDragEnd={ this.props.onDragEnd }
             >
-                <Button bsSize={ 'xsmall' } bsStyle={ 'link' } className='remove' onClick={ this.props.onRemove }>
+                <Button bsSize={ 'xsmall' } bsStyle={ 'link' } className='remove' onClick={ this.remove.bind(null, index) }>
                     &times;
                 </Button>
-                <div className='track-infos' onDoubleClick={ this.props.onPlay } >
+                <div className='track-infos' onDoubleClick={ this.play.bind(null, this.props.queueCursor + index + 1) } >
                     <div className='title'>
                         { track.title }
                     </div>
@@ -40,5 +42,13 @@ export default class QueueItem extends PureComponent {
                 </div>
             </div>
         );
+    }
+
+    remove(index) {
+        AppActions.queue.remove(index);
+    }
+
+    play(index) {
+        AppActions.queue.selectAndPlay(index);
     }
 }

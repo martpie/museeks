@@ -41,13 +41,12 @@ export default class Queue extends Component {
                 <QueueItem
                     index={ index }
                     track={ track }
+                    queueCursor={ this.props.queueCursor }
                     dragged={ index === self.state.draggedTrack }
                     draggedOver={ index === self.state.draggedOverTrack }
                     draggedOverAfter={ index === self.state.draggedOverTrack && !self.state.draggedBefore }
                     onDragStart={ self.dragStart.bind(self, index) }
                     onDragEnd={ self.dragEnd.bind(self) }
-                    onRemove={ self.removeFromQueue.bind(null, index) }
-                    onPlay={ self.play.bind(null, self.props.queueCursor + index + 1) }
                 />
             );
         });
@@ -94,14 +93,6 @@ export default class Queue extends Component {
 
     clearQueue() {
         AppActions.queue.clear();
-    }
-
-    removeFromQueue(index) {
-        AppActions.queue.remove(index);
-    }
-
-    play(index) {
-        AppActions.queue.selectAndPlay(index);
     }
 
     dragStart(index, e) {
