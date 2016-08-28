@@ -1,6 +1,12 @@
 import React, { PureComponent } from 'react';
 import FullViewMessage from '../Shared/FullViewMessage.react';
 
+/*
+|--------------------------------------------------------------------------
+| EmptyPlaylist
+|--------------------------------------------------------------------------
+*/
+
 export default class EmptyPlaylist extends PureComponent {
     render() {
         return (

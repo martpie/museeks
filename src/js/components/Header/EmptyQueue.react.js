@@ -2,7 +2,13 @@ import React, { PureComponent } from 'react';
 
 import classnames from 'classnames';
 
-export default class VolumeControl extends PureComponent {
+/*
+|--------------------------------------------------------------------------
+| EmptyQueue
+|--------------------------------------------------------------------------
+*/
+
+export default class EmptyQueue extends PureComponent {
 
     render() {
         const queueClasses = classnames('queue text-left', {

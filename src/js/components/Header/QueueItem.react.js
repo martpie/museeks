@@ -3,6 +3,12 @@ import { Button } from 'react-bootstrap';
 
 import classnames from 'classnames';
 
+/*
+|--------------------------------------------------------------------------
+| QueueItem
+|--------------------------------------------------------------------------
+*/
+
 export default class QueueItem extends PureComponent {
     render() {
         const queueContentClasses = classnames('track', {

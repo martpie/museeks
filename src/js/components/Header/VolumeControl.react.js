@@ -2,9 +2,14 @@ import React, { PureComponent } from 'react';
 import Icon from 'react-fontawesome';
 import classnames from 'classnames';
 
-
 import AppActions from '../../actions/AppActions';
 import Player from '../../lib/player';
+
+/*
+|--------------------------------------------------------------------------
+| VolumeControl
+|--------------------------------------------------------------------------
+*/
 
 export default class VolumeControl extends PureComponent {
 
