@@ -52,74 +52,67 @@ export default class PlayingBar extends Component {
         const queueCursor = this.props.queueCursor;
         const trackPlaying = queue[queueCursor];
 
-        let playingBar;
         let elapsedPercent;
 
-        // TODO (y.solovyov): we can just return null here and it will render nothing.
-        if(queueCursor === null) {
-            playingBar = <div></div>;
-        } else {
+        if(queueCursor === null) return null;
 
-            if(this.state.elapsed < trackPlaying.duration) elapsedPercent = this.state.elapsed * 100 / trackPlaying.duration;
+        if(this.state.elapsed < trackPlaying.duration) elapsedPercent = this.state.elapsed * 100 / trackPlaying.duration;
 
-            const nowPlayingTextClasses = classnames('now-playing text-center', {
-                dragging: this.state.dragging
-            });
+        const nowPlayingTextClasses = classnames('now-playing text-center', {
+            dragging: this.state.dragging
+        });
 
-            const nowPlayingTooltipClasses = classnames('playing-bar-tooltip', {
-                hidden: this.state.duration === null
-            });
+        const nowPlayingTooltipClasses = classnames('playing-bar-tooltip', {
+            hidden: this.state.duration === null
+        });
 
-            playingBar = (
-                <div className={ nowPlayingTextClasses }
-                     onMouseMove={ this.dragOver.bind(this) }
-                     onMouseLeave={ this.dragEnd.bind(this) }
-                     onMouseUp={ this.dragEnd.bind(this) }
-                >
-                    <div className='now-playing-cover'>
-                        <TrackCover cover={ this.coverBase64 } />
+        return (
+            <div className={ nowPlayingTextClasses }
+                 onMouseMove={ this.dragOver.bind(this) }
+                 onMouseLeave={ this.dragEnd.bind(this) }
+                 onMouseUp={ this.dragEnd.bind(this) }
+            >
+                <div className='now-playing-cover'>
+                    <TrackCover cover={ this.coverBase64 } />
+                </div>
+                <div className='now-playing-infos'>
+                    <div className='now-playing-metas'>
+                        <div className='player-options'>
+                            <ButtonRepeat repeat={ this.props.repeat } />
+                            <ButtonShuffle queue={ this.props.queue } shuffle={ this.props.shuffle } />
+                        </div>
+                        <div className='metas'>
+                            <strong className='meta-title'>
+                                { trackPlaying.title }
+                            </strong>
+                            &nbsp;by&nbsp;
+                            <strong className='meta-artist'>
+                                { trackPlaying.artist.join(', ') }
+                            </strong>
+                            &nbsp;on&nbsp;
+                            <strong className='meta-album'>
+                                { trackPlaying.album }
+                            </strong>
+                        </div>
+
+                        <span className='duration'>
+                            { utils.parseDuration(this.state.elapsed) } / { utils.parseDuration(trackPlaying.duration) }
+                        </span>
                     </div>
-                    <div className='now-playing-infos'>
-                        <div className='now-playing-metas'>
-                            <div className='player-options'>
-                                <ButtonRepeat repeat={ this.props.repeat } />
-                                <ButtonShuffle queue={ this.props.queue } shuffle={ this.props.shuffle } />
-                            </div>
-                            <div className='metas'>
-                                <strong className='meta-title'>
-                                    { trackPlaying.title }
-                                </strong>
-                                &nbsp;by&nbsp;
-                                <strong className='meta-artist'>
-                                    { trackPlaying.artist.join(', ') }
-                                </strong>
-                                &nbsp;on&nbsp;
-                                <strong className='meta-album'>
-                                    { trackPlaying.album }
-                                </strong>
-                            </div>
-
-                            <span className='duration'>
-                                { utils.parseDuration(this.state.elapsed) } / { utils.parseDuration(trackPlaying.duration) }
-                            </span>
+                    <div className='now-playing-bar'>
+                        <div className={ nowPlayingTooltipClasses } style={ { left: this.state.x - 12 } }>
+                            { utils.parseDuration(this.state.duration) }
                         </div>
-                        <div className='now-playing-bar'>
-                            <div className={ nowPlayingTooltipClasses } style={ { left: this.state.x - 12 } }>
-                                { utils.parseDuration(this.state.duration) }
-                            </div>
-                            <ProgressBar
-                                now={ elapsedPercent }
-                                onMouseDown={ this.jumpAudioTo.bind(this) }
-                                onMouseMove={ this.showTooltip.bind(this) }
-                                onMouseLeave={ this.hideTooltip.bind(this) }
-                            />
-                        </div>
+                        <ProgressBar
+                            now={ elapsedPercent }
+                            onMouseDown={ this.jumpAudioTo.bind(this) }
+                            onMouseMove={ this.showTooltip.bind(this) }
+                            onMouseLeave={ this.hideTooltip.bind(this) }
+                        />
                     </div>
                 </div>
-            );
-        }
-
-        return playingBar;
+            </div>
+        );
     }
 
     componentDidMount() {
