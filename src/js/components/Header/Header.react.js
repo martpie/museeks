@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import { Col } from 'react-bootstrap';
 import Icon from 'react-fontawesome';
 import Input from 'react-simple-input';
-import classnames from 'classnames';
 
-import PlayingBar from './PlayingBar.react';
-import Queue      from './Queue.react';
+import PlayingBar     from './PlayingBar.react';
+import Queue          from './Queue.react';
+import WindowControls from './WindowControls.react';
+import PlayerControls from './PlayerControls.react';
 
 import AppActions from '../../actions/AppActions';
 
@@ -33,63 +34,21 @@ export default class Header extends Component {
 
         super(props);
         this.state = {
-            showVolume : false,
             showQueue  : false
         };
-        this.mute = this.mute.bind(this);
     }
 
     render() {
 
-        const audio = Player.getAudio();
-
-        const playButton = (
-            <button className='player-control play' onClick={ () => this.playToggle() }>
-                <Icon name={ this.props.playerStatus === 'play' ? 'pause' : 'play' } fixedWidth />
-            </button>
-        );
-
-        // TODO (y.solovyov): incapsulate window controls into own component
-        const windowControls = this.props.windowControls ? <button className='window-control' onClick={ this.winClose.bind(null) }>&times;</button> : false;
-
-        const volumeClasses = classnames('volume-control', {
-            visible: this.state.showVolume
-        });
-
         return (
             <header className='row'>
                 <Col sm={ 3 } className='main-controls'>
-                    <div className='window-controls'>
-                        { windowControls }
-                    </div>
+                    <WindowControls active={ this.props.windowControls } />
 
-                    <div className='player-controls'>
-                        <button type='button' className='player-control previous' onClick={ this.previous.bind(null) }>
-                            <Icon name='backward' />
-                        </button>
-                        { playButton }
-                        <button type='button' className='player-control forward' onClick={ this.next.bind(null) }>
-                            <Icon name='forward' />
-                        </button>
-                        <button type='button'
-                                className='player-control volume'
-                                onMouseEnter={ this.showVolume.bind(this) }
-                                onMouseLeave={ this.hideVolume.bind(this) }
-                                onClick={ this.mute }
-                        >
-                            <Icon name={ audio.muted || audio.volume === 0 ? 'volume-off' : audio.volume > 0.5 ? 'volume-up' : 'volume-down' } />
-                            <div className={ volumeClasses }>
-                                <input type={ 'range' }
-                                       min={ 0 }
-                                       max={ 1 }
-                                       step={ 0.01 }
-                                       defaultValue={ Math.pow(audio.volume, 1 / 4) }
-                                       ref='volume'
-                                       onChange={ this.setVolume.bind(this) }
-                                />
-                            </div>
-                        </button>
-                    </div>
+                    <PlayerControls
+                        audio={ Player.getAudio() }
+                        playerStatus={ this.props.playerStatus }
+                    />
                 </Col>
                 <Col sm={ 6 }>
                     <PlayingBar
@@ -124,61 +83,12 @@ export default class Header extends Component {
         );
     }
 
-    winClose() {
-        AppActions.app.close();
-    }
-
-    search(value) {
-        AppActions.library.filterSearch(value.toLowerCase());
-    }
-
-    searchSelect() {
-        this.refs.search.select();
-    }
-
-    playToggle() {
-        if(this.props.playerStatus === 'play') this.pause();
-        else if (this.props.playerStatus === 'pause') this.play();
-    }
-
-    play() {
-        AppActions.player.play();
-    }
-
-    pause() {
-        AppActions.player.pause();
-    }
-
     toggleRepeat() {
         AppActions.player.toggleRepeat();
     }
 
-    next() {
-        AppActions.player.next();
-    }
-
-    previous() {
-        AppActions.player.previous();
-    }
-
-    setVolume() {
-        AppActions.player.setVolume(parseFloat(this.refs.volume.value));
-    }
-
-    showVolume() {
-        this.setState({ showVolume: true });
-    }
-
-    mute(e) {
-
-        if(e.target.classList.contains('player-control') || e.target.classList.contains('fa')) {
-
-            AppActions.player.setMuted(!Player.getAudio().muted);
-        }
-    }
-
-    hideVolume() {
-        this.setState({ showVolume: false });
+    search(value) {
+        AppActions.library.filterSearch(value.toLowerCase());
     }
 
     toggleQueue() {

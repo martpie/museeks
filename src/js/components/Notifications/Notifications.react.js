@@ -22,12 +22,17 @@ export default class Notifications extends Component {
     }
 
     render() {
-        // TODO (y.solovyov): should enforce reporting of this kind of long lines through eslint
-        const notifications = this.props.notifications.map((notification, index) => <Notification type={ notification.type } content={ notification.content } key={ index } />);
-
         return (
             <div className='notifications'>
-                { notifications }
+                { this.props.notifications.map((notification, index) => {
+                    return (
+                        <Notification
+                            type={ notification.type }
+                            content={ notification.content }
+                            key={ index }
+                        />
+                    );
+                }) }
             </div>
         );
     }

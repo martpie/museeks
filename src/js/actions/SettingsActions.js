@@ -105,7 +105,9 @@ export default {
                 message = `Museeks ${currentVersion} is the latest version available.`;
             }
 
-            AppActions.notifications.add('success', message);
+            if (message) {
+                AppActions.notifications.add('success', message);
+            }
         }).catch(() => {
             AppActions.notifications.add('danger', 'An error occurred while checking updates.');
         });

@@ -53,7 +53,7 @@ export default class TracksList extends Component {
         const tracksChunked = utils.chunkArray(tracks, chunkLength);
         const tilesScrolled = Math.floor(this.state.scrollTop / tileHeight);
 
-        // TODO (y.solovyov): move to separate method that returns components
+        // TODO (y.solovyov | KeitIG): move to separate method that returns components
         // Tiles and chunks
         const trackTiles = tracksChunked.splice(tilesScrolled, tilesToDisplay).map((tracksChunk, indexChunk) => {
 
@@ -70,7 +70,7 @@ export default class TracksList extends Component {
                     selected: selected.includes(track._id)
                 });
 
-                // TODO (y.solovyov): how about TrackRow and TrackCell components?
+                // TODO (y.solovyov | KeitIG): how about TrackRow and TrackCell components?
                 return(
                     <div
                         className={ trackClasses }
@@ -112,7 +112,7 @@ export default class TracksList extends Component {
             );
         });
 
-        // TODO (y.solovyov): TrackListHeader component?
+        // TODO (y.solovyov | KeitIG): TrackListHeader component?
         return (
             <div className='tracks-list-container' tabIndex='0'>
                 <KeyBinding onKey={ this.onKey } target={ '.tracks-list-container' } preventInputConflict preventDefault />

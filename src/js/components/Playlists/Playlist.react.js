@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
-import TracksList from '../Shared/TracksList.react.js';
+import EmptyPlaylist from './EmptyPlaylist.react';
+import TracksList    from '../Shared/TracksList.react.js';
 
 
 /*
@@ -26,7 +27,7 @@ export default class Playlists extends Component {
 
     render() {
 
-        if(!!this.props.tracks && !!this.props.tracks.length && this.props.tracks.length > 0) {
+        if(Array.isArray(this.props.tracks) && this.props.tracks.length > 0) {
             return (
                 <TracksList
                     type='playlist'
@@ -38,12 +39,6 @@ export default class Playlists extends Component {
             );
         }
 
-        // TODO (y.solovyov): make empty playlist a separate component
-        return (
-            <div className='full-message'>
-                <p>Empty playlist</p>
-                <p className='sub-message'>You can add tracks from the library view</p>
-            </div>
-        );
+        return <EmptyPlaylist />;
     }
 }
