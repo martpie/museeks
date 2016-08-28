@@ -3,6 +3,8 @@ import { ButtonGroup, Button, ProgressBar } from 'react-bootstrap';
 import Icon from 'react-fontawesome';
 import classnames from 'classnames';
 
+import LibraryFolders from './LibraryFolders.react';
+
 import AppActions from '../../actions/AppActions';
 
 
@@ -27,8 +29,6 @@ export default class SettingsLibrary extends Component {
     }
 
     render() {
-
-        const self         = this;
         const musicFolders = this.props.config.musicFolders;
 
         const buttonsGroup = (
@@ -46,23 +46,6 @@ export default class SettingsLibrary extends Component {
             </ButtonGroup>
         );
 
-        // TODO (y.solovyov): move to separate method that returns items
-        const removeButtonClasses = classnames('delete-libray-folder', {
-            disabled: self.props.refreshingLibrary
-        });
-        const list = musicFolders.map((folder, i) => {
-            return(
-                <li key={ i }>
-                    <Icon name='close' className={ removeButtonClasses } onClick={ self.props.refreshingLibrary ? void(0) : self.removeFolder.bind(self, i) } />
-                    { folder }
-                </li>
-            );
-        });
-
-        const foldersListClasses = classnames('musicfolders-list', {
-            empty: musicFolders.length === 0
-        });
-
         const progressBarClasses = classnames('library-refresh-progress', {
             hidden: !this.props.refreshingLibrary
         });
@@ -72,9 +55,10 @@ export default class SettingsLibrary extends Component {
                 <div className='setting-section'>
                     <h4>Folders</h4>
                     <p>You currently have { musicFolders.length } folder{ musicFolders.length < 2 ? '' : 's' } in your library.</p>
-                    <ul className={ foldersListClasses }>
-                        { list }
-                    </ul>
+                    <LibraryFolders
+                        folders={ musicFolders }
+                        refreshingLibrary={ this.props.refreshingLibrary }
+                    />
                     { buttonsGroup }
                     <ProgressBar className={ progressBarClasses } now={ this.props.refreshProgress } />
                 </div>
@@ -84,10 +68,6 @@ export default class SettingsLibrary extends Component {
 
     addFolders() {
         AppActions.library.addFolders();
-    }
-
-    removeFolder(i) {
-        AppActions.library.removeFolder(i);
     }
 
     resetLibrary() {

@@ -8,7 +8,6 @@ import FullViewMessage from '../Shared/FullViewMessage.react';
 |--------------------------------------------------------------------------
 */
 
-
 export default class EmptyLibrary extends PureComponent {
     render() {
         return (
