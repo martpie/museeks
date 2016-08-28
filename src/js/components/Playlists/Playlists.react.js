@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import PlaylistsNav from './PlaylistsNav.react';
+import FullViewMessage from '../Shared/FullViewMessage.react';
 
 import AppActions from '../../actions/AppActions';
 
@@ -26,45 +27,36 @@ export default class Playlists extends Component {
         this.state = {};
     }
 
-    render() {
+    createPlaylist() {
+        AppActions.playlists.create('New playlist', true);
+    }
 
-        let content;
-
-        // TODO (y.solovyov): move all these cases to separate components
+    getContent() {
         if(this.props.playlists === null) {
-            content = (
-                <div className='full-message'>
-                    <p>Loading playlists</p>
-                </div>
-            );
-        } else if(this.props.playlists.length === 0) {
-            content = (
-                <div className='full-message'>
-                    <p>You haven't created any playlist yet</p>
-                    <p className='sub-message'>
-                        <a onClick={ () => {
-                            AppActions.playlists.create('New playlist', true);
-                        } }>
-                            create one now
-                        </a>
-                    </p>
-                </div>
-            );
-        } else if(!this.props.params.playlistId) {
-            content = (
-                <div className='full-message'>
-                    <p>Select a playlist in the menu on the left</p>
-                </div>
-            );
-        } else {
-            content = React.cloneElement(this.props.children, { ...this.props });
+            return <FullViewMessage message='Loading playlists' />;
         }
 
+        if(this.props.playlists.length === 0) {
+            return (
+                <FullViewMessage message="You haven't created any playlist yet">
+                    <a onClick={ this.createPlaylist }> create one now </a>
+                </FullViewMessage>
+            );
+        }
+
+        if(!this.props.params.playlistId) {
+            return <FullViewMessage message='Select a playlist in the menu on the left' />;
+        }
+
+        return React.cloneElement(this.props.children, { ...this.props });
+    }
+
+    render() {
         return (
             <div className='view view-playlists'>
                 <PlaylistsNav playlists={ this.props.playlists } />
                 <div className='playlist'>
-                    { content }
+                    { this.getContent() }
                 </div>
             </div>
         );

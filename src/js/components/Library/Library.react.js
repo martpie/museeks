@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 
 import EmptyLibrary from './EmptyLibrary.react';
-import NewLibrary from './NewLibrary.react';
 
+import FullViewMessage from '../Shared/FullViewMessage.react';
 import TracksList from '../Shared/TracksList.react';
 
 
@@ -29,13 +29,13 @@ export default class Library extends Component {
 
     getLibraryComponent() {
         if(this.props.library === null) {
-            return <EmptyLibrary message='Loading library...' />;
+            return <FullViewMessage message='Loading library...' />;
         }
         if (this.props.library.length === 0) {
-            return <NewLibrary />;
+            return <EmptyLibrary />;
         }
         if (this.props.tracks.length === 0) {
-            return <EmptyLibrary message='Your search returned no results' />;
+            return <FullViewMessage message='Your search returned no results' />;
         }
         return (
             <TracksList

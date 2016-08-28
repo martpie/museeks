@@ -1,16 +1,14 @@
-import React, { PureComponent } from 'react';
+import { PureComponent } from 'react';
+import { Link } from 'react-router';
+import FullViewMessage from '../Shared/FullViewMessage.react';
 
-export default class LoadingLibrary extends PureComponent {
-
-    static propTypes = {
-        message: React.PropTypes.string
-    }
-
+export default class EmptyLibrary extends PureComponent {
     render() {
         return (
-            <div className='full-message'>
-                <p>{ this.props.message }</p>
-            </div>
+            <FullViewMessage message='Too bad, there is no music in your library =(' >
+                <span>nothing found yet, but that's fine, you can always </span>
+                <Link to='/settings/library'>add your music here</Link>
+            </FullViewMessage>
         );
     }
 }
