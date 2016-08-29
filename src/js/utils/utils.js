@@ -227,7 +227,6 @@ const utils = {
                         no: 0,
                         of: 0
                     },
-                    type         : 'track',
                     year         : ''
                 };
 
@@ -263,7 +262,6 @@ const utils = {
                     playCount    : 0,
                     title        : data.title === null || data.title === '' ? path.parse(track).base : data.title,
                     track        : data.track,
-                    type         : 'track',
                     year         : data.year
                 };
 

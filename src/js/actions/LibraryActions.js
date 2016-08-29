@@ -16,6 +16,7 @@ const dialog = electron.remote.dialog;
 export default {
 
     load: function() {
+
         const querySort = {
             'loweredMetas.artist': 1,
             'year': 1,
@@ -24,7 +25,7 @@ export default {
             'track.no': 1
         };
 
-        app.db.find({ type : 'track' }).sort(querySort).exec((err, tracks) => {
+        app.models.Track.find().sort(querySort).exec((err, tracks) => {
             if (err) console.warn(err);
             else {
                 store.dispatch({
@@ -86,21 +87,23 @@ export default {
     },
 
     reset: function() {
+
         store.dispatch({
             type : AppConstants.APP_LIBRARY_REFRESH_START,
         });
 
-        app.db.remove({ }, { multi: true }, (err) => {
+        // Need promises
+        app.models.Track.remove({}, { multi: true }, (err) => {
+
             if(err) console.error(err);
-            app.db.loadDatabase((err) => {
-                if(err) {
-                    console.warn(err);
-                } else {
-                    AppActions.library.load();
-                    store.dispatch({
-                        type : AppConstants.APP_LIBRARY_REFRESH_END,
-                    });
-                }
+
+            app.models.Playlist.remove({}, { multi: true }, (err) => {
+                if(err) console.error(err);
+
+                AppActions.library.load();
+                store.dispatch({
+                    type : AppConstants.APP_LIBRARY_REFRESH_END,
+                });
             });
         });
     },
@@ -125,9 +128,7 @@ export default {
         };
 
         // Start the big thing
-        app.db.removeAsync({ type : 'track' }, { multi: true }).then(() => {
-            return app.db.loadDatabaseAsync();
-        }).then(() => {
+        app.models.Track.removeAsync({}, { multi: true }).then(() => {
             return Promise.map(folders, (folder) => {
                 const pattern = path.join(folder, '**/*.*');
                 return globby(pattern, { nodir: true, follow: true });
@@ -149,13 +150,13 @@ export default {
             let addedFiles = 0;
             const totalFiles = supportedFiles.length;
             return Promise.map(supportedFiles, (filePath) => {
-                return app.db.findAsync({ path: filePath }).then((docs) => {
+                return app.models.Track.findAsync({ path: filePath }).then((docs) => {
                     if (docs.length === 0) {
                         return getMetadataAsync(filePath);
                     }
                     return docs[0];
                 }).then((metadata) => {
-                    return app.db.insertAsync(metadata);
+                    return app.models.Track.insertAsync(metadata);
                 }).then(() => {
                     const percent = parseInt(addedFiles * 100 / totalFiles);
                     AppActions.settings.refreshProgress(percent);

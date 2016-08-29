@@ -11,10 +11,10 @@ const PlaylistsActions = {
 
     load: function(_id) {
 
-        app.db.findOne({ _id }, (err, playlist) => {
+        app.models.Playlist.findOne({ _id }, (err, playlist) => {
             if(err) console.warn(err);
             else {
-                app.db.find({ type: 'track', _id: { $in: playlist.tracks } }, (err, tracks) => {
+                app.models.Track.find({ _id: { $in: playlist.tracks } }, (err, tracks) => {
                     store.dispatch({
                         type : AppConstants.APP_PLAYLISTS_LOAD_ONE,
                         tracks
@@ -26,7 +26,7 @@ const PlaylistsActions = {
 
     refresh: function() {
 
-        app.db.find({ type : 'playlist' }).sort({ name : 1 }).exec((err, playlists) => {
+        app.models.Playlist.find({}).sort({ name : 1 }).exec((err, playlists) => {
             if (err) console.warn(err);
             else {
                 store.dispatch({
@@ -41,11 +41,10 @@ const PlaylistsActions = {
 
         const playlist = {
             name,
-            type   : 'playlist',
             tracks :  []
         };
 
-        app.db.insert(playlist, (err, doc) => {
+        app.models.Playlist.insert(playlist, (err, doc) => {
             if(err) console.warn(err);
             else {
                 // If a callback was provided (e.g create new playlist with selected tracks)
@@ -59,7 +58,7 @@ const PlaylistsActions = {
 
     rename: function(_id, name) {
 
-        app.db.update({ _id }, { $set: { name } }, (err) => {
+        app.models.Playlist.update({ _id }, { $set: { name } }, (err) => {
 
             if(err) console.warn(err);
             else PlaylistsActions.refresh();
@@ -68,7 +67,7 @@ const PlaylistsActions = {
 
     delete: function(_id) {
 
-        app.db.remove({ _id, type: 'playlist' }, (err) => {
+        app.models.Playlist.remove({ _id }, (err) => {
 
             if(err) console.warn(err);
             else PlaylistsActions.refresh();
@@ -79,13 +78,13 @@ const PlaylistsActions = {
 
         // isShown should never be true, letting it here anyway to remember of a design issue
         if(!isShown) {
-            app.db.findOne({ _id }, (err, playlist) => {
+            app.models.Playlist.findOne({ _id }, (err, playlist) => {
                 if (err) console.warn(err);
                 else {
 
                     const playlistTracks = playlist.tracks.concat(tracks);
 
-                    app.db.update({ _id }, { $set: { tracks: playlistTracks } }, (err) => {
+                    app.models.Playlist.update({ _id }, { $set: { tracks: playlistTracks } }, (err) => {
 
                         if(err) console.warn(err);
                     });
@@ -96,7 +95,7 @@ const PlaylistsActions = {
 
     removeTracksFrom: function(_id, tracks) {
 
-        app.db.findOne({ _id }, (err, playlist) => {
+        app.models.Playlist.findOne({ _id }, (err, playlist) => {
             if(err) console.warn(err);
             else {
 
@@ -104,7 +103,7 @@ const PlaylistsActions = {
                     return !tracks.includes(elem);
                 });
 
-                app.db.update({ _id }, { $set: { tracks: playlistTracks } }, (err) => {
+                app.models.Playlist.update({ _id }, { $set: { tracks: playlistTracks } }, (err) => {
 
                     if(err) console.warn(err);
                     else PlaylistsActions.load(_id);
