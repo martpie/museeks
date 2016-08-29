@@ -20,7 +20,7 @@ export default class QueueList extends Component {
     static propTypes = {
         queue: React.PropTypes.array,
         queueCursor: React.PropTypes.number,
-        shown: React.PropTypes.bool
+        visible: React.PropTypes.bool
     }
 
     constructor(props) {
@@ -35,6 +35,7 @@ export default class QueueList extends Component {
     }
 
     render() {
+
         const self = this;
 
         const queue       = this.props.queue;
@@ -45,7 +46,7 @@ export default class QueueList extends Component {
         const incomingQueue = queue.slice(queueCursor + 1);
 
         const queueClasses = classnames('queue text-left', {
-            visible: this.props.shown
+            visible: this.props.visible
         });
 
         const queueBodyClasses = classnames('queue-body', {

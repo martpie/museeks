@@ -25,7 +25,7 @@ export default class PlayingBar extends Component {
 
             const styles = { backgroundImage: `url(${this.props.cover})` };
 
-            return <div className='cover' style={ styles }></div>;
+            return <div className='cover' style={ styles } />;
         }
 
         return(

@@ -13,6 +13,17 @@ import AppActions from '../../actions/AppActions';
 
 export default class QueueItem extends PureComponent {
 
+    static propTypes = {
+        dragged: React.PropTypes.bool,
+        draggedOver: React.PropTypes.bool,
+        draggedOverAfter: React.PropTypes.bool,
+        index: React.PropTypes.number,
+        track: React.PropTypes.object,
+        onDragStart: React.PropTypes.func,
+        onDragEnd: React.PropTypes.func,
+        queueCursor: React.PropTypes.number
+    }
+
     constructor(props) {
 
         super(props);

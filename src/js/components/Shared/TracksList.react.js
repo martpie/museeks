@@ -117,7 +117,7 @@ export default class TracksList extends Component {
             <div className='tracks-list-container' tabIndex='0'>
                 <KeyBinding onKey={ this.onKey } target={ '.tracks-list-container' } preventInputConflict preventDefault />
                 <div className='tracks-list-header'>
-                    <div className='track-cell-header cell-track-playing'></div>
+                    <div className='track-cell-header cell-track-playing' />
                     <div className='track-cell-header cell-track'>Track</div>
                     <div className='track-cell-header cell-duration'>Duration</div>
                     <div className='track-cell-header cell-artist'>Artist</div>

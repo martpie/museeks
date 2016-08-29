@@ -15,7 +15,7 @@ export default class Queue extends PureComponent {
     static propTypes = {
         queue: React.PropTypes.array,
         queueCursor: React.PropTypes.number,
-        showQueue: React.PropTypes.bool
+        shown: React.PropTypes.bool
     }
 
     constructor(props) {

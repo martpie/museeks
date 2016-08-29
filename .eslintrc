@@ -66,7 +66,6 @@
         "react/no-multi-comp": "error",
         "react/prefer-es6-class": "error",
         "react/prop-types": "error",
-        "react/require-optimization": 2,
         "react/require-render-return": "error",
         "react/self-closing-comp": "error",
         "import/no-mutable-exports": "error",

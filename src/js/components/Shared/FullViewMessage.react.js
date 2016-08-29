@@ -8,6 +8,10 @@ import React, { PureComponent } from 'react';
 
 export default class FullViewMessage extends PureComponent {
 
+    static propTypes = {
+        children: React.PropTypes.object
+    }
+
     constructor(props) {
 
         super(props);
