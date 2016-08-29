@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 
-import EmptyPlaylist from './EmptyPlaylist.react';
 import TracksList    from '../Shared/TracksList.react.js';
+import FullViewMessage from '../Shared/FullViewMessage.react';
+import { Link } from 'react-router';
 
 
 /*
@@ -38,6 +39,11 @@ export default class Playlists extends Component {
             );
         }
 
-        return <EmptyPlaylist />;
+        return (
+            <FullViewMessage>
+                <p>Empty playlist</p>
+                <p className='sub-message'>You can add tracks from the <Link to='/library'>library view</Link></p>
+            </FullViewMessage>
+        );
     }
 }
