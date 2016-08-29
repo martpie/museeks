@@ -69,9 +69,9 @@ If you encounter freezes when starting the app, you can reset Museeks by followi
     - Windows: `%AppData%\museeks`
     - OSX: `~/Library/Application Support/museeks`
     - Linux: `~/.config/museeks/` or `$XDG_CONFIG_HOME/museeks`
-- Delete the following files
-    - `library.db`
-    - `config.json`
+- Delete:
+    - `IndexedDB` folder
+    - `config.json` file
 - Restart Museeks
 
 If you still get problems after that, please open an issue :)
