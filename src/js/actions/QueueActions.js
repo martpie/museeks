@@ -27,7 +27,7 @@ export default {
     },
 
     add: function(tracksIds) {
-        app.db.find({ type: 'track', _id: { $in: tracksIds } }, (err, tracks) => {
+        app.models.Track.find({ _id: { $in: tracksIds } }, (err, tracks) => {
             store.dispatch({
                 type : AppConstants.APP_QUEUE_ADD,
                 tracks
@@ -37,7 +37,7 @@ export default {
     },
 
     addNext: function(tracksIds) {
-        app.db.find({ type: 'track', _id: { $in: tracksIds } }, (err, tracks) => {
+        app.models.Track.find({ _id: { $in: tracksIds } }, (err, tracks) => {
             store.dispatch({
                 type : AppConstants.APP_QUEUE_ADD_NEXT,
                 tracks

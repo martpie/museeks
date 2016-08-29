@@ -46,14 +46,14 @@ class Museeks extends Component {
                     shuffle={ store.shuffle }
                     queue={ store.queue }
                     queueCursor={ store.queueCursor }
-                    windowControls={ !app.config.getAll().useNativeFrame }
+                    windowControls={ !{ ...app.config.getAll() }.useNativeFrame }
                 />
                 <div className='main-content'>
                     <Row className='content'>
                         { React.cloneElement(
                             this.props.children, {
                                 app               : this,
-                                config            : app.config.getAll(),
+                                config            : { ...app.config.getAll() },
                                 queue             : store.queue,
                                 tracks            : store.tracks[store.tracksCursor].sub,
                                 library           : store.tracks[store.tracksCursor].all,
