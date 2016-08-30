@@ -36,7 +36,7 @@ body.theme-dark {
             color: #EEE;
         }
 
-        .main-controls .window-controls .window-control {
+        .col-main-controls .window-controls .window-control {
             border-color: #555;
             color: #EEE;
 
@@ -46,7 +46,7 @@ body.theme-dark {
             }
         }
 
-        .main-controls {
+        .col-main-controls {
 
             .player-controls {
 
@@ -60,73 +60,84 @@ body.theme-dark {
             }
        }
 
-        .now-playing {
+       .col-player-infos {
 
-            .now-playing-cover {
+           .now-playing {
 
-                .cover {
-                    border: solid 1px #666;
-                }
-            }
+               .now-playing-cover {
 
-           .now-playing-bar .progress {
-               background-color: #444;
-            }
+                   .cover {
+                       border: solid 1px #666;
+                   }
+               }
 
-            .now-playing-infos .player-options .button {
+               .now-playing-infos {
 
-                svg {
-                    fill: #EEE;
-                }
+                   .player-options .button {
 
-                &.active svg {
-                    fill: #337ab7;
-                }
-            }
-        }
+                       svg {
+                           fill: #EEE;
+                       }
 
-        .queue-controls .queue {
-            background-color: #444;
-            border-color: #666;
-            box-shadow: 0 5px 3px -5px rgba(255, 255, 255, .5);
+                       &.active svg {
+                           fill: #459ce7;
+                       }
+                   }
 
-            .queue-header {
-                background-color: #555;
+                  .now-playing-bar .progress {
+                      background-color: #444;
+                   }
+               }
 
-                .queue-infos {
-                    color: #DDD;
-                }
+               .now-playing-queue .queue {
+                   background-color: #444;
+                   border-color: #666;
+                   box-shadow: 0 5px 3px -5px rgba(255, 255, 255, .5);
 
-                .empty-button {
-                    background-color: #555;
-                    color: #EEE;
-                    border-color: #444;
-                }
-            }
+                   .queue-header {
+                       background-color: #555;
 
-            .queue-body {
+                       .queue-infos {
+                           color: #DDD;
+                       }
 
-                .track {
-                    &::before,
-                    &::after {
-                        background-color: #555;
-                    }
+                       .empty-button {
+                           background-color: #555;
+                           color: #EEE;
+                           border-color: #444;
+                       }
+                   }
 
-                    &:not(:last-child) {
-                        border-bottom-color: #555;
-                    }
+                   .queue-body {
 
-                    .remove {
-                        color: #EEE;
-                    }
+                       .track {
+                           &::before,
+                           &::after {
+                               background-color: #555;
+                           }
 
-                    .other-infos,
-                    .title {
-                        color: #EEE;
-                    }
-                }
-            }
-        }
+                           &:not(:last-child) {
+                               border-bottom-color: #555;
+                           }
+
+                           .track-infos {
+                               width: calc(100% - 40px);
+
+                               .title,
+                               .other-infos {
+                                   color: #EEE;
+                               }
+                           }
+
+                           .remove,
+                           .remove:hover {
+                               color: #EEE;
+                           }
+                       }
+                   }
+               }
+           }
+       }
     }
 
 
