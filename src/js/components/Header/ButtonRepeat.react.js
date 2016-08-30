@@ -28,6 +28,7 @@ export default class ButtonRepeat extends Component {
     }
 
     render() {
+
         const svg = svgMap[this.props.repeat] || svgMap.default;
         const buttonClasses = classnames('button repeat',{
             active: this.props.repeat === 'one' || this.props.repeat === 'all'
@@ -39,13 +40,9 @@ export default class ButtonRepeat extends Component {
         });
 
         return (
-            <button className={ buttonClasses } onClick={ this.toggleRepeat.bind(null) }>
+            <button className={ buttonClasses } onClick={ AppActions.player.repeat }>
                 <InlineSVG src={ svg } className={ svgClasses } />
             </button>
         );
-    }
-
-    toggleRepeat() {
-        AppActions.player.repeat();
     }
 }

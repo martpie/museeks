@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import Icon from 'react-fontawesome';
 import KeyBinding from 'react-keybinding-component';
-import classnames from 'classnames';
+
+import TrackRow from './TrackRow.react';
 
 import AppActions from '../../actions/AppActions';
 
@@ -35,8 +36,10 @@ export default class TracksList extends Component {
             scrollTop : 0
         };
 
-        this.showContextMenu = this.showContextMenu.bind(this);
-        this.onKey = this.onKey.bind(this);
+        this.showContextMenu  = this.showContextMenu.bind(this);
+        this.scrollTracksList = this.scrollTracksList.bind(this);
+        this.selectTrack      = this.selectTrack.bind(this);
+        this.onKey            = this.onKey.bind(this);
     }
 
     render() {
@@ -66,17 +69,13 @@ export default class TracksList extends Component {
                     if(track._id === trackPlayingId && Player.getAudio().paused) playing = <Icon name='volume-off' fixedWidth />;
                 }
 
-                const trackClasses = classnames('track', {
-                    selected: selected.includes(track._id)
-                });
-
-                // TODO (y.solovyov | KeitIG): how about TrackRow and TrackCell components?
                 return(
-                    <div
-                        className={ trackClasses }
+                    <TrackRow
+                        selected={ selected.includes(track._id) }
+                        trackId={ track._id }
                         key={ index }
-                        onMouseDown={ (e) => self.selectTrack(e, track._id, (tilesScrolled + indexChunk) * chunkLength + index) }
-                        onDoubleClick={ () => self.selectAndPlay(track._id) }
+                        index={ (tilesScrolled + indexChunk) * chunkLength + index }
+                        onMouseDown={ self.selectTrack }
                         onContextMenu={ self.showContextMenu }
                     >
                         <div className='cell cell-track-playing text-center'>
@@ -97,7 +96,7 @@ export default class TracksList extends Component {
                         <div className='cell cell-genre'>
                             { track.genre.join(', ') }
                         </div>
-                    </div>
+                    </TrackRow>
                 );
             });
 
@@ -124,7 +123,7 @@ export default class TracksList extends Component {
                     <div className='track-cell-header cell-album'>Album</div>
                     <div className='track-cell-header cell-genre'>Genre</div>
                 </div>
-                <div className='tracks-list-body' onScroll={ this.scrollTracksList.bind(this) }>
+                <div className='tracks-list-body' onScroll={ this.scrollTracksList }>
                     <div className='tracks-list-tiles' style={ { height : tracks.length * 25 } }>
                         { trackTiles }
                     </div>
@@ -331,10 +330,6 @@ export default class TracksList extends Component {
                 if(i !== undefined) AppActions.library.selectAndPlay(tracks[i]._id);
                 break;
         }
-    }
-
-    selectAndPlay(_id) {
-        AppActions.library.selectAndPlay(_id);
     }
 
     showContextMenu() {

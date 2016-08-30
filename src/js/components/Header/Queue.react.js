@@ -15,7 +15,7 @@ export default class Queue extends PureComponent {
     static propTypes = {
         queue: React.PropTypes.array,
         queueCursor: React.PropTypes.number,
-        shown: React.PropTypes.bool
+        visible: React.PropTypes.bool
     }
 
     constructor(props) {
@@ -30,7 +30,7 @@ export default class Queue extends PureComponent {
         const shownQueue = queue.slice(queueCursor + 1, queueCursor + 21);
 
         if(shownQueue.length === 0) {
-            return <QueueEmpty visible={ this.props.shown } />;
+            return <QueueEmpty visible={ this.props.visible } />;
         }
 
         return <QueueList { ...this.props } />;

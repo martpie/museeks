@@ -439,11 +439,20 @@ export default (state = {}, payload) => { // payload is basically 'action'
         }
 
         case(AppConstants.APP_LIBRARY_REMOVE_FOLDER): {
-            const musicFolders = app.config.get('musicFolders');
-            musicFolders.splice(payload.index, 1);
-            app.config.set('musicFolders', musicFolders);
-            app.config.saveSync();
-            return { ...state };
+
+            if(!state.refreshingLibrary) {
+
+                const musicFolders = app.config.get('musicFolders');
+
+                musicFolders.splice(payload.index, 1);
+
+                app.config.set('musicFolders', musicFolders);
+                app.config.saveSync();
+
+                return { ...state };
+            }
+
+            return state;
         }
 
         case(AppConstants.APP_LIBRARY_RESET): {

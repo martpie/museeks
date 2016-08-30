@@ -23,6 +23,7 @@ export default class ButtonShuffle extends Component {
     }
 
     render() {
+
         const svg = require('../../../images/icons/player-shuffle.svg');
 
         const buttonClasses = classnames('button', {
@@ -30,13 +31,9 @@ export default class ButtonShuffle extends Component {
         });
 
         return (
-            <button type='button' className={ buttonClasses } onClick={ this.shuffle }>
+            <button type='button' className={ buttonClasses } onClick={ AppActions.player.shuffle }>
                 <InlineSVG src={ svg } className='icon shuffle' />
             </button>
         );
-    }
-
-    shuffle() {
-        AppActions.player.shuffle();
     }
 }

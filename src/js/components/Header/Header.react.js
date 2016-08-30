@@ -30,6 +30,8 @@ export default class Header extends Component {
     constructor(props) {
 
         super(props);
+
+        this.search = this.search.bind(null);
     }
 
     render() {
@@ -60,15 +62,11 @@ export default class Header extends Component {
                         changeTimeout={ 250 }
                         clearButton
                         ref='search'
-                        onChange={ this.search.bind(null) }
+                        onChange={ this.search }
                     />
                 </div>
             </header>
         );
-    }
-
-    toggleRepeat() {
-        AppActions.player.toggleRepeat();
     }
 
     search(value) {

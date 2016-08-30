@@ -32,6 +32,10 @@ export default class QueueList extends Component {
             draggedOverTrack : null,
             draggedBefore    : true
         };
+
+        this.dragStart = this.dragStart.bind(this);
+        this.dragOver  = this.dragOver.bind(this);
+        this.dragEnd   = this.dragEnd.bind(this);
     }
 
     render() {
@@ -65,7 +69,7 @@ export default class QueueList extends Component {
                         </Button>
                     </ButtonGroup>
                 </div>
-                <div className={ queueBodyClasses } onDragOver={ this.dragOver.bind(this) }>
+                <div className={ queueBodyClasses } onDragOver={ this.dragOver }>
                     { shownQueue.map((track, index) => {
                         return (
                             <QueueItem
@@ -75,8 +79,8 @@ export default class QueueList extends Component {
                                 dragged={ index === self.state.draggedTrack }
                                 draggedOver={ index === self.state.draggedOverTrack }
                                 draggedOverAfter={ index === self.state.draggedOverTrack && !self.state.draggedBefore }
-                                onDragStart={ self.dragStart.bind(self, index) }
-                                onDragEnd={ self.dragEnd.bind(self) }
+                                onDragStart={ self.dragStart }
+                                onDragEnd={ self.dragEnd }
                             />
                         );
                     }) }
@@ -89,7 +93,7 @@ export default class QueueList extends Component {
         AppActions.queue.clear();
     }
 
-    dragStart(index, e) {
+    dragStart(e, index) {
 
         e.dataTransfer.effectAllowed = 'move';
         e.dataTransfer.setData('text/html', e.currentTarget);

@@ -3,7 +3,8 @@ import AppActions from '../../actions/AppActions';
 import React, { Component } from 'react';
 import { ButtonGroup, Button } from 'react-bootstrap';
 import Icon from 'react-fontawesome';
-import { Link } from 'react-router';
+
+import PlaylistsNavLink from './PlaylistsNavLink.react';
 
 const ipcRenderer = electron.ipcRenderer;
 
@@ -23,9 +24,14 @@ export default class PlaylistsNav extends Component {
     constructor(props) {
 
         super(props);
+
         this.state = {
             renamed: null // the playlist being renamed if there's one
         };
+
+        this.rename          = this.rename.bind(this);
+        this.blur            = this.blur.bind(this);
+        this.showContextMenu = this.showContextMenu.bind(this);
     }
 
     render() {
@@ -42,16 +48,19 @@ export default class PlaylistsNav extends Component {
                         type='text'
                         ref='renamedPlaylist'
                         defaultValue={ elem.name }
-                        onChange={ self.rename.bind(self) }
-                        onBlur={ self.blur.bind(self) }
+                        onChange={ self.rename }
+                        onBlur={ self.blur }
                         autofocus
                     />
                 );
             } else {
                 navItemContent = (
-                    <Link className='playlist-link' activeClassName='active' to={ `/playlists/${elem._id}` } onContextMenu={ self.showContextMenu.bind(self, elem._id) }>
+                    <PlaylistsNavLink
+                        playlistId={ elem._id }
+                        onContextMenu={ self.showContextMenu }
+                    >
                         { elem.name }
-                    </Link>
+                    </PlaylistsNavLink>
                 );
             }
 
@@ -69,7 +78,7 @@ export default class PlaylistsNav extends Component {
                 </div>
                 <div className='playlists-nav-footer'>
                     <ButtonGroup className='playlists-management'>
-                        <Button bsStyle='link' bsSize='xs' onClick={ this.createPlaylist.bind(this) }>
+                        <Button bsStyle='link' bsSize='xs' onClick={ this.createPlaylist }>
                             <Icon name='plus' />
                         </Button>
                     </ButtonGroup>

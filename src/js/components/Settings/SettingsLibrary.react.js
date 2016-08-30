@@ -25,6 +25,8 @@ export default class SettingsLibrary extends Component {
     constructor(props) {
 
         super(props);
+
+        this.addFolders = this.addFolders.bind(this);
     }
 
     render() {
@@ -32,7 +34,7 @@ export default class SettingsLibrary extends Component {
 
         const buttonsGroup = (
             <ButtonGroup>
-                <Button bsSize='small' disabled={ this.props.refreshingLibrary } onClick={ this.addFolders.bind(this) }>
+                <Button bsSize='small' disabled={ this.props.refreshingLibrary } onClick={ this.addFolders }>
                     <Icon name='plus' fixedWidth />
                     Add folder(s)
                 </Button>

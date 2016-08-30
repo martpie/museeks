@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-
-import EmptyLibrary from './EmptyLibrary.react';
+import { Link } from 'react-router';
 
 import FullViewMessage from '../Shared/FullViewMessage.react';
 import TracksList from '../Shared/TracksList.react';
@@ -27,15 +26,39 @@ export default class Library extends Component {
     }
 
     getLibraryComponent() {
+
+        // Loading library
         if(this.props.library === null) {
-            return <FullViewMessage><p>Loading library...</p></FullViewMessage>;
+            return (
+                <FullViewMessage>
+                    <p>Loading library...</p>
+                </FullViewMessage>
+            );
         }
+
+        // Empty library
         if (this.props.library.length === 0) {
-            return <EmptyLibrary />;
+            return (
+                <FullViewMessage>
+                    <p>Too bad, there is no music in your library =(</p>
+                    <p className='sub-message'>
+                        <span>nothing found yet, but that's fine, you can always </span>
+                        <Link to='/settings/library'>add your music here</Link>
+                    </p>
+                </FullViewMessage>
+            );
         }
+
+        // Empty search
         if (this.props.tracks.length === 0) {
-            return <FullViewMessage><p>Your search returned no results</p></FullViewMessage>;
+            return (
+                <FullViewMessage>
+                    <p>Your search returned no results</p>
+                </FullViewMessage>
+            );
         }
+
+        // All good !
         return (
             <TracksList
                 type='library'

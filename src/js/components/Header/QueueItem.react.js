@@ -27,6 +27,10 @@ export default class QueueItem extends PureComponent {
     constructor(props) {
 
         super(props);
+
+        this.remove      = this.remove.bind(this);
+        this.play        = this.play.bind(this);
+        this.onDragStart = this.onDragStart.bind(this);
     }
 
     render() {
@@ -44,13 +48,13 @@ export default class QueueItem extends PureComponent {
             <div key={ index }
               className={ queueContentClasses }
               draggable='true'
-              onDragStart={ this.props.onDragStart }
+              onDragStart={ this.onDragStart }
               onDragEnd={ this.props.onDragEnd }
             >
-                <Button bsSize={ 'xsmall' } bsStyle={ 'link' } className='remove' onClick={ this.remove.bind(null, index) }>
+                <Button bsSize={ 'xsmall' } bsStyle={ 'link' } className='remove' onClick={ this.remove }>
                     &times;
                 </Button>
-                <div className='track-infos' onDoubleClick={ this.play.bind(null, this.props.queueCursor + index + 1) } >
+                <div className='track-infos' onDoubleClick={ this.play } >
                     <div className='title'>
                         { track.title }
                     </div>
@@ -62,11 +66,15 @@ export default class QueueItem extends PureComponent {
         );
     }
 
-    remove(index) {
-        AppActions.queue.remove(index);
+    onDragStart(e) {
+        this.props.onDragStart(e, this.props.index);
     }
 
-    play(index) {
-        AppActions.queue.selectAndPlay(index);
+    remove() {
+        AppActions.queue.remove(this.props.index);
+    }
+
+    play() {
+        AppActions.queue.selectAndPlay(this.props.queueCursor + this.props.index + 1);
     }
 }

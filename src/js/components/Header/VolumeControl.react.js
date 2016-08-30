@@ -20,10 +20,14 @@ export default class VolumeControl extends PureComponent {
     constructor(props) {
 
         super(props);
+
         this.state = {
             showVolume : false
         };
-        this.mute = this.mute.bind(this);
+
+        this.mute       = this.mute.bind(this);
+        this.showVolume = this.showVolume.bind(this);
+        this.hideVolume = this.hideVolume.bind(this);
     }
 
     getVolumeIcon(audio) {
@@ -38,8 +42,8 @@ export default class VolumeControl extends PureComponent {
         return (
             <button type='button'
                     className='player-control volume'
-                    onMouseEnter={ this.showVolume.bind(this) }
-                    onMouseLeave={ this.hideVolume.bind(this) }
+                    onMouseEnter={ this.showVolume }
+                    onMouseLeave={ this.hideVolume }
                     onClick={ this.mute }
             >
                 <Icon name={ this.getVolumeIcon(this.props.audio) } />

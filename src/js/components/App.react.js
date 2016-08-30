@@ -29,6 +29,8 @@ class Museeks extends Component {
     constructor(props) {
 
         super(props);
+
+        this.onKey = this.onKey.bind(this);
     }
 
     render() {
@@ -38,7 +40,7 @@ class Museeks extends Component {
 
         return (
             <div className='main'>
-                <KeyBinding onKey={ (e) => this.onKey(e) } preventInputConflict />
+                <KeyBinding onKey={ this.onKey } preventInputConflict />
                 <Header
                     app={ this }
                     playerStatus={ store.playerStatus }
@@ -79,8 +81,7 @@ class Museeks extends Component {
             case 32:
                 e.preventDefault();
                 e.stopPropagation();
-                if(this.props.store.playerStatus === 'pause') AppActions.player.play();
-                else if(this.props.store.playerStatus === 'play') AppActions.player.pause();
+                AppActions.player.playToggle();
                 break;
         }
     }

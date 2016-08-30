@@ -44,8 +44,16 @@ export default class PlayingBar extends Component {
             showQueue   : false
         };
 
-        this.tick        = this.tick.bind(this);
+        this.tick = this.tick.bind(this);
+
+        this.dragOver = this.dragOver.bind(this);
+        this.dragEnd  = this.dragEnd.bind(this);
+
+        this.jumpAudioTo = this.jumpAudioTo.bind(this);
         this.showTooltip = this.showTooltip.bind(this);
+        this.hideTooltip = this.hideTooltip.bind(this);
+
+        this.toggleQueue = this.toggleQueue.bind(this);
 
         const trackPlaying =  this.props.queue[this.props.queueCursor];
 
@@ -74,9 +82,9 @@ export default class PlayingBar extends Component {
 
         return (
             <div className={ nowPlayingTextClasses }
-                 onMouseMove={ this.dragOver.bind(this) }
-                 onMouseLeave={ this.dragEnd.bind(this) }
-                 onMouseUp={ this.dragEnd.bind(this) }
+                 onMouseMove={ this.dragOver }
+                 onMouseLeave={ this.dragEnd }
+                 onMouseUp={ this.dragEnd }
             >
                 <div className='now-playing-cover'>
                     <TrackCover cover={ this.coverBase64 } />
@@ -111,18 +119,18 @@ export default class PlayingBar extends Component {
                         </div>
                         <ProgressBar
                             now={ elapsedPercent }
-                            onMouseDown={ this.jumpAudioTo.bind(this) }
-                            onMouseMove={ this.showTooltip.bind(this) }
-                            onMouseLeave={ this.hideTooltip.bind(this) }
+                            onMouseDown={ this.jumpAudioTo }
+                            onMouseMove={ this.showTooltip }
+                            onMouseLeave={ this.hideTooltip }
                         />
                     </div>
                 </div>
                 <div className='now-playing-queue'>
-                    <button type='button' className='queue-toggle' onClick={ this.toggleQueue.bind(this) }>
+                    <button type='button' className='queue-toggle' onClick={ this.toggleQueue }>
                         <Icon name='list' />
                     </button>
                     <Queue
-                        shown={ this.state.showQueue }
+                        visible={ this.state.showQueue }
                         queue={ this.props.queue }
                         queueCursor={ this.props.queueCursor }
                     />
@@ -170,9 +178,9 @@ export default class PlayingBar extends Component {
         // Chack if it's needed to update currentTime
         if(this.state.dragging) {
 
-            const queue       = this.props.queue;
-            const queueCursor = this.props.queueCursor;
-            const trackPlaying   = queue[queueCursor];
+            const queue        = this.props.queue;
+            const queueCursor  = this.props.queueCursor;
+            const trackPlaying = queue[queueCursor];
 
             const bar = document.querySelector('.now-playing-bar');
             const percent = ((e.pageX - (bar.offsetLeft + bar.offsetParent.offsetLeft)) / bar.offsetWidth) * 100;
