@@ -25,6 +25,7 @@ import classnames from 'classnames';
 export default class PlayingBar extends Component {
 
     static propTypes = {
+        cover: React.PropTypes.string,
         queue: React.PropTypes.array,
         queueCursor: React.PropTypes.number,
         shuffle: React.PropTypes.bool,
@@ -52,12 +53,7 @@ export default class PlayingBar extends Component {
         this.jumpAudioTo = this.jumpAudioTo.bind(this);
         this.showTooltip = this.showTooltip.bind(this);
         this.hideTooltip = this.hideTooltip.bind(this);
-
         this.toggleQueue = this.toggleQueue.bind(this);
-
-        const trackPlaying =  this.props.queue[this.props.queueCursor];
-
-        this.coverBase64 = trackPlaying && trackPlaying.cover ? utils.parseBase64(trackPlaying.cover.format, trackPlaying.cover.data) : '';
     }
 
     render() {
@@ -87,7 +83,7 @@ export default class PlayingBar extends Component {
                  onMouseUp={ this.dragEnd }
             >
                 <div className='now-playing-cover'>
-                    <TrackCover cover={ this.coverBase64 } />
+                    <TrackCover cover={ this.props.cover } />
                 </div>
                 <div className='now-playing-infos'>
                     <div className='now-playing-metas'>
@@ -149,9 +145,15 @@ export default class PlayingBar extends Component {
 
     componentWillReceiveProps(nextProps) {
 
-        const trackPlaying =  nextProps.queue[nextProps.queueCursor];
+        const nextTrackPlaying = nextProps.queue[nextProps.queueCursor];
+        const nextTrackPlayingPath = nextTrackPlaying && nextTrackPlaying.path ? nextTrackPlaying.path : null;
 
-        this.coverBase64 = trackPlaying && trackPlaying.cover ? utils.parseBase64(trackPlaying.cover.format, trackPlaying.cover.data) : '';
+        const currTrackPlaying = this.props.queue[this.props.queueCursor];
+        const currTrackPlayingPath = currTrackPlaying && currTrackPlaying.path ? currTrackPlaying.path : null;
+
+        if(nextTrackPlayingPath !== currTrackPlayingPath) {
+            AppActions.library.fetchCover(nextTrackPlayingPath);
+        }
     }
 
     tick() {

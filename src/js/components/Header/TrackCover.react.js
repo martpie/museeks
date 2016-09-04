@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 
 
 /*
@@ -7,7 +7,7 @@ import React, { Component } from 'react';
 |--------------------------------------------------------------------------
 */
 
-export default class PlayingBar extends Component {
+export default class TrackCover extends PureComponent {
 
     static propTypes = {
         cover: React.PropTypes.string
@@ -23,7 +23,7 @@ export default class PlayingBar extends Component {
 
         if(this.props.cover) {
 
-            const styles = { backgroundImage: `url(${this.props.cover})` };
+            const styles = { backgroundImage: `url('${this.props.cover}')` };
 
             return <div className='cover' style={ styles } />;
         }

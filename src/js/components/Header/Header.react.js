@@ -20,6 +20,7 @@ export default class Header extends Component {
 
     static propTypes = {
         playerStatus: React.PropTypes.string,
+        cover: React.PropTypes.string,
         queue: React.PropTypes.array,
         queueCursor: React.PropTypes.number,
         shuffle: React.PropTypes.bool,
@@ -48,6 +49,7 @@ export default class Header extends Component {
                 </div>
                 <div className='col-player-infos'>
                     <PlayingBar
+                        cover={ this.props.cover }
                         queue={ this.props.queue }
                         queueCursor={ this.props.queueCursor }
                         shuffle={ this.props.shuffle }

@@ -6,8 +6,8 @@
 
 import path from 'path';
 import fs   from 'fs';
-
-import mmd     from 'musicmetadata';
+import mmd  from 'musicmetadata';
+import globby from 'globby';
 
 
 const utils = {
@@ -33,7 +33,6 @@ const utils = {
             result += `${minutes}:${seconds}`;
 
             return result;
-
         }
 
         return '00:00';
@@ -212,7 +211,6 @@ const utils = {
                     album        : 'Unknown',
                     albumartist  : [],
                     artist       : ['Unknown artist'],
-                    cover        : null,
                     disk         : {
                         no: 0,
                         of: 0
@@ -253,7 +251,6 @@ const utils = {
                     album        : data.album === null || data.album === '' ? 'Unknown' : data.album,
                     albumartist  : data.albumartist,
                     artist       : data.artist.length === 0 ? ['Unknown artist'] : data.artist,
-                    cover        : data.picture[0] ? { format: data.picture[0].format, data: data.picture[0].data.toString('base64') } : null,
                     disk         : data.disk,
                     duration     : data.duration === '' ? 0 : data.duration,
                     genre        : data.genre,
@@ -312,6 +309,54 @@ const utils = {
 
         audio.preload = 'metadata';
         audio.src = path;
+    },
+
+    fetchCover(trackPath, callback) {
+
+        if(!trackPath) {
+            callback(null);
+            return;
+        }
+
+        const stream = fs.createReadStream(trackPath);
+
+        mmd(stream, { duration: true }, (err, data) => {
+
+            if(err) console.warn(err);
+            else {
+                if(data.picture[0]) { // If cover in id3
+
+                    const cover = utils.parseBase64(data.picture[0].format, data.picture[0].data.toString('base64'));
+
+                    callback(cover);
+                    return;
+                }
+
+                // scan folder for any cover image
+                const folder = path.dirname(trackPath);
+
+                const pattern = path.join(folder, '*');
+
+                globby(pattern, { nodir: true, follow: false }).then((matches) => {
+
+                    const filteredMatches = matches.filter((elem) => {
+
+                        const parsedPath = path.parse(elem);
+
+                        return ['album', 'albumart', 'folder', 'cover'].includes(parsedPath.name.toLowerCase())
+                            && ['.png', '.jpg', '.bmp', '.gif'].includes(parsedPath.ext.toLowerCase()) ;
+                    });
+
+                    if(filteredMatches[0]) {
+                        callback(filteredMatches[0]);
+                        return;
+                    }
+
+                    callback(null);
+                    return;
+                });
+            }
+        });
     }
 };
 

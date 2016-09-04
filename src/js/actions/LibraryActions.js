@@ -169,5 +169,15 @@ export default {
         }).catch((err) => {
             console.warn(err);
         });
+    },
+
+    fetchCover: function(path) {
+
+        utils.fetchCover(path, (cover) => {
+            store.dispatch({
+                type : AppConstants.APP_LIBRARY_FETCHED_COVER,
+                cover
+            });
+        });
     }
 };
