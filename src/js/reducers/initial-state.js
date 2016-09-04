@@ -26,4 +26,6 @@ export default {
     repeat            :  false, // the current repeat state (one, all, false)
     shuffle           :  false, // If shuffle mode is enabled
     refreshProgress   :  0,     // Progress of the refreshing library
+
+    search            : ""      // Search phrase
 };

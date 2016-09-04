@@ -39,6 +39,7 @@ export default class TracksList extends Component {
         this.showContextMenu  = this.showContextMenu.bind(this);
         this.scrollTracksList = this.scrollTracksList.bind(this);
         this.selectTrack      = this.selectTrack.bind(this);
+        this.filterSearch     = this.filterSearch.bind(this);
         this.onKey            = this.onKey.bind(this);
     }
 
@@ -88,10 +89,14 @@ export default class TracksList extends Component {
                             { utils.parseDuration(track.duration) }
                         </div>
                         <div className='cell cell-artist'>
+                          <a onClick={ self.filterSearch }>
                             { track.artist[0] }
+                          </a>
                         </div>
                         <div className='cell cell-album'>
+                          <a onClick={ self.filterSearch }>
                             { track.album }
+                          </a>
                         </div>
                         <div className='cell cell-genre'>
                             { track.genre.join(', ') }
@@ -346,5 +351,9 @@ export default class TracksList extends Component {
             selectedCount: this.state.selected.length,
             playlists: playlistsList
         }));
+    }
+
+    filterSearch(e, id) {
+      AppActions.library.filterSearch(e.target.innerText);
     }
 }
