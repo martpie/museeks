@@ -109,7 +109,7 @@ export default {
                 AppActions.notifications.add('success', message);
             }
         }).catch(() => {
-            AppActions.notifications.add('danger', 'An error occurred while checking updates.');
+            if(!options.silentFail) AppActions.notifications.add('danger', 'An error occurred while checking updates.');
         });
     },
 
