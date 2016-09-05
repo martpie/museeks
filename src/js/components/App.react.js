@@ -23,7 +23,7 @@ class Museeks extends Component {
 
     static propTypes = {
         store: React.PropTypes.object,
-        children: React.PropTypes.object
+        children: React.PropTypes.object,
     }
 
     constructor(props) {
@@ -50,6 +50,7 @@ class Museeks extends Component {
                     queue={ store.queue }
                     queueCursor={ store.queueCursor }
                     windowControls={ !{ ...app.config.getAll() }.useNativeFrame }
+                    search={ store.search }
                 />
                 <div className='main-content'>
                     <Row className='content'>

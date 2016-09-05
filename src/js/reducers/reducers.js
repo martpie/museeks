@@ -125,6 +125,7 @@ export default (state = {}, payload) => { // payload is basically 'action'
             });
 
             const newState = { ...state };
+            newState.search = payload.search;
             newState.tracks[state.tracksCursor].sub = tracks;
 
             return newState;

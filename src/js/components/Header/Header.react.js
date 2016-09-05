@@ -25,18 +25,18 @@ export default class Header extends Component {
         queueCursor: React.PropTypes.number,
         shuffle: React.PropTypes.bool,
         repeat: React.PropTypes.string,
-        windowControls: React.PropTypes.bool
+        windowControls: React.PropTypes.bool,
+        search: React.PropTypes.string
     }
 
     constructor(props) {
 
         super(props);
 
-        this.search = this.search.bind(null);
+        this.filterSearch = this.filterSearch.bind(null);
     }
 
     render() {
-
         return (
             <header className='row'>
                 <div className='col-main-controls'>
@@ -64,14 +64,14 @@ export default class Header extends Component {
                         changeTimeout={ 250 }
                         clearButton
                         ref='search'
-                        onChange={ this.search }
+                        onChange={ this.filterSearch }
                     />
                 </div>
             </header>
         );
     }
 
-    search(value) {
+    filterSearch(value) {
         AppActions.library.filterSearch(value.toLowerCase());
     }
 }
