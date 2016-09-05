@@ -320,7 +320,7 @@ const utils = {
 
         const stream = fs.createReadStream(trackPath);
 
-        mmd(stream, { duration: true }, (err, data) => {
+        mmd(stream, (err, data) => {
 
             if(err) console.warn(err);
             else {
@@ -339,7 +339,7 @@ const utils = {
 
                 globby(pattern, { nodir: true, follow: false }).then((matches) => {
 
-                    const filteredMatches = matches.filter((elem) => {
+                    const cover = matches.find((elem) => {
 
                         const parsedPath = path.parse(elem);
 
@@ -347,12 +347,7 @@ const utils = {
                             && ['.png', '.jpg', '.bmp', '.gif'].includes(parsedPath.ext.toLowerCase()) ;
                     });
 
-                    if(filteredMatches[0]) {
-                        callback(filteredMatches[0]);
-                        return;
-                    }
-
-                    callback(null);
+                    callback(cover);
                     return;
                 });
             }
