@@ -11,7 +11,7 @@ import { Link } from 'react-router';
 |--------------------------------------------------------------------------
 */
 
-export default class Playlists extends Component {
+export default class Playlist extends Component {
 
     static propTypes = {
         params: React.PropTypes.object,

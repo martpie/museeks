@@ -415,6 +415,13 @@ export default (state = {}, payload) => { // payload is basically 'action'
             };
         }
 
+        case(AppConstants.APP_LIBRARY_FETCHED_COVER): {
+            return {
+                ...state,
+                cover: payload.cover || null
+            };
+        }
+
         case(AppConstants.APP_LIBRARY_ADD_FOLDERS): {
             const folders    = payload.folders;
             let musicFolders = app.config.get('musicFolders');

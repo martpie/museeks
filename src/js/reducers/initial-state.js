@@ -21,6 +21,7 @@ export default {
     playlists         :  null,
 
     playerStatus      : 'stop', // Player status
+    cover             :  null,  // Current trackplaying cover
     notifications     :  [],    // The array of notifications
     refreshingLibrary :  false, // If the app is currently refreshing the app
     repeat            :  false, // the current repeat state (one, all, false)

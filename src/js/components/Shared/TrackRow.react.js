@@ -11,7 +11,7 @@ import classnames from 'classnames';
 |--------------------------------------------------------------------------
 */
 
-export default class TracksList extends Component {
+export default class TrackRow extends Component {
 
     static propTypes = {
         children: React.PropTypes.object,

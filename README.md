@@ -22,6 +22,7 @@ It uses:
 - Playlists
 - Queue management
 - Shuffle, loop
+- Covers
 - Dark theme
 - Playback speed control
 - Sleep mode blocker

@@ -7,7 +7,7 @@ import React, { Component } from 'react';
 |--------------------------------------------------------------------------
 */
 
-export default class Notifications extends Component {
+export default class Notification extends Component {
 
     static propTypes = {
         type: React.PropTypes.string,
