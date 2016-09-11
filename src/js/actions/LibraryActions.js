@@ -179,5 +179,18 @@ export default {
                 cover
             });
         });
+    },
+
+    /**
+     * Update the play count attribute.
+     *
+     * @param source
+     */
+    incrementPlayCount(source) {
+        app.models.Track.update({ src: source }, { $inc: { playcount : 1 } }, (err) => {
+            if(err) {
+                console.warn(err);
+            }
+        });
     }
 };
