@@ -10,12 +10,12 @@ class IpcManager {
 
     bindEvents() {
 
-        ipcMain.on('tracksListContextMenu', (event, data) => {
+        ipcMain.on('tracksListContextMenu', (event, stringData) => {
 
-            const options = JSON.parse(data);
+            const data = JSON.parse(stringData);
             let playlistTemplate;
 
-            if(options.playlists) {
+            if(data.playlists) {
 
                 playlistTemplate = [
                     {
@@ -26,7 +26,7 @@ class IpcManager {
                     }
                 ];
 
-                if(options.playlists.length > 0) {
+                if(data.playlists.length > 0) {
                     playlistTemplate.push(
                         {
                             type: 'separator'
@@ -34,7 +34,7 @@ class IpcManager {
                     );
                 }
 
-                options.playlists.forEach((elem) => {
+                data.playlists.forEach((elem) => {
                     playlistTemplate.push({
                         label: elem.name,
                         click: () => {
@@ -66,7 +66,7 @@ class IpcManager {
 
             const template = [
                 {
-                    label: options.selectedCount > 1 ? `${options.selectedCount} tracks selected` : `${options.selectedCount} track selected`,
+                    label: data.selectedCount > 1 ? `${data.selectedCount} tracks selected` : `${data.selectedCount} track selected`,
                     enabled: false
                 },
                 {
@@ -90,10 +90,25 @@ class IpcManager {
                 {
                     label: 'Add to playlist',
                     submenu: playlistTemplate
+                },
+                {
+                    type: 'separator'
+                },
+                {
+                    label: `Search for "${data.track.artist[0]}"`,
+                    click: () => {
+                        event.sender.send('tracksListContextMenuReply', 'searchFor', { search: data.track.artist[0] });
+                    }
+                },
+                {
+                    label: `Search for "${data.track.album}"`,
+                    click: () => {
+                        event.sender.send('tracksListContextMenuReply', 'searchFor', { search: data.track.album });
+                    }
                 }
             ];
 
-            if(options.type === 'playlist') template.push({
+            if(data.type === 'playlist') template.push({
                 label: 'Remove from playlist',
                 click: () => {
                     event.sender.send('tracksListContextMenuReply', 'removeFromPlaylist');

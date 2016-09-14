@@ -136,7 +136,7 @@ export default class TracksList extends Component {
 
         const self = this;
 
-        ipcRenderer.on('tracksListContextMenuReply', (event, reply, params) => {
+        ipcRenderer.on('tracksListContextMenuReply', (event, reply, data) => {
 
             const selected = self.state.selected;
 
@@ -150,8 +150,8 @@ export default class TracksList extends Component {
                     break;
                 }
                 case 'addToPlaylist': {
-                    const isShown = self.props.type === 'playlist' && params === self.props.currentPlaylist;
-                    AppActions.playlists.addTracksTo(params.playlistId, selected, isShown);
+                    const isShown = self.props.type === 'playlist' && data === self.props.currentPlaylist;
+                    AppActions.playlists.addTracksTo(data.playlistId, selected, isShown);
                     break;
                 }
                 case 'removeFromPlaylist': {
@@ -162,9 +162,17 @@ export default class TracksList extends Component {
                 }
                 case 'createPlaylist': {
                     AppActions.playlists.create('New playlist', false, (playlistId) => {
-                        const isShown = self.props.type === 'playlist' && params === self.props.currentPlaylist;
+                        const isShown = self.props.type === 'playlist' && data === self.props.currentPlaylist;
                         AppActions.playlists.addTracksTo(playlistId, selected, isShown);
                     });
+                    break;
+                }
+                case 'searchFor': {
+                    // small hack, we can't call AppActions.library.filterSearch directly
+                    // otherwise the search clear button will not appear, because it will not detect an input event on itself
+                    const searchInput = document.querySelector('input[type="text"].search');
+                    searchInput.value = data.search;
+                    searchInput.dispatchEvent(new Event('input', { bubbles: true }));
                     break;
                 }
             }
@@ -332,7 +340,7 @@ export default class TracksList extends Component {
         }
     }
 
-    showContextMenu() {
+    showContextMenu(e, index) {
 
         let playlistsList = [].concat(this.props.playlists);
 
@@ -344,6 +352,7 @@ export default class TracksList extends Component {
         ipcRenderer.send('tracksListContextMenu', JSON.stringify({
             type: this.props.type,
             selectedCount: this.state.selected.length,
+            track: this.props.tracks[index],
             playlists: playlistsList
         }));
     }
