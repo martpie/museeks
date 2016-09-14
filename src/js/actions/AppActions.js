@@ -34,6 +34,11 @@ const AppActions = {
         // Audio Events
         Player.getAudio().addEventListener('ended', AppActions.player.next);
         Player.getAudio().addEventListener('error', AppActions.player.audioError);
+        Player.getAudio().addEventListener('timeupdate', () => {
+            if (Player.isThresholdReached()) {
+                LibraryActions.incrementPlayCount(Player.getAudio().src);
+            }
+        });
         Player.getAudio().addEventListener('play', () => {
             ipcRenderer.send('playerAction', 'play');
         });
