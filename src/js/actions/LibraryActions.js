@@ -155,8 +155,8 @@ export default {
                         return getMetadataAsync(filePath);
                     }
                     return docs[0];
-                }).then((metadata) => {
-                    return app.models.Track.insertAsync(metadata);
+                }).then((track) => {
+                    return app.models.Track.insertAsync(track);
                 }).then(() => {
                     const percent = parseInt(addedFiles * 100 / totalFiles);
                     AppActions.settings.refreshProgress(percent);

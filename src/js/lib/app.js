@@ -88,6 +88,8 @@ const Track = new linvodb('track', {
     year: String
 });
 
+Track.ensureIndex({ fieldName: 'path', unique: true });
+
 const Playlist = new linvodb('playlist', {
     name: String,
     tracks: {
