@@ -54,8 +54,8 @@ export default class TrackRow extends Component {
         this.props.onMouseDown(e, this.props.trackId, this.props.index);
     }
 
-    onContextMenu() {
-        this.props.onContextMenu();
+    onContextMenu(e) {
+        this.props.onContextMenu(e, this.props.index);
     }
 
     selectAndPlay() {
