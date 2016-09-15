@@ -87,7 +87,7 @@ const PlaylistsActions = {
                     app.models.Playlist.update({ _id }, { $set: { tracks: playlistTracks } }, (err) => {
 
                         if(err) AppActions.notifications.add('danger', err);
-                        else AppActions.notifications.add('success', `${tracks.length} tracks were successfully added to ${playlist.name}`);
+                        else AppActions.notifications.add('success', `${tracks.length} tracks were successfully added to "${playlist.name}"`);
                     });
                 }
             });
