@@ -28,8 +28,8 @@ export default class QueueList extends Component {
         super(props);
 
         this.state = {
-            draggedTrack     : null,
-            draggedOverTrack : null,
+            draggedTrackIndex     : null,
+            draggedOverTrackIndex : null,
             dragPosition     : null // null, 'above' or 'below'
         };
 
@@ -54,7 +54,7 @@ export default class QueueList extends Component {
         });
 
         const queueBodyClasses = classnames('queue-body', {
-            dragging: this.state.draggedTrack !== null
+            dragging: this.state.draggedTrackIndex !== null
         });
 
         return (
@@ -76,9 +76,9 @@ export default class QueueList extends Component {
                                 index={ index }
                                 track={ track }
                                 queueCursor={ this.props.queueCursor }
-                                dragged={ index === self.state.draggedTrack }
-                                draggedOver={ index === self.state.draggedOverTrack }
-                                dragPosition={ index === self.state.draggedOverTrack && self.state.dragPosition }
+                                dragged={ index === self.state.draggedTrackIndex }
+                                draggedOver={ index === self.state.draggedOverTrackIndex }
+                                dragPosition={ index === self.state.draggedOverTrackIndex && self.state.dragPosition }
                                 onDragStart={ self.dragStart }
                                 onDragOver={ this.dragOver }
                                 onDragEnd={ self.dragEnd }
@@ -95,7 +95,7 @@ export default class QueueList extends Component {
         e.dataTransfer.effectAllowed = 'move';
         e.dataTransfer.setData('text/html', e.currentTarget);
 
-        this.setState({ draggedTrack: index });
+        this.setState({ draggedTrackIndex: index });
     }
 
     dragEnd() {
@@ -103,25 +103,31 @@ export default class QueueList extends Component {
         const queue       = this.props.queue;
         const queueCursor = this.props.queueCursor;
 
-        const draggedTrack     = this.state.draggedTrack;
-        const draggedOverTrack = this.state.draggedOverTrack;
-        const dragPosition     = this.state.dragPosition;
+        const dragPosition = this.state.dragPosition;
 
-        // If someone has a better idea...
-        const offset = (dragPosition === 'below' ? 1 : 0) + (draggedOverTrack < draggedTrack || (draggedOverTrack === draggedTrack && dragPosition === 'above') ? 1 : 0);
+        const draggedIndex     = this.state.draggedTrackIndex;
+        const draggedOverIndex = this.state.draggedOverTrackIndex;
+
+        const offsetPosition = dragPosition === 'below' ? 1 : 0;
+        const offsetHigherIndex = draggedOverIndex < draggedIndex || (draggedOverIndex === draggedIndex && dragPosition === 'above') ? 1 : 0;
+
+        // Real position in queue
+        const draggedQueueIndex = draggedIndex + queueCursor + 1;
+        const draggedOverQueueIndex = draggedOverIndex + queueCursor + offsetPosition + offsetHigherIndex;
+
 
         const newQueue = [...queue];
 
-        // remove draggedTrack
-        const movedTrack = newQueue.splice(queueCursor + 1 + draggedTrack, 1)[0];
+        // remove draggedTrackIndex
+        const movedTrack = newQueue.splice(draggedQueueIndex, 1)[0];
 
         // add removed track at its new position
-        newQueue.splice(queueCursor + draggedOverTrack + offset, 0, movedTrack);
+        newQueue.splice(draggedOverQueueIndex, 0, movedTrack);
 
         this.setState({
-            draggedTrack     : null,
-            draggedOverTrack : null,
-            dragPosition     : null
+            draggedTrackIndex     : null,
+            draggedOverTrackIndex : null,
+            dragPosition          : null
         });
 
         AppActions.queue.setQueue(newQueue);
@@ -135,7 +141,7 @@ export default class QueueList extends Component {
         const dragPosition = relativePosition < 0.5 ? 'above' : 'below';
 
         this.setState({
-            draggedOverTrack: index,
+            draggedOverTrackIndex: index,
             dragPosition,
         });
     }
