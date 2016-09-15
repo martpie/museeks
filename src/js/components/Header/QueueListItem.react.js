@@ -11,15 +11,16 @@ import AppActions from '../../actions/AppActions';
 |--------------------------------------------------------------------------
 */
 
-export default class QueueItem extends PureComponent {
+export default class QueueListItem extends PureComponent {
 
     static propTypes = {
         dragged: React.PropTypes.bool,
         draggedOver: React.PropTypes.bool,
-        draggedOverAfter: React.PropTypes.bool,
+        dragPosition: React.PropTypes.string,
         index: React.PropTypes.number,
         track: React.PropTypes.object,
         onDragStart: React.PropTypes.func,
+        onDragOver: React.PropTypes.func,
         onDragEnd: React.PropTypes.func,
         queueCursor: React.PropTypes.number
     }
@@ -31,6 +32,7 @@ export default class QueueItem extends PureComponent {
         this.remove      = this.remove.bind(this);
         this.play        = this.play.bind(this);
         this.onDragStart = this.onDragStart.bind(this);
+        this.onDragOver  = this.onDragOver.bind(this);
     }
 
     render() {
@@ -38,7 +40,8 @@ export default class QueueItem extends PureComponent {
         const queueContentClasses = classnames('track', {
             'dragged': this.props.dragged,
             'dragged-over': this.props.draggedOver,
-            'dragged-over-after': this.props.draggedOverAfter
+            'above': this.props.draggedOver && this.props.dragPosition === 'above',
+            'below': this.props.draggedOver && this.props.dragPosition === 'below'
         });
 
         const index = this.props.index;
@@ -49,6 +52,7 @@ export default class QueueItem extends PureComponent {
               className={ queueContentClasses }
               draggable='true'
               onDragStart={ this.onDragStart }
+              onDragOver={ this.onDragOver }
               onDragEnd={ this.props.onDragEnd }
             >
                 <Button bsSize={ 'xsmall' } bsStyle={ 'link' } className='remove' onClick={ this.remove }>
@@ -68,6 +72,10 @@ export default class QueueItem extends PureComponent {
 
     onDragStart(e) {
         this.props.onDragStart(e, this.props.index);
+    }
+
+    onDragOver(e) {
+        this.props.onDragOver(e, this.props.index);
     }
 
     remove() {

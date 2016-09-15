@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { ButtonGroup, Button } from 'react-bootstrap';
 import classnames from 'classnames';
 
-import QueueItem  from './QueueItem.react';
+import QueueListItem  from './QueueListItem.react';
 
 import AppActions from '../../actions/AppActions';
 
@@ -28,9 +28,9 @@ export default class QueueList extends Component {
         super(props);
 
         this.state = {
-            draggedTrack     : null,
-            draggedOverTrack : null,
-            draggedBefore    : true
+            draggedTrackIndex     : null,
+            draggedOverTrackIndex : null,
+            dragPosition     : null // null, 'above' or 'below'
         };
 
         this.dragStart = this.dragStart.bind(this);
@@ -54,7 +54,7 @@ export default class QueueList extends Component {
         });
 
         const queueBodyClasses = classnames('queue-body', {
-            dragging: this.state.draggedTrack !== null
+            dragging: this.state.draggedTrackIndex !== null
         });
 
         return (
@@ -64,22 +64,23 @@ export default class QueueList extends Component {
                         { utils.getStatus(incomingQueue) }
                     </div>
                     <ButtonGroup>
-                        <Button bsSize={ 'xsmall' } bsStyle={ 'default' } className='empty-button' onClick={ this.clearQueue }>
+                        <Button bsSize={ 'xsmall' } bsStyle={ 'default' } className='empty-button' onClick={ AppActions.queue.clear }>
                             clear queue
                         </Button>
                     </ButtonGroup>
                 </div>
-                <div className={ queueBodyClasses } onDragOver={ this.dragOver }>
+                <div className={ queueBodyClasses }>
                     { shownQueue.map((track, index) => {
                         return (
-                            <QueueItem
+                            <QueueListItem
                                 index={ index }
                                 track={ track }
                                 queueCursor={ this.props.queueCursor }
-                                dragged={ index === self.state.draggedTrack }
-                                draggedOver={ index === self.state.draggedOverTrack }
-                                draggedOverAfter={ index === self.state.draggedOverTrack && !self.state.draggedBefore }
+                                dragged={ index === self.state.draggedTrackIndex }
+                                draggedOver={ index === self.state.draggedOverTrackIndex }
+                                dragPosition={ index === self.state.draggedOverTrackIndex && self.state.dragPosition }
                                 onDragStart={ self.dragStart }
+                                onDragOver={ this.dragOver }
                                 onDragEnd={ self.dragEnd }
                             />
                         );
@@ -89,16 +90,12 @@ export default class QueueList extends Component {
         );
     }
 
-    clearQueue() {
-        AppActions.queue.clear();
-    }
-
     dragStart(e, index) {
 
         e.dataTransfer.effectAllowed = 'move';
         e.dataTransfer.setData('text/html', e.currentTarget);
 
-        this.draggedIndex = index;
+        this.setState({ draggedTrackIndex: index });
     }
 
     dragEnd() {
@@ -106,44 +103,46 @@ export default class QueueList extends Component {
         const queue       = this.props.queue;
         const queueCursor = this.props.queueCursor;
 
-        const draggedTrack     = this.state.draggedTrack;
-        const draggedOverTrack = this.state.draggedOverTrack;
+        const dragPosition = this.state.dragPosition;
 
-        const newQueue = queue.slice();
-        const trackToMove = queue[queueCursor + 1 + draggedTrack];
-        newQueue.splice(queueCursor + 1 + draggedTrack, 1);
-        newQueue.splice(queueCursor + draggedOverTrack, 0, trackToMove);
+        const draggedIndex     = this.state.draggedTrackIndex;
+        const draggedOverIndex = this.state.draggedOverTrackIndex;
+
+        const offsetPosition = dragPosition === 'below' ? 1 : 0;
+        const offsetHigherIndex = draggedOverIndex < draggedIndex || (draggedOverIndex === draggedIndex && dragPosition === 'above') ? 1 : 0;
+
+        // Real position in queue
+        const draggedQueueIndex = draggedIndex + queueCursor + 1;
+        const draggedOverQueueIndex = draggedOverIndex + queueCursor + offsetPosition + offsetHigherIndex;
+
+
+        const newQueue = [...queue];
+
+        // remove draggedTrackIndex
+        const movedTrack = newQueue.splice(draggedQueueIndex, 1)[0];
+
+        // add removed track at its new position
+        newQueue.splice(draggedOverQueueIndex, 0, movedTrack);
 
         this.setState({
-            draggedOverTrack : null,
-            draggedTrack     : null
+            draggedTrackIndex     : null,
+            draggedOverTrackIndex : null,
+            dragPosition          : null
         });
 
         AppActions.queue.setQueue(newQueue);
     }
 
-    dragOver(e) {
+    dragOver(e, index) {
 
         e.preventDefault();
 
-        const currentTarget = e.currentTarget;
-        const offsetTop     = currentTarget.parentNode.offsetTop + currentTarget.parentNode.parentNode.offsetTop;
-
-        const yEnd  = e.pageY + currentTarget.scrollTop - offsetTop;
-        const limit = currentTarget.scrollHeight - currentTarget.lastChild.offsetHeight / 2;
-
-        // If the element is dragged after the half of the last one
-        const draggedBefore = yEnd > limit ? false : true;
-        const draggedOverTrack = Math.ceil((e.pageY + document.querySelector('.queue-body').scrollTop - 75) / 45);
-
-        // souldn't change. Is here otherwise dragOver wouldn't be triggered
-        const index = this.draggedIndex;
+        const relativePosition = e.nativeEvent.offsetY / e.currentTarget.offsetHeight;
+        const dragPosition = relativePosition < 0.5 ? 'above' : 'below';
 
         this.setState({
-            draggedOverTrack,
-            draggedBefore,
-            draggedTrack     : index,
-            dragging         : true
+            draggedOverTrackIndex: index,
+            dragPosition,
         });
     }
 }

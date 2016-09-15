@@ -111,10 +111,6 @@ body.theme-dark {
                    .queue-body {
 
                        .track {
-                           &::before,
-                           &::after {
-                               background-color: #555;
-                           }
 
                            &:not(:last-child) {
                                border-bottom-color: #555;
