@@ -326,6 +326,7 @@ header {
                         overflow: auto;
 
                         .track {
+                            position: relative;
                             padding-bottom: 5px;
                             padding-top: 5px;
                             cursor: pointer;
@@ -335,29 +336,31 @@ header {
                                 border-bottom: dashed 1px #D8D8D8;
                             }
 
-                            &::before,
-                            &::after {
-                                content: '';
-                                display: block;
-                                background-color: #f4f4f4;
-                                padding: 0;
-                            }
-
                             &.dragged {
-                                    display: none;
-                            }
 
-                            &.dragged-over {
-                                padding-top: 0;
-
-                                &::before {
-                                    margin-bottom: 5px;
-                                    padding: 20px 0;
+                                .track-infos {
+                                    opacity: .25;
                                 }
                             }
 
-                            &.dragged-over-after::after {
-                                padding: 20px 0;
+                            &.dragged-over {
+
+                                &::after {
+                                    position: absolute;
+                                    z-index: 1;
+                                    display: block;
+                                    width: 100%;
+                                    content: '';
+                                    border-bottom: solid 3px #459CE7;
+                                }
+
+                                &.above::after {
+                                    top: -2px;
+                                }
+
+                                &.below::after {
+                                    bottom: -2px;
+                                }
                             }
 
                             .track-infos {

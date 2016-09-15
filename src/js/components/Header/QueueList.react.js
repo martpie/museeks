@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { ButtonGroup, Button } from 'react-bootstrap';
 import classnames from 'classnames';
 
-import QueueItem  from './QueueItem.react';
+import QueueListItem  from './QueueListItem.react';
 
 import AppActions from '../../actions/AppActions';
 
@@ -30,7 +30,7 @@ export default class QueueList extends Component {
         this.state = {
             draggedTrack     : null,
             draggedOverTrack : null,
-            draggedBefore    : true
+            dragPosition     : null // null, 'above' or 'below'
         };
 
         this.dragStart = this.dragStart.bind(this);
@@ -64,22 +64,23 @@ export default class QueueList extends Component {
                         { utils.getStatus(incomingQueue) }
                     </div>
                     <ButtonGroup>
-                        <Button bsSize={ 'xsmall' } bsStyle={ 'default' } className='empty-button' onClick={ this.clearQueue }>
+                        <Button bsSize={ 'xsmall' } bsStyle={ 'default' } className='empty-button' onClick={ AppActions.queue.clear }>
                             clear queue
                         </Button>
                     </ButtonGroup>
                 </div>
-                <div className={ queueBodyClasses } onDragOver={ this.dragOver }>
+                <div className={ queueBodyClasses }>
                     { shownQueue.map((track, index) => {
                         return (
-                            <QueueItem
+                            <QueueListItem
                                 index={ index }
                                 track={ track }
                                 queueCursor={ this.props.queueCursor }
                                 dragged={ index === self.state.draggedTrack }
                                 draggedOver={ index === self.state.draggedOverTrack }
-                                draggedOverAfter={ index === self.state.draggedOverTrack && !self.state.draggedBefore }
+                                dragPosition={ index === self.state.draggedOverTrack && self.state.dragPosition }
                                 onDragStart={ self.dragStart }
+                                onDragOver={ this.dragOver }
                                 onDragEnd={ self.dragEnd }
                             />
                         );
@@ -89,16 +90,12 @@ export default class QueueList extends Component {
         );
     }
 
-    clearQueue() {
-        AppActions.queue.clear();
-    }
-
     dragStart(e, index) {
 
         e.dataTransfer.effectAllowed = 'move';
         e.dataTransfer.setData('text/html', e.currentTarget);
 
-        this.draggedIndex = index;
+        this.setState({ draggedTrack: index });
     }
 
     dragEnd() {
@@ -108,42 +105,38 @@ export default class QueueList extends Component {
 
         const draggedTrack     = this.state.draggedTrack;
         const draggedOverTrack = this.state.draggedOverTrack;
+        const dragPosition     = this.state.dragPosition;
 
-        const newQueue = queue.slice();
-        const trackToMove = queue[queueCursor + 1 + draggedTrack];
-        newQueue.splice(queueCursor + 1 + draggedTrack, 1);
-        newQueue.splice(queueCursor + draggedOverTrack, 0, trackToMove);
+        // If someone has a better idea...
+        const offset = (dragPosition === 'below' ? 1 : 0) + (draggedOverTrack < draggedTrack || (draggedOverTrack === draggedTrack && dragPosition === 'above') ? 1 : 0);
+
+        const newQueue = [...queue];
+
+        // remove draggedTrack
+        const movedTrack = newQueue.splice(queueCursor + 1 + draggedTrack, 1)[0];
+
+        // add removed track at its new position
+        newQueue.splice(queueCursor + draggedOverTrack + offset, 0, movedTrack);
 
         this.setState({
+            draggedTrack     : null,
             draggedOverTrack : null,
-            draggedTrack     : null
+            dragPosition     : null
         });
 
         AppActions.queue.setQueue(newQueue);
     }
 
-    dragOver(e) {
+    dragOver(e, index) {
 
         e.preventDefault();
 
-        const currentTarget = e.currentTarget;
-        const offsetTop     = currentTarget.parentNode.offsetTop + currentTarget.parentNode.parentNode.offsetTop;
-
-        const yEnd  = e.pageY + currentTarget.scrollTop - offsetTop;
-        const limit = currentTarget.scrollHeight - currentTarget.lastChild.offsetHeight / 2;
-
-        // If the element is dragged after the half of the last one
-        const draggedBefore = yEnd > limit ? false : true;
-        const draggedOverTrack = Math.ceil((e.pageY + document.querySelector('.queue-body').scrollTop - 75) / 45);
-
-        // souldn't change. Is here otherwise dragOver wouldn't be triggered
-        const index = this.draggedIndex;
+        const relativePosition = e.nativeEvent.offsetY / e.currentTarget.offsetHeight;
+        const dragPosition = relativePosition < 0.5 ? 'above' : 'below';
 
         this.setState({
-            draggedOverTrack,
-            draggedBefore,
-            draggedTrack     : index,
-            dragging         : true
+            draggedOverTrack: index,
+            dragPosition,
         });
     }
 }
