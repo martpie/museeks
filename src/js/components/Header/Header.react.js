@@ -7,8 +7,6 @@ import PlayerControls from './PlayerControls.react';
 
 import AppActions from '../../actions/AppActions';
 
-import Player from '../../lib/player';
-
 
 /*
 |--------------------------------------------------------------------------
@@ -25,7 +23,7 @@ export default class Header extends Component {
         queueCursor: React.PropTypes.number,
         shuffle: React.PropTypes.bool,
         repeat: React.PropTypes.string,
-        windowControls: React.PropTypes.bool
+        windowControls: React.PropTypes.bool,
     }
 
     constructor(props) {
@@ -41,9 +39,7 @@ export default class Header extends Component {
             <header className='row'>
                 <div className='col-main-controls'>
                     <WindowControls active={ this.props.windowControls } />
-
                     <PlayerControls
-                        audio={ Player.getAudio() }
                         playerStatus={ this.props.playerStatus }
                     />
                 </div>

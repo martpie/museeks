@@ -13,7 +13,6 @@ import AppActions from '../../actions/AppActions';
 export default class PlayerControls extends PureComponent {
 
     static propTypes = {
-        audio: React.PropTypes.object,
         playerStatus: React.PropTypes.string
     }
 
@@ -34,9 +33,7 @@ export default class PlayerControls extends PureComponent {
                 <button type='button' className='player-control forward' onClick={ AppActions.player.next }>
                     <Icon name='forward' />
                 </button>
-                <VolumeControl
-                    audio={ this.props.audio }
-                />
+                <VolumeControl />
             </div>
         );
 

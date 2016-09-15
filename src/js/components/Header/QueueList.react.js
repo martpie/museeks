@@ -100,6 +100,8 @@ export default class QueueList extends Component {
 
     dragEnd() {
 
+        // Move that to a reducer may be a good idea
+
         const queue       = this.props.queue;
         const queueCursor = this.props.queueCursor;
 
@@ -114,7 +116,6 @@ export default class QueueList extends Component {
         // Real position in queue
         const draggedQueueIndex = draggedIndex + queueCursor + 1;
         const draggedOverQueueIndex = draggedOverIndex + queueCursor + offsetPosition + offsetHigherIndex;
-
 
         const newQueue = [...queue];
 
