@@ -15,8 +15,7 @@ export default {
     queue             :  [],    // Tracks to be played
     queueCursor       :  null,  // The cursor of the queue
 
-    oldQueue          :  null,  // Queue backup
-    oldQueueCursor    :  null,  // The last cursor backup (to roll stuff back, e.g. unshuffle)
+    oldQueue          :  null,  // Queue backup (in case of shuffle)
 
     playlists         :  null,
 

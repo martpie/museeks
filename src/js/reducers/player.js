@@ -50,7 +50,6 @@ export default (state = {}, payload) => {
                 ...state,
                 queue          :  [],
                 queueCursor    :  null,
-                oldQueueCursor :  null,
                 playerStatus   : 'stop'
             };
 
@@ -105,7 +104,6 @@ export default (state = {}, payload) => {
                 ...state,
                 queue: [],
                 queueCursor    :  null,
-                oldQueueCursor :  null,
                 playerStatus   : 'stop'
             };
         }
@@ -144,7 +142,6 @@ export default (state = {}, payload) => {
                 ...state,
                 queue: [],
                 queueCursor    :  null,
-                oldQueueCursor :  null,
                 playerStatus   : 'stop'
             };
         }
@@ -188,16 +185,20 @@ export default (state = {}, payload) => {
                     shuffle: true,
                     queueCursor: 0,
                     oldQueue: state.queue,
-                    oldQueueCursor: queueCursor
                 };
 
             }
 
-            // Roll back
+            const currentTrackSrc = Player.getAudio().src;
+            const currentTrackIndex = state.oldQueue.findIndex((track) => {
+                return currentTrackSrc === `file://${encodeURI(track.path)}`;
+            });
+
+            // Roll back to the old but update queueCursor
             return {
                 ...state,
                 queue: [...state.oldQueue],
-                queueCursor: state.oldQueueCursor,
+                queueCursor: currentTrackIndex,
                 shuffle: false
             };
         }
