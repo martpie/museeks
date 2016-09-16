@@ -40,12 +40,14 @@ export default {
         });
     },
 
-    toggleSleepBlocker: function(mode = 'prevent-app-suspension') {
+    toggleSleepBlocker: function() {
 
-        app.config.set('sleepBlocker', !app.config.get('sleepBlocker'));
+        const value = !app.config.get('sleepBlocker');
+
+        app.config.set('sleepBlocker', value);
         app.config.saveSync();
 
-        ipcRenderer.send('toggleSleepBlocker', app.config.get('sleepBlocker'), mode);
+        ipcRenderer.send('toggleSleepBlocker', value, 'prevent-app-suspension');
 
         store.dispatch({
             type : AppConstants.APP_REFRESH_CONFIG
