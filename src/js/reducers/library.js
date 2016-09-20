@@ -1,4 +1,3 @@
-import fs           from 'fs';
 import app          from '../lib/app';
 import Player       from '../lib/player';
 import AppConstants from '../constants/AppConstants';
@@ -115,12 +114,9 @@ export default (state = {}, payload) => {
             const folders    = payload.folders;
             let musicFolders = app.config.get('musicFolders');
 
-            // Check if we reveived folders
+            // Check if we received folders
             if(folders !== undefined) {
-                // Add folders
-                folders.forEach((folder) => {
-                    musicFolders.push(fs.realpathSync(folder));
-                });
+                musicFolders = musicFolders.concat(folders);
 
                 // Remove duplicates, useless children, ect...
                 musicFolders = utils.removeUselessFolders(musicFolders);
