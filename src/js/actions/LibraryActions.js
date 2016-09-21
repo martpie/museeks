@@ -6,12 +6,13 @@ import AppActions    from './AppActions';
 import app   from '../lib/app';
 import utils from '../utils/utils';
 
+import fs       from 'fs';
 import path     from 'path';
 import globby   from 'globby';
 import Promise  from 'bluebird';
 
 const dialog = electron.remote.dialog;
-
+const realpathAsync = Promise.promisify(fs.realpath);
 
 export default {
 
@@ -71,9 +72,13 @@ export default {
             properties: ['openDirectory', 'multiSelections']
         }, (folders) => {
             if(folders !== undefined) {
-                store.dispatch({
-                    type : AppConstants.APP_LIBRARY_ADD_FOLDERS,
-                    folders
+                Promise.map(folders, (folder) => {
+                    return realpathAsync(folder);
+                }).then((resolvedFolders) => {
+                    store.dispatch({
+                        type : AppConstants.APP_LIBRARY_ADD_FOLDERS,
+                        folders: resolvedFolders
+                    });
                 });
             }
         });
