@@ -1,6 +1,6 @@
 'use strict';
 
-const { Menu, ipcMain, powerSaveBlocker, app } = require('electron');
+const { Menu, ipcMain, powerSaveBlocker, shell, app } = require('electron');
 
 class IpcManager {
     constructor(window) {
@@ -104,6 +104,15 @@ class IpcManager {
                     label: `Search for "${data.track.album}"`,
                     click: () => {
                         event.sender.send('tracksListContextMenuReply', 'searchFor', { search: data.track.album });
+                    }
+                },
+                {
+                    type: 'separator'
+                },
+                {
+                    label: 'Show file in finder',
+                    click: () => {
+                        shell.showItemInFolder(data.track.path);
                     }
                 }
             ];
