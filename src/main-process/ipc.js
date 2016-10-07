@@ -110,7 +110,7 @@ class IpcManager {
                     type: 'separator'
                 },
                 {
-                    label: 'Show file in finder',
+                    label: 'Show in file manager',
                     click: () => {
                         shell.showItemInFolder(data.track.path);
                     }
