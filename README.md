@@ -89,7 +89,7 @@ If you want to report a bug, first, thanks a lot. To help us, please indicate yo
 
 - Fork and clone
 - Master is usually unstable, checkout to a tag to have a stable state of the app
-- `npm install && npm run dev`
+- `npm install && npm run dev` then run in a separate terminal `electron .`
 - Enable dev mode in the app in the settings view to show DevTools
 
 Webpack will watch for JSX and SASS changes.
