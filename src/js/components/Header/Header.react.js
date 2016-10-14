@@ -67,7 +67,7 @@ export default class Header extends Component {
         );
     }
 
-    search(value) {
-        AppActions.library.filterSearch(value.toLowerCase());
+    search(e) {
+        AppActions.library.filterSearch(e.target.value);
     }
 }
