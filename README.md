@@ -90,8 +90,8 @@ If you want to report a bug, first, thanks a lot. To help us, please indicate yo
 - Fork and clone
 - Master is usually unstable, checkout to a tag to have a stable state of the app
 
-- Install the latest version of electron by running `npm install -g electron`
-- NPM will install electron globally. You can use it on every of your electron projects now.
+- Install the latest version of electron either by running `npm install -g electron` or downloading the latest release available [here](https://github.com/electron/electron/releases) and just drop the app on `resources/` folder.
+- You can use electron now with `electron [electronapp-dir]` command if you installed electron using npm or by running your downloaded electron.
 
 - `npm install && npm run dev` then run in a separate terminal `electron .`
 - `npm run dev` will watch for file changes using Webpack which will recompile JSX and SASS files.
