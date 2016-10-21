@@ -65,3 +65,64 @@
         }
     }
 }
+
+.playing-indicator {
+    height: 100%;
+    width: 100%;
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform ease-in-out .25s;
+    cursor: pointer;
+
+    &:hover {
+        transform: scale(1.1);
+    }
+
+    .animation {
+        width: 8px;
+        height: 8px;
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+
+        .bar {
+            height: 1px;
+            width: 2px;
+            align-items: baseline;
+            background-color: #333;
+            animation: bar-animate;
+            animation-duration: .8s;
+            animation-timing-function: ease-in-out;
+            animation-iteration-count: infinite;
+
+            &.bar-second {
+                animation-delay: .55s;
+            }
+
+            &.bar-third {
+                animation-delay: .25s;
+            }
+
+            &:not(:last-child) {
+                margin-right: 1px;
+            }
+        }
+    }
+}
+
+@keyframes bar-animate {
+
+    from {
+        height: 0;
+    }
+
+    50% {
+        height: 8px;
+    }
+
+    to {
+        height: 0;
+    }
+}

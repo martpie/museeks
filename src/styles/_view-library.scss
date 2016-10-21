@@ -69,11 +69,12 @@
                         }
 
                         .cell {
-                            padding: 4px;
+                            padding: 3px 4px;
                             cursor: default;
                             white-space: nowrap;
                             overflow: hidden;
                             text-overflow: ellipsis;
+                            line-height: 24px;
                         }
                     }
                 }
