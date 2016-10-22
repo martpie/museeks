@@ -31,11 +31,11 @@ export default class TrackRow extends Component {
 
     render() {
 
-        const classNames = classnames({
+        const classNames = classnames('playing-indicator', this.props.state, {
             'hovered': this.state.hovered,
-        }, this.props.state, 'playing-indicator');
+        });
 
-        const content = this.getContent(this.props.state, this.state.hovered);
+        const icon = this.getIcon(this.props.state, this.state.hovered);
 
         return (
             <div className={ classNames }
@@ -44,13 +44,13 @@ export default class TrackRow extends Component {
                 onMouseLeave= { this.onMouseLeave }
             >
                 <div className="playing-indicator">
-                    { content }
+                    { icon }
                 </div>
             </div>
         );
     }
 
-    getContent(state, hovered) {
+    getIcon(state, hovered) {
 
         if(state === 'play') {
 
