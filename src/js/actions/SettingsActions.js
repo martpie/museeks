@@ -8,124 +8,134 @@ import semver from 'semver';
 
 const ipcRenderer = electron.ipcRenderer;
 
+const check = () => {
 
-export default {
+    checkTheme();
+    checkDevMode();
+    checkSleepBlocker();
+    if(app.config.get('autoUpdateChecker')) checkForUpdate({ silentFail: true });
+};
 
-    check: function() {
+const checkTheme = () => {
+    const themeName = app.config.get('theme');
+    document.querySelector('body').classList.add(`theme-${themeName}`);
+};
 
-        this.checkTheme();
-        this.checkDevMode();
-        this.checkSleepBlocker();
-        if(app.config.get('autoUpdateChecker')) this.checkForUpdate({ silentFail: true });
-    },
+const toggleDarkTheme = () => {
 
-    checkTheme: function() {
-        const themeName = app.config.get('theme');
-        document.querySelector('body').classList.add(`theme-${themeName}`);
-    },
+    const oldTheme = app.config.get('theme');
+    const newTheme = oldTheme === 'light' ? 'dark' : 'light';
 
-    toggleDarkTheme: function() {
+    document.querySelector('body').classList.remove(`theme-${oldTheme}`);
+    document.querySelector('body').classList.add(`theme-${newTheme}`);
 
-        const oldTheme = app.config.get('theme');
-        const newTheme = oldTheme === 'light' ? 'dark' : 'light';
+    app.config.set('theme', newTheme);
+    app.config.saveSync();
 
-        document.querySelector('body').classList.remove(`theme-${oldTheme}`);
-        document.querySelector('body').classList.add(`theme-${newTheme}`);
+    store.dispatch({
+        type : AppConstants.APP_REFRESH_CONFIG
+    });
+};
 
-        app.config.set('theme', newTheme);
-        app.config.saveSync();
+const toggleSleepBlocker = () => {
 
-        store.dispatch({
-            type : AppConstants.APP_REFRESH_CONFIG
-        });
-    },
+    const value = !app.config.get('sleepBlocker');
 
-    toggleSleepBlocker: function() {
+    app.config.set('sleepBlocker', value);
+    app.config.saveSync();
 
-        const value = !app.config.get('sleepBlocker');
+    ipcRenderer.send('toggleSleepBlocker', value, 'prevent-app-suspension');
 
-        app.config.set('sleepBlocker', value);
-        app.config.saveSync();
+    store.dispatch({
+        type : AppConstants.APP_REFRESH_CONFIG
+    });
+};
 
-        ipcRenderer.send('toggleSleepBlocker', value, 'prevent-app-suspension');
-
-        store.dispatch({
-            type : AppConstants.APP_REFRESH_CONFIG
-        });
-    },
-
-    checkSleepBlocker: function() {
-        if(app.config.get('sleepBlocker')) {
-            ipcRenderer.send('toggleSleepBlocker', true, 'prevent-app-suspension');
-        }
-    },
-
-    toggleDevMode: function() {
-
-        app.config.set('devMode', !app.config.get('devMode'));
-
-        // Open dev tools if needed
-        if(app.config.get('devMode')) app.browserWindows.main.webContents.openDevTools();
-        else app.browserWindows.main.webContents.closeDevTools();
-
-        app.config.saveSync();
-
-        store.dispatch({
-            type : AppConstants.APP_REFRESH_CONFIG
-        });
-    },
-
-    checkDevMode: function() {
-        if(app.config.get('devMode')) app.browserWindows.main.webContents.openDevTools();
-    },
-
-    toggleAutoUpdateChecker: function() {
-
-        app.config.set('autoUpdateChecker', !app.config.get('autoUpdateChecker'));
-        app.config.saveSync();
-
-        store.dispatch({
-            type : AppConstants.APP_REFRESH_CONFIG
-        });
-    },
-
-    checkForUpdate: function(options = {}) {
-
-        const currentVersion = app.version;
-
-        fetch('https://api.github.com/repos/KeitIG/museeks/releases').then((res) => {
-            return res.json();
-        }).then((releases) => {
-            const newRelease = releases.find((release) => {
-                return semver.valid(release.tag_name) !== null && semver.gt(release.tag_name, currentVersion);
-            });
-
-            let message;
-            if (newRelease) {
-                message = `Museeks ${newRelease.tag_name} is available, check http://museeks.io !`;
-            } else if(!options.silentFail) {
-                message = `Museeks ${currentVersion} is the latest version available.`;
-            }
-
-            if (message) {
-                AppActions.notifications.add('success', message);
-            }
-        }).catch(() => {
-            if(!options.silentFail) AppActions.notifications.add('danger', 'An error occurred while checking updates.');
-        });
-    },
-
-    toggleNativeFrame: function() {
-
-        app.config.set('useNativeFrame', !app.config.get('useNativeFrame'));
-        app.config.saveSync();
-        AppActions.app.restart();
-    },
-
-    refreshProgress: function(percentage) {
-        store.dispatch({
-            type : AppConstants.APP_LIBRARY_REFRESH_PROGRESS,
-            percentage
-        });
+const checkSleepBlocker = () => {
+    if(app.config.get('sleepBlocker')) {
+        ipcRenderer.send('toggleSleepBlocker', true, 'prevent-app-suspension');
     }
+};
+
+const toggleDevMode = () => {
+
+    app.config.set('devMode', !app.config.get('devMode'));
+
+    // Open dev tools if needed
+    if(app.config.get('devMode')) app.browserWindows.main.webContents.openDevTools();
+    else app.browserWindows.main.webContents.closeDevTools();
+
+    app.config.saveSync();
+
+    store.dispatch({
+        type : AppConstants.APP_REFRESH_CONFIG
+    });
+};
+
+const checkDevMode = () => {
+    if(app.config.get('devMode')) app.browserWindows.main.webContents.openDevTools();
+};
+
+const toggleAutoUpdateChecker = () => {
+
+    app.config.set('autoUpdateChecker', !app.config.get('autoUpdateChecker'));
+    app.config.saveSync();
+
+    store.dispatch({
+        type : AppConstants.APP_REFRESH_CONFIG
+    });
+};
+
+const checkForUpdate = (options = {}) => {
+
+    const currentVersion = app.version;
+
+    fetch('https://api.github.com/repos/KeitIG/museeks/releases').then((res) => {
+        return res.json();
+    }).then((releases) => {
+        const newRelease = releases.find((release) => {
+            return semver.valid(release.tag_name) !== null && semver.gt(release.tag_name, currentVersion);
+        });
+
+        let message;
+        if (newRelease) {
+            message = `Museeks ${newRelease.tag_name} is available, check http://museeks.io !`;
+        } else if(!options.silentFail) {
+            message = `Museeks ${currentVersion} is the latest version available.`;
+        }
+
+        if (message) {
+            AppActions.notifications.add('success', message);
+        }
+    }).catch(() => {
+        if(!options.silentFail) AppActions.notifications.add('danger', 'An error occurred while checking updates.');
+    });
+};
+
+const toggleNativeFrame = () => {
+
+    app.config.set('useNativeFrame', !app.config.get('useNativeFrame'));
+    app.config.saveSync();
+    AppActions.app.restart();
+};
+
+const refreshProgress = (percentage) => {
+    store.dispatch({
+        type : AppConstants.APP_LIBRARY_REFRESH_PROGRESS,
+        percentage
+    });
+};
+
+export default{
+    check,
+    checkDevMode,
+    checkForUpdate,
+    checkSleepBlocker,
+    checkTheme,
+    refreshProgress,
+    toggleAutoUpdateChecker,
+    toggleDarkTheme,
+    toggleDevMode,
+    toggleNativeFrame,
+    toggleSleepBlocker
 };

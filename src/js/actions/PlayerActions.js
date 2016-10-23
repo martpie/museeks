@@ -16,124 +16,136 @@ const audioErrors = {
 };
 
 
-export default {
+const playToggle = () => {
+    store.dispatch({
+        type : AppConstants.APP_PLAYER_TOGGLE
+    });
+};
 
-    playToggle: function() {
+const play = () => {
+    store.dispatch({
+        type : AppConstants.APP_PLAYER_PLAY
+    });
+};
+
+const pause = () => {
+    store.dispatch({
+        type : AppConstants.APP_PLAYER_PAUSE
+    });
+};
+
+const stop = () => {
+    store.dispatch({
+        type : AppConstants.APP_PLAYER_STOP
+    });
+
+    ipcRenderer.send('playerAction', 'stop');
+};
+
+const next = (e) => {
+    store.dispatch({
+        type : AppConstants.APP_PLAYER_NEXT,
+        e
+    });
+};
+
+const previous = () => {
+    store.dispatch({
+        type : AppConstants.APP_PLAYER_PREVIOUS
+    });
+};
+
+const shuffle = () => {
+    store.dispatch({
+        type : AppConstants.APP_PLAYER_SHUFFLE
+    });
+};
+
+const setVolume = (volume) => {
+    if(!isNaN(parseFloat(volume)) && isFinite(volume)) {
+
+        Player.setAudioVolume(volume);
+
+        app.config.set('audioVolume', Math.pow(volume, 4));
+        app.config.saveSync();
         store.dispatch({
-            type : AppConstants.APP_PLAYER_TOGGLE
+            type : AppConstants.APP_REFRESH_CONFIG
         });
-    },
+    }
+};
 
-    play: function() {
-        store.dispatch({
-            type : AppConstants.APP_PLAYER_PLAY
-        });
-    },
+const setMuted = (muted = false) => {
 
-    pause: function() {
-        store.dispatch({
-            type : AppConstants.APP_PLAYER_PAUSE
-        });
-    },
+    if(muted) Player.mute();
+    else Player.unmute();
 
-    stop: function() {
-        store.dispatch({
-            type : AppConstants.APP_PLAYER_STOP
-        });
+    app.config.set('audioMuted', muted);
+    app.config.saveSync();
+    store.dispatch({
+        type : AppConstants.APP_REFRESH_CONFIG
+    });
+};
 
-        ipcRenderer.send('playerAction', 'stop');
-    },
+const setPlaybackRate = (value) => {
+    if(!isNaN(parseFloat(value)) && isFinite(value)) { // if is numeric
 
-    next: function(e) {
-        store.dispatch({
-            type : AppConstants.APP_PLAYER_NEXT,
-            e
-        });
-    },
+        if(value >= 0.5 && value <= 5) { // if in allowed range
 
-    previous: function() {
-        store.dispatch({
-            type : AppConstants.APP_PLAYER_PREVIOUS
-        });
-    },
+            Player.setAudioPlaybackRate(value);
 
-    shuffle: function() {
-        store.dispatch({
-            type : AppConstants.APP_PLAYER_SHUFFLE
-        });
-    },
-
-    setVolume: function(volume) {
-
-        if(!isNaN(parseFloat(volume)) && isFinite(volume)) {
-
-            Player.setAudioVolume(volume);
-
-            app.config.set('audioVolume', Math.pow(volume, 4));
+            app.config.set('audioPlaybackRate', parseFloat(value));
             app.config.saveSync();
             store.dispatch({
                 type : AppConstants.APP_REFRESH_CONFIG
             });
         }
-    },
-
-    setMuted: function(muted = false) {
-
-        if(muted) Player.mute();
-        else Player.unmute();
-
-        app.config.set('audioMuted', muted);
-        app.config.saveSync();
-        store.dispatch({
-            type : AppConstants.APP_REFRESH_CONFIG
-        });
-    },
-
-    setPlaybackRate: function(value) {
-
-        if(!isNaN(parseFloat(value)) && isFinite(value)) { // if is numeric
-
-            if(value >= 0.5 && value <= 5) { // if in allowed range
-
-                Player.setAudioPlaybackRate(value);
-
-                app.config.set('audioPlaybackRate', parseFloat(value));
-                app.config.saveSync();
-                store.dispatch({
-                    type : AppConstants.APP_REFRESH_CONFIG
-                });
-            }
-        }
-    },
-
-    repeat: function() {
-        store.dispatch({
-            type : AppConstants.APP_PLAYER_REPEAT
-        });
-    },
-
-    jumpTo: function(to) {
-        store.dispatch({
-            type : AppConstants.APP_PLAYER_JUMP_TO,
-            to
-        });
-    },
-
-    audioError: function(e) {
-
-        switch (e.target.error.code) {
-            case e.target.error.MEDIA_ERR_ABORTED:
-                NotificationsActions.add('warning', audioErrors.aborted);
-                break;
-            case e.target.error.MEDIA_ERR_DECODE:
-                NotificationsActions.add('danger', audioErrors.corrupt);
-                break;
-            case e.target.error.MEDIA_ERR_SRC_NOT_SUPPORTED:
-                NotificationsActions.add('danger', audioErrors.notFound);
-                break;
-            default:
-                NotificationsActions.add('danger', audioErrors.unknown);
-                break;
-        }
     }
+};
+
+const repeat = () => {
+    store.dispatch({
+        type : AppConstants.APP_PLAYER_REPEAT
+    });
+};
+
+const jumpTo = (to) => {
+    store.dispatch({
+        type : AppConstants.APP_PLAYER_JUMP_TO,
+        to
+    });
+};
+
+const audioError = (e) => {
+    switch (e.target.error.code) {
+        case e.target.error.MEDIA_ERR_ABORTED:
+            NotificationsActions.add('warning', audioErrors.aborted);
+            break;
+        case e.target.error.MEDIA_ERR_DECODE:
+            NotificationsActions.add('danger', audioErrors.corrupt);
+            break;
+        case e.target.error.MEDIA_ERR_SRC_NOT_SUPPORTED:
+            NotificationsActions.add('danger', audioErrors.notFound);
+            break;
+        default:
+            NotificationsActions.add('danger', audioErrors.unknown);
+            break;
+    }
+};
+
+
+export default {
+    audioError,
+    jumpTo,
+    next,
+    pause,
+    play,
+    playToggle,
+    previous,
+    repeat,
+    setMuted,
+    setPlaybackRate,
+    setVolume,
+    shuffle,
+    stop,
+    audioErrors
 };

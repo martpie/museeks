@@ -4,51 +4,57 @@ import AppConstants  from '../constants/AppConstants';
 import app from '../lib/app';
 
 
-export default {
+const selectAndPlay = (index) => {
+    store.dispatch({
+        type : AppConstants.APP_QUEUE_PLAY,
+        index
+    });
+};
 
-    selectAndPlay: function(index) {
+const clear = () => {
+    store.dispatch({
+        type : AppConstants.APP_QUEUE_CLEAR
+    });
+};
+
+const remove = (index) => {
+    store.dispatch({
+        type : AppConstants.APP_QUEUE_REMOVE,
+        index
+    });
+};
+
+const add =  (tracksIds) => {
+    app.models.Track.find({ _id: { $in: tracksIds } }, (err, tracks) => {
         store.dispatch({
-            type : AppConstants.APP_QUEUE_PLAY,
-            index
+            type : AppConstants.APP_QUEUE_ADD,
+            tracks
         });
-    },
+    });
+};
 
-    clear: function() {
+const addNext = (tracksIds) => {
+    app.models.Track.find({ _id: { $in: tracksIds } }, (err, tracks) => {
         store.dispatch({
-            type : AppConstants.APP_QUEUE_CLEAR
+            type : AppConstants.APP_QUEUE_ADD_NEXT,
+            tracks
         });
-    },
+    });
+};
 
-    remove: function(index) {
-        store.dispatch({
-            type : AppConstants.APP_QUEUE_REMOVE,
-            index
-        });
-    },
+const setQueue = (queue) => {
+    store.dispatch({
+        type : AppConstants.APP_QUEUE_SET_QUEUE,
+        queue
+    });
+};
 
-    add: function(tracksIds) {
-        app.models.Track.find({ _id: { $in: tracksIds } }, (err, tracks) => {
-            store.dispatch({
-                type : AppConstants.APP_QUEUE_ADD,
-                tracks
-            });
-        });
 
-    },
-
-    addNext: function(tracksIds) {
-        app.models.Track.find({ _id: { $in: tracksIds } }, (err, tracks) => {
-            store.dispatch({
-                type : AppConstants.APP_QUEUE_ADD_NEXT,
-                tracks
-            });
-        });
-    },
-
-    setQueue: function(queue) {
-        store.dispatch({
-            type : AppConstants.APP_QUEUE_SET_QUEUE,
-            queue
-        });
-    }
+export default{
+    add,
+    addNext,
+    clear,
+    remove,
+    selectAndPlay,
+    setQueue
 };
