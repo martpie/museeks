@@ -72,6 +72,10 @@ app.on('ready', () => {
         mainWindow = null;
     });
 
+    mainWindow.on('ready-to-show', () => {
+        mainWindow.show();
+    });
+
     // IPC events
     const ipcManager = new IpcManager(mainWindow);
     ipcManager.bindEvents();
