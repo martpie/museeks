@@ -39,6 +39,7 @@ class ConfigManager {
             sleepBlocker: false,
             autoUpdateChecker: true,
             useNativeFrame: false,
+            useTray: true,
             devMode: false,
             bounds: {
                 width: 1000,

@@ -122,6 +122,16 @@ export default {
         AppActions.app.restart();
     },
 
+    toggleTray: function() {
+
+        app.config.set('useTray', !app.config.get('useTray'));
+        app.config.saveSync();
+
+        store.dispatch({
+            type : AppConstants.APP_REFRESH_CONFIG
+        });
+    },
+
     refreshProgress: function(percentage) {
         store.dispatch({
             type : AppConstants.APP_LIBRARY_REFRESH_PROGRESS,

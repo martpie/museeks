@@ -7,6 +7,7 @@ const os       = require('os');
 const electron = require('electron');
 
 const IpcManager         = require('./ipc');             // Manages IPC evens
+const TrayManager        = require('./tray');            // Manages Tray
 const ConfigManager      = require('./config');          // Handles config
 const IntegrationManager = require('./integration');     // Applies various integrations
 
@@ -41,7 +42,9 @@ app.on('ready', () => {
         '64': nativeImage.createFromPath(path.join(logosPath, 'museeks-64.png')),
         '48': nativeImage.createFromPath(path.join(logosPath, 'museeks-48.png')),
         '32': nativeImage.createFromPath(path.join(logosPath, 'museeks-32.png')),
-        'ico': nativeImage.createFromPath(path.join(logosPath, 'museeks.ico'))
+        'ico': nativeImage.createFromPath(path.join(logosPath, 'museeks.ico')),
+        'tray': nativeImage.createFromPath(path.join(logosPath, 'museeks-tray.png')),
+        'tray-ico': nativeImage.createFromPath(path.join(logosPath, 'museeks-tray.png'))
     };
 
     // Browser Window options
@@ -72,6 +75,11 @@ app.on('ready', () => {
     // IPC events
     const ipcManager = new IpcManager(mainWindow);
     ipcManager.bindEvents();
+
+    // Tray manager
+    const trayIcon = os.platform() === 'win32' ? museeksIcons['tray-ico'] : museeksIcons['tray'];
+    const trayManager = new TrayManager(mainWindow, trayIcon);
+    trayManager.bindEvents();
 
     // integrations
     const integrations = new IntegrationManager(mainWindow);
