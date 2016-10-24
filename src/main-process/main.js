@@ -9,6 +9,7 @@ const electron = require('electron');
 const IpcManager         = require('./ipc');             // Manages IPC evens
 const TrayManager        = require('./tray');            // Manages Tray
 const ConfigManager      = require('./config');          // Handles config
+const PowerMonitor       = require('./power-monitor');   // Handle power events
 const IntegrationManager = require('./integration');     // Applies various integrations
 
 const app           = electron.app;              // Module to control application life.
@@ -79,6 +80,10 @@ app.on('ready', () => {
     // IPC events
     const ipcManager = new IpcManager(mainWindow);
     ipcManager.bindEvents();
+
+    // Power monitor
+    const powerMonitor = new PowerMonitor(mainWindow);
+    powerMonitor.enable();
 
     // Tray manager
     const trayIcon = os.platform() === 'win32' ? museeksIcons['tray-ico'] : museeksIcons['tray'];
