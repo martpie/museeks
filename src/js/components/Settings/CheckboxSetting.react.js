@@ -18,6 +18,8 @@ export default class CheckboxSetting extends PureComponent {
     constructor(props) {
 
         super(props);
+
+        this.onClick = this.onClick.bind(this);
     }
 
     render() {
@@ -28,7 +30,7 @@ export default class CheckboxSetting extends PureComponent {
                 <div className='checkbox'>
                     <label>
                         <input type='checkbox'
-                               onClick={ this.props.onClick }
+                               onClick={ this.onClick }
                                defaultChecked={ this.props.defaultValue }
                         />
                         { this.props.description }
@@ -36,5 +38,10 @@ export default class CheckboxSetting extends PureComponent {
                     </div>
             </div>
         );
+    }
+
+    onClick(e) {
+
+        this.props.onClick(e.target.checked);
     }
 }

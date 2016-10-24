@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import Icon from 'react-fontawesome';
 import KeyBinding from 'react-keybinding-component';
 
 import TrackRow from './TrackRow.react';
+import PlayingIndicator from './PlayingIndicator.react';
 
 import AppActions from '../../actions/AppActions';
 
@@ -40,6 +40,8 @@ export default class TracksList extends Component {
         this.scrollTracksList = this.scrollTracksList.bind(this);
         this.selectTrack      = this.selectTrack.bind(this);
         this.onKey            = this.onKey.bind(this);
+
+        this.rowHeight = 30;
     }
 
     render() {
@@ -51,7 +53,7 @@ export default class TracksList extends Component {
 
         const chunkLength = 20;
         const tilesToDisplay = 5;
-        const tileHeight = 25 * chunkLength;
+        const tileHeight = this.rowHeight * chunkLength;
 
         const tracksChunked = utils.chunkArray(tracks, chunkLength);
         const tilesScrolled = Math.floor(this.state.scrollTop / tileHeight);
@@ -62,11 +64,10 @@ export default class TracksList extends Component {
 
             const list = tracksChunk.map((track, index) => {
 
-                let playing = undefined;
+                let playingIndicator = undefined;
 
-                if(trackPlayingId !== null) {
-                    if(track._id === trackPlayingId) playing = <Icon name='volume-up' fixedWidth />;
-                    if(track._id === trackPlayingId && Player.getAudio().paused) playing = <Icon name='volume-off' fixedWidth />;
+                if(trackPlayingId === track._id) {
+                    playingIndicator = <PlayingIndicator state={ Player.getAudio().paused ? 'pause' : 'play' } />;
                 }
 
                 return(
@@ -79,7 +80,7 @@ export default class TracksList extends Component {
                         onContextMenu={ self.showContextMenu }
                     >
                         <div className='cell cell-track-playing text-center'>
-                            { playing }
+                            { playingIndicator }
                         </div>
                         <div className='cell cell-track'>
                             { track.title }
@@ -101,7 +102,7 @@ export default class TracksList extends Component {
             });
 
             const tracksListTileStyles = {
-                transform: `translate3d(0, ${(((tilesScrolled * 25 * chunkLength) + (indexChunk * 25 * chunkLength)))}px, 0)`
+                transform: `translate3d(0, ${(((tilesScrolled * this.rowHeight * chunkLength) + (indexChunk * this.rowHeight * chunkLength)))}px, 0)`
             };
 
             return (
@@ -124,7 +125,7 @@ export default class TracksList extends Component {
                     <div className='track-cell-header cell-genre'>Genre</div>
                 </div>
                 <div className='tracks-list-body' onScroll={ this.scrollTracksList }>
-                    <div className='tracks-list-tiles' style={ { height : tracks.length * 25 } }>
+                    <div className='tracks-list-tiles' style={ { height : tracks.length * this.rowHeight } }>
                         { trackTiles }
                     </div>
                 </div>
@@ -304,7 +305,7 @@ export default class TracksList extends Component {
                     this.setState({ selected : tracks[i - 1]._id }, () => {
 
                         const container = document.querySelector('.tracks-list-container .tracks-list-body');
-                        const nodeOffsetTop = (i - 1) * 25;
+                        const nodeOffsetTop = (i - 1) * this.rowHeight;
 
                         if(container.scrollTop > nodeOffsetTop) container.scrollTop = nodeOffsetTop;
                     });
@@ -321,10 +322,10 @@ export default class TracksList extends Component {
                     this.setState({ selected : tracks[i + 1]._id }, () => {
 
                         const container = document.querySelector('.tracks-list-container .tracks-list-body');
-                        const nodeOffsetTop = (i + 1) * 25;
+                        const nodeOffsetTop = (i + 1) * this.rowHeight;
 
                         if(container.scrollTop + container.offsetHeight <= nodeOffsetTop) {
-                            container.scrollTop = nodeOffsetTop - container.offsetHeight + 25;
+                            container.scrollTop = nodeOffsetTop - container.offsetHeight + this.rowHeight;
                         }
                     });
                 }
