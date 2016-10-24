@@ -104,7 +104,7 @@ const AppActions = {
 
         close: function() {
 
-            if(app.config.get('useTray')) {
+            if(app.config.get('minimizeToTray')) {
 
                 app.browserWindows.main.hide();
                 ipcRenderer.send('showTray');

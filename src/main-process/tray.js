@@ -13,22 +13,18 @@ class IpcManager {
 
     bindEvents() {
 
-        const self = this;
-
         ipcMain.on('showTray', () => {
 
-            self.show();
+            this.show();
         });
 
         ipcMain.on('hideTray', () => {
 
-            self.hide();
+            this.hide();
         });
     }
 
     show() {
-
-        const self = this;
 
         this.tray = new Tray(this.trayIcon);
 
@@ -36,8 +32,8 @@ class IpcManager {
             {
                 label: 'Show',
                 click: () => {
-                    self.win.show();
-                    self.hide();
+                    this.win.show();
+                    this.hide();
                 }
             },
             {
@@ -46,7 +42,7 @@ class IpcManager {
             {
                 label: 'Quit',
                 click: () => {
-                    self.win.destroy();
+                    this.win.destroy();
                 }
             }
         ]);

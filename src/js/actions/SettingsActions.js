@@ -122,9 +122,9 @@ export default {
         AppActions.app.restart();
     },
 
-    toggleTray: function() {
+    toggleMinimizeToTray: function() {
 
-        app.config.set('useTray', !app.config.get('useTray'));
+        app.config.set('minimizeToTray', !app.config.get('minimizeToTray'));
         app.config.saveSync();
 
         store.dispatch({
