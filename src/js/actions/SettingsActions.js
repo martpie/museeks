@@ -24,10 +24,10 @@ export default {
         document.querySelector('body').classList.add(`theme-${themeName}`);
     },
 
-    toggleDarkTheme: function() {
+    toggleDarkTheme: function(value) {
 
-        const oldTheme = app.config.get('theme');
-        const newTheme = oldTheme === 'light' ? 'dark' : 'light';
+        const oldTheme = value ? 'light' : 'dark';
+        const newTheme = value ? 'dark' : 'light';
 
         document.querySelector('body').classList.remove(`theme-${oldTheme}`);
         document.querySelector('body').classList.add(`theme-${newTheme}`);
@@ -40,9 +40,7 @@ export default {
         });
     },
 
-    toggleSleepBlocker: function() {
-
-        const value = !app.config.get('sleepBlocker');
+    toggleSleepBlocker: function(value) {
 
         app.config.set('sleepBlocker', value);
         app.config.saveSync();
@@ -60,12 +58,12 @@ export default {
         }
     },
 
-    toggleDevMode: function() {
+    toggleDevMode: function(value) {
 
-        app.config.set('devMode', !app.config.get('devMode'));
+        app.config.set('devMode', value);
 
         // Open dev tools if needed
-        if(app.config.get('devMode')) app.browserWindows.main.webContents.openDevTools();
+        if(value) app.browserWindows.main.webContents.openDevTools();
         else app.browserWindows.main.webContents.closeDevTools();
 
         app.config.saveSync();
@@ -79,9 +77,9 @@ export default {
         if(app.config.get('devMode')) app.browserWindows.main.webContents.openDevTools();
     },
 
-    toggleAutoUpdateChecker: function() {
+    toggleAutoUpdateChecker: function(value) {
 
-        app.config.set('autoUpdateChecker', !app.config.get('autoUpdateChecker'));
+        app.config.set('autoUpdateChecker', value);
         app.config.saveSync();
 
         store.dispatch({
@@ -115,16 +113,16 @@ export default {
         });
     },
 
-    toggleNativeFrame: function() {
+    toggleNativeFrame: function(value) {
 
-        app.config.set('useNativeFrame', !app.config.get('useNativeFrame'));
+        app.config.set('useNativeFrame', value);
         app.config.saveSync();
         AppActions.app.restart();
     },
 
-    toggleMinimizeToTray: function() {
+    toggleMinimizeToTray: function(value) {
 
-        app.config.set('minimizeToTray', !app.config.get('minimizeToTray'));
+        app.config.set('minimizeToTray', value);
         app.config.saveSync();
 
         store.dispatch({
