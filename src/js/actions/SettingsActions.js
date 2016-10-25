@@ -21,10 +21,10 @@ const checkTheme = () => {
     document.querySelector('body').classList.add(`theme-${themeName}`);
 };
 
-const toggleDarkTheme = () => {
+const toggleDarkTheme = (value) => {
 
-    const oldTheme = app.config.get('theme');
-    const newTheme = oldTheme === 'light' ? 'dark' : 'light';
+    const oldTheme = value ? 'light' : 'dark';
+    const newTheme = value ? 'dark' : 'light';
 
     document.querySelector('body').classList.remove(`theme-${oldTheme}`);
     document.querySelector('body').classList.add(`theme-${newTheme}`);
@@ -37,9 +37,7 @@ const toggleDarkTheme = () => {
     });
 };
 
-const toggleSleepBlocker = () => {
-
-    const value = !app.config.get('sleepBlocker');
+const toggleSleepBlocker = (value) => {
 
     app.config.set('sleepBlocker', value);
     app.config.saveSync();
@@ -57,12 +55,12 @@ const checkSleepBlocker = () => {
     }
 };
 
-const toggleDevMode = () => {
+const toggleDevMode = (value) => {
 
-    app.config.set('devMode', !app.config.get('devMode'));
+    app.config.set('devMode', value);
 
     // Open dev tools if needed
-    if(app.config.get('devMode')) app.browserWindows.main.webContents.openDevTools();
+    if(value) app.browserWindows.main.webContents.openDevTools();
     else app.browserWindows.main.webContents.closeDevTools();
 
     app.config.saveSync();
@@ -76,9 +74,9 @@ const checkDevMode = () => {
     if(app.config.get('devMode')) app.browserWindows.main.webContents.openDevTools();
 };
 
-const toggleAutoUpdateChecker = () => {
+const toggleAutoUpdateChecker = (value) => {
 
-    app.config.set('autoUpdateChecker', !app.config.get('autoUpdateChecker'));
+    app.config.set('autoUpdateChecker', value);
     app.config.saveSync();
 
     store.dispatch({
@@ -112,11 +110,21 @@ const checkForUpdate = (options = {}) => {
     });
 };
 
-const toggleNativeFrame = () => {
+const toggleNativeFrame = (value) => {
 
-    app.config.set('useNativeFrame', !app.config.get('useNativeFrame'));
+    app.config.set('useNativeFrame', value);
     app.config.saveSync();
     AppActions.app.restart();
+};
+
+const toggleMinimizeToTray = (value) => {
+
+    app.config.set('minimizeToTray', value);
+    app.config.saveSync();
+
+    store.dispatch({
+        type : AppConstants.APP_REFRESH_CONFIG
+    });
 };
 
 const refreshProgress = (percentage) => {

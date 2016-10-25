@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 
 import AppActions from '../../actions/AppActions';
 
+import CheckboxSetting from './CheckboxSetting.react';
+
 
 /*
 |--------------------------------------------------------------------------
@@ -26,19 +28,13 @@ export default class SettingsAdvanced extends Component {
 
         return (
             <div className='setting setting-dev-mode'>
-                <div className='setting-section'>
-                    <h4>Dev mode</h4>
-                    <div className='checkbox'>
-                        <label>
-                            <input type='checkbox' onClick={ this.toggleDevMode } defaultChecked={ config.devMode } /> Enable dev mode
-                        </label>
-                    </div>
-                </div>
+                <CheckboxSetting
+                    title='Dev mode'
+                    description='Enable dev mode'
+                    defaultValue={ config.devMode }
+                    onClick={ AppActions.settings.toggleDevMode }
+                />
             </div>
         );
-    }
-
-    toggleDevMode() {
-        AppActions.settings.toggleDevMode();
     }
 }
