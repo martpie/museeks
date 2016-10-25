@@ -95,7 +95,7 @@ export default class PlaylistsNav extends Component {
 
             switch(reply) {
                 case 'delete':
-                    AppActions.playlists.delete(_id);
+                    AppActions.playlists.remove(_id);
                     break;
                 case 'rename':
                     self.setState({ renamed: _id });

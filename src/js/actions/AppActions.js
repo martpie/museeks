@@ -3,28 +3,26 @@ import app    from '../lib/app';
 
 import LibraryActions       from './LibraryActions';
 import PlaylistsActions     from './PlaylistsActions';
+import NotificationsActions from './NotificationsActions';
 import PlayerActions        from './PlayerActions';
+import QueueActions         from './QueueActions';
 import SettingsActions      from './SettingsActions';
 
 const globalShortcut = electron.remote.globalShortcut;
 const ipcRenderer    = electron.ipcRenderer;
-const player         = PlayerActions;
-const playlists      = PlaylistsActions;
-const library        = LibraryActions;
-const settings       = SettingsActions;
 
 const init = () => {
     // Usual tasks
-    library.load();
-    playlists.refresh();
-    settings.check();
+    LibraryActions.load();
+    PlaylistsActions.refresh();
+    SettingsActions.check();
     initShortcuts();
     start();
 
     // Bind player events
     // Audio Events
-    Player.getAudio().addEventListener('ended', player.next);
-    Player.getAudio().addEventListener('error', player.audioError);
+    Player.getAudio().addEventListener('ended', PlaylistsActions.next);
+    Player.getAudio().addEventListener('error', PlaylistsActions.audioError);
     Player.getAudio().addEventListener('timeupdate', () => {
         if (Player.isThresholdReached()) {
             LibraryActions.incrementPlayCount(Player.getAudio().src);
@@ -42,16 +40,16 @@ const init = () => {
 
         switch(reply) {
             case 'play':
-                player.play();
+                PlaylistsActions.play();
                 break;
             case 'pause':
-                player.pause();
+                PlaylistsActions.pause();
                 break;
             case 'prev':
-                player.previous();
+                PlaylistsActions.previous();
                 break;
             case 'next':
-                player.next();
+                PlaylistsActions.next();
                 break;
         }
     });
@@ -68,19 +66,15 @@ const init = () => {
     window.addEventListener('beforeunload', (e) => {
         // See http://electron.atom.io/docs/api/browser-window/#event-close
         e.returnValue = false;
-        this.app.close();
+        close();
     });
 
     // Remember dimensions and positionning
     const currentWindow = app.browserWindows.main;
 
-    currentWindow.on('resize', () => {
-        saveBounds();
-    });
+    currentWindow.on('resize', saveBounds);
 
-    currentWindow.on('move', () => {
-        saveBounds();
-    });
+    currentWindow.on('move', saveBounds);
 };
 
 const start = () => {
@@ -132,23 +126,25 @@ const initShortcuts = () => {
 
     // Global shortcuts - Player
     globalShortcut.register('MediaPlayPause', () => {
-        player.playToggle();
+        PlaylistsActions.playToggle();
     });
 
     globalShortcut.register('MediaPreviousTrack', () => {
-        player.previous();
+        PlaylistsActions.previous();
     });
 
     globalShortcut.register('MediaNextTrack', () => {
-        player.next();
+        PlaylistsActions.next();
     });
 };
 
 export default {
-    player ,
-    playlists,
-    library,
-    settings,
+    player        : PlayerActions,
+    playlists     : PlaylistsActions,
+    queue         : QueueActions,
+    library       : LibraryActions,
+    settings      : SettingsActions,
+    notifications : NotificationsActions,
 
     close,
     init,

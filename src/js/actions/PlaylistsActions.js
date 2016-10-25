@@ -35,8 +35,9 @@ const refresh = () => {
     });
 };
 
-const create = (name, redirect = false, callback = () => {
-}) => {
+const noop = () => {};
+
+const create = (name, redirect = false, callback = noop) => {
 
     const playlist = {
         name,
@@ -117,7 +118,7 @@ export default{
     refresh,
     create,
     rename,
-    delete:remove,
+    remove,
     addTracksTo,
     removeTracksFrom
 };

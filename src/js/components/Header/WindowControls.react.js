@@ -30,6 +30,6 @@ export default class WindowControls extends PureComponent {
     }
 
     winClose() {
-        AppActions.app.close();
+        AppActions.close();
     }
 }
