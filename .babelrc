@@ -1,5 +1,9 @@
 {
-  "presets": ["es2015", "stage-2", "react"],
+  "presets": [
+    "node6",
+    "stage-3",
+    "react"
+  ],
   "plugins": [
     "syntax-class-properties",
     "transform-class-properties"
