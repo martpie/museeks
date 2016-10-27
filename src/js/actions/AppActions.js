@@ -11,9 +11,134 @@ import SettingsActions      from './SettingsActions';
 const globalShortcut = electron.remote.globalShortcut;
 const ipcRenderer    = electron.ipcRenderer;
 
+const init = () => {
+    // Usual tasks
+    LibraryActions.load();
+    PlaylistsActions.refresh();
+    SettingsActions.check();
+    initShortcuts();
+    start();
 
-const AppActions = {
+    // Bind player events
+    // Audio Events
+    Player.getAudio().addEventListener('ended', PlaylistsActions.next);
+    Player.getAudio().addEventListener('error', PlaylistsActions.audioError);
+    Player.getAudio().addEventListener('timeupdate', () => {
+        if (Player.isThresholdReached()) {
+            LibraryActions.incrementPlayCount(Player.getAudio().src);
+        }
+    });
+    Player.getAudio().addEventListener('play', () => {
+        ipcRenderer.send('playerAction', 'play');
+    });
+    Player.getAudio().addEventListener('pause', () => {
+        ipcRenderer.send('playerAction', 'pause');
+    });
 
+    // Listen for main-process events
+    ipcRenderer.on('playerAction', (event, reply) => {
+
+        switch(reply) {
+            case 'play':
+                PlaylistsActions.play();
+                break;
+            case 'pause':
+                PlaylistsActions.pause();
+                break;
+            case 'prev':
+                PlaylistsActions.previous();
+                break;
+            case 'next':
+                PlaylistsActions.next();
+                break;
+        }
+    });
+
+    // Prevent some events
+    window.addEventListener('dragover', (e) => {
+        e.preventDefault();
+    }, false);
+
+    window.addEventListener('drop', (e) => {
+        e.preventDefault();
+    }, false);
+
+    window.addEventListener('beforeunload', (e) => {
+        // See http://electron.atom.io/docs/api/browser-window/#event-close
+        e.returnValue = false;
+        close();
+    });
+
+    // Remember dimensions and positionning
+    const currentWindow = app.browserWindows.main;
+
+    currentWindow.on('resize', saveBounds);
+
+    currentWindow.on('move', saveBounds);
+};
+
+const start = () => {
+    ipcRenderer.send('appReady');
+};
+
+const restart = () => {
+    ipcRenderer.send('appRestart');
+};
+
+const close = () => {
+    if(app.config.get('minimizeToTray')) {
+
+        app.browserWindows.main.hide();
+        ipcRenderer.send('showTray');
+
+    } else {
+
+        app.browserWindows.main.destroy();
+    }
+};
+
+const minimize = () => {
+    app.browserWindows.main.minimize();
+};
+
+const maximize = () => {
+    app.browserWindows.main.isMaximized() ? app.browserWindows.main.unmaximize() : app.browserWindows.main.maximize();
+};
+
+const saveBounds = () => {
+    const now = window.performance.now();
+
+    if (now - self.lastFilterSearch < 250) {
+        clearTimeout(self.filterSearchTimeOut);
+    }
+
+    self.lastFilterSearch = now;
+
+    self.filterSearchTimeOut = setTimeout(() => {
+
+        app.config.set('bounds', app.browserWindows.main.getBounds());
+        app.config.saveSync();
+
+    }, 250);
+};
+
+const initShortcuts = () => {
+
+    // Global shortcuts - Player
+    globalShortcut.register('MediaPlayPause', () => {
+        PlaylistsActions.playToggle();
+    });
+
+    globalShortcut.register('MediaPreviousTrack', () => {
+        PlaylistsActions.previous();
+    });
+
+    globalShortcut.register('MediaNextTrack', () => {
+        PlaylistsActions.next();
+    });
+};
+
+export default {
     player        : PlayerActions,
     playlists     : PlaylistsActions,
     queue         : QueueActions,
@@ -21,143 +146,12 @@ const AppActions = {
     settings      : SettingsActions,
     notifications : NotificationsActions,
 
-    init: function() {
-
-        // Usual tasks
-        this.library.load();
-        this.playlists.refresh();
-        this.settings.check();
-        this.app.initShortcuts();
-        this.app.start();
-
-        // Bind player events
-        // Audio Events
-        Player.getAudio().addEventListener('ended', AppActions.player.next);
-        Player.getAudio().addEventListener('error', AppActions.player.audioError);
-        Player.getAudio().addEventListener('timeupdate', () => {
-            if (Player.isThresholdReached()) {
-                LibraryActions.incrementPlayCount(Player.getAudio().src);
-            }
-        });
-        Player.getAudio().addEventListener('play', () => {
-            ipcRenderer.send('playerAction', 'play');
-        });
-        Player.getAudio().addEventListener('pause', () => {
-            ipcRenderer.send('playerAction', 'pause');
-        });
-
-        // Listen for main-process events
-        ipcRenderer.on('playerAction', (event, reply) => {
-
-            switch(reply) {
-                case 'play':
-                    AppActions.player.play();
-                    break;
-                case 'pause':
-                    AppActions.player.pause();
-                    break;
-                case 'prev':
-                    AppActions.player.previous();
-                    break;
-                case 'next':
-                    AppActions.player.next();
-                    break;
-            }
-        });
-
-        // Prevent some events
-        window.addEventListener('dragover', (e) => {
-            e.preventDefault();
-        }, false);
-
-        window.addEventListener('drop', (e) => {
-            e.preventDefault();
-        }, false);
-
-        window.addEventListener('beforeunload', (e) => {
-            // See http://electron.atom.io/docs/api/browser-window/#event-close
-            e.returnValue = false;
-            this.app.close();
-        });
-
-        // Remember dimensions and positionning
-        const currentWindow = app.browserWindows.main;
-
-        currentWindow.on('resize', () => {
-            AppActions.app.saveBounds();
-        });
-
-        currentWindow.on('move', () => {
-            AppActions.app.saveBounds();
-        });
-    },
-
-    app: {
-
-        start: function() {
-            ipcRenderer.send('appReady');
-        },
-
-        restart: function() {
-            ipcRenderer.send('appRestart');
-        },
-
-        close: function() {
-
-            if(app.config.get('minimizeToTray')) {
-
-                app.browserWindows.main.hide();
-                ipcRenderer.send('showTray');
-
-            } else {
-
-                app.browserWindows.main.destroy();
-            }
-        },
-
-        minimize: function() {
-            app.browserWindows.main.minimize();
-        },
-
-        maximize: function() {
-            app.browserWindows.main.isMaximized() ? app.browserWindows.main.unmaximize() : app.browserWindows.main.maximize();
-        },
-
-        saveBounds: function() {
-
-            const self = AppActions;
-            const now = window.performance.now();
-
-            if (now - self.lastFilterSearch < 250) {
-                clearTimeout(self.filterSearchTimeOut);
-            }
-
-            self.lastFilterSearch = now;
-
-            self.filterSearchTimeOut = setTimeout(() => {
-
-                app.config.set('bounds', app.browserWindows.main.getBounds());
-                app.config.saveSync();
-
-            }, 250);
-        },
-
-        initShortcuts: function() {
-
-            // Global shortcuts - Player
-            globalShortcut.register('MediaPlayPause', () => {
-                AppActions.player.playToggle();
-            });
-
-            globalShortcut.register('MediaPreviousTrack', () => {
-                AppActions.player.previous();
-            });
-
-            globalShortcut.register('MediaNextTrack', () => {
-                AppActions.player.next();
-            });
-        }
-    }
+    close,
+    init,
+    initShortcuts,
+    maximize,
+    minimize,
+    restart,
+    saveBounds,
+    start
 };
-
-export default AppActions;
