@@ -21,8 +21,8 @@ const init = () => {
 
     // Bind player events
     // Audio Events
-    Player.getAudio().addEventListener('ended', PlaylistsActions.next);
-    Player.getAudio().addEventListener('error', PlaylistsActions.audioError);
+    Player.getAudio().addEventListener('ended', PlayerActions.next);
+    Player.getAudio().addEventListener('error', PlayerActions.audioError);
     Player.getAudio().addEventListener('timeupdate', () => {
         if (Player.isThresholdReached()) {
             LibraryActions.incrementPlayCount(Player.getAudio().src);
