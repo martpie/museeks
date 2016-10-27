@@ -151,7 +151,10 @@ export default {
     initShortcuts,
     maximize,
     minimize,
-    restart,
     saveBounds,
-    start
+    start,
+
+    app: {
+        restart
+    }
 };
