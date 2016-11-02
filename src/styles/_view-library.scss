@@ -66,6 +66,17 @@
                         &.selected {
                             background-color: $main-color;
                             color: white;
+
+                            // put that elsewhere someday
+                            .playing-indicator {
+
+                                .animation {
+
+                                    .bar {
+                                        background-color: #EEE;
+                                    }
+                                }
+                            }
                         }
 
                         .cell {
