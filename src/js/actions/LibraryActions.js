@@ -120,7 +120,7 @@ const refresh = () => {
         });
     };
     const folders = app.config.get('musicFolders');
-    const fsConcurrency = 64;
+    const fsConcurrency = 32;
 
     const getMetadataAsync = function(track) {
         return new Promise((resolve) => {
