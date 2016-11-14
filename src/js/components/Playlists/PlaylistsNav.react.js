@@ -29,8 +29,8 @@ export default class PlaylistsNav extends Component {
             renamed: null // the playlist being renamed if there's one
         };
 
-        this.rename          = this.rename.bind(this);
         this.blur            = this.blur.bind(this);
+        this.keyDown         = this.keyDown.bind(this);
         this.showContextMenu = this.showContextMenu.bind(this);
     }
 
@@ -48,7 +48,7 @@ export default class PlaylistsNav extends Component {
                         type='text'
                         ref='renamedPlaylist'
                         defaultValue={ elem.name }
-                        onChange={ self.rename }
+                        onKeyDown={ self.keyDown }
                         onBlur={ self.blur }
                         autofocus
                     />
@@ -109,7 +109,11 @@ export default class PlaylistsNav extends Component {
     }
 
     componentDidUpdate() {
-        if(!!this.refs.renamedPlaylist && document.activeElement !== this.refs.renamedPlaylist) this.refs.renamedPlaylist.select();
+
+        // If a playlist is being update
+        if(!!this.refs.renamedPlaylist && document.activeElement !== this.refs.renamedPlaylist) {
+            this.refs.renamedPlaylist.select();
+        }
     }
 
     showContextMenu(_id) {
@@ -120,11 +124,27 @@ export default class PlaylistsNav extends Component {
         AppActions.playlists.create('New playlist', true);
     }
 
-    rename(e) {
-        AppActions.playlists.rename(this.state.renamed, e.currentTarget.value);
+    rename(_id, name) {
+        AppActions.playlists.rename(_id, name);
     }
 
-    blur() {
+    keyDown(e) {
+
+        switch(e.keyCode) {
+            case 13: { // Enter
+                this.rename(this.state.renamed, e.currentTarget.value);
+                this.setState({ renamed: null });
+                break;
+            }
+            case 27: { // Escape
+                this.setState({ renamed: null });
+                break;
+            }
+        }
+    }
+
+    blur(e) {
+        this.rename(this.state.renamed, e.currentTarget.value);
         this.setState({ renamed: null });
     }
 }
