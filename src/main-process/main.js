@@ -23,6 +23,19 @@ const srcPath = path.join(appRoot, 'src'); // app/src/ directory
 // be closed automatically when the javascript object is GCed.
 let mainWindow = null;
 
+// Make the app a single-instance app (to avoid Database concurrency)
+const shouldQuit = app.makeSingleInstance(() => {
+    // Someone tried to run a second instance, we should focus our window.
+    if(mainWindow) {
+        if(mainWindow.isMinimized()) mainWindow.restore();
+        mainWindow.focus();
+    }
+});
+
+if (shouldQuit) {
+    app.quit();
+}
+
 // Quit when all windows are closed
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin')
