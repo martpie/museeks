@@ -1,5 +1,7 @@
 'use strict';
 
+const os = require('os');
+
 const { Tray, Menu, ipcMain } = require('electron');
 
 class IpcManager {
@@ -48,6 +50,21 @@ class IpcManager {
         ]);
 
         this.tray.setToolTip('Museeks');
+        this.tray.setTitle('Museeks');
+
+        if(os.platform() === 'win32') {
+            this.tray.on('click', () => {
+                this.win.show();
+                this.hide();
+            });
+        }
+        else { // Darwin or Linux
+            this.tray.on('double-click', () => {
+                this.win.show();
+                this.hide();
+            });
+        }
+
         this.tray.setContextMenu(contextMenu);
     }
 
