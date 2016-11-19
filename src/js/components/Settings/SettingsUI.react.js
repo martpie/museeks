@@ -28,7 +28,7 @@ export default class SettingsUI extends Component {
         return (
             <div className='setting setting-interface'>
                 <CheckboxSetting
-                    title='Theme'
+                    title='Dark Theme'
                     description='Enable dark theme'
                     defaultValue={ config.theme === 'dark' }
                     onClick={ AppActions.settings.toggleDarkTheme }
