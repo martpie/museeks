@@ -101,7 +101,7 @@ app.on('ready', () => {
     // Tray manager
     const trayIcon = os.platform() === 'win32' ? museeksIcons['tray-ico'] : museeksIcons['tray'];
     const trayManager = new TrayManager(mainWindow, trayIcon);
-    trayManager.bindEvents();
+    trayManager.show();
 
     // integrations
     const integrations = new IntegrationManager(mainWindow);

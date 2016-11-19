@@ -63,12 +63,6 @@ const init = () => {
         e.preventDefault();
     }, false);
 
-    window.addEventListener('beforeunload', (e) => {
-        // See http://electron.atom.io/docs/api/browser-window/#event-close
-        e.returnValue = false;
-        close();
-    });
-
     // Remember dimensions and positionning
     const currentWindow = app.browserWindows.main;
 
@@ -89,7 +83,6 @@ const close = () => {
     if(app.config.get('minimizeToTray')) {
 
         app.browserWindows.main.hide();
-        ipcRenderer.send('showTray');
 
     } else {
 
