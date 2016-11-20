@@ -14,8 +14,21 @@
         border-top: 1px solid #d2d2d2;
         padding: 10px 15px;
 
-        .setting-section:not(:first-child) {
-            margin-top: 25px;
+        .setting-title {
+          font-weight: bold;
+          padding-top: 2px;
+        }
+
+        .setting-description {
+            font-size: 0.85em;
+            margin-top: 3px;
+        }
+
+        input[type="checkbox"] {
+          width: 2.5em;
+          height: 2.5em;
+          top: -0.8em;
+          left: 1.3em;
         }
     }
 }
