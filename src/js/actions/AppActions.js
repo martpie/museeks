@@ -40,16 +40,16 @@ const init = () => {
 
         switch(reply) {
             case 'play':
-                PlaylistsActions.play();
+                PlayerActions.play();
                 break;
             case 'pause':
-                PlaylistsActions.pause();
+                PlayerActions.pause();
                 break;
             case 'prev':
-                PlaylistsActions.previous();
+                PlayerActions.previous();
                 break;
             case 'next':
-                PlaylistsActions.next();
+                PlayerActions.next();
                 break;
         }
     });

@@ -1,6 +1,9 @@
 'use strict';
 
-const { Tray, Menu, app, ipcMain } = require('electron');
+const path = require('path');
+const { Tray, Menu, ipcMain, app, nativeImage } = require('electron');
+
+const iconsDirectory = path.resolve(__dirname, '../', 'images', 'icons', 'tray');
 
 class IpcManager {
 
@@ -30,7 +33,39 @@ class IpcManager {
 
         const contextMenu = Menu.buildFromTemplate([
             {
+                label: 'Play',
+                icon: nativeImage.createFromPath(path.join(iconsDirectory, 'play.png')),
+                click: () => {
+                    this.win.webContents.send('playerAction', 'play');
+                }
+            },
+            {
+                label: 'Pause',
+                icon: nativeImage.createFromPath(path.join(iconsDirectory, 'pause.png')),
+                click: () => {
+                    this.win.webContents.send('playerAction', 'pause');
+                }
+            },
+            {
+                label: 'Prev',
+                icon: nativeImage.createFromPath(path.join(iconsDirectory, 'backward.png')),
+                click: () => {
+                    this.win.webContents.send('playerAction', 'prev');
+                }
+            },
+            {
+                label: 'Next',
+                icon: nativeImage.createFromPath(path.join(iconsDirectory, 'forward.png')),
+                click: () => {
+                    this.win.webContents.send('playerAction', 'next');
+                }
+            },
+            {
+                type: 'separator'
+            },
+            {
                 label: 'Show',
+                icon: nativeImage.createFromPath(path.join(iconsDirectory, 'window-restore.png')),
                 click: () => {
                     this.win.show();
                 }
@@ -40,6 +75,7 @@ class IpcManager {
             },
             {
                 label: 'Quit',
+                icon: nativeImage.createFromPath(path.join(iconsDirectory, 'times.png')),
                 click: () => {
                     this.win.destroy();
                     app.quit();
