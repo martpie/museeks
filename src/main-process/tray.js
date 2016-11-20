@@ -1,6 +1,6 @@
 'use strict';
 
-const { Tray, Menu, ipcMain } = require('electron');
+const { Tray, Menu, app, ipcMain } = require('electron');
 
 class IpcManager {
 
@@ -33,7 +33,6 @@ class IpcManager {
                 label: 'Show',
                 click: () => {
                     this.win.show();
-                    this.hide();
                 }
             },
             {
@@ -43,6 +42,7 @@ class IpcManager {
                 label: 'Quit',
                 click: () => {
                     this.win.destroy();
+                    app.quit();
                 }
             }
         ]);
