@@ -28,6 +28,7 @@ class IpcManager {
             {
                 label: 'Quit',
                 click: () => {
+                    this.win.destroy();
                     app.quit();
                 }
             }
