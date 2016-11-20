@@ -29,8 +29,8 @@ export default class CheckboxSetting extends PureComponent {
                 <div className='checkbox'>
                     <label>
                         <input type='checkbox'
-                               onClick={ this.onClick }
-                               defaultChecked={ this.props.defaultValue }
+                           onClick={ this.onClick }
+                           defaultChecked={ this.props.defaultValue }
                         />
                         <span className='setting-title'>{ this.props.title }</span>
                         <p className='setting-description'>{ this.props.description }</p>
