@@ -99,8 +99,9 @@ app.on('ready', () => {
     powerMonitor.enable();
 
     // Tray manager
-    const trayIcon = os.platform() === 'win32' ? museeksIcons['tray-ico'] : museeksIcons['tray'];
+    const trayIcon = os.platform() === 'win32.' ? museeksIcons['tray-ico'] : museeksIcons['tray'];
     const trayManager = new TrayManager(mainWindow, trayIcon);
+    trayManager.bindEvents();
     trayManager.show();
 
     // integrations

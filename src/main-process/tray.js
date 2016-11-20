@@ -1,6 +1,6 @@
 'use strict';
 
-const { Tray, Menu, app } = require('electron');
+const { Tray, Menu, app, ipcMain } = require('electron');
 
 class IpcManager {
 
@@ -9,6 +9,19 @@ class IpcManager {
         this.tray = null;
         this.trayIcon = icon;
         this.win = win;
+    }
+
+    bindEvents() {
+
+        ipcMain.on('showTray', () => {
+
+            this.show();
+        });
+
+        ipcMain.on('hideTray', () => {
+
+            this.hide();
+        });
     }
 
     show() {
