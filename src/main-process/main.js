@@ -47,7 +47,10 @@ app.on('window-all-closed', () => {
 app.on('ready', () => {
 
     const configManager = new ConfigManager(app);
-    const { bounds, useNativeFrame } = configManager.getConfig();
+    const { useNativeFrame } = configManager.getConfig();
+    let { bounds } = configManager.getConfig();
+
+    bounds = checkBounds(bounds);
 
     const logosPath = path.join(appRoot, 'src', 'images', 'logos');
     const museeksIcons = {
@@ -61,20 +64,6 @@ app.on('ready', () => {
         'tray-ico': nativeImage.createFromPath(path.join(logosPath, 'museeks-tray.ico'))
     };
 
-    // check if the browser window is offscreen
-    const display = electron.screen.getDisplayNearestPoint(bounds).workArea;
-
-    const onScreen = bounds.x >= display.x
-        && bounds.x + bounds.width <= display.x + display.width
-        && bounds.y >= display.y
-        && bounds.y + bounds.height <= display.y + display.height;
-
-    if(!onScreen) {
-        delete bounds.x;
-        delete bounds.y;
-        bounds.width = 900;
-        bounds.height = 550;
-    }
 
     // Browser Window options
     const mainWindowOption = {
@@ -122,3 +111,30 @@ app.on('ready', () => {
     const integrations = new IntegrationManager(mainWindow);
     integrations.enable();
 });
+
+
+/*
+|--------------------------------------------------------------------------
+| Utils
+|--------------------------------------------------------------------------
+*/
+
+function checkBounds(bounds) {
+
+    // check if the browser window is offscreen
+    const display = electron.screen.getDisplayNearestPoint(bounds).workArea;
+
+    const onScreen = bounds.x >= display.x
+        && bounds.x + bounds.width <= display.x + display.width
+        && bounds.y >= display.y
+        && bounds.y + bounds.height <= display.y + display.height;
+
+    if(!onScreen) {
+        delete bounds.x;
+        delete bounds.y;
+        bounds.width = 900;
+        bounds.height = 550;
+    }
+
+    return bounds;
+}
