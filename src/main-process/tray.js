@@ -61,7 +61,7 @@ class IpcManager {
                 }
             },
             {
-                label: 'Prev',
+                label: 'Previous',
                 click: () => {
                     this.win.webContents.send('playerAction', 'prev');
                 }
