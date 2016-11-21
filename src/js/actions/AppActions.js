@@ -124,15 +124,15 @@ const initShortcuts = () => {
 
     // Global shortcuts - Player
     globalShortcut.register('MediaPlayPause', () => {
-        PlaylistsActions.playToggle();
+        PlayerActions.playToggle();
     });
 
     globalShortcut.register('MediaPreviousTrack', () => {
-        PlaylistsActions.previous();
+        PlayerActions.previous();
     });
 
     globalShortcut.register('MediaNextTrack', () => {
-        PlaylistsActions.next();
+        PlayerActions.next();
     });
 };
 
