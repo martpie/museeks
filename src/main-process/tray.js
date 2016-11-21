@@ -9,6 +9,7 @@ class IpcManager {
         this.tray = null;
         this.trayIcon = icon;
         this.win = win;
+        this.contextMenu;
     }
 
     bindEvents() {
@@ -22,13 +23,55 @@ class IpcManager {
 
             this.hide();
         });
+
+        ipcMain.on('playerAction', (event, reply) => {
+
+            switch(reply) {
+                case 'play':
+                    this.contextMenu.items[0].visible = false;
+                    this.contextMenu.items[1].visible = true;
+                    break;
+                case 'pause':
+                    this.contextMenu.items[0].visible = true;
+                    this.contextMenu.items[1].visible = false;
+                    break;
+            }
+        });
     }
 
     show() {
 
         this.tray = new Tray(this.trayIcon);
 
-        const contextMenu = Menu.buildFromTemplate([
+        this.contextMenu = Menu.buildFromTemplate([
+            {
+                label: 'Play',
+                click: () => {
+                    this.win.webContents.send('playerAction', 'play');
+                }
+            },
+            {
+                label: 'Pause',
+                visible: false,
+                click: () => {
+                    this.win.webContents.send('playerAction', 'pause');
+                }
+            },
+            {
+                label: 'Previous',
+                click: () => {
+                    this.win.webContents.send('playerAction', 'prev');
+                }
+            },
+            {
+                label: 'Next',
+                click: () => {
+                    this.win.webContents.send('playerAction', 'next');
+                }
+            },
+            {
+                type: 'separator'
+            },
             {
                 label: 'Show',
                 click: () => {
@@ -48,7 +91,7 @@ class IpcManager {
         ]);
 
         this.tray.setToolTip('Museeks');
-        this.tray.setContextMenu(contextMenu);
+        this.tray.setContextMenu(this.contextMenu);
     }
 
     hide() {
