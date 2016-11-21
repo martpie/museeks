@@ -12,6 +12,7 @@ class IpcManager {
         this.tray = null;
         this.trayIcon = icon;
         this.win = win;
+        this.contextMenu;
     }
 
     bindEvents() {
@@ -25,37 +26,48 @@ class IpcManager {
 
             this.hide();
         });
+
+        ipcMain.on('playerAction', (event, reply) => {
+
+            switch(reply) {
+                case 'play':
+                    this.contextMenu.items[0].visible = false;
+                    this.contextMenu.items[1].visible = true;
+                    break;
+                case 'pause':
+                    this.contextMenu.items[0].visible = true;
+                    this.contextMenu.items[1].visible = false;
+                    break;
+            }
+        });
     }
 
     show() {
 
         this.tray = new Tray(this.trayIcon);
 
-        const contextMenu = Menu.buildFromTemplate([
+        this.contextMenu = Menu.buildFromTemplate([
             {
                 label: 'Play',
-                icon: nativeImage.createFromPath(path.join(iconsDirectory, 'play.png')),
                 click: () => {
                     this.win.webContents.send('playerAction', 'play');
                 }
             },
             {
                 label: 'Pause',
-                icon: nativeImage.createFromPath(path.join(iconsDirectory, 'pause.png')),
+                visible: false,
                 click: () => {
                     this.win.webContents.send('playerAction', 'pause');
                 }
             },
             {
                 label: 'Prev',
-                icon: nativeImage.createFromPath(path.join(iconsDirectory, 'backward.png')),
                 click: () => {
                     this.win.webContents.send('playerAction', 'prev');
                 }
             },
             {
                 label: 'Next',
-                icon: nativeImage.createFromPath(path.join(iconsDirectory, 'forward.png')),
                 click: () => {
                     this.win.webContents.send('playerAction', 'next');
                 }
@@ -65,7 +77,6 @@ class IpcManager {
             },
             {
                 label: 'Show',
-                icon: nativeImage.createFromPath(path.join(iconsDirectory, 'window-restore.png')),
                 click: () => {
                     this.win.show();
                 }
@@ -75,7 +86,6 @@ class IpcManager {
             },
             {
                 label: 'Quit',
-                icon: nativeImage.createFromPath(path.join(iconsDirectory, 'times.png')),
                 click: () => {
                     this.win.destroy();
                     app.quit();
@@ -84,7 +94,7 @@ class IpcManager {
         ]);
 
         this.tray.setToolTip('Museeks');
-        this.tray.setContextMenu(contextMenu);
+        this.tray.setContextMenu(this.contextMenu);
     }
 
     hide() {
