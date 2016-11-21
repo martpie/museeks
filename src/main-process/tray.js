@@ -78,6 +78,7 @@ class IpcManager {
                 label: 'Show',
                 click: () => {
                     this.win.show();
+                    this.win.focus();
                 }
             },
             {
@@ -98,11 +99,13 @@ class IpcManager {
         if(os.platform() === 'win32') {
             this.tray.on('click', () => {
                 this.win.show();
+                this.win.focus();
                 this.hide();
             });
-        } else { // Darwin or Linux
+        } else if(os.platform() === 'darwin') {
             this.tray.on('double-click', () => {
                 this.win.show();
+                this.win.focus();
                 this.hide();
             });
         }
