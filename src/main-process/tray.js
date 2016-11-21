@@ -1,9 +1,6 @@
 'use strict';
 
-const path = require('path');
-const { Tray, Menu, ipcMain, app, nativeImage } = require('electron');
-
-const iconsDirectory = path.resolve(__dirname, '../', 'images', 'icons', 'tray');
+const { Tray, Menu, app, ipcMain } = require('electron');
 
 class IpcManager {
 
