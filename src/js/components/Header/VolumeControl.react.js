@@ -20,6 +20,7 @@ export default class VolumeControl extends Component {
         const audio = Player.getAudio();
 
         this.state = {
+            audio,
             showVolume : false,
             volume     : audio.volume,
             muted      : audio.muted
@@ -36,6 +37,9 @@ export default class VolumeControl extends Component {
     }
 
     render() {
+        // TODO: Remove this after verifying correct behavior
+        console.log("audio volume", this.state.audio.volume);
+        console.log("state volume", this.state.volume);
 
         const volumeClasses = classnames('volume-control', {
             visible: this.state.showVolume
@@ -54,7 +58,7 @@ export default class VolumeControl extends Component {
                            min={ 0 }
                            max={ 1 }
                            step={ 0.01 }
-                           defaultValue={ this.state.volume, 1 / 4 }
+                           defaultValue={ this.state.volume }
                            ref='volume'
                            onChange={ this.setVolume }
                     />
@@ -65,7 +69,7 @@ export default class VolumeControl extends Component {
 
     setVolume(e) {
         AppActions.player.setVolume(parseFloat(e.currentTarget.value));
-        this.setState({ volume: e.currentTarget.value });
+        this.setState({ volume: Math.pow(e.currentTarget.value, 4) });
     }
 
     showVolume() {
