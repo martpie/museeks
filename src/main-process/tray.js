@@ -12,53 +12,27 @@ class IpcManager {
         this.trayIcon = icon;
         this.win = win;
         this.contextMenu;
-    }
 
-    bindEvents() {
 
-        ipcMain.on('showTray', () => {
-
-            this.show();
-        });
-
-        ipcMain.on('hideTray', () => {
-
-            this.hide();
-        });
-
-        ipcMain.on('playerAction', (event, reply) => {
-
-            switch(reply) {
-                case 'play':
-                    this.contextMenu.items[0].visible = false;
-                    this.contextMenu.items[1].visible = true;
-                    break;
-                case 'pause':
-                    this.contextMenu.items[0].visible = true;
-                    this.contextMenu.items[1].visible = false;
-                    break;
-            }
-        });
-    }
-
-    show() {
-
-        this.tray = new Tray(this.trayIcon);
-
-        this.contextMenu = Menu.buildFromTemplate([
+        this.playToggle = [
             {
                 label: 'Play',
                 click: () => {
                     this.win.webContents.send('playerAction', 'play');
                 }
-            },
+            }
+        ];
+
+        this.pauseToggle = [
             {
                 label: 'Pause',
-                visible: false,
                 click: () => {
                     this.win.webContents.send('playerAction', 'pause');
                 }
-            },
+            }
+        ];
+
+        this.menu = [
             {
                 label: 'Previous',
                 click: () => {
@@ -91,7 +65,37 @@ class IpcManager {
                     app.quit();
                 }
             }
-        ]);
+        ];
+    }
+
+    bindEvents() {
+
+        ipcMain.on('showTray', () => {
+
+            this.show();
+        });
+
+        ipcMain.on('hideTray', () => {
+
+            this.hide();
+        });
+
+        ipcMain.on('playerAction', (event, reply) => {
+
+            switch(reply) {
+                case 'play':
+                    this.tray.setContextMenu(Menu.buildFromTemplate([...this.pauseToggle, ...this.menu]));
+                    break;
+                case 'pause':
+                    this.tray.setContextMenu(Menu.buildFromTemplate([...this.playToggle, ...this.menu]));
+                    break;
+            }
+        });
+    }
+
+    show() {
+
+        this.tray = new Tray(this.trayIcon);
 
         this.tray.setToolTip('Museeks');
         this.tray.setTitle('Museeks');
@@ -110,7 +114,7 @@ class IpcManager {
             });
         }
 
-        this.tray.setContextMenu(this.contextMenu);
+        this.tray.setContextMenu(Menu.buildFromTemplate([...this.playToggle, ...this.menu]));
     }
 
     hide() {
