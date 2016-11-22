@@ -1,3 +1,5 @@
+import app from '../lib/app';
+
 export default {
     tracks: {
         library: { // Tracks of the library view
@@ -23,7 +25,7 @@ export default {
     cover             :  null,  // Current trackplaying cover
     notifications     :  [],    // The array of notifications
     refreshingLibrary :  false, // If the app is currently refreshing the app
-    repeat            :  false, // the current repeat state (one, all, false)
-    shuffle           :  false, // If shuffle mode is enabled
+    repeat            :  app.config.get('audioRepeat'), // the current repeat state (one, all, false)
+    shuffle           :  app.config.get('audioShuffle'), // If shuffle mode is enabled
     refreshProgress   :  0,     // Progress of the refreshing library
 };

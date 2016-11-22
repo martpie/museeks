@@ -55,9 +55,25 @@ const previous = () => {
     });
 };
 
-const shuffle = () => {
+const shuffle = (shuffle) => {
+
+    app.config.set('audioShuffle', shuffle);
+    app.config.saveSync();
+
     store.dispatch({
-        type : AppConstants.APP_PLAYER_SHUFFLE
+        type : AppConstants.APP_PLAYER_SHUFFLE,
+        shuffle
+    });
+};
+
+const repeat = (repeat) => {
+
+    app.config.set('audioRepeat', repeat);
+    app.config.saveSync();
+
+    store.dispatch({
+        type : AppConstants.APP_PLAYER_REPEAT,
+        repeat
     });
 };
 
@@ -101,12 +117,6 @@ const setPlaybackRate = (value) => {
             });
         }
     }
-};
-
-const repeat = () => {
-    store.dispatch({
-        type : AppConstants.APP_PLAYER_REPEAT
-    });
 };
 
 const jumpTo = (to) => {
