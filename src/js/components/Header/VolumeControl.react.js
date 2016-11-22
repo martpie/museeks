@@ -32,7 +32,7 @@ export default class VolumeControl extends Component {
     }
 
     getVolumeIcon(volume, muted) {
-        return muted || volume === 0 ? 'volume-off' : volume > 0.5 ? 'volume-up' : 'volume-down';
+        return muted || volume === 0 ? 'volume-off' : Math.pow(volume, 1 / 4) > 0.5 ? 'volume-up' : 'volume-down';
     }
 
     render() {
@@ -64,8 +64,11 @@ export default class VolumeControl extends Component {
     }
 
     setVolume(e) {
-        AppActions.player.setVolume(parseFloat(e.currentTarget.value));
-        this.setState({ volume: Math.pow(e.currentTarget.value, 4) });
+
+        const smoothVolume = Math.pow(e.currentTarget.value, 4);
+
+        AppActions.player.setVolume(smoothVolume);
+        this.setState({ volume: smoothVolume });
     }
 
     showVolume() {
