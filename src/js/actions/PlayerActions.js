@@ -81,9 +81,9 @@ const setVolume = (volume) => {
 
     if(!isNaN(parseFloat(volume)) && isFinite(volume)) {
 
-        Player.setAudioVolume(Math.pow(volume, 4));
+        Player.setAudioVolume(volume);
 
-        app.config.set('audioVolume', Math.pow(volume, 4));
+        app.config.set('audioVolume', volume);
         app.config.saveSync();
         store.dispatch({
             type : AppConstants.APP_REFRESH_CONFIG

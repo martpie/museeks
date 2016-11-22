@@ -21,7 +21,7 @@ export default class VolumeControl extends Component {
 
         this.state = {
             showVolume : false,
-            volume     : audio.volume,
+            volume     : Math.pow(audio.volume, 1 / 4),
             muted      : audio.muted
         };
 
@@ -54,7 +54,7 @@ export default class VolumeControl extends Component {
                            min={ 0 }
                            max={ 1 }
                            step={ 0.01 }
-                           defaultValue={ Math.pow(this.state.volume, 1 / 4) }
+                           defaultValue={ this.state.volume }
                            ref='volume'
                            onChange={ this.setVolume }
                     />
@@ -65,7 +65,7 @@ export default class VolumeControl extends Component {
 
     setVolume(e) {
         AppActions.player.setVolume(parseFloat(e.currentTarget.value));
-        this.setState({ volume: e.currentTarget.value });
+        this.setState({ volume: Math.pow(e.currentTarget.value, 4) });
     }
 
     showVolume() {
