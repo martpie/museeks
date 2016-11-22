@@ -62,9 +62,10 @@ const shuffle = () => {
 };
 
 const setVolume = (volume) => {
+
     if(!isNaN(parseFloat(volume)) && isFinite(volume)) {
 
-        Player.setAudioVolume(volume);
+        Player.setAudioVolume(Math.pow(volume, 4));
 
         app.config.set('audioVolume', Math.pow(volume, 4));
         app.config.saveSync();

@@ -54,7 +54,7 @@ export default class VolumeControl extends Component {
                            min={ 0 }
                            max={ 1 }
                            step={ 0.01 }
-                           defaultValue={ this.state.volume, 1 / 4 }
+                           defaultValue={ Math.pow(this.state.volume, 1 / 4) }
                            ref='volume'
                            onChange={ this.setVolume }
                     />
