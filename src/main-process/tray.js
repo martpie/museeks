@@ -98,7 +98,6 @@ class IpcManager {
         this.tray = new Tray(this.trayIcon);
 
         this.tray.setToolTip('Museeks');
-        this.tray.setTitle('Museeks');
 
         if(os.platform() === 'win32') {
             this.tray.on('click', () => {
