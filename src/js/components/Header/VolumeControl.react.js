@@ -34,7 +34,7 @@ export default class VolumeControl extends Component {
 
         this.state = {
             showVolume : false,
-            volume     : unsmoothifyVolume(audio.volume, 1 / 4),
+            volume     : unsmoothifyVolume(audio.volume),
             muted      : audio.muted
         };
 
