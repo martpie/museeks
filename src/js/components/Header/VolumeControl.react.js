@@ -5,6 +5,19 @@ import classnames from 'classnames';
 import AppActions from '../../actions/AppActions';
 import Player from '../../lib/player';
 
+
+/*
+|--------------------------------------------------------------------------
+| Volume easing - http://www.dr-lex.be/info-stuff/volumecontrols.html#about
+|--------------------------------------------------------------------------
+*/
+
+const factor = 4;
+
+const smoothifyVolume = (value) => Math.pow(value, factor);
+const unsmoothifyVolume = (value) => Math.pow(value, 1 / factor); // Linearize a smoothed volume value
+
+
 /*
 |--------------------------------------------------------------------------
 | VolumeControl
@@ -21,7 +34,7 @@ export default class VolumeControl extends Component {
 
         this.state = {
             showVolume : false,
-            volume     : audio.volume,
+            volume     : unsmoothifyVolume(audio.volume),
             muted      : audio.muted
         };
 
@@ -48,13 +61,13 @@ export default class VolumeControl extends Component {
                     onMouseLeave={ this.hideVolume }
                     onClick={ this.mute }
             >
-                <Icon name={ this.getVolumeIcon(this.state.volume, this.state.muted) } />
+                <Icon name={ this.getVolumeIcon(unsmoothifyVolume(this.state.volume), this.state.muted) } />
                 <div className={ volumeClasses }>
                     <input type={ 'range' }
                            min={ 0 }
                            max={ 1 }
                            step={ 0.01 }
-                           defaultValue={ this.state.volume, 1 / 4 }
+                           defaultValue={ this.state.volume }
                            ref='volume'
                            onChange={ this.setVolume }
                     />
@@ -64,8 +77,11 @@ export default class VolumeControl extends Component {
     }
 
     setVolume(e) {
-        AppActions.player.setVolume(parseFloat(e.currentTarget.value));
-        this.setState({ volume: e.currentTarget.value });
+
+        const smoothVolume = smoothifyVolume(e.currentTarget.value);
+
+        AppActions.player.setVolume(smoothVolume);
+        this.setState({ volume: smoothVolume });
     }
 
     showVolume() {

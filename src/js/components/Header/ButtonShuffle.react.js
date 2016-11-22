@@ -20,6 +20,8 @@ export default class ButtonShuffle extends Component {
     constructor(props) {
 
         super(props);
+
+        this.toggleShuffle = this.toggleShuffle.bind(this);
     }
 
     render() {
@@ -31,9 +33,14 @@ export default class ButtonShuffle extends Component {
         });
 
         return (
-            <button type='button' className={ buttonClasses } onClick={ AppActions.player.shuffle }>
+            <button type='button' className={ buttonClasses } onClick={ this.toggleShuffle }>
                 <InlineSVG src={ svg } className='icon shuffle' />
             </button>
         );
+    }
+
+    toggleShuffle() {
+
+        AppActions.player.shuffle(!this.props.shuffle);
     }
 }

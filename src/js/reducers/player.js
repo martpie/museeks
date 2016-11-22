@@ -153,7 +153,7 @@ export default (state = {}, payload) => {
 
         case(AppConstants.APP_PLAYER_SHUFFLE): {
 
-            if(!state.shuffle) {
+            if(payload.shuffle) {
 
                 // Let's shuffle that
                 const queueCursor = state.queueCursor;
@@ -205,20 +205,9 @@ export default (state = {}, payload) => {
 
         case(AppConstants.APP_PLAYER_REPEAT): {
 
-            const repeatState = state.repeat;
-            let newRepeatState;
-
-            if(repeatState === 'all') {
-                newRepeatState = 'one';
-            } else if (repeatState === 'one') {
-                newRepeatState = false;
-            } else if (repeatState === false) {
-                newRepeatState = 'all';
-            }
-
             return {
                 ...state,
-                repeat: newRepeatState
+                repeat: payload.repeat
             };
         }
 

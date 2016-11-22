@@ -5,12 +5,19 @@ class Player {
 
     constructor(options) {
 
+        const mergedOptions = {
+            playbackRate: 1,
+            volume: 1,
+            muted: false,
+            ...options
+        };
+
         this.audio = new Audio();
 
-        this.audio.defaultPlaybackRate = options.playbackRate || 1;
-        this.audio.playbackRate = options.playbackRate || 1;
-        this.audio.volume = options.volume || 1;
-        this.audio.muted = options.muted || false;
+        this.audio.defaultPlaybackRate = mergedOptions.playbackRate;
+        this.audio.playbackRate = mergedOptions.playbackRate;
+        this.audio.volume = mergedOptions.volume;
+        this.audio.muted = mergedOptions.muted;
 
         this.threshold = .75;
         this.durationThresholdReached = false;
