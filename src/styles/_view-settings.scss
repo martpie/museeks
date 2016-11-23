@@ -25,32 +25,38 @@
             margin-top: 3px;
         }
 
-        label {
-            padding-left: 28px; // Bootstrap default is 20
+        .setting-section {
 
-            input[type="checkbox"] {
-                -webkit-appearance: none; // reset everything
-                width: 18px;
-                height: 18px;
-                border-radius: 3px;
-                display: inline-block;
-                background-color: $generic-lightgrey;
-                border: 1px solid darken($generic-lightgrey, 20%);
-                outline: none;
-                margin-left: -28px;
+            .checkbox {
 
-                &:checked {
-                    background-color: $main-color;
-                    border: darken($main-color, 20%);
+                label {
+                    padding-left: 28px; // Bootstrap default is 20
 
-                    &:after {
-                        content: '\f00c';
-                        font-family: FontAwesome;
-                        font-size: 14px;
-                        color: white;
-                        position: absolute;
-                        top: 2px;
-                        left: 2px;
+                    input[type="checkbox"] {
+                        -webkit-appearance: none; // reset everything
+                        width: 18px;
+                        height: 18px;
+                        border-radius: 3px;
+                        display: inline-block;
+                        background-color: $generic-lightgrey;
+                        border: 1px solid darken($generic-lightgrey, 20%);
+                        outline: none;
+                        margin-left: -28px;
+
+                        &:checked {
+                            background-color: $main-color;
+                            border: darken($main-color, 20%);
+
+                            &:after {
+                                content: '\f00c';
+                                font-family: FontAwesome;
+                                font-size: 14px;
+                                color: white;
+                                position: absolute;
+                                top: 2px;
+                                left: 2px;
+                            }
+                        }
                     }
                 }
             }

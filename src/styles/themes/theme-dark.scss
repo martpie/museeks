@@ -249,16 +249,22 @@ body.theme-dark {
         .tab-content {
             border-top-color: #1b1b1b;
 
-            label {
-                padding-left: 28px; // Bootstrap default is 20
+            .setting-section {
 
-                input[type="checkbox"] {
-                    background-color: #555;
-                    border: 1px solid darken(#555, 20%);
+                .checkbox {
 
-                    &:checked {
-                        background-color: $main-color;
-                        border: darken($main-color, 20%);
+                    label {
+                        padding-left: 28px; // Bootstrap default is 20
+
+                        input[type="checkbox"] {
+                            background-color: #555;
+                            border: 1px solid darken(#555, 20%);
+
+                            &:checked {
+                                background-color: $main-color;
+                                border: darken($main-color, 20%);
+                            }
+                        }
                     }
                 }
             }
