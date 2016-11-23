@@ -34,11 +34,11 @@ module.exports = {
                 loader: ExtractTextPlugin.extract('css-loader!sass-loader')
             },
             {
-                test: /\.(eot|woff|ttf)([\?]?.*)$/,
+                test: /\.(eot|woff|ttf)([?]?.*)$/,
                 loader: 'url-loader?name=fonts/[name].[ext]',
             },
             {
-                test: /\.(png|jpg)([\?]?.*)$/,
+                test: /\.(png|jpg)([?]?.*)$/,
                 loader: 'file-loader?name=img/[name].[ext]',
                 exclude: /node_modules/
             },
