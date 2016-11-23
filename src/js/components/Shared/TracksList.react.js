@@ -45,72 +45,7 @@ export default class TracksList extends Component {
     }
 
     render() {
-
-        const self         = this,
-            selected       = this.state.selected,
-            tracks         = [...this.props.tracks],
-            trackPlayingId = this.props.trackPlayingId;
-
-        const chunkLength = 20;
-        const tilesToDisplay = 5;
-        const tileHeight = this.rowHeight * chunkLength;
-
-        const tracksChunked = utils.chunkArray(tracks, chunkLength);
-        const tilesScrolled = Math.floor(this.state.scrollTop / tileHeight);
-
-        // TODO (y.solovyov | KeitIG): move to separate method that returns components
-        // Tiles and chunks
-        const trackTiles = tracksChunked.splice(tilesScrolled, tilesToDisplay).map((tracksChunk, indexChunk) => {
-
-            const list = tracksChunk.map((track, index) => {
-
-                let playingIndicator = undefined;
-
-                if(trackPlayingId === track._id) {
-                    playingIndicator = <PlayingIndicator state={ Player.getAudio().paused ? 'pause' : 'play' } />;
-                }
-
-                return(
-                    <TrackRow
-                        selected={ selected.includes(track._id) }
-                        trackId={ track._id }
-                        key={ index }
-                        index={ (tilesScrolled + indexChunk) * chunkLength + index }
-                        onMouseDown={ self.selectTrack }
-                        onContextMenu={ self.showContextMenu }
-                    >
-                        <div className='cell cell-track-playing text-center'>
-                            { playingIndicator }
-                        </div>
-                        <div className='cell cell-track'>
-                            { track.title }
-                        </div>
-                        <div className='cell cell-duration'>
-                            { utils.parseDuration(track.duration) }
-                        </div>
-                        <div className='cell cell-artist'>
-                            { track.artist[0] }
-                        </div>
-                        <div className='cell cell-album'>
-                            { track.album }
-                        </div>
-                        <div className='cell cell-genre'>
-                            { track.genre.join(', ') }
-                        </div>
-                    </TrackRow>
-                );
-            });
-
-            const tracksListTileStyles = {
-                transform: `translate3d(0, ${(((tilesScrolled * this.rowHeight * chunkLength) + (indexChunk * this.rowHeight * chunkLength)))}px, 0)`
-            };
-
-            return (
-                <div className='tracks-list-tile' key={ indexChunk } style={ tracksListTileStyles }>
-                    { list }
-                </div>
-            );
-        });
+        const tracks = [...this.props.tracks];
 
         // TODO (y.solovyov | KeitIG): TrackListHeader component?
         return (
@@ -126,7 +61,7 @@ export default class TracksList extends Component {
                 </div>
                 <div className='tracks-list-body' onScroll={ this.scrollTracksList }>
                     <div className='tracks-list-tiles' style={ { height : tracks.length * this.rowHeight } }>
-                        { trackTiles }
+                        { this._buildTrackTiles() }
                     </div>
                 </div>
             </div>
@@ -294,6 +229,72 @@ export default class TracksList extends Component {
                 this._onEnter(firstSelectedTrackIdx, tracks);
                 break;
         }
+    }
+
+    _buildTrackTiles() {
+        const self         = this,
+            selected       = this.state.selected,
+            tracks         = [...this.props.tracks],
+            trackPlayingId = this.props.trackPlayingId;
+
+        const chunkLength = 20;
+        const tilesToDisplay = 5;
+        const tileHeight = this.rowHeight * chunkLength;
+
+        const tracksChunked = utils.chunkArray(tracks, chunkLength);
+        const tilesScrolled = Math.floor(this.state.scrollTop / tileHeight);
+
+        return tracksChunked.splice(tilesScrolled, tilesToDisplay).map((tracksChunk, indexChunk) => {
+
+            const list = tracksChunk.map((track, index) => {
+
+                let playingIndicator = undefined;
+
+                if(trackPlayingId === track._id) {
+                    playingIndicator = <PlayingIndicator state={ Player.getAudio().paused ? 'pause' : 'play' } />;
+                }
+
+                return(
+                    <TrackRow
+                        selected={ selected.includes(track._id) }
+                        trackId={ track._id }
+                        key={ index }
+                        index={ (tilesScrolled + indexChunk) * chunkLength + index }
+                        onMouseDown={ self.selectTrack }
+                        onContextMenu={ self.showContextMenu }
+                    >
+                        <div className='cell cell-track-playing text-center'>
+                            { playingIndicator }
+                        </div>
+                        <div className='cell cell-track'>
+                            { track.title }
+                        </div>
+                        <div className='cell cell-duration'>
+                            { utils.parseDuration(track.duration) }
+                        </div>
+                        <div className='cell cell-artist'>
+                            { track.artist[0] }
+                        </div>
+                        <div className='cell cell-album'>
+                            { track.album }
+                        </div>
+                        <div className='cell cell-genre'>
+                            { track.genre.join(', ') }
+                        </div>
+                    </TrackRow>
+                );
+            });
+
+            const tracksListTileStyles = {
+                transform: `translate3d(0, ${(((tilesScrolled * this.rowHeight * chunkLength) + (indexChunk * this.rowHeight * chunkLength)))}px, 0)`
+            };
+
+            return (
+                <div className='tracks-list-tile' key={ indexChunk } style={ tracksListTileStyles }>
+                    { list }
+                </div>
+            );
+        });
     }
 
     _toggleSelectionById(id) {
