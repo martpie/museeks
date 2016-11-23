@@ -124,86 +124,12 @@ export default class TracksList extends Component {
     }
 
     selectTrack(e, id, index) {
-
-        const self   = this;
-        const tracks = this.props.tracks;
-
         if(e.button === 0 || (e.button === 2 && !this.state.selected.includes(id))) {
-            if(e.ctrlKey) { // add/remove one track in selected tracks
-
+            if(e.ctrlKey) {
                 this._toggleSelectionById(id);
-
-            } else if (e.shiftKey) { // add multiple tracks in selected tracks
-
-                const selected = this.state.selected;
-
-                switch(selected.length) {
-                    case 0: {
-                        selected.push(id);
-                        this.setState({ selected });
-                        break;
-                    }
-                    case 1: {
-
-                        const onlySelected = selected[0];
-                        let onlySelectedIndex;
-
-                        for(let i = 0, length = tracks.length; i < length; i++) { // STH wrong here
-                            if(tracks[i]._id === onlySelected) {
-                                onlySelectedIndex = i;
-                                break;
-                            }
-                        }
-
-                        if(index < onlySelectedIndex) {
-                            for(let i = 1; i <= Math.abs(index - onlySelectedIndex); i++) {
-                                selected.push(tracks[onlySelectedIndex - i]._id);
-                            }
-                        } else if(index > onlySelectedIndex) {
-                            for(let i = 1; i <= Math.abs(index - onlySelectedIndex); i++) {
-                                selected.push(tracks[onlySelectedIndex + i]._id);
-                            }
-                        }
-
-                        self.setState({ selected });
-                        break;
-                    }
-                    default: {
-                        const selectedInt = [];
-
-                        for(let i = 0, length = tracks.length; i < length; i++) {
-                            if(selected.includes(tracks[i]._id)) {
-                                selectedInt.push(i);
-                            }
-                        }
-
-                        let base;
-                        const min = Math.min(...selectedInt);
-                        const max = Math.max(...selectedInt);
-
-                        if(index < min) {
-                            base = max;
-                        } else {
-                            base = min;
-                        }
-
-                        const newSelected = [];
-
-                        if(index < min) {
-                            for(let i = 0; i <= Math.abs(index - base); i++) {
-                                newSelected.push(tracks[base - i]._id);
-                            }
-                        } else if(index > max) {
-                            for(let i = 0; i <= Math.abs(index - base); i++) {
-                                newSelected.push(tracks[base + i]._id);
-                            }
-                        }
-
-                        self.setState({ selected : newSelected });
-                        break;
-                    }
-                }
-            } else { // simple select
+            } else if (e.shiftKey) {
+                this._multiSelect(e, id, index);
+            } else {
                 const selected = [id];
                 this.setState({ selected });
             }
@@ -311,6 +237,79 @@ export default class TracksList extends Component {
 
         selected = utils.simpleSort(selected, 'asc');
         this.setState({ selected });
+    }
+
+    _multiSelect(e, id, index) {
+        const self   = this;
+        const tracks = this.props.tracks;
+        const selected = this.state.selected;
+
+        switch(selected.length) {
+            case 0: {
+                selected.push(id);
+                this.setState({ selected });
+                break;
+            }
+            case 1: {
+
+                const onlySelected = selected[0];
+                let onlySelectedIndex;
+
+                for(let i = 0, length = tracks.length; i < length; i++) { // STH wrong here
+                    if(tracks[i]._id === onlySelected) {
+                        onlySelectedIndex = i;
+                        break;
+                    }
+                }
+
+                if(index < onlySelectedIndex) {
+                    for(let i = 1; i <= Math.abs(index - onlySelectedIndex); i++) {
+                        selected.push(tracks[onlySelectedIndex - i]._id);
+                    }
+                } else if(index > onlySelectedIndex) {
+                    for(let i = 1; i <= Math.abs(index - onlySelectedIndex); i++) {
+                        selected.push(tracks[onlySelectedIndex + i]._id);
+                    }
+                }
+
+                self.setState({ selected });
+                break;
+            }
+            default: {
+                const selectedInt = [];
+
+                for(let i = 0, length = tracks.length; i < length; i++) {
+                    if(selected.includes(tracks[i]._id)) {
+                        selectedInt.push(i);
+                    }
+                }
+
+                let base;
+                const min = Math.min(...selectedInt);
+                const max = Math.max(...selectedInt);
+
+                if(index < min) {
+                    base = max;
+                } else {
+                    base = min;
+                }
+
+                const newSelected = [];
+
+                if(index < min) {
+                    for(let i = 0; i <= Math.abs(index - base); i++) {
+                        newSelected.push(tracks[base - i]._id);
+                    }
+                } else if(index > max) {
+                    for(let i = 0; i <= Math.abs(index - base); i++) {
+                        newSelected.push(tracks[base + i]._id);
+                    }
+                }
+
+                self.setState({ selected : newSelected });
+                break;
+            }
+        }
     }
 
     _onUp(i, tracks) {
