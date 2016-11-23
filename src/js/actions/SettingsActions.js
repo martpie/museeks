@@ -84,13 +84,14 @@ const toggleAutoUpdateChecker = (value) => {
     });
 };
 
-const checkForUpdate = (options = {}) => {
+const checkForUpdate = async (options = {}) => {
 
     const currentVersion = app.version;
 
-    fetch('https://api.github.com/repos/KeitIG/museeks/releases').then((res) => {
-        return res.json();
-    }).then((releases) => {
+    try {
+        const response = await fetch('https://api.github.com/repos/KeitIG/museeks/releases');
+        const releases = await response.json();
+
         const newRelease = releases.find((release) => {
             return semver.valid(release.tag_name) !== null && semver.gt(release.tag_name, currentVersion);
         });
@@ -105,9 +106,10 @@ const checkForUpdate = (options = {}) => {
         if (message) {
             AppActions.notifications.add('success', message);
         }
-    }).catch(() => {
+
+    } catch (e) {
         if(!options.silentFail) AppActions.notifications.add('danger', 'An error occurred while checking updates.');
-    });
+    }
 };
 
 const toggleNativeFrame = (value) => {
