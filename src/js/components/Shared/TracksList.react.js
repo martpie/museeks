@@ -291,23 +291,19 @@ export default class TracksList extends Component {
         const selected = this.state.selected,
             tracks     = this.props.tracks;
 
-        const length = tracks.length;
-        let i;
-        for(i = 0; i < length; i++) {
-            if(selected.includes(tracks[i]._id)) break;
-        }
+        const firstSelectedTrackIdx = tracks.findIndex((track) => selected.includes(track._id));
 
         switch(e.keyCode) {
             case 38: // up
-                this._onUp(i, tracks);
+                this._onUp(firstSelectedTrackIdx, tracks);
                 break;
 
             case 40: // down
-                this._onDown(i, tracks);
+                this._onDown(firstSelectedTrackIdx, tracks);
                 break;
 
             case 13: // enter
-                this._onEnter(i, tracks);
+                this._onEnter(firstSelectedTrackIdx, tracks);
                 break;
         }
     }
