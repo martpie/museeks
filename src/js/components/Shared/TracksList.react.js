@@ -288,57 +288,58 @@ export default class TracksList extends Component {
     }
 
     onKey(e) {
-
         const selected = this.state.selected,
             tracks     = this.props.tracks;
 
-        let i = 0;
+        const length = tracks.length;
+        let i;
+        for(i = 0; i < length; i++) {
+            if(selected.includes(tracks[i]._id)) break;
+        }
 
-        switch(e.keyCode) { // Todo: fix when node not in dom
+        switch(e.keyCode) {
             case 38: // up
-
-                for(let length = tracks.length; i < length; i ++) {
-                    if(selected.includes(tracks[i]._id)) break;
-                }
-
-                if(i - 1 >= 0) {
-                    this.setState({ selected : tracks[i - 1]._id }, () => {
-
-                        const container = document.querySelector('.tracks-list-container .tracks-list-body');
-                        const nodeOffsetTop = (i - 1) * this.rowHeight;
-
-                        if(container.scrollTop > nodeOffsetTop) container.scrollTop = nodeOffsetTop;
-                    });
-                }
+                this._onUp(i, tracks);
                 break;
 
             case 40: // down
-
-                for(let length = tracks.length; i < length; i ++) {
-                    if(selected.includes(tracks[i]._id)) break;
-                }
-
-                if(i + 1 < tracks.length) {
-                    this.setState({ selected : tracks[i + 1]._id }, () => {
-
-                        const container = document.querySelector('.tracks-list-container .tracks-list-body');
-                        const nodeOffsetTop = (i + 1) * this.rowHeight;
-
-                        if(container.scrollTop + container.offsetHeight <= nodeOffsetTop) {
-                            container.scrollTop = nodeOffsetTop - container.offsetHeight + this.rowHeight;
-                        }
-                    });
-                }
+                this._onDown(i, tracks);
                 break;
 
             case 13: // enter
-
-                for(let length = tracks.length; i < length; i++) {
-                    if(selected.includes(tracks[i]._id)) break;
-                }
-                if(i !== undefined) AppActions.library.selectAndPlay(tracks[i]._id);
+                this._onEnter(i, tracks);
                 break;
         }
+    }
+
+    _onUp(i, tracks) {
+        if(i - 1 >= 0) {
+            this.setState({ selected : tracks[i - 1]._id }, () => {
+
+                const container = document.querySelector('.tracks-list-container .tracks-list-body');
+                const nodeOffsetTop = (i - 1) * this.rowHeight;
+
+                if(container.scrollTop > nodeOffsetTop) container.scrollTop = nodeOffsetTop;
+            });
+        }
+    }
+
+    _onDown(i, tracks) {
+        if(i + 1 < tracks.length) {
+            this.setState({ selected : tracks[i + 1]._id }, () => {
+
+                const container = document.querySelector('.tracks-list-container .tracks-list-body');
+                const nodeOffsetTop = (i + 1) * this.rowHeight;
+
+                if(container.scrollTop + container.offsetHeight <= nodeOffsetTop) {
+                    container.scrollTop = nodeOffsetTop - container.offsetHeight + this.rowHeight;
+                }
+            });
+        }
+    }
+
+    _onEnter(i, tracks) {
+        if(i !== undefined) AppActions.library.selectAndPlay(tracks[i]._id);
     }
 
     showContextMenu(e, index) {
