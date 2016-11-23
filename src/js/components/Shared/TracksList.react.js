@@ -189,7 +189,7 @@ export default class TracksList extends Component {
                 let playingIndicator = undefined;
 
                 if(trackPlayingId === track._id) {
-                    playingIndicator = <PlayingIndicator state={ Player.getAudio().paused ? 'pause' : 'play' } />;
+                    playingIndicator = <PlayingIndicator state={ this._pausePlayState() } />;
                 }
 
                 return(
@@ -233,6 +233,10 @@ export default class TracksList extends Component {
                 </div>
             );
         });
+    }
+
+    _pausePlayState() {
+        Player.getAudio().paused ? 'pause' : 'play';
     }
 
     _toggleSelectionById(id) {
