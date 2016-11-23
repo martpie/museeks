@@ -186,6 +186,8 @@ export default class TracksList extends Component {
 
             const list = tracksChunk.map((track, index) => {
 
+                const trackRowIndex = (tilesScrolled + indexChunk) * chunkLength + index;
+
                 let playingIndicator = undefined;
 
                 if(trackPlayingId === track._id) {
@@ -197,7 +199,7 @@ export default class TracksList extends Component {
                         selected={ selected.includes(track._id) }
                         trackId={ track._id }
                         key={ index }
-                        index={ (tilesScrolled + indexChunk) * chunkLength + index }
+                        index={ trackRowIndex }
                         onMouseDown={ self.selectTrack }
                         onContextMenu={ self.showContextMenu }
                     >
