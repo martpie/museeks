@@ -194,21 +194,9 @@ export default class TracksList extends Component {
         const tracks = this.props.tracks;
 
         if(e.button === 0 || (e.button === 2 && !this.state.selected.includes(id))) {
-            if(e.ctrlKey) { // add one track in selected tracks
+            if(e.ctrlKey) { // add/remove one track in selected tracks
 
-                let selected = [...this.state.selected];
-
-                if(selected.includes(id)) {
-                    // remove track
-                    selected.splice(selected.indexOf(id), 1);
-
-                } else {
-                    // add track
-                    selected.push(id);
-                }
-
-                selected = utils.simpleSort(selected, 'asc');
-                this.setState({ selected });
+                this._toggleSelectionById(id);
 
             } else if (e.shiftKey) { // add multiple tracks in selected tracks
 
@@ -306,6 +294,22 @@ export default class TracksList extends Component {
                 this._onEnter(firstSelectedTrackIdx, tracks);
                 break;
         }
+    }
+
+    _toggleSelectionById(id) {
+        let selected = [...this.state.selected];
+
+        if(selected.includes(id)) {
+            // remove track
+            selected.splice(selected.indexOf(id), 1);
+
+        } else {
+            // add track
+            selected.push(id);
+        }
+
+        selected = utils.simpleSort(selected, 'asc');
+        this.setState({ selected });
     }
 
     _onUp(i, tracks) {
