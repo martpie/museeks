@@ -124,7 +124,7 @@ export default class TracksList extends Component {
     }
 
     selectTrack(e, id, index) {
-        if(e.button === 0 || (e.button === 2 && !this.state.selected.includes(id))) {
+        if(this._isLeftClick(e) || (this._isRightClick(e) && this._isSelectableTrack(id))) {
             if(e.ctrlKey) {
                 this._toggleSelectionById(id);
             } else if (e.shiftKey) {
@@ -155,6 +155,18 @@ export default class TracksList extends Component {
                 this._onEnter(firstSelectedTrackIdx, tracks);
                 break;
         }
+    }
+
+    _isReftClick(e) {
+        e.button === 0;
+    }
+
+    _isRightClick(e) {
+        e.button === 2;
+    }
+
+    _isSelectableTrack(id) {
+        !this.state.selected.includes(id);
     }
 
     _buildTrackTiles() {
