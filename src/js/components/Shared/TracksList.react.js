@@ -225,8 +225,10 @@ export default class TracksList extends Component {
                 );
             });
 
+            const translationDistance = (tilesScrolled * this.rowHeight * chunkLength) +
+                                        (indexChunk * this.rowHeight * chunkLength);
             const tracksListTileStyles = {
-                transform: `translate3d(0, ${(((tilesScrolled * this.rowHeight * chunkLength) + (indexChunk * this.rowHeight * chunkLength)))}px, 0)`
+                transform: `translate3d(0, ${translationDistance}px, 0)`
             };
 
             return (
