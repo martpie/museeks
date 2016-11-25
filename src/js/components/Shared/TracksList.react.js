@@ -140,7 +140,9 @@ export default class TracksList extends Component {
         const selected = this.state.selected,
             tracks     = this.props.tracks;
 
-        const firstSelectedTrackIdx = tracks.findIndex((track) => selected.includes(track._id));
+        const firstSelectedTrackIdx = tracks.findIndex((track) => {
+            selected.includes(track._id);
+        });
 
         switch(e.keyCode) {
             case 38: // up
@@ -157,16 +159,16 @@ export default class TracksList extends Component {
         }
     }
 
-    _isReftClick(e) {
-        e.button === 0;
+    _isLeftClick(e) {
+        return e.button === 0;
     }
 
     _isRightClick(e) {
-        e.button === 2;
+        return e.button === 2;
     }
 
     _isSelectableTrack(id) {
-        !this.state.selected.includes(id);
+        return !this.state.selected.includes(id);
     }
 
     _buildTrackTiles() {
@@ -273,14 +275,8 @@ export default class TracksList extends Component {
             case 1: {
 
                 const onlySelected = selected[0];
-                let onlySelectedIndex;
 
-                for(let i = 0, length = tracks.length; i < length; i++) { // STH wrong here
-                    if(tracks[i]._id === onlySelected) {
-                        onlySelectedIndex = i;
-                        break;
-                    }
-                }
+                const onlySelectedIndex = tracks.findIndex((track) => track._id === onlySelected);
 
                 if(index < onlySelectedIndex) {
                     for(let i = 1; i <= Math.abs(index - onlySelectedIndex); i++) {
