@@ -13,6 +13,12 @@ class IpcManager {
         this.win = win;
         this.contextMenu;
 
+        this.songDetails = [
+            {
+                label: 'Not playing',
+                enabled: false
+            }
+        ];
 
         this.playToggle = [
             {
@@ -80,15 +86,21 @@ class IpcManager {
             this.hide();
         });
 
-        ipcMain.on('playerAction', (event, reply) => {
+        ipcMain.on('playerAction', (event, reply, param1) => {
 
             switch(reply) {
                 case 'play':
-                    this.tray.setContextMenu(Menu.buildFromTemplate([...this.pauseToggle, ...this.menu]));
+                    this._setContextMenu('play');
                     break;
                 case 'pause':
-                    this.tray.setContextMenu(Menu.buildFromTemplate([...this.playToggle, ...this.menu]));
+                    this._setContextMenu('pause');
                     break;
+                case 'trackStart': {
+                    const trackMetadata = param1;
+                    this.songDetails[0].label = this._trayString(trackMetadata);
+                    this._setContextMenu('play');
+                    break;
+                }
             }
         });
     }
@@ -113,13 +125,24 @@ class IpcManager {
             });
         }
 
-        this.tray.setContextMenu(Menu.buildFromTemplate([...this.playToggle, ...this.menu]));
+        this._setContextMenu('play');
     }
 
     hide() {
 
         this.tray.destroy();
     }
+
+    _setContextMenu(state) {
+        const playPauseItem = state === 'pause' ? this.pauseToggle : this.playToggle;
+        this.tray.setContextMenu(Menu.buildFromTemplate([...this.songDetails, ...playPauseItem, ...this.menu]));
+    }
+
+
+    _trayString(metadata) {
+        return `${metadata.title} - ${metadata.artist} - ${metadata.album}`;
+    }
+
 }
 
 module.exports = IpcManager;

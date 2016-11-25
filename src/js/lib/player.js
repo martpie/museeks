@@ -1,5 +1,5 @@
 import app from './app';
-
+import utils from '../utils/utils';
 
 class Player {
 
@@ -71,6 +71,11 @@ class Player {
             this.durationThresholdReached = true;
             return this.durationThresholdReached;
         }
+    }
+
+    getCurrentTrackMetadata(cb) {
+        const path = decodeURI(this.getAudio().src).replace('file://', '');
+        utils.getMetadata(path, cb);
     }
 }
 
