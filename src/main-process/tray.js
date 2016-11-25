@@ -17,6 +17,9 @@ class IpcManager {
             {
                 label: 'Not playing',
                 enabled: false
+            },
+            {
+                type: 'separator'
             }
         ];
 
@@ -97,7 +100,7 @@ class IpcManager {
                     break;
                 case 'trackStart': {
                     const trackMetadata = param1;
-                    this.songDetails[0].label = this._trayString(trackMetadata);
+                    this._updateTrayMetadata(trackMetadata);
                     this._setContextMenu('play');
                     break;
                 }
@@ -139,8 +142,27 @@ class IpcManager {
     }
 
 
-    _trayString(metadata) {
-        return `${metadata.title} - ${metadata.artist} - ${metadata.album}`;
+    _updateTrayMetadata(metadata) {
+        this.songDetails = [
+            {
+                label: `Song: ${metadata.title}`,
+                enabled: false
+            },
+            {
+                label: `Artist: ${metadata.artist}`,
+                enabled: false
+            },
+            {
+                label: `Album: ${metadata.album}`,
+                enabled: false
+            },
+            {
+                type: 'separator'
+            }
+        ];
+        // this.songDetails[0].label = this._trayString(metadata);
+
+        // return `${metadata.title} - ${metadata.artist} - ${metadata.album}`;
     }
 
 }
