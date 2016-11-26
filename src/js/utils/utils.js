@@ -181,7 +181,7 @@ const getDefaultMetadata = () => {
             no: 0,
             of: 0
         },
-        duration     : '00:00',
+        duration     : 0,
         genre        : [],
         loweredMetas : {},
         path         : '',
@@ -206,6 +206,8 @@ const getLoweredMeta = (metadata) => {
 };
 
 const getWavMetadata = async (track) => {
+    const defaultMetadata = getDefaultMetadata();
+
     let audioDuration = 0;
     try {
         audioDuration = await getAudioDurationAsync(track);
@@ -214,7 +216,6 @@ const getWavMetadata = async (track) => {
         audioDuration = 0;
     }
 
-    const defaultMetadata = getDefaultMetadata();
     const metadata = {
         ...defaultMetadata,
         duration: audioDuration,
@@ -227,15 +228,17 @@ const getWavMetadata = async (track) => {
 };
 
 const getMusicMetadata = async (track) => {
+    const defaultMetadata = getDefaultMetadata();
+
     let data;
     try {
         const stream = fs.createReadStream(track);
         data = await musicmetadataAsync(stream, { duration: true });
     } catch (err) {
+        data = defaultMetadata;
         console.warn(`An error occured while reading ${track} id3 tags: ${err}`);
     }
 
-    const defaultMetadata = getDefaultMetadata();
     const metadata = {
         ...defaultMetadata,
         ...data,
