@@ -93,15 +93,15 @@ class IpcManager {
 
             switch(reply) {
                 case 'play':
-                    this._setContextMenu('play');
+                    this.setContextMenu('play');
                     break;
                 case 'pause':
-                    this._setContextMenu('pause');
+                    this.setContextMenu('pause');
                     break;
                 case 'trackStart': {
                     const trackMetadata = param1;
-                    this._updateTrayMetadata(trackMetadata);
-                    this._setContextMenu('play');
+                    this.updateTrayMetadata(trackMetadata);
+                    this.setContextMenu('play');
                     break;
                 }
             }
@@ -128,7 +128,7 @@ class IpcManager {
             });
         }
 
-        this._setContextMenu('play');
+        this.setContextMenu('play');
     }
 
     hide() {
@@ -136,35 +136,32 @@ class IpcManager {
         this.tray.destroy();
     }
 
-    _setContextMenu(state) {
+    setContextMenu(state) {
         const playPauseItem = state === 'pause' ? this.pauseToggle : this.playToggle;
-        this.tray.setContextMenu(Menu.buildFromTemplate([...this.songDetails, ...playPauseItem, ...this.menu]));
+        const menuTemplate = [...this.songDetails, ...playPauseItem, ...this.menu];
+        this.tray.setContextMenu(Menu.buildFromTemplate(menuTemplate));
     }
 
 
-    _updateTrayMetadata(metadata) {
+    updateTrayMetadata(metadata) {
         this.songDetails = [
             {
-                label: `Song: ${metadata.title}`,
+                label: `${metadata.title}`,
                 enabled: false
             },
             {
-                label: `Artist: ${metadata.artist}`,
+                label: `by ${metadata.artist}`,
                 enabled: false
             },
             {
-                label: `Album: ${metadata.album}`,
+                label: `on ${metadata.album}`,
                 enabled: false
             },
             {
                 type: 'separator'
             }
         ];
-        // this.songDetails[0].label = this._trayString(metadata);
-
-        // return `${metadata.title} - ${metadata.artist} - ${metadata.album}`;
     }
-
 }
 
 module.exports = IpcManager;
