@@ -122,12 +122,6 @@ const refresh = () => {
     const folders = app.config.get('musicFolders');
     const fsConcurrency = 32;
 
-    const getMetadataAsync = function(track) {
-        return new Promise((resolve) => {
-            utils.getMetadata(track, resolve);
-        });
-    };
-
     // Start the big thing
     app.models.Track.removeAsync({}, { multi: true }).then(() => {
         return Promise.map(folders, (folder) => {
@@ -153,7 +147,7 @@ const refresh = () => {
         return Promise.map(supportedFiles, (filePath) => {
             return app.models.Track.findAsync({ path: filePath }).then((docs) => {
                 if (docs.length === 0) {
-                    return getMetadataAsync(filePath);
+                    return utils.getMetadata(filePath);
                 }
                 return docs[0];
             }).then((track) => {
@@ -173,7 +167,7 @@ const refresh = () => {
 };
 
 const fetchCover = (path) => {
-    utils.fetchCover(path, (cover) => {
+    utils.fetchCover(path).then((cover) => {
         store.dispatch({
             type : AppConstants.APP_LIBRARY_FETCHED_COVER,
             cover

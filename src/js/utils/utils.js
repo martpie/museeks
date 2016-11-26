@@ -4,355 +4,329 @@
 |--------------------------------------------------------------------------
 */
 
-import path from 'path';
-import fs   from 'fs';
-import mmd  from 'musicmetadata';
-import globby from 'globby';
+import path    from 'path';
+import fs      from 'fs';
+import mmd     from 'musicmetadata';
+import globby  from 'globby';
+import Promise from 'bluebird';
 
+const musicmetadataAsync = Promise.promisify(mmd);
 
-const utils = {
+/**
+ * Parse an int to a more readable string
+ *
+ * @param int duration
+ * @return string
+ */
 
-    /**
-     * Parse an int to a more readable string
-     *
-     * @param int duration
-     * @return string
-     */
-    parseDuration: function (duration) {
+const parseDuration = (duration) => {
+    if(duration !== null && duration !== undefined) {
+        let hours   = parseInt(duration / 3600);
+        let minutes = parseInt(duration / 60) % 60;
+        let seconds = parseInt(duration % 60);
 
-        if(duration !== null && duration !== undefined) {
-
-            let hours   = parseInt(duration / 3600);
-            let minutes = parseInt(duration / 60) % 60;
-            let seconds = parseInt(duration % 60);
-
-            hours = hours < 10 ? `0${hours}` : hours;
-            minutes = minutes < 10 ? `0${minutes}` : minutes;
-            seconds = seconds < 10 ? `0${seconds}` : seconds;
-            let result = hours > 0 ? `${hours}:` : '';
-            result += `${minutes}:${seconds}`;
-
-            return result;
-        }
-
-        return '00:00';
-    },
-
-    /**
-     * Format a list of tracks to a nice status
-     *
-     * @param array tracks
-     * @return string
-     */
-    getStatus: function(tracks) {
-        const status = this.parseDuration(tracks.map((d) => d.duration).reduce((a, b) => a + b, 0));
-        return `${tracks.length} tracks, ${status}`;
-    },
-
-    /**
-     * Parse an URI, encoding some characters
-     *
-     * @param string uri
-     * @return string
-     */
-    parseUri: function(uri) {
-        const root = process.platform === 'win32' ? '' : path.parse(uri).root;
-        const location = uri
-            .split(path.sep)
-            .map((d, i) => {
-                return i === 0 ? d : encodeURIComponent(d);
-            })
-            .reduce((a, b) => path.join(a, b));
-        return `file://${root}${location}`;
-    },
-
-    /**
-     * Parse data to be used by img/background-image with base64
-     *
-     * @param string format of the image
-     * @param string data base64 string
-     * @return string
-     */
-    parseBase64: function(format, data) {
-
-        return `data:image/${format};base64,${data}`;
-    },
-
-    /**
-     * Sort an array of int by ASC or DESC, then remove all duplicates
-     *
-     * @param array  array of int to be sorted
-     * @param string 'asc' or 'desc' depending of the sort needed
-     * @return array
-     */
-    simpleSort: function(array, sorting) {
-
-        if(sorting === 'asc') {
-            array.sort((a, b) => {
-                return a - b;
-            });
-        } else if (sorting === 'desc') {
-            array.sort((a, b) => {
-                return b - a;
-            });
-        }
-
-
-        const result = [];
-        array.forEach((item) => {
-            if(!result.includes(item)) result.push(item);
-        });
+        hours = hours < 10 ? `0${hours}` : hours;
+        minutes = minutes < 10 ? `0${minutes}` : minutes;
+        seconds = seconds < 10 ? `0${seconds}` : seconds;
+        let result = hours > 0 ? `${hours}:` : '';
+        result += `${minutes}:${seconds}`;
 
         return result;
-    },
+    }
 
-    /**
-     * Strip accent from String. From https://jsperf.com/strip-accents
-     *
-     * @param String str
-     * @return String
-     */
-    stripAccents(str) {
+    return '00:00';
+};
 
-        const accents = 'ÀÁÂÃÄÅàáâãäåÒÓÔÕÕÖØòóôõöøÈÉÊËèéêëðÇçÐÌÍÎÏìíîïÙÚÛÜùúûüÑñŠšŸÿýŽž';
-        const fixes = 'AAAAAAaaaaaaOOOOOOOooooooEEEEeeeeeCcDIIIIiiiiUUUUuuuuNnSsYyyZz';
-        const split = accents.split('').join('|');
-        const reg = new RegExp(`(${split})`, 'g');
+/**
+ * Format a list of tracks to a nice status
+ *
+ * @param array tracks
+ * @return string
+ */
+const getStatus = (tracks) => {
+    const status = parseDuration(tracks.map((d) => d.duration).reduce((a, b) => a + b, 0));
+    return `${tracks.length} tracks, ${status}`;
+};
 
-        function replacement(a) {
-            return fixes[accents.indexOf(a)] || '';
-        }
+/**
+ * Parse an URI, encoding some characters
+ *
+ * @param string uri
+ * @return string
+ */
+const parseUri = (uri) => {
+    const root = process.platform === 'win32' ? '' : path.parse(uri).root;
+    const location = uri
+        .split(path.sep)
+        .map((d, i) => {
+            return i === 0 ? d : encodeURIComponent(d);
+        })
+        .reduce((a, b) => path.join(a, b));
+    return `file://${root}${location}`;
+};
 
-        return str.replace(reg, replacement).toLowerCase();
-    },
+/**
+ * Parse data to be used by img/background-image with base64
+ *
+ * @param string format of the image
+ * @param string data base64 string
+ * @return string
+ */
 
-    /**
-     * Remove duplicates (realpath) and useless children folders
-     *
-     * @param array the array of folders path
-     * @return array
-     */
-    removeUselessFolders: function(folders) {
+const parseBase64 = (format, data) => {
+    return `data:image/${format};base64,${data}`;
+};
 
-        // Remove duplicates
-        let filteredFolders = folders.filter((elem, index) => {
-            return folders.indexOf(elem) === index;
+/**
+ * Sort an array of int by ASC or DESC, then remove all duplicates
+ *
+ * @param array  array of int to be sorted
+ * @param string 'asc' or 'desc' depending of the sort needed
+ * @return array
+ */
+const simpleSort = (array, sorting) => {
+
+    if(sorting === 'asc') {
+        array.sort((a, b) => {
+            return a - b;
         });
-
-        const foldersToBeRemoved = [];
-
-        filteredFolders.forEach((folder, i) => {
-            filteredFolders.forEach((subfolder, j) => {
-                if(subfolder.includes(folder) && i !== j && !foldersToBeRemoved.includes(folder)) {
-                    foldersToBeRemoved.push(subfolder);
-                }
-            });
+    } else if (sorting === 'desc') {
+        array.sort((a, b) => {
+            return b - a;
         });
+    }
 
-        filteredFolders = filteredFolders.filter((elem) => {
-            return !foldersToBeRemoved.includes(elem);
-        });
 
-        return filteredFolders;
-    },
+    const result = [];
+    array.forEach((item) => {
+        if(!result.includes(item)) result.push(item);
+    });
 
-    /**
-     * Cut an array in smaller chunks
-     *
-     * @param array the array to be chunked
-     * @param int the length of each chunk
-     * @return array
-     */
-    chunkArray: function(array, chunkLength) {
+    return result;
+};
 
-        const chunks = [];
+/**
+ * Strip accent from String. From https://jsperf.com/strip-accents
+ *
+ * @param String str
+ * @return String
+ */
+const stripAccents = (str) => {
+    const accents = 'ÀÁÂÃÄÅàáâãäåÒÓÔÕÕÖØòóôõöøÈÉÊËèéêëðÇçÐÌÍÎÏìíîïÙÚÛÜùúûüÑñŠšŸÿýŽž';
+    const fixes = 'AAAAAAaaaaaaOOOOOOOooooooEEEEeeeeeCcDIIIIiiiiUUUUuuuuNnSsYyyZz';
+    const split = accents.split('').join('|');
+    const reg = new RegExp(`(${split})`, 'g');
 
-        for(let i = 0, length = array.length; i < length; i += chunkLength) {
-            chunks.push(array.slice(i, i + chunkLength));
-        }
+    function replacement(a) {
+        return fixes[accents.indexOf(a)] || '';
+    }
 
-        return chunks;
-    },
+    return str.replace(reg, replacement).toLowerCase();
+};
 
-    /**
-     * Get a file metadata
-     *
-     * @param path (string)
-     * @return object
-     *
-     */
-    getMetadata: function(track, callback) {
+/**
+ * Remove duplicates (realpath) and useless children folders
+ *
+ * @param array the array of folders path
+ * @return array
+ */
+const removeUselessFolders = (folders) => {
 
-        /* output should be something like this:
-            {
-                album        : null,
-                albumartist  : null,
-                artist       : null,
-                disk         : null,
-                duration     : null,
-                genre        : null,
-                loweredMetas : null,
-                path         : null,
-                playCount    : null,
-                title        : null,
-                track        : null,
-                type         : null,
-                year         : null
+    // Remove duplicates
+    let filteredFolders = folders.filter((elem, index) => {
+        return folders.indexOf(elem) === index;
+    });
+
+    const foldersToBeRemoved = [];
+
+    filteredFolders.forEach((folder, i) => {
+        filteredFolders.forEach((subfolder, j) => {
+            if(subfolder.includes(folder) && i !== j && !foldersToBeRemoved.includes(folder)) {
+                foldersToBeRemoved.push(subfolder);
             }
-        */
+        });
+    });
 
-        if(path.extname(track) === '.wav') { // If WAV
+    filteredFolders = filteredFolders.filter((elem) => {
+        return !foldersToBeRemoved.includes(elem);
+    });
 
-            utils.getAudioDuration(track, (err, audioDuration) => {
+    return filteredFolders;
+};
 
-                if (err) console.warn(err);
+/**
+ * Cut an array in smaller chunks
+ *
+ * @param array the array to be chunked
+ * @param int the length of each chunk
+ * @return array
+ */
+const chunkArray = (array, chunkLength) => {
 
-                const metadata = {
-                    album        : 'Unknown',
-                    albumartist  : [],
-                    artist       : ['Unknown artist'],
-                    disk         : {
-                        no: 0,
-                        of: 0
-                    },
-                    duration     : audioDuration,
-                    genre        : [],
-                    loweredMetas : {},
-                    path         : track,
-                    playCount    : 0,
-                    title        : path.parse(track).base,
-                    track        : {
-                        no: 0,
-                        of: 0
-                    },
-                    year         : ''
-                };
+    const chunks = [];
 
-                metadata.loweredMetas = {
-                    artist      : metadata.artist.map((meta) => utils.stripAccents(meta.toLowerCase())),
-                    album       : utils.stripAccents(metadata.album.toLowerCase()),
-                    albumartist : metadata.albumartist.map((meta) => utils.stripAccents(meta.toLowerCase())),
-                    title       : utils.stripAccents(metadata.title.toLowerCase()),
-                    genre       : metadata.genre.map((meta) => utils.stripAccents(meta.toLowerCase()))
-                };
+    for(let i = 0, length = array.length; i < length; i += chunkLength) {
+        chunks.push(array.slice(i, i + chunkLength));
+    }
 
-                callback(metadata);
-            });
+    return chunks;
+};
 
-        } else {
+const getDefaultMetadata = () => {
+    return {
+        album        : 'Unknown',
+        albumartist  : [],
+        artist       : ['Unknown artist'],
+        disk         : {
+            no: 0,
+            of: 0
+        },
+        duration     : '00:00',
+        genre        : [],
+        loweredMetas : {},
+        path         : '',
+        playCount    : 0,
+        title        : '',
+        track        : {
+            no: 0,
+            of: 0
+        },
+        year         : ''
+    };
+};
 
-            const stream = fs.createReadStream(track);
+const getLoweredMeta = (metadata) => {
+    return {
+        artist      : metadata.artist.map((meta) => stripAccents(meta.toLowerCase())),
+        album       : stripAccents(metadata.album.toLowerCase()),
+        albumartist : metadata.albumartist.map((meta) => stripAccents(meta.toLowerCase())),
+        title       : stripAccents(metadata.title.toLowerCase()),
+        genre       : metadata.genre.map((meta) => stripAccents(meta.toLowerCase()))
+    };
+};
 
-            mmd(stream, { duration: true }, (err, data) => {
+const getWavMetadata = async (track) => {
+    let audioDuration = 0;
+    try {
+        audioDuration = await getAudioDurationAsync(track);
+    } catch (err) {
+        console.warn(err);
+        audioDuration = 0;
+    }
 
-                if(err) console.warn(`An error occured while reading ${track} id3 tags: ${err}`);
+    const defaultMetadata = getDefaultMetadata();
+    const metadata = {
+        ...defaultMetadata,
+        duration: audioDuration,
+        path    : track,
+        title   : path.parse(track).base,
+    };
 
-                const metadata = {
-                    album        : data.album === null || data.album === '' ? 'Unknown' : data.album,
-                    albumartist  : data.albumartist,
-                    artist       : data.artist.length === 0 ? ['Unknown artist'] : data.artist,
-                    disk         : data.disk,
-                    duration     : data.duration === '' ? 0 : data.duration,
-                    genre        : data.genre,
-                    loweredMetas : {},
-                    path         : track,
-                    playCount    : 0,
-                    title        : data.title === null || data.title === '' ? path.parse(track).base : data.title,
-                    track        : data.track,
-                    year         : data.year
-                };
+    metadata.loweredMetas = getLoweredMeta(metadata);
+    return metadata;
+};
 
-                metadata.loweredMetas = {
-                    artist      : metadata.artist.map((meta) => utils.stripAccents(meta.toLowerCase())),
-                    album       : utils.stripAccents(metadata.album.toLowerCase()),
-                    albumartist : metadata.albumartist.map((meta) => utils.stripAccents(meta.toLowerCase())),
-                    title       : utils.stripAccents(metadata.title.toLowerCase()),
-                    genre       : metadata.genre.map((meta) => utils.stripAccents(meta.toLowerCase()))
-                };
+const getMusicMetadata = async (track) => {
+    let data;
+    try {
+        const stream = fs.createReadStream(track);
+        data = await musicmetadataAsync(stream, { duration: true });
+    } catch (err) {
+        console.warn(`An error occured while reading ${track} id3 tags: ${err}`);
+    }
 
-                if(metadata.duration === 0) {
+    const defaultMetadata = getDefaultMetadata();
+    const metadata = {
+        ...defaultMetadata,
+        ...data,
+        album        : data.album === null || data.album === '' ? 'Unknown' : data.album,
+        artist       : data.artist.length === 0 ? ['Unknown artist'] : data.artist,
+        duration     : data.duration === '' ? 0 : data.duration,
+        path         : track,
+        title        : data.title === null || data.title === '' ? path.parse(track).base : data.title,
+    };
 
-                    utils.getAudioDuration(track, (err, duration) => {
+    metadata.loweredMetas = getLoweredMeta(metadata);
 
-                        if(err) console.warn(duration);
-
-                        metadata.duration = duration;
-                        callback(metadata);
-                    });
-
-                } else {
-                    callback(metadata);
-                }
-            });
+    if (metadata.duration === 0) {
+        try {
+            metadata.duration = await getAudioDurationAsync(track);
+        } catch (err) {
+            console.warn(`An error occured while getting ${track} duration: ${err}`);
         }
-    },
+    }
+    return metadata;
+};
 
-    /**
-     * Get the duration of an audio file with the Audio element
-     *
-     * @param path (string)
-     * @return float
-     */
-    getAudioDuration(path, callback = () => {}) {
+/**
+ * Get a file metadata
+ *
+ * @param path (string)
+ * @return object
+ *
+ */
+const getMetadata = async (track) => {
+    // metadata should have the same shape as getDefaultMetadata() object
+    const wavFile = path.extname(track).toLowerCase() === '.wav';
+    const metadata = wavFile ? await getWavMetadata(track) : await getMusicMetadata(track);
+    return metadata;
+};
 
-        const audio = new Audio;
+const getAudioDurationAsync = (path) => {
 
+    const audio = new Audio;
+
+    return new Promise((resolve, reject) => {
         audio.addEventListener('loadedmetadata', () => {
-
-            callback(null, audio.duration);
+            resolve(audio.duration);
         });
 
         audio.addEventListener('error', (e) => {
             const message = `Error getting audio duration: (${e.target.error.code}) ${path}`;
-            callback(new Error(message), 0);
+            reject(new Error(message));
         });
 
         audio.preload = 'metadata';
         audio.src = path;
-    },
-
-    fetchCover(trackPath, callback) {
-
-        if(!trackPath) {
-            callback(null);
-            return;
-        }
-
-        const stream = fs.createReadStream(trackPath);
-
-        mmd(stream, (err, data) => {
-
-            if(err) console.warn(err);
-            else {
-                if(data.picture[0]) { // If cover in id3
-
-                    const cover = utils.parseBase64(data.picture[0].format, data.picture[0].data.toString('base64'));
-
-                    callback(cover);
-                    return;
-                }
-
-                // scan folder for any cover image
-                const folder = path.dirname(trackPath);
-
-                const pattern = path.join(folder, '*');
-
-                globby(pattern, { nodir: true, follow: false }).then((matches) => {
-
-                    const cover = matches.find((elem) => {
-
-                        const parsedPath = path.parse(elem);
-
-                        return ['album', 'albumart', 'folder', 'cover'].includes(parsedPath.name.toLowerCase())
-                            && ['.png', '.jpg', '.bmp', '.gif'].includes(parsedPath.ext.toLowerCase()) ;
-                    });
-
-                    callback(cover);
-                    return;
-                });
-            }
-        });
-    }
+    });
 };
 
-export default utils;
+const fetchCover = async (trackPath) => {
+
+    if(!trackPath) {
+        return null;
+    }
+
+    const stream = fs.createReadStream(trackPath);
+
+    const data = await musicmetadataAsync(stream);
+
+    if(data.picture[0]) { // If cover in id3
+        return parseBase64(data.picture[0].format, data.picture[0].data.toString('base64'));
+    }
+
+    // scan folder for any cover image
+    const folder = path.dirname(trackPath);
+    const pattern = path.join(folder, '*');
+    const matches = await globby(pattern, { nodir: true, follow: false });
+
+    return matches.find((elem) => {
+
+        const parsedPath = path.parse(elem);
+
+        return ['album', 'albumart', 'folder', 'cover'].includes(parsedPath.name.toLowerCase())
+            && ['.png', '.jpg', '.bmp', '.gif'].includes(parsedPath.ext.toLowerCase()) ;
+    });
+};
+
+export default {
+    parseDuration,
+    getStatus,
+    parseUri,
+    simpleSort,
+    stripAccents,
+    removeUselessFolders,
+    chunkArray,
+    getMetadata,
+    fetchCover,
+};
