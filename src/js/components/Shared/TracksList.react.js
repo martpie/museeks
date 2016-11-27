@@ -266,66 +266,37 @@ export default class TracksList extends Component {
         const tracks = this.props.tracks;
         const selected = this.state.selected;
 
-        switch(selected.length) {
-            case 0: {
-                selected.push(id);
-                this.setState({ selected });
-                break;
-            }
-            case 1: {
+        const selectedInt = [];
 
-                const onlySelected = selected[0];
-
-                const onlySelectedIndex = tracks.findIndex((track) => track._id === onlySelected);
-
-                if(index < onlySelectedIndex) {
-                    for(let i = 1; i <= Math.abs(index - onlySelectedIndex); i++) {
-                        selected.push(tracks[onlySelectedIndex - i]._id);
-                    }
-                } else if(index > onlySelectedIndex) {
-                    for(let i = 1; i <= Math.abs(index - onlySelectedIndex); i++) {
-                        selected.push(tracks[onlySelectedIndex + i]._id);
-                    }
-                }
-
-                self.setState({ selected });
-                break;
-            }
-            default: {
-                const selectedInt = [];
-
-                for(let i = 0, length = tracks.length; i < length; i++) {
-                    if(selected.includes(tracks[i]._id)) {
-                        selectedInt.push(i);
-                    }
-                }
-
-                let base;
-                const min = Math.min(...selectedInt);
-                const max = Math.max(...selectedInt);
-
-                if(index < min) {
-                    base = max;
-                } else {
-                    base = min;
-                }
-
-                const newSelected = [];
-
-                if(index < min) {
-                    for(let i = 0; i <= Math.abs(index - base); i++) {
-                        newSelected.push(tracks[base - i]._id);
-                    }
-                } else if(index > max) {
-                    for(let i = 0; i <= Math.abs(index - base); i++) {
-                        newSelected.push(tracks[base + i]._id);
-                    }
-                }
-
-                self.setState({ selected : newSelected });
-                break;
+        for(let i = 0, length = tracks.length; i < length; i++) {
+            if(selected.includes(tracks[i]._id)) {
+                selectedInt.push(i);
             }
         }
+
+        let base;
+        const min = Math.min(...selectedInt);
+        const max = Math.max(...selectedInt);
+
+        if(index < min) {
+            base = max;
+        } else {
+            base = min;
+        }
+
+        const newSelected = [];
+
+        if(index < min) {
+            for(let i = 0; i <= Math.abs(index - base); i++) {
+                newSelected.push(tracks[base - i]._id);
+            }
+        } else if(index > max) {
+            for(let i = 0; i <= Math.abs(index - base); i++) {
+                newSelected.push(tracks[base + i]._id);
+            }
+        }
+
+        self.setState({ selected : newSelected });
     }
 
     onUp(i, tracks) {
