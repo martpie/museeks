@@ -61,7 +61,7 @@ export default class TracksList extends Component {
                 </div>
                 <div className='tracks-list-body' onScroll={ this.scrollTracksList }>
                     <div className='tracks-list-tiles' style={ { height : tracks.length * this.rowHeight } }>
-                        { this._buildTrackTiles() }
+                        { this.buildTrackTiles() }
                     </div>
                 </div>
             </div>
@@ -124,11 +124,11 @@ export default class TracksList extends Component {
     }
 
     selectTrack(e, id, index) {
-        if(this._isLeftClick(e) || (this._isRightClick(e) && this._isSelectableTrack(id))) {
+        if(this.isLeftClick(e) || (this.isRightClick(e) && this.isSelectableTrack(id))) {
             if(e.ctrlKey) {
-                this._toggleSelectionById(id);
+                this.toggleSelectionById(id);
             } else if (e.shiftKey) {
-                this._multiSelect(e, id, index);
+                this.multiSelect(e, id, index);
             } else {
                 const selected = [id];
                 this.setState({ selected });
@@ -146,32 +146,32 @@ export default class TracksList extends Component {
 
         switch(e.keyCode) {
             case 38: // up
-                this._onUp(firstSelectedTrackIdx, tracks);
+                this.onUp(firstSelectedTrackIdx, tracks);
                 break;
 
             case 40: // down
-                this._onDown(firstSelectedTrackIdx, tracks);
+                this.onDown(firstSelectedTrackIdx, tracks);
                 break;
 
             case 13: // enter
-                this._onEnter(firstSelectedTrackIdx, tracks);
+                this.onEnter(firstSelectedTrackIdx, tracks);
                 break;
         }
     }
 
-    _isLeftClick(e) {
+    isLeftClick(e) {
         return e.button === 0;
     }
 
-    _isRightClick(e) {
+    isRightClick(e) {
         return e.button === 2;
     }
 
-    _isSelectableTrack(id) {
+    isSelectableTrack(id) {
         return !this.state.selected.includes(id);
     }
 
-    _buildTrackTiles() {
+    buildTrackTiles() {
         const self         = this,
             selected       = this.state.selected,
             tracks         = [...this.props.tracks],
@@ -193,7 +193,7 @@ export default class TracksList extends Component {
                 let playingIndicator = undefined;
 
                 if(trackPlayingId === track._id) {
-                    playingIndicator = <PlayingIndicator state={ this._pausePlayState() } />;
+                    playingIndicator = <PlayingIndicator state={ this.pausePlayState() } />;
                 }
 
                 return(
@@ -241,11 +241,11 @@ export default class TracksList extends Component {
         });
     }
 
-    _pausePlayState() {
+    pausePlayState() {
         Player.getAudio().paused ? 'pause' : 'play';
     }
 
-    _toggleSelectionById(id) {
+    toggleSelectionById(id) {
         let selected = [...this.state.selected];
 
         if(selected.includes(id)) {
@@ -261,7 +261,7 @@ export default class TracksList extends Component {
         this.setState({ selected });
     }
 
-    _multiSelect(e, id, index) {
+    multiSelect(e, id, index) {
         const self   = this;
         const tracks = this.props.tracks;
         const selected = this.state.selected;
@@ -328,7 +328,7 @@ export default class TracksList extends Component {
         }
     }
 
-    _onUp(i, tracks) {
+    onUp(i, tracks) {
         if(i - 1 >= 0) {
             this.setState({ selected : tracks[i - 1]._id }, () => {
 
@@ -340,7 +340,7 @@ export default class TracksList extends Component {
         }
     }
 
-    _onDown(i, tracks) {
+    onDown(i, tracks) {
         if(i + 1 < tracks.length) {
             this.setState({ selected : tracks[i + 1]._id }, () => {
 
@@ -354,7 +354,7 @@ export default class TracksList extends Component {
         }
     }
 
-    _onEnter(i, tracks) {
+    onEnter(i, tracks) {
         if(i !== undefined) AppActions.library.selectAndPlay(tracks[i]._id);
     }
 
