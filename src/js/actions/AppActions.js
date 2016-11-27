@@ -30,6 +30,9 @@ const init = () => {
     });
     Player.getAudio().addEventListener('play', () => {
         ipcRenderer.send('playerAction', 'play');
+        Player.getCurrentTrackMetadata((metadata) => {
+            ipcRenderer.send('playerAction', 'trackStart', metadata);
+        });
     });
     Player.getAudio().addEventListener('pause', () => {
         ipcRenderer.send('playerAction', 'pause');

@@ -50,7 +50,7 @@ const utils = {
     },
 
     /**
-     * Parse an URI, encoding some caracters
+     * Parse an URI, encoding some characters
      *
      * @param string uri
      * @return string

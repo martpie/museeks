@@ -13,6 +13,15 @@ class IpcManager {
         this.win = win;
         this.contextMenu;
 
+        this.songDetails = [
+            {
+                label: 'Not playing',
+                enabled: false
+            },
+            {
+                type: 'separator'
+            }
+        ];
 
         this.playToggle = [
             {
@@ -80,15 +89,21 @@ class IpcManager {
             this.hide();
         });
 
-        ipcMain.on('playerAction', (event, reply) => {
+        ipcMain.on('playerAction', (event, reply, param1) => {
 
             switch(reply) {
                 case 'play':
-                    this.tray.setContextMenu(Menu.buildFromTemplate([...this.pauseToggle, ...this.menu]));
+                    this.setContextMenu('play');
                     break;
                 case 'pause':
-                    this.tray.setContextMenu(Menu.buildFromTemplate([...this.playToggle, ...this.menu]));
+                    this.setContextMenu('pause');
                     break;
+                case 'trackStart': {
+                    const trackMetadata = param1;
+                    this.updateTrayMetadata(trackMetadata);
+                    this.setContextMenu('play');
+                    break;
+                }
             }
         });
     }
@@ -113,12 +128,39 @@ class IpcManager {
             });
         }
 
-        this.tray.setContextMenu(Menu.buildFromTemplate([...this.playToggle, ...this.menu]));
+        this.setContextMenu('play');
     }
 
     hide() {
 
         this.tray.destroy();
+    }
+
+    setContextMenu(state) {
+        const playPauseItem = state === 'pause' ? this.pauseToggle : this.playToggle;
+        const menuTemplate = [...this.songDetails, ...playPauseItem, ...this.menu];
+        this.tray.setContextMenu(Menu.buildFromTemplate(menuTemplate));
+    }
+
+
+    updateTrayMetadata(metadata) {
+        this.songDetails = [
+            {
+                label: `${metadata.title}`,
+                enabled: false
+            },
+            {
+                label: `by ${metadata.artist}`,
+                enabled: false
+            },
+            {
+                label: `on ${metadata.album}`,
+                enabled: false
+            },
+            {
+                type: 'separator'
+            }
+        ];
     }
 }
 
