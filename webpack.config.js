@@ -1,8 +1,24 @@
+'use strict';
+
 const webpack           = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const BabiliPlugin      = require('babili-webpack-plugin');
 
-const path = require('path');
+const minimist = require('minimist');
+const path     = require('path');
+
+const commandline = minimist(process.argv.slice(2));
+
+let pluginsList;
+if (commandline.development) {
+    pluginsList = [new ExtractTextPlugin('main.css', { allChunks: true })];
+} else {
+    pluginsList = [
+        new BabiliPlugin(),
+        new webpack.DefinePlugin({ 'process.env': { 'NODE_ENV': '"production"' } }),
+        new ExtractTextPlugin('main.css', { allChunks: true }),
+    ];
+}
 
 module.exports = {
     entry: {
@@ -54,9 +70,6 @@ module.exports = {
             }
         ]
     },
-    plugins: [
-        new BabiliPlugin(),
-        new webpack.DefinePlugin({ 'process.env': { 'NODE_ENV': '"production"' } }),
-        new ExtractTextPlugin('main.css', { allChunks: true }),
-    ]
+    plugins: pluginsList,
+    devtool: commandline.development ? 'source-map' : undefined
 };

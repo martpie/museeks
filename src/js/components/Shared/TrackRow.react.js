@@ -14,7 +14,7 @@ import classnames from 'classnames';
 export default class TrackRow extends Component {
 
     static propTypes = {
-        children: React.PropTypes.object,
+        children: React.PropTypes.array,
         selected: React.PropTypes.bool,
         trackId: React.PropTypes.string,
         index: React.PropTypes.number,
