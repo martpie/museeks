@@ -45,72 +45,7 @@ export default class TracksList extends Component {
     }
 
     render() {
-
-        const self         = this,
-            selected       = this.state.selected,
-            tracks         = [...this.props.tracks],
-            trackPlayingId = this.props.trackPlayingId;
-
-        const chunkLength = 20;
-        const tilesToDisplay = 5;
-        const tileHeight = this.rowHeight * chunkLength;
-
-        const tracksChunked = utils.chunkArray(tracks, chunkLength);
-        const tilesScrolled = Math.floor(this.state.scrollTop / tileHeight);
-
-        // TODO (y.solovyov | KeitIG): move to separate method that returns components
-        // Tiles and chunks
-        const trackTiles = tracksChunked.splice(tilesScrolled, tilesToDisplay).map((tracksChunk, indexChunk) => {
-
-            const list = tracksChunk.map((track, index) => {
-
-                let playingIndicator = undefined;
-
-                if(trackPlayingId === track._id) {
-                    playingIndicator = <PlayingIndicator state={ Player.getAudio().paused ? 'pause' : 'play' } />;
-                }
-
-                return(
-                    <TrackRow
-                        selected={ selected.includes(track._id) }
-                        trackId={ track._id }
-                        key={ index }
-                        index={ (tilesScrolled + indexChunk) * chunkLength + index }
-                        onMouseDown={ self.selectTrack }
-                        onContextMenu={ self.showContextMenu }
-                    >
-                        <div className='cell cell-track-playing text-center'>
-                            { playingIndicator }
-                        </div>
-                        <div className='cell cell-track'>
-                            { track.title }
-                        </div>
-                        <div className='cell cell-duration'>
-                            { utils.parseDuration(track.duration) }
-                        </div>
-                        <div className='cell cell-artist'>
-                            { track.artist[0] }
-                        </div>
-                        <div className='cell cell-album'>
-                            { track.album }
-                        </div>
-                        <div className='cell cell-genre'>
-                            { track.genre.join(', ') }
-                        </div>
-                    </TrackRow>
-                );
-            });
-
-            const tracksListTileStyles = {
-                transform: `translate3d(0, ${(((tilesScrolled * this.rowHeight * chunkLength) + (indexChunk * this.rowHeight * chunkLength)))}px, 0)`
-            };
-
-            return (
-                <div className='tracks-list-tile' key={ indexChunk } style={ tracksListTileStyles }>
-                    { list }
-                </div>
-            );
-        });
+        const tracks = [...this.props.tracks];
 
         // TODO (y.solovyov | KeitIG): TrackListHeader component?
         return (
@@ -126,7 +61,7 @@ export default class TracksList extends Component {
                 </div>
                 <div className='tracks-list-body' onScroll={ this.scrollTracksList }>
                     <div className='tracks-list-tiles' style={ { height : tracks.length * this.rowHeight } }>
-                        { trackTiles }
+                        { this.buildTrackTiles() }
                     </div>
                 </div>
             </div>
@@ -189,98 +124,12 @@ export default class TracksList extends Component {
     }
 
     selectTrack(e, id, index) {
-
-        const self   = this;
-        const tracks = this.props.tracks;
-
-        if(e.button === 0 || (e.button === 2 && !this.state.selected.includes(id))) {
-            if(e.ctrlKey) { // add one track in selected tracks
-
-                let selected = [...this.state.selected];
-
-                if(selected.includes(id)) {
-                    // remove track
-                    selected.splice(selected.indexOf(id), 1);
-
-                } else {
-                    // add track
-                    selected.push(id);
-                }
-
-                selected = utils.simpleSort(selected, 'asc');
-                this.setState({ selected });
-
-            } else if (e.shiftKey) { // add multiple tracks in selected tracks
-
-                const selected = this.state.selected;
-
-                switch(selected.length) {
-                    case 0: {
-                        selected.push(id);
-                        this.setState({ selected });
-                        break;
-                    }
-                    case 1: {
-
-                        const onlySelected = selected[0];
-                        let onlySelectedIndex;
-
-                        for(let i = 0, length = tracks.length; i < length; i++) { // STH wrong here
-                            if(tracks[i]._id === onlySelected) {
-                                onlySelectedIndex = i;
-                                break;
-                            }
-                        }
-
-                        if(index < onlySelectedIndex) {
-                            for(let i = 1; i <= Math.abs(index - onlySelectedIndex); i++) {
-                                selected.push(tracks[onlySelectedIndex - i]._id);
-                            }
-                        } else if(index > onlySelectedIndex) {
-                            for(let i = 1; i <= Math.abs(index - onlySelectedIndex); i++) {
-                                selected.push(tracks[onlySelectedIndex + i]._id);
-                            }
-                        }
-
-                        self.setState({ selected });
-                        break;
-                    }
-                    default: {
-                        const selectedInt = [];
-
-                        for(let i = 0, length = tracks.length; i < length; i++) {
-                            if(selected.includes(tracks[i]._id)) {
-                                selectedInt.push(i);
-                            }
-                        }
-
-                        let base;
-                        const min = Math.min(...selectedInt);
-                        const max = Math.max(...selectedInt);
-
-                        if(index < min) {
-                            base = max;
-                        } else {
-                            base = min;
-                        }
-
-                        const newSelected = [];
-
-                        if(index < min) {
-                            for(let i = 0; i <= Math.abs(index - base); i++) {
-                                newSelected.push(tracks[base - i]._id);
-                            }
-                        } else if(index > max) {
-                            for(let i = 0; i <= Math.abs(index - base); i++) {
-                                newSelected.push(tracks[base + i]._id);
-                            }
-                        }
-
-                        self.setState({ selected : newSelected });
-                        break;
-                    }
-                }
-            } else { // simple select
+        if(this.isLeftClick(e) || (this.isRightClick(e) && this.isSelectableTrack(id))) {
+            if(e.ctrlKey) {
+                this.toggleSelectionById(id);
+            } else if (e.shiftKey) {
+                this.multiSelect(e, id, index);
+            } else {
                 const selected = [id];
                 this.setState({ selected });
             }
@@ -288,57 +137,196 @@ export default class TracksList extends Component {
     }
 
     onKey(e) {
-
         const selected = this.state.selected,
             tracks     = this.props.tracks;
 
-        let i = 0;
+        const firstSelectedTrackIdx = tracks.findIndex((track) => {
+            selected.includes(track._id);
+        });
 
-        switch(e.keyCode) { // Todo: fix when node not in dom
+        switch(e.keyCode) {
             case 38: // up
-
-                for(let length = tracks.length; i < length; i ++) {
-                    if(selected.includes(tracks[i]._id)) break;
-                }
-
-                if(i - 1 >= 0) {
-                    this.setState({ selected : tracks[i - 1]._id }, () => {
-
-                        const container = document.querySelector('.tracks-list-container .tracks-list-body');
-                        const nodeOffsetTop = (i - 1) * this.rowHeight;
-
-                        if(container.scrollTop > nodeOffsetTop) container.scrollTop = nodeOffsetTop;
-                    });
-                }
+                this.onUp(firstSelectedTrackIdx, tracks);
                 break;
 
             case 40: // down
-
-                for(let length = tracks.length; i < length; i ++) {
-                    if(selected.includes(tracks[i]._id)) break;
-                }
-
-                if(i + 1 < tracks.length) {
-                    this.setState({ selected : tracks[i + 1]._id }, () => {
-
-                        const container = document.querySelector('.tracks-list-container .tracks-list-body');
-                        const nodeOffsetTop = (i + 1) * this.rowHeight;
-
-                        if(container.scrollTop + container.offsetHeight <= nodeOffsetTop) {
-                            container.scrollTop = nodeOffsetTop - container.offsetHeight + this.rowHeight;
-                        }
-                    });
-                }
+                this.onDown(firstSelectedTrackIdx, tracks);
                 break;
 
             case 13: // enter
-
-                for(let length = tracks.length; i < length; i++) {
-                    if(selected.includes(tracks[i]._id)) break;
-                }
-                if(i !== undefined) AppActions.library.selectAndPlay(tracks[i]._id);
+                this.onEnter(firstSelectedTrackIdx, tracks);
                 break;
         }
+    }
+
+    isLeftClick(e) {
+        return e.button === 0;
+    }
+
+    isRightClick(e) {
+        return e.button === 2;
+    }
+
+    isSelectableTrack(id) {
+        return !this.state.selected.includes(id);
+    }
+
+    buildTrackTiles() {
+        const self         = this,
+            selected       = this.state.selected,
+            tracks         = [...this.props.tracks],
+            trackPlayingId = this.props.trackPlayingId;
+
+        const chunkLength = 20;
+        const tilesToDisplay = 5;
+        const tileHeight = this.rowHeight * chunkLength;
+
+        const tracksChunked = utils.chunkArray(tracks, chunkLength);
+        const tilesScrolled = Math.floor(this.state.scrollTop / tileHeight);
+
+        return tracksChunked.splice(tilesScrolled, tilesToDisplay).map((tracksChunk, indexChunk) => {
+
+            const list = tracksChunk.map((track, index) => {
+
+                const trackRowIndex = (tilesScrolled + indexChunk) * chunkLength + index;
+
+                let playingIndicator = undefined;
+
+                if(trackPlayingId === track._id) {
+                    playingIndicator = <PlayingIndicator state={ this.pausePlayState() } />;
+                }
+
+                return(
+                    <TrackRow
+                        selected={ selected.includes(track._id) }
+                        trackId={ track._id }
+                        key={ index }
+                        index={ trackRowIndex }
+                        onMouseDown={ self.selectTrack }
+                        onContextMenu={ self.showContextMenu }
+                    >
+                        <div className='cell cell-track-playing text-center'>
+                            { playingIndicator }
+                        </div>
+                        <div className='cell cell-track'>
+                            { track.title }
+                        </div>
+                        <div className='cell cell-duration'>
+                            { utils.parseDuration(track.duration) }
+                        </div>
+                        <div className='cell cell-artist'>
+                            { track.artist[0] }
+                        </div>
+                        <div className='cell cell-album'>
+                            { track.album }
+                        </div>
+                        <div className='cell cell-genre'>
+                            { track.genre.join(', ') }
+                        </div>
+                    </TrackRow>
+                );
+            });
+
+            const translationDistance = (tilesScrolled * this.rowHeight * chunkLength) +
+                                        (indexChunk * this.rowHeight * chunkLength);
+            const tracksListTileStyles = {
+                transform: `translate3d(0, ${translationDistance}px, 0)`
+            };
+
+            return (
+                <div className='tracks-list-tile' key={ indexChunk } style={ tracksListTileStyles }>
+                    { list }
+                </div>
+            );
+        });
+    }
+
+    pausePlayState() {
+        Player.getAudio().paused ? 'pause' : 'play';
+    }
+
+    toggleSelectionById(id) {
+        let selected = [...this.state.selected];
+
+        if(selected.includes(id)) {
+            // remove track
+            selected.splice(selected.indexOf(id), 1);
+
+        } else {
+            // add track
+            selected.push(id);
+        }
+
+        selected = utils.simpleSort(selected, 'asc');
+        this.setState({ selected });
+    }
+
+    multiSelect(e, id, index) {
+        const self   = this;
+        const tracks = this.props.tracks;
+        const selected = this.state.selected;
+
+        const selectedInt = [];
+
+        for(let i = 0, length = tracks.length; i < length; i++) {
+            if(selected.includes(tracks[i]._id)) {
+                selectedInt.push(i);
+            }
+        }
+
+        let base;
+        const min = Math.min(...selectedInt);
+        const max = Math.max(...selectedInt);
+
+        if(index < min) {
+            base = max;
+        } else {
+            base = min;
+        }
+
+        const newSelected = [];
+
+        if(index < min) {
+            for(let i = 0; i <= Math.abs(index - base); i++) {
+                newSelected.push(tracks[base - i]._id);
+            }
+        } else if(index > max) {
+            for(let i = 0; i <= Math.abs(index - base); i++) {
+                newSelected.push(tracks[base + i]._id);
+            }
+        }
+
+        self.setState({ selected : newSelected });
+    }
+
+    onUp(i, tracks) {
+        if(i - 1 >= 0) {
+            this.setState({ selected : tracks[i - 1]._id }, () => {
+
+                const container = document.querySelector('.tracks-list-container .tracks-list-body');
+                const nodeOffsetTop = (i - 1) * this.rowHeight;
+
+                if(container.scrollTop > nodeOffsetTop) container.scrollTop = nodeOffsetTop;
+            });
+        }
+    }
+
+    onDown(i, tracks) {
+        if(i + 1 < tracks.length) {
+            this.setState({ selected : tracks[i + 1]._id }, () => {
+
+                const container = document.querySelector('.tracks-list-container .tracks-list-body');
+                const nodeOffsetTop = (i + 1) * this.rowHeight;
+
+                if(container.scrollTop + container.offsetHeight <= nodeOffsetTop) {
+                    container.scrollTop = nodeOffsetTop - container.offsetHeight + this.rowHeight;
+                }
+            });
+        }
+    }
+
+    onEnter(i, tracks) {
+        if(i !== undefined) AppActions.library.selectAndPlay(tracks[i]._id);
     }
 
     showContextMenu(e, index) {
