@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
 
-import Notification from './Notification.react';
+import Toast from './Toast.react';
 
 
 /*
 |--------------------------------------------------------------------------
-| Notifications
+| Toasts
 |--------------------------------------------------------------------------
 */
 
-export default class Notifications extends Component {
+export default class Toasts extends Component {
 
     static propTypes = {
-        notifications: React.PropTypes.array
+        toasts: React.PropTypes.array
     }
 
     constructor(props) {
@@ -22,12 +22,12 @@ export default class Notifications extends Component {
 
     render() {
         return (
-            <div className='notifications'>
-                { this.props.notifications.map((notification, index) => {
+            <div className='toasts'>
+                { this.props.toasts.map((toast, index) => {
                     return (
-                        <Notification
-                            type={ notification.type }
-                            content={ notification.content }
+                        <Toast
+                            type={ toast.type }
+                            content={ toast.content }
                             key={ index }
                         />
                     );

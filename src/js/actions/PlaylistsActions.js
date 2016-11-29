@@ -51,7 +51,7 @@ const create = (name, redirect = false, callback = noop) => {
             callback(doc._id);
             refresh();
             if (redirect) hashHistory.push(`/playlists/${doc._id}`);
-            else AppActions.notifications.add('success', `The playlist "${name}" was created`);
+            else AppActions.toasts.add('success', `The playlist "${name}" was created`);
         }
     });
 };
@@ -86,8 +86,8 @@ const addTracksTo = (_id, tracks, isShown) => {
 
                 app.models.Playlist.update( { _id }, { $set: { tracks: playlistTracks } }, (err) => {
 
-                    if (err) AppActions.notifications.add('danger', err);
-                    else AppActions.notifications.add('success', `${tracks.length} tracks were successfully added to "${playlist.name}"`);
+                    if (err) AppActions.toasts.add('danger', err);
+                    else AppActions.toasts.add('success', `${tracks.length} tracks were successfully added to "${playlist.name}"`);
                 });
             }
         });

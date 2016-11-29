@@ -23,7 +23,7 @@ export default {
 
     playerStatus      : 'stop', // Player status
     cover             :  null,  // Current trackplaying cover
-    notifications     :  [],    // The array of notifications
+    toasts     :  [],    // The array of toasts
     refreshingLibrary :  false, // If the app is currently refreshing the app
     repeat            :  app.config.get('audioRepeat'), // the current repeat state (one, all, false)
     shuffle           :  app.config.get('audioShuffle'), // If shuffle mode is enabled

@@ -3,11 +3,11 @@ import React, { Component } from 'react';
 
 /*
 |--------------------------------------------------------------------------
-| Notification
+| Toast
 |--------------------------------------------------------------------------
 */
 
-export default class Notification extends Component {
+export default class Toast extends Component {
 
     static propTypes = {
         type: React.PropTypes.string,

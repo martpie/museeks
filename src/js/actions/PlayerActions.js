@@ -1,7 +1,7 @@
 import store from '../store.js';
 import AppConstants  from '../constants/AppConstants';
 
-import NotificationsActions from './NotificationsActions';
+import ToastsActions from './ToastsActions';
 
 import app from '../lib/app';
 import Player from '../lib/player';
@@ -129,16 +129,16 @@ const jumpTo = (to) => {
 const audioError = (e) => {
     switch (e.target.error.code) {
         case e.target.error.MEDIA_ERR_ABORTED:
-            NotificationsActions.add('warning', audioErrors.aborted);
+            ToastsActions.add('warning', audioErrors.aborted);
             break;
         case e.target.error.MEDIA_ERR_DECODE:
-            NotificationsActions.add('danger', audioErrors.corrupt);
+            ToastsActions.add('danger', audioErrors.corrupt);
             break;
         case e.target.error.MEDIA_ERR_SRC_NOT_SUPPORTED:
-            NotificationsActions.add('danger', audioErrors.notFound);
+            ToastsActions.add('danger', audioErrors.notFound);
             break;
         default:
-            NotificationsActions.add('danger', audioErrors.unknown);
+            ToastsActions.add('danger', audioErrors.unknown);
             break;
     }
 };
