@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 
 import Header from './Header/Header.react';
 import Footer from './Footer/Footer.react';
-import Notifications from './Notifications/Notifications.react';
+import Toasts from './Toasts/Toasts.react';
 
 import AppActions from '../actions/AppActions';
 
@@ -72,7 +72,7 @@ class Museeks extends Component {
                     tracks={ store.tracks[store.tracksCursor].sub }
                     refreshingLibrary={ store.refreshingLibrary }
                 />
-                <Notifications notifications={ store.notifications } />
+                <Toasts toasts={ store.toasts } />
             </div>
         );
     }

@@ -1,6 +1,6 @@
 import app from './app';
 import library from './library';
-import notifications from './notifications';
+import toasts from './toasts';
 import player from './player';
 import playlists from './playlists';
 import queue from './queue';
@@ -8,7 +8,7 @@ import queue from './queue';
 const reducers = [
     app,
     library,
-    notifications,
+    toasts,
     player,
     playlists,
     queue,

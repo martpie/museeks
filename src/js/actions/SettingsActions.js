@@ -104,11 +104,11 @@ const checkForUpdate = async (options = {}) => {
         }
 
         if (message) {
-            AppActions.notifications.add('success', message);
+            AppActions.toasts.add('success', message);
         }
 
     } catch (e) {
-        if(!options.silentFail) AppActions.notifications.add('danger', 'An error occurred while checking updates.');
+        if(!options.silentFail) AppActions.toasts.add('danger', 'An error occurred while checking updates.');
     }
 };
 
