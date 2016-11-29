@@ -242,7 +242,7 @@ export default class TracksList extends Component {
     }
 
     pausePlayState() {
-        Player.getAudio().paused ? 'pause' : 'play';
+        return Player.getAudio().paused ? 'pause' : 'play';
     }
 
     toggleSelectionById(id) {
