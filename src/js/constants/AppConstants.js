@@ -40,5 +40,7 @@ export default keymirror({
     APP_PLAYLISTS_LOAD_ONE : null,
 
     APP_TOAST_ADD    : null,
-    APP_TOAST_REMOVE : null
+    APP_TOAST_REMOVE : null,
+
+    APP_NOTIFICATION_ADD : null
 });
