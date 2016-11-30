@@ -28,12 +28,18 @@ const init = () => {
             LibraryActions.incrementPlayCount(Player.getAudio().src);
         }
     });
+
     Player.getAudio().addEventListener('play', () => {
+
         ipcRenderer.send('playerAction', 'play');
-        Player.getCurrentTrackMetadata((metadata) => {
-            ipcRenderer.send('playerAction', 'trackStart', metadata);
+
+        const path = decodeURI(Player.getAudio().src).replace('file://', '');
+
+        app.models.Track.findOne({ path }, (err, doc) => {
+            ipcRenderer.send('playerAction', 'trackStart', doc);
         });
     });
+
     Player.getAudio().addEventListener('pause', () => {
         ipcRenderer.send('playerAction', 'pause');
     });

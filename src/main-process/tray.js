@@ -89,18 +89,20 @@ class IpcManager {
             this.hide();
         });
 
-        ipcMain.on('playerAction', (event, reply, param1) => {
+        ipcMain.on('playerAction', (event, reply, data) => {
 
             switch(reply) {
-                case 'play':
+                case 'play': {
                     this.setContextMenu('play');
                     break;
-                case 'pause':
+                }
+
+                case 'pause': {
                     this.setContextMenu('pause');
                     break;
+                }
                 case 'trackStart': {
-                    const trackMetadata = param1;
-                    this.updateTrayMetadata(trackMetadata);
+                    this.updateTrayMetadata(data);
                     this.setContextMenu('play');
                     break;
                 }
@@ -137,7 +139,7 @@ class IpcManager {
     }
 
     setContextMenu(state) {
-        const playPauseItem = state === 'pause' ? this.pauseToggle : this.playToggle;
+        const playPauseItem = state === 'play' ? this.pauseToggle : this.playToggle;
         const menuTemplate = [...this.songDetails, ...playPauseItem, ...this.menu];
         this.tray.setContextMenu(Menu.buildFromTemplate(menuTemplate));
     }
