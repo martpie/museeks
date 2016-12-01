@@ -1,12 +1,14 @@
 import Player from '../lib/player';
 import app    from '../lib/app';
+import utils from '../utils/utils';
 
-import LibraryActions   from './LibraryActions';
-import PlaylistsActions from './PlaylistsActions';
-import ToastsActions    from './ToastsActions';
-import PlayerActions    from './PlayerActions';
-import QueueActions     from './QueueActions';
-import SettingsActions  from './SettingsActions';
+import LibraryActions      from './LibraryActions';
+import PlaylistsActions    from './PlaylistsActions';
+import ToastsActions       from './ToastsActions';
+import NotificationActions from './NotificationActions';
+import PlayerActions       from './PlayerActions';
+import QueueActions        from './QueueActions';
+import SettingsActions     from './SettingsActions';
 
 const globalShortcut = electron.remote.globalShortcut;
 const ipcRenderer    = electron.ipcRenderer;
@@ -33,10 +35,18 @@ const init = () => {
 
         ipcRenderer.send('playerAction', 'play');
 
-        const path = decodeURI(Player.getAudio().src).replace('file://', '');
+        const path = decodeURIComponent(Player.getAudio().src).replace('file://', '');
 
-        app.models.Track.findOne({ path }, (err, doc) => {
-            ipcRenderer.send('playerAction', 'trackStart', doc);
+        app.models.Track.findOne({ path }, (err, track) => {
+            ipcRenderer.send('playerAction', 'trackStart', track);
+
+            utils.fetchCover(track.path).then((cover) => {
+                NotificationActions.add({
+                    title: track.title,
+                    body: `${track.artist}\n${track.album}`,
+                    icon: cover
+                });
+            });
         });
     });
 
@@ -146,12 +156,13 @@ const initShortcuts = () => {
 };
 
 export default {
-    player    : PlayerActions,
-    playlists : PlaylistsActions,
-    queue     : QueueActions,
-    library   : LibraryActions,
-    settings  : SettingsActions,
-    toasts    : ToastsActions,
+    player        : PlayerActions,
+    playlists     : PlaylistsActions,
+    queue         : QueueActions,
+    library       : LibraryActions,
+    settings      : SettingsActions,
+    toasts        : ToastsActions,
+    notifications : NotificationActions,
 
     close,
     init,
