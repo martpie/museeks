@@ -27,14 +27,12 @@ class Museeks extends Component {
     }
 
     constructor(props) {
-
         super(props);
 
         this.onKey = this.onKey.bind(this);
     }
 
     render() {
-
         const store = this.props.store;
         const trackPlayingId = (store.queue.length > 0 && store.queueCursor !== null) ? store.queue[store.queueCursor]._id : null;
 

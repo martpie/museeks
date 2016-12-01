@@ -9,7 +9,6 @@ import semver from 'semver';
 const ipcRenderer = electron.ipcRenderer;
 
 const check = () => {
-
     checkTheme();
     checkDevMode();
     checkSleepBlocker();
@@ -22,7 +21,6 @@ const checkTheme = () => {
 };
 
 const toggleDarkTheme = (value) => {
-
     const oldTheme = value ? 'light' : 'dark';
     const newTheme = value ? 'dark' : 'light';
 
@@ -38,7 +36,6 @@ const toggleDarkTheme = (value) => {
 };
 
 const toggleSleepBlocker = (value) => {
-
     app.config.set('sleepBlocker', value);
     app.config.saveSync();
 
@@ -56,7 +53,6 @@ const checkSleepBlocker = () => {
 };
 
 const toggleDevMode = (value) => {
-
     app.config.set('devMode', value);
 
     // Open dev tools if needed
@@ -75,7 +71,6 @@ const checkDevMode = () => {
 };
 
 const toggleAutoUpdateChecker = (value) => {
-
     app.config.set('autoUpdateChecker', value);
     app.config.saveSync();
 
@@ -85,7 +80,6 @@ const toggleAutoUpdateChecker = (value) => {
 };
 
 const checkForUpdate = async (options = {}) => {
-
     const currentVersion = app.version;
 
     try {
@@ -106,21 +100,18 @@ const checkForUpdate = async (options = {}) => {
         if (message) {
             AppActions.toasts.add('success', message);
         }
-
     } catch (e) {
         if(!options.silentFail) AppActions.toasts.add('danger', 'An error occurred while checking updates.');
     }
 };
 
 const toggleNativeFrame = (value) => {
-
     app.config.set('useNativeFrame', value);
     app.config.saveSync();
     AppActions.app.restart();
 };
 
 const toggleMinimizeToTray = (value) => {
-
     app.config.set('minimizeToTray', value);
     app.config.saveSync();
 

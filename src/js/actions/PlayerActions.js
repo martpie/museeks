@@ -56,7 +56,6 @@ const previous = () => {
 };
 
 const shuffle = (shuffle) => {
-
     app.config.set('audioShuffle', shuffle);
     app.config.saveSync();
 
@@ -67,7 +66,6 @@ const shuffle = (shuffle) => {
 };
 
 const repeat = (repeat) => {
-
     app.config.set('audioRepeat', repeat);
     app.config.saveSync();
 
@@ -78,9 +76,7 @@ const repeat = (repeat) => {
 };
 
 const setVolume = (volume) => {
-
     if(!isNaN(parseFloat(volume)) && isFinite(volume)) {
-
         Player.setAudioVolume(volume);
 
         app.config.set('audioVolume', volume);
@@ -92,7 +88,6 @@ const setVolume = (volume) => {
 };
 
 const setMuted = (muted = false) => {
-
     if(muted) Player.mute();
     else Player.unmute();
 
@@ -105,9 +100,7 @@ const setMuted = (muted = false) => {
 
 const setPlaybackRate = (value) => {
     if(!isNaN(parseFloat(value)) && isFinite(value)) { // if is numeric
-
         if(value >= 0.5 && value <= 5) { // if in allowed range
-
             Player.setAudioPlaybackRate(value);
 
             app.config.set('audioPlaybackRate', parseFloat(value));

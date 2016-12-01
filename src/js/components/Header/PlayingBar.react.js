@@ -33,7 +33,6 @@ export default class PlayingBar extends Component {
     }
 
     constructor(props) {
-
         super(props);
 
         this.state = {
@@ -57,7 +56,6 @@ export default class PlayingBar extends Component {
     }
 
     render() {
-
         const queue = this.props.queue;
         const queueCursor = this.props.queueCursor;
         const trackPlaying = queue[queueCursor];
@@ -144,7 +142,6 @@ export default class PlayingBar extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-
         const nextTrackPlaying = nextProps.queue[nextProps.queueCursor];
         const nextTrackPlayingPath = nextTrackPlaying && nextTrackPlaying.path ? nextTrackPlaying.path : null;
 
@@ -161,7 +158,6 @@ export default class PlayingBar extends Component {
     }
 
     jumpAudioTo(e) {
-
         this.setState({ dragging : true });
 
         const queue       = this.props.queue;
@@ -179,7 +175,6 @@ export default class PlayingBar extends Component {
     dragOver(e) {
         // Chack if it's needed to update currentTime
         if(this.state.dragging) {
-
             const queue        = this.props.queue;
             const queueCursor  = this.props.queueCursor;
             const trackPlaying = queue[queueCursor];
@@ -200,7 +195,6 @@ export default class PlayingBar extends Component {
     }
 
     showTooltip(e) {
-
         const queue       = this.props.queue;
         const queueCursor = this.props.queueCursor;
         const trackPlaying   = queue[queueCursor];

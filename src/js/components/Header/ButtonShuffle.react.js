@@ -18,14 +18,12 @@ export default class ButtonShuffle extends Component {
     }
 
     constructor(props) {
-
         super(props);
 
         this.toggleShuffle = this.toggleShuffle.bind(this);
     }
 
     render() {
-
         const svg = require('../../../images/icons/player-shuffle.svg');
 
         const buttonClasses = classnames('button', {
@@ -40,7 +38,6 @@ export default class ButtonShuffle extends Component {
     }
 
     toggleShuffle() {
-
         AppActions.player.shuffle(!this.props.shuffle);
     }
 }

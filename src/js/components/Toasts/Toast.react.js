@@ -15,12 +15,10 @@ export default class Toast extends Component {
     }
 
     constructor(props) {
-
         super(props);
     }
 
     render() {
-
         const type = this.props.type;
         const content = this.props.content;
 

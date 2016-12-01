@@ -17,14 +17,12 @@ export default class PlaylistsNavLink extends Component {
     }
 
     constructor(props) {
-
         super(props);
 
         this.onContextMenu = this.onContextMenu.bind(this);
     }
 
     render() {
-
         return (
             <Link
                 className='playlist-link'

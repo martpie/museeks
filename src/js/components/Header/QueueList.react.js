@@ -24,7 +24,6 @@ export default class QueueList extends Component {
     }
 
     constructor(props) {
-
         super(props);
 
         this.state = {
@@ -39,7 +38,6 @@ export default class QueueList extends Component {
     }
 
     render() {
-
         const self = this;
 
         const queue       = this.props.queue;
@@ -91,7 +89,6 @@ export default class QueueList extends Component {
     }
 
     dragStart(e, index) {
-
         e.dataTransfer.effectAllowed = 'move';
         e.dataTransfer.setData('text/html', e.currentTarget);
 
@@ -99,7 +96,6 @@ export default class QueueList extends Component {
     }
 
     dragEnd() {
-
         // Move that to a reducer may be a good idea
 
         const queue       = this.props.queue;
@@ -135,7 +131,6 @@ export default class QueueList extends Component {
     }
 
     dragOver(e, index) {
-
         e.preventDefault();
 
         const relativePosition = e.nativeEvent.offsetY / e.currentTarget.offsetHeight;

@@ -41,6 +41,8 @@
         "no-var": "error",
         "object-curly-spacing": ["error", "always"],
         "object-shorthand": ["error", "properties"],
+        "one-var": ["error", "never"],
+        "padded-blocks": ["error", "never"],
         "prefer-arrow-callback": "error",
         "prefer-const": "error",
         "prefer-template": "error",

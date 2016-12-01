@@ -22,7 +22,6 @@ export default class PlaylistsNav extends Component {
     }
 
     constructor(props) {
-
         super(props);
 
         this.state = {
@@ -35,11 +34,9 @@ export default class PlaylistsNav extends Component {
     }
 
     render() {
-
         const self = this;
         // TODO (y.solovyov): extract into separate method that returns items
         const nav = this.props.playlists.map((elem, index) => {
-
             let navItemContent;
 
             if(elem._id === self.state.renamed) {
@@ -88,11 +85,9 @@ export default class PlaylistsNav extends Component {
     }
 
     componentDidMount() {
-
         const self = this;
 
         ipcRenderer.on('playlistContextMenuReply', (event, reply, _id) => {
-
             switch(reply) {
                 case 'delete':
                     AppActions.playlists.remove(_id);
@@ -109,7 +104,6 @@ export default class PlaylistsNav extends Component {
     }
 
     componentDidUpdate() {
-
         // If a playlist is being update
         if(!!this.refs.renamedPlaylist && document.activeElement !== this.refs.renamedPlaylist) {
             this.refs.renamedPlaylist.select();
@@ -129,7 +123,6 @@ export default class PlaylistsNav extends Component {
     }
 
     keyDown(e) {
-
         switch(e.keyCode) {
             case 13: { // Enter
                 this.rename(this.state.renamed, e.currentTarget.value);

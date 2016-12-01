@@ -8,7 +8,6 @@ const iconsDirectory = path.resolve(__dirname, '../..', 'images', 'icons', 'wind
 class Win32Integration {
 
     constructor(win) {
-
         this.window = win;
 
         this.thumbarButtons = {
@@ -64,7 +63,6 @@ class Win32Integration {
     }
 
     enable() {
-
         ipcMain.on('appReady', () => {
             this.window.setThumbarButtons([
                 this.thumbarButtons.prevDisabled,

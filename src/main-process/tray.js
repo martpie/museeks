@@ -7,7 +7,6 @@ const { Tray, Menu, app, ipcMain } = require('electron');
 class IpcManager {
 
     constructor(win, icon) {
-
         this.tray = null;
         this.trayIcon = icon;
         this.win = win;
@@ -78,19 +77,15 @@ class IpcManager {
     }
 
     bindEvents() {
-
         ipcMain.on('showTray', () => {
-
             this.show();
         });
 
         ipcMain.on('hideTray', () => {
-
             this.hide();
         });
 
         ipcMain.on('playerAction', (event, reply, data) => {
-
             switch(reply) {
                 case 'play': {
                     this.setContextMenu('play');
@@ -111,7 +106,6 @@ class IpcManager {
     }
 
     show() {
-
         this.tray = new Tray(this.trayIcon);
 
         this.tray.setToolTip('Museeks');
@@ -134,7 +128,6 @@ class IpcManager {
     }
 
     hide() {
-
         this.tray.destroy();
     }
 

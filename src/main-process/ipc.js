@@ -9,14 +9,11 @@ class IpcManager {
     }
 
     bindEvents() {
-
         ipcMain.on('tracksListContextMenu', (event, stringData) => {
-
             const data = JSON.parse(stringData);
             let playlistTemplate;
 
             if(data.playlists) {
-
                 playlistTemplate = [
                     {
                         label: 'Create new playlist...',
@@ -44,9 +41,7 @@ class IpcManager {
                         }
                     });
                 });
-
             } else {
-
                 playlistTemplate = [
                     {
                         label: 'Create new playlist...',
@@ -129,9 +124,7 @@ class IpcManager {
             context.popup(this.window); // Let it appear
         });
 
-
         ipcMain.on('playlistContextMenu', (event, _id) => {
-
             const template = [
                 {
                     label: 'Delete',
@@ -154,7 +147,6 @@ class IpcManager {
 
 
         ipcMain.on('toggleSleepBlocker', (event, toggle, mode) => {
-
             if(toggle) {
                 this.instance.sleepBlockerId = powerSaveBlocker.start(mode);
             } else {

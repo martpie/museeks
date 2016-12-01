@@ -5,7 +5,6 @@ import utils        from '../utils/utils';
 export default (state = {}, payload) => {
     switch (payload.type) {
         case(AppConstants.APP_QUEUE_PLAY): {
-
             const queue       = [].concat(state.queue);
             const queueCursor = payload.index;
 

@@ -27,14 +27,12 @@ export default class Header extends Component {
     }
 
     constructor(props) {
-
         super(props);
 
         this.search = this.search.bind(null);
     }
 
     render() {
-
         return (
             <header className='row'>
                 <div className='col-main-controls'>

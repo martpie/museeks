@@ -29,7 +29,6 @@ export default class TracksList extends Component {
     }
 
     constructor(props) {
-
         super(props);
         this.state = {
             selected  : [],
@@ -69,11 +68,9 @@ export default class TracksList extends Component {
     }
 
     componentDidMount() {
-
         const self = this;
 
         ipcRenderer.on('tracksListContextMenuReply', (event, reply, data) => {
-
             const selected = self.state.selected;
 
             switch(reply) {
@@ -137,8 +134,8 @@ export default class TracksList extends Component {
     }
 
     onKey(e) {
-        const selected = this.state.selected,
-            tracks     = this.props.tracks;
+        const selected = this.state.selected;
+        const tracks   = this.props.tracks;
 
         const firstSelectedTrackIdx = tracks.findIndex((track) => {
             selected.includes(track._id);
@@ -172,10 +169,10 @@ export default class TracksList extends Component {
     }
 
     buildTrackTiles() {
-        const self         = this,
-            selected       = this.state.selected,
-            tracks         = [...this.props.tracks],
-            trackPlayingId = this.props.trackPlayingId;
+        const self           = this;
+        const selected       = this.state.selected;
+        const tracks         = [...this.props.tracks];
+        const trackPlayingId = this.props.trackPlayingId;
 
         const chunkLength = 20;
         const tilesToDisplay = 5;
@@ -185,9 +182,7 @@ export default class TracksList extends Component {
         const tilesScrolled = Math.floor(this.state.scrollTop / tileHeight);
 
         return tracksChunked.splice(tilesScrolled, tilesToDisplay).map((tracksChunk, indexChunk) => {
-
             const list = tracksChunk.map((track, index) => {
-
                 const trackRowIndex = (tilesScrolled + indexChunk) * chunkLength + index;
 
                 let playingIndicator = undefined;
@@ -251,7 +246,6 @@ export default class TracksList extends Component {
         if(selected.includes(id)) {
             // remove track
             selected.splice(selected.indexOf(id), 1);
-
         } else {
             // add track
             selected.push(id);
@@ -302,7 +296,6 @@ export default class TracksList extends Component {
     onUp(i, tracks) {
         if(i - 1 >= 0) {
             this.setState({ selected : tracks[i - 1]._id }, () => {
-
                 const container = document.querySelector('.tracks-list-container .tracks-list-body');
                 const nodeOffsetTop = (i - 1) * this.rowHeight;
 
@@ -314,7 +307,6 @@ export default class TracksList extends Component {
     onDown(i, tracks) {
         if(i + 1 < tracks.length) {
             this.setState({ selected : tracks[i + 1]._id }, () => {
-
                 const container = document.querySelector('.tracks-list-container .tracks-list-body');
                 const nodeOffsetTop = (i + 1) * this.rowHeight;
 
@@ -330,7 +322,6 @@ export default class TracksList extends Component {
     }
 
     showContextMenu(e, index) {
-
         let playlistsList = [].concat(this.props.playlists);
 
         // Hide current playlist if needed

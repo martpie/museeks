@@ -16,7 +16,6 @@ export default class Toasts extends Component {
     }
 
     constructor(props) {
-
         super(props);
     }
 

@@ -45,7 +45,6 @@ app.on('window-all-closed', () => {
 // This method will be called when Electron has done everything
 // initialization and ready for creating browser windows.
 app.on('ready', () => {
-
     const configManager = new ConfigManager(app);
     const { useNativeFrame } = configManager.getConfig();
     let { bounds } = configManager.getConfig();
@@ -121,7 +120,6 @@ app.on('ready', () => {
 */
 
 function checkBounds(bounds) {
-
     // check if the browser window is offscreen
     const display = electron.screen.getDisplayNearestPoint(bounds).workArea;
 

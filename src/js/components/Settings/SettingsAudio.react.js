@@ -16,12 +16,10 @@ export default class SettingsAudio extends Component {
     }
 
     constructor(props) {
-
         super(props);
     }
 
     render() {
-
         const config = this.props.config;
 
         return (
@@ -47,7 +45,6 @@ export default class SettingsAudio extends Component {
     }
 
     setPlaybackRate(e) {
-
         AppActions.player.setPlaybackRate(e.currentTarget.value);
     }
 }
