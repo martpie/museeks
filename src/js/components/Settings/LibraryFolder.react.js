@@ -20,14 +20,12 @@ export default class LibraryFolders extends Component {
     }
 
     constructor(props) {
-
         super(props);
 
         this.removeFolder = this.removeFolder.bind(this);
     }
 
     render() {
-
         const removeButtonClasses = classnames('delete-libray-folder', {
             disabled: this.props.refreshingLibrary
         });

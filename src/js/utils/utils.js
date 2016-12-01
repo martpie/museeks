@@ -85,7 +85,6 @@ const parseBase64 = (format, data) => {
  * @return array
  */
 const simpleSort = (array, sorting) => {
-
     if(sorting === 'asc') {
         array.sort((a, b) => {
             return a - b;
@@ -131,7 +130,6 @@ const stripAccents = (str) => {
  * @return array
  */
 const removeUselessFolders = (folders) => {
-
     // Remove duplicates
     let filteredFolders = folders.filter((elem, index) => {
         return folders.indexOf(elem) === index;
@@ -162,7 +160,6 @@ const removeUselessFolders = (folders) => {
  * @return array
  */
 const chunkArray = (array, chunkLength) => {
-
     const chunks = [];
 
     for(let i = 0, length = array.length; i < length; i += chunkLength) {
@@ -276,7 +273,6 @@ const getMetadata = async (track) => {
 };
 
 const getAudioDurationAsync = (path) => {
-
     const audio = new Audio;
 
     return new Promise((resolve, reject) => {
@@ -295,7 +291,6 @@ const getAudioDurationAsync = (path) => {
 };
 
 const fetchCover = async (trackPath) => {
-
     if(!trackPath) {
         return null;
     }
@@ -314,7 +309,6 @@ const fetchCover = async (trackPath) => {
     const matches = await globby(pattern, { nodir: true, follow: false });
 
     return matches.find((elem) => {
-
         const parsedPath = path.parse(elem);
 
         return ['album', 'albumart', 'folder', 'cover'].includes(parsedPath.name.toLowerCase())

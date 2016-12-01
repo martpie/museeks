@@ -5,7 +5,6 @@ import utils        from '../utils/utils';
 export default (state = {}, payload) => {
     switch (payload.type) {
         case(AppConstants.APP_PLAYER_TOGGLE): {
-
             if(Player.getAudio().paused && state.queue !== null) {
                 Player.play();
                 return {
@@ -22,7 +21,6 @@ export default (state = {}, payload) => {
         }
 
         case(AppConstants.APP_PLAYER_PLAY): {
-
             if(state.queue !== null) {
                 Player.play();
                 return {
@@ -35,7 +33,6 @@ export default (state = {}, payload) => {
         }
 
         case(AppConstants.APP_PLAYER_PAUSE): {
-
             Player.pause();
             return {
                 ...state,
@@ -44,7 +41,6 @@ export default (state = {}, payload) => {
         }
 
         case(AppConstants.APP_PLAYER_STOP): {
-
             Player.pause();
             const newState = {
                 ...state,
@@ -68,7 +64,6 @@ export default (state = {}, payload) => {
         }
 
         case(AppConstants.APP_PLAYER_NEXT): {
-
             const queue = [...state.queue];
             let newQueueCursor;
 
@@ -84,7 +79,6 @@ export default (state = {}, payload) => {
             }
 
             if (queue[newQueueCursor] !== undefined) {
-
                 const uri = utils.parseUri(queue[newQueueCursor].path);
 
                 Player.setAudioSrc(uri);
@@ -109,7 +103,6 @@ export default (state = {}, payload) => {
         }
 
         case(AppConstants.APP_PLAYER_PREVIOUS): {
-
             let newQueueCursor = state.queueCursor;
 
             // If track started less than 5 seconds ago, play th previous track,
@@ -121,7 +114,6 @@ export default (state = {}, payload) => {
             const newTrack = state.queue[newQueueCursor];
 
             if(newTrack !== undefined) {
-
                 const uri = utils.parseUri(newTrack.path);
 
                 Player.setAudioSrc(uri);
@@ -132,7 +124,6 @@ export default (state = {}, payload) => {
                     playerStatus: 'play',
                     queueCursor: newQueueCursor
                 };
-
             }
 
             // Stop
@@ -152,9 +143,7 @@ export default (state = {}, payload) => {
         }
 
         case(AppConstants.APP_PLAYER_SHUFFLE): {
-
             if(payload.shuffle) {
-
                 // Let's shuffle that
                 const queueCursor = state.queueCursor;
                 let queue = [...state.queue];
@@ -169,7 +158,6 @@ export default (state = {}, payload) => {
                 let t;
                 let i;
                 while (m) {
-
                     // Pick a remaining element…
                     i = Math.floor(Math.random() * m--);
 
@@ -188,7 +176,6 @@ export default (state = {}, payload) => {
                     queueCursor: 0,
                     oldQueue: state.queue,
                 };
-
             }
 
             const currentTrackSrc = Player.getAudio().src;
@@ -206,7 +193,6 @@ export default (state = {}, payload) => {
         }
 
         case(AppConstants.APP_PLAYER_REPEAT): {
-
             return {
                 ...state,
                 repeat: payload.repeat

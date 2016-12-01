@@ -16,7 +16,6 @@ export default class FullViewMessage extends PureComponent {
     }
 
     constructor(props) {
-
         super(props);
     }
 

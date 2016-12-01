@@ -32,7 +32,6 @@ const init = () => {
     });
 
     Player.getAudio().addEventListener('play', () => {
-
         ipcRenderer.send('playerAction', 'play');
 
         const path = decodeURIComponent(Player.getAudio().src).replace('file://', '');
@@ -56,7 +55,6 @@ const init = () => {
 
     // Listen for main-process events
     ipcRenderer.on('playerAction', (event, reply) => {
-
         switch(reply) {
             case 'play':
                 PlayerActions.play();
@@ -105,11 +103,8 @@ const restart = () => {
 
 const close = () => {
     if(app.config.get('minimizeToTray')) {
-
         app.browserWindows.main.hide();
-
     } else {
-
         app.browserWindows.main.destroy();
     }
 };
@@ -132,15 +127,12 @@ const saveBounds = () => {
     self.lastFilterSearch = now;
 
     self.filterSearchTimeOut = setTimeout(() => {
-
         app.config.set('bounds', app.browserWindows.main.getBounds());
         app.config.saveSync();
-
     }, 250);
 };
 
 const initShortcuts = () => {
-
     // Global shortcuts - Player
     globalShortcut.register('MediaPlayPause', () => {
         PlayerActions.playToggle();

@@ -27,7 +27,6 @@ const unsmoothifyVolume = (value) => Math.pow(value, 1 / factor); // Linearize a
 export default class VolumeControl extends Component {
 
     constructor(props) {
-
         super(props);
 
         const audio = Player.getAudio();
@@ -49,7 +48,6 @@ export default class VolumeControl extends Component {
     }
 
     render() {
-
         const volumeClasses = classnames('volume-control', {
             visible: this.state.showVolume
         });
@@ -77,7 +75,6 @@ export default class VolumeControl extends Component {
     }
 
     setVolume(e) {
-
         const smoothVolume = smoothifyVolume(e.currentTarget.value);
 
         AppActions.player.setVolume(smoothVolume);
@@ -93,9 +90,7 @@ export default class VolumeControl extends Component {
     }
 
     mute(e) {
-
         if(e.target.classList.contains('player-control') || e.target.classList.contains('fa')) {
-
             const muted = !Player.getAudio().muted;
 
             AppActions.player.setMuted(muted);

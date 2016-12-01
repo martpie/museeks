@@ -21,12 +21,10 @@ export default class Library extends Component {
     }
 
     constructor(props) {
-
         super(props);
     }
 
     getLibraryComponent() {
-
         // Loading library
         if(this.props.library === null) {
             return (

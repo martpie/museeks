@@ -19,12 +19,10 @@ export default class Settings extends Component {
     }
 
     constructor(props) {
-
         super(props);
     }
 
     render() {
-
         const config = this.props.config;
 
         return (

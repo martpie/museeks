@@ -13,7 +13,6 @@ export default (state = {}, payload) => {
             let queuePosition = null;
 
             for(let i = 0, length = queue.length; i < length; i++) {
-
                 if(queue[i]._id === id) {
                     queuePosition = i;
                     queueCursor = i;
@@ -22,7 +21,6 @@ export default (state = {}, payload) => {
             }
 
             if(queuePosition !== null) {
-
                 const uri = utils.parseUri(queue[queuePosition].path);
 
                 Player.setAudioSrc(uri);
@@ -30,12 +28,10 @@ export default (state = {}, payload) => {
 
                 // Check if we have to shuffle the queue
                 if(state.shuffle) {
-
                     let index = 0;
 
                     // need to check that later
                     for(let i = 0, length = queue.length; i < length; i++) {
-
                         if(queue[i]._id === id) {
                             index = i;
                             break;
@@ -50,7 +46,6 @@ export default (state = {}, payload) => {
                     let t;
                     let i;
                     while (m) {
-
                         // Pick a remaining element…
                         i = Math.floor(Math.random() * m--);
 
@@ -81,7 +76,6 @@ export default (state = {}, payload) => {
         }
 
         case(AppConstants.APP_FILTER_SEARCH): {
-
             if(!payload.search) {
                 const newState = { ...state };
                 newState.tracks[state.tracksCursor].sub = [...state.tracks[state.tracksCursor].all];
@@ -133,9 +127,7 @@ export default (state = {}, payload) => {
         }
 
         case(AppConstants.APP_LIBRARY_REMOVE_FOLDER): {
-
             if(!state.refreshingLibrary) {
-
                 const musicFolders = app.config.get('musicFolders');
 
                 musicFolders.splice(payload.index, 1);

@@ -19,7 +19,6 @@ export default class TrackRow extends Component {
     }
 
     constructor(props) {
-
         super(props);
         this.state = {
             hovered: false
@@ -30,7 +29,6 @@ export default class TrackRow extends Component {
     }
 
     render() {
-
         const classNames = classnames('playing-indicator', this.props.state, {
             'hovered': this.state.hovered,
         });
@@ -51,9 +49,7 @@ export default class TrackRow extends Component {
     }
 
     getIcon(state, hovered) {
-
         if(state === 'play') {
-
             if(hovered) {
                 return <Icon name='pause' fixedWidth />;
             }
@@ -71,12 +67,10 @@ export default class TrackRow extends Component {
     }
 
     onMouseEnter() {
-
         this.setState({ hovered: true });
     }
 
     onMouseLeave() {
-
         this.setState({ hovered: false });
     }
 }

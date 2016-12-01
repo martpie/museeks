@@ -56,7 +56,6 @@ const selectAndPlay = (_id) => {
 };
 
 const filterSearch = (search) => {
-
     store.dispatch({
         type : AppConstants.APP_FILTER_SEARCH,
         search
@@ -88,14 +87,12 @@ const removeFolder = (index) => {
 };
 
 const reset = () => {
-
     store.dispatch({
         type : AppConstants.APP_LIBRARY_REFRESH_START,
     });
 
     // Need promises
     app.models.Track.remove({}, { multi: true }, (err) => {
-
         if(err) console.error(err);
 
         app.models.Playlist.remove({}, { multi: true }, (err) => {
@@ -136,7 +133,6 @@ const refresh = () => {
             return app.supportedExtensions.includes(extension);
         });
     }).then((supportedFiles) => {
-
         if (supportedFiles.length === 0) {
             dispatchEnd();
             return;

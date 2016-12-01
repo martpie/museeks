@@ -23,7 +23,6 @@ export default class TrackRow extends Component {
     }
 
     constructor(props) {
-
         super(props);
         this.state = {};
 
@@ -33,7 +32,6 @@ export default class TrackRow extends Component {
     }
 
     render() {
-
         const trackClasses = classnames('track', {
             selected: this.props.selected
         });

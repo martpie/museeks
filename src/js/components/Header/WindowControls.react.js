@@ -14,12 +14,10 @@ export default class WindowControls extends PureComponent {
     }
 
     constructor(props) {
-
         super(props);
     }
 
     render() {
-
         if(!this.props.active) return null;
 
         return (

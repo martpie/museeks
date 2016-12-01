@@ -17,7 +17,6 @@ export default class PlayerControls extends PureComponent {
     }
 
     constructor(props) {
-
         super(props);
     }
 
@@ -36,6 +35,5 @@ export default class PlayerControls extends PureComponent {
                 <VolumeControl />
             </div>
         );
-
     }
 }

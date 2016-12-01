@@ -18,12 +18,10 @@ export default class SettingsAdvanced extends Component {
     }
 
     constructor(props) {
-
         super(props);
     }
 
     render() {
-
         const config = this.props.config;
 
         return (

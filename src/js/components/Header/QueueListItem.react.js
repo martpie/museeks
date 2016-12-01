@@ -26,7 +26,6 @@ export default class QueueListItem extends PureComponent {
     }
 
     constructor(props) {
-
         super(props);
 
         this.remove      = this.remove.bind(this);
@@ -36,7 +35,6 @@ export default class QueueListItem extends PureComponent {
     }
 
     render() {
-
         const queueContentClasses = classnames('track', {
             'dragged': this.props.dragged,
             'dragged-over': this.props.draggedOver,

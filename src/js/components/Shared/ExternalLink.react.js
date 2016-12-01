@@ -17,14 +17,12 @@ export default class ExternalLink extends Component {
     }
 
     constructor(props) {
-
         super(props);
 
         this.openLink = this.openLink.bind(this);
     }
 
     render() {
-
         return (
             <a href onClick={ this.openLink }>
                 { this.props.children }

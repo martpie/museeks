@@ -23,7 +23,6 @@ export default class SettingsLibrary extends Component {
     }
 
     constructor(props) {
-
         super(props);
 
         this.addFolders = this.addFolders.bind(this);
@@ -39,7 +38,8 @@ export default class SettingsLibrary extends Component {
                     Add folder(s)
                 </Button>
                 <Button bsSize='small' disabled={ this.props.refreshingLibrary } onClick={ this.refreshLibrary }>
-                    <Icon name='refresh' spin={ this.props.refreshingLibrary } /> { this.props.refreshingLibrary ? 'Refreshing Library' : 'Refresh Library' }
+                    <Icon name='refresh' spin={ this.props.refreshingLibrary } />
+                      { this.props.refreshingLibrary ? 'Refreshing Library' : 'Refresh Library' }
                 </Button>
                 <Button bsSize='small' disabled={ this.props.refreshingLibrary } bsStyle={ 'danger' } onClick={ this.resetLibrary }>
                     Reset library

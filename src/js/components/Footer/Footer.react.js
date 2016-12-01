@@ -20,12 +20,10 @@ export default class Footer extends Component {
     }
 
     constructor(props) {
-
         super(props);
     }
 
     render() {
-
         const tracks = this.props.tracks;
         const status = (tracks !== null) ? utils.getStatus(tracks) : 'An apple a day keeps Dr Dre away';
 

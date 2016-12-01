@@ -21,12 +21,10 @@ export default class Playlist extends Component {
     }
 
     constructor(props) {
-
         super(props);
     }
 
     render() {
-
         if(Array.isArray(this.props.tracks) && this.props.tracks.length > 0) {
             return (
                 <TracksList

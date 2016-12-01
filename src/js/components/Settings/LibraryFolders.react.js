@@ -19,12 +19,10 @@ export default class LibraryFolders extends Component {
     }
 
     constructor(props) {
-
         super(props);
     }
 
     render() {
-
         const foldersListClasses = classnames('musicfolders-list', {
             empty: this.props.folders.length === 0
         });

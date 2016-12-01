@@ -19,7 +19,6 @@ export default class Queue extends PureComponent {
     }
 
     constructor(props) {
-
         super(props);
     }
 

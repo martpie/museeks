@@ -18,7 +18,6 @@ export default class SettingsUI extends Component {
     }
 
     constructor(props) {
-
         super(props);
     }
 
