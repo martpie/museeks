@@ -137,8 +137,8 @@ export default class TracksList extends Component {
     }
 
     onKey(e) {
-        const selected = this.state.selected,
-            tracks     = this.props.tracks;
+        const selected = this.state.selected;
+        const tracks   = this.props.tracks;
 
         const firstSelectedTrackIdx = tracks.findIndex((track) => {
             selected.includes(track._id);
@@ -172,10 +172,10 @@ export default class TracksList extends Component {
     }
 
     buildTrackTiles() {
-        const self         = this,
-            selected       = this.state.selected,
-            tracks         = [...this.props.tracks],
-            trackPlayingId = this.props.trackPlayingId;
+        const self           = this;
+        const selected       = this.state.selected;
+        const tracks         = [...this.props.tracks];
+        const trackPlayingId = this.props.trackPlayingId;
 
         const chunkLength = 20;
         const tilesToDisplay = 5;

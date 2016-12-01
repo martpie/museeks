@@ -165,7 +165,9 @@ export default (state = {}, payload) => {
                 // now get only what we want
                 queue = queue.splice(queueCursor + 1, state.queue.length - (queueCursor + 1));
 
-                let m = queue.length, t, i;
+                let m = queue.length;
+                let t;
+                let i;
                 while (m) {
 
                     // Pick a remaining element…

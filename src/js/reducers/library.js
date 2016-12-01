@@ -46,7 +46,9 @@ export default (state = {}, payload) => {
 
                     queue.splice(id, 1);
 
-                    let m = queue.length, t, i;
+                    let m = queue.length;
+                    let t;
+                    let i;
                     while (m) {
 
                         // Pick a remaining element…
