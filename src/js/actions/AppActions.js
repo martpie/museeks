@@ -35,7 +35,7 @@ const init = () => {
 
         ipcRenderer.send('playerAction', 'play');
 
-        const path = decodeURI(Player.getAudio().src).replace('file://', '');
+        const path = decodeURIComponent(Player.getAudio().src).replace('file://', '');
 
         app.models.Track.findOne({ path }, (err, track) => {
             ipcRenderer.send('playerAction', 'trackStart', track);
