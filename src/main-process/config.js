@@ -36,7 +36,7 @@ class ConfigManager {
             audioPlaybackRate: 1,
             audioMuted: false,
             audioShuffle: false,
-            audioRepeat: false,
+            audioRepeat: 'none',
             musicFolders: [],
             sleepBlocker: false,
             autoUpdateChecker: true,

@@ -50,18 +50,18 @@ export default class ButtonRepeat extends Component {
 
     toggleRepeat() {
 
-        let repeat = false;
+        let repeat = 'none';
 
         switch(this.props.repeat) {
 
-            case false:
+            case 'none':
                 repeat = 'all';
                 break;
             case 'all':
                 repeat = 'one';
                 break;
             case 'one':
-                repeat = false;
+                repeat = 'none';
                 break;
         }
 
