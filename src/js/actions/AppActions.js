@@ -73,6 +73,11 @@ const init = () => {
         }
     });
 
+    // Listen for main-process events
+    ipcRenderer.on('close', () => {
+        close();
+    });
+
     // Prevent some events
     window.addEventListener('dragover', (e) => {
         e.preventDefault();
@@ -81,11 +86,6 @@ const init = () => {
     window.addEventListener('drop', (e) => {
         e.preventDefault();
     }, false);
-
-    window.addEventListener('beforeunload', (e) => {
-        e.returnValue = false;
-        minimize();
-    });
 
     // Remember dimensions and positionning
     const currentWindow = app.browserWindows.main;
