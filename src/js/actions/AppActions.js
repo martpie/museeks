@@ -36,7 +36,7 @@ const init = () => {
 
         const path = decodeURIComponent(Player.getAudio().src).replace('file://', '');
 
-        app.models.Track.findOne({ path }, (err, track) => {
+        utils.getMetadata(path).then((track) => {
             ipcRenderer.send('playerAction', 'trackStart', track);
 
             if(!app.browserWindows.main.isFocused()) {
