@@ -33,6 +33,12 @@ export default class SettingsUI extends Component {
                     onClick={ AppActions.settings.toggleDarkTheme }
                 />
                 <CheckboxSetting
+                    title='Display Notifications'
+                    description='When checked, native notifications will be displayed for various things, like track start'
+                    defaultValue={ config.displayNotifications }
+                    onClick={ AppActions.settings.toggleDisplayNotifications }
+                />
+                <CheckboxSetting
                     title='Use native frame'
                     description='Run Museeks with default window controls (will restart the app)'
                     defaultValue={ config.useNativeFrame }

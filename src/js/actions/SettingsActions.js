@@ -127,6 +127,15 @@ const refreshProgress = (percentage) => {
     });
 };
 
+const toggleDisplayNotifications = (value) => {
+    app.config.set('displayNotifications', value);
+    app.config.saveSync();
+
+    store.dispatch({
+        type : AppConstants.APP_REFRESH_CONFIG
+    });
+};
+
 export default{
     check,
     checkDevMode,
@@ -137,6 +146,7 @@ export default{
     toggleAutoUpdateChecker,
     toggleDarkTheme,
     toggleDevMode,
+    toggleDisplayNotifications,
     toggleMinimizeToTray,
     toggleNativeFrame,
     toggleSleepBlocker
