@@ -39,13 +39,15 @@ const init = () => {
         app.models.Track.findOne({ path }, (err, track) => {
             ipcRenderer.send('playerAction', 'trackStart', track);
 
-            utils.fetchCover(track.path).then((cover) => {
-                NotificationActions.add({
-                    title: track.title,
-                    body: `${track.artist}\n${track.album}`,
-                    icon: cover
+            if(!app.browserWindows.main.isFocused()) {
+                utils.fetchCover(track.path).then((cover) => {
+                    NotificationActions.add({
+                        title: track.title,
+                        body: `${track.artist}\n${track.album}`,
+                        icon: cover
+                    });
                 });
-            });
+            }
         });
     });
 
