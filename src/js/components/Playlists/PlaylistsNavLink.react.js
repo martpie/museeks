@@ -11,7 +11,7 @@ import { Link } from 'react-router';
 export default class PlaylistsNavLink extends Component {
 
     static propTypes = {
-        children: React.PropTypes.object,
+        children: React.PropTypes.string,
         playlistId: React.PropTypes.string,
         onContextMenu: React.PropTypes.func
     }

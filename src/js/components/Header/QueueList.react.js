@@ -71,12 +71,13 @@ export default class QueueList extends Component {
                     { shownQueue.map((track, index) => {
                         return (
                             <QueueListItem
+                                key={ index }
                                 index={ index }
                                 track={ track }
                                 queueCursor={ this.props.queueCursor }
                                 dragged={ index === self.state.draggedTrackIndex }
                                 draggedOver={ index === self.state.draggedOverTrackIndex }
-                                dragPosition={ index === self.state.draggedOverTrackIndex && self.state.dragPosition }
+                                dragPosition={ index === self.state.draggedOverTrackIndex && self.state.dragPosition || null }
                                 onDragStart={ self.dragStart }
                                 onDragOver={ this.dragOver }
                                 onDragEnd={ self.dragEnd }
