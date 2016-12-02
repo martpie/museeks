@@ -80,11 +80,6 @@ const init = () => {
         e.preventDefault();
     }, false);
 
-    window.addEventListener('beforeunload', (e) => {
-        e.returnValue = false;
-        minimize();
-    });
-
     // Remember dimensions and positionning
     const currentWindow = app.browserWindows.main;
 
