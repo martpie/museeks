@@ -55,6 +55,7 @@ class Museeks extends Component {
                             this.props.children, {
                                 app               : this,
                                 config            : { ...app.config.getAll() },
+                                playerStatus      : store.playerStatus,
                                 queue             : store.queue,
                                 tracks            : store.tracks[store.tracksCursor].sub,
                                 library           : store.tracks[store.tracksCursor].all,

@@ -25,7 +25,8 @@ export default class TracksList extends Component {
         tracks: React.PropTypes.array,
         trackPlayingId: React.PropTypes.string,
         playlists: React.PropTypes.array,
-        currentPlaylist: React.PropTypes.string
+        currentPlaylist: React.PropTypes.string,
+        playerStatus: React.PropTypes.string
     }
 
     constructor(props) {
@@ -333,7 +334,8 @@ export default class TracksList extends Component {
             type: this.props.type,
             selectedCount: this.state.selected.length,
             track: this.props.tracks[index],
-            playlists: playlistsList
+            playlists: playlistsList,
+            playerStatus: this.props.playerStatus
         }));
     }
 }

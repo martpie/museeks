@@ -11,7 +11,8 @@ class IpcManager {
     bindEvents() {
         ipcMain.on('tracksListContextMenu', (event, stringData) => {
             const data = JSON.parse(stringData);
-            let playlistTemplate;
+            let playlistTemplate = [];
+            let addToQueueTemplate = [];
 
             if(data.playlists) {
                 playlistTemplate = [
@@ -59,6 +60,26 @@ class IpcManager {
                 ];
             }
 
+            if(data.playerStatus !== 'stop') {
+                addToQueueTemplate = [
+                    {
+                        label: 'Add to queue',
+                        click: () => {
+                            event.sender.send('tracksListContextMenuReply', 'addToQueue');
+                        }
+                    },
+                    {
+                        label: 'Play next',
+                        click: () => {
+                            event.sender.send('tracksListContextMenuReply', 'playNext');
+                        }
+                    },
+                    {
+                        type: 'separator'
+                    }
+                ];
+            }
+
             const template = [
                 {
                     label: data.selectedCount > 1 ? `${data.selectedCount} tracks selected` : `${data.selectedCount} track selected`,
@@ -67,21 +88,7 @@ class IpcManager {
                 {
                     type: 'separator'
                 },
-                {
-                    label: 'Add to queue',
-                    click: () => {
-                        event.sender.send('tracksListContextMenuReply', 'addToQueue');
-                    }
-                },
-                {
-                    label: 'Play next',
-                    click: () => {
-                        event.sender.send('tracksListContextMenuReply', 'playNext');
-                    }
-                },
-                {
-                    type: 'separator'
-                },
+                ...addToQueueTemplate,
                 {
                     label: 'Add to playlist',
                     submenu: playlistTemplate
