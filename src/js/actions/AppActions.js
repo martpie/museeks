@@ -71,6 +71,11 @@ const init = () => {
         }
     });
 
+    // Listen for main-process events
+    ipcRenderer.on('close', () => {
+        close();
+    });
+
     // Prevent some events
     window.addEventListener('dragover', (e) => {
         e.preventDefault();

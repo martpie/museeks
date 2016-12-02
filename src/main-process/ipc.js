@@ -165,6 +165,11 @@ class IpcManager {
             // Dereference the window object
             this.window = null;
         });
+
+        this.window.on('close', (e) => {
+            e.preventDefault();
+            this.window.webContents.send('close');
+        });
     }
 }
 
