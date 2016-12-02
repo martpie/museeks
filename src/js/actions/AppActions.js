@@ -39,7 +39,7 @@ const init = () => {
         utils.getMetadata(path).then((track) => {
             ipcRenderer.send('playerAction', 'trackStart', track);
 
-            if(!app.browserWindows.main.isFocused()) {
+            if(!app.browserWindows.main.isFocused() && app.config.get('displayNotifications')) {
                 utils.fetchCover(track.path).then((cover) => {
                     NotificationActions.add({
                         title: track.title,
