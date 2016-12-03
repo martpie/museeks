@@ -32,9 +32,7 @@ const refresh = async () => {
     }
 };
 
-const noop = () => {};
-
-const create = async (name, redirect = false, callback = noop) => {
+const create = async (name, redirect = false) => {
     const playlist = {
         name,
         tracks: []
@@ -42,11 +40,10 @@ const create = async (name, redirect = false, callback = noop) => {
 
     try {
         const doc = await app.models.Playlist.insertAsync(playlist);
-        // TODO (y.solovyov): we should convert callback API into async/await
-        callback(doc._id);
         refresh();
         if (redirect) hashHistory.push(`/playlists/${doc._id}`);
         else AppActions.toasts.add('success', `The playlist "${name}" was created`);
+        return doc._id;
     } catch (err) {
         console.warn(err);
     }
