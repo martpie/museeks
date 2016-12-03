@@ -12,7 +12,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 export default class Settings extends Component {
 
     static propTypes = {
-        config: React.PropTypes.object.isRequired,
+        config: React.PropTypes.object,
         refreshingLibrary: React.PropTypes.bool,
         refreshProgress: React.PropTypes.number,
         children: React.PropTypes.object
