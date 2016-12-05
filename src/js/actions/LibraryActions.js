@@ -15,7 +15,7 @@ const dialog = electron.remote.dialog;
 const realpathAsync = Promise.promisify(fs.realpath);
 
 
-const load = () => {
+const load = async () => {
     const querySort = {
         'loweredMetas.artist': 1,
         'year': 1,
@@ -23,15 +23,16 @@ const load = () => {
         'disk.no': 1,
         'track.no': 1
     };
-    app.models.Track.find().sort(querySort).exec((err, tracks) => {
-        if (err) console.warn(err);
-        else {
-            store.dispatch({
-                type : AppConstants.APP_REFRESH_LIBRARY,
-                tracks
-            });
-        }
-    });
+
+    try {
+        const tracks = await app.models.Track.find().sort(querySort).execAsync();
+        store.dispatch({
+            type : AppConstants.APP_REFRESH_LIBRARY,
+            tracks
+        });
+    } catch (err) {
+        console.warn(err);
+    }
 };
 
 const setTracksCursor = (cursor) => {
@@ -86,23 +87,26 @@ const removeFolder = (index) => {
     });
 };
 
-const reset = () => {
+const reset = async () => {
     store.dispatch({
         type : AppConstants.APP_LIBRARY_REFRESH_START,
     });
 
-    // Need promises
-    app.models.Track.remove({}, { multi: true }, (err) => {
-        if(err) console.error(err);
+    try {
+        await app.models.Track.removeAsync({}, { multi: true });
+    } catch (err) {
+        console.error(err);
+    }
 
-        app.models.Playlist.remove({}, { multi: true }, (err) => {
-            if(err) console.error(err);
+    try {
+        await app.models.Playlist.removeAsync({}, { multi: true });
+    } catch (err) {
+        console.error(err);
+    }
 
-            AppActions.library.load();
-            store.dispatch({
-                type : AppConstants.APP_LIBRARY_REFRESH_END,
-            });
-        });
+    AppActions.library.load();
+    store.dispatch({
+        type : AppConstants.APP_LIBRARY_REFRESH_END,
     });
 };
 
@@ -162,12 +166,11 @@ const refresh = () => {
     });
 };
 
-const fetchCover = (path) => {
-    utils.fetchCover(path).then((cover) => {
-        store.dispatch({
-            type : AppConstants.APP_LIBRARY_FETCHED_COVER,
-            cover
-        });
+const fetchCover = async (path) => {
+    const cover = await utils.fetchCover(path);
+    store.dispatch({
+        type : AppConstants.APP_LIBRARY_FETCHED_COVER,
+        cover
     });
 };
 
@@ -176,12 +179,14 @@ const fetchCover = (path) => {
  *
  * @param source
  */
-const incrementPlayCount = (source) => {
-    app.models.Track.update({ src: source }, { $inc: { playcount : 1 } }, (err) => {
-        if(err) {
-            console.warn(err);
-        }
-    });
+const incrementPlayCount = async (source) => {
+    const query = { src: source };
+    const update = { $inc: { playcount : 1 } };
+    try {
+        await app.models.Track.updateAsync(query, update);
+    } catch (err) {
+        console.warn(err);
+    }
 };
 
 

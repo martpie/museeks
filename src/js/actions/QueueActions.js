@@ -24,21 +24,19 @@ const remove = (index) => {
     });
 };
 
-const add =  (tracksIds) => {
-    app.models.Track.find({ _id: { $in: tracksIds } }, (err, tracks) => {
-        store.dispatch({
-            type : AppConstants.APP_QUEUE_ADD,
-            tracks
-        });
+const add = async (tracksIds) => {
+    const tracks = await app.models.Track.findAsync({ _id: { $in: tracksIds } });
+    store.dispatch({
+        type : AppConstants.APP_QUEUE_ADD,
+        tracks
     });
 };
 
-const addNext = (tracksIds) => {
-    app.models.Track.find({ _id: { $in: tracksIds } }, (err, tracks) => {
-        store.dispatch({
-            type : AppConstants.APP_QUEUE_ADD_NEXT,
-            tracks
-        });
+const addNext = async (tracksIds) => {
+    const tracks = await app.models.Track.findAsync({ _id: { $in: tracksIds } });
+    store.dispatch({
+        type : AppConstants.APP_QUEUE_ADD_NEXT,
+        tracks
     });
 };
 
