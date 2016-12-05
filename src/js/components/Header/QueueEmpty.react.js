@@ -11,7 +11,7 @@ import classnames from 'classnames';
 export default class QueueEmpty extends PureComponent {
 
     static propTypes = {
-        visible: React.PropTypes.visible
+        visible: React.PropTypes.bool
     }
 
     constructor(props) {
