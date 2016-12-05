@@ -18,7 +18,8 @@ export default class Playlists extends Component {
         params: React.PropTypes.object,
         children: React.PropTypes.object,
         tracks: React.PropTypes.array,
-        playlists: React.PropTypes.array
+        playlists: React.PropTypes.array,
+        playerStatus: React.PropTypes.string
     }
 
     constructor(props) {

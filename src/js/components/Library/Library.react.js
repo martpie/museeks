@@ -17,7 +17,8 @@ export default class Library extends Component {
         library: React.PropTypes.array,
         tracks: React.PropTypes.array,
         trackPlayingId: React.PropTypes.string,
-        playlists: React.PropTypes.array
+        playlists: React.PropTypes.array,
+        playerStatus: React.PropTypes.string
     }
 
     constructor(props) {
@@ -60,6 +61,7 @@ export default class Library extends Component {
         return (
             <TracksList
                 type='library'
+                playerStatus={ this.props.playerStatus }
                 tracks={ this.props.tracks }
                 trackPlayingId={ this.props.trackPlayingId }
                 playlists={ this.props.playlists }
