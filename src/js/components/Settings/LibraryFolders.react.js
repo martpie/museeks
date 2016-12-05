@@ -32,6 +32,7 @@ export default class LibraryFolders extends Component {
                 { this.props.folders.map((folder, i) => {
                     return (
                         <LibraryFolder
+                            key={ i }
                             index={ i }
                             folder={ folder }
                             refreshingLibrary={ this.props.refreshingLibrary }

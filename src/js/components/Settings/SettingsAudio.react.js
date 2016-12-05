@@ -12,7 +12,7 @@ import AppActions from '../../actions/AppActions';
 export default class SettingsAudio extends Component {
 
     static propTypes = {
-        config: React.PropTypes.object.isRequired
+        config: React.PropTypes.object
     }
 
     constructor(props) {

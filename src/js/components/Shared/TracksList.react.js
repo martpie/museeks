@@ -71,7 +71,7 @@ export default class TracksList extends Component {
     componentDidMount() {
         const self = this;
 
-        ipcRenderer.on('tracksListContextMenuReply', (event, reply, data) => {
+        ipcRenderer.on('tracksListContextMenuReply', async (event, reply, data) => {
             const selected = self.state.selected;
 
             switch(reply) {
@@ -95,10 +95,9 @@ export default class TracksList extends Component {
                     break;
                 }
                 case 'createPlaylist': {
-                    AppActions.playlists.create('New playlist', false, (playlistId) => {
-                        const isShown = self.props.type === 'playlist' && data === self.props.currentPlaylist;
-                        AppActions.playlists.addTracksTo(playlistId, selected, isShown);
-                    });
+                    const playlistId = await AppActions.playlists.create('New playlist', false);
+                    const isShown = self.props.type === 'playlist' && data === self.props.currentPlaylist;
+                    AppActions.playlists.addTracksTo(playlistId, selected, isShown);
                     break;
                 }
                 case 'searchFor': {

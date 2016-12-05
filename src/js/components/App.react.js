@@ -36,6 +36,8 @@ class Museeks extends Component {
         const store = this.props.store;
         const trackPlayingId = (store.queue.length > 0 && store.queueCursor !== null) ? store.queue[store.queueCursor]._id : null;
 
+        const config = { ...app.config.getAll() };
+
         return (
             <div className='main'>
                 <KeyBinding onKey={ this.onKey } preventInputConflict />
@@ -47,14 +49,14 @@ class Museeks extends Component {
                     cover={ store.cover }
                     queue={ store.queue }
                     queueCursor={ store.queueCursor }
-                    windowControls={ !{ ...app.config.getAll() }.useNativeFrame }
+                    windowControls={ !config.useNativeFrame }
                 />
                 <div className='main-content'>
                     <Row className='content'>
                         { React.cloneElement(
                             this.props.children, {
                                 app               : this,
-                                config            : { ...app.config.getAll() },
+                                config,
                                 playerStatus      : store.playerStatus,
                                 queue             : store.queue,
                                 tracks            : store.tracks[store.tracksCursor].sub,
