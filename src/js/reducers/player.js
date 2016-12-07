@@ -1,39 +1,16 @@
 import AppConstants from '../constants/AppConstants';
-import Player       from '../lib/player';
 import utils        from '../utils/utils';
 
 export default (state = {}, payload) => {
     switch (payload.type) {
-        case(AppConstants.APP_PLAYER_TOGGLE): {
-            if(Player.getAudio().paused && state.queue !== null) {
-                Player.play();
-                return {
-                    ...state,
-                    playerStatus: 'play'
-                };
-            }
-
-            Player.pause();
+        case(AppConstants.APP_PLAYER_PLAY): {
             return {
                 ...state,
-                playerStatus: 'pause'
+                playerStatus: 'play'
             };
         }
 
-        case(AppConstants.APP_PLAYER_PLAY): {
-            if(state.queue !== null) {
-                Player.play();
-                return {
-                    ...state,
-                    playerStatus: 'play'
-                };
-            }
-
-            return state;
-        }
-
         case(AppConstants.APP_PLAYER_PAUSE): {
-            Player.pause();
             return {
                 ...state,
                 playerStatus: 'pause'
@@ -41,7 +18,6 @@ export default (state = {}, payload) => {
         }
 
         case(AppConstants.APP_PLAYER_STOP): {
-            Player.pause();
             const newState = {
                 ...state,
                 queue          :  [],
@@ -64,81 +40,22 @@ export default (state = {}, payload) => {
         }
 
         case(AppConstants.APP_PLAYER_NEXT): {
-            const queue = [...state.queue];
-            let newQueueCursor;
-
-            if(state.repeat === 'one') {
-                newQueueCursor = state.queueCursor;
-            } else if (
-                state.repeat === 'all' &&
-                state.queueCursor === queue.length - 1 // is last track
-            ) {
-                newQueueCursor = 0; // start with new track
-            } else {
-                newQueueCursor = state.queueCursor + 1;
-            }
-
-            if (queue[newQueueCursor] !== undefined) {
-                const uri = utils.parseUri(queue[newQueueCursor].path);
-
-                Player.setAudioSrc(uri);
-                Player.play();
-
-                return {
-                    ...state,
-                    playerStatus: 'play',
-                    queueCursor: newQueueCursor
-                };
-            }
-
-            Player.pause();
-
-            // Stop
             return {
                 ...state,
-                queue: [],
-                queueCursor    :  null,
-                playerStatus   : 'stop'
+                playerStatus: 'play',
+                queueCursor: payload.newQueueCursor
             };
         }
 
         case(AppConstants.APP_PLAYER_PREVIOUS): {
-            let newQueueCursor = state.queueCursor;
-
-            // If track started less than 5 seconds ago, play th previous track,
-            // otherwise replay the current one
-            if (Player.getAudio().currentTime < 5) {
-                newQueueCursor = state.queueCursor - 1;
-            }
-
-            const newTrack = state.queue[newQueueCursor];
-
-            if(newTrack !== undefined) {
-                const uri = utils.parseUri(newTrack.path);
-
-                Player.setAudioSrc(uri);
-                Player.play();
-
-                return {
-                    ...state,
-                    playerStatus: 'play',
-                    queueCursor: newQueueCursor
-                };
-            }
-
-            // Stop
-            Player.pause();
-
             return {
                 ...state,
-                queue: [],
-                queueCursor    :  null,
-                playerStatus   : 'stop'
+                playerStatus: 'play',
+                queueCursor: payload.newQueueCursor
             };
         }
 
         case(AppConstants.APP_PLAYER_JUMP_TO): {
-            Player.setAudioCurrentTime(payload.to);
             return state;
         }
 
@@ -178,9 +95,8 @@ export default (state = {}, payload) => {
                 };
             }
 
-            const currentTrackSrc = Player.getAudio().src;
             const currentTrackIndex = state.oldQueue.findIndex((track) => {
-                return currentTrackSrc === `file://${encodeURI(track.path)}`;
+                return payload.currentSrc === `file://${encodeURI(track.path)}`;
             });
 
             // Roll back to the old but update queueCursor

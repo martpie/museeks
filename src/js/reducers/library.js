@@ -1,5 +1,4 @@
 import app          from '../lib/app';
-import Player       from '../lib/player';
 import AppConstants from '../constants/AppConstants';
 import utils        from '../utils/utils';
 
@@ -9,70 +8,47 @@ export default (state = {}, payload) => {
             const queue = [...state.tracks[state.tracksCursor].sub];
             const id    = payload._id;
 
-            let queueCursor = null; // Clean that variable mess later
-            let queuePosition = null;
+            let queueCursor = payload.queuePosition; // Clean that variable mess later
 
-            for(let i = 0, length = queue.length; i < length; i++) {
-                if(queue[i]._id === id) {
-                    queuePosition = i;
-                    queueCursor = i;
-                    break;
-                }
-            }
+            // Check if we have to shuffle the queue
+            if(state.shuffle) {
+                // need to check that later
+                const index = queue.findIndex(function(track) {
+                    return track._id === id;
+                });
 
-            if(queuePosition !== null) {
-                const uri = utils.parseUri(queue[queuePosition].path);
+                const firstTrack = queue[index];
 
-                Player.setAudioSrc(uri);
-                Player.play();
+                queue.splice(id, 1);
 
-                // Check if we have to shuffle the queue
-                if(state.shuffle) {
-                    let index = 0;
+                let m = queue.length;
+                let t;
+                let i;
+                while (m) {
+                    // Pick a remaining element…
+                    i = Math.floor(Math.random() * m--);
 
-                    // need to check that later
-                    for(let i = 0, length = queue.length; i < length; i++) {
-                        if(queue[i]._id === id) {
-                            index = i;
-                            break;
-                        }
-                    }
-
-                    const firstTrack = queue[index];
-
-                    queue.splice(id, 1);
-
-                    let m = queue.length;
-                    let t;
-                    let i;
-                    while (m) {
-                        // Pick a remaining element…
-                        i = Math.floor(Math.random() * m--);
-
-                        // And swap it with the current element.
-                        t = queue[m];
-                        queue[m] = queue[i];
-                        queue[i] = t;
-                    }
-
-                    queue.unshift(firstTrack);
-
-                    // Let's set the cursor to 0
-                    queueCursor = 0;
+                    // And swap it with the current element.
+                    t = queue[m];
+                    queue[m] = queue[i];
+                    queue[i] = t;
                 }
 
-                // Backup that and change the UI
-                return {
-                    ...state,
-                    queue,
-                    queueCursor,
-                    oldQueue       :  queue,
-                    oldQueueCursor :  queueCursor,
-                    playerStatus   : 'play'
-                };
+                queue.unshift(firstTrack);
+
+                // Let's set the cursor to 0
+                queueCursor = 0;
             }
 
-            return state;
+            // Backup that and change the UI
+            return {
+                ...state,
+                queue,
+                queueCursor,
+                oldQueue       :  queue,
+                oldQueueCursor :  queueCursor,
+                playerStatus   : 'play'
+            };
         }
 
         case(AppConstants.APP_FILTER_SEARCH): {

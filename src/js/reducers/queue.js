@@ -1,16 +1,11 @@
 import AppConstants from '../constants/AppConstants';
-import Player       from '../lib/player';
 import utils        from '../utils/utils';
 
 export default (state = {}, payload) => {
     switch (payload.type) {
         case(AppConstants.APP_QUEUE_PLAY): {
-            const queue       = [].concat(state.queue);
+            const queue       = [...queue];
             const queueCursor = payload.index;
-
-            const uri = utils.parseUri(queue[queueCursor].path);
-            Player.setAudioSrc(uri);
-            Player.play();
 
             // Backup that and change the UI
             return {

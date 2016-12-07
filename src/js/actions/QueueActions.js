@@ -2,9 +2,15 @@ import store from '../store.js';
 import AppConstants  from '../constants/AppConstants';
 
 import app from '../lib/app';
+import Player from '../lib/player';
 
 
 const selectAndPlay = (index) => {
+    const { queue } = store.getState();
+    const uri = utils.parseUri(queue[index].path);
+    Player.setAudioSrc(uri);
+    Player.play();
+
     store.dispatch({
         type : AppConstants.APP_QUEUE_PLAY,
         index

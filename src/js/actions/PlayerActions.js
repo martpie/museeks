@@ -5,6 +5,7 @@ import ToastsActions from './ToastsActions';
 
 import app from '../lib/app';
 import Player from '../lib/player';
+import utils from '../utils/utils';
 
 const ipcRenderer    = electron.ipcRenderer;
 
@@ -17,24 +18,29 @@ const audioErrors = {
 
 
 const playToggle = () => {
-    store.dispatch({
-        type : AppConstants.APP_PLAYER_TOGGLE
-    });
+    Player.getAudio().paused ? play() : pause();
 };
 
 const play = () => {
-    store.dispatch({
-        type : AppConstants.APP_PLAYER_PLAY
-    });
+    if(store.getState().queue !== null) {
+        Player.play();
+        store.dispatch({
+            type : AppConstants.APP_PLAYER_PLAY
+        });
+    }
 };
 
 const pause = () => {
-    store.dispatch({
-        type : AppConstants.APP_PLAYER_PAUSE
-    });
+    if(store.getState().queue !== null) {
+        Player.pause();
+        store.dispatch({
+            type : AppConstants.APP_PLAYER_PAUSE
+        });
+    }
 };
 
 const stop = () => {
+    Player.stop();
     store.dispatch({
         type : AppConstants.APP_PLAYER_STOP
     });
@@ -42,26 +48,86 @@ const stop = () => {
     ipcRenderer.send('playerAction', 'stop');
 };
 
-const next = (e) => {
-    store.dispatch({
-        type : AppConstants.APP_PLAYER_NEXT,
-        e
-    });
+const next = () => {
+    const { queue, queueCursor, repeat } = store.getState();
+    let newQueueCursor;
+
+    if(repeat === 'one') {
+        newQueueCursor = queueCursor;
+    } else if (repeat === 'all' && queueCursor === queue.length - 1) { // is last track
+        console.log('is last');
+        newQueueCursor = 0; // start with new track
+    } else {
+        newQueueCursor = queueCursor + 1;
+    }
+
+    const track = queue[newQueueCursor];
+
+    if (track !== undefined) {
+        const uri = utils.parseUri(track.path);
+
+        Player.setAudioSrc(uri);
+        Player.play();
+        store.dispatch({
+            type : AppConstants.APP_PLAYER_NEXT,
+            newQueueCursor
+        });
+    } else {
+        // Player.pause();
+        //
+        // // Stop
+        // return {
+        //     ...state,
+        //     queue: [],
+        //     queueCursor    :  null,
+        //     playerStatus   : 'stop'
+        // };
+
+        // TODO (y.solovyov) do we need an action that sets state as in stop(),
+        // but calls Player.pause()?
+        stop();
+    }
 };
 
 const previous = () => {
-    store.dispatch({
-        type : AppConstants.APP_PLAYER_PREVIOUS
-    });
+    const currentTime = Player.getAudio().currentTime;
+
+    const { queue, queueCursor } = store.getState();
+    let newQueueCursor = queueCursor;
+
+    // If track started less than 5 seconds ago, play th previous track,
+    // otherwise replay the current one
+    if (currentTime < 5) {
+        newQueueCursor = queueCursor - 1;
+    }
+
+    const newTrack = queue[newQueueCursor];
+
+    if (newTrack !== undefined) {
+        const uri = utils.parseUri(newTrack.path);
+
+        Player.setAudioSrc(uri);
+        Player.play();
+
+        store.dispatch({
+            type : AppConstants.APP_PLAYER_PREVIOUS,
+            currentTime,
+            newQueueCursor,
+        });
+    } else {
+        stop();
+    }
 };
 
 const shuffle = (shuffle) => {
     app.config.set('audioShuffle', shuffle);
     app.config.saveSync();
 
+    const currentSrc = Player.getAudio().src;
     store.dispatch({
         type : AppConstants.APP_PLAYER_SHUFFLE,
-        shuffle
+        shuffle,
+        currentSrc
     });
 };
 
@@ -113,9 +179,11 @@ const setPlaybackRate = (value) => {
 };
 
 const jumpTo = (to) => {
+    // TODO (y.solovyov) do we want to set some explicit state?
+    // if yes, what should it be? if not, do we need this actions at all?
+    Player.setAudioCurrentTime(to);
     store.dispatch({
-        type : AppConstants.APP_PLAYER_JUMP_TO,
-        to
+        type : AppConstants.APP_PLAYER_JUMP_TO
     });
 };
 
