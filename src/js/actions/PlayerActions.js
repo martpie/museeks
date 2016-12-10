@@ -22,7 +22,9 @@ const playToggle = () => {
 };
 
 const play = () => {
-    if(store.getState().queue !== null) {
+    const { queue } = store.getState();
+    console.log(queue);
+    if(queue !== null) {
         Player.play();
         store.dispatch({
             type : AppConstants.APP_PLAYER_PLAY
@@ -31,7 +33,9 @@ const play = () => {
 };
 
 const pause = () => {
-    if(store.getState().queue !== null) {
+    const { queue } = store.getState();
+    console.log(queue);
+    if(queue !== null) {
         Player.pause();
         store.dispatch({
             type : AppConstants.APP_PLAYER_PAUSE
@@ -73,18 +77,6 @@ const next = () => {
             newQueueCursor
         });
     } else {
-        // Player.pause();
-        //
-        // // Stop
-        // return {
-        //     ...state,
-        //     queue: [],
-        //     queueCursor    :  null,
-        //     playerStatus   : 'stop'
-        // };
-
-        // TODO (y.solovyov) do we need an action that sets state as in stop(),
-        // but calls Player.pause()?
         stop();
     }
 };

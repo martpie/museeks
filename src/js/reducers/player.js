@@ -25,17 +25,6 @@ export default (state = {}, payload) => {
                 playerStatus   : 'stop'
             };
 
-            newState.tracks = {
-                library: {
-                    all: null,
-                    sub: null
-                },
-                playlist: {
-                    all: null,
-                    sub: null
-                }
-            };
-
             return newState;
         }
 
