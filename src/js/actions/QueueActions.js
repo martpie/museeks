@@ -6,6 +6,7 @@ import Player from '../lib/player';
 
 
 const selectAndPlay = (index) => {
+    // TODO (y.solovyov | KeitIG): calling getState is a hack.
     const { queue } = store.getState();
     const uri = utils.parseUri(queue[index].path);
     Player.setAudioSrc(uri);

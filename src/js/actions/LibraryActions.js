@@ -51,6 +51,7 @@ const resetTracks = () => {
 };
 
 const selectAndPlay = (_id) => {
+    // TODO (y.solovyov | KeitIG): calling getState is a hack.
     const { tracks, tracksCursor } = store.getState();
     const queue = [...tracks[tracksCursor].sub];
     const queuePosition = queue.findIndex(function(track) {

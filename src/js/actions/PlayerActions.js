@@ -2,6 +2,7 @@ import store from '../store.js';
 import AppConstants  from '../constants/AppConstants';
 
 import ToastsActions from './ToastsActions';
+import LibraryActions from './LibraryActions';
 
 import app from '../lib/app';
 import Player from '../lib/player';
@@ -18,10 +19,20 @@ const audioErrors = {
 
 
 const playToggle = () => {
-    Player.getAudio().paused ? play() : pause();
+    const { paused } = Player.getAudio();
+    // TODO (y.solovyov | KeitIG): calling getState is a hack.
+    const { queue, tracks } = store.getState();
+    if (paused && queue.length === 0) {
+        // LibraryActions.selectAndPlay();
+    } else if (paused) {
+        play();
+    } else {
+        pause();
+    }
 };
 
 const play = () => {
+    // TODO (y.solovyov | KeitIG): calling getState is a hack.
     const { queue } = store.getState();
     console.log(queue);
     if(queue !== null) {
@@ -33,6 +44,7 @@ const play = () => {
 };
 
 const pause = () => {
+    // TODO (y.solovyov | KeitIG): calling getState is a hack.
     const { queue } = store.getState();
     console.log(queue);
     if(queue !== null) {
@@ -53,13 +65,13 @@ const stop = () => {
 };
 
 const next = () => {
+    // TODO (y.solovyov | KeitIG): calling getState is a hack.
     const { queue, queueCursor, repeat } = store.getState();
     let newQueueCursor;
 
     if(repeat === 'one') {
         newQueueCursor = queueCursor;
     } else if (repeat === 'all' && queueCursor === queue.length - 1) { // is last track
-        console.log('is last');
         newQueueCursor = 0; // start with new track
     } else {
         newQueueCursor = queueCursor + 1;
@@ -84,6 +96,7 @@ const next = () => {
 const previous = () => {
     const currentTime = Player.getAudio().currentTime;
 
+    // TODO (y.solovyov | KeitIG): calling getState is a hack.
     const { queue, queueCursor } = store.getState();
     let newQueueCursor = queueCursor;
 
