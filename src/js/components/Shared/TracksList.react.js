@@ -237,7 +237,7 @@ export default class TracksList extends Component {
     }
 
     pausePlayState() {
-        return Player.getAudio().paused ? 'pause' : 'play';
+        return Player.isPaused() ? 'pause' : 'play';
     }
 
     toggleSelectionById(id) {

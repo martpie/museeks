@@ -89,7 +89,7 @@ const next = () => {
 };
 
 const previous = () => {
-    const currentTime = Player.getAudio().currentTime;
+    const currentTime = Player.getCurrentTime();
 
     // TODO (y.solovyov | KeitIG): calling getState is a hack.
     const { queue, queueCursor } = store.getState();
@@ -123,7 +123,7 @@ const shuffle = (shuffle) => {
     app.config.set('audioShuffle', shuffle);
     app.config.saveSync();
 
-    const currentSrc = Player.getAudio().src;
+    const currentSrc = Player.getSrc();
     store.dispatch({
         type : AppConstants.APP_PLAYER_SHUFFLE,
         shuffle,
