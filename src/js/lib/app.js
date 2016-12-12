@@ -47,11 +47,8 @@ const supportedExtensions = [
     
     // Opus
     '.ogg',
-    '.ogv', 
-    '.oga', 
-    '.ogx', 
+    '.ogv',  
     '.ogm', 
-    '.spx', 
     '.opus'
 ];
 
