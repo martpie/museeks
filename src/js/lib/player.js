@@ -90,7 +90,6 @@ class Player {
             return this.durationThresholdReached;
         }
     }
-
 }
 
 export default new Player({
