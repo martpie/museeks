@@ -2,7 +2,6 @@ import store from '../store.js';
 import AppConstants  from '../constants/AppConstants';
 
 import ToastsActions from './ToastsActions';
-import LibraryActions from './LibraryActions';
 
 import app from '../lib/app';
 import Player from '../lib/player';
@@ -21,10 +20,8 @@ const audioErrors = {
 const playToggle = () => {
     const { paused } = Player.getAudio();
     // TODO (y.solovyov | KeitIG): calling getState is a hack.
-    const { queue, tracks } = store.getState();
-    if (paused && queue.length === 0) {
-        // LibraryActions.selectAndPlay();
-    } else if (paused) {
+    const { queue } = store.getState();
+    if (paused && queue.length > 0) {
         play();
     } else {
         pause();
@@ -34,7 +31,6 @@ const playToggle = () => {
 const play = () => {
     // TODO (y.solovyov | KeitIG): calling getState is a hack.
     const { queue } = store.getState();
-    console.log(queue);
     if(queue !== null) {
         Player.play();
         store.dispatch({
@@ -46,7 +42,6 @@ const play = () => {
 const pause = () => {
     // TODO (y.solovyov | KeitIG): calling getState is a hack.
     const { queue } = store.getState();
-    console.log(queue);
     if(queue !== null) {
         Player.pause();
         store.dispatch({

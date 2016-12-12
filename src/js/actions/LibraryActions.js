@@ -15,7 +15,6 @@ import Promise  from 'bluebird';
 const dialog = electron.remote.dialog;
 const realpathAsync = Promise.promisify(fs.realpath);
 
-
 const load = async () => {
     const querySort = {
         'loweredMetas.artist': 1,
@@ -54,7 +53,7 @@ const selectAndPlay = (_id) => {
     // TODO (y.solovyov | KeitIG): calling getState is a hack.
     const { tracks, tracksCursor } = store.getState();
     const queue = [...tracks[tracksCursor].sub];
-    const queuePosition = queue.findIndex(function(track) {
+    const queuePosition = queue.findIndex((track) => {
         return track._id === _id;
     });
 

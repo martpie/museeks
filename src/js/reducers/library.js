@@ -13,7 +13,7 @@ export default (state = {}, payload) => {
             // Check if we have to shuffle the queue
             if(state.shuffle) {
                 // need to check that later
-                const index = queue.findIndex(function(track) {
+                const index = queue.findIndex((track) => {
                     return track._id === id;
                 });
 

@@ -1,5 +1,4 @@
 import AppConstants from '../constants/AppConstants';
-import utils        from '../utils/utils';
 
 export default (state = {}, payload) => {
     switch (payload.type) {

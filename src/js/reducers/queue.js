@@ -1,10 +1,9 @@
 import AppConstants from '../constants/AppConstants';
-import utils        from '../utils/utils';
 
 export default (state = {}, payload) => {
     switch (payload.type) {
         case(AppConstants.APP_QUEUE_PLAY): {
-            const queue       = [...queue];
+            const queue       = [...state.queue];
             const queueCursor = payload.index;
 
             // Backup that and change the UI
