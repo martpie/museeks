@@ -318,7 +318,7 @@ export default class TracksList extends Component {
     }
 
     onEnter(i, tracks) {
-        if(i !== undefined) AppActions.library.selectAndPlay(tracks[i]._id);
+        if(i !== undefined) AppActions.player.start(tracks[i]._id);
     }
 
     showContextMenu(e, index) {

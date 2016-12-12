@@ -2,7 +2,7 @@ import AppConstants from '../constants/AppConstants';
 
 export default (state = {}, payload) => {
     switch (payload.type) {
-        case(AppConstants.APP_QUEUE_PLAY): {
+        case(AppConstants.APP_QUEUE_START): {
             const queue       = [...state.queue];
             const queueCursor = payload.index;
 

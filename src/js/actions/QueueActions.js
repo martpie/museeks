@@ -6,7 +6,7 @@ import Player from '../lib/player';
 import utils from '../utils/utils';
 
 
-const selectAndPlay = (index) => {
+const start = (index) => {
     // TODO (y.solovyov | KeitIG): calling getState is a hack.
     const { queue } = store.getState();
     const uri = utils.parseUri(queue[index].path);
@@ -14,7 +14,7 @@ const selectAndPlay = (index) => {
     Player.play();
 
     store.dispatch({
-        type : AppConstants.APP_QUEUE_PLAY,
+        type : AppConstants.APP_QUEUE_START,
         index
     });
 };
@@ -61,6 +61,6 @@ export default{
     addNext,
     clear,
     remove,
-    selectAndPlay,
+    start,
     setQueue
 };

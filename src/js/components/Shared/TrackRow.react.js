@@ -26,7 +26,7 @@ export default class TrackRow extends Component {
         super(props);
         this.state = {};
 
-        this.selectAndPlay = this.selectAndPlay.bind(this);
+        this.start = this.start.bind(this);
         this.onMouseDown   = this.onMouseDown.bind(this);
         this.onContextMenu = this.onContextMenu.bind(this);
     }
@@ -39,7 +39,7 @@ export default class TrackRow extends Component {
         return (
             <div
                 className={ trackClasses }
-                onDoubleClick={ this.selectAndPlay }
+                onDoubleClick={ this.start }
                 onMouseDown={ this.onMouseDown }
                 onContextMenu={ this.onContextMenu }
             >
@@ -56,7 +56,7 @@ export default class TrackRow extends Component {
         this.props.onContextMenu(e, this.props.index);
     }
 
-    selectAndPlay() {
-        AppActions.library.selectAndPlay(this.props.trackId);
+    start() {
+        AppActions.player.start(this.props.trackId);
     }
 }

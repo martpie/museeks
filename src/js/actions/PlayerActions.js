@@ -50,6 +50,28 @@ const pause = () => {
     }
 };
 
+const start = (_id) => {
+    // TODO (y.solovyov | KeitIG): calling getState is a hack.
+    const { tracks, tracksCursor } = store.getState();
+    const queue = [...tracks[tracksCursor].sub];
+    const queuePosition = queue.findIndex((track) => {
+        return track._id === _id;
+    });
+
+    if (queuePosition > -1) {
+        const uri = utils.parseUri(queue[queuePosition].path);
+
+        Player.setAudioSrc(uri);
+        Player.play();
+
+        store.dispatch({
+            type : AppConstants.APP_PLAYER_START,
+            queuePosition,
+            _id
+        });
+    }
+};
+
 const stop = () => {
     Player.stop();
     store.dispatch({
@@ -218,6 +240,7 @@ export default {
     setPlaybackRate,
     setVolume,
     shuffle,
+    start,
     stop,
     audioErrors
 };

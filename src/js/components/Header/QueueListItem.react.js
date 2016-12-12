@@ -81,6 +81,6 @@ export default class QueueListItem extends PureComponent {
     }
 
     play() {
-        AppActions.queue.selectAndPlay(this.props.queueCursor + this.props.index + 1);
+        AppActions.queue.start(this.props.queueCursor + this.props.index + 1);
     }
 }

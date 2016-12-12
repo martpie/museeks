@@ -4,7 +4,6 @@ import AppConstants  from '../constants/AppConstants';
 import AppActions    from './AppActions';
 
 import app   from '../lib/app';
-import Player from '../lib/player';
 import utils from '../utils/utils';
 
 import fs       from 'fs';
@@ -47,28 +46,6 @@ const resetTracks = () => {
         type : AppConstants.APP_REFRESH_LIBRARY,
         tracks : null
     });
-};
-
-const selectAndPlay = (_id) => {
-    // TODO (y.solovyov | KeitIG): calling getState is a hack.
-    const { tracks, tracksCursor } = store.getState();
-    const queue = [...tracks[tracksCursor].sub];
-    const queuePosition = queue.findIndex((track) => {
-        return track._id === _id;
-    });
-
-    if (queuePosition > -1) {
-        const uri = utils.parseUri(queue[queuePosition].path);
-
-        Player.setAudioSrc(uri);
-        Player.play();
-
-        store.dispatch({
-            type : AppConstants.APP_SELECT_AND_PLAY,
-            queuePosition,
-            _id
-        });
-    }
 };
 
 const filterSearch = (search) => {
@@ -209,7 +186,6 @@ export default {
     load,
     setTracksCursor,
     resetTracks,
-    selectAndPlay,
     filterSearch,
     addFolders,
     removeFolder,

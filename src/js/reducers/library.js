@@ -4,53 +4,6 @@ import utils        from '../utils/utils';
 
 export default (state = {}, payload) => {
     switch (payload.type) {
-        case(AppConstants.APP_SELECT_AND_PLAY): {
-            const queue = [...state.tracks[state.tracksCursor].sub];
-            const id    = payload._id;
-
-            let queueCursor = payload.queuePosition; // Clean that variable mess later
-
-            // Check if we have to shuffle the queue
-            if(state.shuffle) {
-                // need to check that later
-                const index = queue.findIndex((track) => {
-                    return track._id === id;
-                });
-
-                const firstTrack = queue[index];
-
-                queue.splice(id, 1);
-
-                let m = queue.length;
-                let t;
-                let i;
-                while (m) {
-                    // Pick a remaining element…
-                    i = Math.floor(Math.random() * m--);
-
-                    // And swap it with the current element.
-                    t = queue[m];
-                    queue[m] = queue[i];
-                    queue[i] = t;
-                }
-
-                queue.unshift(firstTrack);
-
-                // Let's set the cursor to 0
-                queueCursor = 0;
-            }
-
-            // Backup that and change the UI
-            return {
-                ...state,
-                queue,
-                queueCursor,
-                oldQueue       :  queue,
-                oldQueueCursor :  queueCursor,
-                playerStatus   : 'play'
-            };
-        }
-
         case(AppConstants.APP_FILTER_SEARCH): {
             if(!payload.search) {
                 const newState = { ...state };
