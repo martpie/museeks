@@ -44,7 +44,12 @@ const supportedExtensions = [
     '.m4a',
     '.3gp',
     '.wav',
-    '.ogg'
+    
+    // Opus
+    '.ogg',
+    '.ogv',  
+    '.ogm', 
+    '.opus'
 ];
 
 
