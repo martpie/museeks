@@ -1,80 +1,9 @@
 import app          from '../lib/app';
-import Player       from '../lib/player';
 import AppConstants from '../constants/AppConstants';
 import utils        from '../utils/utils';
 
 export default (state = {}, payload) => {
     switch (payload.type) {
-        case(AppConstants.APP_SELECT_AND_PLAY): {
-            const queue = [...state.tracks[state.tracksCursor].sub];
-            const id    = payload._id;
-
-            let queueCursor = null; // Clean that variable mess later
-            let queuePosition = null;
-
-            for(let i = 0, length = queue.length; i < length; i++) {
-                if(queue[i]._id === id) {
-                    queuePosition = i;
-                    queueCursor = i;
-                    break;
-                }
-            }
-
-            if(queuePosition !== null) {
-                const uri = utils.parseUri(queue[queuePosition].path);
-
-                Player.setAudioSrc(uri);
-                Player.play();
-
-                // Check if we have to shuffle the queue
-                if(state.shuffle) {
-                    let index = 0;
-
-                    // need to check that later
-                    for(let i = 0, length = queue.length; i < length; i++) {
-                        if(queue[i]._id === id) {
-                            index = i;
-                            break;
-                        }
-                    }
-
-                    const firstTrack = queue[index];
-
-                    queue.splice(id, 1);
-
-                    let m = queue.length;
-                    let t;
-                    let i;
-                    while (m) {
-                        // Pick a remaining element…
-                        i = Math.floor(Math.random() * m--);
-
-                        // And swap it with the current element.
-                        t = queue[m];
-                        queue[m] = queue[i];
-                        queue[i] = t;
-                    }
-
-                    queue.unshift(firstTrack);
-
-                    // Let's set the cursor to 0
-                    queueCursor = 0;
-                }
-
-                // Backup that and change the UI
-                return {
-                    ...state,
-                    queue,
-                    queueCursor,
-                    oldQueue       :  queue,
-                    oldQueueCursor :  queueCursor,
-                    playerStatus   : 'play'
-                };
-            }
-
-            return state;
-        }
-
         case(AppConstants.APP_FILTER_SEARCH): {
             if(!payload.search) {
                 const newState = { ...state };

@@ -14,7 +14,6 @@ import Promise  from 'bluebird';
 const dialog = electron.remote.dialog;
 const realpathAsync = Promise.promisify(fs.realpath);
 
-
 const load = async () => {
     const querySort = {
         'loweredMetas.artist': 1,
@@ -46,13 +45,6 @@ const resetTracks = () => {
     store.dispatch({
         type : AppConstants.APP_REFRESH_LIBRARY,
         tracks : null
-    });
-};
-
-const selectAndPlay = (_id) => {
-    store.dispatch({
-        type : AppConstants.APP_SELECT_AND_PLAY,
-        _id
     });
 };
 
@@ -194,7 +186,6 @@ export default {
     load,
     setTracksCursor,
     resetTracks,
-    selectAndPlay,
     filterSearch,
     addFolders,
     removeFolder,

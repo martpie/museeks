@@ -5,10 +5,9 @@ export default keymirror({
     APP_REFRESH_LIBRARY : null,
     APP_REFRESH_CONFIG  : null,
 
-    APP_SELECT_AND_PLAY : null,
-
     APP_FILTER_SEARCH : null,
 
+    APP_PLAYER_START    : null,
     APP_PLAYER_TOGGLE   : null,
     APP_PLAYER_PLAY     : null,
     APP_PLAYER_PAUSE    : null,
@@ -20,7 +19,7 @@ export default keymirror({
     APP_PLAYER_SHUFFLE : null,
     APP_PLAYER_REPEAT  : null,
 
-    APP_QUEUE_PLAY      : null,
+    APP_QUEUE_START     : null,
     APP_QUEUE_CLEAR     : null,
     APP_QUEUE_REMOVE    : null,
     APP_QUEUE_ADD       : null,

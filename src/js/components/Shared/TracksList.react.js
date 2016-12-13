@@ -237,7 +237,7 @@ export default class TracksList extends Component {
     }
 
     pausePlayState() {
-        return Player.getAudio().paused ? 'pause' : 'play';
+        return Player.isPaused() ? 'pause' : 'play';
     }
 
     toggleSelectionById(id) {
@@ -318,7 +318,7 @@ export default class TracksList extends Component {
     }
 
     onEnter(i, tracks) {
-        if(i !== undefined) AppActions.library.selectAndPlay(tracks[i]._id);
+        if(i !== undefined) AppActions.player.start(tracks[i]._id);
     }
 
     showContextMenu(e, index) {

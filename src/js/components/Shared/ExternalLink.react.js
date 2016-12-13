@@ -32,6 +32,7 @@ export default class ExternalLink extends Component {
 
     openLink(e) {
         e.preventDefault();
+        // TODO (y.solovyov | KeitIG): this should be somewhere else, not in the component
         shell.openExternal(this.props.href);
     }
 }

@@ -91,7 +91,7 @@ export default class VolumeControl extends Component {
 
     mute(e) {
         if(e.target.classList.contains('player-control') || e.target.classList.contains('fa')) {
-            const muted = !Player.getAudio().muted;
+            const muted = !Player.isMuted();
 
             AppActions.player.setMuted(muted);
             this.setState({ muted });

@@ -3,7 +3,7 @@ import { Button } from 'react-bootstrap';
 
 import ExternalLink from '../Shared/ExternalLink.react';
 
-import app   from '../../lib/app';
+import app from '../../lib/app';
 
 import AppActions from '../../actions/AppActions';
 

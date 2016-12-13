@@ -2,11 +2,19 @@ import store from '../store.js';
 import AppConstants  from '../constants/AppConstants';
 
 import app from '../lib/app';
+import Player from '../lib/player';
+import utils from '../utils/utils';
 
 
-const selectAndPlay = (index) => {
+const start = (index) => {
+    // TODO (y.solovyov | KeitIG): calling getState is a hack.
+    const { queue } = store.getState();
+    const uri = utils.parseUri(queue[index].path);
+    Player.setAudioSrc(uri);
+    Player.play();
+
     store.dispatch({
-        type : AppConstants.APP_QUEUE_PLAY,
+        type : AppConstants.APP_QUEUE_START,
         index
     });
 };
@@ -53,6 +61,6 @@ export default{
     addNext,
     clear,
     remove,
-    selectAndPlay,
+    start,
     setQueue
 };

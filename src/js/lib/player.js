@@ -45,6 +45,18 @@ class Player {
         return this.audio;
     }
 
+    getCurrentTime() {
+        return this.audio.currentTime;
+    }
+
+    getVolume() {
+        return this.audio.volume;
+    }
+
+    getSrc() {
+        return this.audio.src;
+    }
+
     setAudioVolume(volume) {
         this.audio.volume = volume;
     }
@@ -62,6 +74,14 @@ class Player {
 
     setAudioCurrentTime(currentTime) {
         this.audio.currentTime = currentTime;
+    }
+
+    isMuted() {
+        return this.audio.muted;
+    }
+
+    isPaused() {
+        return this.audio.paused;
     }
 
     isThresholdReached() {

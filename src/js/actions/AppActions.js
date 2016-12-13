@@ -27,14 +27,14 @@ const init = () => {
     Player.getAudio().addEventListener('error', PlayerActions.audioError);
     Player.getAudio().addEventListener('timeupdate', () => {
         if (Player.isThresholdReached()) {
-            LibraryActions.incrementPlayCount(Player.getAudio().src);
+            LibraryActions.incrementPlayCount(Player.getSrc());
         }
     });
 
     Player.getAudio().addEventListener('play', async () => {
         ipcRenderer.send('playerAction', 'play');
 
-        const path = decodeURIComponent(Player.getAudio().src).replace('file://', '');
+        const path = decodeURIComponent(Player.getSrc()).replace('file://', '');
 
         const track = await utils.getMetadata(path);
 
