@@ -17,9 +17,9 @@
     "ci:eslint": "./node_modules/.bin/eslint . --config .eslintrc",
     "build:compile": "./node_modules/.bin/webpack --config webpack.config.js",
     "build:eslint": "./node_modules/.bin/eslint . --config .eslintrc",
-    "compile": "webpack --config webpack.config.js --progress --colors",
+    "compile": "webpack --config webpack.config.js --progress --colors --production",
     "lint": "eslint . --config .eslintrc --cache",
-    "dev": "webpack --config webpack.config.js --progress --colors --watch --development",
+    "dev": "webpack --config webpack.config.js --progress --colors --watch",
     "build": "npm run build:eslint && npm run build:compile && node build.js"
   },
   "dependencies": {
