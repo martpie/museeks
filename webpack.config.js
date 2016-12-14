@@ -71,5 +71,5 @@ module.exports = {
         ]
     },
     plugins: pluginsList,
-    devtool: commandline.development ? 'source-map' : undefined
+    devtool: commandline.development ? 'cheap-source-map' : undefined
 };

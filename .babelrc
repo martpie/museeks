@@ -5,7 +5,6 @@
     "react"
   ],
   "plugins": [
-    "syntax-class-properties",
     "transform-class-properties",
     "transform-async-to-generator"
   ]
