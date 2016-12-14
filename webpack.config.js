@@ -9,15 +9,14 @@ const path     = require('path');
 
 const commandline = minimist(process.argv.slice(2));
 
-let pluginsList;
-if (commandline.development) {
-    pluginsList = [new ExtractTextPlugin('main.css', { allChunks: true })];
-} else {
-    pluginsList = [
-        new BabiliPlugin(),
-        new webpack.DefinePlugin({ 'process.env': { 'NODE_ENV': '"production"' } }),
-        new ExtractTextPlugin('main.css', { allChunks: true }),
-    ];
+const pluginsList = [
+    new webpack.optimize.DedupePlugin(),
+    new ExtractTextPlugin('main.css', { allChunks: true }),
+];
+
+if (commandline.production) {
+    pluginsList.push(new BabiliPlugin());
+    pluginsList.push(new webpack.DefinePlugin({ 'process.env': { 'NODE_ENV': '"production"' } }));
 }
 
 module.exports = {
