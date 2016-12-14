@@ -138,7 +138,7 @@ export default class TracksList extends Component {
         const tracks   = this.props.tracks;
 
         const firstSelectedTrackIdx = tracks.findIndex((track) => {
-            selected.includes(track._id);
+            return selected.includes(track._id);
         });
 
         switch(e.keyCode) {
