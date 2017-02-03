@@ -1,6 +1,12 @@
 {
   "presets": [
-    "node6",
+    ["env", {
+      "targets": {
+        "chrome": 53,
+        "node": 6.5
+      },
+      "useBuiltIns": true
+    }],
     "stage-3",
     "react"
   ],
