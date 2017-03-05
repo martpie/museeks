@@ -38,14 +38,14 @@ function getDirectories(srcpath) {
 
 const options = {
     // required
-    'dir'           :  './',
-    'name'          :  'Museeks',
-    'platform'      : ['darwin', 'win32', 'linux'],
-    'arch'          : ['ia32', 'x64'],
-    'version'       :  '1.4.12',
-    'icon'          :  path.join('src', 'images', 'logos', 'museeks'),
-    'build-version' :  app.version,
-    'app-version'   :  app.version,
+    'dir'            :  './',
+    'name'           :  'Museeks',
+    'platform'       : ['darwin', 'win32', 'linux'],
+    'arch'           : ['ia32', 'x64'],
+    'electronVersion': '1.4.12',
+    'icon'           :  path.join('src', 'images', 'logos', 'museeks'),
+    'build-version'  :  app.version,
+    'app-version'    :  app.version,
 
     // optional
     'prune'     :  true,
