@@ -29,6 +29,7 @@ export default class PlaylistsNav extends Component {
         };
 
         this.blur            = this.blur.bind(this);
+        this.focus           = this.focus.bind(this);
         this.keyDown         = this.keyDown.bind(this);
         this.showContextMenu = this.showContextMenu.bind(this);
     }
@@ -43,11 +44,11 @@ export default class PlaylistsNav extends Component {
                 navItemContent = (
                     <input
                         type='text'
-                        ref='renamedPlaylist'
+                        autoFocus
                         defaultValue={ elem.name }
                         onKeyDown={ self.keyDown }
                         onBlur={ self.blur }
-                        autofocus
+                        onFocus={ self.focus }
                     />
                 );
             } else {
@@ -103,13 +104,6 @@ export default class PlaylistsNav extends Component {
         ipcRenderer.removeAllListeners('playlistContextMenuReply');
     }
 
-    componentDidUpdate() {
-        // If a playlist is being update
-        if(!!this.refs.renamedPlaylist && document.activeElement !== this.refs.renamedPlaylist) {
-            this.refs.renamedPlaylist.select();
-        }
-    }
-
     showContextMenu(_id) {
         ipcRenderer.send('playlistContextMenu', _id);
     }
@@ -139,5 +133,9 @@ export default class PlaylistsNav extends Component {
     blur(e) {
         this.rename(this.state.renamed, e.currentTarget.value);
         this.setState({ renamed: null });
+    }
+
+    focus(e) {
+        e.currentTarget.select();
     }
 }

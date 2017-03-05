@@ -12,7 +12,7 @@ import globby   from 'globby';
 import Promise  from 'bluebird';
 
 const dialog = electron.remote.dialog;
-const realpathAsync = Promise.promisify(fs.realpath);
+const statAsync = Promise.promisify(fs.stat);
 
 const load = async () => {
     const querySort = {
@@ -55,54 +55,7 @@ const filterSearch = (search) => {
     });
 };
 
-const addFolders = () => {
-    dialog.showOpenDialog({
-        properties: ['openDirectory', 'multiSelections']
-    }, (folders) => {
-        if(folders !== undefined) {
-            Promise.map(folders, (folder) => {
-                return realpathAsync(folder);
-            }).then((resolvedFolders) => {
-                store.dispatch({
-                    type : AppConstants.APP_LIBRARY_ADD_FOLDERS,
-                    folders: resolvedFolders
-                });
-            });
-        }
-    });
-};
-
-const removeFolder = (index) => {
-    store.dispatch({
-        type : AppConstants.APP_LIBRARY_REMOVE_FOLDER,
-        index
-    });
-};
-
-const reset = async () => {
-    store.dispatch({
-        type : AppConstants.APP_LIBRARY_REFRESH_START,
-    });
-
-    try {
-        await app.models.Track.removeAsync({}, { multi: true });
-    } catch (err) {
-        console.error(err);
-    }
-
-    try {
-        await app.models.Playlist.removeAsync({}, { multi: true });
-    } catch (err) {
-        console.error(err);
-    }
-
-    AppActions.library.load();
-    store.dispatch({
-        type : AppConstants.APP_LIBRARY_REFRESH_END,
-    });
-};
-
-const refresh = () => {
+const add = (pathsToScan) => {
     store.dispatch({
         type : AppConstants.APP_LIBRARY_REFRESH_START
     });
@@ -112,22 +65,48 @@ const refresh = () => {
             type : AppConstants.APP_LIBRARY_REFRESH_END
         });
     };
-    const folders = app.config.get('musicFolders');
+
     const fsConcurrency = 32;
 
-    // Start the big thing
-    app.models.Track.removeAsync({}, { multi: true }).then(() => {
+    let rootFiles; // HACK Kind of hack, looking for a better solution
+
+    // Scan folders and add files to library
+    new Promise((resolve) => {
+        const paths = Promise.map(pathsToScan, (path) => {
+            return statAsync(path).then((stat) => {
+                return {
+                    path,
+                    stat
+                };
+            });
+        });
+
+        resolve(paths);
+    }).then((paths) => {
+        const files = [];
+        const folders = [];
+
+        paths.forEach((elem) => {
+            if(elem.stat.isFile()) files.push(elem.path);
+            if(elem.stat.isDirectory() || elem.stat.isSymbolicLink()) folders.push(elem.path);
+        });
+
+        rootFiles = files;
+
         return Promise.map(folders, (folder) => {
             const pattern = path.join(folder, '**/*.*');
             return globby(pattern, { nodir: true, follow: true });
         });
-    }).then((filesArrays) => {
-        return filesArrays.reduce((acc, array) => {
-            return acc.concat(array);
-        }, []).filter((filePath) => {
-            const extension = path.extname(filePath).toLowerCase();
-            return app.supportedExtensions.includes(extension);
-        });
+    }).then((files) => {
+        const flatFiles = files.reduce((acc, array) => acc.concat(array), [])
+            .concat(rootFiles)
+            .filter((filePath) => {
+                const extension = path.extname(filePath).toLowerCase();
+                return app.supportedExtensions.includes(extension);
+            }
+        );
+
+        return flatFiles;
     }).then((supportedFiles) => {
         if (supportedFiles.length === 0) {
             dispatchEnd();
@@ -141,21 +120,87 @@ const refresh = () => {
                 if (docs.length === 0) {
                     return utils.getMetadata(filePath);
                 }
-                return docs[0];
+                return null;
             }).then((track) => {
+                if(track === null) return;
                 return app.models.Track.insertAsync(track);
             }).then(() => {
-                const percent = parseInt(addedFiles * 100 / totalFiles);
-                AppActions.settings.refreshProgress(percent);
+                refreshProgress(addedFiles, totalFiles);
                 addedFiles++;
             });
         }, { concurrency: fsConcurrency });
     }).then(() => {
-        AppActions.library.load();
+        AppActions.library.load(); // TODO Reload the library at the end of this
         dispatchEnd();
     }).catch((err) => {
         console.warn(err);
     });
+
+    // TODO progressive loading in the store, don't freeze the app, able to add files/folders when scanning
+};
+
+const refreshProgress = (processed, total) => {
+    store.dispatch({
+        type : AppConstants.APP_LIBRARY_REFRESH_PROGRESS,
+        processed,
+        total,
+    });
+};
+
+const removeFromLibrary = async (tracksIds) => {
+    // not calling await on it as it calls the synchonous message box
+    dialog.showMessageBox(app.browserWindows.main, {
+        buttons: [
+            'Cancel',
+            'Remove'
+        ],
+        title: 'Remove tracks from library?',
+        message: `Are you sure you want to remove ${tracksIds.length} element(s) from your library?`,
+        type: 'warning'
+    }, (result) => {
+        if(result === 1) {
+            // Remove tracks from the Track collection
+            app.models.Track.removeAsync({ _id: { $in: tracksIds } }, { multi: true }, () => {
+                store.dispatch({
+                    type : AppConstants.APP_LIBRARY_REMOVE_TRACKS,
+                    tracksIds,
+                });
+            });
+            // That would be great to remove those ids from all the playlists, but it's not easy
+            // and should not cause strange behaviors, all PR for that would be really appreciated
+            // TODO: see if it's possible to remove the Ids from the selected state of TracksList as it "could" lead to strange behaviors
+        }
+    });
+};
+
+const reset = async () => {
+    try {
+        const result = await dialog.showMessageBox(app.browserWindows.main, {
+            buttons: [
+                'Cancel',
+                'Reset'
+            ],
+            title: 'Reset library?',
+            message: 'Are you sure you want to reset your library ? All your tracks and playlists will be cleared.',
+            type: 'warning'
+        });
+
+        if(result === 1) {
+            store.dispatch({
+                type : AppConstants.APP_LIBRARY_REFRESH_START,
+            });
+
+            await app.models.Track.removeAsync({}, { multi: true });
+            await app.models.Playlist.removeAsync({}, { multi: true });
+
+            AppActions.library.load();
+            store.dispatch({
+                type : AppConstants.APP_LIBRARY_REFRESH_END,
+            });
+        }
+    } catch(err) {
+        console.error(err);
+    }
 };
 
 const fetchCover = async (path) => {
@@ -183,14 +228,14 @@ const incrementPlayCount = async (source) => {
 
 
 export default {
+    add,
     load,
     setTracksCursor,
     resetTracks,
     filterSearch,
-    addFolders,
-    removeFolder,
+    removeFromLibrary,
+    refreshProgress,
     reset,
-    refresh,
     fetchCover,
     incrementPlayCount
 };

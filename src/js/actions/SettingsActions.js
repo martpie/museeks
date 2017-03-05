@@ -120,13 +120,6 @@ const toggleMinimizeToTray = (value) => {
     });
 };
 
-const refreshProgress = (percentage) => {
-    store.dispatch({
-        type : AppConstants.APP_LIBRARY_REFRESH_PROGRESS,
-        percentage
-    });
-};
-
 const toggleDisplayNotifications = (value) => {
     app.config.set('displayNotifications', value);
     app.config.saveSync();
@@ -142,7 +135,6 @@ export default{
     checkForUpdate,
     checkSleepBlocker,
     checkTheme,
-    refreshProgress,
     toggleAutoUpdateChecker,
     toggleDarkTheme,
     toggleDevMode,

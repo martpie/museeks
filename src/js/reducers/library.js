@@ -56,7 +56,7 @@ export default (state = {}, payload) => {
         }
 
         case(AppConstants.APP_LIBRARY_REMOVE_FOLDER): {
-            if(!state.refreshingLibrary) {
+            if(!state.library.refreshing) {
                 const musicFolders = app.config.get('musicFolders');
 
                 musicFolders.splice(payload.index, 1);
@@ -78,22 +78,57 @@ export default (state = {}, payload) => {
         case(AppConstants.APP_LIBRARY_REFRESH_START): {
             return {
                 ...state,
-                status : 'An apple a day keeps Dr Dre away',
-                refreshingLibrary : true
+                status: 'An apple a day keeps Dr Dre away',
+                library: {
+                    ...state.library,
+                    refreshing: true
+                }
             };
         }
 
         case(AppConstants.APP_LIBRARY_REFRESH_END): {
             return {
                 ...state,
-                refreshingLibrary : false,
-                refreshProgress : 0
+                library: {
+                    refreshing: false,
+                    refresh : {
+                        processed: null,
+                        total: null,
+                    }
+                }
             };
         }
 
         case(AppConstants.APP_LIBRARY_REFRESH_PROGRESS): {
             return {
                 ...state,
+                library: {
+                    ...state.library,
+                    refresh : {
+                        processed: payload.processed,
+                        total: payload.total,
+                    }
+                }
+            };
+        }
+
+        case(AppConstants.APP_LIBRARY_REMOVE_TRACKS): {
+            const tracksIds = payload.tracksIds;
+            const removeTrack = (track) => !tracksIds.includes(track._id);
+            const tracks = {
+                library: {
+                    all: [...state.tracks.library.all].filter(removeTrack),
+                    sub: [...state.tracks.library.sub].filter(removeTrack)
+                },
+                playlist: {
+                    all: [...state.tracks.playlist.all].filter(removeTrack),
+                    sub: [...state.tracks.playlist.sub].filter(removeTrack)
+                }
+            };
+
+            return {
+                ...state,
+                tracks,
                 refreshProgress : payload.percentage
             };
         }

@@ -14,8 +14,8 @@ import TracksList from '../Shared/TracksList.react';
 export default class Library extends Component {
 
     static propTypes = {
-        library: React.PropTypes.array,
-        tracks: React.PropTypes.array,
+        library: React.PropTypes.object,
+        tracks: React.PropTypes.object,
         trackPlayingId: React.PropTypes.string,
         playlists: React.PropTypes.array,
         playerStatus: React.PropTypes.string
@@ -27,7 +27,7 @@ export default class Library extends Component {
 
     getLibraryComponent() {
         // Loading library
-        if(this.props.library === null) {
+        if(this.props.tracks.all === null) {
             return (
                 <FullViewMessage>
                     <p>Loading library...</p>
@@ -36,7 +36,7 @@ export default class Library extends Component {
         }
 
         // Empty library
-        if (this.props.library.length === 0) {
+        if (this.props.tracks.all.length === 0) {
             return (
                 <FullViewMessage>
                     <p>Too bad, there is no music in your library =(</p>
@@ -49,7 +49,7 @@ export default class Library extends Component {
         }
 
         // Empty search
-        if (this.props.tracks.length === 0) {
+        if (this.props.tracks.sub.length === 0) {
             return (
                 <FullViewMessage>
                     <p>Your search returned no results</p>
@@ -62,7 +62,7 @@ export default class Library extends Component {
             <TracksList
                 type='library'
                 playerStatus={ this.props.playerStatus }
-                tracks={ this.props.tracks }
+                tracks={ this.props.tracks.sub }
                 trackPlayingId={ this.props.trackPlayingId }
                 playlists={ this.props.playlists }
             />
