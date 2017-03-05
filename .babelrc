@@ -2,8 +2,8 @@
   "presets": [
     ["env", {
       "targets": {
-        "chrome": 53,
-        "node": 6.5
+        "chrome": 56,
+        "node": 7.4
       },
       "useBuiltIns": true
     }],
