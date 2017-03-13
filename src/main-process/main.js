@@ -13,6 +13,8 @@ const PowerMonitor       = require('./power-monitor');   // Handle power events
 const IntegrationManager = require('./integration');     // Applies various integrations
 
 const IpcPromiseManager  = require('../js/utils/ipcPromiseManager/main')
+const ApiManager         = require('./api/server.js')
+const api = new ApiManager('send function??')
 
 const app           = electron.app;              // Module to control application life.
 const nativeImage   = electron.nativeImage;
