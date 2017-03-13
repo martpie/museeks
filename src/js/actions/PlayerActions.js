@@ -28,6 +28,7 @@ const playToggle = () => {
     }
 };
 
+
 const play = () => {
     // TODO (y.solovyov | KeitIG): calling getState is a hack.
     const { queue } = store.getState();

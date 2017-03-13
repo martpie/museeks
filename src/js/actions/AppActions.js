@@ -2,6 +2,8 @@ import Player from '../lib/player';
 import app    from '../lib/app';
 import utils from '../utils/utils';
 
+import IpcPromiseReceiver from '../utils/ipcPromiseManager/renderer';
+
 import LibraryActions      from './LibraryActions';
 import PlaylistsActions    from './PlaylistsActions';
 import ToastsActions       from './ToastsActions';
@@ -148,7 +150,8 @@ const initShortcuts = () => {
     });
 };
 
-export default {
+
+const functionLib = {
     player        : PlayerActions,
     playlists     : PlaylistsActions,
     queue         : QueueActions,
@@ -169,3 +172,10 @@ export default {
         restart
     }
 };
+
+// Initialise the ipc promise manager
+const ipcPromiseReceiver = new IpcPromiseReceiver(functionLib);
+
+
+// Export the function lib
+export default functionLib;

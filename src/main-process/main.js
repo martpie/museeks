@@ -12,6 +12,8 @@ const ConfigManager      = require('./config');          // Handles config
 const PowerMonitor       = require('./power-monitor');   // Handle power events
 const IntegrationManager = require('./integration');     // Applies various integrations
 
+const IpcPromiseManager  = require('../js/utils/ipcPromiseManager/main')
+
 const app           = electron.app;              // Module to control application life.
 const nativeImage   = electron.nativeImage;
 const BrowserWindow = electron.BrowserWindow;    // Module to create native browser window.
@@ -97,6 +99,12 @@ app.on('ready', () => {
     // IPC events
     const ipcManager = new IpcManager(mainWindow);
     ipcManager.bindEvents();
+
+    // IPC promise events
+    const ipcPromiseManager = new IpcPromiseManager(mainWindow);
+    setTimeout(() => {
+        ipcPromiseManager.send('player.pause');
+    }, 2000);
 
     // Power monitor
     const powerMonitor = new PowerMonitor(mainWindow);
