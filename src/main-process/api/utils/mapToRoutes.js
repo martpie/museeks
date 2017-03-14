@@ -7,13 +7,8 @@ const mapLibraries = (libraries, send) => {
         // remove any double slashes created in urls
         const safeUrl = (url) => url.replace('//', '/');
 
-        // support objects and primitives on the data property
-        const payloadData = (payload) => typeof payload.data === 'object'
-            ? payload
-            : payload.data;
-
         const handler = (route) => {
-            return (req, res) => send(`${library.namespace}.${route.path}`, payloadData(req.payload))
+            return (req, res) => send(`${library.namespace}.${route.path}`, req.payload && req.payload.data)
             .then((result) => res(result))
             .catch((error) => res({ error }).code(error.code));
         }

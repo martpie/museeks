@@ -24,6 +24,7 @@ class IpcPromiseManager {
 
         // Send: main-process -> renderer
         this.send = (functionToRun, functionInputs) => {
+
             // Get a unique promise id
             const id = uniqueId('promise_');
 
