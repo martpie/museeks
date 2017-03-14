@@ -7,9 +7,7 @@ const toasts = require('./toasts');
 const notification = require('./notification');
 const app = require('./app');
 
-const mapToRoutes = require('./utils/mapToRoutes');
-
-const libraries = [
+const routes = [
     player,
     playlists,
     queue,
@@ -20,4 +18,4 @@ const libraries = [
     app
 ];
 
-module.exports = (send) => mapToRoutes(libraries, send);
+module.exports = routes;
