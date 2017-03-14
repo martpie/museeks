@@ -18,5 +18,5 @@ class Api {
         return server;
     }
 }
-new Api((c, d) => console.log(c, d))
+
 module.exports = Api;

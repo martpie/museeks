@@ -109,7 +109,7 @@ app.on('ready', () => {
     const api = new ApiManager(ipcPromiseManager.send);
 
     // Start the peer discovery service
-    // const peers = new PeerDiscoveryManager(ipcPromiseManager.send);
+    const peers = new PeerDiscoveryManager(ipcPromiseManager.send);
 
     // Power monitor
     const powerMonitor = new PowerMonitor(mainWindow);

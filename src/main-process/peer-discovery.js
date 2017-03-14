@@ -14,13 +14,15 @@ const scanForPeers = (send) => {
     networks.forEach((network) => {
 
         const lookup = new evilscan({
-            target: `${network.address}/16`,
+            target: `${network.address}/24`,
             port: 54321,
             status: 'O',
-            timeout: 50
+            timeout: 50,
+            concurrency: 10
         });
 
         lookup.on('result', (result) => {
+            console.log('result', result);
             if (!result.status.includes('ENETUNREACH')) {
                 http({
                     method: 'GET',
@@ -36,7 +38,7 @@ const scanForPeers = (send) => {
                 });
             }
         });
-
+lookup.on('done', () => console.log('done'))
         lookup.run();
     });
 }
@@ -45,7 +47,7 @@ class PeerDiscovery {
     constructor(send) {
         // scanning at startup slows application load time
         const scanDelay = 5000;
-        setTimeout(scanForPeers(send), scanDelay);
+        setTimeout(() => scanForPeers(send), scanDelay);
     }
 }
 
