@@ -1,5 +1,26 @@
 import AppConstants from '../constants/AppConstants';
 
-AppConstants.APP_NETWORK_CONNECT
-AppConstants.APP_NETWORK_DISCONNECT
-AppConstants.APP_NETWORK_SEARCH
+export default (state = {}, payload) => {
+    switch (payload.type) {
+
+        case(AppConstants.APP_NETWORK_PEER_FOUND): {
+
+            const peer = payload.peer;
+            const peers = (state.peers || []).slice();
+
+            // if the peers list doesn't include the found peer, add it
+            if (peers.every(p => p.id !== peer.id)) {
+                peers.push(peer);
+            }
+
+            return {
+                ...state,
+                peers
+            };
+        }
+
+        default: {
+            return state;
+        }
+    }
+};

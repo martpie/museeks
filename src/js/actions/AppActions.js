@@ -7,14 +7,13 @@ import IpcPromiseReceiver from '../utils/ipcPromiseManager/renderer';
 import LibraryActions      from './LibraryActions';
 import PlaylistsActions    from './PlaylistsActions';
 import ToastsActions       from './ToastsActions';
+import NetworkActions      from './NetworkActions';
 import NotificationActions from './NotificationActions';
 import PlayerActions       from './PlayerActions';
 import QueueActions        from './QueueActions';
 import SettingsActions     from './SettingsActions';
 
 import ApiSdk from '../api'
-
-console.log(ApiSdk);
 
 const globalShortcut = electron.remote.globalShortcut;
 const ipcRenderer    = electron.ipcRenderer;
@@ -162,6 +161,7 @@ const functionLib = {
     library       : LibraryActions,
     settings      : SettingsActions,
     toasts        : ToastsActions,
+    network       : NetworkActions,
     notifications : NotificationActions,
 
     close,

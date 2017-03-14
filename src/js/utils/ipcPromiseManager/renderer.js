@@ -13,8 +13,8 @@ class IpcPromiseReceiver {
                     status: 'resolve',
                     data
                 });
-
             }
+
             const reject = (data) => {
                 ipcRenderer.send('ipcPromise', {
                     promiseId: payload.promiseId,
@@ -29,10 +29,12 @@ class IpcPromiseReceiver {
             // If we found the function in the functionLib, run it.
             if (actualFunctionToRun) {
                 // Run the function and get the result
-                const result = Array.isArray(functionInputs) ? actualFunctionToRun(...functionInputs) : actualFunctionToRun(functionInputs);
-                // We wrap the result in Promise.resolve so we can treate it like a promise (even if is not a promise);
-                Promise.resolve(result).then(resolve).catch(reject)
+                const result = Array.isArray(functionInputs)
+                    ? actualFunctionToRun(...functionInputs)
+                    : actualFunctionToRun(functionInputs);
 
+                // We wrap the result in Promise.resolve so we can treate it like a promise (even if is not a promise);
+                Promise.resolve(result).then(resolve).catch(reject);
             } else {
                 reject({error: 'Function not found.'});
             }

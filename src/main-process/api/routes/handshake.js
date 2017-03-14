@@ -1,9 +1,12 @@
+const os = require('os');
+
 const routes = [{
     method : 'GET',
     path: '/',
     handler: (req, res) => {
         res({
-            name : `Jackson's Computer`
+            id : os.hostname(),
+            name : `${os.platform()} Computer`
         });
     }
 }];

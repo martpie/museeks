@@ -22,23 +22,24 @@ const scanForPeers = (send) => {
         });
 
         lookup.on('result', (result) => {
-            console.log('result', result);
+
+            const handshake = (peer) => http({
+                method: 'GET',
+                url: `http://${peer.ip}:54321/api/handshake/`
+            })
+            .then((response) => response.data)
+            .then((peer) => {
+                send('network.peerFound', peer);
+            })
+            .catch((err) => {
+                console.log(err, `Got error ${err.code} when handshaking with ${result.ip}`);
+            });
+
             if (!result.status.includes('ENETUNREACH')) {
-                http({
-                    method: 'GET',
-                    url: '/api/handshake/'
-                })
-                .then((response) => response.data)
-                .then((response) => {
-                    console.log('peer handshake response', response);
-                    send('peer-found', result.ip);
-                })
-                .catch((err) => {
-                    console.warn(`Got error ${err.code} when handshaking with ${result.ip}`);
-                });
+                handshake(result);
             }
         });
-lookup.on('done', () => console.log('done'))
+
         lookup.run();
     });
 }
@@ -46,7 +47,7 @@ lookup.on('done', () => console.log('done'))
 class PeerDiscovery {
     constructor(send) {
         // scanning at startup slows application load time
-        const scanDelay = 5000;
+        const scanDelay = 2000;
         setTimeout(() => scanForPeers(send), scanDelay);
     }
 }

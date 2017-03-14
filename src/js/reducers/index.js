@@ -3,6 +3,7 @@ import library from './library';
 import toasts from './toasts';
 import player from './player';
 import playlists from './playlists';
+import network from './network';
 import queue from './queue';
 
 const reducers = [
@@ -11,7 +12,8 @@ const reducers = [
     toasts,
     player,
     playlists,
-    queue,
+    network,
+    queue
 ];
 
 export default (state, action) => {

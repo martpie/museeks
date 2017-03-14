@@ -1,26 +1,13 @@
 import store from '../store.js';
 import AppConstants from '../constants/AppConstants';
 
-const connect = () => {
+const peerFound = (peer) => {
     store.dispatch({
-        type: AppConstants.APP_NETWORK_CONNECT,
-    });
-}
-
-const disconnect = () => {
-    store.dispatch({
-        type: AppConstants.APP_NETWORK_DISCONNECT,
-    });
-}
-
-const search = () => {
-    store.dispatch({
-        type: AppConstants.APP_NETWORK_SEARCH,
+        type: AppConstants.APP_NETWORK_PEER_FOUND,
+        peer
     });
 }
 
 export default {
-    connect,
-    disconnect,
-    search
+    peerFound
 }

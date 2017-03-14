@@ -20,7 +20,7 @@ class IpcPromiseManager {
                     promise.reject(payload.data);
                 }
             }
-        })
+        });
 
         // Send: main-process -> renderer
         this.send = (functionToRun, functionInputs) => {
