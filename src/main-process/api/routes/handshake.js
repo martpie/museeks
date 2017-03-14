@@ -1,17 +1,17 @@
 const os = require('os');
 
 const routes = [{
-    method : 'GET',
+    method: 'GET',
     path: '/',
     handler: (req, res) => {
         res({
-            id : os.hostname(),
-            name : `${os.platform()} Computer`
+            hostname: os.hostname(),
+            platform: os.platform()
         });
     }
 }];
 
 module.exports = {
-    namespace : 'handshake',
+    namespace: 'handshake',
     routes
 };

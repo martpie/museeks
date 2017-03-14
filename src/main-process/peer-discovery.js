@@ -28,8 +28,8 @@ const scanForPeers = (send) => {
                 url: `http://${peer.ip}:54321/api/handshake/`
             })
             .then((response) => response.data)
-            .then((peer) => {
-                send('network.peerFound', peer);
+            .then((peerInfo) => {
+                send('network.peerFound', extend(peerInfo, { ip : peer.ip });
             })
             .catch((err) => {
                 console.log(err, `Got error ${err.code} when handshaking with ${result.ip}`);

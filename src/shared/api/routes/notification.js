@@ -1,9 +1,9 @@
 const routes = [{
-    method : 'GET',
-    path : '/'
+    method: 'GET',
+    path: '/'
 }];
 
 module.exports = {
-    namespace : 'notification',
+    namespace: 'notification',
     routes
 };

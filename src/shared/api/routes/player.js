@@ -46,6 +46,6 @@ const routes = [{
 }];
 
 module.exports = {
-    namespace : 'player',
+    namespace: 'player',
     routes
 };

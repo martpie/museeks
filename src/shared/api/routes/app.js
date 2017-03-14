@@ -1,30 +1,30 @@
 const routes = [{
-    method : 'GET',
+    method: 'GET',
     path: 'close'
 }, {
-    method : 'GET',
+    method: 'GET',
     path: 'init'
 }, {
-    method : 'GET',
+    method: 'GET',
     path: 'initShortcuts'
 }, {
-    method : 'GET',
+    method: 'GET',
     path: 'maximize'
 }, {
-    method : 'GET',
+    method: 'GET',
     path: 'minimize'
 }, {
-    method : 'GET',
+    method: 'GET',
     path: 'saveBounds'
 }, {
-    method : 'GET',
+    method: 'GET',
     path: 'start'
 }, {
-    method : 'GET',
+    method: 'GET',
     path: 'restart'
 }];
 
 module.exports = {
-    namespace : 'app',
+    namespace: 'app',
     routes
 };

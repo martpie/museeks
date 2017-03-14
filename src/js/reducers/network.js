@@ -12,7 +12,7 @@ export default (state = {}, payload) => {
             if (peers.every(p => p.id !== peer.id)) {
                 peers.push(peer);
             }
-
+console.log('peers', peers)
             return {
                 ...state,
                 peers

@@ -1,9 +1,9 @@
 const routes = [{
-    method : 'GET',
-    path : '/'
+    method: 'GET',
+    path: '/'
 }];
 
 module.exports = {
-    namespace : 'playlists',
+    namespace: 'playlists',
     routes
 };
