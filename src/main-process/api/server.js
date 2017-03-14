@@ -1,4 +1,6 @@
 const Hapi = require('hapi');
+const routeData = require('../../shared/api/routeData');
+const mapToRoutes = require('./utils/mapToRoutes');
 
 class Api {
     constructor(send) {
@@ -10,7 +12,7 @@ class Api {
             port: 54321
         });
 
-        const routes = require('./routes')(send);
+        const routes = mapToRoutes(routeData, send);
         routes.forEach(route => server.route(route));
 
         server.start();

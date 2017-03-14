@@ -23,6 +23,7 @@
     "build": "npm run build:eslint && npm run build:compile && node build.js"
   },
   "dependencies": {
+    "axios": "^0.15.3",
     "bluebird": "^3.5.0",
     "bootstrap-css-only": "3.3.7",
     "classnames": "2.2.5",

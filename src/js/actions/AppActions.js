@@ -12,6 +12,10 @@ import PlayerActions       from './PlayerActions';
 import QueueActions        from './QueueActions';
 import SettingsActions     from './SettingsActions';
 
+import ApiSdk from '../api'
+
+console.log(ApiSdk);
+
 const globalShortcut = electron.remote.globalShortcut;
 const ipcRenderer    = electron.ipcRenderer;
 
