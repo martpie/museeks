@@ -12,8 +12,9 @@ const ConfigManager      = require('./config');          // Handles config
 const PowerMonitor       = require('./power-monitor');   // Handle power events
 const IntegrationManager = require('./integration');     // Applies various integrations
 
-const IpcPromiseManager  = require('../js/utils/ipcPromiseManager/main')
-const ApiManager         = require('./api/server.js')
+const IpcPromiseManager    = require('../js/utils/ipcPromiseManager/main')
+const ApiManager           = require('./api/server')
+const PeerDiscoveryManager = require('./peer-discovery')
 
 const app           = electron.app;              // Module to control application life.
 const nativeImage   = electron.nativeImage;
@@ -103,9 +104,12 @@ app.on('ready', () => {
 
     // IPC promise events
     const ipcPromiseManager = new IpcPromiseManager(mainWindow);
-    
+
     // Start the API server
     const api = new ApiManager(ipcPromiseManager.send);
+
+    // Start the peer discovery service
+    // const peers = new PeerDiscoveryManager(ipcPromiseManager.send);
 
     // Power monitor
     const powerMonitor = new PowerMonitor(mainWindow);
