@@ -12,14 +12,16 @@ const mapLibraries = (libraries, send) => {
             ? payload
             : payload.data;
 
-        const handler = (req, res) => send(`${library.namespace}.${route.path}`, payloadData(req.payload))
+        const handler = (route) => {
+            return (req, res) => send(`${library.namespace}.${route.path}`, payloadData(req.payload))
             .then((result) => res(result))
             .catch((error) => res({ error }).code(error.code));
+        }
 
         const routesWithHandlers = library.routes.map((route) => ({
             method : route.method,
             path : safeUrl(`/api/${library.namespace}/${route.path}`),
-            handler : route.handler || handler
+            handler : route.handler || handler(route)
         }));
 
         return routesWithHandlers;
