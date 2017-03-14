@@ -45,9 +45,9 @@ const scanForPeers = (send) => {
             concurrency: 10
         });
 
-        lookup.on('result', (host) => {
-            const ignoreHost = host.status.includes('ENETUNREACH');
-            if (!ignoreHost) handshake(host);
+        lookup.on('result', (peer) => {
+            const ignoreHost = peer.status.includes('ENETUNREACH');
+            if (!ignoreHost) handshake(peer);
         });
 
         lookup.run();
@@ -60,6 +60,7 @@ class PeerDiscovery {
         const scanDelay = 2000;
         setTimeout(() => scanForPeers(send), scanDelay);
     },
+    scanForPeers
 }
 
 module.exports = PeerDiscovery;

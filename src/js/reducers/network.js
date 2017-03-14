@@ -9,7 +9,7 @@ export default (state = {}, payload) => {
             const peers = (state.peers || []).slice();
 
             // if the peers list doesn't include the found peer, add it
-            if (peers.every(p => p.id !== peer.id)) {
+            if (peers.every(p => p.ip !== peer.ip)) {
                 peers.push(peer);
             }
 console.log('peers', peers)
