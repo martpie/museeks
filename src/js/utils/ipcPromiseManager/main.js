@@ -11,8 +11,6 @@ class IpcPromiseManager {
         ipcMain.on('ipcPromise', (event, payload) => {
             // Fetch the promise from the promise store
             const promise = this.promises[payload.promiseId];
-            
-            console.log(payload);
 
             // If we find the promise - we resolve/reject it.
             if (promise) {
@@ -23,7 +21,7 @@ class IpcPromiseManager {
                 }
             }
         })
-        
+
         // Send: main-process -> renderer
         this.send = (functionToRun, functionInputs) => {
             // Get a unique promise id
