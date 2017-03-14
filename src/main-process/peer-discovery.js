@@ -2,6 +2,7 @@ const Promise = require('bluebird');
 const flatten = require('flatten');
 const evilscan = require('evilscan');
 const http = require('axios');
+const extend = require('xtend');
 const os = require('os');
 
 const scanForPeers = (send) => {
@@ -24,12 +25,18 @@ const scanForPeers = (send) => {
         lookup.on('result', (result) => {
 
             const handshake = (peer) => http({
-                method: 'GET',
-                url: `http://${peer.ip}:54321/api/handshake/`
+                method: 'POST',
+                url: `http://${peer.ip}:54321/api/handshake/`,
+                data: {
+                    hostname: os.hostname(),
+                    platform: os.platform(),
+                    ip: network.address
+                },
+                json : true
             })
             .then((response) => response.data)
             .then((peerInfo) => {
-                send('network.peerFound', extend(peerInfo, { ip : peer.ip });
+                send('network.peerFound', extend(peerInfo, { ip : peer.ip }));
             })
             .catch((err) => {
                 console.log(err, `Got error ${err.code} when handshaking with ${result.ip}`);
