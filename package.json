@@ -24,9 +24,9 @@
   },
   "dependencies": {
     "bluebird": "^3.5.0",
+    "bonjour": "^3.5.0",
     "bootstrap-css-only": "3.3.7",
     "classnames": "2.2.5",
-    "evilscan": "^1.0.3",
     "flatten": "^1.0.2",
     "font-awesome": "4.7.0",
     "globby": "^6.1.0",
@@ -36,7 +36,6 @@
     "linvodb3": "^3.25.0",
     "musicmetadata": "2.0.5",
     "open-sans-fontface": "1.4.0",
-    "range": "0.0.3",
     "react": "15.4.2",
     "react-bootstrap": "0.30.7",
     "react-dom": "15.4.2",
