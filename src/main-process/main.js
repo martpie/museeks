@@ -14,7 +14,6 @@ const IntegrationManager = require('./integration');     // Applies various inte
 
 const IpcPromiseManager  = require('../js/utils/ipcPromiseManager/main')
 const ApiManager         = require('./api/server.js')
-const api = new ApiManager('send function??')
 
 const app           = electron.app;              // Module to control application life.
 const nativeImage   = electron.nativeImage;
@@ -104,9 +103,9 @@ app.on('ready', () => {
 
     // IPC promise events
     const ipcPromiseManager = new IpcPromiseManager(mainWindow);
-    setTimeout(() => {
-        ipcPromiseManager.send('player.pause');
-    }, 2000);
+    
+    // Start the API server
+    const api = new ApiManager(ipcPromiseManager.send);
 
     // Power monitor
     const powerMonitor = new PowerMonitor(mainWindow);

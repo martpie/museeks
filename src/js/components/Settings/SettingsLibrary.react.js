@@ -63,6 +63,10 @@ export default class SettingsLibrary extends Component {
                     { buttonsGroup }
                     <ProgressBar className={ progressBarClasses } now={ this.props.refreshProgress } />
                 </div>
+                <div className='setting-section'>
+                    <h4>Networked Museek</h4>
+                    <p>Connect to other instances of Museek on your network.</p>
+                </div>
             </div>
         );
     }

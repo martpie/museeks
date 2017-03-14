@@ -41,5 +41,9 @@ export default keymirror({
     APP_TOAST_ADD    : null,
     APP_TOAST_REMOVE : null,
 
-    APP_NOTIFICATION_NEW : null
+    APP_NOTIFICATION_NEW : null,
+    
+    APP_NETWORK_CONNECT : null,
+    APP_NETWORK_DISCONNECT : null,
+    APP_NETWORK_SEARCH : null,
 });

@@ -11,6 +11,8 @@ class IpcPromiseManager {
         ipcMain.on('ipcPromise', (event, payload) => {
             // Fetch the promise from the promise store
             const promise = this.promises[payload.promiseId];
+            
+            console.log(payload);
 
             // If we find the promise - we resolve/reject it.
             if (promise) {
@@ -21,30 +23,31 @@ class IpcPromiseManager {
                 }
             }
         })
-    }
-    // Send: main-process -> renderer
-    send(functionToRun, functionInputs) {
-        // Get a unique promise id
-        const id = uniqueId('promise_');
+        
+        // Send: main-process -> renderer
+        this.send = (functionToRun, functionInputs) => {
+            // Get a unique promise id
+            const id = uniqueId('promise_');
 
-        // Create the deferred promise
-        const deferred = Promise.pending();
+            // Create the deferred promise
+            const deferred = Promise.pending();
 
-        // Add it to the promise store
-        this.promises[id] = deferred;
+            // Add it to the promise store
+            this.promises[id] = deferred;
 
-        // Create the ipc payload
-        const payload = {
-            promiseId: id,
-            data: {
-                functionToRun,
-                functionInputs,
-            },
+            // Create the ipc payload
+            const payload = {
+                promiseId: id,
+                data: {
+                    functionToRun,
+                    functionInputs,
+                },
+            }
+
+            // Send the ipc event
+            this.renderer.webContents.send('ipcPromise', payload);
+            return deferred.promise;
         }
-
-        // Send the ipc event
-        this.renderer.webContents.send('ipcPromise', payload);
-        return deferred.promise;
     }
 }
 
