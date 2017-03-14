@@ -1,9 +1,32 @@
 const Promise = require('bluebird');
 const flatten = require('flatten');
-const evilscan = require('evilscan');
+const scan = require('evilscan');
 const http = require('axios');
 const extend = require('xtend');
 const os = require('os');
+
+const handshake = (peer) => {
+    return http({
+        method: 'POST',
+        url: `http://${peer.ip}:54321/api/handshake/`,
+        data: {
+            hostname: os.hostname(),
+            platform: os.platform(),
+            ip: network.address
+        }
+    })
+    .then((response) => response.data)
+    .then((peerInfo) => {
+        send('network.peerFound', extend(peerInfo, { ip : peer.ip }));
+    })
+    .catch((err) => {
+        const ignore = err.response.status === 404;
+
+        if (!ignore) {
+            console.log(err, `Got error ${err.code} when handshaking with ${peer.ip}`);
+        }
+    });
+}
 
 const scanForPeers = (send) => {
 
@@ -14,7 +37,7 @@ const scanForPeers = (send) => {
 
     networks.forEach((network) => {
 
-        const lookup = new evilscan({
+        const lookup = new scan({
             target: `${network.address}/24`,
             port: 54321,
             status: 'O',
@@ -22,29 +45,9 @@ const scanForPeers = (send) => {
             concurrency: 10
         });
 
-        lookup.on('result', (result) => {
-
-            const handshake = (peer) => http({
-                method: 'POST',
-                url: `http://${peer.ip}:54321/api/handshake/`,
-                data: {
-                    hostname: os.hostname(),
-                    platform: os.platform(),
-                    ip: network.address
-                },
-                json : true
-            })
-            .then((response) => response.data)
-            .then((peerInfo) => {
-                send('network.peerFound', extend(peerInfo, { ip : peer.ip }));
-            })
-            .catch((err) => {
-                console.log(err, `Got error ${err.code} when handshaking with ${result.ip}`);
-            });
-
-            if (!result.status.includes('ENETUNREACH')) {
-                handshake(result);
-            }
+        lookup.on('result', (host) => {
+            const ignoreHost = host.status.includes('ENETUNREACH');
+            if (!ignoreHost) handshake(host);
         });
 
         lookup.run();
@@ -56,7 +59,7 @@ class PeerDiscovery {
         // scanning at startup slows application load time
         const scanDelay = 2000;
         setTimeout(() => scanForPeers(send), scanDelay);
-    }
+    },
 }
 
 module.exports = PeerDiscovery;
