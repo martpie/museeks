@@ -236,6 +236,8 @@ const getMusicMetadata = async (track) => {
         console.warn(`An error occured while reading ${track} id3 tags: ${err}`);
     }
 
+    stream.close();
+    
     const metadata = {
         ...defaultMetadata,
         ...data,
