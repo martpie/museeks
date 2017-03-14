@@ -227,7 +227,8 @@ const getWavMetadata = async (track) => {
 const getMusicMetadata = async (track) => {
     const defaultMetadata = getDefaultMetadata();
 
-    let data, stream;
+    let data;
+    let stream;
     try {
         stream = fs.createReadStream(track);
         data = await musicmetadataAsync(stream, { duration: true });
@@ -301,7 +302,7 @@ const fetchCover = async (trackPath) => {
 
     const data = await musicmetadataAsync(stream);
 
-    stream.close()
+    stream.close();
     
     if(data.picture[0]) { // If cover in id3
         return parseBase64(data.picture[0].format, data.picture[0].data.toString('base64'));
