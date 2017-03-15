@@ -2,7 +2,7 @@
 const AppConstants = require('../constants/AppConstants');
 const utils        = require('../../utils/utils');
 
-export default (state = {}, payload) => {
+module.exports = (state = {}, payload) => {
     switch (payload.type) {
         case('APP_FILTER_SEARCH'): {
             if(!payload.search) {

@@ -1,6 +1,6 @@
 import app from '../lib/app';
 
-export default {
+module.exports = {
     tracks: {
         library: { // Tracks of the library view
             all: null, // All tracks

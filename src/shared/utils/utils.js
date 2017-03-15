@@ -4,11 +4,11 @@
 |--------------------------------------------------------------------------
 */
 
-import path    from 'path';
-import fs      from 'fs';
-import mmd     from 'musicmetadata';
-import globby  from 'globby';
-import Promise from 'bluebird';
+const path    = require('path');
+const fs      = require('fs');
+const mmd     = require('musicmetadata');
+const globby  = require('globby');
+const Promise = require('bluebird');
 
 const musicmetadataAsync = Promise.promisify(mmd);
 
@@ -316,7 +316,7 @@ const fetchCover = async (trackPath) => {
     });
 };
 
-export default {
+module.exports = {
     parseDuration,
     getStatus,
     parseUri,
