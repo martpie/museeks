@@ -8,7 +8,7 @@ const check = () => {
     checkTheme();
     checkDevMode();
     checkSleepBlocker();
-    if(app.config.get('autoUpdateChecker')) checkForUpdate({ silentFail: true });
+    if (app.config.get('autoUpdateChecker')) checkForUpdate({ silentFail: true });
 };
 
 const checkTheme = () => {
@@ -43,7 +43,7 @@ const toggleSleepBlocker = (value) => (dispatch) => {
 };
 
 const checkSleepBlocker = () => {
-    if(app.config.get('sleepBlocker')) {
+    if (app.config.get('sleepBlocker')) {
         ipcRenderer.send('toggleSleepBlocker', true, 'prevent-app-suspension');
     }
 };
@@ -52,7 +52,7 @@ const toggleDevMode = (value) => (dispatch) => {
     app.config.set('devMode', value);
 
     // Open dev tools if needed
-    if(value) app.browserWindows.main.webContents.openDevTools();
+    if (value) app.browserWindows.main.webContents.openDevTools();
     else app.browserWindows.main.webContents.closeDevTools();
 
     app.config.saveSync();
@@ -63,7 +63,7 @@ const toggleDevMode = (value) => (dispatch) => {
 };
 
 const checkDevMode = () => {
-    if(app.config.get('devMode')) app.browserWindows.main.webContents.openDevTools();
+    if (app.config.get('devMode')) app.browserWindows.main.webContents.openDevTools();
 };
 
 const toggleAutoUpdateChecker = (value) => (dispatch) => {
@@ -89,7 +89,7 @@ const checkForUpdate = async (options = {}) => {
         let message;
         if (newRelease) {
             message = `Museeks ${newRelease.tag_name} is available, check http://museeks.io !`;
-        } else if(!options.silentFail) {
+        } else if (!options.silentFail) {
             message = `Museeks ${currentVersion} is the latest version available.`;
         }
 
@@ -97,7 +97,7 @@ const checkForUpdate = async (options = {}) => {
             dispatch(actions.toasts.add('success', message));
         }
     } catch (e) {
-        if(!options.silentFail) dispatch(actions.toasts.add('danger', 'An error occurred while checking updates.'));
+        if (!options.silentFail) dispatch(actions.toasts.add('danger', 'An error occurred while checking updates.'));
     }
 };
 

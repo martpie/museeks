@@ -7,7 +7,7 @@ const extname  = require('path').extname;
 const utils    = require('../../utils/utils');
 const dialog   = require('electron').remote.dialog;
 
-const supportedExtensions = require('../../utils/supportedExtensions');
+const { supportedExtensions } = require('../../utils');
 
 const realpath = Promise.promisify(fs.realpath);
 

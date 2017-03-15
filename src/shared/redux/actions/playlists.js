@@ -1,99 +1,86 @@
-const AppConstants    = require('../constants/AppConstants');
-const actions         = require('./index');
+const AppConstants = require('../constants/AppConstants');
+const lib = require('../../lib');
 const { hashHistory } = require('react-router');
-//import app          from '../lib/app';
 
-const load = async (_id) => {
-    try {
-        const playlist = await lib.playlist.findOne({ query : { _id } });
-        const tracks = await lib.track.find({
-            query : { _id: { $in: playlist.tracks } }
-        });
-        store.dispatch({
+const load = (_id) => (dispatch) => {
+    const getPlaylist = lib.playlist.findOne({ query : { _id } });
+    const getPlaylistTracks = (playlist) => lib.track.find({
+        query : { _id: { $in: playlist.tracks } }
+    });
+
+    return getPlaylist.then(getPlaylistTracks).then((tracks) => {
+        return dispatch({
             type: 'APP_PLAYLISTS_LOAD_ONE',
-            tracks
+            payload: {
+                tracks
+            }
         });
-    } catch (err) {
-        console.warn(err);
-    }
+    });
 };
 
-const refresh = async () => {
-    try {
-        const playlists = await lib.playlist.find({
-            query : {},
-            sort : { name: 1 }
-        });
-        store.dispatch({
+const refresh = () => (dispatch) => {
+    return lib.playlist.find({
+        query : {},
+        sort : { name: 1 }
+    }).then((playlists) => {
+        return dispatch({
             type: 'APP_PLAYLISTS_REFRESH',
-            playlists
+            payload: {
+                playlists
+            }
         });
-    } catch (err) {
-        console.warn(err);
-    }
+    });
 };
 
-const create = async (name, redirect = false) => {
-    const playlist = {
+// DR: call site must be updated for dispatch style function
+const create = (name, redirect = false) => (dispatch) => {
+    return lib.playlist.insert({
         name,
         tracks: []
-    };
+    }).then((doc) => {
+        if (redirect) {
+            hashHistory.push(`/playlists/${doc._id}`);
+        } else {
+            dispatch(lib.actions.toasts.add('success', `The playlist "${name}" was created`));
+        }
 
-    try {
-        const doc = await lib.playlist.insert(playlist);
-        refresh();
-        if (redirect) hashHistory.push(`/playlists/${doc._id}`);
-        else actions.toasts.add('success', `The playlist "${name}" was created`);
+        dispatch(refresh());
         return doc._id;
-    } catch (err) {
-        console.warn(err);
-    }
+    });
 };
 
-const rename = async (_id, name) => {
-    try {
-        await lib.playlist.update({ _id }, { $set: { name } });
-        refresh();
-    } catch (err) {
-        console.warn(err);
-    }
+const rename = (_id, name) => (dispatch) => {
+    return lib.playlist.update({ _id }, { $set: { name } }).then(() => {
+        return dispatch(refresh());
+    });
 };
 
-const remove = async (_id) => {
-    try {
-        await lib.playlist.remove({ _id });
-        refresh();
-    } catch (err) {
-        console.warn(err);
-    }
+const remove = (_id) => (dispatch) => {
+    return lib.playlist.remove({ _id }).then(() => {
+        return dispatch(refresh());
+    });
 };
 
-const addTracksTo = async (_id, tracks, isShown) => {
+const addTracksTo = (_id, newTracks, isShown) => (dispatch) => {
     // isShown should never be true, letting it here anyway to remember of a design issue
     if (isShown) return;
 
-    try {
-        const playlist = await lib.playlist.findOne({ query : { _id } });
-        const playlistTracks = playlist.tracks.concat(tracks);
-        await lib.playlist.update({ _id }, { $set: { tracks: playlistTracks } });
-        actions.toasts.add('success', `${tracks.length} tracks were successfully added to "${playlist.name}"`);
-    } catch (err) {
-        console.warn(err);
-        actions.toasts.add('danger', err);
-    }
+    return lib.playlist.findOne({ query : { _id } }).then((playlist) => {
+        const tracks = playlist.tracks.concat(newTracks);
+        return lib.playlist.update({ _id }, { $set: { tracks } }).then((() => {
+            return dispatch(lib.actions.toasts.add('success', `${tracks.length} tracks were successfully added to "${playlist.name}"`));
+        });
+    })
+    .catch((err) => dispatch(lib.actions.toasts.add('danger', err));
 };
 
-const removeTracksFrom = async (_id, tracks) => {
-    try {
-        const playlist = await lib.playlist.findOne({ query : { _id } });
-        const playlistTracks = playlist.tracks.filter((elem) => {
-            return !tracks.includes(elem);
+const removeTracksFrom = (_id, deletedTracks) => (dispatch) => {
+    return lib.playlist.findOne({ query : { _id } }).then((playlist) => {
+        const tracks = playlist.tracks.filter(track => !deletedTracks.includes(track));
+        return lib.playlist.update({ _id }, { $set: { tracks } }).then(() => {
+            return dispatch(load(_id));
         });
-        await lib.playlist.update({ _id }, { $set: { tracks: playlistTracks } });
-        load(_id);
-    } catch (err) {
-        console.warn(err);
-    }
+    });
 };
 
 module.exports = {

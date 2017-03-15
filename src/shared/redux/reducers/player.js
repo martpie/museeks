@@ -9,7 +9,7 @@ module.exports = (state = {}, payload) => {
             let queueCursor = payload.queuePosition; // Clean that variable mess later
 
             // Check if we have to shuffle the queue
-            if(state.shuffle) {
+            if (state.shuffle) {
                 // need to check that later
                 const index = queue.findIndex((track) => {
                     return track._id === id;
@@ -95,7 +95,7 @@ module.exports = (state = {}, payload) => {
         }
 
         case('APP_PLAYER_SHUFFLE'): {
-            if(payload.shuffle) {
+            if (payload.shuffle) {
                 // Let's shuffle that
                 const queueCursor = state.queueCursor;
                 let queue = [...state.queue];

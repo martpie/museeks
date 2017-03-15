@@ -1,9 +1,8 @@
 //const Player = require('../lib/player');
-//import app    from '../lib/app';
-const electron       = require('electron');
-const utils          = require('../../utils/utils');
-const globalShortcut = electron.remote.globalShortcut;
-const ipcRenderer    = electron.ipcRenderer;
+const lib = require('../../lib');
+const utils = require('../../utils/utils');
+const { ipcRenderer } = require('electron');
+const { globalShortcut } = require('electron').remote;
 
 const init = () => {
     // Usual tasks
@@ -32,7 +31,7 @@ const init = () => {
 
         ipcRenderer.send('playerAction', 'trackStart', track);
 
-        if(app.browserWindows.main.isFocused()) return;
+        if (lib.app.browserWindows.main.isFocused()) return;
 
         const cover = await utils.fetchCover(track.path);
         NotificationActions.add({
@@ -79,7 +78,7 @@ const init = () => {
     }, false);
 
     // Remember dimensions and positionning
-    const currentWindow = app.browserWindows.main;
+    const currentWindow = lib.app.browserWindows.main;
 
     currentWindow.on('resize', saveBounds);
 
@@ -95,19 +94,21 @@ const restart = () => {
 };
 
 const close = () => {
-    if(app.config.get('minimizeToTray')) {
-        app.browserWindows.main.hide();
+    if (app.config.get('minimizeToTray')) {
+        lib.app.browserWindows.main.hide();
     } else {
-        app.browserWindows.main.destroy();
+        lib.app.browserWindows.main.destroy();
     }
 };
 
 const minimize = () => {
-    app.browserWindows.main.minimize();
+    lib.app.browserWindows.main.minimize();
 };
 
 const maximize = () => {
-    app.browserWindows.main.isMaximized() ? app.browserWindows.main.unmaximize() : app.browserWindows.main.maximize();
+    lib.app.browserWindows.main.isMaximized()
+        ? lib.app.browserWindows.main.unmaximize()
+        : lib.app.browserWindows.main.maximize();
 };
 
 const saveBounds = () => {
@@ -120,7 +121,7 @@ const saveBounds = () => {
     self.lastFilterSearch = now;
 
     self.filterSearchTimeOut = setTimeout(() => {
-        app.config.set('bounds', app.browserWindows.main.getBounds());
+        app.config.set('bounds', lib.app.browserWindows.main.getBounds());
         app.config.saveSync();
     }, 250);
 };

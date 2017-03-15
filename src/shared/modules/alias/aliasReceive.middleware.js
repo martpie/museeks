@@ -22,7 +22,7 @@ class aliasReceive {
 
         this.middleware = store => next => action => {
             // If this is an aliased function, we run it from the function lib.
-            if(action.type == 'ALIASED' && scope === action.payload.scope) {
+            if (action.type == 'ALIASED' && scope === action.payload.scope) {
                 const { promiseId, functionToRun, functionInputs } = action.payload;
 
                 // Create reject/resolve functions
@@ -50,7 +50,7 @@ class aliasReceive {
 
                 const functionFromAlias = getFunction(functionToRun);
                 // If we have a function, run it.
-                if(functionFromAlias){
+                if (functionFromAlias){
                     // Run the function and get the result
                     const result = run(functionFromAlias, functionInputs);
                     // We wrap the result in Promise.resolve so we can treate it like a promise (even if is not a promise);

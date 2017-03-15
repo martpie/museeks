@@ -20,7 +20,7 @@ const musicmetadataAsync = Promise.promisify(mmd);
  */
 
 const parseDuration = (duration) => {
-    if(duration !== null && duration !== undefined) {
+    if (duration !== null && duration !== undefined) {
         let hours   = parseInt(duration / 3600);
         let minutes = parseInt(duration / 60) % 60;
         let seconds = parseInt(duration % 60);
@@ -85,7 +85,7 @@ const parseBase64 = (format, data) => {
  * @return array
  */
 const simpleSort = (array, sorting) => {
-    if(sorting === 'asc') {
+    if (sorting === 'asc') {
         array.sort((a, b) => {
             return a - b;
         });
@@ -98,7 +98,7 @@ const simpleSort = (array, sorting) => {
 
     const result = [];
     array.forEach((item) => {
-        if(!result.includes(item)) result.push(item);
+        if (!result.includes(item)) result.push(item);
     });
 
     return result;
@@ -139,7 +139,7 @@ const removeUselessFolders = (folders) => {
 
     filteredFolders.forEach((folder, i) => {
         filteredFolders.forEach((subfolder, j) => {
-            if(subfolder.includes(folder) && i !== j && !foldersToBeRemoved.includes(folder)) {
+            if (subfolder.includes(folder) && i !== j && !foldersToBeRemoved.includes(folder)) {
                 foldersToBeRemoved.push(subfolder);
             }
         });
@@ -291,7 +291,7 @@ const getAudioDurationAsync = (path) => {
 };
 
 const fetchCover = async (trackPath) => {
-    if(!trackPath) {
+    if (!trackPath) {
         return null;
     }
 
@@ -299,7 +299,7 @@ const fetchCover = async (trackPath) => {
 
     const data = await musicmetadataAsync(stream);
 
-    if(data.picture[0]) { // If cover in id3
+    if (data.picture[0]) { // If cover in id3
         return parseBase64(data.picture[0].format, data.picture[0].data.toString('base64'));
     }
 
@@ -316,6 +316,25 @@ const fetchCover = async (trackPath) => {
     });
 };
 
+const supportedExtensions = [
+    // MP3 / MP4
+    '.mp3',
+    '.mp4',
+    '.aac',
+    '.m4a',
+    '.3gp',
+    '.wav',
+
+    // Opus
+    '.ogg',
+    '.ogv',
+    '.ogm',
+    '.opus',
+
+    // Flac
+    '.flac'
+];
+
 module.exports = {
     parseDuration,
     getStatus,
@@ -326,4 +345,5 @@ module.exports = {
     chunkArray,
     getMetadata,
     fetchCover,
+    supportedExtensions
 };

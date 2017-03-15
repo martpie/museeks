@@ -7,7 +7,7 @@ import Promise  from 'bluebird';
 
 import { join, extname } from 'path';
 
-import supportedExtensions from '../../../shared/utils/supportedExtensions';
+import { supportedExtensions } from '../../../shared/utils';
 
 const dialog = electron.remote.dialog;
 const realpath = Promise.promisify(fs.realpath);

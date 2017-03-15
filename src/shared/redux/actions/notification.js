@@ -1,5 +1,7 @@
+import lib from '../../lib';
+
 const add = (notificationData) => {
-    if (app.config.get('displayNotifications')) {
+    if (config.get('displayNotifications')) {
         const notification =
             new Notification(
                 notificationData.title,
@@ -11,8 +13,8 @@ const add = (notificationData) => {
             );
 
         notification.onclick = () => {
-            app.browserWindows.main.show();
-            app.browserWindows.main.focus();
+            lib.app.browserWindows.main.show(),
+            lib.app.browserWindows.main.focus()
         };
 
         return {

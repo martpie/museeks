@@ -5,7 +5,7 @@ const utils        = require('../../utils/utils');
 module.exports = (state = {}, payload) => {
     switch (payload.type) {
         case('APP_FILTER_SEARCH'): {
-            if(!payload.search) {
+            if (!payload.search) {
                 const newState = { ...state };
                 newState.tracks[state.tracksCursor].sub = [...state.tracks[state.tracksCursor].all];
 
@@ -40,7 +40,7 @@ module.exports = (state = {}, payload) => {
             let musicFolders = app.config.get('musicFolders');
 
             // Check if we received folders
-            if(folders !== undefined) {
+            if (folders !== undefined) {
                 musicFolders = musicFolders.concat(folders);
 
                 // Remove duplicates, useless children, ect...
@@ -56,7 +56,7 @@ module.exports = (state = {}, payload) => {
         }
 
         case('APP_LIBRARY_REMOVE_FOLDER'): {
-            if(!state.refreshingLibrary) {
+            if (!state.refreshingLibrary) {
                 const musicFolders = app.config.get('musicFolders');
 
                 musicFolders.splice(payload.index, 1);

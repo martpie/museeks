@@ -1,16 +1,14 @@
 const AppConstants  = require('../constants/AppConstants');
 const ToastsActions = require('./toasts');
-const utils         = require('../../utils/utils');
-//import app from '../lib/app';
-//import Player from '../lib/player';
+const lib = require('../../lib');
+const utils = require('../../utils/utils');
 
 const audioErrors = {
-    aborted:  'The video playback was aborted.',
-    corrupt:  'The audio playback was aborted due to a corruption problem.',
+    aborted: 'The video playback was aborted.',
+    corrupt: 'The audio playback was aborted due to a corruption problem.',
     notFound: 'The track file could not be found. It may be due to a file move or an unmounted partition.',
-    unknown:  'An unknown error occurred.',
+    unknown: 'An unknown error occurred.'
 };
-
 
 const playToggle = () => (dispatch, getState) => {
     const { paused } = Player.getAudio();
@@ -23,11 +21,10 @@ const playToggle = () => (dispatch, getState) => {
     }
 };
 
-
 const play = () => (dispatch, getState) => {
     // TODO (y.solovyov | KeitIG): calling getState is a hack.
     const { queue } = getState();
-    if(queue !== null) {
+    if (queue !== null) {
         Player.play();
         dispatch({
             type : 'APP_PLAYER_PLAY'
@@ -38,7 +35,7 @@ const play = () => (dispatch, getState) => {
 const pause = () => (dispatch, getState) => {
     // TODO (y.solovyov | KeitIG): calling getState is a hack.
     const { queue } = getState();
-    if(queue !== null) {
+    if (queue !== null) {
         Player.pause();
         dispatch({
             type : 'APP_PLAYER_PAUSE'
@@ -82,7 +79,7 @@ const next = () => (dispatch, getState) => {
     const { queue, queueCursor, repeat } = getState();
     let newQueueCursor;
 
-    if(repeat === 'one') {
+    if (repeat === 'one') {
         newQueueCursor = queueCursor;
     } else if (repeat === 'all' && queueCursor === queue.length - 1) { // is last track
         newQueueCursor = 0; // start with new track
@@ -160,7 +157,7 @@ const repeat = (repeat) => {
 };
 
 const setVolume = (volume) => {
-    if(!isNaN(parseFloat(volume)) && isFinite(volume)) {
+    if (!isNaN(parseFloat(volume)) && isFinite(volume)) {
         Player.setAudioVolume(volume);
 
         app.config.set('audioVolume', volume);
@@ -172,7 +169,7 @@ const setVolume = (volume) => {
 };
 
 const setMuted = (muted = false) => {
-    if(muted) Player.mute();
+    if (muted) Player.mute();
     else Player.unmute();
 
     app.config.set('audioMuted', muted);
@@ -183,8 +180,8 @@ const setMuted = (muted = false) => {
 };
 
 const setPlaybackRate = (value) => {
-    if(!isNaN(parseFloat(value)) && isFinite(value)) { // if is numeric
-        if(value >= 0.5 && value <= 5) { // if in allowed range
+    if (!isNaN(parseFloat(value)) && isFinite(value)) { // if is numeric
+        if (value >= 0.5 && value <= 5) { // if in allowed range
             Player.setAudioPlaybackRate(value);
 
             app.config.set('audioPlaybackRate', parseFloat(value));
@@ -221,7 +218,6 @@ const audioError = (e) => {
             break;
     }
 };
-
 
 export default {
     audioError,

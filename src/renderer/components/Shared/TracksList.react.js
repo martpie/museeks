@@ -4,7 +4,7 @@ import KeyBinding from 'react-keybinding-component';
 import TrackRow from './TrackRow.react';
 import PlayingIndicator from './PlayingIndicator.react';
 
-import { api, actions } from '../../library';
+import { api, actions } from '../../lib';
 
 import Player from '../../lib/player';
 import utils from '../../../shared/utils/utils';
