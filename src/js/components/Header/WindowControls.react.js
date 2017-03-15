@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import AppActions from '../../actions/AppActions';
+import { api, actions } from '../../library';
 
 /*
 |--------------------------------------------------------------------------
@@ -28,6 +28,6 @@ export default class WindowControls extends PureComponent {
     }
 
     winClose() {
-        AppActions.close();
+        actions.close();
     }
 }

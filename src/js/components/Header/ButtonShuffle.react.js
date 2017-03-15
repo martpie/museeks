@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import InlineSVG from 'svg-inline-react';
 import classnames from 'classnames';
 
-import AppActions from '../../actions/AppActions';
+import { api, actions } from '../../library';
 
 
 /*
@@ -38,6 +38,6 @@ export default class ButtonShuffle extends Component {
     }
 
     toggleShuffle() {
-        AppActions.player.shuffle(!this.props.shuffle);
+        actions.player.shuffle(!this.props.shuffle);
     }
 }

@@ -8,7 +8,7 @@ import Header from './Header/Header.react';
 import Footer from './Footer/Footer.react';
 import Toasts from './Toasts/Toasts.react';
 
-import AppActions from '../actions/AppActions';
+import lib from '../library';
 
 import app from '../lib/app';
 
@@ -83,7 +83,7 @@ class Museeks extends Component {
             case 32:
                 e.preventDefault();
                 e.stopPropagation();
-                AppActions.player.playToggle();
+                lib.actions.player.playToggle();
                 break;
         }
     }

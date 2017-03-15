@@ -3,7 +3,7 @@ import { Col, Button, ButtonGroup } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import Icon from 'react-fontawesome';
 
-import utils from '../../utils/utils';
+import utils from '../../../shared/utils/utils';
 
 
 /*

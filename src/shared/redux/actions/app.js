@@ -3,7 +3,7 @@ import Player from '../lib/player';
 import app    from '../lib/app';
 import utils  from '../utils/utils';
 
-import IpcPromiseReceiver from '../utils/ipcPromiseManager/renderer';
+import IpcPromiseReceiver  from '../utils/ipcPromiseManager/renderer';
 
 import LibraryActions      from './LibraryActions';
 import PlaylistsActions    from './PlaylistsActions';

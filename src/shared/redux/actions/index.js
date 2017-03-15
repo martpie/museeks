@@ -1,13 +1,12 @@
-import app          from './AppActions';
-import library      from './LibraryActions';
-import network      from './NetworkActions';
-import notification from './NotificationActions';
-import player       from './PlayerActions';
-import playlists    from './PlaylistsActions';
-import queue        from './QueueActions';
-import settings     from './SettingsActions';
-import toasts       from './ToastsActions';
-
+import app          from './app';
+import library      from './library';
+import network      from './network';
+import notification from './notification';
+import player       from './player';
+import playlists    from './playlists';
+import queue        from './queue';
+import settings     from './settings';
+import toasts       from './toasts';
 
 export default {
     app,

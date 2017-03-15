@@ -1,4 +1,4 @@
-import AppActions from '../../actions/AppActions';
+import { api, actions } from '../../library';
 
 import React, { Component } from 'react';
 import { ButtonGroup, Button } from 'react-bootstrap';
@@ -90,7 +90,7 @@ export default class PlaylistsNav extends Component {
         ipcRenderer.on('playlistContextMenuReply', (event, reply, _id) => {
             switch(reply) {
                 case 'delete':
-                    AppActions.playlists.remove(_id);
+                    actions.playlists.remove(_id);
                     break;
                 case 'rename':
                     self.setState({ renamed: _id });
@@ -115,11 +115,11 @@ export default class PlaylistsNav extends Component {
     }
 
     createPlaylist() {
-        AppActions.playlists.create('New playlist', true);
+        actions.playlists.create('New playlist', true);
     }
 
     rename(_id, name) {
-        AppActions.playlists.rename(_id, name);
+        actions.playlists.rename(_id, name);
     }
 
     keyDown(e) {

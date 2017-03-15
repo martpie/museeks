@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import Icon from 'react-fontawesome';
 import VolumeControl from './VolumeControl.react';
 
-import AppActions from '../../actions/AppActions';
+import { api, actions } from '../../library';
 
 /*
 |--------------------------------------------------------------------------
@@ -23,13 +23,13 @@ export default class PlayerControls extends PureComponent {
     render() {
         return (
             <div className='player-controls'>
-                <button type='button' className='player-control previous' onClick={ AppActions.player.previous }>
+                <button type='button' className='player-control previous' onClick={ actions.player.previous }>
                     <Icon name='backward' />
                 </button>
-                <button className='player-control play' onClick={ AppActions.player.playToggle }>
+                <button className='player-control play' onClick={ actions.player.playToggle }>
                     <Icon name={ this.props.playerStatus === 'play' ? 'pause' : 'play' } fixedWidth />
                 </button>
-                <button type='button' className='player-control forward' onClick={ AppActions.player.next }>
+                <button type='button' className='player-control forward' onClick={ actions.player.next }>
                     <Icon name='forward' />
                 </button>
                 <VolumeControl />

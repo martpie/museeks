@@ -1,10 +1,8 @@
-import store from '../store.js';
-import AppConstants  from '../constants/AppConstants';
-import AppActions    from './AppActions';
-
-import app from '../lib/app';
-
-import semver from 'semver';
+import store        from '../store.js';
+import AppConstants from '../constants/AppConstants';
+import actions      from './index';
+import app          from '../lib/app';
+import semver       from 'semver';
 
 const ipcRenderer = electron.ipcRenderer;
 
@@ -98,17 +96,17 @@ const checkForUpdate = async (options = {}) => {
         }
 
         if (message) {
-            AppActions.toasts.add('success', message);
+            actions.toasts.add('success', message);
         }
     } catch (e) {
-        if(!options.silentFail) AppActions.toasts.add('danger', 'An error occurred while checking updates.');
+        if(!options.silentFail) actions.toasts.add('danger', 'An error occurred while checking updates.');
     }
 };
 
 const toggleNativeFrame = (value) => {
     app.config.set('useNativeFrame', value);
     app.config.saveSync();
-    AppActions.app.restart();
+    actions.app.restart();
 };
 
 const toggleMinimizeToTray = (value) => {

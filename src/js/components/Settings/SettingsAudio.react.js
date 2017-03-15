@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import AppActions from '../../actions/AppActions';
+import { api, actions } from '../../library';
 
 
 /*
@@ -45,6 +45,6 @@ export default class SettingsAudio extends Component {
     }
 
     setPlaybackRate(e) {
-        AppActions.player.setPlaybackRate(e.currentTarget.value);
+        actions.player.setPlaybackRate(e.currentTarget.value);
     }
 }

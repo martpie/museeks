@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import PlaylistsNav from './PlaylistsNav.react';
 import FullViewMessage from '../Shared/FullViewMessage.react';
 
-import AppActions from '../../actions/AppActions';
+import { api, actions } from '../../library';
 
 
 /*
@@ -27,7 +27,7 @@ export default class Playlists extends Component {
     }
 
     createPlaylist() {
-        AppActions.playlists.create('New playlist', true);
+        actions.playlists.create('New playlist', true);
     }
 
     render() {

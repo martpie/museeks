@@ -3,7 +3,7 @@ import Icon from 'react-fontawesome';
 
 import classnames from 'classnames';
 
-import AppActions from '../../actions/AppActions';
+import { api, actions } from '../../library';
 
 /*
 |--------------------------------------------------------------------------
@@ -42,6 +42,6 @@ export default class LibraryFolders extends Component {
     }
 
     removeFolder() {
-        AppActions.library.removeFolder(this.props.index);
+        actions.library.removeFolder(this.props.index);
     }
 }

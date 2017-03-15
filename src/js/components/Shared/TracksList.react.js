@@ -4,10 +4,10 @@ import KeyBinding from 'react-keybinding-component';
 import TrackRow from './TrackRow.react';
 import PlayingIndicator from './PlayingIndicator.react';
 
-import AppActions from '../../actions/AppActions';
+import { api, actions } from '../../library';
 
 import Player from '../../lib/player';
-import utils  from '../../utils/utils';
+import utils from '../../../shared/utils/utils';
 
 const ipcRenderer = electron.ipcRenderer;
 
@@ -76,32 +76,32 @@ export default class TracksList extends Component {
 
             switch(reply) {
                 case 'addToQueue': {
-                    AppActions.queue.add(selected);
+                    actions.queue.add(selected);
                     break;
                 }
                 case 'playNext': {
-                    AppActions.queue.addNext(selected);
+                    actions.queue.addNext(selected);
                     break;
                 }
                 case 'addToPlaylist': {
                     const isShown = self.props.type === 'playlist' && data === self.props.currentPlaylist;
-                    AppActions.playlists.addTracksTo(data.playlistId, selected, isShown);
+                    actions.playlists.addTracksTo(data.playlistId, selected, isShown);
                     break;
                 }
                 case 'removeFromPlaylist': {
                     if(self.props.type === 'playlist') {
-                        AppActions.playlists.removeTracksFrom(self.props.currentPlaylist, selected);
+                        actions.playlists.removeTracksFrom(self.props.currentPlaylist, selected);
                     }
                     break;
                 }
                 case 'createPlaylist': {
-                    const playlistId = await AppActions.playlists.create('New playlist', false);
+                    const playlistId = await actions.playlists.create('New playlist', false);
                     const isShown = self.props.type === 'playlist' && data === self.props.currentPlaylist;
-                    AppActions.playlists.addTracksTo(playlistId, selected, isShown);
+                    actions.playlists.addTracksTo(playlistId, selected, isShown);
                     break;
                 }
                 case 'searchFor': {
-                    // small hack, we can't call AppActions.library.filterSearch directly
+                    // small hack, we can't call actions.library.filterSearch directly
                     // otherwise the search clear button will not appear, because it will not detect an input event on itself
                     const searchInput = document.querySelector('input[type="text"].search');
                     searchInput.value = data.search;
@@ -318,7 +318,7 @@ export default class TracksList extends Component {
     }
 
     onEnter(i, tracks) {
-        if(i !== undefined) AppActions.player.start(tracks[i]._id);
+        if(i !== undefined) actions.player.start(tracks[i]._id);
     }
 
     showContextMenu(e, index) {

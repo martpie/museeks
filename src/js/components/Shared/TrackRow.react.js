@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import AppActions from '../../actions/AppActions';
+import { api, actions } from '../../library';
 
 import classnames from 'classnames';
 
@@ -57,6 +57,6 @@ export default class TrackRow extends Component {
     }
 
     start() {
-        AppActions.player.start(this.props.trackId);
+        actions.player.start(this.props.trackId);
     }
 }

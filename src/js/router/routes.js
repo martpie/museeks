@@ -3,7 +3,7 @@ import React from 'react';
 import { Route, IndexRedirect } from 'react-router';
 
 // Actions
-import AppActions from '../actions/AppActions';
+import lib from '../library';
 
 // Components
 import App       from '../components/App.react';
@@ -22,16 +22,16 @@ import SettingsAbout    from '../components/Settings/SettingsAbout.react';
 const init = {
 
     app: () => {
-        AppActions.init();
+        actions.actions.init();
     },
 
     library: () => {
-        AppActions.library.setTracksCursor('library');
+        actions.actions.library.setTracksCursor('library');
     },
 
     playlist: (route) => {
-        AppActions.playlists.load(route.params.playlistId);
-        AppActions.library.setTracksCursor('playlist');
+        actions.actions.playlists.load(route.params.playlistId);
+        actions.actions.library.setTracksCursor('playlist');
     }
 };
 

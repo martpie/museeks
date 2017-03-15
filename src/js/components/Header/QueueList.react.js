@@ -4,9 +4,9 @@ import classnames from 'classnames';
 
 import QueueListItem  from './QueueListItem.react';
 
-import AppActions from '../../actions/AppActions';
+import { api, actions } from '../../library';
 
-import utils from '../../utils/utils';
+import utils from '../../../shared/utils/utils';
 
 
 /*
@@ -62,7 +62,7 @@ export default class QueueList extends Component {
                         { utils.getStatus(incomingQueue) }
                     </div>
                     <ButtonGroup>
-                        <Button bsSize={ 'xsmall' } bsStyle={ 'default' } className='empty-button' onClick={ AppActions.queue.clear }>
+                        <Button bsSize={ 'xsmall' } bsStyle={ 'default' } className='empty-button' onClick={ actions.queue.clear }>
                             clear queue
                         </Button>
                     </ButtonGroup>
@@ -128,7 +128,7 @@ export default class QueueList extends Component {
             dragPosition          : null
         });
 
-        AppActions.queue.setQueue(newQueue);
+        actions.queue.setQueue(newQueue);
     }
 
     dragOver(e, index) {

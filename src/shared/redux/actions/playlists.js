@@ -1,9 +1,7 @@
-import store from '../store.js';
-import AppConstants  from '../constants/AppConstants';
-import AppActions    from './AppActions';
-
-import app from '../lib/app';
-
+import store        from '../store.js';
+import AppConstants from '../constants/AppConstants';
+import actions      from './index';
+import app          from '../lib/app';
 import { hashHistory } from 'react-router';
 
 
@@ -42,7 +40,7 @@ const create = async (name, redirect = false) => {
         const doc = await app.models.Playlist.insertAsync(playlist);
         refresh();
         if (redirect) hashHistory.push(`/playlists/${doc._id}`);
-        else AppActions.toasts.add('success', `The playlist "${name}" was created`);
+        else actions.toasts.add('success', `The playlist "${name}" was created`);
         return doc._id;
     } catch (err) {
         console.warn(err);
@@ -75,10 +73,10 @@ const addTracksTo = async (_id, tracks, isShown) => {
         const playlist = await app.models.Playlist.findOneAsync({ _id });
         const playlistTracks = playlist.tracks.concat(tracks);
         await app.models.Playlist.updateAsync({ _id }, { $set: { tracks: playlistTracks } });
-        AppActions.toasts.add('success', `${tracks.length} tracks were successfully added to "${playlist.name}"`);
+        actions.toasts.add('success', `${tracks.length} tracks were successfully added to "${playlist.name}"`);
     } catch (err) {
         console.warn(err);
-        AppActions.toasts.add('danger', err);
+        actions.toasts.add('danger', err);
     }
 };
 

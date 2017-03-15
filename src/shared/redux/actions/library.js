@@ -1,7 +1,7 @@
 import store from '../store.js';
 
 import AppConstants  from '../constants/AppConstants';
-import AppActions    from './AppActions';
+import actions  from './index.js';
 
 import app      from '../lib/app';
 import api      from '../api';
@@ -132,7 +132,7 @@ const reset = async () => {
         console.error(err);
     }
 
-    AppActions.library.load();
+    actions.library.load();
     store.dispatch({
         type : AppConstants.APP_LIBRARY_REFRESH_END,
     });
@@ -182,12 +182,12 @@ const refresh = () => {
                 return app.models.Track.insertAsync(track);
             }).then(() => {
                 const percent = parseInt(addedFiles * 100 / totalFiles);
-                AppActions.settings.refreshProgress(percent);
+                actions.settings.refreshProgress(percent);
                 addedFiles++;
             });
         }, { concurrency: fsConcurrency });
     }).then(() => {
-        AppActions.library.load();
+        actions.library.load();
         dispatchEnd();
     }).catch((err) => {
         console.warn(err);

@@ -1,4 +1,4 @@
-import actions  from '../shared/redux/actions.js';
+import actions  from '../shared/redux/actions';
 import api      from './api';
 
 export default {

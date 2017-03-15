@@ -3,7 +3,7 @@ import { Button } from 'react-bootstrap';
 
 import classnames from 'classnames';
 
-import AppActions from '../../actions/AppActions';
+import { api, actions } from '../../library';
 
 /*
 |--------------------------------------------------------------------------
@@ -77,10 +77,10 @@ export default class QueueListItem extends PureComponent {
     }
 
     remove() {
-        AppActions.queue.remove(this.props.index);
+        actions.queue.remove(this.props.index);
     }
 
     play() {
-        AppActions.queue.start(this.props.queueCursor + this.props.index + 1);
+        actions.queue.start(this.props.queueCursor + this.props.index + 1);
     }
 }

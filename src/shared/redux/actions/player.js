@@ -5,7 +5,7 @@ import ToastsActions from './ToastsActions';
 
 import app from '../lib/app';
 import Player from '../lib/player';
-import utils from '../utils/utils';
+import utils from '../../utils/utils';
 
 const ipcRenderer    = electron.ipcRenderer;
 

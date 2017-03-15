@@ -1,6 +1,6 @@
-const { ipcMain } = require('electron');
+const { ipcMain }  = require('electron');
 const { uniqueId } = require('lodash')
-const Promise = require('bluebird');
+const Promise      = require('bluebird');
 
 class IpcPromiseManager {
     constructor(renderer) {

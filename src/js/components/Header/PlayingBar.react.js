@@ -9,9 +9,9 @@ import TrackCover    from './TrackCover.react';
 import Queue         from './Queue.react';
 
 import Player from '../../lib/player';
-import utils  from '../../utils/utils';
+import utils from '../../../shared/utils/utils';
 
-import AppActions from '../../actions/AppActions';
+import { api, actions } from '../../library';
 
 import classnames from 'classnames';
 
@@ -149,7 +149,7 @@ export default class PlayingBar extends Component {
         const currTrackPlayingPath = currTrackPlaying && currTrackPlaying.path ? currTrackPlaying.path : null;
 
         if(nextTrackPlayingPath !== currTrackPlayingPath) {
-            AppActions.library.fetchCover(nextTrackPlayingPath);
+            actions.library.fetchCover(nextTrackPlayingPath);
         }
     }
 
@@ -169,7 +169,7 @@ export default class PlayingBar extends Component {
 
         const jumpTo = (percent * trackPlaying.duration) / 100;
 
-        AppActions.player.jumpTo(jumpTo);
+        actions.player.jumpTo(jumpTo);
     }
 
     dragOver(e) {
@@ -184,7 +184,7 @@ export default class PlayingBar extends Component {
 
             const jumpTo = (percent * trackPlaying.duration) / 100;
 
-            AppActions.player.jumpTo(jumpTo);
+            actions.player.jumpTo(jumpTo);
         }
     }
 

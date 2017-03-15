@@ -5,7 +5,7 @@ import classnames from 'classnames';
 
 import LibraryFolders from './LibraryFolders.react';
 
-import AppActions from '../../actions/AppActions';
+import { api, actions } from '../../library';
 
 
 /*
@@ -72,16 +72,16 @@ export default class SettingsLibrary extends Component {
     }
 
     addFolders() {
-        AppActions.library.addFolders();
+        actions.library.addFolders();
     }
 
     resetLibrary() {
-        AppActions.player.stop();
-        AppActions.library.reset();
+        actions.player.stop();
+        actions.library.reset();
     }
 
     refreshLibrary() {
-        AppActions.player.stop();
-        AppActions.library.refresh();
+        actions.player.stop();
+        actions.library.refresh();
     }
 }

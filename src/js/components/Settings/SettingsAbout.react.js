@@ -5,7 +5,7 @@ import ExternalLink from '../Shared/ExternalLink.react';
 
 import app from '../../lib/app';
 
-import AppActions from '../../actions/AppActions';
+import { api, actions } from '../../library';
 
 // sth wrong with that, need some check with Webpack
 const museeksLogoRequire = require('../../../images/logos/museeks.png');
@@ -35,7 +35,7 @@ export default class SettingsAbout extends Component {
                         <ExternalLink href='http://museeks.io'>museeks.io</ExternalLink>
                         { ' - ' }
                         <ExternalLink href={ `https://github.com/KeitIG/Museeks/releases/tag/${app.version}` }>release notes</ExternalLink>
-                        <Button bsSize='small' className='update-checker' onClick={ AppActions.settings.checkForUpdate }>Check for update</Button>
+                        <Button bsSize='small' className='update-checker' onClick={ actions.settings.checkForUpdate }>Check for update</Button>
                     </p>
                 </div>
                 <div className='setting-section'>

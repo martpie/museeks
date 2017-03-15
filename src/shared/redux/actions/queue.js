@@ -3,7 +3,7 @@ import AppConstants  from '../constants/AppConstants';
 
 import app from '../lib/app';
 import Player from '../lib/player';
-import utils from '../utils/utils';
+import utils from '../../utils/utils';
 
 
 const start = (index) => {

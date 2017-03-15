@@ -5,7 +5,7 @@ import PlayingBar     from './PlayingBar.react';
 import WindowControls from './WindowControls.react';
 import PlayerControls from './PlayerControls.react';
 
-import AppActions from '../../actions/AppActions';
+import { api, actions } from '../../library';
 
 
 /*
@@ -66,6 +66,6 @@ export default class Header extends Component {
     }
 
     search(e) {
-        AppActions.library.filterSearch(e.target.value);
+        actions.library.filterSearch(e.target.value);
     }
 }
