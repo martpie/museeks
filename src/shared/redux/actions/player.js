@@ -35,7 +35,7 @@ const play = () => {
     if(queue !== null) {
         Player.play();
         store.dispatch({
-            type : AppConstants.APP_PLAYER_PLAY
+            type : 'APP_PLAYER_PLAY'
         });
     }
 };
@@ -46,7 +46,7 @@ const pause = () => {
     if(queue !== null) {
         Player.pause();
         store.dispatch({
-            type : AppConstants.APP_PLAYER_PAUSE
+            type : 'APP_PLAYER_PAUSE'
         });
     }
 };
@@ -66,7 +66,7 @@ const start = (_id) => {
         Player.play();
 
         store.dispatch({
-            type : AppConstants.APP_PLAYER_START,
+            type : 'APP_PLAYER_START',
             queuePosition,
             _id
         });
@@ -76,7 +76,7 @@ const start = (_id) => {
 const stop = () => {
     Player.stop();
     store.dispatch({
-        type : AppConstants.APP_PLAYER_STOP
+        type : 'APP_PLAYER_STOP'
     });
 
     ipcRenderer.send('playerAction', 'stop');
@@ -103,7 +103,7 @@ const next = () => {
         Player.setAudioSrc(uri);
         Player.play();
         store.dispatch({
-            type : AppConstants.APP_PLAYER_NEXT,
+            type : 'APP_PLAYER_NEXT',
             newQueueCursor
         });
     } else {
@@ -133,7 +133,7 @@ const previous = () => {
         Player.play();
 
         store.dispatch({
-            type : AppConstants.APP_PLAYER_PREVIOUS,
+            type : 'APP_PLAYER_PREVIOUS',
             currentTime,
             newQueueCursor,
         });
@@ -148,7 +148,7 @@ const shuffle = (shuffle) => {
 
     const currentSrc = Player.getSrc();
     store.dispatch({
-        type : AppConstants.APP_PLAYER_SHUFFLE,
+        type : 'APP_PLAYER_SHUFFLE',
         shuffle,
         currentSrc
     });
@@ -159,7 +159,7 @@ const repeat = (repeat) => {
     app.config.saveSync();
 
     store.dispatch({
-        type : AppConstants.APP_PLAYER_REPEAT,
+        type : 'APP_PLAYER_REPEAT',
         repeat
     });
 };
@@ -171,7 +171,7 @@ const setVolume = (volume) => {
         app.config.set('audioVolume', volume);
         app.config.saveSync();
         store.dispatch({
-            type : AppConstants.APP_REFRESH_CONFIG
+            type : 'APP_REFRESH_CONFIG'
         });
     }
 };
@@ -183,7 +183,7 @@ const setMuted = (muted = false) => {
     app.config.set('audioMuted', muted);
     app.config.saveSync();
     store.dispatch({
-        type : AppConstants.APP_REFRESH_CONFIG
+        type : 'APP_REFRESH_CONFIG'
     });
 };
 
@@ -195,7 +195,7 @@ const setPlaybackRate = (value) => {
             app.config.set('audioPlaybackRate', parseFloat(value));
             app.config.saveSync();
             store.dispatch({
-                type : AppConstants.APP_REFRESH_CONFIG
+                type : 'APP_REFRESH_CONFIG'
             });
         }
     }
@@ -206,7 +206,7 @@ const jumpTo = (to) => {
     // if yes, what should it be? if not, do we need this actions at all?
     Player.setAudioCurrentTime(to);
     store.dispatch({
-        type : AppConstants.APP_PLAYER_JUMP_TO
+        type : 'APP_PLAYER_JUMP_TO'
     });
 };
 

@@ -13,41 +13,41 @@ const start = (index) => (dispatch, getState) => {
     Player.play();
 
     return {
-        type : AppConstants.APP_QUEUE_START,
+        type : 'APP_QUEUE_START',
         index
     };
 };
 
 const clear = () => {
     return {
-        type : AppConstants.APP_QUEUE_CLEAR
+        type : 'APP_QUEUE_CLEAR'
     };
 };
 
 const remove = (index) => {
     return {
-        type : AppConstants.APP_QUEUE_REMOVE,
+        type : 'APP_QUEUE_REMOVE',
         index
     };
 };
 
 const add = (tracksIds) => {
     return {
-        type : AppConstants.APP_QUEUE_ADD,
+        type : 'APP_QUEUE_ADD',
         payload : app.models.Track.findAsync({ _id: { $in: tracksIds } })
     };
 };
 
 const addNext = (tracksIds) => {
     store.dispatch({
-        type : AppConstants.APP_QUEUE_ADD_NEXT,
+        type : 'APP_QUEUE_ADD_NEXT',
         payload : app.models.Track.findAsync({ _id: { $in: tracksIds } });
     });
 };
 
 const setQueue = (queue) => {
     return {
-        type : AppConstants.APP_QUEUE_SET_QUEUE,
+        type : 'APP_QUEUE_SET_QUEUE',
         queue
     };
 };

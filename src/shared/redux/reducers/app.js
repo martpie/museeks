@@ -2,8 +2,8 @@ import AppConstants from '../constants/AppConstants';
 
 export default (state = {}, payload) => {
     switch (payload.type) {
-        case(AppConstants.APP_REFRESH_LIBRARY+'_FULFILLED'): {
-            console.log(AppConstants.APP_REFRESH_LIBRARY+'_FULFILLED', payload);
+        case('APP_REFRESH_LIBRARY'+'_FULFILLED'): {
+            console.log('APP_REFRESH_LIBRARY'+'_FULFILLED', payload);
             return state;
             // return {
             //     ...state,
@@ -20,7 +20,7 @@ export default (state = {}, payload) => {
             // };
         }
 
-        case(AppConstants.APP_REFRESH_CONFIG): {
+        case('APP_REFRESH_CONFIG'): {
             return { ...state };
         }
 

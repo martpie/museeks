@@ -4,7 +4,7 @@ import utils        from '../utils/utils';
 
 export default (state = {}, payload) => {
     switch (payload.type) {
-        case(AppConstants.APP_FILTER_SEARCH): {
+        case('APP_FILTER_SEARCH'): {
             if(!payload.search) {
                 const newState = { ...state };
                 newState.tracks[state.tracksCursor].sub = [...state.tracks[state.tracksCursor].all];
@@ -28,14 +28,14 @@ export default (state = {}, payload) => {
             return newState;
         }
 
-        case(AppConstants.APP_LIBRARY_FETCHED_COVER): {
+        case('APP_LIBRARY_FETCHED_COVER'): {
             return {
                 ...state,
                 cover: payload.cover || null
             };
         }
 
-        case(AppConstants.APP_LIBRARY_ADD_FOLDERS): {
+        case('APP_LIBRARY_ADD_FOLDERS'): {
             const folders    = payload.folders;
             let musicFolders = app.config.get('musicFolders');
 
@@ -55,7 +55,7 @@ export default (state = {}, payload) => {
             return { ...state };
         }
 
-        case(AppConstants.APP_LIBRARY_REMOVE_FOLDER): {
+        case('APP_LIBRARY_REMOVE_FOLDER'): {
             if(!state.refreshingLibrary) {
                 const musicFolders = app.config.get('musicFolders');
 
@@ -70,12 +70,12 @@ export default (state = {}, payload) => {
             return state;
         }
 
-        case(AppConstants.APP_LIBRARY_RESET): {
+        case('APP_LIBRARY_RESET'): {
             // nothing here for the moment
             return state;
         }
 
-        case(AppConstants.APP_LIBRARY_REFRESH+'_PENDING'): {
+        case('APP_LIBRARY_REFRESH'+'_PENDING'): {
             return {
                 ...state,
                 status : 'An apple a day keeps Dr Dre away',
@@ -83,7 +83,7 @@ export default (state = {}, payload) => {
             };
         }
 
-        case(AppConstants.APP_LIBRARY_REFRESH+'_FULFILLED'): {
+        case('APP_LIBRARY_REFRESH'+'_FULFILLED'): {
             return {
                 ...state,
                 refreshingLibrary : false,
@@ -91,14 +91,14 @@ export default (state = {}, payload) => {
             };
         }
 
-        case(AppConstants.APP_LIBRARY_REFRESH_PROGRESS): {
+        case('APP_LIBRARY_REFRESH_PROGRESS'): {
             return {
                 ...state,
                 refreshProgress : payload.percentage
             };
         }
 
-        case(AppConstants.APP_LIBRARY_SET_TRACKSCURSOR): {
+        case('APP_LIBRARY_SET_TRACKSCURSOR'): {
             return {
                 ...state,
                 tracksCursor: payload.cursor

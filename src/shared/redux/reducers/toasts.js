@@ -2,7 +2,7 @@ const AppConstants = require('../constants/AppConstants');
 
 export default (state = {}, payload) => {
     switch (payload.type) {
-        case(AppConstants.APP_TOAST_ADD): {
+        case('APP_TOAST_ADD'): {
             const toasts = [...state.toasts, payload.toast];
             return {
                 ...state,
@@ -10,7 +10,7 @@ export default (state = {}, payload) => {
             };
         }
 
-        case(AppConstants.APP_TOAST_REMOVE): {
+        case('APP_TOAST_REMOVE'): {
             const toasts = [...state.toasts].filter((n) => n._id !== payload._id);
             return {
                 ...state,

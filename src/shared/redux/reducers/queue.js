@@ -2,7 +2,7 @@ const AppConstants = require('../constants/AppConstants');
 
 export default (state = {}, payload) => {
     switch (payload.type) {
-        case(AppConstants.APP_QUEUE_START): {
+        case('APP_QUEUE_START'): {
             const queue       = [...state.queue];
             const queueCursor = payload.index;
 
@@ -15,7 +15,7 @@ export default (state = {}, payload) => {
             };
         }
 
-        case(AppConstants.APP_QUEUE_CLEAR): {
+        case('APP_QUEUE_CLEAR'): {
             const queue = [...state.queue];
             queue.splice(state.queueCursor + 1, state.queue.length - state.queueCursor);
             return {
@@ -24,7 +24,7 @@ export default (state = {}, payload) => {
             };
         }
 
-        case(AppConstants.APP_QUEUE_REMOVE): {
+        case('APP_QUEUE_REMOVE'): {
             const queue = [...state.queue];
             queue.splice(state.queueCursor + payload.index + 1, 1);
             return {
@@ -34,7 +34,7 @@ export default (state = {}, payload) => {
         }
 
         // Prob here
-        case(AppConstants.APP_QUEUE_ADD+'_FULFILLED'): {
+        case('APP_QUEUE_ADD'+'_FULFILLED'): {
             const queue = [...state.queue, ...payload.tracks];
             return {
                 ...state,
@@ -42,7 +42,7 @@ export default (state = {}, payload) => {
             };
         }
 
-        case(AppConstants.APP_QUEUE_ADD_NEXT+'_FULFILLED'): {
+        case('APP_QUEUE_ADD_NEXT'+'_FULFILLED'): {
             const queue = [...state.queue];
             queue.splice(state.queueCursor + 1, 0, ...payload.tracks);
             return {
@@ -51,7 +51,7 @@ export default (state = {}, payload) => {
             };
         }
 
-        case(AppConstants.APP_QUEUE_SET_QUEUE): {
+        case('APP_QUEUE_SET_QUEUE'): {
             return {
                 ...state,
                 queue: payload.queue

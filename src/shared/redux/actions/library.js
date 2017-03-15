@@ -27,7 +27,7 @@ const load = async (a) => {
     try {
         const tracks = await app.models.Track.find().sort(querySort).execAsync();
         store.dispatch({
-            type : AppConstants.APP_REFRESH_LIBRARY,
+            type : 'APP_REFRESH_LIBRARY',
             tracks
         });
     } catch (err) {
@@ -72,21 +72,21 @@ const list = async (data) => {
 
 const setTracksCursor = (cursor) => {
     store.dispatch({
-        type : AppConstants.APP_LIBRARY_SET_TRACKSCURSOR,
+        type : 'APP_LIBRARY_SET_TRACKSCURSOR',
         cursor
     });
 };
 
 const resetTracks = () => {
     store.dispatch({
-        type : AppConstants.APP_REFRESH_LIBRARY,
+        type : 'APP_REFRESH_LIBRARY',
         tracks : null
     });
 };
 
 const filterSearch = (search) => {
     store.dispatch({
-        type : AppConstants.APP_FILTER_SEARCH,
+        type : 'APP_FILTER_SEARCH',
         search
     });
 };
@@ -100,7 +100,7 @@ const addFolders = () => {
                 return realpathAsync(folder);
             }).then((resolvedFolders) => {
                 store.dispatch({
-                    type : AppConstants.APP_LIBRARY_ADD_FOLDERS,
+                    type : 'APP_LIBRARY_ADD_FOLDERS',
                     folders: resolvedFolders
                 });
             });
@@ -110,14 +110,14 @@ const addFolders = () => {
 
 const removeFolder = (index) => {
     store.dispatch({
-        type : AppConstants.APP_LIBRARY_REMOVE_FOLDER,
+        type : 'APP_LIBRARY_REMOVE_FOLDER',
         index
     });
 };
 
 const reset = async () => {
     store.dispatch({
-        type : AppConstants.APP_LIBRARY_REFRESH_START,
+        type : 'APP_LIBRARY_REFRESH_START',
     });
 
     try {
@@ -134,18 +134,18 @@ const reset = async () => {
 
     actions.library.load();
     store.dispatch({
-        type : AppConstants.APP_LIBRARY_REFRESH_END,
+        type : 'APP_LIBRARY_REFRESH_END',
     });
 };
 
 const refresh = () => {
     store.dispatch({
-        type : AppConstants.APP_LIBRARY_REFRESH_START
+        type : 'APP_LIBRARY_REFRESH_START'
     });
 
     const dispatchEnd = function() {
         store.dispatch({
-            type : AppConstants.APP_LIBRARY_REFRESH_END
+            type : 'APP_LIBRARY_REFRESH_END'
         });
     };
     const folders = app.config.get('musicFolders');
@@ -197,7 +197,7 @@ const refresh = () => {
 const fetchCover = async (path) => {
     const cover = await utils.fetchCover(path);
     store.dispatch({
-        type : AppConstants.APP_LIBRARY_FETCHED_COVER,
+        type : 'APP_LIBRARY_FETCHED_COVER',
         cover
     });
 };

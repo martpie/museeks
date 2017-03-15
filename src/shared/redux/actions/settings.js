@@ -28,7 +28,7 @@ const toggleDarkTheme = (value) => (dispatch) =>
     app.config.saveSync();
 
     dispatch({
-        type : AppConstants.APP_REFRESH_CONFIG
+        type : 'APP_REFRESH_CONFIG'
     });
 };
 
@@ -39,7 +39,7 @@ const toggleSleepBlocker = (value) => (dispatch) => {
     ipcRenderer.send('toggleSleepBlocker', value, 'prevent-app-suspension');
 
     dispatch({
-        type : AppConstants.APP_REFRESH_CONFIG
+        type : 'APP_REFRESH_CONFIG'
     });
 };
 
@@ -59,7 +59,7 @@ const toggleDevMode = (value) => (dispatch) => {
     app.config.saveSync();
 
     dispatch({
-        type : AppConstants.APP_REFRESH_CONFIG
+        type : 'APP_REFRESH_CONFIG'
     });
 };
 
@@ -72,7 +72,7 @@ const toggleAutoUpdateChecker = (value) => (dispatch) => {
     app.config.saveSync();
 
     dispatch({
-        type : AppConstants.APP_REFRESH_CONFIG
+        type : 'APP_REFRESH_CONFIG'
     });
 };
 
@@ -113,13 +113,13 @@ const toggleMinimizeToTray = (value) => (dispatch) => {
     app.config.saveSync();
 
     dispatch({
-        type : AppConstants.APP_REFRESH_CONFIG
+        type : 'APP_REFRESH_CONFIG'
     });
 };
 
 const refreshProgress = (percentage) => (dispatch) => {
     dispatch({
-        type : AppConstants.APP_LIBRARY_REFRESH_PROGRESS,
+        type : 'APP_LIBRARY_REFRESH_PROGRESS',
         percentage
     });
 };
@@ -129,7 +129,7 @@ const toggleDisplayNotifications = (value) => (dispatch) => {
     app.config.saveSync();
 
     dispatch({
-        type : AppConstants.APP_REFRESH_CONFIG
+        type : 'APP_REFRESH_CONFIG'
     });
 };
 
