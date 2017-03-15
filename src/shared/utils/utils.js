@@ -268,8 +268,8 @@ const getMusicMetadata = async (track) => {
 const getMetadata = async (track) => {
     // metadata should have the same shape as getDefaultMetadata() object
     const wavFile = path.extname(track).toLowerCase() === '.wav';
-    const metadata = wavFile ? await getWavMetadata(track) : await getMusicMetadata(track);
-    return metadata;
+    const metadata = wavFile ? getWavMetadata : getMusicMetadata;
+    return await metadata(track);
 };
 
 const getAudioDurationAsync = (path) => {

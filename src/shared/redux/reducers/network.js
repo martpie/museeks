@@ -3,7 +3,7 @@ const AppConstants = require('../constants/AppConstants');
 export default (state = {}, payload) => {
     switch (payload.type) {
 
-        case(AppConstants.APP_NETWORK_PEER_FOUND): {
+        case('APP_NETWORK_PEER_FOUND'): {
 
             const peer = payload.peer;
             const peers = (state.peers || []).slice();

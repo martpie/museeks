@@ -2,7 +2,7 @@ const AppConstants = require('../constants/AppConstants');
 
 export default (state = {}, payload) => {
     switch (payload.type) {
-        case(AppConstants.APP_PLAYER_START): {
+        case('APP_PLAYER_START'): {
             const queue = [...state.tracks[state.tracksCursor].sub];
             const id    = payload._id;
 
@@ -49,21 +49,21 @@ export default (state = {}, payload) => {
             };
         }
 
-        case(AppConstants.APP_PLAYER_PLAY): {
+        case('APP_PLAYER_PLAY'): {
             return {
                 ...state,
                 playerStatus: 'play'
             };
         }
 
-        case(AppConstants.APP_PLAYER_PAUSE): {
+        case('APP_PLAYER_PAUSE'): {
             return {
                 ...state,
                 playerStatus: 'pause'
             };
         }
 
-        case(AppConstants.APP_PLAYER_STOP): {
+        case('APP_PLAYER_STOP'): {
             const newState = {
                 ...state,
                 queue          :  [],
@@ -74,7 +74,7 @@ export default (state = {}, payload) => {
             return newState;
         }
 
-        case(AppConstants.APP_PLAYER_NEXT): {
+        case('APP_PLAYER_NEXT'): {
             return {
                 ...state,
                 playerStatus: 'play',
@@ -82,7 +82,7 @@ export default (state = {}, payload) => {
             };
         }
 
-        case(AppConstants.APP_PLAYER_PREVIOUS): {
+        case('APP_PLAYER_PREVIOUS'): {
             return {
                 ...state,
                 playerStatus: 'play',
@@ -90,11 +90,11 @@ export default (state = {}, payload) => {
             };
         }
 
-        case(AppConstants.APP_PLAYER_JUMP_TO): {
+        case('APP_PLAYER_JUMP_TO'): {
             return state;
         }
 
-        case(AppConstants.APP_PLAYER_SHUFFLE): {
+        case('APP_PLAYER_SHUFFLE'): {
             if(payload.shuffle) {
                 // Let's shuffle that
                 const queueCursor = state.queueCursor;
@@ -143,7 +143,7 @@ export default (state = {}, payload) => {
             };
         }
 
-        case(AppConstants.APP_PLAYER_REPEAT): {
+        case('APP_PLAYER_REPEAT'): {
             return {
                 ...state,
                 repeat: payload.repeat

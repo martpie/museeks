@@ -1,6 +1,5 @@
 import store from '../store.js';
 
-import AppConstants  from '../constants/AppConstants';
 import actions  from './index.js';
 
 import app      from '../lib/app';
@@ -13,9 +12,9 @@ import globby   from 'globby';
 import Promise  from 'bluebird';
 
 const dialog = electron.remote.dialog;
-const realpathAsync = Promise.promisify(fs.realpath);
+const realpath = Promise.promisify(fs.realpath);
 
-const load = async (a) => {
+const load = () {
     const querySort = {
         'loweredMetas.artist': 1,
         'year': 1,
@@ -24,128 +23,64 @@ const load = async (a) => {
         'track.no': 1
     };
 
-    try {
-        const tracks = await app.models.Track.find().sort(querySort).execAsync();
-        store.dispatch({
-            type : 'APP_REFRESH_LIBRARY',
-            tracks
-        });
-    } catch (err) {
-        console.warn(err);
+    return {
+        type: 'APP_REFRESH_LIBRARY',
+        payload: app.models.Track.find().sort(querySort).execAsync()
     }
 };
 
-const load2 = async (data) => {
-    const querySort = data.sort || {
-        'loweredMetas.artist': 1,
-        'year': 1,
-        'loweredMetas.album': 1,
-        'disk.no': 1,
-        'track.no': 1
-    };
+const setTracksCursor = (cursor) => ({
+    type: 'APP_LIBRARY_SET_TRACKSCURSOR',
+    cursor
+});
 
-    try {
-        const tracks = await api.library.list(data);
-        return tracks;
-    } catch (err) {
-        console.warn(err);
-    }
-};
+const resetTracks = () => ({
+    type: 'APP_REFRESH_LIBRARY',
+    tracks : null
+});
 
-const list = async (data) => {
-    const querySort = data.sort || {
-        'loweredMetas.artist': 1,
-        'year': 1,
-        'loweredMetas.album': 1,
-        'disk.no': 1,
-        'track.no': 1
-    };
+const filterSearch = (search) => ({
+    type: 'APP_FILTER_SEARCH',
+    search
+});
 
-    try {
-        const tracks = app.models.Track.find().sort(querySort).execAsync();
-
-        return tracks;
-    } catch (err) {
-        console.warn(err);
-    }
-};
-
-const setTracksCursor = (cursor) => {
-    store.dispatch({
-        type : 'APP_LIBRARY_SET_TRACKSCURSOR',
-        cursor
-    });
-};
-
-const resetTracks = () => {
-    store.dispatch({
-        type : 'APP_REFRESH_LIBRARY',
-        tracks : null
-    });
-};
-
-const filterSearch = (search) => {
-    store.dispatch({
-        type : 'APP_FILTER_SEARCH',
-        search
-    });
-};
-
-const addFolders = () => {
+const addFolders = () => (dispatch) => ({
     dialog.showOpenDialog({
         properties: ['openDirectory', 'multiSelections']
     }, (folders) => {
-        if(folders !== undefined) {
-            Promise.map(folders, (folder) => {
-                return realpathAsync(folder);
-            }).then((resolvedFolders) => {
-                store.dispatch({
-                    type : 'APP_LIBRARY_ADD_FOLDERS',
+        if (folders !== undefined) {
+            Promise.map(folders, realpath).then((resolvedFolders) => {
+                dispatch({
+                    type: 'APP_LIBRARY_ADD_FOLDERS',
                     folders: resolvedFolders
                 });
             });
         }
     });
-};
+});
 
-const removeFolder = (index) => {
-    store.dispatch({
-        type : 'APP_LIBRARY_REMOVE_FOLDER',
-        index
-    });
-};
+const removeFolder = (index) => {{
+    type : 'APP_LIBRARY_REMOVE_FOLDER',
+    index
+});
 
-const reset = async () => {
-    store.dispatch({
-        type : 'APP_LIBRARY_REFRESH_START',
-    });
+const reset = () => (dispatch) => ({
+    type: 'APP_LIBRARY_REFRESH',
+    payload: Promise.all([
+        app.models.Track.removeAsync({}, { multi: true }),
+        app.models.Playlist.removeAsync({}, { multi: true })
+    ])
+    .then(() => dispatch(actions.library.load()));
+});
 
-    try {
-        await app.models.Track.removeAsync({}, { multi: true });
-    } catch (err) {
-        console.error(err);
-    }
-
-    try {
-        await app.models.Playlist.removeAsync({}, { multi: true });
-    } catch (err) {
-        console.error(err);
-    }
-
-    actions.library.load();
-    store.dispatch({
-        type : 'APP_LIBRARY_REFRESH_END',
-    });
-};
-
-const refresh = () => {
-    store.dispatch({
-        type : 'APP_LIBRARY_REFRESH_START'
+const refresh = () => (dispatch) => {
+    dispatch({
+        type : 'APP_LIBRARY_REFRESH_PENDING'
     });
 
-    const dispatchEnd = function() {
-        store.dispatch({
-            type : 'APP_LIBRARY_REFRESH_END'
+    const dispatchEnd = () => {
+        dispatch({
+            type : 'APP_LIBRARY_REFRESH_FULFILLED'
         });
     };
     const folders = app.config.get('musicFolders');
@@ -182,12 +117,12 @@ const refresh = () => {
                 return app.models.Track.insertAsync(track);
             }).then(() => {
                 const percent = parseInt(addedFiles * 100 / totalFiles);
-                actions.settings.refreshProgress(percent);
+                dispatch(actions.settings.refreshProgress(percent));
                 addedFiles++;
             });
         }, { concurrency: fsConcurrency });
     }).then(() => {
-        actions.library.load();
+        dispatch(actions.library.load());
         dispatchEnd();
     }).catch((err) => {
         console.warn(err);
@@ -220,7 +155,6 @@ const incrementPlayCount = async (source) => {
 
 export default {
     load,
-    load2,
     list,
     setTracksCursor,
     resetTracks,

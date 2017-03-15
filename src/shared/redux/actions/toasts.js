@@ -6,12 +6,12 @@ const add = (type, content, duration = 3000) => {
 
     return (dispatch) => {
         dispatch({
-            type   : AppConstants.APP_TOAST_ADD,
+            type   : 'APP_TOAST_ADD',
             toast
         });
         setTimeout(() => {
             dispatch({
-                type : AppConstants.APP_TOAST_REMOVE,
+                type : 'APP_TOAST_REMOVE',
                 _id
             });
         }, duration);

@@ -3,7 +3,7 @@ import AppConstants from '../constants/AppConstants';
 
 const peerFound = (peer) => {
     store.dispatch({
-        type: AppConstants.APP_NETWORK_PEER_FOUND,
+        type: 'APP_NETWORK_PEER_FOUND',
         peer
     });
 }

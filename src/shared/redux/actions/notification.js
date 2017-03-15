@@ -20,7 +20,7 @@ const add = (notificationData) => {
         };
 
         store.dispatch({
-            type   : AppConstants.APP_NOTIFICATION_NEW,
+            type: 'APP_NOTIFICATION_NEW',
             notification
         });
     }
