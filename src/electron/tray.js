@@ -110,13 +110,13 @@ class IpcManager {
 
         this.tray.setToolTip('Museeks');
 
-        if(os.platform() === 'win32') {
+        if (os.platform() === 'win32') {
             this.tray.on('click', () => {
                 this.win.show();
                 this.win.focus();
                 this.hide();
             });
-        } else if(os.platform() === 'darwin') {
+        } else if (os.platform() === 'darwin') {
             this.tray.on('double-click', () => {
                 this.win.show();
                 this.win.focus();

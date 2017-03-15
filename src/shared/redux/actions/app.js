@@ -22,22 +22,24 @@ const init = () => {
         }
     });
 
-    Player.getAudio().addEventListener('play', async () => {
+    Player.getAudio().addEventListener('play', () => {
         ipcRenderer.send('playerAction', 'play');
 
         const path = decodeURIComponent(Player.getSrc()).replace('file://', '');
 
-        const track = await utils.getMetadata(path);
+        return utils.getMetadata(path).then((path) => {
 
-        ipcRenderer.send('playerAction', 'trackStart', track);
+            ipcRenderer.send('playerAction', 'trackStart', track);
 
-        if (lib.app.browserWindows.main.isFocused()) return;
+            if (lib.app.browserWindows.main.isFocused()) return;
 
-        const cover = await utils.fetchCover(track.path);
-        NotificationActions.add({
-            title: track.title,
-            body: `${track.artist}\n${track.album}`,
-            icon: cover
+            return utils.fetchCover(track.path).then((cover) => {
+                return NotificationActions.add({
+                    title: track.title,
+                    body: `${track.artist}\n${track.album}`,
+                    icon: cover
+                });
+            });
         });
     });
 

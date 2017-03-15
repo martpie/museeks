@@ -28,8 +28,8 @@ let mainWindow = null;
 // Make the app a single-instance app (to avoid Database concurrency)
 const shouldQuit = app.makeSingleInstance(() => {
     // Someone tried to run a second instance, we should focus our window.
-    if(mainWindow) {
-        if(mainWindow.isMinimized()) mainWindow.restore();
+    if (mainWindow) {
+        if (mainWindow.isMinimized()) mainWindow.restore();
         mainWindow.show();
         mainWindow.focus();
     }
@@ -137,7 +137,7 @@ function checkBounds(bounds) {
         && bounds.y >= display.y
         && bounds.y + bounds.height <= display.y + display.height;
 
-    if(!onScreen) {
+    if (!onScreen) {
         delete bounds.x;
         delete bounds.y;
         bounds.width = 900;

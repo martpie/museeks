@@ -11,23 +11,19 @@ const { supportedExtensions } = require('../../utils');
 
 const realpath = Promise.promisify(fs.realpath);
 
-const load = () {
-    const sort = {
-        'loweredMetas.artist': 1,
-        'year': 1,
-        'loweredMetas.album': 1,
-        'disk.no': 1,
-        'track.no': 1
-    };
-
-    return {
-        type: 'APP_REFRESH_LIBRARY',
-        payload: lib.track.find({
-            query : {},
-            sort
-        })
-    }
-};
+const load = () => ({
+    type: 'APP_REFRESH_LIBRARY',
+    payload: lib.track.find({
+        query: {},
+        sort: {
+            'loweredMetas.artist': 1,
+            'year': 1,
+            'loweredMetas.album': 1,
+            'disk.no': 1,
+            'track.no': 1
+        }
+    })
+});
 
 const setTracksCursor = (cursor) => ({
     type: 'APP_LIBRARY_SET_TRACKSCURSOR',
@@ -50,7 +46,7 @@ const filterSearch = (search) => ({
     }
 });
 
-const addFolders = () => (dispatch) => ({
+const addFolders = () => (dispatch) => {
     dialog.showOpenDialog({
         properties: ['openDirectory', 'multiSelections']
     }, (folders) => {
@@ -63,9 +59,9 @@ const addFolders = () => (dispatch) => ({
             });
         }
     });
-});
+};
 
-const removeFolder = (index) => {{
+const removeFolder = (index) => ({
     type: 'APP_LIBRARY_REMOVE_FOLDER',
     payload: {
         index
@@ -95,7 +91,7 @@ const refresh = () => (dispatch) => {
     const fsConcurrency = 32;
 
     // Start the big thing
-    lib.track.remove({}, { multi: true }).then(() => {
+    return lib.track.remove({}, { multi: true }).then(() => {
         return Promise.map(folders, (folder) => {
             const pattern = join(folder, '**/*.*');
             return globby(pattern, { nodir: true, follow: true });
@@ -137,7 +133,7 @@ const refresh = () => (dispatch) => {
 };
 
 const fetchCover = (path) => (dispatch) => {
-    utils.fetchCover(path).then((cover) =>
+    utils.fetchCover(path).then((cover) => {
         dispatch({
             type: 'APP_LIBRARY_FETCHED_COVER',
             payload: {
@@ -150,12 +146,10 @@ const fetchCover = (path) => (dispatch) => {
 /**
  * Update the play count attribute.
  *
- * @param source
+ * @param src
  */
-const incrementPlayCount = async (source) => {
-    const query = { src: source };
-    const update = { $inc: { playcount : 1 } };
-    return lib.track.update(query, update);
+const incrementPlayCount = (src) => {
+    return lib.track.update({ src }, { $inc: { playcount : 1 } });
 };
 
 export default {
