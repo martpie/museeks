@@ -75,7 +75,7 @@ export default (state = {}, payload) => {
             return state;
         }
 
-        case('APP_LIBRARY_REFRESH'+'_PENDING'): {
+        case('APP_LIBRARY_REFRESH_PENDING'): {
             return {
                 ...state,
                 status : 'An apple a day keeps Dr Dre away',
@@ -83,7 +83,7 @@ export default (state = {}, payload) => {
             };
         }
 
-        case('APP_LIBRARY_REFRESH'+'_FULFILLED'): {
+        case('APP_LIBRARY_REFRESH_FULFILLED'): {
             return {
                 ...state,
                 refreshingLibrary : false,

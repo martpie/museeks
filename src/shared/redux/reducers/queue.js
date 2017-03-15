@@ -34,7 +34,7 @@ export default (state = {}, payload) => {
         }
 
         // Prob here
-        case('APP_QUEUE_ADD'+'_FULFILLED'): {
+        case('APP_QUEUE_ADD_FULFILLED'): {
             const queue = [...state.queue, ...payload.tracks];
             return {
                 ...state,
@@ -42,7 +42,7 @@ export default (state = {}, payload) => {
             };
         }
 
-        case('APP_QUEUE_ADD_NEXT'+'_FULFILLED'): {
+        case('APP_QUEUE_ADD_NEXT_FULFILLED'): {
             const queue = [...state.queue];
             queue.splice(state.queueCursor + 1, 0, ...payload.tracks);
             return {
