@@ -4,17 +4,17 @@ const { forwardToMain, replayActionRenderer, getInitialStateRenderer } = require
 const { promiseMiddleware } = require('redux-promise-middleware');
 const { aliasReceive, aliasResponse } = require('../../shared/modules/alias');
 
-const thunk         = require('redux-thunk');
-const createLogger  = require('redux-logger');
-const reducers      = require('../../shared/redux/reducers');
-const initialState  = getInitialStateRenderer();
-const logger        = createLogger({ collapsed : true });
+const thunk = require('redux-thunk');
+const createLogger = require('redux-logger');
+const reducers = require('../../shared/redux/reducers');
+const initialState = getInitialStateRenderer();
+const logger = createLogger({ collapsed : true });
 
-const middleware    = [
+const middleware = [
     forwardToMain,
     thunk,
-    new aliasReceive(lib),
-    new aliasResponse(),
+    new aliasReceive(lib, 'mainRenderer'),
+    new aliasResponse('mainRenderer'),
     promiseMiddleware,
     logger
 ];

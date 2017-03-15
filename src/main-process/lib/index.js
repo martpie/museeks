@@ -1,14 +1,13 @@
 const actions = require('../shared/redux/actions');
 const api = require('../shared/api');
-const tracks = require('./tracks');
+const models = require('../models');
+const playlist = require('./playlist')(models.playlist);
+const track = require('./track')(models.track);
 
-const lib = {
+export default {
     actions,
     api,
-    models
-}
-
-const playlists = require('./playlists')(lib);
-const models = require('./models')(lib);
-
-export default lib;
+    models,
+    playlist,
+    track
+};

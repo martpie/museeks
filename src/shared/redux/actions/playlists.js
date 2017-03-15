@@ -3,11 +3,12 @@ const actions         = require('./index');
 const { hashHistory } = require('react-router');
 //import app          from '../lib/app';
 
-
 const load = async (_id) => {
     try {
-        const playlist = await app.models.Playlist.findOneAsync({ _id });
-        const tracks = await app.models.Track.findAsync({ _id: { $in: playlist.tracks } });
+        const playlist = await lib.playlist.findOne({ query : { _id } });
+        const tracks = await lib.track.find({
+            query : { _id: { $in: playlist.tracks } }
+        });
         store.dispatch({
             type: 'APP_PLAYLISTS_LOAD_ONE',
             tracks
@@ -19,7 +20,10 @@ const load = async (_id) => {
 
 const refresh = async () => {
     try {
-        const playlists = await app.models.Playlist.find({}).sort({ name: 1 }).execAsync();
+        const playlists = await lib.playlist.find({
+            query : {},
+            sort : { name: 1 }
+        });
         store.dispatch({
             type: 'APP_PLAYLISTS_REFRESH',
             playlists
@@ -36,7 +40,7 @@ const create = async (name, redirect = false) => {
     };
 
     try {
-        const doc = await app.models.Playlist.insertAsync(playlist);
+        const doc = await lib.playlist.insert(playlist);
         refresh();
         if (redirect) hashHistory.push(`/playlists/${doc._id}`);
         else actions.toasts.add('success', `The playlist "${name}" was created`);
@@ -48,7 +52,7 @@ const create = async (name, redirect = false) => {
 
 const rename = async (_id, name) => {
     try {
-        await app.models.Playlist.updateAsync({ _id }, { $set: { name } });
+        await lib.playlist.update({ _id }, { $set: { name } });
         refresh();
     } catch (err) {
         console.warn(err);
@@ -57,7 +61,7 @@ const rename = async (_id, name) => {
 
 const remove = async (_id) => {
     try {
-        await app.models.Playlist.removeAsync({ _id });
+        await lib.playlist.remove({ _id });
         refresh();
     } catch (err) {
         console.warn(err);
@@ -69,9 +73,9 @@ const addTracksTo = async (_id, tracks, isShown) => {
     if (isShown) return;
 
     try {
-        const playlist = await app.models.Playlist.findOneAsync({ _id });
+        const playlist = await lib.playlist.findOne({ query : { _id } });
         const playlistTracks = playlist.tracks.concat(tracks);
-        await app.models.Playlist.updateAsync({ _id }, { $set: { tracks: playlistTracks } });
+        await lib.playlist.update({ _id }, { $set: { tracks: playlistTracks } });
         actions.toasts.add('success', `${tracks.length} tracks were successfully added to "${playlist.name}"`);
     } catch (err) {
         console.warn(err);
@@ -81,11 +85,11 @@ const addTracksTo = async (_id, tracks, isShown) => {
 
 const removeTracksFrom = async (_id, tracks) => {
     try {
-        const playlist = await app.models.Playlist.findOneAsync({ _id });
+        const playlist = await lib.playlist.findOne({ query : { _id } });
         const playlistTracks = playlist.tracks.filter((elem) => {
             return !tracks.includes(elem);
         });
-        await app.models.Playlist.updateAsync({ _id }, { $set: { tracks: playlistTracks } });
+        await lib.playlist.update({ _id }, { $set: { tracks: playlistTracks } });
         load(_id);
     } catch (err) {
         console.warn(err);

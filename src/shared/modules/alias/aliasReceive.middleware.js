@@ -1,7 +1,7 @@
 const { get } = require('lodash');
 
 class aliasReceive {
-    constructor(library) {
+    constructor(library, scope) {
 
         // Check the functionLib for the functionToRun
         const getFunction = (functionName) => {
@@ -22,7 +22,7 @@ class aliasReceive {
 
         this.middleware = store => next => action => {
             // If this is an aliased function, we run it from the function lib.
-            if(action.type == 'ALIASED') {
+            if(action.type == 'ALIASED' && scope === action.payload.scope) {
                 const { promiseId, functionToRun, functionInputs } = action.payload;
 
                 // Create reject/resolve functions
@@ -31,6 +31,7 @@ class aliasReceive {
                         type: 'ALIASED_RESOLVE',
                         payload: {
                             promiseId: payload.promiseId,
+                            scope,
                             result
                         }
                     })
@@ -41,6 +42,7 @@ class aliasReceive {
                         type: 'ALIASED_REJECT',
                         payload: {
                             promiseId: payload.promiseId,
+                            scope,
                             result
                         }
                     });

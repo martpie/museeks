@@ -33,6 +33,6 @@ const Track = new linvodb('track', {
 
 Track.ensureIndex({ fieldName: 'path', unique: true });
 
-Promise.promisifyAll(models.Track);
+Promise.promisifyAll(Track);
 
 module.exports = Track;

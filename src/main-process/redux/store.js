@@ -13,8 +13,8 @@ const logger        = createLogger({ collapsed : true });
 const middleware    = [
     triggerAlias,
     thunk,
-    new aliasReceive(lib),
-    new aliasResponse(),
+    new aliasReceive(lib, 'mainThread'),
+    new aliasResponse('mainThread'),
     logger,
     forwardToRenderer
 ];

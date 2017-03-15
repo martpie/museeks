@@ -1,11 +1,11 @@
-const { uniqueId } = require('lodash')
-const Promise      = require('bluebird');
+const Promise = require('bluebird');
+const uuid = require('uuid/v4');
 
-const promises     = require('./promises');
+const promises = require('./promises');
 
-const emit = (dispatch, functionToRun, functionInputs) => {
+const emit = (dispatch, functionToRun, functionInputs, scope) => {
     // Get a unique promise id
-    const id = uniqueId('promise_');
+    const id = `promise_${uuid()}`;
 
     // Create the deferred promise
     const deferred = Promise.pending();
@@ -18,6 +18,7 @@ const emit = (dispatch, functionToRun, functionInputs) => {
         type: 'ALIASED',
         payload: {
             promiseId: id,
+            scope,
             functionToRun,
             functionInputs,
         }

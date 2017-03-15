@@ -9,6 +9,6 @@ const Playlist = new linvodb('playlist', {
     }
 });
 
-Promise.promisifyAll(models.Playlist);
+Promise.promisifyAll(Playlist);
 
 export default Playlist;

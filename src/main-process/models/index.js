@@ -5,12 +5,10 @@ const Promise = require('bluebird');
 const track = require('./models/track');
 const playlist = require('./models/playlist');
 
-module.exports = (app) => {
-    linvodb.defaults.store = { db: leveljs };
-    linvodb.dbPath = app.getPath('userData');
+linvodb.defaults.store = { db: leveljs };
+linvodb.dbPath = app.getPath('userData');
 
-    return {
-        track,
-        playlist
-    }
+module.exports = {
+    track,
+    playlist
 }

@@ -3,7 +3,7 @@ const aliasEmit = require('../../modules/alias/aliasEmit');
 const getAll = () => (dispatch) =>  {
     return {
         type : 'APP_CONFIG_GET_ALL',
-        payload : aliasEmit(dispatch, 'app.library.config.getAll', '')
+        payload : aliasEmit(dispatch, 'config.getAll', '', 'mainRenderer')
     }
 
 const set = (key, value) => (dispatch) => {
@@ -24,5 +24,5 @@ const save = () => (dispatch) => {
 module.exports = {
     getAll,
     set,
-    save,
+    save
 };

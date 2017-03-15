@@ -18,7 +18,9 @@ const lib = Object.keys(libraries).reduce((lib, library) => {
 
     // create a handler for each rpc function
     const rpcFunctions = functions.reduce((hash, fn) => {
-        hash[fn] = (data) => rpc({ library, fn, data });
+        hash[fn] = function () {
+            return rpc({ library, fn, arguments });
+        }
         return hash;
     }, {});
 

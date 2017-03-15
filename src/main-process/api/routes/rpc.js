@@ -1,9 +1,13 @@
 const routes = [{
     method: 'POST',
     path: '/',
-    handler: (req, res) => req.lib[req.payload.library][req.payload.function](req.payload.data)
-        .then((result) => res.status(200).json(result))
-        .catch((error) => res.status(error.code).json({ error }));
+    handler: (req, res) => {
+        const rpc = req.payload;
+        const target = req.lib[rpc.library][rpc.function];
+
+        return target.apply(null, rpc.arguments)
+            .then((result) => res.status(200).json(result))
+            .catch((error) => res.status(error.code).json({ error }));
 }];
 
 module.exports = {

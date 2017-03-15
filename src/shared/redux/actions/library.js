@@ -4,7 +4,8 @@ const actions  = require('./index.js');
 const api      = require('../../api');
 const fs       = require('fs');
 const globby   = require('globby');
-const path     = require('path');
+const join     = require('path').join;
+const extname  = require('path').extname;
 const utils    = require('../../utils/utils');
 
 const supportedExtensions = require('../../utils/supportedExtensions');
@@ -13,7 +14,7 @@ const dialog = electron.remote.dialog;
 const realpathAsync = Promise.promisify(fs.realpath);
 
 const load = async (a) => {
-    const querySort = {
+    const sort = {
         'loweredMetas.artist': 1,
         'year': 1,
         'loweredMetas.album': 1,
@@ -22,7 +23,7 @@ const load = async (a) => {
     };
 
     try {
-        const tracks = await app.models.Track.find().sort(querySort).execAsync();
+        const tracks = await lib.track.find({ sort });
         store.dispatch({
             type : 'APP_REFRESH_LIBRARY',
             tracks
@@ -50,7 +51,7 @@ const load2 = async (data) => {
 };
 
 const list = async (data) => {
-    const querySort = data.sort || {
+    const sort = data.sort || {
         'loweredMetas.artist': 1,
         'year': 1,
         'loweredMetas.album': 1,
@@ -59,7 +60,7 @@ const list = async (data) => {
     };
 
     try {
-        const tracks = app.models.Track.find().sort(querySort).execAsync();
+        const tracks = lib.track.find({ sort });
 
         return tracks;
     } catch (err) {
@@ -118,13 +119,16 @@ const reset = async () => {
     });
 
     try {
-        await app.models.Track.removeAsync({}, { multi: true });
+        await lib.track.remove({
+            query : {},
+            multi: true
+        });
     } catch (err) {
         console.error(err);
     }
 
     try {
-        await app.models.Playlist.removeAsync({}, { multi: true });
+        await lib.playlist.remove({}, { multi: true });
     } catch (err) {
         console.error(err);
     }
@@ -149,16 +153,19 @@ const refresh = () => {
     const fsConcurrency = 32;
 
     // Start the big thing
-    app.models.Track.removeAsync({}, { multi: true }).then(() => {
+    lib.track.remove({
+        query : {},
+        multi: true
+    }).then(() => {
         return Promise.map(folders, (folder) => {
-            const pattern = path.join(folder, '**/*.*');
+            const pattern = join(folder, '**/*.*');
             return globby(pattern, { nodir: true, follow: true });
         });
     }).then((filesArrays) => {
         return filesArrays.reduce((acc, array) => {
             return acc.concat(array);
-        }, []).filter((filePath) => {
-            const extension = path.extname(filePath).toLowerCase();
+        }, []).filter((path) => {
+            const extension = extname(path).toLowerCase();
             return supportedExtensions.includes(extension);
         });
     }).then((supportedFiles) => {
@@ -169,14 +176,16 @@ const refresh = () => {
 
         let addedFiles = 0;
         const totalFiles = supportedFiles.length;
-        return Promise.map(supportedFiles, (filePath) => {
-            return app.models.Track.findAsync({ path: filePath }).then((docs) => {
+        return Promise.map(supportedFiles, (path) => {
+            return lib.track.find({
+                query : { path }
+            }).then((docs) => {
                 if (docs.length === 0) {
-                    return utils.getMetadata(filePath);
+                    return utils.getMetadata(path);
                 }
                 return docs[0];
             }).then((track) => {
-                return app.models.Track.insertAsync(track);
+                return lib.track.insert(track);
             }).then(() => {
                 const percent = parseInt(addedFiles * 100 / totalFiles);
                 actions.settings.refreshProgress(percent);
@@ -208,7 +217,7 @@ const incrementPlayCount = async (source) => {
     const query = { src: source };
     const update = { $inc: { playcount : 1 } };
     try {
-        await app.models.Track.updateAsync(query, update);
+        await lib.track.update(query, update);
     } catch (err) {
         console.warn(err);
     }

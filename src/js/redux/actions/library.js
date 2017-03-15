@@ -2,9 +2,10 @@ import lib      from '../../lib';
 import utils    from '../utils/utils';
 
 import fs       from 'fs';
-import path     from 'path';
 import globby   from 'globby';
 import Promise  from 'bluebird';
+
+import { join, extname } from 'path';
 
 import supportedExtensions from '../../../shared/utils/supportedExtensions';
 
@@ -22,7 +23,7 @@ const load = () {
 
     return {
         type: 'APP_REFRESH_LIBRARY',
-        payload: lib.tracks.find({
+        payload: lib.track.find({
             query : {},
             sort
         })
@@ -75,8 +76,8 @@ const removeFolder = (index) => {{
 const reset = () => (dispatch) => ({
     type: 'APP_LIBRARY_REFRESH',
     payload: Promise.all([
-        app.models.Track.removeAsync({}, { multi: true }),
-        app.models.Playlist.removeAsync({}, { multi: true })
+        lib.track.remove({}, { multi: true }),
+        lib.playlist.remove({}, { multi: true })
     ])
     .then(() => dispatch(actions.library.load()));
 });
@@ -95,16 +96,16 @@ const refresh = () => (dispatch) => {
     const fsConcurrency = 32;
 
     // Start the big thing
-    app.models.Track.removeAsync({}, { multi: true }).then(() => {
+    lib.track.remove({}, { multi: true }).then(() => {
         return Promise.map(folders, (folder) => {
-            const pattern = path.join(folder, '**/*.*');
+            const pattern = join(folder, '**/*.*');
             return globby(pattern, { nodir: true, follow: true });
         });
     }).then((filesArrays) => {
         return filesArrays.reduce((acc, array) => {
             return acc.concat(array);
-        }, []).filter((filePath) => {
-            const extension = path.extname(filePath).toLowerCase();
+        }, []).filter((path) => {
+            const extension = extname(path).toLowerCase();
             return supportedExtensions.includes(extension);
         });
     }).then((supportedFiles) => {
@@ -115,14 +116,14 @@ const refresh = () => (dispatch) => {
 
         let addedFiles = 0;
         const totalFiles = supportedFiles.length;
-        return Promise.map(supportedFiles, (filePath) => {
-            return app.models.Track.findAsync({ path: filePath }).then((docs) => {
+        return Promise.map(supportedFiles, (path) => {
+            return lib.track.find({ query : { path } }).then((docs) => {
                 if (docs.length === 0) {
-                    return utils.getMetadata(filePath);
+                    return utils.getMetadata(path);
                 }
                 return docs[0];
             }).then((track) => {
-                return app.models.Track.insertAsync(track);
+                return lib.track.insert(track);
             }).then(() => {
                 const percent = parseInt(addedFiles * 100 / totalFiles);
                 dispatch(actions.settings.refreshProgress(percent));
@@ -156,7 +157,7 @@ const fetchCover = (path) => (dispatch) => {
 const incrementPlayCount = async (source) => {
     const query = { src: source };
     const update = { $inc: { playcount : 1 } };
-    return app.models.Track.updateAsync(query, update);
+    return lib.track.update(query, update);
 };
 
 export default {

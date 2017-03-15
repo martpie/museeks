@@ -32,14 +32,18 @@ const remove = (index) => {
 const add = (tracksIds) => {
     return {
         type : 'APP_QUEUE_ADD',
-        payload : app.models.Track.findAsync({ _id: { $in: tracksIds } })
+        payload : lib.track.find({
+            query : { _id: { $in: tracksIds } }
+        })
     };
 };
 
 const addNext = (tracksIds) => {
     return {
         type : 'APP_QUEUE_ADD_NEXT',
-        payload : app.models.Track.findAsync({ _id: { $in: tracksIds } })
+        payload : lib.track.find({
+            query : { _id: { $in: tracksIds } }
+        })
     };
 };
 
