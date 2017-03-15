@@ -27,6 +27,7 @@
     "bluebird": "^3.5.0",
     "bootstrap-css-only": "3.3.7",
     "classnames": "2.2.5",
+    "electron-redux": "^1.2.5",
     "evilscan": "^1.0.3",
     "flatten": "^1.0.2",
     "font-awesome": "4.7.0",
