@@ -28,10 +28,20 @@ class IpcPromiseReceiver {
 
             // If we found the function in the functionLib, run it.
             if (actualFunctionToRun) {
+
+                // handle different argument formats
+                const run = (fn, args) => {
+                    if (Array.isArray(args)) {
+                        return fn(args);
+                    } else if (args === null) {
+                        return fn({});
+                    } else {
+                        return fn(args);
+                    }
+                }
+
                 // Run the function and get the result
-                const result = Array.isArray(functionInputs)
-                    ? actualFunctionToRun(...functionInputs)
-                    : actualFunctionToRun(functionInputs);
+                const result = run(actualFunctionToRun, functionInputs);
 
                 // We wrap the result in Promise.resolve so we can treate it like a promise (even if is not a promise);
                 Promise.resolve(result).then(resolve).catch(reject);

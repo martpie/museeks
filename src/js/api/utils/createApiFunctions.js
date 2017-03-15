@@ -1,13 +1,15 @@
-const axios        = require('axios');
+const axios = require('axios');
 
 const createApiFunctions = (libs) => {
 
     const reduceLib = (lib) => lib.routes.reduce((output, route) => {
         // Create a function that call this api
-        output[route.path] = () => axios({
+        output[route.path] = (config) => axios({
+            ...config,
             method: route.method,
-            url: `/api/${lib.namespace}/${route.path}`
-        });
+            url: `http://${config.ip || 'localhost'}:54321/api/${lib.namespace}/${route.path}`
+        })
+        .then((response) => response.data);
         return output;
     }, {});
 
@@ -20,4 +22,3 @@ const createApiFunctions = (libs) => {
 }
 
 module.exports = createApiFunctions;
-

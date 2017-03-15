@@ -10,7 +10,10 @@ const mapLibraries = (libraries, send) => {
         const handler = (route) => {
             return (req, res) => send(`${library.namespace}.${route.path}`, req.payload && req.payload.data)
             .then((result) => res(result))
-            .catch((error) => res({ error }).code(error.code));
+            .catch((error) => {
+                console.log('error', error)
+                res({ error }).code(error.code);
+            })
         }
 
         const routesWithHandlers = library.routes.map((route) => ({

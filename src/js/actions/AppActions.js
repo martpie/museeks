@@ -1,6 +1,7 @@
+import store  from '../store.js';
 import Player from '../lib/player';
 import app    from '../lib/app';
-import utils from '../utils/utils';
+import utils  from '../utils/utils';
 
 import IpcPromiseReceiver from '../utils/ipcPromiseManager/renderer';
 
@@ -13,7 +14,7 @@ import PlayerActions       from './PlayerActions';
 import QueueActions        from './QueueActions';
 import SettingsActions     from './SettingsActions';
 
-import ApiSdk from '../api'
+import api from '../api';
 
 const globalShortcut = electron.remote.globalShortcut;
 const ipcRenderer    = electron.ipcRenderer;
@@ -153,8 +154,16 @@ const initShortcuts = () => {
     });
 };
 
+const getState = (key) => {
+    const state = store.getState();
+    return key
+        ? state[key]
+        : state;
+}
+
 
 const functionLib = {
+    store         : { getState },
     player        : PlayerActions,
     playlists     : PlaylistsActions,
     queue         : QueueActions,

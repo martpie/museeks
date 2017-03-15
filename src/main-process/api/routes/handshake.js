@@ -12,6 +12,15 @@ const routes = [{
             platform: os.platform()
         });
     }
+}, {
+    method: 'GET',
+    path: '/state',
+    handler: (req, res) => {
+        req.send('library.load2', { ip : '192.168.1.2' }).then((result) => {
+            res(result);
+            console.log('result', result);
+        });
+    }
 }];
 
 module.exports = {

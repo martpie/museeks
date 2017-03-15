@@ -11,7 +11,7 @@ class PeerDiscovery {
 
         // scanning at startup slows application load time
         const scanDelay = 2000;
-        setTimeout(() => this.scanForPeers, scanDelay);
+        setTimeout(() => this.scanForPeers(), scanDelay);
     }
     handshake (network, peer) {
         return http({
@@ -36,7 +36,6 @@ class PeerDiscovery {
         });
     }
     scanForPeers() {
-
         const interfaces = flatten(Object.values(os.networkInterfaces()));
 
         // only scan for external ipv4 adapters
@@ -54,7 +53,8 @@ class PeerDiscovery {
 
             lookup.on('result', (peer) => {
                 const ignoreHost = peer.status.includes('ENETUNREACH');
-                if (!ignoreHost) handshake(network, peer);
+
+                if (!ignoreHost) this.handshake(network, peer);
             });
 
             lookup.run();

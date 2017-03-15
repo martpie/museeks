@@ -2,6 +2,9 @@ const routes = [{
     method: 'GET',
     path: 'load'
 }, {
+    method: 'GET',
+    path: 'list'
+}, {
     method: 'POST',
     path: 'setTracksCursor',
 }, {

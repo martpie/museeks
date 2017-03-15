@@ -4,6 +4,7 @@ import AppConstants  from '../constants/AppConstants';
 import AppActions    from './AppActions';
 
 import app   from '../lib/app';
+import api   from '../api';
 import utils from '../utils/utils';
 
 import fs       from 'fs';
@@ -14,7 +15,7 @@ import Promise  from 'bluebird';
 const dialog = electron.remote.dialog;
 const realpathAsync = Promise.promisify(fs.realpath);
 
-const load = async () => {
+const load = async (a) => {
     const querySort = {
         'loweredMetas.artist': 1,
         'year': 1,
@@ -29,6 +30,41 @@ const load = async () => {
             type : AppConstants.APP_REFRESH_LIBRARY,
             tracks
         });
+    } catch (err) {
+        console.warn(err);
+    }
+};
+
+const load2 = async (data) => {
+    const querySort = data.sort || {
+        'loweredMetas.artist': 1,
+        'year': 1,
+        'loweredMetas.album': 1,
+        'disk.no': 1,
+        'track.no': 1
+    };
+
+    try {
+        const tracks = await api.library.list(data);
+        return tracks;
+    } catch (err) {
+        console.warn(err);
+    }
+};
+
+const list = async (data) => {
+    const querySort = data.sort || {
+        'loweredMetas.artist': 1,
+        'year': 1,
+        'loweredMetas.album': 1,
+        'disk.no': 1,
+        'track.no': 1
+    };
+
+    try {
+        const tracks = app.models.Track.find().sort(querySort).execAsync();
+
+        return tracks;
     } catch (err) {
         console.warn(err);
     }
@@ -184,6 +220,8 @@ const incrementPlayCount = async (source) => {
 
 export default {
     load,
+    load2,
+    list,
     setTracksCursor,
     resetTracks,
     filterSearch,
