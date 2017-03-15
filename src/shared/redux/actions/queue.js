@@ -1,4 +1,3 @@
-import store from '../store.js';
 import AppConstants  from '../constants/AppConstants';
 
 import app from '../lib/app';
@@ -6,53 +5,51 @@ import Player from '../lib/player';
 import utils from '../../utils/utils';
 
 
-const start = (index) => {
+const start = (index) => (dispatch, getState) => {
     // TODO (y.solovyov | KeitIG): calling getState is a hack.
-    const { queue } = store.getState();
+    const { queue } = getState();
     const uri = utils.parseUri(queue[index].path);
     Player.setAudioSrc(uri);
     Player.play();
 
-    store.dispatch({
+    return {
         type : AppConstants.APP_QUEUE_START,
         index
-    });
+    };
 };
 
 const clear = () => {
-    store.dispatch({
+    return {
         type : AppConstants.APP_QUEUE_CLEAR
-    });
+    };
 };
 
 const remove = (index) => {
-    store.dispatch({
+    return {
         type : AppConstants.APP_QUEUE_REMOVE,
         index
-    });
+    };
 };
 
-const add = async (tracksIds) => {
-    const tracks = await app.models.Track.findAsync({ _id: { $in: tracksIds } });
-    store.dispatch({
+const add = (tracksIds) => {
+    return {
         type : AppConstants.APP_QUEUE_ADD,
-        tracks
-    });
+        payload : app.models.Track.findAsync({ _id: { $in: tracksIds } })
+    };
 };
 
-const addNext = async (tracksIds) => {
-    const tracks = await app.models.Track.findAsync({ _id: { $in: tracksIds } });
+const addNext = (tracksIds) => {
     store.dispatch({
         type : AppConstants.APP_QUEUE_ADD_NEXT,
-        tracks
+        payload : app.models.Track.findAsync({ _id: { $in: tracksIds } });
     });
 };
 
 const setQueue = (queue) => {
-    store.dispatch({
+    return {
         type : AppConstants.APP_QUEUE_SET_QUEUE,
         queue
-    });
+    };
 };
 
 

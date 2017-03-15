@@ -1,4 +1,3 @@
-import store        from '../store.js';
 import AppConstants from '../constants/AppConstants';
 import actions      from './index';
 import app          from '../lib/app';
@@ -18,7 +17,7 @@ const checkTheme = () => {
     document.querySelector('body').classList.add(`theme-${themeName}`);
 };
 
-const toggleDarkTheme = (value) => {
+const toggleDarkTheme = (value) => (dispatch) =>
     const oldTheme = value ? 'light' : 'dark';
     const newTheme = value ? 'dark' : 'light';
 
@@ -28,18 +27,18 @@ const toggleDarkTheme = (value) => {
     app.config.set('theme', newTheme);
     app.config.saveSync();
 
-    store.dispatch({
+    dispatch({
         type : AppConstants.APP_REFRESH_CONFIG
     });
 };
 
-const toggleSleepBlocker = (value) => {
+const toggleSleepBlocker = (value) => (dispatch) => {
     app.config.set('sleepBlocker', value);
     app.config.saveSync();
 
     ipcRenderer.send('toggleSleepBlocker', value, 'prevent-app-suspension');
 
-    store.dispatch({
+    dispatch({
         type : AppConstants.APP_REFRESH_CONFIG
     });
 };
@@ -50,7 +49,7 @@ const checkSleepBlocker = () => {
     }
 };
 
-const toggleDevMode = (value) => {
+const toggleDevMode = (value) => (dispatch) => {
     app.config.set('devMode', value);
 
     // Open dev tools if needed
@@ -59,7 +58,7 @@ const toggleDevMode = (value) => {
 
     app.config.saveSync();
 
-    store.dispatch({
+    dispatch({
         type : AppConstants.APP_REFRESH_CONFIG
     });
 };
@@ -68,11 +67,11 @@ const checkDevMode = () => {
     if(app.config.get('devMode')) app.browserWindows.main.webContents.openDevTools();
 };
 
-const toggleAutoUpdateChecker = (value) => {
+const toggleAutoUpdateChecker = (value) => (dispatch) => {
     app.config.set('autoUpdateChecker', value);
     app.config.saveSync();
 
-    store.dispatch({
+    dispatch({
         type : AppConstants.APP_REFRESH_CONFIG
     });
 };
@@ -109,27 +108,27 @@ const toggleNativeFrame = (value) => {
     actions.app.restart();
 };
 
-const toggleMinimizeToTray = (value) => {
+const toggleMinimizeToTray = (value) => (dispatch) => {
     app.config.set('minimizeToTray', value);
     app.config.saveSync();
 
-    store.dispatch({
+    dispatch({
         type : AppConstants.APP_REFRESH_CONFIG
     });
 };
 
-const refreshProgress = (percentage) => {
-    store.dispatch({
+const refreshProgress = (percentage) => (dispatch) => {
+    dispatch({
         type : AppConstants.APP_LIBRARY_REFRESH_PROGRESS,
         percentage
     });
 };
 
-const toggleDisplayNotifications = (value) => {
+const toggleDisplayNotifications = (value) => (dispatch) => {
     app.config.set('displayNotifications', value);
     app.config.saveSync();
 
-    store.dispatch({
+    dispatch({
         type : AppConstants.APP_REFRESH_CONFIG
     });
 };
