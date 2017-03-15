@@ -1,4 +1,4 @@
-import lib      from '../library';
+import lib      from '../../lib';
 import utils    from '../utils/utils';
 
 import fs       from 'fs';
@@ -20,7 +20,7 @@ const load = () {
 
     return {
         type: 'APP_REFRESH_LIBRARY',
-        payload: lib.api.tracks({
+        payload: lib.tracks.find({
             query : {},
             sort
         })
