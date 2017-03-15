@@ -1,5 +1,5 @@
 import actions  from '../shared/redux/actions';
-import api      from './api';
+import api      from '../shared/api';
 
 export default {
     actions,
