@@ -7,6 +7,6 @@ export default {
     actions,
     api,
     player,
-    tracks: rpc.tracks,
-    playlists: rpc.playlists
+    track: rpc.track,
+    playlist: rpc.playlist
 }

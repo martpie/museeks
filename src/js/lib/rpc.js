@@ -7,9 +7,12 @@ const rpc = (data) => http({
     json : true
 });
 
+const modelOperations = ['find', 'findOne', 'insert', 'update', 'remove'];
+
 // libraries to call remotely
 const libraries = {
-    tracks : ['find']
+    track : modelOperations,
+    playlist : modelOperations
 }
 
 const lib = Object.keys(libraries).reduce((lib, library) => {
@@ -18,7 +21,7 @@ const lib = Object.keys(libraries).reduce((lib, library) => {
 
     // create a handler for each rpc function
     const rpcFunctions = functions.reduce((hash, fn) => {
-        hash[fn] = function () {
+        hash[fn] = function() {
             return rpc({ library, fn, arguments });
         }
         return hash;
