@@ -92,7 +92,7 @@ const refresh = () => (dispatch) => {
             type: 'APP_LIBRARY_REFRESH_FULFILLED'
         });
     };
-    const folders = app.config.get('musicFolders');
+    const folders = lib.config.get('musicFolders');
     const fsConcurrency = 32;
 
     // Start the big thing

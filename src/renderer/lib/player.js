@@ -1,4 +1,4 @@
-import app from './app';
+import lib from '../lib';
 
 class Player {
 
@@ -93,7 +93,7 @@ class Player {
 }
 
 export default new Player({
-    volume       : app.config.get('audioVolume'),
-    playbackRate : app.config.get('audioPlaybackRate'),
-    muted        : app.config.get('audioMuted')
+    volume: lib.config.get('audioVolume'),
+    playbackRate: lib.config.get('audioPlaybackRate'),
+    muted: lib.config.get('audioMuted')
 });

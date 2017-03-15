@@ -11,9 +11,9 @@ const utils    = require('../../utils/utils');
 const supportedExtensions = require('../../utils/supportedExtensions');
 
 const dialog = electron.remote.dialog;
-const realpathAsync = Promise.promisify(fs.realpath);
+const realpath = Promise.promisify(fs.realpath);
 
-const load = async (a) => {
+const load = () {
     const sort = {
         'loweredMetas.artist': 1,
         'year': 1,
@@ -22,141 +22,82 @@ const load = async (a) => {
         'track.no': 1
     };
 
-    try {
-        const tracks = await lib.track.find({ sort });
-        store.dispatch({
-            type : 'APP_REFRESH_LIBRARY',
-            tracks
-        });
-    } catch (err) {
-        console.warn(err);
+    return {
+        type: 'APP_REFRESH_LIBRARY',
+        payload: lib.track.find({
+            query : {},
+            sort
+        })
     }
 };
 
-const load2 = async (data) => {
-    const querySort = data.sort || {
-        'loweredMetas.artist': 1,
-        'year': 1,
-        'loweredMetas.album': 1,
-        'disk.no': 1,
-        'track.no': 1
-    };
-
-    try {
-        const tracks = await api.library.list(data);
-        return tracks;
-    } catch (err) {
-        console.warn(err);
-    }
-};
-
-const list = async (data) => {
-    const sort = data.sort || {
-        'loweredMetas.artist': 1,
-        'year': 1,
-        'loweredMetas.album': 1,
-        'disk.no': 1,
-        'track.no': 1
-    };
-
-    try {
-        const tracks = lib.track.find({ sort });
-
-        return tracks;
-    } catch (err) {
-        console.warn(err);
-    }
-};
-
-const setTracksCursor = (cursor) => {
-    store.dispatch({
-        type : 'APP_LIBRARY_SET_TRACKSCURSOR',
+const setTracksCursor = (cursor) => ({
+    type: 'APP_LIBRARY_SET_TRACKSCURSOR',
+    payload: {
         cursor
-    });
-};
+    }
+});
 
-const resetTracks = () => {
-    store.dispatch({
-        type : 'APP_REFRESH_LIBRARY',
+const resetTracks = () => ({
+    type: 'APP_REFRESH_LIBRARY',
+    payload: {
         tracks : null
-    });
-};
+    }
+});
 
-const filterSearch = (search) => {
-    store.dispatch({
-        type : 'APP_FILTER_SEARCH',
+const filterSearch = (search) => ({
+    type: 'APP_FILTER_SEARCH',
+    payload: {
         search
-    });
-};
+    }
+});
 
-const addFolders = () => {
+const addFolders = () => (dispatch) => ({
     dialog.showOpenDialog({
         properties: ['openDirectory', 'multiSelections']
     }, (folders) => {
-        if(folders !== undefined) {
-            Promise.map(folders, (folder) => {
-                return realpathAsync(folder);
-            }).then((resolvedFolders) => {
-                store.dispatch({
-                    type : 'APP_LIBRARY_ADD_FOLDERS',
+        if (folders !== undefined) {
+            Promise.map(folders, realpath).then((resolvedFolders) => {
+                dispatch({
+                    type: 'APP_LIBRARY_ADD_FOLDERS',
                     folders: resolvedFolders
                 });
             });
         }
     });
-};
+});
 
-const removeFolder = (index) => {
-    store.dispatch({
-        type : 'APP_LIBRARY_REMOVE_FOLDER',
+const removeFolder = (index) => {{
+    type: 'APP_LIBRARY_REMOVE_FOLDER',
+    payload: {
         index
-    });
-};
-
-const reset = async () => {
-    store.dispatch({
-        type : 'APP_LIBRARY_REFRESH_START',
-    });
-
-    try {
-        await lib.track.remove({
-            query : {},
-            multi: true
-        });
-    } catch (err) {
-        console.error(err);
     }
+});
 
-    try {
-        await lib.playlist.remove({}, { multi: true });
-    } catch (err) {
-        console.error(err);
-    }
+const reset = () => (dispatch) => ({
+    type: 'APP_LIBRARY_REFRESH',
+    payload: Promise.all([
+        lib.track.remove({}, { multi: true }),
+        lib.playlist.remove({}, { multi: true })
+    ])
+    .then(() => dispatch(actions.library.load()));
+});
 
-    actions.library.load();
-    store.dispatch({
-        type : 'APP_LIBRARY_REFRESH_END',
-    });
-};
-
-const refresh = () => {
-    store.dispatch({
-        type : 'APP_LIBRARY_REFRESH_START'
+const refresh = () => (dispatch) => {
+    dispatch({
+        type: 'APP_LIBRARY_REFRESH_PENDING'
     });
 
-    const dispatchEnd = function() {
-        store.dispatch({
-            type : 'APP_LIBRARY_REFRESH_END'
+    const dispatchEnd = () => {
+        dispatch({
+            type: 'APP_LIBRARY_REFRESH_FULFILLED'
         });
     };
     const folders = app.config.get('musicFolders');
     const fsConcurrency = 32;
 
     // Start the big thing
-    lib.track.remove({
-        query : {},
-        multi: true
-    }).then(() => {
+    lib.track.remove({}, { multi: true }).then(() => {
         return Promise.map(folders, (folder) => {
             const pattern = join(folder, '**/*.*');
             return globby(pattern, { nodir: true, follow: true });
@@ -170,16 +111,13 @@ const refresh = () => {
         });
     }).then((supportedFiles) => {
         if (supportedFiles.length === 0) {
-            dispatchEnd();
-            return;
+            return dispatchEnd();
         }
 
         let addedFiles = 0;
         const totalFiles = supportedFiles.length;
         return Promise.map(supportedFiles, (path) => {
-            return lib.track.find({
-                query : { path }
-            }).then((docs) => {
+            return lib.track.find({ query : { path } }).then((docs) => {
                 if (docs.length === 0) {
                     return utils.getMetadata(path);
                 }
@@ -188,23 +126,26 @@ const refresh = () => {
                 return lib.track.insert(track);
             }).then(() => {
                 const percent = parseInt(addedFiles * 100 / totalFiles);
-                actions.settings.refreshProgress(percent);
+                dispatch(actions.settings.refreshProgress(percent));
                 addedFiles++;
             });
         }, { concurrency: fsConcurrency });
     }).then(() => {
-        actions.library.load();
+        dispatch(actions.library.load());
         dispatchEnd();
     }).catch((err) => {
         console.warn(err);
     });
 };
 
-const fetchCover = async (path) => {
-    const cover = await utils.fetchCover(path);
-    store.dispatch({
-        type : 'APP_LIBRARY_FETCHED_COVER',
-        cover
+const fetchCover = (path) => (dispatch) => {
+    utils.fetchCover(path).then((cover) =>
+        dispatch({
+            type: 'APP_LIBRARY_FETCHED_COVER',
+            payload: {
+                cover
+            }
+        });
     });
 };
 
@@ -216,17 +157,11 @@ const fetchCover = async (path) => {
 const incrementPlayCount = async (source) => {
     const query = { src: source };
     const update = { $inc: { playcount : 1 } };
-    try {
-        await lib.track.update(query, update);
-    } catch (err) {
-        console.warn(err);
-    }
+    return lib.track.update(query, update);
 };
 
-
-module.exports = {
+export default {
     load,
-    load2,
     list,
     setTracksCursor,
     resetTracks,

@@ -8,10 +8,7 @@ import Header from './Header/Header.react';
 import Footer from './Footer/Footer.react';
 import Toasts from './Toasts/Toasts.react';
 
-import lib from '../library';
-
-import app from '../lib/app';
-
+import lib from '../lib';
 
 /*
 |--------------------------------------------------------------------------
@@ -36,7 +33,7 @@ class Museeks extends Component {
         const store = this.props.store;
         const trackPlayingId = (store.queue.length > 0 && store.queueCursor !== null) ? store.queue[store.queueCursor]._id : null;
 
-        const config = { ...app.config.getAll() };
+        const config = { ...lib.config.getAll() };
 
         return (
             <div className='main'>
