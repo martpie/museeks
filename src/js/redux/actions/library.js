@@ -1,5 +1,3 @@
-import store from '../store.js';
-
 import actions  from './index.js';
 
 import app      from '../lib/app';
@@ -31,17 +29,23 @@ const load = () {
 
 const setTracksCursor = (cursor) => ({
     type: 'APP_LIBRARY_SET_TRACKSCURSOR',
-    cursor
+    payload: {
+        cursor
+    }
 });
 
 const resetTracks = () => ({
     type: 'APP_REFRESH_LIBRARY',
-    tracks : null
+    payload: {
+        tracks : null
+    }
 });
 
 const filterSearch = (search) => ({
     type: 'APP_FILTER_SEARCH',
-    search
+    payload: {
+        search
+    }
 });
 
 const addFolders = () => (dispatch) => ({
@@ -60,8 +64,10 @@ const addFolders = () => (dispatch) => ({
 });
 
 const removeFolder = (index) => {{
-    type : 'APP_LIBRARY_REMOVE_FOLDER',
-    index
+    type: 'APP_LIBRARY_REMOVE_FOLDER',
+    payload: {
+        index
+    }
 });
 
 const reset = () => (dispatch) => ({
@@ -75,12 +81,12 @@ const reset = () => (dispatch) => ({
 
 const refresh = () => (dispatch) => {
     dispatch({
-        type : 'APP_LIBRARY_REFRESH_PENDING'
+        type: 'APP_LIBRARY_REFRESH_PENDING'
     });
 
     const dispatchEnd = () => {
         dispatch({
-            type : 'APP_LIBRARY_REFRESH_FULFILLED'
+            type: 'APP_LIBRARY_REFRESH_FULFILLED'
         });
     };
     const folders = app.config.get('musicFolders');
@@ -129,11 +135,14 @@ const refresh = () => (dispatch) => {
     });
 };
 
-const fetchCover = async (path) => {
-    const cover = await utils.fetchCover(path);
-    store.dispatch({
-        type : 'APP_LIBRARY_FETCHED_COVER',
-        cover
+const fetchCover = (path) => (dispatch) => {
+    return utils.fetchCover(path).then((cover) =>
+        dispatch({
+            type: 'APP_LIBRARY_FETCHED_COVER',
+            payload: {
+                cover
+            }
+        });
     });
 };
 
@@ -145,13 +154,8 @@ const fetchCover = async (path) => {
 const incrementPlayCount = async (source) => {
     const query = { src: source };
     const update = { $inc: { playcount : 1 } };
-    try {
-        await app.models.Track.updateAsync(query, update);
-    } catch (err) {
-        console.warn(err);
-    }
+    return app.models.Track.updateAsync(query, update);
 };
-
 
 export default {
     load,
