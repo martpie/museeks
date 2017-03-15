@@ -1,0 +1,168 @@
+import store from '../store.js';
+
+import actions  from './index.js';
+
+import app      from '../lib/app';
+import api      from '../api';
+import utils    from '../utils/utils';
+
+import fs       from 'fs';
+import path     from 'path';
+import globby   from 'globby';
+import Promise  from 'bluebird';
+
+const dialog = electron.remote.dialog;
+const realpath = Promise.promisify(fs.realpath);
+
+const load = () {
+    const querySort = {
+        'loweredMetas.artist': 1,
+        'year': 1,
+        'loweredMetas.album': 1,
+        'disk.no': 1,
+        'track.no': 1
+    };
+
+    return {
+        type: 'APP_REFRESH_LIBRARY',
+        payload: app.models.Track.find().sort(querySort).execAsync()
+    }
+};
+
+const setTracksCursor = (cursor) => ({
+    type: 'APP_LIBRARY_SET_TRACKSCURSOR',
+    cursor
+});
+
+const resetTracks = () => ({
+    type: 'APP_REFRESH_LIBRARY',
+    tracks : null
+});
+
+const filterSearch = (search) => ({
+    type: 'APP_FILTER_SEARCH',
+    search
+});
+
+const addFolders = () => (dispatch) => ({
+    dialog.showOpenDialog({
+        properties: ['openDirectory', 'multiSelections']
+    }, (folders) => {
+        if (folders !== undefined) {
+            Promise.map(folders, realpath).then((resolvedFolders) => {
+                dispatch({
+                    type: 'APP_LIBRARY_ADD_FOLDERS',
+                    folders: resolvedFolders
+                });
+            });
+        }
+    });
+});
+
+const removeFolder = (index) => {{
+    type : 'APP_LIBRARY_REMOVE_FOLDER',
+    index
+});
+
+const reset = () => (dispatch) => ({
+    type: 'APP_LIBRARY_REFRESH',
+    payload: Promise.all([
+        app.models.Track.removeAsync({}, { multi: true }),
+        app.models.Playlist.removeAsync({}, { multi: true })
+    ])
+    .then(() => dispatch(actions.library.load()));
+});
+
+const refresh = () => (dispatch) => {
+    dispatch({
+        type : 'APP_LIBRARY_REFRESH_PENDING'
+    });
+
+    const dispatchEnd = () => {
+        dispatch({
+            type : 'APP_LIBRARY_REFRESH_FULFILLED'
+        });
+    };
+    const folders = app.config.get('musicFolders');
+    const fsConcurrency = 32;
+
+    // Start the big thing
+    app.models.Track.removeAsync({}, { multi: true }).then(() => {
+        return Promise.map(folders, (folder) => {
+            const pattern = path.join(folder, '**/*.*');
+            return globby(pattern, { nodir: true, follow: true });
+        });
+    }).then((filesArrays) => {
+        return filesArrays.reduce((acc, array) => {
+            return acc.concat(array);
+        }, []).filter((filePath) => {
+            const extension = path.extname(filePath).toLowerCase();
+            return app.supportedExtensions.includes(extension);
+        });
+    }).then((supportedFiles) => {
+        if (supportedFiles.length === 0) {
+            dispatchEnd();
+            return;
+        }
+
+        let addedFiles = 0;
+        const totalFiles = supportedFiles.length;
+        return Promise.map(supportedFiles, (filePath) => {
+            return app.models.Track.findAsync({ path: filePath }).then((docs) => {
+                if (docs.length === 0) {
+                    return utils.getMetadata(filePath);
+                }
+                return docs[0];
+            }).then((track) => {
+                return app.models.Track.insertAsync(track);
+            }).then(() => {
+                const percent = parseInt(addedFiles * 100 / totalFiles);
+                dispatch(actions.settings.refreshProgress(percent));
+                addedFiles++;
+            });
+        }, { concurrency: fsConcurrency });
+    }).then(() => {
+        dispatch(actions.library.load());
+        dispatchEnd();
+    }).catch((err) => {
+        console.warn(err);
+    });
+};
+
+const fetchCover = async (path) => {
+    const cover = await utils.fetchCover(path);
+    store.dispatch({
+        type : 'APP_LIBRARY_FETCHED_COVER',
+        cover
+    });
+};
+
+/**
+ * Update the play count attribute.
+ *
+ * @param source
+ */
+const incrementPlayCount = async (source) => {
+    const query = { src: source };
+    const update = { $inc: { playcount : 1 } };
+    try {
+        await app.models.Track.updateAsync(query, update);
+    } catch (err) {
+        console.warn(err);
+    }
+};
+
+
+export default {
+    load,
+    list,
+    setTracksCursor,
+    resetTracks,
+    filterSearch,
+    addFolders,
+    removeFolder,
+    reset,
+    refresh,
+    fetchCover,
+    incrementPlayCount
+};
