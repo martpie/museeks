@@ -180,6 +180,5 @@ const functionLib = {
 // Initialise the ipc promise manager
 const ipcPromiseReceiver = new IpcPromiseReceiver(functionLib);
 
-
 // Export the function lib
 export default functionLib;
