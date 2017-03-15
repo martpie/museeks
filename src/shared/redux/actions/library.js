@@ -7,7 +7,9 @@ const globby   = require('globby');
 const path     = require('path');
 const utils    = require('../../utils/utils');
 
-const dialog   = electron.remote.dialog;
+const supportedExtensions = require('../../utils/supportedExtensions');
+
+const dialog = electron.remote.dialog;
 const realpathAsync = Promise.promisify(fs.realpath);
 
 const load = async (a) => {
@@ -157,7 +159,7 @@ const refresh = () => {
             return acc.concat(array);
         }, []).filter((filePath) => {
             const extension = path.extname(filePath).toLowerCase();
-            return app.supportedExtensions.includes(extension);
+            return supportedExtensions.includes(extension);
         });
     }).then((supportedFiles) => {
         if (supportedFiles.length === 0) {

@@ -6,6 +6,8 @@ import path     from 'path';
 import globby   from 'globby';
 import Promise  from 'bluebird';
 
+import supportedExtensions from '../../../shared/utils/supportedExtensions';
+
 const dialog = electron.remote.dialog;
 const realpath = Promise.promisify(fs.realpath);
 
@@ -103,7 +105,7 @@ const refresh = () => (dispatch) => {
             return acc.concat(array);
         }, []).filter((filePath) => {
             const extension = path.extname(filePath).toLowerCase();
-            return app.supportedExtensions.includes(extension);
+            return supportedExtensions.includes(extension);
         });
     }).then((supportedFiles) => {
         if (supportedFiles.length === 0) {

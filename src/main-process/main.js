@@ -14,8 +14,8 @@ const ConfigManager      = require('./config');          // Handles config
 const PowerMonitor       = require('./power-monitor');   // Handle power events
 const IntegrationManager = require('./integration');     // Applies various integrations
 
-const ApiManager           = require('./api/server')
-const PeerDiscoveryManager = require('./peer-discovery')
+const ApiManager           = require('./api/server');
+const PeerDiscoveryManager = require('./peer-discovery');
 
 const app           = electron.app;              // Module to control application life.
 const nativeImage   = electron.nativeImage;
