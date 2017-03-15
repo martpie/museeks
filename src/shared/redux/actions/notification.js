@@ -1,5 +1,3 @@
-//import app from '../lib/app';
-
 const add = (notificationData) => {
     if (app.config.get('displayNotifications')) {
         const notification =

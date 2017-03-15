@@ -1,16 +1,14 @@
-//import app      from '../lib/app';
 const Promise  = require('bluebird');
 const actions  = require('./index.js');
-const api      = require('../../api');
 const fs       = require('fs');
 const globby   = require('globby');
 const join     = require('path').join;
 const extname  = require('path').extname;
 const utils    = require('../../utils/utils');
+const dialog   = require('electron').remote.dialog;
 
 const supportedExtensions = require('../../utils/supportedExtensions');
 
-const dialog = electron.remote.dialog;
 const realpath = Promise.promisify(fs.realpath);
 
 const load = () {
