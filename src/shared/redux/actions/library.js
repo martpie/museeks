@@ -1,6 +1,6 @@
 //import app      from '../lib/app';
 const Promise  = require('bluebird');
-const actions  = require( './index.js';
+const actions  = require('./index.js');
 const api      = require('../../api');
 const fs       = require('fs');
 const globby   = require('globby');
