@@ -6,7 +6,7 @@ const path     = require('path');
 const os       = require('os');
 const electron = require('electron');
 
-const store              = require('./store.js');
+const store              = require('./redux/store');     // Redux store
 const IpcManager         = require('./ipc');             // Manages IPC evens
 const TrayManager        = require('./tray');            // Manages Tray
 const ConfigManager      = require('./config');          // Handles config
@@ -103,10 +103,10 @@ app.on('ready', () => {
     ipcManager.bindEvents();
 
     // Start the API server
-    const api = new ApiManager();
+    const api = new ApiManager(store);
 
     // Start the peer discovery service
-    const peers = new PeerDiscoveryManager();
+    const peers = new PeerDiscoveryManager(store);
 
     // Power monitor
     const powerMonitor = new PowerMonitor(mainWindow);

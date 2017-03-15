@@ -1,21 +1,21 @@
-import app          from './app';
-import library      from './library';
-import network      from './network';
-import notification from './notification';
-import player       from './player';
-import playlists    from './playlists';
-import queue        from './queue';
-import settings     from './settings';
-import toasts       from './toasts';
+const app          = require('./app');
+const library      = require('./library');
+const network      = require('./network');
+const notification = require('./notification');
+const player       = require('./player');
+const playlists    = require('./playlists');
+const queue        = require('./queue');
+const settings     = require('./settings');
+const toasts       = require('./toasts');
 
-export default {
+module.exports = {
     app,
+    library,
+    network,
+    notification,
     player,
     playlists,
     queue,
-    library,
     settings,
     toasts,
-    network,
-    notification,
 };

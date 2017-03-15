@@ -1,6 +1,6 @@
 const AppConstants = require('../constants/AppConstants');
 
-export default (state = {}, payload) => {
+module.exports = (state = {}, payload) => {
     switch (payload.type) {
 
         case('APP_PLAYLISTS_REFRESH'): {

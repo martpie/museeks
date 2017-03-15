@@ -1,5 +1,4 @@
-import AppConstants  from '../constants/AppConstants';
-import app from '../lib/app';
+//import app from '../lib/app';
 
 const add = (notificationData) => {
     if (app.config.get('displayNotifications')) {
@@ -25,6 +24,6 @@ const add = (notificationData) => {
     }
 };
 
-export default {
+module.exports = {
     add
 };

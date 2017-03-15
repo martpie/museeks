@@ -1,4 +1,4 @@
-import AppConstants  from '../constants/AppConstants';
+const AppConstants = require('../constants/AppConstants');
 
 const add = (type, content, duration = 3000) => {
     const _id = Date.now();
@@ -19,6 +19,6 @@ const add = (type, content, duration = 3000) => {
 };
 
 
-export default {
+module.exports = {
     add
 };

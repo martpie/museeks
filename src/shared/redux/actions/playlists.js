@@ -1,8 +1,7 @@
-import store        from '../store.js';
-import AppConstants from '../constants/AppConstants';
-import actions      from './index';
-import app          from '../lib/app';
-import { hashHistory } from 'react-router';
+const AppConstants    = require('../constants/AppConstants');
+const actions         = require('./index');
+const { hashHistory } = require('react-router');
+//import app          from '../lib/app';
 
 
 const load = async (_id) => {
@@ -93,7 +92,7 @@ const removeTracksFrom = async (_id, tracks) => {
     }
 };
 
-export default{
+module.exports = {
     load,
     refresh,
     create,

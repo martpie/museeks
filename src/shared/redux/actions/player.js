@@ -1,10 +1,8 @@
-import AppConstants  from '../constants/AppConstants';
-
-import ToastsActions from './toasts';
-
-import app from '../lib/app';
-import Player from '../lib/player';
-import utils from '../../utils/utils';
+const AppConstants  = require('../constants/AppConstants');
+const ToastsActions = require('./toasts');
+const utils         = require('../../utils/utils');
+//import app from '../lib/app';
+//import Player from '../lib/player';
 
 const audioErrors = {
     aborted:  'The video playback was aborted.',

@@ -1,6 +1,6 @@
-import AppConstants from '../constants/AppConstants';
+const AppConstants = require('../constants/AppConstants');
 
-export default (state = {}, payload) => {
+module.exports = (state = {}, payload) => {
     switch (payload.type) {
         case('APP_REFRESH_LIBRARY_FULFILLED'): {
             console.log('APP_REFRESH_LIBRARY_FULFILLED', payload);
