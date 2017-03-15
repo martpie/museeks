@@ -95,17 +95,17 @@ const checkForUpdate = async (options = {}) => {
         }
 
         if (message) {
-            actions.toasts.add('success', message);
+            dispatch(actions.toasts.add('success', message));
         }
     } catch (e) {
-        if(!options.silentFail) actions.toasts.add('danger', 'An error occurred while checking updates.');
+        if(!options.silentFail) dispatch(actions.toasts.add('danger', 'An error occurred while checking updates.'));
     }
 };
 
 const toggleNativeFrame = (value) => {
     app.config.set('useNativeFrame', value);
     app.config.saveSync();
-    actions.app.restart();
+    dispatch(actions.app.restart());
 };
 
 const toggleMinimizeToTray = (value) => (dispatch) => {

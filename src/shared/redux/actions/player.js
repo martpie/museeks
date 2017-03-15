@@ -1,13 +1,10 @@
-import store from '../store.js';
 import AppConstants  from '../constants/AppConstants';
 
-import ToastsActions from './ToastsActions';
+import ToastsActions from './toasts';
 
 import app from '../lib/app';
 import Player from '../lib/player';
 import utils from '../../utils/utils';
-
-const ipcRenderer    = electron.ipcRenderer;
 
 const audioErrors = {
     aborted:  'The video playback was aborted.',
@@ -17,43 +14,43 @@ const audioErrors = {
 };
 
 
-const playToggle = () => {
+const playToggle = () => (dispatch, getState) => {
     const { paused } = Player.getAudio();
     // TODO (y.solovyov | KeitIG): calling getState is a hack.
-    const { queue } = store.getState();
+    const { queue } = getState();
     if (paused && queue.length > 0) {
-        play();
+        dispatch(play());
     } else {
-        pause();
+        dispatch(pause());
     }
 };
 
 
-const play = () => {
+const play = () => (dispatch, getState) => {
     // TODO (y.solovyov | KeitIG): calling getState is a hack.
-    const { queue } = store.getState();
+    const { queue } = getState();
     if(queue !== null) {
         Player.play();
-        store.dispatch({
+        dispatch({
             type : 'APP_PLAYER_PLAY'
         });
     }
 };
 
-const pause = () => {
+const pause = () => (dispatch, getState) => {
     // TODO (y.solovyov | KeitIG): calling getState is a hack.
-    const { queue } = store.getState();
+    const { queue } = getState();
     if(queue !== null) {
         Player.pause();
-        store.dispatch({
+        dispatch({
             type : 'APP_PLAYER_PAUSE'
         });
     }
 };
 
-const start = (_id) => {
+const start = (_id) => (dispatch, getState) => {
     // TODO (y.solovyov | KeitIG): calling getState is a hack.
-    const { tracks, tracksCursor } = store.getState();
+    const { tracks, tracksCursor } = getState();
     const queue = [...tracks[tracksCursor].sub];
     const queuePosition = queue.findIndex((track) => {
         return track._id === _id;
@@ -65,7 +62,7 @@ const start = (_id) => {
         Player.setAudioSrc(uri);
         Player.play();
 
-        store.dispatch({
+        dispatch({
             type : 'APP_PLAYER_START',
             queuePosition,
             _id
@@ -75,16 +72,16 @@ const start = (_id) => {
 
 const stop = () => {
     Player.stop();
-    store.dispatch({
+    return {
         type : 'APP_PLAYER_STOP'
-    });
-
-    ipcRenderer.send('playerAction', 'stop');
+    };
+    // DR: We can Remove?
+    // ipcRenderer.send('playerAction', 'stop');
 };
 
-const next = () => {
+const next = () => (dispatch, getState) => {
     // TODO (y.solovyov | KeitIG): calling getState is a hack.
-    const { queue, queueCursor, repeat } = store.getState();
+    const { queue, queueCursor, repeat } = getState();
     let newQueueCursor;
 
     if(repeat === 'one') {
@@ -102,20 +99,20 @@ const next = () => {
 
         Player.setAudioSrc(uri);
         Player.play();
-        store.dispatch({
+        dispatch({
             type : 'APP_PLAYER_NEXT',
             newQueueCursor
         });
     } else {
-        stop();
+        dispatch(stop());
     }
 };
 
-const previous = () => {
+const previous = () => (dispatch, getState) => {
     const currentTime = Player.getCurrentTime();
 
     // TODO (y.solovyov | KeitIG): calling getState is a hack.
-    const { queue, queueCursor } = store.getState();
+    const { queue, queueCursor } = getState();
     let newQueueCursor = queueCursor;
 
     // If track started less than 5 seconds ago, play th previous track,
@@ -132,13 +129,13 @@ const previous = () => {
         Player.setAudioSrc(uri);
         Player.play();
 
-        store.dispatch({
+        dispatch({
             type : 'APP_PLAYER_PREVIOUS',
             currentTime,
             newQueueCursor,
         });
     } else {
-        stop();
+        dispatch(stop());
     }
 };
 
@@ -147,21 +144,21 @@ const shuffle = (shuffle) => {
     app.config.saveSync();
 
     const currentSrc = Player.getSrc();
-    store.dispatch({
+    return {
         type : 'APP_PLAYER_SHUFFLE',
         shuffle,
         currentSrc
-    });
+    };
 };
 
 const repeat = (repeat) => {
     app.config.set('audioRepeat', repeat);
     app.config.saveSync();
 
-    store.dispatch({
+    return {
         type : 'APP_PLAYER_REPEAT',
         repeat
-    });
+    };
 };
 
 const setVolume = (volume) => {
@@ -170,9 +167,9 @@ const setVolume = (volume) => {
 
         app.config.set('audioVolume', volume);
         app.config.saveSync();
-        store.dispatch({
+        return {
             type : 'APP_REFRESH_CONFIG'
-        });
+        };
     }
 };
 
@@ -182,9 +179,9 @@ const setMuted = (muted = false) => {
 
     app.config.set('audioMuted', muted);
     app.config.saveSync();
-    store.dispatch({
+    return {
         type : 'APP_REFRESH_CONFIG'
-    });
+    };
 };
 
 const setPlaybackRate = (value) => {
@@ -194,9 +191,9 @@ const setPlaybackRate = (value) => {
 
             app.config.set('audioPlaybackRate', parseFloat(value));
             app.config.saveSync();
-            store.dispatch({
+            return {
                 type : 'APP_REFRESH_CONFIG'
-            });
+            };
         }
     }
 };
@@ -205,24 +202,24 @@ const jumpTo = (to) => {
     // TODO (y.solovyov) do we want to set some explicit state?
     // if yes, what should it be? if not, do we need this actions at all?
     Player.setAudioCurrentTime(to);
-    store.dispatch({
+    return {
         type : 'APP_PLAYER_JUMP_TO'
-    });
+    };
 };
 
 const audioError = (e) => {
     switch (e.target.error.code) {
         case e.target.error.MEDIA_ERR_ABORTED:
-            ToastsActions.add('warning', audioErrors.aborted);
+            dispatch(ToastsActions.add('warning', audioErrors.aborted));
             break;
         case e.target.error.MEDIA_ERR_DECODE:
-            ToastsActions.add('danger', audioErrors.corrupt);
+            dispatch(ToastsActions.add('danger', audioErrors.corrupt));
             break;
         case e.target.error.MEDIA_ERR_SRC_NOT_SUPPORTED:
-            ToastsActions.add('danger', audioErrors.notFound);
+            dispatch(ToastsActions.add('danger', audioErrors.notFound));
             break;
         default:
-            ToastsActions.add('danger', audioErrors.unknown);
+            dispatch(ToastsActions.add('danger', audioErrors.unknown));
             break;
     }
 };

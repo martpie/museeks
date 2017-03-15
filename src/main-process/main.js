@@ -6,13 +6,13 @@ const path     = require('path');
 const os       = require('os');
 const electron = require('electron');
 
+const store              = require('./store.js');
 const IpcManager         = require('./ipc');             // Manages IPC evens
 const TrayManager        = require('./tray');            // Manages Tray
 const ConfigManager      = require('./config');          // Handles config
 const PowerMonitor       = require('./power-monitor');   // Handle power events
 const IntegrationManager = require('./integration');     // Applies various integrations
 
-const IpcPromiseManager    = require('../js/utils/ipcPromiseManager/main')
 const ApiManager           = require('./api/server')
 const PeerDiscoveryManager = require('./peer-discovery')
 
@@ -102,14 +102,11 @@ app.on('ready', () => {
     const ipcManager = new IpcManager(mainWindow);
     ipcManager.bindEvents();
 
-    // IPC promise events
-    const ipcPromiseManager = new IpcPromiseManager(mainWindow);
-
     // Start the API server
-    const api = new ApiManager(ipcPromiseManager.send);
+    const api = new ApiManager();
 
     // Start the peer discovery service
-    const peers = new PeerDiscoveryManager(ipcPromiseManager.send);
+    const peers = new PeerDiscoveryManager();
 
     // Power monitor
     const powerMonitor = new PowerMonitor(mainWindow);

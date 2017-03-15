@@ -1,11 +1,10 @@
-import store from '../store.js';
 import AppConstants from '../constants/AppConstants';
 
 const peerFound = (peer) => {
-    store.dispatch({
+    return {
         type: 'APP_NETWORK_PEER_FOUND',
         peer
-    });
+    };
 }
 
 export default {
