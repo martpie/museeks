@@ -1,4 +1,3 @@
-import store from '../store.js';
 import AppConstants  from '../constants/AppConstants';
 import app from '../lib/app';
 
@@ -19,10 +18,10 @@ const add = (notificationData) => {
             app.browserWindows.main.focus();
         };
 
-        store.dispatch({
+        return {
             type: 'APP_NOTIFICATION_NEW',
             notification
-        });
+        };
     }
 };
 

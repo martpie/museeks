@@ -39,10 +39,10 @@ const add = (tracksIds) => {
 };
 
 const addNext = (tracksIds) => {
-    store.dispatch({
+    return {
         type : 'APP_QUEUE_ADD_NEXT',
         payload : app.models.Track.findAsync({ _id: { $in: tracksIds } });
-    });
+    };
 };
 
 const setQueue = (queue) => {
