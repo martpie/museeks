@@ -1,6 +1,7 @@
 //const Player = require('../lib/player');
 //import app    from '../lib/app';
-const utils  = require('../../utils/utils');
+const electron       = require('electron');
+const utils          = require('../../utils/utils');
 const globalShortcut = electron.remote.globalShortcut;
 const ipcRenderer    = electron.ipcRenderer;
 

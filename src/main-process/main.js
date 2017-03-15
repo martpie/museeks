@@ -1,5 +1,6 @@
 'use strict';
 
+require("babel-register");
 process.env.NODE_ENV = 'production'; // Drastically increase performances
 
 const path     = require('path');
