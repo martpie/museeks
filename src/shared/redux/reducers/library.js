@@ -1,5 +1,5 @@
-import app          from '../lib/app';
-import AppConstants from '../constants/AppConstants';
+import app         = require('../lib/app');
+const AppConstants = require('../constants/AppConstants');
 import utils        from '../utils/utils';
 
 export default (state = {}, payload) => {

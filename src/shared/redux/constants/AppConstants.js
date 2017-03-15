@@ -1,6 +1,6 @@
-import keymirror from 'keymirror';
+const keymirror = require('keymirror');
 
-export default keymirror({
+module.exports = keymirror({
 
     APP_REFRESH_LIBRARY : null,
     APP_REFRESH_CONFIG  : null,

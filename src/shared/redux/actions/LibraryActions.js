@@ -3,9 +3,9 @@ import store from '../store.js';
 import AppConstants  from '../constants/AppConstants';
 import AppActions    from './AppActions';
 
-import app   from '../lib/app';
-import api   from '../api';
-import utils from '../utils/utils';
+import app      from '../lib/app';
+import api      from '../api';
+import utils    from '../utils/utils';
 
 import fs       from 'fs';
 import path     from 'path';
