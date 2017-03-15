@@ -1,10 +1,6 @@
-import store  from '../store.js';
-import Player from '../lib/player';
-import app    from '../lib/app';
-import utils  from '../utils/utils';
-
-import api from '../api';
-
+//const Player = require('../lib/player');
+//import app    from '../lib/app';
+const utils  = require('../../utils/utils');
 const globalShortcut = electron.remote.globalShortcut;
 const ipcRenderer    = electron.ipcRenderer;
 
@@ -145,7 +141,7 @@ const initShortcuts = () => {
 
 
 
-export default {
+module.exports = {
     close,
     init,
     initShortcuts,

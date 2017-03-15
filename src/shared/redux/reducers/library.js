@@ -1,6 +1,6 @@
-import app         = require('../lib/app');
+//const app          = require('../lib/app');
 const AppConstants = require('../constants/AppConstants');
-import utils        from '../utils/utils';
+const utils        = require('../../utils/utils');
 
 export default (state = {}, payload) => {
     switch (payload.type) {

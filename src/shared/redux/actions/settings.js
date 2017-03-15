@@ -1,9 +1,8 @@
-import AppConstants from '../constants/AppConstants';
-import actions      from './index';
-import app          from '../lib/app';
-import semver       from 'semver';
-
-const ipcRenderer = electron.ipcRenderer;
+const AppConstants = require('../constants/AppConstants');
+const actions      = require('./index');
+const semver       = require('semver');
+const ipcRenderer  = electron.ipcRenderer;
+//import app          from '../lib/app';
 
 const check = () => {
     checkTheme();
@@ -17,7 +16,7 @@ const checkTheme = () => {
     document.querySelector('body').classList.add(`theme-${themeName}`);
 };
 
-const toggleDarkTheme = (value) => (dispatch) =>
+const toggleDarkTheme = (value) => {
     const oldTheme = value ? 'light' : 'dark';
     const newTheme = value ? 'dark' : 'light';
 
@@ -27,9 +26,9 @@ const toggleDarkTheme = (value) => (dispatch) =>
     app.config.set('theme', newTheme);
     app.config.saveSync();
 
-    dispatch({
+    return {
         type : 'APP_REFRESH_CONFIG'
-    });
+    };
 };
 
 const toggleSleepBlocker = (value) => (dispatch) => {
@@ -133,7 +132,7 @@ const toggleDisplayNotifications = (value) => (dispatch) => {
     });
 };
 
-export default{
+module.exports = {
     check,
     checkDevMode,
     checkForUpdate,

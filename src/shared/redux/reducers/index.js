@@ -1,10 +1,10 @@
-import app from './app';
-import library from './library';
-import toasts from './toasts';
-import player from './player';
-import playlists from './playlists';
-import network from './network';
-import queue from './queue';
+const app = require('./app');
+const library = require('./library');
+const toasts = require('./toasts');
+const player = require('./player');
+const playlists = require('./playlists');
+const network = require('./network');
+const queue = require('./queue');
 
 const reducers = [
     app,

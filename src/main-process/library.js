@@ -1,7 +1,7 @@
-import actions  from '../shared/redux/actions';
-import api      from '../shared/api';
+const actions  = require('../shared/redux/actions');
+const api      = require('../shared/api');
 
-export default {
+module.exports = {
     actions,
     api
 }

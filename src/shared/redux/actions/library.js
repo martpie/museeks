@@ -1,18 +1,13 @@
-import store from '../store.js';
+//import app      from '../lib/app';
+const Promise  = require('bluebird');
+const actions  = require( './index.js';
+const api      = require('../../api');
+const fs       = require('fs');
+const globby   = require('globby');
+const path     = require('path');
+const utils    = require('../../utils/utils');
 
-import AppConstants  from '../constants/AppConstants';
-import actions  from './index.js';
-
-import app      from '../lib/app';
-import api      from '../api';
-import utils    from '../utils/utils';
-
-import fs       from 'fs';
-import path     from 'path';
-import globby   from 'globby';
-import Promise  from 'bluebird';
-
-const dialog = electron.remote.dialog;
+const dialog   = electron.remote.dialog;
 const realpathAsync = Promise.promisify(fs.realpath);
 
 const load = async (a) => {
@@ -218,7 +213,7 @@ const incrementPlayCount = async (source) => {
 };
 
 
-export default {
+module.exports = {
     load,
     load2,
     list,

@@ -1,9 +1,7 @@
-import AppConstants  from '../constants/AppConstants';
-
-import app from '../lib/app';
-import Player from '../lib/player';
-import utils from '../../utils/utils';
-
+const AppConstants = require('../constants/AppConstants');
+const utils        = require( '../../utils/utils');
+//import app from '../lib/app';
+//import Player from '../lib/player';
 
 const start = (index) => (dispatch, getState) => {
     // TODO (y.solovyov | KeitIG): calling getState is a hack.
@@ -41,7 +39,7 @@ const add = (tracksIds) => {
 const addNext = (tracksIds) => {
     return {
         type : 'APP_QUEUE_ADD_NEXT',
-        payload : app.models.Track.findAsync({ _id: { $in: tracksIds } });
+        payload : app.models.Track.findAsync({ _id: { $in: tracksIds } })
     };
 };
 
@@ -53,7 +51,7 @@ const setQueue = (queue) => {
 };
 
 
-export default{
+module.exports = {
     add,
     addNext,
     clear,
