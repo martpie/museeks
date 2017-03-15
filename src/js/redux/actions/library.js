@@ -1,7 +1,4 @@
-import actions  from './index.js';
-
-import app      from '../lib/app';
-import api      from '../api';
+import lib      from '../library';
 import utils    from '../utils/utils';
 
 import fs       from 'fs';
@@ -13,7 +10,7 @@ const dialog = electron.remote.dialog;
 const realpath = Promise.promisify(fs.realpath);
 
 const load = () {
-    const querySort = {
+    const sort = {
         'loweredMetas.artist': 1,
         'year': 1,
         'loweredMetas.album': 1,
@@ -23,7 +20,10 @@ const load = () {
 
     return {
         type: 'APP_REFRESH_LIBRARY',
-        payload: app.models.Track.find().sort(querySort).execAsync()
+        payload: lib.api.tracks({
+            query : {},
+            sort
+        })
     }
 };
 
