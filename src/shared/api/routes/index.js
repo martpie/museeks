@@ -6,9 +6,17 @@ Demo Route:
     name         : 'action.player.play',    // Path to the function in the lib
     // Optional
     dispatch     : true,                    // Should the result be dispatched?
-    argTransform : (query) => ({            // This will transform the query params/body before
-        songName: query.name,               // it is passed to the aliased function.
-    }),
+    argTransform : function(query) {            // This will transform the query params/body before
+        if (someCase) {
+            return {
+                songName: query.song
+            }
+        } else {
+            arguments[0] = query.key,
+            arguments[1] = query.value,
+            return arguments
+        }
+    },
 }]
 */
 
