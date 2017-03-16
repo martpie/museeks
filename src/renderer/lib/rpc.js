@@ -11,8 +11,8 @@ const modelOperations = ['find', 'findOne', 'insert', 'update', 'remove'];
 
 // libraries to call remotely
 const libraries = {
-    track : modelOperations,
-    playlist : modelOperations
+    playlist : modelOperations,
+    track : modelOperations
 }
 
 const lib = Object.keys(libraries).reduce((lib, library) => {

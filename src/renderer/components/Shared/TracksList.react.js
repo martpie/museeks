@@ -89,7 +89,7 @@ export default class TracksList extends Component {
                     break;
                 }
                 case 'removeFromPlaylist': {
-                    if(self.props.type === 'playlist') {
+                    if (self.props.type === 'playlist') {
                         actions.playlists.removeTracksFrom(self.props.currentPlaylist, selected);
                     }
                     break;
@@ -121,8 +121,8 @@ export default class TracksList extends Component {
     }
 
     selectTrack(e, id, index) {
-        if(this.isLeftClick(e) || (this.isRightClick(e) && this.isSelectableTrack(id))) {
-            if(e.ctrlKey) {
+        if (this.isLeftClick(e) || (this.isRightClick(e) && this.isSelectableTrack(id))) {
+            if (e.ctrlKey) {
                 this.toggleSelectionById(id);
             } else if (e.shiftKey) {
                 this.multiSelect(e, id, index);
@@ -187,7 +187,7 @@ export default class TracksList extends Component {
 
                 let playingIndicator = undefined;
 
-                if(trackPlayingId === track._id) {
+                if (trackPlayingId === track._id) {
                     playingIndicator = <PlayingIndicator state={ this.pausePlayState() } />;
                 }
 
@@ -243,7 +243,7 @@ export default class TracksList extends Component {
     toggleSelectionById(id) {
         let selected = [...this.state.selected];
 
-        if(selected.includes(id)) {
+        if (selected.includes(id)) {
             // remove track
             selected.splice(selected.indexOf(id), 1);
         } else {
@@ -263,7 +263,7 @@ export default class TracksList extends Component {
         const selectedInt = [];
 
         for(let i = 0, length = tracks.length; i < length; i++) {
-            if(selected.includes(tracks[i]._id)) {
+            if (selected.includes(tracks[i]._id)) {
                 selectedInt.push(i);
             }
         }
@@ -272,7 +272,7 @@ export default class TracksList extends Component {
         const min = Math.min(...selectedInt);
         const max = Math.max(...selectedInt);
 
-        if(index < min) {
+        if (index < min) {
             base = max;
         } else {
             base = min;
@@ -280,11 +280,11 @@ export default class TracksList extends Component {
 
         const newSelected = [];
 
-        if(index < min) {
+        if (index < min) {
             for(let i = 0; i <= Math.abs(index - base); i++) {
                 newSelected.push(tracks[base - i]._id);
             }
-        } else if(index > max) {
+        } else if (index > max) {
             for(let i = 0; i <= Math.abs(index - base); i++) {
                 newSelected.push(tracks[base + i]._id);
             }
@@ -294,23 +294,23 @@ export default class TracksList extends Component {
     }
 
     onUp(i, tracks) {
-        if(i - 1 >= 0) {
+        if (i - 1 >= 0) {
             this.setState({ selected : tracks[i - 1]._id }, () => {
                 const container = document.querySelector('.tracks-list-container .tracks-list-body');
                 const nodeOffsetTop = (i - 1) * this.rowHeight;
 
-                if(container.scrollTop > nodeOffsetTop) container.scrollTop = nodeOffsetTop;
+                if (container.scrollTop > nodeOffsetTop) container.scrollTop = nodeOffsetTop;
             });
         }
     }
 
     onDown(i, tracks) {
-        if(i + 1 < tracks.length) {
+        if (i + 1 < tracks.length) {
             this.setState({ selected : tracks[i + 1]._id }, () => {
                 const container = document.querySelector('.tracks-list-container .tracks-list-body');
                 const nodeOffsetTop = (i + 1) * this.rowHeight;
 
-                if(container.scrollTop + container.offsetHeight <= nodeOffsetTop) {
+                if (container.scrollTop + container.offsetHeight <= nodeOffsetTop) {
                     container.scrollTop = nodeOffsetTop - container.offsetHeight + this.rowHeight;
                 }
             });
@@ -318,14 +318,14 @@ export default class TracksList extends Component {
     }
 
     onEnter(i, tracks) {
-        if(i !== undefined) actions.player.start(tracks[i]._id);
+        if (i !== undefined) actions.player.start(tracks[i]._id);
     }
 
     showContextMenu(e, index) {
         let playlistsList = [].concat(this.props.playlists);
 
         // Hide current playlist if needed
-        if(this.props.type === 'playlist') {
+        if (this.props.type === 'playlist') {
             playlistsList = playlistsList.filter((elem) => elem._id !== this.props.currentPlaylist);
         }
 

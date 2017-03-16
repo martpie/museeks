@@ -1,10 +1,15 @@
-const peerFound = (peer) => ({
-    type: 'APP_NETWORK_PEER_FOUND',
-    payload: {
-        peer
-    }
-})
+const library = (lib) => {
 
-module.exports = {
-    peerFound
+    const peerFound = (peer) => ({
+        type: 'APP_NETWORK_PEER_FOUND',
+        payload: {
+            peer
+        }
+    });
+
+    return {
+        peerFound
+    };
 }
+
+module.exports = library;

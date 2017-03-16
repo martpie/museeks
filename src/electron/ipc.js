@@ -14,7 +14,7 @@ class IpcManager {
             let playlistTemplate = [];
             let addToQueueTemplate = [];
 
-            if(data.playlists) {
+            if (data.playlists) {
                 playlistTemplate = [
                     {
                         label: 'Create new playlist...',
@@ -24,7 +24,7 @@ class IpcManager {
                     }
                 ];
 
-                if(data.playlists.length > 0) {
+                if (data.playlists.length > 0) {
                     playlistTemplate.push(
                         {
                             type: 'separator'
@@ -60,7 +60,7 @@ class IpcManager {
                 ];
             }
 
-            if(data.playerStatus !== 'stop') {
+            if (data.playerStatus !== 'stop') {
                 addToQueueTemplate = [
                     {
                         label: 'Add to queue',
@@ -97,13 +97,13 @@ class IpcManager {
                     type: 'separator'
                 },
                 {
-                    label: `Search for "${data.track.artist[0]}"`,
+                    label: `Search for '${data.track.artist[0]}'`,
                     click: () => {
                         event.sender.send('tracksListContextMenuReply', 'searchFor', { search: data.track.artist[0] });
                     }
                 },
                 {
-                    label: `Search for "${data.track.album}"`,
+                    label: `Search for '${data.track.album}'`,
                     click: () => {
                         event.sender.send('tracksListContextMenuReply', 'searchFor', { search: data.track.album });
                     }
@@ -119,7 +119,7 @@ class IpcManager {
                 }
             ];
 
-            if(data.type === 'playlist') template.push({
+            if (data.type === 'playlist') template.push({
                 label: 'Remove from playlist',
                 click: () => {
                     event.sender.send('tracksListContextMenuReply', 'removeFromPlaylist');
@@ -154,7 +154,7 @@ class IpcManager {
 
 
         ipcMain.on('toggleSleepBlocker', (event, toggle, mode) => {
-            if(toggle) {
+            if (toggle) {
                 this.instance.sleepBlockerId = powerSaveBlocker.start(mode);
             } else {
                 powerSaveBlocker.stop(this.instance.sleepBlockerId);

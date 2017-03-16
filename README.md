@@ -85,6 +85,33 @@ If you want to report a bug, first, thanks a lot. To help us, please indicate yo
 
 ===
 
+### Architecture
+
+There are two data channels between electron and the renderers:
+
+HTTP
+Public data
+
+RPC
+Internal function calls
+Each renderer is given an access token to make remote proceedure calls in electron.
+
+
+
+All data access in the renderer is retreived from the main thread via an http api.
+
+Much code is written to be shared between electron and renderers without change. This is done by using a common api, with environment specific implementations in `lib` in `electron` and `renderer`. All shared code must be supplied the environment specific implementation for the environment in which it is run.
+
+Renderer
+IPC (App actions?) (Duplex)
+HTTP (Public data transfer) (Renderer -> Electron)
+RPC (Internal data transfer) (Renderer -> Electron)
+
+Electron -> Renderer
+IPC (App actions?) (Duplex)
+
+===
+
 ### Contribute
 
 - Fork and clone

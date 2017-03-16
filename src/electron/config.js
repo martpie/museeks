@@ -19,14 +19,14 @@ class ConfigManager {
         let configChanged = false;
 
         for(const key in defaultConfig) {
-            if(this.conf.get(key) === undefined) {
+            if (this.conf.get(key) === undefined) {
                 this.conf.set(key, defaultConfig[key]);
                 configChanged = true;
             }
         }
 
         // save config if changed
-        if(configChanged) this.conf.saveSync();
+        if (configChanged) this.conf.saveSync();
     }
 
     getDefaultConfig() {

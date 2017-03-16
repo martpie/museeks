@@ -18,7 +18,7 @@ export default class TrackCover extends PureComponent {
     }
 
     render() {
-        if(this.props.cover) {
+        if (this.props.cover) {
             const styles = { backgroundImage: `url('${this.props.cover}')` };
 
             return <div className='cover' style={ styles } />;

@@ -39,7 +39,7 @@ export default class PlaylistsNav extends Component {
         const nav = this.props.playlists.map((elem, index) => {
             let navItemContent;
 
-            if(elem._id === self.state.renamed) {
+            if (elem._id === self.state.renamed) {
                 navItemContent = (
                     <input
                         type='text'
@@ -105,7 +105,7 @@ export default class PlaylistsNav extends Component {
 
     componentDidUpdate() {
         // If a playlist is being update
-        if(!!this.refs.renamedPlaylist && document.activeElement !== this.refs.renamedPlaylist) {
+        if (!!this.refs.renamedPlaylist && document.activeElement !== this.refs.renamedPlaylist) {
             this.refs.renamedPlaylist.select();
         }
     }

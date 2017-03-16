@@ -33,13 +33,13 @@ export default class Playlists extends Component {
     render() {
         let playlistContent;
 
-        if(this.props.playlists === null) {
+        if (this.props.playlists === null) {
             playlistContent = (
                 <FullViewMessage>
                     <p>Loading playlists</p>
                 </FullViewMessage>
             );
-        } else if(this.props.playlists.length === 0) {
+        } else if (this.props.playlists.length === 0) {
             playlistContent = (
                 <FullViewMessage>
                     <p>You haven't created any playlist yet</p>
@@ -48,7 +48,7 @@ export default class Playlists extends Component {
                     </p>
                 </FullViewMessage>
             );
-        } else if(!this.props.params.playlistId) {
+        } else if (!this.props.params.playlistId) {
             playlistContent = (
                 <FullViewMessage>
                     <p>Select a playlist in the menu on the left</p>

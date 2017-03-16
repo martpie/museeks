@@ -1,65 +1,60 @@
-const AppConstants = require('../constants/AppConstants');
-const utils        = require( '../../utils/utils');
-//import app from '../lib/app';
-//import Player from '../lib/player';
+const utils = require( '../../utils/utils');
 
-const start = (index) => (dispatch, getState) => {
-    // TODO (y.solovyov | KeitIG): calling getState is a hack.
-    const { queue } = getState();
-    const uri = utils.parseUri(queue[index].path);
-    Player.setAudioSrc(uri);
-    Player.play();
+const library = (lib) => {
 
-    return {
-        type : 'APP_QUEUE_START',
-        index
+    const start = (index) => (dispatch, getState) => {
+        // TODO (y.solovyov | KeitIG): calling getState is a hack.
+        const { queue } = getState();
+        const uri = utils.parseUri(queue[index].path);
+        lib.player.setAudioSrc(uri);
+        lib.player.play();
+
+        return {
+            type: 'APP_QUEUE_START',
+            payload: {
+                index
+            }
+        };
     };
-};
 
-const clear = () => {
-    return {
-        type : 'APP_QUEUE_CLEAR'
-    };
-};
+    const clear = () => ({
+        type: 'APP_QUEUE_CLEAR'
+    });
 
-const remove = (index) => {
-    return {
-        type : 'APP_QUEUE_REMOVE',
-        index
-    };
-};
+    const remove = (index) => ({
+        type: 'APP_QUEUE_REMOVE',
+        payload: {
+            index
+        }
+    });
 
-const add = (tracksIds) => {
-    return {
-        type : 'APP_QUEUE_ADD',
-        payload : lib.track.find({
-            query : { _id: { $in: tracksIds } }
+    const add = (tracksIds) => ({
+        type: 'APP_QUEUE_ADD',
+        payload: lib.track.find({
+            query: { _id: { $in: tracksIds } }
         })
-    };
-};
+    });
 
-const addNext = (tracksIds) => {
-    return {
+    const addNext = (tracksIds) => ({
         type : 'APP_QUEUE_ADD_NEXT',
         payload : lib.track.find({
             query : { _id: { $in: tracksIds } }
         })
-    };
-};
+    });
 
-const setQueue = (queue) => {
-    return {
+    const setQueue = (queue) => ({
         type : 'APP_QUEUE_SET_QUEUE',
         queue
+    });
+
+    return {
+        add,
+        addNext,
+        clear,
+        remove,
+        start,
+        setQueue
     };
-};
+}
 
-
-module.exports = {
-    add,
-    addNext,
-    clear,
-    remove,
-    start,
-    setQueue
-};
+module.exports = library;

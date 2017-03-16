@@ -62,9 +62,9 @@ export default class PlayingBar extends Component {
 
         let elapsedPercent;
 
-        if(queueCursor === null) return null;
+        if (queueCursor === null) return null;
 
-        if(this.state.elapsed < trackPlaying.duration) elapsedPercent = this.state.elapsed * 100 / trackPlaying.duration;
+        if (this.state.elapsed < trackPlaying.duration) elapsedPercent = this.state.elapsed * 100 / trackPlaying.duration;
 
         const nowPlayingTextClasses = classnames('now-playing text-center', {
             dragging: this.state.dragging
@@ -148,7 +148,7 @@ export default class PlayingBar extends Component {
         const currTrackPlaying = this.props.queue[this.props.queueCursor];
         const currTrackPlayingPath = currTrackPlaying && currTrackPlaying.path ? currTrackPlaying.path : null;
 
-        if(nextTrackPlayingPath !== currTrackPlayingPath) {
+        if (nextTrackPlayingPath !== currTrackPlayingPath) {
             actions.library.fetchCover(nextTrackPlayingPath);
         }
     }
@@ -174,7 +174,7 @@ export default class PlayingBar extends Component {
 
     dragOver(e) {
         // Chack if it's needed to update currentTime
-        if(this.state.dragging) {
+        if (this.state.dragging) {
             const queue        = this.props.queue;
             const queueCursor  = this.props.queueCursor;
             const trackPlaying = queue[queueCursor];
@@ -189,7 +189,7 @@ export default class PlayingBar extends Component {
     }
 
     dragEnd() {
-        if(this.state.dragging) {
+        if (this.state.dragging) {
             this.setState({ dragging : false });
         }
     }

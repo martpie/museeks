@@ -27,7 +27,7 @@ export default class Library extends Component {
 
     getLibraryComponent() {
         // Loading library
-        if(this.props.library === null) {
+        if (this.props.library === null) {
             return (
                 <FullViewMessage>
                     <p>Loading library...</p>

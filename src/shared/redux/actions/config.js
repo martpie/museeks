@@ -1,28 +1,29 @@
 const rpc = require('../../modules/rpc/rpc');
 
-const getAll = () => (dispatch) =>  {
-    return {
-        type : 'APP_CONFIG_GET_ALL',
-        payload : rpc(dispatch, 'mainRenderer', 'config.getAll')
-    }
+const library = (lib) => {
 
-const set = (key, value) => (dispatch) => {
-    return {
-        type : 'APP_CONFIG_SET',
-        payload : rpc(dispatch, 'mainRenderer', 'config.set', [key, value]),
+    const getAll = () => (dispatch) =>  ({
+        type: 'APP_CONFIG_GET_ALL',
+        payload: aliasEmit(dispatch, 'config.getAll', '', 'mainRenderer')
+    });
+
+    const set = (key, value) => (dispatch) => ({
+        type: 'APP_CONFIG_SET',
+        payload: aliasEmit(dispatch, 'app.library.config.set', [key, value]),
         meta: { key, value }
-    }
-};
+    });
 
-const save = () => (dispatch) => {
+
+    const save = () => (dispatch) => ({
+        type: 'APP_CONFIG_SAVE',
+        payload: aliasEmit(dispatch, 'app.library.config.saveSync', '')
+    });
+
     return {
-        type : 'APP_CONFIG_SAVE',
-        payload: rpc(dispatch, 'mainRenderer', 'config.saveSync')
+        getAll,
+        set,
+        save
     }
-};
+}
 
-module.exports = {
-    getAll,
-    set,
-    save
-};
+module.exports = library;

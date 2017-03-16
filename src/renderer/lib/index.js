@@ -1,14 +1,23 @@
 import rpcWrap from '../../shared/modules/rpc'
-import actions from '../../shared/redux/actions';
-import api from '../../shared/api';
+import lib from '../../shared/lib';
+import actions from '../redux/actions';
 
 import rpc from './rpc';
 import player from './player';
 
-export default {
-    actions: rpc.actions,
-    api,
+//
+//    track: rpcWrap('track', ['pause', 'play'], 'mainRenderer'),
+//    playlist: rpcWrap('playlist', ['pause', 'play'], 'mainRenderer')
+const library = {
     player,
-    track: rpcWrap('track', ['pause', 'play'], 'mainRenderer'),
-    playlist: rpcWrap('playlist', ['pause', 'play'], 'mainRenderer')
-}
+    playlist: rpc.playlist,
+    track: rpc.track
+};
+
+// attach shared libraries
+const allLibraries = lib(library);
+
+// attach renderer specific actions
+library.actions.renderer = actions;
+
+export default allLibraries;

@@ -18,7 +18,7 @@ export default class WindowControls extends PureComponent {
     }
 
     render() {
-        if(!this.props.active) return null;
+        if (!this.props.active) return null;
 
         return (
             <div className='window-controls'>
