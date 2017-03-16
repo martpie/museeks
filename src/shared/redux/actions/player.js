@@ -134,8 +134,8 @@ const library = (lib) => {
     };
 
     const shuffle = (shuffle) => {
-        app.config.set('audioShuffle', shuffle);
-        app.config.saveSync();
+        lib.config.set('audioShuffle', shuffle);
+        lib.config.saveSync();
 
         const currentSrc = Player.getSrc();
         return {
@@ -146,8 +146,8 @@ const library = (lib) => {
     };
 
     const repeat = (repeat) => {
-        app.config.set('audioRepeat', repeat);
-        app.config.saveSync();
+        lib.config.set('audioRepeat', repeat);
+        lib.config.saveSync();
 
         return {
             type : 'APP_PLAYER_REPEAT',
@@ -159,8 +159,8 @@ const library = (lib) => {
         if (!isNaN(parseFloat(volume)) && isFinite(volume)) {
             Player.setAudioVolume(volume);
 
-            app.config.set('audioVolume', volume);
-            app.config.saveSync();
+            lib.config.set('audioVolume', volume);
+            lib.config.saveSync();
             return {
                 type : 'APP_REFRESH_CONFIG'
             };
@@ -171,8 +171,8 @@ const library = (lib) => {
         if (muted) Player.mute();
         else Player.unmute();
 
-        app.config.set('audioMuted', muted);
-        app.config.saveSync();
+        lib.config.set('audioMuted', muted);
+        lib.config.saveSync();
         return {
             type : 'APP_REFRESH_CONFIG'
         };
@@ -183,8 +183,8 @@ const library = (lib) => {
             if (value >= 0.5 && value <= 5) { // if in allowed range
                 Player.setAudioPlaybackRate(value);
 
-                app.config.set('audioPlaybackRate', parseFloat(value));
-                app.config.saveSync();
+                lib.config.set('audioPlaybackRate', parseFloat(value));
+                lib.config.saveSync();
                 return {
                     type : 'APP_REFRESH_CONFIG'
                 };
