@@ -14,10 +14,6 @@ module.exports = (state = {}, action) => {
             };
         }
 
-        case('APP_CONFIG_SAVE_FULFILLED'): {
-            return state;
-        }
-
         default: {
             return state;
         }

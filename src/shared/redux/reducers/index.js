@@ -1,4 +1,5 @@
 const app = require('./app');
+const config = require('./config');
 const library = require('./library');
 const toasts = require('./toasts');
 const player = require('./player');
@@ -8,6 +9,7 @@ const queue = require('./queue');
 
 const reducers = [
     app,
+    config,
     library,
     toasts,
     player,
