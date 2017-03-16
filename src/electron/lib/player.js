@@ -1,6 +1,6 @@
-import lib from '../lib';
+import rpcWrap from '../../shared/modules/rpc';
 
-const playerFunctions = [
+const functions = [
     'play',
     'pause',
     'stop',
@@ -19,8 +19,4 @@ const playerFunctions = [
     'isThresholdReached'
 ];
 
-const library = playerFunctions.reduce((library, fn) => {
-    library[fn] = () => {} // do ipc? http? here for main thread to renderer communication
-});
-
-return library;
+export default rpcWrap('playlist', functions, 'mainRenderer');
