@@ -3,14 +3,14 @@ import actions from '../redux/actions';
 
 import config from './config';
 import player from './player';
-import playlist from './playlist''
-import track from './playlist''
+import playlist from './playlist';
+import track from './track';
 
 const library = {
     config,
     player,
     playlist,
-    track,
+    track
 };
 
 // attach shared libraries

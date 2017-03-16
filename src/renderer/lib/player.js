@@ -19,6 +19,39 @@ class Player {
 
         this.threshold = .75;
         this.durationThresholdReached = false;
+
+        this.getAudio().addEventListener('ended', lib.actions.player.next);
+        this.getAudio().addEventListener('error', lib.actions.player.audioError);
+        this.getAudio().addEventListener('timeupdate', () => {
+            if (this.isThresholdReached()) {
+                LibraryActions.incrementPlayCount(this.getSrc());
+            }
+        });
+
+        this.getAudio().addEventListener('play', () => {
+            ipcRenderer.send('playerAction', 'play');
+
+            const path = decodeURIComponent(this.getSrc()).replace('file://', '');
+
+            return utils.getMetadata(path).then((path) => {
+
+                ipcRenderer.send('playerAction', 'trackStart', track);
+
+                if (lib.app.browserWindows.main.isFocused()) return;
+
+                return utils.fetchCover(track.path).then((cover) => {
+                    return NotificationActions.add({
+                        title: track.title,
+                        body: `${track.artist}\n${track.album}`,
+                        icon: cover
+                    });
+                });
+            });
+        });
+
+        this.getAudio().addEventListener('pause', () => {
+            ipcRenderer.send('playerAction', 'pause');
+        });
     }
 
     play() {

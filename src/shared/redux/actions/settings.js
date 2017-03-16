@@ -26,7 +26,7 @@ const library = (lib) => {
         lib.config.saveSync();
 
         return {
-            type : 'APP_REFRESH_CONFIG'
+            type: 'APP_REFRESH_CONFIG'
         };
     };
 
@@ -37,7 +37,7 @@ const library = (lib) => {
         ipcRenderer.send('toggleSleepBlocker', value, 'prevent-app-suspension');
 
         dispatch({
-            type : 'APP_REFRESH_CONFIG'
+            type: 'APP_REFRESH_CONFIG'
         });
     };
 
@@ -57,7 +57,7 @@ const library = (lib) => {
         lib.config.saveSync();
 
         dispatch({
-            type : 'APP_REFRESH_CONFIG'
+            type: 'APP_REFRESH_CONFIG'
         });
     };
 
@@ -70,7 +70,7 @@ const library = (lib) => {
         lib.config.saveSync();
 
         dispatch({
-            type : 'APP_REFRESH_CONFIG'
+            type: 'APP_REFRESH_CONFIG'
         });
     };
 
@@ -111,13 +111,13 @@ const library = (lib) => {
         lib.config.saveSync();
 
         dispatch({
-            type : 'APP_REFRESH_CONFIG'
+            type: 'APP_REFRESH_CONFIG'
         });
     };
 
     const refreshProgress = (percentage) => (dispatch) => {
         dispatch({
-            type : 'APP_LIBRARY_REFRESH_PROGRESS',
+            type: 'APP_LIBRARY_REFRESH_PROGRESS',
             percentage
         });
     };
@@ -127,7 +127,7 @@ const library = (lib) => {
         lib.config.saveSync();
 
         dispatch({
-            type : 'APP_REFRESH_CONFIG'
+            type: 'APP_REFRESH_CONFIG'
         });
     };
 

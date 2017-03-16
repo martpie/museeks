@@ -11,7 +11,7 @@ const library = (lib) => {
             });
             setTimeout(() => {
                 dispatch({
-                    type : 'APP_TOAST_REMOVE',
+                    type: 'APP_TOAST_REMOVE',
                     _id
                 });
             }, duration);
