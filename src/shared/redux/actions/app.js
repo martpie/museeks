@@ -6,9 +6,9 @@ const library = (lib) => {
 
     const init = () => {
         // Usual tasks
-        LibraryActions.load();
-        PlaylistsActions.refresh();
-        SettingsActions.check();
+        lib.actions.library.load();
+        lib.actions.playlist.refresh();
+        lib.actions.settings.check();
         initShortcuts();
         start();
 
@@ -16,16 +16,16 @@ const library = (lib) => {
         ipcRenderer.on('playerAction', (event, reply) => {
             switch(reply) {
                 case 'play':
-                    PlayerActions.play();
+                    lib.actions.player.play();
                     break;
                 case 'pause':
-                    PlayerActions.pause();
+                    lib.actions.player.pause();
                     break;
                 case 'prev':
-                    PlayerActions.previous();
+                    lib.actions.player.previous();
                     break;
                 case 'next':
-                    PlayerActions.next();
+                    lib.actions.player.next();
                     break;
             }
         });
@@ -96,15 +96,15 @@ const library = (lib) => {
     const initShortcuts = () => {
         // Global shortcuts - Player
         globalShortcut.register('MediaPlayPause', () => {
-            PlayerActions.playToggle();
+            lib.actions.player.playToggle();
         });
 
         globalShortcut.register('MediaPreviousTrack', () => {
-            PlayerActions.previous();
+            lib.actions.player.previous();
         });
 
         globalShortcut.register('MediaNextTrack', () => {
-            PlayerActions.next();
+            lib.actions.player.next();
         });
     };
 
