@@ -3,20 +3,20 @@
 require('babel-register');
 process.env.NODE_ENV = 'production'; // Drastically increase performances
 
-const path               = require('path');
-const os                 = require('os');
-const electron           = require('electron');
+const path                 = require('path');
+const os                   = require('os');
+const electron             = require('electron');
 
-const database           = require('./database');               // Database for local data storage
-const store              = require('./redux/store');            // Redux store
-const lib                = require('./lib');                    // Library containing app logic
-const IpcManager         = require('./ipc');                    // Manages IPC events
-const configureStore     = require('./redux/configureStore');   // Store configuration
-const TrayManager        = require('./tray');                   // Manages Tray
-const ConfigManager      = require('./config');                 // Handles config
-const { RpcIpcManager }  = require('../shared/modules/rpc');    // Handles RPC IPC Events
-const PowerMonitor       = require('./power-monitor');          // Handle power events
-const IntegrationManager = require('./integration');            // Applies various integrations
+const database             = require('./database');               // Database for local data storage
+const store                = require('./redux/store');            // Redux store
+const lib                  = require('./lib');                    // Library containing app logic
+const IpcManager           = require('./ipc');                    // Manages IPC events
+const configureStore       = require('./redux/configureStore');   // Store configuration
+const TrayManager          = require('./tray');                   // Manages Tray
+const ConfigManager        = require('./config');                 // Handles config
+const { RpcIpcManager }    = require('../shared/modules/rpc');    // Handles RPC IPC Events
+const PowerMonitor         = require('./power-monitor');          // Handle power events
+const IntegrationManager   = require('./integration');            // Applies various integrations
 
 const ApiManager           = require('./api/server');
 const PeerDiscoveryManager = require('./peer-discovery');

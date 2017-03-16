@@ -6,19 +6,19 @@ const routes = [{
     path: 'list'
 }, {
     method: 'POST',
-    path: 'setTracksCursor',
+    path: 'setTracksCursor'
 }, {
     method: 'GET',
-    path: 'resetTrack',
+    path: 'resetTrack'
 }, {
     method: 'POST',
-    path: 'filterSearch',
+    path: 'filterSearch'
 }, {
     method: 'POST',
-    path: 'addFolders',
+    path: 'addFolders'
 }, {
     method: 'GET',
-    path: 'removeFolder',
+    path: 'removeFolder'
 }, {
     method: 'GET',
     path: 'reset'
@@ -27,7 +27,7 @@ const routes = [{
     path: 'refresh'
 }, {
     method: 'GET',
-    path: 'fetchCover',
+    path: 'fetchCover'
 }, {
     method: 'POST',
     path: 'incrementPlayCount'

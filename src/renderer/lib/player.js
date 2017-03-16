@@ -23,15 +23,15 @@ class Player {
         this.threshold = 0.75;
         this.durationThresholdReached = false;
 
-        this.getAudio().addEventListener('ended', lib.actions.player.next);
-        this.getAudio().addEventListener('error', lib.actions.player.audioError);
-        this.getAudio().addEventListener('timeupdate', () => {
+        this.audio.addEventListener('ended', lib.actions.player.next);
+        this.audio.addEventListener('error', lib.actions.player.audioError);
+        this.audio.addEventListener('timeupdate', () => {
             if (this.isThresholdReached()) {
                 lib.actions.library.incrementPlayCount(this.getSrc());
             }
         });
 
-        this.getAudio().addEventListener('play', () => {
+        this.audio.addEventListener('play', () => {
             ipcRenderer.send('playerAction', 'play');
 
             const path = decodeURIComponent(this.getSrc()).replace('file://', '');
@@ -52,7 +52,7 @@ class Player {
             });
         });
 
-        this.getAudio().addEventListener('pause', () => {
+        this.audio.addEventListener('pause', () => {
             ipcRenderer.send('playerAction', 'pause');
         });
     }
@@ -75,10 +75,6 @@ class Player {
 
     unmute() {
         this.audio.muted = false;
-    }
-
-    getAudio() {
-        return this.audio;
     }
 
     getCurrentTime() {
