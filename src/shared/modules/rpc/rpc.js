@@ -1,23 +1,16 @@
 const Promise = require('bluebird');
 const uuid = require('uuid/v4');
-const { BrowserWindow } from 'electron';
-
+const ipcSend = require('../ipc/ipcSend');
 const promises = require('./promises');
 
 /****************************************************************
 RPC Emit.
 
 This will emit an Remote Procedure Call action (which will travel
-to all threads).
-Middleware in these other threads will then run the RPC if the
-scope is correct.
+to all threads). This will run a function if scope is correct.
 ****************************************************************/
 
 const rpc = (scope, functionToRun, functionInputs) => {
-
-
-
-
 
 
     // Get a unique promise id
@@ -31,17 +24,12 @@ const rpc = (scope, functionToRun, functionInputs) => {
     promises[promiseId] = deferred;
 
     // Send the event over IPC
-    const eventPayload = {
+    ipcSend('RPC', {
         promiseId,
         scope,
         functionToRun,
         functionInputs,
-    };
-    const openWindows = BrowserWindow.getAllWindows();
-    openWindows.forEach(({ webContents }) => {
-        webContents.send('RPC', );
     });
-
 
     return deferred.promise;
 }

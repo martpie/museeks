@@ -12,6 +12,11 @@ import { Provider } from 'react-redux';
 
 import routes from './router/routes';
 import store from './redux/store.js';
+import lib from './lib';
+
+//import rpcProcess from
+//
+//const rpcProcess =
 
 
 

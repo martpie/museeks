@@ -4,19 +4,19 @@ const library = (lib) => {
 
     const getAll = () => (dispatch) =>  ({
         type: 'APP_CONFIG_GET_ALL',
-        payload: aliasEmit(dispatch, 'config.getAll', '', 'mainRenderer')
+        payload: rpc('mainRenderer', 'config.getAll', '')
     });
 
     const set = (key, value) => (dispatch) => ({
         type: 'APP_CONFIG_SET',
-        payload: aliasEmit(dispatch, 'app.library.config.set', [key, value]),
+        payload: rpc('mainRenderer', 'app.library.config.set', [key, value]),
         meta: { key, value }
     });
 
 
     const save = () => (dispatch) => ({
         type: 'APP_CONFIG_SAVE',
-        payload: aliasEmit(dispatch, 'app.library.config.saveSync', '')
+        payload: rpc('mainRenderer', 'app.library.config.saveSync', '')
     });
 
     return {

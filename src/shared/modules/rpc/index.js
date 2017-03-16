@@ -1,7 +1,7 @@
-const rpc           = require('./rpc');
-const rpcMiddleware = require('./aliasReceive.middleware');
+const rpc         = require('./rpc');
+const rpcProcess = require('./rpcProcess');
 
 module.exports = {
     rpc,
-    rpcMiddleware,
+    rpcProcess,
 }

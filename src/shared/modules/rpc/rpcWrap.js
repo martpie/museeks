@@ -5,7 +5,7 @@ RPC Wrap.
 
 This will create a library of RPC functions.
 
-eg
+eg:
 rpcWrap('track', ['pause', 'play'], 'mainRenderer')
 ****************************************************************/
 
