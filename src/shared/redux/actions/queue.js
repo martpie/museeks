@@ -36,14 +36,14 @@ const library = (lib) => {
     });
 
     const addNext = (tracksIds) => ({
-        type : 'APP_QUEUE_ADD_NEXT',
+        type: 'APP_QUEUE_ADD_NEXT',
         payload : lib.track.find({
             query : { _id: { $in: tracksIds } }
         })
     });
 
     const setQueue = (queue) => ({
-        type : 'APP_QUEUE_SET_QUEUE',
+        type: 'APP_QUEUE_SET_QUEUE',
         queue
     });
 

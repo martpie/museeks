@@ -10,7 +10,7 @@ const library = (lib) => {
     };
 
     const playToggle = () => (dispatch, getState) => {
-        const { paused } = Player.getAudio();
+        const { paused } = lib.playergetAudio();
         // TODO (y.solovyov | KeitIG): calling getState is a hack.
         const { queue } = getState();
         if (paused && queue.length > 0) {
@@ -24,9 +24,9 @@ const library = (lib) => {
         // TODO (y.solovyov | KeitIG): calling getState is a hack.
         const { queue } = getState();
         if (queue !== null) {
-            Player.play();
+            lib.playerplay();
             dispatch({
-                type : 'APP_PLAYER_PLAY'
+                type: 'APP_PLAYER_PLAY'
             });
         }
     };
@@ -35,9 +35,9 @@ const library = (lib) => {
         // TODO (y.solovyov | KeitIG): calling getState is a hack.
         const { queue } = getState();
         if (queue !== null) {
-            Player.pause();
+            lib.playerpause();
             dispatch({
-                type : 'APP_PLAYER_PAUSE'
+                type: 'APP_PLAYER_PAUSE'
             });
         }
     };
@@ -53,11 +53,11 @@ const library = (lib) => {
         if (queuePosition > -1) {
             const uri = utils.parseUri(queue[queuePosition].path);
 
-            Player.setAudioSrc(uri);
-            Player.play();
+            lib.playersetAudioSrc(uri);
+            lib.playerplay();
 
             dispatch({
-                type : 'APP_PLAYER_START',
+                type: 'APP_PLAYER_START',
                 queuePosition,
                 _id
             });
@@ -65,9 +65,9 @@ const library = (lib) => {
     };
 
     const stop = () => {
-        Player.stop();
+        lib.playerstop();
         return {
-            type : 'APP_PLAYER_STOP'
+            type: 'APP_PLAYER_STOP'
         };
         // DR: We can Remove?
         // ipcRenderer.send('playerAction', 'stop');
@@ -91,10 +91,10 @@ const library = (lib) => {
         if (track !== undefined) {
             const uri = utils.parseUri(track.path);
 
-            Player.setAudioSrc(uri);
-            Player.play();
+            lib.playersetAudioSrc(uri);
+            lib.playerplay();
             dispatch({
-                type : 'APP_PLAYER_NEXT',
+                type: 'APP_PLAYER_NEXT',
                 newQueueCursor
             });
         } else {
@@ -103,7 +103,7 @@ const library = (lib) => {
     };
 
     const previous = () => (dispatch, getState) => {
-        const currentTime = Player.getCurrentTime();
+        const currentTime = lib.playergetCurrentTime();
 
         // TODO (y.solovyov | KeitIG): calling getState is a hack.
         const { queue, queueCursor } = getState();
@@ -120,11 +120,11 @@ const library = (lib) => {
         if (newTrack !== undefined) {
             const uri = utils.parseUri(newTrack.path);
 
-            Player.setAudioSrc(uri);
-            Player.play();
+            lib.playersetAudioSrc(uri);
+            lib.playerplay();
 
             dispatch({
-                type : 'APP_PLAYER_PREVIOUS',
+                type: 'APP_PLAYER_PREVIOUS',
                 currentTime,
                 newQueueCursor,
             });
@@ -137,9 +137,9 @@ const library = (lib) => {
         lib.config.set('audioShuffle', shuffle);
         lib.config.saveSync();
 
-        const currentSrc = Player.getSrc();
+        const currentSrc = lib.playergetSrc();
         return {
-            type : 'APP_PLAYER_SHUFFLE',
+            type: 'APP_PLAYER_SHUFFLE',
             shuffle,
             currentSrc
         };
@@ -150,43 +150,43 @@ const library = (lib) => {
         lib.config.saveSync();
 
         return {
-            type : 'APP_PLAYER_REPEAT',
+            type: 'APP_PLAYER_REPEAT',
             repeat
         };
     };
 
     const setVolume = (volume) => {
         if (!isNaN(parseFloat(volume)) && isFinite(volume)) {
-            Player.setAudioVolume(volume);
+            lib.playersetAudioVolume(volume);
 
             lib.config.set('audioVolume', volume);
             lib.config.saveSync();
             return {
-                type : 'APP_REFRESH_CONFIG'
+                type: 'APP_REFRESH_CONFIG'
             };
         }
     };
 
     const setMuted = (muted = false) => {
-        if (muted) Player.mute();
-        else Player.unmute();
+        if (muted) lib.playermute();
+        else lib.playerunmute();
 
         lib.config.set('audioMuted', muted);
         lib.config.saveSync();
         return {
-            type : 'APP_REFRESH_CONFIG'
+            type: 'APP_REFRESH_CONFIG'
         };
     };
 
     const setPlaybackRate = (value) => {
         if (!isNaN(parseFloat(value)) && isFinite(value)) { // if is numeric
             if (value >= 0.5 && value <= 5) { // if in allowed range
-                Player.setAudioPlaybackRate(value);
+                lib.playersetAudioPlaybackRate(value);
 
                 lib.config.set('audioPlaybackRate', parseFloat(value));
                 lib.config.saveSync();
                 return {
-                    type : 'APP_REFRESH_CONFIG'
+                    type: 'APP_REFRESH_CONFIG'
                 };
             }
         }
@@ -195,9 +195,9 @@ const library = (lib) => {
     const jumpTo = (to) => {
         // TODO (y.solovyov) do we want to set some explicit state?
         // if yes, what should it be? if not, do we need this actions at all?
-        Player.setAudioCurrentTime(to);
+        lib.playersetAudioCurrentTime(to);
         return {
-            type : 'APP_PLAYER_JUMP_TO'
+            type: 'APP_PLAYER_JUMP_TO'
         };
     };
 

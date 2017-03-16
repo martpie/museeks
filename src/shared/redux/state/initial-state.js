@@ -25,7 +25,7 @@ module.exports = {
     cover             :  null,  // Current trackplaying cover
     toasts     :  [],    // The array of toasts
     refreshingLibrary :  false, // If the app is currently refreshing the app
-    repeat            :  app.config.get('audioRepeat'), // the current repeat state (one, all, none)
-    shuffle           :  app.config.get('audioShuffle'), // If shuffle mode is enabled
+    repeat            :  lib.config.get('audioRepeat'), // the current repeat state (one, all, none)
+    shuffle           :  lib.config.get('audioShuffle'), // If shuffle mode is enabled
     refreshProgress   :  0,     // Progress of the refreshing library
 };

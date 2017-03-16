@@ -12,41 +12,6 @@ const library = (lib) => {
         initShortcuts();
         start();
 
-        // Bind player events
-        // Audio Events
-        lib.player.getAudio().addEventListener('ended', PlayerActions.next);
-        lib.player.getAudio().addEventListener('error', PlayerActions.audioError);
-        lib.player.getAudio().addEventListener('timeupdate', () => {
-            if (lib.player.isThresholdReached()) {
-                LibraryActions.incrementPlayCount(lib.player.getSrc());
-            }
-        });
-
-        lib.player.getAudio().addEventListener('play', () => {
-            ipcRenderer.send('playerAction', 'play');
-
-            const path = decodeURIComponent(lib.player.getSrc()).replace('file://', '');
-
-            return utils.getMetadata(path).then((path) => {
-
-                ipcRenderer.send('playerAction', 'trackStart', track);
-
-                if (lib.app.browserWindows.main.isFocused()) return;
-
-                return utils.fetchCover(track.path).then((cover) => {
-                    return NotificationActions.add({
-                        title: track.title,
-                        body: `${track.artist}\n${track.album}`,
-                        icon: cover
-                    });
-                });
-            });
-        });
-
-        lib.player.getAudio().addEventListener('pause', () => {
-            ipcRenderer.send('playerAction', 'pause');
-        });
-
         // Listen for main-process events
         ipcRenderer.on('playerAction', (event, reply) => {
             switch(reply) {
