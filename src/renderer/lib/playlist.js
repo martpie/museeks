@@ -1,4 +1,4 @@
-import rpcWrap from '../../shared/modules/rpc';
+import { rpcWrap } from '../../shared/modules/rpc';
 import playlist from '../../electron/lib/playlist';
 
 const functions = Object.keys(playlist);

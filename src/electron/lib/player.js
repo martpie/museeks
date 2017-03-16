@@ -1,4 +1,4 @@
-import rpcWrap from '../../shared/modules/rpc';
+import { rpcWrap } from '../../shared/modules/rpc';
 
 const functions = [
     'play',
