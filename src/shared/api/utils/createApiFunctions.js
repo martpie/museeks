@@ -1,24 +1,18 @@
 const axios = require('axios');
+const { set } = require('lodash');
 
-const createApiFunctions = (libs) => {
+const createApiFunctions = (routes) => routes.reduce((apiLib, route) => {
+    // Create a function that call the api
+    const apiFunction = (config) => axios({
+        ...config,
+        method: route.method,
+        url: `http://${config.ip || 'localhost'}:54321/${route.path}`
+    });
 
-    const reduceLib = (lib) => lib.routes.reduce((routes, route) => {
-        // Create a function that call this api
-        routes[route.path] = (config) => axios({
-            ...config,
-            method: route.method,
-            url: `http://${config.ip || 'localhost'}:54321/api/${lib.namespace}/${route.path}`
-        })
-        .then((response) => response.data);
-        return routes;
-    }, {});
+    // Add it to the api lib
+    set(apiLib, route.name, apiFunction);
+    return apiLib;
+}, {});
 
-    const reduceLibs = (libs) => libs.reduce((libs, lib) => {
-        libs[lib.namespace] = reduceLib(lib);
-        return libs;
-    }, {});
-
-    return reduceLibs(libs);
-}
 
 module.exports = createApiFunctions;
