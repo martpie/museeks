@@ -29,8 +29,8 @@ export default {
     library           : {
         refreshing : false,
         refresh : {
-            processed: null,
-            total: null,
+            processed: 0,
+            total: 0,
         }
     }
 };

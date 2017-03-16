@@ -55,18 +55,32 @@ const filterSearch = (search) => {
     });
 };
 
+const scan = {
+    processed: 0,
+    total: 0,
+};
+
+const scanIsOver = () => {
+    return scan.processed === scan.total;
+};
+
 const add = (pathsToScan) => {
     store.dispatch({
         type : AppConstants.APP_LIBRARY_REFRESH_START
     });
 
-    const dispatchEnd = function() {
-        store.dispatch({
-            type : AppConstants.APP_LIBRARY_REFRESH_END
-        });
+
+    const endCurrentScan = function() {
+        if(scanIsOver()) {
+            store.dispatch({
+                type : AppConstants.APP_LIBRARY_REFRESH_END
+            });
+        }
     };
 
-    const fsConcurrency = 32;
+    // We may have a problem with this if the user do a lot of concurrent scan
+    // I lowered this value from 32 to prevent ERROPEN with a least two concurrent scans
+    const fsConcurrency = 16;
 
     let rootFiles; // HACK Kind of hack, looking for a better solution
 
@@ -98,6 +112,7 @@ const add = (pathsToScan) => {
             return globby(pattern, { nodir: true, follow: true });
         });
     }).then((files) => {
+        // Merge all path arrays together and filter them with the extensions we support
         const flatFiles = files.reduce((acc, array) => acc.concat(array), [])
             .concat(rootFiles)
             .filter((filePath) => {
@@ -109,12 +124,13 @@ const add = (pathsToScan) => {
         return flatFiles;
     }).then((supportedFiles) => {
         if (supportedFiles.length === 0) {
-            dispatchEnd();
+            endCurrentScan();
             return;
         }
 
-        let addedFiles = 0;
-        const totalFiles = supportedFiles.length;
+        // Add files to be processed to the scan object
+        scan.total += supportedFiles.length;
+
         return Promise.map(supportedFiles, (filePath) => {
             return app.models.Track.findAsync({ path: filePath }).then((docs) => {
                 if (docs.length === 0) {
@@ -122,16 +138,18 @@ const add = (pathsToScan) => {
                 }
                 return null;
             }).then((track) => {
+                // If null, that means a track with the same absolute path already exists in the database
                 if(track === null) return;
+                // else, insert the new document in the database
                 return app.models.Track.insertAsync(track);
             }).then(() => {
-                refreshProgress(addedFiles, totalFiles);
-                addedFiles++;
+                refreshProgress(scan.processed, scan.total);
+                scan.processed++;
             });
         }, { concurrency: fsConcurrency });
     }).then(() => {
         AppActions.library.load(); // TODO Reload the library at the end of this
-        dispatchEnd();
+        endCurrentScan();
     }).catch((err) => {
         console.warn(err);
     });
@@ -234,7 +252,6 @@ export default {
     resetTracks,
     filterSearch,
     removeFromLibrary,
-    refreshProgress,
     reset,
     fetchCover,
     incrementPlayCount
