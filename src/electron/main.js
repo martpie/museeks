@@ -3,11 +3,11 @@
 require('babel-register');
 process.env.NODE_ENV = 'production'; // Drastically increase performances
 
-const path     = require('path');
-const os       = require('os');
-const electron = require('electron');
-const { nativeImage, BrowserWindow, app } = electron;
-const lib      = require('./lib');
+const path               = require('path');
+const os                 = require('os');
+const electron           = require('electron');
+const lib                = require('./lib');
+const database           = require('./lib');
 
 const store              = require('./redux/store');            // Redux store
 const IpcManager         = require('./ipc');                    // Manages IPC evens
@@ -22,6 +22,8 @@ const PeerDiscoveryManager = require('./peer-discovery');
 
 const appRoot = path.resolve(__dirname, '../..'); // app/ directory
 const srcPath = path.join(appRoot, 'src'); // app/src/ directory
+
+const { nativeImage, BrowserWindow, app } = electron;
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the javascript object is GCed.

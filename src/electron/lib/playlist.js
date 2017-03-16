@@ -1,20 +1,19 @@
-module.exports = (playlist) => {
+const playlist = require('../models/playlist');
 
-    const find = (data) => playlist.find(data.query).sort(data.sort).execAsync();
+const find = (data) => playlist.find(data.query).sort(data.sort).execAsync();
 
-    const findOne = (data) => playlist.findOneAsync(data.query);
+const findOne = (data) => playlist.findOneAsync(data.query);
 
-    const insert = (data) => playlist.insertAsync(data);
+const insert = (data) => playlist.insertAsync(data);
 
-    const update = (criteria, data) => playlist.update(criteria, data).execAsync();
+const update = (criteria, data) => playlist.update(criteria, data).execAsync();
 
-    const remove = (criteria, options) => playlist.removeAsync(criteria, options);
+const remove = (criteria, options) => playlist.removeAsync(criteria, options);
 
-    return {
-        find,
-        findOne,
-        insert,
-        update,
-        remove
-    }
-}
+module.exports = {
+    find,
+    findOne,
+    insert,
+    update,
+    remove
+};

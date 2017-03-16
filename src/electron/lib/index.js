@@ -1,11 +1,9 @@
 const lib = require('../../shared/lib');
 const actions = require('../redux/actions');
 
-const models = require('../models');
-const playlist = require('./playlist')(models.playlist);
-const track = require('./track')(models.track);
-
 const player = require('./player');
+const playlist = require('./playlist');
+const track = require('./track');
 
 const library = {
     player,
