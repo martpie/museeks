@@ -176,13 +176,13 @@ const removeFromLibrary = async (tracksIds) => {
         message: `Are you sure you want to remove ${tracksIds.length} element(s) from your library?`,
         type: 'warning'
     }, (result) => {
-        if(result === 1) {
+        if(result === 1) { // button possition, here 'remove'
             // Remove tracks from the Track collection
-            app.models.Track.removeAsync({ _id: { $in: tracksIds } }, { multi: true }, () => {
-                store.dispatch({
-                    type : AppConstants.APP_LIBRARY_REMOVE_TRACKS,
-                    tracksIds,
-                });
+            app.models.Track.removeAsync({ _id: { $in: tracksIds } }, { multi: true });
+
+            store.dispatch({
+                type : AppConstants.APP_LIBRARY_REMOVE_TRACKS,
+                tracksIds,
             });
             // That would be great to remove those ids from all the playlists, but it's not easy
             // and should not cause strange behaviors, all PR for that would be really appreciated

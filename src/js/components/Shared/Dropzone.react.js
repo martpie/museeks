@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import classnames from 'classnames';
 
 
 /*
@@ -32,9 +33,11 @@ export default class TrackRow extends Component {
     }
 
     render() {
+        const classes = classnames('dropzone', this.state.state);
+
         return (
             <div
-                className={ `dropzone ${this.state.state}` }
+                className={ classes }
                 onDragEnter={ this.onDragEnter }
                 onDragOver={ this.onDragOver }
                 onDragLeave={ this.onDragLeave }
