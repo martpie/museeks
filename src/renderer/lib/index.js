@@ -1,11 +1,13 @@
 import lib from '../../shared/lib';
 import actions from '../redux/actions';
 import player from './player';
+import playlist from './playlist''
+import track from './playlist''
 
 const library = {
     player,
-    playlist: rpc.playlist,
-    track: rpc.track
+    playlist,
+    track,
 };
 
 // attach shared libraries
