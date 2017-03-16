@@ -8,6 +8,7 @@ const routes = [{
         return target.apply(null, rpc.arguments)
             .then((result) => res.status(200).json(result))
             .catch((error) => res.status(error.code).json({ error }));
+    }
 }];
 
 module.exports = {

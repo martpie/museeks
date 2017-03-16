@@ -6,7 +6,7 @@ import Icon from 'react-fontawesome';
 
 import PlaylistsNavLink from './PlaylistsNavLink.react';
 
-const ipcRenderer = electron.ipcRenderer;
+import ipcRenderer from 'electron';
 
 
 /*

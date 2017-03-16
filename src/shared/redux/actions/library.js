@@ -5,7 +5,7 @@ const globby   = require('globby');
 const join     = require('path').join;
 const extname  = require('path').extname;
 const utils    = require('../../utils/utils');
-const dialog   = require('electron').remote.dialog;
+// const dialog   = require('electron').remote.dialog;
 const realpath = Promise.promisify(fs.realpath);
 
 const library = (lib) => {
@@ -46,18 +46,18 @@ const library = (lib) => {
     });
 
     const addFolders = () => (dispatch) => {
-        dialog.showOpenDialog({
-            properties: ['openDirectory', 'multiSelections']
-        }, (folders) => {
-            if (folders !== undefined) {
-                Promise.map(folders, realpath).then((resolvedFolders) => {
-                    dispatch({
-                        type: 'APP_LIBRARY_ADD_FOLDERS',
-                        folders: resolvedFolders
-                    });
-                });
-            }
-        });
+        // dialog.showOpenDialog({
+        //     properties: ['openDirectory', 'multiSelections']
+        // }, (folders) => {
+        //     if (folders !== undefined) {
+        //         Promise.map(folders, realpath).then((resolvedFolders) => {
+        //             dispatch({
+        //                 type: 'APP_LIBRARY_ADD_FOLDERS',
+        //                 folders: resolvedFolders
+        //             });
+        //         });
+        //     }
+        // });
     };
 
     const removeFolder = (index) => ({
@@ -153,7 +153,6 @@ const library = (lib) => {
 
     return {
         load,
-        list,
         setTracksCursor,
         resetTracks,
         filterSearch,

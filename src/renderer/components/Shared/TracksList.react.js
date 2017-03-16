@@ -9,7 +9,7 @@ import { api, actions } from '../../lib';
 import Player from '../../lib/player';
 import utils from '../../../shared/utils/utils';
 
-const ipcRenderer = electron.ipcRenderer;
+import ipcRenderer from 'electron';
 
 
 /*

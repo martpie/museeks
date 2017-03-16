@@ -1,4 +1,4 @@
-const playlist = require('../models/playlist');
+// const playlist = require('../models/playlist');
 
 const find = (data) => playlist.find(data.query).sort(data.sort).execAsync();
 

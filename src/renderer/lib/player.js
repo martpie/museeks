@@ -1,8 +1,11 @@
 import { ipcRenderer } from 'electron';
+import { fetchCover, getMetadata } from '../../shared/utils/utils';
 
 class Player {
 
     constructor(lib) {
+
+        this.lib = lib;
 
         const mergedOptions = {
             playbackRate: 1,
@@ -19,12 +22,14 @@ class Player {
 
         this.threshold = 0.75;
         this.durationThresholdReached = false;
+    }
 
-        this.audio.addEventListener('ended', lib.actions.player.next);
-        this.audio.addEventListener('error', lib.actions.player.audioError);
+    play() {
+        this.audio.addEventListener('ended', this.lib.actions.player.next);
+        this.audio.addEventListener('error', this.lib.actions.player.audioError);
         this.audio.addEventListener('timeupdate', () => {
             if (this.isThresholdReached()) {
-                lib.actions.library.incrementPlayCount(this.getSrc());
+                this.lib.actions.library.incrementPlayCount(this.getSrc());
             }
         });
 
@@ -33,13 +38,13 @@ class Player {
 
             const path = decodeURIComponent(this.getSrc()).replace('file://', '');
 
-            return utils.getMetadata(path).then((path) => {
+            return getMetadata(path).then((path) => {
 
                 ipcRenderer.send('playerAction', 'trackStart', track);
 
-                if (lib.app.browserWindows.main.isFocused()) return;
+                if (this.lib.app.browserWindows.main.isFocused()) return;
 
-                return utils.fetchCover(track.path).then((cover) => {
+                return fetchCover(track.path).then((cover) => {
                     return NotificationActions.add({
                         title: track.title,
                         body: `${track.artist}\n${track.album}`,

@@ -110,10 +110,10 @@ app.on('ready', () => {
     const rpcIpcManager = new RpcIpcManager(lib, 'electron');
 
     // Start the API server
-    const api = new ApiManager(store);
+    const api = new ApiManager(store, lib);
 
     // Start the peer discovery service
-    const peers = new PeerDiscoveryManager(store);
+    const peers = new PeerDiscoveryManager(store, lib);
 
     // Power monitor
     const powerMonitor = new PowerMonitor(mainWindow);

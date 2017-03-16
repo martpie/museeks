@@ -1,11 +1,11 @@
 let appModule;
 if (process.type == 'renderer') {
-    const { remote, app } = require('electron');
+    const { remote } = require('electron');
     appModule = {
         browserWindows: {
             main: remote.getCurrentWindow()
         },
-        version: app.getVersion()
+        // version: app.getVersion()
     };
 } else {
     const { BrowserWindow, app } = require('electron');

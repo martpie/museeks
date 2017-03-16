@@ -6,7 +6,7 @@ const routes = [{
     path: '/',
     handler: (req, res) => {
         const peer = extend(req.payload, { ip : req.info.remoteAddress });
-        req.send('network.peerFound', peer);
+        // req.lib.actions.network.peerFound();
         res({
             hostname: os.hostname(),
             platform: os.platform()
@@ -16,7 +16,7 @@ const routes = [{
     method: 'GET',
     path: '/state',
     handler: (req, res) => {
-        req.send('library.load2', { ip : '192.168.1.2' }).then((result) => {
+        req.lib.actions.library.load().then((result) => {
             res(result);
             console.log('result', result);
         });

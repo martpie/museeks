@@ -6,8 +6,8 @@ const extend = require('xtend');
 const os = require('os');
 
 class PeerDiscovery {
-    constructor(send) {
-        this.send = send;
+    constructor(store, lib) {
+        this.lib = lib;
 
         // scanning at startup slows application load time
         const scanDelay = 2000;
@@ -25,9 +25,10 @@ class PeerDiscovery {
         })
         .then((response) => response.data)
         .then((peerInfo) => {
-            this.send('network.peerFound', extend(peerInfo, { ip : peer.ip }));
+            // return lib.actions.network.peerFound(extend(peerInfo, { ip : peer.ip }));
         })
         .catch((err) => {
+            console.log(err)
             const ignore = err.response.status === 404;
 
             if (!ignore) {
