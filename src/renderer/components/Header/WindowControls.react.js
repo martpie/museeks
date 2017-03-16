@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { api, actions } from '../../library';
+import { api, actions } from '../../lib';
 
 /*
 |--------------------------------------------------------------------------

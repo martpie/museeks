@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import Icon from 'react-fontawesome';
 import VolumeControl from './VolumeControl.react';
 
-import { api, actions } from '../../library';
+import { api, actions } from '../../lib';
 
 /*
 |--------------------------------------------------------------------------

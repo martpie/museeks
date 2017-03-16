@@ -8,9 +8,9 @@ class Player {
             playbackRate: 1,
             volume: 1,
             muted: false,
-            volume: lib.config.get('audioVolume'),
-            playbackRate: lib.config.get('audioPlaybackRate'),
-            muted: lib.config.get('audioMuted')
+            volume: config.audioVolume,
+            playbackRate: config.audioPlaybackRate,
+            muted: config.audioMuted
         };
 
         this.audio = new Audio();

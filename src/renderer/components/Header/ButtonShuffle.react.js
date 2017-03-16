@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import InlineSVG from 'svg-inline-react';
 import classnames from 'classnames';
 
-import { api, actions } from '../../library';
+import { api, actions } from '../../lib';
 
 
 /*

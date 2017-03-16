@@ -1,4 +1,4 @@
-import { api, actions } from '../../library';
+import { api, actions } from '../../lib';
 
 import React, { Component } from 'react';
 import { ButtonGroup, Button } from 'react-bootstrap';

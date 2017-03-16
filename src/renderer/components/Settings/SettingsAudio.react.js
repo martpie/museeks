@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { api, actions } from '../../library';
+import { api, actions } from '../../lib';
 
 
 /*

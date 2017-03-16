@@ -11,8 +11,6 @@ to all threads). This will run a function if scope is correct.
 ****************************************************************/
 
 const rpc = (scope, functionToRun, functionInputs) => {
-
-
     // Get a unique promise id
     const promiseId = `promise_${uuid()}`;
 

@@ -11,13 +11,13 @@ import { Router,  hashHistory } from 'react-router';
 import { Provider } from 'react-redux';
 
 import routes from './router/routes';
-import store from './redux/store.js';
+import store from './redux/store';
 import lib from './lib';
 
 import { RpcIpcManager } from '../shared/modules/rpc'
 
 // Start listening for RPC IPC events
-const rpcIpcManager = new RpcIpcManager(lib);
+const rpcIpcManager = new RpcIpcManager(lib, 'mainThread');
 
 /*
 |--------------------------------------------------------------------------

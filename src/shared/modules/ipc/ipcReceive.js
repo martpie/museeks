@@ -10,7 +10,7 @@ if (process.type == 'browser') {
     }
 
 } else {
-    const { ipcMain } from 'electron';
+    const { ipcMain } = require('electron');
 
     ipcReceive = (event, callback) => {
         ipcMain.on(event, (event, payload) => {

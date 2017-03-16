@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Icon from 'react-fontawesome';
 import classnames from 'classnames';
 
-import { api, actions } from '../../library';
+import { api, actions } from '../../lib';
 import Player from '../../lib/player';
 
 

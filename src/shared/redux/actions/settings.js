@@ -1,17 +1,17 @@
 const semver = require('semver');
 const { ipcRenderer } = require('electron');
 
-const library = (lib) => {
+const library = (lib) => (dispatch, getState) => {
 
     const check = () => {
         checkTheme();
         checkDevMode();
         checkSleepBlocker();
-        if (lib.config.get('autoUpdateChecker')) checkForUpdate({ silentFail: true });
+        if (getState().config.autoUpdateChecker) checkForUpdate({ silentFail: true });
     };
 
     const checkTheme = () => {
-        const themeName = lib.config.get('theme');
+        const themeName = getState().config.theme;
         document.querySelector('body').classList.add(`theme-${themeName}`);
     };
 
@@ -41,8 +41,8 @@ const library = (lib) => {
         });
     };
 
-    const checkSleepBlocker = () => {
-        if (lib.config.get('sleepBlocker')) {
+    const checkSleepBlocker = () => (dispatch, getState) => {
+        if (getState().config.sleepBlocker) {
             ipcRenderer.send('toggleSleepBlocker', true, 'prevent-app-suspension');
         }
     };
@@ -61,8 +61,8 @@ const library = (lib) => {
         });
     };
 
-    const checkDevMode = () => {
-        if (lib.config.get('devMode')) lib.app.browserWindows.main.webContents.openDevTools();
+    const checkDevMode = () => (dispatch, getState) => {
+        if (getState().config.devMode) lib.app.browserWindows.main.webContents.openDevTools();
     };
 
     const toggleAutoUpdateChecker = (value) => (dispatch) => {

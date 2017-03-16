@@ -1,7 +1,7 @@
 const library = (lib) => {
 
-    const add = (notificationData) => {
-        if (config.get('displayNotifications')) {
+    const add = (notificationData) => (dispatch, getState) => {
+        if (getState.config.displayNotifications) {
             const notification =
                 new Notification(
                     notificationData.title,

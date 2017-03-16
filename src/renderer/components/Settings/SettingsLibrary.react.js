@@ -5,7 +5,7 @@ import classnames from 'classnames';
 
 import LibraryFolders from './LibraryFolders.react';
 
-import { api, actions } from '../../library';
+import { api, actions } from '../../lib';
 
 
 /*

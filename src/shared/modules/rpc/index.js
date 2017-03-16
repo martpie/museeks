@@ -1,7 +1,7 @@
 const rpc         = require('./rpc');
-const rpcProcess = require('./rpcProcess');
+const RpcIpcManager = require('./RpcIpcManager');
 
 module.exports = {
     rpc,
-    rpcProcess,
+    RpcIpcManager,
 }
