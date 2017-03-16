@@ -60,8 +60,8 @@ const library = (lib) => {
         ipcRenderer.send('appRestart');
     };
 
-    const close = () => {
-        if (lib.config.get('minimizeToTray')) {
+    const close = () => (dispatch, getState) => {
+        if (getState().config.minimizeToTray) {
             lib.app.browserWindows.main.hide();
         } else {
             lib.app.browserWindows.main.destroy();

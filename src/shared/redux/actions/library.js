@@ -78,7 +78,7 @@ const library = (lib) => {
         .then(() => dispatch(actions.library.load()));
     });
 
-    const refresh = () => (dispatch) => {
+    const refresh = () => (dispatch, getState) => {
         dispatch({
             type: 'APP_LIBRARY_REFRESH_PENDING'
         });
@@ -88,7 +88,7 @@ const library = (lib) => {
                 type: 'APP_LIBRARY_REFRESH_FULFILLED'
             });
         };
-        const folders = lib.config.get('musicFolders');
+        const folders = getState.config.musicFolders;
         const fsConcurrency = 32;
 
         // Start the big thing

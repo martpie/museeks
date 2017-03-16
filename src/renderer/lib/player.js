@@ -125,8 +125,10 @@ class Player {
     }
 }
 
-export default new Player({
-    volume: lib.config.get('audioVolume'),
-    playbackRate: lib.config.get('audioPlaybackRate'),
-    muted: lib.config.get('audioMuted')
-});
+export default (config) => {
+    new Player({
+        volume: config.audioVolume,
+        playbackRate: config.audioPlaybackRate,
+        muted: config.audioMuted
+    });
+}

@@ -37,7 +37,7 @@ module.exports = (state = {}, payload) => {
 
         case('APP_LIBRARY_ADD_FOLDERS'): {
             const folders    = payload.folders;
-            let musicFolders = lib.config.get('musicFolders');
+            let musicFolders = state.config.musicFolders;
 
             // Check if we received folders
             if (folders !== undefined) {
@@ -57,7 +57,7 @@ module.exports = (state = {}, payload) => {
 
         case('APP_LIBRARY_REMOVE_FOLDER'): {
             if (!state.refreshingLibrary) {
-                const musicFolders = lib.config.get('musicFolders');
+                const musicFolders = state.config.musicFolders;
 
                 musicFolders.splice(payload.index, 1);
 
