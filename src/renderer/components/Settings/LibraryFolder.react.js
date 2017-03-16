@@ -3,7 +3,7 @@ import Icon from 'react-fontawesome';
 
 import classnames from 'classnames';
 
-import { api, actions } from '../../library';
+import { api, actions } from '../../lib';
 
 /*
 |--------------------------------------------------------------------------

@@ -2,7 +2,7 @@ const Hapi = require('hapi');
 const apiRoutes = require('./routes');
 const actionRoutes = require('../../shared/api/routes');
 const mapToRoutes = require('../../shared/api/utils/mapToRoutes');
-const lib = require('../library');
+const lib = require('../lib');
 
 class Api {
     constructor(send) {

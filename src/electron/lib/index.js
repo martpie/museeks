@@ -2,12 +2,14 @@ const lib = require('../../shared/lib');
 const actions = require('../redux/actions');
 
 const models = require('../models');
+
+const config = require('./config');
+const player = require('./player');
 const playlist = require('./playlist')(models.playlist);
 const track = require('./track')(models.track);
 
-const player = require('./player');
-
 const library = {
+    config,
     player,
     playlist,
     track

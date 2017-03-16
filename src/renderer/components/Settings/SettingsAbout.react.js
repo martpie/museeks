@@ -3,9 +3,7 @@ import { Button } from 'react-bootstrap';
 
 import ExternalLink from '../Shared/ExternalLink.react';
 
-import app from '../../lib/app';
-
-import { api, actions } from '../../library';
+import lib from '../../lib';
 
 // sth wrong with that, need some check with Webpack
 const museeksLogoRequire = require('../../../images/logos/museeks.png');
@@ -31,11 +29,11 @@ export default class SettingsAbout extends Component {
                     <h4>About Museeks</h4>
                     <img src={ museeksLogo } className='logo-museeks' alt='Logo' title='Museeks logo' />
                     <p>
-                        Museeks { app.version }{ ' - ' }
+                        Museeks { lib.app.version }{ ' - ' }
                         <ExternalLink href='http://museeks.io'>museeks.io</ExternalLink>
                         { ' - ' }
-                        <ExternalLink href={ `https://github.com/KeitIG/Museeks/releases/tag/${app.version}` }>release notes</ExternalLink>
-                        <Button bsSize='small' className='update-checker' onClick={ actions.settings.checkForUpdate }>Check for update</Button>
+                        <ExternalLink href={ `https://github.com/KeitIG/Museeks/releases/tag/${lib.app.version}` }>release notes</ExternalLink>
+                        <Button bsSize='small' className='update-checker' onClick={ lib.actions.settings.checkForUpdate }>Check for update</Button>
                     </p>
                 </div>
                 <div className='setting-section'>

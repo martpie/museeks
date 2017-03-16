@@ -8,4 +8,4 @@ const functions = [
     'remove'
 ]
 
-export default rpcWrap('playlist', functions, 'mainRenderer');
+export default rpcWrap('playlist', functions, 'electron');

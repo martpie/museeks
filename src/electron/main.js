@@ -9,7 +9,7 @@ const electron = require('electron');
 const { nativeImage, BrowserWindow, app } = electron;
 const lib      = require('./lib');
 
-const store              = require('./redux/store');            // Redux store
+const configureStore     = require('./redux/configureStore');   // Redux store
 const IpcManager         = require('./ipc');                    // Manages IPC evens
 const TrayManager        = require('./tray');                   // Manages Tray
 const ConfigManager      = require('./config');                 // Handles config
@@ -52,8 +52,8 @@ app.on('window-all-closed', () => {
 app.on('ready', () => {
     const configManager = new ConfigManager(app);
     const { useNativeFrame } = configManager.getConfig();
-    let { bounds } = configManager.getConfig();
-
+    const config   = configManager.getConfig();
+    let { bounds } = config;
     bounds = checkBounds(bounds);
 
     const logosPath = path.join(appRoot, 'src', 'images', 'logos');
@@ -98,12 +98,15 @@ app.on('ready', () => {
         mainWindow.show();
     });
 
+    // Create the store
+    const store = configureStore(config);
+
     // IPC events
     const ipcManager = new IpcManager(mainWindow);
     ipcManager.bindEvents();
 
     // Start listening for RPC IPC events
-    const rpcIpcManager = new RpcIpcManager(lib);
+    const rpcIpcManager = new RpcIpcManager(lib, 'electron');
 
     // Start the API server
     const api = new ApiManager(store);

@@ -1,10 +1,10 @@
-import teeny from 'teeny-conf';
-import { join } from 'path';
-import { app } from 'electron';
+import rpcWrap from '../../shared/modules/rpc';
 
-const configPath = app.getPath('userData');
-const config = new teeny(join(configPath, 'config.json'));
+const functions = [
+    'set',
+    'delete',
+    'save',
+    'saveSync',
+];
 
-config.loadOrCreateSync();
-
-export default config;
+export default rpcWrap('config', functions, 'electron');

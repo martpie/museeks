@@ -17,7 +17,7 @@ import lib from './lib';
 import { RpcIpcManager } from '../shared/modules/rpc'
 
 // Start listening for RPC IPC events
-const rpcIpcManager = new RpcIpcManager(lib);
+const rpcIpcManager = new RpcIpcManager(lib, 'mainThread');
 
 /*
 |--------------------------------------------------------------------------

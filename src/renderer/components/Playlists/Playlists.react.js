@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import PlaylistsNav from './PlaylistsNav.react';
 import FullViewMessage from '../Shared/FullViewMessage.react';
 
-import { api, actions } from '../../library';
+import { api, actions } from '../../lib';
 
 
 /*
