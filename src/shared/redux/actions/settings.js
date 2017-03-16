@@ -15,15 +15,15 @@ const library = (lib) => (dispatch, getState) => {
         document.querySelector('body').classList.add(`theme-${themeName}`);
     };
 
-    const toggleDarkTheme = (value) => {
+    const toggleDarkTheme = (value) => (dispatch) => {
         const oldTheme = value ? 'light' : 'dark';
         const newTheme = value ? 'dark' : 'light';
 
         document.querySelector('body').classList.remove(`theme-${oldTheme}`);
         document.querySelector('body').classList.add(`theme-${newTheme}`);
 
-        lib.config.set('theme', newTheme);
-        lib.config.saveSync();
+        dispatch(lib.actions.config.set('theme', newTheme));
+        dispatch(lib.actions.config.save());
 
         return {
             type: 'APP_REFRESH_CONFIG'
@@ -31,8 +31,8 @@ const library = (lib) => (dispatch, getState) => {
     };
 
     const toggleSleepBlocker = (value) => (dispatch) => {
-        lib.config.set('sleepBlocker', value);
-        lib.config.saveSync();
+        dispatch(lib.actions.config.set('sleepBlocker', value));
+        dispatch(lib.actions.config.save());
 
         ipcRenderer.send('toggleSleepBlocker', value, 'prevent-app-suspension');
 
@@ -48,13 +48,13 @@ const library = (lib) => (dispatch, getState) => {
     };
 
     const toggleDevMode = (value) => (dispatch) => {
-        lib.config.set('devMode', value);
 
         // Open dev tools if needed
         if (value) lib.app.browserWindows.main.webContents.openDevTools();
         else lib.app.browserWindows.main.webContents.closeDevTools();
 
-        lib.config.saveSync();
+        dispatch(lib.actions.config.set('devMode', value));
+        dispatch(lib.actions.config.save());
 
         dispatch({
             type: 'APP_REFRESH_CONFIG'
@@ -66,8 +66,8 @@ const library = (lib) => (dispatch, getState) => {
     };
 
     const toggleAutoUpdateChecker = (value) => (dispatch) => {
-        lib.config.set('autoUpdateChecker', value);
-        lib.config.saveSync();
+        dispatch(lib.actions.config.set('autoUpdateChecker', value));
+        dispatch(lib.actions.config.save());
 
         dispatch({
             type: 'APP_REFRESH_CONFIG'
@@ -100,15 +100,15 @@ const library = (lib) => (dispatch, getState) => {
         }
     };
 
-    const toggleNativeFrame = (value) => {
-        lib.config.set('useNativeFrame', value);
-        lib.config.saveSync();
+    const toggleNativeFrame = (value) => (dispatch) => {
+        dispatch(lib.actions.config.set('useNativeFrame', value));
+        dispatch(lib.actions.config.save());
         dispatch(lib.actions.app.restart());
     };
 
     const toggleMinimizeToTray = (value) => (dispatch) => {
-        lib.config.set('minimizeToTray', value);
-        lib.config.saveSync();
+        dispatch(lib.actions.config.set('minimizeToTray', value));
+        dispatch(lib.actions.config.save());
 
         dispatch({
             type: 'APP_REFRESH_CONFIG'
@@ -123,8 +123,8 @@ const library = (lib) => (dispatch, getState) => {
     };
 
     const toggleDisplayNotifications = (value) => (dispatch) => {
-        lib.config.set('displayNotifications', value);
-        lib.config.saveSync();
+        dispatch(lib.actions.config.set('displayNotifications', value));
+        dispatch(lib.actions.config.save());
 
         dispatch({
             type: 'APP_REFRESH_CONFIG'

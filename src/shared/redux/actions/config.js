@@ -8,7 +8,7 @@ const library = (lib) => {
 
     const save = () => (dispatch) => ({
         type: 'APP_CONFIG_SAVE',
-        payload: lib.config.set(key, value),
+        payload: lib.config.save(),
     });
 
     return {

@@ -127,9 +127,9 @@ const library = (lib) => {
         }
     };
 
-    const shuffle = (shuffle) => {
-        lib.config.set('audioShuffle', shuffle);
-        lib.config.saveSync();
+    const shuffle = (shuffle) => (dispatch) => {
+        dispatch(lib.actions.config.set('audioShuffle', shuffle));
+        dispatch(lib.actions.config.save());
 
         const currentSrc = lib.player.getSrc();
         return {
@@ -139,9 +139,9 @@ const library = (lib) => {
         };
     };
 
-    const repeat = (repeat) => {
-        lib.config.set('audioRepeat', repeat);
-        lib.config.saveSync();
+    const repeat = (repeat) => (dispatch) => {
+        dispatch(lib.actions.config.set('audioRepeat', repeat));
+        dispatch(lib.actions.config.save());
 
         return {
             type: 'APP_PLAYER_REPEAT',
@@ -149,36 +149,39 @@ const library = (lib) => {
         };
     };
 
-    const setVolume = (volume) => {
+    const setVolume = (volume) => (dispatch) => {
         if (!isNaN(parseFloat(volume)) && isFinite(volume)) {
             lib.player.setAudioVolume(volume);
 
-            lib.config.set('audioVolume', volume);
-            lib.config.saveSync();
+            dispatch(lib.actions.config.set('audioVolume', volume));
+            dispatch(lib.actions.config.save());
+
             return {
                 type: 'APP_REFRESH_CONFIG'
             };
         }
     };
 
-    const setMuted = (muted = false) => {
+    const setMuted = (muted = false) => (dispatch) => {
         if (muted) lib.player.mute();
         else lib.player.unmute();
 
-        lib.config.set('audioMuted', muted);
-        lib.config.saveSync();
+        dispatch(lib.actions.config.set('audioMuted', muted));
+        dispatch(lib.actions.config.save());
+
         return {
             type: 'APP_REFRESH_CONFIG'
         };
     };
 
-    const setPlaybackRate = (value) => {
+    const setPlaybackRate = (value) => (dispatch) => {
         if (!isNaN(parseFloat(value)) && isFinite(value)) { // if is numeric
             if (value >= 0.5 && value <= 5) { // if in allowed range
                 lib.player.setAudioPlaybackRate(value);
 
-                lib.config.set('audioPlaybackRate', parseFloat(value));
-                lib.config.saveSync();
+                dispatch(lib.actions.config.set('audioPlaybackRate', parseFloat(value)));
+                dispatch(lib.actions.config.save());
+
                 return {
                     type: 'APP_REFRESH_CONFIG'
                 };
@@ -195,7 +198,7 @@ const library = (lib) => {
         };
     };
 
-    const audioError = (e) => {
+    const audioError = (e) => (dispatch) => {
         switch (e.target.error.code) {
             case e.target.error.MEDIA_ERR_ABORTED:
                 dispatch(lib.actions.toasts.add('warning', audioErrors.aborted));
