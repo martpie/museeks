@@ -1,7 +1,4 @@
 const routes = [{
-    method: 'GET',
-    path: 'audioError'
-}, {
     method: 'POST',
     path: 'jumpTo'
 }, {

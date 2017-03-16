@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-const shell = electron.shell;
+import shell from 'electron';
 
 
 /*

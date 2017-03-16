@@ -1,6 +1,6 @@
 const utils = require('../../utils/utils');
 const { ipcRenderer } = require('electron');
-const { globalShortcut } = require('electron').remote;
+// const { globalShortcut } = require('electron').remote;
 
 const library = (lib) => {
 
@@ -94,18 +94,18 @@ const library = (lib) => {
     };
 
     const initShortcuts = () => {
-        // Global shortcuts - Player
-        globalShortcut.register('MediaPlayPause', () => {
-            lib.actions.player.playToggle();
-        });
-
-        globalShortcut.register('MediaPreviousTrack', () => {
-            lib.actions.player.previous();
-        });
-
-        globalShortcut.register('MediaNextTrack', () => {
-            lib.actions.player.next();
-        });
+        // // Global shortcuts - Player
+        // globalShortcut.register('MediaPlayPause', () => {
+        //     lib.actions.player.playToggle();
+        // });
+        //
+        // globalShortcut.register('MediaPreviousTrack', () => {
+        //     lib.actions.player.previous();
+        // });
+        //
+        // globalShortcut.register('MediaNextTrack', () => {
+        //     lib.actions.player.next();
+        // });
     };
 
     return {

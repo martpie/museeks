@@ -33,9 +33,9 @@ require('../styles/main.scss');
 const config = store.getState().config;
 
 // Config the audio player
-lib.player.setAudioVolume(config.audioVolume);
-lib.player.setAudioPlaybackRate(config.audioPlaybackRate);
-lib.player.setAudioMuted(config.audioMuted);
+// lib.player.setAudioVolume(config.audioVolume);
+// lib.player.setAudioPlaybackRate(config.audioPlaybackRate);
+// lib.player.setAudioMuted(config.audioMuted);
 
 /*
 |--------------------------------------------------------------------------
