@@ -6,11 +6,11 @@ process.env.NODE_ENV = 'production'; // Drastically increase performances
 const path               = require('path');
 const os                 = require('os');
 const electron           = require('electron');
-const lib                = require('./lib');
-const database           = require('./lib');
 
+const database           = require('./database');               // Database for local data storage
 const store              = require('./redux/store');            // Redux store
-const IpcManager         = require('./ipc');                    // Manages IPC evens
+const lib                = require('./lib');                    // Library containing app logic
+const IpcManager         = require('./ipc');                    // Manages IPC events
 const TrayManager        = require('./tray');                   // Manages Tray
 const ConfigManager      = require('./config');                 // Handles config
 const { RpcIpcManager }  = require('../shared/modules/rpc');    // Handles RPC IPC Events
@@ -69,7 +69,6 @@ app.on('ready', () => {
         'tray': nativeImage.createFromPath(path.join(logosPath, 'museeks-tray.png')).resize({ width: 24, height: 24 }),
         'tray-ico': nativeImage.createFromPath(path.join(logosPath, 'museeks-tray.ico')).resize({ width: 24, height: 24 })
     };
-
 
     // Browser Window options
     const mainWindowOption = {

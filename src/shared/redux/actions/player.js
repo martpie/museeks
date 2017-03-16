@@ -11,7 +11,6 @@ const library = (lib) => {
 
     const playToggle = () => (dispatch, getState) => {
         const { paused } = lib.playergetAudio();
-        // TODO (y.solovyov | KeitIG): calling getState is a hack.
         const { queue } = getState();
         if (paused && queue.length > 0) {
             dispatch(play());
@@ -21,7 +20,6 @@ const library = (lib) => {
     };
 
     const play = () => (dispatch, getState) => {
-        // TODO (y.solovyov | KeitIG): calling getState is a hack.
         const { queue } = getState();
         if (queue !== null) {
             lib.playerplay();
@@ -32,7 +30,6 @@ const library = (lib) => {
     };
 
     const pause = () => (dispatch, getState) => {
-        // TODO (y.solovyov | KeitIG): calling getState is a hack.
         const { queue } = getState();
         if (queue !== null) {
             lib.playerpause();
@@ -43,7 +40,6 @@ const library = (lib) => {
     };
 
     const start = (_id) => (dispatch, getState) => {
-        // TODO (y.solovyov | KeitIG): calling getState is a hack.
         const { tracks, tracksCursor } = getState();
         const queue = [...tracks[tracksCursor].sub];
         const queuePosition = queue.findIndex((track) => {
@@ -74,7 +70,6 @@ const library = (lib) => {
     };
 
     const next = () => (dispatch, getState) => {
-        // TODO (y.solovyov | KeitIG): calling getState is a hack.
         const { queue, queueCursor, repeat } = getState();
         let newQueueCursor;
 
@@ -105,7 +100,6 @@ const library = (lib) => {
     const previous = () => (dispatch, getState) => {
         const currentTime = lib.playergetCurrentTime();
 
-        // TODO (y.solovyov | KeitIG): calling getState is a hack.
         const { queue, queueCursor } = getState();
         let newQueueCursor = queueCursor;
 

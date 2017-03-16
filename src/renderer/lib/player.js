@@ -24,7 +24,7 @@ class Player {
         this.getAudio().addEventListener('error', lib.actions.player.audioError);
         this.getAudio().addEventListener('timeupdate', () => {
             if (this.isThresholdReached()) {
-                LibraryActions.incrementPlayCount(this.getSrc());
+                lib.actions.library.incrementPlayCount(this.getSrc());
             }
         });
 

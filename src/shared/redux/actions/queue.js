@@ -3,7 +3,6 @@ const utils = require( '../../utils/utils');
 const library = (lib) => {
 
     const start = (index) => (dispatch, getState) => {
-        // TODO (y.solovyov | KeitIG): calling getState is a hack.
         const { queue } = getState();
         const uri = utils.parseUri(queue[index].path);
         lib.player.setAudioSrc(uri);
@@ -44,7 +43,9 @@ const library = (lib) => {
 
     const setQueue = (queue) => ({
         type: 'APP_QUEUE_SET_QUEUE',
-        queue
+        payload: {
+            queue
+        }
     });
 
     return {
