@@ -2,12 +2,15 @@ import lib from '../lib';
 
 class Player {
 
-    constructor(options) {
+    constructor(lib) {
+
         const mergedOptions = {
             playbackRate: 1,
             volume: 1,
             muted: false,
-            ...options
+            volume: lib.config.get('audioVolume'),
+            playbackRate: lib.config.get('audioPlaybackRate'),
+            muted: lib.config.get('audioMuted')
         };
 
         this.audio = new Audio();
@@ -125,8 +128,4 @@ class Player {
     }
 }
 
-export default new Player({
-    volume: lib.config.get('audioVolume'),
-    playbackRate: lib.config.get('audioPlaybackRate'),
-    muted: lib.config.get('audioMuted')
-});
+export default Player;
