@@ -1,9 +1,0 @@
-[Desktop Entry]
-Version=0.7.1
-Name=Museeks
-Comment=a free, lightweight and cross-platform music player
-Exec=/opt/museeks/museeks
-Icon=/opt/museeks/resources/app/src/images/logos/museeks.png
-Terminal=false
-Type=Application
-Categories=Application;Music;Player;Audio;

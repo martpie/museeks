@@ -1,5 +1,5 @@
 const linvodb = require('linvodb3');
-const leveljs = require('level-js');
+const leveljs = require('leveldown');
 const { app } = require('electron');
 
 linvodb.defaults.store = { db: leveljs };
