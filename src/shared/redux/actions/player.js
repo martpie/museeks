@@ -10,7 +10,7 @@ const library = (lib) => {
     };
 
     const playToggle = () => (dispatch, getState) => {
-        const { paused } = lib.playergetAudio();
+        const { paused } = lib.player.getAudio();
         const { queue } = getState();
         if (paused && queue.length > 0) {
             dispatch(play());
@@ -22,7 +22,7 @@ const library = (lib) => {
     const play = () => (dispatch, getState) => {
         const { queue } = getState();
         if (queue !== null) {
-            lib.playerplay();
+            lib.player.play();
             dispatch({
                 type: 'APP_PLAYER_PLAY'
             });
@@ -32,7 +32,7 @@ const library = (lib) => {
     const pause = () => (dispatch, getState) => {
         const { queue } = getState();
         if (queue !== null) {
-            lib.playerpause();
+            lib.player.pause();
             dispatch({
                 type: 'APP_PLAYER_PAUSE'
             });
@@ -49,8 +49,8 @@ const library = (lib) => {
         if (queuePosition > -1) {
             const uri = utils.parseUri(queue[queuePosition].path);
 
-            lib.playersetAudioSrc(uri);
-            lib.playerplay();
+            lib.player.setAudioSrc(uri);
+            lib.player.play();
 
             dispatch({
                 type: 'APP_PLAYER_START',
@@ -61,7 +61,7 @@ const library = (lib) => {
     };
 
     const stop = () => {
-        lib.playerstop();
+        lib.player.stop();
         return {
             type: 'APP_PLAYER_STOP'
         };
@@ -86,8 +86,8 @@ const library = (lib) => {
         if (track !== undefined) {
             const uri = utils.parseUri(track.path);
 
-            lib.playersetAudioSrc(uri);
-            lib.playerplay();
+            lib.player.setAudioSrc(uri);
+            lib.player.play();
             dispatch({
                 type: 'APP_PLAYER_NEXT',
                 newQueueCursor
@@ -98,7 +98,7 @@ const library = (lib) => {
     };
 
     const previous = () => (dispatch, getState) => {
-        const currentTime = lib.playergetCurrentTime();
+        const currentTime = lib.player.getCurrentTime();
 
         const { queue, queueCursor } = getState();
         let newQueueCursor = queueCursor;
@@ -114,8 +114,8 @@ const library = (lib) => {
         if (newTrack !== undefined) {
             const uri = utils.parseUri(newTrack.path);
 
-            lib.playersetAudioSrc(uri);
-            lib.playerplay();
+            lib.player.setAudioSrc(uri);
+            lib.player.play();
 
             dispatch({
                 type: 'APP_PLAYER_PREVIOUS',
@@ -131,7 +131,7 @@ const library = (lib) => {
         lib.config.set('audioShuffle', shuffle);
         lib.config.saveSync();
 
-        const currentSrc = lib.playergetSrc();
+        const currentSrc = lib.player.getSrc();
         return {
             type: 'APP_PLAYER_SHUFFLE',
             shuffle,
@@ -151,7 +151,7 @@ const library = (lib) => {
 
     const setVolume = (volume) => {
         if (!isNaN(parseFloat(volume)) && isFinite(volume)) {
-            lib.playersetAudioVolume(volume);
+            lib.player.setAudioVolume(volume);
 
             lib.config.set('audioVolume', volume);
             lib.config.saveSync();
@@ -162,8 +162,8 @@ const library = (lib) => {
     };
 
     const setMuted = (muted = false) => {
-        if (muted) lib.playermute();
-        else lib.playerunmute();
+        if (muted) lib.player.mute();
+        else lib.player.unmute();
 
         lib.config.set('audioMuted', muted);
         lib.config.saveSync();
@@ -175,7 +175,7 @@ const library = (lib) => {
     const setPlaybackRate = (value) => {
         if (!isNaN(parseFloat(value)) && isFinite(value)) { // if is numeric
             if (value >= 0.5 && value <= 5) { // if in allowed range
-                lib.playersetAudioPlaybackRate(value);
+                lib.player.setAudioPlaybackRate(value);
 
                 lib.config.set('audioPlaybackRate', parseFloat(value));
                 lib.config.saveSync();
@@ -189,7 +189,7 @@ const library = (lib) => {
     const jumpTo = (to) => {
         // TODO (y.solovyov) do we want to set some explicit state?
         // if yes, what should it be? if not, do we need this actions at all?
-        lib.playersetAudioCurrentTime(to);
+        lib.player.setAudioCurrentTime(to);
         return {
             type: 'APP_PLAYER_JUMP_TO'
         };

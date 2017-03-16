@@ -1,11 +1,7 @@
 import rpcWrap from '../../shared/modules/rpc';
+import track from '../../electron/lib/track';
 
-const functions = [
-    'find',
-    'findOne',
-    'insert',
-    'update',
-    'remove'
-]
+const functions = Object.keys(track);
 
-export default rpcWrap('playlist', functions, 'electron');
+// make track functions invoked in the renderer execute in electron via rpc
+export default rpcWrap('track', functions, 'electron');

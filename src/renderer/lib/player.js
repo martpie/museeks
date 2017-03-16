@@ -20,7 +20,7 @@ class Player {
         this.audio.volume = mergedOptions.volume;
         this.audio.muted = mergedOptions.muted;
 
-        this.threshold = .75;
+        this.threshold = 0.75;
         this.durationThresholdReached = false;
 
         this.getAudio().addEventListener('ended', lib.actions.player.next);
