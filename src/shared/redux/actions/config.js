@@ -1,15 +1,15 @@
-const aliasEmit = require('../../modules/alias/aliasEmit');
+const rpc = require('../../modules/rpc/rpc');
 
 const getAll = () => (dispatch) =>  {
     return {
         type : 'APP_CONFIG_GET_ALL',
-        payload : aliasEmit(dispatch, 'config.getAll', '', 'mainRenderer')
+        payload : rpc(dispatch, 'mainRenderer', 'config.getAll')
     }
 
 const set = (key, value) => (dispatch) => {
     return {
         type : 'APP_CONFIG_SET',
-        payload : aliasEmit(dispatch, 'app.library.config.set', [key, value]),
+        payload : rpc(dispatch, 'mainRenderer', 'config.set', [key, value]),
         meta: { key, value }
     }
 };
@@ -17,7 +17,7 @@ const set = (key, value) => (dispatch) => {
 const save = () => (dispatch) => {
     return {
         type : 'APP_CONFIG_SAVE',
-        payload: aliasEmit(dispatch, 'app.library.config.saveSync', '')
+        payload: rpc(dispatch, 'mainRenderer', 'config.saveSync')
     }
 };
 

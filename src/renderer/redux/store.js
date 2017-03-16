@@ -1,20 +1,19 @@
-const lib = require('../library');
 const { applyMiddleware, createStore } = require('redux');
 const { forwardToMain, replayActionRenderer, getInitialStateRenderer } = require('electron-redux');
 const { promiseMiddleware } = require('redux-promise-middleware');
-const { aliasReceive, aliasResponse } = require('../../shared/modules/alias');
-
-const thunk = require('redux-thunk');
+const lib          = require('../library');
+const thunk        = require('redux-thunk');
 const createLogger = require('redux-logger');
-const reducers = require('../../shared/redux/reducers');
+const reducers     = require('../../shared/redux/reducers');
 const initialState = getInitialStateRenderer();
-const logger = createLogger({ collapsed : true });
 
+// Create and configure the logger
+const logger       = createLogger({ collapsed : true });
+
+// Create the middleware chain
 const middleware = [
     forwardToMain,
     thunk,
-    new aliasReceive(lib, 'mainRenderer'),
-    new aliasResponse('mainRenderer'),
     promiseMiddleware,
     logger
 ];
