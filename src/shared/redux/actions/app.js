@@ -96,7 +96,7 @@ const library = (lib) => {
     };
 
     const close = () => {
-        if (app.config.get('minimizeToTray')) {
+        if (lib.config.get('minimizeToTray')) {
             lib.app.browserWindows.main.hide();
         } else {
             lib.app.browserWindows.main.destroy();
@@ -123,8 +123,8 @@ const library = (lib) => {
         self.lastFilterSearch = now;
 
         self.filterSearchTimeOut = setTimeout(() => {
-            app.config.set('bounds', lib.app.browserWindows.main.getBounds());
-            app.config.saveSync();
+            lib.config.set('bounds', lib.app.browserWindows.main.getBounds());
+            lib.config.saveSync();
         }, 250);
     };
 
