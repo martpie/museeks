@@ -22,7 +22,6 @@ const mapApis = (apis, lib, dispatch) => {
                     ? dispatch(functionFromLib(args))
                     : functionFromLib(args);
 
-                // Return the
                 return (req, res) => dispatchedFunction(transformedArgs)
                     .then((result) => res(result))
                     .catch((error) => {
