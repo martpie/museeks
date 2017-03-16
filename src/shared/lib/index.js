@@ -1,10 +1,14 @@
-import actions from '../redux/actions';
-import api from '../api';
+const api = require('../api');
+const app = require('./app');
 
-import app from './app';
+const library = (lib) => {
+    const actions = require('../redux/actions')(lib);
 
-export default {
-    actions,
-    api,
-    app
-}
+    return {
+        actions,
+        api,
+        app
+    };
+};
+
+module.exports = library;

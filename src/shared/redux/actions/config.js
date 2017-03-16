@@ -1,23 +1,28 @@
 const aliasEmit = require('../../modules/alias/aliasEmit');
 
-const getAll = () => (dispatch) =>  ({
-    type : 'APP_CONFIG_GET_ALL',
-    payload : aliasEmit(dispatch, 'config.getAll', '', 'mainRenderer')
-});
+const library = (lib) => {
 
-const set = (key, value) => (dispatch) => ({
-    type : 'APP_CONFIG_SET',
-    payload : aliasEmit(dispatch, 'app.library.config.set', [key, value]),
-    meta: { key, value }
-});
+    const getAll = () => (dispatch) =>  ({
+        type: 'APP_CONFIG_GET_ALL',
+        payload: aliasEmit(dispatch, 'config.getAll', '', 'mainRenderer')
+    });
 
-const save = () => (dispatch) => ({
-    type : 'APP_CONFIG_SAVE',
-    payload: aliasEmit(dispatch, 'app.library.config.saveSync', '')
-});
+    const set = (key, value) => (dispatch) => ({
+        type: 'APP_CONFIG_SET',
+        payload: aliasEmit(dispatch, 'app.library.config.set', [key, value]),
+        meta: { key, value }
+    });
 
-module.exports = {
-    getAll,
-    set,
-    save
-};
+    const save = () => (dispatch) => ({
+        type: 'APP_CONFIG_SAVE',
+        payload: aliasEmit(dispatch, 'app.library.config.saveSync', '')
+    });
+
+    return {
+        getAll,
+        set,
+        save
+    }
+}
+
+module.exports = library;

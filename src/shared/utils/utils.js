@@ -1,16 +1,10 @@
-/*
-|--------------------------------------------------------------------------
-| Utils
-|--------------------------------------------------------------------------
-*/
-
 const path    = require('path');
 const fs      = require('fs');
 const mmd     = require('musicmetadata');
 const globby  = require('globby');
 const Promise = require('bluebird');
 
-const musicmetadataAsync = Promise.promisify(mmd);
+const musicmetadata = Promise.promisify(mmd);
 
 /**
  * Parse an int to a more readable string
@@ -230,7 +224,7 @@ const getMusicMetadata = async (track) => {
     let data;
     try {
         const stream = fs.createReadStream(track);
-        data = await musicmetadataAsync(stream, { duration: true });
+        data = await musicmetadata(stream, { duration: true });
     } catch (err) {
         data = defaultMetadata;
         console.warn(`An error occured while reading ${track} id3 tags: ${err}`);
@@ -297,7 +291,7 @@ const fetchCover = async (trackPath) => {
 
     const stream = fs.createReadStream(trackPath);
 
-    const data = await musicmetadataAsync(stream);
+    const data = await musicmetadata(stream);
 
     if (data.picture[0]) { // If cover in id3
         return parseBase64(data.picture[0].format, data.picture[0].data.toString('base64'));

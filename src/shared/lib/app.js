@@ -1,6 +1,6 @@
-import { remote, app } from 'electron';
+const { remote, app } = require('electron');
 
-export default {
+module.exports = {
     browserWindows: {
         main: remote.getCurrentWindow()
     },

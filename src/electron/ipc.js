@@ -97,13 +97,13 @@ class IpcManager {
                     type: 'separator'
                 },
                 {
-                    label: `Search for "${data.track.artist[0]}"`,
+                    label: `Search for '${data.track.artist[0]}'`,
                     click: () => {
                         event.sender.send('tracksListContextMenuReply', 'searchFor', { search: data.track.artist[0] });
                     }
                 },
                 {
-                    label: `Search for "${data.track.album}"`,
+                    label: `Search for '${data.track.album}'`,
                     click: () => {
                         event.sender.send('tracksListContextMenuReply', 'searchFor', { search: data.track.album });
                     }
