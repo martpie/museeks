@@ -1,5 +1,4 @@
 import lib from '../../shared/lib';
-import actions from '../redux/actions';
 
 import config from './config';
 import playlist from './playlist';
@@ -17,8 +16,5 @@ const library = {
 
 // attach shared libraries
 const allLibraries = lib(library);
-
-// attach renderer specific actions
-library.actions.renderer = actions;
 
 export default allLibraries;

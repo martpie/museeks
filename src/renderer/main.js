@@ -29,6 +29,13 @@ require('bootstrap-css-only/css/bootstrap.min.css');
 require('font-awesome/css/font-awesome.css');
 require('../styles/main.scss');
 
+// Get the config
+const config = store.getState().config;
+
+// Config the audio player
+lib.player.setAudioVolume(config.audioVolume);
+lib.player.setAudioPlaybackRate(config.audioPlaybackRate);
+lib.player.setAudioMuted(config.audioMuted);
 
 /*
 |--------------------------------------------------------------------------

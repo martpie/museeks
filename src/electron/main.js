@@ -8,7 +8,6 @@ const os                   = require('os');
 const electron             = require('electron');
 
 const database             = require('./database');               // Database for local data storage
-const store                = require('./redux/store');            // Redux store
 const lib                  = require('./lib');                    // Library containing app logic
 const IpcManager           = require('./ipc');                    // Manages IPC events
 const configureStore       = require('./redux/configureStore');   // Store configuration

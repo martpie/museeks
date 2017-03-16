@@ -1,6 +1,6 @@
 let ipcSend
 
-if (process.type == 'browser') {
+if (process.type == 'renderer') {
     const { ipcRenderer } = require('electron');
 
     ipcSend = (event, payload) => {
@@ -8,7 +8,7 @@ if (process.type == 'browser') {
     }
 
 } else {
-    const { BrowserWindow } from 'electron';
+    const { BrowserWindow } = require('electron');
 
     ipcSend = (event, payload) => {
         const openWindows = BrowserWindow.getAllWindows();
@@ -18,4 +18,4 @@ if (process.type == 'browser') {
     }
 }
 
-modules.exports = ipcSend;
+module.exports = ipcSend;

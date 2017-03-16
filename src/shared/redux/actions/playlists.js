@@ -67,11 +67,11 @@ const library = (lib) => {
 
         return lib.playlist.findOne({ query : { _id } }).then((playlist) => {
             const tracks = playlist.tracks.concat(newTracks);
-            return lib.playlist.update({ _id }, { $set: { tracks } }).then((() => {
+            return lib.playlist.update({ _id }, { $set: { tracks } }).then(() => {
                 return dispatch(lib.actions.toasts.add('success', `${tracks.length} tracks were successfully added to '${playlist.name}'`));
             });
         })
-        .catch((err) => dispatch(lib.actions.toasts.add('danger', err));
+        .catch((err) => dispatch(lib.actions.toasts.add('danger', err)));
     };
 
     const removeTracksFrom = (_id, deletedTracks) => (dispatch) => {

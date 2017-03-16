@@ -1,6 +1,6 @@
 let ipcReceive
 
-if (process.type == 'browser') {
+if (process.type == 'renderer') {
     const { ipcRenderer } = require('electron');
 
     ipcReceive = (event, callback) => {
@@ -19,4 +19,4 @@ if (process.type == 'browser') {
     }
 }
 
-modules.exports = ipcReceive;
+module.exports = ipcReceive;

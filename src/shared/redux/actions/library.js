@@ -8,8 +8,6 @@ const utils    = require('../../utils/utils');
 const dialog   = require('electron').remote.dialog;
 const realpath = Promise.promisify(fs.realpath);
 
-const { supportedExtensions } = require('../../utils');
-
 const library = (lib) => {
 
     const load = () => ({
@@ -75,7 +73,7 @@ const library = (lib) => {
             lib.track.remove({}, { multi: true }),
             lib.playlist.remove({}, { multi: true })
         ])
-        .then(() => dispatch(actions.library.load()));
+        .then(() => dispatch(actions.library.load()))
     });
 
     const refresh = () => (dispatch, getState) => {
@@ -102,7 +100,7 @@ const library = (lib) => {
                 return acc.concat(array);
             }, []).filter((path) => {
                 const extension = extname(path).toLowerCase();
-                return supportedExtensions.includes(extension);
+                return utils.supportedExtensions.includes(extension);
             });
         }).then((supportedFiles) => {
             if (supportedFiles.length === 0) {

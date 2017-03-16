@@ -15,7 +15,7 @@ const createApiFunctions = (libs) => {
 
     const reduceLibs = (libs) => libs.reduce((libs, lib) => {
         libs[lib.namespace] = reduceLib(lib);
-        return output;
+        return libs;
     }, {});
 
     return reduceLibs(libs);

@@ -7,10 +7,7 @@ class Player {
         const mergedOptions = {
             playbackRate: 1,
             volume: 1,
-            muted: false,
-            volume: config.audioVolume,
-            playbackRate: config.audioPlaybackRate,
-            muted: config.audioMuted
+            muted: false
         };
 
         this.audio = new Audio();
@@ -67,6 +64,10 @@ class Player {
 
     stop() {
         this.audio.pause();
+    }
+
+    setAudioMuted(status) {
+        this.audio.muted = status;
     }
 
     mute() {
