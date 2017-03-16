@@ -19,7 +19,7 @@ const mapApis = (apis, lib, dispatch) => {
 
                 // Wrap the function in a redux dispatch if required
                 const dispatchedFunction = (args) => route.dispatch
-                    ? dispatch(functionFromLib(args))
+                    ? dispatch(functionFromLib.apply(null, args))
                     : functionFromLib(args);
 
                 return (req, res) => dispatchedFunction(transformedArgs)
