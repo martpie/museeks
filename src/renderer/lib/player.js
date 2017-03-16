@@ -1,4 +1,4 @@
-import lib from '../lib';
+import { ipcRenderer } from 'electron';
 
 class Player {
 
