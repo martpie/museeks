@@ -7,13 +7,15 @@ const path     = require('path');
 const os       = require('os');
 const electron = require('electron');
 const { nativeImage, BrowserWindow, app } = electron;
+const lib      = require('./lib');
 
-const store              = require('./redux/store');     // Redux store
-const IpcManager         = require('./ipc');             // Manages IPC evens
-const TrayManager        = require('./tray');            // Manages Tray
-const ConfigManager      = require('./config');          // Handles config
-const PowerMonitor       = require('./power-monitor');   // Handle power events
-const IntegrationManager = require('./integration');     // Applies various integrations
+const store              = require('./redux/store');            // Redux store
+const IpcManager         = require('./ipc');                    // Manages IPC evens
+const TrayManager        = require('./tray');                   // Manages Tray
+const ConfigManager      = require('./config');                 // Handles config
+const { RpcIpcManager }  = require('../shared/modules/rpc');    // Handles RPC IPC Events
+const PowerMonitor       = require('./power-monitor');          // Handle power events
+const IntegrationManager = require('./integration');            // Applies various integrations
 
 const ApiManager           = require('./api/server');
 const PeerDiscoveryManager = require('./peer-discovery');
@@ -99,6 +101,9 @@ app.on('ready', () => {
     // IPC events
     const ipcManager = new IpcManager(mainWindow);
     ipcManager.bindEvents();
+
+    // Start listening for RPC IPC events
+    const rpcIpcManager = new RpcIpcManager(lib);
 
     // Start the API server
     const api = new ApiManager(store);

@@ -9,14 +9,14 @@ const library = (lib) => {
 
     const set = (key, value) => (dispatch) => ({
         type: 'APP_CONFIG_SET',
-        payload: rpc('mainRenderer', 'app.library.config.set', [key, value]),
+        payload: rpc('mainRenderer', 'config.set', [key, value]),
         meta: { key, value }
     });
 
 
     const save = () => (dispatch) => ({
         type: 'APP_CONFIG_SAVE',
-        payload: rpc('mainRenderer', 'app.library.config.saveSync', '')
+        payload: rpc('mainRenderer', 'config.saveSync', '')
     });
 
     return {

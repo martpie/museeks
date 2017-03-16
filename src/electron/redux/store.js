@@ -1,7 +1,6 @@
 const { forwardToRenderer, replayActionMain, } = require('electron-redux');
 const { applyMiddleware, createStore } = require('redux');
 const { promiseMiddleware } = require('redux-promise-middleware');
-const lib           = require('../lib');
 const thunk         = require('redux-thunk');
 const createLogger  = require('redux-logger');
 const reducers      = require('../../shared/redux/reducers/index');

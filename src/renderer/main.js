@@ -14,11 +14,10 @@ import routes from './router/routes';
 import store from './redux/store.js';
 import lib from './lib';
 
-//import rpcProcess from
-//
-//const rpcProcess =
+import { RpcIpcManager } from '../shared/modules/rpc'
 
-
+// Start listening for RPC IPC events
+const rpcIpcManager = new RpcIpcManager(lib);
 
 /*
 |--------------------------------------------------------------------------
