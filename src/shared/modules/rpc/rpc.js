@@ -1,6 +1,6 @@
 const Promise = require('bluebird');
 const uuid = require('uuid/v4');
-const ipcSend = require('../ipc/ipcSend');
+const { ipcSend } = require('electron-simple-ipc');
 const promises = require('./promises');
 
 /****************************************************************

@@ -1,6 +1,5 @@
 const promises   = require('./promises');
-const ipcReceive = require('../ipc/ipcReceive');
-const ipcSend    = require('../ipc/ipcSend');
+const { ipcReceive, ipcSend } = require('electron-simple-ipc');
 const { get }    = require('lodash');
 
 /*****************************************************************************
