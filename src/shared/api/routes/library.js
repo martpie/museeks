@@ -1,11 +1,11 @@
 module.exports = [{
     path         : 'api/v1/library/load',
     method       : 'GET',
-    name         : 'action.library.load',
+    name         : 'actions.library.load',
     dispatch     : true
 },{
     path         : 'api/v1/library/refresh',
     method       : 'GET',
-    name         : 'action.library.refresh',
+    name         : 'actions.library.refresh',
     dispatch     : true
 }];

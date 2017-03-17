@@ -16,6 +16,7 @@ const ConfigManager        = require('./config');                 // Handles con
 const { RpcIpcManager }    = require('../shared/modules/rpc');    // Handles RPC IPC Events
 const PowerMonitor         = require('./power-monitor');          // Handle power events
 const IntegrationManager   = require('./integration');            // Applies various integrations
+const init                 = require('./lib');
 
 const ApiManager           = require('./api/server');
 const PeerDiscoveryManager = require('./peer-discovery');
@@ -102,6 +103,10 @@ app.on('ready', () => {
     // Create the store
     const store = configureStore(config);
 
+    // Init
+    init(store, lib);
+
+
     // IPC events
     const ipcManager = new IpcManager(mainWindow);
     ipcManager.bindEvents();
@@ -116,12 +121,12 @@ app.on('ready', () => {
     const peers = new PeerDiscoveryManager(store, lib);
 
     // Power monitor
-    const powerMonitor = new PowerMonitor(mainWindow);
+    const powerMonitor = new PowerMonitor(mainWindow, store);
     powerMonitor.enable();
 
     // Tray manager
     const trayIcon = os.platform() === 'win32.' ? museeksIcons['tray-ico'] : museeksIcons['tray'];
-    const trayManager = new TrayManager(mainWindow, trayIcon);
+    const trayManager = new TrayManager(mainWindow, trayIcon, store);
     trayManager.bindEvents();
     trayManager.show();
 

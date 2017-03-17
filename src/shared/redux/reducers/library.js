@@ -35,41 +35,6 @@ module.exports = (state = {}, payload) => {
             };
         }
 
-        case('APP_LIBRARY_ADD_FOLDERS'): {
-            const folders    = payload.folders;
-            let musicFolders = state.config.musicFolders;
-
-            // Check if we received folders
-            if (folders !== undefined) {
-                musicFolders = musicFolders.concat(folders);
-
-                // Remove duplicates, useless children, ect...
-                musicFolders = utils.removeUselessFolders(musicFolders);
-
-                musicFolders.sort();
-
-                lib.config.set('musicFolders', musicFolders);
-                lib.config.saveSync();
-            }
-
-            return { ...state };
-        }
-
-        case('APP_LIBRARY_REMOVE_FOLDER'): {
-            if (!state.refreshingLibrary) {
-                const musicFolders = state.config.musicFolders;
-
-                musicFolders.splice(payload.index, 1);
-
-                lib.config.set('musicFolders', musicFolders);
-                lib.config.saveSync();
-
-                return { ...state };
-            }
-
-            return state;
-        }
-
         case('APP_LIBRARY_RESET'): {
             // nothing here for the moment
             return state;

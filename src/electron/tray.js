@@ -3,10 +3,13 @@
 const os = require('os');
 
 const { Tray, Menu, app, ipcMain } = require('electron');
+const lib = require('./lib');
 
 class IpcManager {
 
-    constructor(win, icon) {
+    constructor(win, icon, store) {
+        const { dispatch } = this.store;
+
         this.tray = null;
         this.trayIcon = icon;
         this.win = win;
@@ -26,7 +29,7 @@ class IpcManager {
             {
                 label: 'Play',
                 click: () => {
-                    this.win.webContents.send('playerAction', 'play');
+                    dispatch(lib.actions.player.play.play());
                 }
             }
         ];
@@ -35,7 +38,7 @@ class IpcManager {
             {
                 label: 'Pause',
                 click: () => {
-                    this.win.webContents.send('playerAction', 'pause');
+                    dispatch(lib.actions.player.play.pause());
                 }
             }
         ];
@@ -44,13 +47,13 @@ class IpcManager {
             {
                 label: 'Previous',
                 click: () => {
-                    this.win.webContents.send('playerAction', 'prev');
+                    dispatch(lib.actions.player.play.prev());
                 }
             },
             {
                 label: 'Next',
                 click: () => {
-                    this.win.webContents.send('playerAction', 'next');
+                    dispatch(lib.actions.player.play.next());
                 }
             },
             {
