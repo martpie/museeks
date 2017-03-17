@@ -1,10 +1,10 @@
-import api from '../api';
+import api from '../api/handlers';
+import actions from '../redux/actions';
 
 const library = (lib) => {
-    const actions = require('../redux/actions')(lib);
 
     return {
-        actions,
+        actions: actions(lib),
         api
     };
 };

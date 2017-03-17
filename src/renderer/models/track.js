@@ -1,5 +1,5 @@
-const linvodb = require('linvodb3');
-const Promise = require('bluebird');
+import linvodb from 'linvodb3';
+import Promise from 'bluebird';
 
 const Track = new linvodb('track', {
     album: String,
@@ -14,12 +14,12 @@ const Track = new linvodb('track', {
     },
     duration: Number,
     genre: [String],
-    loweredMetas : {
-        artist      : [String],
-        album       : String,
-        albumartist : [String],
-        title       : String,
-        genre       : [String]
+    loweredMetas: {
+        artist: [String],
+        album: String,
+        albumartist: [String],
+        title: String,
+        genre: [String]
     },
     path: String,
     playCount: Number,

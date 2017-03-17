@@ -16,8 +16,8 @@ import PowerMonitor from './power-monitor';            // Handle power events
 import IntegrationManager from './integration';        // Applies various integrations
 import init from './init';
 
-import ApiManager from './api/server';
 import PeerDiscoveryManager from './peer-discovery';
+import api from './api';
 
 const appRoot = path.resolve(__dirname, '../..'); // app/ directory
 const srcPath = path.join(appRoot, 'src'); // app/src/ directory
@@ -106,15 +106,15 @@ app.on('ready', () => {
     // Init
     init(store, lib);
 
+    // Start the API server
+    api(store, lib);
+
     // IPC events
     const ipcManager = new IpcManager(mainWindow);
     ipcManager.bindEvents();
 
     // Start listening for RPC IPC events
     const rpcIpcManager = new RpcIpcManager(lib, 'electron');
-
-    // Start the API server
-    const api = new ApiManager(store, lib);
 
     // Start the peer discovery service
     const peers = new PeerDiscoveryManager(store, lib);

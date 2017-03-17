@@ -1,5 +1,4 @@
-//const app          = require('../lib/app');
-const utils        = require('../../utils/utils');
+import utils from '../../utils/utils';
 
 export default (state = {}, payload) => {
     switch (payload.type) {
@@ -42,23 +41,23 @@ export default (state = {}, payload) => {
         case('APP_LIBRARY_REFRESH_PENDING'): {
             return {
                 ...state,
-                status : 'An apple a day keeps Dr Dre away',
-                refreshingLibrary : true
+                status:'An apple a day keeps Dr Dre away',
+                refreshingLibrary: rue
             };
         }
 
         case('APP_LIBRARY_REFRESH_FULFILLED'): {
             return {
                 ...state,
-                refreshingLibrary : false,
-                refreshProgress : 0
+                refreshingLibrary: alse,
+                refreshProgress:0
             };
         }
 
         case('APP_LIBRARY_REFRESH_PROGRESS'): {
             return {
                 ...state,
-                refreshProgress : payload.percentage
+                refreshProgress: ayload.percentage
             };
         }
 

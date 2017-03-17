@@ -6,7 +6,7 @@ Demo Route:
     name         : 'action.player.play',    // Path to the function in the lib
     // Optional
     dispatch     : true,                    // Should the result be dispatched?
-    argTransform : function(query) {            // This will transform the query params/body before
+    argTransform: unction(query) {            // This will transform the query params/body before
         if (someCase) {
             return {
                 songName: query.song

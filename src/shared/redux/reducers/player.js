@@ -41,9 +41,9 @@ export default (state = {}, payload) => {
                 ...state,
                 queue,
                 queueCursor,
-                oldQueue       :  queue,
-                oldQueueCursor :  queueCursor,
-                playerStatus   : 'play'
+                oldQueue: queue,
+                oldQueueCursor: queueCursor,
+                playerStatus: 'play'
             };
         }
 

@@ -1,7 +1,7 @@
-const path    = require('path');
-const fs      = require('fs');
-const mmd     = require('musicmetadata');
-const globby  = require('globby');
+import path from 'path';
+import fs from 'fs';
+import mmd from 'musicmetadata';
+import globby from 'globby';
 import Promise from 'bluebird';
 
 const musicmetadata = Promise.promisify(mmd);
@@ -52,10 +52,12 @@ const parseUri = (uri) => {
     const root = process.platform === 'win32' ? '' : path.parse(uri).root;
     const location = uri
         .split(path.sep)
-        .map((d, i) => {
-            return i === 0 ? d : encodeURIComponent(d);
-        })
+        .map((d, i) => i === 0
+            ? d
+            : encodeURIComponent(d)
+        )
         .reduce((a, b) => path.join(a, b));
+
     return `file://${root}${location}`;
 };
 
@@ -165,34 +167,34 @@ const chunkArray = (array, chunkLength) => {
 
 const getDefaultMetadata = () => {
     return {
-        album        : 'Unknown',
-        albumartist  : [],
-        artist       : ['Unknown artist'],
-        disk         : {
+        album: 'Unknown',
+        albumartist: [],
+        artist: ['Unknown artist'],
+        disk: {
             no: 0,
             of: 0
         },
-        duration     : 0,
-        genre        : [],
-        loweredMetas : {},
-        path         : '',
-        playCount    : 0,
-        title        : '',
-        track        : {
+        duration: 0,
+        genre: [],
+        loweredMetas: {},
+        path: '',
+        playCount: 0,
+        title: '',
+        track: {
             no: 0,
             of: 0
         },
-        year         : ''
+        year: ''
     };
 };
 
 const getLoweredMeta = (metadata) => {
     return {
-        artist      : metadata.artist.map((meta) => stripAccents(meta.toLowerCase())),
-        album       : stripAccents(metadata.album.toLowerCase()),
-        albumartist : metadata.albumartist.map((meta) => stripAccents(meta.toLowerCase())),
-        title       : stripAccents(metadata.title.toLowerCase()),
-        genre       : metadata.genre.map((meta) => stripAccents(meta.toLowerCase()))
+        artist: metadata.artist.map((meta) => stripAccents(meta.toLowerCase())),
+        album: stripAccents(metadata.album.toLowerCase()),
+        albumartist: metadata.albumartist.map((meta) => stripAccents(meta.toLowerCase())),
+        title: stripAccents(metadata.title.toLowerCase()),
+        genre: metadata.genre.map((meta) => stripAccents(meta.toLowerCase()))
     };
 };
 
@@ -233,11 +235,11 @@ const getMusicMetadata = async (track) => {
     const metadata = {
         ...defaultMetadata,
         ...data,
-        album        : data.album === null || data.album === '' ? 'Unknown' : data.album,
-        artist       : data.artist.length === 0 ? ['Unknown artist'] : data.artist,
-        duration     : data.duration === '' ? 0 : data.duration,
-        path         : track,
-        title        : data.title === null || data.title === '' ? path.parse(track).base : data.title,
+        album: data.album === null || data.album === '' ? 'Unknown' : data.album,
+        artist: data.artist.length === 0 ? ['Unknown artist'] : data.artist,
+        duration: data.duration === '' ? 0 : data.duration,
+        path: track,
+        title: data.title === null || data.title === '' ? path.parse(track).base : data.title,
     };
 
     metadata.loweredMetas = getLoweredMeta(metadata);
@@ -259,11 +261,14 @@ const getMusicMetadata = async (track) => {
  * @return object
  *
  */
-const getMetadata = async (track) => {
+const getMetadata = (track) => {
     // metadata should have the same shape as getDefaultMetadata() object
     const wavFile = path.extname(track).toLowerCase() === '.wav';
-    const metadata = wavFile ? getWavMetadata : getMusicMetadata;
-    return await metadata(track);
+    const metadata = wavFile
+        ? getWavMetadata
+        : getMusicMetadata;
+
+    return metadata(track);
 };
 
 const getAudioDurationAsync = (path) => {

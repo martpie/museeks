@@ -3,9 +3,9 @@ import { hashHistory } from 'react-router';
 const library = (lib) => {
 
     const load = (_id) => (dispatch) => {
-        const getPlaylist = lib.playlist.findOne({ query : { _id } });
+        const getPlaylist = lib.playlist.findOne({ query: { _id } });
         const getPlaylistTracks = (playlist) => lib.track.find({
-            query : { _id: { $in: playlist.tracks } }
+            query: { _id: { $in: playlist.tracks } }
         });
 
         return getPlaylist.then(getPlaylistTracks).then((tracks) => {
@@ -20,8 +20,8 @@ const library = (lib) => {
 
     const refresh = () => (dispatch) => {
         return lib.playlist.find({
-            query : {},
-            sort : { name: 1 }
+            query: {},
+            sort: { name: 1 }
         }).then((playlists) => {
             return dispatch({
                 type: 'APP_PLAYLISTS_REFRESH',
@@ -65,7 +65,7 @@ const library = (lib) => {
         // isShown should never be true, letting it here anyway to remember of a design issue
         if (isShown) return;
 
-        return lib.playlist.findOne({ query : { _id } }).then((playlist) => {
+        return lib.playlist.findOne({ query: { _id } }).then((playlist) => {
             const tracks = playlist.tracks.concat(newTracks);
             return lib.playlist.update({ _id }, { $set: { tracks } }).then(() => {
                 return dispatch(lib.actions.toasts.add('success', `${tracks.length} tracks were successfully added to '${playlist.name}'`));
@@ -75,7 +75,7 @@ const library = (lib) => {
     };
 
     const removeTracksFrom = (_id, deletedTracks) => (dispatch) => {
-        return lib.playlist.findOne({ query : { _id } }).then((playlist) => {
+        return lib.playlist.findOne({ query: { _id } }).then((playlist) => {
             const tracks = playlist.tracks.filter(track => !deletedTracks.includes(track));
             return lib.playlist.update({ _id }, { $set: { tracks } }).then(() => {
                 return dispatch(load(_id));

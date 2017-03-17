@@ -3,12 +3,12 @@ export default (state = {}, payload) => {
 
         case('APP_NETWORK_PEER_FOUND'): {
 
-            const peer = payload.peer;
+            const newPeer = payload.peer;
             const peers = (state.peers || []).slice();
 
             // if the peers list doesn't include the found peer, add it
-            if (peers.every(p => p.ip !== peer.ip)) {
-                peers.push(peer);
+            if (peers.every((peer) => peer.ip !== newPeer.ip)) {
+                peers.push(newPeer);
             }
 console.log('peers', peers)
             return {

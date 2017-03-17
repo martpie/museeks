@@ -1,6 +1,6 @@
-const promises   = require('./promises');
+import promises from './promises';
 import { ipcReceive, ipcSend } from 'electron-simple-ipc';
-const { get }    = require('lodash');
+import { get } from 'lodash';
 
 /*****************************************************************************
 RPC IPC Manager.

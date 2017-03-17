@@ -1,5 +1,5 @@
-const { remote } = require('electron');
-const { rpcWrap } = require('../../shared/modules/rpc');
+import { remote } from 'electron';
+import { rpcWrap } from '../../shared/modules/rpc';
 
 const remoteAppFunctions = rpcWrap('app', ['restart'], 'electron');
 

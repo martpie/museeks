@@ -1,32 +1,44 @@
 import extend from 'xtend';
 
-// take in a lib object with the environment specific
-// implementation for the renderer or electon
-const library = (lib) => {
+import app from'./app';
+import config from'./config';
+import library from'./library';
+import network from'./network';
+import notification from'./notification';
+import player from'./player';
+import playlists from'./playlists';
+import queue from'./queue';
+import settings from'./settings';
+import toasts from'./toasts';
+
+// take in a lib object containing the environment specific implementation
+// for the environment this is being run in (renderer/electron)
+const lib = (lib) => {
 
     const actions = {
-        app: require('./app'),
-        config: require('./config'),
-        library: require('./library'),
-        network: require('./network'),
-        notification: require('./notification'),
-        player: require('./player'),
-        playlists: require('./playlists'),
-        queue: require('./queue'),
-        settings: require('./settings'),
-        toasts: require('./toasts')
+        app,
+        config,
+        library,
+        network,
+        notification,
+        player,
+        playlists,
+        queue,
+        settings,
+        toasts
     }
 
     // create a copy of the library to attach actions to
-    const libWithActions = extend(lib, { actions : {} });
+    const libWithActions = extend(lib, { actions: {} });
 
+    // invoke each action library with the shared library object
     const sharedLib = Object.keys(actions).reduce((sharedLib, action) => {
-        // invoke each action library with the shared library object
         sharedLib.actions[action] = actions[action](sharedLib);
         return sharedLib;
     }, libWithActions);
 
+    // return the actions object with the shared library reference
     return sharedLib.actions;
 }
 
-export default library;
+export default lib;

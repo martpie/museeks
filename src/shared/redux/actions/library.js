@@ -1,11 +1,10 @@
-const Promise  = require('bluebird');
-const actions  = require('./index.js');
-const fs       = require('fs');
-const globby   = require('globby');
-const join     = require('path').join;
-const extname  = require('path').extname;
-const utils    = require('../../utils/utils');
+import Promise from 'bluebird';
+import actions from './index.js';
+import fs from 'fs';
+import globby from 'globby';
+import utils from '../../utils/utils';
 import electron from 'electron';
+import { join, extname } from 'path';
 const realpath = Promise.promisify(fs.realpath);
 
 const library = (lib) => {
@@ -34,7 +33,7 @@ const library = (lib) => {
     const resetTracks = () => ({
         type: 'APP_REFRESH_LIBRARY',
         payload: {
-            tracks : null
+            tracks: null
         }
     });
 
@@ -125,7 +124,7 @@ const library = (lib) => {
             let addedFiles = 0;
             const totalFiles = supportedFiles.length;
             return Promise.map(supportedFiles, (path) => {
-                return lib.track.find({ query : { path } }).then((docs) => {
+                return lib.track.find({ query: { path } }).then((docs) => {
                     if (docs.length === 0) {
                         return utils.getMetadata(path);
                     }
@@ -163,7 +162,7 @@ const library = (lib) => {
      * @param src
      */
     const incrementPlayCount = (src) => {
-        return lib.track.update({ src }, { $inc: { playcount : 1 } });
+        return lib.track.update({ src }, { $inc: { playcount: 1 } });
     };
 
     return {
