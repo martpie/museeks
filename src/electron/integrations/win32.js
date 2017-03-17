@@ -1,6 +1,6 @@
 'use strict';
 
-const path = require('path');
+import path from 'path';
 const { nativeImage, ipcMain } = require('electron');
 
 const iconsDirectory = path.resolve(__dirname, '../..', 'images', 'icons', 'windows');
@@ -99,4 +99,4 @@ class Win32Integration {
     }
 }
 
-module.exports = Win32Integration;
+export default Win32Integration;

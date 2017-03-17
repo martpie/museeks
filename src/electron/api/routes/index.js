@@ -1,9 +1,9 @@
-const handshake = require('./handshake');
-const rpc = require('./rpc');
+import handshake from './handshake';
+import rpc from './rpc';
 
 const routes = [
     ...handshake,
     ...rpc
 ];
 
-module.exports = routes;
+export default routes;

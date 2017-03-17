@@ -1,4 +1,4 @@
-const { globalShortcut } = require('electron');
+import { globalShortcut } from 'electron';
 
 const library = (store, lib) => {
     const { dispatch, getState } = store;
@@ -25,4 +25,4 @@ const library = (store, lib) => {
     initShortcuts();
 }
 
-module.exports = library;
+export default library;

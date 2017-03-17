@@ -1,10 +1,10 @@
-const sharedLib = require('../../shared/lib');
+import sharedLib from '../../shared/lib';
 
-const app = require('./app');
-const config = require('./config');
-const player = require('./player');
-const playlist = require('./playlist');
-const track = require('./track');
+import app from './app';
+import config from './config';
+import player from './player';
+import playlist from './playlist';
+import track from './track';
 
 const electron = {
     app,
@@ -21,4 +21,4 @@ const lib = {
     ...shared
 }
 
-module.exports = lib;
+export default lib;

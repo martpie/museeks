@@ -1,4 +1,4 @@
-const { rpcWrap } = require('../../shared/modules/rpc');
+import { rpcWrap } from '../../shared/modules/rpc';
 
 const functions = [
     'play',
@@ -20,4 +20,4 @@ const functions = [
     'link'
 ];
 
-module.exports = rpcWrap('playlist', functions, 'main-renderer');
+export default rpcWrap('playlist', functions, 'main-renderer');

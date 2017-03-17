@@ -1,4 +1,4 @@
-module.exports = (config) => {
+export default (config) => {
     return {
         tracks: {
             library: { // Tracks of the library view

@@ -1,6 +1,6 @@
 'use strict';
 
-const platform = require('os').platform();
+import { platform } from 'os';
 
 let Integration = null;
 
@@ -22,4 +22,4 @@ class IntegrationManager {
 
 }
 
-module.exports = IntegrationManager;
+export default IntegrationManager;

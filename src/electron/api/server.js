@@ -1,7 +1,7 @@
-const Hapi = require('hapi');
-const otherRoutes = require('./routes');
-const sharedRoutes = require('../../shared/api/routes');
-const mapToRoutes = require('../../shared/api/utils/mapToRoutes');
+import Hapi from 'hapi';
+import otherRoutes from './routes';
+import sharedRoutes from '../../shared/api/routes';
+import mapToRoutes from '../../shared/api/utils/mapToRoutes';
 
 class Api {
     constructor(store, lib) {
@@ -33,4 +33,4 @@ class Api {
     }
 }
 
-module.exports = Api;
+export default Api;

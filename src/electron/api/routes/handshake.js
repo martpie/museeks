@@ -1,7 +1,7 @@
-const os = require('os');
-const extend = require('xtend');
+import os from 'os';
+import extend from 'xtend';
 
-module.exports = [{
+export default [{
     method: 'POST',
     path: 'api/v1/handshake',
     handler: (req, res) => {

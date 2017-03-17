@@ -1,9 +1,9 @@
 'use strict';
 
-const os = require('os');
+import os from 'os';
 
 const { Tray, Menu, app, ipcMain } = require('electron');
-const lib = require('./lib');
+import lib from './lib';
 
 class IpcManager {
 
@@ -162,4 +162,4 @@ class IpcManager {
     }
 }
 
-module.exports = IpcManager;
+export default IpcManager;
