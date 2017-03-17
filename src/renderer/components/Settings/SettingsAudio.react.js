@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
-import { api, actions } from '../../lib';
+import { actions } from '../../lib';
 
 
 /*
@@ -9,7 +10,7 @@ import { api, actions } from '../../lib';
 |--------------------------------------------------------------------------
 */
 
-export default class SettingsAudio extends Component {
+class SettingsAudio extends Component {
 
     static propTypes = {
         config: React.PropTypes.object
@@ -45,6 +46,14 @@ export default class SettingsAudio extends Component {
     }
 
     setPlaybackRate(e) {
-        actions.player.setPlaybackRate(e.currentTarget.value);
+        this.props.setPlaybackRate(e.currentTarget.value);
     }
 }
+
+const stateToProps = () => ({});
+
+const dispatchToProps = {
+    setPlaybackRate: actions.player.setPlaybackRate
+};
+
+export default connect(stateToProps, dispatchToProps)(SettingsAudio);

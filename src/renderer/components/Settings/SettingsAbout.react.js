@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Button } from 'react-bootstrap';
 
 import ExternalLink from '../Shared/ExternalLink.react';
 
-import lib from '../../lib';
+import { actions } from '../../lib';
 
 // sth wrong with that, need some check with Webpack
 const museeksLogoRequire = require('../../../images/logos/museeks.png');
@@ -16,7 +17,7 @@ const museeksLogo = `dist/${museeksLogoRequire}`;
 |--------------------------------------------------------------------------
 */
 
-export default class SettingsAbout extends Component {
+class SettingsAbout extends Component {
 
     constructor(props) {
         super(props);
@@ -33,7 +34,7 @@ export default class SettingsAbout extends Component {
                         <ExternalLink href='http://museeks.io'>museeks.io</ExternalLink>
                         { ' - ' }
                         <ExternalLink href={ `https://github.com/KeitIG/Museeks/releases/tag/${lib.app.version}` }>release notes</ExternalLink>
-                        <Button bsSize='small' className='update-checker' onClick={ lib.actions.settings.checkForUpdate }>Check for update</Button>
+                        <Button bsSize='small' className='update-checker' onClick={ this.props.checkForUpdate }>Check for update</Button>
                     </p>
                 </div>
                 <div className='setting-section'>
@@ -63,3 +64,11 @@ export default class SettingsAbout extends Component {
         );
     }
 }
+
+const stateToProps = () => ({});
+
+const dispatchToProps = {
+    checkForUpdate: actions.settings.checkForUpdate
+};
+
+export default connect(stateToProps, dispatchToProps)(SettingsAbout);

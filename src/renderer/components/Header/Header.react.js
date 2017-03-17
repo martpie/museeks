@@ -6,7 +6,7 @@ import PlayingBar     from './PlayingBar.react';
 import WindowControls from './WindowControls.react';
 import PlayerControls from './PlayerControls.react';
 
-import { api, actions } from '../../lib';
+import { actions } from '../../lib';
 
 
 /*

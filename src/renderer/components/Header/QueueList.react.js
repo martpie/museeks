@@ -5,7 +5,7 @@ import classnames from 'classnames';
 
 import QueueListItem  from './QueueListItem.react';
 
-import { api, actions } from '../../lib';
+import { actions } from '../../lib';
 
 import utils from '../../../shared/utils/utils';
 

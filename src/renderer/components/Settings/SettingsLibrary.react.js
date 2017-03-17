@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { ButtonGroup, Button, ProgressBar } from 'react-bootstrap';
 import Icon from 'react-fontawesome';
 import classnames from 'classnames';
 
 import LibraryFolders from './LibraryFolders.react';
 
-import { api, actions } from '../../lib';
+import { actions } from '../../lib';
 
 
 /*
@@ -14,7 +15,7 @@ import { api, actions } from '../../lib';
 |--------------------------------------------------------------------------
 */
 
-export default class SettingsLibrary extends Component {
+class SettingsLibrary extends Component {
 
     static propTypes = {
         config: React.PropTypes.object,
@@ -72,16 +73,28 @@ export default class SettingsLibrary extends Component {
     }
 
     addFolders() {
-        actions.library.addFolders();
+        this.props.addFolders();
     }
 
     resetLibrary() {
-        actions.player.stop();
-        actions.library.reset();
+        this.props.stop();
+        this.props.reset();
     }
 
     refreshLibrary() {
-        actions.player.stop();
-        actions.library.refresh();
+        this.props.stop();
+        this.props.refresh();
     }
 }
+
+
+const stateToProps = () => ({});
+
+const dispatchToProps = {
+    stop: actions.player.stop,
+    reset: actions.library.reset,
+    addFolders: actions.library.addFolders,
+    refresh: actions.library.refresh
+};
+
+export default connect(stateToProps, dispatchToProps)(SettingsLibrary);

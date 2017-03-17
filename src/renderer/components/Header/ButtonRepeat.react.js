@@ -3,7 +3,7 @@ import InlineSVG from 'svg-inline-react';
 import classnames from 'classnames';
 import { connect } from 'react-redux';
 
-import { api, actions } from '../../lib';
+import { actions } from '../../lib';
 
 const svgMap = {
     one: require('../../../images/icons/player-repeat-one.svg'),

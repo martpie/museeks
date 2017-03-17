@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { ButtonGroup, Button } from 'react-bootstrap';
 import Icon from 'react-fontawesome';
 
-import { api, actions } from '../../lib';
+import { actions } from '../../lib';
 
 import PlaylistsNavLink from './PlaylistsNavLink.react';
 
@@ -16,7 +16,7 @@ import ipcRenderer from 'electron';
 |--------------------------------------------------------------------------
 */
 
-export default class PlaylistsNav extends Component {
+class PlaylistsNav extends Component {
 
     static propTypes = {
         playlists: React.PropTypes.array
@@ -91,7 +91,7 @@ export default class PlaylistsNav extends Component {
         ipcRenderer.on('playlistContextMenuReply', (event, reply, _id) => {
             switch(reply) {
                 case 'delete':
-                    actions.playlists.remove(_id);
+                    this.props.remove(_id);
                     break;
                 case 'rename':
                     self.setState({ renamed: _id });
@@ -116,11 +116,11 @@ export default class PlaylistsNav extends Component {
     }
 
     createPlaylist() {
-        actions.playlists.create('New playlist', true);
+        this.props.create('New playlist', true);
     }
 
     rename(_id, name) {
-        actions.playlists.rename(_id, name);
+        this.props.rename(_id, name);
     }
 
     keyDown(e) {
@@ -146,9 +146,9 @@ export default class PlaylistsNav extends Component {
 const stateToProps = () => ({});
 
 const dispatchToProps = {
-    previous: actions.player.previous,
-    next: actions.player.next,
-    playToggle: actions.player.playToggle
+    remove: actions.playlists.remove,
+    create: actions.playlists.create,
+    rename: actions.playlists.rename
 };
 
-export default connect(stateToProps, dispatchToProps)(PlayerControls);
+export default connect(stateToProps, dispatchToProps)(PlaylistsNav);

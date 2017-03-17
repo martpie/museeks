@@ -11,7 +11,7 @@ import Queue         from './Queue.react';
 import Player from '../../lib/player';
 import utils from '../../../shared/utils/utils';
 
-import { api, actions } from '../../lib';
+import { actions } from '../../lib';
 
 import classnames from 'classnames';
 

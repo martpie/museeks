@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Icon from 'react-fontawesome';
 import VolumeControl from './VolumeControl.react';
 
-import { api, actions } from '../../lib';
+import { actions } from '../../lib';
 
 /*
 |--------------------------------------------------------------------------

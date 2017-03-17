@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
-import { api, actions } from '../../lib';
+import { actions } from '../../lib';
 
 import CheckboxSetting from './CheckboxSetting.react';
 
@@ -11,7 +12,7 @@ import CheckboxSetting from './CheckboxSetting.react';
 |--------------------------------------------------------------------------
 */
 
-export default class SettingsAdvanced extends Component {
+class SettingsAdvanced extends Component {
 
     static propTypes = {
         config: React.PropTypes.object
@@ -30,9 +31,17 @@ export default class SettingsAdvanced extends Component {
                     title='Dev mode'
                     description='Enable dev mode'
                     defaultValue={ config.devMode }
-                    onClick={ actions.settings.toggleDevMode }
+                    onClick={ this.props.toggleDevMode }
                 />
             </div>
         );
     }
 }
+
+const stateToProps = () => ({});
+
+const dispatchToProps = {
+    toggleDevMode: actions.settings.toggleDevMode
+};
+
+export default connect(stateToProps, dispatchToProps)(SettingsAdvanced);

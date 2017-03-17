@@ -4,7 +4,7 @@ import { Button } from 'react-bootstrap';
 
 import classnames from 'classnames';
 
-import { api, actions } from '../../lib';
+import { actions } from '../../lib';
 
 /*
 |--------------------------------------------------------------------------

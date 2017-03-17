@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Icon from 'react-fontawesome';
 
 import classnames from 'classnames';
 
-import { api, actions } from '../../lib';
+import { actions } from '../../lib';
 
 /*
 |--------------------------------------------------------------------------
@@ -11,7 +12,7 @@ import { api, actions } from '../../lib';
 |--------------------------------------------------------------------------
 */
 
-export default class LibraryFolders extends Component {
+class LibraryFolders extends Component {
 
     static propTypes = {
         index: React.PropTypes.number,
@@ -42,6 +43,14 @@ export default class LibraryFolders extends Component {
     }
 
     removeFolder() {
-        actions.library.removeFolder(this.props.index);
+        this.props.removeFolder(this.props.index);
     }
 }
+
+const stateToProps = () => ({});
+
+const dispatchToProps = {
+    removeFolder: actions.library.removeFolder
+};
+
+export default connect(stateToProps, dispatchToProps)(LibraryFolders);

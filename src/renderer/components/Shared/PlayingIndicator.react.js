@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Icon from 'react-fontawesome';
 
 import classnames from 'classnames';
 
-import { api, actions } from '../../lib';
+import { actions } from '../../lib';
 
 
 /*
@@ -12,7 +13,7 @@ import { api, actions } from '../../lib';
 |--------------------------------------------------------------------------
 */
 
-export default class TrackRow extends Component {
+class TrackRow extends Component {
 
     static propTypes = {
         state: React.PropTypes.string.isRequired,
@@ -37,7 +38,7 @@ export default class TrackRow extends Component {
 
         return (
             <div className={ classNames }
-                onClick={ actions.player.playToggle }
+                onClick={ this.props.playToggle }
                 onMouseEnter={ this.onMouseEnter }
                 onMouseLeave= { this.onMouseLeave }
             >
@@ -74,3 +75,11 @@ export default class TrackRow extends Component {
         this.setState({ hovered: false });
     }
 }
+
+const stateToProps = () => ({});
+
+const dispatchToProps = {
+    playToggle: actions.player.playToggle
+};
+
+export default connect(stateToProps, dispatchToProps)(TrackRow);

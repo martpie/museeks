@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
-import { api, actions } from '../../lib';
+import { actions } from '../../lib';
 
 import classnames from 'classnames';
 
@@ -11,7 +12,7 @@ import classnames from 'classnames';
 |--------------------------------------------------------------------------
 */
 
-export default class TrackRow extends Component {
+class TrackRow extends Component {
 
     static propTypes = {
         children: React.PropTypes.array,
@@ -57,6 +58,14 @@ export default class TrackRow extends Component {
     }
 
     start() {
-        actions.player.start(this.props.trackId);
+        this.props.start(this.props.trackId);
     }
 }
+
+const stateToProps = () => ({});
+
+const dispatchToProps = {
+    start: actions.player.start
+};
+
+export default connect(stateToProps, dispatchToProps)(TrackRow);

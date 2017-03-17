@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import KeyBinding from 'react-keybinding-component';
 
 import TrackRow from './TrackRow.react';
 import PlayingIndicator from './PlayingIndicator.react';
 
-import { api, actions } from '../../lib';
+import { actions } from '../../lib';
 
 import Player from '../../lib/player';
 import utils from '../../../shared/utils/utils';
@@ -18,7 +19,7 @@ import ipcRenderer from 'electron';
 |--------------------------------------------------------------------------
 */
 
-export default class TracksList extends Component {
+class TracksList extends Component {
 
     static propTypes = {
         type: React.PropTypes.string.isRequired,
@@ -76,28 +77,28 @@ export default class TracksList extends Component {
 
             switch(reply) {
                 case 'addToQueue': {
-                    actions.queue.add(selected);
+                    this.props.add(selected);
                     break;
                 }
                 case 'playNext': {
-                    actions.queue.addNext(selected);
+                    this.props.addNext(selected);
                     break;
                 }
                 case 'addToPlaylist': {
                     const isShown = self.props.type === 'playlist' && data === self.props.currentPlaylist;
-                    actions.playlists.addTracksTo(data.playlistId, selected, isShown);
+                    this.props.addTracksTo(data.playlistId, selected, isShown);
                     break;
                 }
                 case 'removeFromPlaylist': {
                     if (self.props.type === 'playlist') {
-                        actions.playlists.removeTracksFrom(self.props.currentPlaylist, selected);
+                        this.props.removeTracksFrom(self.props.currentPlaylist, selected);
                     }
                     break;
                 }
                 case 'createPlaylist': {
-                    const playlistId = await actions.playlists.create('New playlist', false);
+                    const playlistId = await this.props.create('New playlist', false);
                     const isShown = self.props.type === 'playlist' && data === self.props.currentPlaylist;
-                    actions.playlists.addTracksTo(playlistId, selected, isShown);
+                    this.props.addTracksTo(playlistId, selected, isShown);
                     break;
                 }
                 case 'searchFor': {
@@ -318,7 +319,7 @@ export default class TracksList extends Component {
     }
 
     onEnter(i, tracks) {
-        if (i !== undefined) actions.player.start(tracks[i]._id);
+        if (i !== undefined) this.props.start(tracks[i]._id);
     }
 
     showContextMenu(e, index) {
@@ -338,3 +339,17 @@ export default class TracksList extends Component {
         }));
     }
 }
+
+const stateToProps = () => ({});
+
+const dispatchToProps = {
+    add: actions.queue.add,
+    addNext: actions.queue.addNext,
+    addTracksTo: actions.playlists.addTracksTo,
+    removeTracksFrom: actions.playlists.removeTracksFrom,
+    create: actions.playlists.create,
+    addTracksTo: actions.playlists.addTracksTo,
+    start: actions.player.start
+};
+
+export default connect(stateToProps, dispatchToProps)(TracksList);
