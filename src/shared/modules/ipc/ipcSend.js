@@ -16,12 +16,12 @@ ipcSend('SOME_EVENT_NAME', {
 let ipcSend
 
 if (process.type == 'renderer') {
-    const { ipcRenderer } = require('electron');
+    import { ipcRenderer } from 'electron';
 
     ipcSend = ipcRenderer.send;
 
 } else {
-    const { BrowserWindow } = require('electron');
+    import { BrowserWindow } from 'electron';
 
     ipcSend = (event, payload) => {
         const openWindows = BrowserWindow.getAllWindows();

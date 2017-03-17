@@ -1,4 +1,4 @@
-const utils = require( '../../utils/utils');
+import utils from  '../../utils/utils';
 
 const library = (lib) => {
 

@@ -1,7 +1,7 @@
 'use strict';
 
 import path from 'path';
-const { nativeImage, ipcMain } = require('electron');
+import { nativeImage, ipcMain } from 'electron';
 
 const iconsDirectory = path.resolve(__dirname, '../..', 'images', 'icons', 'windows');
 

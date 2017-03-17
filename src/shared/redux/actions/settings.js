@@ -1,5 +1,5 @@
-const semver = require('semver');
-const { ipcRenderer } = require('electron');
+import semver from 'semver';
+import { ipcRenderer } from 'electron';
 
 const library = (lib) => {
 

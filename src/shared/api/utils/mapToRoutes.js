@@ -1,4 +1,4 @@
-const { get } = require('lodash');
+import { get } from 'lodash';
 
 const mapApis = (apis, lib, dispatch) => {
 

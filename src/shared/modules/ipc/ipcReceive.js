@@ -17,7 +17,7 @@ ipcReceive('SOME_EVENT_NAME', (payload) => {
 let ipcReceive
 
 if (process.type == 'renderer') {
-    const { ipcRenderer } = require('electron');
+    import { ipcRenderer } from 'electron';
 
     ipcReceive = (event, callback) => {
         ipcRenderer.on(event, (event, payload) => {
@@ -26,7 +26,7 @@ if (process.type == 'renderer') {
     }
 
 } else {
-    const { ipcMain } = require('electron');
+    import { ipcMain } from 'electron';
 
     ipcReceive = (event, callback) => {
         ipcMain.on(event, (event, payload) => {

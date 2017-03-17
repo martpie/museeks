@@ -2,7 +2,7 @@ const path    = require('path');
 const fs      = require('fs');
 const mmd     = require('musicmetadata');
 const globby  = require('globby');
-const Promise = require('bluebird');
+import Promise from 'bluebird';
 
 const musicmetadata = Promise.promisify(mmd);
 

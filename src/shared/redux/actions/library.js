@@ -5,7 +5,7 @@ const globby   = require('globby');
 const join     = require('path').join;
 const extname  = require('path').extname;
 const utils    = require('../../utils/utils');
-const electron = require('electron');
+import electron from 'electron';
 const realpath = Promise.promisify(fs.realpath);
 
 const library = (lib) => {

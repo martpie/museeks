@@ -1,6 +1,6 @@
 const rpc           = require('./rpc');
 const rpcWrap       = require('./rpcWrap');
-const RpcIpcManager = require('./RpcIpcManager');
+import RpcIpcManager from './RpcIpcManager';
 
 module.exports = {
     rpc,

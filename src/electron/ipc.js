@@ -1,6 +1,6 @@
 'use strict';
 
-const { Menu, ipcMain, powerSaveBlocker, shell, app } = require('electron');
+import { Menu, ipcMain, powerSaveBlocker, shell, app } from 'electron';
 
 class IpcManager {
     constructor(window) {

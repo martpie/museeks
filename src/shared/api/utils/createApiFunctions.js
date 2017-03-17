@@ -1,5 +1,5 @@
-const axios = require('axios');
-const { set } = require('lodash');
+import axios from 'axios';
+import { set } from 'lodash';
 
 const createApiFunctions = (routes) => routes.reduce((apiLib, route) => {
     // Create a function that call the api

@@ -2,7 +2,7 @@
 
 import os from 'os';
 
-const { Tray, Menu, app, ipcMain } = require('electron');
+import { Tray, Menu, app, ipcMain } from 'electron';
 import lib from './lib';
 
 class IpcManager {

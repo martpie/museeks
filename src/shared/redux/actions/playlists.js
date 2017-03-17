@@ -1,4 +1,4 @@
-const { hashHistory } = require('react-router');
+import { hashHistory } from 'react-router';
 
 const library = (lib) => {
 

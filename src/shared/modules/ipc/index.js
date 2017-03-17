@@ -1,5 +1,5 @@
-const ipcReceive = require('./ipcReceive');
-const ipcSend = require('./ipcSend');
+import ipcReceive from './ipcReceive';
+import ipcSend from './ipcSend';
 
 modules.exports = {
   ipcReceive,

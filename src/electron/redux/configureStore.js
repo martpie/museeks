@@ -1,5 +1,5 @@
-const { forwardToRenderer, replayActionMain, } = require('electron-redux');
-const { applyMiddleware, createStore } = require('redux');
+import { forwardToRenderer, replayActionMain } from 'electron-redux';
+import { applyMiddleware, createStore } from 'redux';
 import promiseMiddleware from 'redux-promise-middleware';
 import thunk from 'redux-thunk';
 import createLogger from 'redux-logger';

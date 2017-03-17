@@ -1,4 +1,4 @@
-const extend = require('xtend');
+import extend from 'xtend';
 
 // take in a lib object with the environment specific
 // implementation for the renderer or electon

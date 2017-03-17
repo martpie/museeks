@@ -1,4 +1,4 @@
-const { BrowserWindow, app } = require('electron');
+import { BrowserWindow, app } from 'electron';
 
 const restart = () => {
     app.relaunch({ args: process.argv.slice(1) + ['--relaunch'] });

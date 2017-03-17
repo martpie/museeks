@@ -21,14 +21,14 @@ Demo Route:
 */
 
 
-const player = require('./player');
-const playlists = require('./playlists');
-const queue = require('./queue');
-const library = require('./library');
-const settings = require('./settings');
-const toasts = require('./toasts');
-const notification = require('./notification');
-const app = require('./app');
+import player from './player';
+import playlists from './playlists';
+import queue from './queue';
+import library from './library';
+import settings from './settings';
+import toasts from './toasts';
+import notification from './notification';
+import app from './app';
 
 const routes = [
     ...player,
