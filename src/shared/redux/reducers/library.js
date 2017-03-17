@@ -1,5 +1,4 @@
 //const app          = require('../lib/app');
-const AppConstants = require('../constants/AppConstants');
 const utils        = require('../../utils/utils');
 
 module.exports = (state = {}, payload) => {

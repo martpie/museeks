@@ -20,15 +20,10 @@ import SettingsAbout    from '../components/Settings/SettingsAbout.react';
 
 
 const init = {
-
-    app: () => {
-        actions.actions.init();
-    },
-
+    app: () => {},
     library: () => {
         actions.actions.library.setTracksCursor('library');
     },
-
     playlist: (route) => {
         actions.actions.playlists.load(route.params.playlistId);
         actions.actions.library.setTracksCursor('playlist');

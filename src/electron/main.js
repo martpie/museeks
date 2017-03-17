@@ -54,8 +54,11 @@ app.on('window-all-closed', () => {
 // initialization and ready for creating browser windows.
 app.on('ready', () => {
     const configManager = new ConfigManager(app);
-    const { useNativeFrame } = configManager.getConfig();
     const config   = configManager.getConfig();
+
+    // Create the store
+    const store = configureStore(config);
+
     let { bounds } = config;
     bounds = checkBounds(bounds);
 
@@ -81,7 +84,7 @@ app.on('ready', () => {
         height    :  bounds.height,
         minWidth  :  900,
         minHeight :  550,
-        frame     :  useNativeFrame,
+        frame     :  config.useNativeFrame,
         show      :  false
     };
 
@@ -100,12 +103,8 @@ app.on('ready', () => {
         mainWindow.show();
     });
 
-    // Create the store
-    const store = configureStore(config);
-
     // Init
     init(store, lib);
-
 
     // IPC events
     const ipcManager = new IpcManager(mainWindow);
