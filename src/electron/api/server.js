@@ -6,7 +6,13 @@ const mapToRoutes = require('../../shared/api/utils/mapToRoutes');
 class Api {
     constructor(store, lib) {
 
-        const server = new Hapi.Server();
+        const server = new Hapi.Server({
+            connections: {
+                router: {
+                    stripTrailingSlash : true
+                }
+            }
+        });
 
         server.connection({ port: 54321 });
 

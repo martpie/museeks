@@ -1,7 +1,5 @@
 const { BrowserWindow, app } = require('electron');
 
-const main = BrowserWindow.getAllWindows()[0];
-
 const restart = () => {
     app.relaunch({ args: process.argv.slice(1) + ['--relaunch'] });
     app.exit(0);
@@ -10,7 +8,7 @@ const restart = () => {
 export default {
     restart,
     browserWindows: {
-        main
+        main: BrowserWindow.getAllWindows()[0]
     },
     version: app.getVersion()
 }

@@ -1,8 +1,8 @@
 'use strict';
 
-const teeny    = require('teeny-conf');
+const teeny = require('teeny-conf');
 const electron = require('electron');
-const path     = require('path');
+const path = require('path');
 
 class ConfigManager {
 

@@ -6,6 +6,7 @@ const library = (lib) => {
 
     const actions = {
         app: require('./app'),
+        config: require('./config'),
         library: require('./library'),
         network: require('./network'),
         notification: require('./notification'),

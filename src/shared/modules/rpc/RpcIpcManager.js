@@ -26,8 +26,8 @@ class RpcIpcManager {
             If the scope is correct, we attempt to run the corresponding
             function in the function lib.
             ****************************************************************/
-            if (scope === action.payload.scope) {
-                const { promiseId, functionToRun, functionInputs } = action.payload;
+            if (scope === payload.scope) {
+                const { promiseId, functionToRun, functionInputs } = payload;
 
                 // Create reject/resolve functions
                 const resolve = (result) => {
@@ -72,14 +72,14 @@ class RpcIpcManager {
         ****************************************************************/
         ipcReceive('RPC_RESOLVED', (payload) => {
             // Check the promise cache
-            const promise = promises[action.payload.promiseId];
-            if (promise) promise.resolve(action.payload.result);
+            const promise = promises[payload.promiseId];
+            if (promise) promise.resolve(payload.result);
         })
 
         ipcReceive('RPC_REJECTED', (payload) => {
             // Check the promise cache
-            const promise = promises[action.payload.promiseId];
-            if (promise) promise.reject(action.payload.result);
+            const promise = promises[payload.promiseId];
+            if (promise) promise.reject(payload.result);
         })
 
     }

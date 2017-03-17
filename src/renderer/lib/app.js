@@ -1,12 +1,12 @@
 const { remote } = require('electron');
 const { rpcWrap } = require('../../shared/modules/rpc');
 
-const main = remote.getCurrentWindow();
+const remoteAppFunctions = rpcWrap('app', ['restart'], 'electron');
 
 export default {
-    restart: rpcWrap('app', ['restart'], 'electron'),
+    ...remoteAppFunctions,
     browserWindows: {
-        main
+        main : remote.getCurrentWindow()
     },
     version: remote.app.getVersion()
 }

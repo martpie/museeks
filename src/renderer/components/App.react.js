@@ -72,7 +72,7 @@ class Museeks extends Component {
         );
     }
 
-    onKey(e) {
+    onKey = (e) => {
         switch(e.keyCode) {
             case 32:
                 e.preventDefault();
