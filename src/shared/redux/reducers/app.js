@@ -1,5 +1,3 @@
-const AppConstants = require('../constants/AppConstants');
-
 module.exports = (state = {}, payload) => {
     switch (payload.type) {
         case('APP_REFRESH_LIBRARY_FULFILLED'): {

@@ -1,10 +1,12 @@
 'use strict';
 
+const lib = require('./lib');
 
 class PowerMonitor {
 
-    constructor(win) {
+    constructor(win, store) {
         this.win = win;
+        this.store = store;
     }
 
     enable() {
@@ -12,7 +14,7 @@ class PowerMonitor {
         const win = this.win;
 
         powerMonitor.on('suspend', () => {
-            win.webContents.send('playerAction', 'pause');
+            this.store.dispatch(lib.actions.player.pause());
         });
     }
 }

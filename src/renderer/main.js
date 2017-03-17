@@ -13,11 +13,15 @@ import { Provider } from 'react-redux';
 import routes from './router/routes';
 import store from './redux/store';
 import lib from './lib';
+import init from './init';
 
 import { RpcIpcManager } from '../shared/modules/rpc'
 
 // Start listening for RPC IPC events
 const rpcIpcManager = new RpcIpcManager(lib, 'mainThread');
+
+// Init
+init(store, lib);
 
 /*
 |--------------------------------------------------------------------------
@@ -29,13 +33,6 @@ require('bootstrap-css-only/css/bootstrap.min.css');
 require('font-awesome/css/font-awesome.css');
 require('../styles/main.scss');
 
-// Get the config
-const config = store.getState().config;
-
-// Config the audio player
-// lib.player.setAudioVolume(config.audioVolume);
-// lib.player.setAudioPlaybackRate(config.audioPlaybackRate);
-// lib.player.setAudioMuted(config.audioMuted);
 
 /*
 |--------------------------------------------------------------------------

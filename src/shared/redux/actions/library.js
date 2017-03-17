@@ -45,27 +45,36 @@ const library = (lib) => {
         }
     });
 
-    const addFolders = () => (dispatch) => {
-        // dialog.showOpenDialog({
-        //     properties: ['openDirectory', 'multiSelections']
-        // }, (folders) => {
-        //     if (folders !== undefined) {
-        //         Promise.map(folders, realpath).then((resolvedFolders) => {
-        //             dispatch({
-        //                 type: 'APP_LIBRARY_ADD_FOLDERS',
-        //                 folders: resolvedFolders
-        //             });
-        //         });
-        //     }
-        // });
+    const addFolders = () => (dispatch, getState) => {
+         dialog.showOpenDialog({
+             properties: ['openDirectory', 'multiSelections']
+         }, (folders) => {
+             if (folders !== undefined) {
+                 Promise.map(folders, realpath).then((resolvedFolders) => {
+                    let musicFolders = getState().config.musicFolders;
+                    // Check if we received folders
+                    if (resolvedFolders !== undefined) {
+                        musicFolders = musicFolders.concat(resolvedFolders);
+                        // Remove duplicates, useless children, ect...
+                        musicFolders = utils.removeUselessFolders(musicFolders);
+                        musicFolders.sort();
+                        dispatch(lib.actions.config.set('musicFolders', musicFolders));
+                        dispatch(lib.actions.config.save());
+                    }
+                 });
+             }
+         });
     };
 
-    const removeFolder = (index) => ({
-        type: 'APP_LIBRARY_REMOVE_FOLDER',
-        payload: {
-            index
+    const removeFolder = (index) => (dispatch) => {
+        const state = getState();
+        if (!state.library.refreshingLibrary) {
+            const musicFolders = state.config.musicFolders;
+            musicFolders.splice(index, 1);
+            dispatch(lib.actions.config.set('musicFolders', musicFolders));
+            dispatch(lib.actions.config.save());
         }
-    });
+    };
 
     const reset = () => (dispatch) => ({
         type: 'APP_LIBRARY_REFRESH',

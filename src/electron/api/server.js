@@ -1,6 +1,6 @@
 const Hapi = require('hapi');
-const apiRoutes = require('./routes');
-const actionRoutes = require('../../shared/api/routes');
+const otherRoutes = require('./routes');
+const sharedRoutes = require('../../shared/api/routes');
 const mapToRoutes = require('../../shared/api/utils/mapToRoutes');
 
 class Api {
@@ -10,7 +10,7 @@ class Api {
 
         server.connection({ port: 54321 });
 
-        const routes = mapToRoutes([...apiRoutes, ...actionRoutes], lib);
+        const routes = mapToRoutes([...otherRoutes, ...sharedRoutes], lib, store.dispatch);
         routes.forEach(route => server.route(route));
 
         // attach the libs and dispatcher to each request

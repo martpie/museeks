@@ -21,7 +21,7 @@ import SettingsAbout    from '../components/Settings/SettingsAbout.react';
 
 
 const init = {
-    app: () => lib.actions.app.init(),
+    app: () => {},
     library: () => lib.actions.library.setTracksCursor('library'),
     playlist: (route) => Promise.all([
         lib.actions.playlists.load(route.params.playlistId),
