@@ -6,7 +6,6 @@ const functions = [
     'stop',
     'mute',
     'unmute',
-    'getAudio',
     'getCurrentTime',
     'getVolume',
     'getSrc',

@@ -12,15 +12,15 @@ const logger = createLogger({ collapsed : true });
 
 // Create the middleware chain
 const middleware = [
-    forwardToMain,
     thunk,
-    promiseMiddleware,
-    logger
+    promiseMiddleware(),
+    logger,
+    forwardToMain,
 ];
 
 const store = createStore(reducers, initialState, applyMiddleware(...middleware));
 
 // replay renderer actions in electron
-// replayActionRenderer(store);
+replayActionRenderer(store);
 
 export default store;

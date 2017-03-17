@@ -21,7 +21,7 @@ const library = (store, lib) => {
     // Initialize all app components
     dispatch(lib.actions.library.load());
     dispatch(lib.actions.playlists.refresh());
-    dispatch(lib.actions.settings.check());
+    lib.actions.settings.check();
     initShortcuts();
 }
 

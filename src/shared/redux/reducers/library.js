@@ -42,22 +42,22 @@ export default (state = {}, payload) => {
             return {
                 ...state,
                 status:'An apple a day keeps Dr Dre away',
-                refreshingLibrary: rue
+                refreshingLibrary: true
             };
         }
 
         case('APP_LIBRARY_REFRESH_FULFILLED'): {
             return {
                 ...state,
-                refreshingLibrary: alse,
-                refreshProgress:0
+                refreshingLibrary: false,
+                refreshProgress: 0
             };
         }
 
         case('APP_LIBRARY_REFRESH_PROGRESS'): {
             return {
                 ...state,
-                refreshProgress: ayload.percentage
+                refreshProgress: payload.percentage
             };
         }
 

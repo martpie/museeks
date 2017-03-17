@@ -16,7 +16,7 @@ class PeerDiscovery {
     handshake (network, peer) {
         return http({
             method: 'POST',
-            url: `http://${peer.ip}:54321/api/v1/handshake/`,
+            url: `http://${peer.ip}:54321/api/v1/handshake`,
             data: {
                 hostname: os.hostname(),
                 platform: os.platform(),

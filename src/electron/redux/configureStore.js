@@ -6,17 +6,18 @@ import createLogger from 'redux-logger';
 import reducers from '../../shared/redux/reducers/index';
 import getInitialState from './getInitialState';
 
-export default (config) => {
-    // Create and configure the logger
-    const logger = createLogger({ collapsed : true });
+// Create and configure the logger
+const logger = createLogger({ collapsed : true });
 
-    // Create the middleware chain
-    const middleware = [
-        thunk,
-        promiseMiddleware,
-        logger,
-        forwardToRenderer
-    ];
+// Create the middleware chain
+const middleware = [
+    thunk,
+    promiseMiddleware(),
+    logger,
+    forwardToRenderer
+];
+
+export default (config) => {
 
     const store = createStore(reducers, getInitialState(config), applyMiddleware(...middleware));
 
