@@ -1,5 +1,5 @@
 import { ipcRenderer } from 'electron';
-import { fetchCover, getMetadata } from '../../shared/utils/utils';
+import utils from '../../shared/utils/utils';
 
 class Player {
 
@@ -40,13 +40,13 @@ class Player {
 
             const path = decodeURIComponent(this.getSrc()).replace('file://', '');
 
-            return getMetadata(path).then((path) => {
+            return utils.getMetadata(path).then((track) => {
 
                 ipcRenderer.send('playerAction', 'trackStart', track);
 
                 if (this.lib.app.browserWindows.main.isFocused()) return;
 
-                return fetchCover(track.path).then((cover) => {
+                return utils.fetchCover(track.path).then((cover) => {
                     return NotificationActions.add({
                         title: track.title,
                         body: `${track.artist}\n${track.album}`,

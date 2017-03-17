@@ -89,7 +89,7 @@ class VolumeControl extends Component {
 
     mute(e) {
         if (e.target.classList.contains('player-control') || e.target.classList.contains('fa')) {
-            const muted = !Player.isMuted();
+            const muted = !player.isMuted();
 
             this.props.setMuted(muted);
             this.setState({ muted });

@@ -37,6 +37,7 @@ class PlaylistsNav extends Component {
     render() {
         const self = this;
         // TODO (y.solovyov): extract into separate method that returns items
+        console.log(this.props)
         const nav = this.props.playlists.map((elem, index) => {
             let navItemContent;
 
@@ -88,20 +89,22 @@ class PlaylistsNav extends Component {
     componentDidMount() {
         const self = this;
 
-        ipcRenderer.on('playlistContextMenuReply', (event, reply, _id) => {
-            switch(reply) {
-                case 'delete':
-                    this.props.remove(_id);
-                    break;
-                case 'rename':
-                    self.setState({ renamed: _id });
-                    break;
-            }
-        });
+        // TODO
+        // ipcRenderer.on('playlistContextMenuReply', (event, reply, _id) => {
+        //     switch(reply) {
+        //         case 'delete':
+        //             this.props.remove(_id);
+        //             break;
+        //         case 'rename':
+        //             self.setState({ renamed: _id });
+        //             break;
+        //     }
+        // });
     }
 
     componentWillUnmount() {
-        ipcRenderer.removeAllListeners('playlistContextMenuReply');
+        // TODO
+        // ipcRenderer.removeAllListeners('playlistContextMenuReply');
     }
 
     componentDidUpdate() {

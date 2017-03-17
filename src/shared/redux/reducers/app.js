@@ -1,21 +1,19 @@
-export default (state = {}, payload) => {
-    switch (payload.type) {
+export default (state = {}, action) => {
+    switch (action.type) {
         case('APP_REFRESH_LIBRARY_FULFILLED'): {
-            console.log('APP_REFRESH_LIBRARY_FULFILLED', payload);
-            return state;
-            // return {
-            //     ...state,
-            //     tracks: {
-            //         library: {
-            //             all: [...payload.tracks],
-            //             sub: [...payload.tracks]
-            //         },
-            //         playlist: {
-            //             all: [],
-            //             sub: []
-            //         }
-            //     }
-            // };
+            return {
+                ...state,
+                tracks: {
+                    library: {
+                        all: [...action.payload],
+                        sub: [...action.payload]
+                    },
+                    playlist: {
+                        all: [],
+                        sub: []
+                    }
+                }
+            };
         }
 
         case('APP_REFRESH_CONFIG'): {

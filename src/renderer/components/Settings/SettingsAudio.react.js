@@ -45,7 +45,7 @@ class SettingsAudio extends Component {
         );
     }
 
-    setPlaybackRate(e) {
+    setPlaybackRate = (e) => {
         this.props.setPlaybackRate(e.currentTarget.value);
     }
 }

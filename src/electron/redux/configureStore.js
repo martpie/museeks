@@ -13,7 +13,7 @@ const logger = createLogger({ collapsed : true });
 const middleware = [
     thunk,
     promiseMiddleware(),
-    logger,
+    // logger,
     forwardToRenderer
 ];
 

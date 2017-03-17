@@ -63,14 +63,14 @@ class ButtonRepeat extends Component {
                 break;
         }
 
-        this.props.repeat(repeat);
+        this.props.repeatTrack(repeat);
     }
 }
 
 const stateToProps = () => ({});
 
 const dispatchToProps = {
-    repeat: actions.player.repeat
+    repeatTrack: actions.player.repeat
 };
 
 export default connect(stateToProps, dispatchToProps)(ButtonRepeat);

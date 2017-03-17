@@ -7,7 +7,7 @@ import PlayingIndicator from './PlayingIndicator.react';
 
 import { actions } from '../../lib';
 
-import Player from '../../lib/player';
+import { player } from '../../lib';
 import utils from '../../../shared/utils/utils';
 
 import ipcRenderer from 'electron';
@@ -72,49 +72,51 @@ class TracksList extends Component {
     componentDidMount() {
         const self = this;
 
-        ipcRenderer.on('tracksListContextMenuReply', async (event, reply, data) => {
-            const selected = self.state.selected;
-
-            switch(reply) {
-                case 'addToQueue': {
-                    this.props.add(selected);
-                    break;
-                }
-                case 'playNext': {
-                    this.props.addNext(selected);
-                    break;
-                }
-                case 'addToPlaylist': {
-                    const isShown = self.props.type === 'playlist' && data === self.props.currentPlaylist;
-                    this.props.addTracksTo(data.playlistId, selected, isShown);
-                    break;
-                }
-                case 'removeFromPlaylist': {
-                    if (self.props.type === 'playlist') {
-                        this.props.removeTracksFrom(self.props.currentPlaylist, selected);
-                    }
-                    break;
-                }
-                case 'createPlaylist': {
-                    const playlistId = await this.props.create('New playlist', false);
-                    const isShown = self.props.type === 'playlist' && data === self.props.currentPlaylist;
-                    this.props.addTracksTo(playlistId, selected, isShown);
-                    break;
-                }
-                case 'searchFor': {
-                    // small hack, we can't call actions.library.filterSearch directly
-                    // otherwise the search clear button will not appear, because it will not detect an input event on itself
-                    const searchInput = document.querySelector('input[type="text"].search');
-                    searchInput.value = data.search;
-                    searchInput.dispatchEvent(new Event('input', { bubbles: true }));
-                    break;
-                }
-            }
-        });
+        // TODO
+        // ipcRenderer.on('tracksListContextMenuReply', async (event, reply, data) => {
+        //     const selected = self.state.selected;
+        //
+        //     switch(reply) {
+        //         case 'addToQueue': {
+        //             this.props.add(selected);
+        //             break;
+        //         }
+        //         case 'playNext': {
+        //             this.props.addNext(selected);
+        //             break;
+        //         }
+        //         case 'addToPlaylist': {
+        //             const isShown = self.props.type === 'playlist' && data === self.props.currentPlaylist;
+        //             this.props.addTracksTo(data.playlistId, selected, isShown);
+        //             break;
+        //         }
+        //         case 'removeFromPlaylist': {
+        //             if (self.props.type === 'playlist') {
+        //                 this.props.removeTracksFrom(self.props.currentPlaylist, selected);
+        //             }
+        //             break;
+        //         }
+        //         case 'createPlaylist': {
+        //             const playlistId = await this.props.create('New playlist', false);
+        //             const isShown = self.props.type === 'playlist' && data === self.props.currentPlaylist;
+        //             this.props.addTracksTo(playlistId, selected, isShown);
+        //             break;
+        //         }
+        //         case 'searchFor': {
+        //             // small hack, we can't call actions.library.filterSearch directly
+        //             // otherwise the search clear button will not appear, because it will not detect an input event on itself
+        //             const searchInput = document.querySelector('input[type="text"].search');
+        //             searchInput.value = data.search;
+        //             searchInput.dispatchEvent(new Event('input', { bubbles: true }));
+        //             break;
+        //         }
+        //     }
+        // });
     }
 
     componentWillUnmount() {
-        ipcRenderer.removeAllListeners('tracksListContextMenuReply');
+        // TODO
+        // ipcRenderer.removeAllListeners('tracksListContextMenuReply');
     }
 
     scrollTracksList() {
@@ -238,7 +240,7 @@ class TracksList extends Component {
     }
 
     pausePlayState() {
-        return Player.isPaused() ? 'pause' : 'play';
+        return player.isPaused() ? 'pause' : 'play';
     }
 
     toggleSelectionById(id) {

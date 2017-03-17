@@ -14,8 +14,8 @@ const logger = createLogger({ collapsed : true });
 const middleware = [
     thunk,
     promiseMiddleware(),
-    logger,
     forwardToMain,
+    logger
 ];
 
 const store = createStore(reducers, initialState, applyMiddleware(...middleware));
