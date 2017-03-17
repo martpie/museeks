@@ -1,15 +1,32 @@
+const extend = require('xtend');
+
+// take in a lib object with the environment specific implementations already supplied (renderer/electon)
 const library = (lib) => {
 
-    // invoke all shared libraries with the environment specific lib
-    const app = require('./app')(lib);
-    const library = require('./library')(lib);
-    const network = require('./network')(lib);
-    const notification = require('./notification')(lib);
-    const player = require('./player')(lib);
-    const playlists = require('./playlists')(lib);
-    const queue = require('./queue')(lib);
-    const settings = require('./settings')(lib);
-    const toasts = require('./toasts')(lib);
+    // hack so actions can depend on actions. fix later.
+    const actions = {
+        app : {},
+        library : {},
+        network : {},
+        notification : {},
+        player : {},
+        playlists : {},
+        queue : {},
+        settings : {},
+        toasts : {}
+    }
+
+    const libWithActions = extend(lib, { actions });
+
+    const app = require('./app')(libWithActions);
+    const library = require('./library')(libWithActions);
+    const network = require('./network')(libWithActions);
+    const notification = require('./notification')(libWithActions);
+    const player = require('./player')(libWithActions);
+    const playlists = require('./playlists')(libWithActions);
+    const queue = require('./queue')(libWithActions);
+    const settings = require('./settings')(libWithActions);
+    const toasts = require('./toasts')(libWithActions);
 
     return {
         app,

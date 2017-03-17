@@ -1,4 +1,5 @@
 // Modules
+import Promise from 'bluebird';
 import React from 'react';
 import { Route, IndexRedirect } from 'react-router';
 
@@ -20,19 +21,12 @@ import SettingsAbout    from '../components/Settings/SettingsAbout.react';
 
 
 const init = {
-
-    app: () => {
-        actions.actions.init();
-    },
-
-    library: () => {
-        actions.actions.library.setTracksCursor('library');
-    },
-
-    playlist: (route) => {
-        actions.actions.playlists.load(route.params.playlistId);
-        actions.actions.library.setTracksCursor('playlist');
-    }
+    app: () => lib.actions.app.init(),
+    library: () => lib.actions.library.setTracksCursor('library'),
+    playlist: (route) => Promise.all([
+        lib.actions.playlists.load(route.params.playlistId),
+        lib.actions.library.setTracksCursor('playlist')
+    ])
 };
 
 // Router

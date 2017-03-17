@@ -1,4 +1,4 @@
-import { rpcWrap } from '../../shared/modules/rpc';
+const { rpcWrap } = require('../../shared/modules/rpc');
 
 const functions = [
     'play',
@@ -19,4 +19,4 @@ const functions = [
     'isThresholdReached'
 ];
 
-export default rpcWrap('playlist', functions, 'mainRenderer');
+module.exports = rpcWrap('playlist', functions, 'mainRenderer');

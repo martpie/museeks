@@ -1,10 +1,10 @@
-import teeny from 'teeny-conf';
-import { join } from 'path';
-import { app } from 'electron';
+const teeny = require('teeny-conf');
+const { join } = require('path');
+const { app } = require('electron');
 
 const configPath = app.getPath('userData');
 const config = new teeny(join(configPath, 'config.json'));
 
 config.loadOrCreateSync();
 
-export default config;
+module.exports = config;

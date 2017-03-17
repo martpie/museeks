@@ -1,11 +1,11 @@
-import lib from '../../shared/lib';
+import sharedLib from '../../shared/lib';
 
 import config from './config';
 import playlist from './playlist';
 import track from './track';
 
 import Player from './player';
-const player = new Player(lib);
+const player = new Player();
 
 const library = {
     config,
@@ -15,6 +15,9 @@ const library = {
 };
 
 // attach shared libraries
-const allLibraries = lib(library);
+const allLibraries = sharedLib(library);
+
+// link the player once all libraries are loaded
+player.link(allLibraries);
 
 export default allLibraries;

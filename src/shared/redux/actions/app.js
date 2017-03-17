@@ -5,7 +5,7 @@ const { ipcRenderer } = require('electron');
 const library = (lib) => {
 
     const init = () => {
-        // Usual tasks
+        console.log('xxx', lib)
         lib.actions.library.load();
         lib.actions.playlist.refresh();
         lib.actions.settings.check();

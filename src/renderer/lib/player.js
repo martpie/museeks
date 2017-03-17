@@ -3,9 +3,7 @@ import { fetchCover, getMetadata } from '../../shared/utils/utils';
 
 class Player {
 
-    constructor(lib) {
-
-        this.lib = lib;
+    constructor() {
 
         const mergedOptions = {
             playbackRate: 1,
@@ -24,7 +22,11 @@ class Player {
         this.durationThresholdReached = false;
     }
 
-    play() {
+    // link player to libraries
+    link(lib) {
+
+        this.lib = lib;
+
         this.audio.addEventListener('ended', this.lib.actions.player.next);
         this.audio.addEventListener('error', this.lib.actions.player.audioError);
         this.audio.addEventListener('timeupdate', () => {

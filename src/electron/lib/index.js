@@ -1,4 +1,4 @@
-const lib = require('../../shared/lib');
+const sharedLib = require('../../shared/lib');
 
 const config = require('./config');
 const player = require('./player');
@@ -13,6 +13,6 @@ const library = {
 };
 
 // attach shared libraries
-const allLibraries = lib(library);
+const allLibraries = sharedLib(library);
 
 module.exports = allLibraries;
