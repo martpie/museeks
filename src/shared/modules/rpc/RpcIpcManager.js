@@ -3,12 +3,15 @@ const ipcReceive = require('../ipc/ipcReceive');
 const ipcSend    = require('../ipc/ipcSend');
 const { get }    = require('lodash');
 
-/**
- * This is used to receive and respond to RPC actions received over IPC.
- *
- * @param object lib   - The function library used with rpc
- * @param string scope - This thread's scope (electron, main-renderer etc)
- */
+/*****************************************************************************
+RPC IPC Manager.
+
+This is used to receive and respond to RPC actions received over IPC.
+
+@param object lib   - The function library used with rpc
+@param string scope - This thread's scope (electron, main-renderer etc)
+*****************************************************************************/
+
 
 class RpcIpcManager {
     constructor(lib, scope) {
