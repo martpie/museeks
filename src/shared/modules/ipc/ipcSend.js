@@ -3,9 +3,7 @@ let ipcSend
 if (process.type == 'renderer') {
     const { ipcRenderer } = require('electron');
 
-    ipcSend = (event, payload) => {
-        ipcRenderer.send(event, action);
-    }
+    ipcSend = ipcRenderer.send;
 
 } else {
     const { BrowserWindow } = require('electron');

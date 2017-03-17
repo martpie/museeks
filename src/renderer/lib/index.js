@@ -6,14 +6,14 @@ import playlist from './playlist';
 import track from './track';
 
 import Player from './player';
-const player = new Player();
+const PlayerInstance = new Player();
 
 const renderer = {
     app,
     config,
-    player,
     playlist,
-    track
+    track,
+    player: PlayerInstance
 };
 
 const shared = sharedLib(renderer);
@@ -25,5 +25,9 @@ const lib = {
 
 // link the player once all libraries are loaded
 lib.player.link(lib);
+
+// explicit exports required for webpack
+export const actions = lib.actions;
+export const player = PlayerInstance;
 
 export default lib;

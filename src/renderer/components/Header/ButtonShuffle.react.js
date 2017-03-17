@@ -3,10 +3,7 @@ import InlineSVG from 'svg-inline-react';
 import classnames from 'classnames';
 import { connect } from 'react-redux';
 
-import lib from '../../lib';
 import { actions } from '../../lib';
-const { actions2 } = lib;
-console.log(lib, actions, actions2)
 
 /*
 |--------------------------------------------------------------------------

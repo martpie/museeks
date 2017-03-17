@@ -16,7 +16,8 @@ const functions = [
     'setAudioCurrentTime',
     'isMuted',
     'isPaused',
-    'isThresholdReached'
+    'isThresholdReached',
+    'link'
 ];
 
 module.exports = rpcWrap('playlist', functions, 'main-renderer');

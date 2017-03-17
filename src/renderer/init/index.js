@@ -16,9 +16,7 @@ const library = (store, lib) => {
             lib.config.saveSync();
         }, 250);
     };
-console.log(store)
-console.log(store.getState())
-console.log('ffffffffffffffffffffffffff')
+
     // Get the config
     const config = store.getState().config;
 
