@@ -5,7 +5,7 @@ const library = (lib) => {
 
     return {
         actions,
-        api,
+        api
     };
 };
 

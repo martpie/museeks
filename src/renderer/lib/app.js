@@ -1,5 +1,5 @@
 const { remote } = require('electron');
-import { rpcWrap } = require('../../shared/modules/rpc');
+const { rpcWrap } = require('../../shared/modules/rpc');
 
 const main = remote.getCurrentWindow();
 
@@ -8,5 +8,5 @@ export default {
     browserWindows: {
         main
     },
-    version: app.getVersion()
+    version: remote.app.getVersion()
 }

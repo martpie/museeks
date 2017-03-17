@@ -1,7 +1,20 @@
-import { rpcWrap } from '../../shared/modules/rpc';
-import track from '../../electron/lib/track';
+import track from '../models/track';
 
-const functions = Object.keys(track);
+const find = (data) => track.findAsync(data.query);
+// const find = (data) => track.findAsync(data.query).sort(data.sort);
 
-// make track functions invoked in the renderer execute in electron via rpc
-export default rpcWrap('track', functions, 'electron');
+const findOne = (data) => track.findOneAsync(data.query);
+
+const insert = (data) => track.insertAsync(data);
+
+const update = (criteria, data) => track.updateAsync(criteria, data);
+
+const remove = (criteria, options) => track.removeAsync(criteria, options);
+
+export default {
+    find,
+    findOne,
+    insert,
+    update,
+    remove
+};

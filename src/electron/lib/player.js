@@ -19,4 +19,4 @@ const functions = [
     'isThresholdReached'
 ];
 
-module.exports = rpcWrap('playlist', functions, 'mainRenderer');
+module.exports = rpcWrap('playlist', functions, 'main-renderer');

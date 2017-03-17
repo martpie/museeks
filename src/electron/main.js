@@ -7,7 +7,6 @@ const path                 = require('path');
 const os                   = require('os');
 const electron             = require('electron');
 
-const database             = require('./database');               // Database for local data storage
 const lib                  = require('./lib');                    // Library containing app logic
 const IpcManager           = require('./ipc');                    // Manages IPC events
 const configureStore       = require('./redux/configureStore');   // Store configuration
@@ -16,7 +15,7 @@ const ConfigManager        = require('./config');                 // Handles con
 const { RpcIpcManager }    = require('../shared/modules/rpc');    // Handles RPC IPC Events
 const PowerMonitor         = require('./power-monitor');          // Handle power events
 const IntegrationManager   = require('./integration');            // Applies various integrations
-const init                 = require('./lib');
+const init                 = require('./init');
 
 const ApiManager           = require('./api/server');
 const PeerDiscoveryManager = require('./peer-discovery');
@@ -54,7 +53,7 @@ app.on('window-all-closed', () => {
 // initialization and ready for creating browser windows.
 app.on('ready', () => {
     const configManager = new ConfigManager(app);
-    const config   = configManager.getConfig();
+    const config = configManager.getConfig();
 
     // Create the store
     const store = configureStore(config);

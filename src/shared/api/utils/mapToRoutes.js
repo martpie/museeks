@@ -1,43 +1,49 @@
 const { get } = require('lodash');
+
 const mapApis = (apis, lib, dispatch) => {
 
+    // add a handler to a route that calls an internal library function
     const createRouteHandlers = (route) => {
 
-        // remove any double slashes created in urls
-        const safeUrl = (url) => url.replace('//', '/');
-
         const handler = (route) => {
-            // Get the function from the lib
-            const functionFromLib = get(lib, route.name);
 
-            if (functionFromLib) => {
+            // the library function to be executed by this route
+            const libraryFunction = get(lib, route.name);
+
+            // return a function with the hapi route handler signature
+            return (req, res) => {
+
                 // Get the input args
-                const args = route.method === 'GET' ? req.payload.params : req.payload.data;
+                const args = route.method === 'GET'
+                    ? req.payload.params
+                    : req.payload.data;
 
                 // Transform the inputs
-                const transformedArgs = route.argTransform ? route.argTransform(args) : args;
+                const transformedArgs = route.argTransform
+                    ? route.argTransform(args)
+                    : args;
 
                 // Wrap the function in a redux dispatch if required
                 const dispatchedFunction = (args) => route.dispatch
-                    ? dispatch(functionFromLib.apply(null, args))
-                    : functionFromLib(args);
+                    ? dispatch(libraryFunction.apply(null, args))
+                    : libraryFunction(args);
 
-                return (req, res) => dispatchedFunction(transformedArgs)
+                return dispatchedFunction(transformedArgs)
                     .then((result) => res(result))
                     .catch((error) => {
                         console.log('error', error)
                         res({ error }).code(error.code);
-                    })
-
-            } else {
-                console.error(`Function not found: ${route.name} for ${route.path}`);
+                    });
             }
         }
 
+        // remove any double slashes created in urls
+        const safeUrl = (url) => url.replace('//', '/');
+
         const routeWithHandler = {
-            method  : route.method,
-            path    : safeUrl(`/${route.path}`),
-            handler : route.handler || handler(route)
+            method: route.method,
+            path: safeUrl(`/${route.path}`),
+            handler: route.handler || handler(route)
         }
 
         return routeWithHandler;

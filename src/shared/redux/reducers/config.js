@@ -10,7 +10,7 @@ module.exports = (state = {}, action) => {
         case('APP_CONFIG_SET_FULFILLED'): {
             return {
                 ...state,
-                action.meta.key: action.meta.value
+                // action.meta.key: action.meta.value TODO
             };
         }
 

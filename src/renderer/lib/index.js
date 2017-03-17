@@ -1,5 +1,6 @@
 import sharedLib from '../../shared/lib';
 
+import app from './app';
 import config from './config';
 import playlist from './playlist';
 import track from './track';
@@ -7,17 +8,22 @@ import track from './track';
 import Player from './player';
 const player = new Player();
 
-const library = {
+const renderer = {
+    app,
     config,
     player,
     playlist,
     track
 };
 
-// attach shared libraries
-const allLibraries = sharedLib(library);
+const shared = sharedLib(renderer);
+
+const lib = {
+    ...renderer,
+    ...shared
+}
 
 // link the player once all libraries are loaded
-player.link(allLibraries);
+lib.player.link(lib);
 
-export default allLibraries;
+export default lib;

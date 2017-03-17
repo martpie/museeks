@@ -1,18 +1,18 @@
 const semver = require('semver');
 const { ipcRenderer } = require('electron');
 
-const library = (lib) => (dispatch, getState) => {
+const library = (lib) => {
 
     const check = () => {
         checkTheme();
         checkDevMode();
         checkSleepBlocker();
-        if (getState().config.autoUpdateChecker) checkForUpdate({ silentFail: true });
+        // if (getState().config.autoUpdateChecker) checkForUpdate({ silentFail: true }); TODO
     };
 
     const checkTheme = () => {
-        const themeName = getState().config.theme;
-        document.querySelector('body').classList.add(`theme-${themeName}`);
+        // const themeName = getState().config.theme; TODO
+        // document.querySelector('body').classList.add(`theme-${themeName}`);
     };
 
     const toggleDarkTheme = (value) => (dispatch) => {

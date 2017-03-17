@@ -18,9 +18,9 @@ const library = (store, lib) => {
         });
     };
 
-    // Usual tasks
+    // Initialize all app components
     dispatch(lib.actions.library.load());
-    dispatch(lib.actions.playlist.refresh());
+    dispatch(lib.actions.playlists.refresh());
     dispatch(lib.actions.settings.check());
     initShortcuts();
 }

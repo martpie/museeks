@@ -6,7 +6,7 @@ RPC Wrap.
 This will create a library of RPC functions.
 
 eg:
-rpcWrap('track', ['pause', 'play'], 'mainRenderer')
+rpcWrap('track', ['pause', 'play'], 'main-renderer')
 ****************************************************************/
 
 const rpcWrap = (namespace, functions, scope) => {

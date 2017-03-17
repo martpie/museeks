@@ -11,6 +11,7 @@ class Api {
         server.connection({ port: 54321 });
 
         const routes = mapToRoutes([...otherRoutes, ...sharedRoutes], lib, store.dispatch);
+
         routes.forEach(route => server.route(route));
 
         // attach the libs and dispatcher to each request

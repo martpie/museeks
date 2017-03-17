@@ -1,6 +1,6 @@
-const routes = [{
+module.exports = [{
     method: 'POST',
-    path: '/',
+    path: 'api/v1/rpc',
     handler: (req, res) => {
         const rpc = req.payload;
         const target = req.lib[rpc.library][rpc.function];
@@ -10,8 +10,3 @@ const routes = [{
             .catch((error) => res.status(error.code).json({ error }));
     }
 }];
-
-module.exports = {
-    namespace: 'rpc',
-    routes
-};

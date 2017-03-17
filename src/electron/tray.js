@@ -8,7 +8,7 @@ const lib = require('./lib');
 class IpcManager {
 
     constructor(win, icon, store) {
-        const { dispatch } = this.store;
+        const { dispatch } = store;
 
         this.tray = null;
         this.trayIcon = icon;
