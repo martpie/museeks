@@ -4,7 +4,7 @@ import { Button } from 'react-bootstrap';
 
 import ExternalLink from '../Shared/ExternalLink.react';
 
-import { actions } from '../../lib';
+import { actions, app } from '../../lib';
 
 // sth wrong with that, need some check with Webpack
 const museeksLogoRequire = require('../../../images/logos/museeks.png');
@@ -30,10 +30,10 @@ class SettingsAbout extends Component {
                     <h4>About Museeks</h4>
                     <img src={ museeksLogo } className='logo-museeks' alt='Logo' title='Museeks logo' />
                     <p>
-                        Museeks { lib.app.version }{ ' - ' }
+                        Museeks { app.version }{ ' - ' }
                         <ExternalLink href='http://museeks.io'>museeks.io</ExternalLink>
                         { ' - ' }
-                        <ExternalLink href={ `https://github.com/KeitIG/Museeks/releases/tag/${lib.app.version}` }>release notes</ExternalLink>
+                        <ExternalLink href={ `https://github.com/KeitIG/Museeks/releases/tag/${app.version}` }>release notes</ExternalLink>
                         <Button bsSize='small' className='update-checker' onClick={ this.props.checkForUpdate }>Check for update</Button>
                     </p>
                 </div>
@@ -53,7 +53,7 @@ class SettingsAbout extends Component {
                         <p>
                             Although Museeks is mostly stable, a few bugs may still occur. Please, do
                             not hesitate to report them or to ask for features you would like to
-                            see, using our
+                            see, using our&nbsp;
                             <ExternalLink href='http://github.com/KeitIG/Museeks/issues'>
                                 issue tracker
                             </ExternalLink>.

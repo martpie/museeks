@@ -54,7 +54,9 @@ const library = (lib) => {
              properties: ['openDirectory', 'multiSelections']
         }, (folders) => {
             if (folders !== undefined) {
-                Promise.map(folders, realpath).then((resolvedFolders) => {
+                Promise.map(folders, (folder) => {
+                    return realpath(folder)
+                }).then((resolvedFolders) => {
                     let musicFolders = getState().config.musicFolders;
                     // Check if we received folders
                     if (resolvedFolders !== undefined) {

@@ -21,7 +21,7 @@ const library = (lib) => {
 
         document.querySelector('body').classList.remove(`theme-${oldTheme}`);
         document.querySelector('body').classList.add(`theme-${newTheme}`);
-console.log(lib)
+
         dispatch(lib.actions.config.set('theme', newTheme));
         dispatch(lib.actions.config.save());
 
@@ -74,12 +74,12 @@ console.log(lib)
         });
     };
 
-    const checkForUpdate = async (options = {}) => {
+    const checkForUpdate = (options = {}) => (dispatch) => {
         const currentVersion = lib.app.version;
 
-        try {
-            const response = await fetch('https://api.github.com/repos/KeitIG/museeks/releases');
-            const releases = await response.json();
+        return fetch('https://api.github.com/repos/KeitIG/museeks/releases')
+        .then((response) => response.json())
+        .then((releases) => {
 
             const newRelease = releases.find((release) => {
                 return semver.valid(release.tag_name) !== null && semver.gt(release.tag_name, currentVersion);
@@ -95,9 +95,7 @@ console.log(lib)
             if (message) {
                 dispatch(lib.actions.toasts.add('success', message));
             }
-        } catch (e) {
-            if (!options.silentFail) dispatch(lib.actions.toasts.add('danger', 'An error occurred while checking updates.'));
-        }
+        });
     };
 
     const toggleNativeFrame = (value) => (dispatch) => {
