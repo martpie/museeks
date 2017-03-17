@@ -71,11 +71,11 @@ class SettingsUI extends Component {
 const stateToProps = () => ({});
 
 const dispatchToProps = {
-    toggleDarkTheme: actions.settings.toggleDarkTheme
-    toggleDisplayNotifications: actions.settings.toggleDisplayNotifications
-    toggleNativeFrame: actions.settings.toggleNativeFrame
-    toggleSleepBlocker: actions.settings.toggleSleepBlocker
-    toggleMinimizeToTray: actions.settings.toggleMinimizeToTray
+    toggleDarkTheme: actions.settings.toggleDarkTheme,
+    toggleDisplayNotifications: actions.settings.toggleDisplayNotifications,
+    toggleNativeFrame: actions.settings.toggleNativeFrame,
+    toggleSleepBlocker: actions.settings.toggleSleepBlocker,
+    toggleMinimizeToTray: actions.settings.toggleMinimizeToTray,
     toggleAutoUpdateChecker: actions.settings.toggleAutoUpdateChecker
 };
 
