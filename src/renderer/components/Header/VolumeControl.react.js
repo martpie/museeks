@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Icon from 'react-fontawesome';
 import classnames from 'classnames';
 
-import { actions } from '../../lib';
-import Player from '../../lib/player';
+import { actions, player } from '../../lib';
 
 
 /*
@@ -29,18 +29,16 @@ class VolumeControl extends Component {
     constructor(props) {
         super(props);
 
-        const audio = Player.getAudio();
-
         this.state = {
-            showVolume : false,
-            volume     : unsmoothifyVolume(audio.volume),
-            muted      : audio.muted
+            showVolume: false,
+            volume: unsmoothifyVolume(player.audio.volume),
+            muted: player.audio.muted
         };
 
-        this.mute       = this.mute.bind(this);
+        this.mute = this.mute.bind(this);
         this.showVolume = this.showVolume.bind(this);
         this.hideVolume = this.hideVolume.bind(this);
-        this.setVolume  = this.setVolume.bind(this);
+        this.setVolume = this.setVolume.bind(this);
     }
 
     getVolumeIcon(volume, muted) {

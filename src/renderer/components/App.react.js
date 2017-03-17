@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Row } from 'react-bootstrap';
 import KeyBinding from 'react-keybinding-component';
-
-import { connect } from 'react-redux';
 
 import Header from './Header/Header.react';
 import Footer from './Footer/Footer.react';
@@ -90,4 +89,4 @@ const dispatchToProps = {
     playToggle: actions.player.playToggle
 };
 
-export default connect(stateToProps, dispatchToProps)(PlayingBar);
+export default connect(stateToProps, dispatchToProps)(Museeks);

@@ -5,7 +5,7 @@ const globby   = require('globby');
 const join     = require('path').join;
 const extname  = require('path').extname;
 const utils    = require('../../utils/utils');
-// const dialog   = require('electron').remote.dialog;
+const electron = require('electron');
 const realpath = Promise.promisify(fs.realpath);
 
 const library = (lib) => {
@@ -46,11 +46,15 @@ const library = (lib) => {
     });
 
     const addFolders = () => (dispatch, getState) => {
-         dialog.showOpenDialog({
+        const dialog = electron.remote
+            ? electron.remote.dialog
+            : electron.dialog;
+
+        dialog.showOpenDialog({
              properties: ['openDirectory', 'multiSelections']
-         }, (folders) => {
-             if (folders !== undefined) {
-                 Promise.map(folders, realpath).then((resolvedFolders) => {
+        }, (folders) => {
+            if (folders !== undefined) {
+                Promise.map(folders, realpath).then((resolvedFolders) => {
                     let musicFolders = getState().config.musicFolders;
                     // Check if we received folders
                     if (resolvedFolders !== undefined) {
@@ -82,7 +86,7 @@ const library = (lib) => {
             lib.track.remove({}, { multi: true }),
             lib.playlist.remove({}, { multi: true })
         ])
-        .then(() => dispatch(actions.library.load()))
+        .then(() => dispatch(lib.actions.library.load()))
     });
 
     const refresh = () => (dispatch, getState) => {
@@ -95,7 +99,7 @@ const library = (lib) => {
                 type: 'APP_LIBRARY_REFRESH_FULFILLED'
             });
         };
-        const folders = getState.config.musicFolders;
+        const folders = getState().config.musicFolders;
         const fsConcurrency = 32;
 
         // Start the big thing
@@ -128,12 +132,12 @@ const library = (lib) => {
                     return lib.track.insert(track);
                 }).then(() => {
                     const percent = parseInt(addedFiles * 100 / totalFiles);
-                    dispatch(actions.settings.refreshProgress(percent));
+                    dispatch(lib.actions.settings.refreshProgress(percent));
                     addedFiles++;
                 });
             }, { concurrency: fsConcurrency });
         }).then(() => {
-            dispatch(actions.library.load());
+            dispatch(lib.actions.library.load());
             dispatchEnd();
         }).catch((err) => {
             console.warn(err);

@@ -25,7 +25,7 @@ class PeerDiscovery {
         })
         .then((response) => response.data)
         .then((peerInfo) => {
-            // return lib.actions.network.peerFound(extend(peerInfo, { ip : peer.ip }));
+            return this.lib.actions.network.peerFound(extend(peerInfo, { ip : peer.ip }));
         })
         .catch((err) => {
             console.log(err)

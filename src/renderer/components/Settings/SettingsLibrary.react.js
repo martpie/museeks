@@ -72,16 +72,16 @@ class SettingsLibrary extends Component {
         );
     }
 
-    addFolders() {
+    addFolders = () => {
         this.props.addFolders();
     }
 
-    resetLibrary() {
+    resetLibrary = () => {
         this.props.stop();
         this.props.reset();
     }
 
-    refreshLibrary() {
+    refreshLibrary = () => {
         this.props.stop();
         this.props.refresh();
     }

@@ -1,44 +1,31 @@
 const extend = require('xtend');
 
-// take in a lib object with the environment specific implementations already supplied (renderer/electon)
+// take in a lib object with the environment specific
+// implementation for the renderer or electon
 const library = (lib) => {
 
-    // hack so actions can depend on actions. fix later.
     const actions = {
-        app : {},
-        library : {},
-        network : {},
-        notification : {},
-        player : {},
-        playlists : {},
-        queue : {},
-        settings : {},
-        toasts : {}
+        app: require('./app'),
+        library: require('./library'),
+        network: require('./network'),
+        notification: require('./notification'),
+        player: require('./player'),
+        playlists: require('./playlists'),
+        queue: require('./queue'),
+        settings: require('./settings'),
+        toasts: require('./toasts')
     }
 
-    const libWithActions = extend(lib, { actions });
+    // create a copy of the library to attach actions to
+    const libWithActions = extend(lib, { actions : {} });
 
-    const app = require('./app')(libWithActions);
-    const library = require('./library')(libWithActions);
-    const network = require('./network')(libWithActions);
-    const notification = require('./notification')(libWithActions);
-    const player = require('./player')(libWithActions);
-    const playlists = require('./playlists')(libWithActions);
-    const queue = require('./queue')(libWithActions);
-    const settings = require('./settings')(libWithActions);
-    const toasts = require('./toasts')(libWithActions);
+    const sharedLib = Object.keys(actions).reduce((sharedLib, action) => {
+        // invoke each action library with the shared library object
+        sharedLib.actions[action] = actions[action](sharedLib);
+        return sharedLib;
+    }, libWithActions);
 
-    return {
-        app,
-        library,
-        network,
-        notification,
-        player,
-        playlists,
-        queue,
-        settings,
-        toasts
-    };
+    return sharedLib.actions;
 }
 
 module.exports = library;

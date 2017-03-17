@@ -5,7 +5,3 @@ build/dist
 
 npm-debug.log
 .eslintcache
-
-playlist.db
-track.db
-

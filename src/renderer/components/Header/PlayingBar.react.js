@@ -8,7 +8,7 @@ import ButtonRepeat  from './ButtonRepeat.react';
 import TrackCover    from './TrackCover.react';
 import Queue         from './Queue.react';
 
-import Player from '../../lib/player';
+import { player } from '../../lib';
 import utils from '../../../shared/utils/utils';
 
 import { actions } from '../../lib';
@@ -154,7 +154,7 @@ class PlayingBar extends Component {
     }
 
     tick() {
-        this.setState({ elapsed: Player.getCurrentTime() });
+        this.setState({ elapsed: player.getCurrentTime() });
     }
 
     jumpAudioTo(e) {
