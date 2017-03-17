@@ -20,23 +20,19 @@ class WindowControls extends PureComponent {
 
     render() {
         if (!this.props.active) return null;
-
+console.log(this.props)
         return (
             <div className='window-controls'>
-                <button className='window-control' onClick={ this.winClose }>&times;</button>
+                <button className='window-control' onClick={ this.props.close() }>&times;</button>
             </div>
         );
-    }
-
-    winClose() {
-        this.props.close();
     }
 }
 
 const stateToProps = () => ({});
 
 const dispatchToProps = {
-    close: actions.close
+    close: actions.app.close
 };
 
 export default connect(stateToProps, dispatchToProps)(WindowControls);

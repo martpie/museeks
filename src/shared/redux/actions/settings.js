@@ -21,7 +21,7 @@ const library = (lib) => {
 
         document.querySelector('body').classList.remove(`theme-${oldTheme}`);
         document.querySelector('body').classList.add(`theme-${newTheme}`);
-
+console.log(lib)
         dispatch(lib.actions.config.set('theme', newTheme));
         dispatch(lib.actions.config.save());
 
@@ -103,7 +103,7 @@ const library = (lib) => {
     const toggleNativeFrame = (value) => (dispatch) => {
         dispatch(lib.actions.config.set('useNativeFrame', value));
         dispatch(lib.actions.config.save());
-        dispatch(lib.actions.app.restart());
+        lib.app.restart();
     };
 
     const toggleMinimizeToTray = (value) => (dispatch) => {
