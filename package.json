@@ -34,6 +34,7 @@
     "font-awesome": "4.7.0",
     "globby": "^6.1.0",
     "hapi": "^16.1.0",
+    "level-js": "^2.2.4",
     "linvodb3": "^3.25.0",
     "musicmetadata": "2.0.5",
     "open-sans-fontface": "1.4.0",
