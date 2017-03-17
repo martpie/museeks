@@ -10,7 +10,7 @@ import QueueList from './QueueList.react';
 |--------------------------------------------------------------------------
 */
 
-export default class Queue extends PureComponent {
+class Queue extends PureComponent {
 
     static propTypes = {
         queue: React.PropTypes.array,
@@ -35,3 +35,5 @@ export default class Queue extends PureComponent {
         return <QueueList { ...this.props } />;
     }
 }
+
+export default Queue;

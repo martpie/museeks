@@ -4,3 +4,4 @@ import { remote } from 'electron';
 
 linvodb.defaults.store = { db: leveljs };
 linvodb.dbPath = remote.app.getPath('userData');
+console.log('dbPathdbPathdbPathdbPathdbPathdbPath', dbPath)

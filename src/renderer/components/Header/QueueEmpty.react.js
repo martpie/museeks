@@ -8,7 +8,7 @@ import classnames from 'classnames';
 |--------------------------------------------------------------------------
 */
 
-export default class QueueEmpty extends PureComponent {
+class QueueEmpty extends PureComponent {
 
     static propTypes = {
         visible: React.PropTypes.bool
@@ -32,3 +32,5 @@ export default class QueueEmpty extends PureComponent {
         );
     }
 }
+
+export default QueueEmpty;

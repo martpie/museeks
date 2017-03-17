@@ -7,7 +7,7 @@ import React, { PureComponent } from 'react';
 |--------------------------------------------------------------------------
 */
 
-export default class TrackCover extends PureComponent {
+class TrackCover extends PureComponent {
 
     static propTypes = {
         cover: React.PropTypes.string
@@ -31,3 +31,5 @@ export default class TrackCover extends PureComponent {
         );
     }
 }
+
+export default TrackCover;

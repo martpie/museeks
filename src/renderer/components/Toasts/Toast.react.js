@@ -7,7 +7,7 @@ import React, { Component } from 'react';
 |--------------------------------------------------------------------------
 */
 
-export default class Toast extends Component {
+class Toast extends Component {
 
     static propTypes = {
         type: React.PropTypes.string,
@@ -29,3 +29,5 @@ export default class Toast extends Component {
         );
     }
 }
+
+export default Toast;

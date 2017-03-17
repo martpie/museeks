@@ -6,7 +6,7 @@ import React, { PureComponent } from 'react';
 |--------------------------------------------------------------------------
 */
 
-export default class FullViewMessage extends PureComponent {
+class FullViewMessage extends PureComponent {
 
     static propTypes = {
         children: React.PropTypes.oneOfType([
@@ -27,3 +27,5 @@ export default class FullViewMessage extends PureComponent {
         );
     }
 }
+
+export default FullViewMessage;

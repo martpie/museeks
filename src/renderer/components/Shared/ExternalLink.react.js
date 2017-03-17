@@ -9,7 +9,7 @@ import shell from 'electron';
 |--------------------------------------------------------------------------
 */
 
-export default class ExternalLink extends Component {
+class ExternalLink extends Component {
 
     static propTypes = {
         href: React.PropTypes.string,
@@ -36,3 +36,5 @@ export default class ExternalLink extends Component {
         shell.openExternal(this.props.href);
     }
 }
+
+export default ExternalLink;

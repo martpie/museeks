@@ -9,7 +9,7 @@ import Toast from './Toast.react';
 |--------------------------------------------------------------------------
 */
 
-export default class Toasts extends Component {
+class Toasts extends Component {
 
     static propTypes = {
         toasts: React.PropTypes.array
@@ -35,3 +35,5 @@ export default class Toasts extends Component {
         );
     }
 }
+
+export default Toasts;

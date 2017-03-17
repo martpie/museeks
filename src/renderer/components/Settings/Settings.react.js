@@ -9,7 +9,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 |--------------------------------------------------------------------------
 */
 
-export default class Settings extends Component {
+class Settings extends Component {
 
     static propTypes = {
         config: React.PropTypes.object,
@@ -59,3 +59,5 @@ export default class Settings extends Component {
         );
     }
 }
+
+export default Settings;

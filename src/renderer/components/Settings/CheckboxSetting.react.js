@@ -6,7 +6,7 @@ import React, { PureComponent } from 'react';
 |--------------------------------------------------------------------------
 */
 
-export default class CheckboxSetting extends PureComponent {
+class CheckboxSetting extends PureComponent {
 
     static propTypes = {
         title: React.PropTypes.string,
@@ -42,3 +42,5 @@ export default class CheckboxSetting extends PureComponent {
         this.props.onClick(e.target.checked);
     }
 }
+
+export default CheckboxSetting;

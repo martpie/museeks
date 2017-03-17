@@ -12,7 +12,7 @@ import utils from '../../../shared/utils/utils';
 |--------------------------------------------------------------------------
 */
 
-export default class Footer extends Component {
+class Footer extends Component {
 
     static propTypes = {
         tracks: React.PropTypes.array,
@@ -59,3 +59,5 @@ export default class Footer extends Component {
         );
     }
 }
+
+export default Footer;

@@ -8,7 +8,7 @@ import { Link } from 'react-router';
 |--------------------------------------------------------------------------
 */
 
-export default class PlaylistsNavLink extends Component {
+class PlaylistsNavLink extends Component {
 
     static propTypes = {
         children: React.PropTypes.string,
@@ -39,3 +39,5 @@ export default class PlaylistsNavLink extends Component {
         this.props.onContextMenu(this.props.playlistId);
     }
 }
+
+export default PlaylistsNavLink;

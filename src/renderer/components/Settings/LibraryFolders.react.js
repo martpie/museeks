@@ -11,7 +11,7 @@ import classnames from 'classnames';
 |--------------------------------------------------------------------------
 */
 
-export default class LibraryFolders extends Component {
+class LibraryFolders extends Component {
 
     static propTypes = {
         folders: React.PropTypes.array,
@@ -44,3 +44,5 @@ export default class LibraryFolders extends Component {
         );
     }
 }
+
+export default LibraryFolders;

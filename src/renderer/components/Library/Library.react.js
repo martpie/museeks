@@ -11,7 +11,7 @@ import TracksList from '../Shared/TracksList.react';
 |--------------------------------------------------------------------------
 */
 
-export default class Library extends Component {
+class Library extends Component {
 
     static propTypes = {
         library: React.PropTypes.array,
@@ -77,3 +77,5 @@ export default class Library extends Component {
         );
     }
 }
+
+export default Library;
