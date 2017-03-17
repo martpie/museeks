@@ -329,7 +329,7 @@ const supportedExtensions = [
     '.flac'
 ];
 
-module.exports = {
+export default {
     parseDuration,
     getStatus,
     parseUri,

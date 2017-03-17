@@ -45,4 +45,4 @@ const library = (store, lib) => {
     currentWindow.on('move', saveBounds);
 }
 
-module.exports = library;
+export default library;

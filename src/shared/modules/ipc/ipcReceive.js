@@ -35,4 +35,4 @@ if (process.type == 'renderer') {
     }
 }
 
-module.exports = ipcReceive;
+export default ipcReceive;

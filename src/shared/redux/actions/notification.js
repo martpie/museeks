@@ -29,4 +29,4 @@ const library = (lib) => {
     };
 }
 
-module.exports = library;
+export default library;

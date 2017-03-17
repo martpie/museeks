@@ -1,4 +1,4 @@
-module.exports = [{
+export default [{
     path         : 'api/v1/library/load',
     method       : 'GET',
     name         : 'actions.library.load',

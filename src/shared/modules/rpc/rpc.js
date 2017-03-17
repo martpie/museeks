@@ -32,4 +32,4 @@ const rpc = (scope, functionToRun, functionInputs) => {
     return deferred.promise;
 }
 
-module.exports = rpc;
+export default rpc;

@@ -18,7 +18,7 @@ const reducers = [
     queue
 ];
 
-module.exports = (state, action) => {
+export default (state, action) => {
     return reducers.reduce((currentState, reducer) => {
         return reducer(currentState, action);
     }, state);

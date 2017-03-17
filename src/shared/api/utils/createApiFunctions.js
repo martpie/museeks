@@ -15,4 +15,4 @@ const createApiFunctions = (routes) => routes.reduce((apiLib, route) => {
 }, {});
 
 
-module.exports = createApiFunctions;
+export default createApiFunctions;

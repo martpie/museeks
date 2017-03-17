@@ -3,4 +3,4 @@
 import routes from './routes';
 import createApiFunctions from './utils/createApiFunctions';
 
-module.exports = createApiFunctions(routes);
+export default createApiFunctions(routes);

@@ -1,4 +1,4 @@
-module.exports = (state = {}, payload) => {
+export default (state = {}, payload) => {
     switch (payload.type) {
         case('APP_REFRESH_LIBRARY_FULFILLED'): {
             console.log('APP_REFRESH_LIBRARY_FULFILLED', payload);

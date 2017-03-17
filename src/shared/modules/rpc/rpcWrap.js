@@ -18,4 +18,4 @@ const rpcWrap = (namespace, functions, scope) => {
     }, {})
 }
 
-module.exports = rpcWrap;
+export default rpcWrap;

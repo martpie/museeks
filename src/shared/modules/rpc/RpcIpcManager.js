@@ -85,4 +85,4 @@ class RpcIpcManager {
     }
 };
 
-module.exports = RpcIpcManager;
+export default RpcIpcManager;

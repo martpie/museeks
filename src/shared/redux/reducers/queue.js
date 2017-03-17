@@ -1,4 +1,4 @@
-module.exports = (state = {}, payload) => {
+export default (state = {}, payload) => {
     switch (payload.type) {
         case('APP_QUEUE_START'): {
             const queue       = [...state.queue];

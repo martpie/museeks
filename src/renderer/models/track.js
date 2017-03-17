@@ -35,4 +35,4 @@ Track.ensureIndex({ fieldName: 'path', unique: true });
 
 Promise.promisifyAll(Track);
 
-module.exports = Track;
+export default Track;

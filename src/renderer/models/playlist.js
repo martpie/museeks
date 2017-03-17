@@ -11,4 +11,4 @@ const Playlist = new linvodb('playlist', {
 
 Promise.promisifyAll(Playlist);
 
-module.exports = Playlist;
+export default Playlist;

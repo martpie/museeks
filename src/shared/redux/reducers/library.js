@@ -1,7 +1,7 @@
 //const app          = require('../lib/app');
 const utils        = require('../../utils/utils');
 
-module.exports = (state = {}, payload) => {
+export default (state = {}, payload) => {
     switch (payload.type) {
         case('APP_FILTER_SEARCH'): {
             if (!payload.search) {

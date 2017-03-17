@@ -1,4 +1,4 @@
-module.exports = (state = {}, payload) => {
+export default (state = {}, payload) => {
     switch (payload.type) {
         case('APP_TOAST_ADD'): {
             const toasts = [...state.toasts, payload.toast];

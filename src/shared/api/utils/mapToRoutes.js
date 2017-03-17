@@ -52,4 +52,4 @@ const mapApis = (apis, lib, dispatch) => {
     return apis.map(createRouteHandlers)
 }
 
-module.exports = mapApis;
+export default mapApis;

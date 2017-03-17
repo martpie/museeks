@@ -1,4 +1,4 @@
-module.exports = [{
+export default [{
     path         : 'api/v1/player/audioError',
     method       : 'GET',
     name         : 'actions.player.audioError',

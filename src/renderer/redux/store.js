@@ -17,7 +17,7 @@ const middleware = [
     promiseMiddleware,
     logger
 ];
-
+console.log(reducers)
 const store = createStore(reducers, initialState, applyMiddleware(...middleware));
 
 // replay renderer actions in electron

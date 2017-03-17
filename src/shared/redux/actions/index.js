@@ -29,4 +29,4 @@ const library = (lib) => {
     return sharedLib.actions;
 }
 
-module.exports = library;
+export default library;

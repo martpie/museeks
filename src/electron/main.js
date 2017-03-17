@@ -38,6 +38,8 @@ const shouldQuit = app.makeSingleInstance(() => {
     }
 });
 
+lib.actions.network.peerFound({ ip : 'jackson' })
+
 if (shouldQuit) {
     app.quit();
 }

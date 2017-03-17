@@ -31,4 +31,4 @@ if (process.type == 'renderer') {
     }
 }
 
-module.exports = ipcSend;
+export default ipcSend;
