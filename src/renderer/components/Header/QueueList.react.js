@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { ButtonGroup, Button } from 'react-bootstrap';
 import classnames from 'classnames';
 
@@ -15,7 +16,7 @@ import utils from '../../../shared/utils/utils';
 |--------------------------------------------------------------------------
 */
 
-export default class QueueList extends Component {
+class QueueList extends Component {
 
     static propTypes = {
         queue: React.PropTypes.array,
@@ -62,7 +63,7 @@ export default class QueueList extends Component {
                         { utils.getStatus(incomingQueue) }
                     </div>
                     <ButtonGroup>
-                        <Button bsSize={ 'xsmall' } bsStyle={ 'default' } className='empty-button' onClick={ actions.queue.clear }>
+                        <Button bsSize={ 'xsmall' } bsStyle={ 'default' } className='empty-button' onClick={ this.props.clear }>
                             clear queue
                         </Button>
                     </ButtonGroup>
@@ -128,7 +129,7 @@ export default class QueueList extends Component {
             dragPosition          : null
         });
 
-        actions.queue.setQueue(newQueue);
+        this.props.setQueue(newQueue);
     }
 
     dragOver(e, index) {
@@ -143,3 +144,12 @@ export default class QueueList extends Component {
         });
     }
 }
+
+const stateToProps = () => ({});
+
+const dispatchToProps = {
+    clear: actions.queue.clear,
+    setQueue: actions.queue.setQueue
+};
+
+export default connect(stateToProps, dispatchToProps)(QueueList);

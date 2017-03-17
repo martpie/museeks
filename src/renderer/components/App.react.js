@@ -8,7 +8,7 @@ import Header from './Header/Header.react';
 import Footer from './Footer/Footer.react';
 import Toasts from './Toasts/Toasts.react';
 
-import lib from '../lib';
+import { actions } from '../lib';
 
 /*
 |--------------------------------------------------------------------------
@@ -78,14 +78,16 @@ class Museeks extends Component {
             case 32:
                 e.preventDefault();
                 e.stopPropagation();
-                lib.actions.player.playToggle();
+                this.props.playToggle();
                 break;
         }
     }
 }
 
-function mapStateToProps(state) {
-    return { store: { ...state } };
-}
+const stateToProps = (state) => ({ store: { ...state } });
 
-export default connect(mapStateToProps)(Museeks);
+const dispatchToProps = {
+    playToggle: actions.player.playToggle
+};
+
+export default connect(stateToProps, dispatchToProps)(PlayingBar);

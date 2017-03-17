@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { ProgressBar } from 'react-bootstrap';
 import Icon from 'react-fontawesome';
-
 
 import ButtonShuffle from './ButtonShuffle.react';
 import ButtonRepeat  from './ButtonRepeat.react';
@@ -22,7 +22,7 @@ import classnames from 'classnames';
 |--------------------------------------------------------------------------
 */
 
-export default class PlayingBar extends Component {
+class PlayingBar extends Component {
 
     static propTypes = {
         cover: React.PropTypes.string,
@@ -149,7 +149,7 @@ export default class PlayingBar extends Component {
         const currTrackPlayingPath = currTrackPlaying && currTrackPlaying.path ? currTrackPlaying.path : null;
 
         if (nextTrackPlayingPath !== currTrackPlayingPath) {
-            actions.library.fetchCover(nextTrackPlayingPath);
+            this.props.fetchCover(nextTrackPlayingPath);
         }
     }
 
@@ -169,7 +169,7 @@ export default class PlayingBar extends Component {
 
         const jumpTo = (percent * trackPlaying.duration) / 100;
 
-        actions.player.jumpTo(jumpTo);
+        this.props.jumpTo(jumpTo);
     }
 
     dragOver(e) {
@@ -184,7 +184,7 @@ export default class PlayingBar extends Component {
 
             const jumpTo = (percent * trackPlaying.duration) / 100;
 
-            actions.player.jumpTo(jumpTo);
+            this.props.jumpTo(jumpTo);
         }
     }
 
@@ -220,4 +220,13 @@ export default class PlayingBar extends Component {
     toggleQueue() {
         this.setState({ showQueue: !this.state.showQueue });
     }
-}
+};
+
+const stateToProps = () => ({});
+
+const dispatchToProps = {
+    jumpTo: actions.player.jumpTo,
+    fetchCover: actions.library.fetchCover
+};
+
+export default connect(stateToProps, dispatchToProps)(PlayingBar);

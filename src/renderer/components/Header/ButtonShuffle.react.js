@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import InlineSVG from 'svg-inline-react';
 import classnames from 'classnames';
+import { connect } from 'react-redux';
 
 import { api, actions } from '../../lib';
 
@@ -11,7 +12,7 @@ import { api, actions } from '../../lib';
 |--------------------------------------------------------------------------
 */
 
-export default class ButtonShuffle extends Component {
+class ButtonShuffle extends Component {
 
     static propTypes = {
         shuffle: React.PropTypes.bool
@@ -38,6 +39,14 @@ export default class ButtonShuffle extends Component {
     }
 
     toggleShuffle() {
-        actions.player.shuffle(!this.props.shuffle);
+        this.props.shuffle(!this.props.shuffle);
     }
 }
+
+const stateToProps = () => ({});
+
+const dispatchToProps = {
+    repeat: actions.player.repeat
+};
+
+export default connect(stateToProps, dispatchToProps)(ButtonShuffle);

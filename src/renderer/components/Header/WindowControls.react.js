@@ -7,7 +7,7 @@ import { api, actions } from '../../lib';
 |--------------------------------------------------------------------------
 */
 
-export default class WindowControls extends PureComponent {
+class WindowControls extends PureComponent {
 
     static propTypes = {
         active: React.PropTypes.bool
@@ -28,6 +28,14 @@ export default class WindowControls extends PureComponent {
     }
 
     winClose() {
-        actions.close();
+        this.props.close();
     }
 }
+
+const stateToProps = () => ({});
+
+const dispatchToProps = {
+    close: actions.close
+};
+
+export default connect(stateToProps, dispatchToProps)(WindowControls);

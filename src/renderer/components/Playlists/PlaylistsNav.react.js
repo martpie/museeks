@@ -1,8 +1,9 @@
-import { api, actions } from '../../lib';
-
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { ButtonGroup, Button } from 'react-bootstrap';
 import Icon from 'react-fontawesome';
+
+import { api, actions } from '../../lib';
 
 import PlaylistsNavLink from './PlaylistsNavLink.react';
 
@@ -141,3 +142,13 @@ export default class PlaylistsNav extends Component {
         this.setState({ renamed: null });
     }
 }
+
+const stateToProps = () => ({});
+
+const dispatchToProps = {
+    previous: actions.player.previous,
+    next: actions.player.next,
+    playToggle: actions.player.playToggle
+};
+
+export default connect(stateToProps, dispatchToProps)(PlayerControls);

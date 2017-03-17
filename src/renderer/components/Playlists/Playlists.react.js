@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import PlaylistsNav from './PlaylistsNav.react';
 import FullViewMessage from '../Shared/FullViewMessage.react';
@@ -12,7 +13,7 @@ import { api, actions } from '../../lib';
 |--------------------------------------------------------------------------
 */
 
-export default class Playlists extends Component {
+class Playlists extends Component {
 
     static propTypes = {
         params: React.PropTypes.object,
@@ -27,7 +28,7 @@ export default class Playlists extends Component {
     }
 
     createPlaylist() {
-        actions.playlists.create('New playlist', true);
+        this.props.create('New playlist', true);
     }
 
     render() {
@@ -42,7 +43,7 @@ export default class Playlists extends Component {
         } else if (this.props.playlists.length === 0) {
             playlistContent = (
                 <FullViewMessage>
-                    <p>You haven't created any playlist yet</p>
+                    <p>You haven't created any playlists yet</p>
                     <p className='sub-message'>
                         <a onClick={ this.createPlaylist }>create one now</a>
                     </p>
@@ -68,3 +69,11 @@ export default class Playlists extends Component {
         );
     }
 }
+
+const stateToProps = () => ({});
+
+const dispatchToProps = {
+    create: actions.playlists.create
+};
+
+export default connect(stateToProps, dispatchToProps)(Playlists);

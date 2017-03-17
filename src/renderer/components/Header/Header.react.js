@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Input from 'react-simple-input';
+import { connect } from 'react-redux';
 
 import PlayingBar     from './PlayingBar.react';
 import WindowControls from './WindowControls.react';
@@ -14,7 +15,7 @@ import { api, actions } from '../../lib';
 |--------------------------------------------------------------------------
 */
 
-export default class Header extends Component {
+class Header extends Component {
 
     static propTypes = {
         playerStatus: React.PropTypes.string,
@@ -66,6 +67,14 @@ export default class Header extends Component {
     }
 
     search(e) {
-        actions.library.filterSearch(e.target.value);
+        this.props.filterSearch(e.target.value);
     }
 }
+
+const stateToProps = () => ({});
+
+const dispatchToProps = {
+    filterSearch: actions.library.filterSearch
+};
+
+export default connect(stateToProps, dispatchToProps)(Header);

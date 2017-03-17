@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import InlineSVG from 'svg-inline-react';
 import classnames from 'classnames';
+import { connect } from 'react-redux';
 
 import { api, actions } from '../../lib';
 
@@ -16,7 +17,7 @@ const svgMap = {
 |--------------------------------------------------------------------------
 */
 
-export default class ButtonRepeat extends Component {
+class ButtonRepeat extends Component {
 
     static propTypes = {
         repeat: React.PropTypes.string
@@ -62,6 +63,14 @@ export default class ButtonRepeat extends Component {
                 break;
         }
 
-        actions.player.repeat(repeat);
+        this.props.repeat(repeat);
     }
 }
+
+const stateToProps = () => ({});
+
+const dispatchToProps = {
+    repeat: actions.player.repeat
+};
+
+export default connect(stateToProps, dispatchToProps)(ButtonRepeat);

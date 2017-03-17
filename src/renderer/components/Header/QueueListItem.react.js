@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react';
+import { connect } from 'react-redux';
 import { Button } from 'react-bootstrap';
 
 import classnames from 'classnames';
@@ -11,7 +12,7 @@ import { api, actions } from '../../lib';
 |--------------------------------------------------------------------------
 */
 
-export default class QueueListItem extends PureComponent {
+class QueueListItem extends PureComponent {
 
     static propTypes = {
         dragged: React.PropTypes.bool,
@@ -77,10 +78,19 @@ export default class QueueListItem extends PureComponent {
     }
 
     remove() {
-        actions.queue.remove(this.props.index);
+        this.props.remove(this.props.index);
     }
 
     play() {
-        actions.queue.start(this.props.queueCursor + this.props.index + 1);
+        this.props.start(this.props.queueCursor + this.props.index + 1);
     }
 }
+
+const stateToProps = () => ({});
+
+const dispatchToProps = {
+    remove: actions.queue.remove,
+    start: actions.queue.start
+};
+
+export default connect(stateToProps, dispatchToProps)(QueueListItem);
