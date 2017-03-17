@@ -1,9 +1,9 @@
-const Promise = require('bluebird');
-const flatten = require('flatten');
-const scan = require('evilscan');
-const http = require('axios');
-const extend = require('xtend');
-const os = require('os');
+import Promise from 'bluebird';
+import flatten from 'flatten';
+import scan from 'evilscan';
+import http from 'axios';
+import extend from 'xtend';
+import os from 'os';
 
 class PeerDiscovery {
     constructor(store, lib) {
@@ -63,4 +63,4 @@ class PeerDiscovery {
     }
 }
 
-module.exports = PeerDiscovery;
+export default PeerDiscovery;

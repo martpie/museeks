@@ -1,6 +1,6 @@
 'use strict';
 
-const lib = require('./lib');
+import lib from './lib';
 
 class PowerMonitor {
 
@@ -19,4 +19,4 @@ class PowerMonitor {
     }
 }
 
-module.exports = PowerMonitor;
+export default PowerMonitor;

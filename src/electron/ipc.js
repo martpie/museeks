@@ -180,4 +180,4 @@ class IpcManager {
     }
 }
 
-module.exports = IpcManager;
+export default IpcManager;

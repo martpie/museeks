@@ -1,8 +1,8 @@
 'use strict';
 
-const teeny = require('teeny-conf');
-const electron = require('electron');
-const path = require('path');
+import teeny from 'teeny-conf';
+import electron from 'electron';
+import path from 'path';
 
 class ConfigManager {
 
@@ -58,4 +58,4 @@ class ConfigManager {
     }
 }
 
-module.exports = ConfigManager;
+export default ConfigManager;

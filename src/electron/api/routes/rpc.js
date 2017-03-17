@@ -1,4 +1,4 @@
-module.exports = [{
+export default [{
     method: 'POST',
     path: 'api/v1/rpc',
     handler: (req, res) => {

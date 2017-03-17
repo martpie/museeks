@@ -1,24 +1,23 @@
 'use strict';
 
-require('babel-register');
 process.env.NODE_ENV = 'production'; // Drastically increase performances
 
-const path                 = require('path');
-const os                   = require('os');
-const electron             = require('electron');
+import path from 'path';
+import os from 'os';
+import electron from 'electron';
 
-const lib                  = require('./lib');                    // Library containing app logic
-const IpcManager           = require('./ipc');                    // Manages IPC events
-const configureStore       = require('./redux/configureStore');   // Store configuration
-const TrayManager          = require('./tray');                   // Manages Tray
-const ConfigManager        = require('./config');                 // Handles config
-const { RpcIpcManager }    = require('../shared/modules/rpc');    // Handles RPC IPC Events
-const PowerMonitor         = require('./power-monitor');          // Handle power events
-const IntegrationManager   = require('./integration');            // Applies various integrations
-const init                 = require('./init');
+import lib from './lib';                               // Library containing app logic
+import IpcManager from './ipc';                        // Manages IPC events
+import configureStore from './redux/configureStore';   // Store configuration
+import TrayManager from './tray';                      // Manages Tray
+import ConfigManager from './config';                  // Handles config
+import { RpcIpcManager } from '../shared/modules/rpc'; // Handles RPC IPC Events
+import PowerMonitor from './power-monitor';            // Handle power events
+import IntegrationManager from './integration';        // Applies various integrations
+import init from './init';
 
-const ApiManager           = require('./api/server');
-const PeerDiscoveryManager = require('./peer-discovery');
+import ApiManager from './api/server';
+import PeerDiscoveryManager from './peer-discovery';
 
 const appRoot = path.resolve(__dirname, '../..'); // app/ directory
 const srcPath = path.join(appRoot, 'src'); // app/src/ directory

@@ -20,7 +20,7 @@ class WindowControls extends PureComponent {
 
     render() {
         if (!this.props.active) return null;
-console.log(this.props)
+
         return (
             <div className='window-controls'>
                 <button className='window-control' onClick={ this.props.close() }>&times;</button>
