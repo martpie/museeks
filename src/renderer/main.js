@@ -16,7 +16,7 @@ import store from './redux/store';
 import lib from './lib';
 import init from './init';
 
-import { RpcIpcManager } from '../shared/modules/rpc'
+import { RpcIpcManager } from 'electron-simple-rpc';
 
 // Start listening for RPC IPC events
 const rpcIpcManager = new RpcIpcManager(lib, 'mainThread');

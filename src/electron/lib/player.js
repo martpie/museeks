@@ -1,4 +1,4 @@
-import { rpcWrap } from '../../shared/modules/rpc';
+import { rpcWrap } from 'electron-simple-rpc';
 
 const functions = [
     'play',

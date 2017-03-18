@@ -11,7 +11,7 @@ import IpcManager from './ipc';                        // Manages IPC events
 import configureStore from './redux/configureStore';   // Store configuration
 import TrayManager from './tray';                      // Manages Tray
 import ConfigManager from './config';                  // Handles config
-import { RpcIpcManager } from '../shared/modules/rpc'; // Handles RPC IPC Events
+import { RpcIpcManager } from 'electron-simple-rpc';   // Handles RPC IPC Events
 import PowerMonitor from './power-monitor';            // Handle power events
 import IntegrationManager from './integration';        // Applies various integrations
 import init from './init';

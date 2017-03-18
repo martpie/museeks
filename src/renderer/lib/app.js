@@ -1,5 +1,5 @@
 import { remote } from 'electron';
-import { rpcWrap } from '../../shared/modules/rpc';
+import { rpcWrap } from 'electron-simple-rpc';
 
 const remoteAppFunctions = rpcWrap('app', ['restart'], 'electron');
 
