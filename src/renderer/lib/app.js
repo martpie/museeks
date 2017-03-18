@@ -1,7 +1,7 @@
 import { remote } from 'electron';
 import { rpcWrap } from 'electron-simple-rpc';
 
-const remoteAppFunctions = rpcWrap('app', ['restart'], 'electron');
+const remoteAppFunctions = rpcWrap('app', ['restart', 'toggleSleepBlocker'], 'electron');
 
 export default {
     ...remoteAppFunctions,

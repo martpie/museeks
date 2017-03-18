@@ -29,7 +29,7 @@
     "classnames": "2.2.5",
     "electron-redux": "^1.2.5",
     "electron-simple-ipc": "^1.0.1",
-    "electron-simple-rpc": "^1.0.0",
+    "electron-simple-rpc": "^1.0.3",
     "evilscan": "^1.0.3",
     "flatten": "^1.0.2",
     "font-awesome": "4.7.0",

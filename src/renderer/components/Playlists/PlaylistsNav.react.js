@@ -6,9 +6,8 @@ import Icon from 'react-fontawesome';
 import { actions } from '../../lib';
 
 import PlaylistsNavLink from './PlaylistsNavLink.react';
-
-import ipcRenderer from 'electron';
-
+import { remote } from 'electron';
+const { Menu } = remote;
 
 /*
 |--------------------------------------------------------------------------
@@ -86,27 +85,6 @@ class PlaylistsNav extends Component {
         );
     }
 
-    componentDidMount() {
-        const self = this;
-
-        // TODO
-        // ipcRenderer.on('playlistContextMenuReply', (event, reply, _id) => {
-        //     switch(reply) {
-        //         case 'delete':
-        //             this.props.remove(_id);
-        //             break;
-        //         case 'rename':
-        //             self.setState({ renamed: _id });
-        //             break;
-        //     }
-        // });
-    }
-
-    componentWillUnmount() {
-        // TODO
-        // ipcRenderer.removeAllListeners('playlistContextMenuReply');
-    }
-
     componentDidUpdate() {
         // If a playlist is being update
         if (!!this.refs.renamedPlaylist && document.activeElement !== this.refs.renamedPlaylist) {
@@ -115,7 +93,24 @@ class PlaylistsNav extends Component {
     }
 
     showContextMenu(_id) {
-        ipcRenderer.send('playlistContextMenu', _id);
+        const renamePlaylist = () => {
+            this.setState({ renamed: _id });
+        };
+        const deletePlaylist = () => {
+            this.props.remove(_id);
+        };
+        const template = [
+            {
+                label: 'Delete',
+                click: deletePlaylist
+            },
+            {
+                label: 'Rename',
+                click: renamePlaylist
+            }
+        ];
+        const menu = Menu.buildFromTemplate(template);
+        menu.popup(remote.getCurrentWindow());
     }
 
     createPlaylist() {

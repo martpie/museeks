@@ -34,7 +34,7 @@ const library = (lib) => {
         dispatch(lib.actions.config.set('sleepBlocker', value));
         dispatch(lib.actions.config.save());
 
-        ipcRenderer.send('toggleSleepBlocker', value, 'prevent-app-suspension');
+        lib.app.toggleSleepBlocker(value, 'prevent-app-suspension');
 
         dispatch({
             type: 'APP_REFRESH_CONFIG'
@@ -43,7 +43,7 @@ const library = (lib) => {
 
     const checkSleepBlocker = () => (dispatch, getState) => {
         if (getState().config.sleepBlocker) {
-            ipcRenderer.send('toggleSleepBlocker', true, 'prevent-app-suspension');
+            lib.app.toggleSleepBlocker(true, 'prevent-app-suspension');
         }
     };
 
