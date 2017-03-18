@@ -1,5 +1,3 @@
-'use strict';
-
 import { platform } from 'os';
 
 let Integration = null;

@@ -1,5 +1,3 @@
-'use strict';
-
 process.env.NODE_ENV = 'production'; // Drastically increase performances
 
 import path from 'path';

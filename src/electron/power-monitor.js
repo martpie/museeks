@@ -1,5 +1,3 @@
-'use strict';
-
 import lib from './lib';
 
 class PowerMonitor {

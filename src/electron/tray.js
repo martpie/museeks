@@ -1,5 +1,3 @@
-'use strict';
-
 import os from 'os';
 
 import { Tray, Menu, app, ipcMain } from 'electron';

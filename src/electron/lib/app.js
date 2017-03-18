@@ -1,6 +1,6 @@
 import { BrowserWindow, app, powerSaveBlocker } from 'electron';
 
-let sleepBlockerId;
+const sleepBlocker = {};
 
 const restart = () => {
     app.relaunch({ args: process.argv.slice(1) + ['--relaunch'] });
@@ -9,10 +9,10 @@ const restart = () => {
 
 const toggleSleepBlocker = (toggle, mode) => {
     if (toggle) {
-        sleepBlockerId = powerSaveBlocker.start(mode);
+        sleepBlocker.id = powerSaveBlocker.start(mode);
     } else {
-        powerSaveBlocker.stop(sleepBlockerId);
-        delete(sleepBlockerId);
+        powerSaveBlocker.stop(sleepBlocker.id);
+        delete(sleepBlocker.id);
     }
 };
 
