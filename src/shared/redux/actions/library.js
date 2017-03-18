@@ -56,28 +56,38 @@ const library = (lib) => {
                 Promise.map(folders, (folder) => {
                     return realpath(folder)
                 }).then((resolvedFolders) => {
-                    let musicFolders = getState().config.musicFolders;
-                    // Check if we received folders
-                    if (resolvedFolders !== undefined) {
-                        musicFolders = musicFolders.concat(resolvedFolders);
-                        // Remove duplicates, useless children, ect...
-                        musicFolders = utils.removeUselessFolders(musicFolders);
-                        musicFolders.sort();
-                        dispatch(lib.actions.config.set('musicFolders', musicFolders));
-                        dispatch(lib.actions.config.save());
-                    }
-                 });
+                    const existingFolders = getState().config.musicFolders;
+                    const musicFolders = existingFolders.concat(resolvedFolders);
+                    const folders = utils.removeUselessFolders(musicFolders);
+                    folders.sort();
+
+                    dispatch(lib.actions.config.set('musicFolders', folders));
+                    dispatch(lib.actions.config.save());
+                    dispatch({
+                        type: 'APP_LIBRARY_UPDATE_FOLDERS',
+                        payload: {
+                            folders
+                        }
+                    });
+                });
              }
          });
     };
 
-    const removeFolder = (index) => (dispatch) => {
+    const removeFolder = (index) => (dispatch, getState) => {
         const state = getState();
-        if (!state.library.refreshingLibrary) {
-            const musicFolders = state.config.musicFolders;
-            musicFolders.splice(index, 1);
-            dispatch(lib.actions.config.set('musicFolders', musicFolders));
+        if (!state.refreshingLibrary) {
+            const folders = state.config.musicFolders;
+            folders.splice(index, 1);
+
+            dispatch(lib.actions.config.set('musicFolders', folders));
             dispatch(lib.actions.config.save());
+            dispatch({
+                type: 'APP_LIBRARY_UPDATE_FOLDERS',
+                payload: {
+                    folders
+                }
+            });
         }
     };
 

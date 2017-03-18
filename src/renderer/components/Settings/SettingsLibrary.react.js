@@ -30,7 +30,7 @@ class SettingsLibrary extends Component {
     }
 
     render() {
-        const musicFolders = this.props.config.musicFolders;
+        const musicFolders = this.props.musicFolders;
 
         const buttonsGroup = (
             <ButtonGroup>
@@ -88,7 +88,9 @@ class SettingsLibrary extends Component {
 }
 
 
-const stateToProps = () => ({});
+const stateToProps = (state) => ({
+    musicFolders: state.config.musicFolders
+});
 
 const dispatchToProps = {
     stop: actions.player.stop,

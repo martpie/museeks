@@ -49,15 +49,15 @@ class Museeks extends Component {
                     <Row className='content'>
                         { React.cloneElement(
                             this.props.children, {
-                                app               : this,
-                                config            : store.config,
-                                playerStatus      : store.playerStatus,
-                                queue             : store.queue,
-                                tracks            : store.tracks[store.tracksCursor].sub,
-                                library           : store.tracks[store.tracksCursor].all,
-                                playlists         : store.playlists,
-                                refreshingLibrary : store.refreshingLibrary,
-                                refreshProgress   : store.refreshProgress,
+                                app: this,
+                                config: store.config,
+                                playerStatus: store.playerStatus,
+                                queue: store.queue,
+                                tracks: store.tracks[store.tracksCursor].sub,
+                                library: store.tracks[store.tracksCursor].all,
+                                playlists: store.playlists,
+                                refreshingLibrary: store.refreshingLibrary,
+                                refreshProgress: store.refreshProgress,
                                 trackPlayingId
                             })
                         }

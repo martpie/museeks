@@ -54,8 +54,10 @@ const library = (lib) => {
 
             dispatch({
                 type: 'APP_PLAYER_START',
-                queuePosition,
-                _id
+                payload: {
+                    queuePosition,
+                    _id
+                }
             });
         }
     };
@@ -65,8 +67,6 @@ const library = (lib) => {
         return {
             type: 'APP_PLAYER_STOP'
         };
-        // DR: We can Remove?
-        // ipcRenderer.send('playerAction', 'stop');
     };
 
     const next = () => (dispatch, getState) => {
@@ -98,16 +98,14 @@ const library = (lib) => {
     };
 
     const previous = () => (dispatch, getState) => {
+        const { queue, queueCursor } = getState();
         const currentTime = lib.player.getCurrentTime();
 
-        const { queue, queueCursor } = getState();
-        let newQueueCursor = queueCursor;
-
-        // If track started less than 5 seconds ago, play th previous track,
+        // If track started less than 5 seconds ago, play the previous track,
         // otherwise replay the current one
-        if (currentTime < 5) {
-            newQueueCursor = queueCursor - 1;
-        }
+        const newQueueCursor = currentTime < 5
+            ? queueCursor - 1
+            : queueCursor;
 
         const newTrack = queue[newQueueCursor];
 
@@ -119,8 +117,10 @@ const library = (lib) => {
 
             dispatch({
                 type: 'APP_PLAYER_PREVIOUS',
-                currentTime,
-                newQueueCursor,
+                payload: {
+                    currentTime,
+                    newQueueCursor
+                }
             });
         } else {
             dispatch(stop());
@@ -134,8 +134,10 @@ const library = (lib) => {
         const currentSrc = lib.player.getSrc();
         return {
             type: 'APP_PLAYER_SHUFFLE',
-            shuffle,
-            currentSrc
+            payload: {
+                shuffle,
+                currentSrc
+            }
         };
     };
 
@@ -145,7 +147,9 @@ const library = (lib) => {
 
         return {
             type: 'APP_PLAYER_REPEAT',
-            repeat
+            payload: {
+                repeat
+            }
         };
     };
 
@@ -190,8 +194,6 @@ const library = (lib) => {
     };
 
     const jumpTo = (to) => {
-        // TODO (y.solovyov) do we want to set some explicit state?
-        // if yes, what should it be? if not, do we need this actions at all?
         lib.player.setAudioCurrentTime(to);
         return {
             type: 'APP_PLAYER_JUMP_TO'

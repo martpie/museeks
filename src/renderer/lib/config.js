@@ -5,6 +5,7 @@ const functions = [
     'delete',
     'save',
     'saveSync',
+    'get'
 ];
 
 export default rpcWrap('config', functions, 'electron');

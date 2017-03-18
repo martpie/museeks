@@ -6,9 +6,9 @@ const library = (lib) => {
         meta: { key, value }
     });
 
-    const save = () => (dispatch) => ({
+    const save = () => ({
         type: 'APP_CONFIG_SAVE',
-        payload: lib.config.save(),
+        payload: lib.config.save()
     });
 
     return {

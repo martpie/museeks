@@ -49,7 +49,7 @@ class Settings extends Component {
                         { React.cloneElement(
                             this.props.children, {
                                 config,
-                                refreshingLibrary : this.props.refreshingLibrary,
+                                refreshingLibrary: this.props.refreshingLibrary,
                                 refreshProgress: this.props.refreshProgress,
                             })
                         }

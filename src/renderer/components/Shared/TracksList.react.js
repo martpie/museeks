@@ -33,14 +33,14 @@ class TracksList extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            selected  : [],
+            selected : [],
             scrollTop : 0
         };
 
-        this.showContextMenu  = this.showContextMenu.bind(this);
+        this.showContextMenu = this.showContextMenu.bind(this);
         this.scrollTracksList = this.scrollTracksList.bind(this);
-        this.selectTrack      = this.selectTrack.bind(this);
-        this.onKey            = this.onKey.bind(this);
+        this.selectTrack = this.selectTrack.bind(this);
+        this.onKey = this.onKey.bind(this);
 
         this.rowHeight = 30;
     }
@@ -332,13 +332,14 @@ class TracksList extends Component {
             playlistsList = playlistsList.filter((elem) => elem._id !== this.props.currentPlaylist);
         }
 
-        ipcRenderer.send('tracksListContextMenu', JSON.stringify({
-            type: this.props.type,
-            selectedCount: this.state.selected.length,
-            track: this.props.tracks[index],
-            playlists: playlistsList,
-            playerStatus: this.props.playerStatus
-        }));
+        // TODO
+        // ipcRenderer.send('tracksListContextMenu', JSON.stringify({
+        //     type: this.props.type,
+        //     selectedCount: this.state.selected.length,
+        //     track: this.props.tracks[index],
+        //     playlists: playlistsList,
+        //     playerStatus: this.props.playerStatus
+        // }));
     }
 }
 

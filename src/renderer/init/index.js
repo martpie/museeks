@@ -1,6 +1,7 @@
 import { ipcRenderer } from 'electron';
 
 const library = (store, lib) => {
+    const { dispatch } = store;
 
     const saveBounds = () => {
         const now = window.performance.now();
@@ -27,7 +28,7 @@ const library = (store, lib) => {
 
     // Listen for main-process events
     ipcRenderer.on('close', () => {
-        store.dispatch(lib.actions.app.close());
+        dispatch(lib.actions.app.close());
     });
 
     // Prevent some events
@@ -43,6 +44,11 @@ const library = (store, lib) => {
     const currentWindow = lib.app.browserWindows.main;
     currentWindow.on('resize', saveBounds);
     currentWindow.on('move', saveBounds);
+
+    // load data and apply app settings
+    dispatch(lib.actions.library.load());
+    dispatch(lib.actions.playlists.refresh());
+    dispatch(lib.actions.settings.check());
 }
 
 export default library;

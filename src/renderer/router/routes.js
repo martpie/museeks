@@ -19,33 +19,29 @@ import SettingsAudio    from '../components/Settings/SettingsAudio.react';
 import SettingsAdvanced from '../components/Settings/SettingsAdvanced.react';
 import SettingsAbout    from '../components/Settings/SettingsAbout.react';
 
+export default (store) => {
+    const init = {
+        library: () => store.dispatch(lib.actions.library.setTracksCursor('library')),
+        playlist: (route) => Promise.all([
+            store.dispatch(lib.actions.playlists.load(route.params.playlistId)),
+            store.dispatch(lib.actions.library.setTracksCursor('playlist'))
+        ])
+    };
 
-const init = {
-    app: () => {},
-    library: () => lib.actions.library.setTracksCursor('library'),
-    playlist: (route) => Promise.all([
-        lib.actions.playlists.load(route.params.playlistId),
-        lib.actions.library.setTracksCursor('playlist')
-    ])
+    return (
+        <Route component={ App } path='/'>
+            <Route path='library' component={ Library } onEnter={ init.library } />
+            <Route path='settings' component={ Settings }>
+                <IndexRedirect to="library" />
+                <Route path='about' component={ SettingsAbout } />
+                <Route path='advanced' component={ SettingsAdvanced } />
+                <Route path='audio' component={ SettingsAudio } />
+                <Route path='interface' component={ SettingsUI } />
+                <Route path='library' component={ SettingsLibrary } />
+            </Route>
+            <Route path='playlists' component={ Playlists }>
+                <Route path=':playlistId' component={ Playlist } onEnter={ ()=>init.playlist } />
+            </Route>
+        </Route>
+    );
 };
-
-// Router
-const routes = (
-    <Route component={ App } path='/' onEnter={ init.app }>
-        <Route path='library' component={ Library } onEnter={ init.library } />
-        <Route path='settings' component={ Settings }>
-            <IndexRedirect to="library" />
-            <Route path='about' component={ SettingsAbout } />
-            <Route path='advanced' component={ SettingsAdvanced } />
-            <Route path='audio' component={ SettingsAudio } />
-            <Route path='interface' component={ SettingsUI } />
-            <Route path='library' component={ SettingsLibrary } />
-        </Route>
-        <Route path='playlists' component={ Playlists }>
-            <Route path=':playlistId' component={ Playlist } onEnter={ init.playlist } />
-        </Route>
-    </Route>
-);
-
-
-export default routes;

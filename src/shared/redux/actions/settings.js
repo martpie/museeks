@@ -3,19 +3,24 @@ import { ipcRenderer } from 'electron';
 
 const library = (lib) => {
 
-    const check = () => {
-        checkTheme();
-        checkDevMode();
-        checkSleepBlocker();
-        // if (getState().config.autoUpdateChecker) checkForUpdate({ silentFail: true }); TODO
-    };
+    const check = () => (dispatch, getState) => {
+        const { config } = getState();
 
-    const checkTheme = () => {
-        // const themeName = getState().config.theme; TODO
-        // document.querySelector('body').classList.add(`theme-${themeName}`);
+        // set theme
+        document.querySelector('body').classList.add(`theme-${config.theme}`);
+
+        // set dev mode
+        if (config.devMode) lib.app.browserWindows.main.webContents.openDevTools();
+
+        // set sleep mode
+        if (config.sleepBlocker) ipcRenderer.send('toggleSleepBlocker', true, 'prevent-app-suspension');
+
+        // check for updates
+        if (config.autoUpdateChecker) checkForUpdate({ silentFail: true });
     };
 
     const toggleDarkTheme = (value) => (dispatch) => {
+        console.log('toggleDarkTheme', value)
         const oldTheme = value ? 'light' : 'dark';
         const newTheme = value ? 'dark' : 'light';
 
@@ -41,12 +46,6 @@ const library = (lib) => {
         });
     };
 
-    const checkSleepBlocker = () => (dispatch, getState) => {
-        if (getState().config.sleepBlocker) {
-            ipcRenderer.send('toggleSleepBlocker', true, 'prevent-app-suspension');
-        }
-    };
-
     const toggleDevMode = (value) => (dispatch) => {
 
         // Open dev tools if needed
@@ -59,10 +58,6 @@ const library = (lib) => {
         dispatch({
             type: 'APP_REFRESH_CONFIG'
         });
-    };
-
-    const checkDevMode = () => (dispatch, getState) => {
-        if (getState().config.devMode) lib.app.browserWindows.main.webContents.openDevTools();
     };
 
     const toggleAutoUpdateChecker = (value) => (dispatch) => {
@@ -116,7 +111,9 @@ const library = (lib) => {
     const refreshProgress = (percentage) => (dispatch) => {
         dispatch({
             type: 'APP_LIBRARY_REFRESH_PROGRESS',
-            percentage
+            payload: {
+                percentage
+            }
         });
     };
 
@@ -131,10 +128,7 @@ const library = (lib) => {
 
     return {
         check,
-        checkDevMode,
         checkForUpdate,
-        checkSleepBlocker,
-        checkTheme,
         refreshProgress,
         toggleAutoUpdateChecker,
         toggleDarkTheme,

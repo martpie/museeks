@@ -11,7 +11,7 @@ import { Router,  hashHistory } from 'react-router';
 import { Provider } from 'react-redux';
 
 import database from './database';
-import routes from './router/routes';
+import getRoutes from './router/routes';
 import store from './redux/store';
 import lib from './lib';
 import init from './init';
@@ -43,7 +43,7 @@ require('../styles/main.scss');
 
 ReactDOM.render(
     <Provider store={ store }>
-        <Router routes={ routes } history={ hashHistory } />
+        <Router routes={ getRoutes(store) } history={ hashHistory } />
     </Provider>,
     document.getElementById('wrap')
 );

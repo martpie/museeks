@@ -1,16 +1,17 @@
+import extend from 'xtend';
 import utils from '../../utils/utils';
 
-export default (state = {}, payload) => {
-    switch (payload.type) {
+export default (state = {}, action) => {
+    switch (action.type) {
         case('APP_FILTER_SEARCH'): {
-            if (!payload.search) {
+            if (!action.payload.search) {
                 const newState = { ...state };
                 newState.tracks[state.tracksCursor].sub = [...state.tracks[state.tracksCursor].all];
 
                 return newState;
             }
 
-            const search = utils.stripAccents(payload.search);
+            const search = utils.stripAccents(action.payload.search);
 
             const allCurrentTracks = state.tracks[state.tracksCursor].all;
             const tracks = [].concat(allCurrentTracks).filter((track) => { // Problem here
@@ -26,10 +27,33 @@ export default (state = {}, payload) => {
             return newState;
         }
 
+        case('APP_LIBRARY_UPDATE_FOLDERS'): {
+            const config = extend(state.config, { musicFolders: action.payload.folders });
+            return {
+                ...state,
+                config
+            };
+        }
+
+        case('APP_LIBRARY_REMOVE_FOLDER'): {
+            if (!state.refreshingLibrary) {
+                const musicFolders = app.config.get('musicFolders');
+
+                musicFolders.splice(payload.index, 1);
+
+                app.config.set('musicFolders', musicFolders);
+                app.config.saveSync();
+
+                return { ...state };
+            }
+
+            return state;
+        }
+
         case('APP_LIBRARY_FETCHED_COVER'): {
             return {
                 ...state,
-                cover: payload.cover || null
+                cover: action.payload.cover || null
             };
         }
 
@@ -41,7 +65,7 @@ export default (state = {}, payload) => {
         case('APP_LIBRARY_REFRESH_PENDING'): {
             return {
                 ...state,
-                status:'An apple a day keeps Dr Dre away',
+                status: 'An apple a day keeps Dr Dre away',
                 refreshingLibrary: true
             };
         }
@@ -57,14 +81,14 @@ export default (state = {}, payload) => {
         case('APP_LIBRARY_REFRESH_PROGRESS'): {
             return {
                 ...state,
-                refreshProgress: payload.percentage
+                refreshProgress: action.payload.percentage
             };
         }
 
         case('APP_LIBRARY_SET_TRACKSCURSOR'): {
             return {
                 ...state,
-                tracksCursor: payload.cursor
+                tracksCursor: action.payload.cursor
             };
         }
 

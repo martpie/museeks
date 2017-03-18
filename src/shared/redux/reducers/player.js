@@ -1,10 +1,10 @@
-export default (state = {}, payload) => {
-    switch (payload.type) {
+export default (state = {}, action) => {
+    switch (action.type) {
         case('APP_PLAYER_START'): {
             const queue = [...state.tracks[state.tracksCursor].sub];
-            const id    = payload._id;
+            const id = action.payload._id;
 
-            let queueCursor = payload.queuePosition; // Clean that variable mess later
+            let queueCursor = action.payload.queuePosition; // Clean that variable mess later
 
             // Check if we have to shuffle the queue
             if (state.shuffle) {
@@ -64,9 +64,9 @@ export default (state = {}, payload) => {
         case('APP_PLAYER_STOP'): {
             const newState = {
                 ...state,
-                queue          :  [],
-                queueCursor    :  null,
-                playerStatus   : 'stop'
+                queue:  [],
+                queueCursor:  null,
+                playerStatus: 'stop'
             };
 
             return newState;
@@ -76,7 +76,7 @@ export default (state = {}, payload) => {
             return {
                 ...state,
                 playerStatus: 'play',
-                queueCursor: payload.newQueueCursor
+                queueCursor: action.payload.newQueueCursor
             };
         }
 
@@ -84,7 +84,7 @@ export default (state = {}, payload) => {
             return {
                 ...state,
                 playerStatus: 'play',
-                queueCursor: payload.newQueueCursor
+                queueCursor: action.payload.newQueueCursor
             };
         }
 
@@ -93,7 +93,7 @@ export default (state = {}, payload) => {
         }
 
         case('APP_PLAYER_SHUFFLE'): {
-            if (payload.shuffle) {
+            if (action.payload.shuffle) {
                 // Let's shuffle that
                 const queueCursor = state.queueCursor;
                 let queue = [...state.queue];
@@ -129,7 +129,7 @@ export default (state = {}, payload) => {
             }
 
             const currentTrackIndex = state.oldQueue.findIndex((track) => {
-                return payload.currentSrc === `file://${encodeURI(track.path)}`;
+                return action.payload.currentSrc === `file://${encodeURI(track.path)}`;
             });
 
             // Roll back to the old but update queueCursor
@@ -144,7 +144,7 @@ export default (state = {}, payload) => {
         case('APP_PLAYER_REPEAT'): {
             return {
                 ...state,
-                repeat: payload.repeat
+                repeat: action.payload.repeat
             };
         }
 
