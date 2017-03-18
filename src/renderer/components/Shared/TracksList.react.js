@@ -10,14 +10,135 @@ import { actions } from '../../lib';
 import { player } from '../../lib';
 import utils from '../../../shared/utils/utils';
 
-import ipcRenderer from 'electron';
-
+import { remote } from 'electron';
+const { Menu } = remote;
 
 /*
 |--------------------------------------------------------------------------
 | Child - ArtistList
 |--------------------------------------------------------------------------
 */
+
+const attachTrackListContextMenu = (data, callback) => {
+    let playlistTemplate = [];
+    let addToQueueTemplate = [];
+
+    if (data.playlists) {
+        playlistTemplate = [
+            {
+                label: 'Create new playlist...',
+                click: () => {
+                    callback('createPlaylist');
+                }
+            }
+        ];
+
+        if (data.playlists.length > 0) {
+            playlistTemplate.push(
+                {
+                    type: 'separator'
+                }
+            );
+        }
+
+        data.playlists.forEach((elem) => {
+            playlistTemplate.push({
+                label: elem.name,
+                click: () => {
+                    callback('addToPlaylist', {
+                        playlistId: elem._id
+                    });
+                }
+            });
+        });
+    } else {
+        playlistTemplate = [
+            {
+                label: 'Create new playlist...',
+                click: () => {
+                    callback('createPlaylist');
+                }
+            },
+            {
+                type: 'separator'
+            },
+            {
+                label: 'No playlist',
+                enabled: false
+            }
+        ];
+    }
+
+    if (data.playerStatus !== 'stop') {
+        addToQueueTemplate = [
+            {
+                label: 'Add to queue',
+                click: () => {
+                    callback('addToQueue');
+                }
+            },
+            {
+                label: 'Play next',
+                click: () => {
+                    callback('playNext');
+                }
+            },
+            {
+                type: 'separator'
+            }
+        ];
+    }
+
+    const template = [
+        {
+            label: data.selectedCount > 1 ? `${data.selectedCount} tracks selected` : `${data.selectedCount} track selected`,
+            enabled: false
+        },
+        {
+            type: 'separator'
+        },
+        ...addToQueueTemplate,
+        {
+            label: 'Add to playlist',
+            submenu: playlistTemplate
+        },
+        {
+            type: 'separator'
+        },
+        {
+            label: `Search for '${data.track.artist[0]}'`,
+            click: () => {
+                callback('searchFor', { search: data.track.artist[0] });
+            }
+        },
+        {
+            label: `Search for '${data.track.album}'`,
+            click: () => {
+                callback('searchFor', { search: data.track.album });
+            }
+        },
+        {
+            type: 'separator'
+        },
+        {
+            label: 'Show in file manager',
+            click: () => {
+                shell.showItemInFolder(data.track.path);
+            }
+        }
+    ];
+
+    if (data.type === 'playlist') template.push({
+        label: 'Remove from playlist',
+        click: () => {
+            callback('removeFromPlaylist');
+        }
+    });
+
+    const menu = Menu.buildFromTemplate(template);
+
+    menu.popup(remote.getCurrentWindow());
+};
 
 class TracksList extends Component {
 
@@ -67,56 +188,6 @@ class TracksList extends Component {
                 </div>
             </div>
         );
-    }
-
-    componentDidMount() {
-        const self = this;
-
-        // TODO
-        // ipcRenderer.on('tracksListContextMenuReply', async (event, reply, data) => {
-        //     const selected = self.state.selected;
-        //
-        //     switch(reply) {
-        //         case 'addToQueue': {
-        //             this.props.add(selected);
-        //             break;
-        //         }
-        //         case 'playNext': {
-        //             this.props.addNext(selected);
-        //             break;
-        //         }
-        //         case 'addToPlaylist': {
-        //             const isShown = self.props.type === 'playlist' && data === self.props.currentPlaylist;
-        //             this.props.addTracksTo(data.playlistId, selected, isShown);
-        //             break;
-        //         }
-        //         case 'removeFromPlaylist': {
-        //             if (self.props.type === 'playlist') {
-        //                 this.props.removeTracksFrom(self.props.currentPlaylist, selected);
-        //             }
-        //             break;
-        //         }
-        //         case 'createPlaylist': {
-        //             const playlistId = await this.props.create('New playlist', false);
-        //             const isShown = self.props.type === 'playlist' && data === self.props.currentPlaylist;
-        //             this.props.addTracksTo(playlistId, selected, isShown);
-        //             break;
-        //         }
-        //         case 'searchFor': {
-        //             // small hack, we can't call actions.library.filterSearch directly
-        //             // otherwise the search clear button will not appear, because it will not detect an input event on itself
-        //             const searchInput = document.querySelector('input[type="text"].search');
-        //             searchInput.value = data.search;
-        //             searchInput.dispatchEvent(new Event('input', { bubbles: true }));
-        //             break;
-        //         }
-        //     }
-        // });
-    }
-
-    componentWillUnmount() {
-        // TODO
-        // ipcRenderer.removeAllListeners('tracksListContextMenuReply');
     }
 
     scrollTracksList() {
@@ -332,14 +403,53 @@ class TracksList extends Component {
             playlistsList = playlistsList.filter((elem) => elem._id !== this.props.currentPlaylist);
         }
 
-        // TODO
-        // ipcRenderer.send('tracksListContextMenu', JSON.stringify({
-        //     type: this.props.type,
-        //     selectedCount: this.state.selected.length,
-        //     track: this.props.tracks[index],
-        //     playlists: playlistsList,
-        //     playerStatus: this.props.playerStatus
-        // }));
+        const processClick = (reply, data) => {
+            const selected = this.state.selected;
+            switch(reply) {
+                case 'addToQueue': {
+                    this.props.add(selected);
+                    break;
+                }
+                case 'playNext': {
+                    this.props.addNext(selected);
+                    break;
+                }
+                case 'addToPlaylist': {
+                    const isShown = this.props.type === 'playlist' && data === this.props.currentPlaylist;
+                    this.props.addTracksTo(data.playlistId, selected, isShown);
+                    break;
+                }
+                case 'removeFromPlaylist': {
+                    if (this.props.type === 'playlist') {
+                        this.props.removeTracksFrom(this.props.currentPlaylist, selected);
+                    }
+                    break;
+                }
+                case 'createPlaylist': {
+                    this.props.create('New playlist', false).then((playlistId) => {
+                        const isShown = this.props.type === 'playlist' && data === this.props.currentPlaylist;
+                        this.props.addTracksTo(playlistId, selected, isShown);
+                    })
+                    break;
+                }
+                case 'searchFor': {
+                    // small hack, we can't call actions.library.filterSearch directly
+                    // otherwise the search clear button will not appear, because it will not detect an input event on itself
+                    const searchInput = document.querySelector('input[type="text"].search');
+                    searchInput.value = data.search;
+                    searchInput.dispatchEvent(new Event('input', { bubbles: true }));
+                    break;
+                }
+            }
+        };
+
+        attachTrackListContextMenu({
+            type: this.props.type,
+            selectedCount: this.state.selected.length,
+            track: this.props.tracks[index],
+            playlists: playlistsList,
+            playerStatus: this.props.playerStatus
+        }, processClick);
     }
 }
 

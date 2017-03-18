@@ -13,14 +13,13 @@ const library = (lib) => {
         if (config.devMode) lib.app.browserWindows.main.webContents.openDevTools();
 
         // set sleep mode
-        if (config.sleepBlocker) ipcRenderer.send('toggleSleepBlocker', true, 'prevent-app-suspension');
+        if (config.sleepBlocker) lib.app.toggleSleepBlocker(true, 'prevent-app-suspension');
 
         // check for updates
         if (config.autoUpdateChecker) checkForUpdate({ silentFail: true });
     };
 
     const toggleDarkTheme = (value) => (dispatch) => {
-        console.log('toggleDarkTheme', value)
         const oldTheme = value ? 'light' : 'dark';
         const newTheme = value ? 'dark' : 'light';
 
@@ -39,7 +38,7 @@ const library = (lib) => {
         dispatch(lib.actions.config.set('sleepBlocker', value));
         dispatch(lib.actions.config.save());
 
-        ipcRenderer.send('toggleSleepBlocker', value, 'prevent-app-suspension');
+        lib.app.toggleSleepBlocker(value, 'prevent-app-suspension');
 
         dispatch({
             type: 'APP_REFRESH_CONFIG'

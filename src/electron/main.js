@@ -7,7 +7,6 @@ import os from 'os';
 import electron from 'electron';
 
 import lib from './lib';                               // Library containing app logic
-import IpcManager from './ipc';                        // Manages IPC events
 import configureStore from './redux/configureStore';   // Store configuration
 import TrayManager from './tray';                      // Manages Tray
 import ConfigManager from './config';                  // Handles config
@@ -17,7 +16,7 @@ import IntegrationManager from './integration';        // Applies various integr
 import init from './init';
 
 import PeerDiscoveryManager from './peer-discovery';
-import api from './api';
+import apiServer from './api';
 
 const appRoot = path.resolve(__dirname, '../..'); // app/ directory
 const srcPath = path.join(appRoot, 'src'); // app/src/ directory
@@ -98,20 +97,19 @@ app.on('ready', () => {
         // Dereference the window object
         mainWindow = null;
     });
-
     mainWindow.on('ready-to-show', () => {
         mainWindow.show();
+    });
+    mainWindow.on('close', (e) => {
+        e.preventDefault();
+        mainWindow.webContents.send('close');
     });
 
     // Init
     init(store, lib);
 
     // Start the API server
-    api(store, lib);
-
-    // IPC events
-    const ipcManager = new IpcManager(mainWindow);
-    ipcManager.bindEvents();
+    apiServer(store, lib);
 
     // Start listening for RPC IPC events
     const rpcIpcManager = new RpcIpcManager(lib, 'electron');

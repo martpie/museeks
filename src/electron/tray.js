@@ -140,7 +140,6 @@ class IpcManager {
         this.tray.setContextMenu(Menu.buildFromTemplate(menuTemplate));
     }
 
-
     updateTrayMetadata(metadata) {
         this.songDetails = [
             {
