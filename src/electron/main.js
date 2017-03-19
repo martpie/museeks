@@ -13,14 +13,17 @@ import ConfigManager from './config';                  // Handles config
 import { RpcIpcManager } from 'electron-simple-rpc';   // Handles RPC IPC Events
 import PowerMonitor from './power-monitor';            // Handle power events
 import IntegrationManager from './integration';        // Applies various integrations
+
 import init from './init';
+import initMainWindow from './windows/initMainWindow';
+import getIcons from './other/getIcons';
 
 import PeerDiscoveryManager from './peer-discovery';
 
 const appRoot = path.resolve(__dirname, '../..'); // app/ directory
-const srcPath = path.join(appRoot, 'src'); // app/src/ directory
+const srcPath = path.join(appRoot, 'src');        // app/src/ directory
 
-const { nativeImage, BrowserWindow, app } = electron;
+const { nativeImage, app } = electron;
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the javascript object is GCed.
@@ -52,9 +55,11 @@ app.on('window-all-closed', () => {
 // This method will be called when Electron has done everything
 // initialization and ready for creating browser windows.
 app.on('ready', () => {
+    // Get the config
     const configManager = new ConfigManager(app);
     const config = configManager.getConfig();
 
+<<<<<<< HEAD
     const desiredBounds = config.bounds;
     const bounds = checkBounds(desiredBounds);
 
@@ -102,6 +107,12 @@ app.on('ready', () => {
         mainWindow.webContents.send('close');
     });
 
+    // Get the application icons
+    const museeksIcons = getIcons(appRoot);
+
+    // Create and load the main window
+    mainWindow = initMainWindow(museeksIcons, config, srcPath);
+
     // Load configuration into the store
     store.dispatch(lib.actions.config.load(config));
 
@@ -131,29 +142,3 @@ app.on('ready', () => {
     const integrations = new IntegrationManager(mainWindow);
     integrations.enable();
 });
-
-
-/*
-|--------------------------------------------------------------------------
-| Utils
-|--------------------------------------------------------------------------
-*/
-
-function checkBounds(bounds) {
-    // check if the browser window is offscreen
-    const display = electron.screen.getDisplayNearestPoint(bounds).workArea;
-
-    const onScreen = bounds.x >= display.x
-        && bounds.x + bounds.width <= display.x + display.width
-        && bounds.y >= display.y
-        && bounds.y + bounds.height <= display.y + display.height;
-
-    if (!onScreen) {
-        delete bounds.x;
-        delete bounds.y;
-        bounds.width = 900;
-        bounds.height = 550;
-    }
-
-    return bounds;
-}
