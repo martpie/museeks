@@ -17,7 +17,7 @@ const library = (store, lib) => {
 
     const routes = routesToHandlers([...serverRoutes, ...sharedRoutes], lib, store.dispatch);
 
-    routes.forEach(route => server.route(route));
+    server.route(routes);
 
     // attach the libs and dispatcher to each request
     server.ext('onRequest', (req, res) => {
