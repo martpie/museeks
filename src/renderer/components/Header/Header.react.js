@@ -6,7 +6,7 @@ import PlayingBar     from './PlayingBar.react';
 import WindowControls from './WindowControls.react';
 import PlayerControls from './PlayerControls.react';
 
-import { actions } from '../../lib';
+import lib from '../../lib';
 
 
 /*
@@ -74,7 +74,7 @@ class Header extends Component {
 const stateToProps = () => ({});
 
 const dispatchToProps = {
-    filterSearch: actions.library.filterSearch
+    filterSearch: lib.actions.library.filterSearch
 };
 
 export default connect(stateToProps, dispatchToProps)(Header);

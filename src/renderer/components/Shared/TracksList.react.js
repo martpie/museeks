@@ -5,9 +5,7 @@ import KeyBinding from 'react-keybinding-component';
 import TrackRow from './TrackRow.react';
 import PlayingIndicator from './PlayingIndicator.react';
 
-import { actions } from '../../lib';
-
-import { player } from '../../lib';
+import lib from '../../lib';
 import utils from '../../../shared/utils/utils';
 
 import { remote } from 'electron';
@@ -311,7 +309,7 @@ class TracksList extends Component {
     }
 
     pausePlayState() {
-        return player.isPaused() ? 'pause' : 'play';
+        return lib.player.isPaused() ? 'pause' : 'play';
     }
 
     toggleSelectionById(id) {
@@ -456,13 +454,13 @@ class TracksList extends Component {
 const stateToProps = () => ({});
 
 const dispatchToProps = {
-    add: actions.queue.add,
-    addNext: actions.queue.addNext,
-    addTracksTo: actions.playlists.addTracksTo,
-    removeTracksFrom: actions.playlists.removeTracksFrom,
-    create: actions.playlists.create,
-    addTracksTo: actions.playlists.addTracksTo,
-    start: actions.player.start
+    add: lib.actions.queue.add,
+    addNext: lib.actions.queue.addNext,
+    addTracksTo: lib.actions.playlists.addTracksTo,
+    removeTracksFrom: lib.actions.playlists.removeTracksFrom,
+    create: lib.actions.playlists.create,
+    addTracksTo: lib.actions.playlists.addTracksTo,
+    start: lib.actions.player.start
 };
 
 export default connect(stateToProps, dispatchToProps)(TracksList);

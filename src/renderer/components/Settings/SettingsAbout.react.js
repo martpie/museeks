@@ -4,7 +4,7 @@ import { Button } from 'react-bootstrap';
 
 import ExternalLink from '../Shared/ExternalLink.react';
 
-import { actions, app } from '../../lib';
+import lib from '../../lib';
 
 // sth wrong with that, need some check with Webpack
 const museeksLogoRequire = require('../../../images/logos/museeks.png');
@@ -68,7 +68,7 @@ class SettingsAbout extends Component {
 const stateToProps = () => ({});
 
 const dispatchToProps = {
-    checkForUpdate: actions.settings.checkForUpdate
+    checkForUpdate: lib.actions.settings.checkForUpdate
 };
 
 export default connect(stateToProps, dispatchToProps)(SettingsAbout);

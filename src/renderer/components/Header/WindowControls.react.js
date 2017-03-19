@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
-import { actions } from '../../lib';
+import lib from '../../lib';
 
 /*
 |--------------------------------------------------------------------------
@@ -32,7 +32,7 @@ class WindowControls extends PureComponent {
 const stateToProps = () => ({});
 
 const dispatchToProps = {
-    close: actions.app.close
+    close: lib.actions.app.close
 };
 
 export default connect(stateToProps, dispatchToProps)(WindowControls);

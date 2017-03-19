@@ -7,11 +7,11 @@ const library = (lib) => {
 
     // for each internal api route, create a function that will call it externally
     const clientApiCalls = routes.reduce((api, route) => {
-
+console.log(lib.store)
         const clientCall = (config) => axios({
             ...config,
             method: route.method,
-            url: `http://${config.ip || 'localhost'}:54321/${route.path}`
+            url: `http://${config.ip || 'localhost'}:${lib.config.port}/${route.path}`
         });
 
         // store the api call in the api hierarchy

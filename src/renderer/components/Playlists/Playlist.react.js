@@ -5,7 +5,7 @@ import TracksList    from '../Shared/TracksList.react.js';
 import FullViewMessage from '../Shared/FullViewMessage.react';
 import { Link } from 'react-router';
 
-import { actions } from '../../lib';
+import lib from '../../lib';
 
 /*
 |--------------------------------------------------------------------------
@@ -58,8 +58,8 @@ class Playlist extends Component {
 const stateToProps = (state) => ({});
 
 const dispatchToProps = {
-    load: actions.playlists.load,
-    setTracksCursor: actions.library.setTracksCursor
+    load: lib.actions.playlists.load,
+    setTracksCursor: lib.actions.library.setTracksCursor
 };
 
 export default connect(stateToProps, dispatchToProps)(Playlist);

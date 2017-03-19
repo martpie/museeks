@@ -4,7 +4,7 @@ import { Button } from 'react-bootstrap';
 
 import classnames from 'classnames';
 
-import { actions } from '../../lib';
+import lib from '../../lib';
 
 /*
 |--------------------------------------------------------------------------
@@ -89,8 +89,8 @@ class QueueListItem extends PureComponent {
 const stateToProps = () => ({});
 
 const dispatchToProps = {
-    remove: actions.queue.remove,
-    start: actions.queue.start
+    remove: lib.actions.queue.remove,
+    start: lib.actions.queue.start
 };
 
 export default connect(stateToProps, dispatchToProps)(QueueListItem);

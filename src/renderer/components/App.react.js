@@ -7,7 +7,7 @@ import Header from './Header/Header.react';
 import Footer from './Footer/Footer.react';
 import Toasts from './Toasts/Toasts.react';
 
-import { actions } from '../lib';
+import lib from '../lib';
 
 /*
 |--------------------------------------------------------------------------
@@ -86,7 +86,7 @@ class Museeks extends Component {
 const stateToProps = (state) => ({ state });
 
 const dispatchToProps = {
-    playToggle: actions.player.playToggle
+    playToggle: lib.actions.player.playToggle
 };
 
 export default connect(stateToProps, dispatchToProps)(Museeks);

@@ -5,7 +5,7 @@ import { Link } from 'react-router';
 import FullViewMessage from '../Shared/FullViewMessage.react';
 import TracksList from '../Shared/TracksList.react';
 
-import { actions } from '../../lib';
+import lib from '../../lib';
 
 /*
 |--------------------------------------------------------------------------
@@ -87,7 +87,7 @@ class Library extends Component {
 const stateToProps = (state) => ({});
 
 const dispatchToProps = {
-    setTracksCursor: actions.library.setTracksCursor
+    setTracksCursor: lib.actions.library.setTracksCursor
 };
 
 export default connect(stateToProps, dispatchToProps)(Library);

@@ -5,7 +5,7 @@ import classnames from 'classnames';
 
 import QueueListItem  from './QueueListItem.react';
 
-import { actions } from '../../lib';
+import lib from '../../lib';
 
 import utils from '../../../shared/utils/utils';
 
@@ -148,8 +148,8 @@ class QueueList extends Component {
 const stateToProps = () => ({});
 
 const dispatchToProps = {
-    clear: actions.queue.clear,
-    setQueue: actions.queue.setQueue
+    clear: lib.actions.queue.clear,
+    setQueue: lib.actions.queue.setQueue
 };
 
 export default connect(stateToProps, dispatchToProps)(QueueList);

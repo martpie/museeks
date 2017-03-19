@@ -4,7 +4,7 @@ import Icon from 'react-fontawesome';
 
 import classnames from 'classnames';
 
-import { actions } from '../../lib';
+import lib from '../../lib';
 
 /*
 |--------------------------------------------------------------------------
@@ -50,7 +50,7 @@ class LibraryFolders extends Component {
 const stateToProps = () => ({});
 
 const dispatchToProps = {
-    removeFolder: actions.library.removeFolder
+    removeFolder: lib.actions.library.removeFolder
 };
 
 export default connect(stateToProps, dispatchToProps)(LibraryFolders);

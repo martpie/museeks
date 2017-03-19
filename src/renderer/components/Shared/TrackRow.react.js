@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { actions } from '../../lib';
+import lib from '../../lib';
 
 import classnames from 'classnames';
 
@@ -65,7 +65,7 @@ class TrackRow extends Component {
 const stateToProps = () => ({});
 
 const dispatchToProps = {
-    start: actions.player.start
+    start: lib.actions.player.start
 };
 
 export default connect(stateToProps, dispatchToProps)(TrackRow);

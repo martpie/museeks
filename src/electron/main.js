@@ -7,7 +7,7 @@ import { nativeImage, app } from 'electron';
 
 import database from './database';
 import store from './redux/store';                     // Redux store
-import initLib from './lib';                           // Shared library configuration
+import lib, { initLib } from './lib';                  // Shared library configuration
 import initApi from './api';                           // API configuration
 import initElectron from './init';                     // Electron bootstrap
 import TrayManager from './tray';                      // Manages Tray
@@ -54,7 +54,7 @@ app.on('window-all-closed', () => {
 app.on('ready', () => {
 
     // Initialise shared libraries with the store
-    const lib = initLib(store);
+    initLib(store);
 
     // Get the config
     const configManager = new ConfigManager(app);
