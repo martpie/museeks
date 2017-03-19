@@ -75,6 +75,7 @@ const endScan = () => {
 const scanConcurrency = 16;
 const scanQueue = new queue();
 scanQueue.concurrency = scanConcurrency;
+scanQueue.autostart = true;
 scanQueue.on('end', endScan);
 scanQueue.on('success', () => {
     refreshProgress(scan.processed, scan.total);
@@ -151,8 +152,6 @@ const add = (pathsToScan) => {
                 });
             });
         });
-
-        scanQueue.start();
     }).catch((err) => {
         console.warn(err);
     });
