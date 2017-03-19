@@ -59,7 +59,6 @@ app.on('ready', () => {
     const configManager = new ConfigManager(app);
     const config = configManager.getConfig();
 
-<<<<<<< HEAD
     const desiredBounds = config.bounds;
     const bounds = checkBounds(desiredBounds);
 
