@@ -24,7 +24,7 @@ const initApi = (lib) => {
     // attach the libs and dispatcher to each request
     server.ext('onRequest', (req, res) => {
         req.lib = lib;
-        return res.continue();
+        res.continue();
     });
 
     server.start();
