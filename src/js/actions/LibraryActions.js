@@ -10,6 +10,7 @@ import fs       from 'fs';
 import path     from 'path';
 import globby   from 'globby';
 import Promise  from 'bluebird';
+import queue    from 'queue';
 
 const dialog = electron.remote.dialog;
 const statAsync = Promise.promisify(fs.stat);
@@ -60,27 +61,29 @@ const scan = {
     total: 0,
 };
 
-const scanIsOver = () => {
-    return scan.processed === scan.total;
+const endScan = () => {
+    scan.processed = 0;
+    scan.total = 0;
+
+    store.dispatch({
+        type : AppConstants.APP_LIBRARY_REFRESH_END
+    });
+
+    AppActions.library.load();
 };
+
+const scanConcurrency = 16;
+const scanQueue = new queue();
+scanQueue.concurrency = scanConcurrency;
+scanQueue.on('end', endScan);
+scanQueue.on('success', () => {
+    refreshProgress(scan.processed, scan.total);
+});
 
 const add = (pathsToScan) => {
     store.dispatch({
         type : AppConstants.APP_LIBRARY_REFRESH_START
     });
-
-
-    const endCurrentScan = function() {
-        if(scanIsOver()) {
-            store.dispatch({
-                type : AppConstants.APP_LIBRARY_REFRESH_END
-            });
-        }
-    };
-
-    // We may have a problem with this if the user do a lot of concurrent scan
-    // I lowered this value from 32 to prevent ERROPEN with a least two concurrent scans
-    const fsConcurrency = 16;
 
     let rootFiles; // HACK Kind of hack, looking for a better solution
 
@@ -124,32 +127,32 @@ const add = (pathsToScan) => {
         return flatFiles;
     }).then((supportedFiles) => {
         if (supportedFiles.length === 0) {
-            endCurrentScan();
             return;
         }
 
         // Add files to be processed to the scan object
         scan.total += supportedFiles.length;
 
-        return Promise.map(supportedFiles, (filePath) => {
-            return app.models.Track.findAsync({ path: filePath }).then((docs) => {
-                if (docs.length === 0) {
-                    return utils.getMetadata(filePath);
-                }
-                return null;
-            }).then((track) => {
-                // If null, that means a track with the same absolute path already exists in the database
-                if(track === null) return;
-                // else, insert the new document in the database
-                return app.models.Track.insertAsync(track);
-            }).then(() => {
-                refreshProgress(scan.processed, scan.total);
-                scan.processed++;
+        supportedFiles.forEach((filePath) => {
+            scanQueue.push((callback) => {
+                return app.models.Track.findAsync({ path: filePath }).then((docs) => {
+                    if (docs.length === 0) {
+                        return utils.getMetadata(filePath);
+                    }
+                    return null;
+                }).then((track) => {
+                    // If null, that means a track with the same absolute path already exists in the database
+                    if(track === null) return;
+                    // else, insert the new document in the database
+                    return app.models.Track.insertAsync(track);
+                }).then(() => {
+                    scan.processed++;
+                    callback();
+                });
             });
-        }, { concurrency: fsConcurrency });
-    }).then(() => {
-        AppActions.library.load(); // TODO Reload the library at the end of this
-        endCurrentScan();
+        });
+
+        scanQueue.start();
     }).catch((err) => {
         console.warn(err);
     });

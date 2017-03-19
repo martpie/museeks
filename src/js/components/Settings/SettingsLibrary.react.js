@@ -70,7 +70,9 @@ export default class SettingsLibrary extends Component {
         dialog.showOpenDialog({
             properties: ['multiSelections', 'openDirectory']
         }, (result) => {
-            AppActions.library.add(result);
+            if(result) {
+                AppActions.library.add(result);
+            }
         });
     }
 }
