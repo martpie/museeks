@@ -1,20 +1,12 @@
-import track from '../models/track';
+import { rpcWrap } from 'electron-simple-rpc';
 
-const find = (data) => track.findAsync(data.query);
-// const find = (data) => track.findAsync(data.query).sort(data.sort);
+const functions = [
+    'find',
+    'findOne',
+    'insert',
+    'update',
+    'remove'
+];
 
-const findOne = (data) => track.findOneAsync(data.query);
-
-const insert = (data) => track.insertAsync(data);
-
-const update = (criteria, data) => track.updateAsync(criteria, data);
-
-const remove = (criteria, options) => track.removeAsync(criteria, options);
-
-export default {
-    find,
-    findOne,
-    insert,
-    update,
-    remove
-};
+// make playlist functions invoked in the renderer execute in electron via rpc
+export default rpcWrap('track', functions, 'electron');

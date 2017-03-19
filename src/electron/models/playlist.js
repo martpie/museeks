@@ -10,6 +10,5 @@ const Playlist = new linvodb('playlist', {
 });
 
 Promise.promisifyAll(Playlist);
-Promise.promisifyAll(Playlist.find().__proto__);
 
 export default Playlist;

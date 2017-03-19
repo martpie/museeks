@@ -4,6 +4,7 @@ import path from 'path';
 import os from 'os';
 import electron from 'electron';
 
+import database from './database';
 import lib from './lib';                               // Library containing app logic
 import configureStore from './redux/configureStore';   // Store configuration
 import TrayManager from './tray';                      // Manages Tray

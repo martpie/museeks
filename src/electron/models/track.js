@@ -34,5 +34,13 @@ const Track = new linvodb('track', {
 Track.ensureIndex({ fieldName: 'path', unique: true });
 
 Promise.promisifyAll(Track);
+Promise.promisifyAll(Track.find().__proto__);
 
 export default Track;
+
+// Track.insertAsync({ album: 'jackson' }).then((res) => {
+//     Track.findAsync({}).then((res) => {
+//         console.log('find resutl', res)
+//     });
+//     console.log('find resutl', res)
+// });

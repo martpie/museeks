@@ -10,7 +10,6 @@ import { Router,  hashHistory } from 'react-router';
 
 import { Provider } from 'react-redux';
 
-import database from './database';
 import getRoutes from './router/routes';
 import store from './redux/store';
 import lib from './lib';

@@ -114,7 +114,9 @@ const library = (lib) => {
         const fsConcurrency = 32;
 
         // Start the big thing
+        console.log('pre', lib.track)
         return lib.track.remove({}, { multi: true }).then(() => {
+            console.log('post')
             return Promise.map(folders, (folder) => {
                 const pattern = join(folder, '**/*.*');
                 return globby(pattern, { nodir: true, follow: true });
