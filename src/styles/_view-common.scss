@@ -47,7 +47,7 @@
     justify-content: center;
     height: 100%;
     font-size: 25px;
-    color: #AAA;
+    color: #555;
     font-weight: 100;
     padding: 30px;
     margin: auto;
@@ -63,6 +63,27 @@
         &:hover {
             text-decoration: none;
         }
+    }
+}
+
+.dropzone {
+    border: dashed 1px lightgrey;
+    margin-bottom: 15px;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+
+    &.dragging {
+        border-color: $main-color;
+    }
+
+    .title {
+        font-size: 16px;
+        margin-bottom: 5px;
+    }
+
+    .subtitle {
+        color: #7d7d7d;
     }
 }
 

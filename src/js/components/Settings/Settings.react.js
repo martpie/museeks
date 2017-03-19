@@ -13,8 +13,7 @@ export default class Settings extends Component {
 
     static propTypes = {
         config: React.PropTypes.object,
-        refreshingLibrary: React.PropTypes.bool,
-        refreshProgress: React.PropTypes.number,
+        library: React.PropTypes.object,
         children: React.PropTypes.object
     }
 
@@ -49,8 +48,7 @@ export default class Settings extends Component {
                         { React.cloneElement(
                             this.props.children, {
                                 config,
-                                refreshingLibrary : this.props.refreshingLibrary,
-                                refreshProgress: this.props.refreshProgress,
+                                library: this.props.library,
                             })
                         }
                     </div>

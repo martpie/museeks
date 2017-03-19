@@ -26,14 +26,13 @@ export default keymirror({
     APP_QUEUE_ADD_NEXT  : null,
     APP_QUEUE_SET_QUEUE : null,
 
-    APP_LIBRARY_ADD_FOLDERS      : null,
-    APP_LIBRARY_REMOVE_FOLDER    : null,
     APP_LIBRARY_RESET            : null,
     APP_LIBRARY_REFRESH_START    : null,
     APP_LIBRARY_REFRESH_END      : null,
     APP_LIBRARY_REFRESH_PROGRESS : null,
     APP_LIBRARY_SET_TRACKSCURSOR : null,
     APP_LIBRARY_FETCHED_COVER    : null,
+    APP_LIBRARY_REMOVE_TRACKS    : null,
 
     APP_PLAYLISTS_REFRESH  : null,
     APP_PLAYLISTS_LOAD_ONE : null,

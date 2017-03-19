@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { ButtonGroup, Button, ProgressBar } from 'react-bootstrap';
-import Icon from 'react-fontawesome';
-import classnames from 'classnames';
+import { ButtonGroup, Button } from 'react-bootstrap';
 
-import LibraryFolders from './LibraryFolders.react';
+import Dropzone from '../Shared/Dropzone.react';
 
 import AppActions from '../../actions/AppActions';
+
+const dialog = electron.remote.dialog;
 
 
 /*
@@ -18,57 +18,36 @@ export default class SettingsLibrary extends Component {
 
     static propTypes = {
         config: React.PropTypes.object,
-        refreshingLibrary: React.PropTypes.bool,
-        refreshProgress: React.PropTypes.number
+        library: React.PropTypes.object,
     }
 
     constructor(props) {
         super(props);
-
-        this.addFolders = this.addFolders.bind(this);
     }
 
     render() {
-        const musicFolders = this.props.config.musicFolders;
-
         const buttonsGroup = (
             <ButtonGroup>
-                <Button bsSize='small' disabled={ this.props.refreshingLibrary } onClick={ this.addFolders }>
-                    <Icon name='plus' fixedWidth />
-                    Add folder(s)
-                </Button>
-                <Button bsSize='small' disabled={ this.props.refreshingLibrary } onClick={ this.refreshLibrary }>
-                    <Icon name='refresh' spin={ this.props.refreshingLibrary } />
-                      { this.props.refreshingLibrary ? 'Refreshing Library' : 'Refresh Library' }
-                </Button>
-                <Button bsSize='small' disabled={ this.props.refreshingLibrary } bsStyle={ 'danger' } onClick={ this.resetLibrary }>
+                <Button bsSize='small' disabled={ this.props.library.refreshing } bsStyle={ 'danger' } onClick={ this.resetLibrary }>
                     Reset library
                 </Button>
             </ButtonGroup>
         );
 
-        const progressBarClasses = classnames('library-refresh-progress', {
-            hidden: !this.props.refreshingLibrary
-        });
-
         return (
             <div className='setting settings-musicfolder'>
                 <div className='setting-section'>
-                    <h4>Folders</h4>
-                    <p>You currently have { musicFolders.length } folder{ musicFolders.length < 2 ? '' : 's' } in your library.</p>
-                    <LibraryFolders
-                        folders={ musicFolders }
-                        refreshingLibrary={ this.props.refreshingLibrary }
+                    <h4>Manage library</h4>
+                    <Dropzone
+                        title='Add music to library'
+                        subtitle='Drop files or folders here'
+                        onDrop={ this.onDrop }
+                        onClick={ this.openFolderSelector }
                     />
                     { buttonsGroup }
-                    <ProgressBar className={ progressBarClasses } now={ this.props.refreshProgress } />
                 </div>
             </div>
         );
-    }
-
-    addFolders() {
-        AppActions.library.addFolders();
     }
 
     resetLibrary() {
@@ -76,8 +55,24 @@ export default class SettingsLibrary extends Component {
         AppActions.library.reset();
     }
 
-    refreshLibrary() {
-        AppActions.player.stop();
-        AppActions.library.refresh();
+    onDrop(e) {
+        const files = [];
+        const eventFiles = e.dataTransfer.files;
+
+        for(let i = 0; i < eventFiles.length; i++) {
+            files.push(eventFiles[i].path);
+        }
+
+        AppActions.library.add(files);
+    }
+
+    openFolderSelector() {
+        dialog.showOpenDialog({
+            properties: ['multiSelections', 'openDirectory']
+        }, (result) => {
+            if(result) {
+                AppActions.library.add(result);
+            }
+        });
     }
 }
