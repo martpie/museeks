@@ -10,13 +10,15 @@ const path     = require('path');
 const commandline = minimist(process.argv.slice(2));
 
 const pluginsList = [
-    new webpack.optimize.DedupePlugin(),
-    new ExtractTextPlugin('main.css', { allChunks: true }),
+    new ExtractTextPlugin({ filename: 'main.css', allChunks: true }),
 ];
 
-if (commandline.production) {
+let devtool;
+if (commandline.env === 'production') {
     pluginsList.push(new BabiliPlugin());
     pluginsList.push(new webpack.DefinePlugin({ 'process.env': { 'NODE_ENV': '"production"' } }));
+} else {
+    devtool = 'source-map';
 }
 
 module.exports = {
@@ -30,45 +32,62 @@ module.exports = {
         publicPath: ''
     },
     module: {
-        loaders: [
+        rules: [
             {
                 test: /\.js$/,
-                loader: 'babel',
+                use: ['babel-loader'],
                 exclude: /node_modules/
             },
             {
                 test: /\.json$/,
-                loader: 'json',
+                use: ['json-loader'],
             },
             {
                 test: /\.css$/,
-                loader: ExtractTextPlugin.extract('css-loader')
+                use: ExtractTextPlugin.extract({ use: 'css-loader' })
             },
             {
                 test: /\.scss$/,
-                loader: ExtractTextPlugin.extract('css-loader!sass-loader')
+                use: ExtractTextPlugin.extract({
+                    use: ['css-loader', 'sass-loader']
+                })
             },
             {
-                test: /\.(eot|woff|ttf)([?]?.*)$/,
-                loader: 'url-loader?name=fonts/[name].[ext]',
+                test: /\.(eot|woff|woff2|ttf)([?]?.*)$/,
+                use: [{
+                    loader: 'url-loader',
+                    options: {
+                        name: 'fonts/[name].[ext]'
+                    }
+                }],
             },
             {
                 test: /\.(png|jpg)([?]?.*)$/,
-                loader: 'file-loader?name=img/[name].[ext]',
+                use: [{
+                    loader: 'file-loader',
+                    options: {
+                        name: 'img/[name].[ext]'
+                    }
+                }],
                 exclude: /node_modules/
             },
             {
                 test: /\.svg$/,
-                loader: 'svg-inline',
+                use: ['svg-inline-loader'],
                 include: path.resolve(__dirname, 'src')
             },
             {
                 test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-                loader: 'url?mimetype=image/svg+xml',
+                use: [{
+                    loader: 'url-loader',
+                    options: {
+                        mimetype: 'image/svg+xml'
+                    }
+                }],
                 include: /node_modules/
             }
         ]
     },
     plugins: pluginsList,
-    devtool: commandline.development ? 'cheap-source-map' : undefined
+    devtool
 };
