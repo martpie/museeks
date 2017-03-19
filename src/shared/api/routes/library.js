@@ -4,8 +4,8 @@ export default [{
     name         : 'actions.library.load',
     dispatch     : true
 },{
-    path         : 'api/v1/library/refresh',
+    path         : 'api/v1/library/rescan',
     method       : 'GET',
-    name         : 'actions.library.refresh',
+    name         : 'actions.library.rescan',
     dispatch     : true
 }];

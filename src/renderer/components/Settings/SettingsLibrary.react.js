@@ -42,8 +42,8 @@ class SettingsLibrary extends Component {
                     <Icon name='refresh' spin={ this.props.refreshingLibrary } />
                       { this.props.refreshingLibrary ? 'Refreshing Library' : 'Refresh Library' }
                 </Button>
-                <Button bsSize='small' disabled={ this.props.refreshingLibrary } bsStyle={ 'danger' } onClick={ this.resetLibrary }>
-                    Reset library
+                <Button bsSize='small' disabled={ this.props.refreshingLibrary } bsStyle={ 'danger' } onClick={ this.deleteLibrary }>
+                    Delete library
                 </Button>
             </ButtonGroup>
         );
@@ -76,17 +76,16 @@ class SettingsLibrary extends Component {
         this.props.addFolders();
     }
 
-    resetLibrary = () => {
+    deleteLibrary = () => {
         this.props.stop();
-        this.props.reset();
+        this.props.remove();
     }
 
     refreshLibrary = () => {
         this.props.stop();
-        this.props.refresh();
+        this.props.rescan();
     }
 }
-
 
 const stateToProps = (state) => ({
     musicFolders: state.config.musicFolders
@@ -94,9 +93,9 @@ const stateToProps = (state) => ({
 
 const dispatchToProps = {
     stop: actions.player.stop,
-    reset: actions.library.reset,
+    remove: actions.library.remove,
     addFolders: actions.library.addFolders,
-    refresh: actions.library.refresh
+    rescan: actions.library.rescan
 };
 
 export default connect(stateToProps, dispatchToProps)(SettingsLibrary);

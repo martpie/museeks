@@ -1,6 +1,6 @@
 export default (state = {}, action) => {
     switch (action.type) {
-        case('APP_REFRESH_LIBRARY_FULFILLED'): {
+        case('APP_LIBRARY_LOAD_FULFILLED'): {
             return {
                 ...state,
                 tracks: {

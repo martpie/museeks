@@ -1,11 +1,11 @@
 'use strict';
 
-const webpack           = require('webpack');
+const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const BabiliPlugin      = require('babili-webpack-plugin');
+const BabiliPlugin = require('babili-webpack-plugin');
 
 const minimist = require('minimist');
-const path     = require('path');
+const path = require('path');
 
 const commandline = minimist(process.argv.slice(2));
 

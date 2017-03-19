@@ -10,7 +10,7 @@ const realpath = Promise.promisify(fs.realpath);
 const library = (lib) => {
 
     const load = () => ({
-        type: 'APP_REFRESH_LIBRARY',
+        type: 'APP_LIBRARY_LOAD',
         payload: lib.track.find({
             query: {},
             sort: {
@@ -20,20 +20,13 @@ const library = (lib) => {
                 'disk.no': 1,
                 'track.no': 1
             }
-        })
+        }).then((res) => {console.log('res', res); return res})
     });
 
     const setTracksCursor = (cursor) => ({
         type: 'APP_LIBRARY_SET_TRACKSCURSOR',
         payload: {
             cursor
-        }
-    });
-
-    const resetTracks = () => ({
-        type: 'APP_REFRESH_LIBRARY',
-        payload: {
-            tracks: null
         }
     });
 
@@ -54,7 +47,7 @@ const library = (lib) => {
         }, (folders) => {
             if (folders !== undefined) {
                 Promise.map(folders, (folder) => {
-                    return realpath(folder)
+                    return realpath(folder);
                 }).then((resolvedFolders) => {
                     const existingFolders = getState().config.musicFolders;
                     const musicFolders = existingFolders.concat(resolvedFolders);
@@ -91,40 +84,28 @@ const library = (lib) => {
         }
     };
 
-    const reset = () => (dispatch) => ({
-        type: 'APP_LIBRARY_REFRESH',
+    const remove = () => ({
+        type: 'APP_LIBRARY_DELETE',
         payload: Promise.all([
             lib.track.remove({}, { multi: true }),
             lib.playlist.remove({}, { multi: true })
         ])
-        .then(() => dispatch(lib.actions.library.load()))
     });
 
-    const refresh = () => (dispatch, getState) => {
-        dispatch({
-            type: 'APP_LIBRARY_REFRESH_PENDING'
-        });
+    const rescan = () => (dispatch, getState) => {
 
-        const dispatchEnd = () => {
-            dispatch({
-                type: 'APP_LIBRARY_REFRESH_FULFILLED'
-            });
-        };
+        dispatch({ type: 'APP_LIBRARY_RESCAN_PENDING' });
+
         const folders = getState().config.musicFolders;
         const fsConcurrency = 32;
 
-        // Start the big thing
-        console.log('pre', lib.track)
         return lib.track.remove({}, { multi: true }).then(() => {
-            console.log('post')
             return Promise.map(folders, (folder) => {
                 const pattern = join(folder, '**/*.*');
                 return globby(pattern, { nodir: true, follow: true });
             });
         }).then((filesArrays) => {
-            return filesArrays.reduce((acc, array) => {
-                return acc.concat(array);
-            }, []).filter((path) => {
+            return filesArrays.reduce((acc, array) => acc.concat(array), []).filter((path) => {
                 const extension = extname(path).toLowerCase();
                 return utils.supportedExtensions.includes(extension);
             });
@@ -133,27 +114,21 @@ const library = (lib) => {
                 return dispatchEnd();
             }
 
-            let addedFiles = 0;
             const totalFiles = supportedFiles.length;
-            return Promise.map(supportedFiles, (path) => {
-                return lib.track.find({ query: { path } }).then((docs) => {
-                    if (docs.length === 0) {
-                        return utils.getMetadata(path);
-                    }
-                    return docs[0];
-                }).then((track) => {
-                    return lib.track.insert(track);
-                }).then(() => {
-                    const percent = parseInt(addedFiles * 100 / totalFiles);
+            return Promise.map(supportedFiles, (path, numAdded) => {
+                return lib.track.find({ query: { path } })
+                .then((docs) => docs.length === 0
+                    ? utils.getMetadata(path)
+                    : docs[0])
+                .then(lib.track.insert)
+                .then(() => {
+                    const percent = parseInt(numAdded * 100 / totalFiles);
                     dispatch(lib.actions.settings.refreshProgress(percent));
-                    addedFiles++;
                 });
             }, { concurrency: fsConcurrency });
         }).then(() => {
+            dispatch({ type: 'APP_LIBRARY_RESCAN_FULFILLED' });
             dispatch(lib.actions.library.load());
-            dispatchEnd();
-        }).catch((err) => {
-            console.warn(err);
         });
     };
 
@@ -180,12 +155,11 @@ const library = (lib) => {
     return {
         load,
         setTracksCursor,
-        resetTracks,
         filterSearch,
         addFolders,
         removeFolder,
-        reset,
-        refresh,
+        remove,
+        rescan,
         fetchCover,
         incrementPlayCount
     };

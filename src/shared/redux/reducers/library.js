@@ -57,12 +57,7 @@ export default (state = {}, action) => {
             };
         }
 
-        case('APP_LIBRARY_RESET'): {
-            // nothing here for the moment
-            return state;
-        }
-
-        case('APP_LIBRARY_REFRESH_PENDING'): {
+        case('APP_LIBRARY_RESCAN_PENDING'): {
             return {
                 ...state,
                 status: 'An apple a day keeps Dr Dre away',
@@ -70,7 +65,7 @@ export default (state = {}, action) => {
             };
         }
 
-        case('APP_LIBRARY_REFRESH_FULFILLED'): {
+        case('APP_LIBRARY_RESCAN_FULFILLED'): {
             return {
                 ...state,
                 refreshingLibrary: false,
@@ -78,7 +73,7 @@ export default (state = {}, action) => {
             };
         }
 
-        case('APP_LIBRARY_REFRESH_PROGRESS'): {
+        case('APP_LIBRARY_RESCAN_PROGRESS'): {
             return {
                 ...state,
                 refreshProgress: action.payload.percentage
@@ -89,6 +84,22 @@ export default (state = {}, action) => {
             return {
                 ...state,
                 tracksCursor: action.payload.cursor
+            };
+        }
+
+        case('APP_LIBRARY_DELETE_FULFILLED'): {
+            return {
+                ...state,
+                tracks: {
+                    library: {
+                        all: [],
+                        sub: []
+                    },
+                    playlist: {
+                        all: [],
+                        sub: []
+                    }
+                }
             };
         }
 
