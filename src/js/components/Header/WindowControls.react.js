@@ -22,12 +22,22 @@ export default class WindowControls extends PureComponent {
 
         return (
             <div className='window-controls'>
-                <button className='window-control' onClick={ this.winClose }>&times;</button>
+                <button className='window-control fa fa-window-close' onClick={ this.winClose } />
+                <button className='window-control fa fa-window-minimize' onClick={ this.winMinimize } />
+                <button className='window-control fa fa-window-maximize' onClick={ this.winMaximize } />
             </div>
         );
     }
 
     winClose() {
         AppActions.close();
+    }
+
+    winMinimize() {
+        AppActions.minimize();
+    }
+
+    winMaximize() {
+        AppActions.maximize();
     }
 }

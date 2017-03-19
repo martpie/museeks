@@ -15,6 +15,8 @@ header {
     .search,
     .window-controls {
         -webkit-app-region: no-drag;
+
+        display: flex;
     }
 }
 
