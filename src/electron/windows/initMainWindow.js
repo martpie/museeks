@@ -1,7 +1,41 @@
 import { BrowserWindow } from 'electron';
+import os from 'os';
 
-export default () => {
+export default (icons, config, srcPath) => {
+  const bounds = checkBounds(config.bounds);
 
+  const mainWindowOption = {
+        title     : 'Museeks',
+        icon      :  os.platform() === 'win32' ? icons['ico'] : icons['256'],
+        x         :  bounds.x,
+        y         :  bounds.y,
+        width     :  bounds.width,
+        height    :  bounds.height,
+        minWidth  :  900,
+        minHeight :  550,
+        frame     :  config.useNativeFrame,
+        show      :  false
+    };
+
+    // Create the browser window
+    const mainWindow = new BrowserWindow(mainWindowOption);
+
+    // ... and load our html page
+    mainWindow.loadURL(`file://${srcPath}/app.html#/library`);
+
+    mainWindow.on('closed', () => {
+        // Dereference the window object
+        mainWindow = null;
+    });
+    mainWindow.on('ready-to-show', () => {
+        mainWindow.show();
+    });
+    mainWindow.on('close', (e) => {
+        e.preventDefault();
+        mainWindow.webContents.send('close');
+    });
+
+  return mainWindow
 }
 
 function checkBounds(bounds) {
