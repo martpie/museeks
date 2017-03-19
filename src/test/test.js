@@ -1,22 +1,23 @@
-import test from 'tape';
+import { Application } from 'spectron';
+import path from 'path';
 
-import client from '../renderer/redux/store';
-import server from '../electron/redux/store';
+const electronPath = path.join(__dirname, '../..', 'node_modules', '.bin', 'electron');
 
-test('A passing test', (assert) => {
+const platformPath = process.platform === 'win32'
+    ? electronPath + '.cmd'
+    : electronPath;
 
+const appPath = path.join(__dirname, '../..');
 
-    assert.pass('This test will pass.');
-
-    assert.end();
+const app = new Application({
+    path: platformPath,
+    args: [appPath]
 });
 
-// test('Assertions with tape.', (assert) => {
-//   const expected = 'something to test';
-//   const actual = 'sonething to test';
-//
-//   assert.equal(actual, expected,
-//     'Given two mismatched values, .equal() should produce a nice bug report');
-//
-//   assert.end();
-// });
+app.start().catch((err) => {});
+
+const runTests = () => {
+    console.log('running')
+}
+
+setTimeout(runTests, 5000);

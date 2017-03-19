@@ -20,7 +20,8 @@ const shared = sharedLib(renderer);
 
 const lib = {
     ...renderer,
-    ...shared
+    ...shared,
+    attachStore: (store) => lib.store = store
 }
 
 // link the player once all libraries are loaded

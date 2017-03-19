@@ -3,7 +3,7 @@ import serverRoutes from './routes';
 import sharedRoutes from '../../shared/api/routes';
 import routesToHandlers from '../../shared/api/handlers';
 
-const configureApi = (store, lib) => {
+const initApi = (lib) => {
 
     const server = new Hapi.Server({
         connections: {
@@ -13,16 +13,17 @@ const configureApi = (store, lib) => {
         }
     });
 
-    server.connection({ port: 54321 });
+    server.connection({
+        port: lib.store.getState().config.api.port
+    });
 
-    const routes = routesToHandlers([...serverRoutes, ...sharedRoutes], lib, store.dispatch);
+    const routes = routesToHandlers([...serverRoutes, ...sharedRoutes], lib);
 
     server.route(routes);
 
     // attach the libs and dispatcher to each request
     server.ext('onRequest', (req, res) => {
         req.lib = lib;
-        req.store = store;
         return res.continue();
     });
 
@@ -31,4 +32,4 @@ const configureApi = (store, lib) => {
     return server;
 }
 
-export default configureApi;
+export default initApi;

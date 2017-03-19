@@ -46,6 +46,9 @@ class ConfigManager {
                 height: 600,
                 x: parseInt(this.workArea.width / 2),
                 y: parseInt(this.workArea.height / 2)
+            },
+            api: {
+                port: 54321
             }
         };
     }

@@ -1,10 +1,6 @@
 // Modules
-import Promise from 'bluebird';
 import React from 'react';
 import { Route, IndexRedirect } from 'react-router';
-
-// Actions
-import lib from '../lib';
 
 // Components
 import App       from '../components/App.react';

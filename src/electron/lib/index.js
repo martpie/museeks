@@ -16,9 +16,10 @@ const electron = {
 
 const shared = sharedLib(electron);
 
-const lib = {
+const library = (store) => ({
+    store,
     ...electron,
     ...shared
-}
+});
 
-export default lib;
+export default library;

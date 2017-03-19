@@ -6,16 +6,16 @@ import electron from 'electron';
 import { nativeImage, app } from 'electron';
 
 import database from './database';
-import lib from './lib';                               // Library containing app logic
 import store from './redux/store';                     // Redux store
-import configureApi from './api';                      // API configuration
+import initLib from './lib';                           // Shared library configuration
+import initApi from './api';                           // API configuration
+import initElectron from './init';                     // Electron bootstrap
 import TrayManager from './tray';                      // Manages Tray
 import ConfigManager from './config';                  // Handles config
 import { RpcIpcManager } from 'electron-simple-rpc';   // Handles RPC IPC Events
 import PowerMonitor from './power-monitor';            // Handle power events
 import IntegrationManager from './integration';        // Applies various integrations
 
-import init from './init';
 import initMainWindow from './windows/initMainWindow';
 import getIcons from './other/getIcons';
 
@@ -38,8 +38,6 @@ const shouldQuit = app.makeSingleInstance(() => {
     }
 });
 
-lib.actions.network.peerFound({ ip : 'jackson' })
-
 if (shouldQuit) {
     app.quit();
 }
@@ -54,9 +52,17 @@ app.on('window-all-closed', () => {
 // This method will be called when Electron has done everything
 // initialization and ready for creating browser windows.
 app.on('ready', () => {
+
+    // Initialise shared libraries with the store
+    const lib = initLib(store);
+
     // Get the config
     const configManager = new ConfigManager(app);
     const config = configManager.getConfig();
+
+    // Load configuration into the store
+    store.dispatch(lib.actions.config.load(config));
+    lib.actions.network.peerFound({ ip : 'jackson' });
 
     // Get the application icons
     const museeksIcons = getIcons(appRoot);
@@ -64,14 +70,11 @@ app.on('ready', () => {
     // Create and load the main window
     mainWindow = initMainWindow(museeksIcons, config, srcPath);
 
-    // Load configuration into the store
-    store.dispatch(lib.actions.config.load(config));
-
-    // Init electron
-    init(store, lib);
+    // Init Electron
+    initElectron(lib);
 
     // Start the API server
-    configureApi(store, lib);
+    initApi(lib);
 
     // Start listening for RPC IPC events
     const rpcIpcManager = new RpcIpcManager(lib, 'electron');

@@ -13,15 +13,18 @@ import { Provider } from 'react-redux';
 import getRoutes from './router/routes';
 import store from './redux/store';
 import lib from './lib';
-import init from './init';
+import initRenderer from './init';
 
 import { RpcIpcManager } from 'electron-simple-rpc';
 
+// initialize shared libraries
+lib.attachStore(store);
+
 // Start listening for RPC IPC events
-const rpcIpcManager = new RpcIpcManager(lib, 'mainThread');
+const rpcIpcManager = new RpcIpcManager(lib, 'electron');
 
 // Init renderer
-init(store, lib);
+initRenderer(lib);
 
 /*
 |--------------------------------------------------------------------------

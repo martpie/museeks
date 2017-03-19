@@ -1,7 +1,7 @@
 import { ipcRenderer } from 'electron';
 
-const library = (store, lib) => {
-console.log(store)
+const library = (lib) => {
+    const store = lib.store;
     const dispatch = store.dispatch;
     const config = store.getState().config;
 
