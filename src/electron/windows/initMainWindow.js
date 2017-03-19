@@ -1,4 +1,4 @@
-import { BrowserWindow } from 'electron';
+import { BrowserWindow, screen } from 'electron';
 import os from 'os';
 
 export default (icons, config, srcPath) => {
@@ -18,7 +18,7 @@ export default (icons, config, srcPath) => {
     };
 
     // Create the browser window
-    const mainWindow = new BrowserWindow(mainWindowOption);
+    let mainWindow = new BrowserWindow(mainWindowOption);
 
     // ... and load our html page
     mainWindow.loadURL(`file://${srcPath}/app.html#/library`);
@@ -40,7 +40,7 @@ export default (icons, config, srcPath) => {
 
 function checkBounds(bounds) {
     // check if the browser window is offscreen
-    const display = electron.screen.getDisplayNearestPoint(bounds).workArea;
+    const display = screen.getDisplayNearestPoint(bounds).workArea;
 
     const onScreen = bounds.x >= display.x
         && bounds.x + bounds.width <= display.x + display.width
