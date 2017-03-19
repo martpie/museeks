@@ -1,7 +1,7 @@
 import { globalShortcut } from 'electron';
 
 const library = (store, lib) => {
-    const { dispatch, getState } = store;
+    const { dispatch } = store;
 
     // Global shortcuts - Player
     globalShortcut.register('MediaPlayPause', () => {

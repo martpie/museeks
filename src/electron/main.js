@@ -6,7 +6,7 @@ import electron from 'electron';
 
 import database from './database';
 import lib from './lib';                               // Library containing app logic
-import configureStore from './redux/configureStore';   // Store configuration
+import store from './redux/store';                     // Redux store
 import configureApi from './api';                      // API configuration
 import TrayManager from './tray';                      // Manages Tray
 import ConfigManager from './config';                  // Handles config
@@ -44,8 +44,9 @@ if (shouldQuit) {
 
 // Quit when all windows are closed
 app.on('window-all-closed', () => {
-    if (process.platform !== 'darwin')
+    if (process.platform !== 'darwin') {
         app.quit();
+    }
 });
 
 // This method will be called when Electron has done everything
@@ -54,11 +55,8 @@ app.on('ready', () => {
     const configManager = new ConfigManager(app);
     const config = configManager.getConfig();
 
-    // Create the store
-    const store = configureStore(config);
-
-    let { bounds } = config;
-    bounds = checkBounds(bounds);
+    const desiredBounds = config.bounds;
+    const bounds = checkBounds(desiredBounds);
 
     const logosPath = path.join(appRoot, 'src', 'images', 'logos');
     const museeksIcons = {
@@ -74,16 +72,16 @@ app.on('ready', () => {
 
     // Browser Window options
     const mainWindowOption = {
-        title     : 'Museeks',
-        icon      :  os.platform() === 'win32' ? museeksIcons['ico'] : museeksIcons['256'],
-        x         :  bounds.x,
-        y         :  bounds.y,
-        width     :  bounds.width,
-        height    :  bounds.height,
-        minWidth  :  900,
-        minHeight :  550,
-        frame     :  config.useNativeFrame,
-        show      :  false
+        title: 'Museeks',
+        icon: os.platform() === 'win32' ? museeksIcons['ico'] : museeksIcons['256'],
+        x: bounds.x,
+        y: bounds.y,
+        width: bounds.width,
+        height: bounds.height,
+        minWidth: 900,
+        minHeight: 550,
+        frame: config.useNativeFrame,
+        show: false
     };
 
     // Create the browser window
@@ -104,7 +102,10 @@ app.on('ready', () => {
         mainWindow.webContents.send('close');
     });
 
-    // Init
+    // Load configuration into the store
+    store.dispatch(lib.actions.config.load(config));
+
+    // Init electron
     init(store, lib);
 
     // Start the API server

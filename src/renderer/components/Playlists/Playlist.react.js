@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import TracksList    from '../Shared/TracksList.react.js';
 import FullViewMessage from '../Shared/FullViewMessage.react';
 import { Link } from 'react-router';
 
+import { actions } from '../../lib';
 
 /*
 |--------------------------------------------------------------------------
@@ -23,6 +25,11 @@ class Playlist extends Component {
 
     constructor(props) {
         super(props);
+    }
+
+    componentDidMount() {
+        this.props.load(route.params.playlistId);
+        this.props.setTracksCursor('playlist');
     }
 
     render() {
@@ -48,4 +55,11 @@ class Playlist extends Component {
     }
 }
 
-export default Playlist;
+const stateToProps = (state) => ({});
+
+const dispatchToProps = {
+    load: actions.playlists.load,
+    setTracksCursor: actions.library.setTracksCursor
+};
+
+export default connect(stateToProps, dispatchToProps)(Playlist);

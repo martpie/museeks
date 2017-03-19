@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router';
 
 import FullViewMessage from '../Shared/FullViewMessage.react';
 import TracksList from '../Shared/TracksList.react';
 
+import { actions } from '../../lib';
 
 /*
 |--------------------------------------------------------------------------
@@ -23,6 +25,10 @@ class Library extends Component {
 
     constructor(props) {
         super(props);
+    }
+
+    componentDidMount() {
+        this.props.setTracksCursor('library');
     }
 
     getLibraryComponent() {
@@ -78,4 +84,10 @@ class Library extends Component {
     }
 }
 
-export default Library;
+const stateToProps = (state) => ({});
+
+const dispatchToProps = {
+    setTracksCursor: actions.library.setTracksCursor
+};
+
+export default connect(stateToProps, dispatchToProps)(Library);
