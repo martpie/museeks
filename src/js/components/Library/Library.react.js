@@ -37,6 +37,17 @@ export default class Library extends Component {
 
         // Empty library
         if (this.props.tracks.all.length === 0) {
+            if(this.props.library.refreshing) {
+                return (
+                    <FullViewMessage>
+                        <p>Your library is being scanned =)</p>
+                        <p className='sub-message'>
+                            hold still...
+                        </p>
+                    </FullViewMessage>
+                );
+            }
+
             return (
                 <FullViewMessage>
                     <p>Too bad, there is no music in your library =(</p>
