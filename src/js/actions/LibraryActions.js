@@ -167,7 +167,7 @@ const refreshProgress = (processed, total) => {
     });
 };
 
-const removeFromLibrary = async (tracksIds) => {
+const removeFromLibrary = (tracksIds) => {
     // not calling await on it as it calls the synchonous message box
     dialog.showMessageBox(app.browserWindows.main, {
         buttons: [
