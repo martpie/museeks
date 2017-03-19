@@ -36,7 +36,6 @@ class PlaylistsNav extends Component {
     render() {
         const self = this;
         // TODO (y.solovyov): extract into separate method that returns items
-        console.log(this.props)
         const nav = this.props.playlists.map((elem, index) => {
             let navItemContent;
 

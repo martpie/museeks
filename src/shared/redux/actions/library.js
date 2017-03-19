@@ -20,7 +20,7 @@ const library = (lib) => {
                 'disk.no': 1,
                 'track.no': 1
             }
-        }).then((res) => {console.log('res', res); return res})
+        })
     });
 
     const setTracksCursor = (cursor) => ({

@@ -1,9 +1,4 @@
 export default [{
-    path         : 'api/v1/player/audioError',
-    method       : 'GET',
-    name         : 'actions.player.audioError',
-    dispatch     : true
-},{
     path         : 'api/v1/player/jumpTo',
     method       : 'POST',
     name         : 'actions.player.jumpTo',

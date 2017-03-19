@@ -7,6 +7,7 @@ import electron from 'electron';
 import database from './database';
 import lib from './lib';                               // Library containing app logic
 import configureStore from './redux/configureStore';   // Store configuration
+import configureApi from './api';                      // API configuration
 import TrayManager from './tray';                      // Manages Tray
 import ConfigManager from './config';                  // Handles config
 import { RpcIpcManager } from 'electron-simple-rpc';   // Handles RPC IPC Events
@@ -15,7 +16,6 @@ import IntegrationManager from './integration';        // Applies various integr
 import init from './init';
 
 import PeerDiscoveryManager from './peer-discovery';
-import apiServer from './api';
 
 const appRoot = path.resolve(__dirname, '../..'); // app/ directory
 const srcPath = path.join(appRoot, 'src'); // app/src/ directory
@@ -108,7 +108,7 @@ app.on('ready', () => {
     init(store, lib);
 
     // Start the API server
-    apiServer(store, lib);
+    configureApi(store, lib);
 
     // Start listening for RPC IPC events
     const rpcIpcManager = new RpcIpcManager(lib, 'electron');

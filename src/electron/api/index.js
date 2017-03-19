@@ -3,7 +3,7 @@ import serverRoutes from './routes';
 import sharedRoutes from '../../shared/api/routes';
 import routesToHandlers from '../../shared/api/handlers';
 
-const library = (store, lib) => {
+const configureApi = (store, lib) => {
 
     const server = new Hapi.Server({
         connections: {
@@ -31,4 +31,4 @@ const library = (store, lib) => {
     return server;
 }
 
-export default library;
+export default configureApi;

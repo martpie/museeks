@@ -28,7 +28,6 @@ class PeerDiscovery {
             return this.lib.actions.network.peerFound(extend(peerInfo, { ip : peer.ip }));
         })
         .catch((err) => {
-            console.log(err)
             const ignore = err.response.status === 404;
 
             if (!ignore) {

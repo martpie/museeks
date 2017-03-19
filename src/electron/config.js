@@ -8,7 +8,7 @@ class ConfigManager {
         this.workArea = electron.screen.getPrimaryDisplay().workArea;
 
         const defaultConfig = this.getDefaultConfig();
-console.log(path.join(app.getPath('userData'), 'config.json'))
+
         this.conf = new teeny(path.join(app.getPath('userData'), 'config.json'));
         this.conf.loadOrCreateSync(defaultConfig);
 
