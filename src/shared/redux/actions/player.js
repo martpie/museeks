@@ -13,9 +13,9 @@ const library = (lib) => {
         const { paused } = lib.player.audio;
         const { queue } = getState();
         if (paused && queue.length > 0) {
-            dispatch(play());
+            dispatch(lib.actions.player.play());
         } else {
-            dispatch(pause());
+            dispatch(lib.actions.player.pause());
         }
     };
 
@@ -42,9 +42,7 @@ const library = (lib) => {
     const start = (_id) => (dispatch, getState) => {
         const { tracks, tracksCursor } = getState();
         const queue = [...tracks[tracksCursor].sub];
-        const queuePosition = queue.findIndex((track) => {
-            return track._id === _id;
-        });
+        const queuePosition = queue.findIndex((track) => track._id === _id);
 
         if (queuePosition > -1) {
             const uri = utils.parseUri(queue[queuePosition].path);
@@ -70,30 +68,20 @@ const library = (lib) => {
     };
 
     const next = () => (dispatch, getState) => {
-        const { queue, queueCursor, repeat } = getState();
-        let newQueueCursor;
-
-        if (repeat === 'one') {
-            newQueueCursor = queueCursor;
-        } else if (repeat === 'all' && queueCursor === queue.length - 1) { // is last track
-            newQueueCursor = 0; // start with new track
-        } else {
-            newQueueCursor = queueCursor + 1;
-        }
-
-        const track = queue[newQueueCursor];
-
-        if (track !== undefined) {
+        const { someState } = getState();
+        if (true) {
             const uri = utils.parseUri(track.path);
 
             lib.player.setAudioSrc(uri);
             lib.player.play();
             dispatch({
                 type: 'APP_PLAYER_NEXT',
-                newQueueCursor
+                payload: {
+                    newQueueCursor
+                }
             });
         } else {
-            dispatch(stop());
+            dispatch(lib.actions.player.stop());
         }
     };
 
@@ -123,7 +111,7 @@ const library = (lib) => {
                 }
             });
         } else {
-            dispatch(stop());
+            dispatch(lib.actions.player.stop());
         }
     };
 
@@ -156,10 +144,6 @@ const library = (lib) => {
             lib.player.setAudioVolume(volume);
 
             dispatch(lib.actions.config.set('audioVolume', volume));
-
-            return {
-                type: 'APP_REFRESH_CONFIG'
-            };
         }
     };
 
@@ -168,10 +152,6 @@ const library = (lib) => {
         else lib.player.unmute();
 
         dispatch(lib.actions.config.set('audioMuted', muted));
-
-        return {
-            type: 'APP_REFRESH_CONFIG'
-        };
     };
 
     const setPlaybackRate = (value) => (dispatch) => {
@@ -180,10 +160,6 @@ const library = (lib) => {
                 lib.player.setAudioPlaybackRate(value);
 
                 dispatch(lib.actions.config.set('audioPlaybackRate', parseFloat(value)));
-
-                return {
-                    type: 'APP_REFRESH_CONFIG'
-                };
             }
         }
     };

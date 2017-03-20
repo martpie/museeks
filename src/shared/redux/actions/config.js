@@ -3,7 +3,7 @@ const library = (lib) => {
     const set = (key, value) => {
         return (dispatch) => ({
             type: 'APP_CONFIG_SET',
-            payload: lib.config.set(key, value).then(lib.config.save)
+            payload: lib.config.set(key, value).then(() => dispatch(lib.actions.config.save()))
         });
     }
 
