@@ -69,7 +69,6 @@ app.on('ready', () => {
 
     // Load configuration into the store
     store.dispatch(lib.actions.config.load(lib.config.getAll()));
-    // store.dispatch(lib.actions.config.merge(process.env.config));
     lib.actions.network.peerFound({ ip : 'jackson' });
 
     // Start the database

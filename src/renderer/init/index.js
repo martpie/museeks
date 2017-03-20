@@ -15,8 +15,9 @@ const library = (lib) => {
         self.lastFilterSearch = now;
 
         self.filterSearchTimeOut = setTimeout(() => {
-            lib.config.set('bounds', lib.app.browserWindows.main.getBounds());
-            lib.config.saveSync();
+            console.log('aaaaaaaaaa')
+            console.log(lib.actions.config.set('bounds', lib.app.browserWindows.main.getBounds()))
+            dispatch(lib.actions.config.set('bounds', lib.app.browserWindows.main.getBounds()));
         }, 250);
     };
 
@@ -38,7 +39,7 @@ const library = (lib) => {
     window.addEventListener('drop', (e) => {
         e.preventDefault();
     }, false);
-
+console.log(lib.app.browserWindows.main)
     // Remember dimensions and positionning
     const currentWindow = lib.app.browserWindows.main;
     currentWindow.on('resize', saveBounds);

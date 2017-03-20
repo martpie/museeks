@@ -1,5 +1,4 @@
 import teeny from 'teeny-conf';
-import electron from 'electron';
 import path from 'path';
 import extend from 'xtend';
 

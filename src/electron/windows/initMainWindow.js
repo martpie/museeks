@@ -4,8 +4,9 @@ import os from 'os';
 
 export default (lib, icons, srcPath) => {
 
-    const bounds = checkBounds(lib.config.bounds);
-
+    const bounds = checkBounds(lib.config.get('bounds'));
+console.log('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$')
+console.log('lib.config.useNativeFrame', lib.config)
     const mainWindowOption = {
         title: 'Museeks',
         icon: os.platform() === 'win32' ? icons['ico'] : icons['256'],
@@ -15,7 +16,7 @@ export default (lib, icons, srcPath) => {
         height: bounds.height,
         minWidth: 900,
         minHeight: 550,
-        frame: lib.config.useNativeFrame,
+        frame: lib.config.get('useNativeFrame'),
         show: false
     };
 

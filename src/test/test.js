@@ -7,6 +7,7 @@ const numPeers = 1;
 const peerConfigs = range(0, numPeers).map((peer, peerNumber) => ({
     config: {
         path: `/tmp/museeks-test/${Date.now()}/${peerNumber}/config`,
+        theme: 'dark',
         electron: {
             api: {
                 port: 54321 + peerNumber
