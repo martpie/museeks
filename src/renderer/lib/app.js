@@ -1,10 +1,11 @@
 import { remote } from 'electron';
-import { rpcWrap } from 'electron-simple-rpc';
-
-const remoteAppFunctions = rpcWrap('app', ['restart', 'toggleSleepBlocker'], 'electron');
+import { rpc } from 'electron-simple-rpc';
 
 export default {
-    ...remoteAppFunctions,
+    app: {
+      restart: rpc('electron', 'app.restart'),
+      restart: rpc('electron', 'app.toggleSleepBlocker'),
+    },
     browserWindows: {
         main : remote.getCurrentWindow()
     },

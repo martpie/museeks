@@ -1,12 +1,9 @@
-import { rpcWrap } from 'electron-simple-rpc';
+import { rpc } from 'electron-simple-rpc';
 
-const functions = [
-    'find',
-    'findOne',
-    'insert',
-    'update',
-    'remove'
-];
-
-// make playlist functions invoked in the renderer execute in electron via rpc
-export default rpcWrap('track', functions, 'electron');
+export default {
+    find        : rpc('electron', 'track.find'),
+    findOne     : rpc('electron', 'track.findOne'),
+    insert      : rpc('electron', 'track.insert'),
+    update      : rpc('electron', 'track.update'),
+    remove      : rpc('electron', 'track.remove'),
+};
