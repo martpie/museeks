@@ -66,7 +66,7 @@ class Header extends Component {
         );
     }
 
-    search(e) {
+    search = (e) => {
         this.props.filterSearch(e.target.value);
     }
 }
