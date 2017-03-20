@@ -77,35 +77,6 @@ class IpcManager {
         ];
     }
 
-    bindEvents() {
-        ipcMain.on('showTray', () => {
-            this.show();
-        });
-
-        ipcMain.on('hideTray', () => {
-            this.hide();
-        });
-
-        ipcMain.on('playerAction', (event, reply, data) => {
-            switch(reply) {
-                case 'play': {
-                    this.setContextMenu('play');
-                    break;
-                }
-
-                case 'pause': {
-                    this.setContextMenu('pause');
-                    break;
-                }
-                case 'trackStart': {
-                    this.updateTrayMetadata(data);
-                    this.setContextMenu('play');
-                    break;
-                }
-            }
-        });
-    }
-
     show() {
         this.tray = new Tray(this.trayIcon);
 

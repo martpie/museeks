@@ -85,12 +85,27 @@ app.on('ready', () => {
 
     // Tray manager
     const trayIcon = os.platform() === 'win32.' ? museeksIcons['tray-ico'] : museeksIcons['tray'];
-    const trayManager = new TrayManager(mainWindow, trayIcon, store);
-    trayManager.bindEvents();
-    trayManager.show();
+    lib.tray = new TrayManager(mainWindow, trayIcon, store);
+    lib.tray.show();
 
     // integrations
     const integrations = new IntegrationManager(mainWindow);
     integrations.enable();
 });
 
+
+// TODO: Add these to tray
+//                case 'play': {
+//                    this.setContextMenu('play');
+//                    break;
+//                }
+//
+//                case 'pause': {
+//                    this.setContextMenu('pause');
+//                    break;
+//                }
+//                case 'trackStart': {
+//                    this.updateTrayMetadata(data);
+//                    this.setContextMenu('play');
+//                    break;
+//                }
