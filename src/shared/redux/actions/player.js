@@ -129,7 +129,6 @@ const library = (lib) => {
 
     const shuffle = (shuffle) => (dispatch) => {
         dispatch(lib.actions.config.set('audioShuffle', shuffle));
-        dispatch(lib.actions.config.save());
 
         const currentSrc = lib.player.getSrc();
         return {
@@ -143,7 +142,6 @@ const library = (lib) => {
 
     const repeat = (repeat) => (dispatch) => {
         dispatch(lib.actions.config.set('audioRepeat', repeat));
-        dispatch(lib.actions.config.save());
 
         return {
             type: 'APP_PLAYER_REPEAT',
@@ -158,7 +156,6 @@ const library = (lib) => {
             lib.player.setAudioVolume(volume);
 
             dispatch(lib.actions.config.set('audioVolume', volume));
-            dispatch(lib.actions.config.save());
 
             return {
                 type: 'APP_REFRESH_CONFIG'
@@ -171,7 +168,6 @@ const library = (lib) => {
         else lib.player.unmute();
 
         dispatch(lib.actions.config.set('audioMuted', muted));
-        dispatch(lib.actions.config.save());
 
         return {
             type: 'APP_REFRESH_CONFIG'
@@ -184,7 +180,6 @@ const library = (lib) => {
                 lib.player.setAudioPlaybackRate(value);
 
                 dispatch(lib.actions.config.set('audioPlaybackRate', parseFloat(value)));
-                dispatch(lib.actions.config.save());
 
                 return {
                     type: 'APP_REFRESH_CONFIG'

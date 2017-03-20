@@ -3,7 +3,7 @@ import InlineSVG from 'svg-inline-react';
 import classnames from 'classnames';
 import { connect } from 'react-redux';
 
-import { actions } from '../../lib';
+import lib from '../../lib';
 
 const svgMap = {
     one: require('../../../images/icons/player-repeat-one.svg'),
@@ -70,7 +70,7 @@ class ButtonRepeat extends Component {
 const stateToProps = () => ({});
 
 const dispatchToProps = {
-    repeatTrack: actions.player.repeat
+    repeatTrack: lib.actions.player.repeat
 };
 
 export default connect(stateToProps, dispatchToProps)(ButtonRepeat);

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import PlaylistsNav from './PlaylistsNav.react';
 import FullViewMessage from '../Shared/FullViewMessage.react';
 
-import { actions } from '../../lib';
+import lib from '../../lib';
 
 
 /*
@@ -73,7 +73,7 @@ class Playlists extends Component {
 const stateToProps = () => ({});
 
 const dispatchToProps = {
-    create: actions.playlists.create
+    create: lib.actions.playlists.create
 };
 
 export default connect(stateToProps, dispatchToProps)(Playlists);

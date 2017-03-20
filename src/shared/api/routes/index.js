@@ -26,6 +26,7 @@ import playlists from './playlists';
 import queue from './queue';
 import library from './library';
 import settings from './settings';
+import store from './store';
 import toasts from './toasts';
 import notification from './notification';
 import app from './app';
@@ -36,6 +37,7 @@ const routes = [
     ...queue,
     ...library,
     ...settings,
+    ...store,
     ...toasts,
     ...notification,
     ...app

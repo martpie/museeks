@@ -3,8 +3,8 @@ import InlineSVG from 'svg-inline-react';
 import classnames from 'classnames';
 import { connect } from 'react-redux';
 
-import { actions } from '../../lib';
-
+import lib from '../../lib';
+console.log(lib)
 /*
 |--------------------------------------------------------------------------
 | ShuffleButton
@@ -45,7 +45,7 @@ class ButtonShuffle extends Component {
 const stateToProps = () => ({});
 
 const dispatchToProps = {
-    repeat: actions.player.repeat
+    repeat: lib.actions.player.repeat
 };
 
 export default connect(stateToProps, dispatchToProps)(ButtonShuffle);

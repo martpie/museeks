@@ -1,10 +1,6 @@
 // Modules
-import Promise from 'bluebird';
 import React from 'react';
 import { Route, IndexRedirect } from 'react-router';
-
-// Actions
-import lib from '../lib';
 
 // Components
 import App       from '../components/App.react';
@@ -20,17 +16,9 @@ import SettingsAdvanced from '../components/Settings/SettingsAdvanced.react';
 import SettingsAbout    from '../components/Settings/SettingsAbout.react';
 
 export default (store) => {
-    const init = {
-        library: () => store.dispatch(lib.actions.library.setTracksCursor('library')),
-        playlist: (route) => Promise.all([
-            store.dispatch(lib.actions.playlists.load(route.params.playlistId)),
-            store.dispatch(lib.actions.library.setTracksCursor('playlist'))
-        ])
-    };
-
     return (
         <Route component={ App } path='/'>
-            <Route path='library' component={ Library } onEnter={ init.library } />
+            <Route path='library' component={ Library } />
             <Route path='settings' component={ Settings }>
                 <IndexRedirect to="library" />
                 <Route path='about' component={ SettingsAbout } />
@@ -40,7 +28,7 @@ export default (store) => {
                 <Route path='library' component={ SettingsLibrary } />
             </Route>
             <Route path='playlists' component={ Playlists }>
-                <Route path=':playlistId' component={ Playlist } onEnter={ ()=>init.playlist } />
+                <Route path=':playlistId' component={ Playlist } />
             </Route>
         </Route>
     );

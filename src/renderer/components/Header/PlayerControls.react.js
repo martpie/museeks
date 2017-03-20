@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Icon from 'react-fontawesome';
 import VolumeControl from './VolumeControl.react';
 
-import { actions } from '../../lib';
+import lib from '../../lib';
 
 /*
 |--------------------------------------------------------------------------
@@ -42,9 +42,9 @@ class PlayerControls extends PureComponent {
 const stateToProps = () => ({});
 
 const dispatchToProps = {
-    previous: actions.player.previous,
-    next: actions.player.next,
-    playToggle: actions.player.playToggle
+    previous: lib.actions.player.previous,
+    next: lib.actions.player.next,
+    playToggle: lib.actions.player.playToggle
 };
 
 export default connect(stateToProps, dispatchToProps)(PlayerControls);

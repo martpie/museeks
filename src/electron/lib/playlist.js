@@ -1,19 +1,22 @@
-import playlist from '../models/playlist';
+const library = (lib) => {
 
-const find = (data) => playlist.findAsync(data.query);
+    const find = (data) => lib.models.playlist.findAsync(data.query);
 
-const findOne = (data) => playlist.findOneAsync(data.query);
+    const findOne = (data) => lib.models.playlist.findOneAsync(data.query);
 
-const insert = (data) => playlist.insertAsync(data);
+    const insert = (data) => lib.models.playlist.insertAsync(data);
 
-const update = (criteria, data) => playlist.updateAsync(criteria, data);
+    const update = (criteria, data) => lib.models.playlist.updateAsync(criteria, data);
 
-const remove = (criteria, options) => playlist.removeAsync(criteria, options);
+    const remove = (criteria, options) => lib.models.playlist.removeAsync(criteria, options);
 
-export default {
-    find,
-    findOne,
-    insert,
-    update,
-    remove
-};
+    return {
+        find,
+        findOne,
+        insert,
+        update,
+        remove
+    };
+}
+
+export default library;

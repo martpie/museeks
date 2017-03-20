@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { ButtonGroup, Button } from 'react-bootstrap';
 import Icon from 'react-fontawesome';
 
-import { actions } from '../../lib';
+import lib from '../../lib';
 
 import PlaylistsNavLink from './PlaylistsNavLink.react';
 import { remote } from 'electron';
@@ -143,9 +143,9 @@ class PlaylistsNav extends Component {
 const stateToProps = () => ({});
 
 const dispatchToProps = {
-    remove: actions.playlists.remove,
-    create: actions.playlists.create,
-    rename: actions.playlists.rename
+    remove: lib.actions.playlists.remove,
+    create: lib.actions.playlists.create,
+    rename: lib.actions.playlists.rename
 };
 
 export default connect(stateToProps, dispatchToProps)(PlaylistsNav);

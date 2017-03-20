@@ -4,7 +4,7 @@ import actions from '../redux/actions';
 const library = (lib) => {
     return {
         actions: actions(lib),
-        api
+        api: api(lib)
     };
 };
 

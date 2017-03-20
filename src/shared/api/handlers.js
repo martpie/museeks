@@ -1,6 +1,6 @@
 import { get } from 'lodash';
 
-const mapApis = (apis, lib, dispatch) => {
+const mapApis = (apis, lib) => {
 
     // add a handler to a route that calls an internal library function
     const createRouteHandlers = (route) => {
@@ -25,8 +25,8 @@ const mapApis = (apis, lib, dispatch) => {
 
                 // Wrap the function in a redux dispatch if required
                 const dispatchedFunction = (args) => route.dispatch
-                    ? dispatch(libraryFunction.apply(null, args))
-                    : libraryFunction(args);
+                    ? store.dispatch(libraryFunction.apply(null, args))
+                    : libraryFunction.apply(null, args);
 
                 return dispatchedFunction(transformedArgs)
                     .then((result) => res(result))

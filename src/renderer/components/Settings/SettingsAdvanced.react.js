@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { actions } from '../../lib';
+import lib from '../../lib';
 
 import CheckboxSetting from './CheckboxSetting.react';
 
@@ -41,7 +41,7 @@ class SettingsAdvanced extends Component {
 const stateToProps = () => ({});
 
 const dispatchToProps = {
-    toggleDevMode: actions.settings.toggleDevMode
+    toggleDevMode: lib.actions.settings.toggleDevMode
 };
 
 export default connect(stateToProps, dispatchToProps)(SettingsAdvanced);

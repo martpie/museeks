@@ -3,32 +3,37 @@ import serverRoutes from './routes';
 import sharedRoutes from '../../shared/api/routes';
 import routesToHandlers from '../../shared/api/handlers';
 
-const configureApi = (store, lib) => {
+class ApiServer {
 
-    const server = new Hapi.Server({
-        connections: {
-            router: {
-                stripTrailingSlash: true
+    constructor(lib) {
+        this.lib = lib;
+    }
+
+    start() {
+        this.server = new Hapi.Server({
+            connections: {
+                router: {
+                    stripTrailingSlash: true
+                }
             }
-        }
-    });
+        });
 
-    server.connection({ port: 54321 });
+        this.server.connection({
+            port: this.lib.store.getState().config.electron.api.port
+        });
 
-    const routes = routesToHandlers([...serverRoutes, ...sharedRoutes], lib, store.dispatch);
+        const routes = routesToHandlers([...serverRoutes, ...sharedRoutes], this.lib);
 
-    server.route(routes);
+        this.server.route(routes);
 
-    // attach the libs and dispatcher to each request
-    server.ext('onRequest', (req, res) => {
-        req.lib = lib;
-        req.store = store;
-        return res.continue();
-    });
+        // attach the libs and dispatcher to each request
+        this.server.ext('onRequest', (req, res) => {
+            req.lib = this.lib;
+            res.continue();
+        });
 
-    server.start();
-
-    return server;
+        this.server.start();
+    }
 }
 
-export default configureApi;
+export default ApiServer;

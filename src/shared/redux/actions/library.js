@@ -55,7 +55,6 @@ const library = (lib) => {
                     folders.sort();
 
                     dispatch(lib.actions.config.set('musicFolders', folders));
-                    dispatch(lib.actions.config.save());
                     dispatch({
                         type: 'APP_LIBRARY_UPDATE_FOLDERS',
                         payload: {
@@ -74,7 +73,6 @@ const library = (lib) => {
             folders.splice(index, 1);
 
             dispatch(lib.actions.config.set('musicFolders', folders));
-            dispatch(lib.actions.config.save());
             dispatch({
                 type: 'APP_LIBRARY_UPDATE_FOLDERS',
                 payload: {

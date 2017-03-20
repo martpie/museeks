@@ -1,4 +1,5 @@
 import path from 'path';
+import { nativeImage } from 'electron';
 
 export default (appRoot) => {
   const logosPath = path.join(appRoot, 'src', 'images', 'logos');

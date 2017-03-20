@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { actions } from '../../lib';
+import lib from '../../lib';
 
 
 /*
@@ -53,7 +53,7 @@ class SettingsAudio extends Component {
 const stateToProps = () => ({});
 
 const dispatchToProps = {
-    setPlaybackRate: actions.player.setPlaybackRate
+    setPlaybackRate: lib.actions.player.setPlaybackRate
 };
 
 export default connect(stateToProps, dispatchToProps)(SettingsAudio);

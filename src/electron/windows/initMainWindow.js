@@ -1,24 +1,24 @@
-import { BrowserWindow } from 'electron';
+import { BrowserWindow, screen } from 'electron';
 import os from 'os';
 
 export default (icons, config, srcPath) => {
   const bounds = checkBounds(config.bounds);
 
   const mainWindowOption = {
-        title     : 'Museeks',
-        icon      :  os.platform() === 'win32' ? icons['ico'] : icons['256'],
-        x         :  bounds.x,
-        y         :  bounds.y,
-        width     :  bounds.width,
-        height    :  bounds.height,
-        minWidth  :  900,
-        minHeight :  550,
-        frame     :  config.useNativeFrame,
-        show      :  false
+        title: 'Museeks',
+        icon: os.platform() === 'win32' ? icons['ico'] : icons['256'],
+        x: bounds.x,
+        y: bounds.y,
+        width: bounds.width,
+        height: bounds.height,
+        minWidth: 900,
+        minHeight: 550,
+        frame: config.useNativeFrame,
+        show: false
     };
 
     // Create the browser window
-    const mainWindow = new BrowserWindow(mainWindowOption);
+    let mainWindow = new BrowserWindow(mainWindowOption);
 
     // ... and load our html page
     mainWindow.loadURL(`file://${srcPath}/app.html#/library`);
@@ -40,7 +40,7 @@ export default (icons, config, srcPath) => {
 
 function checkBounds(bounds) {
     // check if the browser window is offscreen
-    const display = electron.screen.getDisplayNearestPoint(bounds).workArea;
+    const display = screen.getDisplayNearestPoint(bounds).workArea;
 
     const onScreen = bounds.x >= display.x
         && bounds.x + bounds.width <= display.x + display.width

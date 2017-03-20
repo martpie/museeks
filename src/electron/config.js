@@ -1,6 +1,7 @@
 import teeny from 'teeny-conf';
 import electron from 'electron';
 import path from 'path';
+import extend from 'xtend';
 
 class ConfigManager {
 
@@ -12,18 +13,11 @@ class ConfigManager {
         this.conf = new teeny(path.join(app.getPath('userData'), 'config.json'));
         this.conf.loadOrCreateSync(defaultConfig);
 
-        // Check if config update
-        let configChanged = false;
+        // merge in the default config, taking existing config as priority
+        this.conf.merge(extend(defaultConfig, this.conf.getAll()));
 
-        for(const key in defaultConfig) {
-            if (this.conf.get(key) === undefined) {
-                this.conf.set(key, defaultConfig[key]);
-                configChanged = true;
-            }
-        }
-
-        // save config if changed
-        if (configChanged) this.conf.saveSync();
+        // save config after merging defaults
+        this.conf.saveSync();
     }
 
     getDefaultConfig() {
@@ -46,6 +40,19 @@ class ConfigManager {
                 height: 600,
                 x: parseInt(this.workArea.width / 2),
                 y: parseInt(this.workArea.height / 2)
+            },
+            electron: {
+                api: {
+                    port: 54321
+                },
+                database: {
+                    path: undefined // use default database path in prod, override in testing
+                }
+            },
+            renderer: {
+                api: {
+                    port: 54321
+                }
             }
         };
     }

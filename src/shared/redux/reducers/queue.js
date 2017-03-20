@@ -1,8 +1,8 @@
-export default (state = {}, payload) => {
-    switch (payload.type) {
+export default (state = {}, action) => {
+    switch (action.type) {
         case('APP_QUEUE_START'): {
             const queue       = [...state.queue];
-            const queueCursor = payload.index;
+            const queueCursor = action.payload.index;
 
             // Backup that and change the UI
             return {
@@ -24,7 +24,7 @@ export default (state = {}, payload) => {
 
         case('APP_QUEUE_REMOVE'): {
             const queue = [...state.queue];
-            queue.splice(state.queueCursor + payload.index + 1, 1);
+            queue.splice(state.queueCursor + action.payload.index + 1, 1);
             return {
                 ...state,
                 queue
@@ -33,7 +33,7 @@ export default (state = {}, payload) => {
 
         // Prob here
         case('APP_QUEUE_ADD_FULFILLED'): {
-            const queue = [...state.queue, ...payload.tracks];
+            const queue = [...state.queue, ...action.payload.tracks];
             return {
                 ...state,
                 queue
@@ -42,7 +42,7 @@ export default (state = {}, payload) => {
 
         case('APP_QUEUE_ADD_NEXT_FULFILLED'): {
             const queue = [...state.queue];
-            queue.splice(state.queueCursor + 1, 0, ...payload.tracks);
+            queue.splice(state.queueCursor + 1, 0, ...action.payload.tracks);
             return {
                 ...state,
                 queue
@@ -52,7 +52,7 @@ export default (state = {}, payload) => {
         case('APP_QUEUE_SET_QUEUE'): {
             return {
                 ...state,
-                queue: payload.queue
+                queue: action.payload.queue
             };
         }
 

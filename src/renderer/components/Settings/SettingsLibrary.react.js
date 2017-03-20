@@ -6,7 +6,7 @@ import classnames from 'classnames';
 
 import LibraryFolders from './LibraryFolders.react';
 
-import { actions } from '../../lib';
+import lib from '../../lib';
 
 
 /*
@@ -92,10 +92,10 @@ const stateToProps = (state) => ({
 });
 
 const dispatchToProps = {
-    stop: actions.player.stop,
-    remove: actions.library.remove,
-    addFolders: actions.library.addFolders,
-    rescan: actions.library.rescan
+    stop: lib.actions.player.stop,
+    remove: lib.actions.library.remove,
+    addFolders: lib.actions.library.addFolders,
+    rescan: lib.actions.library.rescan
 };
 
 export default connect(stateToProps, dispatchToProps)(SettingsLibrary);

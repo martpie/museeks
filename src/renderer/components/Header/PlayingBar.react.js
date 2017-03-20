@@ -8,10 +8,8 @@ import ButtonRepeat  from './ButtonRepeat.react';
 import TrackCover    from './TrackCover.react';
 import Queue         from './Queue.react';
 
-import { player } from '../../lib';
+import lib from '../../lib';
 import utils from '../../../shared/utils/utils';
-
-import { actions } from '../../lib';
 
 import classnames from 'classnames';
 
@@ -154,7 +152,7 @@ class PlayingBar extends Component {
     }
 
     tick() {
-        this.setState({ elapsed: player.getCurrentTime() });
+        this.setState({ elapsed: lib.player.getCurrentTime() });
     }
 
     jumpAudioTo(e) {
@@ -225,8 +223,8 @@ class PlayingBar extends Component {
 const stateToProps = () => ({});
 
 const dispatchToProps = {
-    jumpTo: actions.player.jumpTo,
-    fetchCover: actions.library.fetchCover
+    jumpTo: lib.actions.player.jumpTo,
+    fetchCover: lib.actions.library.fetchCover
 };
 
 export default connect(stateToProps, dispatchToProps)(PlayingBar);

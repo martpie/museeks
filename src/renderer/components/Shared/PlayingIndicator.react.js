@@ -4,7 +4,7 @@ import Icon from 'react-fontawesome';
 
 import classnames from 'classnames';
 
-import { actions } from '../../lib';
+import lib from '../../lib';
 
 
 /*
@@ -79,7 +79,7 @@ class TrackRow extends Component {
 const stateToProps = () => ({});
 
 const dispatchToProps = {
-    playToggle: actions.player.playToggle
+    playToggle: lib.actions.player.playToggle
 };
 
 export default connect(stateToProps, dispatchToProps)(TrackRow);

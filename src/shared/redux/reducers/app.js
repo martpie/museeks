@@ -16,10 +16,6 @@ export default (state = {}, action) => {
             };
         }
 
-        case('APP_REFRESH_CONFIG'): {
-            return { ...state };
-        }
-
         default: {
             return state;
         }

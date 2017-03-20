@@ -1,17 +1,12 @@
+import extend from 'xtend';
+
 export default (state = {}, action) => {
     switch (action.type) {
-        case('APP_CONFIG_GET_ALL_FULFILLED'): {
+        case('APP_CONFIG_LOAD'): {
             return {
                 ...state,
-                ...action.payload
-            };
-        }
-
-        case('APP_CONFIG_SET_FULFILLED'): {
-            return {
-                ...state,
-                // action.meta.key: action.meta.value TODO
-            };
+                config: action.payload.config
+            }
         }
 
         default: {

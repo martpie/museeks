@@ -7,7 +7,7 @@ import Header from './Header/Header.react';
 import Footer from './Footer/Footer.react';
 import Toasts from './Toasts/Toasts.react';
 
-import { actions } from '../lib';
+import lib from '../lib';
 
 /*
 |--------------------------------------------------------------------------
@@ -29,45 +29,45 @@ class Museeks extends Component {
     }
 
     render() {
-        const store = this.props.store;
-        const trackPlayingId = (store.queue.length > 0 && store.queueCursor !== null) ? store.queue[store.queueCursor]._id : null;
+        const state = this.props.state;
+        const trackPlayingId = (state.queue.length > 0 && state.queueCursor !== null) ? state.queue[state.queueCursor]._id : null;
 
         return (
             <div className='main'>
                 <KeyBinding onKey={ this.onKey } preventInputConflict />
                 <Header
                     app={ this }
-                    playerStatus={ store.playerStatus }
-                    repeat={ store.repeat }
-                    shuffle={ store.shuffle }
-                    cover={ store.cover }
-                    queue={ store.queue }
-                    queueCursor={ store.queueCursor }
-                    windowControls={ !store.config.useNativeFrame }
+                    playerStatus={ state.playerStatus }
+                    repeat={ state.repeat }
+                    shuffle={ state.shuffle }
+                    cover={ state.cover }
+                    queue={ state.queue }
+                    queueCursor={ state.queueCursor }
+                    windowControls={ !state.config.useNativeFrame }
                 />
                 <div className='main-content'>
                     <Row className='content'>
                         { React.cloneElement(
                             this.props.children, {
                                 app: this,
-                                config: store.config,
-                                playerStatus: store.playerStatus,
-                                queue: store.queue,
-                                tracks: store.tracks[store.tracksCursor].sub,
-                                library: store.tracks[store.tracksCursor].all,
-                                playlists: store.playlists,
-                                refreshingLibrary: store.refreshingLibrary,
-                                refreshProgress: store.refreshProgress,
+                                config: state.config,
+                                playerStatus: state.playerStatus,
+                                queue: state.queue,
+                                tracks: state.tracks[state.tracksCursor].sub,
+                                library: state.tracks[state.tracksCursor].all,
+                                playlists: state.playlists,
+                                refreshingLibrary: state.refreshingLibrary,
+                                refreshProgress: state.refreshProgress,
                                 trackPlayingId
                             })
                         }
                     </Row>
                 </div>
                 <Footer
-                    tracks={ store.tracks[store.tracksCursor].sub }
-                    refreshingLibrary={ store.refreshingLibrary }
+                    tracks={ state.tracks[state.tracksCursor].sub }
+                    refreshingLibrary={ state.refreshingLibrary }
                 />
-                <Toasts toasts={ store.toasts } />
+                <Toasts toasts={ state.toasts } />
             </div>
         );
     }
@@ -83,10 +83,10 @@ class Museeks extends Component {
     }
 }
 
-const stateToProps = (state) => ({ store: { ...state } });
+const stateToProps = (state) => ({ state });
 
 const dispatchToProps = {
-    playToggle: actions.player.playToggle
+    playToggle: lib.actions.player.playToggle
 };
 
 export default connect(stateToProps, dispatchToProps)(Museeks);

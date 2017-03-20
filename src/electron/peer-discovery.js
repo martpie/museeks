@@ -6,7 +6,7 @@ import extend from 'xtend';
 import os from 'os';
 
 class PeerDiscovery {
-    constructor(store, lib) {
+    constructor(lib) {
         this.lib = lib;
 
         // scanning at startup slows application load time
@@ -14,9 +14,11 @@ class PeerDiscovery {
         setTimeout(() => this.scanForPeers(), scanDelay);
     }
     handshake (network, peer) {
+        const apiPort = this.lib.store.getState().config.electron.api.port;
+
         return http({
             method: 'POST',
-            url: `http://${peer.ip}:54321/api/v1/handshake`,
+            url: `http://${peer.ip}:${apiPort}/api/v1/handshake`,
             data: {
                 hostname: os.hostname(),
                 platform: os.platform(),
@@ -24,9 +26,8 @@ class PeerDiscovery {
             }
         })
         .then((response) => response.data)
-        .then((peerInfo) => {
-            return this.lib.actions.network.peerFound(extend(peerInfo, { ip : peer.ip }));
-        })
+        .then((peerInfo) => extend(peerInfo, { ip : peer.ip }))
+        .then((peer) => this.lib.actions.network.peerFound(peer))
         .catch((err) => {
             const ignore = err.response.status === 404;
 
@@ -37,15 +38,14 @@ class PeerDiscovery {
     }
     scanForPeers() {
         const interfaces = flatten(Object.values(os.networkInterfaces()));
+        const networks = interfaces.filter(adapter => adapter.family === 'IPv4' && !adapter.internal); // only scan for external ipv4 adapters
+        const apiPort = this.lib.store.getState().config.electron.api.port;
 
-        // only scan for external ipv4 adapters
-        const networks = interfaces.filter(adapter => adapter.family === 'IPv4' && !adapter.internal);
-
-        networks.forEach((network) => {
+        const scanNetwork = (network) => {
 
             const lookup = new scan({
                 target: `${network.address}/24`,
-                port: 54321,
+                port: apiPort,
                 status: 'O',
                 timeout: 50,
                 concurrency: 10
@@ -58,7 +58,9 @@ class PeerDiscovery {
             });
 
             lookup.run();
-        });
+        }
+
+        networks.forEach(scanNetwork);
     }
 }
 

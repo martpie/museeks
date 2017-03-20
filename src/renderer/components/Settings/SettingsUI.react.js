@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { actions } from '../../lib';
+import lib from '../../lib';
 
 import CheckboxSetting from './CheckboxSetting.react';
 
@@ -71,12 +71,12 @@ class SettingsUI extends Component {
 const stateToProps = () => ({});
 
 const dispatchToProps = {
-    toggleDarkTheme: actions.settings.toggleDarkTheme,
-    toggleDisplayNotifications: actions.settings.toggleDisplayNotifications,
-    toggleNativeFrame: actions.settings.toggleNativeFrame,
-    toggleSleepBlocker: actions.settings.toggleSleepBlocker,
-    toggleMinimizeToTray: actions.settings.toggleMinimizeToTray,
-    toggleAutoUpdateChecker: actions.settings.toggleAutoUpdateChecker
+    toggleDarkTheme: lib.actions.settings.toggleDarkTheme,
+    toggleDisplayNotifications: lib.actions.settings.toggleDisplayNotifications,
+    toggleNativeFrame: lib.actions.settings.toggleNativeFrame,
+    toggleSleepBlocker: lib.actions.settings.toggleSleepBlocker,
+    toggleMinimizeToTray: lib.actions.settings.toggleMinimizeToTray,
+    toggleAutoUpdateChecker: lib.actions.settings.toggleAutoUpdateChecker
 };
 
 export default connect(stateToProps, dispatchToProps)(SettingsUI);

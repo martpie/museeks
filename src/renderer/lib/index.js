@@ -1,3 +1,5 @@
+import mutate from 'xtend/mutable';
+
 import sharedLib from '../../shared/lib';
 
 import app from './app';
@@ -16,18 +18,21 @@ const renderer = {
     player
 };
 
-const shared = sharedLib(renderer);
-
-const lib = {
-    ...renderer,
-    ...shared
+const library = {
+    ...renderer
 }
 
-// link the player once all libraries are loaded
-lib.player.link(lib);
+// attach the shared libraries after the store has been supplied
+const shared = sharedLib(library);
 
-// explicit exports required for webpack
-export const actions = lib.actions;
-export { player, app };
+// at the shared libraries to our internal library
+mutate(library, shared);
 
-export default lib;
+export const initLib = (store) => {
+    library.store = store;
+
+    // link the player once all libraries are loaded
+    library.player.link(library);
+};
+
+export default library;

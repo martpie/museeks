@@ -1,7 +1,9 @@
 import { ipcRenderer } from 'electron';
 
-const library = (store, lib) => {
-    const { dispatch } = store;
+const library = (lib) => {
+    const store = lib.store;
+    const dispatch = store.dispatch;
+    const config = store.getState().config;
 
     const saveBounds = () => {
         const now = window.performance.now();
@@ -17,9 +19,6 @@ const library = (store, lib) => {
             lib.config.saveSync();
         }, 250);
     };
-
-    // Get the config
-    const config = store.getState().config;
 
     // Config the audio player
     lib.player.setAudioVolume(config.audioVolume);

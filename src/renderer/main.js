@@ -6,22 +6,25 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Router,  hashHistory } from 'react-router';
+import { Router, hashHistory } from 'react-router';
 
 import { Provider } from 'react-redux';
 
 import getRoutes from './router/routes';
 import store from './redux/store';
-import lib from './lib';
-import init from './init';
+import lib, { initLib } from './lib';
+import initRenderer from './init';
 
 import { RpcIpcManager } from 'electron-simple-rpc';
 
-// Start listening for RPC IPC events
-const rpcIpcManager = new RpcIpcManager(lib, 'mainThread');
+// Initialise shared libraries with the store
+initLib(store);
 
-// Init
-init(store, lib);
+// Start listening for RPC IPC events
+const rpcIpcManager = new RpcIpcManager(lib, 'main-renderer');
+
+// Init renderer
+initRenderer(lib);
 
 /*
 |--------------------------------------------------------------------------

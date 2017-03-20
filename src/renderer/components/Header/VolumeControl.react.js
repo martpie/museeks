@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Icon from 'react-fontawesome';
 import classnames from 'classnames';
 
-import { actions, player } from '../../lib';
+import lib from '../../lib';
 
 
 /*
@@ -31,8 +31,8 @@ class VolumeControl extends Component {
 
         this.state = {
             showVolume: false,
-            volume: unsmoothifyVolume(player.audio.volume),
-            muted: player.audio.muted
+            volume: unsmoothifyVolume(lib.player.audio.volume),
+            muted: lib.player.audio.muted
         };
 
         this.mute = this.mute.bind(this);
@@ -89,7 +89,7 @@ class VolumeControl extends Component {
 
     mute(e) {
         if (e.target.classList.contains('player-control') || e.target.classList.contains('fa')) {
-            const muted = !player.isMuted();
+            const muted = !lib.player.isMuted();
 
             this.props.setMuted(muted);
             this.setState({ muted });
@@ -100,8 +100,8 @@ class VolumeControl extends Component {
 const stateToProps = () => ({});
 
 const dispatchToProps = {
-    setVolume: actions.player.setVolume,
-    setMuted: actions.player.setMuted
+    setVolume: lib.actions.player.setVolume,
+    setMuted: lib.actions.player.setMuted
 };
 
 export default connect(stateToProps, dispatchToProps)(VolumeControl);
