@@ -116,6 +116,12 @@ class IpcManager {
                     click: () => {
                         shell.showItemInFolder(data.track.path);
                     }
+                },
+                {
+                    label: 'Remove from library',
+                    click: () => {
+                        event.sender.send('tracksListContextMenuReply', 'removeFromLibrary');
+                    }
                 }
             ];
 

@@ -231,6 +231,8 @@ const getMusicMetadata = async (track) => {
     try {
         const stream = fs.createReadStream(track);
         data = await musicmetadataAsync(stream, { duration: true });
+        delete data.picture;
+        stream.close();
     } catch (err) {
         data = defaultMetadata;
         console.warn(`An error occured while reading ${track} id3 tags: ${err}`);

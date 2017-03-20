@@ -44,5 +44,17 @@ footer {
         padding-top: 7px;
         padding-bottom: 7px;
         color: #888;
+
+        .progress {
+            display: inline-block;
+            width: 100%;
+            vertical-align: middle;
+            height: 5px;
+            margin-bottom: 0;
+
+            .progress-bar {
+                background-color: $main-color;
+            }
+        }
     }
 }

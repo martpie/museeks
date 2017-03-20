@@ -59,11 +59,12 @@ class Museeks extends Component {
                                 config,
                                 playerStatus      : store.playerStatus,
                                 queue             : store.queue,
-                                tracks            : store.tracks[store.tracksCursor].sub,
-                                library           : store.tracks[store.tracksCursor].all,
+                                tracks            : {
+                                    all: store.tracks[store.tracksCursor].all,
+                                    sub: store.tracks[store.tracksCursor].sub
+                                },
                                 playlists         : store.playlists,
-                                refreshingLibrary : store.refreshingLibrary,
-                                refreshProgress   : store.refreshProgress,
+                                library           : store.library,
                                 trackPlayingId
                             })
                         }
@@ -71,7 +72,7 @@ class Museeks extends Component {
                 </div>
                 <Footer
                     tracks={ store.tracks[store.tracksCursor].sub }
-                    refreshingLibrary={ store.refreshingLibrary }
+                    library={ store.library }
                 />
                 <Toasts toasts={ store.toasts } />
             </div>

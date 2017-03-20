@@ -102,10 +102,14 @@ export default class TracksList extends Component {
                 }
                 case 'searchFor': {
                     // small hack, we can't call AppActions.library.filterSearch directly
-                    // otherwise the search clear button will not appear, because it will not detect an input event on itself
+                    // otherwise the search clear button would not appear, because it will not detect an input event on itself
                     const searchInput = document.querySelector('input[type="text"].search');
                     searchInput.value = data.search;
                     searchInput.dispatchEvent(new Event('input', { bubbles: true }));
+                    break;
+                }
+                case 'removeFromLibrary': {
+                    AppActions.library.removeFromLibrary(selected);
                     break;
                 }
             }

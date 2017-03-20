@@ -1,11 +1,13 @@
 {
   "presets": [
-    "node6",
-    "stage-3",
+    ["env", {
+      "targets": { "chrome": 56 },
+      "useBuiltIns": true
+    }],
     "react"
   ],
   "plugins": [
     "transform-class-properties",
-    "transform-async-to-generator"
+    ["transform-object-rest-spread", { "useBuiltIns": true }]
   ]
 }
