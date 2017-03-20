@@ -54,12 +54,22 @@ const peers = peerConfigs.map((config) => {
 });
 
 // start all electron instances
-const startPeers = Promise.map(peers, (peer) => peer.start());
+// const startPeers = () => {
+//     console.log('aaaaaaa', peers.length)
+//     return Promise.map(peers, (peer) => peer.start())
+// };
+
+// prepare each peer's runtime configuration
+const runtimeConfiguration = () => {
+    return Promise.map(peers, (peer) => {
+        // simulate peer discovery
+        return Promise.map(peers, (foundPeer) => notifyPeerFound(peer, foundPeer));
+    });
+}
 
 const runTests = () => {
 
     // test starts here
-
     const getElectronLogs = () => {
         peers.forEach((peer, peerNumber) => {
             peer.client.getMainProcessLogs().then((logs) => {
@@ -105,14 +115,12 @@ const notifyPeerFound = (peer, foundPeer) => {
     });
 }
 
-// prepare each peer's runtime configuration
-const runtimeConfiguration = () => {
-    return Promise.map(peers, (peer) => {
-        // simulate peer discovery
-        return Promise.map(peers, (foundPeer) => notifyPeerFound(peer, foundPeer));
-    });
-}
+// startPeers()
+// .then(runtimeConfiguration)
+// .then(runTests);
 
-startPeers
-.then(runtimeConfiguration)
-.then(runTests);
+// console.log(peers[0])
+// peers[0].start()
+
+const p = Electron({ env : { config : {} } });
+console.log(p.start())
