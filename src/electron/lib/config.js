@@ -3,7 +3,7 @@ import path from 'path';
 import Promise from 'bluebird';
 const fs = Promise.promisifyAll(require('fs'));
 
-const defaultConfig = {
+let defaultConfig = {
     theme: 'light',
     audioVolume: 1,
     audioPlaybackRate: 1,
@@ -37,8 +37,13 @@ const defaultConfig = {
     }
 }
 
-// static config defaults to user's home directory
-const defaultPath = path.join(app.getPath('userData'), 'config.json');
+let defaultPath = path.join(app.getPath('userData'), 'config.json');
+
+const save = (data) => {
+  const output = JSON.stringify(data, null, 4);
+  return fs.writeFileAsync(defaultPath, output);
+};
+
 
 const load = () => {
   return fs.readFileAsync(defaultPath).then((stringData) => {
@@ -48,17 +53,25 @@ const load = () => {
           return Object.assign({}, defaultConfig, data);
       }
       catch(err) {
-          return Promise.reject('Error reading JSON');
+          // Json is corrupt, overwrite settings with default
+          return save(defaultConfig);
       }
-  })
-}
+  }).catch(() => save(defaultConfig))
+};
 
-const save = (data) => {
-  const output = JSON.stringify(data, null, 4);
-  return fs.writeFileAsync(defaultPath, output);
-}
+
+const setConfigPath = (path) => {
+  defaultPath = path;
+};
+
+const extendDefaultConfig = (config) => {
+  defaultConfig = Object.assign({}, defaultConfig, config);
+};
+
 
 export default {
+  save,
   load,
-  save
+  setConfigPath,
+  extendDefaultConfig,
 };
