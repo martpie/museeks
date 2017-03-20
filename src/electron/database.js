@@ -10,7 +10,7 @@ class Database {
         this.lib = lib;
     }
 
-    start() {
+    start = () => {
         const defaultPath = app.getPath('userData');
 
         linvodb.defaults.store = { db: backend };

@@ -21,8 +21,8 @@ import getIcons from './other/getIcons';
 
 import PeerDiscoveryManager from './peer-discovery';
 
-const appRoot = path.resolve(__dirname, '../..'); // app/ directory
-const srcPath = path.join(appRoot, 'src');        // app/src/ directory
+const appRoot = path.resolve(__dirname, '../..');      // app/ directory
+const srcPath = path.join(appRoot, 'src');             // app/src/ directory
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the javascript object is GCed.
@@ -53,13 +53,12 @@ app.on('window-all-closed', () => {
 // initialization and ready for creating browser windows.
 app.on('ready', () => {
 
-
     // parse configuration from environment variables when in testing mode
     if (process.env.SPECTRON) {
         const config = JSON.parse(process.env.config);
         lib.config.setConfigPath(config.path);
-        lib.config.extendDefaultConfig(config);
-        lib.config.save();
+        lib.config.extendConfig(config);
+        lib.config.saveSync();
     }
 
     // Initialise shared libraries with the store
@@ -68,44 +67,44 @@ app.on('ready', () => {
     // Load configuration into the store
     store.dispatch(lib.actions.config.load()).then((response) => {
 
-      // After config has loaded, do stuff.
-      lib.actions.network.peerFound({ ip : 'jackson' });
+        // After config has loaded, do stuff.
+        lib.actions.network.peerFound({ ip : 'jackson' });
 
-      // Start the database
-      const database = new Database(lib);
-      database.start();
+        // Start the database
+        const database = new Database(lib);
+        database.start();
 
-      // Start the API server
-      const apiServer = new ApiServer(lib);
-      apiServer.start();
+        // Start the API server
+        const apiServer = new ApiServer(lib);
+        apiServer.start();
 
-      // Start listening for RPC IPC events
-      const rpcIpcManager = new RpcIpcManager(lib, 'electron');
+        // Start listening for RPC IPC events
+        const rpcIpcManager = new RpcIpcManager(lib, 'electron');
 
-      // Start the peer discovery service
-      const peers = new PeerDiscoveryManager(lib);
+        // Start the peer discovery service
+        const peers = new PeerDiscoveryManager(lib);
 
-      // Power monitor
-      const powerMonitor = new PowerMonitor(mainWindow, store);
-      powerMonitor.enable();
+        // Power monitor
+        const powerMonitor = new PowerMonitor(mainWindow, store);
+        powerMonitor.enable();
 
-      // Integrations
-      const integrations = new IntegrationManager(mainWindow);
-      integrations.enable();
+        // Integrations
+        const integrations = new IntegrationManager(mainWindow);
+        integrations.enable();
 
-      // Get the application icons
-      const museeksIcons = getIcons(appRoot);
+        // Get the application icons
+        const museeksIcons = getIcons(appRoot);
 
-      // Tray manager
-      const trayIcon = os.platform() === 'win32.' ? museeksIcons['tray-ico'] : museeksIcons['tray'];
-      lib.tray = new TrayManager(mainWindow, trayIcon, store);
-      lib.tray.show();
+        // Tray manager
+        const trayIcon = os.platform() === 'win32.' ? museeksIcons['tray-ico'] : museeksIcons['tray'];
+        lib.tray = new TrayManager(mainWindow, trayIcon, store);
+        lib.tray.show();
 
-      // Create and load the main window
-      mainWindow = initMainWindow(lib, museeksIcons, srcPath);
+        // Create and load the main window
+        mainWindow = initMainWindow(lib, museeksIcons, srcPath);
 
-      // Init Electron
-      initElectron(lib);
+        // Init Electron
+        initElectron(lib);
     });
 
 // TODO: Add these to tray

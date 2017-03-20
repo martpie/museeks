@@ -1,36 +1,67 @@
+import Promise from 'bluebird';
 import Electron from './fixtures/Electron';
 import { range } from 'range';
 import mkdirp from 'mkdirp';
+import http from 'axios';
+import mutate from 'xtend/mutable';
+import fs from 'fs-extra';
+import path from 'path';
+import test from 'tape';
+
+const srcRoot = path.resolve(__dirname, '..');
+const testMp3 = path.resolve(srcRoot, './test/fixtures/test.mp3');
 
 const numPeers = 1;
 
-const peerConfigs = range(0, numPeers).map((peer, peerNumber) => ({
-    config: {
-        path: `/tmp/museeks-test/${Date.now()}/${peerNumber}/config`,
-        theme: 'dark',
-        electron: {
-            api: {
-                port: 54321 + peerNumber
-            },
-            database: {
-                path: `/tmp/museeks-test/${Date.now()}/${peerNumber}/database`
+const peerConfigs = range(0, numPeers).map((peer, peerNumber) => {
+    const peerDataRoot = `/tmp/museeks-test/${Date.now()}/${peerNumber}`;
+
+    return {
+        ip: 'localhost',
+        testDataPath: `${peerDataRoot}/data`,
+        config: {
+            path: `${peerDataRoot}/config/config.json`,
+            theme: 'dark',
+            discoverPeers: false,
+            electron: {
+                api: {
+                    port: 54321 + peerNumber
+                },
+                database: {
+                    path: `${peerDataRoot}/database`
+                }
             }
         }
     }
-}));
+});
 
 // create all peer database paths
 peerConfigs.forEach((peer) => mkdirp(peer.config.electron.database.path));
 
+// create test environment for each peer
 const peers = peerConfigs.map((config) => {
-    return Electron({ env: config });
+
+    // create peer electron instance
+    const peer = Electron({ env: config });
+
+    // create peer data directories
+    mkdirp(config.testDataPath);
+    mkdirp(path.dirname(config.config.path));
+    mkdirp(config.config.electron.database.path);
+
+    // copy test files
+    fs.copySync(testMp3, config.testDataPath);
+
+    // add config to peer
+    return mutate(peer, config);
 });
 
-peers.forEach((peer) => peer.start());
+// peers.forEach((peer) => peer.start());
+
+// start all electron instances
+const startPeers = () => Promise.map(peers, (peer) => peer.start());
 
 const runTests = () => {
-
-    console.log(peers)
 
     const getElectronLogs = () => {
         peers.forEach((peer) => {
@@ -45,4 +76,48 @@ const runTests = () => {
     setInterval(getElectronLogs, 1000);
 }
 
-setTimeout(runTests, 2000);
+// prepare each peer's runtime configuration
+const runtimeConfiguration = () => {
+    return Promise.map(peers, (peer) => {
+        // simulate peer discovery
+        return Promise.map(peers, (foundPeer) => notifyPeerFound(peer, foundPeer));
+    });
+}
+
+const setConfig = (peer, key, value) => {
+    const host = peer.ip;
+    const port = peer.config.electron.api.port;
+
+    return http({
+        method: 'POST',
+        url: `http://${host}:${port}/api/v1/store/dispatch`,
+        json: true,
+        data: {
+            type: 'APP_CONFIG_SET',
+            payload: { key, value }
+        }
+    });
+}
+
+const notifyPeerFound = (peer, foundPeer) => {
+    const host = peer.ip;
+    const port = peer.config.electron.api.port;
+
+    return http({
+        method: 'POST',
+        url: `http://${host}:${port}/api/v1/store/dispatch`,
+        json: true,
+        data: {
+            type: 'APP_NETWORK_PEER_FOUND',
+            payload: {
+                peer: {
+                    ip: foundPeer.ip
+                }
+            }
+        }
+    });
+}
+
+startPeers()
+.then(runtimeConfiguration)
+.then(runTests);

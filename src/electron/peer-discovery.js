@@ -60,7 +60,9 @@ class PeerDiscovery {
             lookup.run();
         }
 
-        networks.forEach(scanNetwork);
+        if (this.lib.store.getState().config.discoverPeers) {
+            networks.forEach(scanNetwork);
+        }
     }
 }
 
