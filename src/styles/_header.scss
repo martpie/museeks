@@ -280,26 +280,30 @@ header {
                     border: 0;
                     background: transparent;
                     font-size: 14px;
+                    box-shadow: none;
+                }
+
+                .queue-dropdown {
+
+                    .dropdown-menu {
+                        border: 0;
+                        padding: 0;
+                        margin: 0;
+                        left: auto;
+                        right: -15px;
+                        box-shadow: none;
+                    }
                 }
 
                 .queue {
-                    display: none;
-                    position: absolute;
                     width: 300px;
                     background: white;
                     border: solid 1px rgb(210, 210, 210);
                     text-overflow: ellipsis;
                     overflow-x: hidden;
                     font-size: 12px;
-                    z-index: 30;
                     color: grey;
-                    right: 10px;
-                    top: 30px;
                     box-shadow: 0 5px 3px -5px rgba(0, 0, 0, .5);
-
-                    &.visible {
-                        display: block;
-                    }
 
                     .empty-queue {
                         padding: 20px;

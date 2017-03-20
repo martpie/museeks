@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ProgressBar } from 'react-bootstrap';
+import { ProgressBar, Dropdown } from 'react-bootstrap';
 import Icon from 'react-fontawesome';
 
 
@@ -41,7 +41,6 @@ export default class PlayingBar extends Component {
             duration    : null,
             x           : null,
             dragging    : false,
-            showQueue   : false
         };
 
         this.tick = this.tick.bind(this);
@@ -52,7 +51,6 @@ export default class PlayingBar extends Component {
         this.jumpAudioTo = this.jumpAudioTo.bind(this);
         this.showTooltip = this.showTooltip.bind(this);
         this.hideTooltip = this.hideTooltip.bind(this);
-        this.toggleQueue = this.toggleQueue.bind(this);
     }
 
     render() {
@@ -120,14 +118,17 @@ export default class PlayingBar extends Component {
                     </div>
                 </div>
                 <div className='now-playing-queue'>
-                    <button type='button' className='queue-toggle' onClick={ this.toggleQueue }>
-                        <Icon name='list' />
-                    </button>
-                    <Queue
-                        visible={ this.state.showQueue }
-                        queue={ this.props.queue }
-                        queueCursor={ this.props.queueCursor }
-                    />
+                    <Dropdown id='queue-dropdown' className='queue-dropdown'>
+                        <Dropdown.Toggle noCaret className='queue-toggle'>
+                            <Icon name='list' />
+                        </Dropdown.Toggle>
+                        <Dropdown.Menu>
+                            <Queue
+                                queue={ this.props.queue }
+                                queueCursor={ this.props.queueCursor }
+                            />
+                        </Dropdown.Menu>
+                    </Dropdown>
                 </div>
             </div>
         );
@@ -215,9 +216,5 @@ export default class PlayingBar extends Component {
             duration : null,
             x        : null
         });
-    }
-
-    toggleQueue() {
-        this.setState({ showQueue: !this.state.showQueue });
     }
 }
