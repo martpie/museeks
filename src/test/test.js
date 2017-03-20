@@ -32,7 +32,7 @@ const peerConfigs = range(0, numPeers).map((peer, peerNumber) => {
             }
         }
     }
-}));
+});
 
 // create test environment for each peer
 const peers = peerConfigs.map((config) => {
@@ -49,7 +49,7 @@ const peers = peerConfigs.map((config) => {
     fs.copySync(testMp3, config.testDataPath);
 
     // add config to peer
-    mutate(peer, config);
+    return mutate(peer, config);
 });
 
 // start all electron instances
