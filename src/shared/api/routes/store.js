@@ -1,5 +1,3 @@
-import { rpcWrap } from 'electron-simple-rpc';
-
 export default [{
     path: 'api/v1/store/getState',
     method: 'GET',
