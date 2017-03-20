@@ -56,12 +56,11 @@ app.on('ready', () => {
 
     // parse configuration from environment variables when in testing mode
     if (process.env.SPECTRON) {
-//        const config = JSON.parse(process.env.config);
-//        lib.config.merge(config);
-//        lib.config.setConfigPath(config.path);
-//        lib.config.saveSync();
+        const config = JSON.parse(process.env.config);
+        lib.config.setConfigPath(config.path);
+        lib.config.extendDefaultConfig(config);
+        lib.config.save();
     }
-
 
     // Initialise shared libraries with the store
     initLib(store);
