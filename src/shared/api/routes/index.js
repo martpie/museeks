@@ -23,26 +23,16 @@ Demo Route:
 
 import app from './app';
 import player from './player';
-import playlists from './playlists';
-import queue from './queue';
 import library from './library';
-import settings from './settings';
 import store from './store';
-import toasts from './toasts';
-import notification from './notification';
 import handshake from './handshake';
 import rpc from './rpc';
 
 const routes = [
     ...app,
     ...player,
-    ...playlists,
-    ...queue,
     ...library,
-    ...settings,
     ...store,
-    ...toasts,
-    ...notification,
     ...handshake,
     ...rpc
 ];

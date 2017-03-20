@@ -4,7 +4,7 @@
 [![Dependencies](https://david-dm.org/KeitIG/museeks.svg)](https://github.com/KeitIG/museeks)
 [![Gitter](https://badges.gitter.im/KeitIG/museeks.svg)](https://gitter.im/KeitIG/museeks?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
-A simple, clean and cross-platform music player. ([museeks.io](http://museeks.io))
+A simple, clean and cross-platform music player, backed by a local P2P network. ([museeks.io](http://museeks.io))
 
 ![Screenshot](screenshot.png)
 

@@ -55,7 +55,7 @@ export default [{
     dispatch: true
 }, {
     path: 'api/v1/player/start',
-    method: 'GET',
+    method: 'POST',
     name: 'actions.player.start',
     dispatch: true
 }, {
