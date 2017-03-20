@@ -1,7 +1,7 @@
 const library = (lib) => {
 
     const close = () => (dispatch, getState) => {
-        getState().config.minimizeToTray
+          getState().config.minimizeToTray
             ? lib.app.browserWindows.main.hide()
             : lib.app.browserWindows.main.destroy();
     };
