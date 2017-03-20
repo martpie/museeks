@@ -1,6 +1,5 @@
 import Hapi from 'hapi';
-import serverRoutes from './routes';
-import sharedRoutes from '../../shared/api/routes';
+import routes from '../../shared/api/routes';
 import routesToHandlers from '../../shared/api/handlers';
 
 class ApiServer {
@@ -22,9 +21,9 @@ class ApiServer {
             port: this.lib.store.getState().config.electron.api.port
         });
 
-        const routes = routesToHandlers([...serverRoutes, ...sharedRoutes], this.lib);
+        const handlers = routesToHandlers(routes, this.lib);
 
-        this.server.route(routes);
+        this.server.route(handlers);
 
         // attach the libs and dispatcher to each request
         this.server.ext('onRequest', (req, res) => {

@@ -104,7 +104,9 @@ const notifyPeerFound = (peer, foundPeer) => {
 
 const runTests = () => {
 
-    // 
+    // test: get song from library
+    // two clients
+    // client one
 
     const getElectronLogs = () => {
         peers.forEach((peer, peerNumber) => {

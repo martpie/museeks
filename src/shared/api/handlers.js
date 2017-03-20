@@ -1,9 +1,9 @@
 import { get } from 'lodash';
 
-const mapApis = (apis, lib) => {
+const routesToHandlers = (routes, lib) => {
 
-    // add a handler to a route that calls an internal library function
-    const createRouteHandlers = (route) => {
+    // add a handler to a route that calls the corresponding internal library function
+    const createRouteHandler = (route) => {
 
         const handler = (route) => {
 
@@ -46,7 +46,7 @@ const mapApis = (apis, lib) => {
         return routeWithHandler;
     }
 
-    return apis.map(createRouteHandlers)
+    return routes.map(createRouteHandler)
 }
 
-export default mapApis;
+export default routesToHandlers;
