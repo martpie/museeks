@@ -1,19 +1,22 @@
-import track from '../models/track';
+const library = (lib) => {
 
-const find = (data) => track.find(data.query).sort(data.sort).execAsync();
+    const find = (data) => lib.models.track.find(data.query).sort(data.sort).execAsync();
 
-const findOne = (data) => track.findOneAsync(data.query);
+    const findOne = (data) => lib.models.track.findOneAsync(data.query);
 
-const insert = (data) => track.insertAsync(data);
+    const insert = (data) => lib.models.track.insertAsync(data);
 
-const update = (criteria, data) => track.updateAsync(criteria, data);
+    const update = (criteria, data) => lib.models.track.updateAsync(criteria, data);
 
-const remove = (criteria, options) => track.removeAsync(criteria, options);
+    const remove = (criteria, options) => lib.models.track.removeAsync(criteria, options);
 
-export default {
-    find,
-    findOne,
-    insert,
-    update,
-    remove
-};
+    return {
+        find,
+        findOne,
+        insert,
+        update,
+        remove
+    };
+}
+
+export default library;

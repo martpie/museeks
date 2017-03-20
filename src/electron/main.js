@@ -74,6 +74,7 @@ app.on('ready', () => {
 
     // Start the database
     const database = new Database(lib);
+    database.start();
 
     // Start the API server
     const apiServer = new ApiServer(lib);

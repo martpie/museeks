@@ -10,8 +10,7 @@ const electron = {
     app,
     config,
     player,
-    playlist,
-    track
+    models : {} // models attached when database initialises
 };
 
 const shared = sharedLib(electron);
@@ -20,6 +19,10 @@ const library = {
     ...electron,
     ...shared
 }
+
+// attach libraries which must be invoked
+library.playlist = playlist(library);
+library.track = track(library);
 
 export const initLib = (store) => {
     library.store = store;
