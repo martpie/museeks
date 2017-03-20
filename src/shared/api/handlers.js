@@ -30,10 +30,7 @@ const mapApis = (apis, lib) => {
 
                 return dispatchedFunction(transformedArgs)
                     .then((result) => res(result))
-                    .catch((error) => {
-                        console.log('error', error)
-                        res({ error }).code(error.code);
-                    });
+                    .catch((error) => res({ error }).code(error.code));
             }
         }
 

@@ -53,16 +53,17 @@ app.on('window-all-closed', () => {
 // initialization and ready for creating browser windows.
 app.on('ready', () => {
 
-    const configPath = './config.json';
-    // const configPath = process.env.config.path || path.join(app.getPath('userData'), 'config.json');
 
     // parse configuration from environment variables when in testing mode
     if (process.env.SPECTRON) {
         const config = JSON.parse(process.env.config);
-        console.log("SPECTRON", config)
         lib.config.merge(config);
         lib.config.setConfigPath(config.path);
+        lib.config.saveSync();
     }
+
+    // load config from disk
+    lib.config.loadOrCreateSync();
 
     // Initialise shared libraries with the store
     initLib(store);

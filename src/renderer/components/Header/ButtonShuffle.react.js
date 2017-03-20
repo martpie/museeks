@@ -4,7 +4,7 @@ import classnames from 'classnames';
 import { connect } from 'react-redux';
 
 import lib from '../../lib';
-console.log(lib)
+
 /*
 |--------------------------------------------------------------------------
 | ShuffleButton

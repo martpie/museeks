@@ -10,7 +10,7 @@ export default (state = {}, payload) => {
             if (peers.every((peer) => peer.ip !== newPeer.ip)) {
                 peers.push(newPeer);
             }
-console.log('peers', peers)
+
             return {
                 ...state,
                 peers

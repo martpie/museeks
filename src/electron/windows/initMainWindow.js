@@ -5,8 +5,7 @@ import os from 'os';
 export default (lib, icons, srcPath) => {
 
     const bounds = checkBounds(lib.config.get('bounds'));
-console.log('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$')
-console.log('lib.config.useNativeFrame', lib.config)
+
     const mainWindowOption = {
         title: 'Museeks',
         icon: os.platform() === 'win32' ? icons['ico'] : icons['256'],

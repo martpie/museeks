@@ -1,3 +1,4 @@
+import { app } from 'electron';
 import teeny from 'teeny-conf';
 import path from 'path';
 import extend from 'xtend';
@@ -39,5 +40,9 @@ const config = new teeny();
 
 // supply default/static config
 config.merge(defaultConfig);
+
+// static config defaults to user's home directory
+const defaultPath = path.join(app.getPath('userData'), 'config.json');
+config.setConfigPath(defaultPath);
 
 export default config;
