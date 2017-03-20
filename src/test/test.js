@@ -7,23 +7,27 @@ import mutate from 'xtend/mutable';
 import fs from 'fs-extra';
 import path from 'path';
 
-const appRoot = path.resolve(__dirname, '../..');
-const testMp3 = path.resolve(appRoot, './test/fixtures/test.mp3');
+const srcRoot = path.resolve(__dirname, '..');
+const testMp3 = path.resolve(srcRoot, './test/fixtures/test.mp3');
 
 const numPeers = 1;
 
-const peerConfigs = range(0, numPeers).map((peer, peerNumber) => ({
-    hostname: 'localhost',
-    testDataPath: `/tmp/museeks-test/${Date.now()}/${peerNumber}/data`,
-    config: {
-        path: `/tmp/museeks-test/${Date.now()}/${peerNumber}/config`,
-        theme: 'dark',
-        electron: {
-            api: {
-                port: 54321 + peerNumber
-            },
-            database: {
-                path: `/tmp/museeks-test/${Date.now()}/${peerNumber}/database`
+const peerConfigs = range(0, numPeers).map((peer, peerNumber) => {
+    const peerDataRoot = `/tmp/museeks-test/${Date.now()}/${peerNumber}`;
+
+    return {
+        hostname: 'localhost',
+        testDataPath: `${peerDataRoot}/data`,
+        config: {
+            path: `${peerDataRoot}/config`,
+            theme: 'dark',
+            electron: {
+                api: {
+                    port: 54321 + peerNumber
+                },
+                database: {
+                    path: `${peerDataRoot}/database`
+                }
             }
         }
     }
