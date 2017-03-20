@@ -17,11 +17,12 @@ const peerConfigs = range(0, numPeers).map((peer, peerNumber) => {
     const peerDataRoot = `/tmp/museeks-test/${Date.now()}/${peerNumber}`;
 
     return {
-        hostname: 'localhost',
+        ip: 'localhost',
         testDataPath: `${peerDataRoot}/data`,
         config: {
             path: `${peerDataRoot}/config`,
             theme: 'dark',
+            discoverPeers: false,
             electron: {
                 api: {
                     port: 54321 + peerNumber
@@ -57,11 +58,13 @@ const startPeers = Promise.map(peers, (peer) => peer.start());
 
 const runTests = () => {
 
+    // test starts here
+
     const getElectronLogs = () => {
-        peers.forEach((peer) => {
+        peers.forEach((peer, peerNumber) => {
             peer.client.getMainProcessLogs().then((logs) => {
                 logs.forEach((log) => {
-                    console.log('ELECTRON', log);
+                    console.log(`ELECTRON ${peerNumber}`, log);
                 });
             });
         });
@@ -71,7 +74,7 @@ const runTests = () => {
 }
 
 const setConfig = (peer, key, value) => {
-    const host = peer.hostname;
+    const host = peer.ip;
     const port = peer.config.electron.api.port;
 
     return http({
@@ -85,4 +88,31 @@ const setConfig = (peer, key, value) => {
     });
 }
 
-startPeers.then(runTests);
+const notifyPeerFound = (peer, foundPeer) => {
+    const host = peer.ip;
+    const port = peer.config.electron.api.port;
+
+    return http({
+        method: 'POST',
+        url: `http://${host}:${port}/api/v1/store/dispatch`,
+        json: true,
+        data: {
+            type: 'APP_NETWORK_PEER_FOUND',
+            payload: {
+                peer: foundPeer
+            }
+        }
+    });
+}
+
+// prepare each peer's runtime configuration
+const runtimeConfiguration = () => {
+    return Promise.map(peers, (peer) => {
+        // simulate peer discovery
+        return Promise.map(peers, (foundPeer) => notifyPeerFound(peer, foundPeer));
+    });
+}
+
+startPeers
+.then(runtimeConfiguration)
+.then(runTests);

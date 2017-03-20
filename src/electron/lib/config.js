@@ -17,6 +17,7 @@ const defaultConfig = {
     minimizeToTray: true,
     displayNotifications: true,
     devMode: false,
+    discoverPeers: true,
     bounds: {
         width: 1000,
         height: 600
