@@ -29,7 +29,7 @@ class SettingsLibrary extends Component {
         this.addFolders = this.addFolders.bind(this);
     }
 
-    render() {
+    render = () => {
         const musicFolders = this.props.musicFolders;
 
         const buttonsGroup = (

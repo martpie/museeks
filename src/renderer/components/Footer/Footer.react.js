@@ -23,7 +23,7 @@ class Footer extends Component {
         super(props);
     }
 
-    render() {
+    render = () => {
         const tracks = this.props.tracks;
         const status = (tracks !== null) ? utils.getStatus(tracks) : 'An apple a day keeps Dr Dre away';
 

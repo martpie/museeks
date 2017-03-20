@@ -35,7 +35,7 @@ class QueueListItem extends PureComponent {
         this.onDragOver  = this.onDragOver.bind(this);
     }
 
-    render() {
+    render = () => {
         const queueContentClasses = classnames('track', {
             'dragged': this.props.dragged,
             'dragged-over': this.props.draggedOver,
@@ -69,19 +69,19 @@ class QueueListItem extends PureComponent {
         );
     }
 
-    onDragStart(e) {
+    onDragStart = (e) => {
         this.props.onDragStart(e, this.props.index);
     }
 
-    onDragOver(e) {
+    onDragOver = (e) => {
         this.props.onDragOver(e, this.props.index);
     }
 
-    remove() {
+    remove = () => {
         this.props.remove(this.props.index);
     }
 
-    play() {
+    play = () => {
         this.props.start(this.props.queueCursor + this.props.index + 1);
     }
 }

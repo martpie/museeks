@@ -29,7 +29,7 @@ class ButtonRepeat extends Component {
         this.toggleRepeat = this.toggleRepeat.bind(this);
     }
 
-    render() {
+    render = () => {
         const svg = svgMap[this.props.repeat] || svgMap.default;
         const buttonClasses = classnames('button repeat',{
             active: this.props.repeat === 'one' || this.props.repeat === 'all'
@@ -47,7 +47,7 @@ class ButtonRepeat extends Component {
         );
     }
 
-    toggleRepeat() {
+    toggleRepeat = () => {
         let repeat = 'none';
 
         switch(this.props.repeat) {

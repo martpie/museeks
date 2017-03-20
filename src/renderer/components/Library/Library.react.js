@@ -27,11 +27,11 @@ class Library extends Component {
         super(props);
     }
 
-    componentDidMount() {
+    componentDidMount = () => {
         this.props.setTracksCursor('library');
     }
 
-    getLibraryComponent() {
+    getLibraryComponent = () => {
         // Loading library
         if (this.props.library === null) {
             return (
@@ -75,7 +75,7 @@ class Library extends Component {
         );
     }
 
-    render() {
+    render = () => {
         return (
             <div className='view view-library' >
                 { this.getLibraryComponent() }

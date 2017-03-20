@@ -27,12 +27,12 @@ class Playlist extends Component {
         super(props);
     }
 
-    componentDidMount() {
+    componentDidMount = () => {
         this.props.load(route.params.playlistId);
         this.props.setTracksCursor('playlist');
     }
 
-    render() {
+    render = () => {
         if (Array.isArray(this.props.tracks) && this.props.tracks.length > 0) {
             return (
                 <TracksList

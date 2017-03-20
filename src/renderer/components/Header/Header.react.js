@@ -33,7 +33,7 @@ class Header extends Component {
         this.search = this.search.bind(null);
     }
 
-    render() {
+    render = () => {
         return (
             <header className='row'>
                 <div className='col-main-controls'>

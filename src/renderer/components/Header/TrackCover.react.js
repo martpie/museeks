@@ -17,7 +17,7 @@ class TrackCover extends PureComponent {
         super(props);
     }
 
-    render() {
+    render = () => {
         if (this.props.cover) {
             const styles = { backgroundImage: `url('${this.props.cover}')` };
 
