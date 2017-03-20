@@ -18,7 +18,7 @@ class QueueEmpty extends PureComponent {
         super(props);
     }
 
-    render() {
+    render = () => {
         const queueClasses = classnames('queue text-left', {
             visible: this.props.visible
         });

@@ -18,7 +18,7 @@ class WindowControls extends PureComponent {
         super(props);
     }
 
-    render() {
+    render = () => {
         if (!this.props.active) return null;
 
         return (

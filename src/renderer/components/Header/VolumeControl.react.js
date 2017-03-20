@@ -45,7 +45,7 @@ class VolumeControl extends Component {
         return muted || volume === 0 ? 'volume-off' : volume > 0.5 ? 'volume-up' : 'volume-down';
     }
 
-    render() {
+    render = () => {
         const volumeClasses = classnames('volume-control', {
             visible: this.state.showVolume
         });
@@ -72,22 +72,22 @@ class VolumeControl extends Component {
         );
     }
 
-    setVolume(e) {
+    setVolume = (e) => {
         const smoothVolume = smoothifyVolume(e.currentTarget.value);
 
         this.props.setVolume(smoothVolume);
         this.setState({ volume: smoothVolume });
     }
 
-    showVolume() {
+    showVolume = () => {
         this.setState({ showVolume: true });
     }
 
-    hideVolume() {
+    hideVolume = () => {
         this.setState({ showVolume: false });
     }
 
-    mute(e) {
+    mute = (e) => {
         if (e.target.classList.contains('player-control') || e.target.classList.contains('fa')) {
             const muted = !lib.player.isMuted();
 

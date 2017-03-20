@@ -38,7 +38,7 @@ class QueueList extends Component {
         this.dragEnd   = this.dragEnd.bind(this);
     }
 
-    render() {
+    render = () => {
         const self = this;
 
         const queue       = this.props.queue;
@@ -97,7 +97,7 @@ class QueueList extends Component {
         this.setState({ draggedTrackIndex: index });
     }
 
-    dragEnd() {
+    dragEnd = () => {
         // Move that to a reducer may be a good idea
 
         const queue       = this.props.queue;

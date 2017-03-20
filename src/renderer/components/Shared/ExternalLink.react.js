@@ -22,7 +22,7 @@ class ExternalLink extends Component {
         this.openLink = this.openLink.bind(this);
     }
 
-    render() {
+    render = () => {
         return (
             <a href onClick={ this.openLink }>
                 { this.props.children }
@@ -30,7 +30,7 @@ class ExternalLink extends Component {
         );
     }
 
-    openLink(e) {
+    openLink = (e) => {
         e.preventDefault();
         // TODO (y.solovyov | KeitIG): this should be somewhere else, not in the component
         shell.openExternal(this.props.href);

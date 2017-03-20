@@ -21,7 +21,7 @@ class PlayerControls extends PureComponent {
         super(props);
     }
 
-    render() {
+    render = () => {
         return (
             <div className='player-controls'>
                 <button type='button' className='player-control previous' onClick={ this.props.previous }>

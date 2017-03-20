@@ -32,7 +32,7 @@ class TrackRow extends Component {
         this.onContextMenu = this.onContextMenu.bind(this);
     }
 
-    render() {
+    render = () => {
         const trackClasses = classnames('track', {
             selected: this.props.selected
         });
@@ -49,15 +49,15 @@ class TrackRow extends Component {
         );
     }
 
-    onMouseDown(e) {
+    onMouseDown = (e) => {
         this.props.onMouseDown(e, this.props.trackId, this.props.index);
     }
 
-    onContextMenu(e) {
+    onContextMenu = (e) => {
         this.props.onContextMenu(e, this.props.index);
     }
 
-    start() {
+    start = () => {
         this.props.start(this.props.trackId);
     }
 }

@@ -53,7 +53,7 @@ const load = () => {
 }
 
 const save = (data) => {
-  const output = JSON.stringify(data);
+  const output = JSON.stringify(data, null, 4);
   return fs.writeFileAsync(defaultPath, output);
 }
 

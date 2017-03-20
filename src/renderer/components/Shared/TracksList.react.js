@@ -164,7 +164,7 @@ class TracksList extends Component {
         this.rowHeight = 30;
     }
 
-    render() {
+    render = () => {
         const tracks = [...this.props.tracks];
 
         // TODO (y.solovyov | KeitIG): TrackListHeader component?
@@ -188,7 +188,7 @@ class TracksList extends Component {
         );
     }
 
-    scrollTracksList() {
+    scrollTracksList = () => {
         this.setState({ scrollTop : document.querySelector('.tracks-list-body').scrollTop });
     }
 
@@ -205,7 +205,7 @@ class TracksList extends Component {
         }
     }
 
-    onKey(e) {
+    onKey = (e) => {
         const selected = this.state.selected;
         const tracks   = this.props.tracks;
 
@@ -228,11 +228,11 @@ class TracksList extends Component {
         }
     }
 
-    isLeftClick(e) {
+    isLeftClick = (e) => {
         return e.button === 0;
     }
 
-    isRightClick(e) {
+    isRightClick = (e) => {
         return e.button === 2;
     }
 
@@ -240,7 +240,7 @@ class TracksList extends Component {
         return !this.state.selected.includes(id);
     }
 
-    buildTrackTiles() {
+    buildTrackTiles = () => {
         const self           = this;
         const selected       = this.state.selected;
         const tracks         = [...this.props.tracks];
@@ -308,7 +308,7 @@ class TracksList extends Component {
         });
     }
 
-    pausePlayState() {
+    pausePlayState = () => {
         return lib.player.isPaused() ? 'pause' : 'play';
     }
 

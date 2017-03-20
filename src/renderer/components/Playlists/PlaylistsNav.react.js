@@ -33,7 +33,7 @@ class PlaylistsNav extends Component {
         this.showContextMenu = this.showContextMenu.bind(this);
     }
 
-    render() {
+    render = () => {
         const self = this;
         // TODO (y.solovyov): extract into separate method that returns items
         const nav = this.props.playlists.map((elem, index) => {
@@ -84,7 +84,7 @@ class PlaylistsNav extends Component {
         );
     }
 
-    componentDidUpdate() {
+    componentDidUpdate = () => {
         // If a playlist is being update
         if (!!this.refs.renamedPlaylist && document.activeElement !== this.refs.renamedPlaylist) {
             this.refs.renamedPlaylist.select();
@@ -112,7 +112,7 @@ class PlaylistsNav extends Component {
         menu.popup(remote.getCurrentWindow());
     }
 
-    createPlaylist() {
+    createPlaylist = () => {
         this.props.create('New playlist', true);
     }
 
@@ -120,7 +120,7 @@ class PlaylistsNav extends Component {
         this.props.rename(_id, name);
     }
 
-    keyDown(e) {
+    keyDown = (e) => {
         switch(e.keyCode) {
             case 13: { // Enter
                 this.rename(this.state.renamed, e.currentTarget.value);
@@ -134,7 +134,7 @@ class PlaylistsNav extends Component {
         }
     }
 
-    blur(e) {
+    blur = (e) => {
         this.rename(this.state.renamed, e.currentTarget.value);
         this.setState({ renamed: null });
     }

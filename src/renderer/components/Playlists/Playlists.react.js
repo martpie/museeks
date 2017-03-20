@@ -27,11 +27,11 @@ class Playlists extends Component {
         super(props);
     }
 
-    createPlaylist() {
+    createPlaylist = () => {
         this.props.create('New playlist', true);
     }
 
-    render() {
+    render = () => {
         let playlistContent;
 
         if (this.props.playlists === null) {

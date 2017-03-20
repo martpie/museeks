@@ -53,7 +53,7 @@ class PlayingBar extends Component {
         this.toggleQueue = this.toggleQueue.bind(this);
     }
 
-    render() {
+    render = () => {
         const queue = this.props.queue;
         const queueCursor = this.props.queueCursor;
         const trackPlaying = queue[queueCursor];
@@ -131,11 +131,11 @@ class PlayingBar extends Component {
         );
     }
 
-    componentDidMount() {
+    componentDidMount = () => {
         this.timer = setInterval(this.tick, 100);
     }
 
-    componentWillUnmount() {
+    componentWillUnmount = () => {
         clearInterval(this.timer);
     }
 
@@ -151,11 +151,11 @@ class PlayingBar extends Component {
         }
     }
 
-    tick() {
+    tick = () => {
         this.setState({ elapsed: lib.player.getCurrentTime() });
     }
 
-    jumpAudioTo(e) {
+    jumpAudioTo = (e) => {
         this.setState({ dragging : true });
 
         const queue       = this.props.queue;
@@ -170,7 +170,7 @@ class PlayingBar extends Component {
         this.props.jumpTo(jumpTo);
     }
 
-    dragOver(e) {
+    dragOver = (e) => {
         // Chack if it's needed to update currentTime
         if (this.state.dragging) {
             const queue        = this.props.queue;
@@ -186,13 +186,13 @@ class PlayingBar extends Component {
         }
     }
 
-    dragEnd() {
+    dragEnd = () => {
         if (this.state.dragging) {
             this.setState({ dragging : false });
         }
     }
 
-    showTooltip(e) {
+    showTooltip = (e) => {
         const queue       = this.props.queue;
         const queueCursor = this.props.queueCursor;
         const trackPlaying   = queue[queueCursor];
@@ -208,14 +208,14 @@ class PlayingBar extends Component {
         });
     }
 
-    hideTooltip() {
+    hideTooltip = () => {
         this.setState({
             duration : null,
             x        : null
         });
     }
 
-    toggleQueue() {
+    toggleQueue = () => {
         this.setState({ showQueue: !this.state.showQueue });
     }
 };

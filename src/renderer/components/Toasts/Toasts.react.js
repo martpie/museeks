@@ -19,7 +19,7 @@ class Toasts extends Component {
         super(props);
     }
 
-    render() {
+    render = () => {
         return (
             <div className='toasts'>
                 { this.props.toasts.map((toast, index) => {
