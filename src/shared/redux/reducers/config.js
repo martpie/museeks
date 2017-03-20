@@ -9,6 +9,13 @@ export default (state = {}, action) => {
             }
         }
 
+        case('APP_CONFIG_MERGE'): {
+            return {
+                ...state,
+                config: extend(state.config, action.payload.config)
+            }
+        }
+
         default: {
             return state;
         }

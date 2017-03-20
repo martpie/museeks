@@ -10,7 +10,7 @@ const electron = {
     app,
     config,
     player,
-    models : {} // models attached when database initialises
+    models: {} // models attached when database initialises
 };
 
 const shared = sharedLib(electron);

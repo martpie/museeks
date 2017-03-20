@@ -18,10 +18,18 @@ const library = (lib) => {
         }
     });
 
+    const merge = (config) => ({
+        type: 'APP_CONFIG_MERGE',
+        payload: {
+            config
+        }
+    });
+
     return {
         set,
         save,
-        load
+        load,
+        merge
     }
 }
 

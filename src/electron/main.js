@@ -12,7 +12,6 @@ import lib, { initLib } from './lib';                  // Shared library configu
 import ApiServer from './api';                         // HTTP API access to electorn and renderer
 import initElectron from './init';                     // Electron bootstrap
 import TrayManager from './tray';                      // Manages Tray
-import ConfigManager from './config';                  // Handles config
 import { RpcIpcManager } from 'electron-simple-rpc';   // Handles RPC IPC Events
 import PowerMonitor from './power-monitor';            // Handle power events
 import IntegrationManager from './integration';        // Applies various integrations
@@ -54,23 +53,24 @@ app.on('window-all-closed', () => {
 // initialization and ready for creating browser windows.
 app.on('ready', () => {
 
+    const configPath = './config.json';
+    // const configPath = process.env.config.path || path.join(app.getPath('userData'), 'config.json');
+
+    // parse configuration from environment variables when in testing mode
+    if (process.env.SPECTRON) {
+        const config = JSON.parse(process.env.config);
+        console.log("SPECTRON", config)
+        lib.config.merge(config);
+        lib.config.setConfigPath(config.path);
+    }
+
     // Initialise shared libraries with the store
     initLib(store);
 
-    // Get the config
-    const configManager = new ConfigManager(app);
-    const config = configManager.getConfig();
-
     // Load configuration into the store
-    store.dispatch(lib.actions.config.load(config));
+    store.dispatch(lib.actions.config.load(lib.config.getAll()));
+    // store.dispatch(lib.actions.config.merge(process.env.config));
     lib.actions.network.peerFound({ ip : 'jackson' });
-
-    // Load configuration from environment variables when in testing mode
-    if (process.env.SPECTRON) {
-        const testConfig = JSON.parse(process.env.config);
-        const fullConfig = extend(lib.config.getAll(), testConfig);
-        store.dispatch(lib.actions.config.load(fullConfig));
-    }
 
     // Start the database
     const database = new Database(lib);
@@ -104,7 +104,7 @@ app.on('ready', () => {
     trayManager.show();
 
     // Create and load the main window
-    mainWindow = initMainWindow(museeksIcons, config, srcPath);
+    mainWindow = initMainWindow(lib, museeksIcons, srcPath);
 
     // Init Electron
     initElectron(lib);

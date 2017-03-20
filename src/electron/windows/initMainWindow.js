@@ -1,10 +1,12 @@
 import { BrowserWindow, screen } from 'electron';
+import extend from 'xtend';
 import os from 'os';
 
-export default (icons, config, srcPath) => {
-  const bounds = checkBounds(config.bounds);
+export default (lib, icons, srcPath) => {
 
-  const mainWindowOption = {
+    const bounds = checkBounds(lib.config.bounds);
+
+    const mainWindowOption = {
         title: 'Museeks',
         icon: os.platform() === 'win32' ? icons['ico'] : icons['256'],
         x: bounds.x,
@@ -13,7 +15,7 @@ export default (icons, config, srcPath) => {
         height: bounds.height,
         minWidth: 900,
         minHeight: 550,
-        frame: config.useNativeFrame,
+        frame: lib.config.useNativeFrame,
         show: false
     };
 
@@ -38,7 +40,16 @@ export default (icons, config, srcPath) => {
   return mainWindow
 }
 
-function checkBounds(bounds) {
+function checkBounds(desiredBounds) {
+
+    // capture the bounds of the user's screen
+    const { width, height } = screen.getPrimaryDisplay().workArea;
+    const screenBounds = {
+        x: parseInt(width / 2),
+        y: parseInt(height / 2)
+    }
+    const bounds = extend(screenBounds, desiredBounds);
+
     // check if the browser window is offscreen
     const display = screen.getDisplayNearestPoint(bounds).workArea;
 
