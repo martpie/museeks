@@ -4,7 +4,7 @@ import os from 'os';
 
 export default (lib, icons, srcPath) => {
 
-    const bounds = checkBounds(lib.config.get('bounds'));
+    const bounds = checkBounds(lib.store.getState().config.bounds);
 
     const mainWindowOption = {
         title: 'Museeks',
@@ -15,7 +15,7 @@ export default (lib, icons, srcPath) => {
         height: bounds.height,
         minWidth: 900,
         minHeight: 550,
-        frame: lib.config.get('useNativeFrame'),
+        frame: lib.store.getState().config.useNativeFrame,
         show: false
     };
 

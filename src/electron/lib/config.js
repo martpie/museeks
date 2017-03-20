@@ -1,7 +1,7 @@
 import { app } from 'electron';
-import teeny from 'teeny-conf';
 import path from 'path';
-import extend from 'xtend';
+import Promise from 'bluebird';
+const fs = Promise.promisifyAll(require('fs'));
 
 const defaultConfig = {
     theme: 'light',
@@ -36,13 +36,28 @@ const defaultConfig = {
     }
 }
 
-const config = new teeny();
-
-// supply default/static config
-config.merge(defaultConfig);
-
 // static config defaults to user's home directory
 const defaultPath = path.join(app.getPath('userData'), 'config.json');
-config.setConfigPath(defaultPath);
 
-export default config;
+const load = () => {
+  return fs.readFileAsync(defaultPath).then((stringData) => {
+      // Check if json is valid
+      try {
+          const data = JSON.parse(stringData);
+          return Object.assign({}, defaultConfig, data);
+      }
+      catch(err) {
+          return Promise.reject('Error reading JSON');
+      }
+  })
+}
+
+const save = (data) => {
+  const output = JSON.stringify(data, null, 4);
+  return fs.writeFileAsync(defaultPath, output);
+}
+
+export default {
+  load,
+  save
+};
