@@ -1,10 +1,11 @@
 const library = (lib) => {
 
-    const set = (key, value) => (dispatch) => ({
-        type: 'APP_CONFIG_SET',
-        payload: lib.config.set(key, value).then(lib.config.save),
-        meta: { key, value }
-    });
+    const set = (key, value) => {
+        return (dispatch) => ({
+            type: 'APP_CONFIG_SET',
+            payload: lib.config.set(key, value).then(lib.config.save)
+        });
+    }
 
     const save = () => ({
         type: 'APP_CONFIG_SAVE',
@@ -18,10 +19,18 @@ const library = (lib) => {
         }
     });
 
+    const merge = (config) => ({
+        type: 'APP_CONFIG_MERGE',
+        payload: {
+            config
+        }
+    });
+
     return {
         set,
         save,
-        load
+        load,
+        merge
     }
 }
 

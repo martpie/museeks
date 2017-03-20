@@ -15,8 +15,7 @@ const library = (lib) => {
         self.lastFilterSearch = now;
 
         self.filterSearchTimeOut = setTimeout(() => {
-            lib.config.set('bounds', lib.app.browserWindows.main.getBounds());
-            lib.config.saveSync();
+            dispatch(lib.actions.config.set('bounds', lib.app.browserWindows.main.getBounds()));
         }, 250);
     };
 
