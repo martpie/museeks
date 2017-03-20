@@ -1,11 +1,11 @@
 /*
 Demo Route:
 [{
-    path         : 'api/v1/player/play',    // The api path
-    method       : 'GET',                   // Method type
-    name         : 'action.player.play',    // Path to the function in the lib
+    path: 'api/v1/player/play',    // The api path
+    method: 'GET',                   // Method type
+    name: 'action.player.play',    // Path to the function in the lib
     // Optional
-    dispatch     : true,                    // Should the result be dispatched?
+    dispatch: true,                    // Should the result be dispatched?
     argTransform: unction(query) {            // This will transform the query params/body before
         if (someCase) {
             return {
@@ -21,6 +21,7 @@ Demo Route:
 */
 
 
+import app from './app';
 import player from './player';
 import playlists from './playlists';
 import queue from './queue';
@@ -29,9 +30,11 @@ import settings from './settings';
 import store from './store';
 import toasts from './toasts';
 import notification from './notification';
-import app from './app';
+import handshake from './handshake';
+import rpc from './rpc';
 
 const routes = [
+    ...app,
     ...player,
     ...playlists,
     ...queue,
@@ -40,7 +43,8 @@ const routes = [
     ...store,
     ...toasts,
     ...notification,
-    ...app
+    ...handshake,
+    ...rpc
 ];
 
 export default routes;

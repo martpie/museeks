@@ -56,28 +56,12 @@ const peers = peerConfigs.map((config) => {
     return mutate(peer, config);
 });
 
-// peers.forEach((peer) => peer.start());
-
 // start all electron instances
 const startPeers = () => Promise.map(peers, (peer) => peer.start());
 
-const runTests = () => {
-
-    const getElectronLogs = () => {
-        peers.forEach((peer) => {
-            peer.client.getMainProcessLogs().then((logs) => {
-                logs.forEach((log) => {
-                    console.log('ELECTRON', log)
-                })
-            })
-        });
-    }
-
-    setInterval(getElectronLogs, 1000);
-}
-
 // prepare each peer's runtime configuration
 const runtimeConfiguration = () => {
+    // for all peers
     return Promise.map(peers, (peer) => {
         // simulate peer discovery
         return Promise.map(peers, (foundPeer) => notifyPeerFound(peer, foundPeer));
@@ -116,6 +100,23 @@ const notifyPeerFound = (peer, foundPeer) => {
             }
         }
     });
+}
+
+const runTests = () => {
+
+    // 
+
+    const getElectronLogs = () => {
+        peers.forEach((peer, peerNumber) => {
+            peer.client.getMainProcessLogs().then((logs) => {
+                logs.forEach((log) => {
+                    console.log(`ELECTRON ${peerNumber}`, log)
+                })
+            })
+        });
+    }
+
+    setInterval(getElectronLogs, 1000);
 }
 
 startPeers()

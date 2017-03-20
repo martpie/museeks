@@ -5,7 +5,7 @@ import routes from './routes';
 
 const library = (lib) => {
 
-    // for each internal api route, create a function that will call it externally
+    // for each internal api route, create an http request that will call it
     const clientApiCalls = routes.reduce((api, route) => {
 
         const clientCall = (config) => {
