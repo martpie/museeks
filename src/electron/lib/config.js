@@ -1,9 +1,13 @@
+import Promise from 'bluebird';
 import { app } from 'electron';
 import path from 'path';
-import Promise from 'bluebird';
+import mutate from 'xtend/mutable';
 const fs = Promise.promisifyAll(require('fs'));
 
-let defaultConfig = {
+const defaultConfigPath = path.join(app.getPath('userData'), 'config.json');
+
+const defaultConfig = {
+    path: defaultConfigPath,
     theme: 'light',
     audioVolume: 1,
     audioPlaybackRate: 1,
@@ -37,41 +41,28 @@ let defaultConfig = {
     }
 }
 
-let defaultPath = path.join(app.getPath('userData'), 'config.json');
+const serializeConfig = () => JSON.stringify(defaultConfig, null, 4);
+const deserializeConfig = (data) => JSON.parse(data);
 
-const save = (data) => {
-  const output = JSON.stringify(data, null, 4);
-  return fs.writeFileAsync(defaultPath, output);
-};
+const save = () => fs.writeFileAsync(defaultConfig.path, serializeConfig());
 
+const saveSync = () => fs.writeFileSync(defaultConfig.path, serializeConfig());
+
+const setConfigPath = (path) => defaultConfig.path = path;
+
+const extendConfig = (config) => mutate(defaultConfig, config);
 
 const load = () => {
-  return fs.readFileAsync(defaultPath).then((stringData) => {
-      // Check if json is valid
-      try {
-          const data = JSON.parse(stringData);
-          return Object.assign({}, defaultConfig, data);
-      }
-      catch(err) {
-          // Json is corrupt, overwrite settings with default
-          return save(defaultConfig);
-      }
-  }).catch(() => save(defaultConfig))
+    return fs.readFileAsync(defaultConfig.path)
+    .then(deserializeConfig)
+    .then(extendConfig)
+    .catch(save);
 };
-
-
-const setConfigPath = (path) => {
-  defaultPath = path;
-};
-
-const extendDefaultConfig = (config) => {
-  defaultConfig = Object.assign({}, defaultConfig, config);
-};
-
 
 export default {
-  save,
-  load,
-  setConfigPath,
-  extendDefaultConfig,
+    load,
+    save,
+    saveSync,
+    setConfigPath,
+    extendConfig
 };

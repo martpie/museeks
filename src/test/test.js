@@ -20,7 +20,7 @@ const peerConfigs = range(0, numPeers).map((peer, peerNumber) => {
         ip: 'localhost',
         testDataPath: `${peerDataRoot}/data`,
         config: {
-            path: `${peerDataRoot}/config`,
+            path: `${peerDataRoot}/config/config.json`,
             theme: 'dark',
             discoverPeers: false,
             electron: {
@@ -35,6 +35,9 @@ const peerConfigs = range(0, numPeers).map((peer, peerNumber) => {
     }
 });
 
+// create all peer database paths
+peerConfigs.forEach((peer) => mkdirp(peer.config.electron.database.path));
+
 // create test environment for each peer
 const peers = peerConfigs.map((config) => {
 
@@ -43,7 +46,7 @@ const peers = peerConfigs.map((config) => {
 
     // create peer data directories
     mkdirp(config.testDataPath);
-    mkdirp(config.config.path);
+    mkdirp(path.dirname(config.config.path));
     mkdirp(config.config.electron.database.path);
 
     // copy test files
@@ -53,11 +56,25 @@ const peers = peerConfigs.map((config) => {
     return mutate(peer, config);
 });
 
+// peers.forEach((peer) => peer.start());
+
 // start all electron instances
-// const startPeers = () => {
-//     console.log('aaaaaaa', peers.length)
-//     return Promise.map(peers, (peer) => peer.start())
-// };
+const startPeers = () => Promise.map(peers, (peer) => peer.start());
+
+const runTests = () => {
+
+    const getElectronLogs = () => {
+        peers.forEach((peer) => {
+            peer.client.getMainProcessLogs().then((logs) => {
+                logs.forEach((log) => {
+                    console.log('ELECTRON', log)
+                })
+            })
+        });
+    }
+
+    setInterval(getElectronLogs, 1000);
+}
 
 // prepare each peer's runtime configuration
 const runtimeConfiguration = () => {
@@ -65,22 +82,6 @@ const runtimeConfiguration = () => {
         // simulate peer discovery
         return Promise.map(peers, (foundPeer) => notifyPeerFound(peer, foundPeer));
     });
-}
-
-const runTests = () => {
-
-    // test starts here
-    const getElectronLogs = () => {
-        peers.forEach((peer, peerNumber) => {
-            peer.client.getMainProcessLogs().then((logs) => {
-                logs.forEach((log) => {
-                    console.log(`ELECTRON ${peerNumber}`, log);
-                });
-            });
-        });
-    }
-
-    setInterval(getElectronLogs, 1000);
 }
 
 const setConfig = (peer, key, value) => {
@@ -109,18 +110,14 @@ const notifyPeerFound = (peer, foundPeer) => {
         data: {
             type: 'APP_NETWORK_PEER_FOUND',
             payload: {
-                peer: foundPeer
+                peer: {
+                    ip: foundPeer.ip
+                }
             }
         }
     });
 }
 
-// startPeers()
-// .then(runtimeConfiguration)
-// .then(runTests);
-
-// console.log(peers[0])
-// peers[0].start()
-
-const p = Electron({ env : { config : {} } });
-console.log(p.start())
+startPeers()
+.then(runtimeConfiguration)
+.then(runTests);

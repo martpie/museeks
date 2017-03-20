@@ -57,8 +57,8 @@ app.on('ready', () => {
     if (process.env.SPECTRON) {
         const config = JSON.parse(process.env.config);
         lib.config.setConfigPath(config.path);
-        lib.config.extendDefaultConfig(config);
-        lib.config.save();
+        lib.config.extendConfig(config);
+        lib.config.saveSync();
     }
 
     // Initialise shared libraries with the store
