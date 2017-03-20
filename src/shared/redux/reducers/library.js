@@ -35,21 +35,6 @@ export default (state = {}, action) => {
             };
         }
 
-        case('APP_LIBRARY_REMOVE_FOLDER'): {
-            if (!state.refreshingLibrary) {
-                const musicFolders = app.config.get('musicFolders');
-
-                musicFolders.splice(payload.index, 1);
-
-                app.config.set('musicFolders', musicFolders);
-                app.config.saveSync();
-
-                return { ...state };
-            }
-
-            return state;
-        }
-
         case('APP_LIBRARY_FETCHED_COVER'): {
             return {
                 ...state,
