@@ -39,6 +39,12 @@ const defaultConfig = {
 // static config defaults to user's home directory
 const defaultPath = path.join(app.getPath('userData'), 'config.json');
 
+const save = (data) => {
+  const output = JSON.stringify(data, null, 4);
+  return fs.writeFileAsync(defaultPath, output);
+}
+
+
 const load = () => {
   return fs.readFileAsync(defaultPath).then((stringData) => {
       // Check if json is valid
@@ -47,15 +53,12 @@ const load = () => {
           return Object.assign({}, defaultConfig, data);
       }
       catch(err) {
-          return Promise.reject('Error reading JSON');
+          // Json is corrupt, overwrite settings with default
+          return save(defaultConfig);
       }
   })
 }
 
-const save = (data) => {
-  const output = JSON.stringify(data, null, 4);
-  return fs.writeFileAsync(defaultPath, output);
-}
 
 export default {
   load,
