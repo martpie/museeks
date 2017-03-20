@@ -1,9 +1,10 @@
-import { forwardToRenderer, replayActionMain } from 'electron-redux';
 import { applyMiddleware, createStore } from 'redux';
+import { forwardToRenderer, replayActionMain } from 'electron-redux';
 import promiseMiddleware from 'redux-promise-middleware';
 import thunk from 'redux-thunk';
 import createLogger from 'redux-logger';
 import reducers from '../../shared/redux/reducers/index';
+
 import initialState from './initialState';
 
 // Create and configure the logger

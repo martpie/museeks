@@ -6,7 +6,7 @@ import extend from 'xtend';
 import os from 'os';
 
 class PeerDiscovery {
-    constructor(store, lib) {
+    constructor(lib) {
         this.lib = lib;
 
         // scanning at startup slows application load time
@@ -14,7 +14,7 @@ class PeerDiscovery {
         setTimeout(() => this.scanForPeers(), scanDelay);
     }
     handshake (network, peer) {
-        const apiPort = this.lib.store.getState().config.api.port;
+        const apiPort = this.lib.store.getState().config.electron.api.port;
 
         return http({
             method: 'POST',
@@ -39,7 +39,7 @@ class PeerDiscovery {
     scanForPeers() {
         const interfaces = flatten(Object.values(os.networkInterfaces()));
         const networks = interfaces.filter(adapter => adapter.family === 'IPv4' && !adapter.internal); // only scan for external ipv4 adapters
-        const apiPort = this.lib.store.getState().config.api.port;
+        const apiPort = this.lib.store.getState().config.electron.api.port;
 
         const scanNetwork = (network) => {
 

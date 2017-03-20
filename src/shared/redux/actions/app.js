@@ -1,11 +1,9 @@
 const library = (lib) => {
 
     const close = () => (dispatch, getState) => {
-        if (getState().config.minimizeToTray) {
-            lib.app.browserWindows.main.hide();
-        } else {
-            lib.app.browserWindows.main.destroy();
-        }
+        getState().config.minimizeToTray
+            ? lib.app.browserWindows.main.hide()
+            : lib.app.browserWindows.main.destroy();
     };
 
     const minimize = () => {
@@ -21,7 +19,7 @@ const library = (lib) => {
     return {
         close,
         maximize,
-        minimize,
+        minimize
     }
 }
 

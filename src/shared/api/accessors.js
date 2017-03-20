@@ -9,7 +9,7 @@ const library = (lib) => {
     const clientApiCalls = routes.reduce((api, route) => {
 
         const clientCall = (config) => {
-            const apiPort = lib.store.getState().config.api.port;
+            const apiPort = lib.store.getState().config.renderer.api.port;
 
             return axios({
                 ...config,

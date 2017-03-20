@@ -1,23 +1,46 @@
-import { Application } from 'spectron';
-import path from 'path';
+import Electron from './fixtures/Electron';
+import { range } from 'range';
+import mkdirp from 'mkdirp';
 
-const electronPath = path.join(__dirname, '../..', 'node_modules', '.bin', 'electron');
+const numPeers = 3;
 
-const platformPath = process.platform === 'win32'
-    ? electronPath + '.cmd'
-    : electronPath;
+const peerConfigs = range(0, numPeers).map((peer, peerNumber) => ({
+    config: {
+        electron: {
+            api: {
+                port: 54321 + peerNumber
+            },
+            database: {
+                path: `/tmp/museeks-test-database/${Date.now()}/${peerNumber}/`
+            }
+        }
+    }
+}));
 
-const appPath = path.join(__dirname, '../..');
+// create all peer database paths
+peerConfigs.forEach((peer) => mkdirp(peer.config.electron.database.path));
 
-const app = new Application({
-    path: platformPath,
-    args: [appPath]
-});
+const peers = peerConfigs.map((config) => {
+    return Electron({ env: config });
+})
 
-app.start().catch((err) => {});
+peers.forEach((peer) => peer.start());
 
 const runTests = () => {
-    console.log('running')
+
+    console.log(peers)
+
+    const getElectronLogs = () => {
+        peers.forEach((peer) => {
+            peer.client.getMainProcessLogs().then((logs) => {
+                logs.forEach((log) => {
+                    console.log('ELECTRON', log)
+                })
+            })
+        });
+    }
+
+    setInterval(getElectronLogs, 1000);
 }
 
-setTimeout(runTests, 5000);
+setTimeout(runTests, 2000);
