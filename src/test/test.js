@@ -6,6 +6,7 @@ import http from 'axios';
 import mutate from 'xtend/mutable';
 import fs from 'fs-extra';
 import path from 'path';
+import test from 'tape';
 
 const srcRoot = path.resolve(__dirname, '..');
 const testMp3 = path.resolve(srcRoot, './test/fixtures/test.mp3');
@@ -35,11 +36,20 @@ const peerConfigs = range(0, numPeers).map((peer, peerNumber) => {
 
 // create test environment for each peer
 const peers = peerConfigs.map((config) => {
+
+    // create peer electron instance
     const peer = Electron({ env: config });
+
+    // create peer data directories
+    mkdirp(config.testDataPath);
     mkdirp(config.config.path);
     mkdirp(config.config.electron.database.path);
+
+    // copy test files
     fs.copySync(testMp3, config.testDataPath);
-    return mutate(peer, config);
+
+    // add config to peer
+    mutate(peer, config);
 });
 
 // start all electron instances
@@ -56,8 +66,6 @@ const runTests = () => {
             });
         });
     }
-
-    setConfig(peers[0], 'devMode', true);
 
     setInterval(getElectronLogs, 1000);
 }
