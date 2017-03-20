@@ -56,57 +56,58 @@ app.on('ready', () => {
 
     // parse configuration from environment variables when in testing mode
     if (process.env.SPECTRON) {
-        const config = JSON.parse(process.env.config);
-        lib.config.merge(config);
-        lib.config.setConfigPath(config.path);
-        lib.config.saveSync();
+//        const config = JSON.parse(process.env.config);
+//        lib.config.merge(config);
+//        lib.config.setConfigPath(config.path);
+//        lib.config.saveSync();
     }
 
-    // load config from disk
-    lib.config.loadOrCreateSync();
 
     // Initialise shared libraries with the store
     initLib(store);
 
     // Load configuration into the store
-    store.dispatch(lib.actions.config.load(lib.config.getAll()));
-    lib.actions.network.peerFound({ ip : 'jackson' });
+    store.dispatch(lib.actions.config.load()).then((response) => {
 
-    // Start the database
-    const database = new Database(lib);
-    database.start();
+      // After config has loaded, do stuff.
+      lib.actions.network.peerFound({ ip : 'jackson' });
 
-    // Start the API server
-    const apiServer = new ApiServer(lib);
-    apiServer.start();
+      // Start the database
+      const database = new Database(lib);
+      database.start();
 
-    // Start listening for RPC IPC events
-    const rpcIpcManager = new RpcIpcManager(lib, 'electron');
+      // Start the API server
+      const apiServer = new ApiServer(lib);
+      apiServer.start();
 
-    // Start the peer discovery service
-    const peers = new PeerDiscoveryManager(lib);
+      // Start listening for RPC IPC events
+      const rpcIpcManager = new RpcIpcManager(lib, 'electron');
 
-    // Power monitor
-    const powerMonitor = new PowerMonitor(mainWindow, store);
-    powerMonitor.enable();
+      // Start the peer discovery service
+      const peers = new PeerDiscoveryManager(lib);
 
-    // Integrations
-    const integrations = new IntegrationManager(mainWindow);
-    integrations.enable();
+      // Power monitor
+      const powerMonitor = new PowerMonitor(mainWindow, store);
+      powerMonitor.enable();
 
-    // Get the application icons
-    const museeksIcons = getIcons(appRoot);
+      // Integrations
+      const integrations = new IntegrationManager(mainWindow);
+      integrations.enable();
 
-    // Tray manager
-    const trayIcon = os.platform() === 'win32.' ? museeksIcons['tray-ico'] : museeksIcons['tray'];
-    lib.tray = new TrayManager(mainWindow, trayIcon, store);
-    lib.tray.show();
+      // Get the application icons
+      const museeksIcons = getIcons(appRoot);
 
-    // Create and load the main window
-    mainWindow = initMainWindow(lib, museeksIcons, srcPath);
+      // Tray manager
+      const trayIcon = os.platform() === 'win32.' ? museeksIcons['tray-ico'] : museeksIcons['tray'];
+      lib.tray = new TrayManager(mainWindow, trayIcon, store);
+      lib.tray.show();
 
-    // Init Electron
-    initElectron(lib);
+      // Create and load the main window
+      mainWindow = initMainWindow(lib, museeksIcons, srcPath);
+
+      // Init Electron
+      initElectron(lib);
+    });
 
 // TODO: Add these to tray
 //                case 'play': {

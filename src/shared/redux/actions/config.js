@@ -3,34 +3,27 @@ const library = (lib) => {
     const set = (key, value) => {
         return (dispatch) => ({
             type: 'APP_CONFIG_SET',
-            payload: lib.config.set(key, value).then(lib.config.save)
+            payload: {
+              key,
+              value
+            }
         });
     }
 
-    const save = () => ({
+    const save = () => (dispatch, getState) => ({
         type: 'APP_CONFIG_SAVE',
-        payload: lib.config.save()
+        payload: lib.config.save(getState().config)
     });
 
     const load = (config) => ({
         type: 'APP_CONFIG_LOAD',
-        payload: {
-            config
-        }
-    });
-
-    const merge = (config) => ({
-        type: 'APP_CONFIG_MERGE',
-        payload: {
-            config
-        }
+        payload: lib.config.load()
     });
 
     return {
         set,
         save,
         load,
-        merge
     }
 }
 

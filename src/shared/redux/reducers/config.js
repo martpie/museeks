@@ -9,10 +9,10 @@ export default (state = {}, action) => {
             }
         }
 
-        case('APP_CONFIG_LOAD'): {
+        case('APP_CONFIG_LOAD_FULFILLED'): {
             return {
                 ...state,
-                config: action.payload.config
+                config: action.payload
             }
         }
 
