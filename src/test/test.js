@@ -125,11 +125,11 @@ const runTests = () => {
     // test: play song from library
     // two peers
     // peer 1 requests the library of peer 2
-    return lib.api.network.find({
+    return lib.actions.network.find({
         sources: [peer[2].ip]
     }).then((tracks) => {
         // peer 1 plays a song from the library of peer 2
-        return lib.api.network.start({
+        return lib.actions.network.start({
             source: peer[1],
             destination: peer[2],
             track: 'uri-of-track'

@@ -4,6 +4,7 @@ import sharedLib from '../../shared/lib';
 
 import app from './app';
 import config from './config';
+import network from './network';
 import playlist from './playlist';
 import track from './track';
 
@@ -13,6 +14,7 @@ const player = new Player();
 const renderer = {
     app,
     config,
+    network,
     playlist,
     track,
     player

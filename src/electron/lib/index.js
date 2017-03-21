@@ -3,6 +3,7 @@ import sharedLib from '../../shared/lib';
 
 import app from './app';
 import config from './config';
+import network from './network';
 import player from './player';
 import playlist from './playlist';
 import track from './track';
@@ -10,7 +11,6 @@ import track from './track';
 const electron = {
     app,
     config,
-    player,
     models: {} // models attached when database initialises
 };
 
@@ -21,6 +21,7 @@ const library = {
 // attach libraries which must be invoked
 library.playlist = playlist(library);
 library.track = track(library);
+library.network = network(library);
 
 export const initLib = (store) => {
     library.store = store;

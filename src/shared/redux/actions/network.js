@@ -1,4 +1,5 @@
-const flatten = require('flatten');
+import Promise from 'bluebird';
+import flatten from 'flatten';
 
 const library = (lib) => {
 
@@ -9,27 +10,30 @@ const library = (lib) => {
         }
     });
 
-    const find = ({ sources, query, sort }) => {
+    const find = ({ peers = [], query, sort } = {}) => (dispatch, getState) => {
 
-        const getLibrary = (source) => lib.api.track.find({ query, sort });
-        const querySources = Promise.map(sources, getLibrary);
+        // if no peers were supplied, search all peers
+        if (peers.length === 0) {
+            peers = getState().peers;
+        }
+
+        const getLibrary = (peer) => lib.network.find({ peer, query, sort });
+        const queryPeers = Promise.map(peers, getLibrary);
 
         const uniqueTracks = (tracks) => tracks;
 
-        const dispatch = (tracks) => lib.store.dispatch({
+        return queryPeers
+        .then(flatten)
+        .then(uniqueTracks)
+        .then((tracks) => dispatch({
             type: 'APP_NETWORK_FIND',
             payload: {
                 tracks
             }
-        });
-
-        return querySources
-        .then(flatten)
-        .then(uniqueTracks)
-        .then(dispatch);
+        }));
     };
 
-    const start = ({ source, destination, track }) => {
+    const start = ({ source, destination, track } = {}) => {
         const getLibrary = (source) => lib.api.network.start(req.query);
         const querySources = Promise.map(req.query.sources, getLibrary);
 
@@ -37,7 +41,7 @@ const library = (lib) => {
         .then(flatten)
         .then(res);
 
-        return  {
+        return {
             type: 'APP_NETWORK_START',
             payload: {
                 peer
@@ -61,6 +65,8 @@ const library = (lib) => {
 
     return {
         peerFound,
+        find,
+        start,
         addObserver,
         removeObserver
     };

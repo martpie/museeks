@@ -1,6 +1,6 @@
 import Hapi from 'hapi';
 import routes from '../../shared/api/routes';
-import routesToHandlers from '../../shared/api/handlers';
+import routesToHandlers from '../../shared/api/routesToHandlers';
 
 class ApiServer {
 

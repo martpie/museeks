@@ -21,22 +21,25 @@ Demo Route:
 */
 
 
-import app from './app';
-import player from './player';
-import library from './library';
-import network from './network';
-import store from './store';
+import app from './actions/app';
+import library from './actions/library';
+import network from './actions/network';
+import player from './actions/player';
+
 import handshake from './handshake';
 import rpc from './rpc';
+import store from './store';
+import track from './track';
 
 const routes = [
     ...app,
-    ...player,
     ...library,
     ...network,
-    ...store,
+    ...player,
     ...handshake,
-    ...rpc
+    ...rpc,
+    ...store,
+    ...track
 ];
 
 export default routes;

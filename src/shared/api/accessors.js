@@ -14,8 +14,10 @@ const library = (lib) => {
             return axios({
                 ...config,
                 method: route.method,
-                url: `http://${config.ip || 'localhost'}:${apiPort}/${route.path}`
-            });
+                url: `http://${config.ip || 'localhost'}:${apiPort}/${route.path}`,
+                json: true
+            })
+            .then((response) => response.data);
         }
 
         // store the api call in the api hierarchy

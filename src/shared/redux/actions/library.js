@@ -9,21 +9,19 @@ const realpath = Promise.promisify(fs.realpath);
 
 const library = (lib) => {
 
-    const load = () => {
-        return {
-            type: 'APP_LIBRARY_LOAD',
-            payload: lib.track.find({
-                query: {},
-                sort: {
-                    'loweredMetas.artist': 1,
-                    'year': 1,
-                    'loweredMetas.album': 1,
-                    'disk.no': 1,
-                    'track.no': 1
-                }
-            })
-        }
-    }
+    const load = () => ({
+        type: 'APP_LIBRARY_LOAD',
+        payload: lib.track.find({
+            query: {},
+            sort: {
+                'loweredMetas.artist': 1,
+                'year': 1,
+                'loweredMetas.album': 1,
+                'disk.no': 1,
+                'track.no': 1
+            }
+        })
+    });
 
     const setTracksCursor = (cursor) => ({
         type: 'APP_LIBRARY_SET_TRACKSCURSOR',
