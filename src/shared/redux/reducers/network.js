@@ -28,6 +28,10 @@ export default (state = {}, action) => {
             })
         }
 
+        case('APP_NETWORK_FIND'): {
+            return i.assocIn(state, ['network', 'tracks'], action.payload.tracks);
+        }
+
         default: {
             return state;
         }

@@ -1,5 +1,3 @@
-import Joi from 'joi';
-
 export default [{
     path: 'api/network/observe',
     method: 'POST',

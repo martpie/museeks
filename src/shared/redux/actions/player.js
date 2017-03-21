@@ -46,7 +46,7 @@ const library = (lib) => {
 
         if (queuePosition > -1) {
             const uri = utils.parseUri(queue[queuePosition].path);
-
+console.log(queue[queuePosition])
             lib.player.setAudioSrc(uri);
             lib.player.play();
 

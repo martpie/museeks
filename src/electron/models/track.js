@@ -35,5 +35,6 @@ Track.ensureIndex({ fieldName: 'path', unique: true });
 
 Promise.promisifyAll(Track);
 Promise.promisifyAll(Track.find().__proto__);
+Promise.promisifyAll(Track.findOne().__proto__);
 
 export default Track;

@@ -1,8 +1,9 @@
 export default {
 
     network: {
-        peers: [],
         observers: [],
+        peers: [],
+        tracks: []
     },
 
     // new state above here

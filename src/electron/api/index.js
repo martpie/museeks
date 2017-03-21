@@ -1,4 +1,5 @@
 import Hapi from 'hapi';
+import Inert from 'inert';
 import routes from '../../shared/api/routes';
 import routesToHandlers from '../../shared/api/routesToHandlers';
 
@@ -17,12 +18,14 @@ class ApiServer {
             }
         });
 
-        this.server.connection({
-            port: this.lib.store.getState().config.electron.api.port
-        });
+        // configure server
+        const port = this.lib.store.getState().config.electron.api.port;
+        this.server.connection({ port });
+
+        // register server plugins
+        this.server.register(Inert);
 
         const handlers = routesToHandlers(routes, this.lib);
-
         this.server.route(handlers);
 
         // attach the libs and dispatcher to each request
