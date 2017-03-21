@@ -1,5 +1,5 @@
 import Promise from 'bluebird';
-import flatten from 'flatten';
+import { flatten } from 'lodash';
 import scan from 'evilscan';
 import http from 'axios';
 import extend from 'xtend';

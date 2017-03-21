@@ -8,20 +8,17 @@ import player from './player';
 import playlist from './playlist';
 import track from './track';
 
-const electron = {
+const library = {
     app,
     config,
-    models: {} // models attached when database initialises
+    models: {}, // models attached after database initialisation
+    player
 };
 
-const library = {
-    ...electron
-}
-
 // attach libraries which must be invoked
+library.network = network(library);
 library.playlist = playlist(library);
 library.track = track(library);
-library.network = network(library);
 
 export const initLib = (store) => {
     library.store = store;

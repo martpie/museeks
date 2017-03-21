@@ -21,6 +21,19 @@ const library = (lib) => {
 
     const play = () => (dispatch, getState) => {
         const { queue } = getState();
+
+        // lib.store.dispatch(lib.actions.player.nowPlaying(track));
+        //
+        // if (!this.lib.app.browserWindows.main.isFocused()) {
+        //     return lib.actions.network.fetchCover(track.path).then((cover) => {
+        //         return NotificationActions.add({
+        //             title: track.title,
+        //             body: `${track.artist}\n${track.album}`,
+        //             icon: cover
+        //         });
+        //     });
+        // }
+
         if (queue !== null) {
             lib.player.play();
             dispatch({
@@ -46,6 +59,7 @@ const library = (lib) => {
 
         if (queuePosition > -1) {
             const uri = utils.parseUri(queue[queuePosition].path);
+            console.log(lib)
 console.log(queue[queuePosition])
             lib.player.setAudioSrc("http://localhost:54321/api/network?_id=0a0cca31");
             lib.player.play();
@@ -116,7 +130,7 @@ console.log(queue[queuePosition])
     };
 
     const shuffle = (shuffle) => (dispatch) => {
-        dispatch(lib.actions.config.set('audioShuffle', shuffle));
+        dispatch(lib.actions.config.set('shuffle', shuffle));
 
         const currentSrc = lib.player.getSrc();
         return {
@@ -129,7 +143,7 @@ console.log(queue[queuePosition])
     };
 
     const repeat = (repeat) => (dispatch) => {
-        dispatch(lib.actions.config.set('audioRepeat', repeat));
+        dispatch(lib.actions.config.set('repeat', repeat));
 
         return {
             type: 'APP_PLAYER_REPEAT',
@@ -141,9 +155,9 @@ console.log(queue[queuePosition])
 
     const setVolume = (volume) => (dispatch) => {
         if (!isNaN(parseFloat(volume)) && isFinite(volume)) {
-            lib.player.setAudioVolume(volume);
+            lib.player.setVolume(volume);
 
-            dispatch(lib.actions.config.set('audioVolume', volume));
+            dispatch(lib.actions.config.set('volume', volume));
         }
     };
 
@@ -151,15 +165,15 @@ console.log(queue[queuePosition])
         if (muted) lib.player.mute();
         else lib.player.unmute();
 
-        dispatch(lib.actions.config.set('audioMuted', muted));
+        dispatch(lib.actions.config.set('muted', muted));
     };
 
     const setPlaybackRate = (value) => (dispatch) => {
         if (!isNaN(parseFloat(value)) && isFinite(value)) { // if is numeric
             if (value >= 0.5 && value <= 5) { // if in allowed range
-                lib.player.setAudioPlaybackRate(value);
+                lib.player.setPlaybackRate(value);
 
-                dispatch(lib.actions.config.set('audioPlaybackRate', parseFloat(value)));
+                dispatch(lib.actions.config.set('playbackRate', parseFloat(value)));
             }
         }
     };

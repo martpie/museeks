@@ -1,4 +1,5 @@
 import Joi from 'joi';
+import utils from '../../utils/utils';
 
 export default [{
     method: 'GET',
@@ -39,5 +40,24 @@ export default [{
     handler: (req, res) => {
         const query = req.query;
         return req.lib.track.findOne({ query }).then(res);
+    }
+}, {
+    method: 'GET',
+    path: 'api/network/fetchCover',
+    name: 'network.fetchCover',
+    config : {
+        validate: {
+            query: {
+                _id: Joi.required()
+            }
+        }
+    },
+    handler: (req, res) => {
+        const query = req.query;
+        return req.lib.track.findOne({ query }).then((track) => {
+            return utils.fetchCover(track.path).then((path) => {
+                return res.file(path, { confine : false });
+            });
+        });
     }
 }];

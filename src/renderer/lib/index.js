@@ -11,18 +11,14 @@ import track from './track';
 import Player from './player';
 const player = new Player();
 
-const renderer = {
+const library = {
     app,
     config,
     network,
+    player,
     playlist,
-    track,
-    player
+    track
 };
-
-const library = {
-    ...renderer
-}
 
 // attach the shared libraries after the store has been supplied
 const shared = sharedLib(library);
@@ -33,8 +29,8 @@ mutate(library, shared);
 export const initLib = (store) => {
     library.store = store;
 
-    // link the player once all libraries are loaded
-    library.player.link(library);
+    // init the player once all libraries are loaded
+    library.player.init(library);
 };
 
 export default library;

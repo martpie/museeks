@@ -33,7 +33,7 @@ class SettingsAudio extends Component {
                         </label>
                         <input type='number'
                                className='form-control'
-                               defaultValue={ config.audioPlaybackRate }
+                               defaultValue={ config.playbackRate }
                                onChange={ this.setPlaybackRate }
                                min='0.5'
                                max='5'

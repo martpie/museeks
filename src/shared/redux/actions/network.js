@@ -1,6 +1,6 @@
 import Promise from 'bluebird';
-import flatten from 'flatten';
-import uniqBy from 'lodash';
+import { uniqBy, flatten, compact } from 'lodash';
+import utils from '../../utils/utils';
 
 const library = (lib) => {
 
@@ -34,14 +34,28 @@ const library = (lib) => {
         }));
     };
 
-    const start = ({ source, destination, track } = {}) => {
-        const getLibrary = (source) => lib.api.network.start(req.query);
-        const querySources = Promise.map(req.query.sources, getLibrary);
+    const findOne = ({ peers = [], query } = {}) => (dispatch, getState) => {
 
-        return querySources
+        // if no peers were supplied, search all peers
+        if (peers.length === 0) {
+            peers = getState().network.peers;
+        }
+
+        const getSong = (peer) => lib.network.findOne({ peer, query });
+        const queryPeers = Promise.map(peers, getSong);
+
+        return queryPeers
         .then(flatten)
-        .then(res);
+        .then(compact)
+        .then((track) => dispatch({
+            type: 'APP_NETWORK_FIND_ONE',
+            payload: {
+                track
+            }
+        }));
+    };
 
+    const start = ({ source, destination, track } = {}) => {
         return {
             type: 'APP_NETWORK_START',
             payload: {
@@ -64,12 +78,26 @@ const library = (lib) => {
         }
     });
 
+    const fetchCover = (_id) => (dispatch) => {
+        console.log(lib)
+        return lib.network.getOwner({ _id }).then((peer) => {
+            console.log('XXXXXXXXXXXXXXXX', `${lib.utils.peerEndpoint(peer)}/api/network/fetchCover?_id=${_id}`)
+            dispatch({
+                type: 'APP_NETWORK_FETCH_COVER',
+                payload: {
+                    path: `${lib.utils.peerEndpoint(peer)}/api/network/fetchCover?_id=${_id}`
+                }
+            });
+        });
+    };
+
     return {
         peerFound,
         find,
         start,
         addObserver,
-        removeObserver
+        removeObserver,
+        fetchCover
     };
 }
 

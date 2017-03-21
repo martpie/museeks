@@ -188,15 +188,13 @@ const getDefaultMetadata = () => {
     };
 };
 
-const getLoweredMeta = (metadata) => {
-    return {
-        artist: metadata.artist.map((meta) => stripAccents(meta.toLowerCase())),
-        album: stripAccents(metadata.album.toLowerCase()),
-        albumartist: metadata.albumartist.map((meta) => stripAccents(meta.toLowerCase())),
-        title: stripAccents(metadata.title.toLowerCase()),
-        genre: metadata.genre.map((meta) => stripAccents(meta.toLowerCase()))
-    };
-};
+const getLoweredMeta = (metadata) => ({
+    artist: metadata.artist.map((meta) => stripAccents(meta.toLowerCase())),
+    album: stripAccents(metadata.album.toLowerCase()),
+    albumartist: metadata.albumartist.map((meta) => stripAccents(meta.toLowerCase())),
+    title: stripAccents(metadata.title.toLowerCase()),
+    genre: metadata.genre.map((meta) => stripAccents(meta.toLowerCase()))
+});
 
 const getWavMetadata = async (track) => {
     const defaultMetadata = getDefaultMetadata();
@@ -212,8 +210,8 @@ const getWavMetadata = async (track) => {
     const metadata = {
         ...defaultMetadata,
         duration: audioDuration,
-        path    : track,
-        title   : path.parse(track).base,
+        path: track,
+        title: path.parse(track).base
     };
 
     metadata.loweredMetas = getLoweredMeta(metadata);

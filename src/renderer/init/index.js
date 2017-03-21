@@ -17,10 +17,10 @@ const library = (lib) => {
         }, 250);
     };
 
-    // Config the audio player
-    lib.player.setAudioVolume(config.audioVolume);
-    lib.player.setAudioPlaybackRate(config.audioPlaybackRate);
-    lib.player.setAudioMuted(config.audioMuted);
+    // Configure the audio player
+    lib.player.setVolume(config.volume);
+    lib.player.setPlaybackRate(config.playbackRate);
+    lib.player.setMuted(config.muted);
 
     // Prevent some events
     window.addEventListener('dragover', (e) => e.preventDefault(), false);
