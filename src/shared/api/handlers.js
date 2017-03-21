@@ -25,7 +25,7 @@ const routesToHandlers = (routes, lib) => {
 
                 // Wrap the function in a redux dispatch if required
                 const dispatchedFunction = (args) => route.dispatch
-                    ? store.dispatch(libraryFunction.apply(null, args))
+                    ? lib.store.dispatch(libraryFunction.apply(null, args))
                     : libraryFunction.apply(null, args);
 
                 return dispatchedFunction(transformedArgs)
