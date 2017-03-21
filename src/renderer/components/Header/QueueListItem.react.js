@@ -35,7 +35,7 @@ class QueueListItem extends PureComponent {
         this.onDragOver  = this.onDragOver.bind(this);
     }
 
-    render = () => {
+    render() {
         const queueContentClasses = classnames('track', {
             'dragged': this.props.dragged,
             'dragged-over': this.props.draggedOver,

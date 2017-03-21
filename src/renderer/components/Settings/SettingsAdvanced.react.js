@@ -22,7 +22,7 @@ class SettingsAdvanced extends Component {
         super(props);
     }
 
-    render = () => {
+    render() {
         const config = this.props.config;
 
         return (

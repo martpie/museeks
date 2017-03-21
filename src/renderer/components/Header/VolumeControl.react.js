@@ -45,7 +45,7 @@ class VolumeControl extends Component {
         return muted || volume === 0 ? 'volume-off' : volume > 0.5 ? 'volume-up' : 'volume-down';
     }
 
-    render = () => {
+    render() {
         const volumeClasses = classnames('volume-control', {
             visible: this.state.showVolume
         });

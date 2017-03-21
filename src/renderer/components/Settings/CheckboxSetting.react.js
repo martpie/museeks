@@ -21,7 +21,7 @@ class CheckboxSetting extends PureComponent {
         this.onClick = this.onClick.bind(this);
     }
 
-    render = () => {
+    render() {
         return (
             <div className='setting-section'>
                 <div className='checkbox'>

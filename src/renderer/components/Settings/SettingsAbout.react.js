@@ -23,7 +23,7 @@ class SettingsAbout extends Component {
         super(props);
     }
 
-    render = () => {
+    render() {
         return (
             <div className='setting setting-about'>
                 <div className='setting-section'>

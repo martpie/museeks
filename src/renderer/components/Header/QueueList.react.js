@@ -38,7 +38,7 @@ class QueueList extends Component {
         this.dragEnd   = this.dragEnd.bind(this);
     }
 
-    render = () => {
+    render() {
         const self = this;
 
         const queue       = this.props.queue;

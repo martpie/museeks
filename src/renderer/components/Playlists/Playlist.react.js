@@ -32,7 +32,7 @@ class Playlist extends Component {
         this.props.setTracksCursor('playlist');
     }
 
-    render = () => {
+    render() {
         if (Array.isArray(this.props.tracks) && this.props.tracks.length > 0) {
             return (
                 <TracksList

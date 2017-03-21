@@ -23,7 +23,7 @@ class ButtonShuffle extends Component {
         this.toggleShuffle = this.toggleShuffle.bind(this);
     }
 
-    render = () => {
+    render() {
         const svg = require('../../../images/icons/player-shuffle.svg');
 
         const buttonClasses = classnames('button', {

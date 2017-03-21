@@ -22,7 +22,7 @@ class LibraryFolders extends Component {
         super(props);
     }
 
-    render = () => {
+    render() {
         const foldersListClasses = classnames('musicfolders-list', {
             empty: this.props.folders.length === 0
         });

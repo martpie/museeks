@@ -18,7 +18,7 @@ class Toast extends Component {
         super(props);
     }
 
-    render = () => {
+    render() {
         const type = this.props.type;
         const content = this.props.content;
 

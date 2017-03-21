@@ -1,5 +1,6 @@
 import Promise from 'bluebird';
 import flatten from 'flatten';
+import uniqBy from 'lodash';
 
 const library = (lib) => {
 
@@ -20,7 +21,7 @@ const library = (lib) => {
         const getLibrary = (peer) => lib.network.find({ peer, query, sort });
         const queryPeers = Promise.map(peers, getLibrary);
 
-        const uniqueTracks = (tracks) => tracks;
+        const uniqueTracks = (tracks) => uniqBy(tracks, '_id');
 
         return queryPeers
         .then(flatten)

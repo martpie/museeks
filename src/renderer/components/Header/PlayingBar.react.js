@@ -53,7 +53,7 @@ class PlayingBar extends Component {
         this.toggleQueue = this.toggleQueue.bind(this);
     }
 
-    render = () => {
+    render() {
         const queue = this.props.queue;
         const queueCursor = this.props.queueCursor;
         const trackPlaying = queue[queueCursor];

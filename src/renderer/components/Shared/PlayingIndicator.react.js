@@ -29,7 +29,7 @@ class TrackRow extends Component {
         this.onMouseLeave = this.onMouseLeave.bind(this);
     }
 
-    render = () => {
+    render() {
         const classNames = classnames('playing-indicator', this.props.state, {
             'hovered': this.state.hovered,
         });

@@ -22,7 +22,7 @@ class PlaylistsNavLink extends Component {
         this.onContextMenu = this.onContextMenu.bind(this);
     }
 
-    render = () => {
+    render() {
         return (
             <Link
                 className='playlist-link'

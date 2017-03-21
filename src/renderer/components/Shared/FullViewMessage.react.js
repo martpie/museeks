@@ -19,7 +19,7 @@ class FullViewMessage extends PureComponent {
         super(props);
     }
 
-    render = () => {
+    render() {
         return (
             <div className='full-message'>
                 { this.props.children }

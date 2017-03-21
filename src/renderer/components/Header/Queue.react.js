@@ -22,7 +22,7 @@ class Queue extends PureComponent {
         super(props);
     }
 
-    render = () => {
+    render() {
         const queue       = this.props.queue;
         const queueCursor = this.props.queueCursor;
 

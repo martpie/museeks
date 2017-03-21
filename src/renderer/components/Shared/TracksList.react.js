@@ -164,7 +164,7 @@ class TracksList extends Component {
         this.rowHeight = 30;
     }
 
-    render = () => {
+    render() {
         const tracks = [...this.props.tracks];
 
         // TODO (y.solovyov | KeitIG): TrackListHeader component?

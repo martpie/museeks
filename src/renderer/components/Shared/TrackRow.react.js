@@ -32,7 +32,7 @@ class TrackRow extends Component {
         this.onContextMenu = this.onContextMenu.bind(this);
     }
 
-    render = () => {
+    render() {
         const trackClasses = classnames('track', {
             selected: this.props.selected
         });

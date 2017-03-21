@@ -28,7 +28,7 @@ class Museeks extends Component {
         this.onKey = this.onKey.bind(this);
     }
 
-    render = () => {
+    render() {
         const state = this.props.state;
         const trackPlayingId = (state.queue.length > 0 && state.queueCursor !== null) ? state.queue[state.queueCursor]._id : null;
 

@@ -22,7 +22,7 @@ class ExternalLink extends Component {
         this.openLink = this.openLink.bind(this);
     }
 
-    render = () => {
+    render() {
         return (
             <a href onClick={ this.openLink }>
                 { this.props.children }

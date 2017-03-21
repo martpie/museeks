@@ -75,7 +75,7 @@ class Library extends Component {
         );
     }
 
-    render = () => {
+    render() {
         return (
             <div className='view view-library' >
                 { this.getLibraryComponent() }

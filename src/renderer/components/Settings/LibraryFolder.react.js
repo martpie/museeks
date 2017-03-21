@@ -26,7 +26,7 @@ class LibraryFolders extends Component {
         this.removeFolder = this.removeFolder.bind(this);
     }
 
-    render = () => {
+    render() {
         const removeButtonClasses = classnames('delete-libray-folder', {
             disabled: this.props.refreshingLibrary
         });
