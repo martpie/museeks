@@ -1,4 +1,10 @@
 export default {
+
+    peers: [],
+    observers: [],
+
+    // new state above here
+
     tracks: {
         library: {                   // Tracks of the library view
             all: null,               // All tracks

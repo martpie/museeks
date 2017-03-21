@@ -64,11 +64,8 @@ app.on('ready', () => {
     // Initialise shared libraries with the store
     initLib(store);
 
-    // Load configuration into the store
+    // Load configuration required for the rest of the app to load into the store
     store.dispatch(lib.actions.config.load()).then((response) => {
-
-        // After config has loaded, do stuff.
-        lib.actions.network.peerFound({ ip : 'jackson' });
 
         // Start the database
         const database = new Database(lib);

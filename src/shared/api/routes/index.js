@@ -24,6 +24,7 @@ Demo Route:
 import app from './app';
 import player from './player';
 import library from './library';
+import network from './network';
 import store from './store';
 import handshake from './handshake';
 import rpc from './rpc';
@@ -32,6 +33,7 @@ const routes = [
     ...app,
     ...player,
     ...library,
+    ...network,
     ...store,
     ...handshake,
     ...rpc

@@ -1,5 +1,5 @@
-import api from '../api/accessors';
 import actions from '../redux/actions';
+import api from '../api/accessors';
 
 const library = (lib) => {
     return {

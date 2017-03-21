@@ -1,5 +1,6 @@
 import Promise from 'bluebird';
 import Electron from './fixtures/Electron';
+import Hapi from 'hapi';
 import { range } from 'range';
 import mkdirp from 'mkdirp';
 import http from 'axios';
@@ -12,6 +13,23 @@ const srcRoot = path.resolve(__dirname, '..');
 const testMp3 = path.resolve(srcRoot, './test/fixtures/test.mp3');
 
 const numPeers = 1;
+
+const server = new Hapi.Server();
+const observerPort = 54555;
+server.connection({ port: observerPort });
+
+let observerCallback = (payload) => console.log('observer api hit', payload);
+
+server.route({
+    method: 'POST',
+    path: '/api/v1/network/event'
+    handler: (req, res) => {
+        observerCallback(req.payload);
+        res();
+    }
+});
+
+server.start();
 
 const peerConfigs = range(0, numPeers).map((peer, peerNumber) => {
     const peerDataRoot = `/tmp/museeks-test/${Date.now()}/${peerNumber}`;
@@ -104,9 +122,28 @@ const notifyPeerFound = (peer, foundPeer) => {
 
 const runTests = () => {
 
-    // test: get song from library
-    // two clients
-    // client one
+    // test: play song from library
+    // two peers
+    // peer 1 requests the library of peer 2
+    return lib.api.network.find({
+        sources: [peer[2].ip]
+    }).then((tracks) => {
+        // peer 1 plays a song from the library of peer 2
+        return lib.api.network.start({
+            source: peer[1],
+            destination: peer[2],
+            track: 'uri-of-track'
+        }).then(() => {
+            // peer 1 receives now playing state updates from peer 2
+
+            const playEvent = () => {
+                return lib.api.network.observe({ ip : peer[2] }).then(() => {
+                    return lib.api.player.play({ ip : peer[2] }).then(() => {
+                });
+            }
+            // peer 1 receives destroy event from peer 2
+        });
+    });
 
     const getElectronLogs = () => {
         peers.forEach((peer, peerNumber) => {

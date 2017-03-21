@@ -54,7 +54,6 @@
     "redux-thunk": "^2.2.0",
     "semver": "5.3.0",
     "svg-inline-react": "1.0.2",
-    "teeny-conf": "https://github.com/sabrehagen/teeny-conf",
     "uuid": "^3.0.1",
     "xtend": "^4.0.1"
   },

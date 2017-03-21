@@ -15,7 +15,7 @@ const routesToHandlers = (routes, lib) => {
 
                 // Get the input args
                 const args = route.method === 'GET'
-                    ? req.payload.params
+                    ? req.query
                     : req.payload.data;
 
                 // Transform the inputs
