@@ -47,7 +47,7 @@ const library = (lib) => {
         if (queuePosition > -1) {
             const uri = utils.parseUri(queue[queuePosition].path);
 console.log(queue[queuePosition])
-            lib.player.setAudioSrc(uri);
+            lib.player.setAudioSrc("http://localhost:54321/api/media?_id=0a0cca31");
             lib.player.play();
 
             dispatch({

@@ -1,10 +1,10 @@
 import app from './actions/app';
 import library from './actions/library';
-import network from './actions/network';
+import networkActions from './actions/network';
 import player from './actions/player';
 
 import handshake from './handshake';
-import media from './media';
+import network from './network';
 import rpc from './rpc';
 import store from './store';
 import track from './track';
@@ -12,10 +12,11 @@ import track from './track';
 const routes = [
     ...app,
     ...library,
-    ...network,
+    ...networkActions,
     ...player,
+
     ...handshake,
-    ...media,
+    ...network,
     ...rpc,
     ...store,
     ...track

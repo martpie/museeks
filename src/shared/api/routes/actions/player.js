@@ -1,65 +1,65 @@
 export default [{
-    path: 'api/player/jumpTo',
+    path: 'api/actions/player/jumpTo',
     method: 'POST',
     name: 'actions.player.jumpTo',
     dispatch: true
 }, {
-    path: 'api/player/next',
+    path: 'api/actions/player/next',
     method: 'GET',
     name: 'actions.player.next',
     dispatch: true
 }, {
-    path: 'api/player/pause',
+    path: 'api/actions/player/pause',
     method: 'GET',
     name: 'actions.player.pause',
     dispatch: true
 }, {
-    path: 'api/player/play',
+    path: 'api/actions/player/play',
     method: 'GET',
     name: 'actions.player.play',
     dispatch: true
 }, {
-    path: 'api/player/playToggle',
+    path: 'api/actions/player/playToggle',
     method: 'GET',
     name: 'actions.player.playToggle',
     dispatch: true
 }, {
-    path: 'api/player/previous',
+    path: 'api/actions/player/previous',
     method: 'GET',
     name: 'actions.player.previous',
     dispatch: true
 }, {
-    path: 'api/player/repeat',
+    path: 'api/actions/player/repeat',
     method: 'GET',
     name: 'actions.player.repeat',
     dispatch: true
 }, {
-    path: 'api/player/setMuted',
+    path: 'api/actions/player/setMuted',
     method: 'POST',
     name: 'actions.player.setMuted',
     dispatch: true
 }, {
-    path: 'api/player/setPlaybackRate',
+    path: 'api/actions/player/setPlaybackRate',
     method: 'POST',
     name: 'actions.player.setPlaybackRate',
     dispatch: true
 }, {
-    path: 'api/player/setVolume',
+    path: 'api/actions/player/setVolume',
     method: 'POST',
     name: 'actions.player.setVolume',
     dispatch: true
 }, {
-    path: 'api/player/shuffle',
+    path: 'api/actions/player/shuffle',
     method: 'GET',
     name: 'actions.player.shuffle',
     dispatch: true
 }, {
-    path: 'api/player/start',
+    path: 'api/actions/player/start',
     method: 'POST',
     name: 'actions.player.start',
     dispatch: true
 }, {
-    path: 'api/player/stop',
+    path: 'api/actions/player/stop',
     method: 'GET',
     name: 'actions.player.stop',
     dispatch: true

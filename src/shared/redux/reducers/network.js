@@ -9,7 +9,7 @@ export default (state = {}, action) => {
             return i.updateIn(state, ['network', 'peers'], (peers) => {
                 // if the peers list doesn't include the found peer, add it
                 return find(peers, ['ip', newPeer.ip]) ? peers : i.push(peers, newPeer);
-            })
+            });
         }
 
         case('APP_NETWORK_ADD_OBSERVER'): {
@@ -17,7 +17,7 @@ export default (state = {}, action) => {
             return i.updateIn(state, ['network', 'observers'], (observers) => {
                 // if the observers list doesn't include the new observer, add it
                 return find(observers, ['ip', newObserver.ip]) ? observers : i.push(observers, newObserver);
-            })
+            });
         }
 
         case('APP_NETWORK_REMOVE_OBSERVER'): {
@@ -25,7 +25,7 @@ export default (state = {}, action) => {
             return i.updateIn(state, ['network', 'observers'], (observers) => {
                 // filter the list to remove the targetObserver
                 return observers.filter(observer => observer.ip !== targetObserver.ip);
-            })
+            });
         }
 
         case('APP_NETWORK_FIND'): {
