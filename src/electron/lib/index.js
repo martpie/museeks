@@ -1,3 +1,4 @@
+import mutate from 'xtend/mutable';
 import sharedLib from '../../shared/lib';
 
 import app from './app';
@@ -13,11 +14,8 @@ const electron = {
     models: {} // models attached when database initialises
 };
 
-const shared = sharedLib(electron);
-
 const library = {
-    ...electron,
-    ...shared
+    ...electron
 }
 
 // attach libraries which must be invoked
@@ -26,6 +24,12 @@ library.track = track(library);
 
 export const initLib = (store) => {
     library.store = store;
-};
+
+    // attach the shared libraries after the store has been supplied
+    const shared = sharedLib(library);
+
+    // attach the shared libraries to our internal library
+    mutate(library, shared);
+}
 
 export default library;

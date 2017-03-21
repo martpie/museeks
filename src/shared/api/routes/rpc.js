@@ -1,6 +1,7 @@
 export default [{
     method: 'POST',
     path: 'api/v1/rpc',
+    name: 'rpc',
     handler: (req, res) => {
         const rpc = req.payload;
         const target = req.lib[rpc.library][rpc.function];
