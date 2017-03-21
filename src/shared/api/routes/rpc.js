@@ -1,6 +1,6 @@
 export default [{
     method: 'POST',
-    path: 'api/v1/rpc',
+    path: 'api/rpc',
     name: 'rpc',
     handler: (req, res) => {
         const rpc = req.payload;

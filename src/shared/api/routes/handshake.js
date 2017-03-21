@@ -3,7 +3,7 @@ import extend from 'xtend';
 
 export default [{
     method: 'POST',
-    path: 'api/v1/handshake',
+    path: 'api/handshake',
     name: 'handshake',
     handler: (req, res) => {
         const peer = extend(req.payload, { ip : req.info.remoteAddress });

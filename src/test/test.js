@@ -22,7 +22,7 @@ let observerCallback = (payload) => console.log('observer api hit', payload);
 
 server.route({
     method: 'POST',
-    path: '/api/v1/network/event'
+    path: '/api/network/event'
     handler: (req, res) => {
         observerCallback(req.payload);
         res();
@@ -92,7 +92,7 @@ const setConfig = (peer, key, value) => {
 
     return http({
         method: 'POST',
-        url: `http://${host}:${port}/api/v1/store/dispatch`,
+        url: `http://${host}:${port}/api/store/dispatch`,
         json: true,
         data: {
             type: 'APP_CONFIG_SET',
@@ -107,7 +107,7 @@ const notifyPeerFound = (peer, foundPeer) => {
 
     return http({
         method: 'POST',
-        url: `http://${host}:${port}/api/v1/store/dispatch`,
+        url: `http://${host}:${port}/api/store/dispatch`,
         json: true,
         data: {
             type: 'APP_NETWORK_PEER_FOUND',

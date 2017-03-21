@@ -1,7 +1,7 @@
 /*
 Demo Route:
 [{
-    path: 'api/v1/player/play',    // The api path
+    path: 'api/player/play',    // The api path
     method: 'GET',                   // Method type
     name: 'action.player.play',    // Path to the function in the lib
     // Optional

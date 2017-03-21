@@ -14,7 +14,7 @@ const library = (lib) => {
 
         // if no peers were supplied, search all peers
         if (peers.length === 0) {
-            peers = getState().peers;
+            peers = getState().network.peers;
         }
 
         const getLibrary = (peer) => lib.network.find({ peer, query, sort });
