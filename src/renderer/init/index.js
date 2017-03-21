@@ -1,5 +1,3 @@
-import { ipcRenderer } from 'electron';
-
 const library = (lib) => {
     const store = lib.store;
     const dispatch = store.dispatch;
@@ -24,19 +22,9 @@ const library = (lib) => {
     lib.player.setAudioPlaybackRate(config.audioPlaybackRate);
     lib.player.setAudioMuted(config.audioMuted);
 
-    // Listen for main-process events
-    ipcRenderer.on('close', () => {
-        dispatch(lib.actions.app.close());
-    });
-
     // Prevent some events
-    window.addEventListener('dragover', (e) => {
-        e.preventDefault();
-    }, false);
-
-    window.addEventListener('drop', (e) => {
-        e.preventDefault();
-    }, false);
+    window.addEventListener('dragover', (e) => e.preventDefault(), false);
+    window.addEventListener('drop', (e) => e.preventDefault(), false);
 
     // Remember dimensions and positionning
     const currentWindow = lib.app.browserWindows.main;

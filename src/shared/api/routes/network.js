@@ -4,7 +4,7 @@ export default [{
     method: 'GET',
     path: 'api/network/download',
     name: 'network.download',
-    config: {
+    config : {
         validate: {
             query: {
                 _id: Joi.required()
@@ -19,9 +19,17 @@ export default [{
     }
 }, {
     method: 'GET',
-    path: 'api/network/metadata',
-    name: 'network.metadata',
-    config: {
+    path: 'api/network/find',
+    name: 'network.find',
+    handler: (req, res) => {
+        const query = req.query;
+        return req.lib.track.find({ query }).then(res);
+    }
+}, {
+    method: 'GET',
+    path: 'api/network/findOne',
+    name: 'network.findOne',
+    config : {
         validate: {
             query: {
                 _id: Joi.required()

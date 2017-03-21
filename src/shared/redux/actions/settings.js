@@ -1,5 +1,4 @@
 import semver from 'semver';
-import { ipcRenderer } from 'electron';
 
 const library = (lib) => {
 

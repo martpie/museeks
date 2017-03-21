@@ -1,4 +1,4 @@
-import { ipcRenderer } from 'electron';
+import url from 'url';
 import utils from '../../shared/utils/utils';
 
 class Player {
@@ -36,13 +36,12 @@ class Player {
         });
 
         this.audio.addEventListener('play', () => {
-            ipcRenderer.send('playerAction', 'play');
+            lib.store.dispatch(lib.actions.player.play());
+            const { query } = url.parse(this.getSrc(), true);
 
-            const path = decodeURIComponent(this.getSrc()).replace('file://', '');
+            return lib.network.find({ query }).then((track) => {
 
-            return utils.getMetadata(path).then((track) => {
-
-                ipcRenderer.send('playerAction', 'trackStart', track);
+                lib.store.dispatch(lib.actions.player.trackStart(track));
 
                 if (this.lib.app.browserWindows.main.isFocused()) return;
 
@@ -57,7 +56,7 @@ class Player {
         });
 
         this.audio.addEventListener('pause', () => {
-            ipcRenderer.send('playerAction', 'pause');
+            lib.store.dispatch(lib.actions.player.pause());
         });
     }
 
