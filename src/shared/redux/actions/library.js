@@ -10,6 +10,7 @@ const realpath = Promise.promisify(fs.realpath);
 const library = (lib) => {
 
     const load = () => {
+        console.log('start')
         return {
             type: 'APP_LIBRARY_LOAD',
             payload: lib.track.find({
@@ -21,6 +22,8 @@ const library = (lib) => {
                     'disk.no': 1,
                     'track.no': 1
                 }
+            }).then((response) => {
+                return response
             })
         }
     }
