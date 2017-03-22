@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Input from 'react-simple-input';
+import KeyBinding from 'react-keybinding-component';
 
 import PlayingBar     from './PlayingBar.react';
 import WindowControls from './WindowControls.react';
@@ -28,7 +29,7 @@ export default class Header extends Component {
     constructor(props) {
         super(props);
 
-        this.search = this.search.bind(null);
+        this.onKey = this.onKey.bind(this);
     }
 
     render() {
@@ -59,11 +60,22 @@ export default class Header extends Component {
                         onChange={ this.search }
                     />
                 </div>
+                <KeyBinding onKey={ this.onKey } preventInputConflict />
             </header>
         );
     }
 
     search(e) {
         AppActions.library.filterSearch(e.target.value);
+    }
+
+    onKey(e) {
+        switch (e.keyCode) {
+            case 70: { // "F"
+                if(e.ctrlKey) {
+                    this.refs.search.refs.input.select();
+                }
+            }
+        }
     }
 }
