@@ -26,15 +26,14 @@ const library = (lib) => {
 
         const uniqueTracks = (tracks) => uniqBy(tracks, '_id');
 
-        return queryPeers
+        const tracks = queryPeers
         .then(flatten)
-        .then(uniqueTracks)
-        .then((tracks) => dispatch({
+        .then(uniqueTracks);
+
+        dispatch({
             type: 'NETWORK/FIND',
-            payload: {
-                tracks
-            }
-        }));
+            payload: tracks
+        });
     };
 
     const findOne = ({ peers = [], query } = {}) => (dispatch, getState) => {
@@ -47,15 +46,14 @@ const library = (lib) => {
         const getSong = (peer) => lib.network.findOne({ peer, query });
         const queryPeers = Promise.map(peers, getSong);
 
-        return queryPeers
+        const track = queryPeers
         .then(flatten)
-        .then(compact)
-        .then((track) => dispatch({
+        .then(compact);
+
+        dispatch({
             type: 'NETWORK/FIND_ONE',
-            payload: {
-                track
-            }
-        }));
+            payload: track
+        });
     };
 
     const start = ({ source, destination, track } = {}) => {
@@ -81,16 +79,12 @@ const library = (lib) => {
         }
     });
 
-    const fetchCover = (_id) => (dispatch) => {
-        return lib.network.getOwner({ _id }).then((peer) => {
-            dispatch({
-                type: 'NETWORK/FETCHED_COVER',
-                payload: {
-                    cover: `${lib.utils.peerEndpoint(peer)}/api/network/fetchCover?_id=${_id}`
-                }
-            });
-        });
-    };
+    const fetchCover = (metadata) => ({
+        type: 'NETWORK/FETCHED_COVER',
+        payload: {
+            cover: `${lib.utils.peerEndpoint(metadata.owner)}/api/track/fetchCover?_id=${metadata._id}`
+        }
+    });
 
     return {
         peerFound,

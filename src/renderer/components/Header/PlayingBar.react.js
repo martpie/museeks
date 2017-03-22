@@ -147,7 +147,7 @@ class PlayingBar extends Component {
         const currTrackPlayingId = currTrackPlaying && currTrackPlaying._id;
 
         if (nextTrackPlayingId !== currTrackPlayingId) {
-            this.props.fetchCover(nextTrackPlayingId);
+            this.props.fetchCover(nextTrackPlaying);
         }
     }
 
@@ -203,15 +203,15 @@ class PlayingBar extends Component {
         const time = (percent * trackPlaying.duration) / 100;
 
         this.setState({
-            duration : time,
-            x        : e.pageX
+            duration: time,
+            x: e.pageX
         });
     }
 
     hideTooltip = () => {
         this.setState({
-            duration : null,
-            x        : null
+            duration: null,
+            x: null
         });
     }
 

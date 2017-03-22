@@ -3,8 +3,8 @@ import { flatten, compact, extend } from 'lodash';
 
 const library = (lib) => {
 
-    const attachPeerMetadata = (peer, item) => item
-        ? extend(item, { peer })
+    const attachOwnerMetadata = (peer, item) => item
+        ? extend(item, { owner: peer })
         : item;
 
     const find = ({ peer, query, sort } = {}) => {
@@ -13,7 +13,7 @@ const library = (lib) => {
             query,
             sort
         })
-        .then((tracks) => tracks.map((track) => attachPeerMetadata(peer, track)));
+        .then((tracks) => tracks.map((track) => attachOwnerMetadata(peer, track)));
     }
 
     const findOne = ({ peer, query } = {}) => {
@@ -21,7 +21,7 @@ const library = (lib) => {
             ip: peer.ip,
             query
         })
-        .then((track) => attachPeerMetadata(peer, track));
+        .then((track) => attachOwnerMetadata(peer, track));
     }
 
     const getOwner = (query) => {

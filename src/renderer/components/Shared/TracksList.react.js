@@ -292,7 +292,7 @@ class TracksList extends Component {
                             { track.genre.join(', ') }
                         </div>
                         <div className='cell cell-host'>
-                            { track.peer.name || track.peer.hostname }
+                            { track.owner.name || track.owner.hostname }
                         </div>
                     </TrackRow>
                 );
