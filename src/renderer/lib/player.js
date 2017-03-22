@@ -78,7 +78,7 @@ class Player {
     setMeta(meta) {
         this.lib.tray.updateTrayMetadata(meta);
         this.lib.tray.setContextMenu('play');
-
+        console.log(meta.path);
         // When we change song, need to update the thresholdReached indicator.
         this.durationThresholdReached = false;
         this.audio.src = meta.path;
