@@ -31,6 +31,8 @@ class ApiServer {
         // attach the libs and dispatcher to each request
         this.server.ext('onRequest', (req, res) => {
             req.lib = this.lib;
+
+            console.log(`${req.method} ${req.path}`);
             res.continue();
         });
 

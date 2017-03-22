@@ -5,7 +5,7 @@ const library = (lib) => {
         const [local, remote] = process.type === 'renderer'
             ? ['renderer', 'electron']
             : ['electron', 'renderer'];
-console.log(config)
+
         const protocol = config[local].api.protocol;
         const host = peer.ip;
         const port = config[remote].api.protocol;
