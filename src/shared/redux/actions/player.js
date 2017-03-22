@@ -40,7 +40,7 @@ const library = (lib) => {
             if (output.islocal) {
                 lib.player.play();
             } else {
-                lib.api.actions.player.play();
+                lib.api.actions.player.play(output);
             }
             dispatch({
                 type: 'PLAYER/PLAY'
@@ -55,7 +55,7 @@ const library = (lib) => {
             if (output.islocal) {
                 lib.player.pause();
             } else {
-                lib.api.actions.player.pause();
+                lib.api.actions.player.pause(output);
             }
             dispatch({
                 type: 'PLAYER/PAUSE'
