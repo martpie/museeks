@@ -15,6 +15,7 @@ class OutputDevice extends Component {
     static propTypes = {
         setOutput: React.PropTypes.func.isRequired,
         peers: React.PropTypes.array.isRequired,
+        me: React.PropTypes.object.isRequired,
     }
 
     constructor(props) {
@@ -22,14 +23,19 @@ class OutputDevice extends Component {
     }
 
     render() {
-        const { peers, setOutput } = this.props;
+        const { peers, me, setOutput } = this.props;
+        const allOutputs = [
+            ...peers,
+            me
+        ];
+
         return (
             <div className="output-controls">
-                { peers.map((peer) => (
+                { allOutputs.map((output) => (
                     <button style={{marginLeft: '15px'}}
-                        key={ peer.id }
-                        onClick={() => setOutput(peer)}>
-                    { peer.hostname }
+                        key={ output.id }
+                        onClick={() => setOutput(output)}>
+                    { output.hostname }
                     </button>
                 ))}
             </div>

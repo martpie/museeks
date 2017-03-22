@@ -43,7 +43,10 @@ class Header extends Component {
                         playerStatus={ this.props.playerStatus }
                     />
                 </div>
-                <OutputDevice peers={ this.props.network.peers }/>
+                <OutputDevice
+                    peers={ this.props.network.peers }
+                    me={ this.props.network.me }
+                />
                 <div className='col-player-infos'>
                     <PlayingBar
                         cover={ this.props.cover }

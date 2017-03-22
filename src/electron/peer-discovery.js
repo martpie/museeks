@@ -5,6 +5,12 @@ import http from 'axios';
 import extend from 'xtend';
 import os from 'os';
 
+const me = {
+    hostname: os.hostname(),
+    platform: os.platform(),
+    ip: 'localhost'
+};
+
 class PeerDiscovery {
     constructor(lib) {
         this.lib = lib;
@@ -29,7 +35,7 @@ class PeerDiscovery {
         })
         .then((response) => response.data)
         .then((peerInfo) => extend(peerInfo, { ip : peer.ip }))
-        .then((peer) => this.lib.actions.network.peerFound(peer))
+        .then((peer) => this.lib.store.dispatch(this.lib.actions.network.peerFound(peer)))
         .catch((err) => {
             const ignore = err.response.status === 404;
 

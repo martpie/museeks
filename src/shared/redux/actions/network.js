@@ -4,14 +4,17 @@ import utils from '../../utils/utils';
 
 const library = (lib) => {
 
-    const peerFound = (peer) => (dispatch) => {
-        dispatch(lib.actions.network.find());
-        dispatch({
-            type: 'NETWORK/PEER_FOUND',
-            payload: {
-                peer
-            }
-        });
+    const peerFound = (peer) => (dispatch, getState) => {
+        const me = getState().network.me;
+        if (me.hostname != peer.hostname) {
+            dispatch(lib.actions.network.find());
+            dispatch({
+                type: 'NETWORK/PEER_FOUND',
+                payload: {
+                    peer
+                }
+            });
+        }
     };
 
     const find = ({ peers = [], query, sort } = {}) => (dispatch, getState) => {
@@ -82,11 +85,12 @@ const library = (lib) => {
             // This may fail if the other Museeks stops working.
             // If so, this is fine... Probably...
             if (prevOutput) {
-                lib.api.network.removeObserver({
+                lib.api.actions.network.removeObserver({
                     ip: prevOutput.ip,
-                    data: me
+                    observer: me
                 });
             }
+
             // Dispatch the change event to update the ui
             dispatch({
                 type: 'NETWORK/SET_OUTPUT',
@@ -96,12 +100,13 @@ const library = (lib) => {
         }
         // If output has changed to another computer
         else {
+            console.log(newOutput.ip);
             // We ask the output device to set us as an observer.
             dispatch({
                 type: 'NETWORK/SET_OUTPUT',
-                payload: lib.api.network.addObserver({
+                payload: lib.api.actions.network.addObserver({
                     ip: newOutput.ip,
-                    data: me
+                    observer: me
                 }),
                 meta: { newOutput, prevOutput }
             });

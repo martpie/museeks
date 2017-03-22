@@ -13,7 +13,7 @@ const library = (lib) => {
             const apiPort = lib.store.getState().config.renderer.api.port;
 
             // remove http metadata from function inputs
-            const inputs = extend(config);
+            const inputs = Object.assign({}, config);
             delete inputs.ip;
 
             const inputType = route.method === 'GET'
