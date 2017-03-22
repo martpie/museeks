@@ -4,6 +4,7 @@ import promiseMiddleware from 'redux-promise-middleware';
 import thunk from 'redux-thunk';
 import createLogger from 'redux-logger';
 import reducers from '../../shared/redux/reducers';
+import sendToObservers from '../../shared/redux/middleware/sendToObservers';
 
 const initialState = getInitialStateRenderer();
 
@@ -14,6 +15,7 @@ const logger = createLogger({ collapsed : true });
 const middleware = [
     thunk,
     promiseMiddleware(),
+    sendToObservers,
     forwardToMain,
     logger
 ];

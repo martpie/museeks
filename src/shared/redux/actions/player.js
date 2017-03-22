@@ -10,7 +10,7 @@ const library = (lib) => {
     };
 
     const playToggle = () => (dispatch, getState) => {
-        const { paused } = lib.player.audio;
+        const { paused } = lib.player.audio; // TODO Jackson
         const { queue } = getState();
         if (paused && queue.length > 0) {
             dispatch(lib.actions.player.play());

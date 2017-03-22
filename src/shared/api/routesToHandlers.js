@@ -1,5 +1,6 @@
 import { get } from 'lodash';
 import extend from 'xtend';
+import Promise from 'bluebird';
 
 const routesToHandlers = (routes, lib) => {
 
@@ -27,9 +28,9 @@ const routesToHandlers = (routes, lib) => {
                 ? lib.store.dispatch(libraryFunction.apply(null, args))
                 : libraryFunction.apply(null, args);
 
-            return dispatchedFunction(transformedArgs)
-                .then((result) => res(result))
-                // .catch((error) => res({ error }).code(error.code));
+            return Promise.resolve(dispatchedFunction(transformedArgs))
+                .then((result) => res(result || 'done'))
+                .catch((error) => res({ error }).code(error.code));
         }
     }
 
