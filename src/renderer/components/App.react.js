@@ -44,6 +44,7 @@ class Museeks extends Component {
                     queue={ state.queue }
                     queueCursor={ state.queueCursor }
                     windowControls={ !state.config.useNativeFrame }
+                    network={ state.network }
                 />
                 <div className='main-content'>
                     <Row className='content'>
@@ -52,6 +53,7 @@ class Museeks extends Component {
                                 app: this,
                                 config: state.config,
                                 playerStatus: state.playerStatus,
+                                network: state.network,
                                 queue: state.queue,
                                 tracks: state.tracks[state.tracksCursor].sub,
                                 library: state.tracks[state.tracksCursor].all,

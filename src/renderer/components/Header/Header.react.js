@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import PlayingBar     from './PlayingBar.react';
 import WindowControls from './WindowControls.react';
 import PlayerControls from './PlayerControls.react';
+import OutputDevice  from './OutputDevice.react';
 
 import lib from '../../lib';
 
@@ -42,6 +43,7 @@ class Header extends Component {
                         playerStatus={ this.props.playerStatus }
                     />
                 </div>
+                <OutputDevice peers={ this.props.network.peers }/>
                 <div className='col-player-infos'>
                     <PlayingBar
                         cover={ this.props.cover }

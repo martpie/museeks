@@ -65,6 +65,49 @@ const library = (lib) => {
         }
     };
 
+    const setOutput = (newOutput) => (dispatch, getState) => {
+        const state = getState();
+        const me = state.network.me;
+        const prevOutput = state.network.output;
+
+        // If the output has not changed. Return
+        if (newOutput.hostname == prevOutput.hostname) {
+            return
+        }
+
+        // If output has swapped to our computer:
+        else if (newOutput.hostname == me.hostname) {
+
+            // Ask to be removed as an observer
+            // This may fail if the other Museeks stops working.
+            // If so, this is fine... Probably...
+            if (prevOutput) {
+                lib.api.network.removeObserver({
+                    ip: prevOutput.ip,
+                    data: me
+                });
+            }
+            // Dispatch the change event
+            dispatch({
+                type: 'NETWORK/SET_OUTPUT',
+                payload: Promise.resolve(),
+                meta: { newOutput, prevOutput }
+            })
+        }
+        // If this is another computer:
+        else {
+            // We the output device to set us as a peer.
+            dispatch({
+                type: 'NETWORK/SET_OUTPUT',
+                payload: lib.api.network.addObserver({
+                    ip: newOutput.ip,
+                    data: me
+                }),
+                meta: { newOutput, prevOutput }
+            });
+        }
+    }
+
     const addObserver = (peer) => ({
         type: 'NETWORK/ADD_OBSERVER',
         payload: {
@@ -90,6 +133,7 @@ const library = (lib) => {
         peerFound,
         find,
         start,
+        setOutput,
         addObserver,
         removeObserver,
         fetchCover

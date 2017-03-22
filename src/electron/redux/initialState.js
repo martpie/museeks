@@ -1,9 +1,18 @@
+import os from 'os';
+
 export default {
 
     network: {
         observers: [],
         peers: [],
-        tracks: []
+        output: {
+            ip: null
+        },
+        me: {
+            hostname: os.hostname(),
+            platform: os.platform(),
+            ip: 'localhost',
+        }
     },
 
     // new state above here

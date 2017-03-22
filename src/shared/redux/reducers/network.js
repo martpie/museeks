@@ -28,6 +28,13 @@ export default (state = {}, action) => {
             });
         }
 
+        case('NETWORK/SET_OUTPUT_PENDING'): {
+            return i.assocIn(state, ['network', 'output'], action.meta.newOutput);
+        }
+        case('NETWORK/SET_OUTPUT_REJECTED'): {
+            return i.assocIn(state, ['network', 'output'], action.meta.oldOutput);
+        }
+
         case('NETWORK/FIND_FULFILLED'): {
             // return i.assocIn(state, ['network', 'tracks'], action.payload.tracks);
             return {

@@ -35,10 +35,23 @@ const library = (lib) => {
         // }
 
         if (queue !== null) {
-            lib.player.play();
-            dispatch({
-                type: 'PLAYER/PLAY'
-            });
+            if (output == me) {
+                lib.player.play();
+                dispatch({
+                    type: 'PLAYER/PLAY'
+                });
+
+            } else {
+                lib.api.actions.player.play();
+                dispatch({
+                    type: 'PLAYER/PLAY'
+                });
+            }
+
+//            dispatch({
+//                type: 'PLAYER/PLAY',
+//                payload: lib.player.play || lib.api.actions.player.play()
+//            });
         }
     };
 
