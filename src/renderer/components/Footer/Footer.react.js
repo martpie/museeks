@@ -49,12 +49,12 @@ class Footer extends Component {
 
         return (
             <footer className='row'>
-                <Col sm={ 3 }>
+                <div>
                     { navButtons }
-                </Col>
-                <Col sm={ 5 } className='status text-center'>
+                </div>
+                <div className='status text-center'>
                     { status }
-                </Col>
+                </div>
             </footer>
         );
     }
