@@ -1,45 +1,8 @@
 import Promise from 'bluebird';
-import { app } from 'electron';
-import path from 'path';
 import mutate from 'xtend/mutable';
 const fs = Promise.promisifyAll(require('fs'));
 
-const defaultConfigPath = path.join(app.getPath('userData'), 'config.json');
-
-const defaultConfig = {
-    path: defaultConfigPath,
-    theme: 'light',
-    volume: 1,
-    playbackRate: 1,
-    muted: false,
-    shuffle: false,
-    repeat: 'none',
-    musicFolders: [],
-    sleepBlocker: false,
-    autoUpdateChecker: true,
-    useNativeFrame: false,
-    minimizeToTray: true,
-    displayNotifications: true,
-    devMode: false,
-    discoverPeers: true,
-    bounds: {
-        width: 1000,
-        height: 600
-    },
-    electron: {
-        api: {
-            port: 54321
-        },
-        database: {
-            path: undefined // use default database path in prod, override in testing
-        }
-    },
-    renderer: {
-        api: {
-            port: 54321
-        }
-    }
-}
+import defaultConfig from '../../shared/lib/config';
 
 const serializeConfig = () => JSON.stringify(defaultConfig, null, 4);
 const deserializeConfig = (data) => JSON.parse(data);
@@ -56,7 +19,7 @@ const load = () => {
     return fs.readFileAsync(defaultConfig.path)
     .then(deserializeConfig)
     .then(extendConfig)
-    .catch(save);
+    .catch(() => save().then(load));
 };
 
 export default {

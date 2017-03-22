@@ -141,13 +141,13 @@ class PlayingBar extends Component {
 
     componentWillReceiveProps(nextProps) {
         const nextTrackPlaying = nextProps.queue[nextProps.queueCursor];
-        const nextTrackPlayingPath = nextTrackPlaying && nextTrackPlaying.path ? nextTrackPlaying.path : null;
+        const nextTrackPlayingId = nextTrackPlaying && nextTrackPlaying._id;
 
         const currTrackPlaying = this.props.queue[this.props.queueCursor];
-        const currTrackPlayingPath = currTrackPlaying && currTrackPlaying.path ? currTrackPlaying.path : null;
+        const currTrackPlayingId = currTrackPlaying && currTrackPlaying._id;
 
-        if (nextTrackPlayingPath !== currTrackPlayingPath) {
-            this.props.fetchCover(nextTrackPlayingPath);
+        if (nextTrackPlayingId !== currTrackPlayingId) {
+            this.props.fetchCover(nextTrackPlayingId);
         }
     }
 

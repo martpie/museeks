@@ -4,19 +4,18 @@ import { flatten, compact } from 'lodash';
 const library = (lib) => {
 
     const find = ({ peer, query, sort } = {}) => {
-        return lib.api.network.find({
+        return lib.api.track.find({
             ip: peer.ip,
             query,
             sort
         });
     }
 
-    const findOne = ({ peer, query, sort } = {}) => {
-        return lib.api.network.findOne({
+    const findOne = ({ peer, query } = {}) => {
+        return lib.api.track.findOne({
             ip: peer.ip,
-            query,
-            sort
-        })
+            query
+        });
     }
 
     const getOwner = (query) => {
@@ -24,8 +23,7 @@ const library = (lib) => {
         // asks a peer if they have the file. returns the peer if the file was found
         const checkIsOwner = (peer) => {
             return lib.network.findOne({
-                ip: peer.ip,
-                query
+                peer, query
             }).then((track) => track
                 ? peer
                 : undefined

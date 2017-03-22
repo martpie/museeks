@@ -4,9 +4,9 @@ import utils from './utils';
 
 const library = (lib) => {
 
+    lib.utils = utils(lib);
     lib.api = api(lib);
     lib.actions = actions(lib);
-    lib.utils = utils(lib);
 
     return lib;
 };

@@ -79,9 +79,7 @@ const library = (lib) => {
     });
 
     const fetchCover = (_id) => (dispatch) => {
-        console.log(lib)
         return lib.network.getOwner({ _id }).then((peer) => {
-            console.log('XXXXXXXXXXXXXXXX', `${lib.utils.peerEndpoint(peer)}/api/network/fetchCover?_id=${_id}`)
             dispatch({
                 type: 'APP_NETWORK_FETCH_COVER',
                 payload: {

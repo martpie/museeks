@@ -2,8 +2,8 @@ import Joi from 'joi';
 import utils from '../../utils/utils';
 
 export default [{
-    method: 'GET',
     path: 'api/network/download',
+    method: 'GET',
     name: 'network.download',
     config : {
         validate: {
@@ -19,31 +19,8 @@ export default [{
         });
     }
 }, {
-    method: 'GET',
-    path: 'api/network/find',
-    name: 'network.find',
-    handler: (req, res) => {
-        const query = req.query;
-        return req.lib.track.find({ query }).then(res);
-    }
-}, {
-    method: 'GET',
-    path: 'api/network/findOne',
-    name: 'network.findOne',
-    config : {
-        validate: {
-            query: {
-                _id: Joi.required()
-            }
-        }
-    },
-    handler: (req, res) => {
-        const query = req.query;
-        return req.lib.track.findOne({ query }).then(res);
-    }
-}, {
-    method: 'GET',
     path: 'api/network/fetchCover',
+    method: 'GET',
     name: 'network.fetchCover',
     config : {
         validate: {

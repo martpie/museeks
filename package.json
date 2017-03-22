@@ -41,6 +41,7 @@
     "linvodb3": "^3.25.0",
     "musicmetadata": "2.0.5",
     "open-sans-fontface": "1.4.0",
+    "qs": "^6.4.0",
     "react": "15.4.2",
     "react-bootstrap": "0.30.7",
     "react-dom": "15.4.2",

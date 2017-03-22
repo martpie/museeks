@@ -1,14 +1,14 @@
 const library = (lib) => {
 
     const peerEndpoint = (peer) => {
-        const state = lib.store.getState().config;
+        const { config } = lib.store.getState();
         const [local, remote] = process.type === 'renderer'
             ? ['renderer', 'electron']
             : ['electron', 'renderer'];
-
-        const protocol = state[local].protocol;
+console.log(config)
+        const protocol = config[local].api.protocol;
         const host = peer.ip;
-        const port = state[remote].protocol;
+        const port = config[remote].api.protocol;
 
         return `${protocol}://${host}:${port}`;
     };
