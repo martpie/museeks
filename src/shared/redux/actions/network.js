@@ -100,7 +100,6 @@ const library = (lib) => {
         }
         // If output has changed to another computer
         else {
-            console.log(newOutput.ip);
             // We ask the output device to set us as an observer.
             dispatch({
                 type: 'NETWORK/SET_OUTPUT',
