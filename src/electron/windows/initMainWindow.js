@@ -2,45 +2,7 @@ import { BrowserWindow, screen } from 'electron';
 import extend from 'xtend';
 import os from 'os';
 
-export default (lib, icons, srcPath) => {
-
-    const bounds = checkBounds(lib.store.getState().config.bounds);
-
-    const mainWindowOption = {
-        title: 'Museeks',
-        icon: os.platform() === 'win32' ? icons['ico'] : icons['256'],
-        x: bounds.x,
-        y: bounds.y,
-        width: bounds.width,
-        height: bounds.height,
-        minWidth: 900,
-        minHeight: 550,
-        frame: lib.store.getState().config.useNativeFrame,
-        show: false
-    };
-
-    // Create the browser window
-    let mainWindow = new BrowserWindow(mainWindowOption);
-
-    // ... and load our html page
-    mainWindow.loadURL(`file://${srcPath}/app.html#/library`);
-
-    mainWindow.on('closed', () => {
-        // Dereference the window object
-        mainWindow = null;
-    });
-    mainWindow.on('ready-to-show', () => {
-        mainWindow.show();
-    });
-    mainWindow.on('close', (e) => {
-        e.preventDefault();
-        mainWindow.webContents.send('close');
-    });
-
-  return mainWindow
-}
-
-function checkBounds(desiredBounds) {
+const checkBounds = (desiredBounds) => {
 
     // capture the bounds of the user's screen
     const { width, height } = screen.getPrimaryDisplay().workArea;
@@ -67,3 +29,39 @@ function checkBounds(desiredBounds) {
 
     return bounds;
 }
+
+const library = (lib, icons, srcPath) => {
+
+    const bounds = checkBounds(lib.store.getState().config.bounds);
+
+    const mainWindowOption = {
+        title: 'Museeks',
+        icon: os.platform() === 'win32' ? icons['ico'] : icons['256'],
+        x: bounds.x,
+        y: bounds.y,
+        width: bounds.width,
+        height: bounds.height,
+        minWidth: 900,
+        minHeight: 550,
+        frame: lib.store.getState().config.useNativeFrame,
+        show: false
+    };
+
+    // Create the browser window
+    let mainWindow = new BrowserWindow(mainWindowOption);
+
+    // ... and load our html page
+    mainWindow.loadURL(`file://${srcPath}/app.html#/library`);
+
+    // Dereference the window object
+    mainWindow.on('closed', () => mainWindow = null);
+    mainWindow.on('ready-to-show', mainWindow.show);
+    mainWindow.on('close', (e) => {
+        e.preventDefault();
+        mainWindow.webContents.send('close');
+    });
+
+    return mainWindow;
+}
+
+export default library;

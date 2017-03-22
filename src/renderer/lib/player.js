@@ -1,5 +1,6 @@
 import url from 'url';
 import utils from '../../shared/utils/utils';
+import { URL } from 'url';
 
 class Player {
 
@@ -75,13 +76,18 @@ class Player {
         this.audio.defaultPlaybackRate = playbackRate;
     }
 
-    setMeta(meta) {
-        this.lib.tray.updateTrayMetadata(meta);
+    setMetadata(metadata) {
+        console.log(this.lib)
+        this.lib.tray.updateTrayMetadata(metadata);
         this.lib.tray.setContextMenu('play');
-        console.log(meta.path);
-        // When we change song, need to update the thresholdReached indicator.
+
+        const peerEndpoint = this.lib.utils.peerEndpoint(metadata.peer);
+        const src = new URL('/network/download', peerEndpoint);
+        src.searchParams.append('_id', metadata._id);
+        this.audio.src = src;
+
+        // when we change song, we need to update the thresholdReached indicator
         this.durationThresholdReached = false;
-        this.audio.src = meta.path;
     }
 
     setAudioCurrentTime(currentTime) {

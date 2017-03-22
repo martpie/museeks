@@ -1,21 +1,27 @@
 import Promise from 'bluebird';
-import { flatten, compact } from 'lodash';
+import { flatten, compact, extend } from 'lodash';
 
 const library = (lib) => {
+
+    const attachPeerMetadata = (peer, item) => item
+        ? extend(item, { peer })
+        : item;
 
     const find = ({ peer, query, sort } = {}) => {
         return lib.api.track.find({
             ip: peer.ip,
             query,
             sort
-        });
+        })
+        .then((tracks) => tracks.map((track) => attachPeerMetadata(peer, track)));
     }
 
     const findOne = ({ peer, query } = {}) => {
         return lib.api.track.findOne({
             ip: peer.ip,
             query
-        });
+        })
+        .then((track) => attachPeerMetadata(peer, track));
     }
 
     const getOwner = (query) => {

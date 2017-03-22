@@ -152,8 +152,8 @@ class TracksList extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            selected : [],
-            scrollTop : 0
+            selected: [],
+            scrollTop: 0
         };
 
         this.showContextMenu = this.showContextMenu.bind(this);
