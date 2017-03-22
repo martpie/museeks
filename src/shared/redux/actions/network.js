@@ -73,12 +73,12 @@ const library = (lib) => {
         const me = state.network.me;
         const prevOutput = state.network.output;
 
-        // If the output has not changed. Do nothing.
-        if (newOutput.hostname === prevOutput.hostname) {
-            return
+        // If the output has not changed, do nothing.
+        if (prevOutput && prevOutput.hostname === newOutput.hostname) {
+            return;
         }
 
-        // If output has swapped to our computer:
+        // If output has swapped to our computer
         else if (newOutput.hostname == me.hostname) {
 
             // Ask to be removed as an observer

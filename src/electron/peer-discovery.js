@@ -24,7 +24,7 @@ class PeerDiscovery {
 
         return http({
             method: 'POST',
-            url: `${lib.utils.peerEndpoint(peer)}/api/handshake`,
+            url: `${this.lib.utils.peerEndpoint(peer)}/api/handshake`,
             data: {
                 name: config.name,
                 hostname: os.hostname(),

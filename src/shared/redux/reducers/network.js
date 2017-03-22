@@ -8,7 +8,9 @@ export default (state = {}, action) => {
             const newPeer = action.payload.peer;
             return i.updateIn(state, ['network', 'peers'], (peers) => {
                 // if the peers list doesn't include the found peer, add it
-                return find(peers, ['ip', newPeer.ip]) ? peers : i.push(peers, newPeer);
+                return find(peers, ['ip', newPeer.ip])
+                    ? peers
+                    : i.push(peers, newPeer);
             });
         }
 
@@ -16,7 +18,9 @@ export default (state = {}, action) => {
             const newObserver = action.payload.peer;
             return i.updateIn(state, ['network', 'observers'], (observers) => {
                 // if the observers list doesn't include the new observer, add it
-                return find(observers, ['ip', newObserver.ip]) ? observers : i.push(observers, newObserver);
+                return find(observers, ['ip', newObserver.ip])
+                    ? observers
+                    : i.push(observers, newObserver);
             });
         }
 

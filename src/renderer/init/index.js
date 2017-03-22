@@ -1,7 +1,7 @@
 const library = (lib) => {
     const store = lib.store;
     const dispatch = store.dispatch;
-    const { config } = store.getState();
+    const { config, network } = store.getState();
 
     const saveBounds = () => {
         const now = window.performance.now();
@@ -28,6 +28,7 @@ const library = (lib) => {
 
     // load data and apply app settings
     dispatch(lib.actions.network.find());
+    dispatch(lib.actions.network.setOutput(network.me));
     dispatch(lib.actions.playlists.refresh());
     dispatch(lib.actions.settings.check());
 }

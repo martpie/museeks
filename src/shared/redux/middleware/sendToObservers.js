@@ -8,8 +8,8 @@ const observerActions = [
 const sendToObservers = (store) => (next) => (action) => {
     const { type, payload } = action;
     const state = store.getState();
-    const protocol = config.renderer.api.protocol;
-    const port = config.electron.api.port;
+    const protocol = state.config.renderer.api.protocol;
+    const port = state.config.electron.api.port;
 
     if (observerActions.includes(action.type)) {
 

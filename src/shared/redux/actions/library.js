@@ -79,6 +79,7 @@ const library = (lib) => {
     const rescan = () => (dispatch, getState) => {
 
         dispatch({ type: 'LIBRARY/RESCAN_PENDING' });
+        const dispatchEnd = () => dispatch({ type: 'LIBRARY/RESCAN_FULFILLED' });
 
         const folders = getState().config.musicFolders;
         const fsConcurrency = 32;
@@ -111,7 +112,7 @@ const library = (lib) => {
                 });
             }, { concurrency: fsConcurrency });
         }).then(() => {
-            dispatch({ type: 'LIBRARY/RESCAN_FULFILLED' });
+            dispatchEnd();
             dispatch(lib.actions.network.find());
         });
     };
