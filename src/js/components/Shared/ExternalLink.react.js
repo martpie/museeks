@@ -13,7 +13,7 @@ export default class ExternalLink extends Component {
 
     static propTypes = {
         href: React.PropTypes.string,
-        children: React.PropTypes.string
+        children: React.PropTypes.string,
     }
 
     constructor(props) {

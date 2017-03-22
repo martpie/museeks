@@ -74,8 +74,8 @@ export default (state = {}, payload) => {
                 status: 'An apple a day keeps Dr Dre away',
                 library: {
                     ...state.library,
-                    refreshing: true
-                }
+                    refreshing: true,
+                },
             };
         }
 
@@ -87,8 +87,8 @@ export default (state = {}, payload) => {
                     refresh : {
                         processed: 0,
                         total: 0,
-                    }
-                }
+                    },
+                },
             };
         }
 
@@ -100,8 +100,8 @@ export default (state = {}, payload) => {
                     refresh : {
                         processed: payload.processed,
                         total: payload.total,
-                    }
-                }
+                    },
+                },
             };
         }
 
@@ -111,25 +111,25 @@ export default (state = {}, payload) => {
             const tracks = {
                 library: {
                     all: [...state.tracks.library.all].filter(removeTrack),
-                    sub: [...state.tracks.library.sub].filter(removeTrack)
+                    sub: [...state.tracks.library.sub].filter(removeTrack),
                 },
                 playlist: {
                     all: [...state.tracks.playlist.all].filter(removeTrack),
-                    sub: [...state.tracks.playlist.sub].filter(removeTrack)
-                }
+                    sub: [...state.tracks.playlist.sub].filter(removeTrack),
+                },
             };
 
             return {
                 ...state,
                 tracks,
-                refreshProgress : payload.percentage
+                refreshProgress : payload.percentage,
             };
         }
 
         case(AppConstants.APP_LIBRARY_SET_TRACKSCURSOR): {
             return {
                 ...state,
-                tracksCursor: payload.cursor
+                tracksCursor: payload.cursor,
             };
         }
 

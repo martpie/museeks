@@ -26,14 +26,14 @@ export default class TracksList extends Component {
         trackPlayingId: React.PropTypes.string,
         playlists: React.PropTypes.array,
         currentPlaylist: React.PropTypes.string,
-        playerStatus: React.PropTypes.string
+        playerStatus: React.PropTypes.string,
     }
 
     constructor(props) {
         super(props);
         this.state = {
             selected  : [],
-            scrollTop : 0
+            scrollTop : 0,
         };
 
         this.showContextMenu  = this.showContextMenu.bind(this);
@@ -229,7 +229,7 @@ export default class TracksList extends Component {
             const translationDistance = (tilesScrolled * this.rowHeight * chunkLength) +
                                         (indexChunk * this.rowHeight * chunkLength);
             const tracksListTileStyles = {
-                transform: `translate3d(0, ${translationDistance}px, 0)`
+                transform: `translate3d(0, ${translationDistance}px, 0)`,
             };
 
             return (
@@ -338,7 +338,7 @@ export default class TracksList extends Component {
             selectedCount: this.state.selected.length,
             track: this.props.tracks[index],
             playlists: playlistsList,
-            playerStatus: this.props.playerStatus
+            playerStatus: this.props.playerStatus,
         }));
     }
 }

@@ -53,7 +53,7 @@ const supportedExtensions = [
     '.opus',
 
     // Flac
-    '.flac'
+    '.flac',
 ];
 
 
@@ -72,11 +72,11 @@ const Track = new linvodb('track', {
     albumartist: [String],
     artist: [String],
     cover: {
-        default: null
+        default: null,
     },
     disk: {
         no: Number,
-        of: Number
+        of: Number,
     },
     duration: Number,
     genre: [String],
@@ -85,16 +85,16 @@ const Track = new linvodb('track', {
         album       : String,
         albumartist : [String],
         title       : String,
-        genre       : [String]
+        genre       : [String],
     },
     path: String,
     playCount: Number,
     title: String,
     track: {
         no: Number,
-        of: Number
+        of: Number,
     },
-    year: String
+    year: String,
 });
 
 Track.ensureIndex({ fieldName: 'path', unique: true });
@@ -103,13 +103,13 @@ const Playlist = new linvodb('playlist', {
     name: String,
     tracks: {
         type: [String],
-        default: []
-    }
+        default: [],
+    },
 });
 
 const models = {
     Track,
-    Playlist
+    Playlist,
 };
 
 Promise.promisifyAll(models.Track.find().__proto__);

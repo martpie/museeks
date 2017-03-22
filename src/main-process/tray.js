@@ -15,11 +15,11 @@ class IpcManager {
         this.songDetails = [
             {
                 label: 'Not playing',
-                enabled: false
+                enabled: false,
             },
             {
-                type: 'separator'
-            }
+                type: 'separator',
+            },
         ];
 
         this.playToggle = [
@@ -27,8 +27,8 @@ class IpcManager {
                 label: 'Play',
                 click: () => {
                     this.win.webContents.send('playerAction', 'play');
-                }
-            }
+                },
+            },
         ];
 
         this.pauseToggle = [
@@ -36,8 +36,8 @@ class IpcManager {
                 label: 'Pause',
                 click: () => {
                     this.win.webContents.send('playerAction', 'pause');
-                }
-            }
+                },
+            },
         ];
 
         this.menu = [
@@ -45,34 +45,34 @@ class IpcManager {
                 label: 'Previous',
                 click: () => {
                     this.win.webContents.send('playerAction', 'prev');
-                }
+                },
             },
             {
                 label: 'Next',
                 click: () => {
                     this.win.webContents.send('playerAction', 'next');
-                }
+                },
             },
             {
-                type: 'separator'
+                type: 'separator',
             },
             {
                 label: 'Show',
                 click: () => {
                     this.win.show();
                     this.win.focus();
-                }
+                },
             },
             {
-                type: 'separator'
+                type: 'separator',
             },
             {
                 label: 'Quit',
                 click: () => {
                     this.win.destroy();
                     app.quit();
-                }
-            }
+                },
+            },
         ];
     }
 
@@ -142,19 +142,19 @@ class IpcManager {
         this.songDetails = [
             {
                 label: `${metadata.title}`,
-                enabled: false
+                enabled: false,
             },
             {
                 label: `by ${metadata.artist}`,
-                enabled: false
+                enabled: false,
             },
             {
                 label: `on ${metadata.album}`,
-                enabled: false
+                enabled: false,
             },
             {
-                type: 'separator'
-            }
+                type: 'separator',
+            },
         ];
     }
 }

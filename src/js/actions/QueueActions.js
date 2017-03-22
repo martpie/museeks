@@ -15,20 +15,20 @@ const start = (index) => {
 
     store.dispatch({
         type : AppConstants.APP_QUEUE_START,
-        index
+        index,
     });
 };
 
 const clear = () => {
     store.dispatch({
-        type : AppConstants.APP_QUEUE_CLEAR
+        type : AppConstants.APP_QUEUE_CLEAR,
     });
 };
 
 const remove = (index) => {
     store.dispatch({
         type : AppConstants.APP_QUEUE_REMOVE,
-        index
+        index,
     });
 };
 
@@ -36,7 +36,7 @@ const add = async (tracksIds) => {
     const tracks = await app.models.Track.findAsync({ _id: { $in: tracksIds } });
     store.dispatch({
         type : AppConstants.APP_QUEUE_ADD,
-        tracks
+        tracks,
     });
 };
 
@@ -44,14 +44,14 @@ const addNext = async (tracksIds) => {
     const tracks = await app.models.Track.findAsync({ _id: { $in: tracksIds } });
     store.dispatch({
         type : AppConstants.APP_QUEUE_ADD_NEXT,
-        tracks
+        tracks,
     });
 };
 
 const setQueue = (queue) => {
     store.dispatch({
         type : AppConstants.APP_QUEUE_SET_QUEUE,
-        queue
+        queue,
     });
 };
 
@@ -62,5 +62,5 @@ export default{
     clear,
     remove,
     start,
-    setQueue
+    setQueue,
 };

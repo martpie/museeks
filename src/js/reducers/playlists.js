@@ -6,7 +6,7 @@ export default (state = {}, payload) => {
         case(AppConstants.APP_PLAYLISTS_REFRESH): {
             return {
                 ...state,
-                playlists: payload.playlists
+                playlists: payload.playlists,
             };
         }
 
@@ -14,7 +14,7 @@ export default (state = {}, payload) => {
             const newState = { ...state };
             newState.tracks[state.tracksCursor] = {
                 all: [...payload.tracks],
-                sub: [...payload.tracks]
+                sub: [...payload.tracks],
             };
             return newState;
         }

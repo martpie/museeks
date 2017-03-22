@@ -10,7 +10,7 @@ import AppActions from '../../actions/AppActions';
 export default class WindowControls extends PureComponent {
 
     static propTypes = {
-        active: React.PropTypes.bool
+        active: React.PropTypes.bool,
     }
 
     constructor(props) {

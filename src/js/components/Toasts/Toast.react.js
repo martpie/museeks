@@ -11,7 +11,7 @@ export default class Toast extends Component {
 
     static propTypes = {
         type: React.PropTypes.string,
-        content: React.PropTypes.string
+        content: React.PropTypes.string,
     }
 
     constructor(props) {

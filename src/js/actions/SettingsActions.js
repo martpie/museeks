@@ -31,7 +31,7 @@ const toggleDarkTheme = (value) => {
     app.config.saveSync();
 
     store.dispatch({
-        type : AppConstants.APP_REFRESH_CONFIG
+        type : AppConstants.APP_REFRESH_CONFIG,
     });
 };
 
@@ -42,7 +42,7 @@ const toggleSleepBlocker = (value) => {
     ipcRenderer.send('toggleSleepBlocker', value, 'prevent-app-suspension');
 
     store.dispatch({
-        type : AppConstants.APP_REFRESH_CONFIG
+        type : AppConstants.APP_REFRESH_CONFIG,
     });
 };
 
@@ -62,7 +62,7 @@ const toggleDevMode = (value) => {
     app.config.saveSync();
 
     store.dispatch({
-        type : AppConstants.APP_REFRESH_CONFIG
+        type : AppConstants.APP_REFRESH_CONFIG,
     });
 };
 
@@ -75,7 +75,7 @@ const toggleAutoUpdateChecker = (value) => {
     app.config.saveSync();
 
     store.dispatch({
-        type : AppConstants.APP_REFRESH_CONFIG
+        type : AppConstants.APP_REFRESH_CONFIG,
     });
 };
 
@@ -116,7 +116,7 @@ const toggleMinimizeToTray = (value) => {
     app.config.saveSync();
 
     store.dispatch({
-        type : AppConstants.APP_REFRESH_CONFIG
+        type : AppConstants.APP_REFRESH_CONFIG,
     });
 };
 
@@ -125,7 +125,7 @@ const toggleDisplayNotifications = (value) => {
     app.config.saveSync();
 
     store.dispatch({
-        type : AppConstants.APP_REFRESH_CONFIG
+        type : AppConstants.APP_REFRESH_CONFIG,
     });
 };
 
@@ -141,5 +141,5 @@ export default{
     toggleDisplayNotifications,
     toggleMinimizeToTray,
     toggleNativeFrame,
-    toggleSleepBlocker
+    toggleSleepBlocker,
 };

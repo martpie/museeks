@@ -14,7 +14,7 @@ export default class Settings extends Component {
     static propTypes = {
         config: React.PropTypes.object,
         library: React.PropTypes.object,
-        children: React.PropTypes.object
+        children: React.PropTypes.object,
     }
 
     constructor(props) {

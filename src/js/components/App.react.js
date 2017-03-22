@@ -23,7 +23,7 @@ class Museeks extends Component {
 
     static propTypes = {
         store: React.PropTypes.object,
-        children: React.PropTypes.object
+        children: React.PropTypes.object,
     }
 
     constructor(props) {
@@ -60,11 +60,11 @@ class Museeks extends Component {
                                 queue             : store.queue,
                                 tracks            : {
                                     all: store.tracks[store.tracksCursor].all,
-                                    sub: store.tracks[store.tracksCursor].sub
+                                    sub: store.tracks[store.tracksCursor].sub,
                                 },
                                 playlists         : store.playlists,
                                 library           : store.library,
-                                trackPlayingId
+                                trackPlayingId,
                             })
                         }
                     </Row>

@@ -48,8 +48,8 @@ class ConfigManager {
                 width: 1000,
                 height: 600,
                 x: parseInt(this.workArea.width / 2),
-                y: parseInt(this.workArea.height / 2)
-            }
+                y: parseInt(this.workArea.height / 2),
+            },
         };
     }
 

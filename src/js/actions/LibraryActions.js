@@ -21,14 +21,14 @@ const load = async () => {
         'year': 1,
         'loweredMetas.album': 1,
         'disk.no': 1,
-        'track.no': 1
+        'track.no': 1,
     };
 
     try {
         const tracks = await app.models.Track.find().sort(querySort).execAsync();
         store.dispatch({
             type : AppConstants.APP_REFRESH_LIBRARY,
-            tracks
+            tracks,
         });
     } catch (err) {
         console.warn(err);
@@ -38,21 +38,21 @@ const load = async () => {
 const setTracksCursor = (cursor) => {
     store.dispatch({
         type : AppConstants.APP_LIBRARY_SET_TRACKSCURSOR,
-        cursor
+        cursor,
     });
 };
 
 const resetTracks = () => {
     store.dispatch({
         type : AppConstants.APP_REFRESH_LIBRARY,
-        tracks : null
+        tracks : null,
     });
 };
 
 const filterSearch = (search) => {
     store.dispatch({
         type : AppConstants.APP_FILTER_SEARCH,
-        search
+        search,
     });
 };
 
@@ -66,7 +66,7 @@ const endScan = () => {
     scan.total = 0;
 
     store.dispatch({
-        type : AppConstants.APP_LIBRARY_REFRESH_END
+        type : AppConstants.APP_LIBRARY_REFRESH_END,
     });
 
     AppActions.library.load();
@@ -83,7 +83,7 @@ scanQueue.on('success', () => {
 
 const add = (pathsToScan) => {
     store.dispatch({
-        type : AppConstants.APP_LIBRARY_REFRESH_START
+        type : AppConstants.APP_LIBRARY_REFRESH_START,
     });
 
     let rootFiles; // HACK Kind of hack, looking for a better solution
@@ -94,7 +94,7 @@ const add = (pathsToScan) => {
             return statAsync(path).then((stat) => {
                 return {
                     path,
-                    stat
+                    stat,
                 };
             });
         });
@@ -172,11 +172,11 @@ const removeFromLibrary = (tracksIds) => {
     dialog.showMessageBox(app.browserWindows.main, {
         buttons: [
             'Cancel',
-            'Remove'
+            'Remove',
         ],
         title: 'Remove tracks from library?',
         message: `Are you sure you want to remove ${tracksIds.length} element(s) from your library?`,
-        type: 'warning'
+        type: 'warning',
     }, (result) => {
         if(result === 1) { // button possition, here 'remove'
             // Remove tracks from the Track collection
@@ -198,11 +198,11 @@ const reset = async () => {
         const result = await dialog.showMessageBox(app.browserWindows.main, {
             buttons: [
                 'Cancel',
-                'Reset'
+                'Reset',
             ],
             title: 'Reset library?',
             message: 'Are you sure you want to reset your library ? All your tracks and playlists will be cleared.',
-            type: 'warning'
+            type: 'warning',
         });
 
         if(result === 1) {
@@ -247,5 +247,5 @@ export default {
     filterSearch,
     removeFromLibrary,
     reset,
-    incrementPlayCount
+    incrementPlayCount,
 };

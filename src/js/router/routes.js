@@ -32,7 +32,7 @@ const init = {
     playlist: (route) => {
         AppActions.playlists.load(route.params.playlistId);
         AppActions.library.setTracksCursor('playlist');
-    }
+    },
 };
 
 // Router

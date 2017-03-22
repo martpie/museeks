@@ -11,7 +11,7 @@ export default (state = {}, payload) => {
                 ...state,
                 queue,
                 queueCursor,
-                playerStatus: 'play'
+                playerStatus: 'play',
             };
         }
 
@@ -20,7 +20,7 @@ export default (state = {}, payload) => {
             queue.splice(state.queueCursor + 1, state.queue.length - state.queueCursor);
             return {
                 ...state,
-                queue
+                queue,
             };
         }
 
@@ -29,7 +29,7 @@ export default (state = {}, payload) => {
             queue.splice(state.queueCursor + payload.index + 1, 1);
             return {
                 ...state,
-                queue
+                queue,
             };
         }
 
@@ -38,7 +38,7 @@ export default (state = {}, payload) => {
             const queue = [...state.queue, ...payload.tracks];
             return {
                 ...state,
-                queue
+                queue,
             };
         }
 
@@ -47,14 +47,14 @@ export default (state = {}, payload) => {
             queue.splice(state.queueCursor + 1, 0, ...payload.tracks);
             return {
                 ...state,
-                queue
+                queue,
             };
         }
 
         case(AppConstants.APP_QUEUE_SET_QUEUE): {
             return {
                 ...state,
-                queue: payload.queue
+                queue: payload.queue,
             };
         }
 

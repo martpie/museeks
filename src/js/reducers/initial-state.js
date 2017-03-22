@@ -4,12 +4,12 @@ export default {
     tracks: {
         library: { // Tracks of the library view
             all: null, // All tracks
-            sub: null  // Filtered tracks (e.g search)
+            sub: null,  // Filtered tracks (e.g search)
         },
         playlist: {
             all: null,
-            sub: null
-        }
+            sub: null,
+        },
     },
 
     tracksCursor      : 'library',  // 'library' or 'playlist'
@@ -30,6 +30,6 @@ export default {
         refresh : {
             processed: 0,
             total: 0,
-        }
-    }
+        },
+    },
 };

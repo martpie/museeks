@@ -20,14 +20,14 @@ class IpcManager {
                         label: 'Create new playlist...',
                         click: () => {
                             event.sender.send('tracksListContextMenuReply', 'createPlaylist');
-                        }
-                    }
+                        },
+                    },
                 ];
 
                 if(data.playlists.length > 0) {
                     playlistTemplate.push(
                         {
-                            type: 'separator'
+                            type: 'separator',
                         }
                     );
                 }
@@ -37,9 +37,9 @@ class IpcManager {
                         label: elem.name,
                         click: () => {
                             event.sender.send('tracksListContextMenuReply', 'addToPlaylist', {
-                                playlistId: elem._id
+                                playlistId: elem._id,
                             });
-                        }
+                        },
                     });
                 });
             } else {
@@ -48,15 +48,15 @@ class IpcManager {
                         label: 'Create new playlist...',
                         click: () => {
                             event.sender.send('tracksListContextMenuReply', 'createPlaylist');
-                        }
+                        },
                     },
                     {
-                        type: 'separator'
+                        type: 'separator',
                     },
                     {
                         label: 'No playlist',
-                        enabled: false
-                    }
+                        enabled: false,
+                    },
                 ];
             }
 
@@ -66,70 +66,70 @@ class IpcManager {
                         label: 'Add to queue',
                         click: () => {
                             event.sender.send('tracksListContextMenuReply', 'addToQueue');
-                        }
+                        },
                     },
                     {
                         label: 'Play next',
                         click: () => {
                             event.sender.send('tracksListContextMenuReply', 'playNext');
-                        }
+                        },
                     },
                     {
-                        type: 'separator'
-                    }
+                        type: 'separator',
+                    },
                 ];
             }
 
             const template = [
                 {
                     label: data.selectedCount > 1 ? `${data.selectedCount} tracks selected` : `${data.selectedCount} track selected`,
-                    enabled: false
+                    enabled: false,
                 },
                 {
-                    type: 'separator'
+                    type: 'separator',
                 },
                 ...addToQueueTemplate,
                 {
                     label: 'Add to playlist',
-                    submenu: playlistTemplate
+                    submenu: playlistTemplate,
                 },
                 {
-                    type: 'separator'
+                    type: 'separator',
                 },
                 {
                     label: `Search for "${data.track.artist[0]}"`,
                     click: () => {
                         event.sender.send('tracksListContextMenuReply', 'searchFor', { search: data.track.artist[0] });
-                    }
+                    },
                 },
                 {
                     label: `Search for "${data.track.album}"`,
                     click: () => {
                         event.sender.send('tracksListContextMenuReply', 'searchFor', { search: data.track.album });
-                    }
+                    },
                 },
                 {
-                    type: 'separator'
+                    type: 'separator',
                 },
                 {
                     label: 'Show in file manager',
                     click: () => {
                         shell.showItemInFolder(data.track.path);
-                    }
+                    },
                 },
                 {
                     label: 'Remove from library',
                     click: () => {
                         event.sender.send('tracksListContextMenuReply', 'removeFromLibrary');
-                    }
-                }
+                    },
+                },
             ];
 
             if(data.type === 'playlist') template.push({
                 label: 'Remove from playlist',
                 click: () => {
                     event.sender.send('tracksListContextMenuReply', 'removeFromPlaylist');
-                }
+                },
             });
 
             const context = Menu.buildFromTemplate(template);
@@ -143,14 +143,14 @@ class IpcManager {
                     label: 'Delete',
                     click: () => {
                         event.sender.send('playlistContextMenuReply', 'delete', _id);
-                    }
+                    },
                 },
                 {
                     label: 'Rename',
                     click: () => {
                         event.sender.send('playlistContextMenuReply', 'rename', _id);
-                    }
-                }
+                    },
+                },
             ];
 
             const context = Menu.buildFromTemplate(template);

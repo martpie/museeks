@@ -13,7 +13,7 @@ import AppActions from '../../actions/AppActions';
 export default class PlayerControls extends PureComponent {
 
     static propTypes = {
-        playerStatus: React.PropTypes.string
+        playerStatus: React.PropTypes.string,
     }
 
     constructor(props) {

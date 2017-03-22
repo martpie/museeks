@@ -21,7 +21,7 @@ export default class TrackRow extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            hovered: false
+            hovered: false,
         };
 
         this.onMouseEnter = this.onMouseEnter.bind(this);

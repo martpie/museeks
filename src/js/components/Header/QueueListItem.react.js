@@ -22,7 +22,7 @@ export default class QueueListItem extends PureComponent {
         onDragStart: React.PropTypes.func,
         onDragOver: React.PropTypes.func,
         onDragEnd: React.PropTypes.func,
-        queueCursor: React.PropTypes.number
+        queueCursor: React.PropTypes.number,
     }
 
     constructor(props) {
@@ -39,7 +39,7 @@ export default class QueueListItem extends PureComponent {
             'dragged': this.props.dragged,
             'dragged-over': this.props.draggedOver,
             'above': this.props.draggedOver && this.props.dragPosition === 'above',
-            'below': this.props.draggedOver && this.props.dragPosition === 'below'
+            'below': this.props.draggedOver && this.props.dragPosition === 'below',
         });
 
         const index = this.props.index;

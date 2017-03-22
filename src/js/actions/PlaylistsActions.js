@@ -13,7 +13,7 @@ const load = async (_id) => {
         const tracks = await app.models.Track.findAsync({ _id: { $in: playlist.tracks } });
         store.dispatch({
             type: AppConstants.APP_PLAYLISTS_LOAD_ONE,
-            tracks
+            tracks,
         });
     } catch (err) {
         console.warn(err);
@@ -25,7 +25,7 @@ const refresh = async () => {
         const playlists = await app.models.Playlist.find({}).sort({ name: 1 }).execAsync();
         store.dispatch({
             type: AppConstants.APP_PLAYLISTS_REFRESH,
-            playlists
+            playlists,
         });
     } catch (err) {
         console.warn(err);
@@ -35,7 +35,7 @@ const refresh = async () => {
 const create = async (name, redirect = false) => {
     const playlist = {
         name,
-        tracks: []
+        tracks: [],
     };
 
     try {
@@ -102,5 +102,5 @@ export default{
     rename,
     remove,
     addTracksTo,
-    removeTracksFrom
+    removeTracksFrom,
 };

@@ -7,18 +7,18 @@ const add = (type, content, duration = 3000) => {
 
     store.dispatch({
         type   : AppConstants.APP_TOAST_ADD,
-        toast
+        toast,
     });
 
     setTimeout(() => {
         store.dispatch({
             type : AppConstants.APP_TOAST_REMOVE,
-            _id
+            _id,
         });
     }, duration);
 };
 
 
 export default {
-    add
+    add,
 };

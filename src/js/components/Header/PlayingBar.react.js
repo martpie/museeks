@@ -28,7 +28,7 @@ export default class PlayingBar extends Component {
         queue: React.PropTypes.array,
         queueCursor: React.PropTypes.number,
         shuffle: React.PropTypes.bool,
-        repeat: React.PropTypes.string
+        repeat: React.PropTypes.string,
     }
 
     constructor(props) {
@@ -64,11 +64,11 @@ export default class PlayingBar extends Component {
         if(this.state.elapsed < trackPlaying.duration) elapsedPercent = this.state.elapsed * 100 / trackPlaying.duration;
 
         const nowPlayingTextClasses = classnames('now-playing text-center', {
-            dragging: this.state.dragging
+            dragging: this.state.dragging,
         });
 
         const nowPlayingTooltipClasses = classnames('playing-bar-tooltip', {
-            hidden: this.state.duration === null
+            hidden: this.state.duration === null,
         });
 
         return (
@@ -194,14 +194,14 @@ export default class PlayingBar extends Component {
 
         this.setState({
             duration : time,
-            x        : e.pageX
+            x        : e.pageX,
         });
     }
 
     hideTooltip() {
         this.setState({
             duration : null,
-            x        : null
+            x        : null,
         });
     }
 }

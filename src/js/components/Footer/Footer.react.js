@@ -18,7 +18,7 @@ export default class Footer extends Component {
 
     static propTypes = {
         tracks: React.PropTypes.array,
-        library: React.PropTypes.object
+        library: React.PropTypes.object,
     }
 
     constructor(props) {

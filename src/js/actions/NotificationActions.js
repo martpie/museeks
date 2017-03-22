@@ -10,7 +10,7 @@ const add = (notificationData) => {
                 {
                     body: notificationData.body,
                     icon: notificationData.icon,
-                    silent: true
+                    silent: true,
                 }
             );
 
@@ -21,11 +21,11 @@ const add = (notificationData) => {
 
         store.dispatch({
             type   : AppConstants.APP_NOTIFICATION_NEW,
-            notification
+            notification,
         });
     }
 };
 
 export default {
-    add
+    add,
 };

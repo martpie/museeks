@@ -6,7 +6,7 @@ export default (state = {}, payload) => {
             const toasts = [...state.toasts, payload.toast];
             return {
                 ...state,
-                toasts
+                toasts,
             };
         }
 
@@ -14,7 +14,7 @@ export default (state = {}, payload) => {
             const toasts = [...state.toasts].filter((n) => n._id !== payload._id);
             return {
                 ...state,
-                toasts
+                toasts,
             };
         }
 

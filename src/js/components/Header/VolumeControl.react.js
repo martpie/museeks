@@ -34,7 +34,7 @@ export default class VolumeControl extends Component {
         this.state = {
             showVolume : false,
             volume     : unsmoothifyVolume(audio.volume),
-            muted      : audio.muted
+            muted      : audio.muted,
         };
 
         this.mute       = this.mute.bind(this);
@@ -49,7 +49,7 @@ export default class VolumeControl extends Component {
 
     render() {
         const volumeClasses = classnames('volume-control', {
-            visible: this.state.showVolume
+            visible: this.state.showVolume,
         });
 
         return (
