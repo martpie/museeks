@@ -26,7 +26,7 @@ export default {
 
     oldQueue: null,                  // Queue backup (in case of shuffle)
 
-    playlists: null,
+    playlists: [],
 
     playerStatus: 'stop',            // Player status
     cover: null,                     // Current trackplaying cover

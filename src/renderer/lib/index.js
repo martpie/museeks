@@ -2,14 +2,15 @@ import mutate from 'xtend/mutable';
 
 import sharedLib from '../../shared/lib';
 
+import Player from './player';
 import app from './app';
 import config from './config';
 import network from './network';
 import playlist from './playlist';
+import shell from './shell';
 import track from './track';
 import tray from './tray';
 
-import Player from './player';
 const player = new Player();
 
 const library = {
@@ -18,6 +19,7 @@ const library = {
     network,
     player,
     playlist,
+    shell,
     track,
     tray
 };

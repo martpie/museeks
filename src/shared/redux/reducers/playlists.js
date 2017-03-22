@@ -4,7 +4,7 @@ export default (state = {}, payload) => {
         case('PLAYLISTS/REFRESH'): {
             return {
                 ...state,
-                playlists: payload.playlists
+                playlists: payload.playlists ? payload.playlists : []
             };
         }
 
