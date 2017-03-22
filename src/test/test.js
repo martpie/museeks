@@ -31,27 +31,25 @@ server.route({
 
 server.start();
 
-const peerConfigs = range(0, numPeers).map((peer, peerNumber) => {
-    const peerDataRoot = `/tmp/museeks-test/${Date.now()}/${peerNumber}`;
+const peerDataRoot = (peerNumber) => `/tmp/museeks-test/${Date.now()}/${peerNumber}`;
 
-    return {
-        ip: 'localhost',
-        testDataPath: `${peerDataRoot}/data`,
-        config: {
-            path: `${peerDataRoot}/config/config.json`,
-            theme: 'dark',
-            discoverPeers: false,
-            electron: {
-                api: {
-                    port: 54321 + peerNumber
-                },
-                database: {
-                    path: `${peerDataRoot}/database`
-                }
+const peerConfigs = range(0, numPeers).map((peer, peerNumber) => ({
+    ip: 'localhost',
+    testDataPath: `${peerDataRoot(peerNumber)}/data`,
+    config: {
+        path: `${peerDataRoot(peerNumber)}/config/config.json`,
+        theme: 'dark',
+        discoverPeers: false,
+        electron: {
+            api: {
+                port: 54321 + peerNumber
+            },
+            database: {
+                path: `${peerDataRoot(peerNumber)}/database`
             }
         }
     }
-});
+}));
 
 // create all peer database paths
 peerConfigs.forEach((peer) => mkdirp(peer.config.electron.database.path));

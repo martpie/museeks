@@ -1,24 +1,27 @@
 import http from 'axios';
 
-const routeInfo = [
+const observerActions = [
     'PLAYER/PAUSE',
     'PLAYER/PLAY'
 ];
 
 const sendToObservers = (store) => (next) => (action) => {
     const { type, payload } = action;
-    const { observers } = store.getState().network;
+    const state = store.getState();
+    const protocol = config.renderer.api.protocol;
+    const port = config.electron.api.port;
 
-    if (routeInfo.includes(action.type)) {
+    if (observerActions.includes(action.type)) {
+
         const sendActionToObserver = (observer) => {
             return http({
-                url: `http://${observer.ip}/$/api/store/dispatch`, // TODO: Jackson
+                url: `${protocol}://${observer.ip}:${port}/api/store/dispatch`,
                 method: 'POST',
-                data: action,
+                data: action
             })
         };
 
-        observers.forEach((observer) => {
+        state.network.observers.forEach((observer) => {
             sendActionToObserver(observer);
         });
     }

@@ -1,7 +1,7 @@
 const library = (lib) => {
     const store = lib.store;
     const dispatch = store.dispatch;
-    const config = store.getState().config;
+    const { config } = store.getState();
 
     const saveBounds = () => {
         const now = window.performance.now();

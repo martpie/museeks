@@ -21,11 +21,10 @@ class PeerDiscovery {
     }
     handshake (network, peer) {
         const { config } = this.lib.store.getState();
-        const apiPort = config.electron.api.port;
 
         return http({
             method: 'POST',
-            url: `http://${peer.ip}:${apiPort}/api/handshake`,
+            url: `${lib.utils.peerEndpoint(peer)}/api/handshake`,
             data: {
                 name: config.name,
                 hostname: os.hostname(),
@@ -47,13 +46,13 @@ class PeerDiscovery {
     scanForPeers() {
         const interfaces = flatten(Object.values(os.networkInterfaces()));
         const networks = interfaces.filter(adapter => adapter.family === 'IPv4' && !adapter.internal); // only scan for external ipv4 adapters
-        const apiPort = this.lib.store.getState().config.electron.api.port;
+        const { port } = this.lib.store.getState().config.electron.api;
 
         const scanNetwork = (network) => {
 
             const lookup = new scan({
                 target: `${network.address}/24`,
-                port: apiPort,
+                port,
                 status: 'O',
                 timeout: 50,
                 concurrency: 10

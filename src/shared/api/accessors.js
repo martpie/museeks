@@ -1,6 +1,7 @@
 import axios from 'axios';
 import qs from 'qs';
-import { set, extend } from 'lodash';
+import { set } from 'lodash';
+import extend from 'xtend';
 
 import routes from './routes';
 
@@ -10,10 +11,9 @@ const library = (lib) => {
     const clientApiCalls = routes.reduce((api, route) => {
 
         const clientCall = (config) => {
-            const apiPort = lib.store.getState().config.renderer.api.port;
 
-            // remove http metadata from function inputs
-            const inputs = Object.assign({}, config);
+            // remove peer metadata from function inputs
+            const inputs = extend(config);
             delete inputs.ip;
 
             const inputType = route.method === 'GET'
@@ -26,7 +26,7 @@ const library = (lib) => {
 
             return axios({
                 method: route.method,
-                url: `http://${config.ip || 'localhost'}:${apiPort}/${route.path}`,
+                url: `${lib.utils.peerEndpoint(config)}/${route.path}`,
                 [inputType]: httpEncodedInput,
                 json: true
             })

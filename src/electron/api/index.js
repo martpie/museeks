@@ -19,7 +19,7 @@ class ApiServer {
         });
 
         // configure server
-        const port = this.lib.store.getState().config.electron.api.port;
+        const { port } = this.lib.store.getState().config.electron.api;
         this.server.connection({ port });
 
         // register server plugins

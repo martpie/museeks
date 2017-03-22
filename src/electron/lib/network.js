@@ -26,6 +26,8 @@ const library = (lib) => {
 
     const getOwner = (query) => {
 
+        const { peers } = lib.store.getState().network;
+
         // asks a peer if they have the file. returns the peer if the file was found
         const checkIsOwner = (peer) => {
             return lib.network.findOne({
@@ -36,7 +38,6 @@ const library = (lib) => {
             );
         }
 
-        const peers = lib.store.getState().network.peers;
         return Promise.map(peers, checkIsOwner)
         .then(flatten)
         .then(compact)
