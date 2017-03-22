@@ -40,9 +40,11 @@ body.theme-dark {
             border-color: #33393b;
             color: #EEE;
 
-            &:active {
-                background-color: #33393b;
-                border-color: #23292b;
+            &.window-maximize {
+
+                &::after {
+                    border-color: #EEE;
+                }
             }
         }
 

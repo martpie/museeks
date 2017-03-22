@@ -1,3 +1,10 @@
+$_header-color: #555;
+
+$_window-control-bg-hover: rgba(0, 0, 0, .1);
+$_window-control-bg-active: rgba(0, 0, 0, .15);
+$_window-control-close-bg-hover: rgb(196, 36, 36);
+$_window-control-close-bg-active: darken($_window-control-close-bg-hover, 5%);
+$_window-control-size: 25px;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,8 +22,6 @@ header {
     .search,
     .window-controls {
         -webkit-app-region: no-drag;
-
-        display: flex;
     }
 }
 
@@ -36,33 +41,65 @@ header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    color: #555;
+    color: $_header-color;
 
     .col-main-controls {
         width: 200px;
         height: 100%;
         display: flex;
         align-items: center;
-        justify-content: flex-start;
+        padding-left: 75px;
 
         .window-controls {
-            margin-right: 20px;
+            display: flex;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
 
             .window-control {
-                width: 30px;
-                height: 30px;
-                font-size: 18px;
-                color: #555;
+                width: $_window-control-size;
+                font-size: 15px;
+                color: $_header-color;
                 border: 0;
-                transition: all .2s ease-in-out;
                 text-align: center;
-                line-height: 22px;
+                padding: 0;
+                line-height: $_window-control-size;
                 background-color: transparent;
                 -webkit-app-region: no-drag;
 
+                &:hover {
+                    background-color: $_window-control-bg-hover;
+                }
+
                 &:active {
-                    background-color: #DFDFDF;
-                    border: solid 1px #B8B8B8;
+                    background-color: $_window-control-bg-active;
+                }
+
+                &.window-close {
+
+                    &:hover {
+                        background-color: $_window-control-close-bg-hover;
+                        color: white;
+                    }
+
+                    &:active {
+                        background-color: $_window-control-close-bg-active;
+                        color: white;
+                    }
+                }
+
+                &.window-maximize {
+
+                    &::after {
+                        content: '';
+                        display: block;
+                        margin: auto;
+                        border: solid 1px #555;
+                        border-top-width: 2px;
+                        height: 9px;
+                        width: 10px;
+                    }
                 }
             }
         }
@@ -116,8 +153,8 @@ header {
             }
         }
     }
-    /* .windows-controls */
 
+    /* .windows-controls */
     .col-player-infos {
         width: calc(100% - 400px);
 
@@ -220,7 +257,7 @@ header {
                         position: fixed;
                         background-color: #FFF;
                         border: 1px solid #CECECE;
-                        color: #555;
+                        color: $_header-color;
                         font-size: 10px;
                         padding: 2px 5px;
                         top: 10px;
@@ -387,7 +424,7 @@ header {
                             }
 
                             .remove {
-                                color: #555;
+                                color: $_header-color;
                                 float: right;
                                 width: 25px;
                                 height: 25px;
@@ -400,7 +437,7 @@ header {
                                 &:hover,
                                 &:focus,
                                 &:active {
-                                    color: #555;
+                                    color: $_header-color;
                                     text-decoration: none;
                                 }
                             }
