@@ -1,4 +1,5 @@
 import Joi from 'joi';
+import Boom from 'boom';
 import utils from '../../utils/utils';
 
 export default [{
@@ -14,9 +15,10 @@ export default [{
     },
     handler: (req, res) => {
         const query = req.query;
-        return req.lib.track.findOne({ query }).then((track) => {
-            return res.file(track.path, { confine : false });
-        });
+        return req.lib.track.findOne({ query }).then((track) => !track
+            ? res(Boom.notFound())
+            : res.file(track.path, { confine : false })
+        );
     }
 }, {
     path: 'api/network/fetchCover',
@@ -31,10 +33,11 @@ export default [{
     },
     handler: (req, res) => {
         const query = req.query;
-        return req.lib.track.findOne({ query }).then((track) => {
-            return utils.fetchCover(track.path).then((path) => {
-                return res.file(path, { confine : false });
-            });
-        });
+        return req.lib.track.findOne({ query }).then((track) => !track
+            ? res(Boom.notFound())
+            : utils.fetchCover(track.path).then((path) => {
+                res.file(path, { confine : false });
+            })
+        );
     }
 }];

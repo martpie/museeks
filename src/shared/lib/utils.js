@@ -8,7 +8,7 @@ const library = (lib) => {
 
         const protocol = config[local].api.protocol;
         const host = peer.ip;
-        const port = config[remote].api.protocol;
+        const port = config[remote].api.port;
 
         return `${protocol}://${host}:${port}`;
     };

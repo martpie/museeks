@@ -26,6 +26,7 @@
   "dependencies": {
     "axios": "^0.15.3",
     "bluebird": "^3.5.0",
+    "boom": "^4.3.0",
     "bootstrap-css-only": "3.3.7",
     "classnames": "2.2.5",
     "electron-redux": "http://github.com/MrBlenny/electron-redux/tarball/master",
