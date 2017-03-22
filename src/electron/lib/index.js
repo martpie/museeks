@@ -6,13 +6,15 @@ import config from './config';
 import network from './network';
 import player from './player';
 import playlist from './playlist';
+import shell from './shell';
 import track from './track';
 
 const library = {
     app,
     config,
     models: {}, // models attached after database initialisation
-    player
+    player,
+    shell,
     // Other libs added via mutation
     // tray
 };

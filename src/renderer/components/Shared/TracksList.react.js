@@ -121,7 +121,7 @@ const attachTrackListContextMenu = (data, callback) => {
         {
             label: 'Show in file manager',
             click: () => {
-                shell.showItemInFolder(data.track.path);
+                lib.shell.showItemInFolder(data.track.path);
             }
         }
     ];
@@ -178,6 +178,7 @@ class TracksList extends Component {
                     <div className='track-cell-header cell-artist'>Artist</div>
                     <div className='track-cell-header cell-album'>Album</div>
                     <div className='track-cell-header cell-genre'>Genre</div>
+                    <div className='track-cell-header cell-host'>Host</div>
                 </div>
                 <div className='tracks-list-body' onScroll={ this.scrollTracksList }>
                     <div className='tracks-list-tiles' style={ { height : tracks.length * this.rowHeight } }>
@@ -289,6 +290,9 @@ class TracksList extends Component {
                         </div>
                         <div className='cell cell-genre'>
                             { track.genre.join(', ') }
+                        </div>
+                        <div className='cell cell-host'>
+                            David PC
                         </div>
                     </TrackRow>
                 );

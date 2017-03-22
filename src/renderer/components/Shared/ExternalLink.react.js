@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import shell from 'electron';
+import lib from '../../lib';
 
 
 /*
@@ -33,7 +34,7 @@ class ExternalLink extends Component {
     openLink = (e) => {
         e.preventDefault();
         // TODO (y.solovyov | KeitIG): this should be somewhere else, not in the component
-        shell.openExternal(this.props.href);
+        lib.shell.openExternal(this.props.href);
     }
 }
 
