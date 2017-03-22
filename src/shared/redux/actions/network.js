@@ -70,8 +70,8 @@ const library = (lib) => {
         const me = state.network.me;
         const prevOutput = state.network.output;
 
-        // If the output has not changed. Return
-        if (newOutput.hostname == prevOutput.hostname) {
+        // If the output has not changed. Do nothing.
+        if (newOutput.hostname === prevOutput.hostname) {
             return
         }
 
@@ -87,16 +87,16 @@ const library = (lib) => {
                     data: me
                 });
             }
-            // Dispatch the change event
+            // Dispatch the change event to update the ui
             dispatch({
                 type: 'NETWORK/SET_OUTPUT',
                 payload: Promise.resolve(),
                 meta: { newOutput, prevOutput }
             })
         }
-        // If this is another computer:
+        // If output has changed to another computer
         else {
-            // We the output device to set us as a peer.
+            // We ask the output device to set us as an observer.
             dispatch({
                 type: 'NETWORK/SET_OUTPUT',
                 payload: lib.api.network.addObserver({
