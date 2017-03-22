@@ -3,7 +3,7 @@ import os from 'os';
 import { Tray, Menu, app, ipcMain } from 'electron';
 import lib from './lib';
 
-class IpcManager {
+class TrayManager {
 
     constructor(win, icon, store) {
         const { dispatch } = store;
@@ -86,13 +86,11 @@ class IpcManager {
             this.tray.on('click', () => {
                 this.win.show();
                 this.win.focus();
-                this.hide();
             });
         } else if (os.platform() === 'darwin') {
             this.tray.on('double-click', () => {
                 this.win.show();
                 this.win.focus();
-                this.hide();
             });
         }
 
@@ -130,4 +128,4 @@ class IpcManager {
     }
 }
 
-export default IpcManager;
+export default TrayManager;
