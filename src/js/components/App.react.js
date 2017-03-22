@@ -46,7 +46,6 @@ class Museeks extends Component {
                     playerStatus={ store.playerStatus }
                     repeat={ store.repeat }
                     shuffle={ store.shuffle }
-                    cover={ store.cover }
                     queue={ store.queue }
                     queueCursor={ store.queueCursor }
                     windowControls={ !config.useNativeFrame }

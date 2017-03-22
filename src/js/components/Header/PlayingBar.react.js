@@ -5,8 +5,8 @@ import Icon from 'react-fontawesome';
 
 import ButtonShuffle from './ButtonShuffle.react';
 import ButtonRepeat  from './ButtonRepeat.react';
-import TrackCover    from './TrackCover.react';
 import Queue         from './Queue.react';
+import Cover         from '../Shared/Cover.react';
 
 import Player from '../../lib/player';
 import utils  from '../../utils/utils';
@@ -25,7 +25,6 @@ import classnames from 'classnames';
 export default class PlayingBar extends Component {
 
     static propTypes = {
-        cover: React.PropTypes.string,
         queue: React.PropTypes.array,
         queueCursor: React.PropTypes.number,
         shuffle: React.PropTypes.bool,
@@ -79,7 +78,7 @@ export default class PlayingBar extends Component {
                  onMouseUp={ this.dragEnd }
             >
                 <div className='now-playing-cover'>
-                    <TrackCover cover={ this.props.cover } />
+                    <Cover path={ trackPlaying.path } />
                 </div>
                 <div className='now-playing-infos'>
                     <div className='now-playing-metas'>
@@ -140,18 +139,6 @@ export default class PlayingBar extends Component {
 
     componentWillUnmount() {
         clearInterval(this.timer);
-    }
-
-    componentWillReceiveProps(nextProps) {
-        const nextTrackPlaying = nextProps.queue[nextProps.queueCursor];
-        const nextTrackPlayingPath = nextTrackPlaying && nextTrackPlaying.path ? nextTrackPlaying.path : null;
-
-        const currTrackPlaying = this.props.queue[this.props.queueCursor];
-        const currTrackPlayingPath = currTrackPlaying && currTrackPlaying.path ? currTrackPlaying.path : null;
-
-        if(nextTrackPlayingPath !== currTrackPlayingPath) {
-            AppActions.library.fetchCover(nextTrackPlayingPath);
-        }
     }
 
     tick() {

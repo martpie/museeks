@@ -223,14 +223,6 @@ const reset = async () => {
     }
 };
 
-const fetchCover = async (path) => {
-    const cover = await utils.fetchCover(path);
-    store.dispatch({
-        type : AppConstants.APP_LIBRARY_FETCHED_COVER,
-        cover
-    });
-};
-
 /**
  * Update the play count attribute.
  *
@@ -255,6 +247,5 @@ export default {
     filterSearch,
     removeFromLibrary,
     reset,
-    fetchCover,
     incrementPlayCount
 };

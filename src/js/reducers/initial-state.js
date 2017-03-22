@@ -22,7 +22,6 @@ export default {
     playlists         :  null,
 
     playerStatus      : 'stop', // Player status
-    cover             :  null,  // Current trackplaying cover
     toasts            :  [],    // The array of toasts
     repeat            :  app.config.get('audioRepeat'), // the current repeat state (one, all, none)
     shuffle           :  app.config.get('audioShuffle'), // If shuffle mode is enabled
