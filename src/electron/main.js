@@ -8,7 +8,7 @@ import extend from 'xtend';
 
 import Database from './database';                     // Persistent data store
 import store from './redux/store';                     // Redux store
-import lib, { initLib } from './lib';                  // Shared library configuration
+import lib, { initLib } from './lib';        // Shared library configuration
 import ApiServer from './api';                         // HTTP API access to electorn and renderer
 import initElectron from './init';                     // Electron bootstrap
 import TrayManager from './tray';                      // Manages Tray
@@ -97,26 +97,10 @@ app.on('ready', () => {
 
         // Tray manager
         const trayIcon = os.platform() === 'win32.' ? museeksIcons['tray-ico'] : museeksIcons['tray'];
-        lib.tray = new TrayManager(mainWindow, trayIcon, store);
+        lib.tray = new TrayManager(mainWindow, trayIcon, lib);
         lib.tray.show();
 
         // Init Electron
         initElectron(lib);
     });
-
-// TODO: Add these to tray
-//                case 'play': {
-//                    this.setContextMenu('play');
-//                    break;
-//                }
-//
-//                case 'pause': {
-//                    this.setContextMenu('pause');
-//                    break;
-//                }
-//                case 'trackStart': {
-//                    this.updateTrayMetadata(data);
-//                    this.setContextMenu('play');
-//                    break;
-//                }
 });

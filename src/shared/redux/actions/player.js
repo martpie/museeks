@@ -61,6 +61,7 @@ const library = (lib) => {
             const uri = utils.parseUri(queue[queuePosition].path);
             console.log(lib)
 console.log(queue[queuePosition])
+//            lib.player.setAudioMeta(queue[queuePosition]);
             lib.player.setAudioSrc("http://localhost:54321/api/network/download?_id=0a0cca31");
             lib.player.play();
 

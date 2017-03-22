@@ -13,6 +13,8 @@ const library = {
     config,
     models: {}, // models attached after database initialisation
     player
+    // Other libs added via mutation
+    // tray
 };
 
 // attach libraries which must be invoked
@@ -28,6 +30,6 @@ export const initLib = (store) => {
 
     // attach the shared libraries to our internal library
     mutate(library, shared);
-}
+};
 
 export default library;

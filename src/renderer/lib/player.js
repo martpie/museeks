@@ -12,7 +12,7 @@ class Player {
     init(lib) {
         this.lib = lib;
 
-        this.audio.addEventListener('play', this.lib.actions.player.play);
+        this.audio.addEventListener('play',  this.lib.actions.player.play);
         this.audio.addEventListener('pause', this.lib.actions.player.pause);
         this.audio.addEventListener('ended', this.lib.actions.player.next);
         this.audio.addEventListener('error', this.lib.actions.player.audioError);
@@ -23,13 +23,16 @@ class Player {
 
     play() {
         this.audio.play();
+        this.lib.tray.setContextMenu('play');
     }
 
     pause() {
         this.audio.pause();
+        this.lib.tray.setContextMenu('pause');
     }
 
     stop() {
+        this.lib.tray.setContextMenu('pause');
         this.audio.pause();
     }
 
@@ -67,6 +70,9 @@ class Player {
     }
 
     setAudioSrc(src) {
+//        this.lib.tray.updateTrayMetadata(data);
+//        this.lib.tray.setContextMenu('play');
+
         // When we change song, need to update the thresholdReached indicator.
         this.durationThresholdReached = false;
         this.audio.src = src;

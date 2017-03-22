@@ -5,8 +5,8 @@ import lib from './lib';
 
 class TrayManager {
 
-    constructor(win, icon, store) {
-        const { dispatch } = store;
+    constructor(win, icon, lib) {
+        const { dispatch } = lib.store;
 
         this.tray = null;
         this.trayIcon = icon;
