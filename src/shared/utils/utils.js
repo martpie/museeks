@@ -230,6 +230,9 @@ const getMusicMetadata = async (track) => {
         console.warn(`An error occured while reading ${track} id3 tags: ${err}`);
     }
 
+    // remove any album art metadata - we don't want to store this in the database
+    delete data.picture;
+
     const metadata = {
         ...defaultMetadata,
         ...data,

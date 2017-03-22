@@ -4,12 +4,15 @@ import utils from '../../utils/utils';
 
 const library = (lib) => {
 
-    const peerFound = (peer) => ({
-        type: 'NETWORK/PEER_FOUND',
-        payload: {
-            peer
-        }
-    });
+    const peerFound = (peer) => (dispatch) => {
+        dispatch(lib.actions.network.find());
+        dispatch({
+            type: 'NETWORK/PEER_FOUND',
+            payload: {
+                peer
+            }
+        });
+    };
 
     const find = ({ peers = [], query, sort } = {}) => (dispatch, getState) => {
 
