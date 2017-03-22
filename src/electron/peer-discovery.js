@@ -14,12 +14,14 @@ class PeerDiscovery {
         setTimeout(() => this.scanForPeers(), scanDelay);
     }
     handshake (network, peer) {
-        const apiPort = this.lib.store.getState().config.electron.api.port;
+        const { config } = this.lib.store.getState();
+        const apiPort = config.electron.api.port;
 
         return http({
             method: 'POST',
             url: `http://${peer.ip}:${apiPort}/api/handshake`,
             data: {
+                name: config.name,
                 hostname: os.hostname(),
                 platform: os.platform(),
                 ip: network.address
