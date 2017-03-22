@@ -18,6 +18,7 @@ export default (state = {}, action) => {
             const newObserver = action.payload.peer;
             return i.updateIn(state, ['network', 'observers'], (observers) => {
                 // if the observers list doesn't include the new observer, add it
+                console.log(action)
                 return find(observers, ['ip', newObserver.ip])
                     ? observers
                     : i.push(observers, newObserver);
