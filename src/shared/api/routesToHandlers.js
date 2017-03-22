@@ -29,7 +29,7 @@ const routesToHandlers = (routes, lib) => {
 
             return dispatchedFunction(transformedArgs)
                 .then((result) => res(result))
-                // .catch((error) => res({ error }).code(error.code));
+                .catch((error) => res({ error }).code(error.code));
         }
     }
 

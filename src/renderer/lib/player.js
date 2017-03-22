@@ -77,15 +77,12 @@ class Player {
     }
 
     setMetadata(metadata) {
-        console.log(this.lib)
         this.lib.tray.updateTrayMetadata(metadata);
         this.lib.tray.setContextMenu('play');
 
-        const peerEndpoint = this.lib.utils.peerEndpoint(metadata.peer);
-        console.log('peerEndpoint', peerEndpoint)
-        const src = new URL('/api/network/download', peerEndpoint);
+        const peerEndpoint = this.lib.utils.peerEndpoint(metadata.owner);
+        const src = new URL('/api/track/download', peerEndpoint);
         src.searchParams.append('_id', metadata._id);
-        console.log(src)
         this.audio.src = src;
 
         // when we change song, we need to update the thresholdReached indicator

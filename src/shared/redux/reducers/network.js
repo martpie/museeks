@@ -28,14 +28,14 @@ export default (state = {}, action) => {
             });
         }
 
-        case('NETWORK/FIND'): {
+        case('NETWORK/FIND_FULFILLED'): {
             // return i.assocIn(state, ['network', 'tracks'], action.payload.tracks);
             return {
                 ...state,
                 tracks: {
                     library: {
-                        all: [...action.payload.tracks],
-                        sub: [...action.payload.tracks]
+                        all: [...action.payload],
+                        sub: [...action.payload]
                     },
                     playlist: {
                         all: [],

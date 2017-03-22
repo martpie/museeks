@@ -4,7 +4,6 @@ import networkActions from './actions/network';
 import player from './actions/player';
 
 import handshake from './handshake';
-import network from './network';
 import rpc from './rpc';
 import store from './store';
 import track from './track';
@@ -16,7 +15,6 @@ const routes = [
     ...player,
 
     ...handshake,
-    ...network,
     ...rpc,
     ...store,
     ...track

@@ -59,8 +59,6 @@ const library = (lib) => {
 
         if (queuePosition > -1) {
             const uri = utils.parseUri(queue[queuePosition].path);
-            console.log(lib)
-            console.log()
             lib.player.setMetadata(queue[queuePosition]);
             lib.player.play();
 
