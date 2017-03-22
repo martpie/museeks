@@ -13,6 +13,8 @@ footer {
     padding-bottom: 5px;
     background-color: rgb(244, 244, 244);
     padding: 0;
+    display: flex;
+    flex-direction: row;
 
     .view-switcher {
 
@@ -44,5 +46,6 @@ footer {
         padding-top: 7px;
         padding-bottom: 7px;
         color: #888;
+        flex: 1;
     }
 }
