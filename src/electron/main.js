@@ -92,13 +92,13 @@ app.on('ready', () => {
         // Get the application icons
         const museeksIcons = getIcons(appRoot);
 
+        // Create and load the main window
+        mainWindow = initMainWindow(lib, museeksIcons, srcPath);
+
         // Tray manager
         const trayIcon = os.platform() === 'win32.' ? museeksIcons['tray-ico'] : museeksIcons['tray'];
         lib.tray = new TrayManager(mainWindow, trayIcon, store);
         lib.tray.show();
-
-        // Create and load the main window
-        mainWindow = initMainWindow(lib, museeksIcons, srcPath);
 
         // Init Electron
         initElectron(lib);
