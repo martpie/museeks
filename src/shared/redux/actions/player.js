@@ -61,7 +61,7 @@ const library = (lib) => {
             const uri = utils.parseUri(queue[queuePosition].path);
             console.log(lib)
             console.log()
-            lib.player.setMeta(queue[queuePosition]);
+            lib.player.setMetadata(queue[queuePosition]);
             lib.player.play();
 
             dispatch({
@@ -97,7 +97,7 @@ const library = (lib) => {
         const track = queue[newQueueCursor];
 
         if (track !== undefined) {
-            lib.player.setMeta(track);
+            lib.player.setMetadata(track);
             lib.player.play();
             dispatch({
                 type: 'PLAYER/NEXT',
@@ -123,7 +123,7 @@ const library = (lib) => {
         const newTrack = queue[newQueueCursor];
 
         if (newTrack !== undefined) {
-            lib.player.setMeta(newTrack);
+            lib.player.setMetadata(newTrack);
             lib.player.play();
 
             dispatch({

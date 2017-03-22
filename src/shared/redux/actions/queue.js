@@ -4,7 +4,7 @@ const library = (lib) => {
 
     const start = (index) => (dispatch, getState) => {
         const { queue } = getState();
-        lib.player.setMeta(queue[index]);
+        lib.player.setMetadata(queue[index]);
         lib.player.play();
 
         return {
