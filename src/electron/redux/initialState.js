@@ -5,7 +5,12 @@ export default {
     network: {
         observers: [],
         peers: [],
-        output: null,
+        output: {
+            ip: 'localhost',
+            hostname: os.hostname(),
+            platform: os.platform(),
+            isLocal: true
+        },
         me: {
             ip: 'localhost',
             hostname: os.hostname(),

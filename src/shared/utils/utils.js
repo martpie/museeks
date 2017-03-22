@@ -6,6 +6,7 @@ import Promise from 'bluebird';
 
 const musicmetadata = Promise.promisify(mmd);
 
+
 /**
  * Parse an int to a more readable string
  *

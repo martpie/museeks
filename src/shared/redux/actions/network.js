@@ -73,14 +73,17 @@ const library = (lib) => {
         const me = state.network.me;
         const prevOutput = state.network.output;
 
+        // Add the isLocal bool to the output object for convenience elsewhere.
+        const isLocal = newOutput.hostname === me.hostname;
+        const newOutputWithLocalBool = { ...newOutput, isLocal };
+
         // If the output has not changed, do nothing.
         if (prevOutput && prevOutput.hostname === newOutput.hostname) {
             return;
         }
 
         // If output has swapped to our computer
-        else if (newOutput.hostname == me.hostname) {
-
+        else if (isLocal) {
             // Ask to be removed as an observer
             // This may fail if the other Museeks stops working.
             // If so, this is fine... Probably...
@@ -95,7 +98,7 @@ const library = (lib) => {
             dispatch({
                 type: 'NETWORK/SET_OUTPUT',
                 payload: Promise.resolve(),
-                meta: { newOutput, prevOutput }
+                meta: { newOutput: newOutputWithLocalBool, prevOutput }
             })
         }
         // If output has changed to another computer
@@ -107,7 +110,7 @@ const library = (lib) => {
                     ip: newOutput.ip,
                     observer: me
                 }),
-                meta: { newOutput, prevOutput }
+                meta: { newOutput: newOutputWithLocalBool, prevOutput }
             });
         }
     }

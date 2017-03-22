@@ -20,7 +20,8 @@ const library = (lib) => {
     };
 
     const play = () => (dispatch, getState) => {
-        const { queue } = getState();
+        const { queue, network: { output } } = getState();
+
 
         // lib.store.dispatch(lib.actions.player.nowPlaying(track));
         //
@@ -34,31 +35,28 @@ const library = (lib) => {
         //     });
         // }
 
-        if (queue !== null) {
-            if (output == me) {
-                lib.player.play();
-                dispatch({
-                    type: 'PLAYER/PLAY'
-                });
 
+        if (queue !== null) {
+            if (output.islocal) {
+                lib.player.play();
             } else {
                 lib.api.actions.player.play();
-                dispatch({
-                    type: 'PLAYER/PLAY'
-                });
             }
-
-//            dispatch({
-//                type: 'PLAYER/PLAY',
-//                payload: lib.player.play || lib.api.actions.player.play()
-//            });
+            dispatch({
+                type: 'PLAYER/PLAY'
+            });
         }
     };
 
     const pause = () => (dispatch, getState) => {
-        const { queue } = getState();
+        const { queue, network: { output } } = getState();
+
         if (queue !== null) {
-            lib.player.pause();
+            if (output.islocal) {
+                lib.player.pause();
+            } else {
+                lib.api.actions.player.pause();
+            }
             dispatch({
                 type: 'PLAYER/PAUSE'
             });
