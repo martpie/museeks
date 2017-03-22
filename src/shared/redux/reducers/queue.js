@@ -1,6 +1,6 @@
 export default (state = {}, action) => {
     switch (action.type) {
-        case('APP_QUEUE_START'): {
+        case('QUEUE/START'): {
             const queue       = [...state.queue];
             const queueCursor = action.payload.index;
 
@@ -13,7 +13,7 @@ export default (state = {}, action) => {
             };
         }
 
-        case('APP_QUEUE_CLEAR'): {
+        case('QUEUE/CLEAR'): {
             const queue = [...state.queue];
             queue.splice(state.queueCursor + 1, state.queue.length - state.queueCursor);
             return {
@@ -22,7 +22,7 @@ export default (state = {}, action) => {
             };
         }
 
-        case('APP_QUEUE_REMOVE'): {
+        case('QUEUE/REMOVE'): {
             const queue = [...state.queue];
             queue.splice(state.queueCursor + action.payload.index + 1, 1);
             return {
@@ -32,7 +32,7 @@ export default (state = {}, action) => {
         }
 
         // Prob here
-        case('APP_QUEUE_ADD_FULFILLED'): {
+        case('QUEUE/ADD_FULFILLED'): {
             const queue = [...state.queue, ...action.payload.tracks];
             return {
                 ...state,
@@ -40,7 +40,7 @@ export default (state = {}, action) => {
             };
         }
 
-        case('APP_QUEUE_ADD_NEXT_FULFILLED'): {
+        case('QUEUE/ADD_NEXT_FULFILLED'): {
             const queue = [...state.queue];
             queue.splice(state.queueCursor + 1, 0, ...action.payload.tracks);
             return {
@@ -49,7 +49,7 @@ export default (state = {}, action) => {
             };
         }
 
-        case('APP_QUEUE_SET_QUEUE'): {
+        case('QUEUE/SET_QUEUE'): {
             return {
                 ...state,
                 queue: action.payload.queue

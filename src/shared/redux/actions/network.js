@@ -4,12 +4,15 @@ import utils from '../../utils/utils';
 
 const library = (lib) => {
 
-    const peerFound = (peer) => ({
-        type: 'APP_NETWORK_PEER_FOUND',
-        payload: {
-            peer
-        }
-    });
+    const peerFound = (peer) => (dispatch) => {
+        dispatch(lib.actions.network.find());
+        dispatch({
+            type: 'NETWORK/PEER_FOUND',
+            payload: {
+                peer
+            }
+        });
+    };
 
     const find = ({ peers = [], query, sort } = {}) => (dispatch, getState) => {
 
@@ -27,7 +30,7 @@ const library = (lib) => {
         .then(flatten)
         .then(uniqueTracks)
         .then((tracks) => dispatch({
-            type: 'APP_NETWORK_FIND',
+            type: 'NETWORK/FIND',
             payload: {
                 tracks
             }
@@ -48,7 +51,7 @@ const library = (lib) => {
         .then(flatten)
         .then(compact)
         .then((track) => dispatch({
-            type: 'APP_NETWORK_FIND_ONE',
+            type: 'NETWORK/FIND_ONE',
             payload: {
                 track
             }
@@ -57,7 +60,7 @@ const library = (lib) => {
 
     const start = ({ source, destination, track } = {}) => {
         return {
-            type: 'APP_NETWORK_START',
+            type: 'NETWORK/START',
             payload: {
                 peer
             }
@@ -65,14 +68,14 @@ const library = (lib) => {
     };
 
     const addObserver = (peer) => ({
-        type: 'APP_NETWORK_ADD_OBSERVER',
+        type: 'NETWORK/ADD_OBSERVER',
         payload: {
             peer
         }
     });
 
     const removeObserver = (peer) => ({
-        type: 'APP_NETWORK_REMOVE_OBSERVER',
+        type: 'NETWORK/REMOVE_OBSERVER',
         payload: {
             peer
         }
@@ -81,9 +84,9 @@ const library = (lib) => {
     const fetchCover = (_id) => (dispatch) => {
         return lib.network.getOwner({ _id }).then((peer) => {
             dispatch({
-                type: 'APP_NETWORK_FETCH_COVER',
+                type: 'NETWORK/FETCHED_COVER',
                 payload: {
-                    path: `${lib.utils.peerEndpoint(peer)}/api/network/fetchCover?_id=${_id}`
+                    cover: `${lib.utils.peerEndpoint(peer)}/api/network/fetchCover?_id=${_id}`
                 }
             });
         });

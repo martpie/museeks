@@ -4,12 +4,11 @@ const library = (lib) => {
 
     const start = (index) => (dispatch, getState) => {
         const { queue } = getState();
-        const uri = utils.parseUri(queue[index].path);
-        lib.player.setAudioSrc(uri);
+        lib.player.setMeta(queue[index]);
         lib.player.play();
 
         return {
-            type: 'APP_QUEUE_START',
+            type: 'QUEUE/START',
             payload: {
                 index
             }
@@ -17,32 +16,32 @@ const library = (lib) => {
     };
 
     const clear = () => ({
-        type: 'APP_QUEUE_CLEAR'
+        type: 'QUEUE/CLEAR'
     });
 
     const remove = (index) => ({
-        type: 'APP_QUEUE_REMOVE',
+        type: 'QUEUE/REMOVE',
         payload: {
             index
         }
     });
 
     const add = (tracksIds) => ({
-        type: 'APP_QUEUE_ADD',
+        type: 'QUEUE/ADD',
         payload: lib.track.find({
             query: { _id: { $in: tracksIds } }
         })
     });
 
     const addNext = (tracksIds) => ({
-        type: 'APP_QUEUE_ADD_NEXT',
+        type: 'QUEUE/ADD_NEXT',
         payload: ib.track.find({
             query: { _id: { $in: tracksIds } }
         })
     });
 
     const setQueue = (queue) => ({
-        type: 'APP_QUEUE_SET_QUEUE',
+        type: 'QUEUE/SET_QUEUE',
         payload: {
             queue
         }

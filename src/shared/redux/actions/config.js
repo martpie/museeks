@@ -1,18 +1,18 @@
 const library = (lib) => {
 
     const load = () => ({
-        type: 'APP_CONFIG_LOAD',
+        type: 'CONFIG/LOAD',
         payload: lib.config.load()
     });
 
     const save = () => (dispatch, getState) => ({
-        type: 'APP_CONFIG_SAVE',
+        type: 'CONFIG/SAVE',
         payload: lib.config.save(getState().config)
     });
 
     const set = (key, value) => (dispatch) => {
       dispatch({
-          type: 'APP_CONFIG_SET',
+          type: 'CONFIG/SET',
           payload: {
               key,
               value

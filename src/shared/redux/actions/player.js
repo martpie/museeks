@@ -37,7 +37,7 @@ const library = (lib) => {
         if (queue !== null) {
             lib.player.play();
             dispatch({
-                type: 'APP_PLAYER_PLAY'
+                type: 'PLAYER/PLAY'
             });
         }
     };
@@ -47,7 +47,7 @@ const library = (lib) => {
         if (queue !== null) {
             lib.player.pause();
             dispatch({
-                type: 'APP_PLAYER_PAUSE'
+                type: 'PLAYER/PAUSE'
             });
         }
     };
@@ -60,13 +60,12 @@ const library = (lib) => {
         if (queuePosition > -1) {
             const uri = utils.parseUri(queue[queuePosition].path);
             console.log(lib)
-console.log(queue[queuePosition])
-//            lib.player.setAudioMeta(queue[queuePosition]);
-            lib.player.setAudioSrc("http://localhost:54321/api/network/download?_id=0a0cca31");
+            console.log()
+            lib.player.setMeta(queue[queuePosition]);
             lib.player.play();
 
             dispatch({
-                type: 'APP_PLAYER_START',
+                type: 'PLAYER/START',
                 payload: {
                     queuePosition,
                     _id
@@ -78,21 +77,32 @@ console.log(queue[queuePosition])
     const stop = () => {
         lib.player.stop();
         return {
-            type: 'APP_PLAYER_STOP'
+            type: 'PLAYER/STOP'
         };
     };
 
     const next = () => (dispatch, getState) => {
-        const { someState } = getState();
-        if (true) {
-            const uri = utils.parseUri(track.path);
+        // TODO (y.solovyov | KeitIG): calling getState is a hack.
+        const { queue, queueCursor, repeat } = getState();
+        let newQueueCursor;
 
-            lib.player.setAudioSrc(uri);
+        if(repeat === 'one') {
+            newQueueCursor = queueCursor;
+        } else if (repeat === 'all' && queueCursor === queue.length - 1) { // is last track
+            newQueueCursor = 0; // start with new track
+        } else {
+            newQueueCursor = queueCursor + 1;
+        }
+
+        const track = queue[newQueueCursor];
+
+        if (track !== undefined) {
+            lib.player.setMeta(track);
             lib.player.play();
             dispatch({
-                type: 'APP_PLAYER_NEXT',
+                type: 'PLAYER/NEXT',
                 payload: {
-                    newQueueCursor
+                  newQueueCursor
                 }
             });
         } else {
@@ -113,13 +123,11 @@ console.log(queue[queuePosition])
         const newTrack = queue[newQueueCursor];
 
         if (newTrack !== undefined) {
-            const uri = utils.parseUri(newTrack.path);
-
-            lib.player.setAudioSrc(uri);
+            lib.player.setMeta(newTrack);
             lib.player.play();
 
             dispatch({
-                type: 'APP_PLAYER_PREVIOUS',
+                type: 'PLAYER/PREVIOUS',
                 payload: {
                     currentTime,
                     newQueueCursor
@@ -135,7 +143,7 @@ console.log(queue[queuePosition])
 
         const currentSrc = lib.player.getSrc();
         return {
-            type: 'APP_PLAYER_SHUFFLE',
+            type: 'PLAYER/SHUFFLE',
             payload: {
                 shuffle,
                 currentSrc
@@ -147,7 +155,7 @@ console.log(queue[queuePosition])
         dispatch(lib.actions.config.set('repeat', repeat));
 
         return {
-            type: 'APP_PLAYER_REPEAT',
+            type: 'PLAYER/REPEAT',
             payload: {
                 repeat
             }
@@ -182,7 +190,7 @@ console.log(queue[queuePosition])
     const jumpTo = (to) => {
         lib.player.setAudioCurrentTime(to);
         return {
-            type: 'APP_PLAYER_JUMP_TO'
+            type: 'PLAYER/JUMP_TO'
         };
     };
 

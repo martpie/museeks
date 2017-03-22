@@ -10,7 +10,7 @@ const library = (lib) => {
 
         return getPlaylist.then(getPlaylistTracks).then((tracks) => {
             return dispatch({
-                type: 'APP_PLAYLISTS_LOAD_ONE',
+                type: 'PLAYLISTS/LOAD_ONE',
                 payload: {
                     tracks
                 }
@@ -24,7 +24,7 @@ const library = (lib) => {
             sort: { name: 1 }
         }).then((playlists) => {
             return dispatch({
-                type: 'APP_PLAYLISTS_REFRESH',
+                type: 'PLAYLISTS/REFRESH',
                 payload: {
                     playlists
                 }

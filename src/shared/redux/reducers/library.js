@@ -3,7 +3,7 @@ import utils from '../../utils/utils';
 
 export default (state = {}, action) => {
     switch (action.type) {
-        case('APP_FILTER_SEARCH'): {
+        case('LIBRARY/FILTER'): {
             if (!action.payload.search) {
                 const newState = { ...state };
                 newState.tracks[state.tracksCursor].sub = [...state.tracks[state.tracksCursor].all];
@@ -27,7 +27,7 @@ export default (state = {}, action) => {
             return newState;
         }
 
-        case('APP_LIBRARY_UPDATE_FOLDERS'): {
+        case('LIBRARY/UPDATE_FOLDERS'): {
             const config = extend(state.config, { musicFolders: action.payload.folders });
             return {
                 ...state,
@@ -35,14 +35,7 @@ export default (state = {}, action) => {
             };
         }
 
-        case('APP_LIBRARY_FETCHED_COVER'): {
-            return {
-                ...state,
-                cover: action.payload.cover || null
-            };
-        }
-
-        case('APP_LIBRARY_RESCAN_PENDING'): {
+        case('LIBRARY/RESCAN_PENDING'): {
             return {
                 ...state,
                 status: 'An apple a day keeps Dr Dre away',
@@ -50,7 +43,7 @@ export default (state = {}, action) => {
             };
         }
 
-        case('APP_LIBRARY_RESCAN_FULFILLED'): {
+        case('LIBRARY/RESCAN_FULFILLED'): {
             return {
                 ...state,
                 refreshingLibrary: false,
@@ -58,21 +51,21 @@ export default (state = {}, action) => {
             };
         }
 
-        case('APP_LIBRARY_RESCAN_PROGRESS'): {
+        case('LIBRARY/RESCAN_PROGRESS'): {
             return {
                 ...state,
                 refreshProgress: action.payload.percentage
             };
         }
 
-        case('APP_LIBRARY_SET_TRACKSCURSOR'): {
+        case('LIBRARY/SET_TRACKSCURSOR'): {
             return {
                 ...state,
                 tracksCursor: action.payload.cursor
             };
         }
 
-        case('APP_LIBRARY_DELETE_FULFILLED'): {
+        case('LIBRARY/DELETE_FULFILLED'): {
             return {
                 ...state,
                 tracks: {

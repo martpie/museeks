@@ -11,7 +11,7 @@ export default {
     getSrc               : rpc('main-renderer', 'player.getSrc'),
     setVolume            : rpc('main-renderer', 'player.setVolume'),
     setPlaybackRate      : rpc('main-renderer', 'player.setPlaybackRate'),
-    setAudioSrc          : rpc('main-renderer', 'player.setAudioSrc'),
+    setMeta              : rpc('main-renderer', 'player.setMeta'),
     setAudioCurrentTime  : rpc('main-renderer', 'player.setAudioCurrentTime'),
     isMuted              : rpc('main-renderer', 'player.isMuted'),
     isPaused             : rpc('main-renderer', 'player.isPaused'),

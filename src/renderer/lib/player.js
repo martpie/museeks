@@ -12,6 +12,12 @@ class Player {
     init(lib) {
         this.lib = lib;
 
+        const { config } = this.lib.store.getState();
+
+        this.setVolume(config.volume);
+        this.setPlaybackRate(config.playbackRate);
+        this.setMuted(config.muted);
+
         this.audio.addEventListener('play',  this.lib.actions.player.play);
         this.audio.addEventListener('pause', this.lib.actions.player.pause);
         this.audio.addEventListener('ended', this.lib.actions.player.next);
@@ -69,13 +75,13 @@ class Player {
         this.audio.defaultPlaybackRate = playbackRate;
     }
 
-    setAudioSrc(src) {
-//        this.lib.tray.updateTrayMetadata(data);
-//        this.lib.tray.setContextMenu('play');
+    setMeta(meta) {
+        this.lib.tray.updateTrayMetadata(meta);
+        this.lib.tray.setContextMenu('play');
 
         // When we change song, need to update the thresholdReached indicator.
         this.durationThresholdReached = false;
-        this.audio.src = src;
+        this.audio.src = meta.path;
     }
 
     setAudioCurrentTime(currentTime) {

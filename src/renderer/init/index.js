@@ -17,11 +17,6 @@ const library = (lib) => {
         }, 250);
     };
 
-    // Configure the audio player
-    lib.player.setVolume(config.volume);
-    lib.player.setPlaybackRate(config.playbackRate);
-    lib.player.setMuted(config.muted);
-
     // Prevent some events
     window.addEventListener('dragover', (e) => e.preventDefault(), false);
     window.addEventListener('drop', (e) => e.preventDefault(), false);
@@ -32,7 +27,7 @@ const library = (lib) => {
     currentWindow.on('move', saveBounds);
 
     // load data and apply app settings
-    dispatch(lib.actions.library.load());
+    dispatch(lib.actions.network.find());
     dispatch(lib.actions.playlists.refresh());
     dispatch(lib.actions.settings.check());
 }

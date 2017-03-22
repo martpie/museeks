@@ -1,14 +1,14 @@
 export default (state = {}, payload) => {
     switch (payload.type) {
 
-        case('APP_PLAYLISTS_REFRESH'): {
+        case('PLAYLISTS/REFRESH'): {
             return {
                 ...state,
                 playlists: payload.playlists
             };
         }
 
-        case('APP_PLAYLISTS_LOAD_ONE'): {
+        case('PLAYLISTS/LOAD_ONE'): {
             const newState = { ...state };
             newState.tracks[state.tracksCursor] = {
                 all: [...payload.tracks],

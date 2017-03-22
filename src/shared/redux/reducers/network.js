@@ -4,7 +4,7 @@ import { find } from 'lodash';
 export default (state = {}, action) => {
     switch (action.type) {
 
-        case('APP_NETWORK_PEER_FOUND'): {
+        case('NETWORK/PEER_FOUND'): {
             const newPeer = action.payload.peer;
             return i.updateIn(state, ['network', 'peers'], (peers) => {
                 // if the peers list doesn't include the found peer, add it
@@ -12,7 +12,7 @@ export default (state = {}, action) => {
             });
         }
 
-        case('APP_NETWORK_ADD_OBSERVER'): {
+        case('NETWORK/ADD_OBSERVER'): {
             const newObserver = action.payload.peer;
             return i.updateIn(state, ['network', 'observers'], (observers) => {
                 // if the observers list doesn't include the new observer, add it
@@ -20,7 +20,7 @@ export default (state = {}, action) => {
             });
         }
 
-        case('APP_NETWORK_REMOVE_OBSERVER'): {
+        case('NETWORK/REMOVE_OBSERVER'): {
             const targetObserver = action.payload.peer;
             return i.updateIn(state, ['network', 'observers'], (observers) => {
                 // filter the list to remove the targetObserver
@@ -28,8 +28,28 @@ export default (state = {}, action) => {
             });
         }
 
-        case('APP_NETWORK_FIND'): {
-            return i.assocIn(state, ['network', 'tracks'], action.payload.tracks);
+        case('NETWORK/FIND'): {
+            // return i.assocIn(state, ['network', 'tracks'], action.payload.tracks);
+            return {
+                ...state,
+                tracks: {
+                    library: {
+                        all: [...action.payload.tracks],
+                        sub: [...action.payload.tracks]
+                    },
+                    playlist: {
+                        all: [],
+                        sub: []
+                    }
+                }
+            };
+        }
+
+        case('NETWORK/FETCHED_COVER'): {
+            return {
+                ...state,
+                cover: action.payload.cover || null
+            };
         }
 
         default: {
