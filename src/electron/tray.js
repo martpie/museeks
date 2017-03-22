@@ -77,7 +77,7 @@ class TrayManager {
         ];
     }
 
-    show() {
+    show = () => {
         this.tray = new Tray(this.trayIcon);
 
         this.tray.setToolTip('Museeks');
@@ -97,17 +97,17 @@ class TrayManager {
         this.setContextMenu('play');
     }
 
-    hide() {
+    hide = () => {
         this.tray.destroy();
     }
 
-    setContextMenu(state) {
+    setContextMenu = (state) => {
         const playPauseItem = state === 'play' ? this.pauseToggle : this.playToggle;
         const menuTemplate = [...this.songDetails, ...playPauseItem, ...this.menu];
         this.tray.setContextMenu(Menu.buildFromTemplate(menuTemplate));
     }
 
-    updateTrayMetadata(metadata) {
+    updateTrayMetadata = (metadata) => {
         this.songDetails = [
             {
                 label: `${metadata.title}`,

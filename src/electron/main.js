@@ -4,7 +4,7 @@ import electron from 'electron';
 import { nativeImage, app } from 'electron';
 import path from 'path';
 import os from 'os';
-import extend from 'xtend';
+import mutate from 'xtend/mutable';
 
 import Database from './database';                     // Persistent data store
 import store from './redux/store';                     // Redux store

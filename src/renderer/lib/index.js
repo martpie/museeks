@@ -7,6 +7,7 @@ import config from './config';
 import network from './network';
 import playlist from './playlist';
 import track from './track';
+import tray from './tray';
 
 import Player from './player';
 const player = new Player();
@@ -17,7 +18,8 @@ const library = {
     network,
     player,
     playlist,
-    track
+    track,
+    tray
 };
 
 // attach the shared libraries after the store has been supplied

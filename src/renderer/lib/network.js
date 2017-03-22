@@ -1,15 +1,8 @@
-import rpc from '../../shared/utils/rpc';
+import { rpc } from 'electron-simple-rpc';
 
-// execute calls to network in the electron thread
-const rpcElectron = rpc.wrap('electron', 'network');
-
-const functions = {
-    find: rpcElectron,
-    findOne: rpcElectron,
-    getOwner: rpcElectron,
-    start: rpcElectron
+export default {
+    find     : rpc('electron', 'network.find'),
+    findOne  : rpc('electron', 'network.findOne'),
+    getOwner : rpc('electron', 'network.getOwner'),
+    start    : rpc('electron', 'network.start')
 };
-
-const library = rpc.translate(functions);
-
-export default library;
