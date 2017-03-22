@@ -12,6 +12,12 @@ class Player {
     init(lib) {
         this.lib = lib;
 
+        const { config } = this.lib.store.getState();
+
+        this.setVolume(config.volume);
+        this.setPlaybackRate(config.playbackRate);
+        this.setMuted(config.muted);
+
         this.audio.addEventListener('play', this.lib.actions.player.play);
         this.audio.addEventListener('pause', this.lib.actions.player.pause);
         this.audio.addEventListener('ended', this.lib.actions.player.next);

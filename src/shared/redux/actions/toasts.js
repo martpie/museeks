@@ -6,12 +6,12 @@ const library = (lib) => {
 
         return (dispatch) => {
             dispatch({
-                type   : 'APP_TOAST_ADD',
+                type   : 'TOAST_ADD',
                 toast
             });
             setTimeout(() => {
                 dispatch({
-                    type: 'APP_TOAST_REMOVE',
+                    type: 'TOAST_REMOVE',
                     _id
                 });
             }, duration);

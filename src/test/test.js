@@ -95,7 +95,7 @@ const setConfig = (peer, key, value) => {
         url: `http://${host}:${port}/api/store/dispatch`,
         json: true,
         data: {
-            type: 'APP_CONFIG_SET',
+            type: 'CONFIG/SET',
             payload: { key, value }
         }
     });
@@ -110,7 +110,7 @@ const notifyPeerFound = (peer, foundPeer) => {
         url: `http://${host}:${port}/api/store/dispatch`,
         json: true,
         data: {
-            type: 'APP_NETWORK_PEER_FOUND',
+            type: 'NETWORK/PEER_FOUND',
             payload: {
                 peer: {
                     ip: foundPeer.ip

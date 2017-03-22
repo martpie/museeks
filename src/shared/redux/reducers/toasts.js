@@ -1,6 +1,6 @@
 export default (state = {}, payload) => {
     switch (payload.type) {
-        case('APP_TOAST_ADD'): {
+        case('TOAST/ADD'): {
             const toasts = [...state.toasts, payload.toast];
             return {
                 ...state,
@@ -8,7 +8,7 @@ export default (state = {}, payload) => {
             };
         }
 
-        case('APP_TOAST_REMOVE'): {
+        case('TOAST/REMOVE'): {
             const toasts = [...state.toasts].filter((n) => n._id !== payload._id);
             return {
                 ...state,

@@ -9,29 +9,15 @@ const realpath = Promise.promisify(fs.realpath);
 
 const library = (lib) => {
 
-    const load = () => ({
-        type: 'APP_LIBRARY_LOAD',
-        payload: lib.track.find({
-            query: {},
-            sort: {
-                'loweredMetas.artist': 1,
-                'year': 1,
-                'loweredMetas.album': 1,
-                'disk.no': 1,
-                'track.no': 1
-            }
-        })
-    });
-
     const setTracksCursor = (cursor) => ({
-        type: 'APP_LIBRARY_SET_TRACKSCURSOR',
+        type: 'LIBRARY/SET_TRACKSCURSOR',
         payload: {
             cursor
         }
     });
 
     const filterSearch = (search) => ({
-        type: 'APP_FILTER_SEARCH',
+        type: 'LIBRARY/FILTER',
         payload: {
             search
         }
@@ -56,7 +42,7 @@ const library = (lib) => {
 
                     dispatch(lib.actions.config.set('musicFolders', folders));
                     dispatch({
-                        type: 'APP_LIBRARY_UPDATE_FOLDERS',
+                        type: 'LIBRARY/UPDATE_FOLDERS',
                         payload: {
                             folders
                         }
@@ -74,7 +60,7 @@ const library = (lib) => {
 
             dispatch(lib.actions.config.set('musicFolders', folders));
             dispatch({
-                type: 'APP_LIBRARY_UPDATE_FOLDERS',
+                type: 'LIBRARY/UPDATE_FOLDERS',
                 payload: {
                     folders
                 }
@@ -83,7 +69,7 @@ const library = (lib) => {
     };
 
     const remove = () => ({
-        type: 'APP_LIBRARY_DELETE',
+        type: 'LIBRARY/DELETE',
         payload: Promise.all([
             lib.track.remove({}, { multi: true }),
             lib.playlist.remove({}, { multi: true })
@@ -92,7 +78,7 @@ const library = (lib) => {
 
     const rescan = () => (dispatch, getState) => {
 
-        dispatch({ type: 'APP_LIBRARY_RESCAN_PENDING' });
+        dispatch({ type: 'LIBRARY/RESCAN_PENDING' });
 
         const folders = getState().config.musicFolders;
         const fsConcurrency = 32;
@@ -125,19 +111,8 @@ const library = (lib) => {
                 });
             }, { concurrency: fsConcurrency });
         }).then(() => {
-            dispatch({ type: 'APP_LIBRARY_RESCAN_FULFILLED' });
-            dispatch(lib.actions.library.load());
-        });
-    };
-
-    const fetchCover = (path) => (dispatch) => {
-        utils.fetchCover(path).then((cover) => {
-            dispatch({
-                type: 'APP_LIBRARY_FETCHED_COVER',
-                payload: {
-                    cover
-                }
-            });
+            dispatch({ type: 'LIBRARY/RESCAN_FULFILLED' });
+            dispatch(lib.actions.network.find());
         });
     };
 
@@ -151,14 +126,12 @@ const library = (lib) => {
     };
 
     return {
-        load,
         setTracksCursor,
         filterSearch,
         addFolders,
         removeFolder,
         remove,
         rescan,
-        fetchCover,
         incrementPlayCount
     };
 };

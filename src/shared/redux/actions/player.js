@@ -37,7 +37,7 @@ const library = (lib) => {
         if (queue !== null) {
             lib.player.play();
             dispatch({
-                type: 'APP_PLAYER_PLAY'
+                type: 'PLAYER/PLAY'
             });
         }
     };
@@ -47,7 +47,7 @@ const library = (lib) => {
         if (queue !== null) {
             lib.player.pause();
             dispatch({
-                type: 'APP_PLAYER_PAUSE'
+                type: 'PLAYER/PAUSE'
             });
         }
     };
@@ -65,7 +65,7 @@ console.log(queue[queuePosition])
             lib.player.play();
 
             dispatch({
-                type: 'APP_PLAYER_START',
+                type: 'PLAYER/START',
                 payload: {
                     queuePosition,
                     _id
@@ -77,7 +77,7 @@ console.log(queue[queuePosition])
     const stop = () => {
         lib.player.stop();
         return {
-            type: 'APP_PLAYER_STOP'
+            type: 'PLAYER/STOP'
         };
     };
 
@@ -89,7 +89,7 @@ console.log(queue[queuePosition])
             lib.player.setAudioSrc(uri);
             lib.player.play();
             dispatch({
-                type: 'APP_PLAYER_NEXT',
+                type: 'PLAYER/NEXT',
                 payload: {
                     newQueueCursor
                 }
@@ -118,7 +118,7 @@ console.log(queue[queuePosition])
             lib.player.play();
 
             dispatch({
-                type: 'APP_PLAYER_PREVIOUS',
+                type: 'PLAYER/PREVIOUS',
                 payload: {
                     currentTime,
                     newQueueCursor
@@ -134,7 +134,7 @@ console.log(queue[queuePosition])
 
         const currentSrc = lib.player.getSrc();
         return {
-            type: 'APP_PLAYER_SHUFFLE',
+            type: 'PLAYER/SHUFFLE',
             payload: {
                 shuffle,
                 currentSrc
@@ -146,7 +146,7 @@ console.log(queue[queuePosition])
         dispatch(lib.actions.config.set('repeat', repeat));
 
         return {
-            type: 'APP_PLAYER_REPEAT',
+            type: 'PLAYER/REPEAT',
             payload: {
                 repeat
             }
@@ -181,7 +181,7 @@ console.log(queue[queuePosition])
     const jumpTo = (to) => {
         lib.player.setAudioCurrentTime(to);
         return {
-            type: 'APP_PLAYER_JUMP_TO'
+            type: 'PLAYER/JUMP_TO'
         };
     };
 

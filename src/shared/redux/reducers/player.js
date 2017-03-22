@@ -1,6 +1,6 @@
 export default (state = {}, action) => {
     switch (action.type) {
-        case('APP_PLAYER_START'): {
+        case('PLAYER/START'): {
             const queue = [...state.tracks[state.tracksCursor].sub];
             const id = action.payload._id;
 
@@ -47,21 +47,21 @@ export default (state = {}, action) => {
             };
         }
 
-        case('APP_PLAYER_PLAY'): {
+        case('PLAYER/PLAY'): {
             return {
                 ...state,
                 playerStatus: 'play'
             };
         }
 
-        case('APP_PLAYER_PAUSE'): {
+        case('PLAYER/PAUSE'): {
             return {
                 ...state,
                 playerStatus: 'pause'
             };
         }
 
-        case('APP_PLAYER_STOP'): {
+        case('PLAYER/STOP'): {
             const newState = {
                 ...state,
                 queue:  [],
@@ -72,7 +72,7 @@ export default (state = {}, action) => {
             return newState;
         }
 
-        case('APP_PLAYER_NEXT'): {
+        case('PLAYER/NEXT'): {
             return {
                 ...state,
                 playerStatus: 'play',
@@ -80,7 +80,7 @@ export default (state = {}, action) => {
             };
         }
 
-        case('APP_PLAYER_PREVIOUS'): {
+        case('PLAYER/PREVIOUS'): {
             return {
                 ...state,
                 playerStatus: 'play',
@@ -88,11 +88,11 @@ export default (state = {}, action) => {
             };
         }
 
-        case('APP_PLAYER_JUMP_TO'): {
+        case('PLAYER/JUMP_TO'): {
             return state;
         }
 
-        case('APP_PLAYER_SHUFFLE'): {
+        case('PLAYER/SHUFFLE'): {
             if (action.payload.shuffle) {
                 // Let's shuffle that
                 const queueCursor = state.queueCursor;
@@ -141,7 +141,7 @@ export default (state = {}, action) => {
             };
         }
 
-        case('APP_PLAYER_REPEAT'): {
+        case('PLAYER/REPEAT'): {
             return {
                 ...state,
                 repeat: action.payload.repeat

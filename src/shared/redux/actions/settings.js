@@ -85,7 +85,7 @@ const library = (lib) => {
 
     const refreshProgress = (percentage) => (dispatch) => {
         dispatch({
-            type: 'APP_LIBRARY_RESCAN_PROGRESS',
+            type: 'LIBRARY/RESCAN_PROGRESS',
             payload: {
                 percentage
             }

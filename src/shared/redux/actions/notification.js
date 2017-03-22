@@ -18,7 +18,7 @@ const library = (lib) => {
             };
 
             return {
-                type: 'APP_NOTIFICATION_NEW',
+                type: 'NOTIFICATION/NEW',
                 notification
             };
         }
