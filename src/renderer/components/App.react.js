@@ -54,7 +54,7 @@ class Museeks extends Component {
                                 config: state.config,
                                 playerStatus: state.playerStatus,
                                 network: state.network,
-                                queue: state.player.queue,
+                                queue: state.queue,
                                 tracks: state.tracks[state.tracks.tracksCursor].sub,
                                 library: state.tracks[state.tracks.tracksCursor].all,
                                 playlists: state.playlists,

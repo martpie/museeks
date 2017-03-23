@@ -11,7 +11,7 @@ const library = (lib) => {
 
     const playToggle = () => (dispatch, getState) => {
         const paused = lib.player.isPaused();
-        const { queue } = getState().player;
+        const { queue } = getState();
         if (paused && queue.length > 0) {
             dispatch(lib.actions.player.play());
         } else {
@@ -20,7 +20,7 @@ const library = (lib) => {
     };
 
     const play = () => (dispatch, getState) => {
-        const { player: { queue }, network: { output } } = getState();
+        const { queue , network: { output } } = getState();
 
         // lib.store.dispatch(lib.actions.player.nowPlaying(track));
         //
@@ -89,7 +89,7 @@ const library = (lib) => {
     };
 
     const next = () => (dispatch, getState) => {
-        const { queue, queueCursor, repeat } = getState().player;
+        const { queue, queueCursor, repeat } = getState();
         let newQueueCursor;
 
         if(repeat === 'one') {

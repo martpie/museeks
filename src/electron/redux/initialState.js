@@ -48,11 +48,11 @@ export default {
 
     playlists: []
 
-    player: {
-        queue: [],                       // Tracks to be played
-        queueCursor: null,               // The cursor of the queue
-        oldQueue: null,                  // Queue backup (in case of shuffle)
+    queue: [],                       // Tracks to be played
+    queueCursor: null,               // The cursor of the queue
+    oldQueue: null,                  // Queue backup (in case of shuffle)
 
+    player: {
         playerStatus: 'stop',            // Player status
         cover: null,                     // Current trackplaying cover
         repeat: 'none',                  // the current repeat state (one, all, none)

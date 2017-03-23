@@ -150,7 +150,6 @@ export default (state = {}, action) => {
             };
         }
 
-
         case('PLAYER/FETCHED_COVER'): {
             return {
                 ...state,

@@ -2,12 +2,10 @@ export default (state = {}, payload) => {
     switch (payload.type) {
 
         case('PLAYLISTS/REFRESH'): {
-            return {
-                ...state,
-                playlists: payload.playlists ? payload.playlists : []
-            };
+            return payload.playlists || [];
         }
 
+        // TODO: BROKEN BY MOVE TO COMBINE REDUCERS. FIX.
         case('PLAYLISTS/LOAD_ONE'): {
             const newState = { ...state };
             newState.tracks[state.tracks.tracksCursor] = {
