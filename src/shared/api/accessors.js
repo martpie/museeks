@@ -10,24 +10,16 @@ const library = (lib) => {
     // for each internal api route, create an http request that will call it
     const clientApiCalls = routes.reduce((api, route) => {
 
-        const clientCall = (config) => {
-
-            // remove peer metadata from function inputs
-            const inputs = extend(config);
-            delete inputs.ip;
+        const clientCall = (peer, data) => {
 
             const inputType = route.method === 'GET'
                 ? 'params'
                 : 'data';
 
-            const httpEncodedInput = inputType === 'params'
-                ? qs.stringify(inputs)
-                : inputs;
-
             return axios({
                 method: route.method,
-                url: `${lib.utils.peerEndpoint(config)}/${route.path}`,
-                [inputType]: httpEncodedInput,
+                url: `${lib.utils.peerEndpoint(peer)}/${route.path}`,
+                [inputType]: data,
                 json: true
             })
             .then((response) => response.data);

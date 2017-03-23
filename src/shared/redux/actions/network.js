@@ -88,10 +88,7 @@ const library = (lib) => {
             // This may fail if the other Museeks stops working.
             // If so, this is fine... Probably...
             if (prevOutput) {
-                lib.api.actions.network.removeObserver({
-                    ip: prevOutput.ip,
-                    observer: me
-                });
+                lib.api.actions.network.removeObserver(prevOutput, me);
             }
 
             // Dispatch the change event to update the ui
@@ -106,10 +103,7 @@ const library = (lib) => {
             // We ask the output device to set us as an observer.
             dispatch({
                 type: 'NETWORK/SET_OUTPUT',
-                payload: lib.api.actions.network.addObserver({
-                    ip: newOutput.ip,
-                    observer: me
-                }),
+                payload: lib.api.actions.network.addObserver(newOutput, me),
                 meta: { newOutput: newOutputWithLocalBool, prevOutput }
             });
         }
