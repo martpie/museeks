@@ -6,6 +6,6 @@ export default [{
 }, {
     path: 'api/actions/network/disconnectOutput',
     method: 'DELETE',
-    name: 'actions.network.disconnectOutput',
+    name: 'actions.network.disconnectAsOutput',
     dispatch: true
 }];
