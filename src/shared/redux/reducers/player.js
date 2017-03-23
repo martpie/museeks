@@ -11,9 +11,7 @@ export default (state = {}, action) => {
             // Check if we have to shuffle the queue
             if (state.shuffle) {
                 // need to check that later
-                const index = queue.findIndex((track) => {
-                    return track._id === id;
-                });
+                const index = queue.findIndex((track) => track._id === id);
 
                 const firstTrack = queue[index];
 
@@ -45,21 +43,30 @@ export default (state = {}, action) => {
                 queueCursor,
                 oldQueue: queue,
                 oldQueueCursor: queueCursor,
-                playerStatus: 'play'
+                player: {
+                    ...state.player,
+                    playerStatus: 'play'
+                }
             };
         }
 
         case('PLAYER/PLAY'): {
             return {
                 ...state,
-                playerStatus: 'play'
+                player: {
+                    ...state.player,
+                    playerStatus: 'play'
+                }
             };
         }
 
         case('PLAYER/PAUSE'): {
             return {
                 ...state,
-                playerStatus: 'pause'
+                player: {
+                    ...state.player,
+                    playerStatus: 'play'
+                }
             };
         }
 
@@ -68,7 +75,10 @@ export default (state = {}, action) => {
                 ...state,
                 queue:  [],
                 queueCursor:  null,
-                playerStatus: 'stop'
+                player: {
+                    ...state.player,
+                    playerStatus: 'play'
+                }
             };
 
             return newState;
@@ -77,16 +87,22 @@ export default (state = {}, action) => {
         case('PLAYER/NEXT'): {
             return {
                 ...state,
-                playerStatus: 'play',
-                queueCursor: action.payload.newQueueCursor
+                queueCursor: action.payload.newQueueCursor,
+                player: {
+                    ...state.player,
+                    playerStatus: 'play'
+                }
             };
         }
 
         case('PLAYER/PREVIOUS'): {
             return {
                 ...state,
-                playerStatus: 'play',
-                queueCursor: action.payload.newQueueCursor
+                queueCursor: action.payload.newQueueCursor,
+                player: {
+                    ...state.player,
+                    playerStatus: 'play'
+                }
             };
         }
 

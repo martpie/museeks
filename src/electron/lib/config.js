@@ -1,10 +1,12 @@
 import Promise from 'bluebird';
 import mutate from 'xtend/mutable';
-const fs = Promise.promisifyAll(require('fs'));
 
+import store from '../redux/store';
 import defaultConfig from '../../shared/lib/config';
 
-const serializeConfig = () => JSON.stringify(defaultConfig, null, 4);
+const fs = Promise.promisifyAll(require('fs'));
+
+const serializeConfig = () => JSON.stringify(store.getState().config, null, 4);
 const deserializeConfig = (data) => JSON.parse(data);
 
 const save = () => fs.writeFileAsync(defaultConfig.path, serializeConfig());
