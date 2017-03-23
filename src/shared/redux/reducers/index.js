@@ -1,3 +1,5 @@
+import { combineReducers } from 'redux';
+
 import app from './app';
 import config from './config';
 import library from './library';
@@ -6,23 +8,27 @@ import player from './player';
 import playlists from './playlists';
 import queue from './queue';
 import toasts from './toasts';
-import track from './track';
+import tracks from './tracks';
 
-const reducers = [
+const isolatedReducers = combineReducers({
     app,
     config,
     library,
-    toasts,
     network,
-    player,
     playlists,
-    queue,
-    track
-];
+    toasts,
+    tracks
+});
+
+const topLevelReducers = [{
+    isolatedReducers,
+    player,
+    queue
+}];
 
 
 export default (state, action) => {
     return reducers.reduce((currentState, reducer) => {
         return reducer(currentState, action);
     }, state);
-};
+}

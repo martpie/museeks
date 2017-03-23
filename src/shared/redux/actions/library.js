@@ -9,20 +9,6 @@ const realpath = Promise.promisify(fs.realpath);
 
 const library = (lib) => {
 
-    const setTracksCursor = (cursor) => ({
-        type: 'LIBRARY/SET_TRACKSCURSOR',
-        payload: {
-            cursor
-        }
-    });
-
-    const filterSearch = (search) => ({
-        type: 'LIBRARY/FILTER',
-        payload: {
-            search
-        }
-    });
-
     const addFolders = () => (dispatch, getState) => {
         const dialog = electron.remote
             ? electron.remote.dialog
@@ -41,12 +27,6 @@ const library = (lib) => {
                     folders.sort();
 
                     dispatch(lib.actions.config.set('musicFolders', folders));
-                    dispatch({
-                        type: 'LIBRARY/UPDATE_FOLDERS',
-                        payload: {
-                            folders
-                        }
-                    });
                 });
              }
          });
@@ -59,22 +39,8 @@ const library = (lib) => {
             folders.splice(index, 1);
 
             dispatch(lib.actions.config.set('musicFolders', folders));
-            dispatch({
-                type: 'LIBRARY/UPDATE_FOLDERS',
-                payload: {
-                    folders
-                }
-            });
         }
     };
-
-    const remove = () => ({
-        type: 'LIBRARY/DELETE',
-        payload: Promise.all([
-            lib.track.remove({}, { multi: true }),
-            lib.playlist.remove({}, { multi: true })
-        ])
-    });
 
     const rescan = () => (dispatch, getState) => {
 
@@ -127,8 +93,6 @@ const library = (lib) => {
     };
 
     return {
-        setTracksCursor,
-        filterSearch,
         addFolders,
         removeFolder,
         remove,

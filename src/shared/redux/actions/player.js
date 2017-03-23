@@ -10,7 +10,7 @@ const library = (lib) => {
     };
 
     const playToggle = () => (dispatch, getState) => {
-        const { paused } = lib.player.audio; // TODO Jackson
+        const paused = lib.player.isPaused();
         const { queue } = getState();
         if (paused && queue.length > 0) {
             dispatch(lib.actions.player.play());
@@ -20,8 +20,7 @@ const library = (lib) => {
     };
 
     const play = () => (dispatch, getState) => {
-        const { queue, network: { output } } = getState();
-
+        const { queue , network: { output } } = getState();
 
         // lib.store.dispatch(lib.actions.player.nowPlaying(track));
         //
@@ -34,7 +33,6 @@ const library = (lib) => {
         //         });
         //     });
         // }
-
 
         if (queue !== null) {
             if (output.islocal) {
@@ -52,7 +50,7 @@ const library = (lib) => {
         const { queue, network: { output } } = getState();
 
         if (queue !== null) {
-            if (output.islocal) {
+            if (output.isLocal) {
                 lib.player.pause();
             } else {
                 lib.api.actions.player.pause(output);
@@ -64,7 +62,7 @@ const library = (lib) => {
     };
 
     const start = (_id) => (dispatch, getState) => {
-        const { tracks, tracksCursor } = getState();
+        const { tracks, tracks: { tracksCursor } } = getState();
         const queue = [...tracks[tracksCursor].sub];
         const queuePosition = queue.findIndex((track) => track._id === _id);
 
@@ -91,7 +89,6 @@ const library = (lib) => {
     };
 
     const next = () => (dispatch, getState) => {
-        // TODO (y.solovyov | KeitIG): calling getState is a hack.
         const { queue, queueCursor, repeat } = getState();
         let newQueueCursor;
 
@@ -220,6 +217,13 @@ const library = (lib) => {
         }
     };
 
+    const fetchCover = (metadata) => ({
+        type: 'PLAYER/FETCHED_COVER',
+        payload: {
+            cover: `${lib.utils.peerEndpoint(metadata.owner)}/api/track/fetchCover?_id=${metadata._id}`
+        }
+    });
+
     return {
         audioError,
         jumpTo,
@@ -228,6 +232,7 @@ const library = (lib) => {
         play,
         playToggle,
         previous,
+        fetchCover,
         repeat,
         setMuted,
         setPlaybackRate,

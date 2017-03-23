@@ -58,10 +58,14 @@ const library = (lib) => {
         }
     }
 
-    const addObserver = (peer) => ({
+    const addObserver = ({ ip, hostname, platform }) => ({
         type: 'NETWORK/ADD_OBSERVER',
         payload: {
-            peer
+            peer: {
+                ip,
+                hostname,
+                platform
+            }
         }
     });
 
@@ -69,13 +73,6 @@ const library = (lib) => {
         type: 'NETWORK/REMOVE_OBSERVER',
         payload: {
             peer
-        }
-    });
-
-    const fetchCover = (metadata) => ({
-        type: 'NETWORK/FETCHED_COVER',
-        payload: {
-            cover: `${lib.utils.peerEndpoint(metadata.owner)}/api/track/fetchCover?_id=${metadata._id}`
         }
     });
 

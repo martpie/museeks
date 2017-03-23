@@ -2,6 +2,28 @@ import Promise from 'bluebird';
 
 const library = (lib) => {
 
+    // const filterSearch = (search) => ({
+    //     type: 'TRACKS/FILTER',
+    //     payload: {
+    //         search
+    //     }
+    // });
+
+    const remove = () => ({
+        type: 'TRACKS/DELETE',
+        payload: Promise.all([
+            lib.track.remove({}, { multi: true }),
+            lib.playlist.remove({}, { multi: true })
+        ])
+    });
+
+    const setTracksCursor = (cursor) => ({
+        type: 'TRACKS/SET_TRACKSCURSOR',
+        payload: {
+            cursor
+        }
+    });
+
     const find = ({ peer, query, sort } = {}) => (dispatch, getState) => {
         const { network : { me } } = getState();
 
@@ -24,17 +46,10 @@ const library = (lib) => {
         }
     };
 
-    // const play = ({ source, destination, track } = {}) => {
-    //     return {
-    //         type: 'NETWORK/START',
-    //         payload: {
-    //             peer
-    //         }
-    //     }
-    // };
-
     return {
-        find
+        find,
+        setTracksCursor,
+        // filterSearch
     }
 }
 

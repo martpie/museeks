@@ -28,6 +28,10 @@ class Player {
         });
     }
 
+    getAudio() {
+        return this.audio;
+    }
+
     play() {
         this.audio.play();
         this.lib.tray.setContextMenu('play');

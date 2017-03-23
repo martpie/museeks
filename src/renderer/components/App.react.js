@@ -55,8 +55,8 @@ class Museeks extends Component {
                                 playerStatus: state.playerStatus,
                                 network: state.network,
                                 queue: state.queue,
-                                tracks: state.tracks[state.tracksCursor].sub,
-                                library: state.tracks[state.tracksCursor].all,
+                                tracks: state.tracks[state.tracks.tracksCursor].sub,
+                                library: state.tracks[state.tracks.tracksCursor].all,
                                 playlists: state.playlists,
                                 refreshingLibrary: state.refreshingLibrary,
                                 refreshProgress: state.refreshProgress,
@@ -67,7 +67,7 @@ class Museeks extends Component {
                 </div>
                 <Footer
                     network={ state.network }
-                    tracks={ state.tracks[state.tracksCursor].sub }
+                    tracks={ state.tracks[state.tracks.tracksCursor].sub }
                     refreshingLibrary={ state.refreshingLibrary }
                 />
                 <Toasts toasts={ state.toasts } />

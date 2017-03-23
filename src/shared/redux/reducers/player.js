@@ -1,7 +1,9 @@
+import i from 'icepick';
+
 export default (state = {}, action) => {
     switch (action.type) {
         case('PLAYER/START'): {
-            const queue = [...state.tracks[state.tracksCursor].sub];
+            const queue = [...state.tracks[state.tracks.tracksCursor].sub];
             const id = action.payload._id;
 
             let queueCursor = action.payload.queuePosition; // Clean that variable mess later
@@ -145,6 +147,13 @@ export default (state = {}, action) => {
             return {
                 ...state,
                 repeat: action.payload.repeat
+            };
+        }
+
+        case('PLAYER/FETCHED_COVER'): {
+            return {
+                ...state,
+                cover: action.payload.cover || null
             };
         }
 
