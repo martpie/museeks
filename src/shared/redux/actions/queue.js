@@ -14,6 +14,7 @@ const library = (lib) => {
             }
         };
     };
+
     const clear = () => ({
         type: 'QUEUE/CLEAR'
     });
