@@ -27,9 +27,7 @@ const library = (lib) => {
     currentWindow.on('move', saveBounds);
 
     // load data and apply app settings
-    dispatch(lib.actions.network.find());
-    dispatch(lib.actions.network.setMe());
-//    dispatch(lib.actions.network.setOutput(network.me));
+    dispatch(lib.actions.network.init());
     dispatch(lib.actions.playlists.refresh());
     dispatch(lib.actions.settings.check());
 }

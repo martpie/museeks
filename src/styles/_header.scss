@@ -13,7 +13,6 @@ header {
     .now-playing-info-buttons,
     .now-playing-queue,
     .search,
-    .output-controls,
     .window-controls {
         -webkit-app-region: no-drag;
     }
@@ -91,13 +90,6 @@ header {
                 i {
                     display: flex;
                     align-items: center;
-                }
-            }
-
-            .output-controls {
-                button {
-                    -webkit-app-region: no-drag;
-                    margin-left: 15px;
                 }
             }
 

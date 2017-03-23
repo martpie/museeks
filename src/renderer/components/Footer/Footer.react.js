@@ -3,6 +3,7 @@ import { Col, Button, ButtonGroup } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import Icon from 'react-fontawesome';
 
+import OutputDevice from '../OutputDevice';
 import utils from '../../../shared/utils/utils';
 
 
@@ -54,6 +55,13 @@ class Footer extends Component {
                 </div>
                 <div className='status text-center'>
                     { status }
+                </div>
+                <div className='output'>
+                    <OutputDevice
+                        peers={ this.props.network.peers }
+                        me={ this.props.network.me }
+                        output={ this.props.network.output }
+                    />
                 </div>
             </footer>
         );

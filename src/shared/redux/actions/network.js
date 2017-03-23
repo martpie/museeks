@@ -4,8 +4,12 @@ import { uniqBy, flatten, compact } from 'lodash';
 import utils from '../../utils/utils';
 
 const library = (lib) => {
+    const init = () => (disaptch) => {
+        disaptch(find());
+        disaptch(setMe());
+    };
 
-    const setMe = (ips) => {
+    const setMe = () => {
         const interfaces = flatten(Object.values(os.networkInterfaces()));
         const networks = interfaces.filter(adapter => adapter.family === 'IPv4' && !adapter.internal);
 
@@ -23,7 +27,6 @@ const library = (lib) => {
         const me = getState().network.me;
         if (me.hostname != peer.hostname) {
             dispatch(lib.actions.network.find());
-            dispatch();
         }
     };
 
@@ -93,15 +96,14 @@ const library = (lib) => {
 
         // If output has swapped to our computer
         if (isLocal) {
-            console.log(prevOutput);
-            // Ask to be removed as an observer
+            // Ask the previous output for us to be removed as an observer
             // This may fail if the other Museeks stops working.
             // If so, this is fine... Probably...
-            if (prevOutput) {
-                lib.api.actions.network.removeObserver(prevOutput, utils.getMeWithIP(me, prevOutput));
-            }
+            lib.api.actions.network.removeObserver(prevOutput, utils.getMeWithIP(me, prevOutput));
 
             // Dispatch the change event to update the ui
+            // This has promise.resolve so we get fulfilled events
+            // to match the other case.
             dispatch({
                 type: 'NETWORK/SET_OUTPUT',
                 payload: Promise.resolve(),
@@ -141,6 +143,7 @@ const library = (lib) => {
     });
 
     return {
+        init,
         setMe,
         peerFound,
         find,

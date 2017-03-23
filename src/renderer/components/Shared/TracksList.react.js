@@ -7,6 +7,8 @@ import PlayingIndicator from './PlayingIndicator.react';
 
 import lib from '../../lib';
 import utils from '../../../shared/utils/utils';
+import Avatar from '../Avatar';
+
 
 import { remote } from 'electron';
 const { Menu } = remote;
@@ -178,7 +180,7 @@ class TracksList extends Component {
                     <div className='track-cell-header cell-artist'>Artist</div>
                     <div className='track-cell-header cell-album'>Album</div>
                     <div className='track-cell-header cell-genre'>Genre</div>
-                    <div className='track-cell-header cell-host'>Host</div>
+                    <div className='track-cell-header cell-host'>Owner</div>
                 </div>
                 <div className='tracks-list-body' onScroll={ this.scrollTracksList }>
                     <div className='tracks-list-tiles' style={ { height : tracks.length * this.rowHeight } }>
@@ -292,7 +294,7 @@ class TracksList extends Component {
                             { track.genre.join(', ') }
                         </div>
                         <div className='cell cell-host'>
-                            { track.owner.name || track.owner.hostname }
+                            <Avatar name={track.owner.name || track.owner.hostname} />
                         </div>
                     </TrackRow>
                 );

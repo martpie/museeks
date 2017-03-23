@@ -5,9 +5,12 @@ import Popover from '../Popover'
 
 import lib from '../../lib';
 
+import Avatar from '../Avatar'
+import styles from './styles.css';
+
 /*
 |--------------------------------------------------------------------------
-| RepeatButton
+| OutputDevice
 |--------------------------------------------------------------------------
 */
 
@@ -17,6 +20,7 @@ class OutputDevice extends Component {
         setOutput: React.PropTypes.func.isRequired,
         peers: React.PropTypes.array.isRequired,
         me: React.PropTypes.object.isRequired,
+        output: React.PropTypes.object.isRequired,
     }
 
     constructor(props) {
@@ -24,24 +28,27 @@ class OutputDevice extends Component {
     }
 
     render() {
-        const { peers, me, setOutput } = this.props;
+        const { peers, me, output, setOutput } = this.props;
         const allOutputs = [
             ...peers,
             me
         ];
 
+        const textStyle = {
+            marginLeft: '10px'
+        };
+
         return (
             <div className="output-controls">
-
-                <Popover preferPlace="below">
-                    <button>Output</button>
+                <Popover preferPlace="above">
+                    <div className="outputDeviceTrigger">Output:<Avatar style={{marginLeft: '7px'}} name={ output.hostname } /></div>
                     <div className="PopoverMenu">
-                        { allOutputs.map((output) => (
-                            <button
-                                key={ output.id }
-                                onClick={() => setOutput(output)}>
-                            { output.hostname }
-                            </button>
+                        { allOutputs.map((option) => (
+                            <a key={ option.id }
+                                onClick={() => setOutput(option)}>
+                                <Avatar name={ output.hostname }/>
+                                <span style={ textStyle }>{ output.hostname }</span>
+                            </a>
                         ))}
                     </div>
                 </Popover>

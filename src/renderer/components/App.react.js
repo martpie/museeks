@@ -66,6 +66,7 @@ class Museeks extends Component {
                     </Row>
                 </div>
                 <Footer
+                    network={ state.network }
                     tracks={ state.tracks[state.tracksCursor].sub }
                     refreshingLibrary={ state.refreshingLibrary }
                 />

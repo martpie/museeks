@@ -3,17 +3,35 @@
   flex-direction: column;
   background: white;
   z-index: 1;
-  box-shadow: 0 0 0 1px rgba(0,0,0,0.1),0 2px 15px rgba(0,0,0,0.1);
   margin-top: -1px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
 }
 
 .Popover-tipShape {
   fill: white;
   stroke-width: 1;
-  stroke: rgba(0, 0, 0, 0.12);
+  stroke: rgba(0, 0, 0, 0.15);
 }
 
 .Popover {
   z-index: 100;
   transform: translateY(0px) !important;
+}
+
+.PopoverMenu {
+    min-width: 150px;
+}
+
+.PopoverMenu a {
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 5px;
+    color: rgba(0, 0, 0, 0.6);
+}
+
+.PopoverMenu a:hover {
+    text-decoration: none;
+    color: rgba(0, 0, 0, 0.8);
 }
