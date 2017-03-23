@@ -90,7 +90,7 @@ const library = (lib) => {
         if (state.player.playerStatus === 'pause') {
             dispatch(lib.actions.player.start());
         } else if (state.player.playerStatus === 'stop') {
-            dispatch(lib.actions.player.stop();
+            dispatch(lib.actions.player.stop());
         } else  if (state.player.playerStatus === 'play') {
             dispatch(lib.actions.player.play());
         }
