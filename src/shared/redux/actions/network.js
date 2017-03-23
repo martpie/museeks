@@ -25,7 +25,13 @@ const library = (lib) => {
 
     const peerFound = (peer) => (dispatch, getState) => {
         const me = getState().network.me;
-        if (me.hostname != peer.hostname) {
+        if (me.hostname !== peer.hostname) {
+            dispatch({
+                type: 'NETWORK/PEER_FOUND',
+                payload: {
+                    peer
+                }
+            });
             dispatch(lib.actions.network.find());
         }
     };
