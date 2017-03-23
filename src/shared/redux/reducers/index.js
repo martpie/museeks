@@ -17,18 +17,24 @@ const isolatedReducers = combineReducers({
     network,
     playlists,
     toasts,
-    tracks
+    tracks,
+
+    // mock reducers to stop redux complaining about unexpected top level keys
+    player: (state = {}) => state,
+    queue: (state = {}) => state,
+    queueCursor: (state = {}) => state,
+    oldQueue: (state = {}) => state,
+    system: (state = {}) => state
 });
 
-const topLevelReducers = [{
+const topLevelReducers = [
     isolatedReducers,
     player,
     queue
-}];
-
+];
 
 export default (state, action) => {
-    return reducers.reduce((currentState, reducer) => {
+    return topLevelReducers.reduce((currentState, reducer) => {
         return reducer(currentState, action);
     }, state);
-}
+};

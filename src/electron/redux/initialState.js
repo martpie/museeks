@@ -44,9 +44,9 @@ export default {
     library: {
         refreshingLibrary: false,        // If the app is currently refreshing the app
         refreshProgress: 0               // Progress of the refreshing library
-    }
+    },
 
-    playlists: []
+    playlists: [],
 
     queue: [],                       // Tracks to be played
     queueCursor: null,               // The cursor of the queue

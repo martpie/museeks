@@ -30,7 +30,7 @@ class Museeks extends Component {
 
     render() {
         const state = this.props.state;
-        const trackPlayingId = (state.player.queue.length > 0 && state.player.queueCursor !== null) ? state.player.queue[state.player.queueCursor]._id : null;
+        const trackPlayingId = (state.queue.length > 0 && state.queueCursor !== null) ? state.queue[state.queueCursor]._id : null;
 
         return (
             <div className='main'>
@@ -41,8 +41,8 @@ class Museeks extends Component {
                     repeat={ state.repeat }
                     shuffle={ state.shuffle }
                     cover={ state.cover }
-                    queue={ state.player.queue }
-                    queueCursor={ state.player.queueCursor }
+                    queue={ state.queue }
+                    queueCursor={ state.queueCursor }
                     windowControls={ !state.config.useNativeFrame }
                     network={ state.network }
                 />

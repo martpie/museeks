@@ -97,14 +97,14 @@ export default (state = {}, action) => {
         case('PLAYER/SHUFFLE'): {
             if (action.payload.shuffle) {
                 // Let's shuffle that
-                const queueCursor = state.player.queueCursor;
-                let queue = [...state.player.queue];
+                const queueCursor = state.queueCursor;
+                let queue = [...state.queue];
 
                 // Get the current track
                 const firstTrack  = queue[queueCursor];
 
                 // now get only what we want
-                queue = queue.splice(queueCursor + 1, state.player.queue.length - (queueCursor + 1));
+                queue = queue.splice(queueCursor + 1, state.queue.length - (queueCursor + 1));
 
                 let m = queue.length;
                 let t;
@@ -126,7 +126,7 @@ export default (state = {}, action) => {
                     queue,
                     shuffle: true,
                     queueCursor: 0,
-                    oldQueue: state.player.queue,
+                    oldQueue: state.queue,
                 };
             }
 

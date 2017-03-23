@@ -29,7 +29,7 @@ const library = (lib) => {
 
         if (!peer || lib.utils.peerIsMe(peer)) {
             dispatch({
-                type: 'TRACK/FIND',
+                type: 'TRACKS/FIND',
                 payload: lib.track.find({ query, sort }),
                 meta: {
                     owner: me
@@ -37,7 +37,7 @@ const library = (lib) => {
             });
         } else {
             dispatch({
-                type: 'TRACK/FIND',
+                type: 'TRACKS/FIND',
                 payload: lib.api.track.find(peer, { query, sort }),
                 meta: {
                     owner: peer
@@ -49,6 +49,7 @@ const library = (lib) => {
     return {
         find,
         setTracksCursor,
+        remove,
         // filterSearch
     }
 }

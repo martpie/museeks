@@ -3,7 +3,7 @@ import { forwardToRenderer, replayActionMain } from 'electron-redux';
 import promiseMiddleware from 'redux-promise-middleware';
 import thunk from 'redux-thunk';
 import createLogger from 'redux-logger';
-import reducers from '../../shared/redux/reducers/index';
+import reducers from '../../shared/redux/reducers';
 
 import initialState from './initialState';
 

@@ -14,7 +14,7 @@ const library = (lib) => {
                     peer
                 }
             });
-            dispatch(lib.actions.track.find({ peer }));
+            dispatch(lib.actions.tracks.find({ peer }));
         }
     };
 
@@ -80,8 +80,7 @@ const library = (lib) => {
         peerFound,
         setOutput,
         addObserver,
-        removeObserver,
-        fetchCover
+        removeObserver
     };
 }
 

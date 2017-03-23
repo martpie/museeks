@@ -10,8 +10,8 @@ export default (state = {}, action) => {
             // add the peer who owns the track as metadata
 
             const tracksWithMetadata = action.payload.map((track) => extend(track, { owner: action.meta.owner }));
-
-            const uniqueTracks = unionBy(tracksWithMetadata, state.tracks.library.all, '_id');
+console.log(state, action)
+            const uniqueTracks = unionBy(tracksWithMetadata, state.library.all, '_id');
 
             return {
                 ...state,
@@ -29,9 +29,8 @@ export default (state = {}, action) => {
         }
 
         case('TRACKS/SET_TRACKSCURSOR'): {
-            return i.assocIn(state, ['tracks', 'tracksCursor'], action.payload.cursor);
+            return i.assocIn(state, ['tracksCursor'], action.payload.cursor);
         }
-
 
         case('TRACKS/DELETE_FULFILLED'): {
             // const otherTracks = tracks.filter((track) => track.owner !== me);
@@ -52,14 +51,14 @@ export default (state = {}, action) => {
         // case('TRACKS/FILTER'): {
         //     if (!action.payload.search) {
         //         const newState = { ...state };
-        //         newState.tracks[state.tracks.tracksCursor].sub = [...state.tracks[state.tracks.tracksCursor].all];
+        //         newstate[state.tracksCursor].sub = [...state[state.tracksCursor].all];
         //
         //         return newState;
         //     }
         //
         //     const search = utils.stripAccents(action.payload.search);
         //
-        //     const allCurrentTracks = state.tracks[state.tracks.tracksCursor].all;
+        //     const allCurrentTracks = state[state.tracksCursor].all;
         //     const tracks = [].concat(allCurrentTracks).filter((track) => { // Problem here
         //         return track.loweredMetas.artist.join(', ').includes(search)
         //             || track.loweredMetas.album.includes(search)
@@ -68,7 +67,7 @@ export default (state = {}, action) => {
         //     });
         //
         //     const newState = { ...state };
-        //     newState.tracks[state.tracks.tracksCursor].sub = tracks;
+        //     newstate[state.tracksCursor].sub = tracks;
         //
         //     return newState;
         // }

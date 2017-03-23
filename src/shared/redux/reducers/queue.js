@@ -1,7 +1,7 @@
 export default (state = {}, action) => {
     switch (action.type) {
         case('QUEUE/START'): {
-            const queue       = [...state.player.queue];
+            const queue       = [...state.queue];
             const queueCursor = action.payload.index;
 
             // Backup that and change the UI
@@ -14,8 +14,8 @@ export default (state = {}, action) => {
         }
 
         case('QUEUE/CLEAR'): {
-            const queue = [...state.player.queue];
-            queue.splice(state.player.queueCursor + 1, state.player.queue.length - state.player.queueCursor);
+            const queue = [...state.queue];
+            queue.splice(state.queueCursor + 1, state.queue.length - state.queueCursor);
             return {
                 ...state,
                 queue
@@ -23,8 +23,8 @@ export default (state = {}, action) => {
         }
 
         case('QUEUE/REMOVE'): {
-            const queue = [...state.player.queue];
-            queue.splice(state.player.queueCursor + action.payload.index + 1, 1);
+            const queue = [...state.queue];
+            queue.splice(state.queueCursor + action.payload.index + 1, 1);
             return {
                 ...state,
                 queue
@@ -33,7 +33,7 @@ export default (state = {}, action) => {
 
         // Prob here
         case('QUEUE/ADD_FULFILLED'): {
-            const queue = [...state.player.queue, ...action.payload.tracks];
+            const queue = [...state.queue, ...action.payload.tracks];
             return {
                 ...state,
                 queue
@@ -41,8 +41,8 @@ export default (state = {}, action) => {
         }
 
         case('QUEUE/ADD_NEXT_FULFILLED'): {
-            const queue = [...state.player.queue];
-            queue.splice(state.player.queueCursor + 1, 0, ...action.payload.tracks);
+            const queue = [...state.queue];
+            queue.splice(state.queueCursor + 1, 0, ...action.payload.tracks);
             return {
                 ...state,
                 queue

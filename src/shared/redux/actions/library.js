@@ -95,7 +95,6 @@ const library = (lib) => {
     return {
         addFolders,
         removeFolder,
-        remove,
         rescan,
         incrementPlayCount
     };

@@ -27,7 +27,7 @@ const library = (lib) => {
     currentWindow.on('move', saveBounds);
 
     // load data and apply app settings
-    dispatch(lib.actions.track.find());
+    dispatch(lib.actions.tracks.find());
     dispatch(lib.actions.playlists.refresh());
     dispatch(lib.actions.settings.check());
 }
