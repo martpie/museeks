@@ -67,7 +67,6 @@ const library = (lib) => {
         const queuePosition = queue.findIndex((track) => track._id === _id);
 
         if (queuePosition > -1) {
-            const uri = utils.parseUri(queue[queuePosition].path);
             lib.player.setMetadata(queue[queuePosition]);
             lib.player.play();
 

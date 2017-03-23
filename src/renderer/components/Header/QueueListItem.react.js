@@ -82,7 +82,8 @@ class QueueListItem extends PureComponent {
     }
 
     play = () => {
-        this.props.start(this.props.queueCursor + this.props.index + 1);
+        this.props.setCursor(this.props.queueCursor + this.props.index + 1);
+        this.props.play();
     }
 }
 
@@ -90,7 +91,8 @@ const stateToProps = () => ({});
 
 const dispatchToProps = {
     remove: lib.actions.queue.remove,
-    start: lib.actions.queue.start
+    setCursor: lib.actions.queue.setCursor,
+    play: lib.actions.player.play
 };
 
 export default connect(stateToProps, dispatchToProps)(QueueListItem);

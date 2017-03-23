@@ -2,19 +2,6 @@ import utils from  '../../utils/utils';
 
 const library = (lib) => {
 
-    const start = (index) => (dispatch, getState) => {
-        const { queue } = getState();
-        lib.player.setMetadata(queue[index]);
-        lib.player.play();
-
-        return {
-            type: 'QUEUE/START',
-            payload: {
-                index
-            }
-        };
-    };
-
     const clear = () => ({
         type: 'QUEUE/CLEAR'
     });
@@ -47,13 +34,27 @@ const library = (lib) => {
         }
     });
 
+    const setCursor = (index) => (dispatch, getState) => {
+        const { queue } = getState();
+        lib.player.setMetadata(queue[index]);
+        console.log('queue[index]queue[index]queue[index]queue[index]queue[index]', queue[index])
+        // lib.player.play();
+
+        return {
+            type: 'QUEUE/SET_CURSOR',
+            payload: {
+                index
+            }
+        };
+    };
+
     return {
         add,
         addNext,
         clear,
         remove,
-        start,
-        setQueue
+        setQueue,
+        setCursor
     };
 }
 

@@ -51,59 +51,27 @@ export default (state = {}, action) => {
         }
 
         case('PLAYER/PLAY'): {
-            return {
-                ...state,
-                player: {
-                    ...state.player,
-                    playerStatus: 'play'
-                }
-            };
+            return i.assocIn(state, ['player', 'playStatus'], 'play');
         }
 
         case('PLAYER/PAUSE'): {
-            return {
-                ...state,
-                player: {
-                    ...state.player,
-                    playerStatus: 'play'
-                }
-            };
+            return i.assocIn(state, ['player', 'playStatus'], 'pause');
         }
 
         case('PLAYER/STOP'): {
-            const newState = {
-                ...state,
-                queue:  [],
-                queueCursor:  null,
-                player: {
-                    ...state.player,
-                    playerStatus: 'play'
-                }
-            };
-
-            return newState;
+            return i.chain(state)
+                .assoc(state, 'queue', [])
+                .assoc(state, 'queueCursor', null)
+                .assocIn(state, ['player', 'playStatus'], 'stop')
+                .value();
         }
 
         case('PLAYER/NEXT'): {
-            return {
-                ...state,
-                queueCursor: action.payload.newQueueCursor,
-                player: {
-                    ...state.player,
-                    playerStatus: 'play'
-                }
-            };
+            return i.assoc(state, 'queueCursor', action.payload.newQueueCursor);
         }
 
         case('PLAYER/PREVIOUS'): {
-            return {
-                ...state,
-                queueCursor: action.payload.newQueueCursor,
-                player: {
-                    ...state.player,
-                    playerStatus: 'play'
-                }
-            };
+            return i.assoc(state, 'queueCursor', action.payload.newQueueCursor);
         }
 
         case('PLAYER/JUMP_TO'): {
@@ -160,17 +128,11 @@ export default (state = {}, action) => {
         }
 
         case('PLAYER/REPEAT'): {
-            return {
-                ...state,
-                repeat: action.payload.repeat
-            };
+            return i.assocIn(state, ['player', 'repeat'], action.payload.repeat);
         }
 
         case('PLAYER/FETCHED_COVER'): {
-            return {
-                ...state,
-                cover: action.payload.cover || null
-            };
+            return i.assocIn(state, ['player', 'cover'], action.payload.cover || null);
         }
 
         default: {

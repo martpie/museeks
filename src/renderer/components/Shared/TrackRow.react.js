@@ -26,10 +26,6 @@ class TrackRow extends Component {
     constructor(props) {
         super(props);
         this.state = {};
-
-        this.start = this.start.bind(this);
-        this.onMouseDown   = this.onMouseDown.bind(this);
-        this.onContextMenu = this.onContextMenu.bind(this);
     }
 
     render() {

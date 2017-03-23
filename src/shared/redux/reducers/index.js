@@ -24,6 +24,7 @@ const isolatedReducers = combineReducers({
     queue: (state = {}) => state,
     queueCursor: (state = {}) => state,
     oldQueue: (state = {}) => state,
+    oldQueueCursor: (state = {}) => state,
     system: (state = {}) => state
 });
 

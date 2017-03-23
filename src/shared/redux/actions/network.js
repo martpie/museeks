@@ -39,7 +39,6 @@ const library = (lib) => {
         const isLocal = newOutput.hostname === me.hostname;
         const newOutputWithLocalBool = { ...newOutput, isLocal };
 
-
         // If the output has not changed, do nothing.
         if (prevOutput && prevOutput.hostname === newOutput.hostname) {
             return;
@@ -65,40 +64,52 @@ const library = (lib) => {
         }
         // If output has changed to another computer
         else {
+            const meWithIP = utils.getMeWithIP(me, newOutput);
+            const playerState = getPlayerState();
+            playerState.queue = playerState.queue.map((track) => track.owner.hostname === me.hostname
+                ? extend(track, { owner: meWithIP })
+                : track
+            );
+
             // We ask the output device to set us as an observer.
             dispatch({
                 type: 'NETWORK/SET_OUTPUT',
                 payload: lib.api.actions.network.connectAsOutput(newOutput, {
-                    peer: utils.getMeWithIP(me, newOutput),
-                    state: getPlayerState(),
+                    peer: meWithIP,
+                    state: playerState
                 }),
                 meta: { newOutput: newOutputWithLocalBool, prevOutput }
             });
         }
     };
 
-    const connectAsOutput = ({state, peer}) => (dispatch) => {
+    const connectAsOutput = ({ state, peer }) => (dispatch) => {
+        console.log(state, peer)
         // Stop the player from playing
         dispatch(lib.actions.player.stop());
 
         // Apply the input's state
+
         // Set the queue
         dispatch(lib.actions.queue.setQueue(state.queue));
+
         // Set the queueCursor
-        dispatch(lib.actions.queue.start(state.queueCursor));
+        dispatch(lib.actions.queue.setCursor(state.queueCursor));
+
         // Set the play/pause/stop status
         if (state.player.playerStatus === 'pause') {
-            dispatch(lib.actions.player.start());
+            dispatch(lib.actions.player.pause());
         } else if (state.player.playerStatus === 'stop') {
             dispatch(lib.actions.player.stop());
-        } else  if (state.player.playerStatus === 'play') {
+        } else if (state.player.playerStatus === 'play') {
             dispatch(lib.actions.player.play());
         }
+
         // Set the elapsed time.
         dispatch(lib.actions.player.jumpTo(state.elapsed));
 
         // Add the input computer as an observer.
-        dispatch(addObserver({ip, hostname, platform}));
+        dispatch(lib.actions.network.addObserver(peer));
     };
 
     const disconnectAsOutput = ({ peer }) => (dispatch) => {
