@@ -30,6 +30,7 @@ export default {
     // new state above here
 
     tracks: {
+        tracksCursor: 'library',     // 'library' or 'playlist'
         library: {                   // Tracks of the library view
             all: null,               // All tracks
             sub: null                // Filtered tracks (e.g search)
@@ -40,23 +41,27 @@ export default {
         }
     },
 
-    tracksCursor: 'library',         // 'library' or 'playlist'
+    library: {
+        refreshingLibrary: false,        // If the app is currently refreshing the app
+        refreshProgress: 0               // Progress of the refreshing library
+    }
 
-    queue: [],                       // Tracks to be played
-    queueCursor: null,               // The cursor of the queue
+    playlists: []
 
-    oldQueue: null,                  // Queue backup (in case of shuffle)
+    player: {
+        queue: [],                       // Tracks to be played
+        queueCursor: null,               // The cursor of the queue
+        oldQueue: null,                  // Queue backup (in case of shuffle)
 
-    playlists: [],
+        playerStatus: 'stop',            // Player status
+        cover: null,                     // Current trackplaying cover
+        repeat: 'none',                  // the current repeat state (one, all, none)
+        shuffle: false                   // If shuffle mode is enabled
+    },
 
-    playerStatus: 'stop',            // Player status
-    cover: null,                     // Current trackplaying cover
-    toasts: [],                      // The array of toasts
-    refreshingLibrary: false,        // If the app is currently refreshing the app
-    repeat: 'none',                  // the current repeat state (one, all, none)
-    shuffle: false,                  // If shuffle mode is enabled
-    refreshProgress: 0,              // Progress of the refreshing library
+    toasts: [],                          // The array of toasts
+
     system: {
-        version: app.getVersion(),
+        version: app.getVersion()
     }
 };

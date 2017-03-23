@@ -32,7 +32,6 @@ const getMeWithIP = (me, peer) => {
 
     const meCopy = omit(me, ['ips']);
     meCopy.ip = getIP();
-    console.log(peer, meCopy);
     return meCopy;
 };
 

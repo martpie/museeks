@@ -1,3 +1,5 @@
+import { combineReducers } from 'redux';
+
 import app from './app';
 import config from './config';
 import library from './library';
@@ -8,7 +10,7 @@ import queue from './queue';
 import toasts from './toasts';
 import track from './track';
 
-const reducers = [
+const reducers = {
     app,
     config,
     library,
@@ -18,11 +20,6 @@ const reducers = [
     playlists,
     queue,
     track
-];
-
-
-export default (state, action) => {
-    return reducers.reduce((currentState, reducer) => {
-        return reducer(currentState, action);
-    }, state);
 };
+
+export default combineReducers(reducers);

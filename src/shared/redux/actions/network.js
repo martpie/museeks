@@ -76,13 +76,6 @@ const library = (lib) => {
         }
     });
 
-    const fetchCover = (metadata) => ({
-        type: 'NETWORK/FETCHED_COVER',
-        payload: {
-            cover: `${lib.utils.peerEndpoint(metadata.owner)}/api/track/fetchCover?_id=${metadata._id}`
-        }
-    });
-
     return {
         peerFound,
         setOutput,

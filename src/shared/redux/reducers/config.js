@@ -5,21 +5,14 @@ export default (state = {}, action) => {
         case('CONFIG/SET'): {
             return {
                 ...state,
-                config: extend(state.config, { [action.payload.key]: action.payload.value })
+                ...extend(state, { [action.payload.key]: action.payload.value })
             }
         }
 
         case('CONFIG/LOAD_FULFILLED'): {
             return {
                 ...state,
-                config: action.payload
-            }
-        }
-
-        case('CONFIG/MERGE'): {
-            return {
-                ...state,
-                config: extend(state.config, action.payload.config)
+                ...action.payload
             }
         }
 

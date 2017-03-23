@@ -1,7 +1,9 @@
+import i from 'icepick';
+
 export default (state = {}, action) => {
     switch (action.type) {
         case('PLAYER/START'): {
-            const queue = [...state.tracks[state.tracksCursor].sub];
+            const queue = [...state.tracks[state.tracks.tracksCursor].sub];
             const id = action.payload._id;
 
             let queueCursor = action.payload.queuePosition; // Clean that variable mess later
@@ -95,14 +97,14 @@ export default (state = {}, action) => {
         case('PLAYER/SHUFFLE'): {
             if (action.payload.shuffle) {
                 // Let's shuffle that
-                const queueCursor = state.queueCursor;
-                let queue = [...state.queue];
+                const queueCursor = state.player.queueCursor;
+                let queue = [...state.player.queue];
 
                 // Get the current track
                 const firstTrack  = queue[queueCursor];
 
                 // now get only what we want
-                queue = queue.splice(queueCursor + 1, state.queue.length - (queueCursor + 1));
+                queue = queue.splice(queueCursor + 1, state.player.queue.length - (queueCursor + 1));
 
                 let m = queue.length;
                 let t;
@@ -124,18 +126,18 @@ export default (state = {}, action) => {
                     queue,
                     shuffle: true,
                     queueCursor: 0,
-                    oldQueue: state.queue,
+                    oldQueue: state.player.queue,
                 };
             }
 
-            const currentTrackIndex = state.oldQueue.findIndex((track) => {
+            const currentTrackIndex = state.player.oldQueue.findIndex((track) => {
                 return action.payload.currentSrc === `file://${encodeURI(track.path)}`;
             });
 
             // Roll back to the old but update queueCursor
             return {
                 ...state,
-                queue: [...state.oldQueue],
+                queue: [...state.player.oldQueue],
                 queueCursor: currentTrackIndex,
                 shuffle: false
             };
@@ -145,6 +147,14 @@ export default (state = {}, action) => {
             return {
                 ...state,
                 repeat: action.payload.repeat
+            };
+        }
+
+
+        case('PLAYER/FETCHED_COVER'): {
+            return {
+                ...state,
+                cover: action.payload.cover || null
             };
         }
 

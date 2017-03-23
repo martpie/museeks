@@ -10,7 +10,7 @@ export default (state = {}, payload) => {
 
         case('PLAYLISTS/LOAD_ONE'): {
             const newState = { ...state };
-            newState.tracks[state.tracksCursor] = {
+            newState.tracks[state.tracks.tracksCursor] = {
                 all: [...payload.tracks],
                 sub: [...payload.tracks]
             };

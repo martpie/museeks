@@ -11,7 +11,7 @@ const library = (lib) => {
 
     const playToggle = () => (dispatch, getState) => {
         const paused = lib.player.isPaused();
-        const { queue } = getState();
+        const { queue } = getState().player;
         if (paused && queue.length > 0) {
             dispatch(lib.actions.player.play());
         } else {
@@ -20,8 +20,7 @@ const library = (lib) => {
     };
 
     const play = () => (dispatch, getState) => {
-        const { queue, network: { output } } = getState();
-
+        const { player: { queue }, network: { output } } = getState();
 
         // lib.store.dispatch(lib.actions.player.nowPlaying(track));
         //
@@ -34,7 +33,6 @@ const library = (lib) => {
         //         });
         //     });
         // }
-
 
         if (queue !== null) {
             if (output.islocal) {
@@ -49,7 +47,8 @@ const library = (lib) => {
     };
 
     const pause = () => (dispatch, getState) => {
-        const { queue, network: { output } } = getState();
+        const { player: { queue }, network: { output } } = getState();
+
         if (queue !== null) {
             if (output.isLocal) {
                 lib.player.pause();
@@ -63,7 +62,7 @@ const library = (lib) => {
     };
 
     const start = (_id) => (dispatch, getState) => {
-        const { tracks, tracksCursor } = getState();
+        const { tracks, tracks: { tracksCursor } } = getState();
         const queue = [...tracks[tracksCursor].sub];
         const queuePosition = queue.findIndex((track) => track._id === _id);
 
@@ -90,8 +89,7 @@ const library = (lib) => {
     };
 
     const next = () => (dispatch, getState) => {
-        // TODO (y.solovyov | KeitIG): calling getState is a hack.
-        const { queue, queueCursor, repeat } = getState();
+        const { queue, queueCursor, repeat } = getState().player;
         let newQueueCursor;
 
         if(repeat === 'one') {
@@ -119,7 +117,7 @@ const library = (lib) => {
     };
 
     const previous = () => (dispatch, getState) => {
-        const { queue, queueCursor } = getState();
+        const { queue, queueCursor } = getState().player;
         const currentTime = lib.player.getCurrentTime();
 
         // If track started less than 5 seconds ago, play the previous track,
@@ -219,6 +217,13 @@ const library = (lib) => {
         }
     };
 
+    const fetchCover = (metadata) => ({
+        type: 'PLAYER/FETCHED_COVER',
+        payload: {
+            cover: `${lib.utils.peerEndpoint(metadata.owner)}/api/track/fetchCover?_id=${metadata._id}`
+        }
+    });
+
     return {
         audioError,
         jumpTo,
@@ -227,6 +232,7 @@ const library = (lib) => {
         play,
         playToggle,
         previous,
+        fetchCover,
         repeat,
         setMuted,
         setPlaybackRate,

@@ -30,7 +30,7 @@ class Museeks extends Component {
 
     render() {
         const state = this.props.state;
-        const trackPlayingId = (state.queue.length > 0 && state.queueCursor !== null) ? state.queue[state.queueCursor]._id : null;
+        const trackPlayingId = (state.player.queue.length > 0 && state.player.queueCursor !== null) ? state.player.queue[state.player.queueCursor]._id : null;
 
         return (
             <div className='main'>
@@ -41,8 +41,8 @@ class Museeks extends Component {
                     repeat={ state.repeat }
                     shuffle={ state.shuffle }
                     cover={ state.cover }
-                    queue={ state.queue }
-                    queueCursor={ state.queueCursor }
+                    queue={ state.player.queue }
+                    queueCursor={ state.player.queueCursor }
                     windowControls={ !state.config.useNativeFrame }
                     network={ state.network }
                 />
@@ -54,9 +54,9 @@ class Museeks extends Component {
                                 config: state.config,
                                 playerStatus: state.playerStatus,
                                 network: state.network,
-                                queue: state.queue,
-                                tracks: state.tracks[state.tracksCursor].sub,
-                                library: state.tracks[state.tracksCursor].all,
+                                queue: state.player.queue,
+                                tracks: state.tracks[state.tracks.tracksCursor].sub,
+                                library: state.tracks[state.tracks.tracksCursor].all,
                                 playlists: state.playlists,
                                 refreshingLibrary: state.refreshingLibrary,
                                 refreshProgress: state.refreshProgress,
@@ -67,7 +67,7 @@ class Museeks extends Component {
                 </div>
                 <Footer
                     network={ state.network }
-                    tracks={ state.tracks[state.tracksCursor].sub }
+                    tracks={ state.tracks[state.tracks.tracksCursor].sub }
                     refreshingLibrary={ state.refreshingLibrary }
                 />
                 <Toasts toasts={ state.toasts } />
