@@ -24,16 +24,18 @@ class SettingsAbout extends Component {
     }
 
     render() {
+        const { version } = this.props;
+
         return (
             <div className='setting setting-about'>
                 <div className='setting-section'>
                     <h4>About Museeks</h4>
                     <img src={ museeksLogo } className='logo-museeks' alt='Logo' title='Museeks logo' />
                     <p>
-                        Museeks { app.version }{ ' - ' }
+                        Museeks { version }{ ' - ' }
                         <ExternalLink href='http://museeks.io'>museeks.io</ExternalLink>
                         { ' - ' }
-                        <ExternalLink href={ `https://github.com/KeitIG/Museeks/releases/tag/${app.version}` }>release notes</ExternalLink>
+                        <ExternalLink href={ `https://github.com/KeitIG/Museeks/releases/tag/${version}` }>release notes</ExternalLink>
                         <Button bsSize='small' className='update-checker' onClick={ this.props.checkForUpdate }>Check for update</Button>
                     </p>
                 </div>
@@ -65,7 +67,9 @@ class SettingsAbout extends Component {
     }
 }
 
-const stateToProps = () => ({});
+const stateToProps = (state) => ({
+    version: state.system.version
+});
 
 const dispatchToProps = {
     checkForUpdate: lib.actions.settings.checkForUpdate

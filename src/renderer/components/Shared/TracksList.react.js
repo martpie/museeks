@@ -180,7 +180,7 @@ class TracksList extends Component {
                     <div className='track-cell-header cell-artist'>Artist</div>
                     <div className='track-cell-header cell-album'>Album</div>
                     <div className='track-cell-header cell-genre'>Genre</div>
-                    <div className='track-cell-header cell-host'>Owner</div>
+                    <div className='track-cell-header cell-owner'>Owner</div>
                 </div>
                 <div className='tracks-list-body' onScroll={ this.scrollTracksList }>
                     <div className='tracks-list-tiles' style={ { height : tracks.length * this.rowHeight } }>
@@ -293,7 +293,7 @@ class TracksList extends Component {
                         <div className='cell cell-genre'>
                             { track.genre.join(', ') }
                         </div>
-                        <div className='cell cell-host'>
+                        <div className='cell cell-owner'>
                             <Avatar name={track.owner.name || track.owner.hostname} />
                         </div>
                     </TrackRow>

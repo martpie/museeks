@@ -1,5 +1,6 @@
 import os from 'os';
 import { flatten } from 'lodash';
+import { app } from 'electron';
 
 const interfaces = flatten(Object.values(os.networkInterfaces()));
 const networks = interfaces.filter(adapter => adapter.family === 'IPv4' && !adapter.internal);
@@ -54,5 +55,8 @@ export default {
     refreshingLibrary: false,        // If the app is currently refreshing the app
     repeat: 'none',                  // the current repeat state (one, all, none)
     shuffle: false,                  // If shuffle mode is enabled
-    refreshProgress: 0               // Progress of the refreshing library
+    refreshProgress: 0,              // Progress of the refreshing library
+    system: {
+        version: app.getVersion(),
+    }
 };

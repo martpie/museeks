@@ -22,5 +22,4 @@ export default {
     browserWindows: {
         main: BrowserWindow.getAllWindows()[0]
     },
-    version: app.getVersion()
 }
