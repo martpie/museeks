@@ -48,6 +48,9 @@ class PeerDiscovery {
         const networks = interfaces.filter(adapter => adapter.family === 'IPv4' && !adapter.internal); // only scan for external ipv4 adapters
         const { port } = this.lib.store.getState().config.electron.api;
 
+        // Set the network.me in the store
+        this.lib.store.dispatch(this.lib.actions.network.setMe(networks.map(network => network.address)));
+
         const scanNetwork = (network) => {
 
             const lookup = new scan({

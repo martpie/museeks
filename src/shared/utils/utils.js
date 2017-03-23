@@ -3,8 +3,38 @@ import fs from 'fs';
 import mmd from 'musicmetadata';
 import globby from 'globby';
 import Promise from 'bluebird';
+import { omit } from 'lodash';
 
 const musicmetadata = Promise.promisify(mmd);
+
+/**
+ * Get the me object with a single IP instead of an array
+ * This is done by finding the adaptor in the same DNS zone
+ * as the peer.
+ *
+ * @param int duration
+ * @return string
+ */
+
+const getMeWithIP = (me, peer) => {
+    // Get the DNS zone. 192.168.0.50 returns 192.168.0
+    const getDnsZone = (ip) => ip.substr(0, ip.lastIndexOf('.'));
+
+    // Get the IP that matches the DNS zone
+    const getIP = () => {
+        if (me.ips.length == 1) {
+            return me.ips[0];
+        } else {
+            const peerDnsZone = getDnsZone(peer.ip);
+            return me.ips.find(ip => getDnsZone(ip) === peerDnsZone);
+        }
+    };
+
+    const meCopy = omit(me, ['ips']);
+    meCopy.ip = getIP();
+    console.log(peer, meCopy);
+    return meCopy;
+};
 
 
 /**
@@ -337,6 +367,7 @@ const supportedExtensions = [
 ];
 
 export default {
+    getMeWithIP,
     parseDuration,
     getStatus,
     parseUri,

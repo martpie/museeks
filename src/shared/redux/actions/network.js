@@ -1,19 +1,26 @@
 import Promise from 'bluebird';
+import os from 'os';
 import { uniqBy, flatten, compact } from 'lodash';
 import utils from '../../utils/utils';
 
 const library = (lib) => {
 
+    const setMe = (ips) => {
+        return {
+            type: 'NETWORK/SET_ME',
+            payload: {
+                ips: ips,
+                hostname: os.hostname(),
+                platform: os.platform(),
+            }
+        }
+    };
+
     const peerFound = (peer) => (dispatch, getState) => {
         const me = getState().network.me;
         if (me.hostname != peer.hostname) {
             dispatch(lib.actions.network.find());
-            dispatch({
-                type: 'NETWORK/PEER_FOUND',
-                payload: {
-                    peer
-                }
-            });
+            dispatch();
         }
     };
 
@@ -69,26 +76,26 @@ const library = (lib) => {
     };
 
     const setOutput = (newOutput) => (dispatch, getState) => {
-        const state = getState();
-        const me = state.network.me;
-        const prevOutput = state.network.output;
+        const { network : { output: prevOutput }, network : { me } } = getState();
 
         // Add the isLocal bool to the output object for convenience elsewhere.
         const isLocal = newOutput.hostname === me.hostname;
         const newOutputWithLocalBool = { ...newOutput, isLocal };
+
 
         // If the output has not changed, do nothing.
         if (prevOutput && prevOutput.hostname === newOutput.hostname) {
             return;
         }
 
+
         // If output has swapped to our computer
-        else if (isLocal) {
+        if (isLocal) {
             // Ask to be removed as an observer
             // This may fail if the other Museeks stops working.
             // If so, this is fine... Probably...
             if (prevOutput) {
-                lib.api.actions.network.removeObserver(prevOutput, me);
+                lib.api.actions.network.removeObserver(prevOutput, utils.getMeWithIP(me, prevOutput));
             }
 
             // Dispatch the change event to update the ui
@@ -103,7 +110,7 @@ const library = (lib) => {
             // We ask the output device to set us as an observer.
             dispatch({
                 type: 'NETWORK/SET_OUTPUT',
-                payload: lib.api.actions.network.addObserver(newOutput, me),
+                payload: lib.api.actions.network.addObserver(newOutput, utils.getMeWithIP(me, newOutput)),
                 meta: { newOutput: newOutputWithLocalBool, prevOutput }
             });
         }
@@ -131,6 +138,7 @@ const library = (lib) => {
     });
 
     return {
+        setMe,
         peerFound,
         find,
         start,

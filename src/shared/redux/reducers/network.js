@@ -4,6 +4,10 @@ import { find } from 'lodash';
 export default (state = {}, action) => {
     switch (action.type) {
 
+        case('NETWORK/SET_ME'): {
+            return i.assocIn(state, ['network', 'me'], action.payload);
+        }
+
         case('NETWORK/PEER_FOUND'): {
             const newPeer = action.payload.peer;
             return i.updateIn(state, ['network', 'peers'], (peers) => {

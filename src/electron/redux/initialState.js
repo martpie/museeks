@@ -12,9 +12,9 @@ export default {
             isLocal: true
         },
         me: {
-            ip: 'localhost',
-            hostname: os.hostname(),
-            platform: os.platform()
+            ips: [],
+            hostname: null,
+            platform: null
         }
     },
 

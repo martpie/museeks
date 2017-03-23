@@ -43,7 +43,6 @@ class ButtonShuffle extends Component {
 }
 
 const stateToProps = () => ({});
-console.log(lib)
 const dispatchToProps = {
     repeat: lib.actions.player.repeat
 };
