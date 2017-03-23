@@ -35,7 +35,7 @@ const library = (lib) => {
         // }
 
         if (queue !== null) {
-            if (output.islocal) {
+            if (output.isLocal) {
                 lib.player.play();
             } else {
                 lib.api.actions.player.play(output);

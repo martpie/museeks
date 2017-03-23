@@ -22,6 +22,13 @@ export default (state = {}, action) => {
             };
         }
 
+        case('QUEUE/SET'): {
+            return {
+                ...state,
+                queue: action.payload
+            };
+        }
+
         case('QUEUE/REMOVE'): {
             const queue = [...state.queue];
             queue.splice(state.queueCursor + action.payload.index + 1, 1);

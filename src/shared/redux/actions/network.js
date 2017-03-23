@@ -1,9 +1,30 @@
 import Promise from 'bluebird';
 import os from 'os';
-import { flatten } from 'lodash';
+import { flatten, pick } from 'lodash';
 import utils from '../../utils/utils';
 
 const library = (lib) => {
+
+    const getPlayerState = () => (dispatch, getState) => {
+        const state = getState();
+
+        const properites = [
+            'player',
+            'queue',
+            'queueCursor'
+        ];
+
+        const storeState = pick(state, properites);
+
+        const otherState = {
+            elapsed: lib.player.getCurrentTime(),
+        };
+
+        return {
+            ...storeState
+            ...otherState
+        }
+    };
 
     const peerFound = (peer) => (dispatch, getState) => {
         const me = getState().network.me;
@@ -19,6 +40,7 @@ const library = (lib) => {
     };
 
     const setOutput = (newOutput) => (dispatch, getState) => {
+        console.log(dispatch(getPlayerState()));
         const { network : { output: prevOutput }, network : { me } } = getState();
 
         // Add the isLocal bool to the output object for convenience elsewhere.
@@ -56,7 +78,31 @@ const library = (lib) => {
                 meta: { newOutput: newOutputWithLocalBool, prevOutput }
             });
         }
-    }
+    };
+
+    const becomeRemoteOutput = (inputState) => (dispatch) => {
+        // Stop the player from playing
+        dispatch(lib.actions.player.stop());
+
+        // Apply the input's state
+        // Set the queue
+        dispatch(lib.actions.queue.setQueue(inputState.queue));
+        // Set the queueCursor
+        dispatch(lib.actions.queue.start(inputState.queueCursor));
+        // Set the play/pause/stop status
+        if (inputState.player.playerStatus === 'pause') {
+            dispatch(lib.actions.player.start(inputState.queueCursor));
+        } else if (inputState.player.playerStatus === 'stop') {
+            dispatch(lib.actions.player.stop(inputState.queueCursor));
+        } else  if (inputState.player.playerStatus === 'play') {
+            dispatch(lib.actions.player.play(inputState.queueCursor));
+        }
+        // Set the elapsed time
+        dispatch(lib.actions.player.jumpTo(inputState.elapsed));
+
+
+
+    };
 
     const addObserver = ({ ip, hostname, platform }) => ({
         type: 'NETWORK/ADD_OBSERVER',
@@ -78,6 +124,7 @@ const library = (lib) => {
 
     return {
         peerFound,
+//        becomeRemoteOutput,
         setOutput,
         addObserver,
         removeObserver
