@@ -13,6 +13,7 @@ const library = (lib) => {
             query,
             sort
         })
+
         return lib.api.track.find(peer, {
             query,
             sort
