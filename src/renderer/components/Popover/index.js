@@ -6,7 +6,7 @@ import Popover from 'react-popover';
 const PropTypesObject = {
   preferPlace         : PropTypes.string,               // ['above', 'below', 'left', 'right']
                                                         // Default: 'above'
-  open                : PropTypes.bool,                 // Is the popover open? Often used with trigger == 'none'
+  open                : PropTypes.bool,                 // Is the popover open? Often used with trigger === 'none'
   trigger             : PropTypes.string,               // ['click', 'hover', 'hoverDelay', 'none']
                                                         // Default: 'click'
   disableClickClose   : PropTypes.bool,                 // This will stop the popup closing when the overlay is clicked.
@@ -41,7 +41,7 @@ export default React.createClass({
   },
   toggle (toState) {
     const newValue = toState === null ? !this.state.isOpen : toState;
-    if(this.state.isOpen != newValue){
+    if(this.state.isOpen !== newValue){
       this.setState({ isOpen: newValue });
     }
   },
@@ -98,7 +98,7 @@ export default React.createClass({
       <Popover
         isOpen={isOpen}
         body={children[1] ? React.cloneElement(children[1], contentPropsWithInherit) : ''}
-        onOuterAction={()=>{if(trigger != 'none'){this.toggle(false)}}}
+        onOuterAction={()=>{if(trigger !== 'none'){this.toggle(false)}}}
         preferPlace = {preferPlace || 'above'}
         tipSize={tipSizeDefault}
         offset={offset}>

@@ -22,7 +22,7 @@ const getMeWithIP = (me, peer) => {
 
     // Get the IP that matches the DNS zone
     const getIP = () => {
-        if (me.ips.length == 1) {
+        if (me.ips.length === 1) {
             return me.ips[0];
         } else {
             const peerDnsZone = getDnsZone(peer.ip);

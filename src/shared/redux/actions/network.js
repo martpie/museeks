@@ -21,9 +21,14 @@ const library = (lib) => {
 
     const peerFound = (peer) => (dispatch, getState) => {
         const me = getState().network.me;
-        if (me.hostname != peer.hostname) {
+        if (me.hostname !== peer.hostname) {
+            dispatch({
+                type: 'NETWORK/PEER_FOUND',
+                payload: {
+                    peer
+                }
+            });
             dispatch(lib.actions.network.find());
-            dispatch();
         }
     };
 
@@ -93,7 +98,6 @@ const library = (lib) => {
 
         // If output has swapped to our computer
         if (isLocal) {
-            console.log(prevOutput);
             // Ask to be removed as an observer
             // This may fail if the other Museeks stops working.
             // If so, this is fine... Probably...
