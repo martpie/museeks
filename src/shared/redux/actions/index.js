@@ -10,6 +10,7 @@ import playlists from'./playlists';
 import queue from'./queue';
 import settings from'./settings';
 import toasts from'./toasts';
+import track from'./track';
 
 // take in a lib object containing the environment specific implementation
 // for the environment this is being run in (renderer/electron)
@@ -25,7 +26,8 @@ const lib = (lib) => {
         playlists,
         queue,
         settings,
-        toasts
+        toasts,
+        track
     }
 
     // create a copy of the library to attach actions to

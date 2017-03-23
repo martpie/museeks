@@ -44,10 +44,10 @@ class OutputDevice extends Component {
                     <div className="outputDeviceTrigger">Output:<Avatar style={{marginLeft: '7px'}} name={ output.hostname } /></div>
                     <div className="PopoverMenu">
                         { allOutputs.map((option) => (
-                            <a key={ option.id }
+                            <a key={ option.hostname }
                                 onClick={() => setOutput(option)}>
-                                <Avatar name={ output.hostname }/>
-                                <span style={ textStyle }>{ output.hostname }</span>
+                                <Avatar name={ option.hostname }/>
+                                <span style={ textStyle }>{ option.hostname }</span>
                             </a>
                         ))}
                     </div>

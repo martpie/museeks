@@ -11,14 +11,6 @@ export default [{
         return req.lib.track.find({ query }).then(res);
     }
 }, {
-    path: 'api/track/findOne',
-    method: 'GET',
-    name: 'track.findOne',
-    handler: (req, res) => {
-        const query = req.query.query;
-        return req.lib.track.findOne({ query }).then(res);
-    }
-}, {
     path: 'api/track/download',
     method: 'GET',
     name: 'track.download',
@@ -49,11 +41,19 @@ export default [{
     },
     handler: (req, res) => {
         const query = req.query;
-        return req.lib.track.findOne({ query }).then((track) => !track
-            ? res(Boom.notFound())
-            : utils.fetchCover(track.path).then((path) => {
-                res.file(path, { confine : false });
-            })
-        );
+        const tracks = req.lib.store.getState().tracks.library.all;
+        const track = tracks.find((track) => track._id === req.query._id);
+
+        if (!track) {
+            res(Boom.notFound());
+        } else {
+            return utils.fetchCover(track.path).then((art) => {
+                if (art.format === 'base64') {
+                    res(art.data);
+                } else {
+                    res.file(art.data, { confine : false });
+                }
+            });
+        }
     }
 }];

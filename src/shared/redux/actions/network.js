@@ -1,27 +1,9 @@
 import Promise from 'bluebird';
 import os from 'os';
-import { uniqBy, flatten, compact } from 'lodash';
+import { flatten } from 'lodash';
 import utils from '../../utils/utils';
 
 const library = (lib) => {
-    const init = () => (disaptch) => {
-        disaptch(find());
-        disaptch(setMe());
-    };
-
-    const setMe = () => {
-        const interfaces = flatten(Object.values(os.networkInterfaces()));
-        const networks = interfaces.filter(adapter => adapter.family === 'IPv4' && !adapter.internal);
-
-        return {
-            type: 'NETWORK/SET_ME',
-            payload: {
-                ips: networks.map(network => network.address),
-                hostname: os.hostname(),
-                platform: os.platform(),
-            }
-        }
-    };
 
     const peerFound = (peer) => (dispatch, getState) => {
         const me = getState().network.me;
@@ -32,58 +14,7 @@ const library = (lib) => {
                     peer
                 }
             });
-            dispatch(lib.actions.network.find());
-        }
-    };
-
-    const find = ({ peers = [], query, sort } = {}) => (dispatch, getState) => {
-
-        // if no peers were supplied, search all peers
-        if (peers.length === 0) {
-            peers = getState().network.peers;
-        }
-
-        const getLibrary = (peer) => lib.network.find({ peer, query, sort });
-        const queryPeers = Promise.map(peers, getLibrary);
-
-        const uniqueTracks = (tracks) => uniqBy(tracks, '_id');
-
-        const tracks = queryPeers
-        .then(flatten)
-        .then(uniqueTracks);
-
-        dispatch({
-            type: 'NETWORK/FIND',
-            payload: tracks
-        });
-    };
-
-    const findOne = ({ peers = [], query } = {}) => (dispatch, getState) => {
-
-        // if no peers were supplied, search all peers
-        if (peers.length === 0) {
-            peers = getState().network.peers;
-        }
-
-        const getSong = (peer) => lib.network.findOne({ peer, query });
-        const queryPeers = Promise.map(peers, getSong);
-
-        const track = queryPeers
-        .then(flatten)
-        .then(compact);
-
-        dispatch({
-            type: 'NETWORK/FIND_ONE',
-            payload: track
-        });
-    };
-
-    const start = ({ source, destination, track } = {}) => {
-        return {
-            type: 'NETWORK/START',
-            payload: {
-                peer
-            }
+            dispatch(lib.actions.track.find({ peer }));
         }
     };
 
@@ -149,11 +80,7 @@ const library = (lib) => {
     });
 
     return {
-        init,
-        setMe,
         peerFound,
-        find,
-        start,
         setOutput,
         addObserver,
         removeObserver,

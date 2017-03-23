@@ -1,4 +1,11 @@
 import os from 'os';
+import { flatten } from 'lodash';
+
+const interfaces = flatten(Object.values(os.networkInterfaces()));
+const networks = interfaces.filter(adapter => adapter.family === 'IPv4' && !adapter.internal);
+const ips = networks.map(network => network.address);
+const hostname = os.hostname();
+const platform = os.platform();
 
 export default {
 
@@ -7,14 +14,15 @@ export default {
         peers: [],
         output: {
             ip: 'localhost',
-            hostname: os.hostname(),
-            platform: os.platform(),
+            hostname,
+            platform,
             isLocal: true
         },
         me: {
-            ips: [],
-            hostname: null,
-            platform: null
+            ips,
+            hostname,
+            platform,
+            isLocal: true
         }
     },
 

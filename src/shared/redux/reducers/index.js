@@ -1,21 +1,23 @@
 import app from './app';
 import config from './config';
 import library from './library';
-import toasts from './toasts';
+import network from './network';
 import player from './player';
 import playlists from './playlists';
-import network from './network';
 import queue from './queue';
+import toasts from './toasts';
+import track from './track';
 
 const reducers = [
     app,
     config,
     library,
     toasts,
+    network,
     player,
     playlists,
-    network,
-    queue
+    queue,
+    track
 ];
 
 

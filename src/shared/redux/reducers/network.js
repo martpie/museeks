@@ -40,7 +40,7 @@ export default (state = {}, action) => {
             return i.assocIn(state, ['network', 'output'], action.meta.newOutput);
         }
         case('NETWORK/SET_OUTPUT_REJECTED'): {
-            return i.assocIn(state, ['network', 'output'], action.meta.oldOutput);
+            return i.assocIn(state, ['network', 'output'], action.meta.prevOutput);
         }
 
         case('NETWORK/FIND_FULFILLED'): {

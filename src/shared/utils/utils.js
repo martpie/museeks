@@ -331,20 +331,29 @@ const fetchCover = async (trackPath) => {
     const data = await musicmetadata(stream);
 
     if (data.picture[0]) { // If cover in id3
-        return parseBase64(data.picture[0].format, data.picture[0].data.toString('base64'));
+        return {
+            format: 'base64',
+            data: data.picture[0].data
+        }
+    } else {
+
+        // scan folder for any cover image
+        const folder = path.dirname(trackPath);
+        const pattern = path.join(folder, '*');
+        const matches = await globby(pattern, { nodir: true, follow: false });
+
+        const path = matches.find((elem) => {
+            const parsedPath = path.parse(elem);
+
+            return ['album', 'albumart', 'folder', 'cover'].includes(parsedPath.name.toLowerCase())
+                && ['.png', '.jpg', '.bmp', '.gif'].includes(parsedPath.ext.toLowerCase());
+        });
+
+        return {
+            format: 'path',
+            data: path
+        }
     }
-
-    // scan folder for any cover image
-    const folder = path.dirname(trackPath);
-    const pattern = path.join(folder, '*');
-    const matches = await globby(pattern, { nodir: true, follow: false });
-
-    return matches.find((elem) => {
-        const parsedPath = path.parse(elem);
-
-        return ['album', 'albumart', 'folder', 'cover'].includes(parsedPath.name.toLowerCase())
-            && ['.png', '.jpg', '.bmp', '.gif'].includes(parsedPath.ext.toLowerCase()) ;
-    });
 };
 
 const supportedExtensions = [
