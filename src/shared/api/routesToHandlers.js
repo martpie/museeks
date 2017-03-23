@@ -16,7 +16,7 @@ const routesToHandlers = (routes, lib) => {
             // get the function arguments
             const args = route.method === 'GET'
                 ? req.query
-                : req.payload.data;
+                : req.payload;
 
             // optionally transform the arguments
             const transformedArgs = route.argTransform
@@ -24,9 +24,9 @@ const routesToHandlers = (routes, lib) => {
                 : args;
 
             // wrap the function in a redux dispatch if required
-            const dispatchedFunction = (args) => route.dispatch
-                ? lib.store.dispatch(libraryFunction.apply(null, args))
-                : libraryFunction.apply(null, args);
+            const dispatchedFunction = (inputs) => route.dispatch
+                ? lib.store.dispatch(libraryFunction(inputs))
+                : libraryFunction(inputs)
 
             return Promise.resolve(dispatchedFunction(transformedArgs))
                 .then((result) => res(result || 'done'))

@@ -32,7 +32,7 @@ class VolumeControl extends Component {
         this.state = {
             showVolume: false,
             volume: unsmoothifyVolume(lib.player.audio.volume),
-            muted: lib.player.audio.muted
+            muted: lib.player.isMuted()
         };
 
         this.mute = this.mute.bind(this);

@@ -10,7 +10,7 @@ const library = (lib) => {
     };
 
     const playToggle = () => (dispatch, getState) => {
-        const { paused } = lib.player.audio; // TODO Jackson
+        const paused = lib.player.isPaused();
         const { queue } = getState();
         if (paused && queue.length > 0) {
             dispatch(lib.actions.player.play());
@@ -50,9 +50,8 @@ const library = (lib) => {
 
     const pause = () => (dispatch, getState) => {
         const { queue, network: { output } } = getState();
-
         if (queue !== null) {
-            if (output.islocal) {
+            if (output.isLocal) {
                 lib.player.pause();
             } else {
                 lib.api.actions.player.pause(output);

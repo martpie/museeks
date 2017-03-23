@@ -58,10 +58,14 @@ const library = (lib) => {
         }
     }
 
-    const addObserver = (peer) => ({
+    const addObserver = ({ ip, hostname, platform }) => ({
         type: 'NETWORK/ADD_OBSERVER',
         payload: {
-            peer
+            peer: {
+                ip,
+                hostname,
+                platform
+            }
         }
     });
 
