@@ -53,7 +53,7 @@ class Library extends Component {
                 </FullViewMessage>
             );
         }
-
+console.log('ZZZZZZZZZZZZZZZZZZZZZZZ', this.props)
         // Empty search
         if (this.props.tracks.length === 0) {
             return (

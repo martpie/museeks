@@ -10,22 +10,10 @@ export default (state = {}, action) => {
             // add the peer who owns the track as metadata
 
             const tracksWithMetadata = action.payload.map((track) => extend(track, { owner: action.meta.owner }));
-console.log(state, action)
+
             const uniqueTracks = unionBy(tracksWithMetadata, state.library.all, '_id');
 
-            return {
-                ...state,
-                tracks: {
-                    library: {
-                        all: uniqueTracks,
-                        sub: uniqueTracks
-                    },
-                    playlist: {
-                        all: [],
-                        sub: []
-                    }
-                }
-            };
+            return i.assocIn(state, ['library', 'all'], uniqueTracks);
         }
 
         case('TRACKS/SET_TRACKSCURSOR'): {

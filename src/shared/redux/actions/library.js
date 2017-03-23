@@ -34,7 +34,7 @@ const library = (lib) => {
 
     const removeFolder = (index) => (dispatch, getState) => {
         const state = getState();
-        if (!state.refreshingLibrary) {
+        if (!state.library.refreshingLibrary) {
             const folders = state.config.musicFolders;
             folders.splice(index, 1);
 
