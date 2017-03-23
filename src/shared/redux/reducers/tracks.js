@@ -13,7 +13,10 @@ export default (state = {}, action) => {
 
             const uniqueTracks = unionBy(tracksWithMetadata, state.library.all, '_id');
 
-            return i.assocIn(state, ['library', 'all'], uniqueTracks);
+            return i.chain(state)
+                .assocIn(['library', 'all'], uniqueTracks)
+                .assocIn(['library', 'sub'], uniqueTracks)
+                .value();
         }
 
         case('TRACKS/SET_TRACKSCURSOR'): {

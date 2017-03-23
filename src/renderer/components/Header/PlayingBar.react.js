@@ -224,7 +224,7 @@ const stateToProps = () => ({});
 
 const dispatchToProps = {
     jumpTo: lib.actions.player.jumpTo,
-    fetchCover: lib.actions.network.fetchCover
+    fetchCover: lib.actions.player.fetchCover
 };
 
 export default connect(stateToProps, dispatchToProps)(PlayingBar);

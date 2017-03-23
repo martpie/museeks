@@ -32,12 +32,12 @@ export default {
     tracks: {
         tracksCursor: 'library',     // 'library' or 'playlist'
         library: {                   // Tracks of the library view
-            all: null,               // All tracks
-            sub: null                // Filtered tracks (e.g search)
+            all: [],               // All tracks
+            sub: []                // Filtered tracks (e.g search)
         },
         playlist: {
-            all: null,
-            sub: null
+            all: [],
+            sub: []
         }
     },
 
