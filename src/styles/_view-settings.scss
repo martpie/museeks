@@ -90,6 +90,45 @@
 }
 
 
+/*
+|--------------------------------------------------------------------------
+| View - Network
+|--------------------------------------------------------------------------
+*/
+
+.view-settings .setting-network {
+
+    .network-row {
+        cursor: default;
+        border: 1px solid lightgrey;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin-bottom: 10px;
+        padding: 6px;
+
+        .name {
+            margin-left: 10px;
+        }
+
+        .platform {
+            margin-left: 10px;
+            color: rgba(0, 0, 0, 0.3);
+        }
+
+        .ip {
+            flex: 1;
+            text-align: center;
+            color: rgba(0, 0, 0, 0.5);
+
+            span {
+                margin: 0 5px;
+            }
+        }
+    }
+}
+
+
 
 /*
 |--------------------------------------------------------------------------

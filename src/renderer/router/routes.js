@@ -14,6 +14,7 @@ import SettingsUI       from '../components/Settings/SettingsUI.react';
 import SettingsAudio    from '../components/Settings/SettingsAudio.react';
 import SettingsAdvanced from '../components/Settings/SettingsAdvanced.react';
 import SettingsAbout    from '../components/Settings/SettingsAbout.react';
+import SettingsNetwork  from '../components/Settings/SettingsNetwork.react';
 
 export default (store) => {
     return (
@@ -26,6 +27,7 @@ export default (store) => {
                 <Route path='audio' component={ SettingsAudio } />
                 <Route path='interface' component={ SettingsUI } />
                 <Route path='library' component={ SettingsLibrary } />
+                <Route path='network' component={ SettingsNetwork } />
             </Route>
             <Route path='playlists' component={ Playlists }>
                 <Route path=':playlistId' component={ Playlist } />

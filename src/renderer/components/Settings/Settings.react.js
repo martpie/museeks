@@ -32,17 +32,20 @@ class Settings extends Component {
                         <LinkContainer to='/settings/library'>
                             <NavItem eventKey={ 1 }>Library</NavItem>
                         </LinkContainer>
+                        <LinkContainer to='/settings/network'>
+                            <NavItem eventKey={ 2 }>Network</NavItem>
+                        </LinkContainer>
                         <LinkContainer to='/settings/audio'>
-                            <NavItem eventKey={ 2 }>Audio</NavItem>
+                            <NavItem eventKey={ 3 }>Audio</NavItem>
                         </LinkContainer>
                         <LinkContainer to='/settings/interface'>
-                            <NavItem eventKey={ 3 }>Interface</NavItem>
+                            <NavItem eventKey={ 4 }>Interface</NavItem>
                         </LinkContainer>
                         <LinkContainer to='/settings/advanced'>
-                            <NavItem eventKey={ 4 }>Advanced</NavItem>
+                            <NavItem eventKey={ 5 }>Advanced</NavItem>
                         </LinkContainer>
                         <LinkContainer to='/settings/about'>
-                            <NavItem eventKey={ 5 }>About</NavItem>
+                            <NavItem eventKey={ 6 }>About</NavItem>
                         </LinkContainer>
                     </Nav>
                     <div className="tab-content">
