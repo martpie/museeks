@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import classnames from 'classnames';
 import { connect } from 'react-redux';
+import Popover from '../Popover'
 
 import lib from '../../lib';
 
@@ -31,13 +32,19 @@ class OutputDevice extends Component {
 
         return (
             <div className="output-controls">
-                { allOutputs.map((output) => (
-                    <button style={{marginLeft: '15px'}}
-                        key={ output.id }
-                        onClick={() => setOutput(output)}>
-                    { output.hostname }
-                    </button>
-                ))}
+
+                <Popover preferPlace="below">
+                    <button>Output</button>
+                    <div className="PopoverMenu">
+                        { allOutputs.map((output) => (
+                            <button
+                                key={ output.id }
+                                onClick={() => setOutput(output)}>
+                            { output.hostname }
+                            </button>
+                        ))}
+                    </div>
+                </Popover>
             </div>
         );
     }

@@ -5,12 +5,6 @@ import http from 'axios';
 import extend from 'xtend';
 import os from 'os';
 
-const me = {
-    hostname: os.hostname(),
-    platform: os.platform(),
-    ip: 'localhost'
-};
-
 class PeerDiscovery {
     constructor(lib) {
         this.lib = lib;
@@ -47,9 +41,6 @@ class PeerDiscovery {
         const interfaces = flatten(Object.values(os.networkInterfaces()));
         const networks = interfaces.filter(adapter => adapter.family === 'IPv4' && !adapter.internal); // only scan for external ipv4 adapters
         const { port } = this.lib.store.getState().config.electron.api;
-
-        // Set the network.me in the store
-        this.lib.store.dispatch(this.lib.actions.network.setMe(networks.map(network => network.address)));
 
         const scanNetwork = (network) => {
 

@@ -1,0 +1,19 @@
+.Popover-body {
+  display: inline-flex;
+  flex-direction: column;
+  background: white;
+  z-index: 1;
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.1),0 2px 15px rgba(0,0,0,0.1);
+  margin-top: -1px;
+}
+
+.Popover-tipShape {
+  fill: white;
+  stroke-width: 1;
+  stroke: rgba(0, 0, 0, 0.12);
+}
+
+.Popover {
+  z-index: 100;
+  transform: translateY(0px) !important;
+}

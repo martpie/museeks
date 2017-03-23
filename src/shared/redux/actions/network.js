@@ -6,10 +6,13 @@ import utils from '../../utils/utils';
 const library = (lib) => {
 
     const setMe = (ips) => {
+        const interfaces = flatten(Object.values(os.networkInterfaces()));
+        const networks = interfaces.filter(adapter => adapter.family === 'IPv4' && !adapter.internal);
+
         return {
             type: 'NETWORK/SET_ME',
             payload: {
-                ips: ips,
+                ips: networks.map(network => network.address),
                 hostname: os.hostname(),
                 platform: os.platform(),
             }
@@ -88,9 +91,9 @@ const library = (lib) => {
             return;
         }
 
-
         // If output has swapped to our computer
         if (isLocal) {
+            console.log(prevOutput);
             // Ask to be removed as an observer
             // This may fail if the other Museeks stops working.
             // If so, this is fine... Probably...
