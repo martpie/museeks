@@ -72,11 +72,7 @@ export default class PlayingBar extends Component {
         });
 
         return (
-            <div className={ nowPlayingTextClasses }
-                 onMouseMove={ this.dragOver }
-                 onMouseLeave={ this.dragEnd }
-                 onMouseUp={ this.dragEnd }
-            >
+            <div className={ nowPlayingTextClasses } >
                 <div className='now-playing-cover'>
                     <Cover path={ trackPlaying.path } />
                 </div>
@@ -135,10 +131,16 @@ export default class PlayingBar extends Component {
 
     componentDidMount() {
         this.timer = setInterval(this.tick, 100);
+
+        window.addEventListener('mousemove', this.dragOver);
+        window.addEventListener('mouseup', this.dragEnd);
     }
 
     componentWillUnmount() {
         clearInterval(this.timer);
+
+        window.removeEventListener('mousemove', this.dragOver);
+        window.removeEventListener('mouseup', this.dragEnd);
     }
 
     tick() {
