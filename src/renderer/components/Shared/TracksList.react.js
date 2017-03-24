@@ -391,7 +391,7 @@ class TracksList extends Component {
     }
 
     onEnter = (i, tracks) => {
-        if (i !== undefined) this.props.start(tracks[i]._id);
+        if (i !== undefined) this.props.loadAndPlay(tracks[i]._id);
     }
 
     showContextMenu = (e, index) => {
@@ -461,7 +461,7 @@ const dispatchToProps = {
     removeTracksFrom: lib.actions.playlists.removeTracksFrom,
     create: lib.actions.playlists.create,
     addTracksTo: lib.actions.playlists.addTracksTo,
-    start: lib.actions.player.start
+    loadAndPlay: lib.actions.player.loadAndPlay
 };
 
 export default connect(stateToProps, dispatchToProps)(TracksList);

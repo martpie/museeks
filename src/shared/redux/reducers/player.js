@@ -2,7 +2,7 @@ import i from 'icepick';
 
 export default (state = {}, action) => {
     switch (action.type) {
-        case('PLAYER/START'): {
+        case('PLAYER/LOAD'): {
             const { queue, queueCursor } = action.payload;
             const track = queue[queueCursor];
             return i.chain(state)
@@ -11,6 +11,13 @@ export default (state = {}, action) => {
                 .updateIn(['player', 'history'], (history) => i.push(history, track))
                 .assocIn(['player', 'currentTrack'], track)
                 .value();
+        }
+
+        case('PLAYER/CREATE_NEW_QUEUE_PENDING'): {
+            return i.assoc(state, 'queue', action.meta.queue);
+        }
+        case('PLAYER/CREATE_NEW_QUEUE_REJECTED'): {
+            return i.assoc(state, 'queue', action.meta.oldQueue);
         }
 
         case('PLAYER/PLAY_PENDING'): {

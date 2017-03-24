@@ -36,7 +36,7 @@ class TrackRow extends Component {
         return (
             <div
                 className={ trackClasses }
-                onDoubleClick={ this.start }
+                onDoubleClick={ () => this.props.start(this.props.trackId) }
                 onMouseDown={ this.onMouseDown }
                 onContextMenu={ this.onContextMenu }
             >
@@ -52,16 +52,12 @@ class TrackRow extends Component {
     onContextMenu = (e) => {
         this.props.onContextMenu(e, this.props.index);
     }
-
-    start = () => {
-        this.props.start(this.props.trackId);
-    }
 }
 
 const stateToProps = () => ({});
 
 const dispatchToProps = {
-    start: lib.actions.player.start
+    loadAndPlay: lib.actions.player.loadAndPlay
 };
 
 export default connect(stateToProps, dispatchToProps)(TrackRow);

@@ -28,11 +28,6 @@ class QueueListItem extends PureComponent {
 
     constructor(props) {
         super(props);
-
-        this.remove      = this.remove.bind(this);
-        this.play        = this.play.bind(this);
-        this.onDragStart = this.onDragStart.bind(this);
-        this.onDragOver  = this.onDragOver.bind(this);
     }
 
     render() {
@@ -57,7 +52,7 @@ class QueueListItem extends PureComponent {
                 <Button bsSize={ 'xsmall' } bsStyle={ 'link' } className='remove' onClick={ this.remove }>
                     &times;
                 </Button>
-                <div className='track-infos' onDoubleClick={ this.play } >
+                <div className='track-infos' onDoubleClick={ () => this.props.loadAndPlay(track._id) } >
                     <div className='title'>
                         { track.title }
                     </div>
@@ -80,19 +75,13 @@ class QueueListItem extends PureComponent {
     remove = () => {
         this.props.remove(this.props.index);
     }
-
-    play = () => {
-        this.props.setCursor(this.props.queueCursor + this.props.index + 1);
-        this.props.play();
-    }
 }
 
 const stateToProps = () => ({});
 
 const dispatchToProps = {
     remove: lib.actions.queue.remove,
-    setCursor: lib.actions.queue.setCursor,
-    play: lib.actions.player.play
+    loadAndPlay: lib.actions.player.loadAndPlay
 };
 
 export default connect(stateToProps, dispatchToProps)(QueueListItem);
