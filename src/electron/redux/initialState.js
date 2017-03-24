@@ -27,13 +27,11 @@ export default {
         }
     },
 
-    // new state above here
-
     tracks: {
-        tracksCursor: 'library',     // 'library' or 'playlist'
-        library: {                   // Tracks of the library view
-            all: [],               // All tracks
-            sub: []                // Filtered tracks (e.g search)
+        tracksCursor: 'library',         // 'library' or 'playlist'
+        library: {                       // Tracks of the library view
+            all: [],                     // All tracks
+            sub: []                      // Filtered tracks (e.g search)
         },
         playlist: {
             all: [],
@@ -48,13 +46,13 @@ export default {
 
     playlists: [],
 
-    queue: [],                       // Tracks to be played
-    queueCursor: null,               // The cursor of the queue
+    queue: [],                           // Tracks to be played
+    queueCursor: null,                   // The cursor of the queue
 
     player: {
         history: [],
         currentTrack: {},                // The currently playing track
-        playStatus: 'stop',            // Player status
+        playStatus: 'stop',              // Player status
         cover: null,                     // Current trackplaying cover
         repeat: 'none',                  // the current repeat state (one, all, none)
         shuffle: false                   // If shuffle mode is enabled

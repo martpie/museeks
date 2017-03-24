@@ -220,7 +220,7 @@ const library = (lib) => {
         return {
             type: 'PLAYER/REPEAT',
             payload: output.isLocal ? outputIsLocal() : outputIsRemote(),
-            meta: { prevShuffle, repeat }
+            meta: { prevRepeat, repeat }
         };
     };
 
@@ -249,7 +249,7 @@ const library = (lib) => {
         }
     };
 
-    const jumpTo = (to) => (dispatch, setState) => {
+    const jumpTo = (to) => (dispatch, getState) => {
         const { network: { output } } = getState();
 
         const outputIsLocal  = () => Promise.resolve(lib.player.setCurrentTime(to));
@@ -258,7 +258,7 @@ const library = (lib) => {
         dispatch({
             type: 'PLAYER/JUMP_TO',
             payload: output.isLocal ? outputIsLocal() : outputIsRemote(),
-            meta: { prevTime, time }
+            // meta: { prevTime, time }
         });
     };
 

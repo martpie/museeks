@@ -63,4 +63,9 @@ export default [{
     method: 'GET',
     name: 'actions.player.stop',
     dispatch: true
+}, {
+    path: 'api/actions/player/createNewQueue',
+    method: 'POST',
+    name: 'actions.player.createNewQueue',
+    dispatch: true
 }];

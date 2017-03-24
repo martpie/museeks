@@ -2,12 +2,37 @@ import Promise from 'bluebird';
 
 const library = (lib) => {
 
-    // const filterSearch = (search) => ({
-    //     type: 'TRACKS/FILTER',
-    //     payload: {
-    //         search
+    const filter = (search) => ({
+        type: 'TRACKS/FILTER',
+        payload: {
+            search
+        }
+    });
+    //
+    // const filter = (search) => (dispatch, getState) => {
+    //     const { all: tracks } = getState().tracks.library;
+    //
+    //     if (!search) {
+    //         return tracks;
+    //     } else {
+    //         const search = utils.stripAccents(search);
+    //
+    //         const tracks = [...state[state.tracksCursor].all].filter((track) => { // Problem here
+    //             return track.loweredMetas.artist.join().includes(search)
+    //                 || track.loweredMetas.album.includes(search)
+    //                 || track.loweredMetas.genre.join().includes(search)
+    //                 || track.loweredMetas.title.includes(search);
+    //         });
     //     }
-    // });
+    //
+    //     return {
+    //         type: 'TRACKS/FILTER',
+    //         payload: {
+    //             search
+    //         }
+    //     }
+    // );
+
 
     const remove = () => ({
         type: 'TRACKS/DELETE',

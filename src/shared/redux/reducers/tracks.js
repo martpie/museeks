@@ -39,38 +39,30 @@ export default (state = {}, action) => {
                 }
             };
         }
-        // case('TRACKS/FILTER'): {
-        //     if (!action.payload.search) {
-        //         const newState = { ...state };
-        //         newstate[state.tracksCursor].sub = [...state[state.tracksCursor].all];
-        //
-        //         return newState;
-        //     }
-        //
-        //     const search = utils.stripAccents(action.payload.search);
-        //
-        //     const allCurrentTracks = state[state.tracksCursor].all;
-        //     const tracks = [].concat(allCurrentTracks).filter((track) => { // Problem here
-        //         return track.loweredMetas.artist.join(', ').includes(search)
-        //             || track.loweredMetas.album.includes(search)
-        //             || track.loweredMetas.genre.join(', ').includes(search)
-        //             || track.loweredMetas.title.includes(search);
-        //     });
-        //
-        //     const newState = { ...state };
-        //     newstate[state.tracksCursor].sub = tracks;
-        //
-        //     return newState;
-        // }
 
-        // const play = ({ source, destination, track } = {}) => {
-        //     return {
-        //         type: 'NETWORK/START',
-        //         payload: {
-        //             peer
-        //         }
-        //     }
-        // };
+        case('TRACKS/FILTER'): {
+            if (!action.payload.search) {
+                const newState = { ...state };
+                newstate[state.tracksCursor].sub = [...state[state.tracksCursor].all];
+
+                return newState;
+            }
+
+            const search = utils.stripAccents(action.payload.search);
+
+            const allCurrentTracks = state[state.tracksCursor].all;
+            const tracks = [].concat(allCurrentTracks).filter((track) => { // Problem here
+                return track.loweredMetas.artist.join(', ').includes(search)
+                    || track.loweredMetas.album.includes(search)
+                    || track.loweredMetas.genre.join(', ').includes(search)
+                    || track.loweredMetas.title.includes(search);
+            });
+
+            const newState = { ...state };
+            newstate[state.tracksCursor].sub = tracks;
+
+            return newState;
+        }
 
         default: {
             return state;
