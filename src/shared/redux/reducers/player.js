@@ -67,11 +67,17 @@ export default (state = {}, action) => {
         }
 
         case('PLAYER/NEXT'): {
-            return i.assoc(state, 'queueCursor', action.payload.newQueueCursor);
+            return i.chain(state)
+                .assoc('queueCursor', action.payload.newQueueCursor)
+                .assocIn(['player', 'currentTrack'], action.payload.track)
+                value();
         }
 
         case('PLAYER/PREVIOUS'): {
-            return i.assoc(state, 'queueCursor', action.payload.newQueueCursor);
+            return i.chain(state)
+                .assoc('queueCursor', action.payload.newQueueCursor)
+                .assocIn(['player', 'currentTrack'], action.payload.track)
+                value();
         }
 
         case('PLAYER/JUMP_TO'): {
