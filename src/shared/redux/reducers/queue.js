@@ -9,7 +9,7 @@ export default (state = {}, action) => {
                 ...state,
                 queue,
                 queueCursor,
-                playerStatus: 'play'
+                playStatus: 'play'
             };
         }
 

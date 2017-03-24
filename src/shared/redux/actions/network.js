@@ -98,11 +98,11 @@ const library = (lib) => {
         dispatch(lib.actions.queue.setCursor(state.queueCursor));
 
         // Set the play/pause/stop status
-        if (state.player.playerStatus === 'pause') {
+        if (state.player.playStatus === 'pause') {
             dispatch(lib.actions.player.pause());
-        } else if (state.player.playerStatus === 'stop') {
+        } else if (state.player.playStatus === 'stop') {
             dispatch(lib.actions.player.stop());
-        } else if (state.player.playerStatus === 'play') {
+        } else if (state.player.playStatus === 'play') {
             dispatch(lib.actions.player.play());
         }
 

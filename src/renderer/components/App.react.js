@@ -24,8 +24,6 @@ class Museeks extends Component {
 
     constructor(props) {
         super(props);
-
-        this.onKey = this.onKey.bind(this);
     }
 
     render() {
@@ -37,7 +35,7 @@ class Museeks extends Component {
                 <KeyBinding onKey={ this.onKey } preventInputConflict />
                 <Header
                     app={ this }
-                    playerStatus={ state.playerStatus }
+                    playStatus={ state.player.playStatus }
                     repeat={ state.repeat }
                     shuffle={ state.shuffle }
                     cover={ state.player.cover }
@@ -52,7 +50,7 @@ class Museeks extends Component {
                             this.props.children, {
                                 app: this,
                                 config: state.config,
-                                playerStatus: state.playerStatus,
+                                playStatus: state.player.playStatus,
                                 network: state.network,
                                 queue: state.queue,
                                 tracks: state.tracks[state.tracks.tracksCursor].sub,

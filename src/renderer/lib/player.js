@@ -13,18 +13,19 @@ class Player {
     init(lib) {
         this.lib = lib;
 
+        const dispatch = this.lib.store.dispatch;
         const { config } = this.lib.store.getState();
 
         this.setVolume(config.volume);
         this.setPlaybackRate(config.playbackRate);
         this.setMuted(config.muted);
 
-        this.audio.addEventListener('play',  this.lib.actions.player.play);
-        this.audio.addEventListener('pause', this.lib.actions.player.pause);
-        this.audio.addEventListener('ended', this.lib.actions.player.next);
-        this.audio.addEventListener('error', this.lib.actions.player.audioError);
+//        this.audio.addEventListener('play',  () => dispatch(this.lib.actions.player.play()));
+//        this.audio.addEventListener('pause', () => dispatch(this.lib.actions.player.pause()));
+        this.audio.addEventListener('ended', () => dispatch(this.lib.actions.player.next()));
+        this.audio.addEventListener('error', () => dispatch(this.lib.actions.player.audioError()));
         this.audio.addEventListener('timeupdate', () => {
-            if (this.isThresholdReached()) this.lib.actions.library.incrementPlayCount(this.getSrc());
+            if (this.isThresholdReached()) dispatch(this.lib.actions.library.incrementPlayCount(this.getSrc()));
         });
     }
 

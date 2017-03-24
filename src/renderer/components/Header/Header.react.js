@@ -18,7 +18,7 @@ import lib from '../../lib';
 class Header extends Component {
 
     static propTypes = {
-        playerStatus: React.PropTypes.string,
+        playStatus: React.PropTypes.string,
         cover: React.PropTypes.string,
         queue: React.PropTypes.array,
         queueCursor: React.PropTypes.number,
@@ -39,7 +39,7 @@ class Header extends Component {
                 <div className='col-main-controls'>
                     <WindowControls active={ this.props.windowControls } />
                     <PlayerControls
-                        playerStatus={ this.props.playerStatus }
+                        playStatus={ this.props.playStatus }
                     />
                 </div>
 

@@ -69,7 +69,7 @@ const attachTrackListContextMenu = (data, callback) => {
         ];
     }
 
-    if (data.playerStatus !== 'stop') {
+    if (data.playStatus !== 'stop') {
         addToQueueTemplate = [
             {
                 label: 'Add to queue',
@@ -148,7 +148,7 @@ class TracksList extends Component {
         trackPlayingId: React.PropTypes.string,
         playlists: React.PropTypes.array,
         currentPlaylist: React.PropTypes.string,
-        playerStatus: React.PropTypes.string
+        playStatus: React.PropTypes.string
     }
 
     constructor(props) {
@@ -157,11 +157,6 @@ class TracksList extends Component {
             selected: [],
             scrollTop: 0
         };
-
-        this.showContextMenu = this.showContextMenu.bind(this);
-        this.scrollTracksList = this.scrollTracksList.bind(this);
-        this.selectTrack = this.selectTrack.bind(this);
-        this.onKey = this.onKey.bind(this);
 
         this.rowHeight = 30;
     }
@@ -195,7 +190,7 @@ class TracksList extends Component {
         this.setState({ scrollTop : document.querySelector('.tracks-list-body').scrollTop });
     }
 
-    selectTrack(e, id, index) {
+    selectTrack = (e, id, index) => {
         if (this.isLeftClick(e) || (this.isRightClick(e) && this.isSelectableTrack(id))) {
             if (e.ctrlKey) {
                 this.toggleSelectionById(id);
@@ -239,7 +234,7 @@ class TracksList extends Component {
         return e.button === 2;
     }
 
-    isSelectableTrack(id) {
+    isSelectableTrack = (id) => {
         return !this.state.selected.includes(id);
     }
 
@@ -318,7 +313,7 @@ class TracksList extends Component {
         return lib.player.isPaused() ? 'pause' : 'play';
     }
 
-    toggleSelectionById(id) {
+    toggleSelectionById = (id) => {
         let selected = [...this.state.selected];
 
         if (selected.includes(id)) {
@@ -333,7 +328,7 @@ class TracksList extends Component {
         this.setState({ selected });
     }
 
-    multiSelect(e, id, index) {
+    multiSelect = (e, id, index) => {
         const self   = this;
         const tracks = this.props.tracks;
         const selected = this.state.selected;
@@ -371,7 +366,7 @@ class TracksList extends Component {
         self.setState({ selected : newSelected });
     }
 
-    onUp(i, tracks) {
+    onUp = (i, tracks) => {
         if (i - 1 >= 0) {
             this.setState({ selected : tracks[i - 1]._id }, () => {
                 const container = document.querySelector('.tracks-list-container .tracks-list-body');
@@ -452,7 +447,7 @@ class TracksList extends Component {
             selectedCount: this.state.selected.length,
             track: this.props.tracks[index],
             playlists: playlistsList,
-            playerStatus: this.props.playerStatus
+            playStatus: this.props.playStatus
         }, processClick);
     }
 }

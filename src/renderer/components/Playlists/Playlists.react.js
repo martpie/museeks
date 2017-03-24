@@ -20,7 +20,7 @@ class Playlists extends Component {
         children: React.PropTypes.object,
         tracks: React.PropTypes.array,
         playlists: React.PropTypes.array,
-        playerStatus: React.PropTypes.string
+        playStatus: React.PropTypes.string
     }
 
     constructor(props) {

@@ -3,51 +3,14 @@ import i from 'icepick';
 export default (state = {}, action) => {
     switch (action.type) {
         case('PLAYER/START'): {
-            const queue = [...state.tracks[state.tracks.tracksCursor].sub];
-            const id = action.payload._id;
-
-            let queueCursor = action.payload.queuePosition; // Clean that variable mess later
-
-            // Check if we have to shuffle the queue
-            if (state.shuffle) {
-                // need to check that later
-                const index = queue.findIndex((track) => track._id === id);
-
-                const firstTrack = queue[index];
-
-                queue.splice(id, 1);
-
-                let m = queue.length;
-                let t;
-                let i;
-                while (m) {
-                    // Pick a remaining element…
-                    i = Math.floor(Math.random() * m--);
-
-                    // And swap it with the current element.
-                    t = queue[m];
-                    queue[m] = queue[i];
-                    queue[i] = t;
-                }
-
-                queue.unshift(firstTrack);
-
-                // Let's set the cursor to 0
-                queueCursor = 0;
-            }
-
-            // Backup that and change the UI
-            return {
-                ...state,
-                queue,
-                queueCursor,
-                oldQueue: queue,
-                oldQueueCursor: queueCursor,
-                player: {
-                    ...state.player,
-                    playerStatus: 'play'
-                }
-            };
+            const { queue, queueCursor } = action.payload;
+            const track = queue[queueCursor];
+            return i.chain(state)
+                .assoc('queue', queue)
+                .assoc('queueCursor', queueCursor)
+                .updateIn(['player', 'history'], (history) => i.push(history, track))
+                .assocIn(['player', 'currentTrack'], track)
+                .value();
         }
 
         case('PLAYER/PLAY'): {
@@ -66,18 +29,17 @@ export default (state = {}, action) => {
                 .value();
         }
 
-        case('PLAYER/NEXT'): {
-            return i.chain(state)
-                .assoc('queueCursor', action.payload.newQueueCursor)
-                .assocIn(['player', 'currentTrack'], action.payload.track)
-                value();
-        }
-
+        case('PLAYER/NEXT'):
         case('PLAYER/PREVIOUS'): {
+            const { oldQueueCursor, newQueueCursor } = action.payload;
+            const queue = state.queue;
+            const previousTrack = queue[oldQueueCursor];
+            const currentTrack = queue[newQueueCursor];
             return i.chain(state)
-                .assoc('queueCursor', action.payload.newQueueCursor)
-                .assocIn(['player', 'currentTrack'], action.payload.track)
-                value();
+                .assoc('queueCursor', newQueueCursor)
+                .updateIn(['player', 'history'], (history) => i.push(history, previousTrack))
+                .assocIn(['player', 'currentTrack'], currentTrack)
+                .value();
         }
 
         case('PLAYER/JUMP_TO'): {

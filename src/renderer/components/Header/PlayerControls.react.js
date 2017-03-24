@@ -14,7 +14,7 @@ import lib from '../../lib';
 class PlayerControls extends PureComponent {
 
     static propTypes = {
-        playerStatus: React.PropTypes.string
+        playStatus: React.PropTypes.string
     }
 
     constructor(props) {
@@ -28,7 +28,7 @@ class PlayerControls extends PureComponent {
                     <Icon name='backward' />
                 </button>
                 <button className='player-control play' onClick={ this.props.playToggle }>
-                    <Icon name={ this.props.playerStatus === 'play' ? 'pause' : 'play' } fixedWidth />
+                    <Icon name={ this.props.playStatus === 'play' ? 'pause' : 'play' } fixedWidth />
                 </button>
                 <button type='button' className='player-control forward' onClick={ this.props.next }>
                     <Icon name='forward' />

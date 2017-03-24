@@ -63,18 +63,20 @@ const library = (lib) => {
 
     const start = (_id) => (dispatch, getState) => {
         const { tracks, tracks: { tracksCursor }, player: { shuffle } } = getState();
+        
+        // Create a new queue
         const queue = [...tracks[tracksCursor].sub];
-        const queuePosition = queue.findIndex((track) => track._id === _id);
-
-        if (queuePosition > -1) {
-            lib.player.setMetadata(queue[queuePosition]);
-            lib.player.play();
+        const queueCursor = queue.findIndex((track) => track._id === _id);
+        
+        if (queueCursor > -1) {
+            lib.player.setMetadata(queue[queueCursor]);
+            dispatch(lib.actions.player.play());
 
             dispatch({
                 type: 'PLAYER/START',
                 payload: {
-                    queuePosition,
-                    _id
+                    queue,
+                    queueCursor,
                 }
             });
         }
@@ -107,8 +109,8 @@ const library = (lib) => {
             dispatch({
                 type: 'PLAYER/NEXT',
                 payload: {
-                    newQueueCursor,
-                    track
+                    oldQueueCursor: queueCursor,
+                    newQueueCursor
                 }
             });
         } else {
@@ -117,7 +119,7 @@ const library = (lib) => {
     };
 
     const previous = () => (dispatch, getState) => {
-        const { queue, queueCursor } = getState().player;
+        const { queue, queueCursor } = getState();
         const currentTime = lib.player.getCurrentTime();
 
         // If track started less than 5 seconds ago, play the previous track,
@@ -134,8 +136,8 @@ const library = (lib) => {
             dispatch({
                 type: 'PLAYER/PREVIOUS',
                 payload: {
-                    newQueueCursor,
-                    track,
+                    oldQueueCursor: queueCursor,
+                    newQueueCursor
                 }
             });
         } else {

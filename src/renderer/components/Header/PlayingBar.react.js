@@ -146,7 +146,8 @@ class PlayingBar extends Component {
         const currTrackPlaying = this.props.queue[this.props.queueCursor];
         const currTrackPlayingId = currTrackPlaying && currTrackPlaying._id;
 
-        if (nextTrackPlayingId !== currTrackPlayingId) {
+        // if we have a track to play, and it wasn't the last track we played
+        if (nextTrackPlayingId && nextTrackPlayingId !== currTrackPlayingId) {
             this.props.fetchCover(nextTrackPlaying);
         }
     }
