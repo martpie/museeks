@@ -41,7 +41,7 @@ class VolumeControl extends Component {
         this.setVolume = this.setVolume.bind(this);
     }
 
-    getVolumeIcon(volume, muted) {
+    getVolumeIcon = (volume, muted) => {
         return muted || volume === 0 ? 'volume-off' : volume > 0.5 ? 'volume-up' : 'volume-down';
     }
 

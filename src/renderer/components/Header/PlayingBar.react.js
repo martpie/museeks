@@ -139,7 +139,7 @@ class PlayingBar extends Component {
         clearInterval(this.timer);
     }
 
-    componentWillReceiveProps(nextProps) {
+    componentWillReceiveProps = (nextProps) => {
         const nextTrackPlaying = nextProps.queue[nextProps.queueCursor];
         const nextTrackPlayingId = nextTrackPlaying && nextTrackPlaying._id;
 

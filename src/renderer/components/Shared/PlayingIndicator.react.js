@@ -49,7 +49,7 @@ class TrackRow extends Component {
         );
     }
 
-    getIcon(state, hovered) {
+    getIcon = (state, hovered) => {
         if (state === 'play') {
             if (hovered) {
                 return <Icon name='pause' fixedWidth />;

@@ -90,7 +90,7 @@ class QueueList extends Component {
         );
     }
 
-    dragStart(e, index) {
+    dragStart = (e, index) => {
         e.dataTransfer.effectAllowed = 'move';
         e.dataTransfer.setData('text/html', e.currentTarget);
 
@@ -132,7 +132,7 @@ class QueueList extends Component {
         this.props.setQueue(newQueue);
     }
 
-    dragOver(e, index) {
+    dragOver = (e, index) => {
         e.preventDefault();
 
         const relativePosition = e.nativeEvent.offsetY / e.currentTarget.offsetHeight;

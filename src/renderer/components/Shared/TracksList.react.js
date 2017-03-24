@@ -377,7 +377,7 @@ class TracksList extends Component {
         }
     }
 
-    onDown(i, tracks) {
+    onDown = (i, tracks) => {
         if (i + 1 < tracks.length) {
             this.setState({ selected : tracks[i + 1]._id }, () => {
                 const container = document.querySelector('.tracks-list-container .tracks-list-body');
@@ -390,11 +390,11 @@ class TracksList extends Component {
         }
     }
 
-    onEnter(i, tracks) {
+    onEnter = (i, tracks) => {
         if (i !== undefined) this.props.start(tracks[i]._id);
     }
 
-    showContextMenu(e, index) {
+    showContextMenu = (e, index) => {
         let playlistsList = [].concat(this.props.playlists);
 
         // Hide current playlist if needed
