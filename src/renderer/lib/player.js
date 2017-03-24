@@ -94,7 +94,7 @@ class Player {
         this.durationThresholdReached = false;
     }
 
-    setAudioCurrentTime = (currentTime) => {
+    setCurrentTime = (currentTime) => {
         this.audio.currentTime = currentTime;
     }
 

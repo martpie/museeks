@@ -1,4 +1,4 @@
-import { get } from 'lodash';
+import { get, has } from 'lodash';
 import extend from 'xtend';
 import Promise from 'bluebird';
 
@@ -28,9 +28,16 @@ const routesToHandlers = (routes, lib) => {
                 ? lib.store.dispatch(libraryFunction(inputs))
                 : libraryFunction(inputs)
 
-            return Promise.resolve(dispatchedFunction(transformedArgs))
+            const pickActionPayload = (result) => has(result, 'action.type') && has(result, 'action.payload')
+                ? result.action.payload
+                : result;
+
+            const functionResult = Promise.resolve(dispatchedFunction(transformedArgs))
+                .then(pickActionPayload)
                 .then((result) => res(result))
                 .catch((error) => res({ error }).code(error.code));
+
+            return functionResult;
         }
     }
 

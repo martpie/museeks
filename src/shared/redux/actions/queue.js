@@ -38,7 +38,6 @@ const library = (lib) => {
         const { queue } = getState();
         lib.player.setMetadata(queue[index]);
         console.log('queue[index]queue[index]queue[index]queue[index]queue[index]', queue[index])
-        // lib.player.play();
 
         return {
             type: 'QUEUE/SET_CURSOR',

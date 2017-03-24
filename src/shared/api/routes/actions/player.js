@@ -54,9 +54,9 @@ export default [{
     name: 'actions.player.shuffle',
     dispatch: true
 }, {
-    path: 'api/actions/player/start',
+    path: 'api/actions/player/loadAndPlay',
     method: 'POST',
-    name: 'actions.player.start',
+    name: 'actions.player.loadAndPlay',
     dispatch: true
 }, {
     path: 'api/actions/player/stop',
