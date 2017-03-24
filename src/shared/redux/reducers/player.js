@@ -29,15 +29,21 @@ export default (state = {}, action) => {
                 .value();
         }
 
-        case('PLAYER/NEXT'):
-        case('PLAYER/PREVIOUS'): {
-            const { oldQueueCursor, newQueueCursor } = action.payload;
-            const queue = state.queue;
-            const previousTrack = queue[oldQueueCursor];
-            const currentTrack = queue[newQueueCursor];
+        case('PLAYER/NEXT'): {
+            const { newQueueCursor } = action.payload;
+            const previousTrack = state.queue[state.queueCursor];
+            const currentTrack = state.queue[newQueueCursor];
             return i.chain(state)
                 .assoc('queueCursor', newQueueCursor)
                 .updateIn(['player', 'history'], (history) => i.push(history, previousTrack))
+                .assocIn(['player', 'currentTrack'], currentTrack)
+                .value();
+        }
+        case('PLAYER/PREVIOUS'): {
+            const { newQueueCursor } = action.payload;
+            const currentTrack = state.queue[newQueueCursor];
+            return i.chain(state)
+                .assoc('queueCursor', newQueueCursor)
                 .assocIn(['player', 'currentTrack'], currentTrack)
                 .value();
         }
@@ -47,52 +53,7 @@ export default (state = {}, action) => {
         }
 
         case('PLAYER/SHUFFLE'): {
-            if (action.payload.shuffle) {
-                // Let's shuffle that
-                const queueCursor = state.queueCursor;
-                let queue = [...state.queue];
-
-                // Get the current track
-                const firstTrack  = queue[queueCursor];
-
-                // now get only what we want
-                queue = queue.splice(queueCursor + 1, state.queue.length - (queueCursor + 1));
-
-                let m = queue.length;
-                let t;
-                let i;
-                while (m) {
-                    // Pick a remaining element…
-                    i = Math.floor(Math.random() * m--);
-
-                    // And swap it with the current element.
-                    t = queue[m];
-                    queue[m] = queue[i];
-                    queue[i] = t;
-                }
-
-                queue.unshift(firstTrack); // Add the current track at the first position
-
-                return {
-                    ...state,
-                    queue,
-                    shuffle: true,
-                    queueCursor: 0,
-                    oldQueue: state.queue,
-                };
-            }
-
-            const currentTrackIndex = state.player.oldQueue.findIndex((track) => {
-                return action.payload.currentSrc === `file://${encodeURI(track.path)}`;
-            });
-
-            // Roll back to the old but update queueCursor
-            return {
-                ...state,
-                queue: [...state.player.oldQueue],
-                queueCursor: currentTrackIndex,
-                shuffle: false
-            };
+            return i.assocIn(state, ['player', 'shuffle'], action.payload.shuffle);
         }
 
         case('PLAYER/REPEAT'): {
@@ -100,7 +61,7 @@ export default (state = {}, action) => {
         }
 
         case('PLAYER/FETCHED_COVER'): {
-            return i.assocIn(state, ['player', 'cover'], action.payload.cover || null);
+            return i.assocIn(state, ['player', 'cover'], action.payload.cover);
         }
 
         default: {

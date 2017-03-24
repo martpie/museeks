@@ -36,14 +36,15 @@ class ButtonShuffle extends Component {
     }
 
     toggleShuffle = () => {
-        this.props.shuffle(!this.props.shuffle);
+        this.props.setShuffle(!this.props.shuffle);
     }
 }
 
 const stateToProps = () => ({});
+
 const dispatchToProps = {
     repeat: lib.actions.player.repeat,
-    shuffle: lib.actions.player.shuffle
+    setShuffle: lib.actions.player.shuffle
 };
 
 export default connect(stateToProps, dispatchToProps)(ButtonShuffle);

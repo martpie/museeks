@@ -1,4 +1,4 @@
-import extend from 'xtend';
+import mutate from 'xtend/mutable';
 
 import app from'./app';
 import config from'./config';
@@ -31,7 +31,7 @@ const lib = (lib) => {
     }
 
     // create a copy of the library to attach actions to
-    const libWithActions = extend(lib, { actions: {} });
+    const libWithActions = mutate(lib, { actions: {} });
 
     // invoke each action library with the shared library object
     const sharedLib = Object.keys(actions).reduce((sharedLib, action) => {

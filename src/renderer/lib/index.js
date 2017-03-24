@@ -1,5 +1,4 @@
 import mutate from 'xtend/mutable';
-
 import sharedLib from '../../shared/lib';
 
 import Player from './player';

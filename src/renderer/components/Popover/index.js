@@ -12,8 +12,7 @@ const PropTypesObject = {
   disableClickClose   : PropTypes.bool,                 // This will stop the popup closing when the overlay is clicked.
   tipSize             : PropTypes.number,               // Size of the arrow. Default: 0
   children            : PropTypes.node.isRequired,      // Two children should be passed in - children[0] is the trigger, children[1] is the popup content
-  inheritIsOpen       : PropTypes.bool,                 // Should the popup content inherit the 'isOpen' prop?
-                                                        // Default: false
+  inheritIsOpen       : PropTypes.bool                  // Should the popup content inherit the 'isOpen' prop?
 }
 
 export default React.createClass({
@@ -25,23 +24,23 @@ export default React.createClass({
   },
   toggleDelayTime: 200,
   toggleDelayTimeout: null,
-  toggleDelay (toState){
+  toggleDelay (toState) {
     clearTimeout(this.toggleDelayTimeout);
     this.toggleDelayTimeout = setTimeout(()=>{
       this.toggle(toState);
     }, this.toggleDelayTime)
   },
-  componentWillUnmount(){
+  componentWillUnmount() {
     clearInterval(this.toggleDelayTimeout);
   },
   componentWillReceiveProps(nextProps) {
-    if (nextProps.open === true || nextProps.open === false){
+    if (nextProps.open === true || nextProps.open === false) {
       this.setState({ isOpen: nextProps.open })
     }
   },
   toggle (toState) {
     const newValue = toState === null ? !this.state.isOpen : toState;
-    if(this.state.isOpen !== newValue){
+    if (this.state.isOpen !== newValue) {
       this.setState({ isOpen: newValue });
     }
   },
@@ -98,7 +97,7 @@ export default React.createClass({
       <Popover
         isOpen={isOpen}
         body={children[1] ? React.cloneElement(children[1], contentPropsWithInherit) : ''}
-        onOuterAction={()=>{if(trigger !== 'none'){this.toggle(false)}}}
+        onOuterAction={()=>{if (trigger !== 'none') {this.toggle(false)}}}
         preferPlace = {preferPlace || 'above'}
         tipSize={tipSizeDefault}
         offset={offset}>

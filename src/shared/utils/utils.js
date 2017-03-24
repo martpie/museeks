@@ -374,6 +374,8 @@ const supportedExtensions = [
     '.flac'
 ];
 
+const pickRandom = (items) => items[Math.floor(Math.random() * items.length)];
+
 export default {
     getMeWithIP,
     parseDuration,
@@ -385,5 +387,6 @@ export default {
     chunkArray,
     getMetadata,
     fetchCover,
-    supportedExtensions
+    supportedExtensions,
+    pickRandom
 };
