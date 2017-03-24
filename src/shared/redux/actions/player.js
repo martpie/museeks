@@ -178,7 +178,7 @@ console.log({ direction, queue, queueCursor, repeat, shuffle, history, currentTi
             ? Promise.resolve(lib.actions.config.set('shuffle', shuffle))
                 .then(() => shuffle)
                 .catch(() => prevShuffle)
-            : lib.api.actions.player.shuffle(output);
+            : lib.api.actions.player.shuffle(output, shuffle);
 
         return dispatch({
             type: 'PLAYER/SHUFFLE',
