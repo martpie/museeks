@@ -17,8 +17,6 @@ class CheckboxSetting extends PureComponent {
 
     constructor(props) {
         super(props);
-
-        this.onClick = this.onClick.bind(this);
     }
 
     render() {

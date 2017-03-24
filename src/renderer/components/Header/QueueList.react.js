@@ -32,10 +32,6 @@ class QueueList extends Component {
             draggedOverTrackIndex : null,
             dragPosition     : null // null, 'above' or 'below'
         };
-
-        this.dragStart = this.dragStart.bind(this);
-        this.dragOver  = this.dragOver.bind(this);
-        this.dragEnd   = this.dragEnd.bind(this);
     }
 
     render() {

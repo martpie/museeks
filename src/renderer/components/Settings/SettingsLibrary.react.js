@@ -25,8 +25,6 @@ class SettingsLibrary extends Component {
 
     constructor(props) {
         super(props);
-
-        this.addFolders = this.addFolders.bind(this);
     }
 
     render() {

@@ -18,8 +18,6 @@ class PlaylistsNavLink extends Component {
 
     constructor(props) {
         super(props);
-
-        this.onContextMenu = this.onContextMenu.bind(this);
     }
 
     render() {

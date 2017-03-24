@@ -19,8 +19,6 @@ class ExternalLink extends Component {
 
     constructor(props) {
         super(props);
-
-        this.openLink = this.openLink.bind(this);
     }
 
     render() {

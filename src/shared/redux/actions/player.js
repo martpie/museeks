@@ -59,6 +59,10 @@ const library = (lib) => {
     const load = (_id) => (dispatch, getState) => {
         const { queue, network: { output } } = getState();
 
+<<<<<<< HEAD
+=======
+        // const qu
+>>>>>>> origin/master
         const queueCursor = queue.findIndex((track) => track._id === _id);
         const track = queue[queueCursor];
 

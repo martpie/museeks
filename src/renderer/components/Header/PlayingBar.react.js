@@ -41,16 +41,6 @@ class PlayingBar extends Component {
             dragging    : false,
             showQueue   : false
         };
-
-        this.tick = this.tick.bind(this);
-
-        this.dragOver = this.dragOver.bind(this);
-        this.dragEnd  = this.dragEnd.bind(this);
-
-        this.jumpAudioTo = this.jumpAudioTo.bind(this);
-        this.showTooltip = this.showTooltip.bind(this);
-        this.hideTooltip = this.hideTooltip.bind(this);
-        this.toggleQueue = this.toggleQueue.bind(this);
     }
 
     render() {
