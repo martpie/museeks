@@ -49,7 +49,6 @@ export default (state = {}, action) => {
             return i.chain(state)
                 .assoc('queueCursor', newQueueCursor)
                 .updateIn(['player', 'history'], (history) => i.push(history, previousTrack))
-                .assocIn(['player', 'currentTrack'], currentTrack)
                 .value();
         }
         case('PLAYER/PREVIOUS'): {
@@ -57,7 +56,6 @@ export default (state = {}, action) => {
             const currentTrack = state.queue[newQueueCursor];
             return i.chain(state)
                 .assoc('queueCursor', newQueueCursor)
-                .assocIn(['player', 'currentTrack'], currentTrack)
                 .value();
         }
 
@@ -69,11 +67,14 @@ export default (state = {}, action) => {
             return i.assocIn(state, ['player', 'shuffle'], action.meta.shuffle);
         }
         case('PLAYER/SHUFFLE_REJECTED'): {
-            return i.assocIn(state, ['player', 'shuffle'], action.payload);
+            return i.assocIn(state, ['player', 'shuffle'], action.meta.prevShuffle);
         }
 
-        case('PLAYER/REPEAT'): {
-            return i.assocIn(state, ['player', 'repeat'], action.payload.repeat);
+        case('PLAYER/REPEAT_PENDING'): {
+            return i.assocIn(state, ['player', 'repeat'], action.meta.repeat);
+        }
+        case('PLAYER/REPEAT_REJECTED'): {
+            return i.assocIn(state, ['player', 'repeat'], action.meta.prevRepeat);
         }
 
         case('PLAYER/FETCHED_COVER'): {
