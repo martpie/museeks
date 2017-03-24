@@ -62,7 +62,7 @@ const library = (lib) => {
     };
 
     const start = (_id) => (dispatch, getState) => {
-        const { tracks, tracks: { tracksCursor } } = getState();
+        const { tracks, tracks: { tracksCursor }, player: { shuffle } } = getState();
         const queue = [...tracks[tracksCursor].sub];
         const queuePosition = queue.findIndex((track) => track._id === _id);
 
@@ -107,7 +107,8 @@ const library = (lib) => {
             dispatch({
                 type: 'PLAYER/NEXT',
                 payload: {
-                  newQueueCursor
+                    newQueueCursor,
+                    track
                 }
             });
         } else {
@@ -125,17 +126,16 @@ const library = (lib) => {
             ? queueCursor - 1
             : queueCursor;
 
-        const newTrack = queue[newQueueCursor];
+        const track = queue[newQueueCursor];
 
-        if (newTrack !== undefined) {
-            lib.player.setMetadata(newTrack);
+        if (track !== undefined) {
+            lib.player.setMetadata(track);
             lib.player.play();
-
             dispatch({
                 type: 'PLAYER/PREVIOUS',
                 payload: {
-                    currentTime,
-                    newQueueCursor
+                    newQueueCursor,
+                    track,
                 }
             });
         } else {

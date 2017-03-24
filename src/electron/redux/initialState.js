@@ -53,6 +53,7 @@ export default {
     oldQueue: null,                  // Queue backup (in case of shuffle)
 
     player: {
+        currentTrack: {},                // The currently playing track
         playerStatus: 'stop',            // Player status
         cover: null,                     // Current trackplaying cover
         repeat: 'none',                  // the current repeat state (one, all, none)
