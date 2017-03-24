@@ -62,16 +62,14 @@ const library = (lib) => {
         const queueCursor = queue.findIndex((track) => track._id === _id);
         const track = queue[queueCursor];
 
-        const payload = output.isLocal
-            ? lib.player.play()
-            : lib.api.actions.player.play(output);
-
         if (track) {
-            lib.player.setMetadata(track);
+            const outputIsLocal  = () => Promise.resolve(lib.player.setMetadata(track));
+            const outputIsRemote = () => lib.api.actions.player.load(output, _id);
 
             return dispatch({
                 type: 'PLAYER/LOAD',
-                payload: {
+                payload: output.isLocal ? outputIsLocal() : outputIsRemote(),
+                meta: {
                     queueCursor
                 }
             });

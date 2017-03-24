@@ -2,11 +2,10 @@ import i from 'icepick';
 
 export default (state = {}, action) => {
     switch (action.type) {
-        case('PLAYER/LOAD'): {
-            const { queue, queueCursor } = action.payload;
-            const track = queue[queueCursor];
+        case('PLAYER/LOAD_PENDING'): {
+            const { queueCursor } = action.meta;
+            const track = state.queue[queueCursor];
             return i.chain(state)
-                .assoc('queue', queue)
                 .assoc('queueCursor', queueCursor)
                 .updateIn(['player', 'history'], (history) => i.push(history, track))
                 .assocIn(['player', 'currentTrack'], track)
