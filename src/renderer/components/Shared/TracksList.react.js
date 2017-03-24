@@ -186,9 +186,7 @@ class TracksList extends Component {
         );
     }
 
-    scrollTracksList = () => {
-        this.setState({ scrollTop : document.querySelector('.tracks-list-body').scrollTop });
-    }
+    scrollTracksList = () => this.setState({ scrollTop : document.querySelector('.tracks-list-body').scrollTop });
 
     selectTrack = (e, id, index) => {
         if (this.isLeftClick(e) || (this.isRightClick(e) && this.isSelectableTrack(id))) {
@@ -226,17 +224,11 @@ class TracksList extends Component {
         }
     }
 
-    isLeftClick = (e) => {
-        return e.button === 0;
-    }
+    isLeftClick = (e) => e.button === 0;
 
-    isRightClick = (e) => {
-        return e.button === 2;
-    }
+    isRightClick = (e) => e.button === 2;
 
-    isSelectableTrack = (id) => {
-        return !this.state.selected.includes(id);
-    }
+    isSelectableTrack = (id) => !this.state.selected.includes(id);
 
     buildTrackTiles = () => {
         const self           = this;
@@ -309,9 +301,7 @@ class TracksList extends Component {
         });
     }
 
-    pausePlayState = () => {
-        return lib.player.isPaused() ? 'pause' : 'play';
-    }
+    pausePlayState = () => lib.player.isPaused() ? 'pause' : 'play';
 
     toggleSelectionById = (id) => {
         let selected = [...this.state.selected];
