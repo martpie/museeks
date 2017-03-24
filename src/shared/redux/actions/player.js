@@ -10,13 +10,13 @@ const library = (lib) => {
     };
 
     const playToggle = () => (dispatch, getState) => {
-        const paused = lib.player.isPaused();
-        const { queue } = getState();
-        if (paused && queue.length > 0) {
-            dispatch(lib.actions.player.play());
-        } else {
-            dispatch(lib.actions.player.pause());
-        }
+        lib.player.getAudio().then((audio) => {
+            if (audio.paused && getState().queue.length > 0) {
+                dispatch(lib.actions.player.play());
+            } else {
+                dispatch(lib.actions.player.pause());
+            }
+        });
     };
 
     const play = () => (dispatch, getState) => {

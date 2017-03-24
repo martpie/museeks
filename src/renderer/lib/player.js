@@ -29,7 +29,7 @@ class Player {
     }
 
     getAudio = () => {
-        return this.audio;
+        return Promise.resolve(this.audio);
     }
 
     play = () => {

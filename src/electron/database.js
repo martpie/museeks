@@ -14,7 +14,8 @@ class Database {
         const defaultPath = app.getPath('userData');
 
         linvodb.defaults.store = { db: backend };
-        linvodb.dbPath = this.lib.store.getState().config.electron.database.path || defaultPath;
+        linvodb.dbPath = defaultPath;
+        // linvodb.dbPath = this.lib.store.getState().config.electron.database.path || defaultPath;
 
         // load models now that database path has been initialised
         this.lib.models.track = require('./models/track').default;

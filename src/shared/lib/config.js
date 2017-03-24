@@ -22,20 +22,5 @@ export default {
     bounds: {
         width: 1000,
         height: 600
-    },
-    electron: {
-        api: {
-            port: 54321,
-            protocol: 'http'
-        },
-        database: {
-            path: undefined // use default database path in prod, override in testing
-        }
-    },
-    renderer: {
-        api: {
-            port: 54321,
-            protocol: 'http'
-        }
     }
 }

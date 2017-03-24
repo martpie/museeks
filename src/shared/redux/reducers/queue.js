@@ -38,7 +38,6 @@ export default (state = {}, action) => {
             };
         }
 
-        // Prob here
         case('QUEUE/ADD_FULFILLED'): {
             const queue = [...state.queue, ...action.payload.tracks];
             return {
@@ -60,6 +59,13 @@ export default (state = {}, action) => {
             return {
                 ...state,
                 queue: action.payload.queue
+            };
+        }
+
+        case('QUEUE/SET_CURSOR'): {
+            return {
+                ...state,
+                queueCursor: action.payload.index
             };
         }
 

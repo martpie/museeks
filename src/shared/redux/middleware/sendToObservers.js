@@ -8,14 +8,12 @@ const observerActions = [
 const sendToObservers = (store) => (next) => (action) => {
     const { type, payload } = action;
     const state = store.getState();
-    const protocol = state.config.renderer.api.protocol;
-    const port = state.config.electron.api.port;
 
     if (observerActions.includes(action.type)) {
 
         const sendActionToObserver = (observer) => {
             return http({
-                url: `${protocol}://${observer.ip}:${port}/api/store/dispatch`,
+                url: `http://${observer.ip}:54321/api/store/dispatch`,
                 method: 'POST',
                 data: action
             })

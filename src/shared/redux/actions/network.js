@@ -38,7 +38,7 @@ const library = (lib) => {
 
         // Add the isLocal bool to the output object for convenience elsewhere.
         const isLocal = newOutput.hostname === me.hostname;
-        const newOutputWithLocalBool = { ...newOutput, isLocal };
+        const newOutputWithIsLocal = { ...newOutput, isLocal };
 
         // If the output has not changed, do nothing.
         if (prevOutput && prevOutput.hostname === newOutput.hostname) {
@@ -60,7 +60,7 @@ const library = (lib) => {
             dispatch({
                 type: 'NETWORK/SET_OUTPUT',
                 payload: Promise.resolve(),
-                meta: { newOutput: newOutputWithLocalBool, prevOutput }
+                meta: { newOutput: newOutputWithIsLocal, prevOutput }
             })
         }
         // If output has changed to another computer
@@ -79,7 +79,7 @@ const library = (lib) => {
                     peer: meWithIP,
                     state: playerState
                 }),
-                meta: { newOutput: newOutputWithLocalBool, prevOutput }
+                meta: { newOutput: newOutputWithIsLocal, prevOutput }
             });
         }
     };
