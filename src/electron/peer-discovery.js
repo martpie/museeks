@@ -40,7 +40,7 @@ class PeerDiscovery {
     scanForPeers() {
         const interfaces = flatten(Object.values(os.networkInterfaces()));
         const networks = interfaces.filter(adapter => adapter.family === 'IPv4' && !adapter.internal); // only scan for external ipv4 adapters
-        const { port } = this.lib.store.getState().config.electron.api;
+        const port = 54321;
 
         const scanNetwork = (network) => {
 

@@ -8,12 +8,6 @@ const library = (lib) => {
         : item;
 
     const find = ({ peer, query, sort } = {}) => {
-        console.log({
-            ip: peer.ip,
-            query,
-            sort
-        })
-
         return lib.api.track.find(peer, {
             query,
             sort

@@ -39,6 +39,7 @@
     "icepick": "^1.3.0",
     "inert": "^4.1.0",
     "joi": "^10.2.2",
+    "leveldown": "^1.6.0",
     "linvodb3": "^3.25.0",
     "musicmetadata": "2.0.5",
     "open-sans-fontface": "1.4.0",
