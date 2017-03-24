@@ -60,9 +60,9 @@ export default (state = {}, action) => {
 
         case('PLAYER/STOP'): {
             return i.chain(state)
-                .assoc(state, 'queue', [])
-                .assoc(state, 'queueCursor', null)
-                .assocIn(state, ['player', 'playStatus'], 'stop')
+                .assoc('queue', [])
+                .assoc('queueCursor', null)
+                .assocIn(['player', 'playStatus'], 'stop')
                 .value();
         }
 

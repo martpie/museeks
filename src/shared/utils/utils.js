@@ -30,7 +30,7 @@ const getMeWithIP = (me, peer) => {
         }
     };
 
-    const meCopy = omit(me, ['ips']);
+    const meCopy = omit(me, ['ips', 'isLocal']);
     meCopy.ip = getIP();
     return meCopy;
 };
