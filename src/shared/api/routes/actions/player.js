@@ -59,6 +59,11 @@ export default [{
     name: 'actions.player.loadAndPlay',
     dispatch: true
 }, {
+    path: 'api/actions/player/load',
+    method: 'POST',
+    name: 'actions.player.load',
+    dispatch: true
+}, {
     path: 'api/actions/player/stop',
     method: 'GET',
     name: 'actions.player.stop',
