@@ -2,7 +2,14 @@ import http from 'axios';
 
 const observerActions = [
     'PLAYER/PAUSE',
-    'PLAYER/PLAY'
+    'PLAYER/PLAY',
+    'PLAYER/STOP',
+    'PLAYER/NEXT',
+    'PLAYER/PREVIOUS',
+    'PLAYER/START',
+    'PLAYER/SHUFFLE',
+    'PLAYER/REPEAT',
+    'PLAYER/JUMP_TO',
 ];
 
 const sendToObservers = (store) => (next) => (action) => {

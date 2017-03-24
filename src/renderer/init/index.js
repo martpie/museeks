@@ -30,6 +30,8 @@ const library = (lib) => {
     dispatch(lib.actions.tracks.find());
     dispatch(lib.actions.playlists.refresh());
     dispatch(lib.actions.settings.check());
+
+    console.log(dispatch(lib.actions.player.shuffle(true)));
 }
 
 export default library;

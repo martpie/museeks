@@ -106,10 +106,16 @@ const library = (lib) => {
             dispatch(lib.actions.player.play());
         }
 
-        // Set the elapsed time.
+        // Set repeat
+        dispatch(lib.actions.player.repeat(state.player.repeat));
+
+        // Set Shuffle
+        dispatch(lib.actions.player.shuffle(state.player.shuffle));
+
+        // Set the elapsed time
         dispatch(lib.actions.player.jumpTo(state.elapsed));
 
-        // Add the input computer as an observer.
+        // Add the input computer as an observer
         dispatch(lib.actions.network.addObserver(peer));
     };
 

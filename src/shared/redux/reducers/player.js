@@ -13,15 +13,21 @@ export default (state = {}, action) => {
                 .value();
         }
 
-        case('PLAYER/PLAY'): {
+        case('PLAYER/PLAY_PENDING'): {
             return i.assocIn(state, ['player', 'playStatus'], 'play');
         }
-
-        case('PLAYER/PAUSE'): {
+        case('PLAYER/PLAY_REJECTED'): {
             return i.assocIn(state, ['player', 'playStatus'], 'pause');
         }
 
-        case('PLAYER/STOP'): {
+        case('PLAYER/PAUSE_PENDING'): {
+            return i.assocIn(state, ['player', 'playStatus'], 'pause');
+        }
+        case('PLAYER/PAUSE_REJECTED'): {
+            return i.assocIn(state, ['player', 'playStatus'], 'play');
+        }
+
+        case('PLAYER/STOP_PENDING'): {
             return i.chain(state)
                 .assoc('queue', [])
                 .assoc('queueCursor', null)
@@ -52,8 +58,11 @@ export default (state = {}, action) => {
             return state;
         }
 
-        case('PLAYER/SHUFFLE'): {
-            return i.assocIn(state, ['player', 'shuffle'], action.payload.shuffle);
+        case('PLAYER/SHUFFLE_PENDING'): {
+            return i.assocIn(state, ['player', 'shuffle'], action.meta.shuffle);
+        }
+        case('PLAYER/SHUFFLE_REJECTED'): {
+            return i.assocIn(state, ['player', 'shuffle'], action.payload);
         }
 
         case('PLAYER/REPEAT'): {

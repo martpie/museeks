@@ -70,31 +70,31 @@ console.log({ direction, queue, queueCursor, repeat, shuffle, history, currentTi
         //     });
         // }
 
-        if (queue !== null) {
-            if (output.isLocal) {
-                lib.player.play();
-            } else {
-                lib.api.actions.player.play(output);
-            }
-            dispatch({
-                type: 'PLAYER/PLAY'
-            });
-        }
+        if (queue === null) return;
+
+        const payload = output.isLocal
+            ? lib.player.play()
+            : lib.api.actions.player.play(output);
+
+        return dispatch({
+            type: 'PLAYER/PLAY',
+            payload: Promise.resolve(payload)
+        });
     };
 
     const pause = () => (dispatch, getState) => {
         const { player: { queue }, network: { output } } = getState();
 
-        if (queue !== null) {
-            if (output.isLocal) {
-                lib.player.pause();
-            } else {
-                lib.api.actions.player.pause(output);
-            }
-            dispatch({
-                type: 'PLAYER/PAUSE'
-            });
-        }
+        if (queue === null) return;
+
+        const payload = output.isLocal
+            ? lib.player.pause()
+            : lib.api.actions.player.pause(output);
+
+        return dispatch({
+            type: 'PLAYER/PAUSE',
+            payload: Promise.resolve(payload)
+        });
     };
 
     const start = (_id) => (dispatch, getState) => {
@@ -118,15 +118,21 @@ console.log({ direction, queue, queueCursor, repeat, shuffle, history, currentTi
         }
     };
 
-    const stop = () => {
-        lib.player.stop();
-        return {
-            type: 'PLAYER/STOP'
-        };
+    const stop = () => (dispatch, getState) => {
+        const { network: { output } } = getState();
+
+        const payload = output.isLocal
+            ? lib.player.stop()
+            : lib.api.actions.player.stop(output);
+
+        return dispatch({
+            type: 'PLAYER/STOP',
+            payload: Promise.resolve(payload)
+        });
     };
 
     const next = () => (dispatch, getState) => {
-        const { queue } = getState();
+        const { queue, network: { output } } = getState();
 
         const newQueueCursor = getNextCursor({ direction: 'next' });
         const track = queue[newQueueCursor];
@@ -165,19 +171,24 @@ console.log({ direction, queue, queueCursor, repeat, shuffle, history, currentTi
         }
     };
 
-    const shuffle = (shuffle) => (dispatch) => {
-        dispatch(lib.actions.config.set('shuffle', shuffle));
-        dispatch({
+    const shuffle = (shuffle) => (dispatch, getState) => {
+        const { player: { shuffle: prevShuffle }, network: { output } } = getState();
+
+        const payload = output.isLocal
+            ? Promise.resolve(lib.actions.config.set('shuffle', shuffle))
+                .then(() => shuffle)
+                .catch(() => prevShuffle)
+            : lib.api.actions.player.shuffle(output);
+
+        return dispatch({
             type: 'PLAYER/SHUFFLE',
-            payload: {
-                shuffle
-            }
+            payload: payload,
+            meta: { shuffle }
         });
     };
 
     const repeat = (repeat) => (dispatch) => {
         dispatch(lib.actions.config.set('repeat', repeat));
-
         return {
             type: 'PLAYER/REPEAT',
             payload: {
