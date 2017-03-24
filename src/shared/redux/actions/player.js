@@ -59,7 +59,7 @@ console.log({ direction, queue, queueCursor, repeat, shuffle, history, currentTi
     const load = (_id) => (dispatch, getState) => {
         const { tracks, tracks: { tracksCursor }, player: { shuffle }, network: { output } } = getState();
 
-        const qu
+        // const qu
         const queueCursor = queue.findIndex((track) => track._id === _id);
         const track = queue[queueCursor];
 

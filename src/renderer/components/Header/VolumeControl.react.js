@@ -34,11 +34,6 @@ class VolumeControl extends Component {
             volume: unsmoothifyVolume(lib.player.audio.volume),
             muted: lib.player.isMuted()
         };
-
-        this.mute = this.mute.bind(this);
-        this.showVolume = this.showVolume.bind(this);
-        this.hideVolume = this.hideVolume.bind(this);
-        this.setVolume = this.setVolume.bind(this);
     }
 
     getVolumeIcon = (volume, muted) => {

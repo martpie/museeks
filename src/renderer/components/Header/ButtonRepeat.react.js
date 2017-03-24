@@ -25,8 +25,6 @@ class ButtonRepeat extends Component {
 
     constructor(props) {
         super(props);
-
-        this.toggleRepeat = this.toggleRepeat.bind(this);
     }
 
     render() {

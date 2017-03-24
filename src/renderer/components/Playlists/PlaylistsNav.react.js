@@ -27,10 +27,6 @@ class PlaylistsNav extends Component {
         this.state = {
             renamed: null // the playlist being renamed if there's one
         };
-
-        this.blur            = this.blur.bind(this);
-        this.keyDown         = this.keyDown.bind(this);
-        this.showContextMenu = this.showContextMenu.bind(this);
     }
 
     render() {

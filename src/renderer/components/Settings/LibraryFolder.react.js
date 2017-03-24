@@ -22,8 +22,6 @@ class LibraryFolders extends Component {
 
     constructor(props) {
         super(props);
-
-        this.removeFolder = this.removeFolder.bind(this);
     }
 
     render() {

@@ -24,9 +24,6 @@ class TrackRow extends Component {
         this.state = {
             hovered: false
         };
-
-        this.onMouseEnter = this.onMouseEnter.bind(this);
-        this.onMouseLeave = this.onMouseLeave.bind(this);
     }
 
     render() {
