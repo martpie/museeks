@@ -1,5 +1,6 @@
 import Promise from 'bluebird';
 import os from 'os';
+import extend from 'xtend';
 import { flatten, pick } from 'lodash';
 import utils from '../../utils/utils';
 
