@@ -199,26 +199,26 @@ console.log({ direction, queue, queueCursor, repeat, shuffle, history, currentTi
     const shuffle = (shuffle) => (dispatch, getState) => {
         const { player: { shuffle: prevShuffle }, network: { output } } = getState();
 
-        const payload = output.isLocal
-            ? Promise.resolve(lib.actions.config.set('shuffle', shuffle))
-                .then(() => shuffle)
-                .catch(() => prevShuffle)
-            : lib.api.actions.player.shuffle(output, shuffle);
+        const outputIsLocal  = () => Promise.resolve(lib.actions.config.set('shuffle', shuffle));
+        const outputIsRemote = () => lib.api.actions.player.shuffle(output, shuffle);
 
         return dispatch({
             type: 'PLAYER/SHUFFLE',
-            payload: payload,
-            meta: { shuffle }
+            payload: output.isLocal ? outputIsLocal() : outputIsRemote(),
+            meta: { prevShuffle, shuffle }
         });
     };
 
-    const repeat = (repeat) => (dispatch) => {
-        dispatch(lib.actions.config.set('repeat', repeat));
+    const repeat = (repeat) => (dispatch, getState) => {
+        const { player: { repeat: prevRepeat }, network: { output } } = getState();
+
+        const outputIsLocal  = () => Promise.resolve(lib.actions.config.set('repeat', repeat));
+        const outputIsRemote = () => lib.api.actions.player.repeat(output, repeat);
+
         return {
             type: 'PLAYER/REPEAT',
-            payload: {
-                repeat
-            }
+            payload: output.isLocal ? outputIsLocal() : outputIsRemote(),
+            meta: { prevShuffle, repeat }
         };
     };
 
@@ -247,11 +247,17 @@ console.log({ direction, queue, queueCursor, repeat, shuffle, history, currentTi
         }
     };
 
-    const jumpTo = (to) => {
-        lib.player.setCurrentTime(to);
-        return {
-            type: 'PLAYER/JUMP_TO'
-        };
+    const jumpTo = (to) => (dispatch, setState) => {
+        const { network: { output } } = getState();
+
+        const outputIsLocal  = () => Promise.resolve(lib.player.setCurrentTime(to));
+        const outputIsRemote = () => lib.api.actions.player.jumpTo(output, to);
+
+        dispatch({
+            type: 'PLAYER/JUMP_TO',
+            payload: output.isLocal ? outputIsLocal() : outputIsRemote(),
+            meta: { prevTime, time }
+        });
     };
 
     const audioError = (e) => (dispatch) => {
