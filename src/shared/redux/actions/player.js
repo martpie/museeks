@@ -13,7 +13,7 @@ const library = (lib) => {
     const getNextCursor = ({ direction }) => {
         const { queue, queueCursor, player: { repeat, shuffle, history } } = lib.store.getState();
         const currentTime = lib.player.getCurrentTime();
-console.log({ direction, queue, queueCursor, repeat, shuffle, history, currentTime })
+        console.log({ direction, queue, queueCursor, repeat, shuffle, history, currentTime })
         if (direction === 'previous' && !shuffle) {
             // If track started less than 5 seconds ago, play the previous track, otherwise replay the current one
             if (currentTime < 5) {
@@ -57,9 +57,8 @@ console.log({ direction, queue, queueCursor, repeat, shuffle, history, currentTi
 
 
     const load = (_id) => (dispatch, getState) => {
-        const { tracks, tracks: { tracksCursor }, player: { shuffle }, network: { output } } = getState();
+        const { queue, network: { output } } = getState();
 
-        const qu
         const queueCursor = queue.findIndex((track) => track._id === _id);
         const track = queue[queueCursor];
 
@@ -96,46 +95,52 @@ console.log({ direction, queue, queueCursor, repeat, shuffle, history, currentTi
 
         if (queue === null) return;
 
-        const payload = output.isLocal
-            ? lib.player.play()
-            : lib.api.actions.player.play(output);
+        const outputIsLocal  = () => Promise.resolve(lib.player.play());
+        const outputIsRemote = () => lib.api.actions.player.play(output);
 
         return dispatch({
             type: 'PLAYER/PLAY',
-            payload: Promise.resolve(payload)
+            payload: output.isLocal ? outputIsLocal() : outputIsRemote(),
         });
+    };
+
+    const newQueueLoadAndPlay = (_id) => (dispatch, getState) => {
+        const { tracks, tracks: { tracksCursor } } = getState();
+        const newQueue = [ ...tracks[tracksCursor].sub ];
+
+        return dispatch(lib.actions.player.createNewQueue(newQueue))
+            .then(() => dispatch(lib.actions.player.loadAndPlay(_id)));
     };
 
     const loadAndPlay = (_id) => (dispatch, getState) => {
         dispatch(lib.actions.player.load(_id));
         dispatch(lib.actions.player.play());
-    }
+    };
 
     const pause = () => (dispatch, getState) => {
-        const { player: { queue }, network: { output } } = getState();
+        const { player: { queue, playStatus }, network: { output } } = getState();
 
+        console.log(queue, playStatus);
         if (queue === null) return;
 
-        const payload = output.isLocal
-            ? lib.player.pause()
-            : lib.api.actions.player.pause(output);
+        const outputIsLocal  = () => Promise.resolve(lib.player.pause());
+        const outputIsRemote = () => lib.api.actions.player.pause(output);
 
         return dispatch({
             type: 'PLAYER/PAUSE',
-            payload: Promise.resolve(payload)
+            payload: output.isLocal ? outputIsLocal() : outputIsRemote(),
         });
     };
 
     const createNewQueue = (newQueue) => (dispatch, getState) => {
         const { queue: oldQueue, network: { output } } = getState();
 
-        const payload = output.isLocal
-            ? Promise.resolve()
-            : lib.api.actions.player.createNewQueue(output, newQueue);
+        const outputIsLocal  = () => Promise.resolve();
+        const outputIsRemote = () => lib.api.actions.player.createNewQueue(output, newQueue);
 
         return dispatch({
             type: 'PLAYER/CREATE_NEW_QUEUE',
-            payload,
+            payload: output.isLocal ? outputIsLocal() : outputIsRemote(),
             meta: {
                 newQueue,
                 oldQueue
@@ -146,13 +151,12 @@ console.log({ direction, queue, queueCursor, repeat, shuffle, history, currentTi
     const stop = () => (dispatch, getState) => {
         const { network: { output } } = getState();
 
-        const payload = output.isLocal
-            ? lib.player.stop()
-            : lib.api.actions.player.stop(output);
+        const outputIsLocal  = () => Promise.resolve(lib.player.stop());
+        const outputIsRemote = () => lib.api.actions.player.stop(output);
 
         return dispatch({
             type: 'PLAYER/STOP',
-            payload: Promise.resolve(payload)
+            payload: output.isLocal ? outputIsLocal() : outputIsRemote(),
         });
     };
 
@@ -286,22 +290,24 @@ console.log({ direction, queue, queueCursor, repeat, shuffle, history, currentTi
 
     return {
         audioError,
+        audioErrors,
+        createNewQueue,
+        fetchCover,
         jumpTo,
+        load,
+        loadAndPlay,
+        newQueueLoadAndPlay,
         next,
         pause,
+        play,
         playToggle,
         previous,
-        fetchCover,
         repeat,
         setMuted,
         setPlaybackRate,
         setVolume,
         shuffle,
-        load,
-        play,
-        loadAndPlay,
         stop,
-        audioErrors
     };
 }
 

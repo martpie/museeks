@@ -14,7 +14,7 @@ export default (state = {}, action) => {
         }
 
         case('PLAYER/CREATE_NEW_QUEUE_PENDING'): {
-            return i.assoc(state, 'queue', action.meta.queue);
+            return i.assoc(state, 'queue', action.meta.newQueue);
         }
         case('PLAYER/CREATE_NEW_QUEUE_REJECTED'): {
             return i.assoc(state, 'queue', action.meta.oldQueue);

@@ -457,7 +457,6 @@ const stateToProps = () => ({});
 const dispatchToProps = {
     add: lib.actions.queue.add,
     addNext: lib.actions.queue.addNext,
-    addTracksTo: lib.actions.playlists.addTracksTo,
     removeTracksFrom: lib.actions.playlists.removeTracksFrom,
     create: lib.actions.playlists.create,
     addTracksTo: lib.actions.playlists.addTracksTo,

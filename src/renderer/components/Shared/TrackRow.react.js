@@ -36,7 +36,7 @@ class TrackRow extends Component {
         return (
             <div
                 className={ trackClasses }
-                onDoubleClick={ () => this.props.start(this.props.trackId) }
+                onDoubleClick={ () => this.props.newQueueLoadAndPlay(this.props.trackId) }
                 onMouseDown={ this.onMouseDown }
                 onContextMenu={ this.onContextMenu }
             >
@@ -57,7 +57,7 @@ class TrackRow extends Component {
 const stateToProps = () => ({});
 
 const dispatchToProps = {
-    loadAndPlay: lib.actions.player.loadAndPlay
+    newQueueLoadAndPlay: lib.actions.player.newQueueLoadAndPlay
 };
 
 export default connect(stateToProps, dispatchToProps)(TrackRow);
