@@ -3,7 +3,6 @@ import sharedLib from '../../shared/lib';
 
 import app from './app';
 import config from './config';
-import network from './network';
 import player from './player';
 import playlist from './playlist';
 import shell from './shell';
@@ -20,7 +19,6 @@ const library = {
 };
 
 // attach libraries which must be invoked
-library.network = network(library);
 library.playlist = playlist(library);
 library.track = track(library);
 

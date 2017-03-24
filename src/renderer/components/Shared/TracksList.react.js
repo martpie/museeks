@@ -381,7 +381,7 @@ class TracksList extends Component {
     }
 
     onEnter = (i, tracks) => {
-        if (i !== undefined) this.props.loadAndPlay(tracks[i]._id);
+        if (i) this.props.loadAndPlay(tracks[i]._id);
     }
 
     showContextMenu = (e, index) => {

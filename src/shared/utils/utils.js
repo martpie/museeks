@@ -44,7 +44,7 @@ const getMeWithIP = (me, peer) => {
  */
 
 const parseDuration = (duration) => {
-    if (duration !== null && duration !== undefined) {
+    if (duration) {
         let hours   = parseInt(duration / 3600);
         let minutes = parseInt(duration / 60) % 60;
         let seconds = parseInt(duration % 60);
@@ -56,9 +56,9 @@ const parseDuration = (duration) => {
         result += `${minutes}:${seconds}`;
 
         return result;
+    } else {
+        return '00:00';
     }
-
-    return '00:00';
 };
 
 /**
@@ -341,7 +341,7 @@ const fetchCover = async (trackPath) => {
         const pattern = path.join(folder, '*');
         const matches = await globby(pattern, { nodir: true, follow: false });
 
-        const path = matches.find((elem) => {
+        const filepath = matches.find((elem) => {
             const parsedPath = path.parse(elem);
 
             return ['album', 'albumart', 'folder', 'cover'].includes(parsedPath.name.toLowerCase())
@@ -350,7 +350,7 @@ const fetchCover = async (trackPath) => {
 
         return {
             format: 'path',
-            data: path
+            data: filepath
         }
     }
 };

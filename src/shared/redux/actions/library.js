@@ -17,7 +17,7 @@ const library = (lib) => {
         dialog.showOpenDialog({
              properties: ['openDirectory', 'multiSelections']
         }, (folders) => {
-            if (folders !== undefined) {
+            if (folders) {
                 Promise.map(folders, (folder) => {
                     return realpath(folder);
                 }).then((resolvedFolders) => {
@@ -79,7 +79,7 @@ const library = (lib) => {
             }, { concurrency: fsConcurrency });
         }).then(() => {
             dispatchEnd();
-            dispatch(lib.actions.network.find());
+            dispatch(lib.actions.tracks.find());
         });
     };
 

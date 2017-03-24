@@ -164,7 +164,7 @@ const library = (lib) => {
         const newQueueCursor = getNextCursor({ direction: 'next' });
         const track = queue[newQueueCursor];
 
-        if (track !== undefined) {
+        if (track) {
             lib.player.setMetadata(track);
             lib.player.play();
             dispatch({
@@ -184,7 +184,7 @@ const library = (lib) => {
         const newQueueCursor = getNextCursor({ direction: 'previous' });
         const track = queue[newQueueCursor];
 
-        if (track !== undefined) {
+        if (track) {
             lib.player.setMetadata(track);
             lib.player.play();
             dispatch({
