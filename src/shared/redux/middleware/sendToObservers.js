@@ -1,5 +1,8 @@
 import http from 'axios';
-import lib from '../../lib';
+
+// hack to get lib without invoking middleware
+import initLib from '../../lib';
+const lib = initLib({});
 
 const observerActions = [
     'PLAYER/PAUSE',

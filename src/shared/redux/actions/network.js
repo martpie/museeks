@@ -121,7 +121,9 @@ const library = (lib) => {
         dispatch(lib.actions.queue.setQueue(state.queue));
 
         // Load the track
-        dispatch(lib.actions.player.load(state.queue[state.queueCursor]._id));
+        if (state.queueCursor) {
+            dispatch(lib.actions.player.load(state.queue[state.queueCursor]._id));
+        }
 
         // Set the play/pause/stop status
         if (state.player.playStatus === 'pause') {
