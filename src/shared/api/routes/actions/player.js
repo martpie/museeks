@@ -5,7 +5,7 @@ export default [{
     dispatch: true
 }, {
     path: 'api/actions/player/next',
-    method: 'GET',
+    method: 'POST',
     name: 'actions.player.next',
     dispatch: true
 }, {
@@ -25,7 +25,7 @@ export default [{
     dispatch: true
 }, {
     path: 'api/actions/player/previous',
-    method: 'GET',
+    method: 'POST',
     name: 'actions.player.previous',
     dispatch: true
 }, {
