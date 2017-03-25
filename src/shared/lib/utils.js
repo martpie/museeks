@@ -31,7 +31,8 @@ const library = (lib) => {
         peerEndpoint,
         peerIsMe,
         trackEndpoint,
-        coverEndpoint
+        coverEndpoint,
+        dispatchEndpoint
     }
 }
 
