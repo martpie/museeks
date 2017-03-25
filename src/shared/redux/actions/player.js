@@ -175,7 +175,7 @@ const library = (lib) => {
         });
     };
 
-    const next = (newQueueCursor) => (dispatch, getState) => {
+    const next = ({ newQueueCursor } = {}) => (dispatch, getState) => {
         const { queue, queueCursor: oldQueueCursor, network: { output } } = getState();
 
         const queueCursor = newQueueCursor
@@ -192,7 +192,7 @@ const library = (lib) => {
                     lib.player.play();
                     return Promise.resolve();
                 }
-                const outputIsRemote = () => lib.api.actions.player.next(output, newQueueCursor);
+                const outputIsRemote = () => lib.api.actions.player.next(output, { newQueueCursor} );
 
                 dispatch({
                     type: 'PLAYER/NEXT',
@@ -210,7 +210,7 @@ const library = (lib) => {
         });
     };
 
-    const previous = (newQueueCursor) => (dispatch, getState) => {
+    const previous = ({ newQueueCursor } = {}) => (dispatch, getState) => {
         const { queue, queueCursor: oldQueueCursor, network: { output } } = getState();
 
         const queueCursor = newQueueCursor
@@ -227,7 +227,7 @@ const library = (lib) => {
                     lib.player.play();
                     return Promise.resolve();
                 }
-                const outputIsRemote = () => lib.api.actions.player.next(output, newQueueCursor);
+                const outputIsRemote = () => lib.api.actions.player.next(output, { newQueueCursor} );
 
                 dispatch({
                     type: 'PLAYER/PREVIOUS',
