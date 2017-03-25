@@ -1,7 +1,6 @@
 import Promise from 'bluebird';
 import os from 'os';
 import extend from 'xtend';
-import { flatten, pick } from 'lodash';
 import utils from '../../utils/utils';
 
 const library = (lib) => {
@@ -51,30 +50,18 @@ const library = (lib) => {
                     newOutput: newOutputWithIsLocal,
                     prevOutput
                 }
-            })
-
-        } else { // If output has changed to another computer
-
-            const meWithIP = utils.getMeWithIP(me, newOutput);
-
-            const makeRemote = (track) => ({
-                ...track,
-                path: lib.utils.trackEndpoint({
-                    _id: track._id,
-                    peer: meWithIP
-                }),
-                owner: meWithIP
             });
 
-            const queueWithRemotePaths = state.queue.map((track) => track.owner.isLocal
-                ? makeRemote(track)
-                : track
-            );
+        } else { // If output has changed to another computer
 
             const playerState = {
                 player: state.player,
                 queueCursor: state.queueCursor,
-                queue: queueWithRemotePaths,
+                queue: utils.transformTrackPaths({
+                    tracks: state.queue,
+                    peer: newOutput,
+                    me
+                }),
                 elapsed: lib.player.getCurrentTime()
             }
 
@@ -82,7 +69,7 @@ const library = (lib) => {
             dispatch({
                 type: 'NETWORK/SET_OUTPUT',
                 payload: lib.api.actions.network.connectAsOutput(newOutput, {
-                    peer: meWithIP,
+                    peer: utils.getMeWithIP(me, newOutput),
                     state: playerState
                 }),
                 meta: {

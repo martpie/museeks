@@ -375,6 +375,31 @@ const supportedExtensions = [
 
 const pickRandom = (items) => items[Math.floor(Math.random() * items.length)];
 
+const transformTrackPaths = ({ tracks, me, peer }) => {
+
+    const meWithIP = utils.getMeWithIP(me, peer);
+
+    const makeRemote = (track) => ({
+        ...track,
+        path: lib.utils.trackEndpoint({
+            _id: track._id,
+            peer: meWithIP
+        }),
+        owner: meWithIP
+    });
+
+    const makeLocal = (track) => track.owner.hostname === peer.hostname
+        ? { ...track, isLocal: true }
+        : track;
+
+    const tracksWithTransformedPaths = tracks.map((track) => track.owner.isLocal
+        ? makeRemote(track)
+        : makeLocal(track)
+    );
+
+    return tracksWithTransformedPaths;
+}
+
 export default {
     getMeWithIP,
     parseDuration,
@@ -387,5 +412,6 @@ export default {
     getMetadata,
     fetchCover,
     supportedExtensions,
-    pickRandom
+    pickRandom,
+    transformTrackPaths
 };

@@ -137,10 +137,17 @@ const library = (lib) => {
     };
 
     const createNewQueue = (newQueue) => (dispatch, getState) => {
-        const { queue: oldQueue, network: { output } } = getState();
+        const { queue: oldQueue, network: { output, me } } = getState();
 
         const outputIsLocal = () => Promise.resolve();
-        const outputIsRemote = () => lib.api.actions.player.createNewQueue(output, newQueue);
+        const outputIsRemote = () => {
+            const remoteQueue = utils.transformTrackPaths({
+                tracks: newQueue,
+                peer: output,
+                me
+            });
+            return lib.api.actions.player.createNewQueue(output, remoteQueue);
+        }
 
         return dispatch({
             type: 'PLAYER/CREATE_NEW_QUEUE',
