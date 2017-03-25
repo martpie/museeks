@@ -175,62 +175,74 @@ const library = (lib) => {
         });
     };
 
-    const next = () => (dispatch, getState) => {
-        const { queue, network: { output } } = getState();
+    const next = (newQueueCursor) => (dispatch, getState) => {
+        const { queue, queueCursor: oldQueueCursor, network: { output } } = getState();
 
-        const newQueueCursor = getNextCursor({ direction: 'next' });
-        const track = queue[newQueueCursor];
+        const queueCursor = newQueueCursor
+            ? Promise.resolve(newQueueCursor)
+            : getNextCursor({ direction: 'next' });
 
-        if (track) {
+        return queueCursor.then((newQueueCursor) => {
+            const track = queue[newQueueCursor];
 
-            const outputIsLocal = () => {
-                lib.player.setMetadata(track);
-                lib.player.play();
-                return Promise.resolve();
-            }
-            const outputIsRemote = () => lib.api.actions.player.next(output);
+            if (track) {
 
-            dispatch({
-                type: 'PLAYER/NEXT',
-                payload: output.isLocal
-                    ? outputIsLocal()
-                    : outputIsRemote(),
-                meta: {
-                    newQueueCursor
+                const outputIsLocal = () => {
+                    lib.player.setMetadata(track);
+                    lib.player.play();
+                    return Promise.resolve();
                 }
-            });
-        } else {
-            dispatch(lib.actions.player.stop());
-        }
+                const outputIsRemote = () => lib.api.actions.player.next(output, newQueueCursor);
+
+                dispatch({
+                    type: 'PLAYER/NEXT',
+                    payload: output.isLocal
+                        ? outputIsLocal()
+                        : outputIsRemote(),
+                    meta: {
+                        newQueueCursor,
+                        oldQueueCursor
+                    }
+                });
+            } else {
+                dispatch(lib.actions.player.stop());
+            }
+        });
     };
 
-    const previous = () => (dispatch, getState) => {
-        const { queue } = getState();
+    const previous = (newQueueCursor) => (dispatch, getState) => {
+        const { queue, queueCursor: oldQueueCursor, network: { output } } = getState();
 
-        const newQueueCursor = getNextCursor({ direction: 'previous' });
-        const track = queue[newQueueCursor];
+        const queueCursor = newQueueCursor
+            ? Promise.resolve(newQueueCursor)
+            : getNextCursor({ direction: 'previous' });
 
-        if (track) {
+        return queueCursor.then((newQueueCursor) => {
+            const track = queue[newQueueCursor];
 
-            const outputIsLocal = () => {
-                lib.player.setMetadata(track);
-                lib.player.play();
-                return Promise.resolve();
-            }
-            const outputIsRemote = () => lib.api.actions.player.next(output);
+            if (track) {
 
-            dispatch({
-                type: 'PLAYER/PREVIOUS',
-                payload: output.isLocal
-                    ? outputIsLocal()
-                    : outputIsRemote(),
-                meta: {
-                    newQueueCursor
+                const outputIsLocal = () => {
+                    lib.player.setMetadata(track);
+                    lib.player.play();
+                    return Promise.resolve();
                 }
-            });
-        } else {
-            dispatch(lib.actions.player.stop());
-        }
+                const outputIsRemote = () => lib.api.actions.player.next(output, newQueueCursor);
+
+                dispatch({
+                    type: 'PLAYER/PREVIOUS',
+                    payload: output.isLocal
+                        ? outputIsLocal()
+                        : outputIsRemote(),
+                    meta: {
+                        newQueueCursor,
+                        oldQueueCursor
+                    }
+                });
+            } else {
+                dispatch(lib.actions.player.stop());
+            }
+        });
     };
 
     const shuffle = (shuffle) => (dispatch, getState) => {

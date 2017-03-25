@@ -45,7 +45,7 @@ class OutputDevice extends Component {
                     <div className="PopoverMenu">
                         { allOutputs.map((option) => (
                             <a key={ option.hostname }
-                                onClick={() => setOutput(option)}>
+                                onClick={ () => setOutput(option) }>
                                 <Avatar name={ option.hostname }/>
                                 <span style={ textStyle }>{ option.hostname }</span>
                             </a>

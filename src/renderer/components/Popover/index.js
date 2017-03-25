@@ -44,6 +44,11 @@ export default React.createClass({
       this.setState({ isOpen: newValue });
     }
   },
+  outerAction () {
+      if (trigger !== 'none') {
+          this.toggle(false);
+      }
+  },
   render() {
     const { preferPlace, trigger, disableClickClose, tipSize, offset, children, inheritIsOpen } = this.props;
     const { isOpen } = this.state;
@@ -97,7 +102,7 @@ export default React.createClass({
       <Popover
         isOpen={isOpen}
         body={children[1] ? React.cloneElement(children[1], contentPropsWithInherit) : ''}
-        onOuterAction={()=>{if (trigger !== 'none') {this.toggle(false)}}}
+        onOuterAction={ this.outerAction }
         preferPlace = {preferPlace || 'above'}
         tipSize={tipSizeDefault}
         offset={offset}>

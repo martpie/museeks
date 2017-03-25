@@ -41,8 +41,8 @@ export default (state = {}, action) => {
                 .value();
         }
 
-        case('PLAYER/NEXT'): {
-            const { newQueueCursor } = action.payload;
+        case('PLAYER/NEXT_PENDING'): {
+            const { newQueueCursor } = action.meta;
             const previousTrack = state.queue[state.queueCursor];
             const currentTrack = state.queue[newQueueCursor];
             return i.chain(state)
@@ -50,11 +50,19 @@ export default (state = {}, action) => {
                 .updateIn(['player', 'history'], (history) => i.push(history, previousTrack))
                 .value();
         }
-        case('PLAYER/PREVIOUS'): {
-            const { newQueueCursor } = action.payload;
-            const currentTrack = state.queue[newQueueCursor];
+        case('PLAYER/NEXT_REJECTED'): {
+            const { oldQueueCursor } = action.meta;
             return i.chain(state)
-                .assoc('queueCursor', newQueueCursor)
+                .assoc('queueCursor', oldQueueCursor)
+                .updateIn(['player', 'history'], (history) => i.slice(history, -1))
+                .value();
+        }
+
+        case('PLAYER/PREVIOUS_PENDING'): {
+            const { oldQueueCursor } = action.meta;
+            return i.chain(state)
+                .assoc('queueCursor', oldQueueCursor)
+                .updateIn(['player', 'history'], (history) => i.slice(history, -1))
                 .value();
         }
 

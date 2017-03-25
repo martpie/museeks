@@ -21,16 +21,20 @@ class PlayerControls extends PureComponent {
         super(props);
     }
 
+    next = () => this.props.next()
+    previous = () => this.props.previous()
+    playToggle = () => this.props.Toggle()
+
     render() {
         return (
             <div className='player-controls'>
-                <button type='button' className='player-control previous' onClick={ this.props.previous }>
+                <button type='button' className='player-control previous' onClick={ this.previous }>
                     <Icon name='backward' />
                 </button>
-                <button className='player-control play' onClick={ this.props.playToggle }>
+                <button className='player-control play' onClick={ this.playToggle }>
                     <Icon name={ this.props.playStatus === 'play' ? 'pause' : 'play' } fixedWidth />
                 </button>
-                <button type='button' className='player-control forward' onClick={ this.props.next }>
+                <button type='button' className='player-control forward' onClick={ this.next }>
                     <Icon name='forward' />
                 </button>
                 <VolumeControl />
