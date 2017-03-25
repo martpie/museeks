@@ -25,6 +25,8 @@ const library = (lib) => {
 
     const coverEndpoint = ({ _id, peer }) => `${peerEndpoint(peer)}/api/track/cover?_id=${_id}`;
 
+    const dispatchEndpoint = ({ peer }) => `${peerEndpoint(peer)}/api/store/dispatch`;
+
     return {
         peerEndpoint,
         peerIsMe,
