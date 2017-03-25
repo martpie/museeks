@@ -73,7 +73,10 @@ const library = (lib) => {
             const playerState = getPlayerState();
             playerState.queue = playerState.queue.map((track) => track.owner.hostname === me.hostname
                 ? extend(track, {
-                    path: lib.utils.peerEndpoint(me),
+                    path: lib.utils.trackEndpoint({
+                        _id: track._id,
+                        peer: me
+                    }),
                     owner: meWithIP
                 })
                 : track

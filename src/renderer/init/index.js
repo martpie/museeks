@@ -31,7 +31,7 @@ const library = (lib) => {
     dispatch(lib.actions.playlists.refresh());
     dispatch(lib.actions.settings.check());
 
-    dispatch(lib.actions.player.shuffle(true)).then(console.log)
+    dispatch(lib.actions.player.shuffle(true));
 }
 
 export default library;

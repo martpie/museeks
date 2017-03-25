@@ -62,12 +62,14 @@ const library = (lib) => {
         const track = queue[queueCursor];
 
         if (track) {
-            const outputIsLocal  = () => Promise.resolve(lib.player.setMetadata(track));
+            const outputIsLocal = () => Promise.resolve(lib.player.setMetadata(track));
             const outputIsRemote = () => lib.api.actions.player.load(output, _id);
 
             return dispatch({
                 type: 'PLAYER/LOAD',
-                payload: output.isLocal ? outputIsLocal() : outputIsRemote(),
+                payload: output.isLocal
+                    ? outputIsLocal()
+                    : outputIsRemote(),
                 meta: {
                     queueCursor
                 }
@@ -92,12 +94,14 @@ const library = (lib) => {
 
         if (queue === null) return;
 
-        const outputIsLocal  = () => Promise.resolve(lib.player.play());
+        const outputIsLocal = () => Promise.resolve(lib.player.play());
         const outputIsRemote = () => lib.api.actions.player.play(output);
 
         return dispatch({
             type: 'PLAYER/PLAY',
-            payload: output.isLocal ? outputIsLocal() : outputIsRemote(),
+            payload: output.isLocal
+                ? outputIsLocal()
+                : outputIsRemote()
         });
     };
 
@@ -106,7 +110,7 @@ const library = (lib) => {
         const newQueue = [ ...tracks[tracksCursor].sub ];
 
         return dispatch(lib.actions.player.createNewQueue(newQueue))
-            .then(() => dispatch(lib.actions.player.loadAndPlay(_id)));
+        .then(() => dispatch(lib.actions.player.loadAndPlay(_id)));
     };
 
     const loadAndPlay = (_id) => (dispatch, getState) => {
@@ -117,7 +121,7 @@ const library = (lib) => {
     const pause = () => (dispatch, getState) => {
         const { player: { playStatus }, network: { output } } = getState();
 
-        const outputIsLocal  = () => Promise.resolve(lib.player.pause());
+        const outputIsLocal = () => Promise.resolve(lib.player.pause());
         const outputIsRemote = () => lib.api.actions.player.pause(output);
 
         return dispatch({
@@ -131,7 +135,7 @@ const library = (lib) => {
     const createNewQueue = (newQueue) => (dispatch, getState) => {
         const { queue: oldQueue, network: { output } } = getState();
 
-        const outputIsLocal  = () => Promise.resolve();
+        const outputIsLocal = () => Promise.resolve();
         const outputIsRemote = () => lib.api.actions.player.createNewQueue(output, newQueue);
 
         return dispatch({
@@ -149,12 +153,14 @@ const library = (lib) => {
     const stop = () => (dispatch, getState) => {
         const { network: { output } } = getState();
 
-        const outputIsLocal  = () => Promise.resolve(lib.player.stop());
+        const outputIsLocal = () => Promise.resolve(lib.player.stop());
         const outputIsRemote = () => lib.api.actions.player.stop(output);
 
         return dispatch({
             type: 'PLAYER/STOP',
-            payload: output.isLocal ? outputIsLocal() : outputIsRemote(),
+            payload: output.isLocal
+                ? outputIsLocal()
+                : outputIsRemote()
         });
     };
 
@@ -201,26 +207,36 @@ const library = (lib) => {
     const shuffle = (shuffle) => (dispatch, getState) => {
         const { player: { shuffle: prevShuffle }, network: { output } } = getState();
 
-        const outputIsLocal  = () => Promise.resolve(lib.actions.config.set('shuffle', shuffle));
+        const outputIsLocal = () => Promise.resolve(lib.actions.config.set('shuffle', shuffle));
         const outputIsRemote = () => lib.api.actions.player.shuffle(output, shuffle);
 
         return dispatch({
             type: 'PLAYER/SHUFFLE',
-            payload: output.isLocal ? outputIsLocal() : outputIsRemote(),
-            meta: { prevShuffle, shuffle }
+            payload: output.isLocal
+                ? outputIsLocal()
+                : outputIsRemote(),
+            meta: {
+                prevShuffle,
+                shuffle
+            }
         });
     };
 
     const repeat = (repeat) => (dispatch, getState) => {
         const { player: { repeat: prevRepeat }, network: { output } } = getState();
 
-        const outputIsLocal  = () => Promise.resolve(lib.actions.config.set('repeat', repeat));
+        const outputIsLocal = () => Promise.resolve(lib.actions.config.set('repeat', repeat));
         const outputIsRemote = () => lib.api.actions.player.repeat(output, repeat);
 
         return {
             type: 'PLAYER/REPEAT',
-            payload: output.isLocal ? outputIsLocal() : outputIsRemote(),
-            meta: { prevRepeat, repeat }
+            payload: output.isLocal
+                ? outputIsLocal()
+                : outputIsRemote(),
+            meta: {
+                prevRepeat,
+                repeat
+            }
         };
     };
 
@@ -252,7 +268,7 @@ const library = (lib) => {
     const jumpTo = (to) => (dispatch, getState) => {
         const { network: { output } } = getState();
 
-        const outputIsLocal  = () => Promise.resolve(lib.player.setCurrentTime(to));
+        const outputIsLocal = () => Promise.resolve(lib.player.setCurrentTime(to));
         const outputIsRemote = () => lib.api.actions.player.jumpTo(output, to);
 
         dispatch({
@@ -282,7 +298,10 @@ const library = (lib) => {
     const fetchCover = (metadata) => ({
         type: 'PLAYER/SET_COVER',
         payload: {
-            cover: `${lib.utils.peerEndpoint(metadata.owner)}/api/track/fetchCover?_id=${metadata._id}`
+            cover: lib.utils.coverEndpoint({
+                _id: metadata._id,
+                peer: metadata.owner
+            })
         }
     });
 

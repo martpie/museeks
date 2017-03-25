@@ -1,6 +1,4 @@
-import url from 'url';
 import utils from '../../shared/utils/utils';
-import { URL } from 'url';
 
 class Player {
 
@@ -59,10 +57,10 @@ class Player {
         this.lib.tray.updateTrayMetadata(metadata);
         this.lib.tray.setContextMenu('play');
 
-        const peerEndpoint = this.lib.utils.peerEndpoint(metadata.owner);
-        const src = new URL('/api/track/download', peerEndpoint);
-        src.searchParams.append('_id', metadata._id);
-        this.audio.src = src;
+        this.audio.src = this.lib.utils.trackEndpoint({
+            _id: metadata._id,
+            peer: metadata.owner
+        });
 
         // when we change song, we need to update the thresholdReached indicator
         this.durationThresholdReached = false;

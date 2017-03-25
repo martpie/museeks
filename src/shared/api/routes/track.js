@@ -29,9 +29,9 @@ export default [{
         );
     }
 }, {
-    path: 'api/track/fetchCover',
+    path: 'api/track/cover',
     method: 'GET',
-    name: 'track.fetchCover',
+    name: 'track.cover',
     config : {
         validate: {
             query: {
