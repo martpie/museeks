@@ -24,13 +24,18 @@ class Player {
 //        this.audio.addEventListener('pause', () => dispatch(this.lib.actions.player.pause()));
         this.audio.addEventListener('ended', () => dispatch(this.lib.actions.player.next()));
         this.audio.addEventListener('error', () => dispatch(this.lib.actions.player.audioError()));
-        this.audio.addEventListener('timeupdate', () => {
-            if (this.isThresholdReached()) dispatch(this.lib.actions.library.incrementPlayCount(this.getSrc()));
-        });
+        this.audio.addEventListener('timeupdate', this.tick);
     }
 
-    getAudio = () => {
-        return Promise.resolve(this.audio);
+    tick = () => {
+        if (this.isThresholdReached()) {
+            this.lib.store.dispatch(this.lib.actions.tracks.incrementPlayCount(this.getMetadata()._id));
+        }
+    }
+
+    setPlaybackRate = (playbackRate) => {
+        this.audio.playbackRate = playbackRate;
+        this.audio.defaultPlaybackRate = playbackRate;
     }
 
     play = () => {
@@ -48,40 +53,9 @@ class Player {
         this.audio.pause();
     }
 
-    setMuted = (status) => {
-        this.audio.muted = status;
-    }
-
-    mute = () => {
-        this.audio.muted = true;
-    }
-
-    unmute = () => {
-        this.audio.muted = false;
-    }
-
-    getCurrentTime = () => {
-        return this.audio.currentTime;
-    }
-
-    getVolume = () => {
-        return this.audio.volume;
-    }
-
-    getSrc = () => {
-        return this.audio.src;
-    }
-
-    setVolume = (volume) => {
-        this.audio.volume = volume;
-    }
-
-    setPlaybackRate = (playbackRate) => {
-        this.audio.playbackRate = playbackRate;
-        this.audio.defaultPlaybackRate = playbackRate;
-    }
-
     setMetadata = (metadata) => {
+        this.metadata = metadata;
+
         this.lib.tray.updateTrayMetadata(metadata);
         this.lib.tray.setContextMenu('play');
 
@@ -94,24 +68,36 @@ class Player {
         this.durationThresholdReached = false;
     }
 
-    setCurrentTime = (currentTime) => {
-        this.audio.currentTime = currentTime;
-    }
-
-    isMuted = () => {
-        return this.audio.muted;
-    }
-
-    isPaused = () => {
-        return this.audio.paused;
-    }
-
     isThresholdReached() {
         if (!this.durationThresholdReached && this.audio.currentTime >= this.audio.duration * this.threshold) {
             this.durationThresholdReached = true;
             return this.durationThresholdReached;
         }
     }
+
+    getAudio = () => Promise.resolve(this.audio);
+
+    setCurrentTime = (currentTime) => this.audio.currentTime = currentTime
+
+    isMuted = () => this.audio.muted
+
+    isPaused = () => this.audio.paused
+
+    setMuted = (status) => this.audio.muted = status
+
+    mute = () => this.audio.muted = true
+
+    unmute = () => this.audio.muted = false
+
+    getCurrentTime = () => this.audio.currentTime
+
+    getVolume = () => this.audio.volume
+
+    getSrc = () => this.audio.src
+
+    getMetadata = () => this.metadata
+
+    setVolume = (volume) => this.audio.volume = volume
 }
 
 export default Player;

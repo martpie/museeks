@@ -1,6 +1,7 @@
 import i from 'icepick';
 import { unionBy } from 'lodash';
 import extend from 'xtend';
+import utils from '../../utils/utils';
 
 export default (state = {}, action) => {
     switch (action.type) {
@@ -41,27 +42,37 @@ export default (state = {}, action) => {
         }
 
         case('TRACKS/FILTER'): {
-            if (!action.payload.search) {
-                const newState = { ...state };
-                newstate[state.tracksCursor].sub = [...state[state.tracksCursor].all];
+            if (!action.payload.search || action.payload.search === '') {
+                return i.assocIn(state, [state.tracksCursor, 'sub'], [...state[state.tracksCursor].all]);
+            } else {
 
-                return newState;
+                const search = utils.stripAccents(action.payload.search);
+
+                const tracks = state[state.tracksCursor].all.filter((track) => {
+                    return track.loweredMetas.artist.join(', ').includes(search)
+                        || track.loweredMetas.album.includes(search)
+                        || track.loweredMetas.genre.join(', ').includes(search)
+                        || track.loweredMetas.title.includes(search);
+                });
+
+                return i.assocIn(state, [state.tracksCursor, 'sub'], tracks);
             }
 
-            const search = utils.stripAccents(action.payload.search);
+        }
 
-            const allCurrentTracks = state[state.tracksCursor].all;
-            const tracks = [].concat(allCurrentTracks).filter((track) => { // Problem here
-                return track.loweredMetas.artist.join(', ').includes(search)
-                    || track.loweredMetas.album.includes(search)
-                    || track.loweredMetas.genre.join(', ').includes(search)
-                    || track.loweredMetas.title.includes(search);
-            });
+        case('TRACKS/PLAY_COUNT_INCREMENT_FULFILLED'): {
 
-            const newState = { ...state };
-            newstate[state.tracksCursor].sub = tracks;
+            const updateTrackPlaycount = (track) => track._id === action.meta._id
+                ? extend(track, {
+                    playCount: track.playCount + 1,
+                    playHistory: (track.playHistory || []).concat(action.meta.event)
+                })
+                : track;
 
-            return newState;
+            return i.chain(state)
+                .assocIn(['library', 'all'], state.library.all.map(updateTrackPlaycount))
+                .assocIn(['library', 'sub'], state.library.sub.map(updateTrackPlaycount))
+                .value();
         }
 
         default: {

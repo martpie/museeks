@@ -8,31 +8,6 @@ const library = (lib) => {
             search
         }
     });
-    //
-    // const filter = (search) => (dispatch, getState) => {
-    //     const { all: tracks } = getState().tracks.library;
-    //
-    //     if (!search) {
-    //         return tracks;
-    //     } else {
-    //         const search = utils.stripAccents(search);
-    //
-    //         const tracks = [...state[state.tracksCursor].all].filter((track) => { // Problem here
-    //             return track.loweredMetas.artist.join().includes(search)
-    //                 || track.loweredMetas.album.includes(search)
-    //                 || track.loweredMetas.genre.join().includes(search)
-    //                 || track.loweredMetas.title.includes(search);
-    //         });
-    //     }
-    //
-    //     return {
-    //         type: 'TRACKS/FILTER',
-    //         payload: {
-    //             search
-    //         }
-    //     }
-    // );
-
 
     const remove = () => ({
         type: 'TRACKS/DELETE',
@@ -71,11 +46,47 @@ const library = (lib) => {
         }
     };
 
+    const incrementPlayCount = (_id, event) => {
+
+        const output = { isLocal: true };
+
+        // create an event to track who listened to the song
+        event = event || {
+            // user: user || network.me.hostname,
+            date: Date.now()
+        }
+
+        const update = {
+            $push: {
+                playHistory: event
+            },
+            $inc: {
+                playCount: 1
+            }
+        }
+
+        // TODO: Jackson to ask David about accessing output from this sliver of store
+        const outputIsLocal  = () => lib.track.update({ _id }, update);
+        const outputIsRemote = () => lib.api.actions.tracks.incrementPlayCount(output, _id, event);
+
+        return {
+            type: 'TRACKS/PLAY_COUNT_INCREMENT',
+            payload: output.isLocal
+                ? outputIsLocal()
+                : outputIsRemote(),
+            meta: {
+                _id,
+                event
+            }
+        }
+    }
+
     return {
         find,
         setTracksCursor,
         remove,
-        // filterSearch
+        incrementPlayCount,
+        filter
     }
 }
 

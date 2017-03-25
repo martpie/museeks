@@ -69,7 +69,7 @@ class PlayingBar extends Component {
                  onMouseUp={ this.dragEnd }
             >
                 <div className='now-playing-cover'>
-                    <TrackCover cover={ this.props.cover } />
+                    <TrackCover src={ this.props.cover } />
                 </div>
                 <div className='now-playing-infos'>
                     <div className='now-playing-metas'>

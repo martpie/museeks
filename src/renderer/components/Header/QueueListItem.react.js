@@ -52,7 +52,7 @@ class QueueListItem extends PureComponent {
                 <Button bsSize={ 'xsmall' } bsStyle={ 'link' } className='remove' onClick={ this.remove }>
                     &times;
                 </Button>
-                <div className='track-infos' onDoubleClick={ () => this.props.loadAndPlay(track._id) } >
+                <div className='track-infos' onDoubleClick={ this.props.loadAndPlay } >
                     <div className='title'>
                         { track.title }
                     </div>
@@ -64,17 +64,13 @@ class QueueListItem extends PureComponent {
         );
     }
 
-    onDragStart = (e) => {
-        this.props.onDragStart(e, this.props.index);
-    }
+    loadAndPlay = (e) => this.props.loadAndPlay(track._id)
 
-    onDragOver = (e) => {
-        this.props.onDragOver(e, this.props.index);
-    }
+    onDragStart = (e) => this.props.onDragStart(e, this.props.index)
 
-    remove = () => {
-        this.props.remove(this.props.index);
-    }
+    onDragOver = (e) => this.props.onDragOver(e, this.props.index)
+
+    remove = () => this.props.remove(this.props.index)
 }
 
 const stateToProps = () => ({});

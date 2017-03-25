@@ -23,6 +23,10 @@ const Track = new linvodb('track', {
     },
     path: String,
     playCount: Number,
+    playHistory: [{
+        user: String,
+        date: Date
+    }],
     title: String,
     track: {
         no: Number,

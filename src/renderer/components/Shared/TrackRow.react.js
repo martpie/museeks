@@ -36,7 +36,7 @@ class TrackRow extends Component {
         return (
             <div
                 className={ trackClasses }
-                onDoubleClick={ () => this.props.newQueueLoadAndPlay(this.props.trackId) }
+                onDoubleClick={ this.newQueueLoadAndPlay }
                 onMouseDown={ this.onMouseDown }
                 onContextMenu={ this.onContextMenu }
             >
@@ -45,13 +45,11 @@ class TrackRow extends Component {
         );
     }
 
-    onMouseDown = (e) => {
-        this.props.onMouseDown(e, this.props.trackId, this.props.index);
-    }
+    newQueueLoadAndPlay = () => this.props.newQueueLoadAndPlay(this.props.trackId)
 
-    onContextMenu = (e) => {
-        this.props.onContextMenu(e, this.props.index);
-    }
+    onMouseDown = (e) => this.props.onMouseDown(e, this.props.trackId, this.props.index)
+
+    onContextMenu = (e) => this.props.onContextMenu(e, this.props.index)
 }
 
 const stateToProps = () => ({});

@@ -22,7 +22,7 @@ const library = (lib) => {
 
     const addNext = (tracksIds) => ({
         type: 'QUEUE/ADD_NEXT',
-        payload: ib.track.find({
+        payload: lib.track.find({
             query: { _id: { $in: tracksIds } }
         })
     });

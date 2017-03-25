@@ -86,7 +86,7 @@ class VolumeControl extends Component {
         if (e.target.classList.contains('player-control') || e.target.classList.contains('fa')) {
             const muted = !lib.player.isMuted();
 
-            this.props.setMuted(muted);
+            this.props.setMute(muted);
             this.setState({ muted });
         }
     }
@@ -96,7 +96,7 @@ const stateToProps = () => ({});
 
 const dispatchToProps = {
     setVolume: lib.actions.player.setVolume,
-    setMuted: lib.actions.player.setMuted
+    setMute: lib.actions.player.setMute
 };
 
 export default connect(stateToProps, dispatchToProps)(VolumeControl);

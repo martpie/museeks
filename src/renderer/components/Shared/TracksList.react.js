@@ -422,7 +422,7 @@ class TracksList extends Component {
                     break;
                 }
                 case 'searchFor': {
-                    // small hack, we can't call actions.library.filterSearch directly
+                    // small hack, we can't call actions.tracks.search directly
                     // otherwise the search clear button will not appear, because it will not detect an input event on itself
                     const searchInput = document.querySelector('input[type="text"].search');
                     searchInput.value = data.search;

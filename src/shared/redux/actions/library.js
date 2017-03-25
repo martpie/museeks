@@ -83,20 +83,10 @@ const library = (lib) => {
         });
     };
 
-    /**
-     * Update the play count attribute.
-     *
-     * @param src
-     */
-    const incrementPlayCount = (src) => {
-        return lib.track.update({ src }, { $inc: { playcount: 1 } });
-    };
-
     return {
         addFolders,
         removeFolder,
-        rescan,
-        incrementPlayCount
+        rescan
     };
 };
 

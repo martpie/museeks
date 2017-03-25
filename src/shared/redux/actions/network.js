@@ -21,29 +21,30 @@ const library = (lib) => {
 
     const setOutput = (newOutput) => (dispatch, getState) => {
         const state = getState();
-
-        const getPlayerState = () => {
-            const properites = [
-                'player',
-                'queue',
-                'queueCursor'
-            ];
-            return {
-                ...pick(state, properites),
-                elapsed: lib.player.getCurrentTime(),
-            }
-        };
-
         const { network : { output: prevOutput }, network : { me } } = state;
-
-        // Add the isLocal bool to the output object for convenience elsewhere.
-        const isLocal = newOutput.hostname === me.hostname;
-        const newOutputWithIsLocal = { ...newOutput, isLocal };
 
         // If the output has not changed, do nothing.
         if (prevOutput && prevOutput.hostname === newOutput.hostname) {
             return;
         }
+
+        const getPlayerState = () => {
+
+            const playerState = [
+                'player',
+                'queue',
+                'queueCursor'
+            ];
+
+            return {
+                ...pick(state, playerState),
+                elapsed: lib.player.getCurrentTime()
+            }
+        };
+
+        // Add the isLocal bool to the output object for convenience elsewhere.
+        const isLocal = newOutput.hostname === me.hostname;
+        const newOutputWithIsLocal = { ...newOutput, isLocal };
 
         // If output has swapped to our computer
         if (isLocal) {
@@ -60,15 +61,21 @@ const library = (lib) => {
             dispatch({
                 type: 'NETWORK/SET_OUTPUT',
                 payload: Promise.resolve(),
-                meta: { newOutput: newOutputWithIsLocal, prevOutput }
+                meta: {
+                    newOutput: newOutputWithIsLocal,
+                    prevOutput
+                }
             })
-        }
-        // If output has changed to another computer
-        else {
+
+        } else { // If output has changed to another computer
+
             const meWithIP = utils.getMeWithIP(me, newOutput);
             const playerState = getPlayerState();
             playerState.queue = playerState.queue.map((track) => track.owner.hostname === me.hostname
-                ? extend(track, { owner: meWithIP })
+                ? extend(track, {
+                    path: lib.utils.peerEndpoint(me),
+                    owner: meWithIP
+                })
                 : track
             );
 
@@ -79,7 +86,10 @@ const library = (lib) => {
                     peer: meWithIP,
                     state: playerState
                 }),
-                meta: { newOutput: newOutputWithIsLocal, prevOutput }
+                meta: {
+                    newOutput: newOutputWithIsLocal,
+                    prevOutput
+                }
             });
         }
     };

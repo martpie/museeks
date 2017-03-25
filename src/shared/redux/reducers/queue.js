@@ -39,7 +39,7 @@ export default (state = {}, action) => {
         }
 
         case('QUEUE/ADD_FULFILLED'): {
-            const queue = [...state.queue, ...action.payload.tracks];
+            const queue = [...state.queue, ...action.payload];
             return {
                 ...state,
                 queue
@@ -48,7 +48,7 @@ export default (state = {}, action) => {
 
         case('QUEUE/ADD_NEXT_FULFILLED'): {
             const queue = [...state.queue];
-            queue.splice(state.queueCursor + 1, 0, ...action.payload.tracks);
+            queue.splice(state.queueCursor + 1, 0, ...action.payload);
             return {
                 ...state,
                 queue

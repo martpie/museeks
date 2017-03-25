@@ -66,14 +66,14 @@ class Header extends Component {
     }
 
     search = (e) => {
-        this.props.filterSearch(e.target.value);
+        this.props.filter(e.target.value);
     }
 }
 
 const stateToProps = () => ({});
 
 const dispatchToProps = {
-    filterSearch: lib.actions.library.filterSearch
+    filter: lib.actions.tracks.filter
 };
 
 export default connect(stateToProps, dispatchToProps)(Header);

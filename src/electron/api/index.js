@@ -1,5 +1,6 @@
-import Hapi from 'hapi';
-import Inert from 'inert';
+import hapi from 'hapi';
+import inert from 'inert';
+import etags from 'hapi-etags';
 import routes from '../../shared/api/routes';
 import routesToHandlers from '../../shared/api/routesToHandlers';
 
@@ -10,7 +11,7 @@ class ApiServer {
     }
 
     start() {
-        this.server = new Hapi.Server({
+        this.server = new hapi.Server({
             connections: {
                 router: {
                     stripTrailingSlash: true
@@ -23,7 +24,8 @@ class ApiServer {
         this.server.connection({ port });
 
         // register server plugins
-        this.server.register(Inert);
+        this.server.register(inert);
+        this.server.register(etags);
 
         const handlers = routesToHandlers(routes, this.lib);
         this.server.route(handlers);
@@ -32,7 +34,7 @@ class ApiServer {
         this.server.ext('onRequest', (req, res) => {
             req.lib = this.lib;
 
-            console.log(`${req.method} ${req.path}`);
+            console.log(`${req.method} ${req.path} ${Object.keys(req.payload || req.query).map(k => `${k}: ${req.query[k]}`)}`);
             res.continue();
         });
 

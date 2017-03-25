@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react';
+import http from 'axios';
 
 
 /*
@@ -10,49 +11,42 @@ import React, { PureComponent } from 'react';
 class TrackCover extends PureComponent {
 
     static propTypes = {
-        cover: React.PropTypes.string
+        src: React.PropTypes.string
     }
 
     constructor(props) {
         super(props);
+
+        this.state = {
+            data: undefined
+        }
     }
 
-    componentDidMount = () => {
-        const img = new Image();
-        img.src = this.props.cover;
-        img.onerror = () => this.setState({ cover: undefined });
+    componentWillReceiveProps(nextProps) {
+        const oldProps = this.props;
+        if (oldProps.src !== nextProps.src) {
+            http({
+                method: 'GET',
+                url: nextProps.src,
+                responseType: 'blob'
+            })
+            .then((response) => {
+                const reader = new window.FileReader();
+                reader.readAsDataURL(response.data);
+                reader.onloadend = () => this.setState({ data: reader.result });
+            })
+            .catch(() => this.setState({ data: undefined }));
+        }
     }
-
-
-    // import http from 'axios';
-    // class image = {
-    //     onPropsDidChange(newProps) {
-    //         const oldProps = this.props;
-    //         if (oldProps.src != newProps.src) {
-    //             http(src).then((response) => {
-    //                 this.setState({data: response.data);
-    //             })
-    //         }
-    //     }
-    //     render() {
-    //         return this.state.data
-    //             ? <div style={{ src = this.state.data }}></div>
-    //             ? <div style={{ fa-music-note }}></div>
-    //     }
-    // }
-
 
     render() {
-        if (this.cover) {
-            const styles = { backgroundImage: `url('${this.state.cover}')` };
-            return <div className='cover' style={ styles } />;
-        }
-
-        return(
-            <div className='cover empty'>
-                <div className='note'>♪</div>
-            </div>
-        );
+        return this.state.data
+            ? <div className='cover' style={{ backgroundImage: `url('${this.state.data}')` }} />
+            : (
+                <div className='cover empty'>
+                    <div className='note'>♪</div>
+                </div>
+            )
     }
 }
 
