@@ -85,7 +85,7 @@ const library = (lib) => {
                 owner: meWithIP
             });
 
-            const queueWithRemotePaths = playerState.queue.map((track) => track.owner.hostname === me.hostname
+            const queueWithRemotePaths = playerState.queue.map((track) => track.owner.isLocal
                 ? makeRemote(track)
                 : track
             );

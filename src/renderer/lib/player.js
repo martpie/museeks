@@ -21,7 +21,7 @@ class Player {
 //        this.audio.addEventListener('play',  () => dispatch(this.lib.actions.player.play()));
 //        this.audio.addEventListener('pause', () => dispatch(this.lib.actions.player.pause()));
         this.audio.addEventListener('ended', () => dispatch(this.lib.actions.player.next()));
-        this.audio.addEventListener('error', () => dispatch(this.lib.actions.player.audioError()));
+        this.audio.addEventListener('error', (e) => dispatch(this.lib.actions.player.audioError(e)));
         this.audio.addEventListener('timeupdate', this.tick);
     }
 

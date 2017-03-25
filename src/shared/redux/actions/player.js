@@ -171,11 +171,20 @@ const library = (lib) => {
         const track = queue[newQueueCursor];
 
         if (track) {
-            lib.player.setMetadata(track);
-            lib.player.play();
+
+            const outputIsLocal = () => {
+                lib.player.setMetadata(track);
+                lib.player.play();
+                return Promise.resolve();
+            }
+            const outputIsRemote = () => lib.api.actions.player.next(output);
+
             dispatch({
                 type: 'PLAYER/NEXT',
-                payload: {
+                payload: output.isLocal
+                    ? outputIsLocal()
+                    : outputIsRemote(),
+                meta: {
                     newQueueCursor
                 }
             });
@@ -191,11 +200,20 @@ const library = (lib) => {
         const track = queue[newQueueCursor];
 
         if (track) {
-            lib.player.setMetadata(track);
-            lib.player.play();
+
+            const outputIsLocal = () => {
+                lib.player.setMetadata(track);
+                lib.player.play();
+                return Promise.resolve();
+            }
+            const outputIsRemote = () => lib.api.actions.player.next(output);
+
             dispatch({
                 type: 'PLAYER/PREVIOUS',
-                payload: {
+                payload: output.isLocal
+                    ? outputIsLocal()
+                    : outputIsRemote(),
+                meta: {
                     newQueueCursor
                 }
             });
@@ -273,7 +291,9 @@ const library = (lib) => {
 
         dispatch({
             type: 'PLAYER/JUMP_TO',
-            payload: output.isLocal ? outputIsLocal() : outputIsRemote(),
+            payload: output.isLocal
+                ? outputIsLocal()
+                : outputIsRemote()
             // meta: { prevTime, time }
         });
     };
