@@ -10,5 +10,6 @@ export default {
     mute                  : rpc('main-renderer', 'player.mute'),
     unmute                : rpc('main-renderer', 'player.unmute'),
     setPlaybackRate       : rpc('main-renderer', 'player.setPlaybackRate'),
-    setCurrentTime        : rpc('main-renderer', 'player.setCurrentTime')
+    setCurrentTime        : rpc('main-renderer', 'player.setCurrentTime'),
+    getCurrentTime        : rpc('main-renderer', 'player.getCurrentTime')
 };

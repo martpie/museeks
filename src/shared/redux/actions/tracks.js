@@ -46,13 +46,13 @@ const library = (lib) => {
         }
     };
 
-    const incrementPlayCount = (_id, event) => {
+    const incrementPlayCount = (_id, event) => (dispatch, getState) => {
 
-        const output = { isLocal: true };
+        const { network : { output, me } } = getState();
 
         // create an event to track who listened to the song
         event = event || {
-            // user: user || network.me.hostname,
+            user: me.hostname,
             date: Date.now()
         }
 
@@ -66,10 +66,10 @@ const library = (lib) => {
         }
 
         // TODO: Jackson to ask David about accessing output from this sliver of store
-        const outputIsLocal  = () => lib.track.update({ _id }, update);
+        const outputIsLocal = () => lib.track.update({ _id }, update);
         const outputIsRemote = () => lib.api.actions.tracks.incrementPlayCount(output, _id, event);
 
-        return {
+        dispatch({
             type: 'TRACKS/PLAY_COUNT_INCREMENT',
             payload: output.isLocal
                 ? outputIsLocal()
@@ -78,7 +78,7 @@ const library = (lib) => {
                 _id,
                 event
             }
-        }
+        });
     }
 
     return {

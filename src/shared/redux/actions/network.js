@@ -28,20 +28,6 @@ const library = (lib) => {
             return;
         }
 
-        const getPlayerState = () => {
-
-            const playerState = [
-                'player',
-                'queue',
-                'queueCursor'
-            ];
-
-            return {
-                ...pick(state, playerState),
-                elapsed: lib.player.getCurrentTime()
-            }
-        };
-
         // Add the isLocal bool to the output object for convenience elsewhere.
         const isLocal = newOutput.hostname === me.hostname;
         const newOutputWithIsLocal = { ...newOutput, isLocal };
@@ -70,29 +56,26 @@ const library = (lib) => {
         } else { // If output has changed to another computer
 
             const meWithIP = utils.getMeWithIP(me, newOutput);
-            const playerState = getPlayerState();
 
             const makeRemote = (track) => ({
                 ...track,
                 path: lib.utils.trackEndpoint({
                     _id: track._id,
-                    peer: me
-                }),
-                cover: lib.utils.coverEndpoint({
-                    _id: track._id,
-                    peer: me
+                    peer: meWithIP
                 }),
                 owner: meWithIP
             });
 
-            const queueWithRemotePaths = playerState.queue.map((track) => track.owner.isLocal
+            const queueWithRemotePaths = state.queue.map((track) => track.owner.isLocal
                 ? makeRemote(track)
                 : track
             );
 
-            const remoteState = {
-                ...playerState,
-                queue: queueWithRemotePaths
+            const playerState = {
+                player: state.player,
+                queueCursor: state.queueCursor,
+                queue: queueWithRemotePaths,
+                elapsed: lib.player.getCurrentTime()
             }
 
             // We ask the output device to set us as an observer.
@@ -100,7 +83,7 @@ const library = (lib) => {
                 type: 'NETWORK/SET_OUTPUT',
                 payload: lib.api.actions.network.connectAsOutput(newOutput, {
                     peer: meWithIP,
-                    state: remoteState
+                    state: playerState
                 }),
                 meta: {
                     newOutput: newOutputWithIsLocal,
@@ -111,7 +94,8 @@ const library = (lib) => {
     };
 
     const connectAsOutput = ({ state, peer }) => (dispatch) => {
-        console.log(state, peer)
+        console.log('CONNECT AS OUPUT')
+        console.log(require('util').inspect(state, { depth: 12 }), peer)
         // Stop the player from playing
         dispatch(lib.actions.player.stop());
 

@@ -12,37 +12,41 @@ const library = (lib) => {
 
     const getNextCursor = ({ direction }) => {
         const { queue, queueCursor, player: { repeat, shuffle, history } } = lib.store.getState();
-        const currentTime = lib.player.getCurrentTime();
-        console.log({ direction, queue, queueCursor, repeat, shuffle, history, currentTime })
-        if (direction === 'previous' && !shuffle) {
-            // If track started less than 5 seconds ago, play the previous track, otherwise replay the current one
-            if (currentTime < 5) {
-                return queueCursor - 1;
+
+        console.log({ direction, queue, queueCursor, repeat, shuffle, history })
+
+        return lib.player.getAudio().then((audio) => {
+
+            if (direction === 'previous' && !shuffle) {
+                // If track started less than 5 seconds ago, play the previous track, otherwise replay the current one
+                if (audio.currentTime < 5) {
+                    return queueCursor - 1;
+                }
+                else {
+                    return queueCursor;
+                }
             }
-            else {
+            else if (direction === 'previous' && shuffle) {
+                // play the previously played track, not the previous in the queue
+                const currentTrack = queue[queueCursor];
+                const previousTrack = history[history.length - 1];
+                const previousIndex = queue.findIndex((track) => track._id === previousTrack._id);
+                return previousIndex;
+            }
+            else if (repeat === 'one') {
                 return queueCursor;
             }
-        }
-        else if (direction === 'previous' && shuffle) {
-            // play the previously played track, not the previous in the queue
-            const currentTrack = queue[queueCursor];
-            const previousTrack = history[history.length - 1];
-            const previousIndex = queue.findIndex((track) => track._id === previousTrack._id);
-            return previousIndex;
-        }
-        else if (repeat === 'one') {
-            return queueCursor;
-        }
-        else if (shuffle) {
-            const choices = range(0, queue.length).filter((choice) => choice !== queueCursor);
-            return utils.pickRandom(choices);
-        }
-        else if (repeat === 'all' && queueCursor === queue.length - 1) { // is last track
-            return 0; // start with new track
-        }
-        else {
-            return queueCursor + 1;
-        }
+            else if (shuffle) {
+                const choices = range(0, queue.length).filter((choice) => choice !== queueCursor);
+                return utils.pickRandom(choices);
+            }
+            else if (repeat === 'all' && queueCursor === queue.length - 1) { // is last track
+                return 0; // start with new track
+            }
+            else {
+                return queueCursor + 1;
+            }
+        });
     }
 
     const playToggle = () => (dispatch, getState) => {

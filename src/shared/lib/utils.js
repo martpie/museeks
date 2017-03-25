@@ -21,9 +21,9 @@ const library = (lib) => {
         return peer.hostname === me.hostname;
     }
 
-    const trackEndpoint = ({ _id, peer }) => `${peerEndpoint(peer)}/api/track/download?_id=${_id}`;
+    const trackEndpoint = ({ _id, peer }) => `${peerEndpoint(peer)}/api/tracks/download?_id=${_id}`;
 
-    const coverEndpoint = ({ _id, peer }) => `${peerEndpoint(peer)}/api/track/cover?_id=${_id}`;
+    const coverEndpoint = ({ _id, peer }) => `${peerEndpoint(peer)}/api/tracks/cover?_id=${_id}`;
 
     const dispatchEndpoint = ({ peer }) => `${peerEndpoint(peer)}/api/store/dispatch`;
 

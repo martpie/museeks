@@ -17,22 +17,21 @@ const musicmetadata = Promise.promisify(mmd);
  */
 
 const getMeWithIP = (me, peer) => {
-    // Get the DNS zone. 192.168.0.50 returns 192.168.0
-    const getDnsZone = (ip) => ip.substr(0, ip.lastIndexOf('.'));
-
     // Get the IP that matches the DNS zone
     const getIP = () => {
         if (me.ips.length === 1) {
             return me.ips[0];
         } else {
+            // Get the DNS zone. 192.168.0.50 returns 192.168.0
+            const getDnsZone = (ip) => ip.substr(0, ip.lastIndexOf('.'));
             const peerDnsZone = getDnsZone(peer.ip);
             return me.ips.find(ip => getDnsZone(ip) === peerDnsZone);
         }
     };
 
-    const meCopy = omit(me, ['ips', 'isLocal']);
-    meCopy.ip = getIP();
-    return meCopy;
+    const result = omit(me, ['ips', 'isLocal']);
+    result.ip = getIP();
+    return result;
 };
 
 
