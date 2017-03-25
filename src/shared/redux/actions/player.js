@@ -55,7 +55,6 @@ const library = (lib) => {
         });
     };
 
-
     const load = (_id) => (dispatch, getState) => {
         const { queue, network: { output } } = getState();
 
@@ -116,17 +115,16 @@ const library = (lib) => {
     };
 
     const pause = () => (dispatch, getState) => {
-        const { player: { queue, playStatus }, network: { output } } = getState();
-
-        console.log(queue, playStatus);
-        if (queue === null) return;
+        const { player: { playStatus }, network: { output } } = getState();
 
         const outputIsLocal  = () => Promise.resolve(lib.player.pause());
         const outputIsRemote = () => lib.api.actions.player.pause(output);
 
         return dispatch({
             type: 'PLAYER/PAUSE',
-            payload: output.isLocal ? outputIsLocal() : outputIsRemote(),
+            payload: output.isLocal
+                ? outputIsLocal()
+                : outputIsRemote()
         });
     };
 
@@ -138,7 +136,9 @@ const library = (lib) => {
 
         return dispatch({
             type: 'PLAYER/CREATE_NEW_QUEUE',
-            payload: output.isLocal ? outputIsLocal() : outputIsRemote(),
+            payload: output.isLocal
+                ? outputIsLocal()
+                : outputIsRemote(),
             meta: {
                 newQueue,
                 oldQueue
@@ -280,7 +280,7 @@ const library = (lib) => {
     };
 
     const fetchCover = (metadata) => ({
-        type: 'PLAYER/FETCHED_COVER',
+        type: 'PLAYER/SET_COVER',
         payload: {
             cover: `${lib.utils.peerEndpoint(metadata.owner)}/api/track/fetchCover?_id=${metadata._id}`
         }

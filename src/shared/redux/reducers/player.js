@@ -76,7 +76,7 @@ export default (state = {}, action) => {
             return i.assocIn(state, ['player', 'repeat'], action.meta.prevRepeat);
         }
 
-        case('PLAYER/FETCHED_COVER'): {
+        case('PLAYER/SET_COVER'): {
             return i.assocIn(state, ['player', 'cover'], action.payload.cover);
         }
 

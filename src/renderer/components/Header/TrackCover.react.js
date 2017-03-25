@@ -17,10 +17,34 @@ class TrackCover extends PureComponent {
         super(props);
     }
 
-    render() {
-        if (this.props.cover) {
-            const styles = { backgroundImage: `url('${this.props.cover}')` };
+    componentDidMount = () => {
+        const img = new Image();
+        img.src = this.props.cover;
+        img.onerror = () => this.setState({ cover: undefined });
+    }
 
+
+    // import http from 'axios';
+    // class image = {
+    //     onPropsDidChange(newProps) {
+    //         const oldProps = this.props;
+    //         if (oldProps.src != newProps.src) {
+    //             http(src).then((response) => {
+    //                 this.setState({data: response.data);
+    //             })
+    //         }
+    //     }
+    //     render() {
+    //         return this.state.data
+    //             ? <div style={{ src = this.state.data }}></div>
+    //             ? <div style={{ fa-music-note }}></div>
+    //     }
+    // }
+
+
+    render() {
+        if (this.cover) {
+            const styles = { backgroundImage: `url('${this.state.cover}')` };
             return <div className='cover' style={ styles } />;
         }
 

@@ -53,7 +53,7 @@ export default {
         history: [],
         currentTrack: {},                // The currently playing track
         playStatus: 'stop',              // Player status
-        cover: null,                     // Current trackplaying cover
+        cover: undefined,                // Current trackplaying cover
         repeat: 'none',                  // the current repeat state (one, all, none)
         shuffle: false                   // If shuffle mode is enabled
     },
