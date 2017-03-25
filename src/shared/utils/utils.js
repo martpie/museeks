@@ -375,13 +375,38 @@ const supportedExtensions = [
 
 const pickRandom = (items) => items[Math.floor(Math.random() * items.length)];
 
+
+const peerEndpoint = (peer) => {
+//        const { config } = lib.store.getState();
+//        const protocol = config[local].api.protocol;
+//        const port = config[remote].api.port;
+
+    const [local, remote] = process.type === 'renderer'
+        ? ['renderer', 'electron']
+        : ['electron', 'renderer'];
+
+    const protocol = 'http';
+    const host = peer.isLocal ? 'localhost' : peer.ip;
+    const port = '54321';
+
+    return `${protocol}://${host}:${port}`;
+};
+
+const peerIsMe = ({ peer, me }) => peer.hostname === me.hostname;
+
+const trackEndpoint = ({ _id, peer }) => `${peerEndpoint(peer)}/api/tracks/download?_id=${_id}`;
+
+const coverEndpoint = ({ _id, peer }) => `${peerEndpoint(peer)}/api/tracks/cover?_id=${_id}`;
+
+const dispatchEndpoint = ({ peer }) => `${peerEndpoint(peer)}/api/store/dispatch`;
+
 const transformTrackPaths = ({ tracks, me, peer }) => {
 
-    const meWithIP = utils.getMeWithIP(me, peer);
+    const meWithIP = getMeWithIP(me, peer);
 
     const makeRemote = (track) => ({
         ...track,
-        path: lib.utils.trackEndpoint({
+        path: trackEndpoint({
             _id: track._id,
             peer: meWithIP
         }),
@@ -413,5 +438,10 @@ export default {
     fetchCover,
     supportedExtensions,
     pickRandom,
-    transformTrackPaths
+    transformTrackPaths,
+    peerEndpoint,
+    peerIsMe,
+    trackEndpoint,
+    coverEndpoint,
+    dispatchEndpoint
 };

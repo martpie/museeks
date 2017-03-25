@@ -1,8 +1,5 @@
 import http from 'axios';
-
-// hack to get lib without invoking middleware
-import initLib from '../../lib';
-const lib = initLib({});
+import utils from '../../utils/utils';
 
 const observerActions = [
     'PLAYER/PAUSE',
@@ -24,7 +21,7 @@ const sendToObservers = (store) => (next) => (action) => {
 console.log(network.observers);
         const sendActionToObserver = (observer) => {
             return http({
-                url: lib.utils.dispatchEndpoint({ peer: observer }),
+                url: utils.dispatchEndpoint({ peer: observer }),
                 method: 'POST',
                 data: action
             })

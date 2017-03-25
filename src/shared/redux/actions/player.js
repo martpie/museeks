@@ -329,7 +329,7 @@ const library = (lib) => {
     const fetchCover = (metadata) => ({
         type: 'PLAYER/SET_COVER',
         payload: {
-            cover: lib.utils.coverEndpoint({
+            cover: utils.coverEndpoint({
                 _id: metadata._id,
                 peer: metadata.owner
             })

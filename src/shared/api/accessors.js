@@ -2,6 +2,7 @@ import axios from 'axios';
 import qs from 'qs';
 import { set } from 'lodash';
 import extend from 'xtend';
+import utils from '../utils/utils';
 
 import routes from './routes';
 
@@ -18,7 +19,7 @@ const library = (lib) => {
 
             return axios({
                 method: route.method,
-                url: `${lib.utils.peerEndpoint(peer)}/${route.path}`,
+                url: `${utils.peerEndpoint(peer)}/${route.path}`,
                 [inputType]: data,
                 json: true
             })

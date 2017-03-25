@@ -1,4 +1,5 @@
 import Promise from 'bluebird';
+import utils from '../../utils/utils';
 
 const library = (lib) => {
 
@@ -27,7 +28,7 @@ const library = (lib) => {
     const find = ({ peer, query, sort } = {}) => (dispatch, getState) => {
         const { network : { me } } = getState();
 
-        if (!peer || lib.utils.peerIsMe(peer)) {
+        if (!peer || utils.peerIsMe({ peer, me })) {
             dispatch({
                 type: 'TRACKS/FIND',
                 payload: lib.track.find({ query, sort }),

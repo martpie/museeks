@@ -57,7 +57,7 @@ class Player {
         this.lib.tray.updateTrayMetadata(metadata);
         this.lib.tray.setContextMenu('play');
 
-        this.audio.src = this.lib.utils.trackEndpoint({
+        this.audio.src = utils.trackEndpoint({
             _id: metadata._id,
             peer: metadata.owner
         });
