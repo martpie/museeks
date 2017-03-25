@@ -71,30 +71,36 @@ const library = (lib) => {
 
             const meWithIP = utils.getMeWithIP(me, newOutput);
             const playerState = getPlayerState();
-            const stateWithRemotePaths = {
+
+            const makeRemote = (track) => ({
+                ...track,
+                path: lib.utils.trackEndpoint({
+                    _id: track._id,
+                    peer: me
+                }),
+                cover: lib.utils.coverEndpoint({
+                    _id: track._id,
+                    peer: me
+                }),
+                owner: meWithIP
+            });
+
+            const queueWithRemotePaths = playerState.queue.map((track) => track.owner.hostname === me.hostname
+                ? makeRemote(track)
+                : track
+            );
+
+            const remoteState = {
                 ...playerState,
-                queue: playerState.queue.map((track) => track.owner.hostname === me.hostname
-                    ? {
-                        ...track,
-                        path: lib.utils.trackEndpoint({
-                            _id: track._id,
-                            peer: me
-                        }),
-                        cover: lib.utils.coverEndpoint({
-                            _id: track._id,
-                            peer: me
-                        }),
-                        owner: meWithIP
-                    })
-                    : track
-                );
+                queue: queueWithRemotePaths
+            }
 
             // We ask the output device to set us as an observer.
             dispatch({
                 type: 'NETWORK/SET_OUTPUT',
                 payload: lib.api.actions.network.connectAsOutput(newOutput, {
                     peer: meWithIP,
-                    state: stateWithRemotePaths
+                    state: remoteState
                 }),
                 meta: {
                     newOutput: newOutputWithIsLocal,
