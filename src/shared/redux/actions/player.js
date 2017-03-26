@@ -3,61 +3,12 @@ import { range } from 'range';
 
 const library = (lib) => {
 
-    const audioErrors = {
-        aborted: 'The video playback was aborted.',
-        corrupt: 'The audio playback was aborted due to a corruption problem.',
-        notFound: 'The track file could not be found. It may be due to a file move or an unmounted partition.',
-        unknown: 'An unknown error occurred.'
-    };
-
-    const getNextCursor = ({ direction }) => {
-        const { queue, queueCursor, player: { repeat, shuffle, history } } = lib.store.getState();
-
-        console.log({ direction, queue, queueCursor, repeat, shuffle, history })
-
-        return lib.player.getAudio().then((audio) => {
-
-            if (direction === 'previous' && !shuffle) {
-                // If track started less than 5 seconds ago, play the previous track, otherwise replay the current one
-                if (audio.currentTime < 5) {
-                    return queueCursor - 1;
-                }
-                else {
-                    return queueCursor;
-                }
-            }
-            else if (direction === 'previous' && shuffle) {
-                // play the previously played track, not the previous in the queue
-                const currentTrack = queue[queueCursor];
-                const previousTrack = history[history.length - 1];
-                const previousIndex = queue.findIndex((track) => track._id === previousTrack._id);
-                return previousIndex;
-            }
-            else if (repeat === 'one') {
-                return queueCursor;
-            }
-            else if (shuffle) {
-                const choices = range(0, queue.length).filter((choice) => choice !== queueCursor);
-                return utils.pickRandom(choices);
-            }
-            else if (repeat === 'all' && queueCursor === queue.length - 1) { // is last track
-                return 0; // start with new track
-            }
-            else {
-                return queueCursor + 1;
-            }
-        });
-    }
-
-    const playToggle = () => (dispatch, getState) => {
-        lib.player.getAudio().then((audio) => {
-            if (audio.paused && getState().queue.length > 0) {
-                dispatch(lib.actions.player.play());
-            } else {
-                dispatch(lib.actions.player.pause());
-            }
-        });
-    };
+    const setState = (state) => ({
+        type: 'PLAYER/SET_STATE',
+        payload: {
+            state
+        }
+    });
 
     const load = (_id) => (dispatch, getState) => {
         const { queue, network: { output } } = getState();
@@ -106,6 +57,16 @@ const library = (lib) => {
             payload: output.isLocal
                 ? outputIsLocal()
                 : outputIsRemote()
+        });
+    };
+
+    const playToggle = () => (dispatch, getState) => {
+        lib.player.getAudio().then((audio) => {
+            if (audio.paused && getState().queue.length > 0) {
+                dispatch(lib.actions.player.play());
+            } else {
+                dispatch(lib.actions.player.pause());
+            }
         });
     };
 
@@ -180,24 +141,40 @@ const library = (lib) => {
         });
     };
 
-    const next = ({ newQueueCursor } = {}) => (dispatch, getState) => {
-        const { queue, queueCursor: oldQueueCursor, network: { output } } = getState();
+    const next = (data = {}) => (dispatch, getState) => {
 
-        const queueCursor = newQueueCursor
-            ? Promise.resolve(newQueueCursor)
-            : getNextCursor({ direction: 'next' });
+        const {
+            queue,
+            queueCursor: oldQueueCursor,
+            player: { history, historyCursor: oldHistoryCursor },
+            network: { output }
+        } = getState();
 
-        return queueCursor.then((newQueueCursor) => {
-            const track = queue[newQueueCursor];
+        const { queueCursor } = data;
+
+        // advance the cursor if required
+        const advanceCursor = !queueCursor
+            ? dispatch(moveCursor({ direction: 'next' })).payload
+            : Promise.resolve(data);
+
+        return advanceCursor.then((cursors) => {
+console.log('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', cursors)
+            const inHistory = cursors.historyCursor !== -1;
+
+            // use the currently active cursor to get the track
+            const track = inHistory
+                ? history[cursors.historyCursor]
+                : queue[cursors.queueCursor];
 
             if (track) {
 
                 const outputIsLocal = () => {
+                    console.log('lib.player.setMetadata(track)', lib.player.setMetadata(track))
                     lib.player.setMetadata(track);
                     lib.player.play();
                     return Promise.resolve();
                 }
-                const outputIsRemote = () => lib.api.actions.player.next(output, { newQueueCursor} );
+                const outputIsRemote = () => lib.api.actions.player.next(output, cursors);
 
                 dispatch({
                     type: 'PLAYER/NEXT',
@@ -205,8 +182,10 @@ const library = (lib) => {
                         ? outputIsLocal()
                         : outputIsRemote(),
                     meta: {
-                        newQueueCursor,
-                        oldQueueCursor
+                        newQueueCursor: cursors.queueCursor,
+                        newHistoryCursor: cursors.historyCursor,
+                        oldQueueCursor,
+                        oldHistoryCursor
                     }
                 });
             } else {
@@ -218,11 +197,11 @@ const library = (lib) => {
     const previous = ({ newQueueCursor } = {}) => (dispatch, getState) => {
         const { queue, queueCursor: oldQueueCursor, network: { output } } = getState();
 
-        const queueCursor = newQueueCursor
+        const advanceCursor = newQueueCursor
             ? Promise.resolve(newQueueCursor)
-            : getNextCursor({ direction: 'previous' });
+            : dispatch(moveCursor({ direction: 'previous' }));
 
-        return queueCursor.then((newQueueCursor) => {
+        return advanceCursor.then((newQueueCursor) => {
             const track = queue[newQueueCursor];
 
             if (track) {
@@ -232,7 +211,7 @@ const library = (lib) => {
                     lib.player.play();
                     return Promise.resolve();
                 }
-                const outputIsRemote = () => lib.api.actions.player.next(output, { newQueueCursor} );
+                const outputIsRemote = () => lib.api.actions.player.next(output, { newQueueCursor });
 
                 dispatch({
                     type: 'PLAYER/PREVIOUS',
@@ -315,7 +294,11 @@ const library = (lib) => {
         const { network: { output } } = getState();
 
         const outputIsLocal = () => Promise.resolve(lib.player.setCurrentTime(to));
-        const outputIsRemote = () => lib.api.actions.player.jumpTo(output, to);
+        const outputIsRemote = () => {
+            return lib.player.getAudio().then((audio) => {
+                lib.api.actions.player.jumpTo(output, to);
+            });
+        }
 
         dispatch({
             type: 'PLAYER/JUMP_TO',
@@ -327,6 +310,13 @@ const library = (lib) => {
     };
 
     const audioError = (e) => (dispatch) => {
+        const audioErrors = {
+            aborted: 'The video playback was aborted.',
+            corrupt: 'The audio playback was aborted due to a corruption problem.',
+            notFound: 'The track file could not be found. It may be due to a file move or an unmounted partition.',
+            unknown: 'An unknown error occurred.'
+        };
+
         switch (e.target.error.code) {
             case e.target.error.MEDIA_ERR_ABORTED:
                 dispatch(lib.actions.toasts.add('warning', audioErrors.aborted));
@@ -371,6 +361,7 @@ const library = (lib) => {
         setMuted,
         setPlaybackRate,
         setVolume,
+        moveCursor,
         shuffle,
         stop,
     };

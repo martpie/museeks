@@ -2,6 +2,10 @@ import i from 'icepick';
 
 export default (state = {}, action) => {
     switch (action.type) {
+        case('PLAYER/SET_STATE'): {
+            return i.assoc(state, 'player', action.payload.state);
+        }
+
         case('PLAYER/LOAD_PENDING'): {
             const { queueCursor } = action.meta;
             const track = state.queue[queueCursor];
@@ -42,19 +46,20 @@ export default (state = {}, action) => {
         }
 
         case('PLAYER/NEXT_PENDING'): {
-            const { newQueueCursor } = action.meta;
-            const previousTrack = state.queue[state.queueCursor];
-            const currentTrack = state.queue[newQueueCursor];
+            const { newQueueCursor, newHistoryCursor } = action.meta;
+            const currentTrack = state.queue[state.queueCursor];
             return i.chain(state)
                 .assoc('queueCursor', newQueueCursor)
-                .updateIn(['player', 'history'], (history) => i.push(history, previousTrack))
+                .assocIn(['player', 'historyCursor'], newHistoryCursor)
+                .updateIn(['player', 'history'], (history) => i.push(history, currentTrack))
                 .value();
         }
         case('PLAYER/NEXT_REJECTED'): {
-            const { oldQueueCursor } = action.meta;
+            const { oldQueueCursor, oldHistoryCursor } = action.meta;
             return i.chain(state)
                 .assoc('queueCursor', oldQueueCursor)
-                .updateIn(['player', 'history'], (history) => i.slice(history, -1))
+                .assocIn(['player', 'historyCursor'], oldHistoryCursor)
+                .updateIn(['player', 'history'], (history) => i.slice(history, 0, -1))
                 .value();
         }
 
@@ -62,7 +67,12 @@ export default (state = {}, action) => {
             const { oldQueueCursor } = action.meta;
             return i.chain(state)
                 .assoc('queueCursor', oldQueueCursor)
-                .updateIn(['player', 'history'], (history) => i.slice(history, -1))
+                .value();
+        }
+        case('PLAYER/PREVIOUS_REJECTED'): { // TODO don't know what the inputs are from the action
+            const { oldQueueCursor } = action.meta;
+            return i.chain(state)
+                .assoc('queueCursor', oldQueueCursor)
                 .value();
         }
 

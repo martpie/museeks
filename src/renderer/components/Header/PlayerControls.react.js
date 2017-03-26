@@ -21,20 +21,17 @@ class PlayerControls extends PureComponent {
         super(props);
     }
 
-    next = () => this.props.next()
-    previous = () => this.props.previous()
-    playToggle = () => this.props.Toggle()
-
     render() {
+        const { next, previous, playToggle, playStatus } = this.props;
         return (
             <div className='player-controls'>
-                <button type='button' className='player-control previous' onClick={ this.previous }>
+                <button type='button' className='player-control previous' onClick={ previous }>
                     <Icon name='backward' />
                 </button>
-                <button className='player-control play' onClick={ this.playToggle }>
-                    <Icon name={ this.props.playStatus === 'play' ? 'pause' : 'play' } fixedWidth />
+                <button className='player-control play' onClick={ playToggle }>
+                    <Icon name={ playStatus === 'play' ? 'pause' : 'play' } fixedWidth />
                 </button>
-                <button type='button' className='player-control forward' onClick={ this.next }>
+                <button type='button' className='player-control forward' onClick={ next }>
                     <Icon name='forward' />
                 </button>
                 <VolumeControl />
@@ -46,9 +43,9 @@ class PlayerControls extends PureComponent {
 const stateToProps = () => ({});
 
 const dispatchToProps = {
-    previous: lib.actions.player.previous,
-    next: lib.actions.player.next,
-    playToggle: lib.actions.player.playToggle
+    previous: () => lib.actions.player.previous(),
+    next: () => lib.actions.player.next(),
+    playToggle: () => lib.actions.player.playToggle()
 };
 
 export default connect(stateToProps, dispatchToProps)(PlayerControls);

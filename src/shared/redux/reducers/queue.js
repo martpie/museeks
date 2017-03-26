@@ -1,3 +1,5 @@
+import i from 'icepick';
+
 export default (state = {}, action) => {
     switch (action.type) {
         case('QUEUE/START'): {
@@ -56,10 +58,10 @@ export default (state = {}, action) => {
         }
 
         case('QUEUE/SET_QUEUE'): {
-            return {
-                ...state,
-                queue: action.payload.queue
-            };
+            return i.chain(state)
+                .assoc('queue', action.payload.queue)
+                .assocIn(['player', 'history'], [])
+                .assocIn(['player', 'historyCursor'], null);
         }
 
         case('QUEUE/SET_CURSOR'): {
@@ -67,6 +69,15 @@ export default (state = {}, action) => {
                 ...state,
                 queueCursor: action.payload.index
             };
+        }
+
+        case('PLAYER/MOVE_CURSOR_FULFILLED'): {
+            const { queueCursor, historyCursor, history, track } = action.payload;
+            return i.chain(state)
+                .assoc('queueCursor', queueCursor)
+                .assocIn(['player', 'historyCursor'], historyCursor)
+                .assocIn(['player', 'history'], history)
+                .value();
         }
 
         default: {

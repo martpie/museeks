@@ -5,6 +5,7 @@ import { app } from 'electron';
 const interfaces = flatten(Object.values(os.networkInterfaces()));
 const networks = interfaces.filter(adapter => adapter.family === 'IPv4' && !adapter.internal);
 const ips = networks.map(network => network.address);
+
 const hostname = os.hostname();
 const platform = os.platform();
 
@@ -50,7 +51,8 @@ export default {
     queueCursor: null,                   // The cursor of the queue
 
     player: {
-        history: [],
+        history: [],                     // The history of songs played from the current queue
+        historyCursor: null,             // The position of the currently playing track in the history queue
         currentTrack: {},                // The currently playing track
         playStatus: 'stop',              // Player status
         cover: undefined,                // Current trackplaying cover
