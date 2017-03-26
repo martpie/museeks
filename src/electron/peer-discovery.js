@@ -46,7 +46,8 @@ class PeerDiscovery {
         const scanNetwork = (network) => {
 
             const lookup = new scan({
-                target: `${network.address}/24`,
+                target: `192.168.1.2`,
+                // target: `${network.address}/24`,
                 port,
                 status: 'O',
                 timeout: 50,
