@@ -15,8 +15,6 @@ const library = (lib) => {
         const queueCursor = queue.findIndex((track) => track._id === _id);
         const track = queue[queueCursor];
 
-//        console.log(queue, track);
-
         if (track) {
             const outputIsLocal = () => Promise.resolve(lib.player.setMetadata(track));
             const outputIsRemote = () => lib.api.actions.player.load(output, _id);
@@ -75,12 +73,12 @@ const library = (lib) => {
         const { tracks, tracks: { tracksCursor } } = getState();
 
         const subList = tracks[tracksCursor].sub;
-        const indexInsubList = subList.findIndex(track => track._id === _id);
-        const startSlice = indexInsubList - 10;
-        const endSlice = indexInsubList + 40;
-        const newQueue = subList.slice(startSlice >= 0 ? startSlice : 0, endSlice);
+//        const indexInsubList = subList.findIndex(track => track._id === _id);
+//        const startSlice = indexInsubList - 10;
+//        const endSlice = indexInsubList + 40;
+//        const newQueue = subList.slice(startSlice >= 0 ? startSlice : 0, endSlice);
 
-        return dispatch(lib.actions.player.createNewQueue(newQueue))
+        return dispatch(lib.actions.player.createNewQueue(subList))
         .then(() => dispatch(lib.actions.player.loadAndPlay(_id)));
     };
 

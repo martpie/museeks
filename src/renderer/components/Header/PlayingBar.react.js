@@ -24,10 +24,11 @@ class PlayingBar extends Component {
 
     static propTypes = {
         cover: React.PropTypes.string,
+        currentTrack: React.PropTypes.object,
         queue: React.PropTypes.array,
         queueCursor: React.PropTypes.number,
+        repeat: React.PropTypes.string,
         shuffle: React.PropTypes.bool,
-        repeat: React.PropTypes.string
     }
 
     constructor(props) {
@@ -44,22 +45,21 @@ class PlayingBar extends Component {
     }
 
     render() {
-        const queue = this.props.queue;
-        const queueCursor = this.props.queueCursor;
-        const trackPlaying = queue[queueCursor];
+        const { cover, currentTrack, shuffle, repeat, queue, queueCursor } = this.props;
+        const { elapsed, dragging, duration, x, showQueue } = this.state;
 
         let elapsedPercent;
 
-        if (queueCursor === null) return null;
+        if (!currentTrack || !currentTrack._id) return null;
 
-        if (this.state.elapsed < trackPlaying.duration) elapsedPercent = this.state.elapsed * 100 / trackPlaying.duration;
+        if (elapsed < currentTrack.duration) elapsedPercent = elapsed * 100 / currentTrack.duration;
 
         const nowPlayingTextClasses = classnames('now-playing text-center', {
-            dragging: this.state.dragging
+            dragging: dragging
         });
 
         const nowPlayingTooltipClasses = classnames('playing-bar-tooltip', {
-            hidden: this.state.duration === null
+            hidden: duration === null
         });
 
         return (
@@ -69,34 +69,34 @@ class PlayingBar extends Component {
                  onMouseUp={ this.dragEnd }
             >
                 <div className='now-playing-cover'>
-                    <TrackCover src={ this.props.cover } />
+                    <TrackCover src={ cover } />
                 </div>
                 <div className='now-playing-infos'>
                     <div className='now-playing-metas'>
                         <div className='player-options'>
-                            <ButtonRepeat repeat={ this.props.repeat } />
-                            <ButtonShuffle queue={ this.props.queue } shuffle={ this.props.shuffle } />
+                            <ButtonRepeat repeat={ repeat } />
+                            <ButtonShuffle queue={ queue } shuffle={ shuffle } />
                         </div>
                         <div className='metas'>
                             <strong className='meta-title'>
-                                { trackPlaying.title }
+                                { currentTrack.title }
                             </strong>
                             &nbsp;by&nbsp;
                             <strong className='meta-artist'>
-                                { trackPlaying.artist.join(', ') }
+                                { currentTrack.artist.join(', ') }
                             </strong>
                             &nbsp;on&nbsp;
                             <strong className='meta-album'>
-                                { trackPlaying.album }
+                                { currentTrack.album }
                             </strong>
                         </div>
 
                         <span className='duration'>
-                            { utils.parseDuration(this.state.elapsed) } / { utils.parseDuration(trackPlaying.duration) }
+                            { utils.parseDuration(this.state.elapsed) } / { utils.parseDuration(currentTrack.duration) }
                         </span>
                     </div>
                     <div className='now-playing-bar'>
-                        <div className={ nowPlayingTooltipClasses } style={ { left: this.state.x - 12 } }>
+                        <div className={ nowPlayingTooltipClasses } style={ { left: x - 12 } }>
                             { utils.parseDuration(this.state.duration) }
                         </div>
                         <ProgressBar
@@ -112,9 +112,9 @@ class PlayingBar extends Component {
                         <Icon name='list' />
                     </button>
                     <Queue
-                        visible={ this.state.showQueue }
-                        queue={ this.props.queue }
-                        queueCursor={ this.props.queueCursor }
+                        visible={ showQueue }
+                        queue={ queue }
+                        currentTrack={ queueCursor }
                     />
                 </div>
             </div>
@@ -130,10 +130,10 @@ class PlayingBar extends Component {
     }
 
     componentWillReceiveProps = (nextProps) => {
-        const nextTrackPlaying = nextProps.queue[nextProps.queueCursor];
+        const nextTrackPlaying = nextProps.currentTrack;
         const nextTrackPlayingId = nextTrackPlaying && nextTrackPlaying._id;
 
-        const currTrackPlaying = this.props.queue[this.props.queueCursor];
+        const currTrackPlaying = this.props.currentTrack;
         const currTrackPlayingId = currTrackPlaying && currTrackPlaying._id;
 
         // if we have a track to play, and it wasn't the last track we played
@@ -149,14 +149,12 @@ class PlayingBar extends Component {
     jumpAudioTo = (e) => {
         this.setState({ dragging : true });
 
-        const queue       = this.props.queue;
-        const queueCursor = this.props.queueCursor;
-        const trackPlaying   = queue[queueCursor];
+        const { currentTrack } = this.props;
 
         const bar = document.querySelector('.now-playing-bar');
         const percent = ((e.pageX - (bar.offsetLeft + bar.offsetParent.offsetLeft)) / bar.offsetWidth) * 100;
 
-        const jumpTo = (percent * trackPlaying.duration) / 100;
+        const jumpTo = (percent * currentTrack.duration) / 100;
 
         this.props.jumpTo(jumpTo);
     }
@@ -164,14 +162,12 @@ class PlayingBar extends Component {
     dragOver = (e) => {
         // Chack if it's needed to update currentTime
         if (this.state.dragging) {
-            const queue        = this.props.queue;
-            const queueCursor  = this.props.queueCursor;
-            const trackPlaying = queue[queueCursor];
+            const { currentTrack } = this.props;
 
             const bar = document.querySelector('.now-playing-bar');
             const percent = ((e.pageX - (bar.offsetLeft + bar.offsetParent.offsetLeft)) / bar.offsetWidth) * 100;
 
-            const jumpTo = (percent * trackPlaying.duration) / 100;
+            const jumpTo = (percent * currentTrack.duration) / 100;
 
             this.props.jumpTo(jumpTo);
         }
@@ -184,14 +180,12 @@ class PlayingBar extends Component {
     }
 
     showTooltip = (e) => {
-        const queue       = this.props.queue;
-        const queueCursor = this.props.queueCursor;
-        const trackPlaying   = queue[queueCursor];
+        const { currentTrack } = this.props;
 
         const bar = document.querySelector('.now-playing-bar');
         const percent = ((e.pageX - (bar.offsetLeft + bar.offsetParent.offsetLeft)) / bar.offsetWidth) * 100;
 
-        const time = (percent * trackPlaying.duration) / 100;
+        const time = (percent * currentTrack.duration) / 100;
 
         this.setState({
             duration: time,
