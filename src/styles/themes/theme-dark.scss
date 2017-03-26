@@ -176,6 +176,10 @@ body.theme-dark {
         .status {
             color: #AAA;
         }
+        .output {
+            color: #AAA;
+            border-color: black;
+        }
     }
 
 
@@ -335,6 +339,7 @@ body.theme-dark {
     |--------------------------------------------------------------------------
     */
 
+
     .playing-indicator {
 
         .animation {
@@ -343,6 +348,27 @@ body.theme-dark {
                 background-color: #EEE;
             }
         }
+    }
+    /*
+    |--------------------------------------------------------------------------
+    | components
+    |--------------------------------------------------------------------------
+    */
+
+    .Popover-body {
+        background-color: #33393b;
+        box-shadow: 0px 2px 10px 0px rgba(0,0,0,0.75);
+
+        a {
+            color: rgba(255, 255, 255, 0.7);
+            &:hover {
+                color: white;
+            }
+        }
+    }
+
+    .Popover-tipShape {
+        fill: #33393b;
     }
 
 

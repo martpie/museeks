@@ -82,7 +82,9 @@ class SettingsLibrary extends Component {
 }
 
 const stateToProps = (state) => ({
-    musicFolders: state.config.musicFolders
+    musicFolders: state.config.musicFolders,
+    refreshProgress: state.library.refreshProgress,
+    refreshingLibrary: state.library.refreshingLibrary,
 });
 
 const dispatchToProps = {

@@ -281,7 +281,7 @@ class TracksList extends Component {
                             { track.genre.join(', ') }
                         </div>
                         <div className='cell cell-owner'>
-                            <Avatar name={track.owner.name || track.owner.hostname} />
+                            <Avatar name={track.owner.name || track.owner.hostname} size={24}/>
                         </div>
                     </TrackRow>
                 );
