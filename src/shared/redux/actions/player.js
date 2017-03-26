@@ -65,6 +65,8 @@ const library = (lib) => {
         const queueCursor = queue.findIndex((track) => track._id === _id);
         const track = queue[queueCursor];
 
+//        console.log(queue, track);
+
         if (track) {
             const outputIsLocal = () => Promise.resolve(lib.player.setMetadata(track));
             const outputIsRemote = () => lib.api.actions.player.load(output, _id);
@@ -112,10 +114,11 @@ const library = (lib) => {
     const newQueueLoadAndPlay = (_id) => (dispatch, getState) => {
         const { tracks, tracks: { tracksCursor } } = getState();
 
-        const queueMaxLength = 50;
         const subList = tracks[tracksCursor].sub;
         const indexInsubList = subList.findIndex(track => track._id === _id);
-        const newQueue = subList.slice(indexInsubList - queueMaxLength / 2, indexInsubList + queueMaxLength / 2);
+        const startSlice = indexInsubList - 10;
+        const endSlice = indexInsubList + 40;
+        const newQueue = subList.slice(startSlice >= 0 ? startSlice : 0, endSlice);
 
         return dispatch(lib.actions.player.createNewQueue(newQueue))
         .then(() => dispatch(lib.actions.player.loadAndPlay(_id)));
