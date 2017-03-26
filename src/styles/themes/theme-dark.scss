@@ -372,6 +372,17 @@ body.theme-dark {
         fill: #33393b;
     }
 
+    .view-settings .setting-network .network-row {
+        border-color: #33393b;
+
+        .platform {
+            color: white;
+        }
+
+        .ip {
+            color: rgba(255, 255, 255, 0.5);
+        }
+    }
 
     /*
     |--------------------------------------------------------------------------
