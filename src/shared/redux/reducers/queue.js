@@ -2,8 +2,9 @@ import i from 'icepick';
 
 export default (state = {}, action) => {
     switch (action.type) {
+
         case('QUEUE/START'): {
-            const queue       = [...state.queue];
+            const queue = [...state.queue];
             const queueCursor = action.payload.index;
 
             // Backup that and change the UI
@@ -60,23 +61,24 @@ export default (state = {}, action) => {
         case('QUEUE/SET_QUEUE'): {
             return i.chain(state)
                 .assoc('queue', action.payload.queue)
+                .assoc('queueCursor', null)
                 .assocIn(['player', 'history'], [])
-                .assocIn(['player', 'historyCursor'], null);
+                .assocIn(['player', 'historyCursor'], null)
+                .value();
         }
 
-        case('QUEUE/SET_CURSOR'): {
-            return {
-                ...state,
-                queueCursor: action.payload.index
-            };
+        case('QUEUE/SET_QUEUE_CURSOR'): {
+            return i.chain(state)
+                .assoc('queueCursor', action.payload.queueCursor)
+                .assocIn(['player', 'historyCursor'], null)
+                .value();
         }
 
         case('PLAYER/MOVE_CURSOR_FULFILLED'): {
-            const { queueCursor, historyCursor, history, track } = action.payload;
+            const { queueCursor, historyCursor } = action.payload;
             return i.chain(state)
                 .assoc('queueCursor', queueCursor)
                 .assocIn(['player', 'historyCursor'], historyCursor)
-                .assocIn(['player', 'history'], history)
                 .value();
         }
 

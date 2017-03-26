@@ -88,18 +88,21 @@ const library = (lib) => {
 
         // Apply the input's state
 
+        // Set the player state
+        dispatch(lib.actions.player.setState(state.player));
+
         // Set the queue
         dispatch(lib.actions.queue.setQueue(state.queue));
 
-        // Set the player state
-        dispatch(lib.actions.player.setState(state.player));
+        // Set the queue cursor
+        dispatch(lib.actions.queue.setQueueCursor(state.queueCursor));
 
         // Load the track
         if (state.queueCursor) {
             dispatch(lib.actions.player.load(state.queue[state.queueCursor]._id));
         }
 
-        // Disatch the action to set the audio element state: can be play/pause/stop
+        // Set audio element play state: can be play/pause/stop
         dispatch(lib.actions.player[state.player.playStatus]());
 
         // Set audio element repeat

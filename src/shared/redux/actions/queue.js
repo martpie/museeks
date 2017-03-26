@@ -35,15 +35,15 @@ const library = (lib) => {
         }
     });
 
-    const setCursor = (index) => (dispatch, getState) => {
+    const setQueueCursor = (queueCursor) => (dispatch, getState) => {
         const { queue } = getState();
-        lib.player.setMetadata(queue[index]);
-        console.log('queue[index]queue[index]queue[index]queue[index]queue[index]', queue[index])
+        lib.player.setMetadata(queue[queueCursor]);
+        console.log('queue[index]queue[index]queue[index]queue[index]queue[index]', queue[queueCursor])
 
         return {
-            type: 'QUEUE/SET_CURSOR',
+            type: 'QUEUE/SET_QUEUE_CURSOR',
             payload: {
-                index
+                queueCursor
             }
         };
     };
@@ -75,7 +75,9 @@ const library = (lib) => {
                 else if (repeat === 'all' && queueCursor === queue.length - 1) { // is last track
                     return 0; // start with new track
                 }
-                else {
+                else if (queueCursor === queue.length - 1) { // is last track
+                    return null; // stop playing
+                } else {
                     return queueCursor + 1;
                 }
             }
@@ -148,7 +150,7 @@ const library = (lib) => {
         clear,
         remove,
         setQueue,
-        setCursor,
+        setQueueCursor,
         moveCursor
     };
 }

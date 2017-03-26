@@ -15,12 +15,13 @@ export default (state = {}, action) => {
                 .assocIn(['player', 'currentTrack'], track)
                 .value();
         }
-
-        case('PLAYER/CREATE_NEW_QUEUE_PENDING'): {
-            return i.assoc(state, 'queue', action.meta.newQueue);
-        }
-        case('PLAYER/CREATE_NEW_QUEUE_REJECTED'): {
-            return i.assoc(state, 'queue', action.meta.oldQueue);
+        case('PLAYER/LOAD_REJECTED'): {
+            const { oldQueueCursor, oldCurrentTrack } = action.meta;
+            return i.chain(state)
+                .assoc('queueCursor', oldQueueCursor)
+                .updateIn(['player', 'history'], (history) => i.slice(history, 0, -1))
+                .assocIn(['player', 'currentTrack'], oldCurrentTrack)
+                .value();
         }
 
         case('PLAYER/PLAY_PENDING'): {
@@ -96,6 +97,19 @@ export default (state = {}, action) => {
 
         case('PLAYER/SET_COVER'): {
             return i.assocIn(state, ['player', 'cover'], action.payload.cover);
+        }
+
+        case('PLAYER/CREATE_NEW_QUEUE_PENDING'): {
+            return i.chain(state)
+                .assoc('queue', action.meta.newQueue)
+                .assoc('queueCursor', null)
+                .value();
+        }
+        case('PLAYER/CREATE_NEW_QUEUE_REJECTED'): {
+            return i.chain(state)
+                .assoc('queue', action.meta.oldQueue)
+                .assoc('queueCursor', action.meta.oldQueueCursor)
+                .value();
         }
 
         default: {

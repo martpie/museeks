@@ -10,11 +10,24 @@ const library = (lib) => {
     });
 
     const load = (_id) => (dispatch, getState) => {
-        const { queue, network: { output } } = getState();
+        const {
+            queue,
+            queueCursor: oldQueueCursor,
+            player: { currentTrack: oldCurrentTrack, history, historyCursor },
+            network: { output }
+        } = getState();
 
-        const queueCursor = queue.findIndex((track) => track._id === _id);
-        const track = queue[queueCursor];
+        const inHistory = historyCursor !== -1 && !_id;
 
+        const queueCursor = _id
+            ? queue.findIndex((track) => track._id === _id)
+            : oldQueueCursor;
+
+        // use the currently active cursor to get the track
+        const track = inHistory
+            ? history[historyCursor]
+            : queue[queueCursor];
+console.log({ inHistory, history, queue, historyCursor, queueCursor })
         if (track) {
             const outputIsLocal = () => Promise.resolve(lib.player.setMetadata(track));
             const outputIsRemote = () => lib.api.actions.player.load(output, _id);
@@ -25,9 +38,13 @@ const library = (lib) => {
                     ? outputIsLocal()
                     : outputIsRemote(),
                 meta: {
-                    queueCursor
+                    queueCursor,
+                    oldQueueCursor,
+                    oldCurrentTrack
                 }
             });
+        } else {
+            dispatch(lib.actions.player.stop());
         }
     };
 
@@ -73,13 +90,10 @@ const library = (lib) => {
         const { tracks, tracks: { tracksCursor } } = getState();
 
         const subList = tracks[tracksCursor].sub;
-//        const indexInsubList = subList.findIndex(track => track._id === _id);
-//        const startSlice = indexInsubList - 10;
-//        const endSlice = indexInsubList + 40;
-//        const newQueue = subList.slice(startSlice >= 0 ? startSlice : 0, endSlice);
 
-        return dispatch(lib.actions.player.createNewQueue(subList))
-        .then(() => dispatch(lib.actions.player.loadAndPlay(_id)));
+        return dispatch(lib.actions.player.createNewQueue(subList)).then(() => {
+            return dispatch(lib.actions.player.loadAndPlay(_id));
+        });
     };
 
     const loadAndPlay = (_id) => (dispatch, getState) => {
@@ -102,9 +116,13 @@ const library = (lib) => {
     };
 
     const createNewQueue = (newQueue) => (dispatch, getState) => {
-        const { queue: oldQueue, network: { output, me } } = getState();
+        const {
+            queue: oldQueue,
+            queueCursor: oldQueueCursor,
+            network: { output, me }
+        } = getState();
 
-        const outputIsLocal = () => Promise.resolve();
+        const outputIsLocal = () => new Promise(setTimeout);
         const outputIsRemote = () => {
             const remoteQueue = utils.transformTrackPaths({
                 tracks: newQueue,
@@ -121,7 +139,8 @@ const library = (lib) => {
                 : outputIsRemote(),
             meta: {
                 newQueue,
-                oldQueue
+                oldQueue,
+                oldQueueCursor
             }
         });
     }
@@ -155,39 +174,14 @@ const library = (lib) => {
             ? dispatch(lib.actions.queue.moveCursor({ direction: 'next' })).payload
             : Promise.resolve(data);
 
-        return advanceCursor.then((cursors) => {
-console.log('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', cursors)
-            const inHistory = cursors.historyCursor !== -1;
-
-            // use the currently active cursor to get the track
-            const track = inHistory
-                ? history[cursors.historyCursor]
-                : queue[cursors.queueCursor];
-
-            if (track) {
-
-                const outputIsLocal = () => {
-                    console.log('lib.player.setMetadata(track)', lib.player.setMetadata(track))
-                    lib.player.setMetadata(track);
-                    lib.player.play();
-                    return Promise.resolve();
-                }
-                const outputIsRemote = () => lib.api.actions.player.next(output, cursors);
-
-                dispatch({
-                    type: 'PLAYER/NEXT',
-                    payload: output.isLocal
-                        ? outputIsLocal()
-                        : outputIsRemote(),
-                    meta: {
-                        newQueueCursor: cursors.queueCursor,
-                        newHistoryCursor: cursors.historyCursor,
-                        oldQueueCursor,
-                        oldHistoryCursor
-                    }
-                });
-            } else {
-                dispatch(lib.actions.player.stop());
+        return dispatch({
+            type: 'PLAYER/NEXT',
+            payload: advanceCursor,
+            meta: {
+                newQueueCursor: cursors.queueCursor,
+                newHistoryCursor: cursors.historyCursor,
+                oldQueueCursor,
+                oldHistoryCursor
             }
         });
     };
@@ -207,38 +201,14 @@ console.log('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', cursors)
             ? dispatch(lib.actions.queue.moveCursor({ direction: 'previous' })).payload
             : Promise.resolve(data);
 
-        return advanceCursor.then((cursors) => {
-            const inHistory = cursors.historyCursor !== -1;
-
-            // use the currently active cursor to get the track
-            const track = inHistory
-                ? history[cursors.historyCursor]
-                : queue[cursors.queueCursor];
-
-            if (track) {
-
-                const outputIsLocal = () => {
-                    console.log('lib.player.setMetadata(track)', lib.player.setMetadata(track))
-                    lib.player.setMetadata(track);
-                    lib.player.play();
-                    return Promise.resolve();
-                }
-                const outputIsRemote = () => lib.api.actions.player.previous(output, { newQueueCursor });
-
-                dispatch({
-                    type: 'PLAYER/PREVIOUS',
-                    payload: output.isLocal
-                        ? outputIsLocal()
-                        : outputIsRemote(),
-                    meta: {
-                        newQueueCursor: cursors.queueCursor,
-                        newHistoryCursor: cursors.historyCursor,
-                        oldQueueCursor,
-                        oldHistoryCursor
-                    }
-                });
-            } else {
-                dispatch(lib.actions.player.stop());
+        return dispatch({
+            type: 'PLAYER/PREVIOUS',
+            payload: advanceCursor,
+            meta: {
+                newQueueCursor: cursors.queueCursor,
+                newHistoryCursor: cursors.historyCursor,
+                oldQueueCursor,
+                oldHistoryCursor
             }
         });
     };
