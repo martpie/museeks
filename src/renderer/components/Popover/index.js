@@ -4,22 +4,37 @@ import Popover from 'react-popover';
 
 export default class PopoverWrapper extends Component {
   static propTypes = {
-    preferPlace         : PropTypes.string,               // ['above', 'below', 'left', 'right']
-                                                          // Default: 'above'
-    open                : PropTypes.bool,                 // Is the popover open? Often used with trigger === 'none' to control state externally
-    trigger             : PropTypes.string,               // ['click', 'hover', 'hoverDelay', 'hoverSingleDelay', 'none']
-                                                          // Default: 'click'
-    disableClickClose   : PropTypes.bool,                 // This will stop the popup closing when the overlay is clicked.
-    tipSize             : PropTypes.number,               // Size of the arrow. Default: 6
-    children            : PropTypes.node.isRequired,      // Two children should be passed in - children[0] is the trigger, children[1] is the popup content
-    inheritIsOpen       : PropTypes.bool                  // Should the popup content inherit the 'isOpen' prop?
+    // The prefered location of the popover
+    // Default: 'above'
+    preferPlace: PropTypes.oneOf(['above', 'below', 'left', 'right']),
+    // Is the popover open? Often used with trigger === 'none' to control state externally
+    // Default: undefined
+    open: PropTypes.bool,
+    // The type of event to trigger the popver
+    // Default: 'click'
+    trigger: PropTypes.oneOf(['click', 'hover', 'hoverDelay', 'hoverSingleDelay', 'none']),
+    // Toggle delay period. To be used with 'hoverDelay' or 'hoverSingleDelay'.
+    // Default: 200
+    toggleDelayTime: PropTypes.number,
+    // This will stop the popup closing when the overlay is clicked.
+    // Default: false
+    disableClickClose: PropTypes.bool,
+    // Size of the arrow.
+    // Default: 6
+    tipSize: PropTypes.number,
+    // Should the popup content inherit the 'isOpen' prop?
+    // Default: false
+    inheritIsOpen: PropTypes.bool,
+    // Two children should be passed in - children[0] is the trigger, children[1] is the popup content
+    children: PropTypes.node.isRequired,
   }
 
   static defaultProps = {
     ...Component.defaultProps,
     tipSize: 6,
     trigger: 'click',
-    preferPlace: 'above'
+    preferPlace: 'above',
+    toggleDelayTime: 200
   }
 
   constructor(props) {
@@ -27,7 +42,6 @@ export default class PopoverWrapper extends Component {
     this.state = {
       isOpen: false,
     };
-    this.toggleDelayTime = 200;
     this.toggleDelayTimeout = null;
   }
 
@@ -46,7 +60,7 @@ export default class PopoverWrapper extends Component {
     clearTimeout(this.toggleDelayTimeout);
     this.toggleDelayTimeout = setTimeout(() => {
       this.toggle(toState);
-    }, this.toggleDelayTime);
+    }, this.props.toggleDelayTime);
   }
 
   toggle = (toState) => {
