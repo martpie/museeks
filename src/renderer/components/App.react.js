@@ -28,22 +28,12 @@ class Museeks extends Component {
 
     render() {
         const state = this.props.state;
-        const trackPlayingId = (state.queue.length > 0 && state.queueCursor !== null) ? state.queue[state.queueCursor]._id : null;
+        const trackPlayingId = state.player.currentTrack && state.player.currentTrack._id ? state.player.currentTrack._id : null;
 
         return (
             <div className='main'>
                 <KeyBinding onKey={ this.onKey } preventInputConflict />
-                <Header
-                    app={ this }
-                    playStatus={ state.player.playStatus }
-                    repeat={ state.repeat }
-                    shuffle={ state.shuffle }
-                    cover={ state.player.cover }
-                    queue={ state.queue }
-                    queueCursor={ state.queueCursor }
-                    windowControls={ !state.config.useNativeFrame }
-                    network={ state.network }
-                />
+                <Header />
                 <div className='main-content'>
                     <Row className='content'>
                         { React.cloneElement(

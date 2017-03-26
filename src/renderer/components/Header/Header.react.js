@@ -18,12 +18,13 @@ import lib from '../../lib';
 class Header extends Component {
 
     static propTypes = {
-        playStatus: React.PropTypes.string,
         cover: React.PropTypes.string,
+        currentTrack: React.PropTypes.object,
+        playStatus: React.PropTypes.string,
         queue: React.PropTypes.array,
         queueCursor: React.PropTypes.number,
-        shuffle: React.PropTypes.bool,
         repeat: React.PropTypes.string,
+        shuffle: React.PropTypes.bool,
         windowControls: React.PropTypes.bool,
     }
 
@@ -32,22 +33,32 @@ class Header extends Component {
     }
 
     render() {
+        const {
+            cover,
+            currentTrack,
+            playStatus,
+            queue,
+            queueCursor,
+            repeat,
+            shuffle,
+            windowControls,
+        } = this.props;
+
         return (
             <header className='row'>
                 <div className='col-main-controls'>
-                    <WindowControls active={ this.props.windowControls } />
-                    <PlayerControls
-                        playStatus={ this.props.playStatus }
-                    />
+                    <WindowControls active={ windowControls } />
+                    <PlayerControls playStatus={ playStatus } />
                 </div>
 
                 <div className='col-player-infos'>
                     <PlayingBar
-                        cover={ this.props.cover }
-                        queue={ this.props.queue }
-                        queueCursor={ this.props.queueCursor }
-                        shuffle={ this.props.shuffle }
-                        repeat={ this.props.repeat }
+                        cover={ cover }
+                        currentTrack={ currentTrack }
+                        shuffle={ shuffle }
+                        repeat={ repeat }
+                        queue={ queue }
+                        queueCursor={ queueCursor }
                     />
                 </div>
                 <div className="col-search-controls">
@@ -70,7 +81,16 @@ class Header extends Component {
     }
 }
 
-const stateToProps = () => ({});
+const stateToProps = (state) => ({
+    cover: state.player.cover,
+    currentTrack: state.player.currentTrack,
+    playStatus: state.player.playStatus,
+    repeat: state.player.repeat,
+    shuffle: state.player.shuffle,
+    queue: state.queue,
+    queueCursor: state.queueCursor,
+    windowControls: !state.config.useNativeFrame,
+});
 
 const dispatchToProps = {
     filter: lib.actions.tracks.filter
