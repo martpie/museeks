@@ -111,7 +111,11 @@ const library = (lib) => {
 
     const newQueueLoadAndPlay = (_id) => (dispatch, getState) => {
         const { tracks, tracks: { tracksCursor } } = getState();
-        const newQueue = [ ...tracks[tracksCursor].sub ];
+
+        const queueMaxLength = 50;
+        const subList = tracks[tracksCursor].sub;
+        const indexInsubList = subList.findIndex(track => track._id === _id);
+        const newQueue = subList.slice(indexInsubList - queueMaxLength / 2, indexInsubList + queueMaxLength / 2);
 
         return dispatch(lib.actions.player.createNewQueue(newQueue))
         .then(() => dispatch(lib.actions.player.loadAndPlay(_id)));
