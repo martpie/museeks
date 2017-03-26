@@ -29,7 +29,7 @@ class Museeks extends Component {
     render() {
         const state = this.props.state;
         const trackPlayingId = (state.queue.length > 0 && state.queueCursor !== null) ? state.queue[state.queueCursor]._id : null;
-
+console.log(state)
         return (
             <div className='main'>
                 <KeyBinding onKey={ this.onKey } preventInputConflict />

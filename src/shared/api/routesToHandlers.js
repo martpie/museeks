@@ -34,8 +34,8 @@ const routesToHandlers = (routes, lib) => {
 
             const functionResult = Promise.resolve(dispatchedFunction(transformedArgs))
                 .then(pickActionPayload)
-                .then((result) => res(result))
-                .catch((error) => res({ error }).code(error.code));
+                .then(res)
+                .catch((error) => res({ error }).code(400));
 
             return functionResult;
         }

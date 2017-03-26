@@ -91,27 +91,24 @@ const library = (lib) => {
         // Set the queue
         dispatch(lib.actions.queue.setQueue(state.queue));
 
+        // Set the player state
+        dispatch(lib.actions.player.setState(state.player));
+
         // Load the track
         if (state.queueCursor) {
             dispatch(lib.actions.player.load(state.queue[state.queueCursor]._id));
         }
 
-        // Set the play/pause/stop status
-        if (state.player.playStatus === 'pause') {
-            dispatch(lib.actions.player.pause());
-        } else if (state.player.playStatus === 'stop') {
-            dispatch(lib.actions.player.stop());
-        } else if (state.player.playStatus === 'play') {
-            dispatch(lib.actions.player.play());
-        }
+        // Disatch the action to set the audio element state: can be play/pause/stop
+        dispatch(lib.actions.player[state.player.playStatus]());
 
-        // Set repeat
+        // Set audio element repeat
         dispatch(lib.actions.player.repeat(state.player.repeat));
 
-        // Set Shuffle
+        // Set audio element suffle
         dispatch(lib.actions.player.shuffle(state.player.shuffle));
 
-        // Set the elapsed time
+        // Set audio element elapsed time
         dispatch(lib.actions.player.jumpTo(state.elapsed));
 
         // Add the input computer as an observer
