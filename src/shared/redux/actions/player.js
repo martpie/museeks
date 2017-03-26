@@ -1,5 +1,4 @@
 import utils from '../../utils/utils';
-import { range } from 'range';
 
 const library = (lib) => {
 
@@ -144,7 +143,6 @@ const library = (lib) => {
     };
 
     const next = (data = {}) => (dispatch, getState) => {
-
         const {
             queue,
             queueCursor: oldQueueCursor,
@@ -156,7 +154,7 @@ const library = (lib) => {
 
         // advance the cursor if required
         const advanceCursor = !queueCursor
-            ? dispatch(moveCursor({ direction: 'next' })).payload
+            ? dispatch(lib.actions.queue.moveCursor({ direction: 'next' })).payload
             : Promise.resolve(data);
 
         return advanceCursor.then((cursors) => {
@@ -196,24 +194,38 @@ console.log('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', cursors)
         });
     };
 
-    const previous = ({ newQueueCursor } = {}) => (dispatch, getState) => {
-        const { queue, queueCursor: oldQueueCursor, network: { output } } = getState();
+    const previous = (data = {}) => (dispatch, getState) => {
+        const {
+            queue,
+            queueCursor: oldQueueCursor,
+            player: { history, historyCursor: oldHistoryCursor },
+            network: { output }
+        } = getState();
 
-        const advanceCursor = newQueueCursor
-            ? Promise.resolve(newQueueCursor)
-            : dispatch(moveCursor({ direction: 'previous' }));
+        const { queueCursor } = data;
 
-        return advanceCursor.then((newQueueCursor) => {
-            const track = queue[newQueueCursor];
+        // advance the cursor if required
+        const advanceCursor = !queueCursor
+            ? dispatch(lib.actions.queue.moveCursor({ direction: 'previous' })).payload
+            : Promise.resolve(data);
+
+        return advanceCursor.then((cursors) => {
+            const inHistory = cursors.historyCursor !== -1;
+
+            // use the currently active cursor to get the track
+            const track = inHistory
+                ? history[cursors.historyCursor]
+                : queue[cursors.queueCursor];
 
             if (track) {
 
                 const outputIsLocal = () => {
+                    console.log('lib.player.setMetadata(track)', lib.player.setMetadata(track))
                     lib.player.setMetadata(track);
                     lib.player.play();
                     return Promise.resolve();
                 }
-                const outputIsRemote = () => lib.api.actions.player.next(output, { newQueueCursor });
+                const outputIsRemote = () => lib.api.actions.player.previous(output, { newQueueCursor });
 
                 dispatch({
                     type: 'PLAYER/PREVIOUS',
@@ -221,8 +233,10 @@ console.log('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', cursors)
                         ? outputIsLocal()
                         : outputIsRemote(),
                     meta: {
-                        newQueueCursor,
-                        oldQueueCursor
+                        newQueueCursor: cursors.queueCursor,
+                        newHistoryCursor: cursors.historyCursor,
+                        oldQueueCursor,
+                        oldHistoryCursor
                     }
                 });
             } else {
@@ -362,9 +376,8 @@ console.log('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', cursors)
         setMuted,
         setPlaybackRate,
         setVolume,
-        moveCursor,
         shuffle,
-        stop,
+        stop
     };
 }
 
