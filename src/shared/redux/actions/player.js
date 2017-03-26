@@ -347,7 +347,6 @@ console.log('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', cursors)
 
     return {
         audioError,
-        audioErrors,
         createNewQueue,
         fetchCover,
         jumpTo,
