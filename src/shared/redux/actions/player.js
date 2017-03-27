@@ -34,7 +34,7 @@ const library = (lib) => {
             network: { output }
         } = getState();
 
-        const getTrack = (_id) => {
+        const getTrack = () => {
             // load a specific track if supplied
             if (_id) {
                 return tracks[_id];
@@ -74,14 +74,11 @@ const library = (lib) => {
     };
 
     const newQueueLoadAndPlay = (_id) => (dispatch, getState) => {
-        console.log('starting newQueueLoadAndPlay')
         const { tracks, tracks: { tracksCursor } } = getState();
 
         const subList = tracks[tracksCursor].sub;
 
         return dispatch(lib.actions.player.createNewQueue(subList)).then(() => {
-            console.log('new queue should be above here ^^^')
-            console.log('createNewQueue promise completed', getState().queue)
             return dispatch(lib.actions.player.loadAndPlay(_id));
         });
     };
@@ -357,8 +354,6 @@ const library = (lib) => {
             queueCursor: oldQueueCursor,
             network: { output, me }
         } = getState();
-
-        console.log('createNewQueue output.isLocal', output.isLocal)
 
         const outputIsLocal = () => new Promise(setTimeout);
         const outputIsRemote = () => {

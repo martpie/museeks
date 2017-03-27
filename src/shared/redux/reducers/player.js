@@ -80,7 +80,6 @@ export default (state = {}, action) => {
         }
 
         case('PLAYER/CREATE_NEW_QUEUE_PENDING'): {
-            console.log('NEW QUEUE', action.meta.newQueue)
             return i.chain(state)
                 .assoc('queue', action.meta.newQueue)
                 .assoc('queueCursor', null)
