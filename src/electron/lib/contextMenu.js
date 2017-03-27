@@ -16,15 +16,20 @@ const trackList = (data) => {
         const itemCreatePlaylist = {
             label: 'Create new playlist...',
             click: () => {
-                resolve('createPlaylist');
+                resolve({
+                    reply: 'createPlaylist'
+                });
             }
         };
 
         const itemAddToPlaylist = (elem) => ({
             label: elem.name,
             click: () => {
-                resolve('addToPlaylist', {
-                    playlistId: elem._id
+                resolve({
+                    reply: 'addToPlaylist',
+                    data: {
+                        playlistId: elem._id
+                    }
                 });
             }
         });
@@ -37,14 +42,18 @@ const trackList = (data) => {
         const itemAddToQueue = {
             label: 'Add to queue',
             click: () => {
-                resolve('addToQueue');
+                resolve({
+                    reply: 'addToQueue',
+                });
             }
         };
 
         const itemPlayNext = {
             label: 'Play next',
             click: () => {
-                resolve('playNext');
+                resolve({
+                    reply: 'playNext',
+                });
             }
         };
 
@@ -87,7 +96,12 @@ const trackList = (data) => {
         const itemSearchFor = (searchTerm) => ({
             label: `Search for '${searchTerm}'`,
             click: () => {
-                resolve('searchFor', { search: searchTerm });
+                resolve({
+                    reply: 'searchFor',
+                    data: {
+                        search: searchTerm
+                    }
+                });
             }
         });
 
@@ -106,7 +120,9 @@ const trackList = (data) => {
         const itemRemoveFromPlaylist = {
             label: 'Remove from playlist',
             click: () => {
-                resolve('removeFromPlaylist');
+                resolve({
+                    reply: 'removeFromPlaylist',
+                });
             }
         };
 

@@ -269,7 +269,7 @@ class TracksList extends Component {
             playlistsList = playlistsList.filter((elem) => elem._id !== this.props.currentPlaylist);
         }
 
-        const processClick = (reply, data) => {
+        const processClick = ({reply, data}) => {
             const selected = this.state.selected;
             switch(reply) {
                 case 'addToQueue': {
