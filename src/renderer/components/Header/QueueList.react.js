@@ -21,6 +21,7 @@ class QueueList extends Component {
     static propTypes = {
         queue: React.PropTypes.array,
         queueCursor: React.PropTypes.number,
+        trackData: React.PropTypes.object,
         visible: React.PropTypes.bool
     }
 
@@ -37,19 +38,30 @@ class QueueList extends Component {
     render() {
         const self = this;
 
-        const queue       = this.props.queue;
-        const queueCursor = this.props.queueCursor;
+        const {
+            trackData,
+            queue,
+            queueCursor,
+            visible
+        } = this.props;
+
+        const {
+            draggedTrackIndex,
+            draggedOverTrackIndex,
+            dragPosition
+        } = this.state;
+
 
         // Get the 20 next tracks displayed
         const shownQueue = queue.slice(queueCursor + 1, queueCursor + 21);
         const incomingQueue = queue.slice(queueCursor + 1);
 
         const queueClasses = classnames('queue text-left', {
-            visible: this.props.visible
+            visible
         });
 
         const queueBodyClasses = classnames('queue-body', {
-            dragging: this.state.draggedTrackIndex !== null
+            dragging: draggedTrackIndex !== null
         });
 
         return (
@@ -65,16 +77,17 @@ class QueueList extends Component {
                     </ButtonGroup>
                 </div>
                 <div className={ queueBodyClasses }>
-                    { shownQueue.map((track, index) => {
+                    { shownQueue.map((trackId, index) => {
+                        const track = trackData[trackId];
                         return (
                             <QueueListItem
                                 key={ index }
                                 index={ index }
                                 track={ track }
-                                queueCursor={ this.props.queueCursor }
-                                dragged={ index === self.state.draggedTrackIndex }
-                                draggedOver={ index === self.state.draggedOverTrackIndex }
-                                dragPosition={ index === self.state.draggedOverTrackIndex && self.state.dragPosition || null }
+                                queueCursor={ queueCursor }
+                                dragged={ index === draggedTrackIndex }
+                                draggedOver={ index === draggedOverTrackIndex }
+                                dragPosition={ index === draggedOverTrackIndex && dragPosition || null }
                                 onDragStart={ self.dragStart }
                                 onDragOver={ this.dragOver }
                                 onDragEnd={ self.dragEnd }
@@ -141,7 +154,9 @@ class QueueList extends Component {
     }
 }
 
-const stateToProps = () => ({});
+const stateToProps = (state) => ({
+    trackData: state.tracks.library.data
+});
 
 const dispatchToProps = {
     clear: lib.actions.queue.clear,

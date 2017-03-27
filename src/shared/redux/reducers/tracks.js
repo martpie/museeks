@@ -3,6 +3,7 @@ import { unionBy, keyBy } from 'lodash';
 import extend from 'xtend';
 import utils from '../../utils/utils';
 
+
 export default (state = {}, action) => {
     switch (action.type) {
 
@@ -30,19 +31,17 @@ export default (state = {}, action) => {
             // const otherTracks = tracks.filter((track) => track.owner !== me);
             return {
                 ...state,
-                tracks: {
-                    library: {
-                        data: {},
-                        all: [],
-                        sub: []
-                    },
-                    playlist: {
-                        data: {},
-                        all: [],
-                        sub: []
-                    }
+                library: {
+                    data: {},
+                    all: [],
+                    sub: []
+                },
+                playlist: {
+                    data: {},
+                    all: [],
+                    sub: []
                 }
-            };
+        };
         }
 
         case('TRACKS/FILTER'): {
@@ -76,8 +75,7 @@ export default (state = {}, action) => {
                 : track;
 
             return i.chain(state)
-                .assocIn(['library', 'all'], state.library.all.map(updateTrackPlaycount))
-                .assocIn(['library', 'sub'], state.library.sub.map(updateTrackPlaycount))
+                .assocIn(['library', 'data'], state.library.data.map(updateTrackPlaycount))
                 .value();
         }
 
