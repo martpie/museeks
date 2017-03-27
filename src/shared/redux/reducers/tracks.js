@@ -12,11 +12,11 @@ export default (state = {}, action) => {
 
             const tracksWithMetadata = action.payload.map((track) => extend(track, { owner: action.meta.owner }));
 
-            const uniqueTracks = unionBy(tracksWithMetadata, state.library.all, '_id');
-            const uniqueTrackIds = uniqueTracks.map( track => track._id);
+            const uniqueTracks = extend(state.library.data, keyBy(tracksWithMetadata, '_id'));
+            const uniqueTrackIds = Object.keys(uniqueTracks);
 
             return i.chain(state)
-                .assocIn(['library', 'data'], keyBy(uniqueTracks, '_id'))
+                .assocIn(['library', 'data'], uniqueTracks)
                 .assocIn(['library', 'all'], uniqueTrackIds)
                 .assocIn(['library', 'sub'], uniqueTrackIds)
                 .value();
