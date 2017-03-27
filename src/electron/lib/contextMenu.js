@@ -57,28 +57,6 @@ const trackList = (data) => {
             }
         };
 
-        const getPlaylistTemplate = () => {
-            let template = [];
-
-            if (data.playlists) {
-                template = [ itemCreatePlaylist ];
-
-                if (data.playlists.length > 0) {
-                    template.push(itemSeperator);
-                }
-                data.playlists.forEach((elem) => {
-                    template.push(itemAddToPlaylist(elem));
-                });
-            } else {
-                template = [
-                    itemCreatePlaylist,
-                    itemSeperator,
-                    itemNoPlaylist,
-                ];
-            }
-            return template;
-        };
-
         const subMenuAddToPlaylist = (submenu) => ({
             label: 'Add to playlist',
             submenu,
@@ -115,6 +93,22 @@ const trackList = (data) => {
                     reply: 'removeFromPlaylist',
                 });
             }
+        };
+
+        const getPlaylistTemplate = () => {
+            return data.playlists
+            ? [
+                itemCreatePlaylist,
+                ...(data.playlists.length > 0
+                   ? [itemSeperator]
+                   : []),
+                ...(data.playlists.map(itemAddToPlaylist)),
+            ]
+            : [
+                itemCreatePlaylist,
+                itemSeperator,
+                itemNoPlaylist,
+            ]
         };
 
         const template = [
