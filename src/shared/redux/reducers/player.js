@@ -9,7 +9,7 @@ export default (state = {}, action) => {
         case('PLAYER/LOAD_PENDING'): {
             const { queueCursor } = action.meta;
             const { tracks: { library: { data: tracksData } } } = state;
-            const track = tracksData[state.queue[state.queueCursor]];
+            const track = tracksData[state.queue[queueCursor]];
 
             return i.chain(state)
                 .assoc('queueCursor', queueCursor)
@@ -51,7 +51,7 @@ export default (state = {}, action) => {
         case('PLAYER/NEXT_PENDING'): {
             const { newQueueCursor, newHistoryCursor } = action.meta;
             const { tracks: { library: { data: tracksData } } } = state;
-            const track = tracksData[state.queue[state.queueCursor]];
+            const track = tracksData[state.queue[newQueueCursor]];
 
             return i.chain(state)
                 .assoc('queueCursor', newQueueCursor)
@@ -72,7 +72,7 @@ export default (state = {}, action) => {
         case('PLAYER/PREVIOUS_PENDING'): {
             const { oldQueueCursor } = action.meta;
             const { tracks: { library: { data: tracksData } } } = state;
-            const track = tracksData[state.queue[state.queueCursor]];
+            const track = tracksData[state.queue[oldQueueCursor]];
 
             return i.chain(state)
                 .assocIn(['player', 'currentTrack'], track)
