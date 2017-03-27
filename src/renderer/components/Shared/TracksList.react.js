@@ -130,8 +130,6 @@ class TracksList extends Component {
                     playingIndicator = <PlayingIndicator state={ this.pausePlayState() } />;
                 }
 
-                console.log(track);
-
                 return(
                     <TrackRow
                         selected={ selected.includes(track._id) }
