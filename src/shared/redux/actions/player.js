@@ -2,34 +2,45 @@ import utils from '../../utils/utils';
 
 const library = (lib) => {
 
-    const setState = (state) => ({
-        type: 'PLAYER/SET_STATE',
-        payload: {
-            state
-        }
-    });
+    const setState = (state) => (dispatch, getState) => {
+        dispatch({
+            type: 'PLAYER/SET_STATE',
+            payload: {
+                state
+            }
+        });
+
+        dispatch(lib.actions.player.load());
+    }
 
     const load = (_id) => (dispatch, getState) => {
         const {
             queue,
-            queueCursor: oldQueueCursor,
+            queueCursor,
             player: { currentTrack: oldCurrentTrack, history, historyCursor },
             network: { output }
         } = getState();
 
-        const inHistory = historyCursor !== -1 && !_id;
+        const getTrack = () => {
 
-        const queueCursor = _id
-            ? queue.findIndex((track) => track._id === _id)
-            : oldQueueCursor;
+            if (_id) {
+                // we've explicitly been given a track to load
+                const trackIndex = queue.findIndex((track) => track._id === _id);
+                return queue[trackIndex];
+            } else {
+                // no track supplied, read the cursors to figure out the track to load
+                const inHistory = historyCursor !== -1;
 
-        // use the currently active cursor to get the track
-        const track = inHistory
-            ? history[historyCursor]
-            : queue[queueCursor];
-console.log({ inHistory, history, queue, historyCursor, queueCursor })
+                return inHistory
+                    ? history[historyCursor]
+                    : queue[queueCursor];
+            }
+        }
+
+        const track = getTrack();
+console.log('load', _id, track)
         if (track) {
-            const outputIsLocal = () => Promise.resolve(lib.player.setMetadata(track));
+            const outputIsLocal = () => lib.player.setMetadata(track);
             const outputIsRemote = () => lib.api.actions.player.load(output, _id);
 
             return dispatch({
@@ -38,15 +49,33 @@ console.log({ inHistory, history, queue, historyCursor, queueCursor })
                     ? outputIsLocal()
                     : outputIsRemote(),
                 meta: {
-                    queueCursor,
-                    oldQueueCursor,
+                    track,
                     oldCurrentTrack
                 }
             });
         } else {
-            dispatch(lib.actions.player.stop());
+            return dispatch(lib.actions.player.stop());
         }
     };
+
+    const loadAndPlay = (_id) => (dispatch, getState) => {
+        dispatch(lib.actions.player.load(_id));
+        dispatch(lib.actions.player.play());
+    };
+
+    const newQueueLoadAndPlay = (_id) => (dispatch, getState) => {
+        console.log('starting newQueueLoadAndPlay')
+        const { tracks, tracks: { tracksCursor } } = getState();
+
+        const subList = tracks[tracksCursor].sub;
+
+        return dispatch(lib.actions.player.createNewQueue(subList)).then(() => {
+            console.log('new queue should be above here ^^^')
+            console.log('createNewQueue promise completed', getState().queue)
+            return dispatch(lib.actions.player.loadAndPlay(_id));
+        });
+    };
+
 
     const play = () => (dispatch, getState) => {
         const { queue , network: { output } } = getState();
@@ -76,31 +105,6 @@ console.log({ inHistory, history, queue, historyCursor, queueCursor })
         });
     };
 
-    const playToggle = () => (dispatch, getState) => {
-        lib.player.getAudio().then((audio) => {
-            if (audio.paused && getState().queue.length > 0) {
-                dispatch(lib.actions.player.play());
-            } else {
-                dispatch(lib.actions.player.pause());
-            }
-        });
-    };
-
-    const newQueueLoadAndPlay = (_id) => (dispatch, getState) => {
-        const { tracks, tracks: { tracksCursor } } = getState();
-
-        const subList = tracks[tracksCursor].sub;
-
-        return dispatch(lib.actions.player.createNewQueue(subList)).then(() => {
-            return dispatch(lib.actions.player.loadAndPlay(_id));
-        });
-    };
-
-    const loadAndPlay = (_id) => (dispatch, getState) => {
-        dispatch(lib.actions.player.load(_id));
-        dispatch(lib.actions.player.play());
-    };
-
     const pause = () => (dispatch, getState) => {
         const { player: { playStatus }, network: { output } } = getState();
 
@@ -115,35 +119,15 @@ console.log({ inHistory, history, queue, historyCursor, queueCursor })
         });
     };
 
-    const createNewQueue = (newQueue) => (dispatch, getState) => {
-        const {
-            queue: oldQueue,
-            queueCursor: oldQueueCursor,
-            network: { output, me }
-        } = getState();
-
-        const outputIsLocal = () => new Promise(setTimeout);
-        const outputIsRemote = () => {
-            const remoteQueue = utils.transformTrackPaths({
-                tracks: newQueue,
-                peer: output,
-                me
-            });
-            return lib.api.actions.player.createNewQueue(output, remoteQueue);
-        }
-
-        return dispatch({
-            type: 'PLAYER/CREATE_NEW_QUEUE',
-            payload: output.isLocal
-                ? outputIsLocal()
-                : outputIsRemote(),
-            meta: {
-                newQueue,
-                oldQueue,
-                oldQueueCursor
+    const playToggle = () => (dispatch, getState) => {
+        lib.player.getAudio().then((audio) => {
+            if (audio.paused && getState().queue.length > 0) {
+                dispatch(lib.actions.player.play());
+            } else {
+                dispatch(lib.actions.player.pause());
             }
         });
-    }
+    };
 
     const stop = () => (dispatch, getState) => {
         const { network: { output } } = getState();
@@ -164,26 +148,39 @@ console.log({ inHistory, history, queue, historyCursor, queueCursor })
             queue,
             queueCursor: oldQueueCursor,
             player: { history, historyCursor: oldHistoryCursor },
-            network: { output }
         } = getState();
 
-        const { queueCursor } = data;
+        let queueCursor = oldQueueCursor;
+        let historyCursor = oldHistoryCursor;
 
-        // advance the cursor if required
-        const advanceCursor = !queueCursor
-            ? dispatch(lib.actions.queue.moveCursor({ direction: 'next' })).payload
-            : Promise.resolve(data);
+        const inHistory = historyCursor !== -1;
 
-        return dispatch({
+        // if we're currently playing a track from our history
+        if (inHistory) {
+            // move one step forward in the history
+            historyCursor = historyCursor + 1;
+
+            // if we moved past the tail of the history queue
+            if (historyCursor === history.length) {
+                // disable the history cursor
+                historyCursor = -1;
+                // set the queue cursor to the next track
+                queueCursor = utils.getNextQueueCursor({ queue, queueCursor, repeat, shuffle });
+            }
+        } else {
+            // set the queue cursor to the next track
+            queueCursor = utils.getNextQueueCursor({ queue, queueCursor, repeat, shuffle });
+        }
+
+        dispatch({
             type: 'PLAYER/NEXT',
-            payload: advanceCursor,
-            meta: {
-                newQueueCursor: cursors.queueCursor,
-                newHistoryCursor: cursors.historyCursor,
-                oldQueueCursor,
-                oldHistoryCursor
+            payload: {
+                queueCursor,
+                historyCursor
             }
         });
+
+        dispatch(lib.actions.player.load());
     };
 
     const previous = (data = {}) => (dispatch, getState) => {
@@ -191,25 +188,42 @@ console.log({ inHistory, history, queue, historyCursor, queueCursor })
             queue,
             queueCursor: oldQueueCursor,
             player: { history, historyCursor: oldHistoryCursor },
-            network: { output }
         } = getState();
 
-        const { queueCursor } = data;
+        lib.player.getAudio().then((audio) => {
 
-        // advance the cursor if required
-        const advanceCursor = !queueCursor
-            ? dispatch(lib.actions.queue.moveCursor({ direction: 'previous' })).payload
-            : Promise.resolve(data);
+            let queueCursor = oldQueueCursor;
+            let historyCursor = oldHistoryCursor;
 
-        return dispatch({
-            type: 'PLAYER/PREVIOUS',
-            payload: advanceCursor,
-            meta: {
-                newQueueCursor: cursors.queueCursor,
-                newHistoryCursor: cursors.historyCursor,
-                oldQueueCursor,
-                oldHistoryCursor
+            const inHistory = historyCursor !== -1;
+
+            // if track started less than 5 seconds ago, play the previous track, otherwise replay the current track
+            if (audio.currentTime < 5) {
+                // if we're currently playing a track from our history
+                if (inHistory) {
+                    // move one step back in the history
+                    historyCursor = historyCursor - 1;
+
+                    if (historyCursor === -1) {
+                        // we tried to move past the head of the history queue, stay at the top
+                        historyCursor = 0;
+                    }
+                } else {
+                    // set the history cursor to the end of the history queue
+                    historyCursor = history.length - 1;
+                }
             }
+
+            dispatch({
+                type: 'PLAYER/PREVIOUS',
+                payload: moveCursorPrevious,
+                meta: {
+                    queueCursor,
+                    historyCursor
+                }
+            });
+
+            dispatch(lib.actions.player.load());
         });
     };
 
@@ -293,6 +307,16 @@ console.log({ inHistory, history, queue, historyCursor, queueCursor })
         });
     };
 
+    const fetchCover = (metadata) => ({
+        type: 'PLAYER/SET_COVER',
+        payload: {
+            cover: utils.coverEndpoint({
+                _id: metadata._id,
+                peer: metadata.owner
+            })
+        }
+    });
+
     const audioError = (e) => (dispatch) => {
         const audioErrors = {
             aborted: 'The video playback was aborted.',
@@ -317,35 +341,57 @@ console.log({ inHistory, history, queue, historyCursor, queueCursor })
         }
     };
 
-    const fetchCover = (metadata) => ({
-        type: 'PLAYER/SET_COVER',
-        payload: {
-            cover: utils.coverEndpoint({
-                _id: metadata._id,
-                peer: metadata.owner
-            })
+    const createNewQueue = (newQueue) => (dispatch, getState) => {
+        const {
+            queue: oldQueue,
+            queueCursor: oldQueueCursor,
+            network: { output, me }
+        } = getState();
+
+        console.log('createNewQueue output.isLocal', output.isLocal)
+
+        const outputIsLocal = () => new Promise(setTimeout);
+        const outputIsRemote = () => {
+            const remoteQueue = utils.transformTrackPaths({
+                tracks: newQueue,
+                peer: output,
+                me
+            });
+            return lib.api.actions.player.createNewQueue(output, remoteQueue);
         }
-    });
+
+        return dispatch({
+            type: 'PLAYER/CREATE_NEW_QUEUE',
+            payload: output.isLocal
+                ? outputIsLocal()
+                : outputIsRemote(),
+            meta: {
+                newQueue,
+                oldQueue,
+                oldQueueCursor
+            }
+        });
+    }
 
     return {
-        audioError,
-        createNewQueue,
-        fetchCover,
-        jumpTo,
         load,
         loadAndPlay,
         newQueueLoadAndPlay,
-        next,
-        pause,
         play,
+        pause,
+        stop,
         playToggle,
+        next,
         previous,
+        jumpTo,
         repeat,
+        shuffle,
         setMuted,
         setPlaybackRate,
         setVolume,
-        shuffle,
-        stop
+        fetchCover,
+        audioError,
+        createNewQueue
     };
 }
 

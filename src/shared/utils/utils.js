@@ -4,6 +4,7 @@ import mmd from 'musicmetadata';
 import globby from 'globby';
 import Promise from 'bluebird';
 import { omit } from 'lodash';
+import { range } from 'range';
 
 const musicmetadata = Promise.promisify(mmd);
 
@@ -425,6 +426,24 @@ const transformTrackPaths = ({ tracks, me, peer }) => {
     return tracksWithTransformedPaths;
 }
 
+const getNextQueueCursor = ({ queue, queueCursor, repeat, shuffle }) => {
+    if (repeat === 'one') {
+        return queueCursor;
+    }
+    else if (shuffle) {
+        const choices = range(0, queue.length).filter((choice) => choice !== queueCursor);
+        return pickRandom(choices);
+    }
+    else if (repeat === 'all' && queueCursor === queue.length - 1) { // is last track
+        return 0; // start with new track
+    }
+    else if (queueCursor === queue.length - 1) { // is last track
+        return null; // stop playing
+    } else {
+        return queueCursor + 1;
+    }
+}
+
 export default {
     getMeWithIP,
     parseDuration,
@@ -443,5 +462,6 @@ export default {
     peerIsMe,
     trackEndpoint,
     coverEndpoint,
-    dispatchEndpoint
+    dispatchEndpoint,
+    getNextQueueCursor
 };

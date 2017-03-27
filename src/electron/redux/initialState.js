@@ -52,7 +52,7 @@ export default {
 
     player: {
         history: [],                     // The history of songs played from the current queue
-        historyCursor: null,             // The position of the currently playing track in the history queue
+        historyCursor: -1,               // The position of the currently playing track in the history queue
         currentTrack: {},                // The currently playing track
         playStatus: 'stop',              // Player status
         cover: undefined,                // Current trackplaying cover

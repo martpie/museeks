@@ -7,18 +7,15 @@ export default (state = {}, action) => {
         }
 
         case('PLAYER/LOAD_PENDING'): {
-            const { queueCursor } = action.meta;
-            const track = state.queue[queueCursor];
+            const { track } = action.meta;
             return i.chain(state)
-                .assoc('queueCursor', queueCursor)
                 .updateIn(['player', 'history'], (history) => i.push(history, track))
                 .assocIn(['player', 'currentTrack'], track)
                 .value();
         }
         case('PLAYER/LOAD_REJECTED'): {
-            const { oldQueueCursor, oldCurrentTrack } = action.meta;
+            const { oldCurrentTrack } = action.meta;
             return i.chain(state)
-                .assoc('queueCursor', oldQueueCursor)
                 .updateIn(['player', 'history'], (history) => i.slice(history, 0, -1))
                 .assocIn(['player', 'currentTrack'], oldCurrentTrack)
                 .value();
@@ -46,23 +43,17 @@ export default (state = {}, action) => {
                 .value();
         }
 
-        case('PLAYER/NEXT_PENDING'): {
-            const { newQueueCursor, newHistoryCursor } = action.meta;
-            const track = state.queue[state.queueCursor];
-
+        case('PLAYER/NEXT'): {
             return i.chain(state)
-                .assoc('queueCursor', newQueueCursor)
-                .assocIn(['player', 'historyCursor'], newHistoryCursor)
-                .assocIn(['player', 'currentTrack'], track)
-                .updateIn(['player', 'history'], (history) => i.push(history, track))
+                .assoc('queueCursor', action.payload.queueCursor)
+                .assocIn(['player', 'historyCursor'], action.payload.historyCursor)
                 .value();
         }
-        case('PLAYER/NEXT_REJECTED'): {
-            const { oldQueueCursor, oldHistoryCursor } = action.meta;
+
+        case('PLAYER/PREVIOUS'): {
             return i.chain(state)
-                .assoc('queueCursor', oldQueueCursor)
-                .assocIn(['player', 'historyCursor'], oldHistoryCursor)
-                .updateIn(['player', 'history'], (history) => i.slice(history, 0, -1))
+                .assoc('queueCursor', action.payload.queueCursor)
+                .assocIn(['player', 'historyCursor'], action.payload.historyCursor)
                 .value();
         }
 
@@ -72,12 +63,6 @@ export default (state = {}, action) => {
 
             return i.chain(state)
                 .assocIn(['player', 'currentTrack'], track)
-                .assoc('queueCursor', oldQueueCursor)
-                .value();
-        }
-        case('PLAYER/PREVIOUS_REJECTED'): { // TODO don't know what the inputs are from the action
-            const { oldQueueCursor } = action.meta;
-            return i.chain(state)
                 .assoc('queueCursor', oldQueueCursor)
                 .value();
         }
@@ -105,6 +90,7 @@ export default (state = {}, action) => {
         }
 
         case('PLAYER/CREATE_NEW_QUEUE_PENDING'): {
+            console.log('NEW QUEUE', action.meta.newQueue)
             return i.chain(state)
                 .assoc('queue', action.meta.newQueue)
                 .assoc('queueCursor', null)

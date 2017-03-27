@@ -74,7 +74,7 @@ export default (state = {}, action) => {
                 .value();
         }
 
-        case('PLAYER/MOVE_CURSOR_FULFILLED'): {
+        case('QUEUE/MOVE_CURSOR_FULFILLED'): {
             const { queueCursor, historyCursor } = action.payload;
             return i.chain(state)
                 .assoc('queueCursor', queueCursor)

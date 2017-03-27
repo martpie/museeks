@@ -83,24 +83,20 @@ const library = (lib) => {
     const connectAsOutput = ({ state, peer }) => (dispatch) => {
         console.log('CONNECT AS OUPUT')
         console.log(require('util').inspect(state, { depth: 12 }), peer)
+
+        // Apply the state of the remote input to the local player
+
         // Stop the player from playing
         dispatch(lib.actions.player.stop());
 
-        // Apply the input's state
-
-        // Set the player state
-        dispatch(lib.actions.player.setState(state.player));
-
-        // Set the queue
+        // Set the queue - TODO: remove when queue is on player
         dispatch(lib.actions.queue.setQueue(state.queue));
 
-        // Set the queue cursor
+        // Set the queue cursor - TODO: remove when queueCursor is on player
         dispatch(lib.actions.queue.setQueueCursor(state.queueCursor));
 
-        // Load the track
-        if (state.queueCursor) {
-            dispatch(lib.actions.player.load(state.queue[state.queueCursor]._id));
-        }
+        // Set the entire player state
+        dispatch(lib.actions.player.setState(state.player));
 
         // Set audio element play state: can be play/pause/stop
         dispatch(lib.actions.player[state.player.playStatus]());

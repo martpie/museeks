@@ -1,3 +1,4 @@
+import Promise from 'bluebird';
 import utils from '../../shared/utils/utils';
 
 class Player {
@@ -39,13 +40,13 @@ class Player {
     }
 
     play = () => {
-        this.audio.play();
         this.lib.tray.setContextMenu('play');
+        this.audio.play();
     }
 
     pause = () => {
-        this.audio.pause();
         this.lib.tray.setContextMenu('pause');
+        this.audio.pause();
     }
 
     stop = () => {
@@ -66,6 +67,8 @@ class Player {
 
         // when we change song, we need to update the thresholdReached indicator
         this.durationThresholdReached = false;
+
+        return Promise.resolve(metadata);
     }
 
     isThresholdReached() {
