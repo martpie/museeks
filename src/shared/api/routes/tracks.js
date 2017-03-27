@@ -40,9 +40,8 @@ export default [{
         }
     },
     handler: (req, res) => {
-        const query = req.query;
-        const tracks = req.lib.store.getState().tracks.library.all;
-        const track = tracks.find((track) => track._id === req.query._id);
+        const { _id } = req.query;
+        const track = req.lib.store.getState().tracks.library.data[_id];
 
         if (!track) {
             res(Boom.notFound());

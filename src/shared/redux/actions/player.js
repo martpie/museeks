@@ -10,6 +10,18 @@ const library = (lib) => {
             }
         });
 
+        // Set audio element play state: can be play/pause/stop
+        dispatch(lib.actions.player[state.playStatus]());
+
+        // Set audio element repeat
+        dispatch(lib.actions.player.repeat(state.repeat));
+
+        // Set audio element suffle
+        dispatch(lib.actions.player.shuffle(state.shuffle));
+
+        // Set audio element elapsed time
+        dispatch(lib.actions.player.jumpTo(state.elapsed));
+
         dispatch(lib.actions.player.load());
     }
 
@@ -22,14 +34,20 @@ const library = (lib) => {
             network: { output }
         } = getState();
 
-        const inHistory = historyCursor !== -1;
+        const getTrack = (_id) => {
+            // load a specific track if supplied
+            if (_id) {
+                return tracks[_id];
+            } else {
+                const inHistory = historyCursor !== -1;
 
-        const trackId = inHistory
-            ? history[historyCursor]
-            : queue[queueCursor];
+                return inHistory
+                    ? history[historyCursor]
+                    : queue[queueCursor];
+            }
+        }
 
-        // load a specific id if supplied
-        const track = tracks[_id || trackId];
+        const track = getTrack();
 
         if (track) {
             const outputIsLocal = () => lib.player.setMetadata(track);

@@ -55,10 +55,12 @@ const library = (lib) => {
         } else { // If output has changed to another computer
 
             const playerState = {
-                player: state.player,
+                player: {
+                    ...state.player,
+                    elapsed: lib.player.getCurrentTime()
+                },
                 queueCursor: state.queueCursor,
-                queue: state.queue,
-                elapsed: lib.player.getCurrentTime()
+                queue: state.queue
             }
 
             // We ask the output device to set us as an observer.
@@ -93,18 +95,6 @@ const library = (lib) => {
 
         // Set the entire player state
         dispatch(lib.actions.player.setState(state.player));
-
-        // Set audio element play state: can be play/pause/stop
-        dispatch(lib.actions.player[state.player.playStatus]());
-
-        // Set audio element repeat
-        dispatch(lib.actions.player.repeat(state.player.repeat));
-
-        // Set audio element suffle
-        dispatch(lib.actions.player.shuffle(state.player.shuffle));
-
-        // Set audio element elapsed time
-        dispatch(lib.actions.player.jumpTo(state.elapsed));
 
         // Add the input computer as an observer
         dispatch(lib.actions.network.addObserver(peer));
