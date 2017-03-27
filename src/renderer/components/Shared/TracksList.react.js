@@ -9,136 +9,13 @@ import lib from '../../lib';
 import utils from '../../../shared/utils/utils';
 import Avatar from '../Avatar';
 
-
-import { remote } from 'electron';
-const { Menu } = remote;
-
 /*
 |--------------------------------------------------------------------------
 | Child - ArtistList
 |--------------------------------------------------------------------------
 */
 
-const attachTrackListContextMenu = (data, callback) => {
-    let playlistTemplate = [];
-    let addToQueueTemplate = [];
 
-    if (data.playlists) {
-        playlistTemplate = [
-            {
-                label: 'Create new playlist...',
-                click: () => {
-                    callback('createPlaylist');
-                }
-            }
-        ];
-
-        if (data.playlists.length > 0) {
-            playlistTemplate.push(
-                {
-                    type: 'separator'
-                }
-            );
-        }
-
-        data.playlists.forEach((elem) => {
-            playlistTemplate.push({
-                label: elem.name,
-                click: () => {
-                    callback('addToPlaylist', {
-                        playlistId: elem._id
-                    });
-                }
-            });
-        });
-    } else {
-        playlistTemplate = [
-            {
-                label: 'Create new playlist...',
-                click: () => {
-                    callback('createPlaylist');
-                }
-            },
-            {
-                type: 'separator'
-            },
-            {
-                label: 'No playlist',
-                enabled: false
-            }
-        ];
-    }
-
-    if (data.playStatus !== 'stop') {
-        addToQueueTemplate = [
-            {
-                label: 'Add to queue',
-                click: () => {
-                    callback('addToQueue');
-                }
-            },
-            {
-                label: 'Play next',
-                click: () => {
-                    callback('playNext');
-                }
-            },
-            {
-                type: 'separator'
-            }
-        ];
-    }
-
-    const template = [
-        {
-            label: data.selectedCount > 1 ? `${data.selectedCount} tracks selected` : `${data.selectedCount} track selected`,
-            enabled: false
-        },
-        {
-            type: 'separator'
-        },
-        ...addToQueueTemplate,
-        {
-            label: 'Add to playlist',
-            submenu: playlistTemplate
-        },
-        {
-            type: 'separator'
-        },
-        {
-            label: `Search for '${data.track.artist[0]}'`,
-            click: () => {
-                callback('searchFor', { search: data.track.artist[0] });
-            }
-        },
-        {
-            label: `Search for '${data.track.album}'`,
-            click: () => {
-                callback('searchFor', { search: data.track.album });
-            }
-        },
-        {
-            type: 'separator'
-        },
-        {
-            label: 'Show in file manager',
-            click: () => {
-                lib.shell.showItemInFolder(data.track.path);
-            }
-        }
-    ];
-
-    if (data.type === 'playlist') template.push({
-        label: 'Remove from playlist',
-        click: () => {
-            callback('removeFromPlaylist');
-        }
-    });
-
-    const menu = Menu.buildFromTemplate(template);
-
-    menu.popup(remote.getCurrentWindow());
-};
 
 class TracksList extends Component {
 
@@ -432,13 +309,13 @@ class TracksList extends Component {
             }
         };
 
-        attachTrackListContextMenu({
+        lib.contextMenu.trackList({
             type: this.props.type,
             selectedCount: this.state.selected.length,
             track: this.props.tracks[index],
             playlists: playlistsList,
             playStatus: this.props.playStatus
-        }, processClick);
+        }).then(processClick);
     }
 }
 
