@@ -69,7 +69,8 @@ const library = (lib) => {
     };
 
     const loadAndPlay = (_id) => (dispatch, getState) => {
-        dispatch(lib.actions.player.load(_id));
+        dispatch(lib.actions.player.setQueueCursor(_id));
+        dispatch(lib.actions.player.load());
         dispatch(lib.actions.player.play());
     };
 
@@ -78,7 +79,9 @@ const library = (lib) => {
 
         const subList = tracks[tracksCursor].sub;
 
+        console.log('subList', subList)
         return dispatch(lib.actions.player.createNewQueue(subList)).then(() => {
+            console.log('111111111111', getState().queue)
             return dispatch(lib.actions.player.loadAndPlay(_id));
         });
     };
@@ -378,7 +381,18 @@ const library = (lib) => {
         });
     }
 
+    const setQueueCursor = (_id) => (dispatch, getState) => {
+        console.log(_id, getState().queue)
+        dispatch({
+            type: 'PLAYER/SET_QUEUE_CURSOR',
+            payload: {
+                queueCursor: getState().queue.findIndex((id) => id === _id)
+            }
+        });
+    }
+
     return {
+        setState,
         load,
         loadAndPlay,
         newQueueLoadAndPlay,
@@ -396,7 +410,8 @@ const library = (lib) => {
         setVolume,
         fetchCover,
         audioError,
-        createNewQueue
+        createNewQueue,
+        setQueueCursor
     };
 }
 
