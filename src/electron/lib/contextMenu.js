@@ -59,6 +59,7 @@ const trackList = (data) => {
 
         const getPlaylistTemplate = () => {
             let template = [];
+
             if (data.playlists) {
                 template = [ itemCreatePlaylist ];
 
@@ -78,20 +79,10 @@ const trackList = (data) => {
             return template;
         };
 
-        const getaddToQueueTemplate = () => {
-            return data.playStatus !== 'stop'
-            ? [
-                itemAddToQueue,
-                itemPlayNext,
-                itemSeperator,
-            ]
-            : [];
-        };
-
-        const subMenuAddToPlaylist = {
+        const subMenuAddToPlaylist = (submenu) => ({
             label: 'Add to playlist',
-            submenu: getPlaylistTemplate()
-        };
+            submenu,
+        });
 
         const itemSearchFor = (searchTerm) => ({
             label: `Search for '${searchTerm}'`,
@@ -129,16 +120,19 @@ const trackList = (data) => {
         const template = [
             itemSelectedCount,
             itemSeperator,
-            ...getaddToQueueTemplate(),
-            subMenuAddToPlaylist,
+            ...(data.playStatus !== 'stop'
+                ? [itemAddToQueue, itemPlayNext, itemSeperator]
+                : []),
+            subMenuAddToPlaylist(getPlaylistTemplate()),
             itemSeperator,
             itemSearchFor(data.track.artist[0]),
             itemSearchFor(data.track.album),
             itemSeperator,
             itemShowExplorer,
+            ...(data.type === 'playlist'
+                ? [itemRemoveFromPlaylist]
+                : []),
         ];
-
-        if (data.type === 'playlist') template.push(itemRemoveFromPlaylist);
 
         const menu = Menu.buildFromTemplate(template);
 
