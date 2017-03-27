@@ -4,6 +4,7 @@
 
 body.theme-dark {
     border-color: #1f1f1f;
+    background: black;
 
     hr {
         border-top-color: #33393b;
@@ -371,6 +372,17 @@ body.theme-dark {
         fill: #33393b;
     }
 
+    .view-settings .setting-network .network-row {
+        border-color: #33393b;
+
+        .platform {
+            color: white;
+        }
+
+        .ip {
+            color: rgba(255, 255, 255, 0.5);
+        }
+    }
 
     /*
     |--------------------------------------------------------------------------

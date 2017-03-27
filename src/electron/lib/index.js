@@ -3,6 +3,7 @@ import sharedLib from '../../shared/lib';
 
 import app from './app';
 import config from './config';
+import contextMenu from './contextMenu';
 import player from './player';
 import playlist from './playlist';
 import shell from './shell';
@@ -11,6 +12,7 @@ import track from './track';
 const library = {
     app,
     config,
+    contextMenu,
     models: {}, // models attached after database initialisation
     player,
     shell,

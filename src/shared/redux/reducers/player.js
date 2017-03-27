@@ -57,16 +57,6 @@ export default (state = {}, action) => {
                 .value();
         }
 
-        case('PLAYER/PREVIOUS_PENDING'): {
-            const { oldQueueCursor } = action.meta;
-            const track = state.queue[state.queueCursor];
-
-            return i.chain(state)
-                .assocIn(['player', 'currentTrack'], track)
-                .assoc('queueCursor', oldQueueCursor)
-                .value();
-        }
-
         case('PLAYER/JUMP_TO'): {
             return state;
         }

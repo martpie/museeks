@@ -1,7 +1,8 @@
 import i from 'icepick';
-import { unionBy } from 'lodash';
+import { unionBy, keyBy } from 'lodash';
 import extend from 'xtend';
 import utils from '../../utils/utils';
+
 
 export default (state = {}, action) => {
     switch (action.type) {
@@ -12,11 +13,13 @@ export default (state = {}, action) => {
 
             const tracksWithMetadata = action.payload.map((track) => extend(track, { owner: action.meta.owner }));
 
-            const uniqueTracks = unionBy(tracksWithMetadata, state.library.all, '_id');
+            const uniqueTracks = extend(state.library.data, keyBy(tracksWithMetadata, '_id'));
+            const uniqueTrackIds = Object.keys(uniqueTracks);
 
             return i.chain(state)
-                .assocIn(['library', 'all'], uniqueTracks)
-                .assocIn(['library', 'sub'], uniqueTracks)
+                .assocIn(['library', 'data'], uniqueTracks)
+                .assocIn(['library', 'all'], uniqueTrackIds)
+                .assocIn(['library', 'sub'], uniqueTrackIds)
                 .value();
         }
 
@@ -28,17 +31,17 @@ export default (state = {}, action) => {
             // const otherTracks = tracks.filter((track) => track.owner !== me);
             return {
                 ...state,
-                tracks: {
-                    library: {
-                        all: [],
-                        sub: []
-                    },
-                    playlist: {
-                        all: [],
-                        sub: []
-                    }
+                library: {
+                    data: {},
+                    all: [],
+                    sub: []
+                },
+                playlist: {
+                    data: {},
+                    all: [],
+                    sub: []
                 }
-            };
+        };
         }
 
         case('TRACKS/FILTER'): {
@@ -48,7 +51,8 @@ export default (state = {}, action) => {
 
                 const search = utils.stripAccents(action.payload.search);
 
-                const tracks = state[state.tracksCursor].all.filter((track) => {
+                const tracks = state[state.tracksCursor].all.filter((trackId) => {
+                    const track = state[state.tracksCursor].data[trackId];
                     return track.loweredMetas.artist.join(', ').includes(search)
                         || track.loweredMetas.album.includes(search)
                         || track.loweredMetas.genre.join(', ').includes(search)
@@ -71,8 +75,7 @@ export default (state = {}, action) => {
                 : track;
 
             return i.chain(state)
-                .assocIn(['library', 'all'], state.library.all.map(updateTrackPlaycount))
-                .assocIn(['library', 'sub'], state.library.sub.map(updateTrackPlaycount))
+                .assocIn(['library', 'data'], state.library.data.map(updateTrackPlaycount))
                 .value();
         }
 

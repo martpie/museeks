@@ -17,28 +17,20 @@ const library = (lib) => {
         const {
             queue,
             queueCursor,
+            tracks: { library : { data: tracks }},
             player: { currentTrack: oldCurrentTrack, history, historyCursor },
             network: { output }
         } = getState();
 
-        const getTrack = () => {
+        const inHistory = historyCursor !== -1;
 
-            if (_id) {
-                // we've explicitly been given a track to load
-                const trackIndex = queue.findIndex((track) => track._id === _id);
-                return queue[trackIndex];
-            } else {
-                // no track supplied, read the cursors to figure out the track to load
-                const inHistory = historyCursor !== -1;
+        const trackId = inHistory
+            ? history[historyCursor]
+            : queue[queueCursor];
 
-                return inHistory
-                    ? history[historyCursor]
-                    : queue[queueCursor];
-            }
-        }
+        // load a specific id if supplied
+        const track = tracks[_id || trackId];
 
-        const track = getTrack();
-console.log('load', _id, track)
         if (track) {
             const outputIsLocal = () => lib.player.setMetadata(track);
             const outputIsRemote = () => lib.api.actions.player.load(output, _id);

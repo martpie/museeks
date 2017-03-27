@@ -114,7 +114,7 @@ class PlayingBar extends Component {
                     <Queue
                         visible={ showQueue }
                         queue={ queue }
-                        currentTrack={ queueCursor }
+                        queueCursor={ queueCursor }
                     />
                 </div>
             </div>

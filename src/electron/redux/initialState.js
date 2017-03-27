@@ -31,10 +31,12 @@ export default {
     tracks: {
         tracksCursor: 'library',         // 'library' or 'playlist'
         library: {                       // Tracks of the library view
+            data: {},
             all: [],                     // All tracks
             sub: []                      // Filtered tracks (e.g search)
         },
         playlist: {
+            data: {},
             all: [],
             sub: []
         }

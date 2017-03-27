@@ -57,11 +57,7 @@ const library = (lib) => {
             const playerState = {
                 player: state.player,
                 queueCursor: state.queueCursor,
-                queue: utils.transformTrackPaths({
-                    tracks: state.queue,
-                    peer: newOutput,
-                    me
-                }),
+                queue: state.queue,
                 elapsed: lib.player.getCurrentTime()
             }
 
