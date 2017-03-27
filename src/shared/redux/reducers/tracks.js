@@ -1,5 +1,5 @@
 import i from 'icepick';
-import { unionBy } from 'lodash';
+import { unionBy, keyBy } from 'lodash';
 import extend from 'xtend';
 import utils from '../../utils/utils';
 
@@ -13,10 +13,12 @@ export default (state = {}, action) => {
             const tracksWithMetadata = action.payload.map((track) => extend(track, { owner: action.meta.owner }));
 
             const uniqueTracks = unionBy(tracksWithMetadata, state.library.all, '_id');
+            const uniqueTrackIds = uniqueTracks.map( track => track._id);
 
             return i.chain(state)
-                .assocIn(['library', 'all'], uniqueTracks)
-                .assocIn(['library', 'sub'], uniqueTracks)
+                .assocIn(['library', 'data'], keyBy(uniqueTracks, '_id'))
+                .assocIn(['library', 'all'], uniqueTrackIds)
+                .assocIn(['library', 'sub'], uniqueTrackIds)
                 .value();
         }
 
@@ -30,10 +32,12 @@ export default (state = {}, action) => {
                 ...state,
                 tracks: {
                     library: {
+                        data: {},
                         all: [],
                         sub: []
                     },
                     playlist: {
+                        data: {},
                         all: [],
                         sub: []
                     }
@@ -48,7 +52,8 @@ export default (state = {}, action) => {
 
                 const search = utils.stripAccents(action.payload.search);
 
-                const tracks = state[state.tracksCursor].all.filter((track) => {
+                const tracks = state[state.tracksCursor].all.filter((trackId) => {
+                    const track = state[state.tracksCursor].data[trackId];
                     return track.loweredMetas.artist.join(', ').includes(search)
                         || track.loweredMetas.album.includes(search)
                         || track.loweredMetas.genre.join(', ').includes(search)

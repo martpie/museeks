@@ -57,11 +57,7 @@ const library = (lib) => {
             const playerState = {
                 player: state.player,
                 queueCursor: state.queueCursor,
-                queue: utils.transformTrackPaths({
-                    tracks: state.queue,
-                    peer: newOutput,
-                    me
-                }),
+                queue: state.queue,
                 elapsed: lib.player.getCurrentTime()
             }
 
@@ -99,7 +95,7 @@ const library = (lib) => {
 
         // Load the track
         if (state.queueCursor) {
-            dispatch(lib.actions.player.load(state.queue[state.queueCursor]._id));
+            dispatch(lib.actions.player.load(state.queue[state.queueCursor]));
         }
 
         // Set audio element play state: can be play/pause/stop

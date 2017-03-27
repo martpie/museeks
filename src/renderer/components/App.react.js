@@ -29,6 +29,10 @@ class Museeks extends Component {
     render() {
         const state = this.props.state;
         const trackPlayingId = state.player.currentTrack && state.player.currentTrack._id ? state.player.currentTrack._id : null;
+
+        const tracks = state.tracks[state.tracks.tracksCursor].sub.map(trackId => state.tracks[state.tracks.tracksCursor].data[trackId]);
+        const library = state.tracks[state.tracks.tracksCursor].all.map(trackId => state.tracks[state.tracks.tracksCursor].data[trackId]);
+
         return (
             <div className='main'>
                 <KeyBinding onKey={ this.onKey } preventInputConflict />
@@ -42,8 +46,8 @@ class Museeks extends Component {
                                 playStatus: state.player.playStatus,
                                 network: state.network,
                                 queue: state.queue,
-                                tracks: state.tracks[state.tracks.tracksCursor].sub,
-                                library: state.tracks[state.tracks.tracksCursor].all,
+                                tracks,
+                                library,
                                 playlists: state.playlists,
                                 refreshingLibrary: state.library.refreshingLibrary,
                                 refreshProgress: state.refreshProgress,
@@ -54,7 +58,7 @@ class Museeks extends Component {
                 </div>
                 <Footer
                     network={ state.network }
-                    tracks={ state.tracks[state.tracks.tracksCursor].sub }
+                    tracks={ tracks }
                     refreshingLibrary={ state.library.refreshingLibrary }
                 />
                 <Toasts toasts={ state.toasts } />

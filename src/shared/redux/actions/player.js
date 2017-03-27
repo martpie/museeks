@@ -12,6 +12,7 @@ const library = (lib) => {
     const load = (_id) => (dispatch, getState) => {
         const {
             queue,
+            tracks: { library : { data: tracksData }},
             queueCursor: oldQueueCursor,
             player: { currentTrack: oldCurrentTrack, history, historyCursor },
             network: { output }
@@ -20,13 +21,13 @@ const library = (lib) => {
         const inHistory = historyCursor !== -1 && !_id;
 
         const queueCursor = _id
-            ? queue.findIndex((track) => track._id === _id)
+            ? queue.indexOf(_id)
             : oldQueueCursor;
 
         // use the currently active cursor to get the track
         const track = inHistory
             ? history[historyCursor]
-            : queue[queueCursor];
+            : tracksData[queue[queueCursor]];
 console.log({ inHistory, history, queue, historyCursor, queueCursor })
         if (track) {
             const outputIsLocal = () => Promise.resolve(lib.player.setMetadata(track));
