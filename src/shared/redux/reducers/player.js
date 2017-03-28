@@ -49,18 +49,6 @@ export default (state = {}, action) => {
                 .value();
         }
 
-        case('PLAYER/NEXT'): {
-            return i.chain(state)
-                .assoc('queueCursor', action.payload.queueCursor)
-                .assocIn(['player', 'historyCursor'], action.payload.historyCursor)
-                .value();
-        }
-        case('PLAYER/PREVIOUS'): {
-            return i.chain(state)
-                .assoc('queueCursor', action.payload.queueCursor)
-                .assocIn(['player', 'historyCursor'], action.payload.historyCursor)
-                .value();
-        }
         case('PLAYER/JUMP_TO_PENDING'): {
             return i.assocIn(state, ['player', 'elapsed'], action.meta.time);
         }

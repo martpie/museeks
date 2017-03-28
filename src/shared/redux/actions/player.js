@@ -189,11 +189,7 @@ const library = (lib) => {
         });
 
         dispatch({
-            type: 'PLAYER/NEXT',
-            meta: {
-                historyCursor: cursors.historyCursor,
-                oldHistoryCursor: historyCursor
-            }
+            type: 'PLAYER/NEXT'
         });
 
         dispatch(lib.actions.player.loadAndPlay(cursors));
@@ -388,7 +384,6 @@ const library = (lib) => {
         repeat,
         setMuted,
         setPlaybackRate,
-        setQueueCursor,
         setState,
         setVolume,
         fetchCover,
