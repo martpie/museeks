@@ -19,8 +19,6 @@ import IntegrationManager from './integration';        // Applies various integr
 import initMainWindow from './windows/initMainWindow';
 import getIcons from './other/getIcons';
 
-import PeerDiscoveryManager from './peer-discovery';
-
 const appRoot = path.resolve(__dirname, '../..');      // app/ directory
 const srcPath = path.join(appRoot, 'src');             // app/src/ directory
 
@@ -77,9 +75,6 @@ app.on('ready', () => {
 
         // Start listening for RPC IPC events
         const rpcIpcManager = new RpcIpcManager(lib, 'electron');
-
-        // Start the peer discovery service
-        const peers = new PeerDiscoveryManager(lib);
 
         // Power monitor
         const powerMonitor = new PowerMonitor(mainWindow, store);

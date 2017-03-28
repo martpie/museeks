@@ -5,7 +5,7 @@ import lib from '../lib';
 const trackList = (data) => {
     // TODO This promise will be left unresolved if we
     // click off the context menu. Maybe this is an issue
-    // for performance? Probably nor important;
+    // for performance? Probably (hopefully) not important...
     return new Promise((resolve, reject) => {
 
         // Create the context menu items

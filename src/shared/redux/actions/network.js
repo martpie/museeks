@@ -6,6 +6,17 @@ import { omit } from 'lodash';
 
 const library = (lib) => {
 
+    const scan = () => (dispatch) => {
+        dispatch({
+            type: 'NETWORK/SCAN_PEERS',
+            payload: lib.peerDiscovery.scan()
+        }).then(({value: peers}) => {
+            peers.forEach((peer) => {
+                dispatch(lib.actions.network.peerFound(peer))
+            })
+        })
+    }
+
     const peerFound = (peer) => (dispatch, getState) => {
         const me = getState().network.me;
         if (me.hostname !== peer.hostname) {
@@ -115,6 +126,7 @@ const library = (lib) => {
     });
 
     return {
+        scan,
         peerFound,
         setOutput,
         connectAsOutput,

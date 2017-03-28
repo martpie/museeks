@@ -25,7 +25,7 @@ class SettingsAdvanced extends Component {
     }
 
     render() {
-        const { config, network, findPeers } = this.props;
+        const { config, network, scan } = this.props;
 
         const allMuseeks = [
             ...network.peers,
@@ -44,9 +44,9 @@ class SettingsAdvanced extends Component {
 
         const buttonsGroup = (
             <ButtonGroup>
-                <Button bsSize='small' onClick={ findPeers }>
-                    <Icon name='refresh' />
-                      { 'Scan Network' }
+                <Button bsSize='small' disabled={ network.scanPending } onClick={ scan }>
+                    <Icon name='refresh' spin={ network.scanPending }/>
+                      { network.scanPending ? 'Scanning Network' : 'Scan Network' }
                 </Button>
             </ButtonGroup>
         );
@@ -80,7 +80,7 @@ const stateToProps = (state) => ({
 
 
 const dispatchToProps = {
-    findPeers: lib.actions.settings.toggleDevMode
+    scan: lib.actions.network.scan
 };
 
 export default connect(stateToProps, dispatchToProps)(SettingsAdvanced);

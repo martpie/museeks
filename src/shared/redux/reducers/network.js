@@ -8,6 +8,16 @@ export default (state = {}, action) => {
             return i.assoc(state, 'me', action.payload);
         }
 
+        case('NETWORK/SCAN_PEERS_PENDING'): {
+            return i.assoc(state, 'scanPending', true);
+        }
+        case('NETWORK/SCAN_PEERS_REJECTED'): {
+            return i.assoc(state, 'scanPending', false);
+        }
+        case('NETWORK/SCAN_PEERS_FULFILLED'): {
+            return i.assoc(state, 'scanPending', false);
+        }
+
         case('NETWORK/PEER_FOUND'): {
             const newPeer = action.payload.peer;
             return i.updateIn(state, ['peers'], (peers) => {

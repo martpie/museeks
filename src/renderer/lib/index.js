@@ -6,6 +6,7 @@ import app from './app';
 import config from './config';
 import contextMenu from './contextMenu';
 import playlist from './playlist';
+import peerDiscovery from './peerDiscovery';
 import shell from './shell';
 import track from './track';
 import tray from './tray';
@@ -18,6 +19,7 @@ const library = {
     contextMenu,
     player,
     playlist,
+    peerDiscovery,
     shell,
     track,
     tray
