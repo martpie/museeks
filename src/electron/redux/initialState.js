@@ -13,15 +13,15 @@ export default {
 
     network: {
         scanPending: false,
-        observers: [],
-        peers: [],
-        output: {
+        observers: [],                  // Array of peers who are observing
+        peers: [],                      // Array of peers on the network
+        output: {                       // The output device (either us or a peer)
             ip: 'localhost',
             hostname,
             platform,
-            isLocal: true
+            isLocal: true               // isLocal bool is used to show if output.hostname === me.hostname
         },
-        me: {
+        me: {                           // The peer info for this machine
             ips,
             hostname,
             platform,
