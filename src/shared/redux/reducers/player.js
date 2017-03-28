@@ -5,7 +5,6 @@ export default (state = {}, action) => {
         case('PLAYER/SET_STATE'): {
             return i.assoc(state, 'player', action.payload.state);
         }
-
         case('PLAYER/LOAD_PENDING'): {
             const { currentTrack, queueCursor, historyCursor, oldHistoryCursor } = action.meta;
             const addToHistory =
@@ -30,21 +29,18 @@ export default (state = {}, action) => {
                 .assocIn(['player', 'historyCursor'], oldHistoryCursor)
                 .value();
         }
-
         case('PLAYER/PLAY_PENDING'): {
             return i.assocIn(state, ['player', 'playStatus'], 'play');
         }
         case('PLAYER/PLAY_REJECTED'): {
             return i.assocIn(state, ['player', 'playStatus'], 'pause');
         }
-
         case('PLAYER/PAUSE_PENDING'): {
             return i.assocIn(state, ['player', 'playStatus'], 'pause');
         }
         case('PLAYER/PAUSE_REJECTED'): {
             return i.assocIn(state, ['player', 'playStatus'], 'play');
         }
-
         case('PLAYER/STOP_PENDING'): {
             return i.chain(state)
                 .assoc('queue', [])
@@ -53,28 +49,42 @@ export default (state = {}, action) => {
                 .value();
         }
 
-        case('PLAYER/JUMP_TO'): {
-            return state;
+        case('PLAYER/NEXT'): {
+            return i.chain(state)
+                .assoc('queueCursor', action.payload.queueCursor)
+                .assocIn(['player', 'historyCursor'], action.payload.historyCursor)
+                .value();
         }
-
+        case('PLAYER/PREVIOUS'): {
+            return i.chain(state)
+                .assoc('queueCursor', action.payload.queueCursor)
+                .assocIn(['player', 'historyCursor'], action.payload.historyCursor)
+                .value();
+        }
+        case('PLAYER/JUMP_TO_PENDING'): {
+            return i.assocIn(state, ['player', 'elapsed'], action.meta.time);
+        }
+        case('PLAYER/JUMP_TO_REJECTED'): {
+            return i.assocIn(state, ['player', 'elapsed'], action.meta.prevTime);
+        }
+        case('PLAYER/UPDATE_ELAPSED_TIME'): {
+            return i.assocIn(state, ['player', 'elapsed'], action.payload);
+        }
         case('PLAYER/SHUFFLE_PENDING'): {
             return i.assocIn(state, ['player', 'shuffle'], action.meta.shuffle);
         }
         case('PLAYER/SHUFFLE_REJECTED'): {
             return i.assocIn(state, ['player', 'shuffle'], action.meta.prevShuffle);
         }
-
         case('PLAYER/REPEAT_PENDING'): {
             return i.assocIn(state, ['player', 'repeat'], action.meta.repeat);
         }
         case('PLAYER/REPEAT_REJECTED'): {
             return i.assocIn(state, ['player', 'repeat'], action.meta.prevRepeat);
         }
-
         case('PLAYER/SET_COVER'): {
             return i.assocIn(state, ['player', 'cover'], action.payload.cover);
         }
-
         case('PLAYER/CREATE_NEW_QUEUE_PENDING'): {
             return i.chain(state)
                 .assoc('queue', action.meta.newQueue)
@@ -87,7 +97,6 @@ export default (state = {}, action) => {
                 .assoc('queueCursor', action.meta.oldQueueCursor)
                 .value();
         }
-
         default: {
             return state;
         }

@@ -288,24 +288,25 @@ const library = (lib) => {
         }
     };
 
-    const jumpTo = (to) => (dispatch, getState) => {
-        const { network: { output } } = getState();
+    const jumpTo = (time) => (dispatch, getState) => {
+        const { network: { output }, player: { elapsed: prevTime } } = getState();
 
-        const outputIsLocal = () => Promise.resolve(lib.player.setCurrentTime(to));
-        const outputIsRemote = () => {
-            return lib.player.getAudio().then((audio) => {
-                lib.api.actions.player.jumpTo(output, to);
-            });
-        }
+        const outputIsLocal = () => Promise.resolve(lib.player.setCurrentTime(time));
+        const outputIsRemote = () => lib.api.actions.player.jumpTo(output, time);
 
         dispatch({
             type: 'PLAYER/JUMP_TO',
             payload: output.isLocal
                 ? outputIsLocal()
-                : outputIsRemote()
-            // meta: { prevTime, time }
+                : outputIsRemote(),
+            meta: { prevTime, time }
         });
     };
+
+    const updateElapsedTime = (time) => ({
+        type: 'PLAYER/UPDATE_ELAPSED_TIME',
+        payload: time
+    });
 
     const fetchCover = (metadata) => ({
         type: 'PLAYER/SET_COVER',
@@ -372,23 +373,26 @@ const library = (lib) => {
     }
 
     return {
-        setState,
+        audioError,
+        createNewQueue,
+        fetchCover,
+        jumpTo,
         load,
         loadAndPlay,
         newQueueLoadAndPlay,
-        play,
-        pause,
-        stop,
-        playToggle,
         next,
+        pause,
+        play,
+        playToggle,
         previous,
-        jumpTo,
         repeat,
-        shuffle,
         setMuted,
         setPlaybackRate,
+        setQueueCursor,
+        setState,
         setVolume,
         fetchCover,
+        updateElapsedTime,
         audioError,
         createNewQueue
     };

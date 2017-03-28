@@ -20,6 +20,8 @@ class Header extends Component {
     static propTypes = {
         cover: React.PropTypes.string,
         currentTrack: React.PropTypes.object,
+        elapsed: React.PropTypes.number,
+        output: React.PropTypes.object,
         playStatus: React.PropTypes.string,
         queue: React.PropTypes.array,
         queueCursor: React.PropTypes.number,
@@ -36,6 +38,8 @@ class Header extends Component {
         const {
             cover,
             currentTrack,
+            elapsed,
+            output,
             playStatus,
             queue,
             queueCursor,
@@ -55,10 +59,13 @@ class Header extends Component {
                     <PlayingBar
                         cover={ cover }
                         currentTrack={ currentTrack }
-                        shuffle={ shuffle }
-                        repeat={ repeat }
+                        elapsed={ elapsed }
+                        output={ output }
+                        playStatus={ playStatus }
                         queue={ queue }
                         queueCursor={ queueCursor }
+                        repeat={ repeat }
+                        shuffle={ shuffle }
                     />
                 </div>
                 <div className="col-search-controls">
@@ -84,11 +91,13 @@ class Header extends Component {
 const stateToProps = (state) => ({
     cover: state.player.cover,
     currentTrack: state.player.currentTrack,
+    elapsed: state.player.elapsed,
+    output: state.network.output,
     playStatus: state.player.playStatus,
-    repeat: state.player.repeat,
-    shuffle: state.player.shuffle,
     queue: state.queue,
     queueCursor: state.queueCursor,
+    repeat: state.player.repeat,
+    shuffle: state.player.shuffle,
     windowControls: !state.config.useNativeFrame,
 });
 

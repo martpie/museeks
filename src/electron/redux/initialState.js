@@ -59,7 +59,9 @@ export default {
         playStatus: 'stop',              // Player status
         cover: undefined,                // Current trackplaying cover
         repeat: 'none',                  // the current repeat state (one, all, none)
-        shuffle: false                   // If shuffle mode is enabled
+        shuffle: false,                  // If shuffle mode is enabled
+        elapsed: 0                       // How much time has elapsed
+
     },
 
     toasts: [],                          // The array of toasts
