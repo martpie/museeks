@@ -21,6 +21,9 @@ const library = (lib) => {
     dispatch(lib.actions.playlists.refresh());
     dispatch(lib.actions.settings.check());
 
+    // Scan network for peers
+    dispatch(lib.actions.network.scan());
+
     // Set player properties from config
     dispatch(lib.actions.player.setVolume(config.volume));
     dispatch(lib.actions.player.setMuted(config.muted));
