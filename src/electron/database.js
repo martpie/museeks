@@ -20,6 +20,7 @@ class Database {
         // load models now that database path has been initialised
         this.lib.models.track = require('./models/track').default;
         this.lib.models.playlist = require('./models/playlist').default;
+        this.lib.models.playEvent = require('./models/playEvent').default;
     }
 }
 

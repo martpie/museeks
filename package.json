@@ -98,6 +98,7 @@
     "svg-inline-loader": "0.7.1",
     "tap-spec": "^4.1.1",
     "tape": "^4.6.3",
+    "tape-redux": "0.0.3",
     "url-loader": "0.5.8",
     "webpack": "2.2.1",
     "webpack-dev-server": "2.4.1"

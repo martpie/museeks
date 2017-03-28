@@ -30,7 +30,7 @@ class Player {
 
     tick = () => {
         if (this.isThresholdReached()) {
-            this.lib.store.dispatch(this.lib.actions.tracks.incrementPlayCount(this.getMetadata()._id));
+            this.lib.store.dispatch(this.lib.actions.tracks.incrementPlayCount({ track : this.getMetadata() }));
         }
     }
 

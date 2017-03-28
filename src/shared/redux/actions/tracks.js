@@ -1,5 +1,6 @@
 import Promise from 'bluebird';
 import utils from '../../utils/utils';
+import { pick } from 'lodash';
 
 const library = (lib) => {
 
@@ -47,28 +48,33 @@ const library = (lib) => {
         }
     };
 
-    const incrementPlayCount = (_id, event) => (dispatch, getState) => {
+    const incrementPlayCount = (data) => (dispatch, getState) => {
 
         const { network : { output, me } } = getState();
 
+        const { track } = data;
+
+        const eventMetadata = ['title' , 'album', 'artist', 'loweredMetas.title', 'loweredMetas.album', 'loweredMetas.artist', 'playCount'];
+
         // create an event to track who listened to the song
-        event = event || {
+        const playEvent = data.playEvent || {
             user: me.hostname,
-            date: Date.now()
+            timestamp: Date.now(),
+            ...pick(track, eventMetadata)
         }
 
-        const update = {
-            $push: {
-                playHistory: event
-            },
+        const playCountUpdate = {
             $inc: {
                 playCount: 1
             }
         }
 
         // TODO: Jackson to ask David about accessing output from this sliver of store
-        const outputIsLocal = () => lib.track.update({ _id }, update);
-        const outputIsRemote = () => lib.api.actions.tracks.incrementPlayCount(output, _id, event);
+        const outputIsLocal = () => Promise.all([
+            lib.playEvent.insert(playEvent),
+            lib.track.update({ _id: track._id }, playCountUpdate)
+        ]);
+        const outputIsRemote = () => lib.api.actions.tracks.incrementPlayCount(output, { track, playEvent });
 
         dispatch({
             type: 'TRACKS/PLAY_COUNT_INCREMENT',
