@@ -1,0 +1,29 @@
+.player-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+
+    .player-control {
+        border: 0;
+        background: transparent;
+        font-size: 20px;
+        padding: 0 10px;
+
+        &.play {
+            font-size: 40px;
+            padding: 0 5px;
+        }
+
+        &.volume {
+            padding: 0;
+            width: 34px;
+            position: relative;
+        }
+
+        i {
+            display: flex;
+            align-items: center;
+        }
+    }
+}

@@ -1,5 +1,4 @@
 import axios from 'axios';
-import qs from 'qs';
 import { set } from 'lodash';
 import extend from 'xtend';
 import utils from '../utils/utils';

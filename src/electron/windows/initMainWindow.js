@@ -51,7 +51,7 @@ const library = (lib, icons, srcPath) => {
     let mainWindow = new BrowserWindow(mainWindowOption);
 
     // ... and load our html page
-    mainWindow.loadURL(`file://${srcPath}/app.html#/library`);
+    mainWindow.loadURL(`file://${srcPath}/renderer/index.html#/library`);
 
     // Dereference the window object
     mainWindow.on('closed', () => mainWindow = null);
