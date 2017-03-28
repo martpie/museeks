@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import classnames from 'classnames';
 import { connect } from 'react-redux';
-import Popover from '../Popover'
+import Popover from 'react-popover-wrapper'
 
 import lib from '../../lib';
 

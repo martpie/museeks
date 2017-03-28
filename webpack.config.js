@@ -37,6 +37,12 @@ module.exports = {
                 test: /\.js$/,
                 use: ['babel-loader'],
                 exclude: /node_modules/
+            },{
+                test: /\.js$/,
+                use: ['babel-loader'],
+                include: [
+                    path.resolve(__dirname, 'node_modules/react-popover-wrapper'),
+                ],
             },
             {
                 test: /\.json$/,
