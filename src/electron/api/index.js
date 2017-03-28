@@ -19,7 +19,7 @@ class ApiServer {
                 },
                 routes: {
                     files: {
-                        relativeTo: path.join(__dirname, '../../web')
+                        relativeTo: path.join(__dirname, '../..')
                     }
                 }
             }
