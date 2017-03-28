@@ -25,6 +25,9 @@ class PlayingBar extends Component {
     static propTypes = {
         cover: React.PropTypes.string,
         currentTrack: React.PropTypes.object,
+        elapsed: React.PropTypes.number,
+        output: React.PropTypes.object,
+        playStatus: React.PropTypes.string,
         queue: React.PropTypes.array,
         queueCursor: React.PropTypes.number,
         repeat: React.PropTypes.string,
@@ -33,9 +36,8 @@ class PlayingBar extends Component {
 
     constructor(props) {
         super(props);
-
         this.state = {
-            elapsed     : 0,
+//            elapsed     : 0,
             showTooltip : false,
             duration    : null,
             x           : null,
@@ -45,8 +47,8 @@ class PlayingBar extends Component {
     }
 
     render() {
-        const { cover, currentTrack, shuffle, repeat, queue, queueCursor } = this.props;
-        const { elapsed, dragging, duration, x, showQueue } = this.state;
+        const { cover, currentTrack, elapsed, shuffle, repeat, queue, queueCursor } = this.props;
+        const { dragging, duration, x, showQueue } = this.state;
 
         let elapsedPercent;
 
@@ -92,12 +94,12 @@ class PlayingBar extends Component {
                         </div>
 
                         <span className='duration'>
-                            { utils.parseDuration(this.state.elapsed) } / { utils.parseDuration(currentTrack.duration) }
+                            { utils.parseDuration(elapsed) } / { utils.parseDuration(currentTrack.duration) }
                         </span>
                     </div>
                     <div className='now-playing-bar'>
                         <div className={ nowPlayingTooltipClasses } style={ { left: x - 12 } }>
-                            { utils.parseDuration(this.state.duration) }
+                            { utils.parseDuration(duration) }
                         </div>
                         <ProgressBar
                             now={ elapsedPercent }
@@ -122,7 +124,7 @@ class PlayingBar extends Component {
     }
 
     componentDidMount = () => {
-        this.timer = setInterval(this.tick, 100);
+        this.timer = setInterval(this.tick, 1000);
     }
 
     componentWillUnmount = () => {
@@ -143,7 +145,12 @@ class PlayingBar extends Component {
     }
 
     tick = () => {
-        this.setState({ elapsed: lib.player.getCurrentTime() });
+        const { playStatus, output, updateElapsedTime } = this.props;
+        // If we are playing and the output is local. We update the current time.
+        if (playStatus === 'play' && output.isLocal) {
+            updateElapsedTime(lib.player.getCurrentTime());
+//            this.setState({ elapsed: lib.player.getCurrentTime() });
+        }
     }
 
     jumpAudioTo = (e) => {
@@ -209,7 +216,8 @@ const stateToProps = () => ({});
 
 const dispatchToProps = {
     jumpTo: lib.actions.player.jumpTo,
-    fetchCover: lib.actions.player.fetchCover
+    fetchCover: lib.actions.player.fetchCover,
+    updateElapsedTime: lib.actions.player.updateElapsedTime
 };
 
 export default connect(stateToProps, dispatchToProps)(PlayingBar);
