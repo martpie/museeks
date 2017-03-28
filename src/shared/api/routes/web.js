@@ -9,7 +9,7 @@ export default [{
     path: 'dist/{path*}',
     handler: {
         directory: {
-            path: './dist',
+            path: './dist/',
         }
     }
 }];
