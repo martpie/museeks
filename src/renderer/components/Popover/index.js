@@ -34,7 +34,7 @@ export default class PopoverWrapper extends Component {
     tipSize: 6,
     trigger: 'click',
     preferPlace: 'above',
-    toggleDelayTime: 200
+    toggleDelayTime: 200,
   }
 
   constructor(props) {
