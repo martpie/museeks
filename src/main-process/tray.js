@@ -77,10 +77,6 @@ class IpcManager {
     }
 
     bindEvents() {
-        ipcMain.on('showTray', () => {
-            this.show();
-        });
-
         ipcMain.on('playerAction', (event, reply, data) => {
             switch(reply) {
                 case 'play': {
