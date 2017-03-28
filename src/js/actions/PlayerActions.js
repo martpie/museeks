@@ -20,8 +20,11 @@ const audioErrors = {
 const playToggle = () => {
     const { paused } = Player.getAudio();
     // TODO (y.solovyov | KeitIG): calling getState is a hack.
-    const { queue } = store.getState();
-    if (paused && queue.length > 0) {
+    const { queue, playerStatus } = store.getState();
+
+    if(playerStatus === 'stop') {
+        start();
+    } else if (paused && queue.length > 0) {
         play();
     } else {
         pause();
@@ -54,8 +57,13 @@ const start = (_id) => {
     // TODO (y.solovyov | KeitIG): calling getState is a hack.
     const { tracks, tracksCursor } = store.getState();
     const queue = [...tracks[tracksCursor].sub];
+
+    if(queue.length === 0) return;
+
+    const trackId = _id || queue[0]._id;
+
     const queuePosition = queue.findIndex((track) => {
-        return track._id === _id;
+        return track._id === trackId;
     });
 
     if (queuePosition > -1) {
