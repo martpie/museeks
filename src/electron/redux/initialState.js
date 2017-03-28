@@ -12,6 +12,7 @@ const platform = os.platform();
 export default {
 
     network: {
+        scanPending: false,
         observers: [],
         peers: [],
         output: {

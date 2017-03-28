@@ -44,9 +44,9 @@ class SettingsAdvanced extends Component {
 
         const buttonsGroup = (
             <ButtonGroup>
-                <Button bsSize='small' onClick={ scan }>
-                    <Icon name='refresh' />
-                      { 'Scan Network' }
+                <Button bsSize='small' disabled={ network.scanPending } onClick={ scan }>
+                    <Icon name='refresh' spin={ network.scanPending }/>
+                      { network.scanPending ? 'Scanning Network' : 'Scan Network' }
                 </Button>
             </ButtonGroup>
         );
