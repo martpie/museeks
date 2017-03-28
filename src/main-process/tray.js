@@ -81,10 +81,6 @@ class IpcManager {
             this.show();
         });
 
-        ipcMain.on('hideTray', () => {
-            this.hide();
-        });
-
         ipcMain.on('playerAction', (event, reply, data) => {
             switch(reply) {
                 case 'play': {
@@ -114,21 +110,15 @@ class IpcManager {
             this.tray.on('click', () => {
                 this.win.show();
                 this.win.focus();
-                this.hide();
             });
         } else if(os.platform() === 'darwin') {
             this.tray.on('double-click', () => {
                 this.win.show();
                 this.win.focus();
-                this.hide();
             });
         }
 
         this.setContextMenu('play');
-    }
-
-    hide() {
-        this.tray.destroy();
     }
 
     setContextMenu(state) {
