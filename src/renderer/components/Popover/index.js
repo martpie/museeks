@@ -72,9 +72,9 @@ export default class PopoverWrapper extends Component {
   }
 
   outerAction = () => {
-      if (this.props.trigger !== 'none') {
-        this.toggle(false);
-      }
+    if (this.props.trigger !== 'none') {
+      this.toggle(false);
+    }
   }
 
   getTriggerEventBinds = (triggerType) => {
