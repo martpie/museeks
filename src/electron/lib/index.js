@@ -6,6 +6,7 @@ import config from './config';
 import contextMenu from './contextMenu';
 import player from './player';
 import playlist from './playlist';
+import playEvent from './playEvent';
 import shell from './shell';
 import track from './track';
 import peerDiscovery from './peerDiscovery';
@@ -19,11 +20,12 @@ const library = {
     shell,
     peerDiscovery: new peerDiscovery(),
     // Other libs added via mutation
-    // tray
+    // tray <-- currently not working
 };
 
 // attach libraries which must be invoked
 library.playlist = playlist(library);
+library.playEvent = playEvent(library);
 library.track = track(library);
 
 export const initLib = (store) => {
