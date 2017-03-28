@@ -50,7 +50,7 @@ class Museeks extends Component {
                     queueCursor={ store.queueCursor }
                     windowControls={ !config.useNativeFrame }
                 />
-                <div className='main-content'>
+                <div className='main-content container-fluid'>
                     <Row className='content'>
                         { React.cloneElement(
                             this.props.children, {

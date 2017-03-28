@@ -6,7 +6,7 @@
 
 .alert {
     border-left-width: 5px;
-    background-color: white;
+    background-color: $generic-white;
 
     &.alert-danger,
     &.alert-info,
@@ -40,7 +40,7 @@
         &:active,
         &:focus,
         &:focus:active {
-            background-color: #FFF;
+            background-color: $generic-white;
         }
     }
 

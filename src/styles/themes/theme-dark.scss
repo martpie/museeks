@@ -27,40 +27,21 @@ body.theme-dark {
 
     header {
         background-color: #33393b;
-        border-bottom-color: #1b1b1b;
         color: #EEE;
+
+        .top-header {
+            border-bottom-color: #1b1b1b;
+        }
+
+        .main-header {
+            border-bottom-color: #1b1b1b;
+        }
 
         .search {
             border-color: #232323;
             background-color: #23292b;
             color: #EEE;
         }
-
-        .col-main-controls .window-controls .window-control {
-            border-color: #33393b;
-            color: #EEE;
-
-            &.window-maximize {
-
-                &::after {
-                    border-color: #EEE;
-                }
-            }
-        }
-
-        .col-main-controls {
-
-            .player-controls {
-
-                .player-control {
-                    color: #EEE;
-                }
-
-                .volume-control{
-                    background-color: #33393b;
-                }
-            }
-       }
 
        .col-player-infos {
 
@@ -136,6 +117,28 @@ body.theme-dark {
                }
            }
        }
+    }
+
+    .window-controls .window-control {
+        color: #EEE;
+
+        &.window-maximize {
+
+            &::after {
+                border-color: #EEE;
+            }
+        }
+    }
+
+    .player-controls {
+
+        .player-control {
+            color: #EEE;
+        }
+
+        .volume-control{
+            background-color: #33393b;
+        }
     }
 
 

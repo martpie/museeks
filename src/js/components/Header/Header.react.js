@@ -34,31 +34,35 @@ export default class Header extends Component {
 
     render() {
         return (
-            <header className='row'>
-                <div className='col-main-controls'>
+            <header>
+                <div className='top-header'>
                     <WindowControls active={ this.props.windowControls } />
-                    <PlayerControls
-                        playerStatus={ this.props.playerStatus }
-                    />
                 </div>
-                <div className='col-player-infos'>
-                    <PlayingBar
-                        queue={ this.props.queue }
-                        queueCursor={ this.props.queueCursor }
-                        shuffle={ this.props.shuffle }
-                        repeat={ this.props.repeat }
-                    />
-                </div>
-                <div className="col-search-controls">
-                    <Input
-                        selectOnClick
-                        placeholder='search'
-                        className='form-control input-sm search'
-                        changeTimeout={ 250 }
-                        clearButton
-                        ref='search'
-                        onChange={ this.search }
-                    />
+                <div className='main-header'>
+                    <div className='col-main-controls'>
+                        <PlayerControls
+                            playerStatus={ this.props.playerStatus }
+                        />
+                    </div>
+                    <div className='col-player-infos'>
+                        <PlayingBar
+                            queue={ this.props.queue }
+                            queueCursor={ this.props.queueCursor }
+                            shuffle={ this.props.shuffle }
+                            repeat={ this.props.repeat }
+                        />
+                    </div>
+                    <div className="col-search-controls">
+                        <Input
+                            selectOnClick
+                            placeholder='search'
+                            className='form-control input-sm search'
+                            changeTimeout={ 250 }
+                            clearButton
+                            ref='search'
+                            onChange={ this.search }
+                        />
+                    </div>
                 </div>
                 <KeyBinding onKey={ this.onKey } preventInputConflict />
             </header>

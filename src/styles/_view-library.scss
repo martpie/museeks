@@ -15,12 +15,12 @@
 
         .tracks-list-header {
             position: fixed;
-            top: 52px;
+            top: #{$main-header-height + $top-header-height + 1}px;
             border-bottom: 1px solid rgb(210, 210, 210);
             color: #555;
             display: flex;
             width: calc(100% - 2px);
-            background-color: white;
+            background-color: $generic-white;
             z-index: 20;
 
             .track-cell-header {
@@ -65,7 +65,7 @@
 
                         &.selected {
                             background-color: $main-color;
-                            color: white;
+                            color: $generic-white;
 
                             // put that elsewhere someday
                             .playing-indicator {
