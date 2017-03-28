@@ -2,6 +2,14 @@ export default [{
     method: 'GET',
     path: '',
     handler: {
-        file: './index.html'
+        file: './web/index.html'
+    }
+}, {
+    method: 'GET',
+    path: 'dist/{path*}',
+    handler: {
+        directory: {
+            path: './dist',
+        }
     }
 }];

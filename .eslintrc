@@ -30,7 +30,7 @@
         "no-array-constructor": "error",
         "no-case-declarations": "error",
         "no-confusing-arrow": "error",
-        "no-console": ["error", { "allow": ["info", "warn", "error"] }],
+        "no-console": ["warn", { "allow": ["info", "warn", "error"] }],
         "no-else-return": "error",
         "no-duplicate-imports": "error",
         "no-multiple-empty-lines": ["error", { "max": 2 }],

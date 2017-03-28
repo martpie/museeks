@@ -1,7 +1,6 @@
 import Promise from 'bluebird';
 import mutate from 'xtend/mutable';
 
-import store from '../redux/store';
 import defaultConfig from '../../shared/lib/config';
 
 const fs = Promise.promisifyAll(require('fs'));

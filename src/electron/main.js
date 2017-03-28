@@ -8,7 +8,7 @@ import mutate from 'xtend/mutable';
 
 import Database from './database';                     // Persistent data store
 import store from './redux/store';                     // Redux store
-import lib, { initLib } from './lib';        // Shared library configuration
+import lib, { initLib } from './lib';                  // Shared library configuration
 import ApiServer from './api';                         // HTTP API access to electorn and renderer
 import initElectron from './init';                     // Electron bootstrap
 import TrayManager from './tray';                      // Manages Tray
