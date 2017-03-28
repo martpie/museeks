@@ -1,3 +1,4 @@
+import path from 'path';
 import hapi from 'hapi';
 import inert from 'inert';
 import etags from 'hapi-etags';
@@ -15,6 +16,11 @@ class ApiServer {
             connections: {
                 router: {
                     stripTrailingSlash: true
+                },
+                routes: {
+                    files: {
+                        relativeTo: path.join(__dirname, '../../web')
+                    }
                 }
             }
         });

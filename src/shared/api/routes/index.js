@@ -8,6 +8,7 @@ import handshake from './handshake';
 import rpc from './rpc';
 import store from './store';
 import tracks from './tracks';
+import web from './web';
 
 const routes = [
     ...app,
@@ -19,7 +20,8 @@ const routes = [
     ...handshake,
     ...rpc,
     ...store,
-    ...tracks
+    ...tracks,
+    ...web
 ];
 
 export default routes;
