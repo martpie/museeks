@@ -446,19 +446,6 @@ header {
             background-color: $_window-control-bg-active;
         }
 
-        &.window-close {
-
-            &:hover {
-                background-color: $_window-control-close-bg-hover;
-                color: $generic-white;
-            }
-
-            &:active {
-                background-color: $_window-control-close-bg-active;
-                color: $generic-white;
-            }
-        }
-
         &.window-maximize {
 
             &::after {
@@ -473,7 +460,45 @@ header {
         }
 
         &.window-close {
-            font-size: 15px;
+            position: relative;
+
+            &:hover {
+                background-color: $_window-control-close-bg-hover;
+
+                &::before,
+                &::after {
+                    background-color: $generic-white;
+                }
+            }
+
+            &:active {
+                background-color: $_window-control-close-bg-active;
+
+                &::before,
+                &::after {
+                    background-color: $generic-white;
+                }
+            }
+
+            &::before,
+            &::after {
+                display: block;
+                position: absolute;
+                content: ' ';
+                height: 11px;
+                width: 1px;
+                background-color: #555;
+                top: 7px;
+                left: 12px;
+            }
+
+            &::before {
+                transform: rotate(45deg);
+            }
+
+            &::after {
+                transform: rotate(-45deg);
+            }
         }
     }
 }

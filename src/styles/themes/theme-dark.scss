@@ -128,6 +128,14 @@ body.theme-dark {
                 border-color: #EEE;
             }
         }
+
+        &.window-close {
+
+            &::before,
+            &::after {
+                background-color: $generic-white;
+            }
+        }
     }
 
     .player-controls {
