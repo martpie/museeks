@@ -1,0 +1,17 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: node:7.4.0
+    working_directory: ~/ci-museeks
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: npm install
+      - run:
+          name: ESlint
+          command: npm run ci:eslint
+      - run:
+          name: Bundle application
+          command: npm run ci:compile
