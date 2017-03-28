@@ -19,7 +19,7 @@ const library = (lib) => {
     return {
         close,
         maximize,
-        minimize
+        minimize,
     }
 }
 

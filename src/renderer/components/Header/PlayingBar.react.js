@@ -37,7 +37,6 @@ class PlayingBar extends Component {
     constructor(props) {
         super(props);
         this.state = {
-//            elapsed     : 0,
             showTooltip : false,
             duration    : null,
             x           : null,
@@ -124,6 +123,7 @@ class PlayingBar extends Component {
     }
 
     componentDidMount = () => {
+        // Update time once every second
         this.timer = setInterval(this.tick, 1000);
     }
 
@@ -149,7 +149,6 @@ class PlayingBar extends Component {
         // If we are playing and the output is local. We update the current time.
         if (playStatus === 'play' && output.isLocal) {
             updateElapsedTime(lib.player.getCurrentTime());
-//            this.setState({ elapsed: lib.player.getCurrentTime() });
         }
     }
 

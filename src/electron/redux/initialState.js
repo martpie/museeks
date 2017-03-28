@@ -60,8 +60,8 @@ export default {
         cover: undefined,                // Current trackplaying cover
         repeat: 'none',                  // the current repeat state (one, all, none)
         shuffle: false,                  // If shuffle mode is enabled
-        elapsed: 0                       // How much time has elapsed
-
+        elapsed: 0,                      // How much time has elapsed
+        volume: 0,
     },
 
     toasts: [],                          // The array of toasts

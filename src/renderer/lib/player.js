@@ -15,10 +15,6 @@ class Player {
         const dispatch = this.lib.store.dispatch;
         const { config } = this.lib.store.getState();
 
-        this.setVolume(config.volume);
-        this.setPlaybackRate(config.playbackRate);
-        this.setMuted(config.muted);
-
         // binding for media keys
         // this.audio.addEventListener('play',  () => dispatch(this.lib.actions.player.play()));
         // this.audio.addEventListener('pause', () => dispatch(this.lib.actions.player.pause()));

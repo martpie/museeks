@@ -1,21 +1,8 @@
+import { throttle } from 'lodash';
 const library = (lib) => {
     const store = lib.store;
     const dispatch = store.dispatch;
-    const { config, network } = store.getState();
-
-    const saveBounds = () => {
-        const now = window.performance.now();
-
-        if (now - self.lastFilterSearch < 250) {
-            clearTimeout(self.filterSearchTimeOut);
-        }
-
-        self.lastFilterSearch = now;
-
-        self.filterSearchTimeOut = setTimeout(() => {
-            dispatch(lib.actions.config.set('bounds', lib.app.browserWindows.main.getBounds()));
-        }, 250);
-    };
+    const { config } = store.getState();
 
     // Prevent some events
     window.addEventListener('dragover', (e) => e.preventDefault(), false);
@@ -23,6 +10,9 @@ const library = (lib) => {
 
     // Remember dimensions and positionning
     const currentWindow = lib.app.browserWindows.main;
+
+    // Save the bounds on resize
+    const saveBounds = () => dispatch(lib.actions.config.set('bounds', lib.app.browserWindows.main.getBounds(), 3000));
     currentWindow.on('resize', saveBounds);
     currentWindow.on('move', saveBounds);
 
@@ -31,7 +21,10 @@ const library = (lib) => {
     dispatch(lib.actions.playlists.refresh());
     dispatch(lib.actions.settings.check());
 
-    // dispatch(lib.actions.player.shuffle(true));
+    // Set player properties from config
+    dispatch(lib.actions.player.setVolume(config.volume));
+    dispatch(lib.actions.player.setMuted(config.muted));
+    dispatch(lib.actions.player.setPlaybackRate(config.playbackRate));
 }
 
 export default library;

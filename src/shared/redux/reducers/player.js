@@ -2,9 +2,6 @@ import i from 'icepick';
 
 export default (state = {}, action) => {
     switch (action.type) {
-        case('PLAYER/SET_STATE'): {
-            return i.assoc(state, 'player', action.payload.state);
-        }
         case('PLAYER/LOAD_PENDING'): {
             const { currentTrack, queueCursor, historyCursor, oldHistoryCursor } = action.meta;
             const addToHistory =
@@ -72,6 +69,15 @@ export default (state = {}, action) => {
         }
         case('PLAYER/SET_COVER'): {
             return i.assocIn(state, ['player', 'cover'], action.payload.cover);
+        }
+        case('PLAYER/SET_VOLUME'): {
+            return i.assocIn(state, ['player', 'volume'], action.payload);
+        }
+        case('PLAYER/SET_VOLUME_FULFILLED'): {
+            return i.assocIn(state, ['player', 'volume'], action.meta.volume);
+        }
+        case('PLAYER/SET_VOLUME_REJECTED'): {
+            return i.assocIn(state, ['player', 'volume'], action.meta.oldVolume);
         }
         case('PLAYER/CREATE_NEW_QUEUE_PENDING'): {
             return i.chain(state)

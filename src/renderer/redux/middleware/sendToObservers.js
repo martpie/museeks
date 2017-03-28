@@ -35,8 +35,11 @@ const observerActions = [
     // Jump to
     'PLAYER/JUMP_TO_PENDING',
     'PLAYER/JUMP_TO_REJECTED',
-    // Elapsed time
+    // Elapsed time ( once per second)
     'PLAYER/UPDATE_ELAPSED_TIME',
+    // Set Volume
+    'PLAYER/SET_VOLUME_FULFILLED',
+    'PLAYER/SET_VOLUME_REJECTED',
 ];
 
 const sendToObservers = (store) => (next) => (action) => {

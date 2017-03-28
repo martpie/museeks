@@ -3,32 +3,37 @@ import utils from '../../utils/utils';
 const library = (lib) => {
 
     const setState = (state) => (dispatch, getState) => {
-        dispatch({
-            type: 'PLAYER/SET_STATE',
-            payload: {
-                state
-            }
-        });
-
-        // Set the queue - TODO: remove when queue is on player
-        dispatch(lib.actions.queue.setQueue(state.queue));
-
-        // Set the queue cursor - TODO: remove when queueCursor is on player
-        dispatch(lib.actions.queue.setQueueCursor(state.queueCursor));
-
-        // Set audio element play state: can be play/pause/stop
-        dispatch(lib.actions.player[state.playStatus]());
+        const {
+            cover,
+            currentTrack,
+            historyCursor,
+            playStatus,
+            queue,
+            queueCursor,
+            repeat,
+            shuffle,
+            volume,
+        } = state;
+        // Set the queue
+        dispatch(lib.actions.player.createNewQueue(queue));
 
         // Set audio element repeat
-        dispatch(lib.actions.player.repeat(state.repeat));
+        dispatch(lib.actions.player.repeat(repeat));
 
-        // Set audio element suffle
-        dispatch(lib.actions.player.shuffle(state.shuffle));
+        // Set audio element shuffle
+        dispatch(lib.actions.player.shuffle(shuffle));
 
         // Set audio element elapsed time
-        dispatch(lib.actions.player.jumpTo(state.elapsed));
+        dispatch(lib.actions.player.jumpTo(elapsed));
 
-        dispatch(lib.actions.player.load());
+        // Set the volume
+        dispatch(lib.actions.player.setVolume(volume));
+
+        // Load the track
+        dispatch(lib.actions.player.load({queue, _id: currentTrack._id}));
+
+        // Set audio element play state: can be play/pause/stop
+        dispatch(lib.actions.player[playStatus]());
     }
 
     const load = (data = {}) => (dispatch, getState) => {
@@ -259,11 +264,36 @@ const library = (lib) => {
         };
     };
 
-    const setVolume = (volume) => (dispatch) => {
+    const setVolume = (volume) => (dispatch, getState) => {
         if (!isNaN(parseFloat(volume)) && isFinite(volume)) {
-            lib.player.setVolume(volume);
+            const { player: { volume: oldVolume }, network: { output } } = getState();
 
-            dispatch(lib.actions.config.set('volume', volume));
+            const outputIsLocal = () => Promise.resolve();
+            const outputIsRemote = () => lib.api.actions.player.setVolume(output, volume);
+
+            lib.player.setVolume(volume);
+            dispatch(lib.actions.config.set('volume', volume, 300));
+
+            // Set the volume state for the UI
+            // We do this directly (no promise) for speed.
+            dispatch({
+                type: 'PLAYER/SET_VOLUME',
+                payload: volume,
+            });
+
+            // This async part is throttled so observers
+            // are not updated too often.
+            return dispatch({
+                type: 'PLAYER/SET_VOLUME',
+                payload: output.isLocal
+                    ? outputIsLocal()
+                    : outputIsRemote(),
+                meta: {
+                    volume, oldVolume,
+                    throttle: 100
+                },
+            })
+
         }
     };
 
