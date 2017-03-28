@@ -31,7 +31,6 @@ class VolumeControl extends Component {
 
         this.state = {
             showVolume: false,
-//            volume: unsmoothifyVolume(lib.player.audio.volume),
             muted: lib.player.isMuted()
         };
     }
@@ -60,7 +59,8 @@ class VolumeControl extends Component {
                            min={ 0 }
                            max={ 1 }
                            step={ 0.01 }
-                           defaultValue={ volume }
+                           defaultValue={ unsmoothifyVolume(volume) }
+                           value={ unsmoothifyVolume(volume) }
                            ref='volume'
                            onChange={ this.setVolume }
                     />

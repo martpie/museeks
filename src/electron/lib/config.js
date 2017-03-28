@@ -6,12 +6,13 @@ import defaultConfig from '../../shared/lib/config';
 
 const fs = Promise.promisifyAll(require('fs'));
 
-const serializeConfig = () => JSON.stringify(store.getState().config, null, 4);
+const serializeConfig = (data) => JSON.stringify(data, null, 4);
+
 const deserializeConfig = (data) => JSON.parse(data);
 
-const save = () => fs.writeFileAsync(defaultConfig.path, serializeConfig());
+const save = (data) => fs.writeFileAsync(defaultConfig.path, serializeConfig(data));
 
-const saveSync = () => fs.writeFileSync(defaultConfig.path, serializeConfig());
+const saveSync = (data) => fs.writeFileSync(defaultConfig.path, serializeConfig(data));
 
 const setConfigPath = (path) => defaultConfig.path = path;
 
@@ -21,7 +22,7 @@ const load = () => {
     return fs.readFileAsync(defaultConfig.path)
     .then(deserializeConfig)
     .then(extendConfig)
-    .catch(() => save().then(load));
+    .catch(() => save({}).then(load));
 };
 
 export default {

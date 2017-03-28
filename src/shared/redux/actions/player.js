@@ -266,19 +266,29 @@ const library = (lib) => {
             const outputIsLocal = () => Promise.resolve();
             const outputIsRemote = () => lib.api.actions.player.setVolume(output, volume);
 
-
             lib.player.setVolume(volume);
             dispatch(lib.actions.config.set('volume', volume, 300));
 
+            // Set the volume state
+            // We do this directly (no promise) for speed.
+            dispatch({
+                type: 'PLAYER/SET_VOLUME',
+                payload: volume,
+            });
+
+            // This async part is throttles so observers
+            // are not updated too often.
             return dispatch({
                 type: 'PLAYER/SET_VOLUME',
                 payload: output.isLocal
                     ? outputIsLocal()
                     : outputIsRemote(),
                 meta: {
-                    volume, oldVolume
-                }
-            });
+                    volume, oldVolume,
+                    throttle: 100
+                },
+            })
+
         }
     };
 
