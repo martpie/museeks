@@ -78,9 +78,11 @@ class Player {
         }
     }
 
-    getAudio = () => Promise.resolve(this.audio);
+    getAudio = () => Promise.resolve(this.audio)
 
-    setCurrentTime = (currentTime) => this.audio.currentTime = currentTime
+    setCurrentTime = (currentTime) => {
+        return Promise.resolve(this.audio.currentTime = currentTime)
+    }
 
     isMuted = () => this.audio.muted
 

@@ -55,12 +55,10 @@ const library = (lib) => {
         } else { // If output has changed to another computer
 
             const playerState = {
-                player: {
-                    ...state.player,
-                    elapsed: lib.player.getCurrentTime()
-                },
-                queueCursor: state.queueCursor,
-                queue: state.queue
+                ...state.player,
+                elapsed: lib.player.getCurrentTime(),
+                queue: state.queue,
+                queueCursor: state.queueCursor
             }
 
             // We ask the output device to set us as an observer.
@@ -87,14 +85,8 @@ const library = (lib) => {
         // Stop the player from playing
         dispatch(lib.actions.player.stop());
 
-        // Set the queue - TODO: remove when queue is on player
-        dispatch(lib.actions.queue.setQueue(state.queue));
-
-        // Set the queue cursor - TODO: remove when queueCursor is on player
-        dispatch(lib.actions.queue.setQueueCursor(state.queueCursor));
-
         // Set the entire player state
-        dispatch(lib.actions.player.setState(state.player));
+        dispatch(lib.actions.player.setState(state));
 
         // Add the input computer as an observer
         dispatch(lib.actions.network.addObserver(peer));

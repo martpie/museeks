@@ -7,17 +7,27 @@ export default (state = {}, action) => {
         }
 
         case('PLAYER/LOAD_PENDING'): {
-            const { track } = action.meta;
+            const { currentTrack, queueCursor, historyCursor, oldHistoryCursor } = action.meta;
+            const addToHistory =
+                oldHistoryCursor === -1  && // we were not playing from history previously
+                historyCursor === -1 // we are not playing from history currently
             return i.chain(state)
-                .updateIn(['player', 'history'], (history) => i.push(history, track))
-                .assocIn(['player', 'currentTrack'], track)
+                .assoc('queueCursor', queueCursor)
+                .assocIn(['player', 'currentTrack'], currentTrack)
+                .assocIn(['player', 'historyCursor'], historyCursor)
+                .updateIn(['player', 'history'], (history) => addToHistory ? i.push(history, currentTrack._id) : history)
                 .value();
         }
         case('PLAYER/LOAD_REJECTED'): {
-            const { oldCurrentTrack } = action.meta;
+            const { oldCurrentTrack, oldQueueCursor, oldHistoryCursor } = action.meta;
+            const addToHistory =
+                oldHistoryCursor === -1  && // we were not playing from history previously
+                historyCursor === -1 // we are not playing from history currently
             return i.chain(state)
-                .updateIn(['player', 'history'], (history) => i.slice(history, 0, -1))
+                .assoc('queueCursor', oldQueueCursor)
+                .updateIn(['player', 'history'], (history) => addToHistory ? i.slice(history, 0, -1) : history)
                 .assocIn(['player', 'currentTrack'], oldCurrentTrack)
+                .assocIn(['player', 'historyCursor'], oldHistoryCursor)
                 .value();
         }
 
@@ -40,20 +50,6 @@ export default (state = {}, action) => {
                 .assoc('queue', [])
                 .assoc('queueCursor', null)
                 .assocIn(['player', 'playStatus'], 'stop')
-                .value();
-        }
-
-        case('PLAYER/NEXT'): {
-            return i.chain(state)
-                .assoc('queueCursor', action.payload.queueCursor)
-                .assocIn(['player', 'historyCursor'], action.payload.historyCursor)
-                .value();
-        }
-
-        case('PLAYER/PREVIOUS'): {
-            return i.chain(state)
-                .assoc('queueCursor', action.payload.queueCursor)
-                .assocIn(['player', 'historyCursor'], action.payload.historyCursor)
                 .value();
         }
 

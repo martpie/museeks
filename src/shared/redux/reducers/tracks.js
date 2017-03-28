@@ -67,15 +67,18 @@ export default (state = {}, action) => {
 
         case('TRACKS/PLAY_COUNT_INCREMENT_FULFILLED'): {
 
-            const updateTrackPlaycount = (track) => track._id === action.meta._id
+            const { _id } = action.meta;
+
+            const updateTrackPlaycount = (track) => track._id === _id
                 ? extend(track, {
-                    playCount: track.playCount + 1,
-                    playHistory: (track.playHistory || []).concat(action.meta.event)
+                    playCount: isNaN(track.playCount) ? 0 : track.playCount + 1,
                 })
                 : track;
 
             return i.chain(state)
-                .assocIn(['library', 'data'], state.library.data.map(updateTrackPlaycount))
+                .assocIn(['library', 'all'], state.library.all.map(updateTrackPlaycount))
+                .assocIn(['library', 'sub'], state.library.sub.map(updateTrackPlaycount))
+                .updateIn(['library', 'data', _id], updateTrackPlaycount)
                 .value();
         }
 

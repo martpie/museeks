@@ -426,21 +426,93 @@ const transformTrackPaths = ({ tracks, me, peer }) => {
     return tracksWithTransformedPaths;
 }
 
-const getNextQueueCursor = ({ queue, queueCursor, repeat, shuffle }) => {
-    if (repeat === 'one') {
-        return queueCursor;
+const getNextQueueCursor = (data) => {
+console.trace('getNextQueueCursor = (data)', data)
+    const {
+        direction,
+        queue,
+        history,
+        repeat,
+        shuffle,
+        currentTime
+    } = data;
+
+    let {
+        queueCursor,
+        historyCursor
+    } = data;
+
+    const nextQueueCursor = () => {
+        if (repeat === 'one') {
+            return queueCursor;
+        }
+        else if (shuffle) {
+            const choices = range(0, queue.length).filter((choice) => choice !== queueCursor);
+            return pickRandom(choices);
+        }
+        else if (repeat === 'all' && queueCursor === queue.length - 1) { // is last track
+            return 0; // start with new track
+        }
+        else if (queueCursor === queue.length - 1) { // is last track
+            return null; // stop playing
+        } else {
+            return queueCursor + 1;
+        }
     }
-    else if (shuffle) {
-        const choices = range(0, queue.length).filter((choice) => choice !== queueCursor);
-        return pickRandom(choices);
+
+    const inHistory = historyCursor !== -1;
+
+    if (direction === 'next') {
+
+        // if we're currently playing a track from our history
+        if (inHistory) {
+
+            // move one step forward in the history
+            historyCursor = historyCursor + 1;
+
+            // if we moved past the tail of the history queue
+            if (historyCursor === history.length) {
+
+                // disable the history cursor
+                historyCursor = -1;
+
+                // set the queue cursor to the next track
+                queueCursor = nextQueueCursor();
+            }
+        } else {
+
+            // set the queue cursor to the next track
+            queueCursor = nextQueueCursor();
+        }
+
+    } else if (direction === 'previous') {
+
+        // if track started less than 5 seconds ago, play the previous track, otherwise replay the current track
+        if (currentTime < 5) {
+
+            // if we're currently playing a track from our history
+            if (inHistory) {
+
+                // move one step back in the history
+                historyCursor = historyCursor - 1;
+
+                if (historyCursor === -1) {
+                    // we tried to move past the head of the history queue, stay at the top
+                    historyCursor = 0;
+                }
+            } else {
+                // set the history cursor to the end of the history queue
+                historyCursor = history.length - 1;
+            }
+        }
     }
-    else if (repeat === 'all' && queueCursor === queue.length - 1) { // is last track
-        return 0; // start with new track
-    }
-    else if (queueCursor === queue.length - 1) { // is last track
-        return null; // stop playing
-    } else {
-        return queueCursor + 1;
+console.log('cursor result', {
+    queueCursor,
+    historyCursor
+})
+    return {
+        queueCursor,
+        historyCursor
     }
 }
 
