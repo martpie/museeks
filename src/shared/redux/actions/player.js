@@ -269,14 +269,14 @@ const library = (lib) => {
             lib.player.setVolume(volume);
             dispatch(lib.actions.config.set('volume', volume, 300));
 
-            // Set the volume state
+            // Set the volume state for the UI
             // We do this directly (no promise) for speed.
             dispatch({
                 type: 'PLAYER/SET_VOLUME',
                 payload: volume,
             });
 
-            // This async part is throttles so observers
+            // This async part is throttled so observers
             // are not updated too often.
             return dispatch({
                 type: 'PLAYER/SET_VOLUME',
