@@ -23,6 +23,7 @@
         "arrow-parens": ["error", "always"],
         "arrow-spacing": ["error", { "before": true, "after": true }],
         "brace-style": ["error", "1tbs"],
+        "comma-dangle": ["error", "always-multiline"],
         "comma-style": ["error", "last"],
         "eqeqeq": "error",
         "indent": ["error", 4, { "SwitchCase": 1 }],

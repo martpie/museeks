@@ -1,3 +1,10 @@
+$_header-color: #555;
+
+$_window-control-bg-hover: rgba(0, 0, 0, .1);
+$_window-control-bg-active: rgba(0, 0, 0, .15);
+$_window-control-close-bg-hover: rgb(196, 36, 36);
+$_window-control-close-bg-active: darken($_window-control-close-bg-hover, 5%);
+$_window-control-size: #{$top-header-height}px;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,95 +34,37 @@ header {
 */
 
 header {
-    border-bottom: 1px solid rgb(210, 210, 210);
     background-color: rgb(244, 244, 244);
-    padding: 0 10px;
-    height: 51px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    color: #555;
+    color: $_header-color;
+
+    .top-header {
+        display: flex;
+        justify-content: flex-end;
+        height: #{$top-header-height}px;
+        background-color: rgba(0, 0, 0, .065);
+        border-bottom: 1px solid rgb(210, 210, 210);
+    }
+
+    .main-header {
+        padding: 0 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: #{$main-header-height}px;
+        border-bottom: 1px solid rgb(210, 210, 210);
+    }
+}
+
+
+header {
 
     .col-main-controls {
         width: 200px;
-        height: 100%;
         display: flex;
         align-items: center;
-        justify-content: flex-start;
-
-        .window-controls {
-            margin-right: 20px;
-
-            .window-control {
-                width: 30px;
-                height: 30px;
-                font-size: 18px;
-                color: #555;
-                border: 0;
-                transition: all .2s ease-in-out;
-                text-align: center;
-                line-height: 22px;
-                background-color: transparent;
-                -webkit-app-region: no-drag;
-
-                &:active {
-                    background-color: #DFDFDF;
-                    border: solid 1px #B8B8B8;
-                }
-            }
-        }
-
-        .player-controls {
-            display: flex;
-            align-items: center;
-            position: relative;
-
-            .player-control {
-                border: 0;
-                background: transparent;
-                font-size: 16px;
-                padding: 0 10px;
-
-                &.play {
-                    font-size: 20px;
-                    padding: 0 5px;
-                }
-
-                &.volume {
-                    padding: 0;
-                    width: 34px;
-                    position: relative;
-                }
-
-                i {
-                    display: flex;
-                    align-items: center;
-                }
-            }
-
-            .volume-control {
-                position: absolute;
-                z-index: 10;
-                background-color: rgb(244, 244, 244);
-                top: -4px;
-                right: 25px;
-                display: none;
-                padding: 5px 12px;
-
-                &.visible {
-                    display: block;
-                }
-
-                input[type=range] {
-                    width: 88px;
-                    height: 20px;
-                    background-color: transparent;
-                }
-            }
-        }
     }
-    /* .windows-controls */
 
+    /* .windows-controls */
     .col-player-infos {
         width: calc(100% - 400px);
 
@@ -216,9 +165,9 @@ header {
 
                     .playing-bar-tooltip {
                         position: fixed;
-                        background-color: #FFF;
+                        background-color: $generic-white;
                         border: 1px solid #CECECE;
-                        color: #555;
+                        color: $_header-color;
                         font-size: 10px;
                         padding: 2px 5px;
                         top: 10px;
@@ -248,7 +197,7 @@ header {
                         &::after {
                             top: 18px;
                             left: 6px;
-                            border-top-color: #FFF;
+                            border-top-color: $generic-white;
                             border-width: 5px;
                         }
                     }
@@ -278,26 +227,30 @@ header {
                     border: 0;
                     background: transparent;
                     font-size: 14px;
+                    box-shadow: none;
+                }
+
+                .queue-dropdown {
+
+                    .dropdown-menu {
+                        border: 0;
+                        padding: 0;
+                        margin: 0;
+                        left: auto;
+                        right: -15px;
+                        box-shadow: none;
+                    }
                 }
 
                 .queue {
-                    display: none;
-                    position: absolute;
                     width: 300px;
-                    background: white;
+                    background: $generic-white;
                     border: solid 1px rgb(210, 210, 210);
                     text-overflow: ellipsis;
                     overflow-x: hidden;
                     font-size: 12px;
-                    z-index: 30;
                     color: grey;
-                    right: 10px;
-                    top: 30px;
                     box-shadow: 0 5px 3px -5px rgba(0, 0, 0, .5);
-
-                    &.visible {
-                        display: block;
-                    }
 
                     .empty-queue {
                         padding: 20px;
@@ -381,7 +334,7 @@ header {
                             }
 
                             .remove {
-                                color: #555;
+                                color: $_header-color;
                                 float: right;
                                 width: 25px;
                                 height: 25px;
@@ -394,7 +347,7 @@ header {
                                 &:hover,
                                 &:focus,
                                 &:active {
-                                    color: #555;
+                                    color: $_header-color;
                                     text-decoration: none;
                                 }
                             }
@@ -413,5 +366,114 @@ header {
 
     .col-search-controls {
         width: 200px;
+    }
+}
+
+
+.player-controls {
+    display: flex;
+    align-items: center;
+    position: relative;
+
+    .player-control {
+        border: 0;
+        background: transparent;
+        font-size: 16px;
+        padding: 0 10px;
+
+        &.play {
+            font-size: 20px;
+            padding: 0 5px;
+        }
+
+        &.volume {
+            padding: 0;
+            width: 34px;
+            position: relative;
+        }
+
+        i {
+            display: flex;
+            align-items: center;
+        }
+    }
+
+    .volume-control {
+        position: absolute;
+        z-index: 10;
+        background-color: rgb(244, 244, 244);
+        top: -3px;
+        right: 25px;
+        display: none;
+        padding: 5px 12px;
+
+        &.visible {
+            display: block;
+        }
+
+        input[type=range] {
+            width: 88px;
+            height: 20px;
+            background-color: transparent;
+        }
+    }
+}
+
+
+.window-controls {
+    display: flex;
+    position: absolute;
+    top: 0;
+    right: 0;
+
+
+    .window-control {
+        width: $_window-control-size;
+        font-size: 15px;
+        color: $_header-color;
+        border: 0;
+        text-align: center;
+        padding: 0;
+        line-height: $_window-control-size;
+        background-color: transparent;
+        -webkit-app-region: no-drag;
+
+        &:hover {
+            background-color: $_window-control-bg-hover;
+        }
+
+        &:active {
+            background-color: $_window-control-bg-active;
+        }
+
+        &.window-close {
+
+            &:hover {
+                background-color: $_window-control-close-bg-hover;
+                color: $generic-white;
+            }
+
+            &:active {
+                background-color: $_window-control-close-bg-active;
+                color: $generic-white;
+            }
+        }
+
+        &.window-maximize {
+
+            &::after {
+                content: '';
+                display: block;
+                margin: auto;
+                border: solid 1px #555;
+                border-top-width: 2px;
+                height: 9px;
+                width: 10px;
+            }
+        }
+
+        &.window-close {
+            font-size: 15px;
+        }
     }
 }

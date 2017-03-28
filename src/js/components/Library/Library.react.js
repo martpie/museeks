@@ -18,7 +18,7 @@ export default class Library extends Component {
         tracks: React.PropTypes.object,
         trackPlayingId: React.PropTypes.string,
         playlists: React.PropTypes.array,
-        playerStatus: React.PropTypes.string
+        playerStatus: React.PropTypes.string,
     }
 
     constructor(props) {

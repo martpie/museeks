@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Col, Button, ButtonGroup, ProgressBar } from 'react-bootstrap';
+import { Row, Col, Button, ButtonGroup, ProgressBar } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import Icon from 'react-fontawesome';
 
@@ -18,7 +18,7 @@ export default class Footer extends Component {
 
     static propTypes = {
         tracks: React.PropTypes.array,
-        library: React.PropTypes.object
+        library: React.PropTypes.object,
     }
 
     constructor(props) {
@@ -62,13 +62,15 @@ export default class Footer extends Component {
         );
 
         return (
-            <footer className='row'>
-                <Col sm={ 3 }>
-                    { navButtons }
-                </Col>
-                <Col sm={ 5 } className='status text-center'>
-                    { status }
-                </Col>
+            <footer className='container-fluid'>
+                <Row>
+                    <Col sm={ 3 }>
+                        { navButtons }
+                    </Col>
+                    <Col sm={ 5 } className='status text-center'>
+                        { status }
+                    </Col>
+                </Row>
             </footer>
         );
     }

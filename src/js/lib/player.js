@@ -7,7 +7,7 @@ class Player {
             playbackRate: 1,
             volume: 1,
             muted: false,
-            ...options
+            ...options,
         };
 
         this.audio = new Audio();
@@ -95,5 +95,5 @@ class Player {
 export default new Player({
     volume       : app.config.get('audioVolume'),
     playbackRate : app.config.get('audioPlaybackRate'),
-    muted        : app.config.get('audioMuted')
+    muted        : app.config.get('audioMuted'),
 });

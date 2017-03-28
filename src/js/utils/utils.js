@@ -176,7 +176,7 @@ const getDefaultMetadata = () => {
         artist       : ['Unknown artist'],
         disk         : {
             no: 0,
-            of: 0
+            of: 0,
         },
         duration     : 0,
         genre        : [],
@@ -186,9 +186,9 @@ const getDefaultMetadata = () => {
         title        : '',
         track        : {
             no: 0,
-            of: 0
+            of: 0,
         },
-        year         : ''
+        year         : '',
     };
 };
 
@@ -198,7 +198,7 @@ const getLoweredMeta = (metadata) => {
         album       : stripAccents(metadata.album.toLowerCase()),
         albumartist : metadata.albumartist.map((meta) => stripAccents(meta.toLowerCase())),
         title       : stripAccents(metadata.title.toLowerCase()),
-        genre       : metadata.genre.map((meta) => stripAccents(meta.toLowerCase()))
+        genre       : metadata.genre.map((meta) => stripAccents(meta.toLowerCase())),
     };
 };
 

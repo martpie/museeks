@@ -10,7 +10,7 @@ import AppActions from '../../actions/AppActions';
 export default class WindowControls extends PureComponent {
 
     static propTypes = {
-        active: React.PropTypes.bool
+        active: React.PropTypes.bool,
     }
 
     constructor(props) {
@@ -22,12 +22,22 @@ export default class WindowControls extends PureComponent {
 
         return (
             <div className='window-controls'>
-                <button className='window-control' onClick={ this.winClose }>&times;</button>
+                <button className='window-control window-minimize' onClick={ this.winMinimize }>－</button> { /* U+FF0D FULLWIDTH HYPHEN-MINUS */ }
+                <button className='window-control window-maximize' onClick={ this.winMaximize } /> { /* custom square with ::after */ }
+                <button className='window-control window-close' onClick={ this.winClose }>✕</button> { /* U+00D7 MULTIPLICATION SIGN */ }
             </div>
         );
     }
 
     winClose() {
         AppActions.close();
+    }
+
+    winMinimize() {
+        AppActions.minimize();
+    }
+
+    winMaximize() {
+        AppActions.maximize();
     }
 }

@@ -8,13 +8,13 @@ export default (state = {}, payload) => {
                 tracks: {
                     library: {
                         all: [...payload.tracks],
-                        sub: [...payload.tracks]
+                        sub: [...payload.tracks],
                     },
                     playlist: {
                         all: [],
-                        sub: []
-                    }
-                }
+                        sub: [],
+                    },
+                },
             };
         }
 

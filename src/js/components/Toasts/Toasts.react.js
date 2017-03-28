@@ -12,7 +12,7 @@ import Toast from './Toast.react';
 export default class Toasts extends Component {
 
     static propTypes = {
-        toasts: React.PropTypes.array
+        toasts: React.PropTypes.array,
     }
 
     constructor(props) {

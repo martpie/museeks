@@ -23,7 +23,7 @@ export default class TrackRow extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            state: 'idle'
+            state: 'idle',
         };
 
         this.onDrop = this.onDrop.bind(this);

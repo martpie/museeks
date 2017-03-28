@@ -6,7 +6,7 @@
 
 .alert {
     border-left-width: 5px;
-    background-color: white;
+    background-color: $generic-white;
 
     &.alert-danger,
     &.alert-info,
@@ -40,7 +40,7 @@
         &:active,
         &:focus,
         &:focus:active {
-            background-color: #FFF;
+            background-color: $generic-white;
         }
     }
 
@@ -147,4 +147,12 @@
 .progress {
     background-color: #dadada;
     box-shadow: none;
+}
+
+.btn-default.active.focus, .btn-default.active:focus, .btn-default.active:hover, .btn-default:active.focus, .btn-default:active:focus, .btn-default:active:hover, .open>.dropdown-toggle.btn-default.focus, .open>.dropdown-toggle.btn-default:focus, .open>.dropdown-toggle.btn-default:hover {
+    color: inherit;
+}
+
+.btn-default.active, .btn-default:active, .open>.dropdown-toggle.btn-default {
+    color: inherit;
 }

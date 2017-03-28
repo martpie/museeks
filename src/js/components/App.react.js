@@ -23,7 +23,7 @@ class Museeks extends Component {
 
     static propTypes = {
         store: React.PropTypes.object,
-        children: React.PropTypes.object
+        children: React.PropTypes.object,
     }
 
     constructor(props) {
@@ -46,12 +46,11 @@ class Museeks extends Component {
                     playerStatus={ store.playerStatus }
                     repeat={ store.repeat }
                     shuffle={ store.shuffle }
-                    cover={ store.cover }
                     queue={ store.queue }
                     queueCursor={ store.queueCursor }
                     windowControls={ !config.useNativeFrame }
                 />
-                <div className='main-content'>
+                <div className='main-content container-fluid'>
                     <Row className='content'>
                         { React.cloneElement(
                             this.props.children, {
@@ -61,11 +60,11 @@ class Museeks extends Component {
                                 queue             : store.queue,
                                 tracks            : {
                                     all: store.tracks[store.tracksCursor].all,
-                                    sub: store.tracks[store.tracksCursor].sub
+                                    sub: store.tracks[store.tracksCursor].sub,
                                 },
                                 playlists         : store.playlists,
                                 library           : store.library,
-                                trackPlayingId
+                                trackPlayingId,
                             })
                         }
                     </Row>

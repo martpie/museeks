@@ -61,7 +61,7 @@ app.on('ready', () => {
         '32': nativeImage.createFromPath(path.join(logosPath, 'museeks-32.png')),
         'ico': nativeImage.createFromPath(path.join(logosPath, 'museeks.ico')),
         'tray': nativeImage.createFromPath(path.join(logosPath, 'museeks-tray.png')).resize({ width: 24, height: 24 }),
-        'tray-ico': nativeImage.createFromPath(path.join(logosPath, 'museeks-tray.ico')).resize({ width: 24, height: 24 })
+        'tray-ico': nativeImage.createFromPath(path.join(logosPath, 'museeks-tray.ico')).resize({ width: 24, height: 24 }),
     };
 
 
@@ -76,7 +76,7 @@ app.on('ready', () => {
         minWidth  :  900,
         minHeight :  550,
         frame     :  useNativeFrame,
-        show      :  false
+        show      :  false,
     };
 
     // Create the browser window

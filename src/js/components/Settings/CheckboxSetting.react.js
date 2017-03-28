@@ -12,7 +12,7 @@ export default class CheckboxSetting extends PureComponent {
         title: React.PropTypes.string,
         description: React.PropTypes.string,
         defaultValue: React.PropTypes.bool,
-        onClick: React.PropTypes.func
+        onClick: React.PropTypes.func,
     }
 
     constructor(props) {

@@ -16,49 +16,49 @@ class Win32Integration {
                 icon: nativeImage.createFromPath(path.join(iconsDirectory, 'play.ico')),
                 click: () => {
                     win.webContents.send('playerAction', 'play');
-                }
+                },
             },
             playDisabled: {
                 tooltip: 'Play',
                 flags: ['disabled'],
-                icon: nativeImage.createFromPath(path.join(iconsDirectory, 'play-disabled.ico'))
+                icon: nativeImage.createFromPath(path.join(iconsDirectory, 'play-disabled.ico')),
             },
             pause: {
                 tooltip: 'Pause',
                 icon: nativeImage.createFromPath(path.join(iconsDirectory, 'pause.ico')),
                 click: () => {
                     win.webContents.send('playerAction', 'pause');
-                }
+                },
             },
             pauseDisabled: {
                 tooltip: 'Pause',
                 flags: ['disabled'],
-                icon: nativeImage.createFromPath(path.join(iconsDirectory, 'pause-disabled.ico'))
+                icon: nativeImage.createFromPath(path.join(iconsDirectory, 'pause-disabled.ico')),
             },
             prev: {
                 tooltip: 'Prev',
                 icon: nativeImage.createFromPath(path.join(iconsDirectory, 'backward.ico')),
                 click: () => {
                     win.webContents.send('playerAction', 'prev');
-                }
+                },
             },
             prevDisabled: {
                 tooltip: 'Prev',
                 flags: ['disabled'],
-                icon: nativeImage.createFromPath(path.join(iconsDirectory, 'backward-disabled.ico'))
+                icon: nativeImage.createFromPath(path.join(iconsDirectory, 'backward-disabled.ico')),
             },
             next: {
                 tooltip: 'Next',
                 icon: nativeImage.createFromPath(path.join(iconsDirectory, 'forward.ico')),
                 click: () => {
                     win.webContents.send('playerAction', 'next');
-                }
+                },
             },
             nextDisabled: {
                 tooltip: 'Next',
                 flags: ['disabled'],
-                icon: nativeImage.createFromPath(path.join(iconsDirectory, 'forward-disabled.ico'))
-            }
+                icon: nativeImage.createFromPath(path.join(iconsDirectory, 'forward-disabled.ico')),
+            },
         };
     }
 

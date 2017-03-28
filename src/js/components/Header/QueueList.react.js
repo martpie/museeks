@@ -20,7 +20,7 @@ export default class QueueList extends Component {
     static propTypes = {
         queue: React.PropTypes.array,
         queueCursor: React.PropTypes.number,
-        visible: React.PropTypes.bool
+        visible: React.PropTypes.bool,
     }
 
     constructor(props) {
@@ -29,7 +29,7 @@ export default class QueueList extends Component {
         this.state = {
             draggedTrackIndex     : null,
             draggedOverTrackIndex : null,
-            dragPosition     : null // null, 'above' or 'below'
+            dragPosition     : null, // null, 'above' or 'below'
         };
 
         this.dragStart = this.dragStart.bind(this);
@@ -48,11 +48,11 @@ export default class QueueList extends Component {
         const incomingQueue = queue.slice(queueCursor + 1);
 
         const queueClasses = classnames('queue text-left', {
-            visible: this.props.visible
+            visible: this.props.visible,
         });
 
         const queueBodyClasses = classnames('queue-body', {
-            dragging: this.state.draggedTrackIndex !== null
+            dragging: this.state.draggedTrackIndex !== null,
         });
 
         return (
@@ -125,7 +125,7 @@ export default class QueueList extends Component {
         this.setState({
             draggedTrackIndex     : null,
             draggedOverTrackIndex : null,
-            dragPosition          : null
+            dragPosition          : null,
         });
 
         AppActions.queue.setQueue(newQueue);

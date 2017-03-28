@@ -18,14 +18,14 @@ const ipcRenderer = electron.ipcRenderer;
 export default class PlaylistsNav extends Component {
 
     static propTypes = {
-        playlists: React.PropTypes.array
+        playlists: React.PropTypes.array,
     }
 
     constructor(props) {
         super(props);
 
         this.state = {
-            renamed: null // the playlist being renamed if there's one
+            renamed: null, // the playlist being renamed if there's one
         };
 
         this.blur            = this.blur.bind(this);

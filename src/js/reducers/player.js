@@ -45,21 +45,21 @@ export default (state = {}, payload) => {
                 queueCursor,
                 oldQueue       :  queue,
                 oldQueueCursor :  queueCursor,
-                playerStatus   : 'play'
+                playerStatus   : 'play',
             };
         }
 
         case(AppConstants.APP_PLAYER_PLAY): {
             return {
                 ...state,
-                playerStatus: 'play'
+                playerStatus: 'play',
             };
         }
 
         case(AppConstants.APP_PLAYER_PAUSE): {
             return {
                 ...state,
-                playerStatus: 'pause'
+                playerStatus: 'pause',
             };
         }
 
@@ -68,7 +68,7 @@ export default (state = {}, payload) => {
                 ...state,
                 queue          :  [],
                 queueCursor    :  null,
-                playerStatus   : 'stop'
+                playerStatus   : 'stop',
             };
 
             return newState;
@@ -78,7 +78,7 @@ export default (state = {}, payload) => {
             return {
                 ...state,
                 playerStatus: 'play',
-                queueCursor: payload.newQueueCursor
+                queueCursor: payload.newQueueCursor,
             };
         }
 
@@ -86,7 +86,7 @@ export default (state = {}, payload) => {
             return {
                 ...state,
                 playerStatus: 'play',
-                queueCursor: payload.newQueueCursor
+                queueCursor: payload.newQueueCursor,
             };
         }
 
@@ -139,14 +139,14 @@ export default (state = {}, payload) => {
                 ...state,
                 queue: [...state.oldQueue],
                 queueCursor: currentTrackIndex,
-                shuffle: false
+                shuffle: false,
             };
         }
 
         case(AppConstants.APP_PLAYER_REPEAT): {
             return {
                 ...state,
-                repeat: payload.repeat
+                repeat: payload.repeat,
             };
         }
 

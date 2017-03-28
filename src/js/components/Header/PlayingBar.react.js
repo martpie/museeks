@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { ProgressBar } from 'react-bootstrap';
+import { ProgressBar, Dropdown } from 'react-bootstrap';
 import Icon from 'react-fontawesome';
 
 
 import ButtonShuffle from './ButtonShuffle.react';
 import ButtonRepeat  from './ButtonRepeat.react';
-import TrackCover    from './TrackCover.react';
 import Queue         from './Queue.react';
+import Cover         from '../Shared/Cover.react';
 
 import Player from '../../lib/player';
 import utils  from '../../utils/utils';
@@ -25,11 +25,10 @@ import classnames from 'classnames';
 export default class PlayingBar extends Component {
 
     static propTypes = {
-        cover: React.PropTypes.string,
         queue: React.PropTypes.array,
         queueCursor: React.PropTypes.number,
         shuffle: React.PropTypes.bool,
-        repeat: React.PropTypes.string
+        repeat: React.PropTypes.string,
     }
 
     constructor(props) {
@@ -41,7 +40,6 @@ export default class PlayingBar extends Component {
             duration    : null,
             x           : null,
             dragging    : false,
-            showQueue   : false
         };
 
         this.tick = this.tick.bind(this);
@@ -52,7 +50,6 @@ export default class PlayingBar extends Component {
         this.jumpAudioTo = this.jumpAudioTo.bind(this);
         this.showTooltip = this.showTooltip.bind(this);
         this.hideTooltip = this.hideTooltip.bind(this);
-        this.toggleQueue = this.toggleQueue.bind(this);
     }
 
     render() {
@@ -67,21 +64,17 @@ export default class PlayingBar extends Component {
         if(this.state.elapsed < trackPlaying.duration) elapsedPercent = this.state.elapsed * 100 / trackPlaying.duration;
 
         const nowPlayingTextClasses = classnames('now-playing text-center', {
-            dragging: this.state.dragging
+            dragging: this.state.dragging,
         });
 
         const nowPlayingTooltipClasses = classnames('playing-bar-tooltip', {
-            hidden: this.state.duration === null
+            hidden: this.state.duration === null,
         });
 
         return (
-            <div className={ nowPlayingTextClasses }
-                 onMouseMove={ this.dragOver }
-                 onMouseLeave={ this.dragEnd }
-                 onMouseUp={ this.dragEnd }
-            >
+            <div className={ nowPlayingTextClasses } >
                 <div className='now-playing-cover'>
-                    <TrackCover cover={ this.props.cover } />
+                    <Cover path={ trackPlaying.path } />
                 </div>
                 <div className='now-playing-infos'>
                     <div className='now-playing-metas'>
@@ -120,14 +113,17 @@ export default class PlayingBar extends Component {
                     </div>
                 </div>
                 <div className='now-playing-queue'>
-                    <button type='button' className='queue-toggle' onClick={ this.toggleQueue }>
-                        <Icon name='list' />
-                    </button>
-                    <Queue
-                        visible={ this.state.showQueue }
-                        queue={ this.props.queue }
-                        queueCursor={ this.props.queueCursor }
-                    />
+                    <Dropdown id='queue-dropdown' className='queue-dropdown'>
+                        <Dropdown.Toggle noCaret className='queue-toggle'>
+                            <Icon name='list' />
+                        </Dropdown.Toggle>
+                        <Dropdown.Menu>
+                            <Queue
+                                queue={ this.props.queue }
+                                queueCursor={ this.props.queueCursor }
+                            />
+                        </Dropdown.Menu>
+                    </Dropdown>
                 </div>
             </div>
         );
@@ -135,22 +131,16 @@ export default class PlayingBar extends Component {
 
     componentDidMount() {
         this.timer = setInterval(this.tick, 100);
+
+        window.addEventListener('mousemove', this.dragOver);
+        window.addEventListener('mouseup', this.dragEnd);
     }
 
     componentWillUnmount() {
         clearInterval(this.timer);
-    }
 
-    componentWillReceiveProps(nextProps) {
-        const nextTrackPlaying = nextProps.queue[nextProps.queueCursor];
-        const nextTrackPlayingPath = nextTrackPlaying && nextTrackPlaying.path ? nextTrackPlaying.path : null;
-
-        const currTrackPlaying = this.props.queue[this.props.queueCursor];
-        const currTrackPlayingPath = currTrackPlaying && currTrackPlaying.path ? currTrackPlaying.path : null;
-
-        if(nextTrackPlayingPath !== currTrackPlayingPath) {
-            AppActions.library.fetchCover(nextTrackPlayingPath);
-        }
+        window.removeEventListener('mousemove', this.dragOver);
+        window.removeEventListener('mouseup', this.dragEnd);
     }
 
     tick() {
@@ -206,18 +196,14 @@ export default class PlayingBar extends Component {
 
         this.setState({
             duration : time,
-            x        : e.pageX
+            x        : e.pageX,
         });
     }
 
     hideTooltip() {
         this.setState({
             duration : null,
-            x        : null
+            x        : null,
         });
-    }
-
-    toggleQueue() {
-        this.setState({ showQueue: !this.state.showQueue });
     }
 }

@@ -11,8 +11,8 @@ export default class FullViewMessage extends PureComponent {
     static propTypes = {
         children: React.PropTypes.oneOfType([
             React.PropTypes.array,
-            React.PropTypes.object
-        ])
+            React.PropTypes.object,
+        ]),
     }
 
     constructor(props) {

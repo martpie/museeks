@@ -13,7 +13,7 @@ export default class PlaylistsNavLink extends Component {
     static propTypes = {
         children: React.PropTypes.string,
         playlistId: React.PropTypes.string,
-        onContextMenu: React.PropTypes.func
+        onContextMenu: React.PropTypes.func,
     }
 
     constructor(props) {

@@ -14,7 +14,7 @@ import AppActions from '../../actions/AppActions';
 export default class ButtonShuffle extends Component {
 
     static propTypes = {
-        shuffle: React.PropTypes.bool
+        shuffle: React.PropTypes.bool,
     }
 
     constructor(props) {
@@ -27,7 +27,7 @@ export default class ButtonShuffle extends Component {
         const svg = require('../../../images/icons/player-shuffle.svg');
 
         const buttonClasses = classnames('button', {
-            active: this.props.shuffle
+            active: this.props.shuffle,
         });
 
         return (

@@ -7,7 +7,7 @@ import AppActions from '../../actions/AppActions';
 const svgMap = {
     one: require('../../../images/icons/player-repeat-one.svg'),
     all: require('../../../images/icons/player-repeat.svg'),
-    default: require('../../../images/icons/player-repeat.svg')
+    default: require('../../../images/icons/player-repeat.svg'),
 };
 
 /*
@@ -19,7 +19,7 @@ const svgMap = {
 export default class ButtonRepeat extends Component {
 
     static propTypes = {
-        repeat: React.PropTypes.string
+        repeat: React.PropTypes.string,
     }
 
     constructor(props) {
@@ -31,12 +31,12 @@ export default class ButtonRepeat extends Component {
     render() {
         const svg = svgMap[this.props.repeat] || svgMap.default;
         const buttonClasses = classnames('button repeat',{
-            active: this.props.repeat === 'one' || this.props.repeat === 'all'
+            active: this.props.repeat === 'one' || this.props.repeat === 'all',
         });
 
         const svgClasses = classnames('icon', {
             'repeat-one': this.props.repeat === 'one',
-            'repeat': this.props.repeat !== 'one'
+            'repeat': this.props.repeat !== 'one',
         });
 
         return (

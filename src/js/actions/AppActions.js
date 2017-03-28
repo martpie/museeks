@@ -46,7 +46,7 @@ const init = () => {
         NotificationActions.add({
             title: track.title,
             body: `${track.artist}\n${track.album}`,
-            icon: cover
+            icon: cover,
         });
     });
 
@@ -166,6 +166,6 @@ export default {
     start,
 
     app: {
-        restart
-    }
+        restart,
+    },
 };

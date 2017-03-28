@@ -68,7 +68,7 @@ export default class SettingsLibrary extends Component {
 
     openFolderSelector() {
         dialog.showOpenDialog({
-            properties: ['multiSelections', 'openDirectory']
+            properties: ['multiSelections', 'openDirectory'],
         }, (result) => {
             if(result) {
                 AppActions.library.add(result);
