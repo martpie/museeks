@@ -2,6 +2,7 @@ import Promise from 'bluebird';
 import os from 'os';
 import extend from 'xtend';
 import utils from '../../utils/utils';
+import { omit } from 'lodash';
 
 const library = (lib) => {
 
@@ -55,10 +56,9 @@ const library = (lib) => {
         } else { // If output has changed to another computer
 
             const playerState = {
-                ...state.player,
-                elapsed: lib.player.getCurrentTime(),
+                ...omit(state.player, ['history']),
                 queue: state.queue,
-                queueCursor: state.queueCursor
+                queueCursor: state.queueCursor,
             }
 
             // We ask the output device to set us as an observer.

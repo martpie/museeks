@@ -2,9 +2,6 @@ import i from 'icepick';
 
 export default (state = {}, action) => {
     switch (action.type) {
-        case('PLAYER/SET_STATE'): {
-            return i.assoc(state, 'player', action.payload.state);
-        }
         case('PLAYER/LOAD_PENDING'): {
             const { currentTrack, queueCursor, historyCursor, oldHistoryCursor } = action.meta;
             const addToHistory =
