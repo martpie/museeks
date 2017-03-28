@@ -259,11 +259,26 @@ const library = (lib) => {
         };
     };
 
-    const setVolume = (volume) => (dispatch) => {
+    const setVolume = (volume) => (dispatch, getState) => {
         if (!isNaN(parseFloat(volume)) && isFinite(volume)) {
-            lib.player.setVolume(volume);
+            const { player: { volume: oldVolume }, network: { output } } = getState();
 
-            dispatch(lib.actions.config.set('volume', volume));
+            const outputIsLocal = () => Promise.resolve();
+            const outputIsRemote = () => lib.api.actions.player.setVolume(output, volume);
+
+
+            lib.player.setVolume(volume);
+            dispatch(lib.actions.config.set('volume', volume, 300));
+
+            return dispatch({
+                type: 'PLAYER/SET_VOLUME',
+                payload: output.isLocal
+                    ? outputIsLocal()
+                    : outputIsRemote(),
+                meta: {
+                    volume, oldVolume
+                }
+            });
         }
     };
 

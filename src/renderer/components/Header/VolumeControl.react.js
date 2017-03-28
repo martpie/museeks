@@ -31,7 +31,7 @@ class VolumeControl extends Component {
 
         this.state = {
             showVolume: false,
-            volume: unsmoothifyVolume(lib.player.audio.volume),
+//            volume: unsmoothifyVolume(lib.player.audio.volume),
             muted: lib.player.isMuted()
         };
     }
@@ -41,6 +41,8 @@ class VolumeControl extends Component {
     }
 
     render() {
+        const { volume } = this.props;
+
         const volumeClasses = classnames('volume-control', {
             visible: this.state.showVolume
         });
@@ -52,13 +54,13 @@ class VolumeControl extends Component {
                     onMouseLeave={ this.hideVolume }
                     onClick={ this.mute }
             >
-                <Icon name={ this.getVolumeIcon(unsmoothifyVolume(this.state.volume), this.state.muted) } />
+                <Icon name={ this.getVolumeIcon(unsmoothifyVolume(volume), this.state.muted) } />
                 <div className={ volumeClasses }>
                     <input type={ 'range' }
                            min={ 0 }
                            max={ 1 }
                            step={ 0.01 }
-                           defaultValue={ this.state.volume }
+                           defaultValue={ volume }
                            ref='volume'
                            onChange={ this.setVolume }
                     />
@@ -69,9 +71,7 @@ class VolumeControl extends Component {
 
     setVolume = (e) => {
         const smoothVolume = smoothifyVolume(e.currentTarget.value);
-
         this.props.setVolume(smoothVolume);
-        this.setState({ volume: smoothVolume });
     }
 
     showVolume = () => {
@@ -92,7 +92,9 @@ class VolumeControl extends Component {
     }
 }
 
-const stateToProps = () => ({});
+const stateToProps = (state) => ({
+    volume: state.player.volume,
+});
 
 const dispatchToProps = {
     setVolume: lib.actions.player.setVolume,

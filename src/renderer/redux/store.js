@@ -5,17 +5,22 @@ import thunk from 'redux-thunk';
 import createLogger from 'redux-logger';
 import reducers from '../../shared/redux/reducers';
 import sendToObservers from './middleware/sendToObservers';
+import throttle from 'redux-throttle';
 
 const initialState = getInitialStateRenderer();
 
 // Create and configure the logger
-const logger = createLogger({ collapsed : true });
+const logger = createLogger({
+    collapsed: true,
+    predicate: (getState, action) => action.type !== 'PLAYER/UPDATE_ELAPSED_TIME'
+});
 
 // Create the middleware chain
 const middleware = [
     thunk,
     promiseMiddleware(),
     sendToObservers,
+    throttle(300),
     forwardToMain,
     logger
 ];

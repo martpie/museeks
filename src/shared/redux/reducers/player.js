@@ -73,6 +73,12 @@ export default (state = {}, action) => {
         case('PLAYER/SET_COVER'): {
             return i.assocIn(state, ['player', 'cover'], action.payload.cover);
         }
+        case('PLAYER/SET_VOLUME_PENDING'): {
+            return i.assocIn(state, ['player', 'volume'], action.meta.volume);
+        }
+        case('PLAYER/SET_VOLUME_REJECTED'): {
+            return i.assocIn(state, ['player', 'volume'], action.meta.oldVolume);
+        }
         case('PLAYER/CREATE_NEW_QUEUE_PENDING'): {
             return i.chain(state)
                 .assoc('queue', action.meta.newQueue)

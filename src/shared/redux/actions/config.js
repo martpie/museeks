@@ -10,17 +10,22 @@ const library = (lib) => {
         payload: lib.config.save(getState().config)
     });
 
-    const set = (key, value) => (dispatch) => {
-      dispatch({
-          type: 'CONFIG/SET',
-          payload: {
-              key,
-              value
-          }
-      });
+    const set = (key, value, throttle) => (dispatch) => {
+        dispatch({
+            type: 'CONFIG/SET',
+            payload: {
+                key,
+                value,
+            },
+            meta: {
+                ...( throttle
+                ? { throttle }
+                : {})
+            }
+        });
 
-      // We save in the next loop so the state has time to update
-      setTimeout(() => dispatch(save()), 1);
+        // We save in the next loop so the state has time to update
+        setTimeout(() => dispatch(save()), 1);
     };
 
     return {
