@@ -23,13 +23,13 @@ if (commandline.env === 'production') {
 
 module.exports = {
     entry: {
-        main: ['./src/renderer/main.js']
+        main: ['./src/renderer/main.js'],
+        web:  ['./src/web/main.js']
     },
     target: 'electron',
     output: {
         path: './src/dist',
-        filename: 'bundle.js',
-        publicPath: ''
+        filename: "[name].entry.js"
     },
     module: {
         rules: [
