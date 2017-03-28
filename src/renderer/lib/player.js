@@ -13,7 +13,6 @@ class Player {
         this.lib = lib;
 
         const dispatch = this.lib.store.dispatch;
-        const { config } = this.lib.store.getState();
 
         // binding for media keys
         // this.audio.addEventListener('play',  () => dispatch(this.lib.actions.player.play()));
@@ -76,9 +75,7 @@ class Player {
 
     getAudio = () => Promise.resolve(this.audio)
 
-    setCurrentTime = (currentTime) => {
-        return Promise.resolve(this.audio.currentTime = currentTime)
-    }
+    setCurrentTime = (currentTime) => Promise.resolve(this.audio.currentTime = currentTime);
 
     isMuted = () => this.audio.muted
 

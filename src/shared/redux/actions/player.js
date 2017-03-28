@@ -162,20 +162,6 @@ const library = (lib) => {
         });
     };
 
-    const stop = () => (dispatch, getState) => {
-        const { network: { output } } = getState();
-
-        const outputIsLocal = () => Promise.resolve(lib.player.stop());
-        const outputIsRemote = () => lib.api.actions.player.stop(output);
-
-        return dispatch({
-            type: 'PLAYER/STOP',
-            payload: output.isLocal
-                ? outputIsLocal()
-                : outputIsRemote()
-        });
-    };
-
     const next = (data = {}) => (dispatch, getState) => {
         const {
             queue,
@@ -208,7 +194,6 @@ const library = (lib) => {
         } = getState();
 
         lib.player.getAudio().then(({ currentTime }) => {
-
             const cursors = utils.getNextQueueCursor({
                 direction: 'previous',
                 queue,
@@ -225,6 +210,20 @@ const library = (lib) => {
             });
 
             dispatch(lib.actions.player.loadAndPlay(cursors));
+        });
+    };
+
+    const stop = () => (dispatch, getState) => {
+        const { network: { output } } = getState();
+
+        const outputIsLocal = () => Promise.resolve(lib.player.stop());
+        const outputIsRemote = () => lib.api.actions.player.stop(output);
+
+        return dispatch({
+            type: 'PLAYER/STOP',
+            payload: output.isLocal
+                ? outputIsLocal()
+                : outputIsRemote()
         });
     };
 
@@ -292,9 +291,8 @@ const library = (lib) => {
                     volume, oldVolume,
                     throttle: 100
                 },
-            })
-
-        }
+            });
+        };
     };
 
     const setMuted = (muted = false) => (dispatch) => {
@@ -383,7 +381,7 @@ const library = (lib) => {
                 me
             });
             return lib.api.actions.player.createNewQueue(output, remoteQueue);
-        }
+        };
 
         return dispatch({
             type: 'PLAYER/CREATE_NEW_QUEUE',
@@ -396,28 +394,27 @@ const library = (lib) => {
                 oldQueueCursor
             }
         });
-    }
+    };
 
     return {
-        audioError,
-        createNewQueue,
-        fetchCover,
-        jumpTo,
+        setState,
         load,
         loadAndPlay,
         newQueueLoadAndPlay,
-        next,
-        pause,
         play,
+        pause,
         playToggle,
+        next,
         previous,
+        stop,
+        shuffle,
         repeat,
+        setVolume,
         setMuted,
         setPlaybackRate,
-        setState,
-        setVolume,
-        fetchCover,
+        jumpTo,
         updateElapsedTime,
+        fetchCover,
         audioError,
         createNewQueue
     };

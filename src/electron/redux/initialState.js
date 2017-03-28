@@ -67,6 +67,6 @@ export default {
     toasts: [],                          // The array of toasts
 
     system: {
-        version: app.getVersion()
+        // version: app.getVersion()
     }
 };
