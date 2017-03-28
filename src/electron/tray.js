@@ -27,7 +27,7 @@ class TrayManager {
             {
                 label: 'Play',
                 click: () => {
-                    dispatch(lib.actions.player.play.play());
+                    dispatch(lib.actions.player.play());
                 }
             }
         ];
@@ -36,44 +36,52 @@ class TrayManager {
             {
                 label: 'Pause',
                 click: () => {
-                    dispatch(lib.actions.player.play.pause());
+                    dispatch(lib.actions.player.pause());
                 }
             }
         ];
 
-        this.menu = [
-            {
-                label: 'Previous',
-                click: () => {
-                    dispatch(lib.actions.player.play.prev());
-                }
-            },
-            {
-                label: 'Next',
-                click: () => {
-                    dispatch(lib.actions.player.play.next());
-                }
-            },
-            {
-                type: 'separator'
-            },
-            {
-                label: 'Show',
-                click: () => {
-                    this.win.show();
-                    this.win.focus();
-                }
-            },
-            {
-                type: 'separator'
-            },
-            {
-                label: 'Quit',
-                click: () => {
-                    this.win.destroy();
-                    app.quit();
-                }
+        const itemPrevious = {
+            label: 'Previous',
+            click: () => {
+                dispatch(lib.actions.player.prev());
             }
+        };
+
+        const itemNext = {
+            label: 'Next',
+            click: () => {
+                dispatch(lib.actions.player.next());
+            }
+        };
+
+        const itemSeparator = {
+            type: 'separator'
+        };
+
+        const itemShow = {
+            label: 'Show',
+            click: () => {
+                this.win.show();
+                this.win.focus();
+            }
+        };
+
+        const itemQuit = {
+            label: 'Quit',
+            click: () => {
+                this.win.destroy();
+                app.quit();
+            }
+        };
+
+        this.menu = [
+            itemPrevious,
+            itemNext,
+            itemSeparator,
+            itemShow,
+            itemSeparator,
+            itemQuit,
         ];
     }
 
