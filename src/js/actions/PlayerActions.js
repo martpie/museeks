@@ -218,6 +218,7 @@ const jumpTo = (to) => {
 };
 
 const audioError = (e) => {
+    stop();
     switch (e.target.error.code) {
         case e.target.error.MEDIA_ERR_ABORTED:
             ToastsActions.add('warning', audioErrors.aborted);
