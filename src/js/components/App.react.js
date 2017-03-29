@@ -3,6 +3,7 @@ import { Row } from 'react-bootstrap';
 import KeyBinding from 'react-keybinding-component';
 
 import { connect } from 'react-redux';
+import classnames from 'classnames';
 
 import Header from './Header/Header.react';
 import Footer from './Footer/Footer.react';
@@ -38,8 +39,12 @@ class Museeks extends Component {
 
         const config = { ...app.config.getAll() };
 
+        const mainClasses = classnames('main', {
+            'native-frame': config.useNativeFrame,
+        });
+
         return (
-            <div className='main'>
+            <div className={ mainClasses }>
                 <KeyBinding onKey={ this.onKey } preventInputConflict />
                 <Header
                     app={ this }
@@ -48,7 +53,7 @@ class Museeks extends Component {
                     shuffle={ store.shuffle }
                     queue={ store.queue }
                     queueCursor={ store.queueCursor }
-                    windowControls={ !config.useNativeFrame }
+                    useNativeFrame={ config.useNativeFrame }
                 />
                 <div className='main-content container-fluid'>
                     <Row className='content'>

@@ -5,9 +5,16 @@
 |--------------------------------------------------------------------------
 */
 
-#wrap,
-.main,
-.main-content,
+#wrap {
+    height: 100%;
+}
+
+.main {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
 .content,
 .view,
 .columns {
@@ -15,20 +22,16 @@
     max-height: 100%;
 }
 
-.view {
-    overflow: auto;
-    position: relative;
-
-    &.view-withpadding {
-        padding: 15px;
-    }
-}
-
 .main-content {
-    padding-bottom: 107px; // HACK
+    width: 100%;
+    flex: 1 1 auto;
+    position: relative;
 }
 
 .content {
+    position: absolute;
+    height: 100%;
+    width: 100%;
     padding: 0;
 
     h2 {
@@ -38,6 +41,15 @@
     .btn .fa {
         display: inline-block;
         margin-right: 12px;
+    }
+}
+
+.view {
+    overflow: auto;
+    position: relative;
+
+    &.view-withpadding {
+        padding: 15px;
     }
 }
 

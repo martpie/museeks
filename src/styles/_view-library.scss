@@ -14,12 +14,12 @@
         max-height: calc(100% - 26px);
 
         .tracks-list-header {
-            position: fixed;
-            top: #{$main-header-height + $top-header-height + 1}px;
+            position: absolute;
+            top: 0;
             border-bottom: 1px solid rgb(210, 210, 210);
             color: #555;
             display: flex;
-            width: calc(100% - 2px);
+            width: 100%;
             background-color: $generic-white;
             z-index: 20;
 

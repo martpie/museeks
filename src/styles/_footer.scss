@@ -5,14 +5,13 @@
 */
 
 footer {
-    position: fixed;
-    bottom: 1px;
-    width: calc(100% - 2px);
+    flex: 0 0 auto;
     border-top: 1px solid #AAA;
     padding-top: 5px;
     padding-bottom: 5px;
     background-color: rgb(244, 244, 244);
     padding: 0;
+    width: 100%;
 
     .view-switcher {
 

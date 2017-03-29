@@ -13,6 +13,7 @@ $_window-control-size: #{$top-header-height}px;
 */
 
 header {
+    flex: 0 0 auto;
     -webkit-app-region: drag;
 
     .player-controls,
@@ -83,19 +84,24 @@ header {
                 width: 60px;
 
                 .cover {
-                    width: 42px;
-                    height: 42px;
+                    width: 49px;
+                    height: 49px;
                     margin-right: 10px;
                     background-position: center;
                     background-size: cover;
                     text-align: center;
-                    border: solid 1px #D2D2D2;
+                    border-style: solid;
+                    border-color: #D2D2D2;
+                    border-width: 0 1px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    box-sizing: content-box;
 
                     .note {
                         font-family: monospace; // the sexy one
                         font-size: 30px;
                         line-height: 28px;
-                        padding: 5px 5px 7px 5px;
                     }
                 }
             }

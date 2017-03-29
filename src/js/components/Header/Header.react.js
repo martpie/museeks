@@ -23,7 +23,7 @@ export default class Header extends Component {
         queueCursor: React.PropTypes.number,
         shuffle: React.PropTypes.bool,
         repeat: React.PropTypes.string,
-        windowControls: React.PropTypes.bool,
+        useNativeFrame: React.PropTypes.bool,
     }
 
     constructor(props) {
@@ -35,9 +35,7 @@ export default class Header extends Component {
     render() {
         return (
             <header>
-                <div className='top-header'>
-                    <WindowControls active={ this.props.windowControls } />
-                </div>
+                { this.getTopHeader() }
                 <div className='main-header'>
                     <div className='col-main-controls'>
                         <PlayerControls
@@ -66,6 +64,16 @@ export default class Header extends Component {
                 </div>
                 <KeyBinding onKey={ this.onKey } preventInputConflict />
             </header>
+        );
+    }
+
+    getTopHeader() {
+        if(this.props.useNativeFrame) return null;
+
+        return (
+            <div className='top-header'>
+                <WindowControls />
+            </div>
         );
     }
 
