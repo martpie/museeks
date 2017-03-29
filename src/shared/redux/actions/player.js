@@ -165,7 +165,7 @@ const library = (lib) => {
         const {
             queue,
             queueCursor,
-            player: { history, historyCursor, repeat, shuffle },
+            player: { history, historyCursor, repeat, shuffle }
         } = getState();
 
         const cursors = utils.getNextQueueCursor({
@@ -189,7 +189,7 @@ const library = (lib) => {
         const {
             queue,
             queueCursor,
-            player: { history, historyCursor, repeat, shuffle },
+            player: { history, historyCursor, repeat, shuffle }
         } = getState();
 
         lib.player.getAudio().then(({ currentTime }) => {

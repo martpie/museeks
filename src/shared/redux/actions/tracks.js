@@ -60,7 +60,8 @@ const library = (lib) => {
         const playEvent = data.playEvent || {
             user: me.hostname,
             timestamp: Date.now(),
-            ...pick(track, eventMetadata)
+            ...pick(track, eventMetadata),
+            _ids: [track._id]
         };
 
         const playCountUpdate = {
@@ -69,7 +70,6 @@ const library = (lib) => {
             }
         };
 
-        // TODO: Jackson to ask David about accessing output from this sliver of store
         const outputIsLocal = () => Promise.all([
             lib.playEvent.insert(playEvent),
             lib.track.update({ _id: track._id }, playCountUpdate)
@@ -82,7 +82,8 @@ const library = (lib) => {
                 ? outputIsLocal()
                 : outputIsRemote(),
             meta: {
-                event
+                _id: track._id,
+                playEvent
             }
         });
     };
