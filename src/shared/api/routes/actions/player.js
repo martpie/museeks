@@ -20,7 +20,7 @@ export default [{
     dispatch: true
 }, {
     path: 'api/actions/player/playToggle',
-    method: 'GET',
+    method: 'POST',
     name: 'actions.player.playToggle',
     dispatch: true
 }, {

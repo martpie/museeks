@@ -31,7 +31,7 @@
     "bootstrap-css-only": "3.3.7",
     "classnames": "2.2.5",
     "electron-redux": "http://github.com/MrBlenny/electron-redux/tarball/master",
-    "electron-simple-rpc": "^1.0.6",
+    "electron-simple-rpc": "^1.0.7",
     "evilscan": "^1.0.3",
     "flatten": "^1.0.2",
     "font-awesome": "4.7.0",

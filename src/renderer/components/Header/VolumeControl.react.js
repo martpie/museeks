@@ -59,7 +59,6 @@ class VolumeControl extends Component {
                            min={ 0 }
                            max={ 1 }
                            step={ 0.01 }
-                           defaultValue={ unsmoothifyVolume(volume) }
                            value={ unsmoothifyVolume(volume) }
                            ref='volume'
                            onChange={ this.setVolume }

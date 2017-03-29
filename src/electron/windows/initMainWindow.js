@@ -1,6 +1,7 @@
 import { BrowserWindow, screen } from 'electron';
 import extend from 'xtend';
 import os from 'os';
+import { throttle } from 'lodash';
 
 const checkBounds = (desiredBounds) => {
 
@@ -32,7 +33,9 @@ const checkBounds = (desiredBounds) => {
 
 const library = (lib, icons, srcPath) => {
 
-    const bounds = checkBounds(lib.store.getState().config.bounds);
+    const { store } = lib;
+
+    const bounds = checkBounds(store.getState().config.bounds);
 
     const mainWindowOption = {
         title: 'Museeks',
@@ -43,7 +46,7 @@ const library = (lib, icons, srcPath) => {
         height: bounds.height,
         minWidth: 900,
         minHeight: 550,
-        frame: lib.store.getState().config.useNativeFrame,
+        frame: store.getState().config.useNativeFrame,
         show: false
     };
 
@@ -51,7 +54,7 @@ const library = (lib, icons, srcPath) => {
     let mainWindow = new BrowserWindow(mainWindowOption);
 
     // ... and load our html page
-    mainWindow.loadURL(`file://${srcPath}/app.html#/library`);
+    mainWindow.loadURL(`file://${srcPath}/renderer/index.html#/library`);
 
     // Dereference the window object
     mainWindow.on('closed', () => mainWindow = null);
@@ -60,6 +63,13 @@ const library = (lib, icons, srcPath) => {
         e.preventDefault();
         mainWindow.webContents.send('close');
     });
+
+    // Save the bounds on resize
+    const saveBounds = () => store.dispatch(lib.actions.config.set('bounds', mainWindow.getBounds()));
+    const saveBoundsThrottled = throttle(saveBounds, 3000);
+    mainWindow.on('resize', saveBoundsThrottled);
+    mainWindow.on('move', saveBoundsThrottled);
+
 
     return mainWindow;
 };

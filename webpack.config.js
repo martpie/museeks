@@ -10,7 +10,7 @@ const path = require('path');
 const commandline = minimist(process.argv.slice(2));
 
 const pluginsList = [
-    new ExtractTextPlugin({ filename: 'main.css', allChunks: true }),
+    new ExtractTextPlugin({ filename: '[name].css', allChunks: true }),
 ];
 
 let devtool;
@@ -18,18 +18,19 @@ if (commandline.env === 'production') {
     pluginsList.push(new BabiliPlugin());
     pluginsList.push(new webpack.DefinePlugin({ 'process.env': { 'NODE_ENV': '"production"' } }));
 } else {
+    pluginsList.push(new webpack.DefinePlugin({ 'process.env': { 'NODE_ENV': '"development"' } }));
     devtool = 'source-map';
 }
 
 module.exports = {
     entry: {
-        main: ['./src/renderer/main.js']
+        main: ['./src/renderer/main.js'],
+        web:  ['./src/web/main.js']
     },
     target: 'electron',
     output: {
         path: './src/dist',
-        filename: 'bundle.js',
-        publicPath: ''
+        filename: "[name].entry.js"
     },
     module: {
         rules: [
