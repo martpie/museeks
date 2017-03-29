@@ -11,11 +11,6 @@ const library = (lib) => {
     // Remember dimensions and positionning
     const currentWindow = lib.app.browserWindows.main;
 
-    // Save the bounds on resize
-    const saveBounds = () => dispatch(lib.actions.config.set('bounds', lib.app.browserWindows.main.getBounds(), 3000));
-    currentWindow.on('resize', saveBounds);
-    currentWindow.on('move', saveBounds);
-
     // load data and apply app settings
     dispatch(lib.actions.tracks.find());
     dispatch(lib.actions.playlists.refresh());
