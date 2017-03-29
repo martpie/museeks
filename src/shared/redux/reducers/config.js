@@ -6,14 +6,14 @@ export default (state = {}, action) => {
             return {
                 ...state,
                 ...extend(state, { [action.payload.key]: action.payload.value })
-            }
+            };
         }
 
         case('CONFIG/LOAD_FULFILLED'): {
             return {
                 ...state,
                 ...action.payload
-            }
+            };
         }
 
         default: {

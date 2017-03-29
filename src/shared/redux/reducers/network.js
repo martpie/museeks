@@ -42,7 +42,7 @@ export default (state = {}, action) => {
             const targetObserver = action.payload.peer;
             return i.updateIn(state, ['observers'], (observers) => {
                 // filter the list to remove the targetObserver
-                return observers.filter(observer => observer.ip !== targetObserver.ip);
+                return observers.filter((observer) => observer.ip !== targetObserver.ip);
             });
         }
 

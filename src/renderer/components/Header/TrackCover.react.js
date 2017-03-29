@@ -19,7 +19,7 @@ class TrackCover extends PureComponent {
 
         this.state = {
             data: undefined
-        }
+        };
     }
 
     componentWillReceiveProps(nextProps) {
@@ -46,7 +46,7 @@ class TrackCover extends PureComponent {
                 <div className='cover empty'>
                     <div className='note'>♪</div>
                 </div>
-            )
+            );
     }
 }
 

@@ -13,8 +13,8 @@ const library = (lib) => {
                 );
 
             notification.onclick = () => {
-                lib.app.browserWindows.main.show(),
-                lib.app.browserWindows.main.focus()
+                lib.app.browserWindows.main.show();
+                lib.app.browserWindows.main.focus();
             };
 
             return {
@@ -27,6 +27,6 @@ const library = (lib) => {
     return {
         add
     };
-}
+};
 
 export default library;

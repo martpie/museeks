@@ -64,7 +64,7 @@ class QueueListItem extends PureComponent {
         );
     }
 
-    loadAndPlay = (e) => this.props.loadAndPlay(track._id)
+    loadAndPlay = () => this.props.loadAndPlay(this.props.track._id)
 
     onDragStart = (e) => this.props.onDragStart(e, this.props.index)
 

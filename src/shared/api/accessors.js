@@ -1,7 +1,5 @@
 import axios from 'axios';
-import qs from 'qs';
 import { set } from 'lodash';
-import extend from 'xtend';
 import utils from '../utils/utils';
 
 import routes from './routes';
@@ -24,7 +22,7 @@ const library = (lib) => {
                 json: true
             })
             .then((response) => response.data);
-        }
+        };
 
         // store the api call in the api hierarchy
         set(api, route.name, clientCall);
@@ -33,6 +31,6 @@ const library = (lib) => {
     }, {});
 
     return clientApiCalls;
-}
+};
 
 export default library;

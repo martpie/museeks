@@ -20,7 +20,9 @@ class Playlist extends Component {
         tracks: React.PropTypes.array,
         trackPlayingId: React.PropTypes.string,
         playlists: React.PropTypes.array,
-        playStatus: React.PropTypes.string
+        playStatus: React.PropTypes.string,
+        load: React.PropTypes.function,
+        setTracksCursor: React.PropTypes.function
     }
 
     constructor(props) {
@@ -28,7 +30,7 @@ class Playlist extends Component {
     }
 
     componentDidMount = () => {
-        this.props.load(route.params.playlistId);
+        this.props.load(this.props.params.playlistId);
         this.props.setTracksCursor('playlist');
     }
 
@@ -55,7 +57,7 @@ class Playlist extends Component {
     }
 }
 
-const stateToProps = (state) => ({});
+const stateToProps = () => ({});
 
 const dispatchToProps = {
     load: lib.actions.playlists.load,

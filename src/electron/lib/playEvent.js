@@ -11,6 +11,6 @@ const library = (lib) => {
         insert,
         remove
     };
-}
+};
 
 export default library;

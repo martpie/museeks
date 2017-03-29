@@ -9,7 +9,6 @@ class PowerMonitor {
 
     enable() {
         const { powerMonitor } = require('electron');
-        const win = this.win;
 
         powerMonitor.on('suspend', () => {
             this.store.dispatch(lib.actions.player.pause());

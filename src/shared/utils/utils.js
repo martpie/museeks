@@ -26,7 +26,7 @@ const getMeWithIP = (me, peer) => {
             // Get the DNS zone. 192.168.0.50 returns 192.168.0
             const getDnsZone = (ip) => ip.substr(0, ip.lastIndexOf('.'));
             const peerDnsZone = getDnsZone(peer.ip);
-            return me.ips.find(ip => getDnsZone(ip) === peerDnsZone);
+            return me.ips.find((ip) => getDnsZone(ip) === peerDnsZone);
         }
     };
 
@@ -98,10 +98,6 @@ const parseUri = (uri) => {
  * @param string data base64 string
  * @return string
  */
-
-const parseBase64 = (format, data) => {
-    return `data:image/${format};base64,${data}`;
-};
 
 /**
  * Sort an array of int by ASC or DESC, then remove all duplicates
@@ -333,9 +329,8 @@ const fetchCover = async (trackPath) => {
         return {
             format: 'base64',
             data: data.picture[0].data
-        }
+        };
     } else {
-
         // scan folder for any cover image
         const folder = path.dirname(trackPath);
         const pattern = path.join(folder, '*');
@@ -351,7 +346,7 @@ const fetchCover = async (trackPath) => {
         return {
             format: 'path',
             data: filepath
-        }
+        };
     }
 };
 
@@ -378,14 +373,6 @@ const pickRandom = (items) => items[Math.floor(Math.random() * items.length)];
 
 
 const peerEndpoint = (peer) => {
-//        const { config } = lib.store.getState();
-//        const protocol = config[local].api.protocol;
-//        const port = config[remote].api.port;
-
-    const [local, remote] = process.type === 'renderer'
-        ? ['renderer', 'electron']
-        : ['electron', 'renderer'];
-
     const protocol = 'http';
     const host = peer.isLocal ? 'localhost' : peer.ip;
     const port = '54321';
@@ -402,7 +389,6 @@ const coverEndpoint = ({ _id, peer }) => `${peerEndpoint(peer)}/api/tracks/cover
 const dispatchEndpoint = ({ peer }) => `${peerEndpoint(peer)}/api/store/dispatch`;
 
 const transformTrackPaths = ({ tracks, me, peer }) => {
-
     const meWithIP = getMeWithIP(me, peer);
 
     const makeRemote = (track) => ({
@@ -424,10 +410,10 @@ const transformTrackPaths = ({ tracks, me, peer }) => {
     );
 
     return tracksWithTransformedPaths;
-}
+};
 
 const getNextQueueCursor = (data) => {
-console.trace('getNextQueueCursor = (data)', data)
+// console.trace('getNextQueueCursor = (data)', data)
     const {
         direction,
         queue,
@@ -458,7 +444,7 @@ console.trace('getNextQueueCursor = (data)', data)
         } else {
             return queueCursor + 1;
         }
-    }
+    };
 
     const inHistory = historyCursor !== -1;
 
@@ -506,15 +492,12 @@ console.trace('getNextQueueCursor = (data)', data)
             }
         }
     }
-console.log('cursor result', {
-    queueCursor,
-    historyCursor
-})
+
     return {
         queueCursor,
         historyCursor
-    }
-}
+    };
+};
 
 export default {
     getMeWithIP,

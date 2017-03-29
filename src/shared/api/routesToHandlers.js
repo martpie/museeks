@@ -1,5 +1,4 @@
 import { get, has } from 'lodash';
-import extend from 'xtend';
 import Promise from 'bluebird';
 
 const routesToHandlers = (routes, lib) => {
@@ -26,7 +25,7 @@ const routesToHandlers = (routes, lib) => {
             // wrap the function in a redux dispatch if required
             const dispatchedFunction = (inputs) => route.dispatch
                 ? lib.store.dispatch(libraryFunction(inputs))
-                : libraryFunction(inputs)
+                : libraryFunction(inputs);
 
             const pickActionPayload = (result) => has(result, 'action.type') && has(result, 'action.payload')
                 ? result.action.payload
@@ -38,8 +37,8 @@ const routesToHandlers = (routes, lib) => {
                 .catch((error) => res({ error }).code(400));
 
             return functionResult;
-        }
-    }
+        };
+    };
 
     const routeWithHandler = (route) => ({
         method: route.method,
@@ -51,6 +50,6 @@ const routesToHandlers = (routes, lib) => {
     const routesWithHandlers = routes.map(routeWithHandler);
 
     return routesWithHandlers;
-}
+};
 
 export default routesToHandlers;

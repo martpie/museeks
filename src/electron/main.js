@@ -1,10 +1,6 @@
-process.env.NODE_ENV = 'production'; // Drastically increase performances
-
-import electron from 'electron';
-import { nativeImage, app } from 'electron';
+import { app } from 'electron';
 import path from 'path';
 import os from 'os';
-import mutate from 'xtend/mutable';
 
 import Database from './database';                     // Persistent data store
 import store from './redux/store';                     // Redux store
@@ -63,7 +59,7 @@ app.on('ready', () => {
     initLib(store);
 
     // Load configuration required for the rest of the app to load into the store
-    store.dispatch(lib.actions.config.load()).then((response) => {
+    store.dispatch(lib.actions.config.load()).then(() => {
 
         // Start the database
         const database = new Database(lib);
@@ -74,7 +70,7 @@ app.on('ready', () => {
         apiServer.start();
 
         // Start listening for RPC IPC events
-        const rpcIpcManager = new RpcIpcManager(lib, 'electron');
+        new RpcIpcManager(lib, 'electron');
 
         // Power monitor
         const powerMonitor = new PowerMonitor(mainWindow, store);

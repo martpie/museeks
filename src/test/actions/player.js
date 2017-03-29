@@ -5,14 +5,10 @@ import lib from '../fixtures/lib';
 
 const player = playerActions(lib);
 
-test('player reducer next', (t) => {
-
+test('player reducer shuffle', (t) => {
     const description = 'shuffle should set the shuffle property to true';
 
     const action = player.shuffle(true);
-
-    const initialState = {
-    }
 
     const delta = {
         player: {
@@ -21,12 +17,32 @@ test('player reducer next', (t) => {
     };
 
     return actionTest({
-        // initialState,
         action,
         delta
     })
-    .then((result) => t.deepEqual(result.expectedState, result.actualState, description))
-    .then(() => {
+    .then((result) => t.deepEqual(result.delta, delta, description));
+});
 
-    });
+test('player reducer next', (t) => {
+
+    const description = 'next should increment the queue cursor';
+
+    const action = player.next();
+
+    const initialState = {
+        queueCursor: 5,
+        player: {
+            playStatus: 'play'
+        }
+    };
+
+    const delta = {
+        queueCursor: 6
+    };
+
+    return actionTest({
+        initialState,
+        action
+    })
+    .then((result) => t.deepEqual(result.delta, delta, description));
 });

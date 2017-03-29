@@ -9,7 +9,7 @@ const checkBounds = (desiredBounds) => {
     const screenBounds = {
         x: parseInt(width / 2),
         y: parseInt(height / 2)
-    }
+    };
     const bounds = extend(screenBounds, desiredBounds);
 
     // check if the browser window is offscreen
@@ -28,7 +28,7 @@ const checkBounds = (desiredBounds) => {
     }
 
     return bounds;
-}
+};
 
 const library = (lib, icons, srcPath) => {
 
@@ -62,6 +62,6 @@ const library = (lib, icons, srcPath) => {
     });
 
     return mainWindow;
-}
+};
 
 export default library;

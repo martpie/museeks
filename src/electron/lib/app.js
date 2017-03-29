@@ -22,4 +22,4 @@ export default {
     browserWindows: {
         main: BrowserWindow.getAllWindows()[0]
     },
-}
+};

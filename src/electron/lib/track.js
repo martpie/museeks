@@ -17,6 +17,6 @@ const library = (lib) => {
         update,
         remove
     };
-}
+};
 
 export default library;

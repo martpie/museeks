@@ -1,7 +1,3 @@
-import i from 'icepick';
-import extend from 'xtend';
-import utils from '../../utils/utils';
-
 export default (state = {}, action) => {
     switch (action.type) {
 

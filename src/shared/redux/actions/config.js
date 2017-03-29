@@ -32,7 +32,7 @@ const library = (lib) => {
         set,
         save,
         load
-    }
-}
+    };
+};
 
 export default library;

@@ -61,13 +61,13 @@ const library = (lib) => {
             user: me.hostname,
             timestamp: Date.now(),
             ...pick(track, eventMetadata)
-        }
+        };
 
         const playCountUpdate = {
             $inc: {
                 playCount: 1
             }
-        }
+        };
 
         // TODO: Jackson to ask David about accessing output from this sliver of store
         const outputIsLocal = () => Promise.all([
@@ -82,11 +82,10 @@ const library = (lib) => {
                 ? outputIsLocal()
                 : outputIsRemote(),
             meta: {
-                _id,
                 event
             }
         });
-    }
+    };
 
     return {
         find,
@@ -94,7 +93,7 @@ const library = (lib) => {
         remove,
         incrementPlayCount,
         filter
-    }
-}
+    };
+};
 
 export default library;

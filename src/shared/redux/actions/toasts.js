@@ -15,12 +15,12 @@ const library = (lib) => {
                     _id
                 });
             }, duration);
-        }
+        };
     };
 
     return {
         add
     };
-}
+};
 
 export default library;

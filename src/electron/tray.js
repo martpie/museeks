@@ -1,7 +1,6 @@
 import os from 'os';
 
-import { Tray, Menu, app, ipcMain } from 'electron';
-import lib from './lib';
+import { Tray, Menu, app } from 'electron';
 
 class TrayManager {
 

@@ -1,4 +1,3 @@
-import { throttle } from 'lodash';
 const library = (lib) => {
     const store = lib.store;
     const dispatch = store.dispatch;
@@ -28,6 +27,6 @@ const library = (lib) => {
     dispatch(lib.actions.player.setVolume(config.volume));
     dispatch(lib.actions.player.setMuted(config.muted));
     dispatch(lib.actions.player.setPlaybackRate(config.playbackRate));
-}
+};
 
 export default library;

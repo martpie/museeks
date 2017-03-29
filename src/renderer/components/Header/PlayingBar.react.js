@@ -55,9 +55,7 @@ class PlayingBar extends Component {
 
         if (elapsed < currentTrack.duration) elapsedPercent = elapsed * 100 / currentTrack.duration;
 
-        const nowPlayingTextClasses = classnames('now-playing text-center', {
-            dragging: dragging
-        });
+        const nowPlayingTextClasses = classnames('now-playing text-center', { dragging });
 
         const nowPlayingTooltipClasses = classnames('playing-bar-tooltip', {
             hidden: duration === null
@@ -209,7 +207,7 @@ class PlayingBar extends Component {
     toggleQueue = () => {
         this.setState({ showQueue: !this.state.showQueue });
     }
-};
+}
 
 const stateToProps = () => ({});
 

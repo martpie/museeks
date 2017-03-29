@@ -1,6 +1,4 @@
 import Promise from 'bluebird';
-import os from 'os';
-import extend from 'xtend';
 import utils from '../../utils/utils';
 import { omit } from 'lodash';
 
@@ -10,12 +8,12 @@ const library = (lib) => {
         dispatch({
             type: 'NETWORK/SCAN_PEERS',
             payload: lib.peerDiscovery.scan()
-        }).then(({value: peers}) => {
+        }).then(({ value: peers }) => {
             peers.forEach((peer) => {
-                dispatch(lib.actions.network.peerFound(peer))
-            })
-        })
-    }
+                dispatch(lib.actions.network.peerFound(peer));
+            });
+        });
+    };
 
     const peerFound = (peer) => (dispatch, getState) => {
         const me = getState().network.me;
@@ -63,14 +61,12 @@ const library = (lib) => {
                     prevOutput
                 }
             });
-
         } else { // If output has changed to another computer
-
             const playerState = {
                 ...omit(state.player, ['history']),
                 queue: state.queue,
                 queueCursor: state.queueCursor,
-            }
+            };
 
             // We ask the output device to set us as an observer.
             dispatch({
@@ -88,9 +84,6 @@ const library = (lib) => {
     };
 
     const connectAsOutput = ({ state, peer }) => (dispatch) => {
-        console.log('CONNECT AS OUPUT')
-        console.log(require('util').inspect(state, { depth: 12 }), peer)
-
         // Apply the state of the remote input to the local player
 
         // Stop the player from playing
@@ -134,6 +127,6 @@ const library = (lib) => {
         addObserver,
         removeObserver
     };
-}
+};
 
 export default library;

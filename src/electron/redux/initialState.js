@@ -1,10 +1,9 @@
 import os from 'os';
 import { flatten } from 'lodash';
-import { app } from 'electron';
 
 const interfaces = flatten(Object.values(os.networkInterfaces()));
-const networks = interfaces.filter(adapter => adapter.family === 'IPv4' && !adapter.internal);
-const ips = networks.map(network => network.address);
+const networks = interfaces.filter((adapter) => adapter.family === 'IPv4' && !adapter.internal);
+const ips = networks.map((network) => network.address);
 
 const hostname = os.hostname();
 const platform = os.platform();

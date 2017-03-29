@@ -107,7 +107,7 @@ const library = (lib) => {
         toggleMinimizeToTray,
         toggleNativeFrame,
         toggleSleepBlocker
-    }
-}
+    };
+};
 
 export default library;

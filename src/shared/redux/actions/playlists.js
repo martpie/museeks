@@ -76,7 +76,7 @@ const library = (lib) => {
 
     const removeTracksFrom = (_id, deletedTracks) => (dispatch) => {
         return lib.playlist.findOne({ query: { _id } }).then((playlist) => {
-            const tracks = playlist.tracks.filter(track => !deletedTracks.includes(track));
+            const tracks = playlist.tracks.filter((track) => !deletedTracks.includes(track));
             return lib.playlist.update({ _id }, { $set: { tracks } }).then(() => {
                 return dispatch(load(_id));
             });
@@ -92,6 +92,6 @@ const library = (lib) => {
         addTracksTo,
         removeTracksFrom
     };
-}
+};
 
 export default library;

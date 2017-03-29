@@ -15,6 +15,6 @@ const library = (lib) => {
     globalShortcut.register('MediaNextTrack', () => {
         dispatch(lib.actions.player.next());
     });
-}
+};
 
 export default library;

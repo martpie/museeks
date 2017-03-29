@@ -28,7 +28,7 @@ const lib = (lib) => {
         settings,
         toasts,
         tracks
-    }
+    };
 
     // create a copy of the library to attach actions to
     const libWithActions = mutate(lib, { actions: {} });
@@ -41,6 +41,6 @@ const lib = (lib) => {
 
     // return the actions object with the shared library reference
     return sharedLib.actions;
-}
+};
 
 export default lib;

@@ -1,6 +1,3 @@
-import utils from  '../../utils/utils';
-import { range } from 'range';
-
 const library = (lib) => {
 
     const clear = () => ({
@@ -38,7 +35,7 @@ const library = (lib) => {
     const setQueueCursor = (queueCursor) => (dispatch, getState) => {
         const { queue } = getState();
         lib.player.setMetadata(queue[queueCursor]);
-        console.log('queue[index]queue[index]queue[index]queue[index]queue[index]', queue[queueCursor])
+        console.log('queue[index]queue[index]queue[index]queue[index]queue[index]', queue[queueCursor]);
 
         return {
             type: 'QUEUE/SET_QUEUE_CURSOR',
@@ -56,6 +53,6 @@ const library = (lib) => {
         setQueue,
         setQueueCursor
     };
-}
+};
 
 export default library;

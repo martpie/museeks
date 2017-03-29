@@ -15,8 +15,6 @@ import Avatar from '../Avatar';
 |--------------------------------------------------------------------------
 */
 
-
-
 class TracksList extends Component {
 
     static propTypes = {
@@ -25,6 +23,7 @@ class TracksList extends Component {
         trackPlayingId: React.PropTypes.string,
         playlists: React.PropTypes.array,
         currentPlaylist: React.PropTypes.string,
+        loadAndPlay: React.PropTypes.function,
         playStatus: React.PropTypes.string
     }
 
@@ -158,7 +157,7 @@ class TracksList extends Component {
                             { track.genre.join(', ') }
                         </div>
                         <div className='cell cell-owner'>
-                            <Avatar name={track.owner.name || track.owner.hostname} size={24}/>
+                        <Avatar name={ track.owner.name || track.owner.hostname } size={ 24 } />
                         </div>
                     </TrackRow>
                 );
@@ -269,7 +268,7 @@ class TracksList extends Component {
             playlistsList = playlistsList.filter((elem) => elem._id !== this.props.currentPlaylist);
         }
 
-        const processClick = ({reply, data}) => {
+        const processClick = ({ reply, data }) => {
             const selected = this.state.selected;
             switch(reply) {
                 case 'addToQueue': {
@@ -295,7 +294,7 @@ class TracksList extends Component {
                     this.props.create('New playlist', false).then((playlistId) => {
                         const isShown = this.props.type === 'playlist' && data === this.props.currentPlaylist;
                         this.props.addTracksTo(playlistId, selected, isShown);
-                    })
+                    });
                     break;
                 }
                 case 'searchFor': {

@@ -6,7 +6,7 @@ const trackList = (data) => {
     // TODO This promise will be left unresolved if we
     // click off the context menu. Maybe this is an issue
     // for performance? Probably (hopefully) not important...
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
 
         // Create the context menu items
         const itemSeperator = {
@@ -108,7 +108,7 @@ const trackList = (data) => {
                 itemCreatePlaylist,
                 itemSeperator,
                 itemNoPlaylist,
-            ]
+            ];
         };
 
         const template = [
@@ -136,4 +136,4 @@ const trackList = (data) => {
 
 export default {
     trackList,
-}
+};

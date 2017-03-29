@@ -1,8 +1,7 @@
 import i from 'icepick';
-import { unionBy, keyBy } from 'lodash';
+import { keyBy } from 'lodash';
 import extend from 'xtend';
 import utils from '../../utils/utils';
-
 
 export default (state = {}, action) => {
     switch (action.type) {
@@ -41,14 +40,13 @@ export default (state = {}, action) => {
                     all: [],
                     sub: []
                 }
-        };
+            };
         }
 
         case('TRACKS/FILTER'): {
             if (!action.payload.search || action.payload.search === '') {
                 return i.assocIn(state, [state.tracksCursor, 'sub'], [...state[state.tracksCursor].all]);
             } else {
-
                 const search = utils.stripAccents(action.payload.search);
 
                 const tracks = state[state.tracksCursor].all.filter((trackId) => {
@@ -62,11 +60,9 @@ export default (state = {}, action) => {
 
                 return i.assocIn(state, [state.tracksCursor, 'sub'], tracks);
             }
-
         }
 
         case('TRACKS/PLAY_COUNT_INCREMENT_FULFILLED'): {
-
             const { _id } = action.meta;
 
             const updateTrackPlaycount = (track) => track._id === _id

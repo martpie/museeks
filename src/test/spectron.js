@@ -7,7 +7,6 @@ import http from 'axios';
 import mutate from 'xtend/mutable';
 import fs from 'fs-extra';
 import path from 'path';
-import test from 'tape';
 
 const srcRoot = path.resolve(__dirname, '..');
 const testMp3 = path.resolve(srcRoot, './test/fixtures/test.mp3');
@@ -18,11 +17,11 @@ const server = new Hapi.Server();
 const observerPort = 54555;
 server.connection({ port: observerPort });
 
-let observerCallback = (payload) => console.log('observer api hit', payload);
+const observerCallback = (payload) => console.log('observer api hit', payload);
 
 server.route({
     method: 'POST',
-    path: '/api/network/event'
+    path: '/api/network/event',
     handler: (req, res) => {
         observerCallback(req.payload);
         res();
@@ -120,28 +119,29 @@ const notifyPeerFound = (peer, foundPeer) => {
 
 const runTests = () => {
 
-    // test: play song from library
-    // two peers
-    // peer 1 requests the library of peer 2
-    return lib.actions.network.find({
-        sources: [peer[2].ip]
-    }).then((tracks) => {
-        // peer 1 plays a song from the library of peer 2
-        return lib.actions.network.start({
-            source: peer[1],
-            destination: peer[2],
-            track: 'uri-of-track'
-        }).then(() => {
-            // peer 1 receives now playing state updates from peer 2
-
-            const playEvent = () => {
-                return lib.api.network.observe({ ip : peer[2] }).then(() => {
-                    return lib.api.player.play({ ip : peer[2] }).then(() => {
-                });
-            }
-            // peer 1 receives destroy event from peer 2
-        });
-    });
+    // // test: play song from library
+    // // two peers
+    // // peer 1 requests the library of peer 2
+    // return lib.actions.network.find({
+    //     sources: [peer[2].ip]
+    // }).then((tracks) => {
+    //     // peer 1 plays a song from the library of peer 2
+    //     return lib.actions.network.start({
+    //         source: peer[1],
+    //         destination: peer[2],
+    //         track: 'uri-of-track'
+    //     }).then(() => {
+    //         // peer 1 receives now playing state updates from peer 2
+    //
+    //         // const playEvent = () => {
+    //         //     return lib.api.network.observe({ ip : peer[2] }).then(() => {
+    //         //         return lib.api.player.play({ ip : peer[2] }).then(() => {
+    //         //         });
+    //         //     });
+    //         // }
+    //         // peer 1 receives destroy event from peer 2
+    //     });
+    // });
 
     const getElectronLogs = () => {
         peers.forEach((peer, peerNumber) => {

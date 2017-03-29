@@ -43,7 +43,6 @@ const observerActions = [
 ];
 
 const sendToObservers = (store) => (next) => (action) => {
-    const { type, payload } = action;
     const { network : { observers } } = store.getState();
 
     // If the observers are interested in this action...
@@ -55,7 +54,7 @@ const sendToObservers = (store) => (next) => (action) => {
                 url: utils.dispatchEndpoint({ peer: observer }),
                 method: 'POST',
                 data: action
-            })
+            });
         };
 
         // Send the action to all observers for replaying

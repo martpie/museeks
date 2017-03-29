@@ -6,7 +6,7 @@ import extend from 'xtend';
 import os from 'os';
 import utils from '../../shared/utils/utils';
 
-import lib from './index'
+import lib from './index';
 
 class PeerDiscovery {
     constructor() {
@@ -38,7 +38,7 @@ class PeerDiscovery {
         // Get this computers networks array (the array of IPs)
         const interfaces = flatten(Object.values(os.networkInterfaces()));
         // Only include external ipv4 adapters
-        const networks = interfaces.filter(adapter => adapter.family === 'IPv4' && !adapter.internal).map(network => network.address);
+        const networks = interfaces.filter((adapter) => adapter.family === 'IPv4' && !adapter.internal).map((network) => network.address);
         const port = 54321;
 
         const scanNetwork = (network) => {
@@ -62,21 +62,19 @@ class PeerDiscovery {
                 });
 
                 lookup.on('error', (err) => {
-                    reject()
+                    reject(err);
                 });
 
                 lookup.on('done', () => {
-                    resolve(result)
+                    resolve(result);
                 });
 
                 lookup.run();
-            })
-        }
+            });
+        };
 
         if (lib.store.getState().config.discoverPeers) {
-            return Promise.all(networks.map(scanNetwork))
-                .then(flatten);
-
+            return Promise.all(networks.map(scanNetwork)).then(flatten);
         } else {
             return Promise.resolve([]);
         }

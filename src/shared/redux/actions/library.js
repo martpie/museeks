@@ -1,5 +1,4 @@
 import Promise from 'bluebird';
-import actions from './index.js';
 import fs from 'fs';
 import globby from 'globby';
 import utils from '../../utils/utils';
@@ -15,7 +14,7 @@ const library = (lib) => {
             : electron.dialog;
 
         dialog.showOpenDialog({
-             properties: ['openDirectory', 'multiSelections']
+            properties: ['openDirectory', 'multiSelections']
         }, (folders) => {
             if (folders) {
                 Promise.map(folders, (folder) => {
@@ -28,8 +27,8 @@ const library = (lib) => {
 
                     dispatch(lib.actions.config.set('musicFolders', folders));
                 });
-             }
-         });
+            }
+        });
     };
 
     const removeFolder = (index) => (dispatch, getState) => {

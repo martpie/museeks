@@ -83,7 +83,7 @@ class Library extends Component {
     }
 }
 
-const stateToProps = (state) => ({});
+const stateToProps = () => ({});
 
 const dispatchToProps = {
     setTracksCursor: lib.actions.tracks.setTracksCursor

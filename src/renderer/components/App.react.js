@@ -18,8 +18,9 @@ import lib from '../lib';
 class Museeks extends Component {
 
     static propTypes = {
-        store: React.PropTypes.object,
-        children: React.PropTypes.object
+        state: React.PropTypes.object,
+        playToggle: React.PropTypes.function,
+        children: React.PropTypes.object,
     }
 
     constructor(props) {
@@ -30,8 +31,8 @@ class Museeks extends Component {
         const state = this.props.state;
         const trackPlayingId = state.player.currentTrack && state.player.currentTrack._id ? state.player.currentTrack._id : null;
 
-        const tracks = state.tracks[state.tracks.tracksCursor].sub.map(trackId => state.tracks[state.tracks.tracksCursor].data[trackId]);
-        const library = state.tracks[state.tracks.tracksCursor].all.map(trackId => state.tracks[state.tracks.tracksCursor].data[trackId]);
+        const tracks = state.tracks[state.tracks.tracksCursor].sub.map((trackId) => state.tracks[state.tracks.tracksCursor].data[trackId]);
+        const library = state.tracks[state.tracks.tracksCursor].all.map((trackId) => state.tracks[state.tracks.tracksCursor].data[trackId]);
 
         return (
             <div className='main'>

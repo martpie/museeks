@@ -40,7 +40,7 @@ class ApiServer {
         this.server.ext('onRequest', (req, res) => {
             req.lib = this.lib;
 
-            console.log(`${req.method} ${req.path} ${Object.keys(req.payload || req.query).map(k => `${k}: ${req.query[k]}`)}`);
+            console.log(`${req.method} ${req.path} ${Object.keys(req.payload || req.query).map((k) => `${k}: ${req.query[k]}`)}`);
             res.continue();
         });
 

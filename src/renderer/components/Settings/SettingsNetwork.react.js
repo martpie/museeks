@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import lib from '../../lib';
-
+import classnames from 'classnames';
 
 import { ButtonGroup, Button } from 'react-bootstrap';
 import Icon from 'react-fontawesome';
@@ -25,7 +25,7 @@ class SettingsAdvanced extends Component {
     }
 
     render() {
-        const { config, network, scan } = this.props;
+        const { network, scan } = this.props;
 
         const allMuseeks = [
             ...network.peers,
@@ -34,18 +34,18 @@ class SettingsAdvanced extends Component {
 
         const getIcon = (platform) => {
             if (platform === 'win32') {
-                return 'fa-windows'
+                return 'fa-windows';
             } else if (platform === 'darwin') {
-                return 'fa-apple'
+                return 'fa-apple';
             } else {
-                return 'fa-linux'
+                return 'fa-linux';
             }
         };
 
         const buttonsGroup = (
             <ButtonGroup>
                 <Button bsSize='small' disabled={ network.scanPending } onClick={ scan }>
-                    <Icon name='refresh' spin={ network.scanPending }/>
+                    <Icon name='refresh' spin={ network.scanPending } />
                       { network.scanPending ? 'Scanning Network' : 'Scan Network' }
                 </Button>
             </ButtonGroup>
@@ -58,12 +58,12 @@ class SettingsAdvanced extends Component {
                     <p>Scan your local network for other instances of Museeks. This will combine your music libraries and allow remote playback.</p>
                     <div>
                         { allMuseeks.map((instance) => (
-                            <div className='network-row' key={instance.hostname}>
-                                <Avatar name={ instance.hostname }/>
-                                <div className='platform'><i className={'fa ' + getIcon(instance.platform)} aria-hidden="true"></i></div>
+                            <div className='network-row' key={ instance.hostname } >
+                                <Avatar name={ instance.hostname } />
+                                <div className='platform'><i className={ classnames('fa', getIcon(instance.platform)) } aria-hidden="true" /></div>
                                 <div className='name'>{ instance.hostname } { instance.hostname === network.me.hostname && <span>&nbsp;(this computer)</span>}</div>
                                 { instance.ip && <div className='ip'>{ instance.ip }</div> }
-                                { instance.ips && <div className='ip'>{ instance.ips.map(ip => <span>{ ip }</span> )}</div> }
+                                { instance.ips && <div className='ip'>{ instance.ips.map((ip) => <span>{ ip }</span> )}</div> }
                             </div>
                         )) }
                     </div>
@@ -75,7 +75,7 @@ class SettingsAdvanced extends Component {
 }
 
 const stateToProps = (state) => ({
-      network: state.network
+    network: state.network
 });
 
 

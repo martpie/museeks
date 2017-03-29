@@ -5,8 +5,8 @@ export default (state = {}, action) => {
         case('PLAYER/LOAD_PENDING'): {
             const { currentTrack, queueCursor, historyCursor, oldHistoryCursor } = action.meta;
             const addToHistory =
-                oldHistoryCursor === -1  && // we were not playing from history previously
-                historyCursor === -1 // we are not playing from history currently
+                oldHistoryCursor === -1 && // we were not playing from history previously
+                historyCursor === -1; // we are not playing from history currently
             return i.chain(state)
                 .assoc('queueCursor', queueCursor)
                 .assocIn(['player', 'currentTrack'], currentTrack)
@@ -15,10 +15,10 @@ export default (state = {}, action) => {
                 .value();
         }
         case('PLAYER/LOAD_REJECTED'): {
-            const { oldCurrentTrack, oldQueueCursor, oldHistoryCursor } = action.meta;
+            const { historyCursor, oldCurrentTrack, oldQueueCursor, oldHistoryCursor } = action.meta;
             const addToHistory =
-                oldHistoryCursor === -1  && // we were not playing from history previously
-                historyCursor === -1 // we are not playing from history currently
+                oldHistoryCursor === -1 && // we were not playing from history previously
+                historyCursor === -1; // we are not playing from history currently
             return i.chain(state)
                 .assoc('queueCursor', oldQueueCursor)
                 .updateIn(['player', 'history'], (history) => addToHistory ? i.slice(history, 0, -1) : history)

@@ -1,19 +1,17 @@
 import utils from '../../utils/utils';
 
 const library = (lib) => {
-
     const setState = (state) => (dispatch, getState) => {
         const {
-            cover,
             currentTrack,
-            historyCursor,
             playStatus,
             queue,
-            queueCursor,
             repeat,
             shuffle,
             volume,
+            elapsed
         } = state;
+
         // Set the queue
         dispatch(lib.actions.player.createNewQueue(queue));
 
@@ -23,6 +21,9 @@ const library = (lib) => {
         // Set audio element shuffle
         dispatch(lib.actions.player.shuffle(shuffle));
 
+        // Set album art for the current track
+        dispatch(lib.actions.player.fetchCover(currentTrack));
+
         // Set audio element elapsed time
         dispatch(lib.actions.player.jumpTo(elapsed));
 
@@ -30,19 +31,18 @@ const library = (lib) => {
         dispatch(lib.actions.player.setVolume(volume));
 
         // Load the track
-        dispatch(lib.actions.player.load({queue, _id: currentTrack._id}));
+        dispatch(lib.actions.player.load({ queue, _id: currentTrack._id }));
 
         // Set audio element play state: can be play/pause/stop
         dispatch(lib.actions.player[playStatus]());
-    }
+    };
 
     const load = (data = {}) => (dispatch, getState) => {
-
         const state = getState();
 
         const {
             queueCursor: oldQueueCursor,
-            tracks: { library : { data: tracks }},
+            tracks: { library : { data: tracks } },
             player: { currentTrack: oldCurrentTrack, history, historyCursor: oldHistoryCursor },
             network: { output }
         } = state;
@@ -89,7 +89,6 @@ const library = (lib) => {
                     oldHistoryCursor
                 }
             });
-
         } else {
             dispatch(lib.actions.player.stop());
         }
@@ -139,7 +138,7 @@ const library = (lib) => {
     };
 
     const pause = () => (dispatch, getState) => {
-        const { player: { playStatus }, network: { output } } = getState();
+        const { network: { output } } = getState();
 
         const outputIsLocal = () => Promise.resolve(lib.player.pause());
         const outputIsRemote = () => lib.api.actions.player.pause(output);
@@ -162,7 +161,7 @@ const library = (lib) => {
         });
     };
 
-    const next = (data = {}) => (dispatch, getState) => {
+    const next = () => (dispatch, getState) => {
         const {
             queue,
             queueCursor,
@@ -186,7 +185,7 @@ const library = (lib) => {
         dispatch(lib.actions.player.loadAndPlay(cursors));
     };
 
-    const previous = (data = {}) => (dispatch, getState) => {
+    const previous = () => (dispatch, getState) => {
         const {
             queue,
             queueCursor,
@@ -292,7 +291,7 @@ const library = (lib) => {
                     throttle: 100
                 },
             });
-        };
+        }
     };
 
     const setMuted = (muted = false) => (dispatch) => {
@@ -418,6 +417,6 @@ const library = (lib) => {
         audioError,
         createNewQueue
     };
-}
+};
 
 export default library;
