@@ -36,7 +36,6 @@ export default {
             sub: []                      // Filtered tracks (e.g search)
         },
         playlist: {
-            data: {},
             all: [],
             sub: []
         }

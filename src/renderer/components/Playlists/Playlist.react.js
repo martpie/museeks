@@ -61,7 +61,7 @@ const stateToProps = () => ({});
 
 const dispatchToProps = {
     load: lib.actions.playlists.load,
-    setTracksCursor: lib.actions.library.setTracksCursor
+    setTracksCursor: lib.actions.tracks.setTracksCursor
 };
 
 export default connect(stateToProps, dispatchToProps)(Playlist);

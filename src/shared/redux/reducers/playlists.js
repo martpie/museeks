@@ -1,18 +1,16 @@
-export default (state = {}, payload) => {
-    switch (payload.type) {
+import i from 'icepick'
+export default (state = {}, action) => {
+    switch (action.type) {
 
         case('PLAYLISTS/REFRESH'): {
-            return payload.playlists || [];
+            return i.assocIn(state, ['playlists'], action.payload.playlists);
         }
-
-        // TODO: BROKEN BY MOVE TO COMBINE REDUCERS. FIX.
         case('PLAYLISTS/LOAD_ONE'): {
-            const newState = { ...state };
-            newState.tracks[state.tracks.tracksCursor] = {
-                all: [...payload.tracks],
-                sub: [...payload.tracks]
-            };
-            return newState;
+            const trackIds = action.payload.tracks.map(track => track._id);
+            return i.chain(state)
+                .assocIn(['tracks', state.tracks.tracksCursor, 'all'], trackIds)
+                .assocIn(['tracks', state.tracks.tracksCursor, 'sub'], trackIds)
+                .value();
         }
 
         default: {

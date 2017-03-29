@@ -46,7 +46,7 @@ class PlaylistsNav extends Component {
                         defaultValue={ elem.name }
                         onKeyDown={ self.keyDown }
                         onBlur={ self.blur }
-                        autofocus
+                        autoFocus
                     />
                 );
             } else {
@@ -90,7 +90,7 @@ class PlaylistsNav extends Component {
         }
     }
 
-    showContextMenu(_id) {
+    showContextMenu = (_id) => {
         const renamePlaylist = () => {
             this.setState({ renamed: _id });
         };
@@ -115,7 +115,7 @@ class PlaylistsNav extends Component {
         this.props.create('New playlist', true);
     }
 
-    rename(_id, name) {
+    rename = (_id, name) => {
         this.props.rename(_id, name);
     }
 
