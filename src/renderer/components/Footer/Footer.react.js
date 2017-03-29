@@ -17,7 +17,8 @@ class Footer extends Component {
 
     static propTypes = {
         tracks: React.PropTypes.array,
-        refreshingLibrary: React.PropTypes.bool
+        refreshingLibrary: React.PropTypes.bool,
+        network: React.PropTypes.object
     }
 
     constructor(props) {
