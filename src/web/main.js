@@ -1,20 +1,20 @@
-/*
-|--------------------------------------------------------------------------
-| React and Router
-|--------------------------------------------------------------------------
-*/
 
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import store from './redux/store';
 
+import PlayerControls from './components/PlayerControls';
+
+/*
+|--------------------------------------------------------------------------
+| React and Router
+|--------------------------------------------------------------------------
+*/
 
 require('bootstrap-css-only/css/bootstrap.min.css');
 require('font-awesome/css/font-awesome.css');
 require('./styles/main.scss');
-
-import PlayerControls from './components/PlayerControls'
 
 /*
 |--------------------------------------------------------------------------
@@ -30,5 +30,3 @@ ReactDOM.render(
     </Provider>,
     document.getElementById('wrap')
 );
-
-console.log('here');
