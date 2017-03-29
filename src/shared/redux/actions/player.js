@@ -21,9 +21,6 @@ const library = (lib) => {
         // Set audio element shuffle
         dispatch(lib.actions.player.shuffle(shuffle));
 
-        // Set album art for the current track
-        dispatch(lib.actions.player.fetchCover(currentTrack));
-
         // Set audio element elapsed time
         dispatch(lib.actions.player.jumpTo(elapsed));
 
@@ -74,6 +71,8 @@ console.log('XXXXXXXXXXXXX', currentTrack)
                 lib.player.setCurrentTime(0)
             ]);
             const outputIsRemote = () => lib.api.actions.player.load(output, data);
+
+            dispatch(lib.actions.player.fetchCover(currentTrack));
 
             dispatch({
                 type: 'PLAYER/LOAD',
