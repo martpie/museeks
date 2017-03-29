@@ -8,24 +8,6 @@ import extend from 'deep-extend';
 
 const player = playerActions(lib);
 
-// test('player reducer shuffle', (t) => {
-//     const description = 'shuffle should set the shuffle property to true';
-//
-//     const action = player.shuffle(true);
-//
-//     const delta = {
-//         player: {
-//             shuffle: true
-//         }
-//     };
-//
-//     return actionTest({
-//         action,
-//         delta
-//     })
-//     .then((result) => t.deepEqual(result.delta, delta, description));
-// });
-
 const numTracks = 10;
 const baseState = {
     tracks: {
@@ -33,7 +15,7 @@ const baseState = {
             data: range(0, numTracks).reduce((data, _id) => {
                 data[_id] = {
                     _id,
-                    name : `song ${_id}`
+                    name: `song ${_id}`
                 };
                 return data;
             }, {})
@@ -46,8 +28,9 @@ const baseState = {
         history: []
     }
 };
+const tracks = baseState.tracks.library.data;
 
-test.only('player next', (t) => {
+test('player next', (t) => {
 
     const iterations = range(3);
 
@@ -68,7 +51,7 @@ test.only('player next', (t) => {
     return Promise.reduce(iterations, (previous) => {
 
         const nextQueueCursor = previous.queueCursor + 1;
-        const nextTrack = baseState.tracks.library.data[nextQueueCursor];
+        const nextTrack = tracks[nextQueueCursor];
 
         const delta = {
             queueCursor: nextQueueCursor,
@@ -105,12 +88,13 @@ test('player next with repeat one', (t) => {
         queueCursor,
         player: {
             playStatus: 'play',
-            currentTrack: baseState.tracks.library.data[queueCursor],
+            currentTrack: tracks[queueCursor],
             history: [],
             repeat: 'one'
         }
     });
 
+    // expect the state to stay the same
     const delta = {};
 
     return actionTest({
@@ -136,7 +120,7 @@ test('player next with repeat all', (t) => {
         queueCursor,
         player: {
             playStatus: 'play',
-            currentTrack: baseState.tracks.library.data[queueCursor],
+            currentTrack: tracks[queueCursor],
             history: [],
             repeat: 'all'
         }
@@ -144,7 +128,7 @@ test('player next with repeat all', (t) => {
 
     // next track should be item 0 in the queue
     const nextTrackId = baseState.queue[0];
-    const nextTrack = baseState.tracks.library.data[nextTrackId];
+    const nextTrack = tracks[nextTrackId];
 
     const delta = {
         queueCursor: 0,
@@ -177,7 +161,7 @@ test('player next with repeat none', (t) => {
         queueCursor,
         player: {
             playStatus: 'play',
-            currentTrack: baseState.tracks.library.data[queueCursor],
+            currentTrack: tracks[queueCursor],
             repeat: 'none'
         }
     });
@@ -205,7 +189,7 @@ test('player previous after 5 seconds of playing', (t) => {
     const action = player.previous();
 
     const queueCursor = 5;
-    const currentTrack = baseState.tracks.library.data[baseState.queue[queueCursor]];
+    const currentTrack = tracks[baseState.queue[queueCursor]];
 
     // force the state of the audio component
     lib.player.getAudio = () => Promise.resolve({
@@ -247,7 +231,7 @@ test('player previous before 5 seconds of playing', (t) => {
     });
 
     const queueCursor = 5;
-    const currentTrack = baseState.tracks.library.data[baseState.queue[queueCursor]];
+    const currentTrack = tracks[baseState.queue[queueCursor]];
 
     const initialState = extend(baseState, {
         queueCursor,
@@ -260,7 +244,7 @@ test('player previous before 5 seconds of playing', (t) => {
 
     const historyCursor = initialState.player.history.length - 1;
     const historyTrackId = initialState.player.history[historyCursor];
-    const historyTrack = baseState.tracks.library.data[historyTrackId];
+    const historyTrack = tracks[historyTrackId];
 
     const delta = {
         player: {
@@ -292,8 +276,6 @@ test('player previous from within the history array', (t) => {
     lib.player.getAudio = () => Promise.resolve({
         currentTime: 3
     });
-
-    const tracks = baseState.tracks.library.data;
 
     const historyCursor = 4;
     const history = [0, 1, 2, 3, 4];
@@ -347,8 +329,6 @@ test('player previous from the head of the history array', (t) => {
         currentTime: 3
     });
 
-    const tracks = baseState.tracks.library.data;
-
     const historyCursor = 0;
     const history = [0, 1, 2, 3, 4];
     const historyTrackId = history[historyCursor];
@@ -371,4 +351,46 @@ test('player previous from the head of the history array', (t) => {
         action
     })
     .then((result) => t.deepEqual(result.delta, delta, description));
+});
+
+test('player next with repeat one and shuffle on', (t) => {
+
+    const iterations = range(3);
+
+    const description = `
+        should not increment the queue cursor
+        should not add to history
+    `;
+
+    const action = player.next();
+
+    const queueCursor = 5;
+
+    const initialState = extend(baseState, {
+        queueCursor,
+        player: {
+            playStatus: 'play',
+            currentTrack: tracks[queueCursor],
+            history: [],
+            historyCursor: -1,
+            repeat: 'one',
+            shuffle: true
+        }
+    });
+
+    return Promise.reduce(iterations, (previous) => {
+
+        // expect the state to stay the same
+        const delta = {};
+
+        return actionTest({
+            initialState: previous,
+            action
+        })
+        .then((result) => {
+            t.deepEqual(result.delta, delta, description);
+
+            return result.state;
+        });
+    }, initialState);
 });

@@ -7,14 +7,16 @@ export default (state = {}, action) => {
             const { repeat } = state.player;
 
             const addToHistory =
-                oldCurrentTrack &&                // we have played a track previously
-                historyCursor === -1 &&           // we are not playing from history currently
-                oldHistoryCursor === -1 &&        // we were not playing from history previously
-                repeat !== 'one' &&               // we are not looping over the same track
-                state.player.currentTime >= 5;    // we are 5 seconds or more into a song
-console.log('=======================')
-console.log(action)
-console.log('=======================')
+                oldCurrentTrack &&                          // we have played a track previously
+                historyCursor === -1 &&                     // we are not playing from history currently
+                oldHistoryCursor === -1 &&                  // we were not playing from history previously
+                repeat !== 'one' &&                         // we are not looping over the same track
+                oldCurrentTrack._id !== currentTrack._id;   // do not add the same track to history twice in a row
+// console.log('=======================')
+// console.log(action)
+// console.log('=======================')
+// console.log(state)
+// console.log('=======================')
             return i.chain(state)
                 .assoc('queueCursor', queueCursor)
                 .assocIn(['player', 'currentTrack'], currentTrack)
@@ -74,9 +76,6 @@ console.log('=======================')
         }
         case('PLAYER/REPEAT_REJECTED'): {
             return i.assocIn(state, ['player', 'repeat'], action.meta.prevRepeat);
-        }
-        case('PLAYER/SET_COVER'): {
-            return i.assocIn(state, ['player', 'cover'], action.payload.cover);
         }
         case('PLAYER/SET_VOLUME_FULFILLED'): {
             return i.assocIn(state, ['player', 'volume'], action.meta.volume);

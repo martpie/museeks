@@ -33,7 +33,6 @@ class PlayingBar extends Component {
         repeat: React.PropTypes.string,
         shuffle: React.PropTypes.bool,
         jumpTo: React.PropTypes.func,
-        fetchCover: React.PropTypes.func,
         updateElapsedTime: React.PropTypes.func,
     }
 
@@ -132,19 +131,6 @@ class PlayingBar extends Component {
         clearInterval(this.timer);
     }
 
-    componentWillReceiveProps = (nextProps) => {
-        const nextTrackPlaying = nextProps.currentTrack;
-        const nextTrackPlayingId = nextTrackPlaying && nextTrackPlaying._id;
-
-        const currTrackPlaying = this.props.currentTrack;
-        const currTrackPlayingId = currTrackPlaying && currTrackPlaying._id;
-
-        // if we have a track to play, and it wasn't the last track we played
-        if (nextTrackPlayingId && nextTrackPlayingId !== currTrackPlayingId) {
-            this.props.fetchCover(nextTrackPlaying);
-        }
-    }
-
     tick = () => {
         const { playStatus, output, updateElapsedTime } = this.props;
         // If we are playing and the output is local. We update the current time.
@@ -216,7 +202,6 @@ const stateToProps = () => ({});
 
 const dispatchToProps = {
     jumpTo: lib.actions.player.jumpTo,
-    fetchCover: lib.actions.player.fetchCover,
     updateElapsedTime: lib.actions.player.updateElapsedTime
 };
 

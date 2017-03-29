@@ -388,33 +388,9 @@ const coverEndpoint = ({ _id, peer }) => `${peerEndpoint(peer)}/api/tracks/cover
 
 const dispatchEndpoint = ({ peer }) => `${peerEndpoint(peer)}/api/store/dispatch`;
 
-const transformTrackPaths = ({ tracks, me, peer }) => {
-    const meWithIP = getMeWithIP(me, peer);
-
-    const makeRemote = (track) => ({
-        ...track,
-        path: trackEndpoint({
-            _id: track._id,
-            peer: meWithIP
-        }),
-        owner: meWithIP
-    });
-
-    const makeLocal = (track) => track.owner.hostname === peer.hostname
-        ? { ...track, isLocal: true }
-        : track;
-
-    const tracksWithTransformedPaths = tracks.map((track) => track.owner.isLocal
-        ? makeRemote(track)
-        : makeLocal(track)
-    );
-
-    return tracksWithTransformedPaths;
-};
-
 const getNextQueueCursor = (data) => {
 
-    console.log('getNextQueueCursor INPUT\n\n', data);
+    // console.log('getNextQueueCursor INPUT\n\n', data);
     const {
         direction,
         queue,
@@ -491,10 +467,10 @@ const getNextQueueCursor = (data) => {
         }
     }
 
-    console.log('getNextQueueCursor RESULT\n\n', {
-        queueCursor,
-        historyCursor
-    });
+    // console.log('getNextQueueCursor RESULT\n\n', {
+    //     queueCursor,
+    //     historyCursor
+    // });
 
     return {
         queueCursor,
@@ -515,7 +491,6 @@ export default {
     fetchCover,
     supportedExtensions,
     pickRandom,
-    transformTrackPaths,
     peerEndpoint,
     peerIsMe,
     trackEndpoint,

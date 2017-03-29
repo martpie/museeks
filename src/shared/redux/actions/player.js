@@ -64,15 +64,13 @@ const library = (lib) => {
 
         // use the user supplied _id, or fall back to cursor
         const currentTrack = tracks[_id || cursorNextTrackId];
-console.log('XXXXXXXXXXXXX', currentTrack)
+
         if (currentTrack) {
             const outputIsLocal = () => Promise.all([
                 lib.player.setMetadata(currentTrack),
                 lib.player.setCurrentTime(0)
             ]);
             const outputIsRemote = () => lib.api.actions.player.load(output, data);
-
-            dispatch(lib.actions.player.fetchCover(currentTrack));
 
             dispatch({
                 type: 'PLAYER/LOAD',
@@ -330,16 +328,6 @@ console.log('XXXXXXXXXXXXX', currentTrack)
         payload: time
     });
 
-    const fetchCover = (metadata) => ({
-        type: 'PLAYER/SET_COVER',
-        payload: {
-            cover: utils.coverEndpoint({
-                _id: metadata._id,
-                peer: metadata.owner
-            })
-        }
-    });
-
     const audioError = (e) => (dispatch) => {
         const audioErrors = {
             aborted: 'The video playback was aborted.',
@@ -372,14 +360,7 @@ console.log('XXXXXXXXXXXXX', currentTrack)
         } = getState();
 
         const outputIsLocal = () => new Promise((resolve) => setTimeout(resolve, 2));
-        const outputIsRemote = () => {
-            const remoteQueue = utils.transformTrackPaths({
-                tracks: newQueue,
-                peer: output,
-                me
-            });
-            return lib.api.actions.player.createNewQueue(output, remoteQueue);
-        };
+        const outputIsRemote = () => lib.api.actions.player.createNewQueue(output, newQueue);
 
         return dispatch({
             type: 'PLAYER/CREATE_NEW_QUEUE',
@@ -412,7 +393,6 @@ console.log('XXXXXXXXXXXXX', currentTrack)
         setPlaybackRate,
         jumpTo,
         updateElapsedTime,
-        fetchCover,
         audioError,
         createNewQueue
     };

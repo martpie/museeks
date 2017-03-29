@@ -90,9 +90,9 @@ const library = (lib) => {
 console.log(observers, peer)
         const incl = observers.find((observer) => observer.hostname === peer.hostname);
 
-        if (incl) {
-            return Promise.reject(new Error('no infinite loops alowed'));
-        }
+        // if (incl) {
+        //     return Promise.reject(new Error('no infinite loops alowed'));
+        // }
 
         // Stop the player from playing
         dispatch(lib.actions.player.stop());

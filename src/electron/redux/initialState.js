@@ -93,7 +93,7 @@ export default {
             },
             order: ['track', 'duration', 'artist', 'album', 'genre', 'owner']
         }
-        
+
     },
 
     library: {
@@ -111,7 +111,6 @@ export default {
         historyCursor: -1,               // The position of the currently playing track in the history queue
         currentTrack: {},                // The currently playing track
         playStatus: 'stop',              // Player status
-        cover: undefined,                // Current trackplaying cover
         repeat: 'none',                  // the current repeat state (one, all, none)
         shuffle: false,                  // If shuffle mode is enabled
         elapsed: 0,                      // How much time has elapsed

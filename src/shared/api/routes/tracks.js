@@ -14,7 +14,7 @@ export default [{
     path: 'api/tracks/download',
     method: 'GET',
     name: 'track.download',
-    config : {
+    config: {
         validate: {
             query: {
                 _id: Joi.required()
@@ -32,7 +32,7 @@ export default [{
     path: 'api/tracks/cover',
     method: 'GET',
     name: 'track.cover',
-    config : {
+    config: {
         validate: {
             query: {
                 _id: Joi.required()

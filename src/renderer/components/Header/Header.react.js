@@ -90,7 +90,7 @@ class Header extends Component {
 }
 
 const stateToProps = (state) => ({
-    cover: state.player.cover,
+    cover: state.player.currentTrack.cover,
     currentTrack: state.player.currentTrack,
     elapsed: state.player.elapsed,
     output: state.network.output,

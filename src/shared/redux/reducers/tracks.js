@@ -10,7 +10,17 @@ export default (state = {}, action) => {
             // return i.assocIn(state, ['network', 'tracks'], action.payload.tracks);
             // add the peer who owns the track as metadata
 
-            const tracksWithMetadata = action.payload.map((track) => extend(track, { owner: action.meta.owner }));
+            const { owner } = action.meta;
+
+            const trackWithMetadata = (track) => ({
+                ...track,
+                cover: utils.coverEndpoint({
+                    _id: track._id,
+                    peer: owner
+                }),
+                owner
+            });
+            const tracksWithMetadata = action.payload.map(trackWithMetadata);
 
             const uniqueTracks = extend(state.library.data, keyBy(tracksWithMetadata, '_id'));
             const uniqueTrackIds = Object.keys(uniqueTracks);
@@ -60,10 +70,10 @@ export default (state = {}, action) => {
 
                 return i.assocIn(state, [state.tracksCursor, 'sub'], tracks);
             }
-        }        
+        }
 
         case('TRACKS/SORT'): {
-            
+
             // Get the orderBy Arrays
             // This is the array of key names and direction for _.orderBy
             // First we order the columns by sortAdded
@@ -77,7 +87,7 @@ export default (state = {}, action) => {
                 }
                 return acc;
             }, [[],[]]);
-            
+
             // Now, we can do the real sort
             const sortTracks = (trackIds) => {
                 const trackData = trackIds.map(trackId => state.library.data[trackId]);
@@ -87,14 +97,14 @@ export default (state = {}, action) => {
                 return sortedData.map(data => data._id);
             };
             return i.updateIn(state, [state.tracksCursor, 'sub'], sortTracks)
-        }               
+        }
 
         case('TRACKS/TOGGLE_SORT'): {
              return i.chain(state)
                 .assocIn(['columns', 'data', action.payload.id, 'sort'], action.payload.state)
                 .assocIn(['columns', 'data', action.payload.id, 'sortAdded'], new Date().getTime())
                 .value();
-        }       
+        }
 
         case('TRACKS/SET_COLUMN_WIDTH'): {
             return i.assocIn(state, ['columns', 'data', action.payload.id, 'width'], action.payload.width);
