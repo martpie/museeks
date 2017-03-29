@@ -4,6 +4,7 @@ import KeyBinding from 'react-keybinding-component';
 
 import TrackRow from './TrackRow.react';
 import PlayingIndicator from './PlayingIndicator.react';
+import TracksHeaderCell from './TracksHeaderCell.react';
 
 import lib from '../../lib';
 import utils from '../../../shared/utils/utils';
@@ -29,14 +30,17 @@ class TracksList extends Component {
         removeTracksFrom: React.PropTypes.func,
         create: React.PropTypes.func,
         addTracksTo: React.PropTypes.func,
-        loadAndPlay: React.PropTypes.func
+        loadAndPlay: React.PropTypes.func,
+        setColumnWidth: React.PropTypes.func,
+        toggleSort: React.PropTypes.func,
+        columns: React.PropTypes.object,
     }
 
     constructor(props) {
         super(props);
         this.state = {
             selected: [],
-            scrollTop: 0
+            scrollTop: 0,
         };
 
         this.rowHeight = 30;
@@ -44,6 +48,8 @@ class TracksList extends Component {
 
     render() {
         const tracks = [...this.props.tracks];
+        const { columns, setColumnWidth, toggleSort } = this.props;
+        const { width } = this.state;
 
         // TODO (y.solovyov | KeitIG): TrackListHeader component?
         return (
@@ -51,12 +57,22 @@ class TracksList extends Component {
                 <KeyBinding onKey={ this.onKey } target={ '.tracks-list-container' } preventInputConflict preventDefault />
                 <div className='tracks-list-header'>
                     <div className='track-cell-header cell-track-playing' />
-                    <div className='track-cell-header cell-track'>Track</div>
-                    <div className='track-cell-header cell-duration'>Duration</div>
-                    <div className='track-cell-header cell-artist'>Artist</div>
-                    <div className='track-cell-header cell-album'>Album</div>
-                    <div className='track-cell-header cell-genre'>Genre</div>
-                    <div className='track-cell-header cell-owner'>Owner</div>
+                    { columns.order.map((colId) => {
+                        const col = columns.data[colId];
+                        return (
+                            <TracksHeaderCell 
+                               key={ col.id } 
+                               id={ col.id } 
+                               width={ col.width }
+                               className={ `cell-${col.id}` }
+                               setColumnWidth={ setColumnWidth }
+                               toggleSort={ toggleSort }
+                               sort={ col.sort }
+                               >
+                                { col.name }
+                            </TracksHeaderCell>
+                        )
+                    })}
                 </div>
                 <div className='tracks-list-body' onScroll={ this.scrollTracksList }>
                     <div className='tracks-list-tiles' style={ { height : tracks.length * this.rowHeight } }>
@@ -116,6 +132,8 @@ class TracksList extends Component {
         const selected       = this.state.selected;
         const tracks         = [...this.props.tracks];
         const trackPlayingId = this.props.trackPlayingId;
+        
+        const { columns } = this.props;
 
         const chunkLength = 20;
         const tilesToDisplay = 5;
@@ -146,23 +164,23 @@ class TracksList extends Component {
                         <div className='cell cell-track-playing text-center'>
                             { playingIndicator }
                         </div>
-                        <div className='cell cell-track'>
+                        <div className='cell cell-track' style={{ width: `${columns.data.track.width}px` }}>
                             { track.title }
                         </div>
-                        <div className='cell cell-duration'>
+                        <div className='cell cell-duration' style={{ width: `${columns.data.duration.width}px` }}>
                             { utils.parseDuration(track.duration) }
                         </div>
-                        <div className='cell cell-artist'>
+                        <div className='cell cell-artist' style={{ width: `${columns.data.artist.width}px` }}>
                             { track.artist[0] }
                         </div>
-                        <div className='cell cell-album'>
+                        <div className='cell cell-album' style={{ width: `${columns.data.album.width}px` }}>
                             { track.album }
                         </div>
-                        <div className='cell cell-genre'>
+                        <div className='cell cell-genre' style={{ width: `${columns.data.genre.width}px` }}>
                             { track.genre.join(', ') }
                         </div>
-                        <div className='cell cell-owner'>
-                        <Avatar name={ track.owner.name || track.owner.hostname } size={ 24 } />
+                        <div className='cell cell-owner' style={{ width: `${columns.data.owner.width}px` }}>
+                            <Avatar name={ track.owner.name || track.owner.hostname } size={ 24 } />
                         </div>
                     </TrackRow>
                 );

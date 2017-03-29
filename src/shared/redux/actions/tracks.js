@@ -9,6 +9,39 @@ const library = (lib) => {
         payload: {
             search
         }
+    });    
+    
+    const toggleSort = ({ id, state }) => (dispatch, getState) => {
+        const currentState = getState().tracks.columns.data[id].sort;
+        
+        const getNextState = () => {
+            if ( currentState === 'asc') {
+                return 'desc'
+            } else if (currentState === 'desc') {
+                return ''
+            } else {
+                return 'asc'
+            }
+        }
+        
+        dispatch({
+            type: 'TRACKS/TOGGLE_SORT',
+            payload: { id, state: getNextState() }
+        });
+        
+        setTimeout(() => dispatch(sort()), 100);
+    };        
+    
+    const sort = () => ({
+        type: 'TRACKS/SORT',
+    })    
+    
+    const setColumnWidth = ({ id, width }) => ({
+        type: 'TRACKS/SET_COLUMN_WIDTH',
+        payload: { id, width },
+        meta: {
+            scope: 'local'
+        }
     });
 
     const remove = () => ({
@@ -89,11 +122,14 @@ const library = (lib) => {
     };
 
     return {
+        setColumnWidth,
+        filter,
         find,
-        setTracksCursor,
-        remove,
         incrementPlayCount,
-        filter
+        remove,
+        setTracksCursor,
+        toggleSort,
+        sort,
     };
 };
 

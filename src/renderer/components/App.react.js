@@ -44,6 +44,7 @@ class Museeks extends Component {
                             this.props.children, {
                                 app: this,
                                 config: state.config,
+                                columns: state.tracks.columns,
                                 playStatus: state.player.playStatus,
                                 network: state.network,
                                 queue: state.queue,
