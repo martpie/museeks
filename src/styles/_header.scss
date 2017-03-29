@@ -431,6 +431,7 @@ header {
     position: absolute;
     top: 0;
     right: 0;
+    height: 24px;
 
 
     .window-control {
@@ -450,6 +451,17 @@ header {
 
         &:active {
             background-color: $_window-control-bg-active;
+        }
+
+        &.window-minimize {
+
+            &::after {
+                content: '';
+                display: block;
+                margin: auto;
+                border-bottom: solid 2px #555;
+                width: 10px;
+            }
         }
 
         &.window-maximize {
@@ -492,10 +504,10 @@ header {
                 position: absolute;
                 content: ' ';
                 height: 11px;
-                width: 1px;
+                width: 2px;
                 background-color: #555;
                 top: 7px;
-                left: 12px;
+                left: 11px;
             }
 
             &::before {

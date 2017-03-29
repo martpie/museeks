@@ -122,6 +122,7 @@ body.theme-dark {
     .window-controls .window-control {
         color: #EEE;
 
+        &.window-minimize,
         &.window-maximize {
 
             &::after {
