@@ -38,7 +38,62 @@ export default {
         playlist: {
             all: [],
             sub: []
+        },
+
+        columns: {
+            data: {
+                track : {
+                    id: 'track',
+                    name: 'Track',
+                    width: null,
+                    sort: undefined,
+                    sortAdded: undefined,
+                    sortKey: 'title'
+                },
+                duration: {
+                    id: 'duration',
+                    name: 'Duration',
+                    width: 100,
+                    sort: undefined,
+                    sortAdded: undefined,
+                    sortKey: 'duration'
+                },
+                artist: {
+                    id: 'artist',
+                    name: 'Artist',
+                    width: 300,
+                    sort: undefined,
+                    sortAdded: undefined,
+                    sortKey: 'artist'
+                },
+                album: {
+                    id: 'album',
+                    name: 'Album',
+                    width: 350,
+                    sort: undefined,
+                    sortAdded: undefined,
+                    sortKey: 'album'
+                },
+                genre: {
+                    id: 'genre',
+                    name: 'Genre',
+                    width: 150,
+                    sort: undefined,
+                    sortAdded: undefined,
+                    sortKey: 'genre'
+                },
+                owner: {
+                    id: 'owner',
+                    name: 'Owner',
+                    width: 70,
+                    sort: undefined,
+                    sortAdded: undefined,
+                    sortKey: 'owner.hostname'
+                },
+            },
+            order: ['track', 'duration', 'artist', 'album', 'genre', 'owner']
         }
+        
     },
 
     library: {

@@ -18,6 +18,7 @@ class Playlist extends Component {
     static propTypes = {
         params: React.PropTypes.object,
         tracks: React.PropTypes.array,
+        columns: React.PropTypes.array,
         trackPlayingId: React.PropTypes.string,
         playlists: React.PropTypes.array,
         playStatus: React.PropTypes.string,
@@ -46,6 +47,7 @@ class Playlist extends Component {
             return (
                 <TracksList
                     type='playlist'
+                    columns={ this.props.columns }
                     currentPlaylist={ this.props.params.playlistId }
                     tracks={ this.props.tracks }
                     trackPlayingId={ this.props.trackPlayingId }

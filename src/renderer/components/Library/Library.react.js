@@ -16,6 +16,7 @@ import lib from '../../lib';
 class Library extends Component {
 
     static propTypes = {
+        columns: React.PropTypes.object,
         library: React.PropTypes.array,
         tracks: React.PropTypes.array,
         trackPlayingId: React.PropTypes.string,
@@ -67,10 +68,13 @@ class Library extends Component {
         return (
             <TracksList
                 type='library'
+                columns={ this.props.columns }
                 playStatus={ this.props.playStatus }
                 tracks={ this.props.tracks }
                 trackPlayingId={ this.props.trackPlayingId }
                 playlists={ this.props.playlists }
+                setColumnWidth={ this.props.setColumnWidth }
+                toggleSort={ this.props.toggleSort }
             />
         );
     }
@@ -87,7 +91,9 @@ class Library extends Component {
 const stateToProps = () => ({});
 
 const dispatchToProps = {
-    setTracksCursor: lib.actions.tracks.setTracksCursor
+    setTracksCursor: lib.actions.tracks.setTracksCursor,
+    setColumnWidth: lib.actions.tracks.setColumnWidth,
+    toggleSort: lib.actions.tracks.toggleSort,
 };
 
 export default connect(stateToProps, dispatchToProps)(Library);
