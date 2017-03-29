@@ -1,11 +1,18 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 
 const colours = [
     '#D50000','#FF4081','#CE93D8','#AA00FF','#B39DDB','#6200EA','#3F51B5','#1A237E','#2962FF','#0091EA','#00B8D4','#00BFA5',
     '#A5D6A7','#00C853','#64DD17','#E6EE9C','#AEEA00','#FFD600','#FFAB00','#FF6D00','#FFAB91','#DD2600','#455A64','#263238'
 ];
 
-export default (props) => {
+const propTypes = {
+    style: PropTypes.object,
+    name: PropTypes.string,
+    size: PropTypes.number,
+    shape: PropTypes.string,
+};
+
+const Avatar =  (props) => {
     const { style, name, ...otherProps } = props;
     let { shape, size } = props;
     size = size || 25;
@@ -49,3 +56,7 @@ export default (props) => {
         </div>
     );
 };
+
+Avatar.propTypes = propTypes;
+
+export default Avatar;

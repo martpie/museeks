@@ -18,7 +18,10 @@ const { Menu } = remote;
 class PlaylistsNav extends Component {
 
     static propTypes = {
-        playlists: React.PropTypes.array
+        playlists: React.PropTypes.array,
+        remove: React.PropTypes.func,
+        create: React.PropTypes.func,
+        rename: React.PropTypes.func,
     }
 
     constructor(props) {

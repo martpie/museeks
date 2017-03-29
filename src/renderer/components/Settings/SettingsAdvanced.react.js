@@ -15,7 +15,8 @@ import CheckboxSetting from './CheckboxSetting.react';
 class SettingsAdvanced extends Component {
 
     static propTypes = {
-        config: React.PropTypes.object
+        config: React.PropTypes.object,
+        toggleDevMode: React.PropTypes.func,
     }
 
     constructor(props) {

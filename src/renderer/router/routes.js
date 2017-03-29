@@ -16,7 +16,7 @@ import SettingsAdvanced from '../components/Settings/SettingsAdvanced.react';
 import SettingsAbout    from '../components/Settings/SettingsAbout.react';
 import SettingsNetwork  from '../components/Settings/SettingsNetwork.react';
 
-export default (store) => {
+export default () => {
     return (
         <Route component={ App } path='/'>
             <Route path='library' component={ Library } />

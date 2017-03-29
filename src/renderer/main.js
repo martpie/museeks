@@ -21,7 +21,7 @@ import { RpcIpcManager } from 'electron-simple-rpc';
 initLib(store);
 
 // Start listening for RPC IPC events
-const rpcIpcManager = new RpcIpcManager(lib, 'main-renderer');
+new RpcIpcManager(lib, 'main-renderer');
 
 // Init renderer
 initRenderer(lib);

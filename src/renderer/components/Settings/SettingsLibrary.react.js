@@ -20,7 +20,12 @@ class SettingsLibrary extends Component {
     static propTypes = {
         config: React.PropTypes.object,
         refreshingLibrary: React.PropTypes.bool,
-        refreshProgress: React.PropTypes.number
+        refreshProgress: React.PropTypes.number,
+        musicFolders: React.PropTypes.array,
+        addFolders: React.PropTypes.func,
+        stop: React.PropTypes.func,
+        remove: React.PropTypes.func,
+        rescan: React.PropTypes.func,
     }
 
     constructor(props) {

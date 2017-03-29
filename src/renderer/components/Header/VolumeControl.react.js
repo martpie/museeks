@@ -26,6 +26,12 @@ const unsmoothifyVolume = (value) => Math.pow(value, 1 / factor); // Linearize a
 
 class VolumeControl extends Component {
 
+    static propTypes = {
+        volume: React.PropTypes.number,
+        setVolume: React.PropTypes.func,
+        setMute: React.PropTypes.setMute,
+    }
+
     constructor(props) {
         super(props);
 

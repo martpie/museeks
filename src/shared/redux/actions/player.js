@@ -1,7 +1,7 @@
 import utils from '../../utils/utils';
 
 const library = (lib) => {
-    const setState = (state) => (dispatch, getState) => {
+    const setState = (state) => (dispatch) => {
         const {
             currentTrack,
             playStatus,
@@ -94,7 +94,7 @@ const library = (lib) => {
         }
     };
 
-    const loadAndPlay = (data) => (dispatch, getState) => {
+    const loadAndPlay = (data) => (dispatch) => {
         dispatch(lib.actions.player.load(data));
         dispatch(lib.actions.player.play());
     };

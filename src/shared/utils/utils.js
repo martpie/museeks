@@ -431,15 +431,12 @@ const getNextQueueCursor = (data) => {
     const nextQueueCursor = () => {
         if (repeat === 'one') {
             return queueCursor;
-        }
-        else if (shuffle) {
+        } else if (shuffle) {
             const choices = range(0, queue.length).filter((choice) => choice !== queueCursor);
             return pickRandom(choices);
-        }
-        else if (repeat === 'all' && queueCursor === queue.length - 1) { // is last track
+        } else if (repeat === 'all' && queueCursor === queue.length - 1) { // is last track
             return 0; // start with new track
-        }
-        else if (queueCursor === queue.length - 1) { // is last track
+        } else if (queueCursor === queue.length - 1) { // is last track
             return null; // stop playing
         } else {
             return queueCursor + 1;

@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import Icon from 'react-fontawesome';
-import style from './styles.scss';
+import './styles.scss';
 
 import { previous, next, playToggle } from '../../redux/actions/player';
 
@@ -14,7 +14,10 @@ import { previous, next, playToggle } from '../../redux/actions/player';
 class PlayerControls extends PureComponent {
 
     static propTypes = {
-        playStatus: React.PropTypes.string
+        playStatus: React.PropTypes.string,
+        previous: React.PropTypes.function,
+        next: React.PropTypes.function,
+        playToggle: React.PropTypes.function
     }
 
     constructor(props) {

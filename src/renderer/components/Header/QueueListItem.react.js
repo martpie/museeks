@@ -23,7 +23,9 @@ class QueueListItem extends PureComponent {
         onDragStart: React.PropTypes.func,
         onDragOver: React.PropTypes.func,
         onDragEnd: React.PropTypes.func,
-        queueCursor: React.PropTypes.number
+        queueCursor: React.PropTypes.number,
+        loadAndPlay: React.PropTypes.func,
+        remove: React.PropTypes.func,
     }
 
     constructor(props) {

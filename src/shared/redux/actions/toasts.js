@@ -1,4 +1,4 @@
-const library = (lib) => {
+const library = () => {
 
     const add = (type, content, duration = 3000) => {
         const _id = Date.now();

@@ -20,7 +20,8 @@ class TrackRow extends Component {
         trackId: React.PropTypes.string,
         index: React.PropTypes.number,
         onMouseDown: React.PropTypes.func,
-        onContextMenu: React.PropTypes.func
+        onContextMenu: React.PropTypes.func,
+        newQueueLoadAndPlay: React.PropTypes.func,
     }
 
     constructor(props) {

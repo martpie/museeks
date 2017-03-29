@@ -14,7 +14,8 @@ import lib from '../../lib';
 class ButtonShuffle extends Component {
 
     static propTypes = {
-        shuffle: React.PropTypes.bool
+        shuffle: React.PropTypes.bool,
+        setShuffle: React.PropTypes.func
     }
 
     constructor(props) {
@@ -43,7 +44,6 @@ class ButtonShuffle extends Component {
 const stateToProps = () => ({});
 
 const dispatchToProps = {
-    repeat: lib.actions.player.repeat,
     setShuffle: lib.actions.player.shuffle
 };
 

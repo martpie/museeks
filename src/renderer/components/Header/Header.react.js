@@ -28,6 +28,7 @@ class Header extends Component {
         repeat: React.PropTypes.string,
         shuffle: React.PropTypes.bool,
         windowControls: React.PropTypes.bool,
+        filter: React.PropTypes.func,
     }
 
     constructor(props) {

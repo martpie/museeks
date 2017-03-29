@@ -22,7 +22,9 @@ class QueueList extends Component {
         queue: React.PropTypes.array,
         queueCursor: React.PropTypes.number,
         trackData: React.PropTypes.object,
-        visible: React.PropTypes.bool
+        visible: React.PropTypes.bool,
+        clear: React.PropTypes.func,
+        setQueue: React.PropTypes.func,
     }
 
     constructor(props) {

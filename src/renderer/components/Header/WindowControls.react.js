@@ -11,7 +11,8 @@ import lib from '../../lib';
 class WindowControls extends PureComponent {
 
     static propTypes = {
-        active: React.PropTypes.bool
+        active: React.PropTypes.bool,
+        close: React.PropTypes.func,
     }
 
     constructor(props) {

@@ -19,6 +19,12 @@ const museeksLogo = `dist/${museeksLogoRequire}`;
 
 class SettingsAbout extends Component {
 
+    static propTypes = {
+        version: React.PropTypes.number,
+        checkForUpdate: React.PropTypes.func,
+    }
+
+
     constructor(props) {
         super(props);
     }

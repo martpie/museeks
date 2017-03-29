@@ -4,7 +4,7 @@ import utils from '../utils/utils';
 
 import routes from './routes';
 
-const library = (lib) => {
+const library = () => {
 
     // for each internal api route, create an http request that will call it
     const clientApiCalls = routes.reduce((api, route) => {
