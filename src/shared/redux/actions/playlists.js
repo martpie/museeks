@@ -32,7 +32,6 @@ const library = (lib) => {
         });
     };
 
-    // DR: call site must be updated for dispatch style function
     const create = (name, redirect = false) => (dispatch) => {
         return lib.playlist.insert({
             name,

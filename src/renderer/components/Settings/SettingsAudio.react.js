@@ -13,7 +13,8 @@ import lib from '../../lib';
 class SettingsAudio extends Component {
 
     static propTypes = {
-        config: React.PropTypes.object
+        config: React.PropTypes.object,
+        setPlaybackRate: React.PropTypes.func,
     }
 
     constructor(props) {

@@ -24,12 +24,12 @@ class TracksList extends Component {
         playlists: React.PropTypes.array,
         currentPlaylist: React.PropTypes.string,
         playStatus: React.PropTypes.string,
-        add: React.PropTypes.function,
-        addNext: React.PropTypes.function,
-        removeTracksFrom: React.PropTypes.function,
-        create: React.PropTypes.function,
-        addTracksTo: React.PropTypes.function,
-        loadAndPlay: React.PropTypes.function
+        add: React.PropTypes.func,
+        addNext: React.PropTypes.func,
+        removeTracksFrom: React.PropTypes.func,
+        create: React.PropTypes.func,
+        addTracksTo: React.PropTypes.func,
+        loadAndPlay: React.PropTypes.func
     }
 
     constructor(props) {

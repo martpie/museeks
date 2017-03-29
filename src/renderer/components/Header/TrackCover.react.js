@@ -41,7 +41,7 @@ class TrackCover extends PureComponent {
 
     render() {
         return this.state.data
-            ? <div className='cover' style={{ backgroundImage: `url('${this.state.data}')` }} />
+            ? <div className='cover' style={ { backgroundImage: `url('${this.state.data}')` } } />
             : (
                 <div className='cover empty'>
                     <div className='note'>♪</div>

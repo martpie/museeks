@@ -17,7 +17,9 @@ import Avatar from '../Avatar';
 class SettingsAdvanced extends Component {
 
     static propTypes = {
-        config: React.PropTypes.object
+        config: React.PropTypes.object,
+        network: React.PropTypes.object,
+        scan: React.PropTypes.func,
     }
 
     constructor(props) {

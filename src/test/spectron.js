@@ -81,22 +81,22 @@ const runtimeConfiguration = () => {
         // simulate peer discovery
         return Promise.map(peers, (foundPeer) => notifyPeerFound(peer, foundPeer));
     });
-}
+};
 
-const setConfig = (peer, key, value) => {
-    const host = peer.ip;
-    const port = peer.config.electron.api.port;
-
-    return http({
-        method: 'POST',
-        url: `http://${host}:${port}/api/store/dispatch`,
-        json: true,
-        data: {
-            type: 'CONFIG/SET',
-            payload: { key, value }
-        }
-    });
-}
+// const setConfig = (peer, key, value) => {
+//     const host = peer.ip;
+//     const port = peer.config.electron.api.port;
+//
+//     return http({
+//         method: 'POST',
+//         url: `http://${host}:${port}/api/store/dispatch`,
+//         json: true,
+//         data: {
+//             type: 'CONFIG/SET',
+//             payload: { key, value }
+//         }
+//     });
+// };
 
 const notifyPeerFound = (peer, foundPeer) => {
     const host = peer.ip;
@@ -115,7 +115,7 @@ const notifyPeerFound = (peer, foundPeer) => {
             }
         }
     });
-}
+};
 
 const runTests = () => {
 
@@ -147,14 +147,14 @@ const runTests = () => {
         peers.forEach((peer, peerNumber) => {
             peer.client.getMainProcessLogs().then((logs) => {
                 logs.forEach((log) => {
-                    console.log(`ELECTRON ${peerNumber}`, log)
-                })
-            })
+                    console.log(`ELECTRON ${peerNumber}`, log);
+                });
+            });
         });
-    }
+    };
 
     setInterval(getElectronLogs, 1000);
-}
+};
 
 startPeers()
 .then(runtimeConfiguration)

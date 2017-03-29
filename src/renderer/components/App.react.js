@@ -19,7 +19,7 @@ class Museeks extends Component {
 
     static propTypes = {
         state: React.PropTypes.object,
-        playToggle: React.PropTypes.function,
+        playToggle: React.PropTypes.func,
         children: React.PropTypes.object,
     }
 
@@ -31,8 +31,8 @@ class Museeks extends Component {
         const state = this.props.state;
         const trackPlayingId = state.player.currentTrack && state.player.currentTrack._id ? state.player.currentTrack._id : null;
 
-        const tracks = state.tracks[state.tracks.tracksCursor].sub.map((trackId) => state.tracks[state.tracks.tracksCursor].data[trackId]);
-        const library = state.tracks[state.tracks.tracksCursor].all.map((trackId) => state.tracks[state.tracks.tracksCursor].data[trackId]);
+        const tracks = state.tracks[state.tracks.tracksCursor].sub.map((trackId) => state.tracks.library.data[trackId]);
+        const library = state.tracks[state.tracks.tracksCursor].all.map((trackId) => state.tracks.library.data[trackId]);
 
         return (
             <div className='main'>

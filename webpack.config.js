@@ -30,7 +30,7 @@ module.exports = {
     target: 'electron',
     output: {
         path: './src/dist',
-        filename: "[name].entry.js"
+        filename: '[name].entry.js'
     },
     module: {
         rules: [

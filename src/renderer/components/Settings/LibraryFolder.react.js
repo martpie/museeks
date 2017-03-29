@@ -17,7 +17,8 @@ class LibraryFolders extends Component {
     static propTypes = {
         index: React.PropTypes.number,
         folder: React.PropTypes.string,
-        refreshingLibrary: React.PropTypes.bool
+        refreshingLibrary: React.PropTypes.bool,
+        removeFolder: React.PropTypes.func,
     }
 
     constructor(props) {

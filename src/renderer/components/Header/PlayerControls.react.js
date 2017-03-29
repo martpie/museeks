@@ -15,9 +15,9 @@ class PlayerControls extends PureComponent {
 
     static propTypes = {
         playStatus: React.PropTypes.string,
-        previous: React.PropTypes.function,
-        next: React.PropTypes.function,
-        playToggle: React.PropTypes.function
+        previous: React.PropTypes.func,
+        next: React.PropTypes.func,
+        playToggle: React.PropTypes.func
     }
 
     constructor(props) {

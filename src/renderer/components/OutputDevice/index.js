@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Avatar from '../Avatar';
 import Popover from 'react-popover-wrapper';
+import './styles.css';
 
 import lib from '../../lib';
 
@@ -39,14 +40,17 @@ class OutputDevice extends Component {
         return (
             <div className="output-controls">
                 <Popover preferPlace="above">
-                    <div className="outputDeviceTrigger">Output:<Avatar style={{ marginLeft: '7px' }} name={ output.hostname } /></div>
+                    <div className="outputDeviceTrigger">Output:<Avatar style={ { marginLeft: '7px' } } name={ output.hostname } /></div>
                     <div className="PopoverMenu">
-                        { allOutputs.map((option) => (
-                            <a key={ option.hostname } onClick={ () => setOutput(option) } >
-                                <Avatar name={ option.hostname } />
-                                <span style={ textStyle }>{ option.hostname }</span>
-                            </a>
-                        ))}
+                        { allOutputs.map((option) => {
+                            const setOutputFn = () => setOutput(option);
+                            return (
+                                <a key={ option.hostname } onClick={ setOutputFn } >
+                                    <Avatar name={ option.hostname } />
+                                    <span style={ textStyle }>{ option.hostname }</span>
+                                </a>
+                            );
+                        })}
                     </div>
                 </Popover>
             </div>

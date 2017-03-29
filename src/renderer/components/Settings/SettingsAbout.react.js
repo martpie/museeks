@@ -8,7 +8,7 @@ import lib from '../../lib';
 
 // sth wrong with that, need some check with Webpack
 const museeksLogoRequire = require('../../../images/logos/museeks.png');
-const museeksLogo = `dist/${museeksLogoRequire}`;
+const museeksLogo = `../dist/${museeksLogoRequire}`;
 
 
 /*
@@ -18,6 +18,12 @@ const museeksLogo = `dist/${museeksLogoRequire}`;
 */
 
 class SettingsAbout extends Component {
+
+    static propTypes = {
+        version: React.PropTypes.number,
+        checkForUpdate: React.PropTypes.func,
+    }
+
 
     constructor(props) {
         super(props);

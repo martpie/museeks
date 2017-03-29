@@ -15,7 +15,13 @@ import CheckboxSetting from './CheckboxSetting.react';
 class SettingsUI extends Component {
 
     static propTypes = {
-        config: React.PropTypes.object
+        config: React.PropTypes.object,
+        toggleDarkTheme: React.PropTypes.func,
+        toggleNativeFrame: React.PropTypes.func,
+        toggleDisplayNotifications: React.PropTypes.func,
+        toggleMinimizeToTray: React.PropTypes.func,
+        toggleSleepBlocker: React.PropTypes.func,
+        toggleAutoUpdateChecker: React.PropTypes.func,
     }
 
     constructor(props) {

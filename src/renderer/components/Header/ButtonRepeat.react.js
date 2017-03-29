@@ -20,7 +20,8 @@ const svgMap = {
 class ButtonRepeat extends Component {
 
     static propTypes = {
-        repeat: React.PropTypes.string
+        repeat: React.PropTypes.string,
+        repeatTrack: React.PropTypes.func,
     }
 
     constructor(props) {

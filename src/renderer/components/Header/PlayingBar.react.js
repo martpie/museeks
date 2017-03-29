@@ -32,6 +32,9 @@ class PlayingBar extends Component {
         queueCursor: React.PropTypes.number,
         repeat: React.PropTypes.string,
         shuffle: React.PropTypes.bool,
+        jumpTo: React.PropTypes.func,
+        fetchCover: React.PropTypes.func,
+        updateElapsedTime: React.PropTypes.func,
     }
 
     constructor(props) {

@@ -7,9 +7,6 @@ const library = (lib) => {
     window.addEventListener('dragover', (e) => e.preventDefault(), false);
     window.addEventListener('drop', (e) => e.preventDefault(), false);
 
-    // Remember dimensions and positionning
-    const currentWindow = lib.app.browserWindows.main;
-
     // load data and apply app settings
     dispatch(lib.actions.tracks.find());
     dispatch(lib.actions.playlists.refresh());

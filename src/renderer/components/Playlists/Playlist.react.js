@@ -21,8 +21,8 @@ class Playlist extends Component {
         trackPlayingId: React.PropTypes.string,
         playlists: React.PropTypes.array,
         playStatus: React.PropTypes.string,
-        load: React.PropTypes.function,
-        setTracksCursor: React.PropTypes.function
+        load: React.PropTypes.func,
+        setTracksCursor: React.PropTypes.func
     }
 
     constructor(props) {
@@ -32,6 +32,13 @@ class Playlist extends Component {
     componentDidMount = () => {
         this.props.load(this.props.params.playlistId);
         this.props.setTracksCursor('playlist');
+    }
+
+    componentWillReceiveProps = (newProps) => {
+        const oldProps = this.props;
+        if (oldProps.params.playlistId !== newProps.params.playlistId) {
+            this.props.load(newProps.params.playlistId);
+        }
     }
 
     render() {
@@ -61,7 +68,7 @@ const stateToProps = () => ({});
 
 const dispatchToProps = {
     load: lib.actions.playlists.load,
-    setTracksCursor: lib.actions.library.setTracksCursor
+    setTracksCursor: lib.actions.tracks.setTracksCursor
 };
 
 export default connect(stateToProps, dispatchToProps)(Playlist);

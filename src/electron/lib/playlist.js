@@ -8,7 +8,7 @@ const library = (lib) => {
 
     const update = (criteria, data) => lib.models.playlist.updateAsync(criteria, data);
 
-    const remove = (criteria, options) => lib.models.playlist.removeAsync(criteria, options);
+    const remove = (criteria, options = {}) => lib.models.playlist.removeAsync(criteria, options);
 
     return {
         find,

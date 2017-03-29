@@ -17,6 +17,7 @@ class TrackRow extends Component {
 
     static propTypes = {
         state: React.PropTypes.string.isRequired,
+        playToggle: React.PropTypes.func.isRequired,
     }
 
     constructor(props) {

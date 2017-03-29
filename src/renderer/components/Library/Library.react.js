@@ -20,7 +20,8 @@ class Library extends Component {
         tracks: React.PropTypes.array,
         trackPlayingId: React.PropTypes.string,
         playlists: React.PropTypes.array,
-        playStatus: React.PropTypes.string
+        playStatus: React.PropTypes.string,
+        setTracksCursor: React.PropTypes.func,
     }
 
     constructor(props) {
