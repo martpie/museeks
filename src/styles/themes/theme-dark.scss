@@ -203,8 +203,20 @@ body.theme-dark {
                 color: #eeeeee;
 
                 .track-cell-header:not(:last-child) {
-                    border-color: #777;
+                    .track-cell-header-inner {
+                        border-color: #777;
+                    }
                 }
+
+                .sort-indicator {
+                    &.up {
+                        border-bottom: 5px solid rgba(255, 255, 255, 0.8);
+                    }
+                    &.down {
+                        border-top: 5px solid rgba(255, 255, 255, 0.8);
+                    }
+                }
+
             }
 
             .tracks-list-body {
