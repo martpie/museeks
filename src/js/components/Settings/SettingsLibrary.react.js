@@ -26,14 +26,6 @@ export default class SettingsLibrary extends Component {
     }
 
     render() {
-        const buttonsGroup = (
-            <ButtonGroup>
-                <Button bsSize='small' disabled={ this.props.library.refreshing } bsStyle={ 'danger' } onClick={ this.resetLibrary }>
-                    Reset library
-                </Button>
-            </ButtonGroup>
-        );
-
         return (
             <div className='setting settings-musicfolder'>
                 <div className='setting-section'>
@@ -44,7 +36,17 @@ export default class SettingsLibrary extends Component {
                         onDrop={ this.onDrop }
                         onClick={ this.openFolderSelector }
                     />
-                    { buttonsGroup }
+                    <ButtonGroup>
+                        <Button
+                            bsSize='small'
+                            bsStyle={ 'danger' }
+                            title='Fully reset the library'
+                            disabled={ this.props.library.refreshing }
+                            onClick={ this.resetLibrary }
+                        >
+                            Reset library
+                        </Button>
+                    </ButtonGroup>
                 </div>
             </div>
         );

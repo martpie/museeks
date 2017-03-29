@@ -46,6 +46,9 @@ export default class SettingsAbout extends Component {
                             (<ExternalLink href='http://pierrevanmart.com'>KeitIG</ExternalLink>)
                             and a bunch of <ExternalLink href='https://github.com/KeitIG/museeks/graphs/contributors'>great people</ExternalLink>.
                         </p>
+                        <p>
+                            Want to contribute? Come and <ExternalLink href='https://gitter.im/KeitIG/museeks'>chat with us</ExternalLink>.
+                        </p>
                     </div>
                 </div>
                 <div className='setting-section'>
@@ -54,10 +57,7 @@ export default class SettingsAbout extends Component {
                         <p>
                             Although Museeks is mostly stable, a few bugs may still occur. Please, do
                             not hesitate to report them or to ask for features you would like to
-                            see, using our
-                            <ExternalLink href='http://github.com/KeitIG/Museeks/issues'>
-                                issue tracker
-                            </ExternalLink>.
+                            see, using our <ExternalLink href='http://github.com/KeitIG/Museeks/issues'>issue tracker</ExternalLink>.
                         </p>
                     </div>
                 </div>

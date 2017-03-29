@@ -34,7 +34,7 @@ export default class SettingsUI extends Component {
                 />
                 <CheckboxSetting
                     title='Display Notifications'
-                    description='When checked, native notifications will be displayed for various things, like track start'
+                    description='Allow the app to send native notifications'
                     defaultValue={ config.displayNotifications }
                     onClick={ AppActions.settings.toggleDisplayNotifications }
                 />

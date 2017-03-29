@@ -44,17 +44,17 @@ export default class Footer extends Component {
         const navButtons = (
             <ButtonGroup className='view-switcher'>
                 <LinkContainer to='/library'>
-                    <Button className='view-link'>
+                    <Button className='view-link' title='Library'>
                         <Icon name='align-justify' fixedWidth />
                     </Button>
                 </LinkContainer>
                 <LinkContainer to='/playlists'>
-                    <Button className='view-link'>
+                    <Button className='view-link' title='Playlists'>
                         <Icon name='star' fixedWidth />
                     </Button>
                 </LinkContainer>
                 <LinkContainer to='/settings'>
-                    <Button className='view-link'>
+                    <Button className='view-link' title='Settings'>
                         <Icon name='gear' fixedWidth />
                     </Button>
                 </LinkContainer>
