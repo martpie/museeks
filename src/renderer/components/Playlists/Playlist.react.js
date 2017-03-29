@@ -34,6 +34,13 @@ class Playlist extends Component {
         this.props.setTracksCursor('playlist');
     }
 
+    componentWillReceiveProps = (newProps) => {
+        const oldProps = this.props;
+        if (oldProps.params.playlistId !== newProps.params.playlistId) {
+            this.props.load(newProps.params.playlistId);
+        }
+    }
+
     render() {
         if (Array.isArray(this.props.tracks) && this.props.tracks.length > 0) {
             return (
