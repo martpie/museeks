@@ -67,7 +67,7 @@ const library = (lib) => {
 
         // use the user supplied _id, or fall back to cursor
         const currentTrack = tracks[_id || cursorNextTrackId];
-
+console.log('XXXXXXXXXXXXX', currentTrack)
         if (currentTrack) {
             const outputIsLocal = () => Promise.all([
                 lib.player.setMetadata(currentTrack),

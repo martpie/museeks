@@ -49,39 +49,7 @@ const baseState = {
 
 test('player next', (t) => {
 
-    const description = `
-        should increment the queue cursor
-        should add to history
-    `;
-
-    const action = player.next();
-
-    const initialState = extend(baseState, {
-        queueCursor: 5,
-        player: {
-            playStatus: 'play',
-        }
-    });
-
-    const nextQueueCursor = initialState.queueCursor + 1;
-    const nextTrack = baseState.tracks.library.data[nextQueueCursor];
-
-    const delta = {
-        queueCursor: nextQueueCursor,
-        player: {
-            currentTrack: nextTrack,
-            history: [nextTrack._id]
-        }
-    };
-
-    return actionTest({
-        initialState,
-        action
-    })
-    .then((result) => t.deepEqual(result.delta, delta, description));
-});
-
-test('player next three times', (t) => {
+    const iterations = range(3);
 
     const description = `
         should increment the queue cursor
@@ -97,9 +65,7 @@ test('player next three times', (t) => {
         }
     });
 
-    const iterations = 3;
-
-    return Promise.reduce(range(iterations), (previous) => {
+    return Promise.reduce(iterations, (previous) => {
 
         const nextQueueCursor = previous.queueCursor + 1;
         const nextTrack = baseState.tracks.library.data[nextQueueCursor];
@@ -220,6 +186,185 @@ test('player next with repeat none', (t) => {
         queueCursor: null,
         queue: []
     };
+
+    return actionTest({
+        initialState,
+        action
+    })
+    .then((result) => t.deepEqual(result.delta, delta, description));
+});
+
+test('player previous after 5 seconds of playing', (t) => {
+
+    const description = `
+        should keep the queue cursor the same
+        should keep the history cursor the same
+        should not add to history
+    `;
+
+    const action = player.previous();
+
+    const queueCursor = 5;
+    const currentTrack = baseState.tracks.library.data[baseState.queue[queueCursor]];
+
+    // force the state of the audio component
+    lib.player.getAudio = () => Promise.resolve({
+        currentTime: 30
+    });
+
+    const initialState = extend(baseState, {
+        queueCursor,
+        player: {
+            playStatus: 'play',
+            history: [0, 1, 2, 3, 4],
+            currentTrack
+        }
+    });
+
+    // expect the state to stay the same
+    const delta = {};
+
+    return actionTest({
+        initialState,
+        action
+    })
+    .then((result) => t.deepEqual(result.delta, delta, description));
+});
+
+test('player previous before 5 seconds of playing', (t) => {
+
+    const description = `
+        should keep the queue cursor the same
+        should put the history cursor to the end of the history array
+        should not add to history
+    `;
+
+    const action = player.previous();
+
+    // force the state of the audio component
+    lib.player.getAudio = () => Promise.resolve({
+        currentTime: 3
+    });
+
+    const queueCursor = 5;
+    const currentTrack = baseState.tracks.library.data[baseState.queue[queueCursor]];
+
+    const initialState = extend(baseState, {
+        queueCursor,
+        player: {
+            playStatus: 'play',
+            history: [0, 1, 2, 3, 4],
+            currentTrack
+        }
+    });
+
+    const historyCursor = initialState.player.history.length - 1;
+    const historyTrackId = initialState.player.history[historyCursor];
+    const historyTrack = baseState.tracks.library.data[historyTrackId];
+
+    const delta = {
+        player: {
+            historyCursor,
+            currentTrack: historyTrack
+        }
+    };
+
+    return actionTest({
+        initialState,
+        action
+    })
+    .then((result) => t.deepEqual(result.delta, delta, description));
+});
+
+test('player previous from within the history array', (t) => {
+
+    const iterations = range(3);
+
+    const description = `
+        should keep the queue cursor the same
+        should decrement the history cursor
+        should not add to history
+    `;
+
+    const action = player.previous();
+
+    // force the state of the audio component
+    lib.player.getAudio = () => Promise.resolve({
+        currentTime: 3
+    });
+
+    const tracks = baseState.tracks.library.data;
+
+    const historyCursor = 4;
+    const history = [0, 1, 2, 3, 4];
+    const historyTrackId = history[historyCursor];
+    const currentTrack = tracks[historyTrackId];
+
+    const initialState = extend(baseState, {
+        player: {
+            playStatus: 'play',
+            historyCursor,
+            history,
+            currentTrack
+        }
+    });
+
+    return Promise.reduce(iterations, (previous) => {
+
+        const nextHistoryCursor = previous.player.historyCursor - 1;
+        const nextTrack = tracks[nextHistoryCursor];
+
+        const delta = {
+            player: {
+                currentTrack: nextTrack,
+                historyCursor: nextHistoryCursor
+            }
+        };
+
+        return actionTest({
+            initialState: previous,
+            action
+        })
+        .then((result) => {
+            t.deepEqual(result.delta, delta, description);
+
+            return result.state;
+        });
+    }, initialState);
+});
+
+test.only('player previous from the head of the history array', (t) => {
+
+    const description = `
+        should keep the history cursor the same
+        should not add to history
+    `;
+
+    const action = player.previous();
+
+    // force the state of the audio component
+    lib.player.getAudio = () => Promise.resolve({
+        currentTime: 3
+    });
+
+    const tracks = baseState.tracks.library.data;
+
+    const historyCursor = 0;
+    const history = [0, 1, 2, 3, 4];
+    const historyTrackId = history[historyCursor];
+    const currentTrack = tracks[historyTrackId];
+
+    const initialState = extend(baseState, {
+        player: {
+            playStatus: 'play',
+            historyCursor,
+            history,
+            currentTrack
+        }
+    });
+
+    // expect the state to stay the same
+    const delta = {};
 
     return actionTest({
         initialState,

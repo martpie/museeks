@@ -414,6 +414,7 @@ const transformTrackPaths = ({ tracks, me, peer }) => {
 
 const getNextQueueCursor = (data) => {
 
+    console.log('getNextQueueCursor INPUT\n\n', data);
     const {
         direction,
         queue,
@@ -494,7 +495,7 @@ const getNextQueueCursor = (data) => {
         queueCursor,
         historyCursor
     });
-    
+
     return {
         queueCursor,
         historyCursor

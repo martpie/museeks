@@ -3,14 +3,18 @@ import i from 'icepick';
 export default (state = {}, action) => {
     switch (action.type) {
         case('PLAYER/LOAD_PENDING'): {
-            const { currentTrack, queueCursor, historyCursor, oldHistoryCursor } = action.meta;
+            const { currentTrack, queueCursor, historyCursor, oldHistoryCursor, oldCurrentTrack } = action.meta;
             const { repeat } = state.player;
 
             const addToHistory =
-                oldHistoryCursor === -1 && // we were not playing from history previously
-                historyCursor === -1 && // we are not playing from history currently
-                repeat !== 'one';
-
+                oldCurrentTrack &&                // we have played a track previously
+                historyCursor === -1 &&           // we are not playing from history currently
+                oldHistoryCursor === -1 &&        // we were not playing from history previously
+                repeat !== 'one' &&               // we are not looping over the same track
+                state.player.currentTime >= 5;    // we are 5 seconds or more into a song
+console.log('=======================')
+console.log(action)
+console.log('=======================')
             return i.chain(state)
                 .assoc('queueCursor', queueCursor)
                 .assocIn(['player', 'currentTrack'], currentTrack)
