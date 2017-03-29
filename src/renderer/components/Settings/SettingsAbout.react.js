@@ -8,7 +8,7 @@ import lib from '../../lib';
 
 // sth wrong with that, need some check with Webpack
 const museeksLogoRequire = require('../../../images/logos/museeks.png');
-const museeksLogo = `dist/${museeksLogoRequire}`;
+const museeksLogo = `../dist/${museeksLogoRequire}`;
 
 
 /*
