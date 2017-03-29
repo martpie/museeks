@@ -19,7 +19,7 @@ class Museeks extends Component {
 
     static propTypes = {
         state: React.PropTypes.object,
-        playToggle: React.PropTypes.function,
+        playToggle: React.PropTypes.func,
         children: React.PropTypes.object,
     }
 

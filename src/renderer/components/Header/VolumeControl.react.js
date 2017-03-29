@@ -29,7 +29,7 @@ class VolumeControl extends Component {
     static propTypes = {
         volume: React.PropTypes.number,
         setVolume: React.PropTypes.func,
-        setMute: React.PropTypes.setMute,
+        setMuted: React.PropTypes.func,
     }
 
     constructor(props) {
@@ -91,7 +91,7 @@ class VolumeControl extends Component {
         if (e.target.classList.contains('player-control') || e.target.classList.contains('fa')) {
             const muted = !lib.player.isMuted();
 
-            this.props.setMute(muted);
+            this.props.setMuted(muted);
             this.setState({ muted });
         }
     }
@@ -103,7 +103,7 @@ const stateToProps = (state) => ({
 
 const dispatchToProps = {
     setVolume: lib.actions.player.setVolume,
-    setMute: lib.actions.player.setMute
+    setMuted: lib.actions.player.setMuted
 };
 
 export default connect(stateToProps, dispatchToProps)(VolumeControl);

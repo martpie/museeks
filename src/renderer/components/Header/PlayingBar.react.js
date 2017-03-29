@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { ProgressBar } from 'react-bootstrap';
 import Icon from 'react-fontawesome';
@@ -32,7 +32,7 @@ class PlayingBar extends Component {
         queueCursor: React.PropTypes.number,
         repeat: React.PropTypes.string,
         shuffle: React.PropTypes.bool,
-        jumpTo: React.jumpTo.func,
+        jumpTo: React.PropTypes.func,
         fetchCover: React.PropTypes.func,
         updateElapsedTime: React.PropTypes.func,
     }

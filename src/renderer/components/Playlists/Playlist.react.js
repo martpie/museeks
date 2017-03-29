@@ -21,8 +21,8 @@ class Playlist extends Component {
         trackPlayingId: React.PropTypes.string,
         playlists: React.PropTypes.array,
         playStatus: React.PropTypes.string,
-        load: React.PropTypes.function,
-        setTracksCursor: React.PropTypes.function
+        load: React.PropTypes.func,
+        setTracksCursor: React.PropTypes.func
     }
 
     constructor(props) {
