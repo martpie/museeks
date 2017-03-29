@@ -151,13 +151,13 @@ console.log('XXXXXXXXXXXXX', currentTrack)
     };
 
     const playToggle = () => (dispatch, getState) => {
-        lib.player.getAudio().then((audio) => {
-            if (audio.paused && getState().queue.length > 0) {
-                dispatch(lib.actions.player.play());
-            } else {
-                dispatch(lib.actions.player.pause());
-            }
-        });
+        const { playState, currentTrack } = getState().player;
+
+        if (playState !== 'play' && currentTrack._id) {
+            dispatch(lib.actions.player.play());
+        } else {
+            dispatch(lib.actions.player.pause());
+        }
     };
 
     const next = () => (dispatch, getState) => {

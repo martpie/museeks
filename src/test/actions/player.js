@@ -47,7 +47,7 @@ const baseState = {
     }
 };
 
-test('player next', (t) => {
+test.only('player next', (t) => {
 
     const iterations = range(3);
 
@@ -333,7 +333,7 @@ test('player previous from within the history array', (t) => {
     }, initialState);
 });
 
-test.only('player previous from the head of the history array', (t) => {
+test('player previous from the head of the history array', (t) => {
 
     const description = `
         should keep the history cursor the same
