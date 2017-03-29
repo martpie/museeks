@@ -24,16 +24,25 @@
             z-index: 20;
 
             .track-cell-header {
+                position: relative;
                 font-weight: 700;
-                padding: 0 4px;
                 cursor: default;
-                margin: 4px 0;
+                padding: 4px 0;
                 white-space: nowrap;
                 overflow: hidden;
                 text-overflow: ellipsis;
+                
+                .track-cell-header-inner {
+                    padding: 0 4px;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
 
                 &:not(:last-child) {
-                    border-right: 1px solid #D2D2D2;
+                  .track-cell-header-inner {
+                        border-right: 1px solid #D2D2D2;
+                    }
                 }
 
                 &:last-child {
@@ -97,21 +106,8 @@
         }
 
         .cell-track {
-            width: calc(33% - 30px);
-        }
-
-        .cell-duration {
-            width: 7%;
-        }
-
-        .cell-artist,
-        .cell-album,
-        .cell-genre {
-            width: 20%;
-        }
-
-        .cell-owner {
-          width: 50px;
+            flex: 1;
+            min-width: 200px;
         }
     }
 }

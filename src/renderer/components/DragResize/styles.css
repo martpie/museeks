@@ -1,0 +1,8 @@
+.DragResizeDragger{
+  position: absolute;
+  z-index: 15;
+}
+
+.DragResizeBox{
+  position: relative;
+}

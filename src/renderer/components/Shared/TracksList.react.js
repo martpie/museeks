@@ -8,6 +8,7 @@ import PlayingIndicator from './PlayingIndicator.react';
 import lib from '../../lib';
 import utils from '../../../shared/utils/utils';
 import Avatar from '../Avatar';
+import Dragger from '../DragResize/Dragger'
 
 /*
 |--------------------------------------------------------------------------
@@ -36,14 +37,32 @@ class TracksList extends Component {
         super(props);
         this.state = {
             selected: [],
-            scrollTop: 0
+            scrollTop: 0,
+            width: {
+                duration: 100,
+                artist: 300,
+                album: 300,
+                genre: 150,
+                owner: 60,
+            }
         };
 
         this.rowHeight = 30;
     }
 
+    drag = (header, event) => {
+        const newState = {
+            width: {
+                ...this.state.width,
+                [header]: this.state.width[header] + event.deltaX
+            }
+        };
+        this.setState(newState)
+    }
+
     render() {
         const tracks = [...this.props.tracks];
+        const { width } = this.state;
 
         // TODO (y.solovyov | KeitIG): TrackListHeader component?
         return (
@@ -51,12 +70,29 @@ class TracksList extends Component {
                 <KeyBinding onKey={ this.onKey } target={ '.tracks-list-container' } preventInputConflict preventDefault />
                 <div className='tracks-list-header'>
                     <div className='track-cell-header cell-track-playing' />
-                    <div className='track-cell-header cell-track'>Track</div>
-                    <div className='track-cell-header cell-duration'>Duration</div>
-                    <div className='track-cell-header cell-artist'>Artist</div>
-                    <div className='track-cell-header cell-album'>Album</div>
-                    <div className='track-cell-header cell-genre'>Genre</div>
-                    <div className='track-cell-header cell-owner'>Owner</div>
+                    <div className='track-cell-header cell-track'>
+                        <div className='track-cell-header-inner'>Track</div>
+                    </div>
+                    <div className='track-cell-header cell-duration' style={{ width: `${width.duration}px` }}>
+                        <div className='track-cell-header-inner'>Duration</div>
+                        <Dragger changeFn={ (e) => this.drag('duration', e) } side='left' />
+                    </div>
+                    <div className='track-cell-header cell-artist'>
+                        <div className='track-cell-header-inner' style={{ width: `${width.artist}px` }}>Artist</div>
+                        <Dragger changeFn={ (e) => this.drag('artist', e) } side='left' />
+                    </div>
+                    <div className='track-cell-header cell-album' style={{ width: `${width.album}px` }}>
+                        <div className='track-cell-header-inner'>Album</div>
+                        <Dragger changeFn={ (e) => this.drag('album', e) } side='left' />
+                    </div>
+                    <div className='track-cell-header cell-genre' style={{ width: `${width.genre}px` }}>
+                        <div className='track-cell-header-inner'>Genre</div>
+                        <Dragger changeFn={ (e) => this.drag('genre', e) } side='left' />
+                    </div>
+                    <div className='track-cell-header cell-owner' style={{ width: `${width.owner}px` }}>
+                        <div className='track-cell-header-inner'>Owner</div>
+                        <Dragger changeFn={ (e) => this.drag('owner', e) } side='left' />
+                    </div>
                 </div>
                 <div className='tracks-list-body' onScroll={ this.scrollTracksList }>
                     <div className='tracks-list-tiles' style={ { height : tracks.length * this.rowHeight } }>
@@ -116,6 +152,7 @@ class TracksList extends Component {
         const selected       = this.state.selected;
         const tracks         = [...this.props.tracks];
         const trackPlayingId = this.props.trackPlayingId;
+        const { width } = this.state;
 
         const chunkLength = 20;
         const tilesToDisplay = 5;
@@ -146,22 +183,22 @@ class TracksList extends Component {
                         <div className='cell cell-track-playing text-center'>
                             { playingIndicator }
                         </div>
-                        <div className='cell cell-track'>
+                        <div className='cell cell-track' style={{ width: `${width.track}px` }}>
                             { track.title }
                         </div>
-                        <div className='cell cell-duration'>
+                        <div className='cell cell-duration' style={{ width: `${width.duration}px` }}>
                             { utils.parseDuration(track.duration) }
                         </div>
-                        <div className='cell cell-artist'>
+                        <div className='cell cell-artist' style={{ width: `${width.artist}px` }}>
                             { track.artist[0] }
                         </div>
-                        <div className='cell cell-album'>
+                        <div className='cell cell-album' style={{ width: `${width.album}px` }}>
                             { track.album }
                         </div>
-                        <div className='cell cell-genre'>
+                        <div className='cell cell-genre' style={{ width: `${width.genre}px` }}>
                             { track.genre.join(', ') }
                         </div>
-                        <div className='cell cell-owner'>
+                        <div className='cell cell-owner' style={{ width: `${width.owner}px` }}>
                         <Avatar name={ track.owner.name || track.owner.hostname } size={ 24 } />
                         </div>
                     </TrackRow>
