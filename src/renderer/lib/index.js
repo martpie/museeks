@@ -6,6 +6,7 @@ import app from './app';
 import config from './config';
 import contextMenu from './contextMenu';
 import playlist from './playlist';
+import playEvent from './playEvent';
 import peerDiscovery from './peerDiscovery';
 import shell from './shell';
 import track from './track';
@@ -19,6 +20,7 @@ const library = {
     contextMenu,
     player,
     playlist,
+    playEvent,
     peerDiscovery,
     shell,
     track,

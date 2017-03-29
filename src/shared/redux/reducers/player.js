@@ -4,9 +4,13 @@ export default (state = {}, action) => {
     switch (action.type) {
         case('PLAYER/LOAD_PENDING'): {
             const { currentTrack, queueCursor, historyCursor, oldHistoryCursor } = action.meta;
+            const { repeat } = state.player;
+
             const addToHistory =
                 oldHistoryCursor === -1 && // we were not playing from history previously
-                historyCursor === -1; // we are not playing from history currently
+                historyCursor === -1 && // we are not playing from history currently
+                repeat !== 'one';
+
             return i.chain(state)
                 .assoc('queueCursor', queueCursor)
                 .assocIn(['player', 'currentTrack'], currentTrack)

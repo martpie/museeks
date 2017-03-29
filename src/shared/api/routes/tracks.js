@@ -55,4 +55,12 @@ export default [{
             });
         }
     }
+}, {
+    path: 'api/tracks/history',
+    method: 'GET',
+    name: 'track.history',
+    handler: (req, res) => {
+        const { query } = req.query;
+        return req.lib.playEvent.find({ query, sort: { timestamp: -1 } }).then(res);
+    }
 }];

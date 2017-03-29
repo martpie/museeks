@@ -1,6 +1,6 @@
 import Promise from 'bluebird';
 import extend from 'deep-extend';
-import { diff } from 'deep-object-diff';
+import diff from '../deep-object-diff';
 
 import { store, setState } from './store';
 
@@ -13,7 +13,7 @@ const cleanState = store.getState();
 // take in an action, an expected delta, and an optional initial state
 const actionTest = ({ initialState = {}, action }) => {
     // set the state for the test
-    const state = extend(cleanState, initialState);
+    const state = extend({}, cleanState, initialState);
     store.dispatch(setState(state));
 
     // dispatch our test action and a timeout to race
@@ -24,6 +24,12 @@ const actionTest = ({ initialState = {}, action }) => {
     return Promise.race([actionPromise, timeoutPromise]).then(() => {
         const actualState = store.getState();
         const actualDelta = diff(state, actualState);
+
+        // console.log('BEFORE', state);
+        // console.log('-----------------');
+        // console.log('AFTER', actualState);
+        // console.log('-----------------');
+        // console.log('ACTUAL DELTA', actualDelta);
 
         return {
             state: actualState,
