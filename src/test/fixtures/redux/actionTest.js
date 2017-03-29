@@ -25,11 +25,11 @@ const actionTest = ({ initialState = {}, action }) => {
         const actualState = store.getState();
         const actualDelta = diff(state, actualState);
 
-        console.log('BEFORE', state)
-        console.log('-----------------')
-        console.log('AFTER', actualState)
-        console.log('-----------------')
-        console.log('ACTUAL DELTA', actualDelta)
+        // console.log('BEFORE', state);
+        // console.log('-----------------');
+        // console.log('AFTER', actualState);
+        // console.log('-----------------');
+        // console.log('ACTUAL DELTA', actualDelta);
 
         return {
             state: actualState,

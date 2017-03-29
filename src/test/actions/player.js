@@ -1,9 +1,10 @@
+import Promise from 'bluebird';
 import test from 'blue-tape';
 import playerActions from '../../shared/redux/actions/player';
 import actionTest from '../fixtures/redux/actionTest';
 import lib from '../fixtures/lib';
 import { range } from 'range';
-import extend from 'xtend';
+import extend from 'deep-extend';
 
 const player = playerActions(lib);
 
@@ -41,30 +42,35 @@ const baseState = {
     queueCursor: 5,
     queue: range(0, numTracks),
     player: {
-        playStatus: 'play'
+        playStatus: 'play',
+        history: []
     }
 };
 
 test('player next', (t) => {
 
-    const description = 'next should increment the queue cursor';
+    const description = `
+        should increment the queue cursor
+        should add to history
+    `;
 
     const action = player.next();
 
-    const queueCursor = 5;
-
     const initialState = extend(baseState, {
-        queueCursor,
+        queueCursor: 5,
         player: {
-            playStatus: 'play'
+            playStatus: 'play',
         }
     });
 
+    const nextQueueCursor = initialState.queueCursor + 1;
+    const nextTrack = baseState.tracks.library.data[nextQueueCursor];
+
     const delta = {
-        queueCursor: queueCursor + 1,
+        queueCursor: nextQueueCursor,
         player: {
-            currentTrack: baseState.tracks.library.data[queueCursor + 1],
-            history: [baseState.tracks.library.data[queueCursor + 1]._id]
+            currentTrack: nextTrack,
+            history: [nextTrack._id]
         }
     };
 
@@ -73,6 +79,49 @@ test('player next', (t) => {
         action
     })
     .then((result) => t.deepEqual(result.delta, delta, description));
+});
+
+test('player next three times', (t) => {
+
+    const description = `
+        should increment the queue cursor
+        should add to history
+    `;
+
+    const action = player.next();
+
+    const initialState = extend(baseState, {
+        queueCursor: 5,
+        player: {
+            playStatus: 'play'
+        }
+    });
+
+    const iterations = 3;
+
+    return Promise.reduce(range(iterations), (previous) => {
+
+        const nextQueueCursor = previous.queueCursor + 1;
+        const nextTrack = baseState.tracks.library.data[nextQueueCursor];
+
+        const delta = {
+            queueCursor: nextQueueCursor,
+            player: {
+                currentTrack: nextTrack,
+                history: previous.player.history.concat(nextTrack._id)
+            }
+        };
+
+        return actionTest({
+            initialState: previous,
+            action
+        })
+        .then((result) => {
+            t.deepEqual(result.delta, delta, description);
+
+            return result.state;
+        });
+    }, initialState);
 });
 
 test('player next with repeat one', (t) => {

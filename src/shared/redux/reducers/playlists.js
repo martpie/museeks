@@ -1,4 +1,5 @@
-import i from 'icepick'
+import i from 'icepick';
+
 export default (state = {}, action) => {
     switch (action.type) {
 
@@ -6,7 +7,7 @@ export default (state = {}, action) => {
             return i.assocIn(state, ['playlists'], action.payload.playlists);
         }
         case('PLAYLISTS/LOAD_ONE'): {
-            const trackIds = action.payload.tracks.map(track => track._id);
+            const trackIds = action.payload.tracks.map((track) => track._id);
             return i.chain(state)
                 .assocIn(['tracks', state.tracks.tracksCursor, 'all'], trackIds)
                 .assocIn(['tracks', state.tracks.tracksCursor, 'sub'], trackIds)

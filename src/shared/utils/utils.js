@@ -490,10 +490,11 @@ const getNextQueueCursor = (data) => {
         }
     }
 
-console.log('getNextQueueCursor RESULT\n\n', {
-    queueCursor,
-    historyCursor
-})
+    console.log('getNextQueueCursor RESULT\n\n', {
+        queueCursor,
+        historyCursor
+    });
+    
     return {
         queueCursor,
         historyCursor
