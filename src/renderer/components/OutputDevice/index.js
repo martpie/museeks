@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Avatar from '../Avatar';
 import Popover from 'react-popover-wrapper';
+import './styles.css';
 
 import lib from '../../lib';
 
