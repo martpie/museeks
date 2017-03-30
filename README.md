@@ -17,7 +17,7 @@ It uses:
 
 ### Features
 
-- Lightweight music player
+- cross-platform music player
 - Polished
 - Playlists
 - Queue management
@@ -26,10 +26,12 @@ It uses:
 - Dark theme
 - Playback speed control
 - Sleep mode blocker
+- Minimize to tray
 - Supported formats:
     - mp3
     - mp4
     - m4a/aac
+    - flac
     - wav
     - ogg
     - 3gpp
