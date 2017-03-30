@@ -101,7 +101,7 @@ export default class PlayingBar extends Component {
                         </span>
                     </div>
                     <div className='now-playing-bar'>
-                        <div className={ nowPlayingTooltipClasses } style={ { left: this.state.x - 12 } }>
+                        <div className={ nowPlayingTooltipClasses } style={ { left: `${this.state.x}%` } }>
                             { utils.parseDuration(this.state.duration) }
                         </div>
                         <ProgressBar
@@ -169,8 +169,10 @@ export default class PlayingBar extends Component {
             const queueCursor  = this.props.queueCursor;
             const trackPlaying = queue[queueCursor];
 
-            const bar = document.querySelector('.now-playing-bar');
-            const percent = ((e.pageX - (bar.offsetLeft + bar.offsetParent.offsetLeft)) / bar.offsetWidth) * 100;
+            const offsetX = e.nativeEvent.offsetX;
+            const barWidth = e.currentTarget.offsetWidth;
+
+            const percent = offsetX / barWidth * 100;
 
             const jumpTo = (percent * trackPlaying.duration) / 100;
 
@@ -187,16 +189,18 @@ export default class PlayingBar extends Component {
     showTooltip(e) {
         const queue       = this.props.queue;
         const queueCursor = this.props.queueCursor;
-        const trackPlaying   = queue[queueCursor];
+        const trackPlaying = queue[queueCursor];
 
-        const bar = document.querySelector('.now-playing-bar');
-        const percent = ((e.pageX - (bar.offsetLeft + bar.offsetParent.offsetLeft)) / bar.offsetWidth) * 100;
+        const offsetX = e.nativeEvent.offsetX;
+        const barWidth = e.currentTarget.offsetWidth;
+
+        const percent = offsetX / barWidth * 100;
 
         const time = (percent * trackPlaying.duration) / 100;
 
         this.setState({
-            duration : time,
-            x        : e.pageX,
+            duration: time,
+            x: percent,
         });
     }
 

@@ -113,6 +113,7 @@ header {
                     display: flex;
                     align-items: center;
                     justify-content: center;
+                    margin-bottom: 4px;
 
                     .icon {
                         display: flex;
@@ -167,16 +168,18 @@ header {
                 }
 
                 .now-playing-bar {
-                    padding: 2px;
+                    position: relative;
 
                     .playing-bar-tooltip {
-                        position: fixed;
+                        position: absolute;
                         background-color: $generic-white;
                         border: 1px solid #CECECE;
                         color: $_header-color;
                         font-size: 10px;
                         padding: 2px 5px;
-                        top: 10px;
+                        bottom: 9px;
+                        z-index: 1;
+                        transform: translateX(-11px);
 
                         &::before,
                         &::after {
