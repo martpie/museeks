@@ -245,7 +245,7 @@ test('player previous before 5 seconds of playing', (t) => {
 
     const description = `
         should keep the queue cursor the same,
-        should put the history cursor to the end of the history array,
+        should put the history cursor one position before the end of the history array,
         should not add to history
     `;
 
@@ -268,7 +268,8 @@ test('player previous before 5 seconds of playing', (t) => {
         }
     });
 
-    const historyCursor = initialState.player.history.length - 1;
+    // one position before the end of the history array
+    const historyCursor = initialState.player.history.length - 2;
     const historyTrackId = initialState.player.history[historyCursor];
     const historyTrack = tracks[historyTrackId];
 
@@ -308,7 +309,7 @@ test('player previous after 5 seconds of playing', (t) => {
         queueCursor,
         player: {
             playStatus: 'play',
-            history: [0, 1, 2, 3, 4],
+            history: [0, 1, 2, 3, 4, 5],
             currentTrack
         }
     });
@@ -382,7 +383,7 @@ test('player previous from within the history array', (t) => {
 test('player previous from the head of the history array', (t) => {
 
     const description = `
-        should keep the history cursor the same,
+        should set the history cursor to before the head of the history queue (null),
         should not add to history,
         should set the play status to stopped
     `;
@@ -415,7 +416,8 @@ test('player previous from the head of the history array', (t) => {
             currentTrack: {
                 _id: undefined,
                 name: undefined
-            }
+            },
+            historyCursor: null
         }
     };
 
@@ -429,7 +431,7 @@ test('player previous from the head of the history array', (t) => {
 test('player previous should not be affected by shuffle', (t) => {
 
     const description = `
-        should put the history cursor to the end of the history array,
+        should put the history cursor one position before the end of the history array,
         should not add to history
     `;
 
@@ -454,7 +456,8 @@ test('player previous should not be affected by shuffle', (t) => {
         }
     });
 
-    const historyCursor = history.length -1;
+    // one position before the end of the history array
+    const historyCursor = history.length - 2;
 
     // expect the state to stay the same
     const delta = {

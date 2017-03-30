@@ -3,14 +3,13 @@ import i from 'icepick';
 export default (state = {}, action) => {
     switch (action.type) {
         case('PLAYER/LOAD_PENDING'): {
-            const { currentTrack, queueCursor, historyCursor, oldHistoryCursor, oldCurrentTrack } = action.meta;
+            const { currentTrack, queueCursor, historyCursor, oldHistoryCursor } = action.meta;
             const { repeat, history } = state.player;
 
             const addToHistory =
-                oldCurrentTrack._id &&                          // we have played a track previously
-                historyCursor === -1 &&                     // we are not playing from history currently
-                repeat !== 'one' &&                         // we are not looping over the same track
-                oldCurrentTrack._id !== currentTrack._id;   // do not add the same track to history twice in a row
+                historyCursor === -1 &&                             // we are not playing from history currently
+                repeat !== 'one' &&                                 // we are not looping over the same track
+                history[history.length - 1] !== currentTrack._id;   // do not add the same track to history twice in a row
 
             const shouldDropFutureHistory =
                 oldHistoryCursor !== -1 &&                  // we were playing from history previously
@@ -23,6 +22,8 @@ export default (state = {}, action) => {
 // console.log('=======================')
 // console.log(action)
 // console.log('=======================')
+// console.log(addToHistory)
+// console.log(newHistory)
 // console.log(state)
 // console.log('=======================')
 
@@ -103,6 +104,14 @@ export default (state = {}, action) => {
                 .assoc('queueCursor', action.meta.oldQueueCursor)
                 .value();
         }
+
+        case('PLAYER/SET_CURSORS'): {
+            return i.chain(state)
+                .assocIn(['queueCursor'], action.payload.queueCursor)
+                .assocIn(['player', 'historyCursor'], action.payload.historyCursor)
+                .value();
+        }
+
         default: {
             return state;
         }

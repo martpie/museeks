@@ -50,22 +50,26 @@ const library = (lib) => {
 
         const getQueueCursor = () => {
             if (_id) {
+                // we've been given a track to play
                 return queue.indexOf(_id);
             } else if (utils.isNumber(data.queueCursor)) {
+                // we've been given a queue cursor
                 return data.queueCursor;
             } else {
+                // pick the existing state's queue cursor
                 return oldQueueCursor;
             }
-        }
+        };
 
         // if we haven't been given a queue cursor
         const queueCursor = getQueueCursor();
 
-        const historyCursor = utils.isNumber(data.historyCursor)
+        // use the supplied history cursor, or pick the existing state's history cursor
+        const historyCursor = data.historyCursor !== undefined
             ? data.historyCursor
             : oldHistoryCursor;
 
-        const inHistory = historyCursor !== -1;
+        const inHistory = historyCursor > -1 || historyCursor === null;
 
         // only index the history if we're in history and haven't been given a song to play
         const shouldPlayFromHistory = inHistory && !_id;
@@ -101,6 +105,7 @@ const library = (lib) => {
                 }
             });
         } else {
+            dispatch(lib.actions.player.setCursors({ queueCursor, historyCursor }));
             dispatch(lib.actions.player.stop());
         }
     };
@@ -163,14 +168,18 @@ const library = (lib) => {
     };
 
     const playToggle = () => (dispatch, getState) => {
-        const { playStatus, currentTrack } = getState().player;
+        const { playStatus } = getState().player;
 
-        if (playStatus === 'stop') {
-            dispatch(lib.actions.player.loadAndPlay());
-        } else if (playStatus === 'pause') {
-            dispatch(lib.actions.player.play());
-        } else {
-            dispatch(lib.actions.player.pause());
+        switch (playStatus) {
+            case('stop'): {
+                return dispatch(lib.actions.player.loadAndPlay());
+            }
+            case('pause'): {
+                return dispatch(lib.actions.player.play());
+            }
+            default: {
+                return dispatch(lib.actions.player.pause());
+            }
         }
     };
 
@@ -178,7 +187,7 @@ const library = (lib) => {
         const {
             queue,
             queueCursor,
-            player: { history, historyCursor, repeat, shuffle }
+            player: { history, historyCursor, repeat, shuffle, playStatus }
         } = getState();
 
         const cursors = utils.getNextQueueCursor({
@@ -199,7 +208,15 @@ const library = (lib) => {
                 type: 'PLAYER/NEXT'
             });
 
-            dispatch(lib.actions.player.loadAndPlay(cursors));
+            dispatch(lib.actions.player.load(cursors));
+
+            if (playStatus === 'stop') {
+                // set the track as paused so the track details are displayed
+                dispatch(lib.actions.player.pause());
+            } else {
+                // apply the existing play status
+                dispatch(lib.actions.player[playStatus]());
+            }
         }
     };
 
@@ -207,7 +224,7 @@ const library = (lib) => {
         const {
             queue,
             queueCursor,
-            player: { history, historyCursor, repeat, shuffle }
+            player: { history, historyCursor, repeat, shuffle, playStatus }
         } = getState();
 
         lib.player.getAudio().then(({ currentTime }) => {
@@ -222,15 +239,19 @@ const library = (lib) => {
                 currentTime
             });
 
-            // stop playback if we've tried to go past the head of the history
-            if (historyCursor === 0 && cursors.historyCursor === 0) {
-                dispatch(lib.actions.player.stop());
-            } else {
-                dispatch({
-                    type: 'PLAYER/PREVIOUS'
-                });
+            // stop playback if we've gone past the head of the history
+            dispatch({
+                type: 'PLAYER/PREVIOUS'
+            });
 
-                dispatch(lib.actions.player.loadAndPlay(cursors));
+            dispatch(lib.actions.player.load(cursors));
+
+            if (playStatus === 'stop') {
+                // set the track as paused so the track details are displayed
+                dispatch(lib.actions.player.pause());
+            } else if (cursors.historyCursor !== null) {
+                // apply the existing play status
+                dispatch(lib.actions.player[playStatus]());
             }
         });
     };
@@ -283,6 +304,13 @@ const library = (lib) => {
                 repeat
             }
         };
+    };
+
+    const setCursors = (cursors) => (dispatch) => {
+        dispatch({
+            type: 'PLAYER/SET_CURSORS',
+            payload: cursors
+        });
     };
 
     const setVolume = (volume) => (dispatch, getState) => {
@@ -414,6 +442,7 @@ const library = (lib) => {
         stop,
         shuffle,
         repeat,
+        setCursors,
         setVolume,
         setMuted,
         setPlaybackRate,

@@ -33,14 +33,14 @@ class TracksList extends Component {
         loadAndPlay: React.PropTypes.func,
         setColumnWidth: React.PropTypes.func,
         toggleSort: React.PropTypes.func,
-        columns: React.PropTypes.object,
+        columns: React.PropTypes.object
     }
 
     constructor(props) {
         super(props);
         this.state = {
             selected: [],
-            scrollTop: 0,
+            scrollTop: 0
         };
 
         this.rowHeight = 30;
@@ -49,7 +49,6 @@ class TracksList extends Component {
     render() {
         const tracks = [...this.props.tracks];
         const { columns, setColumnWidth, toggleSort } = this.props;
-        const { width } = this.state;
 
         // TODO (y.solovyov | KeitIG): TrackListHeader component?
         return (
@@ -60,18 +59,18 @@ class TracksList extends Component {
                     { columns.order.map((colId) => {
                         const col = columns.data[colId];
                         return (
-                            <TracksHeaderCell 
-                               key={ col.id } 
-                               id={ col.id } 
+                            <TracksHeaderCell
+                               key={ col.id }
+                               id={ col.id }
                                width={ col.width }
                                className={ `cell-${col.id}` }
                                setColumnWidth={ setColumnWidth }
                                toggleSort={ toggleSort }
                                sort={ col.sort }
-                               >
+                            >
                                 { col.name }
                             </TracksHeaderCell>
-                        )
+                        );
                     })}
                 </div>
                 <div className='tracks-list-body' onScroll={ this.scrollTracksList }>
@@ -132,7 +131,7 @@ class TracksList extends Component {
         const selected       = this.state.selected;
         const tracks         = [...this.props.tracks];
         const trackPlayingId = this.props.trackPlayingId;
-        
+
         const { columns } = this.props;
 
         const chunkLength = 20;
@@ -164,22 +163,22 @@ class TracksList extends Component {
                         <div className='cell cell-track-playing text-center'>
                             { playingIndicator }
                         </div>
-                        <div className='cell cell-track' style={{ width: `${columns.data.track.width}px` }}>
+                        <div className='cell cell-track' style={ { width: `${columns.data.track.width}px` } }>
                             { track.title }
                         </div>
-                        <div className='cell cell-duration' style={{ width: `${columns.data.duration.width}px` }}>
+                        <div className='cell cell-duration' style={ { width: `${columns.data.duration.width}px` } }>
                             { utils.parseDuration(track.duration) }
                         </div>
-                        <div className='cell cell-artist' style={{ width: `${columns.data.artist.width}px` }}>
+                        <div className='cell cell-artist' style={ { width: `${columns.data.artist.width}px` } }>
                             { track.artist[0] }
                         </div>
-                        <div className='cell cell-album' style={{ width: `${columns.data.album.width}px` }}>
+                        <div className='cell cell-album' style={ { width: `${columns.data.album.width}px` } }>
                             { track.album }
                         </div>
-                        <div className='cell cell-genre' style={{ width: `${columns.data.genre.width}px` }}>
+                        <div className='cell cell-genre' style={ { width: `${columns.data.genre.width}px` } }>
                             { track.genre.join(', ') }
                         </div>
-                        <div className='cell cell-owner' style={{ width: `${columns.data.owner.width}px` }}>
+                        <div className='cell cell-owner' style={ { width: `${columns.data.owner.width}px` } }>
                             <Avatar name={ track.owner.name || track.owner.hostname } size={ 24 } />
                         </div>
                     </TrackRow>
@@ -284,12 +283,8 @@ class TracksList extends Component {
     }
 
     showContextMenu = (e, index) => {
-        let playlistsList = [].concat(this.props.playlists);
-
         // Hide current playlist if needed
-        if (this.props.type === 'playlist') {
-            playlistsList = playlistsList.filter((elem) => elem._id !== this.props.currentPlaylist);
-        }
+        const playlistsList = [].concat(this.props.playlists).filter((elem) => elem._id !== this.props.currentPlaylist);
 
         const processClick = ({ reply, data }) => {
             const selected = this.state.selected;

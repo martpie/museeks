@@ -45,7 +45,7 @@ const getMeWithIP = (me, peer) => {
 
 const parseDuration = (duration) => {
     if (duration) {
-        let hours   = parseInt(duration / 3600);
+        let hours = parseInt(duration / 3600);
         let minutes = parseInt(duration / 60) % 60;
         let seconds = parseInt(duration % 60);
 
@@ -390,6 +390,7 @@ const dispatchEndpoint = ({ peer }) => `${peerEndpoint(peer)}/api/store/dispatch
 const getNextQueueCursor = (data) => {
 
     // console.log('getNextQueueCursor INPUT\n\n', data);
+
     const {
         direction,
         queue,
@@ -419,12 +420,19 @@ const getNextQueueCursor = (data) => {
         }
     };
 
-    const inHistory = historyCursor !== -1;
+    // history cursor is null when it's positioned prior to the first element in the history array
+    const inHistory = historyCursor > -1 || historyCursor === null;
 
     if (direction === 'next') {
 
+        // if we're before the head of history
+        if (historyCursor === null) {
+
+            // move to the head of history
+            historyCursor = 0;
+
         // if we're currently playing a track from our history
-        if (inHistory) {
+        } else if (inHistory) {
 
             // move one step forward in the history
             historyCursor = historyCursor + 1;
@@ -452,16 +460,30 @@ const getNextQueueCursor = (data) => {
             // if we're currently playing a track from our history
             if (inHistory) {
 
-                // move one step back in the history
-                historyCursor = historyCursor - 1;
+                // if we're in the history queue
+                if (historyCursor !== null) {
 
-                if (historyCursor === -1) {
-                    // we tried to move past the head of the history queue, stay at the top
-                    historyCursor = 0;
+                    // move one step back in the history
+                    historyCursor = historyCursor - 1;
+
+                    if (historyCursor === -1) {
+                        // we tried to move past the head of the history queue, stay at the top
+                        historyCursor = null;
+                    }
                 }
-            } else {
-                // set the history cursor to the end of the history queue
-                historyCursor = history.length - 1;
+            } else if (historyCursor === -1) {
+
+                // if we only have one item in our history
+                if (history.length === 1) {
+
+                    // set the history cursort before teh head of the history queue
+                    historyCursor = null;
+
+                } else {
+
+                    // the first time we enter the history, we want to be prior to the last track in the history
+                    historyCursor = history.length - 2;
+                }
             }
         }
     }
