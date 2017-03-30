@@ -13,12 +13,12 @@ It uses:
 * [electron (used to be atom-shell)](https://github.com/atom/electron/) for embedded browser
 * [React.js](https://facebook.github.io/react/) as front-end framework and [Flux](https://facebook.github.io/flux/) with  [Redux](http://redux.js.org/) as data-flow pattern
 
-===
+---
 
 ### Features
 
-- cross-platform music player
-- Polished
+- Cross-platform music player
+- Clean and polished
 - Playlists
 - Queue management
 - Shuffle, loop
@@ -36,13 +36,13 @@ It uses:
     - ogg
     - 3gpp
 
-===
+---
 
 ### Releases notes
 
 - [Releases notes](https://github.com/KeitIG/museeks/releases)
 
-===
+---
 
 ### Installation
 
@@ -60,7 +60,7 @@ Please consider that **`master` is unstable.**
 - `npm install && npm run compile`
 - Run Electron
 
-===
+---
 
 ### Troubleshooting
 
@@ -79,13 +79,13 @@ If you encounter freezes when starting the app, you can reset Museeks by followi
 
 If you still get problems after that, please open an issue :)
 
-===
+---
 
 ### Bug report
 
 If you want to report a bug, first, thanks a lot. To help us, please indicate your OS, your Museeks version, and how to reproduce it. Adding a screen of the console (Settings -> Advanced -> enable dev mode) is a big help too.
 
-===
+---
 
 ### Contribute
 
