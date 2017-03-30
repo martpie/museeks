@@ -22,21 +22,29 @@ class TrackCover extends PureComponent {
         };
     }
 
+    componentDidMount() {
+        this.fetchCover(this.props.src);
+    }
+
     componentWillReceiveProps(nextProps) {
         const oldProps = this.props;
         if (oldProps.src !== nextProps.src) {
-            http({
-                method: 'GET',
-                url: nextProps.src,
-                responseType: 'blob'
-            })
-            .then((response) => {
-                const reader = new window.FileReader();
-                reader.readAsDataURL(response.data);
-                reader.onloadend = () => this.setState({ data: reader.result });
-            })
-            .catch(() => this.setState({ data: undefined }));
+            this.fetchCover(nextProps.src);
         }
+    }
+
+    fetchCover = (url) => {
+        http({
+            method: 'GET',
+            url,
+            responseType: 'blob'
+        })
+        .then((response) => {
+            const reader = new window.FileReader();
+            reader.readAsDataURL(response.data);
+            reader.onloadend = () => this.setState({ data: reader.result });
+        })
+        .catch(() => this.setState({ data: undefined }));
     }
 
     render() {

@@ -4,24 +4,33 @@ export default (state = {}, action) => {
     switch (action.type) {
         case('PLAYER/LOAD_PENDING'): {
             const { currentTrack, queueCursor, historyCursor, oldHistoryCursor, oldCurrentTrack } = action.meta;
-            const { repeat } = state.player;
+            const { repeat, history } = state.player;
 
             const addToHistory =
-                oldCurrentTrack &&                          // we have played a track previously
+                oldCurrentTrack._id &&                          // we have played a track previously
                 historyCursor === -1 &&                     // we are not playing from history currently
-                oldHistoryCursor === -1 &&                  // we were not playing from history previously
                 repeat !== 'one' &&                         // we are not looping over the same track
                 oldCurrentTrack._id !== currentTrack._id;   // do not add the same track to history twice in a row
+
+            const shouldDropFutureHistory =
+                oldHistoryCursor !== -1 &&                  // we were playing from history previously
+                historyCursor === -1 &&                     // we aren't playing from history any more
+                oldHistoryCursor !== history.length;        // we were in the history array, not at the end
+
+            const newHistory = shouldDropFutureHistory
+                ? history.slice(0, oldHistoryCursor + 1)
+                : history;
 // console.log('=======================')
 // console.log(action)
 // console.log('=======================')
 // console.log(state)
 // console.log('=======================')
+
             return i.chain(state)
                 .assoc('queueCursor', queueCursor)
                 .assocIn(['player', 'currentTrack'], currentTrack)
                 .assocIn(['player', 'historyCursor'], historyCursor)
-                .updateIn(['player', 'history'], (history) => addToHistory ? i.push(history, currentTrack._id) : history)
+                .assocIn(['player', 'history'], addToHistory ? i.push(newHistory, currentTrack._id) : newHistory)
                 .value();
         }
         case('PLAYER/LOAD_REJECTED'): {
@@ -50,8 +59,7 @@ export default (state = {}, action) => {
         }
         case('PLAYER/STOP_PENDING'): {
             return i.chain(state)
-                .assoc('queue', [])
-                .assoc('queueCursor', null)
+                .assocIn(['player', 'currentTrack'], {})
                 .assocIn(['player', 'playStatus'], 'stop')
                 .value();
         }

@@ -371,7 +371,6 @@ const supportedExtensions = [
 
 const pickRandom = (items) => items[Math.floor(Math.random() * items.length)];
 
-
 const peerEndpoint = (peer) => {
     const protocol = 'http';
     const host = peer.isLocal ? 'localhost' : peer.ip;
@@ -467,16 +466,15 @@ const getNextQueueCursor = (data) => {
         }
     }
 
-    // console.log('getNextQueueCursor RESULT\n\n', {
-    //     queueCursor,
-    //     historyCursor
-    // });
+    // console.log('getNextQueueCursor RESULT\n\n', { queueCursor, historyCursor });
 
     return {
         queueCursor,
         historyCursor
     };
 };
+
+const isNumber = (number) => typeof number === 'number' && !isNaN(number);
 
 export default {
     getMeWithIP,
@@ -496,5 +494,6 @@ export default {
     trackEndpoint,
     coverEndpoint,
     dispatchEndpoint,
-    getNextQueueCursor
+    getNextQueueCursor,
+    isNumber
 };

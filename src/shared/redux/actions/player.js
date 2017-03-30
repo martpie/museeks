@@ -48,17 +48,29 @@ const library = (lib) => {
         const { _id } = data;
         const queue = data.queue || state.queue;
 
-        const queueCursor = isNaN(data.queueCursor)
-            ? queue.indexOf(_id)
-            : data.queueCursor;
+        const getQueueCursor = () => {
+            if (_id) {
+                return queue.indexOf(_id);
+            } else if (utils.isNumber(data.queueCursor)) {
+                return data.queueCursor;
+            } else {
+                return oldQueueCursor;
+            }
+        }
 
-        const historyCursor = isNaN(data.historyCursor)
-            ? oldHistoryCursor
-            : data.historyCursor;
+        // if we haven't been given a queue cursor
+        const queueCursor = getQueueCursor();
+
+        const historyCursor = utils.isNumber(data.historyCursor)
+            ? data.historyCursor
+            : oldHistoryCursor;
 
         const inHistory = historyCursor !== -1;
 
-        const cursorNextTrackId = inHistory
+        // only index the history if we're in history and haven't been given a song to play
+        const shouldPlayFromHistory = inHistory && !_id;
+
+        const cursorNextTrackId = shouldPlayFromHistory
             ? history[historyCursor]
             : queue[queueCursor];
 
@@ -80,7 +92,9 @@ const library = (lib) => {
                 meta: {
                     currentTrack,
                     queueCursor,
-                    historyCursor,
+                    historyCursor: shouldPlayFromHistory
+                        ? historyCursor
+                        : -1,
                     oldCurrentTrack,
                     oldQueueCursor,
                     oldHistoryCursor
@@ -149,9 +163,11 @@ const library = (lib) => {
     };
 
     const playToggle = () => (dispatch, getState) => {
-        const { playState, currentTrack } = getState().player;
+        const { playStatus, currentTrack } = getState().player;
 
-        if (playState !== 'play' && currentTrack._id) {
+        if (playStatus === 'stop') {
+            dispatch(lib.actions.player.loadAndPlay());
+        } else if (playStatus === 'pause') {
             dispatch(lib.actions.player.play());
         } else {
             dispatch(lib.actions.player.pause());
@@ -175,11 +191,16 @@ const library = (lib) => {
             shuffle
         });
 
-        dispatch({
-            type: 'PLAYER/NEXT'
-        });
+        // stop playback if we have no next queue cursor
+        if (cursors.queueCursor === null) {
+            dispatch(lib.actions.player.stop());
+        } else {
+            dispatch({
+                type: 'PLAYER/NEXT'
+            });
 
-        dispatch(lib.actions.player.loadAndPlay(cursors));
+            dispatch(lib.actions.player.loadAndPlay(cursors));
+        }
     };
 
     const previous = () => (dispatch, getState) => {
@@ -201,11 +222,16 @@ const library = (lib) => {
                 currentTime
             });
 
-            dispatch({
-                type: 'PLAYER/PREVIOUS'
-            });
+            // stop playback if we've tried to go past the head of the history
+            if (historyCursor === 0 && cursors.historyCursor === 0) {
+                dispatch(lib.actions.player.stop());
+            } else {
+                dispatch({
+                    type: 'PLAYER/PREVIOUS'
+                });
 
-            dispatch(lib.actions.player.loadAndPlay(cursors));
+                dispatch(lib.actions.player.loadAndPlay(cursors));
+            }
         });
     };
 
@@ -356,7 +382,7 @@ const library = (lib) => {
         const {
             queue: oldQueue,
             queueCursor: oldQueueCursor,
-            network: { output, me }
+            network: { output }
         } = getState();
 
         const outputIsLocal = () => new Promise((resolve) => setTimeout(resolve, 2));
