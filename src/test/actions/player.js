@@ -324,6 +324,43 @@ test('player previous after 5 seconds of playing', (t) => {
     .then((result) => t.deepEqual(result.delta, delta, description));
 });
 
+test('player previous with repeat one', (t) => {
+
+    const description = `
+        should not decrement the queue cursor,
+        should not add to history
+    `;
+
+    const action = player.previous();
+
+    const queueCursor = 5;
+
+    // force the state of the audio component
+    lib.player.getAudio = () => Promise.resolve({
+        currentTime: 3
+    });
+
+    const initialState = extend(baseState, {
+        queueCursor,
+        player: {
+            playStatus: 'play',
+            currentTrack: tracks[queueCursor],
+            history: [],
+            repeat: 'one'
+        }
+    });
+
+    // expect the state to stay the same
+    const delta = {};
+
+    return actionTest({
+        initialState,
+        action
+    })
+    .then((result) => t.deepEqual(result.delta, delta, description));
+});
+
+
 test('player previous from within the history array', (t) => {
 
     const iterations = range(3);

@@ -55,6 +55,12 @@ const library = (lib) => {
             } else if (utils.isNumber(data.queueCursor)) {
                 // we've been given a queue cursor
                 return data.queueCursor;
+            } else if (data.queueCursor === null) {
+                // move to the head of the queue
+                return 0;
+            } else if (data.queueCursor === undefined && oldQueueCursor === null) {
+                // move to the head of the queue
+                return 0;
             } else {
                 // pick the existing state's queue cursor
                 return oldQueueCursor;
@@ -101,7 +107,8 @@ const library = (lib) => {
                         : -1,
                     oldCurrentTrack,
                     oldQueueCursor,
-                    oldHistoryCursor
+                    oldHistoryCursor,
+                    queue
                 }
             });
         } else {
@@ -168,11 +175,39 @@ const library = (lib) => {
     };
 
     const playToggle = () => (dispatch, getState) => {
-        const { playStatus } = getState().player;
+        const {
+            queue: existingQueue,
+            queueCursor,
+            player: { playStatus, historyCursor, repeat, shuffle },
+            tracks: { library: { sub: filteredTracks } }
+        } = getState();
+console.log("PLAY STSTUS", playStatus)
 
         switch (playStatus) {
             case('stop'): {
-                return dispatch(lib.actions.player.loadAndPlay());
+                const queue = existingQueue.length === 0 // if we have no queue, create one from the filtered list
+                    ? filteredTracks
+                    : existingQueue;
+
+                const cursors = historyCursor === null || queueCursor === null
+                    ? utils.getNextQueueCursor({
+                        direction: 'next',
+                        queue,
+                        queueCursor,
+                        history,
+                        historyCursor,
+                        repeat,
+                        shuffle
+                    })
+                    : {
+                        historyCursor,
+                        queueCursor
+                    }
+
+                return dispatch(lib.actions.player.loadAndPlay({
+                    queue,
+                    ...cursors
+                }));
             }
             case('pause'): {
                 return dispatch(lib.actions.player.play());
@@ -294,7 +329,7 @@ const library = (lib) => {
         const outputIsLocal = () => Promise.resolve(lib.actions.config.set('repeat', repeat));
         const outputIsRemote = () => lib.api.actions.player.repeat(output, repeat);
 
-        return {
+        return dispatch({
             type: 'PLAYER/REPEAT',
             payload: output.isLocal
                 ? outputIsLocal()
@@ -303,7 +338,7 @@ const library = (lib) => {
                 prevRepeat,
                 repeat
             }
-        };
+        });
     };
 
     const setCursors = (cursors) => (dispatch) => {

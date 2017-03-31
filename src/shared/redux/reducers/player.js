@@ -3,7 +3,7 @@ import i from 'icepick';
 export default (state = {}, action) => {
     switch (action.type) {
         case('PLAYER/LOAD_PENDING'): {
-            const { currentTrack, queueCursor, historyCursor, oldHistoryCursor } = action.meta;
+            const { queue, queueCursor, currentTrack, historyCursor, oldHistoryCursor } = action.meta;
             const { repeat, history } = state.player;
 
             const addToHistory =
@@ -29,6 +29,7 @@ export default (state = {}, action) => {
 
             return i.chain(state)
                 .assoc('queueCursor', queueCursor)
+                .assoc('queue', queue)
                 .assocIn(['player', 'currentTrack'], currentTrack)
                 .assocIn(['player', 'historyCursor'], historyCursor)
                 .assocIn(['player', 'history'], addToHistory ? i.push(newHistory, currentTrack._id) : newHistory)

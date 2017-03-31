@@ -389,7 +389,7 @@ const dispatchEndpoint = ({ peer }) => `${peerEndpoint(peer)}/api/store/dispatch
 
 const getNextQueueCursor = (data) => {
 
-    // console.log('getNextQueueCursor INPUT\n\n', data);
+    console.log('getNextQueueCursor INPUT\n\n', data);
 
     const {
         direction,
@@ -415,6 +415,8 @@ const getNextQueueCursor = (data) => {
             return 0; // start with new track
         } else if (queueCursor === queue.length - 1) { // is last track
             return null; // stop playing
+        } else if (queueCursor === null) { // queue cursor has progressed through queue entirely
+            return 0; // start at the head of the queue
         } else {
             return queueCursor + 1;
         }
@@ -422,6 +424,14 @@ const getNextQueueCursor = (data) => {
 
     // history cursor is null when it's positioned prior to the first element in the history array
     const inHistory = historyCursor > -1 || historyCursor === null;
+
+    // if we are to repeat the same track, return the current state regardless or previous or next
+    if (repeat === 'one') {
+        return {
+            queueCursor,
+            historyCursor
+        };
+    }
 
     if (direction === 'next') {
 
@@ -454,8 +464,14 @@ const getNextQueueCursor = (data) => {
 
     } else if (direction === 'previous') {
 
+        // if the queue cursor is beyond the end of the queue
+        if (queueCursor === null) {
+
+            // set the cursor to the head of the queue (wrap around)
+            queueCursor = 0;
+
         // if track started less than 5 seconds ago, play the previous track, otherwise replay the current track
-        if (currentTime < 5) {
+        } else if (currentTime < 5) {
 
             // if we're currently playing a track from our history
             if (inHistory) {
@@ -473,10 +489,10 @@ const getNextQueueCursor = (data) => {
                 }
             } else if (historyCursor === -1) {
 
-                // if we only have one item in our history
-                if (history.length === 1) {
+                // if we have zero or one item in our history
+                if (history.length <= 1) {
 
-                    // set the history cursort before teh head of the history queue
+                    // set the history cursor before the head of the history queue
                     historyCursor = null;
 
                 } else {
@@ -488,7 +504,7 @@ const getNextQueueCursor = (data) => {
         }
     }
 
-    // console.log('getNextQueueCursor RESULT\n\n', { queueCursor, historyCursor });
+    console.log('getNextQueueCursor RESULT\n\n', { queueCursor, historyCursor });
 
     return {
         queueCursor,
