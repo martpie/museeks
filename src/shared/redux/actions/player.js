@@ -88,11 +88,10 @@ const library = (lib) => {
         const currentTrack = tracks[_id || cursorNextTrackId];
 
         if (currentTrack) {
-            const outputIsLocal = () => Promise.all([
-                lib.player.setMetadata(currentTrack),
-                lib.player.setCurrentTime(0)
-            ]);
+            const outputIsLocal = () => Promise.resolve(lib.player.setMetadata(currentTrack));
             const outputIsRemote = () => lib.api.actions.player.load(output, data);
+
+            dispatch(lib.actions.player.jumpTo({ time: 0 }));
 
             dispatch({
                 type: 'PLAYER/LOAD',
