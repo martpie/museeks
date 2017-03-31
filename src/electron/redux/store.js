@@ -2,8 +2,9 @@ import { applyMiddleware, createStore } from 'redux';
 import { forwardToRenderer, replayActionMain } from 'electron-redux';
 import promiseMiddleware from 'redux-promise-middleware';
 import thunk from 'redux-thunk';
-import reducers from '../../shared/redux/reducers';
 import throttle from 'redux-throttle';
+import actionHost from 'redux-action-host';
+import reducers from '../../shared/redux/reducers';
 
 import initialState from './initialState';
 
@@ -11,6 +12,7 @@ import initialState from './initialState';
 const middleware = [
     thunk,
     promiseMiddleware(),
+    actionHost,
     throttle(300),
     forwardToRenderer
 ];

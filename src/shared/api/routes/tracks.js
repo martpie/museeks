@@ -49,8 +49,10 @@ export default [{
             return utils.fetchCover(track.path).then((art) => {
                 if (art.format === 'base64') {
                     res(art.data);
-                } else {
+                } else if (art.data) {
                     res.file(art.data, { confine : false });
+                } else {
+                    res(Boom.notFound());
                 }
             });
         }

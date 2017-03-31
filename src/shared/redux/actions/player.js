@@ -91,8 +91,6 @@ const library = (lib) => {
             const outputIsLocal = () => Promise.resolve(lib.player.setMetadata(currentTrack));
             const outputIsRemote = () => lib.api.actions.player.load(output, data);
 
-            dispatch(lib.actions.player.jumpTo({ time: 0 }));
-
             dispatch({
                 type: 'PLAYER/LOAD',
                 payload: output.isLocal
@@ -244,6 +242,8 @@ console.log("PLAY STSTUS", playStatus)
 
             dispatch(lib.actions.player.load(cursors));
 
+            dispatch(lib.actions.player.jumpTo({ time: 0 }));
+
             if (playStatus === 'stop') {
                 // set the track as paused so the track details are displayed
                 dispatch(lib.actions.player.pause());
@@ -279,6 +279,8 @@ console.log("PLAY STSTUS", playStatus)
             });
 
             dispatch(lib.actions.player.load(cursors));
+
+            dispatch(lib.actions.player.jumpTo({ time: 0 }));
 
             if (playStatus === 'stop') {
                 // set the track as paused so the track details are displayed
