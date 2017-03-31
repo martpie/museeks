@@ -44,7 +44,7 @@ class TrackCover extends PureComponent {
             reader.readAsDataURL(response.data);
             reader.onloadend = () => this.setState({ data: reader.result });
         })
-        .catch(() => this.setState({ data: undefined }));
+        // .catch(() => this.setState({ data: undefined }));
     }
 
     render() {

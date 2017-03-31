@@ -147,9 +147,9 @@ class PlayingBar extends Component {
         const bar = document.querySelector('.now-playing-bar');
         const percent = ((e.pageX - (bar.offsetLeft + bar.offsetParent.offsetLeft)) / bar.offsetWidth) * 100;
 
-        const jumpTo = (percent * currentTrack.duration) / 100;
+        const time = (percent * currentTrack.duration) / 100;
 
-        this.props.jumpTo(jumpTo);
+        this.props.jumpTo({ time });
     }
 
     dragOver = (e) => {
@@ -160,9 +160,9 @@ class PlayingBar extends Component {
             const bar = document.querySelector('.now-playing-bar');
             const percent = ((e.pageX - (bar.offsetLeft + bar.offsetParent.offsetLeft)) / bar.offsetWidth) * 100;
 
-            const jumpTo = (percent * currentTrack.duration) / 100;
+            const time = (percent * currentTrack.duration) / 100;
 
-            this.props.jumpTo(jumpTo);
+            this.props.jumpTo({ time });
         }
     }
 

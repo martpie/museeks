@@ -24,7 +24,7 @@ class Queue extends PureComponent {
 
     render() {
         const { queue, queueCursor, visible } = this.props;
-
+console.log(this.props)
         const shownQueue = queue.slice(queueCursor + 1, queueCursor + 21);
 
         if (shownQueue.length === 0) {

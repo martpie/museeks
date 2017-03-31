@@ -22,7 +22,7 @@ const library = (lib) => {
         dispatch(lib.actions.player.shuffle(shuffle));
 
         // Set audio element elapsed time
-        dispatch(lib.actions.player.jumpTo(elapsed));
+        dispatch(lib.actions.player.jumpTo({ time: elapsed }));
 
         // Set the volume
         dispatch(lib.actions.player.setVolume(volume));
@@ -397,18 +397,21 @@ console.log("PLAY STSTUS", playStatus)
         }
     };
 
-    const jumpTo = (time) => (dispatch, getState) => {
+    const jumpTo = ({ time }) => (dispatch, getState) => {
         const { network: { output }, player: { elapsed: prevTime } } = getState();
 
         const outputIsLocal = () => Promise.resolve(lib.player.setCurrentTime(time));
-        const outputIsRemote = () => lib.api.actions.player.jumpTo(output, time);
+        const outputIsRemote = () => lib.api.actions.player.jumpTo(output, { time });
 
         dispatch({
             type: 'PLAYER/JUMP_TO',
             payload: output.isLocal
                 ? outputIsLocal()
                 : outputIsRemote(),
-            meta: { prevTime, time }
+            meta: {
+                time,
+                prevTime
+            }
         });
     };
 

@@ -29,7 +29,7 @@ export default (state = {}, action) => {
 
             return i.chain(state)
                 .assoc('queueCursor', queueCursor)
-                .assoc('queue', queue)
+                .updateIn(['queue'], (existingQueue) => existingQueue || queue)
                 .assocIn(['player', 'currentTrack'], currentTrack)
                 .assocIn(['player', 'historyCursor'], historyCursor)
                 .assocIn(['player', 'history'], addToHistory ? i.push(newHistory, currentTrack._id) : newHistory)
