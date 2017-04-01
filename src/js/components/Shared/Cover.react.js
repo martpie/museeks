@@ -26,7 +26,10 @@ export default class TrackCover extends PureComponent {
 
     render() {
         if(this.state.coverPath) {
-            const styles = { backgroundImage: `url('${this.state.coverPath}')` };
+            const coverPath = encodeURI(this.state.coverPath)
+                .replace(/'/g, '\\\'')
+                .replace(/"/g, '\\"');
+            const styles = { backgroundImage: `url('${coverPath}')` };
 
             return <div className='cover' style={ styles } />;
         }
