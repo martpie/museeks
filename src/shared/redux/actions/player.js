@@ -418,7 +418,7 @@ const library = (lib) => {
         });
     };
 
-    const updateElapsedTime = (time) => ({
+    const updateElapsedTime = ({ time }) => ({
         type: 'PLAYER/UPDATE_ELAPSED_TIME',
         payload: {
             time

@@ -128,7 +128,7 @@ class PlayingBar extends Component {
         const { playStatus, output, updateElapsedTime } = this.props;
         // If we are playing and the output is local. We update the current time.
         if (playStatus === 'play' && output.isLocal) {
-            updateElapsedTime(lib.player.getCurrentTime());
+            updateElapsedTime({ time: lib.player.getCurrentTime() });
         }
     }
 
