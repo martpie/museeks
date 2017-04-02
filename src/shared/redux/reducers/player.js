@@ -113,6 +113,10 @@ export default (state = {}, action) => {
                 .value();
         }
 
+        case('PLAYER/SET_METADATA'): {
+            return i.assocIn(state, ['player', 'currentTrack'], action.payload.metadata);
+        }
+
         default: {
             return state;
         }

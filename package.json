@@ -44,6 +44,7 @@
     "leveldown": "^1.6.0",
     "linvodb3": "^3.25.0",
     "musicmetadata": "2.0.5",
+    "nodetunes": "https://github.com/Kolky/nodetunes",
     "open-sans-fontface": "1.4.0",
     "range": "0.0.3",
     "react": "15.4.2",
@@ -63,6 +64,7 @@
     "redux-throttle": "^0.1.1",
     "redux-thunk": "^2.2.0",
     "semver": "5.3.0",
+    "speaker": "^0.3.0",
     "svg-inline-react": "1.0.2",
     "uuid": "^3.0.1",
     "xtend": "^4.0.1"

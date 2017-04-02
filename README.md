@@ -58,6 +58,13 @@ Please consider that **`master` is unstable.**
 - `npm install && npm run compile`
 - Run Electron
 
+Rebuild supplied native binaries for latest electron. In the root directory of each of the following node modules run `node-gyp rebuild --target=1.6.2 --arch=x64 --dist-url=https://atom.io/download/atom-shell`
+
+- leveldown
+- mdns
+- speaker
+- libalac
+
 ===
 
 ### Troubleshooting

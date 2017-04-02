@@ -6,6 +6,7 @@ import Database from './database';                     // Persistent data store
 import store from './redux/store';                     // Redux store
 import lib, { initLib } from './lib';                  // Shared library configuration
 import ApiServer from './api';                         // HTTP API access to electorn and renderer
+import AirplayServer from './airplay';                 // Airplay server
 import initElectron from './init';                     // Electron bootstrap
 import TrayManager from './tray';                      // Manages Tray
 import { RpcIpcManager } from 'electron-simple-rpc';   // Handles RPC IPC Events
@@ -23,18 +24,18 @@ const srcPath = path.join(appRoot, 'src');             // app/src/ directory
 let mainWindow = null;
 
 // Make the app a single-instance app (to avoid Database concurrency)
-// const shouldQuit = app.makeSingleInstance(() => {
-//     // Someone tried to run a second instance, we should focus our window.
-//     if (mainWindow) {
-//         if (mainWindow.isMinimized()) mainWindow.restore();
-//         mainWindow.show();
-//         mainWindow.focus();
-//     }
-// });
+const shouldQuit = app.makeSingleInstance(() => {
+    // Someone tried to run a second instance, we should focus our window.
+    if (mainWindow) {
+        if (mainWindow.isMinimized()) mainWindow.restore();
+        mainWindow.show();
+        mainWindow.focus();
+    }
+});
 
-// if (shouldQuit) {
-//     app.quit();
-// }
+if (shouldQuit) {
+    app.quit();
+}
 
 // Quit when all windows are closed
 app.on('window-all-closed', () => {
@@ -68,6 +69,10 @@ app.on('ready', () => {
         // Start the API server
         const apiServer = new ApiServer(lib);
         apiServer.start();
+
+        // Start the API server
+        const airplayServer = new AirplayServer(lib);
+        airplayServer.start();
 
         // Start listening for RPC IPC events
         new RpcIpcManager(lib, 'electron');

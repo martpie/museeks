@@ -466,6 +466,13 @@ console.log("PLAY STSTUS", playStatus)
         });
     };
 
+    const setMetadata = (metadata) => ({
+        type: 'PLAYER/SET_METADATA',
+        payload: {
+            metadata
+        }
+    });
+
     return {
         setState,
         load,
@@ -486,7 +493,8 @@ console.log("PLAY STSTUS", playStatus)
         jumpTo,
         updateElapsedTime,
         audioError,
-        createNewQueue
+        createNewQueue,
+        setMetadata
     };
 };
 
