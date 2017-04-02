@@ -3,6 +3,7 @@ import { forwardToMain, replayActionRenderer, getInitialStateRenderer } from 'el
 import promiseMiddleware from 'redux-promise-middleware';
 import thunk from 'redux-thunk';
 import createLogger from 'redux-logger';
+import actionHost from 'redux-action-host';
 import reducers from '../../shared/redux/reducers';
 import sendToObservers from './middleware/sendToObservers';
 import throttle from 'redux-throttle';
@@ -24,6 +25,7 @@ const logger = createLogger({
 const middleware = [
     thunk,
     promiseMiddleware(),
+    actionHost(),
     sendToObservers,
     throttle(300),
     forwardToMain,

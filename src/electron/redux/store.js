@@ -12,7 +12,7 @@ import initialState from './initialState';
 const middleware = [
     thunk,
     promiseMiddleware(),
-    actionHost,
+    actionHost(),
     throttle(300),
     forwardToRenderer
 ];
