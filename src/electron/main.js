@@ -6,7 +6,6 @@ import Database from './database';                     // Persistent data store
 import store from './redux/store';                     // Redux store
 import lib, { initLib } from './lib';                  // Shared library configuration
 import ApiServer from './api';                         // HTTP API access to electorn and renderer
-import AirplayServer from './airplay';                 // Airplay server
 import initElectron from './init';                     // Electron bootstrap
 import TrayManager from './tray';                      // Manages Tray
 import { RpcIpcManager } from 'electron-simple-rpc';   // Handles RPC IPC Events
@@ -69,10 +68,6 @@ app.on('ready', () => {
         // Start the API server
         const apiServer = new ApiServer(lib);
         apiServer.start();
-
-        // Start the API server
-        const airplayServer = new AirplayServer(lib);
-        airplayServer.start();
 
         // Start listening for RPC IPC events
         new RpcIpcManager(lib, 'electron');

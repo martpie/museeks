@@ -42,7 +42,7 @@ class DraggerComponent extends Component {
     static propTypes = {
         dataDrag: React.PropTypes.object,
         side: React.PropTypes.string,
-        changeFn: React.PropTypes.function
+        changeFn: React.PropTypes.func
     }
 
     constructor(props) {

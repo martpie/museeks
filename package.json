@@ -44,7 +44,6 @@
     "leveldown": "^1.6.0",
     "linvodb3": "^3.25.0",
     "musicmetadata": "2.0.5",
-    "nodetunes": "https://github.com/Kolky/nodetunes",
     "open-sans-fontface": "1.4.0",
     "range": "0.0.3",
     "react": "15.4.2",
