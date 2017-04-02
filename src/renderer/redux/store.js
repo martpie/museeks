@@ -13,12 +13,10 @@ const initialState = getInitialStateRenderer();
 // Create and configure the logger
 const logger = createLogger({
     collapsed: true,
-    predicate: (getState, action) => {
-        return ![
-            'PLAYER/SET_VOLUME',
-            'PLAYER/UPDATE_ELAPSED_TIME'
-        ].includes(action.type);
-    }
+    predicate: (getState, action) => ![
+        'PLAYER/SET_VOLUME',
+        'PLAYER/UPDATE_ELAPSED_TIME'
+    ].includes(action.type)
 });
 
 // Create the middleware chain

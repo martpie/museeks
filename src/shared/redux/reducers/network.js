@@ -4,10 +4,6 @@ import { find } from 'lodash';
 export default (state = {}, action) => {
     switch (action.type) {
 
-        case ('NETWORK/SET_ME'): {
-            return i.assoc(state, 'me', action.payload);
-        }
-
         case ('NETWORK/SCAN_PEERS_PENDING'): {
             return i.assoc(state, 'scanPending', true);
         }

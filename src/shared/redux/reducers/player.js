@@ -73,7 +73,7 @@ export default (state = {}, action) => {
             return i.assocIn(state, ['player', 'elapsed'], action.meta.prevTime);
         }
         case ('PLAYER/UPDATE_ELAPSED_TIME'): {
-            return i.assocIn(state, ['player', 'elapsed'], action.payload);
+            return i.assocIn(state, ['player', 'elapsed'], action.payload.time);
         }
         case ('PLAYER/SHUFFLE_PENDING'): {
             return i.assocIn(state, ['player', 'shuffle'], action.meta.shuffle);

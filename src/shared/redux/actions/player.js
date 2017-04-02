@@ -420,7 +420,9 @@ const library = (lib) => {
 
     const updateElapsedTime = (time) => ({
         type: 'PLAYER/UPDATE_ELAPSED_TIME',
-        payload: time
+        payload: {
+            time
+        }
     });
 
     const audioError = (e) => (dispatch) => {

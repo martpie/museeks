@@ -32,26 +32,12 @@ const library = (lib) => {
         }
     });
 
-    const setQueueCursor = (queueCursor) => (dispatch, getState) => {
-        const { queue } = getState();
-        lib.player.setMetadata(queue[queueCursor]);
-        console.log('queue[index]queue[index]queue[index]queue[index]queue[index]', queue[queueCursor]);
-
-        return {
-            type: 'QUEUE/SET_QUEUE_CURSOR',
-            payload: {
-                queueCursor
-            }
-        };
-    };
-
     return {
         add,
         addNext,
         clear,
         remove,
-        setQueue,
-        setQueueCursor
+        setQueue
     };
 };
 

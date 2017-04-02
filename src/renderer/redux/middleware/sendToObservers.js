@@ -56,7 +56,7 @@ const sendToObservers = (store) => (next) => (action) => {
                 data: action
             });
         };
-
+console.log(action, observers)
         // Send the action to all observers for replaying
         observers.forEach(sendActionToObserver);
     }

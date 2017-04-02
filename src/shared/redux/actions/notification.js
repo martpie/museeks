@@ -2,25 +2,25 @@ const library = (lib) => {
 
     const add = (notificationData) => (dispatch, getState) => {
         if (getState.config.displayNotifications) {
-            const notification =
-                new Notification(
-                    notificationData.title,
-                    {
-                        body: notificationData.body,
-                        icon: notificationData.icon,
-                        silent: true
-                    }
-                );
+            const contents = {
+                body: notificationData.body,
+                icon: notificationData.icon,
+                silent: true
+            };
+
+            const notification = new Notification(notificationData.title, contents);
 
             notification.onclick = () => {
                 lib.app.browserWindows.main.show();
                 lib.app.browserWindows.main.focus();
             };
 
-            return {
+            dispatch({
                 type: 'NOTIFICATION/NEW',
-                notification
-            };
+                payload: {
+                    notification
+                }
+            });
         }
     };
 
