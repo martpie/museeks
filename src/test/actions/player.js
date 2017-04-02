@@ -7,7 +7,7 @@ import { range } from 'range';
 import deepExtend from 'deep-extend';
 import freeze from 'deep-freeze';
 
-const extend = function() {
+function extend () {
     return deepExtend({}, ...arguments);
 };
 
