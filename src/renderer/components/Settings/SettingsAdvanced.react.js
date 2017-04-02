@@ -5,13 +5,6 @@ import lib from '../../lib';
 
 import CheckboxSetting from './CheckboxSetting.react';
 
-
-/*
-|--------------------------------------------------------------------------
-| Child - Advanced Settings
-|--------------------------------------------------------------------------
-*/
-
 class SettingsAdvanced extends Component {
 
     static propTypes = {

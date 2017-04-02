@@ -6,13 +6,6 @@ import './styles.css';
 
 import lib from '../../lib';
 
-
-/*
-|--------------------------------------------------------------------------
-| OutputDevice
-|--------------------------------------------------------------------------
-*/
-
 class OutputDevice extends Component {
 
     static propTypes = {

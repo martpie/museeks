@@ -70,7 +70,7 @@ class Win32Integration {
         });
 
         ipcMain.on('playerAction', (event, arg) => {
-            switch(arg) {
+            switch (arg) {
                 case 'play':
                     this.window.setThumbarButtons([
                         this.thumbarButtons.prev,

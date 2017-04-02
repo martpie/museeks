@@ -6,12 +6,6 @@ import classnames from 'classnames';
 
 import lib from '../../lib';
 
-/*
-|--------------------------------------------------------------------------
-| LibraryFolders
-|--------------------------------------------------------------------------
-*/
-
 class LibraryFolders extends Component {
 
     static propTypes = {

@@ -7,13 +7,6 @@ import { ButtonGroup, Button } from 'react-bootstrap';
 import Icon from 'react-fontawesome';
 import Avatar from '../Avatar';
 
-
-/*
-|--------------------------------------------------------------------------
-| Child - Network Settings
-|--------------------------------------------------------------------------
-*/
-
 class SettingsAdvanced extends Component {
 
     static propTypes = {

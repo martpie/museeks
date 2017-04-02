@@ -132,7 +132,7 @@ const library = (lib) => {
     };
 
     const play = () => (dispatch, getState) => {
-        const { queue , network: { output } } = getState();
+        const { queue, network: { output } } = getState();
 
         // lib.store.dispatch(lib.actions.player.nowPlaying(track));
         //
@@ -177,13 +177,14 @@ const library = (lib) => {
         const {
             queue: existingQueue,
             queueCursor,
-            player: { playStatus, historyCursor, repeat, shuffle },
+            player: { playStatus, history, historyCursor, repeat, shuffle },
             tracks: { library: { sub: filteredTracks } }
         } = getState();
-console.log("PLAY STSTUS", playStatus)
+
+        console.log('PLAY STSTUS', playStatus);
 
         switch (playStatus) {
-            case('stop'): {
+            case ('stop'): {
                 const queue = existingQueue.length === 0 // if we have no queue, create one from the filtered list
                     ? filteredTracks
                     : existingQueue;
@@ -201,14 +202,14 @@ console.log("PLAY STSTUS", playStatus)
                     : {
                         historyCursor,
                         queueCursor
-                    }
+                    };
 
                 return dispatch(lib.actions.player.loadAndPlay({
                     queue,
                     ...cursors
                 }));
             }
-            case('pause'): {
+            case ('pause'): {
                 return dispatch(lib.actions.player.play());
             }
             default: {
@@ -372,7 +373,8 @@ console.log("PLAY STSTUS", playStatus)
                     ? outputIsLocal()
                     : outputIsRemote(),
                 meta: {
-                    volume, oldVolume,
+                    volume,
+                    oldVolume,
                     throttle: 100
                 },
             });

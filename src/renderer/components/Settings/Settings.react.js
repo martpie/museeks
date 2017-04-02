@@ -2,13 +2,6 @@ import React, { Component } from 'react';
 import { Nav, NavItem } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 
-
-/*
-|--------------------------------------------------------------------------
-| Global View
-|--------------------------------------------------------------------------
-*/
-
 class Settings extends Component {
 
     static propTypes = {

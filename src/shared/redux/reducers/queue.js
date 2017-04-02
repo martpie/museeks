@@ -3,7 +3,7 @@ import i from 'icepick';
 export default (state = {}, action) => {
     switch (action.type) {
 
-        case('QUEUE/START'): {
+        case ('QUEUE/START'): {
             const queue = [...state.queue];
             const queueCursor = action.payload.index;
 
@@ -16,7 +16,7 @@ export default (state = {}, action) => {
             };
         }
 
-        case('QUEUE/CLEAR'): {
+        case ('QUEUE/CLEAR'): {
             const queue = [...state.queue];
             queue.splice(state.queueCursor + 1, state.queue.length - state.queueCursor);
             return {
@@ -25,14 +25,14 @@ export default (state = {}, action) => {
             };
         }
 
-        case('QUEUE/SET'): {
+        case ('QUEUE/SET'): {
             return {
                 ...state,
                 queue: action.payload
             };
         }
 
-        case('QUEUE/REMOVE'): {
+        case ('QUEUE/REMOVE'): {
             const queue = [...state.queue];
             queue.splice(state.queueCursor + action.payload.index + 1, 1);
             return {
@@ -41,7 +41,7 @@ export default (state = {}, action) => {
             };
         }
 
-        case('QUEUE/ADD_FULFILLED'): {
+        case ('QUEUE/ADD_FULFILLED'): {
             const queue = [...state.queue, ...action.payload];
             return {
                 ...state,
@@ -49,7 +49,7 @@ export default (state = {}, action) => {
             };
         }
 
-        case('QUEUE/ADD_NEXT_FULFILLED'): {
+        case ('QUEUE/ADD_NEXT_FULFILLED'): {
             const queue = [...state.queue];
             queue.splice(state.queueCursor + 1, 0, ...action.payload);
             return {
@@ -58,7 +58,7 @@ export default (state = {}, action) => {
             };
         }
 
-        case('QUEUE/SET_QUEUE'): {
+        case ('QUEUE/SET_QUEUE'): {
             return i.chain(state)
                 .assoc('queue', action.payload.queue)
                 .assoc('queueCursor', null)
@@ -67,14 +67,14 @@ export default (state = {}, action) => {
                 .value();
         }
 
-        case('QUEUE/SET_QUEUE_CURSOR'): {
+        case ('QUEUE/SET_QUEUE_CURSOR'): {
             return i.chain(state)
                 .assoc('queueCursor', action.payload.queueCursor)
                 .assocIn(['player', 'historyCursor'], null)
                 .value();
         }
 
-        case('QUEUE/MOVE_CURSOR_FULFILLED'): {
+        case ('QUEUE/MOVE_CURSOR_FULFILLED'): {
             const { queueCursor, historyCursor } = action.payload;
             return i.chain(state)
                 .assoc('queueCursor', queueCursor)

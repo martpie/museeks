@@ -4,13 +4,6 @@ import LibraryFolder from './LibraryFolder.react';
 
 import classnames from 'classnames';
 
-
-/*
-|--------------------------------------------------------------------------
-| LibraryFolders
-|--------------------------------------------------------------------------
-*/
-
 class LibraryFolders extends Component {
 
     static propTypes = {

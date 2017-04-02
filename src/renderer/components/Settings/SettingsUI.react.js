@@ -5,13 +5,6 @@ import lib from '../../lib';
 
 import CheckboxSetting from './CheckboxSetting.react';
 
-
-/*
-|--------------------------------------------------------------------------
-| Child - UI Settings
-|--------------------------------------------------------------------------
-*/
-
 class SettingsUI extends Component {
 
     static propTypes = {

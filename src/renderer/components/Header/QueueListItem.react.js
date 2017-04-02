@@ -6,12 +6,6 @@ import classnames from 'classnames';
 
 import lib from '../../lib';
 
-/*
-|--------------------------------------------------------------------------
-| QueueItem
-|--------------------------------------------------------------------------
-*/
-
 class QueueListItem extends PureComponent {
 
     static propTypes = {

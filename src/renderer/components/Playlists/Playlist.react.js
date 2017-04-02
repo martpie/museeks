@@ -7,12 +7,6 @@ import { Link } from 'react-router';
 
 import lib from '../../lib';
 
-/*
-|--------------------------------------------------------------------------
-| Playlist
-|--------------------------------------------------------------------------
-*/
-
 class Playlist extends Component {
 
     static propTypes = {

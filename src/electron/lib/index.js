@@ -9,7 +9,7 @@ import playlist from './playlist';
 import playEvent from './playEvent';
 import shell from './shell';
 import track from './track';
-import peerDiscovery from './peerDiscovery';
+import PeerDiscovery from './peerDiscovery';
 
 const library = {
     app,
@@ -18,7 +18,7 @@ const library = {
     models: {}, // models attached after database initialisation
     player,
     shell,
-    peerDiscovery: new peerDiscovery(),
+    peerDiscovery: new PeerDiscovery(),
     // Other libs added via mutation
     // tray <-- currently not working
 };

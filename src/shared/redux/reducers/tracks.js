@@ -6,7 +6,7 @@ import utils from '../../utils/utils';
 export default (state = {}, action) => {
     switch (action.type) {
 
-        case('TRACKS/FIND_FULFILLED'): {
+        case ('TRACKS/FIND_FULFILLED'): {
             // return i.assocIn(state, ['network', 'tracks'], action.payload.tracks);
             // add the peer who owns the track as metadata
 
@@ -32,11 +32,11 @@ export default (state = {}, action) => {
                 .value();
         }
 
-        case('TRACKS/SET_TRACKSCURSOR'): {
+        case ('TRACKS/SET_TRACKSCURSOR'): {
             return i.assocIn(state, ['tracksCursor'], action.payload.cursor);
         }
 
-        case('TRACKS/DELETE_FULFILLED'): {
+        case ('TRACKS/DELETE_FULFILLED'): {
             // const otherTracks = tracks.filter((track) => track.owner !== me);
             return {
                 ...state,
@@ -53,7 +53,7 @@ export default (state = {}, action) => {
             };
         }
 
-        case('TRACKS/FILTER'): {
+        case ('TRACKS/FILTER'): {
             if (!action.payload.search || action.payload.search === '') {
                 return i.assocIn(state, [state.tracksCursor, 'sub'], [...state[state.tracksCursor].all]);
             } else {
@@ -61,18 +61,18 @@ export default (state = {}, action) => {
 
                 const tracks = state[state.tracksCursor].all.filter((trackId) => {
                     const track = state.library.data[trackId];
-                    return track.loweredMetas.artist.join(', ').includes(search)
-                        || track.loweredMetas.album.includes(search)
-                        || track.loweredMetas.genre.join(', ').includes(search)
-                        || track.owner.hostname.toLowerCase().includes(search)
-                        || track.loweredMetas.title.includes(search);
+                    return track.loweredMetas.artist.join(', ').includes(search) ||
+                        track.loweredMetas.album.includes(search) ||
+                        track.loweredMetas.genre.join(', ').includes(search) ||
+                        track.owner.hostname.toLowerCase().includes(search) ||
+                        track.loweredMetas.title.includes(search);
                 });
 
                 return i.assocIn(state, [state.tracksCursor, 'sub'], tracks);
             }
         }
 
-        case('TRACKS/SORT'): {
+        case ('TRACKS/SORT'): {
 
             // Get the orderBy Arrays
             // This is the array of key names and direction for _.orderBy
@@ -86,31 +86,31 @@ export default (state = {}, action) => {
                     acc[1].push(val.sort);
                 }
                 return acc;
-            }, [[],[]]);
+            }, [[], []]);
 
             // Now, we can do the real sort
             const sortTracks = (trackIds) => {
-                const trackData = trackIds.map(trackId => state.library.data[trackId]);
+                const trackData = trackIds.map((trackId) => state.library.data[trackId]);
                 const sortFunction = (nestedSortKey) => (item) => get(item, nestedSortKey);
                 const sortFunctions = getOrderArrays[0].map(sortFunction);
                 const sortedData = orderBy(trackData, sortFunctions, getOrderArrays[1]);
-                return sortedData.map(data => data._id);
+                return sortedData.map((data) => data._id);
             };
-            return i.updateIn(state, [state.tracksCursor, 'sub'], sortTracks)
+            return i.updateIn(state, [state.tracksCursor, 'sub'], sortTracks);
         }
 
-        case('TRACKS/TOGGLE_SORT'): {
-             return i.chain(state)
+        case ('TRACKS/TOGGLE_SORT'): {
+            return i.chain(state)
                 .assocIn(['columns', 'data', action.payload.id, 'sort'], action.payload.state)
                 .assocIn(['columns', 'data', action.payload.id, 'sortAdded'], new Date().getTime())
                 .value();
         }
 
-        case('TRACKS/SET_COLUMN_WIDTH'): {
+        case ('TRACKS/SET_COLUMN_WIDTH'): {
             return i.assocIn(state, ['columns', 'data', action.payload.id, 'width'], action.payload.width);
         }
 
-        case('TRACKS/PLAY_COUNT_INCREMENT_FULFILLED'): {
+        case ('TRACKS/PLAY_COUNT_INCREMENT_FULFILLED'): {
             const { _id } = action.meta;
 
             const updateTrackPlaycount = (track) => track === _id

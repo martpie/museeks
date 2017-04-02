@@ -9,12 +9,6 @@ import PlaylistsNavLink from './PlaylistsNavLink.react';
 import { remote } from 'electron';
 const { Menu } = remote;
 
-/*
-|--------------------------------------------------------------------------
-| PlaylistsNav
-|--------------------------------------------------------------------------
-*/
-
 class PlaylistsNav extends Component {
 
     static propTypes = {
@@ -120,7 +114,7 @@ class PlaylistsNav extends Component {
     }
 
     keyDown = (e) => {
-        switch(e.keyCode) {
+        switch (e.keyCode) {
             case 13: { // Enter
                 this.rename(this.state.renamed, e.currentTarget.value);
                 this.setState({ renamed: null });

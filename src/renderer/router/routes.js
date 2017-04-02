@@ -3,18 +3,18 @@ import React from 'react';
 import { Route, IndexRedirect } from 'react-router';
 
 // Components
-import App       from '../components/App.react';
-import Library   from '../components/Library/Library.react';
+import App from '../components/App.react';
+import Library from '../components/Library/Library.react';
 import Playlists from '../components/Playlists/Playlists.react';
-import Playlist  from '../components/Playlists/Playlist.react';
-import Settings  from '../components/Settings/Settings.react';
+import Playlist from '../components/Playlists/Playlist.react';
+import Settings from '../components/Settings/Settings.react';
 
-import SettingsLibrary  from '../components/Settings/SettingsLibrary.react';
-import SettingsUI       from '../components/Settings/SettingsUI.react';
-import SettingsAudio    from '../components/Settings/SettingsAudio.react';
+import SettingsLibrary from '../components/Settings/SettingsLibrary.react';
+import SettingsUI from '../components/Settings/SettingsUI.react';
+import SettingsAudio from '../components/Settings/SettingsAudio.react';
 import SettingsAdvanced from '../components/Settings/SettingsAdvanced.react';
-import SettingsAbout    from '../components/Settings/SettingsAbout.react';
-import SettingsNetwork  from '../components/Settings/SettingsNetwork.react';
+import SettingsAbout from '../components/Settings/SettingsAbout.react';
+import SettingsNetwork from '../components/Settings/SettingsNetwork.react';
 
 export default () => {
     return (

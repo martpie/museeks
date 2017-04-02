@@ -5,13 +5,6 @@ import lib from '../../lib';
 
 import classnames from 'classnames';
 
-
-/*
-|--------------------------------------------------------------------------
-| TrackRow
-|--------------------------------------------------------------------------
-*/
-
 class TrackRow extends Component {
 
     static propTypes = {

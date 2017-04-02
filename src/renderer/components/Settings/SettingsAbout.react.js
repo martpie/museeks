@@ -10,13 +10,6 @@ import lib from '../../lib';
 const museeksLogoRequire = require('../../../images/logos/museeks.png');
 const museeksLogo = `../dist/${museeksLogoRequire}`;
 
-
-/*
-|--------------------------------------------------------------------------
-| Child - About
-|--------------------------------------------------------------------------
-*/
-
 class SettingsAbout extends Component {
 
     static propTypes = {

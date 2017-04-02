@@ -10,12 +10,6 @@ import lib from '../../lib';
 import utils from '../../../shared/utils/utils';
 import Avatar from '../Avatar';
 
-/*
-|--------------------------------------------------------------------------
-| Child - ArtistList
-|--------------------------------------------------------------------------
-*/
-
 class TracksList extends Component {
 
     static propTypes = {
@@ -105,7 +99,7 @@ class TracksList extends Component {
             return selected.includes(track._id);
         });
 
-        switch(e.keyCode) {
+        switch (e.keyCode) {
             case 38: // up
                 this.onUp(firstSelectedTrackIdx, tracks);
                 break;
@@ -288,7 +282,7 @@ class TracksList extends Component {
 
         const processClick = ({ reply, data }) => {
             const selected = this.state.selected;
-            switch(reply) {
+            switch (reply) {
                 case 'addToQueue': {
                     this.props.add(selected);
                     break;

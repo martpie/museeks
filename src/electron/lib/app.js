@@ -12,7 +12,7 @@ const toggleSleepBlocker = (toggle, mode) => {
         sleepBlocker.id = powerSaveBlocker.start(mode);
     } else {
         powerSaveBlocker.stop(sleepBlocker.id);
-        delete(sleepBlocker.id);
+        delete sleepBlocker.id;
     }
 };
 

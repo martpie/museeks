@@ -1,7 +1,7 @@
 export default (state = {}, action) => {
     switch (action.type) {
 
-        case('LIBRARY/RESCAN_PENDING'): {
+        case ('LIBRARY/RESCAN_PENDING'): {
             return {
                 ...state,
                 status: 'An apple a day keeps Dr Dre away',
@@ -9,7 +9,7 @@ export default (state = {}, action) => {
             };
         }
 
-        case('LIBRARY/RESCAN_FULFILLED'): {
+        case ('LIBRARY/RESCAN_FULFILLED'): {
             return {
                 ...state,
                 refreshingLibrary: false,
@@ -17,7 +17,7 @@ export default (state = {}, action) => {
             };
         }
 
-        case('LIBRARY/RESCAN_PROGRESS'): {
+        case ('LIBRARY/RESCAN_PROGRESS'): {
             return {
                 ...state,
                 refreshProgress: action.payload.percentage

@@ -9,13 +9,6 @@ import lib from '../../lib';
 
 import utils from '../../../shared/utils/utils';
 
-
-/*
-|--------------------------------------------------------------------------
-| Header - Queue
-|--------------------------------------------------------------------------
-*/
-
 class QueueList extends Component {
 
     static propTypes = {

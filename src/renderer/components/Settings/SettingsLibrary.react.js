@@ -8,13 +8,6 @@ import LibraryFolders from './LibraryFolders.react';
 
 import lib from '../../lib';
 
-
-/*
-|--------------------------------------------------------------------------
-| Child - SettingsLibrary - manage import folders for library
-|--------------------------------------------------------------------------
-*/
-
 class SettingsLibrary extends Component {
 
     static propTypes = {

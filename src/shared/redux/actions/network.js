@@ -87,7 +87,9 @@ const library = (lib) => {
         // Apply the state of the remote input to the local player
 
         const { observers } = getState().network;
-console.log(observers, peer)
+
+        console.log(observers, peer);
+
         const incl = observers.find((observer) => observer.hostname === peer.hostname);
 
         // if (incl) {

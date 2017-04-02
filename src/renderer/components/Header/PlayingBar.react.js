@@ -13,13 +13,6 @@ import utils from '../../../shared/utils/utils';
 
 import classnames from 'classnames';
 
-
-/*
-|--------------------------------------------------------------------------
-| Header - PlayingBar
-|--------------------------------------------------------------------------
-*/
-
 class PlayingBar extends Component {
 
     static propTypes = {

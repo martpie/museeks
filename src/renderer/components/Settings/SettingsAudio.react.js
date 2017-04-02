@@ -3,13 +3,6 @@ import { connect } from 'react-redux';
 
 import lib from '../../lib';
 
-
-/*
-|--------------------------------------------------------------------------
-| Child - Audio settings
-|--------------------------------------------------------------------------
-*/
-
 class SettingsAudio extends Component {
 
     static propTypes = {

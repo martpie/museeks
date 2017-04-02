@@ -1,11 +1,5 @@
 import React, { PureComponent } from 'react';
 
-/*
-|--------------------------------------------------------------------------
-| CheckboxSetting
-|--------------------------------------------------------------------------
-*/
-
 class CheckboxSetting extends PureComponent {
 
     static propTypes = {

@@ -6,13 +6,6 @@ import Icon from 'react-fontawesome';
 import OutputDevice from '../OutputDevice';
 import utils from '../../../shared/utils/utils';
 
-
-/*
-|--------------------------------------------------------------------------
-| Footer
-|--------------------------------------------------------------------------
-*/
-
 class Footer extends Component {
 
     static propTypes = {

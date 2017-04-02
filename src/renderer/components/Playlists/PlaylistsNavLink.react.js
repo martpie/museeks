@@ -1,13 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 
-
-/*
-|--------------------------------------------------------------------------
-| PlaylistsNav
-|--------------------------------------------------------------------------
-*/
-
 class PlaylistsNavLink extends Component {
 
     static propTypes = {

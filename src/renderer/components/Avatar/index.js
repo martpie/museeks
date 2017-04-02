@@ -1,8 +1,8 @@
 import React, { PropTypes } from 'react';
 
 const colours = [
-    '#D50000','#FF4081','#CE93D8','#AA00FF','#B39DDB','#6200EA','#3F51B5','#1A237E','#2962FF','#0091EA','#00B8D4','#00BFA5',
-    '#A5D6A7','#00C853','#64DD17','#E6EE9C','#AEEA00','#FFD600','#FFAB00','#FF6D00','#FFAB91','#DD2600','#455A64','#263238'
+    '#D50000', '#FF4081', '#CE93D8', '#AA00FF', '#B39DDB', '#6200EA', '#3F51B5', '#1A237E', '#2962FF', '#0091EA', '#00B8D4', '#00BFA5',
+    '#A5D6A7', '#00C853', '#64DD17', '#E6EE9C', '#AEEA00', '#FFD600', '#FFAB00', '#FF6D00', '#FFAB91', '#DD2600', '#455A64', '#263238'
 ];
 
 const propTypes = {
@@ -12,7 +12,7 @@ const propTypes = {
     shape: PropTypes.string,
 };
 
-const Avatar =  (props) => {
+const Avatar = (props) => {
     const { style, name, ...otherProps } = props;
     let { shape, size } = props;
     size = size || 25;
@@ -35,10 +35,9 @@ const Avatar =  (props) => {
     };
 
     const getInitials = (name) => {
-        const nameSplit = name.replace('_',' ').replace('-',' ').replace('/',' ').split(' ');
+        const nameSplit = name.replace('_', ' ').replace('-', ' ').replace('/', ' ').split(' ');
         return nameSplit.length >= 2 ? `${nameSplit[0][0]}${nameSplit[1][0]}` : `${name[0]}${name[1]}`;
     };
-
 
     const colorStyles = {
         background: name ? colours[getColorIndex(name)] : '#eaeaea',

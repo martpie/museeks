@@ -9,12 +9,6 @@ import Toasts from './Toasts/Toasts.react';
 
 import lib from '../lib';
 
-/*
-|--------------------------------------------------------------------------
-| The App
-|--------------------------------------------------------------------------
-*/
-
 class Museeks extends Component {
 
     static propTypes = {
@@ -69,7 +63,7 @@ class Museeks extends Component {
     }
 
     onKey = (e) => {
-        switch(e.keyCode) {
+        switch (e.keyCode) {
             case 32:
                 e.preventDefault();
                 e.stopPropagation();

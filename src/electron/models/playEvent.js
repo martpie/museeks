@@ -1,8 +1,8 @@
-import linvodb from 'linvodb3';
+import Linvodb from 'linvodb3';
 import Promise from 'bluebird';
 
 // save metadata and previous _ids in case library is recreated
-const PlayEvent = new linvodb('playEvent', {
+const PlayEvent = new Linvodb('playEvent', {
     user: Number,
     timestamp: Date,
 

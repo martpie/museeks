@@ -5,12 +5,6 @@ import { connect } from 'react-redux';
 
 import lib from '../../lib';
 
-/*
-|--------------------------------------------------------------------------
-| ShuffleButton
-|--------------------------------------------------------------------------
-*/
-
 class ButtonShuffle extends Component {
 
     static propTypes = {

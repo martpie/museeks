@@ -1,11 +1,5 @@
 import React, { PureComponent } from 'react';
 
-/*
-|--------------------------------------------------------------------------
-| FullViewMessage
-|--------------------------------------------------------------------------
-*/
-
 class FullViewMessage extends PureComponent {
 
     static propTypes = {

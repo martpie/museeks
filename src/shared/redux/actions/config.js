@@ -18,9 +18,7 @@ const library = (lib) => {
                 value,
             },
             meta: {
-                ...( throttle
-                ? { throttle }
-                : {})
+                ...(throttle ? { throttle } : {})
             }
         });
 

@@ -6,13 +6,6 @@ import classnames from 'classnames';
 
 import lib from '../../lib';
 
-
-/*
-|--------------------------------------------------------------------------
-| PlayingIndicator
-|--------------------------------------------------------------------------
-*/
-
 class TrackRow extends Component {
 
     static propTypes = {

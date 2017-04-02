@@ -2,12 +2,6 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import lib from '../../lib';
 
-/*
-|--------------------------------------------------------------------------
-| WindowControls
-|--------------------------------------------------------------------------
-*/
-
 class WindowControls extends PureComponent {
 
     static propTypes = {

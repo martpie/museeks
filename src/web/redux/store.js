@@ -2,7 +2,7 @@ import { applyMiddleware, createStore } from 'redux';
 import promiseMiddleware from 'redux-promise-middleware';
 import thunk from 'redux-thunk';
 import createLogger from 'redux-logger';
-//import reducers from '../../shared/redux/reducers';
+// import reducers from '../../shared/redux/reducers';
 import throttle from 'redux-throttle';
 const reducers = () => {};
 

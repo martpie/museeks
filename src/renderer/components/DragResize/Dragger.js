@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react';
 import clickDrag from 'react-clickdrag';
 import './styles.css';
@@ -39,9 +38,16 @@ const styles = {
 };
 
 class DraggerComponent extends Component {
+
+    static propTypes = {
+        dataDrag: React.PropTypes.object,
+        side: React.PropTypes.string,
+        changeFn: React.PropTypes.function
+    }
+
     constructor(props) {
         super(props);
-        
+
         this.state = {
             lastEventId: null,
             active: false,
@@ -53,11 +59,15 @@ class DraggerComponent extends Component {
             this.setState({ active: true, lastEventId: nextProps.dataDrag.id });
             if (nextProps.side === 'left' || nextProps.side === 'right') {
                 this.props.changeFn({
-                    deltaX: nextProps.side === 'right' ? nextProps.dataDrag.deltaX : - nextProps.dataDrag.deltaX,
+                    deltaX: nextProps.side === 'right'
+                        ? nextProps.dataDrag.deltaX
+                        : -nextProps.dataDrag.deltaX,
                 });
             } else {
                 this.props.changeFn({
-                    deltaY: nextProps.side === 'bottom' ? nextProps.dataDrag.deltaY : - nextProps.dataDrag.deltaY
+                    deltaY: nextProps.side === 'bottom'
+                        ? nextProps.dataDrag.deltaY
+                        : -nextProps.dataDrag.deltaY
                 });
             }
         } else {
@@ -67,7 +77,7 @@ class DraggerComponent extends Component {
 
     render() {
         const { side } = this.props;
-        return(
+        return (
           <div className='DragResizeDragger' style={ styles[side] } />
         );
     }

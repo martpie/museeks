@@ -9,33 +9,33 @@ const library = (lib) => {
         payload: {
             search
         }
-    });    
-    
-    const toggleSort = ({ id, state }) => (dispatch, getState) => {
+    });
+
+    const toggleSort = ({ id }) => (dispatch, getState) => {
         const currentState = getState().tracks.columns.data[id].sort;
-        
+
         const getNextState = () => {
-            if ( currentState === 'asc') {
-                return 'desc'
+            if (currentState === 'asc') {
+                return 'desc';
             } else if (currentState === 'desc') {
-                return ''
+                return '';
             } else {
-                return 'asc'
+                return 'asc';
             }
-        }
-        
+        };
+
         dispatch({
             type: 'TRACKS/TOGGLE_SORT',
             payload: { id, state: getNextState() }
         });
-        
+
         setTimeout(() => dispatch(sort()), 100);
-    };        
-    
+    };
+
     const sort = () => ({
         type: 'TRACKS/SORT',
-    })    
-    
+    });
+
     const setColumnWidth = ({ id, width }) => ({
         type: 'TRACKS/SET_COLUMN_WIDTH',
         payload: { id, width },
@@ -87,7 +87,7 @@ const library = (lib) => {
 
         const { track } = data;
 
-        const eventMetadata = ['title' , 'album', 'artist', 'loweredMetas.title', 'loweredMetas.album', 'loweredMetas.artist', 'playCount'];
+        const eventMetadata = ['title', 'album', 'artist', 'loweredMetas.title', 'loweredMetas.album', 'loweredMetas.artist', 'playCount'];
 
         // create an event to track who listened to the song
         const playEvent = data.playEvent || {

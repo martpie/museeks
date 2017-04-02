@@ -11,12 +11,6 @@ const svgMap = {
     default: require('../../../images/icons/player-repeat.svg')
 };
 
-/*
-|--------------------------------------------------------------------------
-| RepeatButton
-|--------------------------------------------------------------------------
-*/
-
 class ButtonRepeat extends Component {
 
     static propTypes = {
@@ -49,7 +43,7 @@ class ButtonRepeat extends Component {
     toggleRepeat = () => {
         let repeat = 'none';
 
-        switch(this.props.repeat) {
+        switch (this.props.repeat) {
 
             case 'none':
                 repeat = 'all';

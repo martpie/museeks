@@ -5,12 +5,6 @@ import VolumeControl from './VolumeControl.react';
 
 import lib from '../../lib';
 
-/*
-|--------------------------------------------------------------------------
-| PlayerControls
-|--------------------------------------------------------------------------
-*/
-
 class PlayerControls extends PureComponent {
 
     static propTypes = {

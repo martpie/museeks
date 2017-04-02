@@ -2,12 +2,6 @@ import React, { PureComponent } from 'react';
 
 import classnames from 'classnames';
 
-/*
-|--------------------------------------------------------------------------
-| EmptyQueue
-|--------------------------------------------------------------------------
-*/
-
 class QueueEmpty extends PureComponent {
 
     static propTypes = {

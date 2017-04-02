@@ -8,8 +8,8 @@ import deepExtend from 'deep-extend';
 import freeze from 'deep-freeze';
 
 const extend = function() {
-    return deepExtend.call(null, {}, ...arguments);
-}
+    return deepExtend({}, ...arguments);
+};
 
 const player = playerActions(lib);
 
@@ -360,7 +360,6 @@ test('player previous with repeat one', (t) => {
     .then((result) => t.deepEqual(result.delta, delta, description));
 });
 
-
 test('player previous from within the history array', (t) => {
 
     const iterations = range(3);
@@ -391,7 +390,6 @@ test('player previous from within the history array', (t) => {
             currentTrack
         }
     });
-
 
     return Promise.reduce(iterations, (previous) => {
 
@@ -481,7 +479,6 @@ test('player previous should not be affected by shuffle', (t) => {
 
     const queueCursor = 5;
     const history = [0, 1, 2, 3, 4];
-    const currentTrackId = baseState.queue[queueCursor];
     const currentTrack = tracks[queueCursor];
 
     const initialState = extend(baseState, {

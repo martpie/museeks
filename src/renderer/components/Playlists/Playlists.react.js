@@ -6,13 +6,6 @@ import FullViewMessage from '../Shared/FullViewMessage.react';
 
 import lib from '../../lib';
 
-
-/*
-|--------------------------------------------------------------------------
-| Playlists
-|--------------------------------------------------------------------------
-*/
-
 class Playlists extends Component {
 
     static propTypes = {

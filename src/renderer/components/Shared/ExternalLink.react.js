@@ -1,12 +1,6 @@
 import React, { Component } from 'react';
 import lib from '../../lib';
 
-/*
-|--------------------------------------------------------------------------
-| External Link
-|--------------------------------------------------------------------------
-*/
-
 class ExternalLink extends Component {
 
     static propTypes = {

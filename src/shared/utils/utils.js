@@ -35,7 +35,6 @@ const getMeWithIP = (me, peer) => {
     return result;
 };
 
-
 /**
  * Parse an int to a more readable string
  *
@@ -117,7 +116,6 @@ const simpleSort = (array, sorting) => {
         });
     }
 
-
     const result = [];
     array.forEach((item) => {
         if (!result.includes(item)) result.push(item);
@@ -184,7 +182,7 @@ const removeUselessFolders = (folders) => {
 const chunkArray = (array, chunkLength) => {
     const chunks = [];
 
-    for(let i = 0, length = array.length; i < length; i += chunkLength) {
+    for (let i = 0, length = array.length; i < length; i += chunkLength) {
         chunks.push(array.slice(i, i + chunkLength));
     }
 
@@ -299,7 +297,7 @@ const getMetadata = (track) => {
 };
 
 const getAudioDurationAsync = (path) => {
-    const audio = new Audio;
+    const audio = new Audio();
 
     return new Promise((resolve, reject) => {
         audio.addEventListener('loadedmetadata', () => {
@@ -339,8 +337,8 @@ const fetchCover = async (trackPath) => {
         const filepath = matches.find((elem) => {
             const parsedPath = path.parse(elem);
 
-            return ['album', 'albumart', 'folder', 'cover'].includes(parsedPath.name.toLowerCase())
-                && ['.png', '.jpg', '.bmp', '.gif'].includes(parsedPath.ext.toLowerCase());
+            return ['album', 'albumart', 'folder', 'cover'].includes(parsedPath.name.toLowerCase()) &&
+                ['.png', '.jpg', '.bmp', '.gif'].includes(parsedPath.ext.toLowerCase());
         });
 
         return {

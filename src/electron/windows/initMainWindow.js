@@ -16,10 +16,10 @@ const checkBounds = (desiredBounds) => {
     // check if the browser window is offscreen
     const display = screen.getDisplayNearestPoint(bounds).workArea;
 
-    const onScreen = bounds.x >= display.x
-        && bounds.x + bounds.width <= display.x + display.width
-        && bounds.y >= display.y
-        && bounds.y + bounds.height <= display.y + display.height;
+    const onScreen = bounds.x >= display.x &&
+        bounds.x + bounds.width <= display.x + display.width &&
+        bounds.y >= display.y &&
+        bounds.y + bounds.height <= display.y + display.height;
 
     if (!onScreen) {
         delete bounds.x;
@@ -69,7 +69,6 @@ const library = (lib, icons, srcPath) => {
     const saveBoundsThrottled = throttle(saveBounds, 3000);
     mainWindow.on('resize', saveBoundsThrottled);
     mainWindow.on('move', saveBoundsThrottled);
-
 
     return mainWindow;
 };

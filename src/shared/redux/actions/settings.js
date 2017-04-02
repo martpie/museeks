@@ -1,3 +1,4 @@
+import http from 'axios';
 import semver from 'semver';
 
 const library = (lib) => {
@@ -53,8 +54,12 @@ const library = (lib) => {
     const checkForUpdate = (options = {}) => (dispatch) => {
         const currentVersion = lib.app.version;
 
-        return fetch('https://api.github.com/repos/KeitIG/museeks/releases')
-        .then((response) => response.json())
+        return http({
+            method: 'GET',
+            url: 'https://api.github.com/repos/KeitIG/museeks/releases',
+            json: true
+        })
+        .then((response) => response.data)
         .then((releases) => {
 
             const newRelease = releases.find((release) => {

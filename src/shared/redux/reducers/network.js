@@ -4,21 +4,21 @@ import { find } from 'lodash';
 export default (state = {}, action) => {
     switch (action.type) {
 
-        case('NETWORK/SET_ME'): {
+        case ('NETWORK/SET_ME'): {
             return i.assoc(state, 'me', action.payload);
         }
 
-        case('NETWORK/SCAN_PEERS_PENDING'): {
+        case ('NETWORK/SCAN_PEERS_PENDING'): {
             return i.assoc(state, 'scanPending', true);
         }
-        case('NETWORK/SCAN_PEERS_REJECTED'): {
+        case ('NETWORK/SCAN_PEERS_REJECTED'): {
             return i.assoc(state, 'scanPending', false);
         }
-        case('NETWORK/SCAN_PEERS_FULFILLED'): {
+        case ('NETWORK/SCAN_PEERS_FULFILLED'): {
             return i.assoc(state, 'scanPending', false);
         }
 
-        case('NETWORK/PEER_FOUND'): {
+        case ('NETWORK/PEER_FOUND'): {
             const newPeer = action.payload.peer;
             return i.updateIn(state, ['peers'], (peers) => {
                 // if the peers list doesn't include the found peer, add it
@@ -28,7 +28,7 @@ export default (state = {}, action) => {
             });
         }
 
-        case('NETWORK/ADD_OBSERVER'): {
+        case ('NETWORK/ADD_OBSERVER'): {
             const newObserver = action.payload.peer;
             return i.updateIn(state, ['observers'], (observers) => {
                 // if the observers list doesn't include the new observer, add it
@@ -38,7 +38,7 @@ export default (state = {}, action) => {
             });
         }
 
-        case('NETWORK/REMOVE_OBSERVER'): {
+        case ('NETWORK/REMOVE_OBSERVER'): {
             const targetObserver = action.payload.peer;
             return i.updateIn(state, ['observers'], (observers) => {
                 // filter the list to remove the targetObserver
@@ -46,11 +46,11 @@ export default (state = {}, action) => {
             });
         }
 
-        case('NETWORK/SET_OUTPUT_PENDING'): {
+        case ('NETWORK/SET_OUTPUT_PENDING'): {
             return i.assoc(state, 'output', action.meta.newOutput);
         }
 
-        case('NETWORK/SET_OUTPUT_REJECTED'): {
+        case ('NETWORK/SET_OUTPUT_REJECTED'): {
             return i.assoc(state, 'output', action.meta.prevOutput);
         }
 

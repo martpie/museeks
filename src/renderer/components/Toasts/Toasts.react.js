@@ -2,13 +2,6 @@ import React, { Component } from 'react';
 
 import Toast from './Toast.react';
 
-
-/*
-|--------------------------------------------------------------------------
-| Toasts
-|--------------------------------------------------------------------------
-*/
-
 class Toasts extends Component {
 
     static propTypes = {

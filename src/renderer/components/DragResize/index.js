@@ -5,12 +5,18 @@ import classNames from 'classnames';
 import './styles.css';
 
 export default class DragResize extends Component {
+
+    static propTypes = {
+        widthRange: React.PropTypes.array,
+        heightRange: React.PropTypes.array,
+        side: React.PropTypes.string
+    }
+
     constructor(props) {
         super(props);
         this.state = props.width
             ? { width: parseInt(props.width) }
-            : { height: parseInt(props.height) }
-        
+            : { height: parseInt(props.height) };
     }
 
     componentWillReceiveProps(nextProps) {

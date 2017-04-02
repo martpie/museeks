@@ -1,7 +1,7 @@
-import linvodb from 'linvodb3';
+import Linvodb from 'linvodb3';
 import Promise from 'bluebird';
 
-const Track = new linvodb('track', {
+const Track = new Linvodb('track', {
     album: String,
     albumartist: [String],
     artist: [String],

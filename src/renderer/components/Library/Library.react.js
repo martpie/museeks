@@ -7,12 +7,6 @@ import TracksList from '../Shared/TracksList.react';
 
 import lib from '../../lib';
 
-/*
-|--------------------------------------------------------------------------
-| Global View
-|--------------------------------------------------------------------------
-*/
-
 class Library extends Component {
 
     static propTypes = {
@@ -23,6 +17,8 @@ class Library extends Component {
         playlists: React.PropTypes.array,
         playStatus: React.PropTypes.string,
         setTracksCursor: React.PropTypes.func,
+        setColumnWidth: React.PropTypes.func,
+        toggleSort: React.PropTypes.func,
     }
 
     constructor(props) {

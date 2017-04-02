@@ -6,23 +6,12 @@ import classnames from 'classnames';
 import lib from '../../lib';
 
 
-/*
-|--------------------------------------------------------------------------
-| Volume easing - http://www.dr-lex.be/info-stuff/volumecontrols.html#about
-|--------------------------------------------------------------------------
-*/
+// Volume easing - http://www.dr-lex.be/info-stuff/volumecontrols.html#about
 
 const factor = 4;
 
 const smoothifyVolume = (value) => Math.pow(value, factor);
 const unsmoothifyVolume = (value) => Math.pow(value, 1 / factor); // Linearize a smoothed volume value
-
-
-/*
-|--------------------------------------------------------------------------
-| VolumeControl
-|--------------------------------------------------------------------------
-*/
 
 class VolumeControl extends Component {
 

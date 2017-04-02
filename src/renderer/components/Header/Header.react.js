@@ -8,13 +8,6 @@ import PlayerControls from './PlayerControls.react';
 
 import lib from '../../lib';
 
-
-/*
-|--------------------------------------------------------------------------
-| Header
-|--------------------------------------------------------------------------
-*/
-
 class Header extends Component {
 
     static propTypes = {
