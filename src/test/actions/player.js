@@ -9,7 +9,7 @@ import freeze from 'deep-freeze';
 
 function extend () {
     return deepExtend({}, ...arguments);
-};
+}
 
 const player = playerActions(lib);
 
