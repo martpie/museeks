@@ -27,7 +27,7 @@ module.exports = {
     },
     target: 'electron',
     output: {
-        path: './src/dist',
+        path: `${__dirname}/src/dist`,
         filename: 'bundle.js',
         publicPath: '',
     },
