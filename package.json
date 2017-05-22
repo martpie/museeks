@@ -57,10 +57,17 @@
       ]
     },
     "linux": {
+      "category": "AudioVideo",
       "target": [
         "deb",
+        "rpm",
         "AppImage"
-      ]
+      ],
+      "executableName": "museeks"
+    },
+    "win": {
+        "target": "nsis",
+        "icon": "src/images/logos/museeks.ico"
     }
   },
   "dependencies": {
