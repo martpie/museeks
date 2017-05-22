@@ -38,7 +38,10 @@
       "node_modules/teeny-conf/**/*"
     ],
     "mac": {
-      "category": "public.app-category.music"
+      "category": "public.app-category.music",
+      "target": [
+        "dmg"
+      ],
     },
     "dmg": {
       "contents": [
@@ -56,7 +59,8 @@
     },
     "linux": {
       "target": [
-        "deb"
+        "deb",
+        "AppImage"
       ]
     }
   },
