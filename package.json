@@ -21,7 +21,6 @@
     "compile": "webpack --config webpack.config.js --progress --colors",
     "lint": "eslint . --config .eslintrc --cache",
     "dev": "webpack --config webpack.config.js --progress --colors --watch",
-    "build": "npm run build:eslint && npm run build:compile && node build.js",
     "package:lw": "build -lw --ia32 --x64",
     "package:l": "build -l --ia32 --x64",
     "package:w": "build -w --ia32 --x64",
@@ -41,7 +40,7 @@
       "category": "public.app-category.music",
       "target": [
         "dmg"
-      ],
+      ]
     },
     "dmg": {
       "contents": [
@@ -101,7 +100,6 @@
     "babili-webpack-plugin": "0.0.11",
     "css-loader": "0.28.0",
     "electron-builder": "^17.10.0",
-    "electron-packager": "8.6.0",
     "eslint": "3.19.0",
     "eslint-plugin-import": "2.2.0",
     "eslint-plugin-react": "6.10.3",
@@ -111,7 +109,6 @@
     "json-loader": "0.5.4",
     "minimist": "1.2.0",
     "node-sass": "4.5.2",
-    "rimraf": "2.6.1",
     "sass-loader": "6.0.3",
     "style-loader": "0.16.1",
     "svg-inline-loader": "0.7.1",
