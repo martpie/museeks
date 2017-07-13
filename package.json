@@ -84,7 +84,7 @@
     "prop-types": "^15.5.10",
     "queue": "4.2.1",
     "react": "15.6.1",
-    "react-bootstrap": "0.30.10",
+    "react-bootstrap": "0.31.1",
     "react-dom": "15.6.1",
     "react-fontawesome": "1.6.1",
     "react-keybinding-component": "0.5.0",
