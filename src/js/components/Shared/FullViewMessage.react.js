@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 
 /*
 |--------------------------------------------------------------------------
@@ -7,11 +8,10 @@ import React, { PureComponent } from 'react';
 */
 
 export default class FullViewMessage extends PureComponent {
-
     static propTypes = {
-        children: React.PropTypes.oneOfType([
-            React.PropTypes.array,
-            React.PropTypes.object,
+        children: PropTypes.oneOfType([
+            PropTypes.array,
+            PropTypes.object,
         ]),
     }
 

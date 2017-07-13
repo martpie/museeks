@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 
 import utils  from '../../utils/utils';
 
@@ -10,9 +11,8 @@ import utils  from '../../utils/utils';
 */
 
 export default class TrackCover extends PureComponent {
-
     static propTypes = {
-        path: React.PropTypes.string,
+        path: PropTypes.string,
     }
 
     constructor(props) {

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Row } from 'react-bootstrap';
 import KeyBinding from 'react-keybinding-component';
 
@@ -21,10 +22,9 @@ import app from '../lib/app';
 */
 
 class Museeks extends Component {
-
     static propTypes = {
-        store: React.PropTypes.object,
-        children: React.PropTypes.object,
+        store: PropTypes.object,
+        children: PropTypes.object,
     }
 
     constructor(props) {

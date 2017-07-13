@@ -123,7 +123,7 @@ const add = (pathsToScan) => {
                 const extension = path.extname(filePath).toLowerCase();
                 return app.supportedExtensions.includes(extension);
             }
-        );
+            );
 
         return flatFiles;
     }).then((supportedFiles) => {

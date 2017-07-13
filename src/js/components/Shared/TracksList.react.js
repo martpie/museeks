@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import KeyBinding from 'react-keybinding-component';
 
 import TrackRow from './TrackRow.react';
@@ -19,14 +20,13 @@ const ipcRenderer = electron.ipcRenderer;
 */
 
 export default class TracksList extends Component {
-
     static propTypes = {
-        type: React.PropTypes.string.isRequired,
-        tracks: React.PropTypes.array,
-        trackPlayingId: React.PropTypes.string,
-        playlists: React.PropTypes.array,
-        currentPlaylist: React.PropTypes.string,
-        playerStatus: React.PropTypes.string,
+        type: PropTypes.string.isRequired,
+        tracks: PropTypes.array,
+        trackPlayingId: PropTypes.string,
+        playlists: PropTypes.array,
+        currentPlaylist: PropTypes.string,
+        playerStatus: PropTypes.string,
     }
 
     constructor(props) {

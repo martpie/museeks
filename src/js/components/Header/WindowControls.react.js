@@ -8,7 +8,6 @@ import AppActions from '../../actions/AppActions';
 */
 
 export default class WindowControls extends PureComponent {
-
     constructor(props) {
         super(props);
     }

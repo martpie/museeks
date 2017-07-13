@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Nav, NavItem } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 
@@ -10,11 +11,10 @@ import { LinkContainer } from 'react-router-bootstrap';
 */
 
 export default class Settings extends Component {
-
     static propTypes = {
-        config: React.PropTypes.object,
-        library: React.PropTypes.object,
-        children: React.PropTypes.object,
+        config: PropTypes.object,
+        library: PropTypes.object,
+        children: PropTypes.object,
     }
 
     constructor(props) {

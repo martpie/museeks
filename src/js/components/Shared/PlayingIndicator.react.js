@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Icon from 'react-fontawesome';
 
 import classnames from 'classnames';
@@ -13,9 +14,8 @@ import AppActions from '../../actions/AppActions';
 */
 
 export default class TrackRow extends Component {
-
     static propTypes = {
-        state: React.PropTypes.string.isRequired,
+        state: PropTypes.string.isRequired,
     }
 
     constructor(props) {

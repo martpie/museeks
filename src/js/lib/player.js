@@ -1,7 +1,6 @@
 import app from './app';
 
 class Player {
-
     constructor(options) {
         const mergedOptions = {
             playbackRate: 1,

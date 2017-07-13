@@ -25,7 +25,6 @@ const unsmoothifyVolume = (value) => Math.pow(value, 1 / factor); // Linearize a
 */
 
 export default class VolumeControl extends Component {
-
     constructor(props) {
         super(props);
 
@@ -63,12 +62,12 @@ export default class VolumeControl extends Component {
                 <Icon name={ this.getVolumeIcon(unsmoothifyVolume(this.state.volume), this.state.muted) } />
                 <div className={ volumeClasses }>
                     <input type={ 'range' }
-                           min={ 0 }
-                           max={ 1 }
-                           step={ 0.01 }
-                           defaultValue={ this.state.volume }
-                           ref='volume'
-                           onChange={ this.setVolume }
+                        min={ 0 }
+                        max={ 1 }
+                        step={ 0.01 }
+                        defaultValue={ this.state.volume }
+                        ref='volume'
+                        onChange={ this.setVolume }
                     />
                 </div>
             </button>

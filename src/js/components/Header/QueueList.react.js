@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { ButtonGroup, Button } from 'react-bootstrap';
 import classnames from 'classnames';
 
@@ -16,11 +17,10 @@ import utils from '../../utils/utils';
 */
 
 export default class QueueList extends Component {
-
     static propTypes = {
-        queue: React.PropTypes.array,
-        queueCursor: React.PropTypes.number,
-        visible: React.PropTypes.bool,
+        queue: PropTypes.array,
+        queueCursor: PropTypes.number,
+        visible: PropTypes.bool,
     }
 
     constructor(props) {

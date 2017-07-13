@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import Toast from './Toast.react';
 
@@ -10,9 +11,8 @@ import Toast from './Toast.react';
 */
 
 export default class Toasts extends Component {
-
     static propTypes = {
-        toasts: React.PropTypes.array,
+        toasts: PropTypes.array,
     }
 
     constructor(props) {

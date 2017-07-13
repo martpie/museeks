@@ -19,7 +19,6 @@ class IntegrationManager {
         if(Integration === null) return;
         this.integration.enable();
     }
-
 }
 
 module.exports = IntegrationManager;

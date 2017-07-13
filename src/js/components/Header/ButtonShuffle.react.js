@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import InlineSVG from 'svg-inline-react';
 import classnames from 'classnames';
 
@@ -12,9 +13,8 @@ import AppActions from '../../actions/AppActions';
 */
 
 export default class ButtonShuffle extends Component {
-
     static propTypes = {
-        shuffle: React.PropTypes.bool,
+        shuffle: PropTypes.bool,
     }
 
     constructor(props) {

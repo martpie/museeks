@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
+import PropTypes from 'prop-types';
 
 import FullViewMessage from '../Shared/FullViewMessage.react';
 import TracksList from '../Shared/TracksList.react';
@@ -12,13 +13,12 @@ import TracksList from '../Shared/TracksList.react';
 */
 
 export default class Library extends Component {
-
     static propTypes = {
-        library: React.PropTypes.object,
-        tracks: React.PropTypes.object,
-        trackPlayingId: React.PropTypes.string,
-        playlists: React.PropTypes.array,
-        playerStatus: React.PropTypes.string,
+        library: PropTypes.object,
+        tracks: PropTypes.object,
+        trackPlayingId: PropTypes.string,
+        playlists: PropTypes.array,
+        playerStatus: PropTypes.string,
     }
 
     constructor(props) {

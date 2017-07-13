@@ -125,10 +125,10 @@ Promise.promisifyAll(models.Playlist);
 
 export default {
     supportedExtensions, // supported audio formats
-    pathSrc,             // path of the app
-    browserWindows,      // Object containing all the windows
-    models,              // database models
+    pathSrc, // path of the app
+    browserWindows, // Object containing all the windows
+    models, // database models
     version       : app.getVersion(), // Museeks version
-    config        : conf,             // teeny-conf
-    initialConfig : conf.getAll(),    // the config at the start of the application
+    config        : conf, // teeny-conf
+    initialConfig : conf.getAll(), // the config at the start of the application
 };

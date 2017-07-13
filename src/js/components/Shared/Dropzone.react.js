@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
 
@@ -9,15 +10,14 @@ import classnames from 'classnames';
 */
 
 export default class TrackRow extends Component {
-
     static propTypes = {
-        title: React.PropTypes.string.isRequired,
-        subtitle: React.PropTypes.string,
-        onDrop: React.PropTypes.func,
-        onClick: React.PropTypes.func,
-        onDragEnter: React.PropTypes.func,
-        onDragLeave: React.PropTypes.func,
-        onDragOver: React.PropTypes.func,
+        title: PropTypes.string.isRequired,
+        subtitle: PropTypes.string,
+        onDrop: PropTypes.func,
+        onClick: PropTypes.func,
+        onDragEnter: PropTypes.func,
+        onDragLeave: PropTypes.func,
+        onDragOver: PropTypes.func,
     }
 
     constructor(props) {

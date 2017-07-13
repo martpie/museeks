@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 import Icon from 'react-fontawesome';
 import VolumeControl from './VolumeControl.react';
 
@@ -11,9 +12,8 @@ import AppActions from '../../actions/AppActions';
 */
 
 export default class PlayerControls extends PureComponent {
-
     static propTypes = {
-        playerStatus: React.PropTypes.string,
+        playerStatus: PropTypes.string,
     }
 
     constructor(props) {

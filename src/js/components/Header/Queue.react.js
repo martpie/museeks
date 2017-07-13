@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 
 import QueueEmpty from './QueueEmpty.react';
 import QueueList from './QueueList.react';
@@ -11,11 +12,10 @@ import QueueList from './QueueList.react';
 */
 
 export default class Queue extends PureComponent {
-
     static propTypes = {
-        queue: React.PropTypes.array,
-        queueCursor: React.PropTypes.number,
-        visible: React.PropTypes.bool,
+        queue: PropTypes.array,
+        queueCursor: PropTypes.number,
+        visible: PropTypes.bool,
     }
 
     constructor(props) {

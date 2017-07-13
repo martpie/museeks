@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { ProgressBar, Dropdown } from 'react-bootstrap';
 import Icon from 'react-fontawesome';
 
@@ -23,12 +24,11 @@ import classnames from 'classnames';
 */
 
 export default class PlayingBar extends Component {
-
     static propTypes = {
-        queue: React.PropTypes.array,
-        queueCursor: React.PropTypes.number,
-        shuffle: React.PropTypes.bool,
-        repeat: React.PropTypes.string,
+        queue: PropTypes.array,
+        queueCursor: PropTypes.number,
+        shuffle: PropTypes.bool,
+        repeat: PropTypes.string,
     }
 
     constructor(props) {

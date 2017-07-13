@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import AppActions from '../../actions/AppActions';
 
@@ -12,14 +13,13 @@ import classnames from 'classnames';
 */
 
 export default class TrackRow extends Component {
-
     static propTypes = {
-        children: React.PropTypes.array,
-        selected: React.PropTypes.bool,
-        trackId: React.PropTypes.string,
-        index: React.PropTypes.number,
-        onMouseDown: React.PropTypes.func,
-        onContextMenu: React.PropTypes.func,
+        children: PropTypes.array,
+        selected: PropTypes.bool,
+        trackId: PropTypes.string,
+        index: PropTypes.number,
+        onMouseDown: PropTypes.func,
+        onContextMenu: PropTypes.func,
     }
 
     constructor(props) {

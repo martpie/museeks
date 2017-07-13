@@ -6,7 +6,6 @@ const { nativeImage, ipcMain } = require('electron');
 const iconsDirectory = path.resolve(__dirname, '../..', 'images', 'icons', 'windows');
 
 class Win32Integration {
-
     constructor(win) {
         this.window = win;
 

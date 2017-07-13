@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 
 /*
@@ -8,10 +9,9 @@ import React, { Component } from 'react';
 */
 
 export default class Toast extends Component {
-
     static propTypes = {
-        type: React.PropTypes.string,
-        content: React.PropTypes.string,
+        type: PropTypes.string,
+        content: PropTypes.string,
     }
 
     constructor(props) {

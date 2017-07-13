@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import PlaylistsNav from './PlaylistsNav.react';
 import FullViewMessage from '../Shared/FullViewMessage.react';
@@ -13,12 +14,11 @@ import AppActions from '../../actions/AppActions';
 */
 
 export default class Playlists extends Component {
-
     static propTypes = {
-        params: React.PropTypes.object,
-        children: React.PropTypes.object,
-        playlists: React.PropTypes.array,
-        playerStatus: React.PropTypes.string,
+        params: PropTypes.object,
+        children: PropTypes.object,
+        playlists: PropTypes.array,
+        playerStatus: PropTypes.string,
     }
 
     constructor(props) {

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { PureComponent } from 'react';
 
 /*
@@ -7,12 +8,11 @@ import React, { PureComponent } from 'react';
 */
 
 export default class CheckboxSetting extends PureComponent {
-
     static propTypes = {
-        title: React.PropTypes.string,
-        description: React.PropTypes.string,
-        defaultValue: React.PropTypes.bool,
-        onClick: React.PropTypes.func,
+        title: PropTypes.string,
+        description: PropTypes.string,
+        defaultValue: PropTypes.bool,
+        onClick: PropTypes.func,
     }
 
     constructor(props) {
@@ -27,8 +27,8 @@ export default class CheckboxSetting extends PureComponent {
                 <div className='checkbox'>
                     <label>
                         <input type='checkbox'
-                           onClick={ this.onClick }
-                           defaultChecked={ this.props.defaultValue }
+                            onClick={ this.onClick }
+                            defaultChecked={ this.props.defaultValue }
                         />
                         <span className='setting-title'>{ this.props.title }</span>
                         <p className='setting-description'>{ this.props.description }</p>

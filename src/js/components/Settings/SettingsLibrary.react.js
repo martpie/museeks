@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { ButtonGroup, Button } from 'react-bootstrap';
 
 import Dropzone from '../Shared/Dropzone.react';
@@ -15,10 +16,9 @@ const dialog = electron.remote.dialog;
 */
 
 export default class SettingsLibrary extends Component {
-
     static propTypes = {
-        config: React.PropTypes.object,
-        library: React.PropTypes.object,
+        config: PropTypes.object,
+        library: PropTypes.object,
     }
 
     constructor(props) {

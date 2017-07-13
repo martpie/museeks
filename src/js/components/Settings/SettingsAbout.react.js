@@ -19,7 +19,6 @@ const museeksLogo = `dist/${museeksLogoRequire}`;
 */
 
 export default class SettingsAbout extends Component {
-
     constructor(props) {
         super(props);
     }

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Input from 'react-simple-input';
 import KeyBinding from 'react-keybinding-component';
 
@@ -16,14 +17,13 @@ import AppActions from '../../actions/AppActions';
 */
 
 export default class Header extends Component {
-
     static propTypes = {
-        playerStatus: React.PropTypes.string,
-        queue: React.PropTypes.array,
-        queueCursor: React.PropTypes.number,
-        shuffle: React.PropTypes.bool,
-        repeat: React.PropTypes.string,
-        useNativeFrame: React.PropTypes.bool,
+        playerStatus: PropTypes.string,
+        queue: PropTypes.array,
+        queueCursor: PropTypes.number,
+        shuffle: PropTypes.bool,
+        repeat: PropTypes.string,
+        useNativeFrame: PropTypes.bool,
     }
 
     constructor(props) {

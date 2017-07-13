@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 const shell = electron.shell;
 
@@ -10,10 +11,9 @@ const shell = electron.shell;
 */
 
 export default class ExternalLink extends Component {
-
     static propTypes = {
-        href: React.PropTypes.string,
-        children: React.PropTypes.string,
+        href: PropTypes.string,
+        children: PropTypes.string,
     }
 
     constructor(props) {

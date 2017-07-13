@@ -5,7 +5,6 @@ const electron = require('electron');
 const path     = require('path');
 
 class ConfigManager {
-
     constructor(app) {
         this.workArea = electron.screen.getPrimaryDisplay().workArea;
 

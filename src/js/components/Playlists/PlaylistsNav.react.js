@@ -1,8 +1,9 @@
-import AppActions from '../../actions/AppActions';
-
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { ButtonGroup, Button } from 'react-bootstrap';
 import Icon from 'react-fontawesome';
+
+import AppActions from '../../actions/AppActions';
 
 import PlaylistsNavLink from './PlaylistsNavLink.react';
 
@@ -16,9 +17,8 @@ const ipcRenderer = electron.ipcRenderer;
 */
 
 export default class PlaylistsNav extends Component {
-
     static propTypes = {
-        playlists: React.PropTypes.array,
+        playlists: PropTypes.array,
     }
 
     constructor(props) {

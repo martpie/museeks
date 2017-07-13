@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import InlineSVG from 'svg-inline-react';
 import classnames from 'classnames';
 
@@ -17,9 +18,8 @@ const svgMap = {
 */
 
 export default class ButtonRepeat extends Component {
-
     static propTypes = {
-        repeat: React.PropTypes.string,
+        repeat: PropTypes.string,
     }
 
     constructor(props) {
@@ -50,7 +50,6 @@ export default class ButtonRepeat extends Component {
         let repeat = 'none';
 
         switch(this.props.repeat) {
-
             case 'none':
                 repeat = 'all';
                 break;

@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 import { Button } from 'react-bootstrap';
 
 import classnames from 'classnames';
@@ -12,17 +13,16 @@ import AppActions from '../../actions/AppActions';
 */
 
 export default class QueueListItem extends PureComponent {
-
     static propTypes = {
-        dragged: React.PropTypes.bool,
-        draggedOver: React.PropTypes.bool,
-        dragPosition: React.PropTypes.string,
-        index: React.PropTypes.number,
-        track: React.PropTypes.object,
-        onDragStart: React.PropTypes.func,
-        onDragOver: React.PropTypes.func,
-        onDragEnd: React.PropTypes.func,
-        queueCursor: React.PropTypes.number,
+        dragged: PropTypes.bool,
+        draggedOver: PropTypes.bool,
+        dragPosition: PropTypes.string,
+        index: PropTypes.number,
+        track: PropTypes.object,
+        onDragStart: PropTypes.func,
+        onDragOver: PropTypes.func,
+        onDragEnd: PropTypes.func,
+        queueCursor: PropTypes.number,
     }
 
     constructor(props) {
@@ -47,11 +47,11 @@ export default class QueueListItem extends PureComponent {
 
         return (
             <div key={ index }
-              className={ queueContentClasses }
-              draggable='true'
-              onDragStart={ this.onDragStart }
-              onDragOver={ this.onDragOver }
-              onDragEnd={ this.props.onDragEnd }
+                className={ queueContentClasses }
+                draggable='true'
+                onDragStart={ this.onDragStart }
+                onDragOver={ this.onDragOver }
+                onDragEnd={ this.props.onDragEnd }
             >
                 <Button bsSize={ 'xsmall' } bsStyle={ 'link' } className='remove' onClick={ this.remove }>
                     &times;

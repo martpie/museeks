@@ -2,7 +2,6 @@
 
 
 class PowerMonitor {
-
     constructor(win) {
         this.win = win;
     }

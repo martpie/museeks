@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Row, Col, Button, ButtonGroup, ProgressBar } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import Icon from 'react-fontawesome';
@@ -15,10 +16,9 @@ import utils from '../../utils/utils';
 */
 
 export default class Footer extends Component {
-
     static propTypes = {
-        tracks: React.PropTypes.array,
-        library: React.PropTypes.object,
+        tracks: PropTypes.array,
+        library: PropTypes.object,
     }
 
     constructor(props) {

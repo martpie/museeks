@@ -6,15 +6,15 @@ const path     = require('path');
 const os       = require('os');
 const electron = require('electron');
 
-const IpcManager         = require('./ipc');             // Manages IPC evens
-const TrayManager        = require('./tray');            // Manages Tray
-const ConfigManager      = require('./config');          // Handles config
-const PowerMonitor       = require('./power-monitor');   // Handle power events
-const IntegrationManager = require('./integration');     // Applies various integrations
+const IpcManager         = require('./ipc'); // Manages IPC evens
+const TrayManager        = require('./tray'); // Manages Tray
+const ConfigManager      = require('./config'); // Handles config
+const PowerMonitor       = require('./power-monitor'); // Handle power events
+const IntegrationManager = require('./integration'); // Applies various integrations
 
-const app           = electron.app;              // Module to control application life.
+const app           = electron.app; // Module to control application life.
 const nativeImage   = electron.nativeImage;
-const BrowserWindow = electron.BrowserWindow;    // Module to create native browser window.
+const BrowserWindow = electron.BrowserWindow; // Module to create native browser window.
 
 const appRoot = path.resolve(__dirname, '../..'); // app/ directory
 const srcPath = path.join(appRoot, 'src'); // app/src/ directory

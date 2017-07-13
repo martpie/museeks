@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 
@@ -9,11 +10,10 @@ import { Link } from 'react-router';
 */
 
 export default class PlaylistsNavLink extends Component {
-
     static propTypes = {
-        children: React.PropTypes.string,
-        playlistId: React.PropTypes.string,
-        onContextMenu: React.PropTypes.func,
+        children: PropTypes.string,
+        playlistId: PropTypes.string,
+        onContextMenu: PropTypes.func,
     }
 
     constructor(props) {

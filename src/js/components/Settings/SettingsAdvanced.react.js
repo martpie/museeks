@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import AppActions from '../../actions/AppActions';
 
@@ -12,9 +13,8 @@ import CheckboxSetting from './CheckboxSetting.react';
 */
 
 export default class SettingsAdvanced extends Component {
-
     static propTypes = {
-        config: React.PropTypes.object,
+        config: PropTypes.object,
     }
 
     constructor(props) {

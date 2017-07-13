@@ -5,7 +5,6 @@ const os = require('os');
 const { Tray, Menu, app, ipcMain } = require('electron');
 
 class IpcManager {
-
     constructor(win, icon) {
         this.tray = null;
         this.trayIcon = icon;
