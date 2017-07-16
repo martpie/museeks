@@ -4,6 +4,7 @@ export default (state = {}, payload) => {
     switch (payload.type) {
         case(AppConstants.APP_PLAYER_START): {
             const queue = [...state.tracks[state.tracksCursor].sub];
+            const oldQueue = [...queue];
             const id    = payload._id;
 
             let queueCursor = payload.queuePosition; // Clean that variable mess later
@@ -43,9 +44,8 @@ export default (state = {}, payload) => {
                 ...state,
                 queue,
                 queueCursor,
-                oldQueue       :  queue,
-                oldQueueCursor :  queueCursor,
-                playerStatus   : 'play',
+                oldQueue,
+                playerStatus : 'play',
             };
         }
 
@@ -130,6 +130,7 @@ export default (state = {}, payload) => {
                 };
             }
 
+            // Unshuffle the queue by restoring the initial queu
             const currentTrackIndex = state.oldQueue.findIndex((track) => {
                 return payload.currentSrc === `file://${encodeURI(track.path)}`;
             });
