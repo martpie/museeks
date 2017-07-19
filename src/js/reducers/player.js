@@ -130,7 +130,7 @@ export default (state = {}, payload) => {
                 };
             }
 
-            // Unshuffle the queue by restoring the initial queu
+            // Unshuffle the queue by restoring the initial queue
             const currentTrackIndex = state.oldQueue.findIndex((track) => {
                 return payload.currentSrc === `file://${encodeURI(track.path)}`;
             });
