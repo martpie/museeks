@@ -92,7 +92,7 @@ const checkForUpdate = async (options = {}) => {
 
         let message;
         if (newRelease) {
-            message = `Museeks ${newRelease.tag_name} is available, check http://museeks.io !`;
+            message = `Museeks ${newRelease.tag_name} is available, check http://museeks.io!`;
         } else if(!options.silentFail) {
             message = `Museeks ${currentVersion} is the latest version available.`;
         }
