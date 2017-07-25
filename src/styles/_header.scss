@@ -396,9 +396,9 @@ header {
         }
 
         &.volume {
-            padding: 0;
-            width: 34px;
             position: relative;
+            display: inline-flex;
+            padding-left: 1em
         }
 
         i {
@@ -408,22 +408,18 @@ header {
     }
 
     .volume-control {
-        position: absolute;
         z-index: 10;
         background-color: rgb(244, 244, 244);
-        top: -3px;
-        right: 25px;
-        display: none;
-        padding: 5px 12px;
-
-        &.visible {
-            display: block;
-        }
+        padding: 8px 5px 5px;
+        width: 100px;
+        height: 20px;
 
         input[type=range] {
-            width: 88px;
-            height: 20px;
             background-color: transparent;
+        }
+
+        + span {
+          margin: 2px 6px 0
         }
     }
 }
