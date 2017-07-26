@@ -398,7 +398,7 @@ header {
         &.volume {
             position: relative;
             display: inline-flex;
-            padding-left: 1em
+            padding-left: 1em;
         }
 
         i {
@@ -419,7 +419,7 @@ header {
         }
 
         + span {
-          margin: 2px 6px 0
+          margin: 2px 6px 0;
         }
     }
 }

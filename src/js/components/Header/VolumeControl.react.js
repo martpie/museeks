@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Icon from 'react-fontawesome';
-import classnames from 'classnames';
 
 import AppActions from '../../actions/AppActions';
 import Player from '../../lib/player';
