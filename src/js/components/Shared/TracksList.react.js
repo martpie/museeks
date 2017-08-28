@@ -49,8 +49,8 @@ export default class TracksList extends Component {
 
         // TODO (y.solovyov | KeitIG): TrackListHeader component?
         return (
-            <div className='tracks-list-container' tabIndex='0'>
-                <KeyBinding onKey={ this.onKey } target={ '.tracks-list-container' } preventInputConflict preventDefault />
+            <div className='tracks-list-container'> {/* there used to be a tabIndex={ 0 }, I don't remember why */}
+                <KeyBinding onKey={ this.onKey } preventInputConflict />
                 <div className='tracks-list-header'>
                     <div className='track-cell-header cell-track-playing' />
                     <div className='track-cell-header cell-track'>Track</div>
@@ -147,14 +147,17 @@ export default class TracksList extends Component {
 
         switch(e.keyCode) {
             case 38: // up
+                e.preventDefault();
                 this.onUp(firstSelectedTrackIdx, tracks);
                 break;
 
             case 40: // down
+                e.preventDefault();
                 this.onDown(firstSelectedTrackIdx, tracks);
                 break;
 
             case 13: // enter
+                e.preventDefault();
                 this.onEnter(firstSelectedTrackIdx, tracks);
                 break;
         }
