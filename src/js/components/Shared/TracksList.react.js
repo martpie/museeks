@@ -49,7 +49,7 @@ export default class TracksList extends Component {
 
         // TODO (y.solovyov | KeitIG): TrackListHeader component?
         return (
-            <div className='tracks-list-container' tabIndex='0'>
+            <div className='tracks-list-container'> {/* there used to be a tabIndex={ 0 }, I don't remember why */}
                 <KeyBinding onKey={ this.onKey } target={ '.tracks-list-container' } preventInputConflict preventDefault />
                 <div className='tracks-list-header'>
                     <div className='track-cell-header cell-track-playing' />
