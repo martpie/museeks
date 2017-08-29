@@ -35,10 +35,6 @@
                 &:not(:last-child) {
                     border-right: 1px solid #D2D2D2;
                 }
-
-                &:last-child {
-                    margin-right: 4px;
-                }
             }
         }
 
@@ -47,6 +43,22 @@
             max-height: 100%;
             margin-top: 26px;
             overflow: auto;
+
+            .tracks-list-render-view {
+                overflow-x: hidden !important; // Overriding react-custom-scrollbars
+            }
+
+            .track-vertical {
+                right: 8px;
+                background-color: #DDD;
+                top: 8px;
+                bottom: 8px;
+                z-index: 10;
+            }
+
+            .thumb-vertical {
+                background: rgba(0, 0, 0, .25);
+            }
 
             .tracks-list-tiles {
                 position: relative;

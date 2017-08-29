@@ -4,6 +4,7 @@ import KeyBinding from 'react-keybinding-component';
 
 import TrackRow from './TrackRow.react';
 import PlayingIndicator from './PlayingIndicator.react';
+import CustomScrollbar from './CustomScrollbar.react';
 
 import AppActions from '../../actions/AppActions';
 
@@ -59,17 +60,23 @@ export default class TracksList extends Component {
                     <div className='track-cell-header cell-album'>Album</div>
                     <div className='track-cell-header cell-genre'>Genre</div>
                 </div>
-                <div className='tracks-list-body' onScroll={ this.scrollTracksList }>
+                <CustomScrollbar
+                    className='tracks-list-body'
+                    onScroll={ this.scrollTracksList }
+                >
                     <div className='tracks-list-tiles' style={ { height : tracks.length * this.rowHeight } }>
-                        { this.buildTrackTiles() }
+                        { this.getTrackTiles() }
                     </div>
-                </div>
+                </CustomScrollbar>
+
             </div>
         );
     }
 
     componentDidMount() {
         const self = this;
+
+        this.renderView = document.querySelector('.tracks-list-render-view');
 
         ipcRenderer.on('tracksListContextMenuReply', async (event, reply, data) => {
             const selected = self.state.selected;
@@ -121,7 +128,8 @@ export default class TracksList extends Component {
     }
 
     scrollTracksList() {
-        this.setState({ scrollTop : document.querySelector('.tracks-list-body').scrollTop });
+        //console.log(this);
+        this.setState({ scrollTop : this.renderView.scrollTop });
     }
 
     selectTrack(e, id, index) {
@@ -175,7 +183,7 @@ export default class TracksList extends Component {
         return !this.state.selected.includes(id);
     }
 
-    buildTrackTiles() {
+    getTrackTiles() {
         const self           = this;
         const selected       = this.state.selected;
         const tracks         = [...this.props.tracks];
