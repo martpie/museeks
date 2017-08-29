@@ -128,7 +128,6 @@ export default class TracksList extends Component {
     }
 
     scrollTracksList() {
-        //console.log(this);
         this.setState({ scrollTop : this.renderView.scrollTop });
     }
 
