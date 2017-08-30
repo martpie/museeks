@@ -56,7 +56,7 @@
         "react/jsx-curly-spacing": ["error", "always", {"allowMultiline": true}],
         "react/jsx-filename-extension": ["error", { "extensions": [".react.js", ".js", ".jsx"] }],
         "react/jsx-no-duplicate-props": "error",
-        "react/jsx-no-bind": "error",
+        "react/jsx-no-bind": ["error", { "ignoreRefs": true }],
         "react/jsx-no-undef": "error",
         "react/jsx-pascal-case": "error",
         "react/jsx-space-before-closing": "error",
