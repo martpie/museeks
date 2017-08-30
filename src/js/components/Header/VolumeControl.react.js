@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Icon from 'react-fontawesome';
-import classnames from 'classnames';
 
 import AppActions from '../../actions/AppActions';
 import Player from '../../lib/player';
@@ -31,14 +30,11 @@ export default class VolumeControl extends Component {
         const audio = Player.getAudio();
 
         this.state = {
-            showVolume : false,
             volume     : unsmoothifyVolume(audio.volume),
             muted      : audio.muted,
         };
 
         this.mute       = this.mute.bind(this);
-        this.showVolume = this.showVolume.bind(this);
-        this.hideVolume = this.hideVolume.bind(this);
         this.setVolume  = this.setVolume.bind(this);
     }
 
@@ -47,20 +43,13 @@ export default class VolumeControl extends Component {
     }
 
     render() {
-        const volumeClasses = classnames('volume-control', {
-            visible: this.state.showVolume,
-        });
-
         return (
             <button type='button'
                 className='player-control volume'
                 title='Volume'
-                onMouseEnter={ this.showVolume }
-                onMouseLeave={ this.hideVolume }
                 onClick={ this.mute }
             >
-                <Icon name={ this.getVolumeIcon(unsmoothifyVolume(this.state.volume), this.state.muted) } />
-                <div className={ volumeClasses }>
+                <div className='volume-control'>
                     <input type={ 'range' }
                         min={ 0 }
                         max={ 1 }
@@ -70,6 +59,7 @@ export default class VolumeControl extends Component {
                         onChange={ this.setVolume }
                     />
                 </div>
+                <Icon name={ this.getVolumeIcon(unsmoothifyVolume(this.state.volume), this.state.muted) } />
             </button>
         );
     }
@@ -79,14 +69,6 @@ export default class VolumeControl extends Component {
 
         AppActions.player.setVolume(smoothVolume);
         this.setState({ volume: smoothVolume });
-    }
-
-    showVolume() {
-        this.setState({ showVolume: true });
-    }
-
-    hideVolume() {
-        this.setState({ showVolume: false });
     }
 
     mute(e) {
