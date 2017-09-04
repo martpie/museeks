@@ -38,22 +38,22 @@ conf.loadOrCreateSync();
 */
 
 const supportedExtensions = [
-    // MP3 / MP4
-    '.mp3',
-    '.mp4',
-    '.aac',
-    '.m4a',
-    '.3gp',
-    '.wav',
+  // MP3 / MP4
+  '.mp3',
+  '.mp4',
+  '.aac',
+  '.m4a',
+  '.3gp',
+  '.wav',
 
-    // Opus
-    '.ogg',
-    '.ogv',
-    '.ogm',
-    '.opus',
+  // Opus
+  '.ogg',
+  '.ogv',
+  '.ogm',
+  '.opus',
 
-    // Flac
-    '.flac',
+  // Flac
+  '.flac',
 ];
 
 
@@ -68,48 +68,48 @@ linvodb.defaults.store = { db: leveljs }; // Comment out to use LevelDB instead 
 linvodb.dbPath = pathUserData;
 
 const Track = new linvodb('track', {
-    album: String,
-    albumartist: [String],
-    artist: [String],
-    cover: {
-        default: null,
-    },
-    disk: {
-        no: Number,
-        of: Number,
-    },
-    duration: Number,
-    genre: [String],
-    loweredMetas : {
-        artist      : [String],
-        album       : String,
-        albumartist : [String],
-        title       : String,
-        genre       : [String],
-    },
-    path: String,
-    playCount: Number,
-    title: String,
-    track: {
-        no: Number,
-        of: Number,
-    },
-    year: String,
+  album: String,
+  albumartist: [String],
+  artist: [String],
+  cover: {
+    default: null,
+  },
+  disk: {
+    no: Number,
+    of: Number,
+  },
+  duration: Number,
+  genre: [String],
+  loweredMetas : {
+    artist      : [String],
+    album       : String,
+    albumartist : [String],
+    title       : String,
+    genre       : [String],
+  },
+  path: String,
+  playCount: Number,
+  title: String,
+  track: {
+    no: Number,
+    of: Number,
+  },
+  year: String,
 });
 
 Track.ensureIndex({ fieldName: 'path', unique: true });
 
 const Playlist = new linvodb('playlist', {
-    name: String,
-    tracks: {
-        type: [String],
-        default: [],
-    },
+  name: String,
+  tracks: {
+    type: [String],
+    default: [],
+  },
 });
 
 const models = {
-    Track,
-    Playlist,
+  Track,
+  Playlist,
 };
 
 Promise.promisifyAll(models.Track.find().__proto__);
@@ -124,11 +124,11 @@ Promise.promisifyAll(models.Playlist);
 */
 
 export default {
-    supportedExtensions, // supported audio formats
-    pathSrc, // path of the app
-    browserWindows, // Object containing all the windows
-    models, // database models
-    version       : app.getVersion(), // Museeks version
-    config        : conf, // teeny-conf
-    initialConfig : conf.getAll(), // the config at the start of the application
+  supportedExtensions, // supported audio formats
+  pathSrc, // path of the app
+  browserWindows, // Object containing all the windows
+  models, // database models
+  version       : app.getVersion(), // Museeks version
+  config        : conf, // teeny-conf
+  initialConfig : conf.getAll(), // the config at the start of the application
 };

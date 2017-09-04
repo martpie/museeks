@@ -12,26 +12,26 @@ import Toast from './Toast.react';
 
 export default class Toasts extends Component {
     static propTypes = {
-        toasts: PropTypes.array,
+      toasts: PropTypes.array,
     }
 
     constructor(props) {
-        super(props);
+      super(props);
     }
 
     render() {
-        return (
-            <div className='toasts'>
-                { this.props.toasts.map((toast, index) => {
-                    return (
-                        <Toast
-                            type={ toast.type }
-                            content={ toast.content }
-                            key={ index }
-                        />
-                    );
-                }) }
-            </div>
-        );
+      return (
+        <div className='toasts'>
+          { this.props.toasts.map((toast, index) => {
+            return (
+              <Toast
+                type={ toast.type }
+                content={ toast.content }
+                key={ index }
+              />
+            );
+          }) }
+        </div>
+      );
     }
 }

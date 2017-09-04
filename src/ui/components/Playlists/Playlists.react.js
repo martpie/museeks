@@ -15,55 +15,55 @@ import AppActions from '../../actions/AppActions';
 
 export default class Playlists extends Component {
     static propTypes = {
-        params: PropTypes.object,
-        children: PropTypes.object,
-        playlists: PropTypes.array,
-        playerStatus: PropTypes.string,
+      params: PropTypes.object,
+      children: PropTypes.object,
+      playlists: PropTypes.array,
+      playerStatus: PropTypes.string,
     }
 
     constructor(props) {
-        super(props);
+      super(props);
     }
 
     createPlaylist() {
-        AppActions.playlists.create('New playlist', true);
+      AppActions.playlists.create('New playlist', true);
     }
 
     render() {
-        let playlistContent;
+      let playlistContent;
 
-        if(this.props.playlists === null) {
-            playlistContent = (
-                <FullViewMessage>
-                    <p>Loading playlists</p>
-                </FullViewMessage>
-            );
-        } else if(this.props.playlists.length === 0) {
-            playlistContent = (
-                <FullViewMessage>
-                    <p>You haven't created any playlist yet</p>
-                    <p className='sub-message'>
-                        <a onClick={ this.createPlaylist }>create one now</a>
-                    </p>
-                </FullViewMessage>
-            );
-        } else if(!this.props.params.playlistId) {
-            playlistContent = (
-                <FullViewMessage>
-                    <p>Select a playlist in the menu on the left</p>
-                </FullViewMessage>
-            );
-        } else {
-            playlistContent = React.cloneElement(this.props.children, { ...this.props });
-        }
-
-        return (
-            <div className='view view-playlists'>
-                <PlaylistsNav playlists={ this.props.playlists } />
-                <div className='playlist'>
-                    { playlistContent }
-                </div>
-            </div>
+      if(this.props.playlists === null) {
+        playlistContent = (
+          <FullViewMessage>
+            <p>Loading playlists</p>
+          </FullViewMessage>
         );
+      } else if(this.props.playlists.length === 0) {
+        playlistContent = (
+          <FullViewMessage>
+            <p>You haven't created any playlist yet</p>
+            <p className='sub-message'>
+              <a onClick={ this.createPlaylist }>create one now</a>
+            </p>
+          </FullViewMessage>
+        );
+      } else if(!this.props.params.playlistId) {
+        playlistContent = (
+          <FullViewMessage>
+            <p>Select a playlist in the menu on the left</p>
+          </FullViewMessage>
+        );
+      } else {
+        playlistContent = React.cloneElement(this.props.children, { ...this.props });
+      }
+
+      return (
+        <div className='view view-playlists'>
+          <PlaylistsNav playlists={ this.props.playlists } />
+          <div className='playlist'>
+            { playlistContent }
+          </div>
+        </div>
+      );
     }
 }

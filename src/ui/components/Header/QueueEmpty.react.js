@@ -8,17 +8,17 @@ import React, { PureComponent } from 'react';
 */
 
 export default class QueueEmpty extends PureComponent {
-    constructor(props) {
-        super(props);
-    }
+  constructor(props) {
+    super(props);
+  }
 
-    render() {
-        return (
-            <div className='queue text-left'>
-                <div className='empty-queue text-center'>
+  render() {
+    return (
+      <div className='queue text-left'>
+        <div className='empty-queue text-center'>
                     queue is empty
-                </div>
-            </div>
-        );
-    }
+        </div>
+      </div>
+    );
+  }
 }

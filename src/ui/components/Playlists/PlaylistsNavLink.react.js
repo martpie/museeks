@@ -11,31 +11,31 @@ import { Link } from 'react-router';
 
 export default class PlaylistsNavLink extends Component {
     static propTypes = {
-        children: PropTypes.string,
-        playlistId: PropTypes.string,
-        onContextMenu: PropTypes.func,
+      children: PropTypes.string,
+      playlistId: PropTypes.string,
+      onContextMenu: PropTypes.func,
     }
 
     constructor(props) {
-        super(props);
+      super(props);
 
-        this.onContextMenu = this.onContextMenu.bind(this);
+      this.onContextMenu = this.onContextMenu.bind(this);
     }
 
     render() {
-        return (
-            <Link
-                className='playlist-link'
-                activeClassName='active'
-                to={ `/playlists/${this.props.playlistId}` }
-                onContextMenu={ this.onContextMenu }
-            >
-                { this.props.children }
-            </Link>
-        );
+      return (
+        <Link
+          className='playlist-link'
+          activeClassName='active'
+          to={ `/playlists/${this.props.playlistId}` }
+          onContextMenu={ this.onContextMenu }
+        >
+          { this.props.children }
+        </Link>
+      );
     }
 
     onContextMenu() {
-        this.props.onContextMenu(this.props.playlistId);
+      this.props.onContextMenu(this.props.playlistId);
     }
 }

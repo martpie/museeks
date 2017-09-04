@@ -32,8 +32,8 @@ import './styles/main.scss';
 */
 
 ReactDOM.render(
-    <Provider store={ store }>
-        <Router routes={ routes } history={ hashHistory } />
-    </Provider>,
-    document.getElementById('wrap')
+  <Provider store={ store }>
+    <Router routes={ routes } history={ hashHistory } />
+  </Provider>,
+  document.getElementById('wrap')
 );

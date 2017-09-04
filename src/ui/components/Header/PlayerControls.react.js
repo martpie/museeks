@@ -13,27 +13,27 @@ import AppActions from '../../actions/AppActions';
 
 export default class PlayerControls extends PureComponent {
     static propTypes = {
-        playerStatus: PropTypes.string,
+      playerStatus: PropTypes.string,
     }
 
     constructor(props) {
-        super(props);
+      super(props);
     }
 
     render() {
-        return (
-            <div className='player-controls'>
-                <button type='button' className='player-control previous' title='Previous' onClick={ AppActions.player.previous }>
-                    <Icon name='backward' />
-                </button>
-                <button className='player-control play' title={ this.props.playerStatus === 'play' ? 'Pause' : 'Play' } onClick={ AppActions.player.playToggle }>
-                    <Icon name={ this.props.playerStatus === 'play' ? 'pause' : 'play' } fixedWidth />
-                </button>
-                <button type='button' className='player-control forward' title='Next' onClick={ AppActions.player.next }>
-                    <Icon name='forward' />
-                </button>
-                <VolumeControl />
-            </div>
-        );
+      return (
+        <div className='player-controls'>
+          <button type='button' className='player-control previous' title='Previous' onClick={ AppActions.player.previous }>
+            <Icon name='backward' />
+          </button>
+          <button className='player-control play' title={ this.props.playerStatus === 'play' ? 'Pause' : 'Play' } onClick={ AppActions.player.playToggle }>
+            <Icon name={ this.props.playerStatus === 'play' ? 'pause' : 'play' } fixedWidth />
+          </button>
+          <button type='button' className='player-control forward' title='Next' onClick={ AppActions.player.next }>
+            <Icon name='forward' />
+          </button>
+          <VolumeControl />
+        </div>
+      );
     }
 }

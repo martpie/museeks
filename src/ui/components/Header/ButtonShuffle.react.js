@@ -14,30 +14,30 @@ import AppActions from '../../actions/AppActions';
 
 export default class ButtonShuffle extends Component {
     static propTypes = {
-        shuffle: PropTypes.bool,
+      shuffle: PropTypes.bool,
     }
 
     constructor(props) {
-        super(props);
+      super(props);
 
-        this.toggleShuffle = this.toggleShuffle.bind(this);
+      this.toggleShuffle = this.toggleShuffle.bind(this);
     }
 
     render() {
-        const svg = require('../../../images/icons/player-shuffle.svg');
+      const svg = require('../../../images/icons/player-shuffle.svg');
 
-        const buttonClasses = classnames('button', {
-            active: this.props.shuffle,
-        });
+      const buttonClasses = classnames('button', {
+        active: this.props.shuffle,
+      });
 
-        return (
-            <button type='button' className={ buttonClasses } onClick={ this.toggleShuffle }>
-                <InlineSVG src={ svg } className='icon shuffle' />
-            </button>
-        );
+      return (
+        <button type='button' className={ buttonClasses } onClick={ this.toggleShuffle }>
+          <InlineSVG src={ svg } className='icon shuffle' />
+        </button>
+      );
     }
 
     toggleShuffle() {
-        AppActions.player.shuffle(!this.props.shuffle);
+      AppActions.player.shuffle(!this.props.shuffle);
     }
 }

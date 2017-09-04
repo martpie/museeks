@@ -12,48 +12,48 @@ import utils  from '../../utils/utils';
 
 export default class TrackCover extends PureComponent {
     static propTypes = {
-        path: PropTypes.string,
+      path: PropTypes.string,
     }
 
     constructor(props) {
-        super(props);
-        this.state = {
-            coverPath: null,
-        };
+      super(props);
+      this.state = {
+        coverPath: null,
+      };
 
-        this.fetchInitialCover = this.fetchInitialCover.bind(this);
+      this.fetchInitialCover = this.fetchInitialCover.bind(this);
     }
 
     render() {
-        if(this.state.coverPath) {
-            const coverPath = encodeURI(this.state.coverPath)
-                .replace(/'/g, '\\\'')
-                .replace(/"/g, '\\"');
-            const styles = { backgroundImage: `url('${coverPath}')` };
+      if(this.state.coverPath) {
+        const coverPath = encodeURI(this.state.coverPath)
+          .replace(/'/g, '\\\'')
+          .replace(/"/g, '\\"');
+        const styles = { backgroundImage: `url('${coverPath}')` };
 
-            return <div className='cover' style={ styles } />;
-        }
+        return <div className='cover' style={ styles } />;
+      }
 
-        return(
-            <div className='cover empty'>
-                <div className='note'>♪</div>
-            </div>
-        );
+      return(
+        <div className='cover empty'>
+          <div className='note'>♪</div>
+        </div>
+      );
     }
 
     componentDidMount() {
-        this.fetchInitialCover();
+      this.fetchInitialCover();
     }
 
     async componentWillUpdate(nextProps) {
-        if(nextProps.path !== this.props.path) {
-            const coverPath = await utils.fetchCover(nextProps.path);
-            this.setState({ coverPath });
-        }
+      if(nextProps.path !== this.props.path) {
+        const coverPath = await utils.fetchCover(nextProps.path);
+        this.setState({ coverPath });
+      }
     }
 
     async fetchInitialCover() {
-        const coverPath = await utils.fetchCover(this.props.path);
-        this.setState({ coverPath });
+      const coverPath = await utils.fetchCover(this.props.path);
+      this.setState({ coverPath });
     }
 }

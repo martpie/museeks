@@ -15,62 +15,62 @@ import AppActions from '../../actions/AppActions';
 
 export default class TrackRow extends Component {
     static propTypes = {
-        state: PropTypes.string.isRequired,
+      state: PropTypes.string.isRequired,
     }
 
     constructor(props) {
-        super(props);
-        this.state = {
-            hovered: false,
-        };
+      super(props);
+      this.state = {
+        hovered: false,
+      };
 
-        this.onMouseEnter = this.onMouseEnter.bind(this);
-        this.onMouseLeave = this.onMouseLeave.bind(this);
+      this.onMouseEnter = this.onMouseEnter.bind(this);
+      this.onMouseLeave = this.onMouseLeave.bind(this);
     }
 
     render() {
-        const classNames = classnames('playing-indicator', this.props.state, {
-            'hovered': this.state.hovered,
-        });
+      const classNames = classnames('playing-indicator', this.props.state, {
+        'hovered': this.state.hovered,
+      });
 
-        const icon = this.getIcon(this.props.state, this.state.hovered);
+      const icon = this.getIcon(this.props.state, this.state.hovered);
 
-        return (
-            <div className={ classNames }
-                onClick={ AppActions.player.playToggle }
-                onMouseEnter={ this.onMouseEnter }
-                onMouseLeave= { this.onMouseLeave }
-            >
-                <div className="playing-indicator">
-                    { icon }
-                </div>
-            </div>
-        );
+      return (
+        <div className={ classNames }
+          onClick={ AppActions.player.playToggle }
+          onMouseEnter={ this.onMouseEnter }
+          onMouseLeave= { this.onMouseLeave }
+        >
+          <div className="playing-indicator">
+            { icon }
+          </div>
+        </div>
+      );
     }
 
     getIcon(state, hovered) {
-        if(state === 'play') {
-            if(hovered) {
-                return <Icon name='pause' fixedWidth />;
-            }
-
-            return (
-                <div className="animation">
-                    <div className="bar bar-first" />
-                    <div className="bar bar-second" />
-                    <div className="bar bar-third" />
-                </div>
-            );
+      if(state === 'play') {
+        if(hovered) {
+          return <Icon name='pause' fixedWidth />;
         }
 
-        return <Icon name='play' fixedWidth />;
+        return (
+          <div className="animation">
+            <div className="bar bar-first" />
+            <div className="bar bar-second" />
+            <div className="bar bar-third" />
+          </div>
+        );
+      }
+
+      return <Icon name='play' fixedWidth />;
     }
 
     onMouseEnter() {
-        this.setState({ hovered: true });
+      this.setState({ hovered: true });
     }
 
     onMouseLeave() {
-        this.setState({ hovered: false });
+      this.setState({ hovered: false });
     }
 }
