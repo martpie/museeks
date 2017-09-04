@@ -20,9 +20,9 @@ import store from './store.js';
 |--------------------------------------------------------------------------
 */
 
-require('bootstrap-css-only/css/bootstrap.min.css');
-require('font-awesome/css/font-awesome.css');
-require('../styles/main.scss');
+import 'bootstrap-css-only/css/bootstrap.min.css';
+import 'font-awesome/css/font-awesome.css';
+import './styles/main.scss';
 
 
 /*

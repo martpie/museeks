@@ -23,7 +23,7 @@ if (commandline.env === 'production') {
 
 module.exports = {
     entry: {
-        main: ['./src/js/main.js'],
+        main: ['./src/ui/main.js'],
     },
     target: 'electron',
     output: {
