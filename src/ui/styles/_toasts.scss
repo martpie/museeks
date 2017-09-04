@@ -5,21 +5,21 @@
 */
 
 .toasts {
-    position: fixed;
-    bottom: 40px;
-    right: 12px;
-    width: 350px;
-    z-index: 1000;
+  position: fixed;
+  bottom: 40px;
+  right: 12px;
+  width: 350px;
+  z-index: 1000;
 
-    .alert {
-        box-shadow: 0 5px 3px -5px rgba(0, 0, 0, .5);
+  .alert {
+    box-shadow: 0 5px 3px -5px rgba(0, 0, 0, .5);
 
-        &:not(:last-child) {
-            margin-bottom: 5px;
-        }
-
-        &:last-child {
-            margin-bottom: 0;
-        }
+    &:not(:last-child) {
+      margin-bottom: 5px;
     }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
 }

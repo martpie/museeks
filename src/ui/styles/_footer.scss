@@ -5,55 +5,55 @@
 */
 
 footer {
-    flex: 0 0 auto;
-    border-top: 1px solid #AAA;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    background-color: rgb(244, 244, 244);
-    padding: 0;
-    width: 100%;
+  flex: 0 0 auto;
+  border-top: 1px solid #AAA;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  background-color: rgb(244, 244, 244);
+  padding: 0;
+  width: 100%;
 
-    .view-switcher {
+  .view-switcher {
 
-        .btn {
-            background-color: transparent;
-            border-top: 0;
-            border-bottom: 0;
+    .btn {
+      background-color: transparent;
+      border-top: 0;
+      border-bottom: 0;
 
-            &.btn-default:hover {
-                background-color: transparent;
-            }
+      &.btn-default:hover {
+        background-color: transparent;
+      }
 
-            &.btn-default.active,
-            &.btn-default:active {
-                box-shadow: none;
-                -webkit-box-shadow: none;
-                background-color: #e6e6e6;
-            }
+      &.btn-default.active,
+      &.btn-default:active {
+        box-shadow: none;
+        -webkit-box-shadow: none;
+        background-color: #e6e6e6;
+      }
 
-            &.btn-default.active {
-                color: $main-color;
-            }
-        }
+      &.btn-default.active {
+        color: $main-color;
+      }
     }
+  }
 
 
-    .status {
-        font-size: 12px;
-        padding-top: 7px;
-        padding-bottom: 7px;
-        color: #888;
+  .status {
+    font-size: 12px;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    color: #888;
 
-        .progress {
-            display: inline-block;
-            width: 100%;
-            vertical-align: middle;
-            height: 5px;
-            margin-bottom: 0;
+    .progress {
+      display: inline-block;
+      width: 100%;
+      vertical-align: middle;
+      height: 5px;
+      margin-bottom: 0;
 
-            .progress-bar {
-                background-color: $main-color;
-            }
-        }
+      .progress-bar {
+        background-color: $main-color;
+      }
     }
+  }
 }

@@ -6,62 +6,62 @@
 
 .view-settings {
 
-    .settings-switcher .nav.nav-pills {
-        margin: 10px 15px;
+  .settings-switcher .nav.nav-pills {
+    margin: 10px 15px;
+  }
+
+  .tab-content {
+    border-top: 1px solid #d2d2d2;
+    padding: 10px 15px;
+
+    .setting-title {
+      display: inline-block;
+      font-weight: bold;
+      margin-top: 4px;
     }
 
-    .tab-content {
-        border-top: 1px solid #d2d2d2;
-        padding: 10px 15px;
+    .setting-description {
+      font-size: .85rem;
+      margin-top: 3px;
+    }
 
-        .setting-title {
+    .setting-section {
+
+      .checkbox {
+
+        label {
+          padding-left: 28px; // Bootstrap default is 20
+
+          input[type="checkbox"] {
+            -webkit-appearance: none; // reset everything
+            width: 18px;
+            height: 18px;
+            border-radius: 3px;
             display: inline-block;
-            font-weight: bold;
-            margin-top: 4px;
-        }
+            background-color: $generic-lightgrey;
+            border: 1px solid darken($generic-lightgrey, 20%);
+            outline: none;
+            margin-left: -28px;
 
-        .setting-description {
-            font-size: .85rem;
-            margin-top: 3px;
-        }
+            &:checked {
+              background-color: $main-color;
+              border: darken($main-color, 20%);
 
-        .setting-section {
-
-            .checkbox {
-
-                label {
-                    padding-left: 28px; // Bootstrap default is 20
-
-                    input[type="checkbox"] {
-                        -webkit-appearance: none; // reset everything
-                        width: 18px;
-                        height: 18px;
-                        border-radius: 3px;
-                        display: inline-block;
-                        background-color: $generic-lightgrey;
-                        border: 1px solid darken($generic-lightgrey, 20%);
-                        outline: none;
-                        margin-left: -28px;
-
-                        &:checked {
-                            background-color: $main-color;
-                            border: darken($main-color, 20%);
-
-                            &:after {
-                                content: '\f00c';
-                                font-family: FontAwesome;
-                                font-size: 14px;
-                                color: $generic-white;
-                                position: absolute;
-                                top: 2px;
-                                left: 2px;
-                            }
-                        }
-                    }
-                }
+              &:after {
+                content: '\f00c';
+                font-family: FontAwesome;
+                font-size: 14px;
+                color: $generic-white;
+                position: absolute;
+                top: 2px;
+                left: 2px;
+              }
             }
+          }
         }
+      }
     }
+  }
 }
 
 
@@ -74,16 +74,16 @@
 
 .view-settings .setting-about {
 
-    .heart {
-        color: #c70000;
-    }
+  .heart {
+    color: #c70000;
+  }
 
-    button.update-checker {
-        margin-left: 10px;
-    }
+  button.update-checker {
+    margin-left: 10px;
+  }
 
-    .logo-museeks {
-        display: block;
-        width: 70px;
-    }
+  .logo-museeks {
+    display: block;
+    width: 70px;
+  }
 }
