@@ -94,6 +94,11 @@ app.on('ready', () => {
     mainWindow.show();
   });
 
+  // Prevent webContents from opening new windows (e.g ctrl-click on link)
+  mainWindow.webContents.on('new-window', (e) => {
+    e.preventDefault();
+  });
+
   // IPC events
   const ipcManager = new IpcManager(mainWindow);
   ipcManager.bindEvents();
