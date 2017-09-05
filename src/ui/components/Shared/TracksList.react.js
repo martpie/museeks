@@ -51,7 +51,7 @@ export default class TracksList extends Component {
       // TODO (y.solovyov | KeitIG): TrackListHeader component?
       return (
         <div className='tracks-list-container'> {/* there used to be a tabIndex={ 0 }, I don't remember why */}
-          <KeyBinding onKey={ this.onKey } preventInputConflict />
+          <KeyBinding onKey={this.onKey} preventInputConflict />
           <div className='tracks-list-header'>
             <div className='track-cell-header cell-track-playing' />
             <div className='track-cell-header cell-track'>Track</div>
@@ -62,9 +62,9 @@ export default class TracksList extends Component {
           </div>
           <CustomScrollbar
             className='tracks-list-body'
-            onScroll={ this.scrollTracksList }
+            onScroll={this.scrollTracksList}
           >
-            <div className='tracks-list-tiles' style={ { height : tracks.length * this.rowHeight } }>
+            <div className='tracks-list-tiles' style={{ height : tracks.length * this.rowHeight }}>
               { this.getTrackTiles() }
             </div>
           </CustomScrollbar>
@@ -202,17 +202,17 @@ export default class TracksList extends Component {
           let playingIndicator = undefined;
 
           if(trackPlayingId === track._id) {
-            playingIndicator = <PlayingIndicator state={ this.pausePlayState() } />;
+            playingIndicator = <PlayingIndicator state={this.pausePlayState()} />;
           }
 
           return(
             <TrackRow
-              selected={ selected.includes(track._id) }
-              trackId={ track._id }
-              key={ index }
-              index={ trackRowIndex }
-              onMouseDown={ self.selectTrack }
-              onContextMenu={ self.showContextMenu }
+              selected={selected.includes(track._id)}
+              trackId={track._id}
+              key={index}
+              index={trackRowIndex}
+              onMouseDown={self.selectTrack}
+              onContextMenu={self.showContextMenu}
             >
               <div className='cell cell-track-playing text-center'>
                 { playingIndicator }
@@ -243,7 +243,7 @@ export default class TracksList extends Component {
         };
 
         return (
-          <div className='tracks-list-tile' key={ indexChunk } style={ tracksListTileStyles }>
+          <div className='tracks-list-tile' key={indexChunk} style={tracksListTileStyles}>
             { list }
           </div>
         );

@@ -27,21 +27,21 @@ export default class Settings extends Component {
       return (
         <div className='view view-settings'>
           <div className='settings-switcher'>
-            <Nav bsStyle="pills" activeKey={ 1 } onSelect={ undefined }>
+            <Nav bsStyle="pills" activeKey={1} onSelect={undefined}>
               <LinkContainer to='/settings/library'>
-                <NavItem eventKey={ 1 }>Library</NavItem>
+                <NavItem eventKey={1}>Library</NavItem>
               </LinkContainer>
               <LinkContainer to='/settings/audio'>
-                <NavItem eventKey={ 2 }>Audio</NavItem>
+                <NavItem eventKey={2}>Audio</NavItem>
               </LinkContainer>
               <LinkContainer to='/settings/interface'>
-                <NavItem eventKey={ 3 }>Interface</NavItem>
+                <NavItem eventKey={3}>Interface</NavItem>
               </LinkContainer>
               <LinkContainer to='/settings/advanced'>
-                <NavItem eventKey={ 4 }>Advanced</NavItem>
+                <NavItem eventKey={4}>Advanced</NavItem>
               </LinkContainer>
               <LinkContainer to='/settings/about'>
-                <NavItem eventKey={ 5 }>About</NavItem>
+                <NavItem eventKey={5}>About</NavItem>
               </LinkContainer>
             </Nav>
             <div className="tab-content">

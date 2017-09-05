@@ -38,10 +38,10 @@ export default class TrackRow extends Component {
 
       return (
         <div
-          className={ trackClasses }
-          onDoubleClick={ this.start }
-          onMouseDown={ this.onMouseDown }
-          onContextMenu={ this.onContextMenu }
+          className={trackClasses}
+          onDoubleClick={this.start}
+          onMouseDown={this.onMouseDown}
+          onContextMenu={this.onContextMenu}
         >
           { this.props.children }
         </div>

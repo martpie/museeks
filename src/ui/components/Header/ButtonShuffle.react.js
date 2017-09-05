@@ -31,8 +31,8 @@ export default class ButtonShuffle extends Component {
       });
 
       return (
-        <button type='button' className={ buttonClasses } onClick={ this.toggleShuffle }>
-          <InlineSVG src={ svg } className='icon shuffle' />
+        <button type='button' className={buttonClasses} onClick={this.toggleShuffle}>
+          <InlineSVG src={svg} className='icon shuffle' />
         </button>
       );
     }

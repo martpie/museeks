@@ -29,8 +29,8 @@ export default class SettingsAdvanced extends Component {
           <CheckboxSetting
             title='Dev mode'
             description='Enable dev mode'
-            defaultValue={ config.devMode }
-            onClick={ AppActions.settings.toggleDevMode }
+            defaultValue={config.devMode}
+            onClick={AppActions.settings.toggleDevMode}
           />
         </div>
       );

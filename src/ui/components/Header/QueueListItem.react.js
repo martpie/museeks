@@ -46,17 +46,17 @@ export default class QueueListItem extends PureComponent {
       const track = this.props.track;
 
       return (
-        <div key={ index }
-          className={ queueContentClasses }
+        <div key={index}
+          className={queueContentClasses}
           draggable='true'
-          onDragStart={ this.onDragStart }
-          onDragOver={ this.onDragOver }
-          onDragEnd={ this.props.onDragEnd }
+          onDragStart={this.onDragStart}
+          onDragOver={this.onDragOver}
+          onDragEnd={this.props.onDragEnd}
         >
-          <Button bsSize={ 'xsmall' } bsStyle={ 'link' } className='remove' onClick={ this.remove }>
+          <Button bsSize={'xsmall'} bsStyle={'link'} className='remove' onClick={this.remove}>
                     &times;
           </Button>
-          <div className='track-infos' onDoubleClick={ this.play } >
+          <div className='track-infos' onDoubleClick={this.play} >
             <div className='title'>
               { track.title }
             </div>

@@ -24,7 +24,7 @@ export default class ExternalLink extends Component {
 
     render() {
       return (
-        <a href onClick={ this.openLink }>
+        <a href onClick={this.openLink}>
           { this.props.children }
         </a>
       );

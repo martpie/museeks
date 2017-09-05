@@ -37,12 +37,12 @@ export default class TrackRow extends Component {
 
       return (
         <div
-          className={ classes }
-          onDragEnter={ this.onDragEnter }
-          onDragOver={ this.onDragOver }
-          onDragLeave={ this.onDragLeave }
-          onDrop={ this.onDrop }
-          onClick={ this.props.onClick }
+          className={classes}
+          onDragEnter={this.onDragEnter}
+          onDragOver={this.onDragOver}
+          onDragLeave={this.onDragLeave}
+          onDrop={this.onDrop}
+          onClick={this.props.onClick}
         >
           <div className='title'>{ this.props.title }</div>
           <div className='subtitle'>{ this.props.subtitle }</div>

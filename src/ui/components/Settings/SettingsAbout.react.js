@@ -28,13 +28,13 @@ export default class SettingsAbout extends Component {
       <div className='setting setting-about'>
         <div className='setting-section'>
           <h4>About Museeks</h4>
-          <img src={ museeksLogo } className='logo-museeks' alt='Logo' title='Museeks logo' />
+          <img src={museeksLogo} className='logo-museeks' alt='Logo' title='Museeks logo' />
           <p>
                         Museeks { app.version }{ ' - ' }
             <ExternalLink href='http://museeks.io'>museeks.io</ExternalLink>
             { ' - ' }
-            <ExternalLink href={ `https://github.com/KeitIG/Museeks/releases/tag/${app.version}` }>release notes</ExternalLink>
-            <Button bsSize='small' className='update-checker' onClick={ AppActions.settings.checkForUpdate }>Check for update</Button>
+            <ExternalLink href={`https://github.com/KeitIG/Museeks/releases/tag/${app.version}`}>release notes</ExternalLink>
+            <Button bsSize='small' className='update-checker' onClick={AppActions.settings.checkForUpdate}>Check for update</Button>
           </p>
         </div>
         <div className='setting-section'>

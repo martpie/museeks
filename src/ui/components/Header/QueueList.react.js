@@ -56,31 +56,31 @@ export default class QueueList extends Component {
       });
 
       return (
-        <div className={ queueClasses }>
+        <div className={queueClasses}>
           <div className='queue-header'>
             <div className='queue-infos'>
               { utils.getStatus(incomingQueue) }
             </div>
             <ButtonGroup>
-              <Button bsSize={ 'xsmall' } bsStyle={ 'default' } className='empty-button' onClick={ AppActions.queue.clear }>
+              <Button bsSize={'xsmall'} bsStyle={'default'} className='empty-button' onClick={AppActions.queue.clear}>
                             clear queue
               </Button>
             </ButtonGroup>
           </div>
-          <div className={ queueBodyClasses }>
+          <div className={queueBodyClasses}>
             { shownQueue.map((track, index) => {
               return (
                 <QueueListItem
-                  key={ index }
-                  index={ index }
-                  track={ track }
-                  queueCursor={ this.props.queueCursor }
-                  dragged={ index === self.state.draggedTrackIndex }
-                  draggedOver={ index === self.state.draggedOverTrackIndex }
-                  dragPosition={ index === self.state.draggedOverTrackIndex && self.state.dragPosition || null }
-                  onDragStart={ self.dragStart }
-                  onDragOver={ this.dragOver }
-                  onDragEnd={ self.dragEnd }
+                  key={index}
+                  index={index}
+                  track={track}
+                  queueCursor={this.props.queueCursor}
+                  dragged={index === self.state.draggedTrackIndex}
+                  draggedOver={index === self.state.draggedOverTrackIndex}
+                  dragPosition={index === self.state.draggedOverTrackIndex && self.state.dragPosition || null}
+                  onDragStart={self.dragStart}
+                  onDragOver={this.dragOver}
+                  onDragEnd={self.dragEnd}
                 />
               );
             }) }

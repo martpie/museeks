@@ -32,8 +32,8 @@ export default class SettingsAudio extends Component {
               </label>
               <input type='number'
                 className='form-control'
-                defaultValue={ config.audioPlaybackRate }
-                onChange={ this.setPlaybackRate }
+                defaultValue={config.audioPlaybackRate}
+                onChange={this.setPlaybackRate}
                 min='0.5'
                 max='5'
                 step='0.1'

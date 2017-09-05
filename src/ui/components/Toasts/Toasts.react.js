@@ -25,9 +25,9 @@ export default class Toasts extends Component {
           { this.props.toasts.map((toast, index) => {
             return (
               <Toast
-                type={ toast.type }
-                content={ toast.content }
-                key={ index }
+                type={toast.type}
+                content={toast.content}
+                key={index}
               />
             );
           }) }

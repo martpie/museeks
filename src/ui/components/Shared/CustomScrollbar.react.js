@@ -15,27 +15,27 @@ class CustomScrollbar extends React.Component {
     }
 
     getRenderView(props) {
-      return <div { ...props } className='tracks-list-render-view' />;
+      return <div {...props} className='tracks-list-render-view' />;
     }
 
     getTrackVertical(props) {
-      return <div { ...props } className='track-vertical' />;
+      return <div {...props} className='track-vertical' />;
     }
 
     getThumbVertical(props) {
-      return <div { ...props } className='thumb-vertical' />;
+      return <div {...props} className='thumb-vertical' />;
     }
 
     render() {
       return (
         <Scrollbars
-          className={ this.props.className }
-          onScroll={ this.props.onScroll }
-          renderView={ this.getRenderView }
-          renderTrackVertical={ this.getTrackVertical }
-          renderThumbVertical={ this.getThumbVertical }
+          className={this.props.className}
+          onScroll={this.props.onScroll}
+          renderView={this.getRenderView}
+          renderTrackVertical={this.getTrackVertical}
+          renderThumbVertical={this.getThumbVertical}
           autoHide
-          autoHideTimeout={ 1000 }
+          autoHideTimeout={1000}
         >
           {this.props.children}
         </Scrollbars>

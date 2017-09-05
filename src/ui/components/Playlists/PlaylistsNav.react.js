@@ -45,17 +45,17 @@ export default class PlaylistsNav extends Component {
             <input
               type='text'
               autoFocus
-              defaultValue={ elem.name }
-              onKeyDown={ self.keyDown }
-              onBlur={ self.blur }
-              onFocus={ self.focus }
+              defaultValue={elem.name}
+              onKeyDown={self.keyDown}
+              onBlur={self.blur}
+              onFocus={self.focus}
             />
           );
         } else {
           navItemContent = (
             <PlaylistsNavLink
-              playlistId={ elem._id }
-              onContextMenu={ self.showContextMenu }
+              playlistId={elem._id}
+              onContextMenu={self.showContextMenu}
             >
               { elem.name }
             </PlaylistsNavLink>
@@ -63,7 +63,7 @@ export default class PlaylistsNav extends Component {
         }
 
         return (
-          <div className={ 'playlist-nav-item' } key={ index }>
+          <div className={'playlist-nav-item'} key={index}>
             { navItemContent }
           </div>
         );
@@ -76,7 +76,7 @@ export default class PlaylistsNav extends Component {
           </div>
           <div className='playlists-nav-footer'>
             <ButtonGroup className='playlists-management'>
-              <Button bsStyle='link' bsSize='xs' onClick={ this.createPlaylist }>
+              <Button bsStyle='link' bsSize='xs' onClick={this.createPlaylist}>
                 <Icon name='plus' />
               </Button>
             </ButtonGroup>

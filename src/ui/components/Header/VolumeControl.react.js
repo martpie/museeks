@@ -55,19 +55,19 @@ export default class VolumeControl extends Component {
       <button type='button'
         className='player-control volume'
         title='Volume'
-        onMouseEnter={ this.showVolume }
-        onMouseLeave={ this.hideVolume }
-        onClick={ this.mute }
+        onMouseEnter={this.showVolume}
+        onMouseLeave={this.hideVolume}
+        onClick={this.mute}
       >
-        <Icon name={ this.getVolumeIcon(unsmoothifyVolume(this.state.volume), this.state.muted) } />
-        <div className={ volumeClasses }>
-          <input type={ 'range' }
-            min={ 0 }
-            max={ 1 }
-            step={ 0.01 }
-            defaultValue={ this.state.volume }
+        <Icon name={this.getVolumeIcon(unsmoothifyVolume(this.state.volume), this.state.muted)} />
+        <div className={volumeClasses}>
+          <input type={'range'}
+            min={0}
+            max={1}
+            step={0.01}
+            defaultValue={this.state.volume}
             ref='volume'
-            onChange={ this.setVolume }
+            onChange={this.setVolume}
           />
         </div>
       </button>

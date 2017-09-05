@@ -33,16 +33,16 @@ export default class SettingsLibrary extends Component {
             <Dropzone
               title='Add music to library'
               subtitle='Drop files or folders here'
-              onDrop={ this.onDrop }
-              onClick={ this.openFolderSelector }
+              onDrop={this.onDrop}
+              onClick={this.openFolderSelector}
             />
             <ButtonGroup>
               <Button
                 bsSize='small'
-                bsStyle={ 'danger' }
+                bsStyle={'danger'}
                 title='Fully reset the library'
-                disabled={ this.props.library.refreshing }
-                onClick={ this.resetLibrary }
+                disabled={this.props.library.refreshing}
+                onClick={this.resetLibrary}
               >
                             Reset library
               </Button>

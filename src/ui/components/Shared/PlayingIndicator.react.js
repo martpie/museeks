@@ -36,10 +36,10 @@ export default class TrackRow extends Component {
       const icon = this.getIcon(this.props.state, this.state.hovered);
 
       return (
-        <div className={ classNames }
-          onClick={ AppActions.player.playToggle }
-          onMouseEnter={ this.onMouseEnter }
-          onMouseLeave= { this.onMouseLeave }
+        <div className={classNames}
+          onClick={AppActions.player.playToggle}
+          onMouseEnter={this.onMouseEnter}
+          onMouseLeave= {this.onMouseLeave}
         >
           <div className="playing-indicator">
             { icon }

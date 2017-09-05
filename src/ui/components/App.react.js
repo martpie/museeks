@@ -44,16 +44,16 @@ class Museeks extends Component {
       });
 
       return (
-        <div className={ mainClasses }>
-          <KeyBinding onKey={ this.onKey } preventInputConflict />
+        <div className={mainClasses}>
+          <KeyBinding onKey={this.onKey} preventInputConflict />
           <Header
-            app={ this }
-            playerStatus={ store.playerStatus }
-            repeat={ store.repeat }
-            shuffle={ store.shuffle }
-            queue={ store.queue }
-            queueCursor={ store.queueCursor }
-            useNativeFrame={ config.useNativeFrame }
+            app={this}
+            playerStatus={store.playerStatus}
+            repeat={store.repeat}
+            shuffle={store.shuffle}
+            queue={store.queue}
+            queueCursor={store.queueCursor}
+            useNativeFrame={config.useNativeFrame}
           />
           <div className='main-content container-fluid'>
             <Row className='content'>
@@ -75,10 +75,10 @@ class Museeks extends Component {
             </Row>
           </div>
           <Footer
-            tracks={ store.tracks[store.tracksCursor].sub }
-            library={ store.library }
+            tracks={store.tracks[store.tracksCursor].sub}
+            library={store.library}
           />
-          <Toasts toasts={ store.toasts } />
+          <Toasts toasts={store.toasts} />
         </div>
       );
     }

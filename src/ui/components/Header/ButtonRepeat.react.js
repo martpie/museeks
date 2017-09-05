@@ -40,8 +40,8 @@ export default class ButtonRepeat extends Component {
       });
 
       return (
-        <button className={ buttonClasses } onClick={ this.toggleRepeat }>
-          <InlineSVG src={ svg } className={ svgClasses } />
+        <button className={buttonClasses} onClick={this.toggleRepeat}>
+          <InlineSVG src={svg} className={svgClasses} />
         </button>
       );
     }

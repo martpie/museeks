@@ -32,6 +32,6 @@ export default class Queue extends PureComponent {
         return <QueueEmpty />;
       }
 
-      return <QueueList { ...this.props } />;
+      return <QueueList {...this.props} />;
     }
 }

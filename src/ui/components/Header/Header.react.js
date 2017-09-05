@@ -39,15 +39,15 @@ export default class Header extends Component {
           <div className='main-header'>
             <div className='col-main-controls'>
               <PlayerControls
-                playerStatus={ this.props.playerStatus }
+                playerStatus={this.props.playerStatus}
               />
             </div>
             <div className='col-player-infos'>
               <PlayingBar
-                queue={ this.props.queue }
-                queueCursor={ this.props.queueCursor }
-                shuffle={ this.props.shuffle }
-                repeat={ this.props.repeat }
+                queue={this.props.queue}
+                queueCursor={this.props.queueCursor}
+                shuffle={this.props.shuffle}
+                repeat={this.props.repeat}
               />
             </div>
             <div className="col-search-controls">
@@ -55,14 +55,14 @@ export default class Header extends Component {
                 selectOnClick
                 placeholder='search'
                 className='form-control input-sm search'
-                changeTimeout={ 250 }
+                changeTimeout={250}
                 clearButton
                 ref='search'
-                onChange={ this.search }
+                onChange={this.search}
               />
             </div>
           </div>
-          <KeyBinding onKey={ this.onKey } preventInputConflict />
+          <KeyBinding onKey={this.onKey} preventInputConflict />
         </header>
       );
     }

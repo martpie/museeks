@@ -31,7 +31,7 @@ export default class TrackCover extends PureComponent {
           .replace(/"/g, '\\"');
         const styles = { backgroundImage: `url('${coverPath}')` };
 
-        return <div className='cover' style={ styles } />;
+        return <div className='cover' style={styles} />;
       }
 
       return(

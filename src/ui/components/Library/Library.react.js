@@ -72,10 +72,10 @@ export default class Library extends Component {
       return (
         <TracksList
           type='library'
-          playerStatus={ this.props.playerStatus }
-          tracks={ this.props.tracks.sub }
-          trackPlayingId={ this.props.trackPlayingId }
-          playlists={ this.props.playlists }
+          playerStatus={this.props.playerStatus}
+          tracks={this.props.tracks.sub}
+          trackPlayingId={this.props.trackPlayingId}
+          playlists={this.props.playlists}
         />
       );
     }

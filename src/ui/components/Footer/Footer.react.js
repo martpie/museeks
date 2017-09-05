@@ -38,7 +38,7 @@ export default class Footer extends Component {
       if(library.refreshing) {
         const progress = Math.round(library.refresh.processed / library.refresh.total * 100);
 
-        status = <ProgressBar className={ progressBarClasses } now={ progress } />;
+        status = <ProgressBar className={progressBarClasses} now={progress} />;
       }
 
       const navButtons = (
@@ -64,10 +64,10 @@ export default class Footer extends Component {
       return (
         <footer className='container-fluid'>
           <Row>
-            <Col sm={ 3 }>
+            <Col sm={3}>
               { navButtons }
             </Col>
-            <Col sm={ 5 } className='status text-center'>
+            <Col sm={5} className='status text-center'>
               { status }
             </Col>
           </Row>

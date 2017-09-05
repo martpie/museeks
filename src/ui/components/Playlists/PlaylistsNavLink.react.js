@@ -27,8 +27,8 @@ export default class PlaylistsNavLink extends Component {
         <Link
           className='playlist-link'
           activeClassName='active'
-          to={ `/playlists/${this.props.playlistId}` }
-          onContextMenu={ this.onContextMenu }
+          to={`/playlists/${this.props.playlistId}`}
+          onContextMenu={this.onContextMenu}
         >
           { this.props.children }
         </Link>

@@ -23,7 +23,7 @@ export default class Toast extends Component {
       const content = this.props.content;
 
       return (
-        <div className={ `alert alert-${type}` }>
+        <div className={`alert alert-${type}`}>
           { content }
         </div>
       );

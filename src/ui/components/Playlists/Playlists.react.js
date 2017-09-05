@@ -43,7 +43,7 @@ export default class Playlists extends Component {
           <FullViewMessage>
             <p>You haven't created any playlist yet</p>
             <p className='sub-message'>
-              <a onClick={ this.createPlaylist }>create one now</a>
+              <a onClick={this.createPlaylist}>create one now</a>
             </p>
           </FullViewMessage>
         );
@@ -59,7 +59,7 @@ export default class Playlists extends Component {
 
       return (
         <div className='view view-playlists'>
-          <PlaylistsNav playlists={ this.props.playlists } />
+          <PlaylistsNav playlists={this.props.playlists} />
           <div className='playlist'>
             { playlistContent }
           </div>

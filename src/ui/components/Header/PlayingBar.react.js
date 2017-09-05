@@ -72,15 +72,15 @@ export default class PlayingBar extends Component {
       });
 
       return (
-        <div className={ nowPlayingTextClasses } >
+        <div className={nowPlayingTextClasses} >
           <div className='now-playing-cover'>
-            <Cover path={ trackPlaying.path } />
+            <Cover path={trackPlaying.path} />
           </div>
           <div className='now-playing-infos'>
             <div className='now-playing-metas'>
               <div className='player-options'>
-                <ButtonRepeat repeat={ this.props.repeat } />
-                <ButtonShuffle queue={ this.props.queue } shuffle={ this.props.shuffle } />
+                <ButtonRepeat repeat={this.props.repeat} />
+                <ButtonShuffle queue={this.props.queue} shuffle={this.props.shuffle} />
               </div>
               <div className='metas'>
                 <strong className='meta-title'>
@@ -101,14 +101,14 @@ export default class PlayingBar extends Component {
               </span>
             </div>
             <div className='now-playing-bar' ref='playingBar'>
-              <div className={ nowPlayingTooltipClasses } style={ { left: `${this.state.x}%` } }>
+              <div className={nowPlayingTooltipClasses} style={{ left: `${this.state.x}%` }}>
                 { utils.parseDuration(this.state.duration) }
               </div>
               <ProgressBar
-                now={ elapsedPercent }
-                onMouseDown={ this.jumpAudioTo }
-                onMouseMove={ this.showTooltip }
-                onMouseLeave={ this.hideTooltip }
+                now={elapsedPercent}
+                onMouseDown={this.jumpAudioTo}
+                onMouseMove={this.showTooltip}
+                onMouseLeave={this.hideTooltip}
               />
             </div>
           </div>
@@ -119,8 +119,8 @@ export default class PlayingBar extends Component {
               </Dropdown.Toggle>
               <Dropdown.Menu>
                 <Queue
-                  queue={ this.props.queue }
-                  queueCursor={ this.props.queueCursor }
+                  queue={this.props.queue}
+                  queueCursor={this.props.queueCursor}
                 />
               </Dropdown.Menu>
             </Dropdown>
