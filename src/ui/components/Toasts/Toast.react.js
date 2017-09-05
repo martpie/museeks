@@ -9,23 +9,23 @@ import PropTypes from 'prop-types';
 */
 
 export default class Toast extends Component {
-    static propTypes = {
-      type: PropTypes.string,
-      content: PropTypes.string,
-    }
+  static propTypes = {
+    type: PropTypes.string,
+    content: PropTypes.string,
+  }
 
-    constructor(props) {
-      super(props);
-    }
+  constructor(props) {
+    super(props);
+  }
 
-    render() {
-      const type = this.props.type;
-      const content = this.props.content;
+  render() {
+    const type = this.props.type;
+    const content = this.props.content;
 
-      return (
-        <div className={`alert alert-${type}`}>
-          { content }
-        </div>
-      );
-    }
+    return (
+      <div className={`alert alert-${type}`}>
+        { content }
+      </div>
+    );
+  }
 }

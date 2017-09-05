@@ -12,26 +12,26 @@ import QueueList from './QueueList.react';
 */
 
 export default class Queue extends PureComponent {
-    static propTypes = {
-      queue: PropTypes.array,
-      queueCursor: PropTypes.number,
-      visible: PropTypes.bool,
+  static propTypes = {
+    queue: PropTypes.array,
+    queueCursor: PropTypes.number,
+    visible: PropTypes.bool,
+  }
+
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    const queue       = this.props.queue;
+    const queueCursor = this.props.queueCursor;
+
+    const shownQueue = queue.slice(queueCursor + 1, queueCursor + 21);
+
+    if(shownQueue.length === 0) {
+      return <QueueEmpty />;
     }
 
-    constructor(props) {
-      super(props);
-    }
-
-    render() {
-      const queue       = this.props.queue;
-      const queueCursor = this.props.queueCursor;
-
-      const shownQueue = queue.slice(queueCursor + 1, queueCursor + 21);
-
-      if(shownQueue.length === 0) {
-        return <QueueEmpty />;
-      }
-
-      return <QueueList {...this.props} />;
-    }
+    return <QueueList {...this.props} />;
+  }
 }

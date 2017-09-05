@@ -13,50 +13,50 @@ import classnames from 'classnames';
 */
 
 export default class TrackRow extends Component {
-    static propTypes = {
-      children: PropTypes.array,
-      selected: PropTypes.bool,
-      trackId: PropTypes.string,
-      index: PropTypes.number,
-      onMouseDown: PropTypes.func,
-      onContextMenu: PropTypes.func,
-    }
+  static propTypes = {
+    children: PropTypes.array,
+    selected: PropTypes.bool,
+    trackId: PropTypes.string,
+    index: PropTypes.number,
+    onMouseDown: PropTypes.func,
+    onContextMenu: PropTypes.func,
+  }
 
-    constructor(props) {
-      super(props);
-      this.state = {};
+  constructor(props) {
+    super(props);
+    this.state = {};
 
-      this.start = this.start.bind(this);
-      this.onMouseDown   = this.onMouseDown.bind(this);
-      this.onContextMenu = this.onContextMenu.bind(this);
-    }
+    this.start = this.start.bind(this);
+    this.onMouseDown   = this.onMouseDown.bind(this);
+    this.onContextMenu = this.onContextMenu.bind(this);
+  }
 
-    render() {
-      const trackClasses = classnames('track', {
-        selected: this.props.selected,
-      });
+  onMouseDown(e) {
+    this.props.onMouseDown(e, this.props.trackId, this.props.index);
+  }
 
-      return (
-        <div
-          className={trackClasses}
-          onDoubleClick={this.start}
-          onMouseDown={this.onMouseDown}
-          onContextMenu={this.onContextMenu}
-        >
-          { this.props.children }
-        </div>
-      );
-    }
+  onContextMenu(e) {
+    this.props.onContextMenu(e, this.props.index);
+  }
 
-    onMouseDown(e) {
-      this.props.onMouseDown(e, this.props.trackId, this.props.index);
-    }
+  start() {
+    AppActions.player.start(this.props.trackId);
+  }
 
-    onContextMenu(e) {
-      this.props.onContextMenu(e, this.props.index);
-    }
+  render() {
+    const trackClasses = classnames('track', {
+      selected: this.props.selected,
+    });
 
-    start() {
-      AppActions.player.start(this.props.trackId);
-    }
+    return (
+      <div
+        className={trackClasses}
+        onDoubleClick={this.start}
+        onMouseDown={this.onMouseDown}
+        onContextMenu={this.onContextMenu}
+      >
+        { this.props.children }
+      </div>
+    );
+  }
 }

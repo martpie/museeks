@@ -46,6 +46,30 @@ export default class VolumeControl extends Component {
     return muted || volume === 0 ? 'volume-off' : volume > 0.5 ? 'volume-up' : 'volume-down';
   }
 
+  setVolume(e) {
+    const smoothVolume = smoothifyVolume(e.currentTarget.value);
+
+    AppActions.player.setVolume(smoothVolume);
+    this.setState({ volume: smoothVolume });
+  }
+
+  showVolume() {
+    this.setState({ showVolume: true });
+  }
+
+  hideVolume() {
+    this.setState({ showVolume: false });
+  }
+
+  mute(e) {
+    if(e.target.classList.contains('player-control') || e.target.classList.contains('fa')) {
+      const muted = !Player.isMuted();
+
+      AppActions.player.setMuted(muted);
+      this.setState({ muted });
+    }
+  }
+
   render() {
     const volumeClasses = classnames('volume-control', {
       visible: this.state.showVolume,
@@ -72,29 +96,5 @@ export default class VolumeControl extends Component {
         </div>
       </button>
     );
-  }
-
-  setVolume(e) {
-    const smoothVolume = smoothifyVolume(e.currentTarget.value);
-
-    AppActions.player.setVolume(smoothVolume);
-    this.setState({ volume: smoothVolume });
-  }
-
-  showVolume() {
-    this.setState({ showVolume: true });
-  }
-
-  hideVolume() {
-    this.setState({ showVolume: false });
-  }
-
-  mute(e) {
-    if(e.target.classList.contains('player-control') || e.target.classList.contains('fa')) {
-      const muted = !Player.isMuted();
-
-      AppActions.player.setMuted(muted);
-      this.setState({ muted });
-    }
   }
 }

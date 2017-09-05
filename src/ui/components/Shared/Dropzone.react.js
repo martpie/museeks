@@ -10,64 +10,64 @@ import classnames from 'classnames';
 */
 
 export default class TrackRow extends Component {
-    static propTypes = {
-      title: PropTypes.string.isRequired,
-      subtitle: PropTypes.string,
-      onDrop: PropTypes.func,
-      onClick: PropTypes.func,
-      onDragEnter: PropTypes.func,
-      onDragLeave: PropTypes.func,
-      onDragOver: PropTypes.func,
-    }
+  static propTypes = {
+    title: PropTypes.string.isRequired,
+    subtitle: PropTypes.string,
+    onDrop: PropTypes.func,
+    onClick: PropTypes.func,
+    onDragEnter: PropTypes.func,
+    onDragLeave: PropTypes.func,
+    onDragOver: PropTypes.func,
+  }
 
-    constructor(props) {
-      super(props);
-      this.state = {
-        state: 'idle',
-      };
+  constructor(props) {
+    super(props);
+    this.state = {
+      state: 'idle',
+    };
 
-      this.onDrop = this.onDrop.bind(this);
-      this.onDragEnter = this.onDragEnter.bind(this);
-      this.onDragLeave = this.onDragLeave.bind(this);
-      this.onDragOver = this.onDragOver.bind(this);
-    }
+    this.onDrop = this.onDrop.bind(this);
+    this.onDragEnter = this.onDragEnter.bind(this);
+    this.onDragLeave = this.onDragLeave.bind(this);
+    this.onDragOver = this.onDragOver.bind(this);
+  }
 
-    render() {
-      const classes = classnames('dropzone', this.state.state);
+  onDragEnter() {
+    if(this.props.onDragEnter) this.props.onDragEnter();
+  }
 
-      return (
-        <div
-          className={classes}
-          onDragEnter={this.onDragEnter}
-          onDragOver={this.onDragOver}
-          onDragLeave={this.onDragLeave}
-          onDrop={this.onDrop}
-          onClick={this.props.onClick}
-        >
-          <div className='title'>{ this.props.title }</div>
-          <div className='subtitle'>{ this.props.subtitle }</div>
-        </div>
-      );
-    }
+  onDragLeave() {
+    this.setState({ state: 'idle' });
+    if(this.props.onDragLeave) this.props.onDragLeave();
+  }
 
-    onDragEnter() {
-      if(this.props.onDragEnter) this.props.onDragEnter();
-    }
+  onDragOver(e) {
+    e.preventDefault();
+    this.setState({ state: 'dragging' });
+    if(this.props.onDragOver) this.props.onDragOver();
+  }
 
-    onDragLeave() {
-      this.setState({ state: 'idle' });
-      if(this.props.onDragLeave) this.props.onDragLeave();
-    }
+  onDrop(e) {
+    e.preventDefault();
+    this.setState({ state: 'idle' });
+    if(this.props.onDrop) this.props.onDrop(e.nativeEvent);
+  }
 
-    onDragOver(e) {
-      e.preventDefault();
-      this.setState({ state: 'dragging' });
-      if(this.props.onDragOver) this.props.onDragOver();
-    }
+  render() {
+    const classes = classnames('dropzone', this.state.state);
 
-    onDrop(e) {
-      e.preventDefault();
-      this.setState({ state: 'idle' });
-      if(this.props.onDrop) this.props.onDrop(e.nativeEvent);
-    }
+    return (
+      <div
+        className={classes}
+        onDragEnter={this.onDragEnter}
+        onDragOver={this.onDragOver}
+        onDragLeave={this.onDragLeave}
+        onDrop={this.onDrop}
+        onClick={this.props.onClick}
+      >
+        <div className='title'>{ this.props.title }</div>
+        <div className='subtitle'>{ this.props.subtitle }</div>
+      </div>
+    );
+  }
 }

@@ -24,193 +24,193 @@ import classnames from 'classnames';
 */
 
 export default class PlayingBar extends Component {
-    static propTypes = {
-      queue: PropTypes.array,
-      queueCursor: PropTypes.number,
-      shuffle: PropTypes.bool,
-      repeat: PropTypes.string,
-    }
+  static propTypes = {
+    queue: PropTypes.array,
+    queueCursor: PropTypes.number,
+    shuffle: PropTypes.bool,
+    repeat: PropTypes.string,
+  }
 
-    constructor(props) {
-      super(props);
+  constructor(props) {
+    super(props);
 
-      this.state = {
-        elapsed     : 0,
-        showTooltip : false,
-        duration    : null,
-        x           : null,
-        dragging    : false,
-      };
+    this.state = {
+      elapsed     : 0,
+      showTooltip : false,
+      duration    : null,
+      x           : null,
+      dragging    : false,
+    };
 
-      this.tick = this.tick.bind(this);
+    this.tick = this.tick.bind(this);
 
-      this.dragOver = this.dragOver.bind(this);
-      this.dragEnd  = this.dragEnd.bind(this);
+    this.dragOver = this.dragOver.bind(this);
+    this.dragEnd  = this.dragEnd.bind(this);
 
-      this.jumpAudioTo = this.jumpAudioTo.bind(this);
-      this.showTooltip = this.showTooltip.bind(this);
-      this.hideTooltip = this.hideTooltip.bind(this);
-    }
+    this.jumpAudioTo = this.jumpAudioTo.bind(this);
+    this.showTooltip = this.showTooltip.bind(this);
+    this.hideTooltip = this.hideTooltip.bind(this);
+  }
 
-    render() {
-      const queue = this.props.queue;
-      const queueCursor = this.props.queueCursor;
+  componentDidMount() {
+    this.timer = setInterval(this.tick, 100);
+
+    window.addEventListener('mousemove', this.dragOver);
+    window.addEventListener('mouseup', this.dragEnd);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timer);
+
+    window.removeEventListener('mousemove', this.dragOver);
+    window.removeEventListener('mouseup', this.dragEnd);
+  }
+
+  tick() {
+    this.setState({ elapsed: Player.getCurrentTime() });
+  }
+
+  jumpAudioTo(e) {
+    this.setState({ dragging : true });
+
+    const queue       = this.props.queue;
+    const queueCursor = this.props.queueCursor;
+    const trackPlaying   = queue[queueCursor];
+
+    const bar = document.querySelector('.now-playing-bar');
+    const percent = ((e.pageX - (bar.offsetLeft + bar.offsetParent.offsetLeft)) / bar.offsetWidth) * 100;
+
+    const jumpTo = (percent * trackPlaying.duration) / 100;
+
+    AppActions.player.jumpTo(jumpTo);
+  }
+
+  dragOver(e) {
+    // Chack if it's needed to update currentTime
+    if(this.state.dragging) {
+      const queue        = this.props.queue;
+      const queueCursor  = this.props.queueCursor;
       const trackPlaying = queue[queueCursor];
 
-      let elapsedPercent;
+      const playingBar = this.refs.playingBar;
+      const playingBarRect = playingBar.getBoundingClientRect();
 
-      if(queueCursor === null) return null;
+      const barWidth = playingBar.offsetWidth;
+      const offsetX = Math.min(Math.max(0, e.pageX - playingBarRect.left), barWidth);
 
-      if(this.state.elapsed < trackPlaying.duration) elapsedPercent = this.state.elapsed * 100 / trackPlaying.duration;
-
-      const nowPlayingTextClasses = classnames('now-playing text-center', {
-        dragging: this.state.dragging,
-      });
-
-      const nowPlayingTooltipClasses = classnames('playing-bar-tooltip', {
-        hidden: this.state.duration === null,
-      });
-
-      return (
-        <div className={nowPlayingTextClasses} >
-          <div className='now-playing-cover'>
-            <Cover path={trackPlaying.path} />
-          </div>
-          <div className='now-playing-infos'>
-            <div className='now-playing-metas'>
-              <div className='player-options'>
-                <ButtonRepeat repeat={this.props.repeat} />
-                <ButtonShuffle queue={this.props.queue} shuffle={this.props.shuffle} />
-              </div>
-              <div className='metas'>
-                <strong className='meta-title'>
-                  { trackPlaying.title }
-                </strong>
-                            &nbsp;by&nbsp;
-                <strong className='meta-artist'>
-                  { trackPlaying.artist.join(', ') }
-                </strong>
-                            &nbsp;on&nbsp;
-                <strong className='meta-album'>
-                  { trackPlaying.album }
-                </strong>
-              </div>
-
-              <span className='duration'>
-                { utils.parseDuration(this.state.elapsed) } / { utils.parseDuration(trackPlaying.duration) }
-              </span>
-            </div>
-            <div className='now-playing-bar' ref='playingBar'>
-              <div className={nowPlayingTooltipClasses} style={{ left: `${this.state.x}%` }}>
-                { utils.parseDuration(this.state.duration) }
-              </div>
-              <ProgressBar
-                now={elapsedPercent}
-                onMouseDown={this.jumpAudioTo}
-                onMouseMove={this.showTooltip}
-                onMouseLeave={this.hideTooltip}
-              />
-            </div>
-          </div>
-          <div className='now-playing-queue'>
-            <Dropdown id='queue-dropdown' className='queue-dropdown'>
-              <Dropdown.Toggle noCaret className='queue-toggle'>
-                <Icon name='list' />
-              </Dropdown.Toggle>
-              <Dropdown.Menu>
-                <Queue
-                  queue={this.props.queue}
-                  queueCursor={this.props.queueCursor}
-                />
-              </Dropdown.Menu>
-            </Dropdown>
-          </div>
-        </div>
-      );
-    }
-
-    componentDidMount() {
-      this.timer = setInterval(this.tick, 100);
-
-      window.addEventListener('mousemove', this.dragOver);
-      window.addEventListener('mouseup', this.dragEnd);
-    }
-
-    componentWillUnmount() {
-      clearInterval(this.timer);
-
-      window.removeEventListener('mousemove', this.dragOver);
-      window.removeEventListener('mouseup', this.dragEnd);
-    }
-
-    tick() {
-      this.setState({ elapsed: Player.getCurrentTime() });
-    }
-
-    jumpAudioTo(e) {
-      this.setState({ dragging : true });
-
-      const queue       = this.props.queue;
-      const queueCursor = this.props.queueCursor;
-      const trackPlaying   = queue[queueCursor];
-
-      const bar = document.querySelector('.now-playing-bar');
-      const percent = ((e.pageX - (bar.offsetLeft + bar.offsetParent.offsetLeft)) / bar.offsetWidth) * 100;
+      const percent = offsetX / barWidth * 100;
 
       const jumpTo = (percent * trackPlaying.duration) / 100;
 
       AppActions.player.jumpTo(jumpTo);
     }
+  }
 
-    dragOver(e) {
-      // Chack if it's needed to update currentTime
-      if(this.state.dragging) {
-        const queue        = this.props.queue;
-        const queueCursor  = this.props.queueCursor;
-        const trackPlaying = queue[queueCursor];
-
-        const playingBar = this.refs.playingBar;
-        const playingBarRect = playingBar.getBoundingClientRect();
-
-        const barWidth = playingBar.offsetWidth;
-        const offsetX = Math.min(Math.max(0, e.pageX - playingBarRect.left), barWidth);
-
-        const percent = offsetX / barWidth * 100;
-
-        const jumpTo = (percent * trackPlaying.duration) / 100;
-
-        AppActions.player.jumpTo(jumpTo);
-      }
+  dragEnd() {
+    if(this.state.dragging) {
+      this.setState({ dragging : false });
     }
+  }
 
-    dragEnd() {
-      if(this.state.dragging) {
-        this.setState({ dragging : false });
-      }
-    }
+  showTooltip(e) {
+    const queue       = this.props.queue;
+    const queueCursor = this.props.queueCursor;
+    const trackPlaying = queue[queueCursor];
 
-    showTooltip(e) {
-      const queue       = this.props.queue;
-      const queueCursor = this.props.queueCursor;
-      const trackPlaying = queue[queueCursor];
+    const offsetX = e.nativeEvent.offsetX;
+    const barWidth = e.currentTarget.offsetWidth;
 
-      const offsetX = e.nativeEvent.offsetX;
-      const barWidth = e.currentTarget.offsetWidth;
+    const percent = offsetX / barWidth * 100;
 
-      const percent = offsetX / barWidth * 100;
+    const time = (percent * trackPlaying.duration) / 100;
 
-      const time = (percent * trackPlaying.duration) / 100;
+    this.setState({
+      duration: time,
+      x: percent,
+    });
+  }
 
-      this.setState({
-        duration: time,
-        x: percent,
-      });
-    }
+  hideTooltip() {
+    this.setState({
+      duration : null,
+      x        : null,
+    });
+  }
 
-    hideTooltip() {
-      this.setState({
-        duration : null,
-        x        : null,
-      });
-    }
+  render() {
+    const queue = this.props.queue;
+    const queueCursor = this.props.queueCursor;
+    const trackPlaying = queue[queueCursor];
+
+    let elapsedPercent;
+
+    if(queueCursor === null) return null;
+
+    if(this.state.elapsed < trackPlaying.duration) elapsedPercent = this.state.elapsed * 100 / trackPlaying.duration;
+
+    const nowPlayingTextClasses = classnames('now-playing text-center', {
+      dragging: this.state.dragging,
+    });
+
+    const nowPlayingTooltipClasses = classnames('playing-bar-tooltip', {
+      hidden: this.state.duration === null,
+    });
+
+    return (
+      <div className={nowPlayingTextClasses} >
+        <div className='now-playing-cover'>
+          <Cover path={trackPlaying.path} />
+        </div>
+        <div className='now-playing-infos'>
+          <div className='now-playing-metas'>
+            <div className='player-options'>
+              <ButtonRepeat repeat={this.props.repeat} />
+              <ButtonShuffle queue={this.props.queue} shuffle={this.props.shuffle} />
+            </div>
+            <div className='metas'>
+              <strong className='meta-title'>
+                { trackPlaying.title }
+              </strong>
+                          &nbsp;by&nbsp;
+              <strong className='meta-artist'>
+                { trackPlaying.artist.join(', ') }
+              </strong>
+                          &nbsp;on&nbsp;
+              <strong className='meta-album'>
+                { trackPlaying.album }
+              </strong>
+            </div>
+
+            <span className='duration'>
+              { utils.parseDuration(this.state.elapsed) } / { utils.parseDuration(trackPlaying.duration) }
+            </span>
+          </div>
+          <div className='now-playing-bar' ref='playingBar'>
+            <div className={nowPlayingTooltipClasses} style={{ left: `${this.state.x}%` }}>
+              { utils.parseDuration(this.state.duration) }
+            </div>
+            <ProgressBar
+              now={elapsedPercent}
+              onMouseDown={this.jumpAudioTo}
+              onMouseMove={this.showTooltip}
+              onMouseLeave={this.hideTooltip}
+            />
+          </div>
+        </div>
+        <div className='now-playing-queue'>
+          <Dropdown id='queue-dropdown' className='queue-dropdown'>
+            <Dropdown.Toggle noCaret className='queue-toggle'>
+              <Icon name='list' />
+            </Dropdown.Toggle>
+            <Dropdown.Menu>
+              <Queue
+                queue={this.props.queue}
+                queueCursor={this.props.queueCursor}
+              />
+            </Dropdown.Menu>
+          </Dropdown>
+        </div>
+      </div>
+    );
+  }
 }
