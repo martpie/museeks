@@ -11,7 +11,7 @@ const add = (notificationData) => {
           body: notificationData.body,
           icon: notificationData.icon,
           silent: true,
-          tag: 'onlyOneNotification',
+          tag: 'museeks-notification',
         }
       );
 
