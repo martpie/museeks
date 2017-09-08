@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import InlineSVG from 'svg-inline-react';
+import InlineSVG from 'react-svg-inline';
 import classnames from 'classnames';
 
 import AppActions from '../../actions/AppActions';
@@ -59,7 +59,7 @@ export default class ButtonRepeat extends Component {
 
     return (
       <button className={buttonClasses} onClick={this.toggleRepeat}>
-        <InlineSVG src={svg} className={svgClasses} />
+        <InlineSVG svg={svg} className={svgClasses} />
       </button>
     );
   }

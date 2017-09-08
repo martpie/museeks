@@ -93,9 +93,9 @@
     "react-router": "3.0.2",
     "react-router-bootstrap": "0.23.1",
     "react-simple-input": "0.4.0",
+    "react-svg-inline": "^2.0.0",
     "redux": "3.7.2",
     "semver": "5.4.1",
-    "svg-inline-react": "1.0.2",
     "teeny-conf": "1.1.0"
   },
   "devDependencies": {
@@ -120,7 +120,7 @@
     "node-sass": "4.5.3",
     "sass-loader": "6.0.6",
     "style-loader": "0.18.2",
-    "svg-inline-loader": "0.7.1",
+    "svg-inline-loader": "0.8.0",
     "url-loader": "0.5.9",
     "webpack": "3.5.6",
     "webpack-dev-server": "2.7.1"
