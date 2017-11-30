@@ -58,7 +58,7 @@ Please consider that **`master` is unstable.**
 - Download Museeks source code
 - Put it in a folder called `app` in `[Electron path]/resources`
 - `yarn install && yarn run compile`
-- Run Electron
+- `yarn run museeks`
 
 ---
 
