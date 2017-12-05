@@ -64,7 +64,7 @@ app.on('ready', () => {
 
 
     // Browser Window options
-  const mainWindowOption = {
+  const mainWindowOptions = {
     title     : 'Museeks',
     icon      :  os.platform() === 'win32' ? museeksIcons['ico'] : museeksIcons['256'],
     x         :  bounds.x,
@@ -75,10 +75,15 @@ app.on('ready', () => {
     minHeight :  550,
     frame     :  useNativeFrame,
     show      :  false,
+
   };
 
-    // Create the browser window
-  mainWindow = new BrowserWindow(mainWindowOption);
+  if (os.platform() === 'darwin' && !useNativeFrame) {
+    mainWindowOptions.titleBarStyle = 'hiddenInset';
+  }
+
+  // Create the browser window
+  mainWindow = new BrowserWindow(mainWindowOptions);
 
   // ... and load our html page
   mainWindow.loadURL(`file://${srcPath}/app.html#/library`);

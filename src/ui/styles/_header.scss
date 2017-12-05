@@ -56,18 +56,22 @@ header {
   }
 }
 
+main.os-darwin:not(.native-frame) .col-main-controls {
+  padding-left: 65px; // let some space for titleBarStyle
+}
 
 header {
 
   .col-main-controls {
-    width: 200px;
+    width: 220px;
     display: flex;
     align-items: center;
+    padding-right: 10px;
   }
 
   /* .windows-controls */
   .col-player-infos {
-    width: calc(100% - 400px);
+    width: calc(100% - 440px);
 
     .now-playing {
       display: flex;
@@ -374,7 +378,9 @@ header {
   /* .player-controls */
 
   .col-search-controls {
-    width: 200px;
+    width: 220px;
+    display: flex;
+    justify-content: flex-end;
   }
 }
 

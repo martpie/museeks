@@ -1,3 +1,4 @@
+import os from 'os';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Row } from 'react-bootstrap';
@@ -50,12 +51,12 @@ class Museeks extends Component {
   render() {
     const { toasts } = this.props;
 
-    const mainClasses = classnames('main', {
+    const mainClasses = classnames('main', `os-${os.platform()}`, {
       'native-frame': config.get('useNativeFrame'),
     });
 
     return (
-      <div className={mainClasses}>
+      <main className={mainClasses}>
         <KeyBinding onKey={this.onKey} preventInputConflict />
         <Header />
         <div className='main-content container-fluid'>
@@ -65,7 +66,7 @@ class Museeks extends Component {
         </div>
         <Footer />
         <Toasts toasts={toasts} />
-      </div>
+      </main>
     );
   }
 }

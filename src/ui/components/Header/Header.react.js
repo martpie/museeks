@@ -1,3 +1,4 @@
+import os from 'os';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -25,23 +26,13 @@ class Header extends Component {
     queueCursor: PropTypes.number,
     shuffle: PropTypes.bool,
     repeat: PropTypes.string,
-    useNativeFrame: PropTypes.bool,
+    showTopHeader: PropTypes.bool,
   }
 
   constructor(props) {
     super(props);
 
     this.onKey = this.onKey.bind(this);
-  }
-
-  getTopHeader(props) {
-    if (props.useNativeFrame) return null;
-
-    return (
-      <div className='top-header'>
-        <WindowControls />
-      </div>
-    );
   }
 
   search(e) {
@@ -59,11 +50,17 @@ class Header extends Component {
   }
 
   render() {
-    const { playerStatus, queue, queueCursor, shuffle, repeat } = this.props;
+    const { playerStatus, queue, queueCursor, shuffle, repeat, showTopHeader } = this.props;
 
     return (
       <header>
-        { this.getTopHeader(this.props) }
+        {
+          showTopHeader && (
+            <div className='top-header'>
+              <WindowControls />
+            </div>
+          )
+        }
         <div className='main-header'>
           <div className='col-main-controls'>
             <PlayerControls
@@ -102,7 +99,7 @@ const mapStateToProps = ({ player }) => ({
   shuffle: player.shuffle,
   queue: player.queue,
   queueCursor: player.queueCursor,
-  useNativeFrame: config.get('useNativeFrame'),
+  showTopHeader: os.platform() !== 'darwin' && !config.get('useNativeFrame'),
 });
 
 export default connect(mapStateToProps)(Header);
