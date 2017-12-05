@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import FullViewMessage from '../Shared/FullViewMessage.react';
 import TracksList from '../Shared/TracksList.react';
+import AppActions from '../../actions/AppActions';
+
+import { connect } from 'react-redux';
 
 
 /*
@@ -12,22 +15,29 @@ import TracksList from '../Shared/TracksList.react';
 |--------------------------------------------------------------------------
 */
 
-export default class Library extends Component {
+class Library extends Component {
   static propTypes = {
     library: PropTypes.object,
-    tracks: PropTypes.object,
-    trackPlayingId: PropTypes.string,
     playlists: PropTypes.array,
     playerStatus: PropTypes.string,
+    queue: PropTypes.any,
   }
 
   constructor(props) {
     super(props);
   }
 
-  getLibraryComponent() {
+  componentDidMount() {
+    AppActions.library.setTracksCursor('library');
+  }
+
+  getLibraryComponent(props) {
+    const { library, playerStatus, playlists, player } = props;
+    const tracks = library.tracks[library.tracksCursor];
+    const trackPlayingId = (player.queue.length > 0 && player.queueCursor !== null) ? player.queue[player.queueCursor]._id : null;
+
     // Loading library
-    if(this.props.tracks.all === null) {
+    if (tracks.all === null) {
       return (
         <FullViewMessage>
           <p>Loading library...</p>
@@ -36,14 +46,12 @@ export default class Library extends Component {
     }
 
     // Empty library
-    if (this.props.tracks.all.length === 0) {
-      if(this.props.library.refreshing) {
+    if (tracks.all.length === 0) {
+      if (library.refreshing) {
         return (
           <FullViewMessage>
             <p>Your library is being scanned =)</p>
-            <p className='sub-message'>
-                          hold still...
-            </p>
+            <p className='sub-message'>hold still...</p>
           </FullViewMessage>
         );
       }
@@ -51,19 +59,19 @@ export default class Library extends Component {
       return (
         <FullViewMessage>
           <p>Too bad, there is no music in your library =(</p>
-          <p className='sub-message'>
-            <span>nothing found yet, but that's fine, you can always </span>
-            <Link to='/settings/library'>add your music here</Link>
-          </p>
         </FullViewMessage>
       );
     }
 
     // Empty search
-    if (this.props.tracks.sub.length === 0) {
+    if (tracks.sub.length === 0) {
       return (
         <FullViewMessage>
           <p>Your search returned no results</p>
+          <p className='sub-message'>
+            <span>nothing found yet, but that's fine, you can always <Link to='/settings/library'>add your music here</Link>
+            </span>
+          </p>
         </FullViewMessage>
       );
     }
@@ -72,10 +80,10 @@ export default class Library extends Component {
     return (
       <TracksList
         type='library'
-        playerStatus={this.props.playerStatus}
-        tracks={this.props.tracks.sub}
-        trackPlayingId={this.props.trackPlayingId}
-        playlists={this.props.playlists}
+        playerStatus={playerStatus}
+        tracks={tracks.sub}
+        trackPlayingId={trackPlayingId}
+        playlists={playlists}
       />
     );
   }
@@ -83,8 +91,17 @@ export default class Library extends Component {
   render() {
     return (
       <div className='view view-library' >
-        { this.getLibraryComponent() }
+        { this.getLibraryComponent(this.props) }
       </div>
     );
   }
 }
+
+const mapStateToProps = (state) => ({
+  playerStatus: state.player.playerStatus,
+  playlists: state.playlists,
+  library: state.library,
+  player: state.player,
+});
+
+export default connect(mapStateToProps)(Library);

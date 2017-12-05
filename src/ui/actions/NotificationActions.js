@@ -1,6 +1,6 @@
 import store from '../store.js';
-import AppConstants  from '../constants/AppConstants';
-import app from '../lib/app';
+import types  from '../constants/action-types';
+import * as app from '../lib/app';
 
 const add = (notificationData) => {
   if (app.config.get('displayNotifications')) {
@@ -21,7 +21,7 @@ const add = (notificationData) => {
     };
 
     store.dispatch({
-      type   : AppConstants.APP_NOTIFICATION_NEW,
+      type   : types.APP_NOTIFICATION_NEW,
       notification,
     });
   }

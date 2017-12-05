@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Row } from 'react-bootstrap';
 import KeyBinding from 'react-keybinding-component';
-
+import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import classnames from 'classnames';
 
@@ -12,7 +12,7 @@ import Toasts from './Toasts/Toasts.react';
 
 import AppActions from '../actions/AppActions';
 
-import app from '../lib/app';
+import { config } from '../lib/app';
 
 
 /*
@@ -23,7 +23,7 @@ import app from '../lib/app';
 
 class Museeks extends Component {
   static propTypes = {
-    store: PropTypes.object,
+    toasts: PropTypes.array,
     children: PropTypes.object,
   }
 
@@ -31,6 +31,10 @@ class Museeks extends Component {
     super(props);
 
     this.onKey = this.onKey.bind(this);
+  }
+
+  componentDidMount() {
+    AppActions.init();
   }
 
   onKey(e) {
@@ -44,58 +48,30 @@ class Museeks extends Component {
   }
 
   render() {
-    const store = this.props.store;
-    const trackPlayingId = (store.queue.length > 0 && store.queueCursor !== null) ? store.queue[store.queueCursor]._id : null;
-
-    const config = { ...app.config.getAll() };
+    const { toasts } = this.props;
 
     const mainClasses = classnames('main', {
-      'native-frame': config.useNativeFrame,
+      'native-frame': config.get('useNativeFrame'),
     });
 
     return (
       <div className={mainClasses}>
         <KeyBinding onKey={this.onKey} preventInputConflict />
-        <Header
-          app={this}
-          playerStatus={store.playerStatus}
-          repeat={store.repeat}
-          shuffle={store.shuffle}
-          queue={store.queue}
-          queueCursor={store.queueCursor}
-          useNativeFrame={config.useNativeFrame}
-        />
+        <Header />
         <div className='main-content container-fluid'>
           <Row className='content'>
-            { React.cloneElement(
-              this.props.children, {
-                app               : this,
-                config,
-                playerStatus      : store.playerStatus,
-                queue             : store.queue,
-                tracks            : {
-                  all: store.tracks[store.tracksCursor].all,
-                  sub: store.tracks[store.tracksCursor].sub,
-                },
-                playlists         : store.playlists,
-                library           : store.library,
-                trackPlayingId,
-              })
-            }
+            {this.props.children}
           </Row>
         </div>
-        <Footer
-          tracks={store.tracks[store.tracksCursor].sub}
-          library={store.library}
-        />
-        <Toasts toasts={store.toasts} />
+        <Footer />
+        <Toasts toasts={toasts} />
       </div>
     );
   }
 }
 
 function mapStateToProps(state) {
-  return { store: { ...state } };
+  return { toasts: state.toasts };
 }
 
-export default connect(mapStateToProps)(Museeks);
+export default withRouter(connect(mapStateToProps)(Museeks));

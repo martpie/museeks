@@ -14,11 +14,12 @@ const app    = remote.app;
 |--------------------------------------------------------------------------
 */
 
-const browserWindows = {};
-browserWindows.main = remote.getCurrentWindow();
+export const browserWindows = {
+  main: remote.getCurrentWindow(),
+};
 
-const pathUserData = app.getPath('userData');
-const pathSrc      = __dirname;
+export const pathUserData = app.getPath('userData');
+export const pathSrc      = __dirname;
 
 
 /*
@@ -37,7 +38,7 @@ conf.loadOrCreateSync();
 |--------------------------------------------------------------------------
 */
 
-const supportedExtensions = [
+export const supportedExtensions = [
   // MP3 / MP4
   '.mp3',
   '.mp4',
@@ -107,7 +108,7 @@ const Playlist = new linvodb('playlist', {
   },
 });
 
-const models = {
+export const models = {
   Track,
   Playlist,
 };
@@ -119,16 +120,10 @@ Promise.promisifyAll(models.Playlist);
 
 /*
 |--------------------------------------------------------------------------
-| Export
+| Other exports
 |--------------------------------------------------------------------------
 */
 
-export default {
-  supportedExtensions, // supported audio formats
-  pathSrc, // path of the app
-  browserWindows, // Object containing all the windows
-  models, // database models
-  version       : app.getVersion(), // Museeks version
-  config        : conf, // teeny-conf
-  initialConfig : conf.getAll(), // the config at the start of the application
-};
+export const version       = app.getVersion(); // Museeks version
+export const config        = conf; // teeny-conf
+export const initialConfig = conf.getAll(); // the config at the start of the application

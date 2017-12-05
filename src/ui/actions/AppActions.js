@@ -1,5 +1,5 @@
 import Player from '../lib/player';
-import app    from '../lib/app';
+import { browserWindows, config }  from '../lib/app';
 import utils from '../utils/utils';
 
 import LibraryActions      from './LibraryActions';
@@ -40,7 +40,7 @@ const init = () => {
 
     ipcRenderer.send('playerAction', 'trackStart', track);
 
-    if(app.browserWindows.main.isFocused()) return;
+    if(browserWindows.main.isFocused()) return;
 
     const cover = await utils.fetchCover(track.path);
     NotificationActions.add({
@@ -87,7 +87,7 @@ const init = () => {
   }, false);
 
   // Remember dimensions and positionning
-  const currentWindow = app.browserWindows.main;
+  const currentWindow = browserWindows.main;
 
   currentWindow.on('resize', saveBounds);
 
@@ -103,19 +103,19 @@ const restart = () => {
 };
 
 const close = () => {
-  if(app.config.get('minimizeToTray')) {
-    app.browserWindows.main.hide();
+  if(config.get('minimizeToTray')) {
+    browserWindows.main.hide();
   } else {
-    app.browserWindows.main.destroy();
+    browserWindows.main.destroy();
   }
 };
 
 const minimize = () => {
-  app.browserWindows.main.minimize();
+  browserWindows.main.minimize();
 };
 
 const maximize = () => {
-  app.browserWindows.main.isMaximized() ? app.browserWindows.main.unmaximize() : app.browserWindows.main.maximize();
+  browserWindows.main.isMaximized() ? browserWindows.main.unmaximize() : browserWindows.main.maximize();
 };
 
 const saveBounds = () => {
@@ -128,8 +128,8 @@ const saveBounds = () => {
   self.lastFilterSearch = now;
 
   self.filterSearchTimeOut = setTimeout(() => {
-    app.config.set('bounds', app.browserWindows.main.getBounds());
-    app.config.saveSync();
+    config.set('bounds', browserWindows.main.getBounds());
+    config.saveSync();
   }, 250);
 };
 

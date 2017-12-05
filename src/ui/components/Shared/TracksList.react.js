@@ -155,10 +155,9 @@ export default class TracksList extends Component {
   }
 
   getTrackTiles() {
-    const self           = this;
-    const selected       = this.state.selected;
-    const tracks         = [...this.props.tracks];
-    const trackPlayingId = this.props.trackPlayingId;
+    const self = this;
+    const { selected } = this.state;
+    const { trackPlayingId, tracks } = this.props;
 
     const chunkLength = 20;
     const tilesToDisplay = 5;
