@@ -82,7 +82,9 @@ app.on('ready', () => {
 
   // ... and load our html page
   mainWindow.loadURL(`file://${srcPath}/app.html#/library`);
-  mainWindow.openDevTools();
+
+  // Open dev tools if museeks is run in edbug mode
+  if (process.argv.includes('--enable-logging')) mainWindow.openDevTools();
 
   mainWindow.on('closed', () => {
     // Dereference the window object
