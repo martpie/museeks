@@ -11,6 +11,7 @@ import PlayerControls from './PlayerControls.react';
 
 import AppActions from '../../actions/AppActions';
 import { config } from '../../lib/app';
+import { isCtrlKey } from '../../utils/utils-platform';
 
 
 /*
@@ -40,12 +41,8 @@ class Header extends Component {
   }
 
   onKey(e) {
-    switch (e.keyCode) {
-      case 70: { // "F"
-        if(e.ctrlKey) {
-          this.refs.search.refs.input.select();
-        }
-      }
+    if (isCtrlKey(e) && e.keyCode === 70) {
+      this.refs.search.refs.input.select();
     }
   }
 

@@ -75,7 +75,6 @@
     "react/self-closing-comp": "error",
     "react/sort-comp": "error",
     "import/no-mutable-exports": "error",
-    "import/prefer-default-export": "error",
     "import/imports-first": "error"
   },
   "plugins": [
