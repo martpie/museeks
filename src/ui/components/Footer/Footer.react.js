@@ -30,7 +30,6 @@ class Footer extends Component {
     const { library } = props;
     const tracks = library.tracks[library.tracksCursor].sub;
 
-    let status = (tracks !== null) ? utils.getStatus(tracks) : 'An apple a day keeps Dr Dre away';
     const progressBarClasses = classnames('library-refresh-progress', {
       'hidden': !this.props.library.refreshing,
     });
@@ -38,10 +37,10 @@ class Footer extends Component {
     if (library.refreshing) {
       const progress = Math.round(library.refresh.processed / library.refresh.total * 100);
 
-      status = <ProgressBar className={progressBarClasses} now={progress} />;
+      return <ProgressBar className={progressBarClasses} now={progress} />;
     }
 
-    return status;
+    return (tracks !== null) ? utils.getStatus(tracks) : 'An apple a day keeps Dr Dre away';
   }
 
   render() {

@@ -8,7 +8,7 @@ import utils from '../utils/utils';
 
 const start = (index) => {
   // TODO (y.solovyov | KeitIG): calling getState is a hack.
-  const { queue } = store.getState();
+  const { queue } = store.getState().player;
   const uri = utils.parseUri(queue[index].path);
   Player.setAudioSrc(uri);
   Player.play();

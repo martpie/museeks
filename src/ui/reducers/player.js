@@ -1,5 +1,6 @@
 import types from '../constants/action-types';
 import { config } from '../lib/app';
+import { shuffleTracks } from '../utils/utils-player';
 
 const initialState = {
   queue: [], // Tracks to be played
@@ -71,38 +72,18 @@ export default (state = initialState, payload) => {
     }
 
     case(types.APP_PLAYER_SHUFFLE): {
+      // If we need to shuffle everything
       if(payload.shuffle) {
         // Let's shuffle that
-        const queueCursor = state.queueCursor;
-        let queue = [...state.queue];
-
-        // Get the current track
-        const firstTrack  = queue[queueCursor];
-
-        // now get only what we want
-        queue = queue.splice(queueCursor + 1, state.queue.length - (queueCursor + 1));
-
-        let m = queue.length;
-        let t;
-        let i;
-        while (m) {
-          // Pick a remaining element…
-          i = Math.floor(Math.random() * m--);
-
-          // And swap it with the current element.
-          t = queue[m];
-          queue[m] = queue[i];
-          queue[i] = t;
-        }
-
-        queue.unshift(firstTrack); // Add the current track at the first position
+        const { queueCursor } = state;
+        const queue = shuffleTracks([...state.queue], queueCursor);
 
         return {
           ...state,
           queue,
-          shuffle: true,
           queueCursor: 0,
           oldQueue: state.queue,
+          shuffle: true,
         };
       }
 
@@ -129,13 +110,13 @@ export default (state = initialState, payload) => {
 
     case(types.APP_QUEUE_START): {
       const queue = [...state.queue];
-      const cursor = payload.index;
+      const queueCursor = payload.index;
 
       // Backup that and change the UI
       return {
         ...state,
         queue,
-        cursor,
+        queueCursor,
         playerStatus: 'play',
       };
     }
@@ -160,7 +141,6 @@ export default (state = initialState, payload) => {
       };
     }
 
-    // Prob here
     case(types.APP_QUEUE_ADD): {
       const queue = [...state.queue, ...payload.tracks];
       return {

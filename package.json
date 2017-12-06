@@ -98,7 +98,7 @@
     "react-simple-input": "0.4.0",
     "react-svg-inline": "^2.0.0",
     "redux": "3.7.2",
-    "redux-thunk": "^2.2.0",
+    "redux-thunk": "2.2.0",
     "semver": "5.4.1",
     "teeny-conf": "1.1.0"
   },

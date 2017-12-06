@@ -46,12 +46,10 @@ export default class TracksList extends Component {
   }
 
   componentDidMount() {
-    const self = this;
-
     this.renderView = document.querySelector('.tracks-list-render-view');
 
     ipcRenderer.on('tracksListContextMenuReply', async (event, reply, data) => {
-      const selected = self.state.selected;
+      const selected = this.state.selected;
 
       switch(reply) {
         case 'addToQueue': {
@@ -63,19 +61,19 @@ export default class TracksList extends Component {
           break;
         }
         case 'addToPlaylist': {
-          const isShown = self.props.type === 'playlist' && data === self.props.currentPlaylist;
+          const isShown = this.props.type === 'playlist' && data === this.props.currentPlaylist;
           AppActions.playlists.addTracksTo(data.playlistId, selected, isShown);
           break;
         }
         case 'removeFromPlaylist': {
-          if(self.props.type === 'playlist') {
-            AppActions.playlists.removeTracksFrom(self.props.currentPlaylist, selected);
+          if(this.props.type === 'playlist') {
+            AppActions.playlists.removeTracksFrom(this.props.currentPlaylist, selected);
           }
           break;
         }
         case 'createPlaylist': {
           const playlistId = await AppActions.playlists.create('New playlist', false);
-          const isShown = self.props.type === 'playlist' && data === self.props.currentPlaylist;
+          const isShown = this.props.type === 'playlist' && data === this.props.currentPlaylist;
           AppActions.playlists.addTracksTo(playlistId, selected, isShown);
           break;
         }
@@ -155,7 +153,6 @@ export default class TracksList extends Component {
   }
 
   getTrackTiles() {
-    const self = this;
     const { selected } = this.state;
     const { trackPlayingId, tracks } = this.props;
 
@@ -182,8 +179,8 @@ export default class TracksList extends Component {
             trackId={track._id}
             key={index}
             index={trackRowIndex}
-            onMouseDown={self.selectTrack}
-            onContextMenu={self.showContextMenu}
+            onMouseDown={this.selectTrack}
+            onContextMenu={this.showContextMenu}
           >
             <div className='cell cell-track-playing text-center'>
               { playingIndicator }
@@ -275,7 +272,7 @@ export default class TracksList extends Component {
       }
     }
 
-    self.setState({ selected : newSelected });
+    this.setState({ selected : newSelected });
   }
 
   onUp(i, tracks) {
