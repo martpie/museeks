@@ -238,7 +238,6 @@ export default class TracksList extends Component {
   }
 
   multiSelect(e, id, index) {
-    const self   = this;
     const tracks = this.props.tracks;
     const selected = this.state.selected;
 
