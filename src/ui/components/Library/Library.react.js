@@ -51,7 +51,7 @@ class Library extends Component {
         return (
           <FullViewMessage>
             <p>Your library is being scanned =)</p>
-            <p className='sub-message'>hold still...</p>
+            <p className='sub-message'>hold on...</p>
           </FullViewMessage>
         );
       }

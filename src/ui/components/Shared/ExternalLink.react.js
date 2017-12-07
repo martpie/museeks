@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-const shell = electron.shell;
+import { openExternal } from '../../lib/electron';
 
 
 /*
@@ -24,7 +24,7 @@ export default class ExternalLink extends Component {
 
   openLink(e) {
     e.preventDefault();
-    shell.openExternal(this.props.href);
+    openExternal(this.props.href);
   }
 
   render() {
