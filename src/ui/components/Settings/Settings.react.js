@@ -1,7 +1,17 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Nav, NavItem } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
+import { Switch, Route, Redirect } from 'react-router-dom';
+
+import SettingsLibrary from './SettingsLibrary.react';
+import SettingsUI from './SettingsUI.react';
+import SettingsAudio from './SettingsAudio.react';
+import SettingsAdvanced from './SettingsAdvanced.react';
+import SettingsAbout from './SettingsAbout.react';
+
+import { config } from '../../lib/app';
 
 
 /*
@@ -10,7 +20,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 |--------------------------------------------------------------------------
 */
 
-export default class Settings extends Component {
+class Settings extends Component {
   static propTypes = {
     config: PropTypes.object,
     library: PropTypes.object,
@@ -22,7 +32,8 @@ export default class Settings extends Component {
   }
 
   render() {
-    const config = this.props.config;
+    const { library } = this.props;
+    const conf = config.getAll();
 
     return (
       <div className='view view-settings'>
@@ -45,15 +56,40 @@ export default class Settings extends Component {
             </LinkContainer>
           </Nav>
           <div className="tab-content">
-            { React.cloneElement(
-              this.props.children, {
-                config,
-                library: this.props.library,
-              })
-            }
+            <Switch>
+              <Route
+                path='/settings'
+                exact
+                render={() => (<Redirect to='/settings/library' />)}
+              />
+              <Route
+                path='/settings/library'
+                render={(p) => (<SettingsLibrary {...p} config={conf} library={library} />)}
+              />
+              <Route
+                path='/settings/interface'
+                render={(p) => (<SettingsUI {...p} config={conf} library={library} />)}
+              />
+              <Route
+                path='/settings/audio'
+                render={(p) => (<SettingsAudio {...p} config={conf} library={library} />)}
+              />
+              <Route
+                path='/settings/advanced'
+                render={(p) => (<SettingsAdvanced {...p} config={conf} library={library} />)}
+              />
+              <Route
+                path='/settings/about'
+                render={(p) => (<SettingsAbout {...p} config={conf} library={library} />)}
+              />
+            </Switch>
           </div>
         </div>
       </div>
     );
   }
 }
+
+const mapStateToProps = (({ library }) => ({ library }));
+
+export default connect(mapStateToProps)(Settings);

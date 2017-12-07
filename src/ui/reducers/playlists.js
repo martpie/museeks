@@ -1,21 +1,12 @@
-import AppConstants from '../constants/AppConstants';
+import types from '../constants/action-types';
 
-export default (state = {}, payload) => {
+
+const initialState = null; // Playlist[]
+
+export default (state = initialState, payload) => {
   switch (payload.type) {
-    case(AppConstants.APP_PLAYLISTS_REFRESH): {
-      return {
-        ...state,
-        playlists: payload.playlists,
-      };
-    }
-
-    case(AppConstants.APP_PLAYLISTS_LOAD_ONE): {
-      const newState = { ...state };
-      newState.tracks[state.tracksCursor] = {
-        all: [...payload.tracks],
-        sub: [...payload.tracks],
-      };
-      return newState;
+    case(types.APP_PLAYLISTS_REFRESH): {
+      return payload.playlists;
     }
 
     default: {

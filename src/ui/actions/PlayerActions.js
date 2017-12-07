@@ -1,11 +1,12 @@
 import store from '../store.js';
-import AppConstants  from '../constants/AppConstants';
+import types  from '../constants/action-types';
 
 import ToastsActions from './ToastsActions';
 
-import app from '../lib/app';
+import * as app from '../lib/app';
 import Player from '../lib/player';
 import utils from '../utils/utils';
+import { shuffleTracks } from '../utils/utils-player';
 
 const ipcRenderer    = electron.ipcRenderer;
 
@@ -20,7 +21,7 @@ const audioErrors = {
 const playToggle = () => {
   const { paused } = Player.getAudio();
   // TODO (y.solovyov | KeitIG): calling getState is a hack.
-  const { queue, playerStatus } = store.getState();
+  const { queue, playerStatus } = store.getState().player;
 
   if(playerStatus === 'stop') {
     start();
@@ -33,30 +34,33 @@ const playToggle = () => {
 
 const play = () => {
   // TODO (y.solovyov | KeitIG): calling getState is a hack.
-  const { queue } = store.getState();
+  const { queue } = store.getState().player;
   if(queue !== null) {
     Player.play();
     store.dispatch({
-      type : AppConstants.APP_PLAYER_PLAY,
+      type : types.APP_PLAYER_PLAY,
     });
   }
 };
 
 const pause = () => {
   // TODO (y.solovyov | KeitIG): calling getState is a hack.
-  const { queue } = store.getState();
+  const { queue } = store.getState().player;
   if(queue !== null) {
     Player.pause();
     store.dispatch({
-      type : AppConstants.APP_PLAYER_PAUSE,
+      type : types.APP_PLAYER_PAUSE,
     });
   }
 };
 
 const start = (_id) => {
   // TODO (y.solovyov | KeitIG): calling getState is a hack.
-  const { tracks, tracksCursor } = store.getState();
-  const queue = [...tracks[tracksCursor].sub];
+  const state = store.getState();
+  const { tracks, tracksCursor } = state.library;
+  const { shuffle } = state.player;
+  let queue = [...tracks[tracksCursor].sub];
+  const oldQueue = [...queue];
 
   if(queue.length === 0) return;
 
@@ -66,16 +70,28 @@ const start = (_id) => {
     return track._id === trackId;
   });
 
+  // If a track exists
   if (queuePosition > -1) {
     const uri = utils.parseUri(queue[queuePosition].path);
 
     Player.setAudioSrc(uri);
     Player.play();
 
+    let queueCursor = queuePosition; // Clean that variable mess later
+
+    // Check if we have to shuffle the queue
+    if (shuffle) {
+      // Shuffle the tracks
+      queue = shuffleTracks(queue, queueCursor);
+      // Let's set the cursor to 0
+      queueCursor = 0;
+    }
+
     store.dispatch({
-      type : AppConstants.APP_PLAYER_START,
-      queuePosition,
-      _id,
+      type : types.APP_PLAYER_START,
+      queue,
+      oldQueue,
+      queueCursor,
     });
   }
 };
@@ -83,7 +99,7 @@ const start = (_id) => {
 const stop = () => {
   Player.stop();
   store.dispatch({
-    type : AppConstants.APP_PLAYER_STOP,
+    type : types.APP_PLAYER_STOP,
   });
 
   ipcRenderer.send('playerAction', 'stop');
@@ -91,7 +107,7 @@ const stop = () => {
 
 const next = () => {
   // TODO (y.solovyov | KeitIG): calling getState is a hack.
-  const { queue, queueCursor, repeat } = store.getState();
+  const { queue, queueCursor, repeat } = store.getState().player;
   let newQueueCursor;
 
   if(repeat === 'one') {
@@ -110,7 +126,7 @@ const next = () => {
     Player.setAudioSrc(uri);
     Player.play();
     store.dispatch({
-      type : AppConstants.APP_PLAYER_NEXT,
+      type : types.APP_PLAYER_NEXT,
       newQueueCursor,
     });
   } else {
@@ -122,7 +138,7 @@ const previous = () => {
   const currentTime = Player.getCurrentTime();
 
   // TODO (y.solovyov | KeitIG): calling getState is a hack.
-  const { queue, queueCursor } = store.getState();
+  const { queue, queueCursor } = store.getState().player;
   let newQueueCursor = queueCursor;
 
   // If track started less than 5 seconds ago, play th previous track,
@@ -140,7 +156,7 @@ const previous = () => {
     Player.play();
 
     store.dispatch({
-      type : AppConstants.APP_PLAYER_PREVIOUS,
+      type : types.APP_PLAYER_PREVIOUS,
       currentTime,
       newQueueCursor,
     });
@@ -155,7 +171,7 @@ const shuffle = (shuffle) => {
 
   const currentSrc = Player.getSrc();
   store.dispatch({
-    type : AppConstants.APP_PLAYER_SHUFFLE,
+    type : types.APP_PLAYER_SHUFFLE,
     shuffle,
     currentSrc,
   });
@@ -166,7 +182,7 @@ const repeat = (repeat) => {
   app.config.saveSync();
 
   store.dispatch({
-    type : AppConstants.APP_PLAYER_REPEAT,
+    type : types.APP_PLAYER_REPEAT,
     repeat,
   });
 };
@@ -178,7 +194,7 @@ const setVolume = (volume) => {
     app.config.set('audioVolume', volume);
     app.config.saveSync();
     store.dispatch({
-      type : AppConstants.APP_REFRESH_CONFIG,
+      type : types.APP_REFRESH_CONFIG,
     });
   }
 };
@@ -190,7 +206,7 @@ const setMuted = (muted = false) => {
   app.config.set('audioMuted', muted);
   app.config.saveSync();
   store.dispatch({
-    type : AppConstants.APP_REFRESH_CONFIG,
+    type : types.APP_REFRESH_CONFIG,
   });
 };
 
@@ -202,7 +218,7 @@ const setPlaybackRate = (value) => {
       app.config.set('audioPlaybackRate', parseFloat(value));
       app.config.saveSync();
       store.dispatch({
-        type : AppConstants.APP_REFRESH_CONFIG,
+        type : types.APP_REFRESH_CONFIG,
       });
     }
   }
@@ -213,7 +229,7 @@ const jumpTo = (to) => {
   // if yes, what should it be? if not, do we need this actions at all?
   Player.setAudioCurrentTime(to);
   store.dispatch({
-    type : AppConstants.APP_PLAYER_JUMP_TO,
+    type : types.APP_PLAYER_JUMP_TO,
   });
 };
 

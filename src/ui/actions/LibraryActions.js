@@ -1,16 +1,16 @@
 import store from '../store.js';
 
-import AppConstants  from '../constants/AppConstants';
-import AppActions    from './AppActions';
+import types from '../constants/action-types';
+import AppActions from './AppActions';
 
-import app   from '../lib/app';
+import * as app from '../lib/app';
 import utils from '../utils/utils';
 
-import fs       from 'fs';
-import path     from 'path';
-import globby   from 'globby';
-import Promise  from 'bluebird';
-import queue    from 'queue';
+import fs      from 'fs';
+import path    from 'path';
+import globby  from 'globby';
+import Promise from 'bluebird';
+import queue   from 'queue';
 
 const dialog = electron.remote.dialog;
 const statAsync = Promise.promisify(fs.stat);
@@ -27,7 +27,7 @@ const load = async () => {
   try {
     const tracks = await app.models.Track.find().sort(querySort).execAsync();
     store.dispatch({
-      type : AppConstants.APP_REFRESH_LIBRARY,
+      type : types.APP_LIBRARY_REFRESH,
       tracks,
     });
   } catch (err) {
@@ -37,21 +37,21 @@ const load = async () => {
 
 const setTracksCursor = (cursor) => {
   store.dispatch({
-    type : AppConstants.APP_LIBRARY_SET_TRACKSCURSOR,
+    type : types.APP_LIBRARY_SET_TRACKSCURSOR,
     cursor,
   });
 };
 
 const resetTracks = () => {
   store.dispatch({
-    type : AppConstants.APP_REFRESH_LIBRARY,
+    type : types.APP_LIBRARY_REFRESH,
     tracks : null,
   });
 };
 
 const filterSearch = (search) => {
   store.dispatch({
-    type : AppConstants.APP_FILTER_SEARCH,
+    type : types.APP_FILTER_SEARCH,
     search,
   });
 };
@@ -66,7 +66,7 @@ const endScan = () => {
   scan.total = 0;
 
   store.dispatch({
-    type : AppConstants.APP_LIBRARY_REFRESH_END,
+    type : types.APP_LIBRARY_REFRESH_END,
   });
 
   AppActions.library.load();
@@ -83,7 +83,7 @@ scanQueue.on('success', () => {
 
 const add = (pathsToScan) => {
   store.dispatch({
-    type : AppConstants.APP_LIBRARY_REFRESH_START,
+    type : types.APP_LIBRARY_REFRESH_START,
   });
 
   let rootFiles; // HACK Kind of hack, looking for a better solution
@@ -161,7 +161,7 @@ const add = (pathsToScan) => {
 
 const refreshProgress = (processed, total) => {
   store.dispatch({
-    type : AppConstants.APP_LIBRARY_REFRESH_PROGRESS,
+    type : types.APP_LIBRARY_REFRESH_PROGRESS,
     processed,
     total,
   });
@@ -183,7 +183,7 @@ const removeFromLibrary = (tracksIds) => {
       app.models.Track.removeAsync({ _id: { $in: tracksIds } }, { multi: true });
 
       store.dispatch({
-        type : AppConstants.APP_LIBRARY_REMOVE_TRACKS,
+        type : types.APP_LIBRARY_REMOVE_TRACKS,
         tracksIds,
       });
       // That would be great to remove those ids from all the playlists, but it's not easy
@@ -207,7 +207,7 @@ const reset = async () => {
 
     if(result === 1) {
       store.dispatch({
-        type : AppConstants.APP_LIBRARY_REFRESH_START,
+        type : types.APP_LIBRARY_REFRESH_START,
       });
 
       await app.models.Track.removeAsync({}, { multi: true });
@@ -215,7 +215,7 @@ const reset = async () => {
 
       AppActions.library.load();
       store.dispatch({
-        type : AppConstants.APP_LIBRARY_REFRESH_END,
+        type : types.APP_LIBRARY_REFRESH_END,
       });
     }
   } catch(err) {

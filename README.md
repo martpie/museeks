@@ -54,11 +54,10 @@ Builds can be found [at this page](https://github.com/KeitIG/museeks/releases). 
 
 Please consider that **`master` is unstable.**
 
-- Download [Electron](https://github.com/atom/electron/releases)
-- Download Museeks source code
-- Put it in a folder called `app` in `[Electron path]/resources`
+- Clone the repo
+- `cd museeks`
 - `yarn install && yarn run compile`
-- Run Electron
+- `yarn run museeks` or `yarn run museeks:debug`
 
 ---
 

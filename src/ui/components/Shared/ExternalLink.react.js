@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-const shell = electron.shell;
+import { openExternal } from '../../lib/electron';
 
 
 /*
@@ -24,13 +24,12 @@ export default class ExternalLink extends Component {
 
   openLink(e) {
     e.preventDefault();
-    // TODO (y.solovyov | KeitIG): this should be somewhere else, not in the component
-    shell.openExternal(this.props.href);
+    openExternal(this.props.href);
   }
 
   render() {
     return (
-      <a href onClick={this.openLink}>
+      <a href="" onClick={this.openLink}>
         { this.props.children }
       </a>
     );

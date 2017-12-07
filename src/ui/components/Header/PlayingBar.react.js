@@ -73,9 +73,8 @@ export default class PlayingBar extends Component {
   jumpAudioTo(e) {
     this.setState({ dragging : true });
 
-    const queue       = this.props.queue;
-    const queueCursor = this.props.queueCursor;
-    const trackPlaying   = queue[queueCursor];
+    const { queue, queueCursor } = this.props;
+    const trackPlaying = queue[queueCursor];
 
     const bar = document.querySelector('.now-playing-bar');
     const percent = ((e.pageX - (bar.offsetLeft + bar.offsetParent.offsetLeft)) / bar.offsetWidth) * 100;
@@ -171,11 +170,11 @@ export default class PlayingBar extends Component {
               <strong className='meta-title'>
                 { trackPlaying.title }
               </strong>
-                          &nbsp;by&nbsp;
+              &nbsp;by&nbsp;
               <strong className='meta-artist'>
                 { trackPlaying.artist.join(', ') }
               </strong>
-                          &nbsp;on&nbsp;
+              &nbsp;on&nbsp;
               <strong className='meta-album'>
                 { trackPlaying.album }
               </strong>

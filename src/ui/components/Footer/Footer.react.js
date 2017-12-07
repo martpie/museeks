@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router';
+import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { Row, Col, Button, ButtonGroup, ProgressBar } from 'react-bootstrap';
-import { LinkContainer } from 'react-router-bootstrap';
+import { Row, Col, ButtonGroup, ProgressBar } from 'react-bootstrap';
 import Icon from 'react-fontawesome';
-
+import { connect } from 'react-redux';
 import classnames from 'classnames';
 
 import utils from '../../utils/utils';
@@ -15,7 +16,7 @@ import utils from '../../utils/utils';
 |--------------------------------------------------------------------------
 */
 
-export default class Footer extends Component {
+class Footer extends Component {
   static propTypes = {
     tracks: PropTypes.array,
     library: PropTypes.object,
@@ -25,53 +26,68 @@ export default class Footer extends Component {
     super(props);
   }
 
-  render() {
-    const tracks = this.props.tracks;
-    let status = (tracks !== null) ? utils.getStatus(tracks) : 'An apple a day keeps Dr Dre away';
+  getStatus(props) {
+    const { library } = props;
+    const tracks = library.tracks[library.tracksCursor].sub;
 
     const progressBarClasses = classnames('library-refresh-progress', {
       'hidden': !this.props.library.refreshing,
     });
 
-    const library = this.props.library;
-
-    if(library.refreshing) {
+    if (library.refreshing) {
       const progress = Math.round(library.refresh.processed / library.refresh.total * 100);
 
-      status = <ProgressBar className={progressBarClasses} now={progress} />;
+      return <ProgressBar className={progressBarClasses} now={progress} />;
     }
 
-    const navButtons = (
-      <ButtonGroup className='view-switcher'>
-        <LinkContainer to='/library'>
-          <Button className='view-link' title='Library'>
-            <Icon name='align-justify' fixedWidth />
-          </Button>
-        </LinkContainer>
-        <LinkContainer to='/playlists'>
-          <Button className='view-link' title='Playlists'>
-            <Icon name='star' fixedWidth />
-          </Button>
-        </LinkContainer>
-        <LinkContainer to='/settings'>
-          <Button className='view-link' title='Settings'>
-            <Icon name='gear' fixedWidth />
-          </Button>
-        </LinkContainer>
-      </ButtonGroup>
-    );
+    return (tracks !== null) ? utils.getStatus(tracks) : 'An apple a day keeps Dr Dre away';
+  }
 
+  render() {
     return (
       <footer className='container-fluid'>
         <Row>
           <Col sm={3}>
-            { navButtons }
+            <ButtonGroup className='view-switcher'>
+              <NavLink
+                to='/library'
+                activeClassName='active'
+                className='btn btn-default view-link'
+                title='Library'
+              >
+                <Icon name='align-justify' fixedWidth />
+              </NavLink>
+              <NavLink
+                to='/playlists'
+                activeClassName='active'
+                className='btn btn-default view-link '
+                title='Playlists'
+              >
+                <Icon name='star' fixedWidth />
+              </NavLink>
+              <NavLink
+                to='/settings'
+                activeClassName='active'
+                className='btn btn-default view-link'
+                title='Settings'
+              >
+                <Icon name='gear' fixedWidth />
+              </NavLink>
+            </ButtonGroup>
           </Col>
           <Col sm={5} className='status text-center'>
-            { status }
+            {this.getStatus(this.props)}
           </Col>
         </Row>
       </footer>
     );
   }
 }
+
+const mapsStateToProps = (state) => {
+  return {
+    library: state.library,
+  };
+};
+
+export default withRouter(connect(mapsStateToProps)(Footer));

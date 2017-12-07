@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import TracksList    from '../Shared/TracksList.react.js';
 import FullViewMessage from '../Shared/FullViewMessage.react';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
+
+import AppActions from '../../actions/AppActions';
 
 
 /*
@@ -12,10 +15,10 @@ import { Link } from 'react-router';
 |--------------------------------------------------------------------------
 */
 
-export default class Playlist extends Component {
+class Playlist extends Component {
   static propTypes = {
-    params: PropTypes.object,
-    tracks: PropTypes.object,
+    match: PropTypes.object,
+    tracks: PropTypes.array,
     trackPlayingId: PropTypes.string,
     playlists: PropTypes.array,
     playerStatus: PropTypes.string,
@@ -25,16 +28,22 @@ export default class Playlist extends Component {
     super(props);
   }
 
+  componentDidMount() {
+    AppActions.playlists.load(this.props.match.params.playlistId);
+  }
+
   render() {
-    if(Array.isArray(this.props.tracks.sub) && this.props.tracks.sub.length > 0) {
+    const { tracks, trackPlayingId, playerStatus, playlists } = this.props;
+
+    if(Array.isArray(tracks) && tracks.length > 0) {
       return (
         <TracksList
           type='playlist'
-          currentPlaylist={this.props.params.playlistId}
-          tracks={this.props.tracks.sub}
-          trackPlayingId={this.props.trackPlayingId}
-          playlists={this.props.playlists}
-          playerStatus={this.props.playerStatus}
+          currentPlaylist={this.props.match.params.playlistId}
+          tracks={tracks}
+          trackPlayingId={trackPlayingId}
+          playlists={playlists}
+          playerStatus={playerStatus}
         />
       );
     }
@@ -47,3 +56,12 @@ export default class Playlist extends Component {
     );
   }
 }
+
+const mapStateToProps = ({ library, playlists, player }) => ({
+  playlists,
+  tracks: library.tracks.playlist.sub,
+  playerStatus: player.playerStatus,
+  trackPlayingId: (player.queue.length > 0 && player.queueCursor !== null) ? player.queue[player.queueCursor]._id : null,
+});
+
+export default connect(mapStateToProps)(Playlist);

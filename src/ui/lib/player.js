@@ -1,4 +1,4 @@
-import app from './app';
+import * as app from './app';
 
 class Player {
   constructor(options) {
