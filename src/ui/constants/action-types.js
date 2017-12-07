@@ -2,7 +2,7 @@ import keymirror from 'keymirror';
 
 export default keymirror({
 
-  APP_REFRESH_LIBRARY : null,
+  APP_LIBRARY_REFRESH : null,
   APP_REFRESH_CONFIG  : null,
 
   APP_FILTER_SEARCH : null,

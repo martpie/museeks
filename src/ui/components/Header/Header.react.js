@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import Input from 'react-simple-input';
 import KeyBinding from 'react-keybinding-component';
 
@@ -8,6 +9,7 @@ import WindowControls from './WindowControls.react';
 import PlayerControls from './PlayerControls.react';
 
 import AppActions from '../../actions/AppActions';
+import { config } from '../../lib/app';
 
 
 /*
@@ -16,7 +18,7 @@ import AppActions from '../../actions/AppActions';
 |--------------------------------------------------------------------------
 */
 
-export default class Header extends Component {
+class Header extends Component {
   static propTypes = {
     playerStatus: PropTypes.string,
     queue: PropTypes.array,
@@ -32,8 +34,8 @@ export default class Header extends Component {
     this.onKey = this.onKey.bind(this);
   }
 
-  getTopHeader() {
-    if(this.props.useNativeFrame) return null;
+  getTopHeader(props) {
+    if (props.useNativeFrame) return null;
 
     return (
       <div className='top-header'>
@@ -57,21 +59,23 @@ export default class Header extends Component {
   }
 
   render() {
+    const { playerStatus, queue, queueCursor, shuffle, repeat } = this.props;
+
     return (
       <header>
-        { this.getTopHeader() }
+        { this.getTopHeader(this.props) }
         <div className='main-header'>
           <div className='col-main-controls'>
             <PlayerControls
-              playerStatus={this.props.playerStatus}
+              playerStatus={playerStatus}
             />
           </div>
           <div className='col-player-infos'>
             <PlayingBar
-              queue={this.props.queue}
-              queueCursor={this.props.queueCursor}
-              shuffle={this.props.shuffle}
-              repeat={this.props.repeat}
+              queue={queue}
+              queueCursor={queueCursor}
+              shuffle={shuffle}
+              repeat={repeat}
             />
           </div>
           <div className="col-search-controls">
@@ -91,3 +95,14 @@ export default class Header extends Component {
     );
   }
 }
+
+const mapStateToProps = ({ player }) => ({
+  playerStatus: player.playerStatus,
+  repeat: player.repeat,
+  shuffle: player.shuffle,
+  queue: player.queue,
+  queueCursor: player.queueCursor,
+  useNativeFrame: config.get('useNativeFrame'),
+});
+
+export default connect(mapStateToProps)(Header);

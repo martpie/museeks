@@ -32,7 +32,7 @@ export default class SettingsAudio extends Component {
           <h4>Playback rate</h4>
           <div className='formGroup'>
             <label>
-                          Increase the playback rate: a value of 2 will play your music at a 2x speed
+              Increase the playback rate: a value of 2 will play your music at a 2x speed
             </label>
             <input type='number'
               className='form-control'

@@ -1,7 +1,5 @@
 'use strict';
 
-process.env.NODE_ENV = 'production'; // Drastically increase performances
-
 const path     = require('path');
 const os       = require('os');
 const electron = require('electron');
@@ -84,6 +82,9 @@ app.on('ready', () => {
 
   // ... and load our html page
   mainWindow.loadURL(`file://${srcPath}/app.html#/library`);
+
+  // Open dev tools if museeks is run in edbug mode
+  if (process.argv.includes('--enable-logging')) mainWindow.openDevTools();
 
   mainWindow.on('closed', () => {
     // Dereference the window object

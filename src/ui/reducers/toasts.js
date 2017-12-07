@@ -1,21 +1,17 @@
-import AppConstants from '../constants/AppConstants';
+import types from '../constants/action-types';
 
-export default (state = {}, payload) => {
+const initialState = [];
+
+export default (state = initialState, payload) => {
   switch (payload.type) {
-    case(AppConstants.APP_TOAST_ADD): {
-      const toasts = [...state.toasts, payload.toast];
-      return {
-        ...state,
-        toasts,
-      };
+    case(types.APP_TOAST_ADD): {
+      const toasts = [...state, payload.toast];
+      return toasts;
     }
 
-    case(AppConstants.APP_TOAST_REMOVE): {
-      const toasts = [...state.toasts].filter((n) => n._id !== payload._id);
-      return {
-        ...state,
-        toasts,
-      };
+    case(types.APP_TOAST_REMOVE): {
+      const toasts = [...state].filter((n) => n._id !== payload._id);
+      return toasts;
     }
 
     default: {

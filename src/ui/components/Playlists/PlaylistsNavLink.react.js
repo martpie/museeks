@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { Link } from 'react-router';
+import { NavLink } from 'react-router-dom';
 
 
 /*
@@ -28,14 +28,14 @@ export default class PlaylistsNavLink extends Component {
 
   render() {
     return (
-      <Link
+      <NavLink
         className='playlist-link'
         activeClassName='active'
         to={`/playlists/${this.props.playlistId}`}
         onContextMenu={this.onContextMenu}
       >
         { this.props.children }
-      </Link>
+      </NavLink>
     );
   }
 }

@@ -3,7 +3,7 @@ import { Button } from 'react-bootstrap';
 
 import ExternalLink from '../Shared/ExternalLink.react';
 
-import app from '../../lib/app';
+import * as app from '../../lib/app';
 
 import AppActions from '../../actions/AppActions';
 
@@ -30,7 +30,7 @@ export default class SettingsAbout extends Component {
           <h4>About Museeks</h4>
           <img src={museeksLogo} className='logo-museeks' alt='Logo' title='Museeks logo' />
           <p>
-                        Museeks { app.version }{ ' - ' }
+            Museeks { app.version }{ ' - ' }
             <ExternalLink href='http://museeks.io'>museeks.io</ExternalLink>
             { ' - ' }
             <ExternalLink href={`https://github.com/KeitIG/Museeks/releases/tag/${app.version}`}>release notes</ExternalLink>
