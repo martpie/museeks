@@ -27,7 +27,7 @@ module.exports = {
   entry: {
     main: ['./src/ui/main.js'],
   },
-  target: 'electron',
+  target: 'electron-renderer',
   output: {
     path: `${__dirname}/src/dist`,
     filename: 'bundle.js',
