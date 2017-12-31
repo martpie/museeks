@@ -1,27 +1,8 @@
 'use strict';
 
-const webpack = require('webpack');
+const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const BabiliPlugin = require('babili-webpack-plugin');
-const CleanTerminalPlugin = require('clean-terminal-webpack-plugin');
 
-const minimist = require('minimist');
-const path     = require('path');
-
-const commandline = minimist(process.argv.slice(2));
-
-const pluginsList = [
-  new ExtractTextPlugin({ filename: 'main.css', allChunks: true }),
-];
-
-let devtool;
-if (commandline.env === 'production') {
-  pluginsList.push(new BabiliPlugin());
-  pluginsList.push(new webpack.DefinePlugin({ 'process.env': { 'NODE_ENV': '"production"' } }));
-} else {
-  pluginsList.push(new CleanTerminalPlugin());
-  devtool = 'inline-source-map';
-}
 
 module.exports = {
   entry: {
@@ -90,6 +71,7 @@ module.exports = {
       },
     ],
   },
-  plugins: pluginsList,
-  devtool,
+  plugins: [
+    new ExtractTextPlugin({ filename: 'main.css', allChunks: true }),
+  ],
 };
