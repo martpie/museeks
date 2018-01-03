@@ -10,7 +10,7 @@ module.exports = merge(common, {
     new BabiliPlugin({}, { sourceMap: true }),
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: JSON.stringify('production'),
+        NODE_ENV: '"production"',
       },
     }),
   ],
