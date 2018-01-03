@@ -551,7 +551,7 @@ babel-messages@^6.23.0:
   dependencies:
     babel-runtime "^6.22.0"
 
-babel-minify-webpack-plugin@^0.2.0:
+babel-minify-webpack-plugin@0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/babel-minify-webpack-plugin/-/babel-minify-webpack-plugin-0.2.0.tgz#ef9694d11a1b8ab8f3204d89f5c9278dd28fc2a9"
   dependencies:
@@ -1495,7 +1495,7 @@ classnames@2.2.5, classnames@^2.2.1, classnames@^2.2.5:
   version "2.2.5"
   resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.2.5.tgz#fb3801d453467649ef3603c7d61a02bd129bde6d"
 
-clean-terminal-webpack-plugin@^1.0.1:
+clean-terminal-webpack-plugin@1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/clean-terminal-webpack-plugin/-/clean-terminal-webpack-plugin-1.0.1.tgz#70d25b845f1bd5254bd4f5e8351e752d21872b1f"
 
@@ -2118,7 +2118,7 @@ electron-to-chromium@^1.2.7, electron-to-chromium@^1.3.27:
   version "1.3.27"
   resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.27.tgz#78ecb8a399066187bb374eede35d9c70565a803d"
 
-electron@^1.7.9:
+electron@1.7.9:
   version "1.7.9"
   resolved "https://registry.yarnpkg.com/electron/-/electron-1.7.9.tgz#add54e9f8f83ed02f6519ec10135f698b19336cf"
   dependencies:
@@ -4852,7 +4852,7 @@ react-router-bootstrap@0.24.4:
   dependencies:
     prop-types "^15.5.10"
 
-react-router-dom@^4.2.2:
+react-router-dom@4.2.2:
   version "4.2.2"
   resolved "https://registry.yarnpkg.com/react-router-dom/-/react-router-dom-4.2.2.tgz#c8a81df3adc58bba8a76782e946cbd4eae649b8d"
   dependencies:
@@ -4881,7 +4881,7 @@ react-simple-input@0.4.0:
   dependencies:
     prop-types "^15.5.10"
 
-react-svg-inline@^2.0.0:
+react-svg-inline@2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/react-svg-inline/-/react-svg-inline-2.0.1.tgz#a8ce9d0c3cc4af8b8cc13cf3f71af1e07c7359e4"
   dependencies:
@@ -4992,7 +4992,7 @@ reduce-function-call@^1.0.1:
   dependencies:
     balanced-match "^0.4.2"
 
-redux-logger@^3.0.6:
+redux-logger@3.0.6:
   version "3.0.6"
   resolved "https://registry.yarnpkg.com/redux-logger/-/redux-logger-3.0.6.tgz#f7555966f3098f3c88604c449cf0baf5778274bf"
   dependencies:
@@ -5983,7 +5983,7 @@ watchpack@^1.4.0:
     chokidar "^1.7.0"
     graceful-fs "^4.1.2"
 
-webpack-merge@^4.1.1:
+webpack-merge@4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/webpack-merge/-/webpack-merge-4.1.1.tgz#f1197a0a973e69c6fbeeb6d658219aa8c0c13555"
   dependencies:
