@@ -113,7 +113,7 @@ const add = (pathsToScan) => {
 
     return Promise.map(folders, (folder) => {
       const pattern = path.join(folder, '**/*.*');
-      return globby(pattern, { nodir: true, follow: true });
+      return globby(pattern, { follow: true });
     });
   }).then((files) => {
     // Merge all path arrays together and filter them with the extensions we support
