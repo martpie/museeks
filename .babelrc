@@ -1,7 +1,7 @@
 {
   "presets": [
     ["env", {
-      "targets": { "chrome": 56 },
+      "targets": { "chrome": 58 },
       "useBuiltIns": true
     }],
     "react"
