@@ -134,7 +134,7 @@ class IpcManager {
 
       const context = Menu.buildFromTemplate(template);
 
-      context.popup(this.window); // Let it appear
+      context.popup(this.window, { async: true }); // Let it appear
     });
 
     ipcMain.on('playlistContextMenu', (event, _id) => {
@@ -155,7 +155,7 @@ class IpcManager {
 
       const context = Menu.buildFromTemplate(template);
 
-      context.popup(this.window); // Let it appear
+      context.popup(this.window, { async: true }); // Let it appear
     });
 
 
