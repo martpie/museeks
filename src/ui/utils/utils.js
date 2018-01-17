@@ -308,7 +308,7 @@ const fetchCover = async (trackPath) => {
   // scan folder for any cover image
   const folder = path.dirname(trackPath);
   const pattern = path.join(folder, '*');
-  const matches = await globby(pattern, { nodir: true, follow: false });
+  const matches = await globby(pattern, { follow: false });
 
   return matches.find((elem) => {
     const parsedPath = path.parse(elem);
