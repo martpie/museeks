@@ -45,8 +45,9 @@ app.on('window-all-closed', () => {
 // initialization and ready for creating browser windows.
 app.on('ready', () => {
   const configManager = new ConfigManager(app);
-  const { useNativeFrame } = configManager.getConfig();
-  let { bounds } = configManager.getConfig();
+  const config = configManager.getConfig();
+  const { useNativeFrame } = config;
+  let { bounds } = config;
 
   bounds = checkBounds(bounds);
 
@@ -98,6 +99,12 @@ app.on('ready', () => {
 
   mainWindow.on('ready-to-show', () => {
     mainWindow.show();
+  });
+
+  // Click on the dock icon to show the app again on macOS
+  app.on('activate', () => {
+    mainWindow.show();
+    mainWindow.focus();
   });
 
   // Prevent webContents from opening new windows (e.g ctrl-click on link)
