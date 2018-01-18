@@ -6,6 +6,7 @@ class IpcManager {
   constructor(window) {
     this.window = window;
     this.instance = {};
+    this.forceQuit = false;
   }
 
   bindEvents() {
@@ -179,9 +180,21 @@ class IpcManager {
       this.window = null;
     });
 
+    // Prevent the window to be closed, hide it instead (to continue audio playback)
     this.window.on('close', (e) => {
-      e.preventDefault();
-      this.window.webContents.send('close');
+      if (this.forceQuit) {
+        app.quit();
+        this.window.destroy();
+      } else {
+        e.preventDefault();
+        this.window.webContents.send('close');
+      }
+    });
+
+    // Small hack to check on MacOS if the dock close action has been clicked
+    // https://stackoverflow.com/questions/35008347/electron-close-w-x-vs-right-click-dock-and-quit#35782702
+    app.on('before-quit', () => {
+      this.forceQuit = true;
     });
   }
 }
