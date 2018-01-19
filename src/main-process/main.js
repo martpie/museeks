@@ -45,8 +45,9 @@ app.on('window-all-closed', () => {
 // initialization and ready for creating browser windows.
 app.on('ready', () => {
   const configManager = new ConfigManager(app);
-  const { useNativeFrame } = configManager.getConfig();
-  let { bounds } = configManager.getConfig();
+  const config = configManager.getConfig();
+  const { useNativeFrame } = config;
+  let { bounds } = config;
 
   bounds = checkBounds(bounds);
 
@@ -64,7 +65,7 @@ app.on('ready', () => {
 
 
     // Browser Window options
-  const mainWindowOption = {
+  const mainWindowOptions = {
     title     : 'Museeks',
     icon      :  os.platform() === 'win32' ? museeksIcons['ico'] : museeksIcons['256'],
     x         :  bounds.x,
@@ -75,10 +76,15 @@ app.on('ready', () => {
     minHeight :  550,
     frame     :  useNativeFrame,
     show      :  false,
+
   };
 
-    // Create the browser window
-  mainWindow = new BrowserWindow(mainWindowOption);
+  if (os.platform() === 'darwin' && !useNativeFrame) {
+    mainWindowOptions.titleBarStyle = 'hiddenInset';
+  }
+
+  // Create the browser window
+  mainWindow = new BrowserWindow(mainWindowOptions);
 
   // ... and load our html page
   mainWindow.loadURL(`file://${srcPath}/app.html#/library`);
@@ -93,6 +99,12 @@ app.on('ready', () => {
 
   mainWindow.on('ready-to-show', () => {
     mainWindow.show();
+  });
+
+  // Click on the dock icon to show the app again on macOS
+  app.on('activate', () => {
+    mainWindow.show();
+    mainWindow.focus();
   });
 
   // Prevent webContents from opening new windows (e.g ctrl-click on link)
