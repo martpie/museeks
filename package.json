@@ -103,7 +103,7 @@
     "react-router": "4.2.0",
     "react-router-bootstrap": "0.24.4",
     "react-router-dom": "4.2.2",
-    "react-simple-input": "0.4.0",
+    "react-simple-input": "0.4.1",
     "react-svg-inline": "2.0.1",
     "redux": "3.7.2",
     "redux-thunk": "2.2.0",
