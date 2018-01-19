@@ -10,6 +10,7 @@ import AppActions from '../../actions/AppActions';
 
 import Player from '../../lib/player';
 import utils  from '../../utils/utils';
+import { isCtrlKey } from '../../utils/utils-platform';
 
 const ipcRenderer = electron.ipcRenderer;
 
@@ -103,7 +104,7 @@ export default class TracksList extends Component {
 
   selectTrack(e, id, index) {
     if(this.isLeftClick(e) || (this.isRightClick(e) && this.isSelectableTrack(id))) {
-      if(e.ctrlKey) {
+      if(isCtrlKey(e.nativeEvent)) {
         this.toggleSelectionById(id);
       } else if (e.shiftKey) {
         this.multiSelect(e, id, index);
