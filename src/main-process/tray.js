@@ -4,7 +4,7 @@ const os = require('os');
 
 const { Tray, Menu, app, ipcMain } = require('electron');
 
-class IpcManager {
+class TrayManager {
   constructor(win, icon) {
     this.tray = null;
     this.trayIcon = icon;
@@ -144,4 +144,4 @@ class IpcManager {
   }
 }
 
-module.exports = IpcManager;
+module.exports = TrayManager;
