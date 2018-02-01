@@ -20,11 +20,11 @@ jobs:
           name: Install dependencies
           command: npm install
       - run:
-          name: ESlint
-          command: npm run ci:eslint
+          name: Lint check
+          command: npm run lint
       - run:
           name: Bundle application
-          command: npm run ci:compile
+          command: npm run build
       - save_cache:
           paths:
             - ./node_modules
