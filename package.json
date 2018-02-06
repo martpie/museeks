@@ -14,16 +14,11 @@
     "url": "https://github.com/KeitIG/museeks/issues"
   },
   "scripts": {
-    "ci:compile": "./node_modules/.bin/webpack --config webpack.prod.js --bail",
-    "ci:eslint": "./node_modules/.bin/eslint . --config .eslintrc",
-    "build:compile": "./node_modules/.bin/webpack --config webpack.prod.js --env.production",
-    "build:eslint": "./node_modules/.bin/eslint . --config .eslintrc",
-    "compile": "webpack --config webpack.prod.js --progress --colors",
-    "lint": "eslint . --config .eslintrc --cache",
+    "build": "webpack --config webpack.prod.js --env.production --progress --colors",
+    "lint": "eslint . --config .eslintrc",
     "dev": "webpack --config webpack.dev.js --progress --colors --watch",
     "museeks": "./node_modules/electron/cli.js .",
     "museeks:debug": "./node_modules/electron/cli.js . --enable-logging",
-    "test": "something",
     "package:lw": "build -lw --ia32 --x64",
     "package:l": "build -l --ia32 --x64",
     "package:w": "build -w --ia32 --x64",
