@@ -20,10 +20,13 @@ jobs:
           name: Install dependencies
           command: npm install
       - run:
-          name: Lint check
-          command: npm run lint
+          name: Lint check: JS
+          command: npm run lint:js
       - run:
-          name: Bundle application
+          name: Lint check: Sass
+          command: npm run lint:sass
+      - run:
+          name: Build application
           command: npm run build
       - save_cache:
           paths:

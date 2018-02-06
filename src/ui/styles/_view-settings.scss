@@ -48,7 +48,7 @@
               border: darken($main-color, 20%);
 
               &:after {
-                content: '\f00c';
+                content: "\f00c";
                 font-family: FontAwesome;
                 font-size: 14px;
                 color: $generic-white;
