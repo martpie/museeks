@@ -7,11 +7,9 @@ $_window-control-close-bg-active: darken($_window-control-close-bg-hover, 5%);
 $_window-control-size: #{$top-header-height}px;
 
 
-/*
-|--------------------------------------------------------------------------
-| Header
-|--------------------------------------------------------------------------
-*/
+//--------------------------------------------------------------------------
+// Header
+//--------------------------------------------------------------------------
 
 main.os-darwin:not(.native-frame) .col-main-controls {
   padding-left: 65px; // let some space for titleBarStyle
@@ -59,7 +57,7 @@ header {
     padding-right: 10px;
   }
 
-  /* .windows-controls */
+  // .windows-controls
   .col-player-infos {
     width: calc(100% - 440px);
 
@@ -186,17 +184,17 @@ header {
               border-bottom: 0;
             }
 
-            /* Stroke */
+            // Stroke
             &::before {
               top: 18px;
               left: 5px;
 
-              /* If 1px darken stroke slightly */
+              // If 1px darken stroke slightly
               border-top-color: #CECECE;
               border-width: 6px;
             }
 
-            /* Fill */
+            // Fill
             &::after {
               top: 18px;
               left: 6px;
@@ -358,14 +356,14 @@ header {
               &:hover .remove {
                 visibility: visible;
               }
-            } /* .track */
+            } // .track
           }
         }
       }
     }
-    /* .now-playing */
+    // .now-playing
   }
-  /* .player-controls */
+  // .player-controls
 
   .col-search-controls {
     width: 220px;
