@@ -66,7 +66,7 @@ app.on('ready', () => {
     '48': nativeImage.createFromPath(path.join(logosPath, 'museeks-48.png')),
     '32': nativeImage.createFromPath(path.join(logosPath, 'museeks-32.png')),
     'ico': nativeImage.createFromPath(path.join(logosPath, 'museeks.ico')),
-    'tray': nativeImage.createFromPath(trayIconPath).resize({ width: 24, height: 24 }),
+    'tray': nativeImage.createFromPath(trayIconPath),
     'tray-ico': nativeImage.createFromPath(trayIconIcoPath),
   };
 
