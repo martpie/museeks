@@ -52,6 +52,13 @@ app.on('ready', () => {
   bounds = checkBounds(bounds);
 
   const logosPath = path.join(appRoot, 'src', 'images', 'logos');
+  const trayIconPath = (config.trayIcon === 'dark')
+    ? path.join(logosPath, 'museeks-tray-dark.png')
+    : path.join(logosPath, 'museeks-tray.png');
+  const trayIconIcoPath = (config.trayIcon === 'dark')
+    ? path.join(logosPath, 'museeks-tray-dark.ico')
+    : path.join(logosPath, 'museeks-tray.ico'); 
+
   const museeksIcons = {
     '256': nativeImage.createFromPath(path.join(logosPath, 'museeks.png')),
     '128': nativeImage.createFromPath(path.join(logosPath, 'museeks-128.png')),
@@ -59,8 +66,8 @@ app.on('ready', () => {
     '48': nativeImage.createFromPath(path.join(logosPath, 'museeks-48.png')),
     '32': nativeImage.createFromPath(path.join(logosPath, 'museeks-32.png')),
     'ico': nativeImage.createFromPath(path.join(logosPath, 'museeks.ico')),
-    'tray': nativeImage.createFromPath(path.join(logosPath, 'museeks-tray.png')).resize({ width: 24, height: 24 }),
-    'tray-ico': nativeImage.createFromPath(path.join(logosPath, 'museeks-tray.ico')),
+    'tray': nativeImage.createFromPath(trayIconPath).resize({ width: 24, height: 24 }),
+    'tray-ico': nativeImage.createFromPath(trayIconIcoPath),
   };
 
 
