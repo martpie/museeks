@@ -4,8 +4,8 @@
 |--------------------------------------------------------------------------
 */
 
-@import 'variables';
-@import 'mixins';
+@import "variables";
+@import "mixins";
 
 
 
@@ -15,7 +15,7 @@
 |--------------------------------------------------------------------------
 */
 
-@import 'fonts';
+@import "fonts";
 
 
 
@@ -25,8 +25,8 @@
 |--------------------------------------------------------------------------
 */
 
-@import 'overrides-bootstrap';
-@import 'overrides-third-parties';
+@import "overrides-bootstrap";
+@import "overrides-third-parties";
 
 /*
 |--------------------------------------------------------------------------
@@ -34,7 +34,7 @@
 |--------------------------------------------------------------------------
 */
 
-@import 'bootstrap-sharper';
+@import "bootstrap-sharper";
 
 /*
 |--------------------------------------------------------------------------
@@ -42,11 +42,11 @@
 |--------------------------------------------------------------------------
 */
 
-@import 'general';
-@import 'toasts';
+@import "general";
+@import "toasts";
 
-@import 'header';
-@import 'footer';
+@import "header";
+@import "footer";
 
 
 
@@ -56,10 +56,10 @@
 |--------------------------------------------------------------------------
 */
 
-@import 'view-common';
-@import 'view-library';
-@import 'view-playlists';
-@import 'view-settings';
+@import "view-common";
+@import "view-library";
+@import "view-playlists";
+@import "view-settings";
 
 
 
@@ -69,4 +69,4 @@
 |--------------------------------------------------------------------------
 */
 
-@import 'themes/theme-dark';
+@import "themes/theme-dark";
