@@ -32,14 +32,23 @@ class Playlist extends Component {
     AppActions.playlists.load(this.props.match.params.playlistId);
   }
 
+  componentWillReceiveProps(nextProps) {
+    const playlistId = this.props.match.params.playlistId;
+    const nextPlaylistId = nextProps.match.params.playlistId;
+
+    if(nextPlaylistId !== playlistId) {
+      AppActions.playlists.load(nextPlaylistId);
+    }
+  }
+
   render() {
-    const { tracks, trackPlayingId, playerStatus, playlists } = this.props;
+    const { tracks, trackPlayingId, playerStatus, playlists, match } = this.props;
 
     if(Array.isArray(tracks) && tracks.length > 0) {
       return (
         <TracksList
           type='playlist'
-          currentPlaylist={this.props.match.params.playlistId}
+          currentPlaylist={match.params.playlistId}
           tracks={tracks}
           trackPlayingId={trackPlayingId}
           playlists={playlists}
