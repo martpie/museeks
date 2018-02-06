@@ -6,13 +6,20 @@ $_window-control-close-bg-hover: rgb(196, 36, 36);
 $_window-control-close-bg-active: darken($_window-control-close-bg-hover, 5%);
 $_window-control-size: #{$top-header-height}px;
 
-/*
-|--------------------------------------------------------------------------
-| Draggable region (zone able to move the window)
-|--------------------------------------------------------------------------
-*/
+
+//--------------------------------------------------------------------------
+// Header
+//--------------------------------------------------------------------------
+
+main.os-darwin:not(.native-frame) .col-main-controls {
+  padding-left: 65px; // let some space for titleBarStyle
+}
 
 header {
+  background-color: rgb(244, 244, 244);
+  color: $_header-color;
+
+  // Draggable region (zone able to move the window)
   flex: 0 0 auto;
   -webkit-app-region: drag;
 
@@ -24,19 +31,7 @@ header {
   .window-controls {
     -webkit-app-region: no-drag;
   }
-}
-
-
-
-/*
-|--------------------------------------------------------------------------
-| Header
-|--------------------------------------------------------------------------
-*/
-
-header {
-  background-color: rgb(244, 244, 244);
-  color: $_header-color;
+  // End of draggable region
 
   .top-header {
     display: flex;
@@ -54,13 +49,6 @@ header {
     height: #{$main-header-height}px;
     border-bottom: 1px solid rgb(210, 210, 210);
   }
-}
-
-main.os-darwin:not(.native-frame) .col-main-controls {
-  padding-left: 65px; // let some space for titleBarStyle
-}
-
-header {
 
   .col-main-controls {
     width: 220px;
@@ -69,7 +57,7 @@ header {
     padding-right: 10px;
   }
 
-  /* .windows-controls */
+  // .windows-controls
   .col-player-infos {
     width: calc(100% - 440px);
 
@@ -196,17 +184,17 @@ header {
               border-bottom: 0;
             }
 
-            /* Stroke */
+            // Stroke
             &::before {
               top: 18px;
               left: 5px;
 
-              /* If 1px darken stroke slightly */
+              // If 1px darken stroke slightly
               border-top-color: #CECECE;
               border-width: 6px;
             }
 
-            /* Fill */
+            // Fill
             &::after {
               top: 18px;
               left: 6px;
@@ -316,7 +304,7 @@ header {
                   z-index: 1;
                   display: block;
                   width: 100%;
-                  content: '';
+                  content: "";
                   border-bottom: solid 3px #459CE7;
                 }
 
@@ -368,14 +356,14 @@ header {
               &:hover .remove {
                 visibility: visible;
               }
-            } /* .track */
+            } // .track
           }
         }
       }
     }
-    /* .now-playing */
+    // .now-playing
   }
-  /* .player-controls */
+  // .player-controls
 
   .col-search-controls {
     width: 220px;
@@ -465,7 +453,7 @@ header {
     &.window-minimize {
 
       &::after {
-        content: '';
+        content: "";
         display: block;
         margin: auto;
         border-bottom: solid 2px #555;
@@ -476,7 +464,7 @@ header {
     &.window-maximize {
 
       &::after {
-        content: '';
+        content: "";
         display: block;
         margin: auto;
         border: solid 1px #555;
@@ -511,7 +499,7 @@ header {
       &::after {
         display: block;
         position: absolute;
-        content: ' ';
+        content: " ";
         height: 11px;
         width: 2px;
         background-color: #555;

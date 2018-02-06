@@ -15,7 +15,8 @@
   },
   "scripts": {
     "build": "webpack --config webpack.prod.js --env.production --progress --colors",
-    "lint": "eslint . --config .eslintrc",
+    "lint:js": "eslint . --config .eslintrc",
+    "lint:sass": "sass-lint --config .sasslintrc -v -q",
     "dev": "webpack --config webpack.dev.js --progress --colors --watch",
     "museeks": "./node_modules/electron/cli.js .",
     "museeks:debug": "./node_modules/electron/cli.js . --enable-logging",
@@ -123,6 +124,7 @@
     "json-loader": "0.5.7",
     "node-sass": "4.7.2",
     "redux-logger": "3.0.6",
+    "sass-lint": "^1.12.1",
     "sass-loader": "6.0.6",
     "style-loader": "0.19.1",
     "svg-inline-loader": "0.8.0",
