@@ -20,11 +20,11 @@ jobs:
           name: Install dependencies
           command: npm install
       - run:
-          name: Lint check: JS
-          command: npm run lint:js
+          name: "Lint check: JS"
+          command: "npm run lint:js"
       - run:
-          name: Lint check: Sass
-          command: npm run lint:sass
+          name: "Lint check: Sass"
+          command: "npm run lint:sass"
       - run:
           name: Build application
           command: npm run build
