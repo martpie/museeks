@@ -2,16 +2,30 @@ version: 2
 jobs:
   build:
     docker:
-      - image: node:7.4.0
+      - image: node:carbon
     working_directory: ~/ci-museeks
     steps:
       - checkout
       - run:
+          name: Display node and npm informations
+          command: |
+            echo "node version $(node -v) running"
+            echo "npm version $(npm -v) running"
+      - restore_cache:
+          keys:
+            - modules-cache-{{ checksum "package-lock.json" }}
+            # fallback to using the latest cache if no exact match is found
+            - modules-cache
+      - run:
           name: Install dependencies
           command: npm install
       - run:
-          name: ESlint
-          command: npm run ci:eslint
+          name: Lint check
+          command: npm run lint
       - run:
           name: Bundle application
-          command: npm run ci:compile
+          command: npm run build
+      - save_cache:
+          paths:
+            - ./node_modules
+          key: modules-cache-{{ checksum "package-lock.json" }}
