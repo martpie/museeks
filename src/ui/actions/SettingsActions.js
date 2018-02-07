@@ -42,7 +42,7 @@ const toggleDarkTrayIcon = (value) => {
   app.config.saveSync();
 
   store.dispatch({
-      type: types.APP_REFRESH_CONFIG,
+    type: types.APP_REFRESH_CONFIG,
   });
 };
 

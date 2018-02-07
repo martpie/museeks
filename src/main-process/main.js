@@ -138,22 +138,22 @@ app.on('ready', () => {
   integrations.enable();
 
   // Update tray icon for gnome-shell
-  if(process.platform === 'linux'){
+  if(process.platform === 'linux') {
     const ps = require('ps-node');
     // detect gnome-shell process
     ps.lookup({
       command: 'gnome-shell',
-    }, function(err, resultList ) {
-        if (err) {
-          throw new Error(err);
-        }
+    }, (err, resultList ) => {
+      if (err) {
+        throw new Error(err);
+      }
  
-        resultList.forEach(function(process){
-          if(process){
-          	// set gnome-shell tray icon
- 		    trayManager.updateTrayIcon(nativeImage.createFromPath(trayIconPath));
-          }
-        });
+      resultList.forEach((process) => {
+        if(process) {
+          // set gnome-shell tray icon
+          trayManager.updateTrayIcon(nativeImage.createFromPath(trayIconPath));
+        }
+      });
     });
   }
 });
