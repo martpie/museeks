@@ -80,6 +80,7 @@
     "globby": "7.1.1",
     "keymirror": "0.1.1",
     "level-js": "2.2.4",
+    "leveldown": "^3.0.0",
     "linvodb3": "3.25.1",
     "musicmetadata": "2.0.5",
     "open-sans-fontface": "1.4.0",
