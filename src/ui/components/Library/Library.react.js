@@ -59,6 +59,10 @@ class Library extends Component {
       return (
         <FullViewMessage>
           <p>Too bad, there is no music in your library =(</p>
+          <p className='sub-message'>
+            <span>nothing found yet, but that's fine, you can always </span>
+            <Link to='/settings/library'>add your music here</Link>
+          </p>
         </FullViewMessage>
       );
     }
