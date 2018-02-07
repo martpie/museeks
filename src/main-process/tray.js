@@ -96,6 +96,10 @@ class TrayManager {
     });
   }
 
+  updateTrayIcon(newIcon) {
+    this.tray.setImage(newIcon);
+  }
+
   show() {
     this.tray = new Tray(this.trayIcon);
 

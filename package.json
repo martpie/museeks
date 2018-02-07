@@ -88,6 +88,7 @@
     "musicmetadata": "2.0.5",
     "open-sans-fontface": "1.4.0",
     "prop-types": "15.6.0",
+    "ps-node": "^0.1.6",
     "queue": "4.4.2",
     "react": "16.2.0",
     "react-bootstrap": "0.32.0",

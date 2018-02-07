@@ -15,7 +15,7 @@ const nativeImage   = electron.nativeImage;
 const BrowserWindow = electron.BrowserWindow; // Module to create native browser window.
 
 const appRoot = path.resolve(__dirname, '../..'); // app/ directory
-const srcPath = path.join(appRoot, 'src'); // app/src/ directory
+const srcPath = path.join(appRoot, 'src'); // app/src/ directoryz
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the javascript object is GCed.
@@ -66,7 +66,7 @@ app.on('ready', () => {
     '48': nativeImage.createFromPath(path.join(logosPath, 'museeks-48.png')),
     '32': nativeImage.createFromPath(path.join(logosPath, 'museeks-32.png')),
     'ico': nativeImage.createFromPath(path.join(logosPath, 'museeks.ico')),
-    'tray': nativeImage.createFromPath(trayIconPath),
+    'tray': nativeImage.createFromPath(trayIconPath).resize({ width: 24, height: 24 }),
     'tray-ico': nativeImage.createFromPath(trayIconIcoPath),
   };
 
@@ -136,6 +136,26 @@ app.on('ready', () => {
   // integrations
   const integrations = new IntegrationManager(mainWindow);
   integrations.enable();
+
+  // Update tray icon for gnome-shell
+  if(process.platform === 'linux'){
+    const ps = require('ps-node');
+    // detect gnome-shell process
+    ps.lookup({
+      command: 'gnome-shell',
+    }, function(err, resultList ) {
+        if (err) {
+          throw new Error(err);
+        }
+ 
+        resultList.forEach(function(process){
+          if(process){
+          	// set gnome-shell tray icon
+ 		    trayManager.updateTrayIcon(nativeImage.createFromPath(trayIconPath));
+          }
+        });
+    });
+  }
 });
 
 
