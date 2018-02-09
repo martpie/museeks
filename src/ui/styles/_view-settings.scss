@@ -32,27 +32,27 @@
 
           input[type="checkbox"] {
             -webkit-appearance: none; // reset everything
-            width: 18px;
-            height: 18px;
-            border-radius: 3px;
-            display: inline-block;
             background-color: $generic-lightgrey;
             border: 1px solid darken($generic-lightgrey, 20%);
-            outline: none;
+            border-radius: 3px;
+            display: inline-block;
+            height: 18px;
             margin-left: -28px;
+            outline: none;
+            width: 18px;
 
             &:checked {
               background-color: $main-color;
               border: darken($main-color, 20%);
 
               &:after {
+                color: $generic-white;
                 content: "\f00c";
                 font-family: FontAwesome;
                 font-size: 14px;
-                color: $generic-white;
+                left: 2px;
                 position: absolute;
                 top: 2px;
-                left: 2px;
               }
             }
           }

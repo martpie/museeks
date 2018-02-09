@@ -7,18 +7,18 @@
   width: 180px;
 
   .react-simple-input {
-    padding: 6px 12px;
     border: 1px solid #C7C7C7;
     color: #555;
+    padding: 6px 12px;
   }
 
   .react-simple-input-clear {
+    color: #777;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 2px;
     position: absolute;
     right: 6px;
     top: 2px;
-    font-size: 16px;
-    color: #777;
-    cursor: pointer;
-    padding: 2px;
   }
 }

@@ -3,21 +3,21 @@
 //--------------------------------------------------------------------------
 
 html {
-  font-size: 12px;
-  user-select: none;
   -webkit-user-select: none;
+  font-size: 12px;
   height: 100%;
   overflow: hidden;
+  user-select: none;
 }
 
 body {
-  font-size: 12px;
-  user-select: none;
   -webkit-user-select: none;
+  border: 1px solid rgb(182, 182, 182);
+  font-family: -apple-system, BlinkMacSystemFont, OpenSans;
+  font-size: 12px;
   height: 100%;
   overflow: hidden;
-  font-family: -apple-system, BlinkMacSystemFont, OpenSans;
-  border: 1px solid rgb(182, 182, 182);
+  user-select: none;
 }
 
 * {
@@ -29,28 +29,28 @@ button {
 }
 
 ::-webkit-scrollbar {
-  width: 5px;
   background-color: #DDD;
+  width: 5px;
 }
 
 ::-webkit-scrollbar-thumb {
   background: rgba(0, 0, 0, .25);
 }
 
-input[type=range] {
+input[type="range"] {
   -webkit-appearance: none;
-  outline: none;
   cursor: pointer;
+  outline: none;
 
   &::-webkit-slider-thumb {
     -webkit-appearance: none;
-    height: 12px;
-    width: 12px;
-    border-radius: 6px;
     background-color: $generic-white;
     border: 1px solid #AAA;
+    border-radius: 6px;
+    height: 12px;
     position: relative;
     top: -5px;
+    width: 12px;
   }
 
   &::-webkit-slider-runnable-track {

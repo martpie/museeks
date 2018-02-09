@@ -3,20 +3,20 @@
 //--------------------------------------------------------------------------
 
 footer {
-  flex: 0 0 auto;
-  border-top: 1px solid #AAA;
-  padding-top: 5px;
-  padding-bottom: 5px;
   background-color: rgb(244, 244, 244);
+  border-top: 1px solid #AAA;
+  flex: 0 0 auto;
   padding: 0;
+  padding-bottom: 5px;
+  padding-top: 5px;
   width: 100%;
 
   .view-switcher {
 
     .btn {
       background-color: transparent;
-      border-top: 0;
       border-bottom: 0;
+      border-top: 0;
 
       &.btn-default:hover {
         background-color: transparent;
@@ -24,9 +24,9 @@ footer {
 
       &.btn-default.active,
       &.btn-default:active {
-        box-shadow: none;
         -webkit-box-shadow: none;
         background-color: #e6e6e6;
+        box-shadow: none;
       }
 
       &.btn-default.active {
@@ -37,17 +37,17 @@ footer {
 
 
   .status {
-    font-size: 12px;
-    padding-top: 7px;
-    padding-bottom: 7px;
     color: #888;
+    font-size: 12px;
+    padding-bottom: 7px;
+    padding-top: 7px;
 
     .progress {
       display: inline-block;
-      width: 100%;
-      vertical-align: middle;
       height: 5px;
       margin-bottom: 0;
+      vertical-align: middle;
+      width: 100%;
 
       .progress-bar {
         background-color: $main-color;
