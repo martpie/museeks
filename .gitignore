@@ -60,6 +60,6 @@ typings/
 src/dist
 dist/
 cache/
-build/dist
+build/
 
 .DS_Store
