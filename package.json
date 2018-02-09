@@ -28,6 +28,9 @@
   "build": {
     "appId": "io.museeks.app",
     "electronVersion": "1.7.9",
+    "directories": {
+      "output": "build"
+    },
     "files": [
       "src/*",
       "src/dist/**/*",
