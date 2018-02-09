@@ -9,7 +9,6 @@ class TrayManager {
     this.tray = null;
     this.trayIcon = icon;
     this.win = win;
-    this.contextMenu;
 
     this.songDetails = [
       {

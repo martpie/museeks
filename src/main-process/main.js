@@ -96,7 +96,7 @@ app.on('ready', () => {
   // ... and load our html page
   mainWindow.loadURL(`file://${srcPath}/app.html#/library`);
 
-  // Open dev tools if museeks is run in edbug mode
+  // Open dev tools if museeks is run in debug mode
   if (process.argv.includes('--enable-logging')) mainWindow.openDevTools();
 
   mainWindow.on('closed', () => {
@@ -132,30 +132,12 @@ app.on('ready', () => {
   const trayManager = new TrayManager(mainWindow, trayIcon);
   trayManager.bindEvents();
   trayManager.show();
+  mainWindow.trayManager = trayManager;
+  mainWindow.appConfig = config;
 
   // integrations
   const integrations = new IntegrationManager(mainWindow);
   integrations.enable();
-
-  // Update tray icon for gnome-shell
-  if(process.platform === 'linux') {
-    const ps = require('ps-node');
-    // detect gnome-shell process
-    ps.lookup({
-      command: 'gnome-shell',
-    }, (err, resultList ) => {
-      if (err) {
-        throw new Error(err);
-      }
- 
-      resultList.forEach((process) => {
-        if(process) {
-          // set gnome-shell tray icon
-          trayManager.updateTrayIcon(nativeImage.createFromPath(trayIconPath));
-        }
-      });
-    });
-  }
 });
 
 
