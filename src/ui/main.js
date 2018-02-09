@@ -34,5 +34,5 @@ ReactDOM.render(
   <Provider store={store}>
     <Router />
   </Provider>,
-  document.getElementById('wrap')
+  document.getElementById('wrap'),
 );

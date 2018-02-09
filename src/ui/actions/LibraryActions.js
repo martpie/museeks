@@ -1,3 +1,10 @@
+import electron from 'electron';
+import fs from 'fs';
+import path from 'path';
+import globby from 'globby';
+import Promise from 'bluebird';
+import queue from 'queue';
+
 import store from '../store.js';
 
 import types from '../constants/action-types';
@@ -6,11 +13,6 @@ import AppActions from './AppActions';
 import * as app from '../lib/app';
 import utils from '../utils/utils';
 
-import fs      from 'fs';
-import path    from 'path';
-import globby  from 'globby';
-import Promise from 'bluebird';
-import queue   from 'queue';
 
 const dialog = electron.remote.dialog;
 const statAsync = Promise.promisify(fs.stat);

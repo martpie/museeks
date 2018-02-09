@@ -2,6 +2,7 @@
 
 const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 
 module.exports = {
@@ -10,7 +11,7 @@ module.exports = {
   },
   target: 'electron-renderer',
   output: {
-    path: `${__dirname}/src/dist`,
+    path: `${__dirname}/dist`,
     filename: 'bundle.js',
     publicPath: '',
   },
@@ -73,5 +74,9 @@ module.exports = {
   },
   plugins: [
     new ExtractTextPlugin({ filename: 'main.css', allChunks: true }),
+    new HtmlWebpackPlugin({
+      title: 'Museeks',
+      template: 'src/app.html',
+    }),
   ],
 };
