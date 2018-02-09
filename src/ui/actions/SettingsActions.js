@@ -1,10 +1,12 @@
+import electron from 'electron';
+import semver from 'semver';
+
 import store from '../store.js';
 import types  from '../constants/action-types';
 import AppActions    from './AppActions';
 
 import * as app from '../lib/app';
 
-import semver from 'semver';
 
 const ipcRenderer = electron.ipcRenderer;
 

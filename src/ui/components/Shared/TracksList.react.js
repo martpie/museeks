@@ -1,3 +1,4 @@
+import electron from 'electron';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import KeyBinding from 'react-keybinding-component';

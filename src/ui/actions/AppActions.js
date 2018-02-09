@@ -1,3 +1,5 @@
+import electron from 'electron';
+
 import Player from '../lib/player';
 import { browserWindows, config }  from '../lib/app';
 import utils from '../utils/utils';

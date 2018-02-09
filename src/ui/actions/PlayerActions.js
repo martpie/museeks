@@ -1,3 +1,5 @@
+import electron from 'electron';
+
 import store from '../store.js';
 import types  from '../constants/action-types';
 
@@ -8,7 +10,7 @@ import Player from '../lib/player';
 import utils from '../utils/utils';
 import { shuffleTracks } from '../utils/utils-player';
 
-const ipcRenderer    = electron.ipcRenderer;
+const ipcRenderer = electron.ipcRenderer;
 
 const audioErrors = {
   aborted:  'The video playback was aborted.',
