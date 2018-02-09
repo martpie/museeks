@@ -42,7 +42,8 @@
       "category": "public.app-category.music",
       "target": [
         "dmg"
-      ]
+      ],
+      "icon": "src/images/logos/museeks.icns"
     },
     "dmg": {
       "contents": [
