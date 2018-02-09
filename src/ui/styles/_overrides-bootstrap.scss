@@ -3,8 +3,8 @@
 //--------------------------------------------------------------------------
 
 .alert {
-  border-left-width: 5px;
   background-color: $generic-white;
+  border-left-width: 5px;
 
   &.alert-danger,
   &.alert-info,
@@ -116,16 +116,16 @@
 }
 
 .form-control:focus {
-  border-color: #AAAAAA;
+  border-color: #AAA;
   box-shadow: none;
 }
 
 .nav-pills>li>a {
-  transition: border-bottom ease-in-out .2s;
-  padding: 5px;
-  outline: none;
   color: #555;
   font-weight: bold;
+  outline: none;
+  padding: 5px;
+  transition: border-bottom ease-in-out .2s;
 }
 
 .nav-pills>li:not(:last-child)>a {

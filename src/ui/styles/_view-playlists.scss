@@ -6,12 +6,12 @@
   display: flex;
 
   .playlists-nav {
-    width: 240px;
-    border-right: 1px solid #d2d2d2;
     background-color: $generic-lightgrey;
+    border-right: 1px solid #d2d2d2;
     max-height: 100%;
     overflow: hidden;
     position: relative;
+    width: 240px;
 
     .playlists-nav-body {
       max-height: 100%;
@@ -35,58 +35,58 @@
         }
 
         a {
-          display: block;
+          border-color: transparent;
+          border-style: solid;
+          border-width: 1px 0;
           color: inherit;
-          text-overflow: ellipsis;
-          white-space: nowrap;
-          overflow: hidden;
           cursor: pointer;
+          display: block;
+          overflow: hidden;
           padding: 12px 15px;
           text-decoration: none;
-          border-style: solid;
-          border-color: transparent;
-          border-width: 1px 0;
+          text-overflow: ellipsis;
+          white-space: nowrap;
 
           &:hover {
             background-color: #e6e6e6;
           }
 
           &.active {
-            border-style: solid;
-            border-color: #d2d2d2;
-            border-width: 1px 0;
             background-color: #e6e6e6;
+            border-color: #d2d2d2;
+            border-style: solid;
+            border-width: 1px 0;
             color: $main-color;
           }
         }
 
         input[type="text"] {
-          display: block;
-          width: 100%;
           background-color: $generic-white;
-          color: $main-color;
-          padding: 12px 15px;
-          outline: none;
-          border-style: solid;
           border-color: #d2d2d2;
+          border-style: solid;
           border-width: 1px 0;
+          color: $main-color;
+          display: block;
+          outline: none;
+          padding: 12px 15px;
+          width: 100%;
         }
       }
     }
 
     .playlists-nav-footer {
-      position: absolute;
       bottom: 0;
+      position: absolute;
 
       .playlists-management {
-        margin: 10px;
         border: solid 1px #CCC;
+        margin: 10px;
 
         button {
-          text-align: center;
           color: #555;
-          width: 22px;
           text-align: center;
+          text-align: center;
+          width: 22px;
 
           .fa {
             margin-right: 0;

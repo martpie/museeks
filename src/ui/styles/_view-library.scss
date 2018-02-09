@@ -7,28 +7,28 @@
   overflow: hidden;
 
   .tracks-list-container {
-    outline: none;
     height: calc(100% - 26px);
     max-height: calc(100% - 26px);
+    outline: none;
 
     .tracks-list-header {
-      position: absolute;
-      top: 0;
+      background-color: $generic-white;
       border-bottom: 1px solid rgb(210, 210, 210);
       color: #555;
       display: flex;
+      position: absolute;
+      top: 0;
       width: 100%;
-      background-color: $generic-white;
       z-index: 20;
 
       .track-cell-header {
-        font-weight: 700;
-        padding: 0 4px;
         cursor: default;
+        font-weight: 700;
         margin: 4px 0;
-        white-space: nowrap;
         overflow: hidden;
+        padding: 0 4px;
         text-overflow: ellipsis;
+        white-space: nowrap;
 
         &:not(:last-child) {
           border-right: 1px solid #D2D2D2;
@@ -38,20 +38,20 @@
 
     .tracks-list-body {
       height: 100%;
-      max-height: 100%;
       margin-top: 26px;
+      max-height: 100%;
       overflow: auto;
 
       .tracks-list-render-view {
-        overflow-x: hidden !important; // Overriding react-custom-scrollbars
-        margin-bottom: 0 !important; // there is no overflow-x
+        margin-bottom: 0 !important; // Overriding react-custom-scrollbars
+        overflow-x: hidden !important; // there is no overflow-x
       }
 
       .track-vertical {
-        right: 8px;
         background-color: #DDD;
-        top: 8px;
         bottom: 8px;
+        right: 8px;
+        top: 8px;
         z-index: 10;
       }
 
@@ -91,12 +91,12 @@
             }
 
             .cell {
-              padding: 3px 4px;
               cursor: default;
-              white-space: nowrap;
-              overflow: hidden;
-              text-overflow: ellipsis;
               line-height: 24px;
+              overflow: hidden;
+              padding: 3px 4px;
+              text-overflow: ellipsis;
+              white-space: nowrap;
             }
           }
         }

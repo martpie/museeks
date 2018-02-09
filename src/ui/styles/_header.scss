@@ -16,12 +16,12 @@ main.os-darwin:not(.native-frame) .col-main-controls {
 }
 
 header {
+  -webkit-app-region: drag;
   background-color: rgb(244, 244, 244);
-  color: $_header-color;
 
   // Draggable region (zone able to move the window)
+  color: $_header-color;
   flex: 0 0 auto;
-  -webkit-app-region: drag;
 
   .player-controls,
   .now-playing-bar,
@@ -34,27 +34,27 @@ header {
   // End of draggable region
 
   .top-header {
-    display: flex;
-    justify-content: flex-end;
-    height: #{$top-header-height}px;
     background-color: rgba(0, 0, 0, .065);
     border-bottom: 1px solid rgb(210, 210, 210);
+    display: flex;
+    height: #{$top-header-height}px;
+    justify-content: flex-end;
   }
 
   .main-header {
-    padding: 0 10px;
-    display: flex;
     align-items: center;
-    justify-content: space-between;
-    height: #{$main-header-height}px;
     border-bottom: 1px solid rgb(210, 210, 210);
+    display: flex;
+    height: #{$main-header-height}px;
+    justify-content: space-between;
+    padding: 0 10px;
   }
 
   .col-main-controls {
-    width: 220px;
-    display: flex;
     align-items: center;
+    display: flex;
     padding-right: 10px;
+    width: 220px;
   }
 
   // .windows-controls
@@ -62,11 +62,11 @@ header {
     width: calc(100% - 440px);
 
     .now-playing {
-      display: flex;
       align-items: center;
+      display: flex;
       justify-content: space-between;
-      max-width: 600px;
       margin: auto;
+      max-width: 600px;
 
       &.dragging {
         -webkit-app-region: no-drag;
@@ -76,19 +76,19 @@ header {
         width: 60px;
 
         .cover {
-          width: 49px;
-          height: 49px;
-          margin-right: 10px;
+          align-items: center;
           background-position: center;
           background-size: cover;
-          text-align: center;
-          border-style: solid;
           border-color: #D2D2D2;
+          border-style: solid;
           border-width: 0 1px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
           box-sizing: content-box;
+          display: flex;
+          height: 49px;
+          justify-content: center;
+          margin-right: 10px;
+          text-align: center;
+          width: 49px;
 
           .note {
             font-family: monospace; // the sexy one
@@ -102,30 +102,30 @@ header {
         width: calc(100% - 120px);
 
         .now-playing-metas {
-          display: flex;
           align-items: center;
+          display: flex;
           justify-content: center;
           margin-bottom: 4px;
 
           .icon {
-            display: flex;
             align-items: center;
-            justify-content: center;
+            display: flex;
             height: 16px;
+            justify-content: center;
             width: 16px;
           }
 
           .player-options {
-            display: flex;
             align-items: center;
+            display: flex;
             justify-content: flex-start;
             width: 100px;
 
             .button {
-              border: 0;
-              background: transparent;
-              font-size: 18px;
               -webkit-app-region: no-drag;
+              background: transparent;
+              border: 0;
+              font-size: 18px;
 
               &.active {
 
@@ -135,27 +135,27 @@ header {
               }
 
               svg {
-                width: 16px;
                 height: auto;
+                width: 16px;
               }
             }
           }
 
           .metas {
-            white-space: nowrap;
-            text-overflow: ellipsis;
             overflow: hidden;
-            vertical-align: middle;
             text-align: center;
+            text-overflow: ellipsis;
+            vertical-align: middle;
+            white-space: nowrap;
             width: calc(100% - 200px);
           }
 
           .duration {
             display: inline-block;
-            padding: 0 6px;
             font-size: 10px;
-            width: 100px;
+            padding: 0 6px;
             text-align: right;
+            width: 100px;
           }
         }
 
@@ -163,57 +163,57 @@ header {
           position: relative;
 
           .playing-bar-tooltip {
-            position: absolute;
             background-color: $generic-white;
             border: 1px solid #CECECE;
+            bottom: 9px;
             color: $_header-color;
             font-size: 10px;
             padding: 2px 5px;
-            bottom: 9px;
-            z-index: 1;
+            position: absolute;
             transform: translateX(-11px);
+            z-index: 1;
 
             &::before,
             &::after {
+              border-bottom: 0;
+              border-color: transparent;
+              border-style: solid;
               content: "";
+              height: 0;
               position: absolute;
               width: 0;
-              height: 0;
-              border-style: solid;
-              border-color: transparent;
-              border-bottom: 0;
             }
 
             // Stroke
             &::before {
-              top: 18px;
-              left: 5px;
-
-              // If 1px darken stroke slightly
               border-top-color: #CECECE;
               border-width: 6px;
+
+              // If 1px darken stroke slightly
+              left: 5px;
+              top: 18px;
             }
 
             // Fill
             &::after {
-              top: 18px;
-              left: 6px;
               border-top-color: $generic-white;
               border-width: 5px;
+              left: 6px;
+              top: 18px;
             }
           }
 
           .progress {
+            background-color: rgb(219, 219, 219);
+            cursor: pointer;
             height: 5px;
             margin-bottom: 0;
             margin-top: 3px;
-            cursor: pointer;
-            background-color: rgb(219, 219, 219);
 
             .progress-bar {
-              background-color: $main-color;
-              -webkit-transition: none;
               -o-transition: none;
+              -webkit-transition: none;
+              background-color: $main-color;
               transition: none;
             }
           }
@@ -221,52 +221,52 @@ header {
       }
 
       .now-playing-queue {
-        width: 60px;
         position: relative;
+        width: 60px;
 
         .queue-toggle {
-          border: 0;
           background: transparent;
-          font-size: 14px;
+          border: 0;
           box-shadow: none;
+          font-size: 14px;
         }
 
         .queue-dropdown {
 
           .dropdown-menu {
             border: 0;
-            padding: 0;
-            margin: 0;
-            left: auto;
-            right: -15px;
             box-shadow: none;
+            left: auto;
+            margin: 0;
+            padding: 0;
+            right: -15px;
           }
         }
 
         .queue {
-          width: 300px;
           background: $generic-white;
           border: solid 1px rgb(210, 210, 210);
-          text-overflow: ellipsis;
-          overflow-x: hidden;
-          font-size: 12px;
-          color: grey;
           box-shadow: 0 5px 3px -5px rgba(0, 0, 0, .5);
+          color: #808080;
+          font-size: 12px;
+          overflow-x: hidden;
+          text-overflow: ellipsis;
+          width: 300px;
 
           .empty-queue {
+            color: #d3d3d3;
             padding: 20px;
-            color: lightgrey;
           }
 
           .queue-header {
-            padding: 5px 10px;
             background-color: rgb(244, 244, 244);
+            padding: 5px 10px;
 
             .queue-infos {
               float: right;
               font-size: 11px;
-              padding-top: 1px;
               padding-bottom: 1px;
+              padding-top: 1px;
             }
 
             .empty-button {
@@ -280,11 +280,11 @@ header {
             overflow: auto;
 
             .track {
-              position: relative;
+              -webkit-user-drag: element;
+              cursor: pointer;
               padding-bottom: 5px;
               padding-top: 5px;
-              cursor: pointer;
-              -webkit-user-drag: element;
+              position: relative;
 
               &:not(:last-child) {
                 border-bottom: dashed 1px #D8D8D8;
@@ -300,12 +300,12 @@ header {
               &.dragged-over {
 
                 &::after {
-                  position: absolute;
-                  z-index: 1;
-                  display: block;
-                  width: 100%;
-                  content: "";
                   border-bottom: solid 3px #459CE7;
+                  content: "";
+                  display: block;
+                  position: absolute;
+                  width: 100%;
+                  z-index: 1;
                 }
 
                 &.above::after {
@@ -326,10 +326,10 @@ header {
 
                 .title,
                 .other-infos {
-                  padding: 0 10px;
                   color: rgb(51, 51, 51);
-                  text-overflow: ellipsis;
                   overflow: hidden;
+                  padding: 0 10px;
+                  text-overflow: ellipsis;
                   white-space: nowrap;
                 }
               }
@@ -337,13 +337,13 @@ header {
               .remove {
                 color: $_header-color;
                 float: right;
-                width: 25px;
                 height: 25px;
                 line-height: 10px;
-                padding: 3px;
-                margin-top: 5px;
                 margin-right: 5px;
+                margin-top: 5px;
+                padding: 3px;
                 visibility: hidden;
+                width: 25px;
 
                 &:hover,
                 &:focus,
@@ -366,21 +366,21 @@ header {
   // .player-controls
 
   .col-search-controls {
-    width: 220px;
     display: flex;
     justify-content: flex-end;
+    width: 220px;
   }
 }
 
 
 .player-controls {
-  display: flex;
   align-items: center;
+  display: flex;
   position: relative;
 
   .player-control {
-    border: 0;
     background: transparent;
+    border: 0;
     font-size: 16px;
     padding: 0 10px;
 
@@ -391,33 +391,33 @@ header {
 
     &.volume {
       padding: 0;
-      width: 34px;
       position: relative;
+      width: 34px;
     }
 
     i {
-      display: flex;
       align-items: center;
+      display: flex;
     }
   }
 
   .volume-control {
-    position: absolute;
-    z-index: 10;
     background-color: rgb(244, 244, 244);
-    top: -3px;
-    right: 25px;
     display: none;
     padding: 5px 12px;
+    position: absolute;
+    right: 25px;
+    top: -3px;
+    z-index: 10;
 
     &.visible {
       display: block;
     }
 
-    input[type=range] {
-      width: 88px;
-      height: 20px;
+    input[type="range"] {
       background-color: transparent;
+      height: 20px;
+      width: 88px;
     }
   }
 }
@@ -425,22 +425,22 @@ header {
 
 .window-controls {
   display: flex;
-  position: absolute;
-  top: 0;
-  right: 0;
   height: 24px;
+  position: absolute;
+  right: 0;
+  top: 0;
 
 
   .window-control {
-    width: $_window-control-size;
-    font-size: 15px;
-    color: $_header-color;
-    border: 0;
-    text-align: center;
-    padding: 0;
-    line-height: $_window-control-size;
-    background-color: transparent;
     -webkit-app-region: no-drag;
+    background-color: transparent;
+    border: 0;
+    color: $_header-color;
+    font-size: 15px;
+    line-height: $_window-control-size;
+    padding: 0;
+    text-align: center;
+    width: $_window-control-size;
 
     &:hover {
       background-color: $_window-control-bg-hover;
@@ -453,10 +453,10 @@ header {
     &.window-minimize {
 
       &::after {
+        border-bottom: solid 2px #555;
         content: "";
         display: block;
         margin: auto;
-        border-bottom: solid 2px #555;
         width: 10px;
       }
     }
@@ -464,12 +464,12 @@ header {
     &.window-maximize {
 
       &::after {
-        content: "";
-        display: block;
-        margin: auto;
         border: solid 1px #555;
         border-top-width: 2px;
+        content: "";
+        display: block;
         height: 9px;
+        margin: auto;
         width: 10px;
       }
     }
@@ -497,14 +497,14 @@ header {
 
       &::before,
       &::after {
-        display: block;
-        position: absolute;
-        content: " ";
-        height: 11px;
-        width: 2px;
         background-color: #555;
-        top: 7px;
+        content: " ";
+        display: block;
+        height: 11px;
         left: 11px;
+        position: absolute;
+        top: 7px;
+        width: 2px;
       }
 
       &::before {

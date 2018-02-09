@@ -31,6 +31,7 @@ class ConfigManager {
   getDefaultConfig() {
     return {
       theme: 'light',
+      trayIcon: 'default',
       audioVolume: 1,
       audioPlaybackRate: 1,
       audioMuted: false,

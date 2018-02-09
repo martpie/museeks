@@ -35,6 +35,17 @@ const toggleDarkTheme = (value) => {
   });
 };
 
+const toggleDarkTrayIcon = (value) => {
+  const newIcon = value ? 'dark' : 'default';
+
+  app.config.set('trayIcon', newIcon);
+  app.config.saveSync();
+
+  store.dispatch({
+    type: types.APP_REFRESH_CONFIG,
+  });
+};
+
 const toggleSleepBlocker = (value) => {
   app.config.set('sleepBlocker', value);
   app.config.saveSync();
@@ -137,6 +148,7 @@ export default{
   checkTheme,
   toggleAutoUpdateChecker,
   toggleDarkTheme,
+  toggleDarkTrayIcon,
   toggleDevMode,
   toggleDisplayNotifications,
   toggleMinimizeToTray,

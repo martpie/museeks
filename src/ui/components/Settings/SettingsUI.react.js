@@ -33,6 +33,12 @@ export default class SettingsUI extends Component {
           onClick={AppActions.settings.toggleDarkTheme}
         />
         <CheckboxSetting
+          title='Dark tray icon'
+          description='Use dark tray icon'
+          defaultValue={config.trayIcon === 'dark'}
+          onClick={AppActions.settings.toggleDarkTrayIcon}
+        />
+        <CheckboxSetting
           title='Display Notifications'
           description='Allow the app to send native notifications'
           defaultValue={config.displayNotifications}

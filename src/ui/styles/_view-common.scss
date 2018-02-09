@@ -20,16 +20,16 @@
 }
 
 .main-content {
-  width: 100%;
   flex: 1 1 auto;
   position: relative;
+  width: 100%;
 }
 
 .content {
-  position: absolute;
   height: 100%;
-  width: 100%;
   padding: 0;
+  position: absolute;
+  width: 100%;
 
   h2 {
     margin-top: 0;
@@ -51,15 +51,15 @@
 }
 
 .full-message {
+  color: #555;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  height: 100%;
   font-size: 25px;
-  color: #555;
   font-weight: 100;
-  padding: 30px;
+  height: 100%;
+  justify-content: center;
   margin: auto;
+  padding: 30px;
   text-align: center;
 
   .sub-message {
@@ -76,11 +76,11 @@
 }
 
 .dropzone {
-  border: dashed 1px lightgrey;
+  border: dashed 1px #d3d3d3;
+  cursor: pointer;
   margin-bottom: 15px;
   padding: 20px;
   text-align: center;
-  cursor: pointer;
 
   &.dragging {
     border-color: $main-color;
@@ -97,35 +97,35 @@
 }
 
 .playing-indicator {
-  height: 100%;
-  width: 100%;
-  font-size: 10px;
-  display: flex;
   align-items: center;
+  cursor: pointer;
+  display: flex;
+  font-size: 10px;
+  height: 100%;
   justify-content: center;
   transition: transform ease-in-out .25s;
-  cursor: pointer;
+  width: 100%;
 
   &:hover {
     transform: scale(1.1);
   }
 
   .animation {
-    width: 8px;
-    height: 8px;
-    display: flex;
     align-items: flex-end;
+    display: flex;
+    height: 8px;
     justify-content: space-between;
+    width: 8px;
 
     .bar {
-      height: 1px;
-      width: 2px;
       align-items: baseline;
-      background-color: #333;
       animation: bar-animate;
       animation-duration: .8s;
-      animation-timing-function: ease-in-out;
       animation-iteration-count: infinite;
+      animation-timing-function: ease-in-out;
+      background-color: #333;
+      height: 1px;
+      width: 2px;
 
       &.bar-second {
         animation-delay: .55s;

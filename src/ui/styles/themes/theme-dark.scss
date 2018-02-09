@@ -35,8 +35,8 @@ body.theme-dark {
     }
 
     .search {
-      border-color: #232323;
       background-color: #23292b;
+      border-color: #232323;
       color: #EEE;
     }
 
@@ -83,8 +83,8 @@ body.theme-dark {
 
             .empty-button {
               background-color: #33393b;
-              color: #EEE;
               border-color: #23292b;
+              color: #EEE;
             }
           }
 
@@ -153,19 +153,19 @@ body.theme-dark {
   //--------------------------------------------------------------------------
 
   footer {
-    border-top-color: #1f1f1f;
     background-color: #33393b;
+    border-top-color: #1f1f1f;
     color: #EEE;
 
     .view-switcher .btn.btn-default {
-      color: #EEE;
-      border-color: #1f1f1f;
       background-color: #33393b;
+      border-color: #1f1f1f;
+      color: #EEE;
 
       &:hover {
-        color: #EEE;
-        border-color: #1f1f1f;
         background-color: #33393b;
+        border-color: #1f1f1f;
+        color: #EEE;
       }
 
       &:focus,
@@ -198,9 +198,9 @@ body.theme-dark {
     .tracks-list-container {
 
       .tracks-list-header {
-        border-bottom: 1px solid #1b1b1b;
         background-color: #23292b;
-        color: #eeeeee;
+        border-bottom: 1px solid #1b1b1b;
+        color: #eee;
 
         .track-cell-header:not(:last-child) {
           border-color: #777;
@@ -247,7 +247,7 @@ body.theme-dark {
     .nav-pills {
 
       &>li>a {
-        color: #eeeeee;
+        color: #eee;
       }
 
       &>li.active>a,
@@ -291,8 +291,8 @@ body.theme-dark {
   .view-playlists {
 
     .playlists-nav {
-      border-right: 1px solid #1f1f1f;
       background-color: #33393b;
+      border-right: 1px solid #1f1f1f;
 
 
       .playlists-nav-body {
@@ -306,18 +306,18 @@ body.theme-dark {
             }
 
             &.active {
-              border-style: solid;
-              border-color: #1f1f1f;
               background-color: #23292b;
+              border-color: #1f1f1f;
+              border-style: solid;
               color: #eee;
             }
           }
 
           input[type="text"] {
             background-color: #23292b;
-            color: #eee;
-            border-style: solid;
             border-color: #1f1f1f;
+            border-style: solid;
+            color: #eee;
           }
         }
       }
@@ -328,8 +328,8 @@ body.theme-dark {
           border: solid 1px #1f1f1f;
 
           button {
-            color: #eee;
             background-color: #33393b;
+            color: #eee;
           }
         }
       }
@@ -362,22 +362,22 @@ body.theme-dark {
 
   button.btn-default {
     background-color: #33393b;
-    color: #eee;
     border-color: #1b1b1b;
+    color: #eee;
 
     &:hover,
     &:active,
     &:focus,
     &:focus:active {
-      color: #EEE;
       background-color: #33393b;
       border-color: #1b1b1b;
+      color: #EEE;
     }
   }
 
   .alert {
-    border-color: #23292b;
     background-color: #33393b;
+    border-color: #23292b;
     color: #EEE;
 
     &.alert-success {
@@ -398,8 +398,8 @@ body.theme-dark {
   }
 
   .form-control {
-    border-color: #6D6D6D;
     background-color: #23292b;
+    border-color: #6D6D6D;
     color: #EEE;
   }
 
