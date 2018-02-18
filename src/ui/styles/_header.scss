@@ -11,7 +11,7 @@ $_window-control-size: #{$top-header-height}px;
 // Header
 //--------------------------------------------------------------------------
 
-main.os-darwin:not(.native-frame) .col-main-controls {
+.root.os-darwin:not(.native-frame) .col-main-controls {
   padding-left: 65px; // let some space for titleBarStyle
 }
 
