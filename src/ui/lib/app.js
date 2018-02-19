@@ -1,3 +1,4 @@
+import electron from 'electron';
 import linvodb  from 'linvodb3';
 import leveljs  from 'level-js';
 import path     from 'path';
