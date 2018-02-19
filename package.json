@@ -28,6 +28,9 @@
   "build": {
     "appId": "io.museeks.app",
     "electronVersion": "1.7.9",
+    "directories": {
+      "output": "build"
+    },
     "files": [
       "src/*",
       "src/dist/**/*",
@@ -39,7 +42,8 @@
       "category": "public.app-category.music",
       "target": [
         "dmg"
-      ]
+      ],
+      "icon": "src/images/logos/museeks.icns"
     },
     "dmg": {
       "contents": [
@@ -120,11 +124,12 @@
     "eslint-plugin-react": "7.5.1",
     "extract-text-webpack-plugin": "3.0.2",
     "file-loader": "1.1.6",
+    "html-webpack-plugin": "2.30.1",
     "install": "0.10.4",
     "json-loader": "0.5.7",
     "node-sass": "4.7.2",
     "redux-logger": "3.0.6",
-    "sass-lint": "^1.12.1",
+    "sass-lint": "1.12.1",
     "sass-loader": "6.0.6",
     "style-loader": "0.19.1",
     "svg-inline-loader": "0.8.0",

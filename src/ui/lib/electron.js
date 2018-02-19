@@ -1,3 +1,5 @@
+import electron from 'electron';
+
 const shell = electron.shell; // electron is currently stored in a global variable
 
 /**

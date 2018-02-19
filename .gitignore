@@ -57,9 +57,8 @@ typings/
 # dotenv environment variables file
 .env
 
-src/dist
 dist/
 cache/
-build/dist
+build/
 
 .DS_Store
