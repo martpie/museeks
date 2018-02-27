@@ -85,7 +85,7 @@ export default class VolumeControl extends Component {
       >
         <Icon name={this.getVolumeIcon(unsmoothifyVolume(this.state.volume), this.state.muted)} />
         <div className={volumeClasses}>
-          <input type={'range'}
+          <input type='range'
             min={0}
             max={1}
             step={0.01}
