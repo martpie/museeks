@@ -13,9 +13,9 @@ jobs:
             echo "npm version $(npm -v) running"
       - restore_cache:
           keys:
-            - modules-cache-{{ checksum "package-lock.json" }}
+            - npm-cache-{{ checksum "package-lock.json" }}
             # fallback to using the latest cache if no exact match is found
-            - modules-cache
+            - mpm-cache
       - run:
           name: Install dependencies
           command: npm install
@@ -31,4 +31,4 @@ jobs:
       - save_cache:
           paths:
             - ./node_modules
-          key: modules-cache-{{ checksum "package-lock.json" }}
+          key: npm-cache-{{ checksum "package-lock.json" }}
