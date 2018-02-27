@@ -69,7 +69,7 @@ export default class QueueListItem extends PureComponent {
         onDragOver={this.onDragOver}
         onDragEnd={this.props.onDragEnd}
       >
-        <Button bsSize={'xsmall'} bsStyle={'link'} className='remove' onClick={this.remove}>
+        <Button bsSize='xsmall' bsStyle='link' className='remove' onClick={this.remove}>
                   &times;
         </Button>
         <div className='track-infos' onDoubleClick={this.play} >
