@@ -97,10 +97,6 @@
   }
 
   .playlist {
-    width: calc(100% - 240px);
-
-    .tracks-list-header {
-      width: calc(100% - 242px); // HACK
-    }
+    flex: 1;
   }
 }

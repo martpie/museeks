@@ -51,22 +51,22 @@ class Museeks extends Component {
   render() {
     const { toasts } = this.props;
 
-    const mainClasses = classnames('main', `os-${os.platform()}`, {
+    const wrapClasses = classnames('root', `os-${os.platform()}`, {
       'native-frame': config.get('useNativeFrame'),
     });
 
     return (
-      <main className={mainClasses}>
+      <div className={wrapClasses}>
         <KeyBinding onKey={this.onKey} preventInputConflict />
         <Header />
-        <div className='main-content container-fluid'>
+        <main className='main-content container-fluid'>
           <Row className='content'>
             {this.props.children}
           </Row>
-        </div>
+        </main>
         <Footer />
         <Toasts toasts={toasts} />
-      </main>
+      </div>
     );
   }
 }

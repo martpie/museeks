@@ -11,7 +11,7 @@ $_window-control-size: #{$top-header-height}px;
 // Header
 //--------------------------------------------------------------------------
 
-main.os-darwin:not(.native-frame) .col-main-controls {
+.root.os-darwin:not(.native-frame) .col-main-controls {
   padding-left: 65px; // let some space for titleBarStyle
 }
 
@@ -119,7 +119,7 @@ header {
             display: flex;
             align-items: center;
             justify-content: flex-start;
-            width: 100px;
+            padding-right: 10px;
 
             .button {
               border: 0;
@@ -147,15 +147,18 @@ header {
             overflow: hidden;
             vertical-align: middle;
             text-align: center;
-            width: calc(100% - 200px);
+            flex: 1;
           }
 
           .duration {
             display: inline-block;
             padding: 0 6px;
             font-size: 10px;
-            width: 100px;
+            padding-left: 10px;
             text-align: right;
+            // force numbers to have the same width and avoid .duration
+            // to have different width based on its content
+            font-variant-numeric: tabular-nums;
           }
         }
 
@@ -280,6 +283,7 @@ header {
             overflow: auto;
 
             .track {
+              display: flex;
               position: relative;
               padding-bottom: 5px;
               padding-top: 5px;
@@ -318,7 +322,7 @@ header {
               }
 
               .track-infos {
-                width: calc(100% - 40px);
+                flex: 1;
 
                 .title {
                   font-weight: bold;
@@ -336,7 +340,6 @@ header {
 
               .remove {
                 color: $_header-color;
-                float: right;
                 width: 25px;
                 height: 25px;
                 line-height: 10px;
