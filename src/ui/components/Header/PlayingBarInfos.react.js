@@ -40,14 +40,14 @@ class PlayingBarInfos extends React.Component {
   }
 
   componentDidMount() {
-    this.timer = setInterval(this.tick, 100); // TODO CPU
+    this.timer = setInterval(this.tick, 250);
 
     window.addEventListener('mousemove', this.dragOver);
     window.addEventListener('mouseup', this.dragEnd);
   }
 
   componentWillUnmount() {
-    clearInterval(this.timer); // TODO CPU
+    clearInterval(this.timer);
 
     window.removeEventListener('mousemove', this.dragOver);
     window.removeEventListener('mouseup', this.dragEnd);
