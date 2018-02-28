@@ -71,7 +71,7 @@ class PlayingBarInfos extends React.Component {
   }
 
   dragOver(e) {
-    // Chack if it's needed to update currentTime
+    // Check if a currentTime update is needed
     if (this.state.dragging) {
       const { trackPlaying } = this.props;
 
