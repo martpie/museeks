@@ -77,7 +77,7 @@ export default class QueueListItem extends PureComponent {
             <span className='artist'>{ track.artist }</span> - <span className='album'>{ track.album }</span>
           </div>
         </div>
-        <Button bsSize={'xsmall'} bsStyle={'link'} className='remove' onClick={this.remove}>
+        <Button bsSize='xsmall' bsStyle='link' className='remove' onClick={this.remove}>
           &times;
         </Button>
       </div>

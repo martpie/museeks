@@ -116,8 +116,8 @@ export default class QueueList extends Component {
             { utils.getStatus(incomingQueue) }
           </div>
           <ButtonGroup>
-            <Button bsSize={'xsmall'} bsStyle={'default'} className='empty-button' onClick={AppActions.queue.clear}>
-                          clear queue
+            <Button bsSize='xsmall' bsStyle='default' className='empty-button' onClick={AppActions.queue.clear}>
+              clear queue
             </Button>
           </ButtonGroup>
         </div>

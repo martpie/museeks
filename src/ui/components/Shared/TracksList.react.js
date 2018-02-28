@@ -344,7 +344,6 @@ export default class TracksList extends Component {
             { this.getTrackTiles() }
           </div>
         </CustomScrollbar>
-
       </div>
     );
   }

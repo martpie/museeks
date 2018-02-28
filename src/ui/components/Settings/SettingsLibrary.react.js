@@ -66,7 +66,7 @@ export default class SettingsLibrary extends Component {
           <ButtonGroup>
             <Button
               bsSize='small'
-              bsStyle={'danger'}
+              bsStyle='danger'
               title='Fully reset the library'
               disabled={this.props.library.refreshing}
               onClick={this.resetLibrary}

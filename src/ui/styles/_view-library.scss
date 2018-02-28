@@ -8,18 +8,16 @@
 
   .tracks-list-container {
     outline: none;
-    height: calc(100% - 26px);
-    max-height: calc(100% - 26px);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 
     .tracks-list-header {
-      position: absolute;
-      top: 0;
       border-bottom: 1px solid rgb(210, 210, 210);
       color: #555;
       display: flex;
       width: 100%;
       background-color: $generic-white;
-      z-index: 20;
 
       .track-cell-header {
         font-weight: 700;
@@ -39,7 +37,6 @@
     .tracks-list-body {
       height: 100%;
       max-height: 100%;
-      margin-top: 26px;
       overflow: auto;
 
       .tracks-list-render-view {
@@ -108,7 +105,7 @@
     }
 
     .cell-track {
-      width: calc(33% - 30px);
+      flex: 1;
     }
 
     .cell-duration {
