@@ -120,9 +120,7 @@ class PlayingBarInfos extends React.Component {
 
   render() {
     const { trackPlaying } = this.props;
-    let elapsedPercent;
-
-    if (this.state.elapsed < trackPlaying.duration) elapsedPercent = this.state.elapsed * 100 / trackPlaying.duration;
+    const elapsedPercent = this.state.elapsed * 100 / trackPlaying.duration;
 
     const nowPlayingTooltipClasses = classnames('playing-bar-tooltip', {
       hidden: this.state.duration === null,
