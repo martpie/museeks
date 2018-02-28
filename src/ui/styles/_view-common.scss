@@ -116,9 +116,10 @@
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
+    overflow: hidden;
 
     .bar {
-      height: 1px;
+      height: 8px;
       width: 2px;
       align-items: baseline;
       background-color: #333;
@@ -145,14 +146,14 @@
 @keyframes bar-animate {
 
   from {
-    height: 0;
+    transform: translate3d(0, 0, 0);
   }
 
   50% {
-    height: 8px;
+    transform: translate3d(0, 8px, 0);
   }
 
   to {
-    height: 0;
+    transform: translate3d(0, 0, 0);
   }
 }
