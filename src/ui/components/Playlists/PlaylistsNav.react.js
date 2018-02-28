@@ -120,7 +120,7 @@ export default class PlaylistsNav extends Component {
       }
 
       return (
-        <div className={'playlist-nav-item'} key={index}>
+        <div className='playlist-nav-item' key={index}>
           { navItemContent }
         </div>
       );
