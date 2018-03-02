@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import AppActions from '../../actions/AppActions';
-
 import classnames from 'classnames';
 
 
@@ -18,6 +16,7 @@ export default class TrackRow extends Component {
     selected: PropTypes.bool,
     trackId: PropTypes.string,
     index: PropTypes.number,
+    onDoubleClick: PropTypes.func,
     onMouseDown: PropTypes.func,
     onContextMenu: PropTypes.func,
   }
@@ -26,7 +25,7 @@ export default class TrackRow extends Component {
     super(props);
     this.state = {};
 
-    this.start = this.start.bind(this);
+    this.onDoubleClick = this.onDoubleClick.bind(this);
     this.onMouseDown   = this.onMouseDown.bind(this);
     this.onContextMenu = this.onContextMenu.bind(this);
   }
@@ -39,8 +38,8 @@ export default class TrackRow extends Component {
     this.props.onContextMenu(e, this.props.index);
   }
 
-  start() {
-    AppActions.player.start(this.props.trackId);
+  onDoubleClick() {
+    this.props.onDoubleClick(this.props.trackId);
   }
 
   render() {
@@ -51,7 +50,7 @@ export default class TrackRow extends Component {
     return (
       <div
         className={trackClasses}
-        onDoubleClick={this.start}
+        onDoubleClick={this.onDoubleClick}
         onMouseDown={this.onMouseDown}
         onContextMenu={this.onContextMenu}
       >

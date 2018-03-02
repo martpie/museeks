@@ -29,10 +29,6 @@ class Playlists extends Component {
     this.autoRedirect = this.autoRedirect.bind(this);
   }
 
-  componentDidMount() {
-    AppActions.library.setTracksCursor('playlist');
-  }
-
   createPlaylist() {
     AppActions.playlists.create('New playlist', true);
   }

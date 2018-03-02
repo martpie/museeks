@@ -8,7 +8,6 @@ const initialState = {
     library: [],
     playlist: [],
   },
-  tracksCursor: 'library', // 'library' or 'playlist'
   search: '',
   loading: true,
   refreshing: false,
@@ -123,17 +122,9 @@ export default (state = initialState, payload) => {
       };
     }
 
-    // TODO REMOVE
-    case(types.APP_LIBRARY_SET_TRACKSCURSOR): {
-      return {
-        ...state,
-        tracksCursor: payload.cursor,
-      };
-    }
-
     case(types.APP_PLAYLISTS_LOAD_ONE): {
       const newState = { ...state };
-      newState.tracks[state.tracksCursor] = [...payload.tracks];
+      newState.tracks.playlist = [...payload.tracks];
 
       return newState;
     }
