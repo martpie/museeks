@@ -28,7 +28,7 @@ class Footer extends Component {
 
   getStatus(props) {
     const { library } = props;
-    const tracks = library.tracks[library.tracksCursor].sub;
+    const tracks = library.tracks[library.tracksCursor];
 
     const progressBarClasses = classnames('library-refresh-progress', {
       'hidden': !this.props.library.refreshing,
