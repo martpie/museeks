@@ -38,17 +38,6 @@ const parseDuration = (duration) => {
 };
 
 /**
- * Format a list of tracks to a nice status
- *
- * @param array tracks
- * @return string
- */
-const getStatus = (tracks) => {
-  const status = parseDuration(tracks.map((d) => d.duration).reduce((a, b) => a + b, 0));
-  return `${tracks.length} tracks, ${status}`;
-};
-
-/**
  * Parse an URI, encoding some characters
  *
  * @param string uri
@@ -320,7 +309,6 @@ const fetchCover = async (trackPath) => {
 
 export default {
   parseDuration,
-  getStatus,
   parseUri,
   simpleSort,
   stripAccents,

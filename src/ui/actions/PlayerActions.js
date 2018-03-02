@@ -56,12 +56,12 @@ const pause = () => {
   }
 };
 
-const start = (_id) => {
+const start = (_id, type) => {
   // TODO (y.solovyov | KeitIG): calling getState is a hack.
   const state = store.getState();
-  const { tracks, tracksCursor } = state.library;
+  const { tracks } = state.library;
   const { shuffle } = state.player;
-  let queue = [...tracks[tracksCursor]];
+  let queue = [...tracks[type]];
   const oldQueue = [...queue];
 
   if(queue.length === 0) return;

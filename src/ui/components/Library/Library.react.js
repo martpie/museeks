@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 
 import FullViewMessage from '../Shared/FullViewMessage.react';
 import TracksList from '../Shared/TracksList.react';
-import AppActions from '../../actions/AppActions';
 import { filterTracks } from '../../utils/utils-library';
 
 
@@ -25,10 +24,6 @@ class Library extends Component {
 
   constructor(props) {
     super(props);
-  }
-
-  componentDidMount() {
-    AppActions.library.setTracksCursor('library');
   }
 
   getLibraryComponent(props) {

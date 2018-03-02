@@ -30,7 +30,6 @@ export default keymirror({
   APP_LIBRARY_REFRESH_START    : null,
   APP_LIBRARY_REFRESH_END      : null,
   APP_LIBRARY_REFRESH_PROGRESS : null,
-  APP_LIBRARY_SET_TRACKSCURSOR : null,
   APP_LIBRARY_REMOVE_TRACKS    : null,
 
   APP_PLAYLISTS_REFRESH  : null,
