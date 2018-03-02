@@ -61,7 +61,7 @@ const start = (_id) => {
   const state = store.getState();
   const { tracks, tracksCursor } = state.library;
   const { shuffle } = state.player;
-  let queue = [...tracks[tracksCursor].sub];
+  let queue = [...tracks[tracksCursor]];
   const oldQueue = [...queue];
 
   if(queue.length === 0) return;
