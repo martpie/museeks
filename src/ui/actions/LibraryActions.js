@@ -37,13 +37,6 @@ const load = async () => {
   }
 };
 
-const setTracksCursor = (cursor) => {
-  store.dispatch({
-    type : types.APP_LIBRARY_SET_TRACKSCURSOR,
-    cursor,
-  });
-};
-
 const resetTracks = () => {
   store.dispatch({
     type : types.APP_LIBRARY_REFRESH,
@@ -244,7 +237,6 @@ const incrementPlayCount = async (source) => {
 export default {
   add,
   load,
-  setTracksCursor,
   resetTracks,
   filterSearch,
   removeFromLibrary,
