@@ -5,16 +5,11 @@ import utils from '../utils/utils';
 
 const initialState = {
   tracks: {
-    library: {
-      all: null,
-      sub: null,
-    },
-    playlist: {
-      all: null,
-      sub: null,
-    },
+    library: [],
+    playlist: [],
   },
-  tracksCursor: 'library', // 'library' or 'playlist'
+  search: '',
+  loading: true,
   refreshing: false,
   refresh: {
     processed: 0,
@@ -29,40 +24,18 @@ export default (state = initialState, payload) => {
       return {
         ...state,
         tracks: {
-          library: {
-            all: [...payload.tracks],
-            sub: [...payload.tracks],
-          },
-          playlist: {
-            all: [],
-            sub: [],
-          },
+          library: [...payload.tracks],
+          playlist: [],
         },
+        loading: false,
       };
     }
 
     case(types.APP_FILTER_SEARCH): {
-      if(!payload.search) {
-        const newState = { ...state };
-        newState.tracks[state.tracksCursor].sub = [...state.tracks[state.tracksCursor].all];
-
-        return newState;
-      }
-
-      const search = utils.stripAccents(payload.search);
-
-      const allCurrentTracks = state.tracks[state.tracksCursor].all;
-      const tracks = [].concat(allCurrentTracks).filter((track) => { // Problem here
-        return track.loweredMetas.artist.join(', ').includes(search)
-          || track.loweredMetas.album.includes(search)
-          || track.loweredMetas.genre.join(', ').includes(search)
-          || track.loweredMetas.title.includes(search);
-      });
-
-      const newState = { ...state };
-      newState.tracks[state.tracksCursor].sub = tracks;
-
-      return newState;
+      return {
+        ...state,
+        search: utils.stripAccents(payload.search),
+      };
     }
 
     case(types.APP_LIBRARY_ADD_FOLDERS): { // TODO Redux -> move to a thunk
@@ -136,15 +109,10 @@ export default (state = initialState, payload) => {
     case(types.APP_LIBRARY_REMOVE_TRACKS): {
       const tracksIds = payload.tracksIds;
       const removeTrack = (track) => !tracksIds.includes(track._id);
+
       const tracks = {
-        library: {
-          all: [...state.tracks.library.all].filter(removeTrack),
-          sub: [...state.tracks.library.sub].filter(removeTrack),
-        },
-        playlist: {
-          all: [...state.tracks.playlist.all].filter(removeTrack),
-          sub: [...state.tracks.playlist.sub].filter(removeTrack),
-        },
+        library: [...state.tracks.library].filter(removeTrack),
+        playlist: [...state.tracks.playlist].filter(removeTrack),
       };
 
       return {
@@ -154,19 +122,10 @@ export default (state = initialState, payload) => {
       };
     }
 
-    case(types.APP_LIBRARY_SET_TRACKSCURSOR): {
-      return {
-        ...state,
-        tracksCursor: payload.cursor,
-      };
-    }
-
     case(types.APP_PLAYLISTS_LOAD_ONE): {
       const newState = { ...state };
-      newState.tracks[state.tracksCursor] = {
-        all: [...payload.tracks],
-        sub: [...payload.tracks],
-      };
+      newState.tracks.playlist = [...payload.tracks];
+
       return newState;
     }
 

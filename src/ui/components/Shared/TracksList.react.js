@@ -40,9 +40,11 @@ export default class TracksList extends Component {
     };
 
     this.showContextMenu  = this.showContextMenu.bind(this);
+    this.startPlayback    = this.startPlayback.bind(this);
     this.scrollTracksList = this.scrollTracksList.bind(this);
     this.selectTrack      = this.selectTrack.bind(this);
     this.onKey            = this.onKey.bind(this);
+    this.onEnter          = this.onEnter.bind(this);
 
     this.rowHeight = 30;
   }
@@ -183,6 +185,7 @@ export default class TracksList extends Component {
             index={trackRowIndex}
             onMouseDown={this.selectTrack}
             onContextMenu={this.showContextMenu}
+            onDoubleClick={this.startPlayback}
           >
             <div className='cell cell-track-playing text-center'>
               { playingIndicator }
@@ -301,7 +304,7 @@ export default class TracksList extends Component {
   }
 
   onEnter(i, tracks) {
-    if(i !== undefined) AppActions.player.start(tracks[i]._id);
+    if(i !== undefined) AppActions.player.start(tracks[i]._id, this.props.type);
   }
 
   showContextMenu(e, index) {
@@ -319,6 +322,10 @@ export default class TracksList extends Component {
       playlists: playlistsList,
       playerStatus: this.props.playerStatus,
     }));
+  }
+
+  startPlayback(_id) {
+    AppActions.player.start(_id, this.props.type);
   }
 
   render() {

@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 import FullViewMessage from '../Shared/FullViewMessage.react';
 import TracksList from '../Shared/TracksList.react';
-import AppActions from '../../actions/AppActions';
-
-import { connect } from 'react-redux';
+import { filterTracks } from '../../utils/utils-library';
 
 
 /*
@@ -27,17 +26,12 @@ class Library extends Component {
     super(props);
   }
 
-  componentDidMount() {
-    AppActions.library.setTracksCursor('library');
-  }
-
   getLibraryComponent(props) {
-    const { library, playerStatus, playlists, player } = props;
-    const tracks = library.tracks[library.tracksCursor];
+    const { library, playerStatus, playlists, player, tracks } = props;
     const trackPlayingId = (player.queue.length > 0 && player.queueCursor !== null) ? player.queue[player.queueCursor]._id : null;
 
     // Loading library
-    if (tracks.all === null) {
+    if (library.loading) {
       return (
         <FullViewMessage>
           <p>Loading library...</p>
@@ -46,7 +40,7 @@ class Library extends Component {
     }
 
     // Empty library
-    if (tracks.all.length === 0) {
+    if (tracks.length === 0 && library.search === '') {
       if (library.refreshing) {
         return (
           <FullViewMessage>
@@ -68,7 +62,7 @@ class Library extends Component {
     }
 
     // Empty search
-    if (tracks.sub.length === 0) {
+    if (tracks.length === 0) {
       return (
         <FullViewMessage>
           <p>Your search returned no results</p>
@@ -85,7 +79,7 @@ class Library extends Component {
       <TracksList
         type='library'
         playerStatus={playerStatus}
-        tracks={tracks.sub}
+        tracks={tracks}
         trackPlayingId={trackPlayingId}
         playlists={playlists}
       />
@@ -101,11 +95,17 @@ class Library extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  playerStatus: state.player.playerStatus,
-  playlists: state.playlists,
-  library: state.library,
-  player: state.player,
-});
+const mapStateToProps = (state) => {
+  const { search, tracks } = state.library;
+  const filteredTracks = filterTracks(tracks.library, search);
+
+  return {
+    playerStatus: state.player.playerStatus,
+    playlists: state.playlists,
+    library: state.library,
+    player: state.player,
+    tracks: filteredTracks,
+  };
+};
 
 export default connect(mapStateToProps)(Library);

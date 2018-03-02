@@ -7,7 +7,7 @@ import QueueListItem  from './QueueListItem.react';
 
 import AppActions from '../../actions/AppActions';
 
-import utils from '../../utils/utils';
+import { getStatus } from '../../utils/utils-library';
 
 
 /*
@@ -113,7 +113,7 @@ export default class QueueList extends Component {
       <div className={queueClasses}>
         <div className='queue-header'>
           <div className='queue-infos'>
-            { utils.getStatus(incomingQueue) }
+            { getStatus(incomingQueue) }
           </div>
           <ButtonGroup>
             <Button bsSize='xsmall' bsStyle='default' className='empty-button' onClick={AppActions.queue.clear}>

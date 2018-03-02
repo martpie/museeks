@@ -7,6 +7,7 @@ import FullViewMessage from '../Shared/FullViewMessage.react';
 import { Link } from 'react-router-dom';
 
 import AppActions from '../../actions/AppActions';
+import { filterTracks } from '../../utils/utils-library';
 
 
 /*
@@ -66,11 +67,16 @@ class Playlist extends Component {
   }
 }
 
-const mapStateToProps = ({ library, playlists, player }) => ({
-  playlists,
-  tracks: library.tracks.playlist.sub,
-  playerStatus: player.playerStatus,
-  trackPlayingId: (player.queue.length > 0 && player.queueCursor !== null) ? player.queue[player.queueCursor]._id : null,
-});
+const mapStateToProps = ({ library, playlists, player }) => {
+  const { search, tracks } = library;
+  const filteredTracks = filterTracks(tracks.playlist, search);
+
+  return {
+    playlists,
+    tracks: filteredTracks,
+    playerStatus: player.playerStatus,
+    trackPlayingId: (player.queue.length > 0 && player.queueCursor !== null) ? player.queue[player.queueCursor]._id : null,
+  };
+};
 
 export default connect(mapStateToProps)(Playlist);

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router';
+import { withRouter, Route, Switch } from 'react-router';
 import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Row, Col, ButtonGroup, ProgressBar } from 'react-bootstrap';
@@ -7,7 +7,7 @@ import Icon from 'react-fontawesome';
 import { connect } from 'react-redux';
 import classnames from 'classnames';
 
-import utils from '../../utils/utils';
+import { getStatus } from '../../utils/utils-library';
 
 
 /*
@@ -28,7 +28,6 @@ class Footer extends Component {
 
   getStatus(props) {
     const { library } = props;
-    const tracks = library.tracks[library.tracksCursor].sub;
 
     const progressBarClasses = classnames('library-refresh-progress', {
       'hidden': !this.props.library.refreshing,
@@ -40,7 +39,23 @@ class Footer extends Component {
       return <ProgressBar className={progressBarClasses} now={progress} />;
     }
 
-    return (tracks !== null) ? utils.getStatus(tracks) : 'An apple a day keeps Dr Dre away';
+
+    return (
+      <Switch>
+        <Route
+          path='/library'
+          render={() => (
+            getStatus(library.tracks.library)
+          )}
+        />
+        <Route
+          path='/playlists'
+          render={() => (
+            getStatus(library.tracks.playlist)
+          )}
+        />
+      </Switch>
+    );
   }
 
   render() {
