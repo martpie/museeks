@@ -26,7 +26,7 @@ const playToggle = () => {
   const { queue, playerStatus } = store.getState().player;
 
   if(playerStatus === 'stop') {
-    start();
+    start(undefined, 'library');
   } else if (paused && queue.length > 0) {
     play();
   } else {
