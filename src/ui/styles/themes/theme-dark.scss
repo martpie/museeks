@@ -201,8 +201,12 @@ body.theme-dark {
         background-color: #23292b;
         color: #eeeeee;
 
-        .track-cell-header:not(:last-child) {
-          border-color: #777;
+        .track-cell-header {
+          &:not(:first-child) {
+            .col-name {
+              border-color: #777;
+            }
+          }
         }
       }
 
