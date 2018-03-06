@@ -143,9 +143,12 @@ const add = (pathsToScan) => {
         }).then(() => {
           scan.processed++;
           callback();
+          return null;
         });
       });
     });
+
+    return null;
   }).catch((err) => {
     console.warn(err);
   });
