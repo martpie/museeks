@@ -127,6 +127,7 @@
       animation-duration: .8s;
       animation-timing-function: ease-in-out;
       animation-iteration-count: infinite;
+      transform: translate3d(0, 8px, 0);
 
       &.bar-second {
         animation-delay: .55s;
@@ -146,14 +147,14 @@
 @keyframes bar-animate {
 
   from {
-    transform: translate3d(0, 0, 0);
-  }
-
-  50% {
     transform: translate3d(0, 8px, 0);
   }
 
-  to {
+  50% {
     transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    transform: translate3d(0, 8px, 0);
   }
 }
