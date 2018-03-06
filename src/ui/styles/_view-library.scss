@@ -6,7 +6,7 @@
 .view-playlists {
   overflow: hidden;
 
-  .tracks-list-container {
+  .tracks-list {
     outline: none;
     display: flex;
     flex-direction: column;
@@ -21,15 +21,42 @@
 
       .track-cell-header {
         font-weight: 700;
-        padding: 0 4px;
         cursor: default;
-        margin: 4px 0;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
+        -webkit-appearance: none;
+        border: 0;
+        background: transparent;
+        display: block;
+        text-align: left;
+        padding: 0;
+        cursor: default;
+        display: flex;
+        align-items: center;
 
-        &:not(:last-child) {
-          border-right: 1px solid #D2D2D2;
+        &.sort:focus {
+          background-color: rgba(0, 0, 0, .025);
+        }
+
+        &.sort:active {
+          background-color: rgba(0, 0, 0, .04);
+        }
+
+        .col-icon {
+          padding-right: 6px;
+        }
+
+        .col-name {
+          flex: 1;
+          margin: 4px 0;
+          padding: 0 4px;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        &:not(:first-child) {
+          .col-name {
+            border-left: 1px solid #D2D2D2;
+          }
         }
       }
     }

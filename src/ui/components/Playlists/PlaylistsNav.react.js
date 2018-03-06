@@ -94,7 +94,7 @@ export default class PlaylistsNav extends Component {
     const { playlists } = this.props;
 
     // TODO (y.solovyov): extract into separate method that returns items
-    const nav = playlists.map((elem, index) => {
+    const nav = playlists.map((elem) => {
       let navItemContent;
 
       if(elem._id === self.state.renamed) {
@@ -120,7 +120,7 @@ export default class PlaylistsNav extends Component {
       }
 
       return (
-        <div className='playlist-nav-item' key={index}>
+        <div className='playlist-nav-item' key={`playlist-${elem._id}`}>
           { navItemContent }
         </div>
       );
