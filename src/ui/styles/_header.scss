@@ -284,6 +284,8 @@ header {
 
             .track {
               display: flex;
+              flex-wrap: nowrap;
+              width: 100%;
               position: relative;
               padding-bottom: 5px;
               padding-top: 5px;
@@ -323,6 +325,7 @@ header {
 
               .track-infos {
                 flex: 1;
+                min-width: 0;
 
                 .title {
                   font-weight: bold;
