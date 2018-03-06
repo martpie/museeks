@@ -335,9 +335,7 @@ export default class TracksList extends Component {
     return (
       <div className='tracks-list'> {/* there used to be a tabIndex={ 0 }, I don't remember why */}
         <KeyBinding onKey={this.onKey} preventInputConflict />
-        <div className='tracks-list-header'>
-          <TracksListHeader enableSort={type === 'library'} />
-        </div>
+        <TracksListHeader enableSort={type === 'library'} />
         <CustomScrollbar
           className='tracks-list-body'
           onScroll={this.scrollTracksList}
