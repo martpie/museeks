@@ -85,7 +85,7 @@
     "keymirror": "0.1.1",
     "level-js": "2.2.4",
     "linvodb3": "3.25.1",
-    "lodash.orderby": "^4.6.0",
+    "lodash.orderby": "4.6.0",
     "musicmetadata": "2.0.5",
     "open-sans-fontface": "1.4.0",
     "prop-types": "15.6.0",
