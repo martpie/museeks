@@ -1,7 +1,6 @@
 import keymirror from 'keymirror';
 
 export default keymirror({
-
   APP_LIBRARY_REFRESH : null,
   APP_REFRESH_CONFIG  : null,
 
@@ -26,6 +25,7 @@ export default keymirror({
   APP_QUEUE_ADD_NEXT  : null,
   APP_QUEUE_SET_QUEUE : null,
 
+  APP_LIBRARY_SORT             : null,
   APP_LIBRARY_RESET            : null,
   APP_LIBRARY_REFRESH_START    : null,
   APP_LIBRARY_REFRESH_END      : null,
