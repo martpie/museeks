@@ -283,7 +283,7 @@ export default class TracksList extends Component {
   onUp(i, tracks) {
     if(i - 1 >= 0) {
       this.setState({ selected : tracks[i - 1]._id }, () => {
-        const container = document.querySelector('.tracks-list .tracks-list-body');
+        const container = document.querySelector('.tracks-list .tracks-list-render-view');
         const nodeOffsetTop = (i - 1) * this.rowHeight;
 
         if(container.scrollTop > nodeOffsetTop) container.scrollTop = nodeOffsetTop;
@@ -294,7 +294,7 @@ export default class TracksList extends Component {
   onDown(i, tracks) {
     if(i + 1 < tracks.length) {
       this.setState({ selected : tracks[i + 1]._id }, () => {
-        const container = document.querySelector('.tracks-list .tracks-list-body');
+        const container = document.querySelector('.tracks-list .tracks-list-render-view');
         const nodeOffsetTop = (i + 1) * this.rowHeight;
 
         if(container.scrollTop + container.offsetHeight <= nodeOffsetTop) {
