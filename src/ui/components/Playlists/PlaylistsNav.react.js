@@ -1,5 +1,6 @@
 import electron from 'electron';
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { ButtonGroup, Button } from 'react-bootstrap';
 import Icon from 'react-fontawesome';
@@ -17,9 +18,10 @@ const ipcRenderer = electron.ipcRenderer;
 |--------------------------------------------------------------------------
 */
 
-export default class PlaylistsNav extends Component {
+class PlaylistsNav extends Component {
   static propTypes = {
     playlists: PropTypes.array,
+    history: PropTypes.object,
   }
 
   constructor(props) {
@@ -29,10 +31,11 @@ export default class PlaylistsNav extends Component {
       renamed: null, // the playlist being renamed if there's one
     };
 
-    this.blur            = this.blur.bind(this);
-    this.focus           = this.focus.bind(this);
-    this.keyDown         = this.keyDown.bind(this);
+    this.blur = this.blur.bind(this);
+    this.focus = this.focus.bind(this);
+    this.keyDown = this.keyDown.bind(this);
     this.showContextMenu = this.showContextMenu.bind(this);
+    this.createPlaylist = this.createPlaylist.bind(this);
   }
 
   componentDidMount() {
@@ -59,7 +62,7 @@ export default class PlaylistsNav extends Component {
   }
 
   createPlaylist() {
-    AppActions.playlists.create('New playlist', true);
+    AppActions.playlists.create('New playlist', true, this.props.history);
   }
 
   rename(_id, name) {
@@ -142,3 +145,5 @@ export default class PlaylistsNav extends Component {
     );
   }
 }
+
+export default withRouter(PlaylistsNav);

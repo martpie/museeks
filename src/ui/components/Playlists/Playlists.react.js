@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Route, Redirect } from 'react-router-dom';
+import { Route, Redirect, withRouter } from 'react-router-dom';
 
 import PlaylistsNav from './PlaylistsNav.react';
 import FullViewMessage from '../Shared/FullViewMessage.react';
@@ -21,16 +21,18 @@ class Playlists extends Component {
     params: PropTypes.object,
     playlists: PropTypes.array,
     playerStatus: PropTypes.string,
+    history: PropTypes.object,
   }
 
   constructor(props) {
     super(props);
 
     this.autoRedirect = this.autoRedirect.bind(this);
+    this.createPlaylist = this.createPlaylist.bind(this);
   }
 
   createPlaylist() {
-    AppActions.playlists.create('New playlist', true);
+    AppActions.playlists.create('New playlist', true, this.props.history);
   }
 
   autoRedirect() {
@@ -83,4 +85,4 @@ const mapStateToProps = ({ playlists, player }) => ({
 });
 
 
-export default connect(mapStateToProps)(Playlists);
+export default withRouter(connect(mapStateToProps)(Playlists));

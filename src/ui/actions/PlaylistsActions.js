@@ -4,8 +4,6 @@ import AppActions    from './AppActions';
 
 import * as app from '../lib/app';
 
-import { hashHistory } from 'react-router';
-
 
 const load = async (_id) => {
   try {
@@ -32,7 +30,7 @@ const refresh = async () => {
   }
 };
 
-const create = async (name, redirect = false) => {
+const create = async (name, redirect = false, history) => {
   const playlist = {
     name,
     tracks: [],
@@ -41,7 +39,7 @@ const create = async (name, redirect = false) => {
   try {
     const doc = await app.models.Playlist.insertAsync(playlist);
     refresh();
-    if (redirect) hashHistory.push(`/playlists/${doc._id}`);
+    if (redirect && history) history.push(`/playlists/${doc._id}`);
     else AppActions.toasts.add('success', `The playlist "${name}" was created`);
     return doc._id;
   } catch (err) {
