@@ -18,7 +18,6 @@ export default class QueueListItem extends PureComponent {
     draggedOver: PropTypes.bool,
     dragPosition: PropTypes.string,
     index: PropTypes.number,
-    key: PropTypes.string,
     track: PropTypes.object,
     onDragStart: PropTypes.func,
     onDragOver: PropTypes.func,
@@ -59,10 +58,10 @@ export default class QueueListItem extends PureComponent {
       'below': this.props.draggedOver && this.props.dragPosition === 'below',
     });
 
-    const { track, key } = this.props;
+    const { track } = this.props;
 
     return (
-      <div key={key}
+      <div
         className={queueContentClasses}
         draggable='true'
         onDragStart={this.onDragStart}
