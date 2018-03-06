@@ -29,6 +29,8 @@
         text-align: left;
         padding: 0;
         cursor: default;
+        display: flex;
+        align-items: center;
 
         &.sort:focus {
           background-color: rgba(0, 0, 0, .025);
@@ -38,7 +40,12 @@
           background-color: rgba(0, 0, 0, .04);
         }
 
+        .col-icon {
+          padding-right: 6px;
+        }
+
         .col-name {
+          flex: 1;
           margin: 4px 0;
           padding: 0 4px;
           white-space: nowrap;
@@ -46,9 +53,9 @@
           text-overflow: ellipsis;
         }
 
-        &:not(:last-child) {
+        &:not(:first-child) {
           .col-name {
-            border-right: 1px solid #D2D2D2;
+            border-left: 1px solid #D2D2D2;
           }
         }
       }

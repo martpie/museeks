@@ -1,26 +1,36 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 import TracksListHeaderCell from './TracksListHeaderCell.react';
 
-import LibraryActions from '../../actions/LibraryActions';
-import * as sort from '../../constants/sort-types';
+import * as SORT from '../../constants/sort-types';
 
 
 class TracksListHeader extends React.Component {
   static propTypes = {
     enableSort: PropTypes.bool,
+    sort: PropTypes.object,
   }
 
-  sort(type) {
-    LibraryActions.sort(type);
+  getIcon(sort, sortType) {
+    if (typeof sort === 'object' && sort.by === sortType) {
+      if (sort.order === SORT.ASC) {
+        return 'angle-up';
+      }
+
+      // Must be DSC then
+      return 'angle-down';
+    }
+
+    return null;
   }
 
   render() {
-    const { enableSort } = this.props;
+    const { enableSort, sort } = this.props;
 
     return (
-      <React.Fragment>
+      <div className='tracks-list-header'>
         <TracksListHeaderCell
           className='cell-track-playing'
           title='&nbsp;'
@@ -28,36 +38,47 @@ class TracksListHeader extends React.Component {
         <TracksListHeaderCell
           className='cell-track'
           title='Title'
-          sortBy={enableSort ? sort.TITLE : null}
-          onClick={enableSort ? this.sort : null}
+          sortBy={enableSort ? SORT.TITLE : null}
+          icon={this.getIcon(sort, SORT.TITLE)}
         />
         <TracksListHeaderCell
           className='cell-duration'
           title='Duration'
-          sortBy={enableSort ? sort.DURATION : null}
-          onClick={enableSort ? this.sort : null}
+          sortBy={enableSort ? SORT.DURATION : null}
+          icon={this.getIcon(sort, SORT.DURATION)}
         />
         <TracksListHeaderCell
           className='cell-artist'
           title='Artist'
-          sortBy={enableSort ? sort.ARTIST : null}
-          onClick={enableSort ? this.sort : null}
+          sortBy={enableSort ? SORT.ARTIST : null}
+          icon={this.getIcon(sort, SORT.ARTIST)}
         />
         <TracksListHeaderCell
           className='cell-album'
           title='Album'
-          sortBy={enableSort ? sort.ALBUM : null}
-          onClick={enableSort ? this.sort : null}
+          sortBy={enableSort ? SORT.ALBUM : null}
+          icon={this.getIcon(sort, SORT.ALBUM)}
         />
         <TracksListHeaderCell
           className='cell-genre'
           title='Genre'
-          sortBy={enableSort ? sort.GENRE : null}
-          onClick={enableSort ? this.sort : null}
+          sortBy={enableSort ? SORT.GENRE : null}
+          icon={this.getIcon(sort, SORT.GENRE)}
         />
-      </React.Fragment>
+      </div>
     );
   }
 }
 
-export default TracksListHeader;
+
+const mapStateToProps = (state, ownProps) => {
+  if (ownProps.enableSort) {
+    return {
+      sort: state.library.sort,
+    };
+  }
+
+  return {};
+};
+
+export default connect(mapStateToProps)(TracksListHeader);

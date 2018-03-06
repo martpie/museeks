@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
+import Icon from 'react-fontawesome';
+
+import LibraryActions from '../../actions/LibraryActions';
 
 
 class TracksListHeaderCell extends React.Component {
@@ -9,20 +12,36 @@ class TracksListHeaderCell extends React.Component {
     sortBy: PropTypes.string,
     title: PropTypes.string,
     onClick: PropTypes.func,
+    icon: PropTypes.string,
   }
 
   constructor(props) {
     super(props);
-
-    this.onClick = this.onClick.bind(this);
+    this.sort = this.sort.bind(this);
   }
 
-  onClick() {
-    this.props.onClick(this.props.sortBy);
+  sort() {
+    LibraryActions.sort(this.props.sortBy);
   }
+
+  getCellContent(props) {
+    return (
+      <React.Fragment>
+        <div className='col-name'>
+          {props.title}
+        </div>
+        {props.icon &&
+          <div className='col-icon'>
+            <Icon name={props.icon} />
+          </div>
+        }
+      </React.Fragment>
+    );
+  }
+
 
   render() {
-    const { sortBy, className, title } = this.props;
+    const { sortBy, className } = this.props;
     const classes = classnames('track-cell-header', className, {
       sort: sortBy,
     });
@@ -31,20 +50,16 @@ class TracksListHeaderCell extends React.Component {
       return (
         <button
           className={classes}
-          onClick={this.onClick}
+          onClick={this.sort}
         >
-          <div className='col-name'>
-            {title}
-          </div>
+          {this.getCellContent(this.props)}
         </button>
       );
     }
 
     return (
       <div className={classes}>
-        <div className='col-name'>
-          {title}
-        </div>
+        {this.getCellContent(this.props)}
       </div>
     );
   }
