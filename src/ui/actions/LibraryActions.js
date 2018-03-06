@@ -18,18 +18,11 @@ const dialog = electron.remote.dialog;
 const statAsync = Promise.promisify(fs.stat);
 
 const load = async () => {
-  const querySort = {
-    'loweredMetas.artist': 1,
-    'year': 1,
-    'loweredMetas.album': 1,
-    'disk.no': 1,
-    'track.no': 1,
-  };
-
   try {
-    const tracks = await app.models.Track.find().sort(querySort).execAsync();
+    const tracks = await app.models.Track.find().execAsync();
+
     store.dispatch({
-      type : types.APP_LIBRARY_REFRESH,
+      type: types.APP_LIBRARY_REFRESH,
       tracks,
     });
   } catch (err) {
@@ -39,15 +32,22 @@ const load = async () => {
 
 const resetTracks = () => {
   store.dispatch({
-    type : types.APP_LIBRARY_REFRESH,
-    tracks : null,
+    type: types.APP_LIBRARY_REFRESH,
+    tracks: [],
   });
 };
 
 const filterSearch = (search) => {
   store.dispatch({
-    type : types.APP_FILTER_SEARCH,
+    type: types.APP_FILTER_SEARCH,
     search,
+  });
+};
+
+const sort = (sortBy) => {
+  store.dispatch({
+    type: types.APP_LIBRARY_SORT,
+    sortBy,
   });
 };
 
@@ -61,15 +61,14 @@ const endScan = () => {
   scan.total = 0;
 
   store.dispatch({
-    type : types.APP_LIBRARY_REFRESH_END,
+    type: types.APP_LIBRARY_REFRESH_END,
   });
 
   AppActions.library.load();
 };
 
-const scanConcurrency = 16;
 const scanQueue = new queue();
-scanQueue.concurrency = scanConcurrency;
+scanQueue.concurrency = 16;
 scanQueue.autostart = true;
 scanQueue.on('end', endScan);
 scanQueue.on('success', () => {
@@ -78,7 +77,7 @@ scanQueue.on('success', () => {
 
 const add = (pathsToScan) => {
   store.dispatch({
-    type : types.APP_LIBRARY_REFRESH_START,
+    type: types.APP_LIBRARY_REFRESH_START,
   });
 
   let rootFiles; // HACK Kind of hack, looking for a better solution
@@ -100,8 +99,8 @@ const add = (pathsToScan) => {
     const folders = [];
 
     paths.forEach((elem) => {
-      if(elem.stat.isFile()) files.push(elem.path);
-      if(elem.stat.isDirectory() || elem.stat.isSymbolicLink()) folders.push(elem.path);
+      if (elem.stat.isFile()) files.push(elem.path);
+      if (elem.stat.isDirectory() || elem.stat.isSymbolicLink()) folders.push(elem.path);
     });
 
     rootFiles = files;
@@ -138,7 +137,7 @@ const add = (pathsToScan) => {
           return null;
         }).then((track) => {
           // If null, that means a track with the same absolute path already exists in the database
-          if(track === null) return;
+          if (track === null) return;
           // else, insert the new document in the database
           return app.models.Track.insertAsync(track);
         }).then(() => {
@@ -156,7 +155,7 @@ const add = (pathsToScan) => {
 
 const refreshProgress = (processed, total) => {
   store.dispatch({
-    type : types.APP_LIBRARY_REFRESH_PROGRESS,
+    type: types.APP_LIBRARY_REFRESH_PROGRESS,
     processed,
     total,
   });
@@ -173,12 +172,12 @@ const removeFromLibrary = (tracksIds) => {
     message: `Are you sure you want to remove ${tracksIds.length} element(s) from your library?`,
     type: 'warning',
   }, (result) => {
-    if(result === 1) { // button possition, here 'remove'
+    if (result === 1) { // button possition, here 'remove'
       // Remove tracks from the Track collection
       app.models.Track.removeAsync({ _id: { $in: tracksIds } }, { multi: true });
 
       store.dispatch({
-        type : types.APP_LIBRARY_REMOVE_TRACKS,
+        type: types.APP_LIBRARY_REMOVE_TRACKS,
         tracksIds,
       });
       // That would be great to remove those ids from all the playlists, but it's not easy
@@ -200,9 +199,9 @@ const reset = async () => {
       type: 'warning',
     });
 
-    if(result === 1) {
+    if (result === 1) {
       store.dispatch({
-        type : types.APP_LIBRARY_REFRESH_START,
+        type: types.APP_LIBRARY_REFRESH_START,
       });
 
       await app.models.Track.removeAsync({}, { multi: true });
@@ -210,10 +209,10 @@ const reset = async () => {
 
       AppActions.library.load();
       store.dispatch({
-        type : types.APP_LIBRARY_REFRESH_END,
+        type: types.APP_LIBRARY_REFRESH_END,
       });
     }
-  } catch(err) {
+  } catch (err) {
     console.error(err);
   }
 };
@@ -225,7 +224,7 @@ const reset = async () => {
  */
 const incrementPlayCount = async (source) => {
   const query = { src: source };
-  const update = { $inc: { playcount : 1 } };
+  const update = { $inc: { playcount: 1 } };
   try {
     await app.models.Track.updateAsync(query, update);
   } catch (err) {
@@ -242,4 +241,5 @@ export default {
   removeFromLibrary,
   reset,
   incrementPlayCount,
+  sort,
 };
