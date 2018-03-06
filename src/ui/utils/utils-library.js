@@ -1,19 +1,31 @@
 import utils from './utils';
+import orderBy from 'lodash.orderby';
 
 /**
- * Filter an array of track by value
+ * Filter an array of tracks
  *
  * @param {array} tracks
  * @param {string} search
  */
 export const filterTracks = (tracks, search) => {
   return tracks.filter((track) => {
-    return track.loweredMetas.artist.join(', ').includes(search)
+    return track.loweredMetas.artist.toString().includes(search)
       || track.loweredMetas.album.includes(search)
-      || track.loweredMetas.genre.join(', ').includes(search)
+      || track.loweredMetas.genre.toString().includes(search)
       || track.loweredMetas.title.includes(search);
   });
 };
+
+/**
+ * Sort an array of tracks (simple alias to lodash.orderby)
+ * @param  {array} tracks
+ * @param  {array} sort
+ * @return {array}
+ */
+export const sortTracks = (tracks, sort) => {
+  return orderBy(tracks, ...sort);
+};
+
 
 /**
  * Format a list of tracks to a nice status

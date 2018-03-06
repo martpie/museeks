@@ -1,6 +1,7 @@
 import * as app from '../lib/app';
 import types from '../constants/action-types';
 import utils from '../utils/utils';
+import { ARTIST, ASC, DSC } from '../constants/sort-types';
 
 
 const initialState = {
@@ -9,6 +10,10 @@ const initialState = {
     playlist: [],
   },
   search: '',
+  sort: {
+    by: ARTIST,
+    order: ASC,
+  },
   loading: true,
   refreshing: false,
   refresh: {
@@ -28,6 +33,29 @@ export default (state = initialState, payload) => {
           playlist: [],
         },
         loading: false,
+      };
+    }
+
+    case(types.APP_LIBRARY_SORT): {
+      const { sortBy } = payload;
+      const prevSort = state.sort;
+
+      if (sortBy === prevSort.by) {
+        return {
+          ...state,
+          sort: {
+            ...state.sort,
+            order: prevSort.order === ASC ? DSC : ASC,
+          },
+        };
+      }
+
+      return {
+        ...state,
+        sort: {
+          by: sortBy,
+          order: ASC,
+        },
       };
     }
 

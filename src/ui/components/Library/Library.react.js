@@ -5,7 +5,8 @@ import { connect } from 'react-redux';
 
 import FullViewMessage from '../Shared/FullViewMessage.react';
 import TracksList from '../Shared/TracksList.react';
-import { filterTracks } from '../../utils/utils-library';
+import { filterTracks, sortTracks } from '../../utils/utils-library';
+import * as SORT_ORDERS from '../../constants/sort-orders';
 
 
 /*
@@ -96,8 +97,14 @@ class Library extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { search, tracks } = state.library;
-  const filteredTracks = filterTracks(tracks.library, search);
+  const { search, tracks, sort } = state.library;
+
+  // Filter and sort TracksList
+  // sorting being a costly operation, do it after filtering
+  const filteredTracks = sortTracks(
+    filterTracks(tracks.library, search),
+    SORT_ORDERS[sort.by][sort.order]
+  );
 
   return {
     playerStatus: state.player.playerStatus,

@@ -6,6 +6,7 @@ import KeyBinding from 'react-keybinding-component';
 import TrackRow from './TrackRow.react';
 import PlayingIndicator from './PlayingIndicator.react';
 import CustomScrollbar from './CustomScrollbar.react';
+import TracksListHeader from './TracksListHeader.react';
 
 import AppActions from '../../actions/AppActions';
 
@@ -181,7 +182,7 @@ export default class TracksList extends Component {
           <TrackRow
             selected={selected.includes(track._id)}
             trackId={track._id}
-            key={index}
+            key={`track-${track._id}`}
             index={trackRowIndex}
             onMouseDown={this.selectTrack}
             onContextMenu={this.showContextMenu}
@@ -282,7 +283,7 @@ export default class TracksList extends Component {
   onUp(i, tracks) {
     if(i - 1 >= 0) {
       this.setState({ selected : tracks[i - 1]._id }, () => {
-        const container = document.querySelector('.tracks-list-container .tracks-list-body');
+        const container = document.querySelector('.tracks-list .tracks-list-body');
         const nodeOffsetTop = (i - 1) * this.rowHeight;
 
         if(container.scrollTop > nodeOffsetTop) container.scrollTop = nodeOffsetTop;
@@ -293,7 +294,7 @@ export default class TracksList extends Component {
   onDown(i, tracks) {
     if(i + 1 < tracks.length) {
       this.setState({ selected : tracks[i + 1]._id }, () => {
-        const container = document.querySelector('.tracks-list-container .tracks-list-body');
+        const container = document.querySelector('.tracks-list .tracks-list-body');
         const nodeOffsetTop = (i + 1) * this.rowHeight;
 
         if(container.scrollTop + container.offsetHeight <= nodeOffsetTop) {
@@ -329,20 +330,12 @@ export default class TracksList extends Component {
   }
 
   render() {
-    const tracks = [...this.props.tracks];
+    const { tracks, type } = this.props;
 
-    // TODO (y.solovyov | KeitIG): TrackListHeader component?
     return (
-      <div className='tracks-list-container'> {/* there used to be a tabIndex={ 0 }, I don't remember why */}
+      <div className='tracks-list'> {/* there used to be a tabIndex={ 0 }, I don't remember why */}
         <KeyBinding onKey={this.onKey} preventInputConflict />
-        <div className='tracks-list-header'>
-          <div className='track-cell-header cell-track-playing' />
-          <div className='track-cell-header cell-track'>Track</div>
-          <div className='track-cell-header cell-duration'>Duration</div>
-          <div className='track-cell-header cell-artist'>Artist</div>
-          <div className='track-cell-header cell-album'>Album</div>
-          <div className='track-cell-header cell-genre'>Genre</div>
-        </div>
+        <TracksListHeader enableSort={type === 'library'} />
         <CustomScrollbar
           className='tracks-list-body'
           onScroll={this.scrollTracksList}
