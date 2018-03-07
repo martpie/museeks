@@ -17,17 +17,19 @@ It uses:
 
 ### Features
 
-- Cross-platform music player
-- Clean and polished
-- Playlists
-- Queue management
-- Shuffle, loop
-- Covers
-- Dark theme
-- Playback speed control
-- Sleep mode blocker
-- Minimize to tray
-- Supported formats:
+Museeks aims to be a minimalistic and easy to use music player, you will not find tons of feature. Here is a little preview though:
+
+- 💻 Cross-platform music player
+- ✨ Clean and polished
+- 🌟 Playlists
+- 🎼 Queue management
+- ➰ Shuffle, loop
+- 🌄 Covers support
+- 🤓 Dark theme
+- 🚤 Playback speed control
+- 😴 Sleep mode blocker
+- 🔊 Minimize to tray
+- 🎧 Supported formats:
     - mp3
     - mp4
     - m4a/aac
@@ -48,15 +50,16 @@ It uses:
 
 #### Classic
 
-Builds can be found [at this page](https://github.com/KeitIG/museeks/releases). Please notice those are only portable versions. Installers are on the road.
+Builds and installers can be found [on this page](https://github.com/KeitIG/museeks/releases).
 
 #### Build (advanced)
 
 Please consider that **`master` is unstable.**
 
-- Clone the repo
+- `git@github.com:KeitIG/museeks.git`
 - `cd museeks`
-- `npm install && npm run compile`
+- `npm install`
+- `npm run compile` or `npm run dev`
 - `npm run museeks` or `npm run museeks:debug`
 
 ---
@@ -82,7 +85,7 @@ If you still get problems after that, please open an issue :)
 
 ### Bug report
 
-If you want to report a bug, first, thanks a lot. To help us, please indicate your OS, your Museeks version, and how to reproduce it. Adding a screen of the console (Settings -> Advanced -> enable dev mode) is a big help too.
+If you want to report a bug, first, thanks a lot, that helps us a lot. Please open an issue and mention your OS, your Museeks version, and how to reproduce it. Adding a screen of the console (Settings -> Advanced -> Enable dev mode) is a big help too.
 
 ---
 
@@ -91,18 +94,13 @@ If you want to report a bug, first, thanks a lot. To help us, please indicate yo
 - Fork and clone
 - Master is usually unstable, checkout to a tag to have a stable state of the app
 
-- Install the latest version of electron either by running `npm install -g electron` or downloading the latest release available [here](https://github.com/electron/electron/releases) and just drop the app on `resources/` folder.
-- You can use electron now with `electron [electronapp-dir]` command if you installed electron using npm or by running your downloaded electron.
-
-- `npm install && npm run dev` then run in a separate terminal `electron .`
+- `npm install && npm run dev` then run in a separate terminal `npm run museeks:debug`
 - `npm run dev` will watch for file changes using Webpack which will recompile JSX and SASS files.
-
-- Enable dev mode in the app in the settings view to show DevTools
 
 Please respect a few rules:
 
 - Before making complex stuff, don't hesitate to open an issue first to discuss about it
 - Make the code readable and comment if needed
-- Make sure `npm run lint` passes
+- Make sure `npm run lint:sass && npm run lint:js` passes
 
 Then open a PR :)
