@@ -27,7 +27,7 @@
   },
   "build": {
     "appId": "io.museeks.app",
-    "electronVersion": "1.8.2",
+    "electronVersion": "1.8.3",
     "directories": {
       "output": "build"
     },
@@ -118,7 +118,7 @@
     "babel-preset-react": "6.24.1",
     "clean-terminal-webpack-plugin": "1.0.1",
     "css-loader": "0.28.9",
-    "electron": "1.8.2",
+    "electron": "1.8.3",
     "electron-builder": "19.54.0",
     "eslint": "4.18.1",
     "eslint-plugin-import": "2.9.0",
