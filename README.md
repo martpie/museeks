@@ -17,7 +17,7 @@ It uses:
 
 ### Features
 
-Museeks aims to be a minimalistic and easy to use music player, you will not find tons of feature. Here is a little preview though:
+Museeks aims to be a minimalistic and easy to use music player, you will not find tons of features. Here is a little preview though:
 
 - 💻 Cross-platform music player
 - ✨ Clean and polished
