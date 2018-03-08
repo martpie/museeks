@@ -109,6 +109,21 @@ class IpcManager {
             event.sender.send('tracksListContextMenuReply', 'searchFor', { search: data.track.album });
           },
         },
+      ];
+
+      if(data.type === 'playlist') template.push(
+        {
+          type: 'separator',
+        },
+        {
+          label: 'Remove from playlist',
+          click: () => {
+            event.sender.send('tracksListContextMenuReply', 'removeFromPlaylist');
+          },
+        }
+      );
+
+      template.push(
         {
           type: 'separator',
         },
@@ -123,15 +138,8 @@ class IpcManager {
           click: () => {
             event.sender.send('tracksListContextMenuReply', 'removeFromLibrary');
           },
-        },
-      ];
-
-      if(data.type === 'playlist') template.push({
-        label: 'Remove from playlist',
-        click: () => {
-          event.sender.send('tracksListContextMenuReply', 'removeFromPlaylist');
-        },
-      });
+        }
+      );
 
       const context = Menu.buildFromTemplate(template);
 
