@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Route, Redirect } from 'react-router-dom';
+import { Route, Redirect, withRouter } from 'react-router-dom';
 
 import PlaylistsNav from './PlaylistsNav.react';
 import FullViewMessage from '../Shared/FullViewMessage.react';
@@ -21,6 +21,7 @@ class Playlists extends Component {
     params: PropTypes.object,
     playlists: PropTypes.array,
     playerStatus: PropTypes.string,
+    match: PropTypes.object,
   }
 
   constructor(props) {
@@ -35,7 +36,26 @@ class Playlists extends Component {
   }
 
   autoRedirect() {
-    return <Redirect to={`/playlists/${this.props.playlists[0]._id}`} />;
+    const { playlistId } = this.props.match.params;
+
+    // If there is not playlist selected, redirect to the first one
+    if (!playlistId) {
+      return <Redirect to={`/playlists/${this.props.playlists[0]._id}`} />;
+    }
+
+    // Maybe this id does not exist in the library anymore
+    // (after deleting a library for example)
+    const { playlists } = this.props;
+
+    if (playlists.every((elem) => elem._id !== playlistId)) {
+      if (playlists.length === 0) {
+        <Redirect to='/playlists' />;
+      }
+
+      return <Redirect to={`/playlists/${this.props.playlists[0]._id}`} />;
+    }
+
+    return null;
   }
 
   render() {
@@ -60,7 +80,7 @@ class Playlists extends Component {
     } else {
       playlistContent = (
         <React.Fragment>
-          <Route exact path="/playlists" render={this.autoRedirect} />
+          <Route path="/playlists" render={this.autoRedirect} />
           <Route path='/playlists/:playlistId' component={Playlist} />
         </React.Fragment>
       );
@@ -84,4 +104,4 @@ const mapStateToProps = ({ playlists, player }) => ({
 });
 
 
-export default connect(mapStateToProps)(Playlists);
+export default withRouter(connect(mapStateToProps)(Playlists));

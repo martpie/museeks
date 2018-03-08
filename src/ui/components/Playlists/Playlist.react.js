@@ -37,7 +37,7 @@ class Playlist extends Component {
     const playlistId = this.props.match.params.playlistId;
     const nextPlaylistId = nextProps.match.params.playlistId;
 
-    if(nextPlaylistId !== playlistId) {
+    if (nextPlaylistId !== playlistId) {
       AppActions.playlists.load(nextPlaylistId);
     }
   }
