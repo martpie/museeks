@@ -110,7 +110,10 @@ export default class TracksList extends Component {
       if(isCtrlKey(e.nativeEvent)) {
         this.toggleSelectionById(id);
       } else if (e.shiftKey) {
-        this.multiSelect(e, id, index);
+        if (this.state.selected.length === 0) {
+          const selected = [id];
+          this.setState({ selected });
+        } else this.multiSelect(e, id, index);
       } else {
         const selected = [id];
         this.setState({ selected });
