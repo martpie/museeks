@@ -1,13 +1,17 @@
 import electron from 'electron';
 
+import history from '../router/history.js';
 import store from '../store.js';
+
 import types  from '../constants/action-types';
+import * as SORT_ORDERS from '../constants/sort-orders';
 
 import ToastsActions from './ToastsActions';
 
 import * as app from '../lib/app';
 import Player from '../lib/player';
 import utils from '../utils/utils';
+import { sortTracks, filterTracks } from '../utils/utils-library';
 import { shuffleTracks } from '../utils/utils-player';
 
 const ipcRenderer = electron.ipcRenderer;
@@ -26,7 +30,7 @@ const playToggle = () => {
   const { queue, playerStatus } = store.getState().player;
 
   if(playerStatus === 'stop') {
-    start(undefined, 'library');
+    start();
   } else if (paused && queue.length > 0) {
     play();
   } else {
@@ -56,25 +60,51 @@ const pause = () => {
   }
 };
 
-const start = (_id, type) => {
-  // TODO (y.solovyov | KeitIG): calling getState is a hack.
+// TODO this function could probably be refactored a bit
+const start = (queue, _id) => {
   const state = store.getState();
-  const { tracks } = state.library;
+
+  let newQueue = queue ? [...queue] : null;
+
+
+  // If no queue is provided, let's search it from the store
+  if (!newQueue) {
+    const { pathname } = history.location;
+
+    if (pathname.indexOf('/playlists') === 0) {
+      newQueue = state.library.tracks.playlist;
+    } else {
+      // we are either on the library or the settings view
+      // so let's play the whole library
+      // Because the tracks in the store are not ordered, let's filter
+      // and sort everything
+      const { library } = state;
+      const { sort, search } = library;
+      newQueue = state.library.tracks.library;
+
+      newQueue = sortTracks(
+        filterTracks(newQueue, search),
+        SORT_ORDERS[sort.by][sort.order]
+      );
+    }
+  }
+
   const { shuffle } = state.player;
-  let queue = [...tracks[type]];
-  const oldQueue = [...queue];
 
-  if(queue.length === 0) return;
+  const oldQueue = [newQueue];
+  const trackId = _id || newQueue[0]._id;
 
-  const trackId = _id || queue[0]._id;
+  // Typically, if we are in the playlists generic view without any view selected
+  if(newQueue.length === 0) return;
 
-  const queuePosition = queue.findIndex((track) => {
+
+  const queuePosition = newQueue.findIndex((track) => {
     return track._id === trackId;
   });
 
   // If a track exists
   if (queuePosition > -1) {
-    const uri = utils.parseUri(queue[queuePosition].path);
+    const uri = utils.parseUri(newQueue[queuePosition].path);
 
     Player.setAudioSrc(uri);
     Player.play();
@@ -84,14 +114,14 @@ const start = (_id, type) => {
     // Check if we have to shuffle the queue
     if (shuffle) {
       // Shuffle the tracks
-      queue = shuffleTracks(queue, queueCursor);
+      newQueue = shuffleTracks(newQueue, queueCursor);
       // Let's set the cursor to 0
       queueCursor = 0;
     }
 
     store.dispatch({
       type : types.APP_PLAYER_START,
-      queue,
+      queue: newQueue,
       oldQueue,
       queueCursor,
     });

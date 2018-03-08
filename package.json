@@ -65,6 +65,7 @@
     "classnames": "2.2.5",
     "font-awesome": "4.7.0",
     "globby": "7.1.1",
+    "history": "^4.7.2",
     "keymirror": "0.1.1",
     "level-js": "2.2.4",
     "linvodb3": "3.25.1",

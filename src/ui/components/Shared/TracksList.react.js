@@ -45,7 +45,6 @@ export default class TracksList extends Component {
     this.scrollTracksList = this.scrollTracksList.bind(this);
     this.selectTrack      = this.selectTrack.bind(this);
     this.onKey            = this.onKey.bind(this);
-    this.onEnter          = this.onEnter.bind(this);
 
     this.rowHeight = 30;
   }
@@ -305,7 +304,7 @@ export default class TracksList extends Component {
   }
 
   onEnter(i, tracks) {
-    if(i !== undefined) AppActions.player.start(tracks[i]._id, this.props.type);
+    if(i !== undefined) AppActions.player.start(tracks, tracks[i]._id);
   }
 
   showContextMenu(e, index) {
@@ -326,7 +325,7 @@ export default class TracksList extends Component {
   }
 
   startPlayback(_id) {
-    AppActions.player.start(_id, this.props.type);
+    AppActions.player.start(this.props.tracks, _id);
   }
 
   render() {

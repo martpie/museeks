@@ -1,4 +1,5 @@
 import store from '../store.js';
+import history from '../router/history';
 import types  from '../constants/action-types';
 import AppActions    from './AppActions';
 
@@ -30,7 +31,7 @@ const refresh = async () => {
   }
 };
 
-const create = async (name, redirect = false, history) => {
+const create = async (name, redirect = false) => {
   const playlist = {
     name,
     tracks: [],
@@ -39,7 +40,7 @@ const create = async (name, redirect = false, history) => {
   try {
     const doc = await app.models.Playlist.insertAsync(playlist);
     refresh();
-    if (redirect && history) history.push(`/playlists/${doc._id}`);
+    if (redirect) history.push(`/playlists/${doc._id}`);
     else AppActions.toasts.add('success', `The playlist "${name}" was created`);
     return doc._id;
   } catch (err) {
