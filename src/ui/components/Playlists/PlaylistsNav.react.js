@@ -1,6 +1,5 @@
 import electron from 'electron';
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { ButtonGroup, Button } from 'react-bootstrap';
 import Icon from 'react-fontawesome';
@@ -21,7 +20,6 @@ const ipcRenderer = electron.ipcRenderer;
 class PlaylistsNav extends Component {
   static propTypes = {
     playlists: PropTypes.array,
-    history: PropTypes.object,
   }
 
   constructor(props) {
@@ -62,7 +60,7 @@ class PlaylistsNav extends Component {
   }
 
   createPlaylist() {
-    AppActions.playlists.create('New playlist', true, this.props.history);
+    AppActions.playlists.create('New playlist', true);
   }
 
   rename(_id, name) {
@@ -146,4 +144,4 @@ class PlaylistsNav extends Component {
   }
 }
 
-export default withRouter(PlaylistsNav);
+export default PlaylistsNav;
