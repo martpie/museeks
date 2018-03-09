@@ -4,13 +4,13 @@
 |--------------------------------------------------------------------------
 */
 
-import path    from 'path';
-import fs      from 'fs';
-import mmd     from 'musicmetadata';
-import globby  from 'globby';
-import Promise from 'bluebird';
+import path from 'path';
+import fs from 'fs';
+import util from 'util';
+import mmd from 'musicmetadata';
+import globby from 'globby';
 
-const musicmetadataAsync = Promise.promisify(mmd);
+const musicmetadataAsync = util.promisify(mmd);
 
 /**
  * Parse an int to a more readable string
@@ -213,18 +213,19 @@ const getWavMetadata = async (track) => {
   return metadata;
 };
 
-const getMusicMetadata = async (track) => {
+const getMusicMetadata = async (trackPath) => {
   const defaultMetadata = getDefaultMetadata();
 
   let data;
   try {
-    const stream = fs.createReadStream(track);
+    const stream = fs.createReadStream(trackPath);
+
     data = await musicmetadataAsync(stream, { duration: true });
     delete data.picture;
     stream.close();
   } catch (err) {
     data = defaultMetadata;
-    console.warn(`An error occured while reading ${track} id3 tags: ${err}`);
+    console.warn(`An error occured while reading ${trackPath} id3 tags: ${err}`);
   }
 
   const metadata = {
@@ -233,17 +234,17 @@ const getMusicMetadata = async (track) => {
     album        : data.album === null || data.album === '' ? 'Unknown' : data.album,
     artist       : data.artist.length === 0 ? ['Unknown artist'] : data.artist,
     duration     : data.duration === '' ? 0 : data.duration,
-    path         : track,
-    title        : data.title === null || data.title === '' ? path.parse(track).base : data.title,
+    path         : trackPath,
+    title        : data.title === null || data.title === '' ? path.parse(trackPath).base : data.title,
   };
 
   metadata.loweredMetas = getLoweredMeta(metadata);
 
   if (metadata.duration === 0) {
     try {
-      metadata.duration = await getAudioDurationAsync(track);
+      metadata.duration = await getAudioDurationAsync(trackPath);
     } catch (err) {
-      console.warn(`An error occured while getting ${track} duration: ${err}`);
+      console.warn(`An error occured while getting ${trackPath} duration: ${err}`);
     }
   }
   return metadata;
@@ -256,10 +257,10 @@ const getMusicMetadata = async (track) => {
  * @return object
  *
  */
-const getMetadata = async (track) => {
+const getMetadata = async (trackPath) => {
   // metadata should have the same shape as getDefaultMetadata() object
-  const wavFile = path.extname(track).toLowerCase() === '.wav';
-  const metadata = wavFile ? await getWavMetadata(track) : await getMusicMetadata(track);
+  const isWavFile = path.extname(trackPath).toLowerCase() === '.wav';
+  const metadata = isWavFile ? await getWavMetadata(trackPath) : await getMusicMetadata(trackPath);
   return metadata;
 };
 

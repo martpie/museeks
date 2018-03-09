@@ -1,8 +1,8 @@
 import electron from 'electron';
 import fs from 'fs';
 import path from 'path';
+import util from 'util';
 import globby from 'globby';
-import Promise from 'bluebird';
 import queue from 'queue';
 
 import store from '../store.js';
@@ -15,7 +15,7 @@ import utils from '../utils/utils';
 
 
 const dialog = electron.remote.dialog;
-const statAsync = Promise.promisify(fs.stat);
+const stat = util.promisify(fs.stat);
 
 const load = async () => {
   try {
@@ -84,14 +84,14 @@ const add = (pathsToScan) => {
 
   // Scan folders and add files to library
   new Promise((resolve) => {
-    const paths = Promise.map(pathsToScan, (path) => {
-      return statAsync(path).then((stat) => {
-        return {
-          path,
-          stat,
-        };
-      });
+    const promises = pathsToScan.map(async (path) => {
+      return {
+        path,
+        stat: await stat(path),
+      };
     });
+
+    const paths = Promise.all(promises);
 
     resolve(paths);
   }).then((paths) => {
@@ -105,10 +105,12 @@ const add = (pathsToScan) => {
 
     rootFiles = files;
 
-    return Promise.map(folders, (folder) => {
+    const globbies = folders.map((folder) => {
       const pattern = path.join(folder, '**/*.*');
       return globby(pattern, { follow: true });
     });
+
+    return Promise.all(globbies);
   }).then((files) => {
     // Merge all path arrays together and filter them with the extensions we support
     const flatFiles = files.reduce((acc, array) => acc.concat(array), [])
@@ -116,8 +118,7 @@ const add = (pathsToScan) => {
       .filter((filePath) => {
         const extension = path.extname(filePath).toLowerCase();
         return app.supportedExtensions.includes(extension);
-      }
-      );
+      });
 
     return flatFiles;
   }).then((supportedFiles) => {
