@@ -61,7 +61,6 @@
     }
   },
   "dependencies": {
-    "bluebird": "3.5.1",
     "bootstrap-css-only": "3.3.7",
     "classnames": "2.2.5",
     "font-awesome": "4.7.0",
