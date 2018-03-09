@@ -70,7 +70,7 @@
     "level-js": "2.2.4",
     "linvodb3": "3.25.1",
     "lodash.orderby": "4.6.0",
-    "musicmetadata": "2.0.5",
+    "music-metadata": "^0.9.8",
     "open-sans-fontface": "1.4.0",
     "prop-types": "15.6.0",
     "queue": "4.4.2",
