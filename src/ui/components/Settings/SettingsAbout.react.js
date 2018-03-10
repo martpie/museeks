@@ -8,8 +8,7 @@ import * as app from '../../lib/app';
 import AppActions from '../../actions/AppActions';
 
 // sth wrong with that, need some check with Webpack
-const museeksLogoRequire = require('../../../images/logos/museeks.png');
-const museeksLogo = `dist/${museeksLogoRequire}`;
+const museeksLogo = require('../../../images/logos/museeks.png');
 
 
 /*
