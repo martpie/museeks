@@ -210,7 +210,11 @@ const reset = async () => {
       await app.models.Track.removeAsync({}, { multi: true });
       await app.models.Playlist.removeAsync({}, { multi: true });
 
-      AppActions.library.load();
+
+      store.dispatch({
+        type: types.APP_LIBRARY_RESET,
+      });
+
       store.dispatch({
         type: types.APP_LIBRARY_REFRESH_END,
       });

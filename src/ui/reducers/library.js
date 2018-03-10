@@ -102,8 +102,7 @@ export default (state = initialState, payload) => {
     }
 
     case(types.APP_LIBRARY_RESET): {
-      // nothing here for the moment
-      return state;
+      return initialState;
     }
 
     case(types.APP_LIBRARY_REFRESH_START): {
