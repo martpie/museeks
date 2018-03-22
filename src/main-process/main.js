@@ -4,11 +4,11 @@ const path     = require('path');
 const os       = require('os');
 const electron = require('electron');
 
-const IpcManager         = require('./ipc'); // Manages IPC evens
-const TrayManager        = require('./tray'); // Manages Tray
-const ConfigManager      = require('./config'); // Handles config
-const PowerMonitor       = require('./power-monitor'); // Handle power events
-const IntegrationManager = require('./integration'); // Applies various integrations
+const IpcManager         = require('./modules/ipc'); // Manages IPC evens
+const TrayManager        = require('./modules/tray'); // Manages Tray
+const ConfigManager      = require('./modules/config'); // Handles config
+const PowerMonitor       = require('./modules/power-monitor'); // Handle power events
+const IntegrationManager = require('./modules/integration'); // Applies various integrations
 
 const app           = electron.app; // Module to control application life.
 const nativeImage   = electron.nativeImage;

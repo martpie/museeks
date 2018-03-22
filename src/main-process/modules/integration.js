@@ -5,7 +5,7 @@ const platform = require('os').platform();
 let Integration = null;
 
 if (platform === 'win32') {
-  Integration = require('./integrations/win32');
+  Integration = require('../integrations/win32');
 }
 
 class IntegrationManager {

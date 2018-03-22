@@ -99,6 +99,7 @@ class TrayManager {
   show() {
     this.tray = new Tray(this.trayIcon);
 
+
     this.tray.setToolTip('Museeks');
 
     if(os.platform() === 'win32') {
