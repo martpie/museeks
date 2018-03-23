@@ -1,14 +1,39 @@
-'use strict';
+/**
+ * Module in charge of the Tray
+ */
 
 const os = require('os');
+const path = require('path');
+const { Tray, Menu, app, ipcMain, nativeImage } = require('electron');
 
-const { Tray, Menu, app, ipcMain } = require('electron');
+const Module = require('./module');
+const constants = require('../constants');
 
-class TrayManager {
-  constructor(win, icon) {
+
+class TrayManager extends Module {
+  static get PLATFORMS() {
+    return ['win32', 'linux', 'darwin'];
+  }
+
+  static get LOAD_AT() {
+    return constants.ON_BROWSERWINDOW_READY;
+  }
+
+  constructor(window) {
+    super(window);
+  }
+
+  load() {
+    const appRoot = path.resolve(__dirname, '../../..'); // Maybe a better way to know this?
+    const logosPath = path.join(appRoot, 'src', 'images', 'logos');
+    const trayIcons = {
+      'tray': nativeImage.createFromPath(path.join(logosPath, 'museeks-tray.png')).resize({ width: 24, height: 24 }),
+      'tray-ico': nativeImage.createFromPath(path.join(logosPath, 'museeks-tray.ico')),
+    };
+
+
     this.tray = null;
-    this.trayIcon = icon;
-    this.win = win;
+    this.trayIcon =  os.platform() === 'win32.' ? trayIcons['tray-ico'] : trayIcons['tray'];
     this.contextMenu;
 
     this.songDetails = [
@@ -25,7 +50,7 @@ class TrayManager {
       {
         label: 'Play',
         click: () => {
-          this.win.webContents.send('playerAction', 'play');
+          this.window.webContents.send('playerAction', 'play');
         },
       },
     ];
@@ -34,7 +59,7 @@ class TrayManager {
       {
         label: 'Pause',
         click: () => {
-          this.win.webContents.send('playerAction', 'pause');
+          this.window.webContents.send('playerAction', 'pause');
         },
       },
     ];
@@ -43,13 +68,13 @@ class TrayManager {
       {
         label: 'Previous',
         click: () => {
-          this.win.webContents.send('playerAction', 'prev');
+          this.window.webContents.send('playerAction', 'prev');
         },
       },
       {
         label: 'Next',
         click: () => {
-          this.win.webContents.send('playerAction', 'next');
+          this.window.webContents.send('playerAction', 'next');
         },
       },
       {
@@ -58,8 +83,8 @@ class TrayManager {
       {
         label: 'Show',
         click: () => {
-          this.win.show();
-          this.win.focus();
+          this.window.show();
+          this.window.focus();
         },
       },
       {
@@ -69,13 +94,12 @@ class TrayManager {
         label: 'Quit',
         click: () => {
           app.quit();
-          this.win.destroy();
+          this.window.destroy();
         },
       },
     ];
-  }
 
-  bindEvents() {
+    // Load events listener for player actions
     ipcMain.on('playerAction', (event, reply, data) => {
       switch(reply) {
         case 'play': {
@@ -94,27 +118,28 @@ class TrayManager {
         }
       }
     });
+
+    this.show();
   }
 
   show() {
     this.tray = new Tray(this.trayIcon);
 
-
     this.tray.setToolTip('Museeks');
 
     if(os.platform() === 'win32') {
       this.tray.on('click', () => {
-        this.win.show();
-        this.win.focus();
+        this.window.show();
+        this.window.focus();
       });
     } else if(os.platform() === 'darwin') {
       this.tray.on('double-click', () => {
-        this.win.show();
-        this.win.focus();
+        this.window.show();
+        this.window.focus();
       });
     }
 
-    this.setContextMenu('play');
+    this.setContextMenu('pause');
   }
 
   setContextMenu(state) {

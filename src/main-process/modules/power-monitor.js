@@ -1,17 +1,30 @@
-'use strict';
+/**
+ * Module in charge of pausing the player when going into sleep
+ */
+
+const Module = require('./module');
+const constants = require('../constants');
 
 
-class PowerMonitor {
-  constructor(win) {
-    this.win = win;
+class PowerMonitor extends Module {
+  static get PLATFORMS() {
+    return ['win32', 'linux', 'darwin'];
   }
 
-  enable() {
+  static get LOAD_AT() {
+    return constants.ON_BROWSERWINDOW_READY;
+  }
+
+  constructor(window) {
+    super(window);
+  }
+
+  load() {
     const { powerMonitor } = require('electron');
-    const win = this.win;
+    const window = this.window;
 
     powerMonitor.on('suspend', () => {
-      win.webContents.send('playerAction', 'pause');
+      window.webContents.send('playerAction', 'pause');
     });
   }
 }

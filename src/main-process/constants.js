@@ -1,0 +1,2 @@
+module.exports.ON_APP_READY = 'ON_APP_READY';
+module.exports.ON_BROWSERWINDOW_READY = 'ON_BROWSERWINDOW_READY';

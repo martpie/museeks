@@ -1,15 +1,32 @@
-'use strict';
+/**
+ * Module in charge of communicating with the render process, especially
+ * in TracksList.
+ *
+ * TODO parts of this file should return to ui/, as content menus can now be
+ * made async without blocking the rendering process
+ */
 
 const { Menu, ipcMain, powerSaveBlocker, shell, app } = require('electron');
+const Module = require('./module');
+const constants = require('../constants');
 
-class IpcManager {
+class IpcManager extends Module {
+  static get PLATFORMS() {
+    return ['win32', 'linux', 'darwin'];
+  }
+
+  static get LOAD_AT() {
+    return constants.ON_BROWSERWINDOW_READY;
+  }
+
   constructor(window) {
-    this.window = window;
+    super(window);
+
     this.instance = {};
     this.forceQuit = false;
   }
 
-  bindEvents() {
+  load() {
     ipcMain.on('tracksListContextMenu', (event, stringData) => {
       const data = JSON.parse(stringData);
       let playlistTemplate = [];
