@@ -23,7 +23,7 @@ class Module {
       this.load();
       this.loaded = true;
     } else {
-      console.info(`[INFO] Ignoring loading of ${this.constructor.name}`);
+      console.info(`[INFO] Skipping load of ${this.constructor.name}`);
     }
   }
 
