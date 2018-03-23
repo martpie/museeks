@@ -60,7 +60,9 @@ const init = () => {
   ipcRenderer.on('playerAction', (event, reply) => {
     switch(reply) {
       case 'play':
-        PlayerActions.play();
+        // Scenarion: click on the Tray when the player is in 'stop' mode
+        if (!Player.getSrc()) PlayerActions.start();
+        else PlayerActions.play();
         break;
       case 'pause':
         PlayerActions.pause();
