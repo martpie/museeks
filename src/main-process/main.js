@@ -10,6 +10,7 @@ const TrayModule    = require('./modules/tray'); // Manages Tray
 const ConfigModule  = require('./modules/config'); // Handles config
 const PowerModule   = require('./modules/power-monitor'); // Handle power events
 const ThumbarModule = require('./modules/thumbar'); // Handle Windows Thumbar
+const DockMenuModule = require('./modules/dock-menu');
 
 const ModulesManager = require('./lib/modules-manager');
 const { checkBounds } = require('./utils');
@@ -109,6 +110,7 @@ app.on('ready', () => {
     new IpcModule(mainWindow),
     new PowerModule(mainWindow),
     new TrayModule(mainWindow),
-    new ThumbarModule(mainWindow)
+    new ThumbarModule(mainWindow),
+    new DockMenuModule(mainWindow)
   );
 });
