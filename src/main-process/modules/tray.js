@@ -7,6 +7,7 @@ const path = require('path');
 const { Tray, Menu, app, ipcMain, nativeImage } = require('electron');
 
 const ModuleWindow = require('./module-window');
+const { IPC_PLAYER_ACTION } = require('../../shared/constants/ipc');
 
 
 class TrayManager extends ModuleWindow {
@@ -41,7 +42,7 @@ class TrayManager extends ModuleWindow {
       {
         label: 'Play',
         click: () => {
-          this.window.webContents.send('playerAction', 'play');
+          this.window.webContents.send(IPC_PLAYER_ACTION, 'play');
         },
       },
     ];
@@ -50,7 +51,7 @@ class TrayManager extends ModuleWindow {
       {
         label: 'Pause',
         click: () => {
-          this.window.webContents.send('playerAction', 'pause');
+          this.window.webContents.send(IPC_PLAYER_ACTION, 'pause');
         },
       },
     ];
@@ -59,13 +60,13 @@ class TrayManager extends ModuleWindow {
       {
         label: 'Previous',
         click: () => {
-          this.window.webContents.send('playerAction', 'prev');
+          this.window.webContents.send(IPC_PLAYER_ACTION, 'prev');
         },
       },
       {
         label: 'Next',
         click: () => {
-          this.window.webContents.send('playerAction', 'next');
+          this.window.webContents.send(IPC_PLAYER_ACTION, 'next');
         },
       },
       {
@@ -91,7 +92,7 @@ class TrayManager extends ModuleWindow {
     ];
 
     // Load events listener for player actions
-    ipcMain.on('playerAction', (event, reply, data) => {
+    ipcMain.on(IPC_PLAYER_ACTION, (event, reply, data) => {
       switch(reply) {
         case 'play': {
           this.setContextMenu('play');

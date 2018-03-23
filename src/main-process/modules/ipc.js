@@ -7,7 +7,9 @@
  */
 
 const { Menu, ipcMain, powerSaveBlocker, shell, app } = require('electron');
+
 const ModuleWindow = require('./module-window');
+const { IPC_APP_CLOSE, IPC_TL_CONTEXTMENU_REPLY } = require('../../shared/constants/ipc');
 
 
 class IpcManager extends ModuleWindow {
@@ -29,7 +31,7 @@ class IpcManager extends ModuleWindow {
           {
             label: 'Create new playlist...',
             click: () => {
-              event.sender.send('tracksListContextMenuReply', 'createPlaylist');
+              event.sender.send(IPC_TL_CONTEXTMENU_REPLY, 'createPlaylist');
             },
           },
         ];
@@ -46,7 +48,7 @@ class IpcManager extends ModuleWindow {
           playlistTemplate.push({
             label: elem.name,
             click: () => {
-              event.sender.send('tracksListContextMenuReply', 'addToPlaylist', {
+              event.sender.send(IPC_TL_CONTEXTMENU_REPLY, 'addToPlaylist', {
                 playlistId: elem._id,
               });
             },
@@ -57,7 +59,7 @@ class IpcManager extends ModuleWindow {
           {
             label: 'Create new playlist...',
             click: () => {
-              event.sender.send('tracksListContextMenuReply', 'createPlaylist');
+              event.sender.send(IPC_TL_CONTEXTMENU_REPLY, 'createPlaylist');
             },
           },
           {
@@ -75,13 +77,13 @@ class IpcManager extends ModuleWindow {
           {
             label: 'Add to queue',
             click: () => {
-              event.sender.send('tracksListContextMenuReply', 'addToQueue');
+              event.sender.send(IPC_TL_CONTEXTMENU_REPLY, 'addToQueue');
             },
           },
           {
             label: 'Play next',
             click: () => {
-              event.sender.send('tracksListContextMenuReply', 'playNext');
+              event.sender.send(IPC_TL_CONTEXTMENU_REPLY, 'playNext');
             },
           },
           {
@@ -109,13 +111,13 @@ class IpcManager extends ModuleWindow {
         {
           label: `Search for "${data.track.artist[0]}"`,
           click: () => {
-            event.sender.send('tracksListContextMenuReply', 'searchFor', { search: data.track.artist[0] });
+            event.sender.send(IPC_TL_CONTEXTMENU_REPLY, 'searchFor', { search: data.track.artist[0] });
           },
         },
         {
           label: `Search for "${data.track.album}"`,
           click: () => {
-            event.sender.send('tracksListContextMenuReply', 'searchFor', { search: data.track.album });
+            event.sender.send(IPC_TL_CONTEXTMENU_REPLY, 'searchFor', { search: data.track.album });
           },
         },
       ];
@@ -127,7 +129,7 @@ class IpcManager extends ModuleWindow {
         {
           label: 'Remove from playlist',
           click: () => {
-            event.sender.send('tracksListContextMenuReply', 'removeFromPlaylist');
+            event.sender.send(IPC_TL_CONTEXTMENU_REPLY, 'removeFromPlaylist');
           },
         }
       );
@@ -145,7 +147,7 @@ class IpcManager extends ModuleWindow {
         {
           label: 'Remove from library',
           click: () => {
-            event.sender.send('tracksListContextMenuReply', 'removeFromLibrary');
+            event.sender.send(IPC_TL_CONTEXTMENU_REPLY, 'removeFromLibrary');
           },
         }
       );
@@ -198,13 +200,13 @@ class IpcManager extends ModuleWindow {
     });
 
     // Prevent the window to be closed, hide it instead (to continue audio playback)
-    this.window.on('close', (e) => {
+    this.window.on(IPC_APP_CLOSE, (e) => {
       if (this.forceQuit) {
         app.quit();
         this.window.destroy();
       } else {
         e.preventDefault();
-        this.window.webContents.send('close');
+        this.window.webContents.send(IPC_APP_CLOSE);
       }
     });
 

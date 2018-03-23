@@ -12,6 +12,8 @@ import PlayerActions       from './PlayerActions';
 import QueueActions        from './QueueActions';
 import SettingsActions     from './SettingsActions';
 
+import { IPC_PLAYER_ACTION, IPC_APP_CLOSE } from '../../shared/constants/ipc';
+
 const globalShortcut = electron.remote.globalShortcut;
 const ipcRenderer    = electron.ipcRenderer;
 
@@ -34,13 +36,13 @@ const init = () => {
   });
 
   Player.getAudio().addEventListener('play', async () => {
-    ipcRenderer.send('playerAction', 'play');
+    ipcRenderer.send(IPC_PLAYER_ACTION, 'play');
 
     const path = decodeURIComponent(Player.getSrc()).replace('file://', '');
 
     const track = await utils.getMetadata(path);
 
-    ipcRenderer.send('playerAction', 'trackStart', track);
+    ipcRenderer.send(IPC_PLAYER_ACTION, 'trackStart', track);
 
     if(browserWindows.main.isFocused()) return;
 
@@ -53,11 +55,11 @@ const init = () => {
   });
 
   Player.getAudio().addEventListener('pause', () => {
-    ipcRenderer.send('playerAction', 'pause');
+    ipcRenderer.send(IPC_PLAYER_ACTION, 'pause');
   });
 
   // Listen for main-process events
-  ipcRenderer.on('playerAction', (event, reply) => {
+  ipcRenderer.on(IPC_PLAYER_ACTION, (event, reply) => {
     switch(reply) {
       case 'play':
         // Scenarion: click on the Tray when the player is in 'stop' mode
@@ -77,7 +79,7 @@ const init = () => {
   });
 
   // Listen for main-process events
-  ipcRenderer.on('close', () => {
+  ipcRenderer.on(IPC_APP_CLOSE, () => {
     close();
   });
 

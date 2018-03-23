@@ -36,6 +36,7 @@
       "dist/**/*",
       "src/images/**/*",
       "src/main-process/**/*",
+      "src/shared/**/*",
       "node_modules/teeny-conf/**/*"
     ],
     "mac": {
