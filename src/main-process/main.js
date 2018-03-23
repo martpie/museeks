@@ -5,6 +5,7 @@ const os       = require('os');
 const electron = require('electron');
 
 const IpcModule     = require('./modules/ipc'); // Manages IPC evens
+const MenuModule    = require('./modules/menu'); // Manage menu
 const TrayModule    = require('./modules/tray'); // Manages Tray
 const ConfigModule  = require('./modules/config'); // Handles config
 const PowerModule   = require('./modules/power-monitor'); // Handle power events
@@ -46,10 +47,13 @@ app.on('window-all-closed', () => {
 // This method will be called when Electron has finished its
 // initialization and ready to create browser windows.
 app.on('ready', () => {
-  const configManager = new ConfigModule();
-  ModulesManager.init(configManager);
+  const configModule = new ConfigModule();
+  ModulesManager.init(
+    configModule,
+    new MenuModule()
+  );
 
-  const config = configManager.getConfig();
+  const config = configModule.getConfig();
   const { useNativeFrame } = config;
   let { bounds } = config;
 
