@@ -20,12 +20,20 @@ class TrayManager extends ModuleWindow {
     const logosPath = path.join(appRoot, 'src', 'images', 'logos');
     const trayIcons = {
       'tray': nativeImage.createFromPath(path.join(logosPath, 'museeks-tray.png')).resize({ width: 24, height: 24 }),
-      'tray-ico': nativeImage.createFromPath(path.join(logosPath, 'museeks-tray.ico')),
+      'tray-win32': nativeImage.createFromPath(path.join(logosPath, 'museeks-tray.ico')),
+      'tray-darwin-dark': nativeImage.createFromPath(path.join(logosPath, 'museeks-tray-dark.png')),
     };
 
+    // Make it "lightable" on macOS
+    trayIcons['tray-darwin-dark'].setTemplateImage(true);
 
     this.tray = null;
-    this.trayIcon =  os.platform() === 'win32.' ? trayIcons['tray-ico'] : trayIcons['tray'];
+
+    // Pick the right icon for the right platform
+    this.trayIcon = trayIcons['tray'];
+    if (os.platform() === 'win32') this.trayIcon = trayIcons['tray-win32'];
+    else if (os.platform() === 'darwin') this.trayIcon = trayIcons['tray-darwin-dark'];
+
     this.contextMenu;
 
     this.songDetails = [
@@ -116,6 +124,7 @@ class TrayManager extends ModuleWindow {
 
   show() {
     this.tray = new Tray(this.trayIcon);
+    if(this.trayIconHovered) this.tray.setPressedImage(this.trayIconHovered);
 
     this.tray.setToolTip('Museeks');
 
