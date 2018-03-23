@@ -12,7 +12,7 @@ const path = require('path');
 const { nativeImage, ipcMain } = require('electron');
 const { createFromPath } = nativeImage;
 
-const { IPC_PLAYER_ACTION } = require('../../shared/constants/ipc');
+const { IPCR_PLAYER_ACTION, IPCR_APP_READY } = require('../../shared/constants/ipc');
 const ModuleWindow = require('./module-window');
 
 const iconsDirectory = path.resolve(__dirname, '../..', 'images', 'icons', 'windows');
@@ -43,7 +43,7 @@ class ThumbarModule extends ModuleWindow {
         tooltip: 'Play',
         icon: icons.play,
         click: () => {
-          window.webContents.send(IPC_PLAYER_ACTION, 'play');
+          window.webContents.send(IPCR_PLAYER_ACTION, 'play');
         },
       },
       playDisabled: {
@@ -55,7 +55,7 @@ class ThumbarModule extends ModuleWindow {
         tooltip: 'Pause',
         icon: icons.pause,
         click: () => {
-          window.webContents.send(IPC_PLAYER_ACTION, 'pause');
+          window.webContents.send(IPCR_PLAYER_ACTION, 'pause');
         },
       },
       pauseDisabled: {
@@ -67,7 +67,7 @@ class ThumbarModule extends ModuleWindow {
         tooltip: 'Prev',
         icon: icons.prev,
         click: () => {
-          window.webContents.send(IPC_PLAYER_ACTION, 'prev');
+          window.webContents.send(IPCR_PLAYER_ACTION, 'prev');
         },
       },
       prevDisabled: {
@@ -79,7 +79,7 @@ class ThumbarModule extends ModuleWindow {
         tooltip: 'Next',
         icon: icons.next,
         click: () => {
-          window.webContents.send(IPC_PLAYER_ACTION, 'next');
+          window.webContents.send(IPCR_PLAYER_ACTION, 'next');
         },
       },
       nextDisabled: {
@@ -89,7 +89,7 @@ class ThumbarModule extends ModuleWindow {
       },
     };
 
-    ipcMain.on('appReady', () => {
+    ipcMain.on(IPCR_APP_READY, () => {
       window.setThumbarButtons([
         thumbarButtons.prevDisabled,
         thumbarButtons.playDisabled,
@@ -97,7 +97,7 @@ class ThumbarModule extends ModuleWindow {
       ]);
     });
 
-    ipcMain.on(IPC_PLAYER_ACTION, (event, arg) => {
+    ipcMain.on(IPCR_PLAYER_ACTION, (event, arg) => {
       switch(arg) {
         case 'play':
           window.setThumbarButtons([

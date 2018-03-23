@@ -66,6 +66,14 @@ class ConfigManager extends Module {
   getConfig() {
     return this.conf.getAll();
   }
+
+  get(key) {
+    return this.conf.get(key);
+  }
+
+  reload() {
+    this.conf.loadOrCreateSync(this.getDefaultConfig());
+  }
 }
 
 module.exports = ConfigManager;

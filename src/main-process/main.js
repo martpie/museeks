@@ -106,7 +106,7 @@ app.on('ready', () => {
   });
 
   ModulesManager.init(
-    new IpcModule(mainWindow),
+    new IpcModule(mainWindow, configModule),
     new PowerModule(mainWindow),
     new TrayModule(mainWindow),
     new ThumbarModule(mainWindow),
