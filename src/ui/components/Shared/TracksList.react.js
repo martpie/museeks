@@ -13,6 +13,7 @@ import AppActions from '../../actions/AppActions';
 import Player from '../../lib/player';
 import utils  from '../../utils/utils';
 import { isCtrlKey } from '../../utils/utils-platform';
+import { IPC_TL_CONTEXTMENU_REPLY } from '../../../shared/constants/ipc';
 
 const ipcRenderer = electron.ipcRenderer;
 
@@ -52,7 +53,7 @@ export default class TracksList extends Component {
   componentDidMount() {
     this.renderView = document.querySelector('.tracks-list-render-view');
 
-    ipcRenderer.on('tracksListContextMenuReply', async (event, reply, data) => {
+    ipcRenderer.on(IPC_TL_CONTEXTMENU_REPLY, async (event, reply, data) => {
       const selected = this.state.selected;
 
       switch(reply) {
@@ -98,7 +99,7 @@ export default class TracksList extends Component {
   }
 
   componentWillUnmount() {
-    ipcRenderer.removeAllListeners('tracksListContextMenuReply');
+    ipcRenderer.removeAllListeners(IPC_TL_CONTEXTMENU_REPLY);
   }
 
   scrollTracksList() {
