@@ -56,43 +56,23 @@ class TrayManager extends ModuleWindow {
           this.window.webContents.send(IPC_PLAYER_ACTION, 'next');
         },
       },
-      {
-        type: 'separator',
-      },
-      {
-        label: 'Show',
-        click: () => {
-          this.window.show();
-          this.window.focus();
-        },
-      },
-      {
-        type: 'separator',
-      },
-      {
-        label: 'Quit',
-        click: () => {
-          app.quit();
-          this.window.destroy();
-        },
-      },
-    ];
+    ],
 
     // Load events listener for player actions
     ipcMain.on(IPC_PLAYER_ACTION, (event, reply, data) => {
       switch(reply) {
         case 'play': {
-          this.setContextMenu('play');
+          this.setDockMenu('play');
           break;
         }
 
         case 'pause': {
-          this.setContextMenu('pause');
+          this.setDockMenu('pause');
           break;
         }
         case 'trackStart': {
           this.updateTrayMetadata(data);
-          this.setContextMenu('play');
+          this.setDockMenu('play');
           break;
         }
       }
