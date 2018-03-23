@@ -1,7 +1,5 @@
 /**
  * Essential module for creating/loading the app config
- *
- * Linux, Mac, Windows
  */
 
 const teeny = require('teeny-conf');
