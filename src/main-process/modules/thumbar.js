@@ -12,23 +12,15 @@ const path = require('path');
 const { nativeImage, ipcMain } = require('electron');
 const { createFromPath } = nativeImage;
 
-const Module = require('./module');
-const constants = require('../constants');
+const ModuleWindow = require('./module-window');
 
 const iconsDirectory = path.resolve(__dirname, '../..', 'images', 'icons', 'windows');
 
 
-class ThumbarModule extends Module {
-  static get PLATFORMS() {
-    return ['win32'];
-  }
-
-  static get LOAD_AT() {
-    return constants.ON_BROWSERWINDOW_READY;
-  }
-
+class ThumbarModule extends ModuleWindow {
   constructor(window) {
     super(window);
+    this.platforms = ['win32'];
   }
 
   load() {

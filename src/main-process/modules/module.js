@@ -2,21 +2,13 @@
  * Example of Module, other modules should extent this class
  */
 
-const constants = require('../constants');
+const os = require('os');
 
 
 class Module {
-  static get PLATFORMS() {
-    return ['win32', 'linux', 'darwin'];
-  }
-
-  static get LOAD_AT() {
-    return constants.ON_BROWSERWINDOW_READY;
-  }
-
-  constructor(window) {
-    this.window = window;
-    this.isLoaded = false;
+  constructor() {
+    this.loaded = false;
+    this.platforms = ['win32', 'linux', 'darwin'];
   }
 
   getConfig() {
@@ -25,10 +17,14 @@ class Module {
 
   // To not be overriden
   init() {
-    if (this.isLoaded) throw(new TypeError('Module is already loaded'));
+    if (this.loaded) throw(new TypeError('Module is already loaded'));
 
-    this.load();
-    this.isLoaded = true;
+    if (this.platforms.includes(os.platform())) {
+      this.load();
+      this.loaded = true;
+    } else {
+      console.info(`[INFO] Ignoring loading of ${this.constructor.name}`);
+    }
   }
 
   load() {

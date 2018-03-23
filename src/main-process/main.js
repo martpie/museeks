@@ -4,11 +4,13 @@ const path     = require('path');
 const os       = require('os');
 const electron = require('electron');
 
-const IpcManager         = require('./modules/ipc'); // Manages IPC evens
-const TrayManager        = require('./modules/tray'); // Manages Tray
-const ConfigManager      = require('./modules/config'); // Handles config
-const PowerMonitor       = require('./modules/power-monitor'); // Handle power events
+const IpcModule     = require('./modules/ipc'); // Manages IPC evens
+const TrayModule    = require('./modules/tray'); // Manages Tray
+const ConfigModule  = require('./modules/config'); // Handles config
+const PowerModule   = require('./modules/power-monitor'); // Handle power events
+const ThumbarModule = require('./modules/thumbar'); // Handle power events
 
+const ModulesManager = require('./lib/modules-manager');
 const { checkBounds } = require('./utils');
 
 const { app, BrowserWindow } = electron;
@@ -39,11 +41,14 @@ app.on('window-all-closed', () => {
     app.quit();
 });
 
-// This method will be called when Electron has done everything
-// initialization and ready for creating browser windows.
+// Let's list the list of modules we will use for Museeks
+
+// This method will be called when Electron has finished its
+// initialization and ready to create browser windows.
 app.on('ready', () => {
-  const configManager = new ConfigManager(null);
-  configManager.load();
+  const configManager = new ConfigModule();
+  ModulesManager.init(configManager);
+
   const config = configManager.getConfig();
   const { useNativeFrame } = config;
   let { bounds } = config;
@@ -96,16 +101,13 @@ app.on('ready', () => {
     e.preventDefault();
   });
 
-
-  // IPC events
-  const ipcManager = new IpcManager(mainWindow);
-  ipcManager.load();
-
-  // Power monitor
-  const powerMonitor = new PowerMonitor(mainWindow);
-  powerMonitor.load();
-
-  // Tray manager
-  const trayManager = new TrayManager(mainWindow);
-  trayManager.load();
+  ModulesManager.init(
+    new IpcModule(mainWindow),
+    new PowerModule(mainWindow),
+    new TrayModule(mainWindow),
+    new ThumbarModule(mainWindow)
+  );
 });
+
+
+module.exports.MainWindow = mainWindow;

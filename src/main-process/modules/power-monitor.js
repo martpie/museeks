@@ -2,19 +2,10 @@
  * Module in charge of pausing the player when going into sleep
  */
 
-const Module = require('./module');
-const constants = require('../constants');
+const ModuleWindow = require('./module-window');
 
 
-class PowerMonitor extends Module {
-  static get PLATFORMS() {
-    return ['win32', 'linux', 'darwin'];
-  }
-
-  static get LOAD_AT() {
-    return constants.ON_BROWSERWINDOW_READY;
-  }
-
+class PowerMonitor extends ModuleWindow {
   constructor(window) {
     super(window);
   }

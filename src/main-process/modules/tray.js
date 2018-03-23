@@ -6,19 +6,10 @@ const os = require('os');
 const path = require('path');
 const { Tray, Menu, app, ipcMain, nativeImage } = require('electron');
 
-const Module = require('./module');
-const constants = require('../constants');
+const ModuleWindow = require('./module-window');
 
 
-class TrayManager extends Module {
-  static get PLATFORMS() {
-    return ['win32', 'linux', 'darwin'];
-  }
-
-  static get LOAD_AT() {
-    return constants.ON_BROWSERWINDOW_READY;
-  }
-
+class TrayManager extends ModuleWindow {
   constructor(window) {
     super(window);
   }
