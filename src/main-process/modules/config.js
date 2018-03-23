@@ -9,20 +9,11 @@ const electron = require('electron');
 const path = require('path');
 
 const Module = require('./module');
-const constants = require('../constants');
 
 const { app } = electron;
 
 
 class ConfigManager extends Module {
-  static get PLATFORMS() {
-    return ['win32', 'linux', 'darwin'];
-  }
-
-  static get LOAD_AT() {
-    return constants.ON_APP_READY;
-  }
-
   constructor(window) {
     super(window);
   }
