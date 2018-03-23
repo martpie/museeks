@@ -8,7 +8,7 @@ const IpcModule     = require('./modules/ipc'); // Manages IPC evens
 const TrayModule    = require('./modules/tray'); // Manages Tray
 const ConfigModule  = require('./modules/config'); // Handles config
 const PowerModule   = require('./modules/power-monitor'); // Handle power events
-const ThumbarModule = require('./modules/thumbar'); // Handle power events
+const ThumbarModule = require('./modules/thumbar'); // Handle Windows Thumbar
 
 const ModulesManager = require('./lib/modules-manager');
 const { checkBounds } = require('./utils');
@@ -108,6 +108,3 @@ app.on('ready', () => {
     new ThumbarModule(mainWindow)
   );
 });
-
-
-module.exports.MainWindow = mainWindow;
