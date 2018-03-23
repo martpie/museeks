@@ -213,7 +213,7 @@ class IpcManager extends ModuleWindow {
     // Small hack to check on MacOS if the dock close action has been clicked
     // https://stackoverflow.com/questions/35008347/electron-close-w-x-vs-right-click-dock-and-quit#35782702
     app.on('before-quit', () => {
-      this.forceQuit = true;
+      // this.forceQuit = true;
     });
   }
 }

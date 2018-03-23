@@ -10,9 +10,13 @@ const ModuleWindow = require('./module-window');
 const { IPC_PLAYER_ACTION } = require('../../shared/constants/ipc');
 
 
-class TrayManager extends ModuleWindow {
+class TrayModule extends ModuleWindow {
   constructor(window) {
     super(window);
+
+    // Darwin used to be supported, it is now disabled because its usage do not
+    // make a lot of sense on this platform, as the icon always stay in the dock
+    this.platforms = ['win32', 'linux'];
   }
 
   load() {
@@ -171,4 +175,4 @@ class TrayManager extends ModuleWindow {
   }
 }
 
-module.exports = TrayManager;
+module.exports = TrayModule;
