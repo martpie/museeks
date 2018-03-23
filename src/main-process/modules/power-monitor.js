@@ -3,7 +3,7 @@
  */
 
 const ModuleWindow = require('./module-window');
-const { IPC_PLAYER_ACTION } = require('../../shared/constants/ipc');
+const { IPCR_PLAYER_ACTION } = require('../../shared/constants/ipc');
 
 
 class PowerMonitor extends ModuleWindow {
@@ -16,7 +16,7 @@ class PowerMonitor extends ModuleWindow {
     const window = this.window;
 
     powerMonitor.on('suspend', () => {
-      window.webContents.send(IPC_PLAYER_ACTION, 'pause');
+      window.webContents.send(IPCR_PLAYER_ACTION, 'pause');
     });
   }
 }
