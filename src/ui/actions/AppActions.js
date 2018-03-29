@@ -62,9 +62,8 @@ const init = () => {
   ipcRenderer.on(IPCR_PLAYER_ACTION, (event, reply) => {
     switch(reply) {
       case 'play':
-        // Scenarion: click on the Tray when the player is in 'stop' mode
-        if (!Player.getSrc()) PlayerActions.start();
-        else PlayerActions.play();
+        // Scenario: click on the Tray when the player is in 'stop' mode
+        Player.getSrc() ? PlayerActions.play() : PlayerActions.start();
         break;
       case 'pause':
         PlayerActions.pause();

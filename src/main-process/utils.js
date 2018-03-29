@@ -5,15 +5,15 @@ module.exports.checkBounds = function(bounds) {
   const display = electron.screen.getDisplayNearestPoint(bounds).workArea;
 
   const onScreen = bounds.x >= display.x
-        && bounds.x + bounds.width <= display.x + display.width
-        && bounds.y >= display.y
-        && bounds.y + bounds.height <= display.y + display.height;
+    && bounds.x + bounds.width <= display.x + display.width
+    && bounds.y >= display.y
+    && bounds.y + bounds.height <= display.y + display.height;
 
   if(!onScreen) {
-    delete bounds.x;
-    delete bounds.y;
-    bounds.width = 900;
-    bounds.height = 550;
+    return {
+      width: 900,
+      height: 550,
+    };
   }
 
   return bounds;
