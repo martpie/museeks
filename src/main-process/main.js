@@ -4,7 +4,7 @@ const path     = require('path');
 const os       = require('os');
 const electron = require('electron');
 
-const IpcModule     = require('./modules/ipc'); // Manages IPC evens
+const IpcModule     = require('./modules/ipc'); // Manages IPC events
 const MenuModule    = require('./modules/menu'); // Manage menu
 const TrayModule    = require('./modules/tray'); // Manages Tray
 const ConfigModule  = require('./modules/config'); // Handles config
