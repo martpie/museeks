@@ -1,11 +1,22 @@
-'use strict';
+/**
+ * Essential module for creating/loading the app config
+ */
 
-const teeny    = require('teeny-conf');
+const teeny = require('teeny-conf');
 const electron = require('electron');
-const path     = require('path');
+const path = require('path');
 
-class ConfigManager {
-  constructor(app) {
+const Module = require('./module');
+
+const { app } = electron;
+
+
+class ConfigManager extends Module {
+  constructor(window) {
+    super(window);
+  }
+
+  load() {
     this.workArea = electron.screen.getPrimaryDisplay().workArea;
 
     const defaultConfig = this.getDefaultConfig();
@@ -54,6 +65,14 @@ class ConfigManager {
 
   getConfig() {
     return this.conf.getAll();
+  }
+
+  get(key) {
+    return this.conf.get(key);
+  }
+
+  reload() {
+    this.conf.loadOrCreateSync(this.getDefaultConfig());
   }
 }
 

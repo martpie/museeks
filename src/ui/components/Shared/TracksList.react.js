@@ -13,6 +13,7 @@ import AppActions from '../../actions/AppActions';
 import Player from '../../lib/player';
 import utils  from '../../utils/utils';
 import { isCtrlKey } from '../../utils/utils-platform';
+import { IPCM_TL_CONTEXTMENU_REPLY, IPCR_TL_CONTEXTMENU } from '../../../shared/constants/ipc';
 
 const ipcRenderer = electron.ipcRenderer;
 
@@ -52,7 +53,7 @@ export default class TracksList extends Component {
   componentDidMount() {
     this.renderView = document.querySelector('.tracks-list-render-view');
 
-    ipcRenderer.on('tracksListContextMenuReply', async (event, reply, data) => {
+    ipcRenderer.on(IPCM_TL_CONTEXTMENU_REPLY, async (event, reply, data) => {
       const selected = this.state.selected;
 
       switch(reply) {
@@ -98,7 +99,7 @@ export default class TracksList extends Component {
   }
 
   componentWillUnmount() {
-    ipcRenderer.removeAllListeners('tracksListContextMenuReply');
+    ipcRenderer.removeAllListeners(IPCM_TL_CONTEXTMENU_REPLY);
   }
 
   scrollTracksList() {
@@ -318,7 +319,7 @@ export default class TracksList extends Component {
       playlistsList = playlistsList.filter((elem) => elem._id !== this.props.currentPlaylist);
     }
 
-    ipcRenderer.send('tracksListContextMenu', JSON.stringify({
+    ipcRenderer.send(IPCR_TL_CONTEXTMENU, JSON.stringify({
       type: this.props.type,
       selectedCount: this.state.selected.length,
       track: this.props.tracks[index],

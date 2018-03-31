@@ -1,15 +1,33 @@
-'use strict';
+/**
+ * Module in charge of communicating with the render process, especially
+ * in TracksList.
+ *
+ * TODO parts of this file should return to ui/, as content menus can now be
+ * made async without blocking the rendering process
+ */
 
 const { Menu, ipcMain, powerSaveBlocker, shell, app } = require('electron');
 
-class IpcManager {
-  constructor(window) {
-    this.window = window;
+const ModuleWindow = require('./module-window');
+const {
+  IPCM_TL_CONTEXTMENU_REPLY,
+  IPCM_PL_CONTEXTMENU_REPLY,
+  IPCR_APP_RESTART,
+  IPCR_APP_CLOSE,
+  IPCR_TOGGLE_SLEEPBLOCKER,
+} = require('../../shared/constants/ipc');
+
+
+class IpcManager extends ModuleWindow {
+  constructor(window, config) {
+    super(window);
+
+    this.config = config;
     this.instance = {};
     this.forceQuit = false;
   }
 
-  bindEvents() {
+  load() {
     ipcMain.on('tracksListContextMenu', (event, stringData) => {
       const data = JSON.parse(stringData);
       let playlistTemplate = [];
@@ -20,7 +38,7 @@ class IpcManager {
           {
             label: 'Create new playlist...',
             click: () => {
-              event.sender.send('tracksListContextMenuReply', 'createPlaylist');
+              event.sender.send(IPCM_TL_CONTEXTMENU_REPLY, 'createPlaylist');
             },
           },
         ];
@@ -37,7 +55,7 @@ class IpcManager {
           playlistTemplate.push({
             label: elem.name,
             click: () => {
-              event.sender.send('tracksListContextMenuReply', 'addToPlaylist', {
+              event.sender.send(IPCM_TL_CONTEXTMENU_REPLY, 'addToPlaylist', {
                 playlistId: elem._id,
               });
             },
@@ -48,7 +66,7 @@ class IpcManager {
           {
             label: 'Create new playlist...',
             click: () => {
-              event.sender.send('tracksListContextMenuReply', 'createPlaylist');
+              event.sender.send(IPCM_TL_CONTEXTMENU_REPLY, 'createPlaylist');
             },
           },
           {
@@ -66,13 +84,13 @@ class IpcManager {
           {
             label: 'Add to queue',
             click: () => {
-              event.sender.send('tracksListContextMenuReply', 'addToQueue');
+              event.sender.send(IPCM_TL_CONTEXTMENU_REPLY, 'addToQueue');
             },
           },
           {
             label: 'Play next',
             click: () => {
-              event.sender.send('tracksListContextMenuReply', 'playNext');
+              event.sender.send(IPCM_TL_CONTEXTMENU_REPLY, 'playNext');
             },
           },
           {
@@ -100,13 +118,13 @@ class IpcManager {
         {
           label: `Search for "${data.track.artist[0]}"`,
           click: () => {
-            event.sender.send('tracksListContextMenuReply', 'searchFor', { search: data.track.artist[0] });
+            event.sender.send(IPCM_TL_CONTEXTMENU_REPLY, 'searchFor', { search: data.track.artist[0] });
           },
         },
         {
           label: `Search for "${data.track.album}"`,
           click: () => {
-            event.sender.send('tracksListContextMenuReply', 'searchFor', { search: data.track.album });
+            event.sender.send(IPCM_TL_CONTEXTMENU_REPLY, 'searchFor', { search: data.track.album });
           },
         },
       ];
@@ -118,7 +136,7 @@ class IpcManager {
         {
           label: 'Remove from playlist',
           click: () => {
-            event.sender.send('tracksListContextMenuReply', 'removeFromPlaylist');
+            event.sender.send(IPCM_TL_CONTEXTMENU_REPLY, 'removeFromPlaylist');
           },
         }
       );
@@ -136,7 +154,7 @@ class IpcManager {
         {
           label: 'Remove from library',
           click: () => {
-            event.sender.send('tracksListContextMenuReply', 'removeFromLibrary');
+            event.sender.send(IPCM_TL_CONTEXTMENU_REPLY, 'removeFromLibrary');
           },
         }
       );
@@ -151,13 +169,13 @@ class IpcManager {
         {
           label: 'Delete',
           click: () => {
-            event.sender.send('playlistContextMenuReply', 'delete', _id);
+            event.sender.send(IPCM_PL_CONTEXTMENU_REPLY, 'delete', _id);
           },
         },
         {
           label: 'Rename',
           click: () => {
-            event.sender.send('playlistContextMenuReply', 'rename', _id);
+            event.sender.send(IPCM_PL_CONTEXTMENU_REPLY, 'rename', _id);
           },
         },
       ];
@@ -168,7 +186,7 @@ class IpcManager {
     });
 
 
-    ipcMain.on('toggleSleepBlocker', (event, toggle, mode) => {
+    ipcMain.on(IPCR_TOGGLE_SLEEPBLOCKER, (event, toggle, mode) => {
       if(toggle) {
         this.instance.sleepBlockerId = powerSaveBlocker.start(mode);
       } else {
@@ -177,7 +195,7 @@ class IpcManager {
       }
     });
 
-    ipcMain.on('appRestart', () => {
+    ipcMain.on(IPCR_APP_RESTART, () => {
       app.relaunch({ args: process.argv.slice(1) + ['--relaunch'] });
       app.exit(0);
     });
@@ -190,13 +208,10 @@ class IpcManager {
 
     // Prevent the window to be closed, hide it instead (to continue audio playback)
     this.window.on('close', (e) => {
-      if (this.forceQuit) {
-        app.quit();
-        this.window.destroy();
-      } else {
-        e.preventDefault();
-        this.window.webContents.send('close');
-      }
+      this.close(e);
+    });
+    ipcMain.on(IPCR_APP_CLOSE, (e) => {
+      this.close(e);
     });
 
     // Small hack to check on MacOS if the dock close action has been clicked
@@ -204,6 +219,19 @@ class IpcManager {
     app.on('before-quit', () => {
       this.forceQuit = true;
     });
+  }
+
+  close(e) {
+    this.config.reload(); // HACKY
+    const minimizeToTray = this.config.get('minimizeToTray');
+
+    if (this.forceQuit || !minimizeToTray) {
+      app.quit();
+      this.window.destroy();
+    } else {
+      e.preventDefault();
+      this.window.hide();
+    }
   }
 }
 

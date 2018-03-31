@@ -125,7 +125,7 @@ export default class QueueList extends Component {
           { shownQueue.map((track, index) => {
             return (
               <QueueListItem
-                key={`queue-track-${track._id}`}
+                key={`queue-track-${track._id}-${index}`}
                 index={index}
                 track={track}
                 queueCursor={this.props.queueCursor}

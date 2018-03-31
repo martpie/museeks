@@ -51,8 +51,8 @@ export default class SettingsUI extends Component {
           onClick={AppActions.settings.toggleSleepBlocker}
         />
         <CheckboxSetting
-          title='Minimize to tray'
-          description='Minimize to tray when closing the app'
+          title='Minimize on close'
+          description='Minimize when closing the app'
           defaultValue={config.minimizeToTray}
           onClick={AppActions.settings.toggleMinimizeToTray}
         />

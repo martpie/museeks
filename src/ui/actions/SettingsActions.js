@@ -7,6 +7,8 @@ import AppActions    from './AppActions';
 
 import * as app from '../lib/app';
 
+import { IPCR_TOGGLE_SLEEPBLOCKER } from '../../shared/constants/ipc';
+
 
 const ipcRenderer = electron.ipcRenderer;
 
@@ -41,7 +43,7 @@ const toggleSleepBlocker = (value) => {
   app.config.set('sleepBlocker', value);
   app.config.saveSync();
 
-  ipcRenderer.send('toggleSleepBlocker', value, 'prevent-app-suspension');
+  ipcRenderer.send(IPCR_TOGGLE_SLEEPBLOCKER, value, 'prevent-app-suspension');
 
   store.dispatch({
     type : types.APP_REFRESH_CONFIG,
@@ -50,7 +52,7 @@ const toggleSleepBlocker = (value) => {
 
 const checkSleepBlocker = () => {
   if(app.config.get('sleepBlocker')) {
-    ipcRenderer.send('toggleSleepBlocker', true, 'prevent-app-suspension');
+    ipcRenderer.send(IPCR_TOGGLE_SLEEPBLOCKER, true, 'prevent-app-suspension');
   }
 };
 

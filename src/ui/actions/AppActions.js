@@ -12,6 +12,8 @@ import PlayerActions       from './PlayerActions';
 import QueueActions        from './QueueActions';
 import SettingsActions     from './SettingsActions';
 
+import { IPCR_PLAYER_ACTION, IPCR_APP_CLOSE, IPCR_APP_READY, IPCR_APP_RESTART } from '../../shared/constants/ipc';
+
 const globalShortcut = electron.remote.globalShortcut;
 const ipcRenderer    = electron.ipcRenderer;
 
@@ -34,13 +36,13 @@ const init = () => {
   });
 
   Player.getAudio().addEventListener('play', async () => {
-    ipcRenderer.send('playerAction', 'play');
+    ipcRenderer.send(IPCR_PLAYER_ACTION, 'play');
 
     const path = decodeURIComponent(Player.getSrc()).replace('file://', '');
 
     const track = await utils.getMetadata(path);
 
-    ipcRenderer.send('playerAction', 'trackStart', track);
+    ipcRenderer.send(IPCR_PLAYER_ACTION, 'trackStart', track);
 
     if(browserWindows.main.isFocused()) return;
 
@@ -53,14 +55,15 @@ const init = () => {
   });
 
   Player.getAudio().addEventListener('pause', () => {
-    ipcRenderer.send('playerAction', 'pause');
+    ipcRenderer.send(IPCR_PLAYER_ACTION, 'pause');
   });
 
   // Listen for main-process events
-  ipcRenderer.on('playerAction', (event, reply) => {
+  ipcRenderer.on(IPCR_PLAYER_ACTION, (event, reply) => {
     switch(reply) {
       case 'play':
-        PlayerActions.play();
+        // Scenario: click on the Tray when the player is in 'stop' mode
+        Player.getSrc() ? PlayerActions.play() : PlayerActions.start();
         break;
       case 'pause':
         PlayerActions.pause();
@@ -72,11 +75,6 @@ const init = () => {
         PlayerActions.next();
         break;
     }
-  });
-
-  // Listen for main-process events
-  ipcRenderer.on('close', () => {
-    close();
   });
 
   // Prevent some events
@@ -97,19 +95,15 @@ const init = () => {
 };
 
 const start = () => {
-  ipcRenderer.send('appReady');
+  ipcRenderer.send(IPCR_APP_READY);
 };
 
 const restart = () => {
-  ipcRenderer.send('appRestart');
+  ipcRenderer.send(IPCR_APP_RESTART);
 };
 
 const close = () => {
-  if(config.get('minimizeToTray')) {
-    browserWindows.main.hide();
-  } else {
-    browserWindows.main.destroy();
-  }
+  ipcRenderer.send(IPCR_APP_CLOSE);
 };
 
 const minimize = () => {
