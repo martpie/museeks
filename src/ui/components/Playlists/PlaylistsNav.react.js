@@ -8,6 +8,8 @@ import AppActions from '../../actions/AppActions';
 
 import PlaylistsNavLink from './PlaylistsNavLink.react';
 
+import { IPCM_PL_CONTEXTMENU_REPLY } from '../../../shared/constants/ipc';
+
 const ipcRenderer = electron.ipcRenderer;
 
 
@@ -39,7 +41,7 @@ class PlaylistsNav extends Component {
   componentDidMount() {
     const self = this;
 
-    ipcRenderer.on('playlistContextMenuReply', (event, reply, _id) => {
+    ipcRenderer.on(IPCM_PL_CONTEXTMENU_REPLY, (event, reply, _id) => {
       switch(reply) {
         case 'delete':
           AppActions.playlists.remove(_id);
@@ -52,7 +54,7 @@ class PlaylistsNav extends Component {
   }
 
   componentWillUnmount() {
-    ipcRenderer.removeAllListeners('playlistContextMenuReply');
+    ipcRenderer.removeAllListeners(IPCM_PL_CONTEXTMENU_REPLY);
   }
 
   showContextMenu(_id) {
