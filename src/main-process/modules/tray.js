@@ -16,7 +16,10 @@ class TrayModule extends ModuleWindow {
 
     // Darwin used to be supported, it is now disabled because its usage do not
     // make a lot of sense on this platform, as the icon always stay in the dock
-    this.platforms = ['win32', 'linux'];
+    //
+    // 01/04/2018 actually not for now, I do not want to break a feature in a
+    // patch release
+    // this.platforms = ['win32', 'linux'];
   }
 
   load() {
