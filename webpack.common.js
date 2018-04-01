@@ -1,7 +1,7 @@
 'use strict';
 
 const path = require('path');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 
@@ -23,18 +23,19 @@ module.exports = {
         exclude: /node_modules/,
       },
       {
-        test: /\.json$/,
-        use: ['json-loader'],
-      },
-      {
         test: /\.css$/,
-        use: ExtractTextPlugin.extract({ use: 'css-loader' }),
+        use: [
+          MiniCssExtractPlugin.loader,
+          'css-loader',
+        ],
       },
       {
         test: /\.scss$/,
-        use: ExtractTextPlugin.extract({
-          use: ['css-loader', 'sass-loader'],
-        }),
+        use: [
+          MiniCssExtractPlugin.loader,
+          'css-loader',
+          'sass-loader',
+        ],
       },
       {
         test: /\.(eot|woff|woff2|ttf)([?]?.*)$/,
@@ -73,7 +74,10 @@ module.exports = {
     ],
   },
   plugins: [
-    new ExtractTextPlugin({ filename: 'main.css', allChunks: true }),
+    new MiniCssExtractPlugin({
+      filename: '[name].css',
+      chunkFilename: '[id].css',
+    }),
     new HtmlWebpackPlugin({
       title: 'Museeks',
       template: 'src/app.html',
