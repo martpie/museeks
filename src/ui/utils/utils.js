@@ -285,7 +285,7 @@ const fetchCover = async (trackPath) => {
   }
 
   const data = await mmd.parseFile(trackPath);
-  const picture = data.common.picture[0];
+  const picture = data.common.picture && data.common.picture[0];
 
   if(picture) { // If cover in id3
     return parseBase64(picture.format, picture.data.toString('base64'));
