@@ -34,7 +34,7 @@ const shouldQuit = app.makeSingleInstance(() => {
 });
 
 if (shouldQuit) {
-  app.quit();
+  app.exit();
 }
 
 // Quit when all windows are closed
