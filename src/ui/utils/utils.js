@@ -8,6 +8,7 @@ import path from 'path';
 import fs from 'fs';
 import util from 'util';
 import globby from 'globby';
+import pickBy from 'lodash/pickBy';
 
 const mmd = require('music-metadata');
 
@@ -196,16 +197,7 @@ const parseMusicMetadata = (data, trackPath) => {
       year     : common.year,
     };
 
-    // HACK Yes, this is terribly hacky, I want to change that
-    // remove all the undefined values to avoid conflicts with the spread
-    // notation
-    for (const key in metadata) {
-      if (metadata[key] === undefined) {
-        delete metadata[key];
-      }
-    }
-
-    return metadata;
+    return pickBy(metadata);
   }
 
   return {};
