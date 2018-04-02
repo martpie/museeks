@@ -92,7 +92,7 @@ const start = (queue, _id) => {
 
   const { shuffle } = state.player;
 
-  const oldQueue = [newQueue];
+  const oldQueue = [...newQueue];
   const trackId = _id || newQueue[0]._id;
 
   // Typically, if we are in the playlists generic view without any view selected
@@ -202,11 +202,9 @@ const shuffle = (shuffle) => {
   app.config.set('audioShuffle', shuffle);
   app.config.saveSync();
 
-  const currentSrc = Player.getSrc();
   store.dispatch({
     type : types.APP_PLAYER_SHUFFLE,
     shuffle,
-    currentSrc,
   });
 };
 
