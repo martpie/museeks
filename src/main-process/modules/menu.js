@@ -8,7 +8,7 @@ const { app, Menu, shell } = require('electron');
 const Module = require('./module');
 
 
-class PowerMonitor extends Module {
+class MenuModule extends Module {
   constructor(window) {
     super(window);
   }
@@ -108,4 +108,4 @@ class PowerMonitor extends Module {
   }
 }
 
-module.exports = PowerMonitor;
+module.exports = MenuModule;

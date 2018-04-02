@@ -8,7 +8,7 @@ const ModuleWindow = require('./module-window');
 const { IPCR_PLAYER_ACTION } = require('../../shared/constants/ipc');
 
 
-class TrayManager extends ModuleWindow {
+class DockMenuModule extends ModuleWindow {
   constructor(window) {
     super(window);
     this.platforms = ['darwin'];
@@ -109,4 +109,4 @@ class TrayManager extends ModuleWindow {
   }
 }
 
-module.exports = TrayManager;
+module.exports = DockMenuModule;

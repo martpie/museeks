@@ -6,7 +6,7 @@ const ModuleWindow = require('./module-window');
 const { IPCR_PLAYER_ACTION } = require('../../shared/constants/ipc');
 
 
-class PowerMonitor extends ModuleWindow {
+class PowerMonitorModule extends ModuleWindow {
   constructor(window) {
     super(window);
   }
@@ -21,4 +21,4 @@ class PowerMonitor extends ModuleWindow {
   }
 }
 
-module.exports = PowerMonitor;
+module.exports = PowerMonitorModule;
