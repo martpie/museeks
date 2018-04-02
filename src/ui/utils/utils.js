@@ -4,13 +4,15 @@
 |--------------------------------------------------------------------------
 */
 
-import path    from 'path';
-import fs      from 'fs';
-import mmd     from 'musicmetadata';
-import globby  from 'globby';
-import Promise from 'bluebird';
+import path from 'path';
+import fs from 'fs';
+import util from 'util';
+import globby from 'globby';
+import pickBy from 'lodash/pickBy';
 
-const musicmetadataAsync = Promise.promisify(mmd);
+const mmd = require('music-metadata');
+
+const stat = util.promisify(fs.stat);
 
 /**
  * Parse an int to a more readable string
@@ -161,7 +163,6 @@ const chunkArray = (array, chunkLength) => {
 const getDefaultMetadata = () => {
   return {
     album        : 'Unknown',
-    albumartist  : [],
     artist       : ['Unknown artist'],
     disk         : {
       no: 0,
@@ -177,76 +178,38 @@ const getDefaultMetadata = () => {
       no: 0,
       of: 0,
     },
-    year         : '',
+    year         : null,
   };
+};
+
+const parseMusicMetadata = (data, trackPath) => {
+  if (typeof data === 'object') {
+    const { common, format } = data;
+
+    const metadata = {
+      album    : common.album,
+      artist   : common.artists || (common.artist && [common.artist]) || (common.albumartist && [common.albumartist]),
+      disk     : common.disk,
+      duration : format.duration,
+      genre    : common.genre,
+      title    : common.title || path.parse(trackPath).base,
+      track    : common.track,
+      year     : common.year,
+    };
+
+    return pickBy(metadata);
+  }
+
+  return {};
 };
 
 const getLoweredMeta = (metadata) => {
   return {
-    artist      : metadata.artist.map((meta) => stripAccents(meta.toLowerCase())),
-    album       : stripAccents(metadata.album.toLowerCase()),
-    albumartist : metadata.albumartist.map((meta) => stripAccents(meta.toLowerCase())),
-    title       : stripAccents(metadata.title.toLowerCase()),
-    genre       : metadata.genre.map((meta) => stripAccents(meta.toLowerCase())),
+    artist: metadata.artist.map((meta) => stripAccents(meta.toLowerCase())),
+    album: stripAccents(metadata.album.toLowerCase()),
+    title: stripAccents(metadata.title.toLowerCase()),
+    genre: metadata.genre.map((meta) => stripAccents(meta.toLowerCase())),
   };
-};
-
-const getWavMetadata = async (track) => {
-  const defaultMetadata = getDefaultMetadata();
-
-  let audioDuration = 0;
-  try {
-    audioDuration = await getAudioDurationAsync(track);
-  } catch (err) {
-    console.warn(err);
-    audioDuration = 0;
-  }
-
-  const metadata = {
-    ...defaultMetadata,
-    duration: audioDuration,
-    path    : track,
-    title   : path.parse(track).base,
-  };
-
-  metadata.loweredMetas = getLoweredMeta(metadata);
-  return metadata;
-};
-
-const getMusicMetadata = async (track) => {
-  const defaultMetadata = getDefaultMetadata();
-
-  let data;
-  try {
-    const stream = fs.createReadStream(track);
-    data = await musicmetadataAsync(stream, { duration: true });
-    delete data.picture;
-    stream.close();
-  } catch (err) {
-    data = defaultMetadata;
-    console.warn(`An error occured while reading ${track} id3 tags: ${err}`);
-  }
-
-  const metadata = {
-    ...defaultMetadata,
-    ...data,
-    album        : data.album === null || data.album === '' ? 'Unknown' : data.album,
-    artist       : data.artist.length === 0 ? ['Unknown artist'] : data.artist,
-    duration     : data.duration === '' ? 0 : data.duration,
-    path         : track,
-    title        : data.title === null || data.title === '' ? path.parse(track).base : data.title,
-  };
-
-  metadata.loweredMetas = getLoweredMeta(metadata);
-
-  if (metadata.duration === 0) {
-    try {
-      metadata.duration = await getAudioDurationAsync(track);
-    } catch (err) {
-      console.warn(`An error occured while getting ${track} duration: ${err}`);
-    }
-  }
-  return metadata;
 };
 
 /**
@@ -256,10 +219,37 @@ const getMusicMetadata = async (track) => {
  * @return object
  *
  */
-const getMetadata = async (track) => {
-  // metadata should have the same shape as getDefaultMetadata() object
-  const wavFile = path.extname(track).toLowerCase() === '.wav';
-  const metadata = wavFile ? await getWavMetadata(track) : await getMusicMetadata(track);
+const getMetadata = async (trackPath) => {
+  let data;
+
+  try {
+    const stats = await stat(trackPath);
+    data = await mmd.parseFile(trackPath, { native: true, skipCovers: true, fileSize: stats.size, duration: true });
+  } catch (err) {
+    console.warn(`An error occured while reading ${trackPath} id3 tags: ${err}`);
+  }
+
+  // Let's try to define something with what we got so far...
+  const parsedData = parseMusicMetadata(data, trackPath);
+  const defaultMetadata = getDefaultMetadata();
+
+  const metadata = {
+    ...defaultMetadata,
+    ...parsedData,
+    path: trackPath,
+  };
+
+  metadata.loweredMetas = getLoweredMeta(metadata);
+
+  // Let's try another wat to retrieve a track duration
+  if (!metadata.duration) {
+    try {
+      metadata.duration = await getAudioDurationAsync(trackPath);
+    } catch (err) {
+      console.warn(`An error occured while getting ${trackPath} duration: ${err}`);
+    }
+  }
+
   return metadata;
 };
 
@@ -286,12 +276,11 @@ const fetchCover = async (trackPath) => {
     return null;
   }
 
-  const stream = fs.createReadStream(trackPath);
+  const data = await mmd.parseFile(trackPath);
+  const picture = data.common.picture && data.common.picture[0];
 
-  const data = await musicmetadataAsync(stream);
-
-  if(data.picture[0]) { // If cover in id3
-    return parseBase64(data.picture[0].format, data.picture[0].data.toString('base64'));
+  if(picture) { // If cover in id3
+    return parseBase64(picture.format, picture.data.toString('base64'));
   }
 
   // scan folder for any cover image
@@ -303,7 +292,7 @@ const fetchCover = async (trackPath) => {
     const parsedPath = path.parse(elem);
 
     return ['album', 'albumart', 'folder', 'cover'].includes(parsedPath.name.toLowerCase())
-            && ['.png', '.jpg', '.bmp', '.gif'].includes(parsedPath.ext.toLowerCase()) ;
+      && ['.png', '.jpg', '.bmp', '.gif'].includes(parsedPath.ext.toLowerCase()) ;
   });
 };
 
