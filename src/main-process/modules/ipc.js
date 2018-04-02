@@ -18,7 +18,7 @@ const {
 } = require('../../shared/constants/ipc');
 
 
-class IpcManager extends ModuleWindow {
+class IpcModule extends ModuleWindow {
   constructor(window, config) {
     super(window);
 
@@ -235,4 +235,4 @@ class IpcManager extends ModuleWindow {
   }
 }
 
-module.exports = IpcManager;
+module.exports = IpcModule;

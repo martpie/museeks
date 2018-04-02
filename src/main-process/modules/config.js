@@ -11,7 +11,7 @@ const Module = require('./module');
 const { app } = electron;
 
 
-class ConfigManager extends Module {
+class ConfigModule extends Module {
   constructor(window) {
     super(window);
   }
@@ -76,4 +76,4 @@ class ConfigManager extends Module {
   }
 }
 
-module.exports = ConfigManager;
+module.exports = ConfigModule;
