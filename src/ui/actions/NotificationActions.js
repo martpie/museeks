@@ -5,7 +5,7 @@ import * as app from '../lib/app';
 const add = (notificationData) => {
   if (app.config.get('displayNotifications')) {
     const notification =
-            new Notification(
+      new Notification(
         notificationData.title,
         {
           body: notificationData.body,
