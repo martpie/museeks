@@ -1,5 +1,5 @@
 import utils from './utils';
-import orderBy from 'lodash.orderby';
+import orderBy from 'lodash/orderBy';
 
 /**
  * Filter an array of tracks
