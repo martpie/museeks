@@ -72,6 +72,8 @@ export default (state = initialState, payload) => {
     }
 
     case(types.APP_PLAYER_SHUFFLE): {
+      const trackPlayingId = state.queue[state.queueCursor]._id;
+
       // If we need to shuffle everything
       if(payload.shuffle) {
         // Let's shuffle that
@@ -89,7 +91,7 @@ export default (state = initialState, payload) => {
 
       // Unshuffle the queue by restoring the initial queue
       const currentTrackIndex = state.oldQueue.findIndex((track) => (
-        payload.currentSrc === `file://${encodeURI(track.path)}`
+        trackPlayingId === track._id
       ));
 
       // Roll back to the old but update queueCursor
