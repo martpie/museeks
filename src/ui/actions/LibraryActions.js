@@ -219,6 +219,8 @@ const reset = async () => {
       store.dispatch({
         type: types.APP_LIBRARY_REFRESH_END,
       });
+
+      load();
     }
   } catch (err) {
     console.error(err);
