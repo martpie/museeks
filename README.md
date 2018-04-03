@@ -56,7 +56,7 @@ Builds and installers can be found [on this page](https://github.com/KeitIG/muse
 
 Please consider that **`master` is unstable.**
 
-- `git@github.com:KeitIG/museeks.git`
+- `git clone git@github.com:KeitIG/museeks.git`
 - `cd museeks`
 - `npm install`
 - `npm run compile` or `npm run dev`
