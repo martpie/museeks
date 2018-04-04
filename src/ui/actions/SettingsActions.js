@@ -8,8 +8,6 @@ import * as ToastsActions from './ToastsActions';
 
 import * as app from '../lib/app';
 
-import { IPCR_TOGGLE_SLEEPBLOCKER } from '../../shared/constants/ipc';
-
 
 const { ipcRenderer } = electron;
 
@@ -56,7 +54,7 @@ export const toggleSleepBlocker = (value) => {
   app.config.set('sleepBlocker', value);
   app.config.saveSync();
 
-  ipcRenderer.send(IPCR_TOGGLE_SLEEPBLOCKER, value, 'prevent-app-suspension');
+  ipcRenderer.send('settings:toggleSleepBlocker', value, 'prevent-app-suspension');
 
   store.dispatch({
     type : types.APP_REFRESH_CONFIG,
@@ -68,7 +66,7 @@ export const toggleSleepBlocker = (value) => {
  */
 export const checkSleepBlocker = () => {
   if(app.config.get('sleepBlocker')) {
-    ipcRenderer.send(IPCR_TOGGLE_SLEEPBLOCKER, true, 'prevent-app-suspension');
+    ipcRenderer.send('settings:toggleSleepBlocker', true, 'prevent-app-suspension');
   }
 };
 
@@ -114,7 +112,7 @@ export const toggleAutoUpdateChecker = (value) => {
  * Check if a new release is available
  * @param {Object} [options={}]
  */
-const checkForUpdate = async (options = {}) => {
+export const checkForUpdate = async (options = {}) => {
   const currentVersion = app.version;
 
   try {

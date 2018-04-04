@@ -10,8 +10,6 @@ import * as NotificationsActions from './NotificationsActions';
 import * as PlayerActions from './PlayerActions';
 import * as SettingsActions from './SettingsActions';
 
-import { IPCR_PLAYER_ACTION, IPCR_APP_CLOSE, IPCR_APP_READY, IPCR_APP_RESTART } from '../../shared/constants/ipc';
-
 const globalShortcut = electron.remote.globalShortcut;
 const ipcRenderer    = electron.ipcRenderer;
 
@@ -33,14 +31,16 @@ const init = () => {
     }
   });
 
+  // Should be moved to PlayerActions.play at some point, currently here due to
+  // how Audio works
   Player.getAudio().addEventListener('play', async () => {
-    ipcRenderer.send(IPCR_PLAYER_ACTION, 'play');
+    ipcRenderer.send('playback:play');
 
     const path = decodeURIComponent(Player.getSrc()).replace('file://', '');
 
     const track = await utils.getMetadata(path);
 
-    ipcRenderer.send(IPCR_PLAYER_ACTION, 'trackStart', track);
+    ipcRenderer.send('playback:trackChange', track);
 
     if(browserWindows.main.isFocused()) return;
 
@@ -53,26 +53,24 @@ const init = () => {
   });
 
   Player.getAudio().addEventListener('pause', () => {
-    ipcRenderer.send(IPCR_PLAYER_ACTION, 'pause');
+    ipcRenderer.send('playback:pause');
   });
 
   // Listen for main-process events
-  ipcRenderer.on(IPCR_PLAYER_ACTION, (event, reply) => {
-    switch(reply) {
-      case 'play':
-        // Scenario: click on the Tray when the player is in 'stop' mode
-        Player.getSrc() ? PlayerActions.play() : PlayerActions.start();
-        break;
-      case 'pause':
-        PlayerActions.pause();
-        break;
-      case 'prev':
-        PlayerActions.previous();
-        break;
-      case 'next':
-        PlayerActions.next();
-        break;
-    }
+  ipcRenderer.on('playback:play', () => {
+    Player.getSrc() ? PlayerActions.play() : PlayerActions.start();
+  });
+
+  ipcRenderer.on('playback:pause', () => {
+    PlayerActions.pause();
+  });
+
+  ipcRenderer.on('playback:previous', () => {
+    PlayerActions.previous();
+  });
+
+  ipcRenderer.on('playback:next', () => {
+    PlayerActions.next();
   });
 
   // Prevent some events
@@ -92,15 +90,15 @@ const init = () => {
 };
 
 const start = () => {
-  ipcRenderer.send(IPCR_APP_READY);
+  ipcRenderer.send('app:ready');
 };
 
 const restart = () => {
-  ipcRenderer.send(IPCR_APP_RESTART);
+  ipcRenderer.send('app:restart');
 };
 
 const close = () => {
-  ipcRenderer.send(IPCR_APP_CLOSE);
+  ipcRenderer.send('app:close');
 };
 
 const minimize = () => {
