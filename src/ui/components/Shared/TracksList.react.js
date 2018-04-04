@@ -297,7 +297,7 @@ export default class TracksList extends Component {
         },
       );
 
-      if(playlists.length > 0) {
+      if(playlists.length === 0) {
         playlistTemplate.push(
           {
             label: 'No playlist',
