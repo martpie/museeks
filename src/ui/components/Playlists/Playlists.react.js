@@ -6,7 +6,7 @@ import { Route, Redirect, withRouter } from 'react-router-dom';
 import PlaylistsNav from './PlaylistsNav.react';
 import FullViewMessage from '../Shared/FullViewMessage.react';
 
-import AppActions from '../../actions/AppActions';
+import * as PlaylistsActions from '../../actions/PlaylistsActions';
 import Playlist from './Playlist.react';
 
 
@@ -32,7 +32,7 @@ class Playlists extends Component {
   }
 
   createPlaylist() {
-    AppActions.playlists.create('New playlist', true);
+    PlaylistsActions.create('New playlist', true);
   }
 
   autoRedirect() {

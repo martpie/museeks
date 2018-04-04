@@ -6,9 +6,9 @@ import ButtonShuffle from './ButtonShuffle.react';
 import ButtonRepeat from './ButtonRepeat.react';
 import { ProgressBar } from 'react-bootstrap';
 
-import AppActions from '../../actions/AppActions';
+import * as PlayerActions from '../../actions/AppActions';
 import Player from '../../lib/player';
-import utils from '../../utils/utils';
+import * as utils from '../../utils/utils';
 
 
 class PlayingBarInfos extends React.Component {
@@ -67,7 +67,7 @@ class PlayingBarInfos extends React.Component {
 
     const jumpTo = (percent * trackPlaying.duration) / 100;
 
-    AppActions.player.jumpTo(jumpTo);
+    PlayerActions.jumpTo(jumpTo);
   }
 
   dragOver(e) {
@@ -85,7 +85,7 @@ class PlayingBarInfos extends React.Component {
 
       const jumpTo = (percent * trackPlaying.duration) / 100;
 
-      AppActions.player.jumpTo(jumpTo);
+      PlayerActions.jumpTo(jumpTo);
     }
   }
 

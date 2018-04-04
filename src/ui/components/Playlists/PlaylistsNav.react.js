@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { ButtonGroup, Button } from 'react-bootstrap';
 import Icon from 'react-fontawesome';
 
-import AppActions from '../../actions/AppActions';
+import * as PlaylistsActions from '../../actions/PlaylistsActions';
 
 import PlaylistsNavLink from './PlaylistsNavLink.react';
 
@@ -44,7 +44,7 @@ class PlaylistsNav extends Component {
     ipcRenderer.on(IPCM_PL_CONTEXTMENU_REPLY, (event, reply, _id) => {
       switch(reply) {
         case 'delete':
-          AppActions.playlists.remove(_id);
+          PlaylistsActions.remove(_id);
           break;
         case 'rename':
           self.setState({ renamed: _id });
@@ -62,11 +62,11 @@ class PlaylistsNav extends Component {
   }
 
   createPlaylist() {
-    AppActions.playlists.create('New playlist', true);
+    PlaylistsActions.create('New playlist', true);
   }
 
   rename(_id, name) {
-    AppActions.playlists.rename(_id, name);
+    PlaylistsActions.rename(_id, name);
   }
 
   keyDown(e) {

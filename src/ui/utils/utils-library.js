@@ -1,4 +1,4 @@
-import utils from './utils';
+import * as utils from './utils';
 import orderBy from 'lodash/orderBy';
 
 /**
@@ -18,8 +18,8 @@ export const filterTracks = (tracks, search) => {
 
 /**
  * Sort an array of tracks (simple alias to lodash.orderby)
- * @param  {array} tracks
- * @param  {array} sort
+ * @param {array} tracks
+ * @param {array} sort
  * @return {array}
  */
 export const sortTracks = (tracks, sort) => {

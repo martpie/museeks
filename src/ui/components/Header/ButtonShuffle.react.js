@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import InlineSVG from 'react-svg-inline';
 import classnames from 'classnames';
 
-import AppActions from '../../actions/AppActions';
+import * as PlayerActions from '../../actions/PlayerActions';
 
 
 /*
@@ -24,7 +24,7 @@ export default class ButtonShuffle extends Component {
   }
 
   toggleShuffle() {
-    AppActions.player.shuffle(!this.props.shuffle);
+    PlayerActions.shuffle(!this.props.shuffle);
   }
 
   render() {

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import AppActions from '../../actions/AppActions';
+import * as SettingsActions from '../../actions/SettingsActions';
 
 import CheckboxSetting from './CheckboxSetting.react';
 
@@ -30,7 +30,7 @@ export default class SettingsAdvanced extends Component {
           title='Dev mode'
           description='Enable dev mode'
           defaultValue={config.devMode}
-          onClick={AppActions.settings.toggleDevMode}
+          onClick={SettingsActions.toggleDevMode}
         />
       </div>
     );

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Icon from 'react-fontawesome';
 import classnames from 'classnames';
 
-import AppActions from '../../actions/AppActions';
+import * as PlayerActions from '../../actions/PlayerActions';
 import Player from '../../lib/player';
 
 
@@ -49,7 +49,7 @@ export default class VolumeControl extends Component {
   setVolume(e) {
     const smoothVolume = smoothifyVolume(e.currentTarget.value);
 
-    AppActions.player.setVolume(smoothVolume);
+    PlayerActions.setVolume(smoothVolume);
     this.setState({ volume: smoothVolume });
   }
 
@@ -65,7 +65,7 @@ export default class VolumeControl extends Component {
     if(e.target.classList.contains('player-control') || e.target.classList.contains('fa')) {
       const muted = !Player.isMuted();
 
-      AppActions.player.setMuted(muted);
+      PlayerActions.setMuted(muted);
       this.setState({ muted });
     }
   }

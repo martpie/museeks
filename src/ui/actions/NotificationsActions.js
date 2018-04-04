@@ -2,7 +2,11 @@ import store from '../store.js';
 import types  from '../constants/action-types';
 import * as app from '../lib/app';
 
-const add = (notificationData) => {
+/**
+ * Show a native notification
+ * @param {any} notificationData [description]
+ */
+export const add = (notificationData) => {
   if (app.config.get('displayNotifications')) {
     const notification =
       new Notification(
@@ -25,8 +29,4 @@ const add = (notificationData) => {
       notification,
     });
   }
-};
-
-export default {
-  add,
 };

@@ -8,10 +8,13 @@ import PlayingIndicator from './PlayingIndicator.react';
 import CustomScrollbar from './CustomScrollbar.react';
 import TracksListHeader from './TracksListHeader.react';
 
-import AppActions from '../../actions/AppActions';
+import * as LibraryActions from '../../actions/LibraryActions';
+import * as PlaylistsActions from '../../actions/PlaylistsActions';
+import * as PlayerActions from '../../actions/PlayerActions';
+import * as QueueActions from '../../actions/QueueActions';
 
 import Player from '../../lib/player';
-import utils  from '../../utils/utils';
+import * as utils from '../../utils/utils';
 import { isCtrlKey } from '../../utils/utils-platform';
 import { IPCM_TL_CONTEXTMENU_REPLY, IPCR_TL_CONTEXTMENU } from '../../../shared/constants/ipc';
 
@@ -58,32 +61,32 @@ export default class TracksList extends Component {
 
       switch(reply) {
         case 'addToQueue': {
-          AppActions.queue.add(selected);
+          QueueActions.addAfter(selected);
           break;
         }
         case 'playNext': {
-          AppActions.queue.addNext(selected);
+          QueueActions.addNext(selected);
           break;
         }
         case 'addToPlaylist': {
           const isShown = this.props.type === 'playlist' && data === this.props.currentPlaylist;
-          AppActions.playlists.addTracksTo(data.playlistId, selected, isShown);
+          PlaylistsActions.addTracksTo(data.playlistId, selected, isShown);
           break;
         }
         case 'removeFromPlaylist': {
           if(this.props.type === 'playlist') {
-            AppActions.playlists.removeTracksFrom(this.props.currentPlaylist, selected);
+            PlaylistsActions.removeTracks(this.props.currentPlaylist, selected);
           }
           break;
         }
         case 'createPlaylist': {
-          const playlistId = await AppActions.playlists.create('New playlist', false);
+          const playlistId = await PlaylistsActions.create('New playlist', false);
           const isShown = this.props.type === 'playlist' && data === this.props.currentPlaylist;
-          AppActions.playlists.addTracksTo(playlistId, selected, isShown);
+          PlaylistsActions.addTracksTo(playlistId, selected, isShown);
           break;
         }
         case 'searchFor': {
-          // small hack, we can't call AppActions.library.filterSearch directly
+          // small hack, we can't call LibraryActions.search directly
           // otherwise the search clear button would not appear, because it will not detect an input event on itself
           const searchInput = document.querySelector('input[type="text"].search');
           searchInput.value = data.search;
@@ -91,7 +94,7 @@ export default class TracksList extends Component {
           break;
         }
         case 'removeFromLibrary': {
-          AppActions.library.removeFromLibrary(selected);
+          LibraryActions.remove(selected);
           break;
         }
       }
@@ -308,7 +311,7 @@ export default class TracksList extends Component {
   }
 
   onEnter(i, tracks) {
-    if(i !== undefined) AppActions.player.start(tracks, tracks[i]._id);
+    if(i !== undefined) PlayerActions.start(tracks, tracks[i]._id);
   }
 
   showContextMenu(e, index) {
@@ -329,7 +332,7 @@ export default class TracksList extends Component {
   }
 
   startPlayback(_id) {
-    AppActions.player.start(this.props.tracks, _id);
+    PlayerActions.start(this.props.tracks, _id);
   }
 
   render() {

@@ -21,7 +21,7 @@ const stat = util.promisify(fs.stat);
  * @return string
  */
 
-const parseDuration = (duration) => {
+export const parseDuration = (duration) => {
   if(duration !== null && duration !== undefined) {
     let hours   = parseInt(duration / 3600);
     let minutes = parseInt(duration / 60) % 60;
@@ -45,7 +45,7 @@ const parseDuration = (duration) => {
  * @param string uri
  * @return string
  */
-const parseUri = (uri) => {
+export const parseUri = (uri) => {
   const root = process.platform === 'win32' ? '' : path.parse(uri).root;
   const location = uri
     .split(path.sep)
@@ -64,7 +64,7 @@ const parseUri = (uri) => {
  * @return string
  */
 
-const parseBase64 = (format, data) => {
+export const parseBase64 = (format, data) => {
   return `data:image/${format};base64,${data}`;
 };
 
@@ -75,7 +75,7 @@ const parseBase64 = (format, data) => {
  * @param string 'asc' or 'desc' depending of the sort needed
  * @return array
  */
-const simpleSort = (array, sorting) => {
+export const simpleSort = (array, sorting) => {
   if(sorting === 'asc') {
     array.sort((a, b) => {
       return a - b;
@@ -101,7 +101,7 @@ const simpleSort = (array, sorting) => {
  * @param String str
  * @return String
  */
-const stripAccents = (str) => {
+export const stripAccents = (str) => {
   const accents = 'ÀÁÂÃÄÅàáâãäåÒÓÔÕÕÖØòóôõöøÈÉÊËèéêëðÇçÐÌÍÎÏìíîïÙÚÛÜùúûüÑñŠšŸÿýŽž';
   const fixes = 'AAAAAAaaaaaaOOOOOOOooooooEEEEeeeeeCcDIIIIiiiiUUUUuuuuNnSsYyyZz';
   const split = accents.split('').join('|');
@@ -120,7 +120,7 @@ const stripAccents = (str) => {
  * @param array the array of folders path
  * @return array
  */
-const removeUselessFolders = (folders) => {
+export const removeUselessFolders = (folders) => {
   // Remove duplicates
   let filteredFolders = folders.filter((elem, index) => {
     return folders.indexOf(elem) === index;
@@ -150,7 +150,7 @@ const removeUselessFolders = (folders) => {
  * @param int the length of each chunk
  * @return array
  */
-const chunkArray = (array, chunkLength) => {
+export const chunkArray = (array, chunkLength) => {
   const chunks = [];
 
   for(let i = 0, length = array.length; i < length; i += chunkLength) {
@@ -160,7 +160,7 @@ const chunkArray = (array, chunkLength) => {
   return chunks;
 };
 
-const getDefaultMetadata = () => {
+export const getDefaultMetadata = () => {
   return {
     album        : 'Unknown',
     artist       : ['Unknown artist'],
@@ -182,7 +182,7 @@ const getDefaultMetadata = () => {
   };
 };
 
-const parseMusicMetadata = (data, trackPath) => {
+export const parseMusicMetadata = (data, trackPath) => {
   if (typeof data === 'object') {
     const { common, format } = data;
 
@@ -203,7 +203,7 @@ const parseMusicMetadata = (data, trackPath) => {
   return {};
 };
 
-const getLoweredMeta = (metadata) => {
+export const getLoweredMeta = (metadata) => {
   return {
     artist: metadata.artist.map((meta) => stripAccents(meta.toLowerCase())),
     album: stripAccents(metadata.album.toLowerCase()),
@@ -219,7 +219,7 @@ const getLoweredMeta = (metadata) => {
  * @return object
  *
  */
-const getMetadata = async (trackPath) => {
+export const getMetadata = async (trackPath) => {
   let data;
 
   try {
@@ -253,7 +253,7 @@ const getMetadata = async (trackPath) => {
   return metadata;
 };
 
-const getAudioDurationAsync = (path) => {
+export const getAudioDurationAsync = (path) => {
   const audio = new Audio;
 
   return new Promise((resolve, reject) => {
@@ -271,7 +271,7 @@ const getAudioDurationAsync = (path) => {
   });
 };
 
-const fetchCover = async (trackPath) => {
+export const fetchCover = async (trackPath) => {
   if(!trackPath) {
     return null;
   }
@@ -294,15 +294,4 @@ const fetchCover = async (trackPath) => {
     return ['album', 'albumart', 'folder', 'cover'].includes(parsedPath.name.toLowerCase())
       && ['.png', '.jpg', '.bmp', '.gif'].includes(parsedPath.ext.toLowerCase()) ;
   });
-};
-
-export default {
-  parseDuration,
-  parseUri,
-  simpleSort,
-  stripAccents,
-  removeUselessFolders,
-  chunkArray,
-  getMetadata,
-  fetchCover,
 };

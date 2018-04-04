@@ -8,16 +8,20 @@ import queue from 'queue';
 import store from '../store.js';
 
 import types from '../constants/action-types';
-import AppActions from './AppActions';
+import * as LibraryActions from './LibraryActions';
 
 import * as app from '../lib/app';
-import utils from '../utils/utils';
+import * as utils from '../utils/utils';
 
 
 const dialog = electron.remote.dialog;
 const stat = util.promisify(fs.stat);
 
-const load = async () => {
+/**
+ * Load tracks from database
+ * @return {Promise} [description]
+ */
+export const load = async () => {
   try {
     const tracks = await app.models.Track.find().execAsync();
 
@@ -30,52 +34,64 @@ const load = async () => {
   }
 };
 
-const resetTracks = () => {
-  store.dispatch({
-    type: types.APP_LIBRARY_REFRESH,
-    tracks: [],
-  });
-};
-
-const filterSearch = (search) => {
+/**
+ * Filter tracks by search
+ * @param {String} search
+ */
+export const search = (search) => {
   store.dispatch({
     type: types.APP_FILTER_SEARCH,
     search,
   });
 };
 
-const sort = (sortBy) => {
+/**
+ * Filter tracks by sort query
+ * @param {String} sortBy [description]
+ */
+export const sort = (sortBy) => {
   store.dispatch({
     type: types.APP_LIBRARY_SORT,
     sortBy,
   });
 };
 
-const scan = {
-  processed: 0,
-  total: 0,
-};
+/**
+ * Add tracks to Library
+ * @param {String[]} pathsToScan [description]
+ */
+export const add = (pathsToScan) => {
+  // Instantiate queue
+  const scan = {
+    processed: 0,
+    total: 0,
+  };
 
-const endScan = () => {
-  scan.processed = 0;
-  scan.total = 0;
+  const endScan = () => {
+    scan.processed = 0;
+    scan.total = 0;
 
-  store.dispatch({
-    type: types.APP_LIBRARY_REFRESH_END,
+    store.dispatch({
+      type: types.APP_LIBRARY_REFRESH_END,
+    });
+
+    LibraryActions.load();
+  };
+
+  const scanQueue = new queue();
+  scanQueue.concurrency = 16;
+  scanQueue.autostart = true;
+
+  scanQueue.on('end', endScan);
+  scanQueue.on('success', () => {
+    store.dispatch({
+      type: types.APP_LIBRARY_REFRESH_PROGRESS,
+      processed: scan.processed,
+      total: scan.total,
+    });
   });
+  // End queue instantiation
 
-  AppActions.library.load();
-};
-
-const scanQueue = new queue();
-scanQueue.concurrency = 16;
-scanQueue.autostart = true;
-scanQueue.on('end', endScan);
-scanQueue.on('success', () => {
-  refreshProgress(scan.processed, scan.total);
-});
-
-const add = (pathsToScan) => {
   store.dispatch({
     type: types.APP_LIBRARY_REFRESH_START,
   });
@@ -157,15 +173,11 @@ const add = (pathsToScan) => {
   // TODO progressive loading in the store, don't freeze the app, able to add files/folders when scanning
 };
 
-const refreshProgress = (processed, total) => {
-  store.dispatch({
-    type: types.APP_LIBRARY_REFRESH_PROGRESS,
-    processed,
-    total,
-  });
-};
-
-const removeFromLibrary = (tracksIds) => {
+/**
+ * remove tracks from library
+ * @param {String[]} tracksIds the ids of tracks to be removed
+ */
+export const remove = (tracksIds) => {
   // not calling await on it as it calls the synchonous message box
   dialog.showMessageBox(app.browserWindows.main, {
     buttons: [
@@ -191,7 +203,11 @@ const removeFromLibrary = (tracksIds) => {
   });
 };
 
-const reset = async () => {
+/**
+ * Reset the library
+ * @return {Promise} [description]
+ */
+export const reset = async () => {
   try {
     const result = await dialog.showMessageBox(app.browserWindows.main, {
       buttons: [
@@ -229,27 +245,14 @@ const reset = async () => {
 
 /**
  * Update the play count attribute.
- *
  * @param source
  */
-const incrementPlayCount = async (source) => {
-  const query = { src: source };
+export const incrementPlayCount = async (source) => {
+  const query = { src: source }; // Not great, should be done with an _id
   const update = { $inc: { playcount: 1 } };
   try {
     await app.models.Track.updateAsync(query, update);
   } catch (err) {
     console.warn(err);
   }
-};
-
-
-export default {
-  add,
-  load,
-  resetTracks,
-  filterSearch,
-  removeFromLibrary,
-  reset,
-  incrementPlayCount,
-  sort,
 };

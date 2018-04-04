@@ -6,11 +6,11 @@ import store from '../store.js';
 import types  from '../constants/action-types';
 import * as SORT_ORDERS from '../constants/sort-orders';
 
-import ToastsActions from './ToastsActions';
+import * as ToastsActions from './ToastsActions';
 
 import * as app from '../lib/app';
+import * as utils from '../utils/utils';
 import Player from '../lib/player';
-import utils from '../utils/utils';
 import { sortTracks, filterTracks } from '../utils/utils-library';
 import { shuffleTracks } from '../utils/utils-player';
 import { IPCR_PLAYER_ACTION } from '../../shared/constants/ipc';
@@ -25,7 +25,10 @@ const audioErrors = {
 };
 
 
-const playToggle = () => {
+/**
+ * Toggle play/pause
+ */
+export const playToggle = () => {
   const { paused } = Player.getAudio();
   // TODO (y.solovyov | KeitIG): calling getState is a hack.
   const { queue, playerStatus } = store.getState().player;
@@ -39,7 +42,10 @@ const playToggle = () => {
   }
 };
 
-const play = () => {
+/**
+ * Play/resume audio
+ */
+export const play = () => {
   // TODO (y.solovyov | KeitIG): calling getState is a hack.
   const { queue } = store.getState().player;
   if(queue !== null) {
@@ -50,7 +56,10 @@ const play = () => {
   }
 };
 
-const pause = () => {
+/**
+ * Pause audio
+ */
+export const pause = () => {
   // TODO (y.solovyov | KeitIG): calling getState is a hack.
   const { queue } = store.getState().player;
   if(queue !== null) {
@@ -61,8 +70,14 @@ const pause = () => {
   }
 };
 
-// TODO this function could probably be refactored a bit
-const start = (queue, _id) => {
+/**
+ * Start playing audio (queue instantiation...
+ * TODO this function could probably be refactored a bit)
+ *
+ * @param {Tracks[]} queue [description]
+ * @param {String} _id   [description]
+ */
+export const start = (queue, _id) => {
   const state = store.getState();
 
   let newQueue = queue ? [...queue] : null;
@@ -129,7 +144,10 @@ const start = (queue, _id) => {
   }
 };
 
-const stop = () => {
+/**
+ * Stop the player
+ */
+export const stop = () => {
   Player.stop();
   store.dispatch({
     type : types.APP_PLAYER_STOP,
@@ -138,7 +156,10 @@ const stop = () => {
   ipcRenderer.send(IPCR_PLAYER_ACTION, 'stop');
 };
 
-const next = () => {
+/**
+ * Jump to the next track
+ */
+export const next = () => {
   // TODO (y.solovyov | KeitIG): calling getState is a hack.
   const { queue, queueCursor, repeat } = store.getState().player;
   let newQueueCursor;
@@ -167,7 +188,11 @@ const next = () => {
   }
 };
 
-const previous = () => {
+/**
+ * Jump to the previous track, or restart the current track after a certain
+ * treshold
+ */
+export const previous = () => {
   const currentTime = Player.getCurrentTime();
 
   // TODO (y.solovyov | KeitIG): calling getState is a hack.
@@ -198,7 +223,11 @@ const previous = () => {
   }
 };
 
-const shuffle = (shuffle) => {
+/**
+ * Enable/disable shuffle
+ * @param {Boolean} shuffle
+ */
+export const shuffle = (shuffle) => {
   app.config.set('audioShuffle', shuffle);
   app.config.saveSync();
 
@@ -208,7 +237,11 @@ const shuffle = (shuffle) => {
   });
 };
 
-const repeat = (repeat) => {
+/**
+ * Enable disable repeat
+ * @param {String} repeat
+ */
+export const repeat = (repeat) => {
   app.config.set('audioRepeat', repeat);
   app.config.saveSync();
 
@@ -218,7 +251,11 @@ const repeat = (repeat) => {
   });
 };
 
-const setVolume = (volume) => {
+/**
+ * Set volume
+ * @param {Number} volume between 0 and 1
+ */
+export const setVolume = (volume) => {
   if(!isNaN(parseFloat(volume)) && isFinite(volume)) {
     Player.setAudioVolume(volume);
 
@@ -230,7 +267,11 @@ const setVolume = (volume) => {
   }
 };
 
-const setMuted = (muted = false) => {
+/**
+ * Mute/unmute the audio
+ * @param {Boolean} [muted=false]
+ */
+export const setMuted = (muted = false) => {
   if(muted) Player.mute();
   else Player.unmute();
 
@@ -241,7 +282,11 @@ const setMuted = (muted = false) => {
   });
 };
 
-const setPlaybackRate = (value) => {
+/**
+ * Set audio's playback rate
+ * @param {Number} value between 0 and 1
+ */
+export const setPlaybackRate = (value) => {
   if(!isNaN(parseFloat(value)) && isFinite(value)) { // if is numeric
     if(value >= 0.5 && value <= 5) { // if in allowed range
       Player.setAudioPlaybackRate(value);
@@ -255,7 +300,11 @@ const setPlaybackRate = (value) => {
   }
 };
 
-const jumpTo = (to) => {
+/**
+ * Jump to a time in the track
+ * @param {Number} to
+ */
+export const jumpTo = (to) => {
   // TODO (y.solovyov) do we want to set some explicit state?
   // if yes, what should it be? if not, do we need this actions at all?
   Player.setAudioCurrentTime(to);
@@ -264,7 +313,11 @@ const jumpTo = (to) => {
   });
 };
 
-const audioError = (e) => {
+/**
+ * Handle audio errors
+ * @param {MediaRecorderErrorEvent} e
+ */
+export const audioError = (e) => {
   stop();
   switch (e.target.error.code) {
     case e.target.error.MEDIA_ERR_ABORTED:
@@ -280,23 +333,4 @@ const audioError = (e) => {
       ToastsActions.add('danger', audioErrors.unknown);
       break;
   }
-};
-
-
-export default {
-  audioError,
-  jumpTo,
-  next,
-  pause,
-  play,
-  playToggle,
-  previous,
-  repeat,
-  setMuted,
-  setPlaybackRate,
-  setVolume,
-  shuffle,
-  start,
-  stop,
-  audioErrors,
 };

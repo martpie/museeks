@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-import utils  from '../../utils/utils';
+import * as utils from '../../utils/utils';
 
 
 /*

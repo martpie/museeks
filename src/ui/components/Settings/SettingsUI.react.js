@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import AppActions from '../../actions/AppActions';
+import * as SettingsActions from '../../actions/SettingsActions';
 
 import CheckboxSetting from './CheckboxSetting.react';
 
@@ -30,37 +30,37 @@ export default class SettingsUI extends Component {
           title='Dark Theme'
           description='Enable dark theme'
           defaultValue={config.theme === 'dark'}
-          onClick={AppActions.settings.toggleDarkTheme}
+          onClick={SettingsActions.toggleDarkTheme}
         />
         <CheckboxSetting
           title='Display Notifications'
           description='Allow the app to send native notifications'
           defaultValue={config.displayNotifications}
-          onClick={AppActions.settings.toggleDisplayNotifications}
+          onClick={SettingsActions.toggleDisplayNotifications}
         />
         <CheckboxSetting
           title='Use native frame'
           description='Run Museeks with default window controls (will restart the app)'
           defaultValue={config.useNativeFrame}
-          onClick={AppActions.settings.toggleNativeFrame}
+          onClick={SettingsActions.toggleNativeFrame}
         />
         <CheckboxSetting
           title='Sleep mode blocker'
           description='Prevent the computer from going into sleep mode'
           defaultValue={config.sleepBlocker}
-          onClick={AppActions.settings.toggleSleepBlocker}
+          onClick={SettingsActions.toggleSleepBlocker}
         />
         <CheckboxSetting
           title='Minimize on close'
           description='Minimize when closing the app'
           defaultValue={config.minimizeToTray}
-          onClick={AppActions.settings.toggleMinimizeToTray}
+          onClick={SettingsActions.toggleMinimizeToTray}
         />
         <CheckboxSetting
           title='Auto update checker'
           description='Automatically check for update on startup'
           defaultValue={config.autoUpdateChecker}
-          onClick={AppActions.settings.toggleAutoUpdateChecker}
+          onClick={SettingsActions.toggleAutoUpdateChecker}
         />
       </div>
     );
