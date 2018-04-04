@@ -5,7 +5,8 @@ import { ButtonGroup, Button } from 'react-bootstrap';
 
 import Dropzone from '../Shared/Dropzone.react';
 
-import AppActions from '../../actions/AppActions';
+import * as LibraryActions from '../../actions/LibraryActions';
+import * as PlayerActions from '../../actions/PlayerActions';
 
 const dialog = electron.remote.dialog;
 
@@ -27,8 +28,8 @@ export default class SettingsLibrary extends Component {
   }
 
   resetLibrary() {
-    AppActions.player.stop();
-    AppActions.library.reset();
+    PlayerActions.stop();
+    LibraryActions.reset();
   }
 
   onDrop(e) {
@@ -39,7 +40,7 @@ export default class SettingsLibrary extends Component {
       files.push(eventFiles[i].path);
     }
 
-    AppActions.library.add(files);
+    LibraryActions.add(files);
   }
 
   openFolderSelector() {
@@ -47,7 +48,7 @@ export default class SettingsLibrary extends Component {
       properties: ['multiSelections', 'openDirectory'],
     }, (result) => {
       if(result) {
-        AppActions.library.add(result);
+        LibraryActions.add(result);
       }
     });
   }

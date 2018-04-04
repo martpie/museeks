@@ -12,6 +12,7 @@ import Footer from './Footer/Footer.react';
 import Toasts from './Toasts/Toasts.react';
 
 import AppActions from '../actions/AppActions';
+import * as PlayerActions from '../actions/PlayerActions';
 
 import { config } from '../lib/app';
 
@@ -43,7 +44,7 @@ class Museeks extends Component {
       case 32:
         e.preventDefault();
         e.stopPropagation();
-        AppActions.player.playToggle();
+        PlayerActions.playToggle();
         break;
     }
   }

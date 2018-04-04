@@ -3,16 +3,21 @@ import semver from 'semver';
 
 import store from '../store.js';
 import types  from '../constants/action-types';
-import AppActions    from './AppActions';
+import AppActions from './AppActions';
+import * as ToastsActions from './ToastsActions';
 
 import * as app from '../lib/app';
 
 import { IPCR_TOGGLE_SLEEPBLOCKER } from '../../shared/constants/ipc';
 
 
-const ipcRenderer = electron.ipcRenderer;
+const { ipcRenderer } = electron;
 
-const check = () => {
+
+/**
+ * Init all settings
+ */
+export const check = () => {
   checkTheme();
   checkDevMode();
   checkSleepBlocker();
@@ -24,7 +29,11 @@ const checkTheme = () => {
   document.querySelector('body').classList.add(`theme-${themeName}`);
 };
 
-const toggleDarkTheme = (value) => {
+/**
+ * Toggle dark/light theme
+ * @param {String} value 'light' or 'dark'
+ */
+export const toggleDarkTheme = (value) => {
   const oldTheme = value ? 'light' : 'dark';
   const newTheme = value ? 'dark' : 'light';
 
@@ -39,7 +48,11 @@ const toggleDarkTheme = (value) => {
   });
 };
 
-const toggleSleepBlocker = (value) => {
+/**
+ * Toggle sleep blocker
+ * @param {Boolean} value
+ */
+export const toggleSleepBlocker = (value) => {
   app.config.set('sleepBlocker', value);
   app.config.saveSync();
 
@@ -50,13 +63,20 @@ const toggleSleepBlocker = (value) => {
   });
 };
 
-const checkSleepBlocker = () => {
+/**
+ * Check and enable sleep blocker if needed
+ */
+export const checkSleepBlocker = () => {
   if(app.config.get('sleepBlocker')) {
     ipcRenderer.send(IPCR_TOGGLE_SLEEPBLOCKER, true, 'prevent-app-suspension');
   }
 };
 
-const toggleDevMode = (value) => {
+/**
+ * Toggle dev mode (show/hide dev tools)
+ * @param {Boolean} value
+ */
+export const toggleDevMode = (value) => {
   app.config.set('devMode', value);
 
   // Open dev tools if needed
@@ -70,11 +90,18 @@ const toggleDevMode = (value) => {
   });
 };
 
-const checkDevMode = () => {
+/**
+ * Check and enable dev mode if needed
+ */
+export const checkDevMode = () => {
   if(app.config.get('devMode')) app.browserWindows.main.webContents.openDevTools();
 };
 
-const toggleAutoUpdateChecker = (value) => {
+/**
+ * Toggle update check on startup
+ * @param {Boolean} value
+ */
+export const toggleAutoUpdateChecker = (value) => {
   app.config.set('autoUpdateChecker', value);
   app.config.saveSync();
 
@@ -83,6 +110,10 @@ const toggleAutoUpdateChecker = (value) => {
   });
 };
 
+/**
+ * Check if a new release is available
+ * @param {Object} [options={}]
+ */
 const checkForUpdate = async (options = {}) => {
   const currentVersion = app.version;
 
@@ -102,20 +133,28 @@ const checkForUpdate = async (options = {}) => {
     }
 
     if (message) {
-      AppActions.toasts.add('success', message);
+      ToastsActions.add('success', message);
     }
   } catch (e) {
-    if(!options.silentFail) AppActions.toasts.add('danger', 'An error occurred while checking updates.');
+    if(!options.silentFail) ToastsActions.add('danger', 'An error occurred while checking updates.');
   }
 };
 
-const toggleNativeFrame = (value) => {
+/**
+ * Toggle native frame
+ * @param {Boolean} value
+ */
+export const toggleNativeFrame = (value) => {
   app.config.set('useNativeFrame', value);
   app.config.saveSync();
-  AppActions.app.restart();
+  AppActions.restart();
 };
 
-const toggleMinimizeToTray = (value) => {
+/**
+ * Toggle minimize-to-tray
+ * @param {Boolean} value
+ */
+export const toggleMinimizeToTray = (value) => {
   app.config.set('minimizeToTray', value);
   app.config.saveSync();
 
@@ -124,26 +163,15 @@ const toggleMinimizeToTray = (value) => {
   });
 };
 
-const toggleDisplayNotifications = (value) => {
+/**
+ * Toggle native notifications display
+ * @param {Boolean} value
+ */
+export const toggleDisplayNotifications = (value) => {
   app.config.set('displayNotifications', value);
   app.config.saveSync();
 
   store.dispatch({
     type : types.APP_REFRESH_CONFIG,
   });
-};
-
-export default{
-  check,
-  checkDevMode,
-  checkForUpdate,
-  checkSleepBlocker,
-  checkTheme,
-  toggleAutoUpdateChecker,
-  toggleDarkTheme,
-  toggleDevMode,
-  toggleDisplayNotifications,
-  toggleMinimizeToTray,
-  toggleNativeFrame,
-  toggleSleepBlocker,
 };

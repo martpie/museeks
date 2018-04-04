@@ -9,7 +9,7 @@ import PlayingBar     from './PlayingBar.react';
 import WindowControls from './WindowControls.react';
 import PlayerControls from './PlayerControls.react';
 
-import AppActions from '../../actions/AppActions';
+import * as LibraryActions from '../../actions/LibraryActions';
 import { config } from '../../lib/app';
 import { isCtrlKey } from '../../utils/utils-platform';
 
@@ -37,7 +37,7 @@ class Header extends Component {
   }
 
   search(e) {
-    AppActions.library.filterSearch(e.target.value);
+    LibraryActions.search(e.target.value);
   }
 
   onKey(e) {

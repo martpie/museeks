@@ -6,7 +6,7 @@ import TracksList    from '../Shared/TracksList.react.js';
 import FullViewMessage from '../Shared/FullViewMessage.react';
 import { Link } from 'react-router-dom';
 
-import AppActions from '../../actions/AppActions';
+import * as PlaylistsActions from '../../actions/PlaylistsActions';
 import { filterTracks } from '../../utils/utils-library';
 
 
@@ -30,7 +30,7 @@ class Playlist extends Component {
   }
 
   componentDidMount() {
-    AppActions.playlists.load(this.props.match.params.playlistId);
+    PlaylistsActions.load(this.props.match.params.playlistId);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -38,7 +38,7 @@ class Playlist extends Component {
     const nextPlaylistId = nextProps.match.params.playlistId;
 
     if (nextPlaylistId !== playlistId) {
-      AppActions.playlists.load(nextPlaylistId);
+      PlaylistsActions.load(nextPlaylistId);
     }
   }
 

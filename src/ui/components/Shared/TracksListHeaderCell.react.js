@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import Icon from 'react-fontawesome';
 
-import LibraryActions from '../../actions/LibraryActions';
+import * as LibraryActions from '../../actions/LibraryActions';
 
 
 class TracksListHeaderCell extends React.Component {

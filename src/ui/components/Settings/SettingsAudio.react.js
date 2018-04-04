@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import AppActions from '../../actions/AppActions';
+import * as PlayerActions from '../../actions/PlayerActions';
 
 
 /*
@@ -20,7 +20,7 @@ export default class SettingsAudio extends Component {
   }
 
   setPlaybackRate(e) {
-    AppActions.player.setPlaybackRate(e.currentTarget.value);
+    PlayerActions.setPlaybackRate(e.currentTarget.value);
   }
 
   render() {

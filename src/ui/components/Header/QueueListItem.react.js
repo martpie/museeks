@@ -4,7 +4,7 @@ import { Button } from 'react-bootstrap';
 
 import classnames from 'classnames';
 
-import AppActions from '../../actions/AppActions';
+import * as QueueActions from '../../actions/QueueActions';
 
 /*
 |--------------------------------------------------------------------------
@@ -43,11 +43,11 @@ export default class QueueListItem extends PureComponent {
   }
 
   remove() {
-    AppActions.queue.remove(this.props.index);
+    QueueActions.remove(this.props.index);
   }
 
   play() {
-    AppActions.queue.start(this.props.queueCursor + this.props.index + 1);
+    QueueActions.start(this.props.queueCursor + this.props.index + 1);
   }
 
   render() {

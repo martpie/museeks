@@ -1,6 +1,6 @@
 import * as app from '../lib/app';
 import types from '../constants/action-types';
-import utils from '../utils/utils';
+import * as utils from '../utils/utils';
 import { ARTIST, ASC, DSC } from '../constants/sort-types';
 
 

@@ -4,7 +4,7 @@ import Icon from 'react-fontawesome';
 
 import classnames from 'classnames';
 
-import AppActions from '../../actions/AppActions';
+import * as PlayerActions from '../../actions/PlayerActions';
 
 
 /*
@@ -63,7 +63,7 @@ export default class TrackRow extends Component {
 
     return (
       <div className={classNames}
-        onClick={AppActions.player.playToggle}
+        onClick={PlayerActions.playToggle}
         onMouseEnter={this.onMouseEnter}
         onMouseLeave= {this.onMouseLeave}
       >

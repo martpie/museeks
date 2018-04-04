@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import InlineSVG from 'react-svg-inline';
 import classnames from 'classnames';
 
-import AppActions from '../../actions/AppActions';
+import * as PlayerActions from '../../actions/PlayerActions';
 
 const svgMap = {
   one: require('../../../images/icons/player-repeat-one.svg'),
@@ -43,7 +43,7 @@ export default class ButtonRepeat extends Component {
         break;
     }
 
-    AppActions.player.repeat(repeat);
+    PlayerActions.repeat(repeat);
   }
 
   render() {

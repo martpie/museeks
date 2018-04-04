@@ -2,15 +2,13 @@ import electron from 'electron';
 
 import Player from '../lib/player';
 import { browserWindows, config }  from '../lib/app';
-import utils from '../utils/utils';
+import * as utils from '../utils/utils';
 
-import LibraryActions      from './LibraryActions';
-import PlaylistsActions    from './PlaylistsActions';
-import ToastsActions       from './ToastsActions';
-import NotificationActions from './NotificationActions';
-import PlayerActions       from './PlayerActions';
-import QueueActions        from './QueueActions';
-import SettingsActions     from './SettingsActions';
+import * as LibraryActions  from './LibraryActions';
+import * as PlaylistsActions from './PlaylistsActions';
+import * as NotificationsActions from './NotificationsActions';
+import * as PlayerActions from './PlayerActions';
+import * as SettingsActions from './SettingsActions';
 
 import { IPCR_PLAYER_ACTION, IPCR_APP_CLOSE, IPCR_APP_READY, IPCR_APP_RESTART } from '../../shared/constants/ipc';
 
@@ -47,7 +45,7 @@ const init = () => {
     if(browserWindows.main.isFocused()) return;
 
     const cover = await utils.fetchCover(track.path);
-    NotificationActions.add({
+    NotificationsActions.add({
       title: track.title,
       body: `${track.artist}\n${track.album}`,
       icon: cover,
@@ -90,7 +88,6 @@ const init = () => {
   const currentWindow = browserWindows.main;
 
   currentWindow.on('resize', saveBounds);
-
   currentWindow.on('move', saveBounds);
 };
 
@@ -118,12 +115,12 @@ const saveBounds = () => {
   const now = window.performance.now();
 
   if (now - self.lastFilterSearch < 250) {
-    clearTimeout(self.filterSearchTimeOut);
+    clearTimeout(self.saveBoundTimeout);
   }
 
   self.lastFilterSearch = now;
 
-  self.filterSearchTimeOut = setTimeout(() => {
+  self.saveBoundTimeout = setTimeout(() => {
     config.set('bounds', browserWindows.main.getBounds());
     config.saveSync();
   }, 250);
@@ -145,14 +142,6 @@ const initShortcuts = () => {
 };
 
 export default {
-  player        : PlayerActions,
-  playlists     : PlaylistsActions,
-  queue         : QueueActions,
-  library       : LibraryActions,
-  settings      : SettingsActions,
-  toasts        : ToastsActions,
-  notifications : NotificationActions,
-
   close,
   init,
   initShortcuts,
@@ -160,8 +149,5 @@ export default {
   minimize,
   saveBounds,
   start,
-
-  app: {
-    restart,
-  },
+  restart,
 };
