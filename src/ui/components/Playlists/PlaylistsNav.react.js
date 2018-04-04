@@ -8,9 +8,7 @@ import * as PlaylistsActions from '../../actions/PlaylistsActions';
 
 import PlaylistsNavLink from './PlaylistsNavLink.react';
 
-import { IPCM_PL_CONTEXTMENU_REPLY } from '../../../shared/constants/ipc';
-
-const ipcRenderer = electron.ipcRenderer;
+const { Menu } = electron.remote;
 
 
 /*
@@ -38,27 +36,25 @@ class PlaylistsNav extends Component {
     this.createPlaylist = this.createPlaylist.bind(this);
   }
 
-  componentDidMount() {
-    const self = this;
-
-    ipcRenderer.on(IPCM_PL_CONTEXTMENU_REPLY, (event, reply, _id) => {
-      switch(reply) {
-        case 'delete':
-          PlaylistsActions.remove(_id);
-          break;
-        case 'rename':
-          self.setState({ renamed: _id });
-          break;
-      }
-    });
-  }
-
-  componentWillUnmount() {
-    ipcRenderer.removeAllListeners(IPCM_PL_CONTEXTMENU_REPLY);
-  }
-
   showContextMenu(_id) {
-    ipcRenderer.send('playlistContextMenu', _id);
+    const template = [
+      {
+        label: 'Delete',
+        click: () => {
+          PlaylistsActions.remove(_id);
+        },
+      },
+      {
+        label: 'Rename',
+        click: () => {
+          this.setState({ renamed: _id });
+        },
+      },
+    ];
+
+    const context = Menu.buildFromTemplate(template);
+
+    context.popup(this.window, { async: true }); // Let it appear
   }
 
   createPlaylist() {

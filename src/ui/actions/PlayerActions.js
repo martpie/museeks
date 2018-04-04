@@ -13,7 +13,6 @@ import * as utils from '../utils/utils';
 import Player from '../lib/player';
 import { sortTracks, filterTracks } from '../utils/utils-library';
 import { shuffleTracks } from '../utils/utils-player';
-import { IPCR_PLAYER_ACTION } from '../../shared/constants/ipc';
 
 const ipcRenderer = electron.ipcRenderer;
 
@@ -153,7 +152,7 @@ export const stop = () => {
     type : types.APP_PLAYER_STOP,
   });
 
-  ipcRenderer.send(IPCR_PLAYER_ACTION, 'stop');
+  ipcRenderer.send('playback:stop');
 };
 
 /**
