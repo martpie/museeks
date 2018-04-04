@@ -7,7 +7,6 @@ const path = require('path');
 const { Tray, Menu, app, ipcMain, nativeImage } = require('electron');
 
 const ModuleWindow = require('./module-window');
-const { IPCR_PLAYER_ACTION } = require('../../shared/constants/ipc');
 
 
 class TrayModule extends ModuleWindow {
@@ -57,7 +56,7 @@ class TrayModule extends ModuleWindow {
       {
         label: 'Play',
         click: () => {
-          this.window.webContents.send(IPCR_PLAYER_ACTION, 'play');
+          this.window.webContents.send('playback:play');
         },
       },
     ];
@@ -66,7 +65,7 @@ class TrayModule extends ModuleWindow {
       {
         label: 'Pause',
         click: () => {
-          this.window.webContents.send(IPCR_PLAYER_ACTION, 'pause');
+          this.window.webContents.send('playback:pause');
         },
       },
     ];
@@ -75,13 +74,13 @@ class TrayModule extends ModuleWindow {
       {
         label: 'Previous',
         click: () => {
-          this.window.webContents.send(IPCR_PLAYER_ACTION, 'prev');
+          this.window.webContents.send('playback:prev');
         },
       },
       {
         label: 'Next',
         click: () => {
-          this.window.webContents.send(IPCR_PLAYER_ACTION, 'next');
+          this.window.webContents.send('playback:next');
         },
       },
       {
@@ -107,23 +106,17 @@ class TrayModule extends ModuleWindow {
     ];
 
     // Load events listener for player actions
-    ipcMain.on(IPCR_PLAYER_ACTION, (event, reply, data) => {
-      switch(reply) {
-        case 'play': {
-          this.setContextMenu('play');
-          break;
-        }
+    ipcMain.on('playback:play', () => {
+      this.setContextMenu('play');
+    });
 
-        case 'pause': {
-          this.setContextMenu('pause');
-          break;
-        }
-        case 'trackStart': {
-          this.updateTrayMetadata(data);
-          this.setContextMenu('play');
-          break;
-        }
-      }
+    ipcMain.on('playback:pause', () => {
+      this.setContextMenu('pause');
+    });
+
+    ipcMain.on('playback:trackChange', (event, track) => {
+      this.updateTrayMetadata(track);
+      this.setContextMenu('play');
     });
 
     this.show();
@@ -157,18 +150,18 @@ class TrayModule extends ModuleWindow {
   }
 
 
-  updateTrayMetadata(metadata) {
+  updateTrayMetadata(track) {
     this.songDetails = [
       {
-        label: `${metadata.title}`,
+        label: `${track.title}`,
         enabled: false,
       },
       {
-        label: `by ${metadata.artist}`,
+        label: `by ${track.artist}`,
         enabled: false,
       },
       {
-        label: `on ${metadata.album}`,
+        label: `on ${track.album}`,
         enabled: false,
       },
       {

@@ -16,9 +16,9 @@ import * as QueueActions from '../../actions/QueueActions';
 import Player from '../../lib/player';
 import * as utils from '../../utils/utils';
 import { isCtrlKey } from '../../utils/utils-platform';
-import { IPCM_TL_CONTEXTMENU_REPLY, IPCR_TL_CONTEXTMENU } from '../../../shared/constants/ipc';
 
-const ipcRenderer = electron.ipcRenderer;
+const { shell, remote } = electron;
+const { Menu } = remote;
 
 
 /*
@@ -55,54 +55,6 @@ export default class TracksList extends Component {
 
   componentDidMount() {
     this.renderView = document.querySelector('.tracks-list-render-view');
-
-    ipcRenderer.on(IPCM_TL_CONTEXTMENU_REPLY, async (event, reply, data) => {
-      const selected = this.state.selected;
-
-      switch(reply) {
-        case 'addToQueue': {
-          QueueActions.addAfter(selected);
-          break;
-        }
-        case 'playNext': {
-          QueueActions.addNext(selected);
-          break;
-        }
-        case 'addToPlaylist': {
-          const isShown = this.props.type === 'playlist' && data === this.props.currentPlaylist;
-          PlaylistsActions.addTracksTo(data.playlistId, selected, isShown);
-          break;
-        }
-        case 'removeFromPlaylist': {
-          if(this.props.type === 'playlist') {
-            PlaylistsActions.removeTracks(this.props.currentPlaylist, selected);
-          }
-          break;
-        }
-        case 'createPlaylist': {
-          const playlistId = await PlaylistsActions.create('New playlist', false);
-          const isShown = this.props.type === 'playlist' && data === this.props.currentPlaylist;
-          PlaylistsActions.addTracksTo(playlistId, selected, isShown);
-          break;
-        }
-        case 'searchFor': {
-          // small hack, we can't call LibraryActions.search directly
-          // otherwise the search clear button would not appear, because it will not detect an input event on itself
-          const searchInput = document.querySelector('input[type="text"].search');
-          searchInput.value = data.search;
-          searchInput.dispatchEvent(new Event('input', { bubbles: true }));
-          break;
-        }
-        case 'removeFromLibrary': {
-          LibraryActions.remove(selected);
-          break;
-        }
-      }
-    });
-  }
-
-  componentWillUnmount() {
-    ipcRenderer.removeAllListeners(IPCM_TL_CONTEXTMENU_REPLY);
   }
 
   scrollTracksList() {
@@ -315,20 +267,144 @@ export default class TracksList extends Component {
   }
 
   showContextMenu(e, index) {
-    let playlistsList = [].concat(this.props.playlists);
+    const { type, playerStatus } = this.props;
+    const { selected } = this.state;
+    const selectedCount = selected.length;
+    const track = this.props.tracks[index];
+
+
+    let playlists = [...this.props.playlists];
 
     // Hide current playlist if needed
     if(this.props.type === 'playlist') {
-      playlistsList = playlistsList.filter((elem) => elem._id !== this.props.currentPlaylist);
+      playlists = playlists.filter((elem) => elem._id !== this.props.currentPlaylist);
     }
 
-    ipcRenderer.send(IPCR_TL_CONTEXTMENU, JSON.stringify({
-      type: this.props.type,
-      selectedCount: this.state.selected.length,
-      track: this.props.tracks[index],
-      playlists: playlistsList,
-      playerStatus: this.props.playerStatus,
-    }));
+    const playlistTemplate = [];
+    let addToQueueTemplate = [];
+
+    if (playlists) {
+      playlistTemplate.push(
+        {
+          label: 'Create new playlist...',
+          click: async () => {
+            const playlistId = await PlaylistsActions.create('New playlist', false);
+            PlaylistsActions.addTracksTo(playlistId, selected);
+          },
+        },
+        {
+          type: 'separator',
+        },
+      );
+
+      if(playlists.length === 0) {
+        playlistTemplate.push(
+          {
+            label: 'No playlist',
+            enabled: false,
+          },
+        );
+      } else {
+        playlists.forEach((playlist) => {
+          playlistTemplate.push({
+            label: playlist.name,
+            click: () => {
+              PlaylistsActions.addTracksTo(playlist._id, selected);
+            },
+          });
+        });
+      }
+    }
+
+    if(playerStatus !== 'stop') {
+      addToQueueTemplate = [
+        {
+          label: 'Add to queue',
+          click: () => {
+            QueueActions.addAfter(selected);
+          },
+        },
+        {
+          label: 'Play next',
+          click: () => {
+            QueueActions.addNext(selected);
+          },
+        },
+        {
+          type: 'separator',
+        },
+      ];
+    }
+
+    const template = [
+      {
+        label: selectedCount > 1 ? `${selectedCount} tracks selected` : `${selectedCount} track selected`,
+        enabled: false,
+      },
+      {
+        type: 'separator',
+      },
+      ...addToQueueTemplate,
+      {
+        label: 'Add to playlist',
+        submenu: playlistTemplate,
+      },
+      {
+        type: 'separator',
+      },
+      {
+        label: `Search for "${track.artist[0]}" `,
+        click: () => {
+          // HACK
+          const searchInput = document.querySelector('input[type="text"].search');
+          searchInput.value = track.artist[0];
+          searchInput.dispatchEvent(new Event('input', { bubbles: true }));
+        },
+      },
+      {
+        label: `Search for "${track.album}"`,
+        click: () => {
+          // HACK
+          const searchInput = document.querySelector('input[type="text"].search');
+          searchInput.value = track.album;
+          searchInput.dispatchEvent(new Event('input', { bubbles: true }));
+        },
+      },
+    ];
+
+    if(type === 'playlist') template.push(
+      {
+        type: 'separator',
+      },
+      {
+        label: 'Remove from playlist',
+        click: () => {
+          PlaylistsActions.removeTracks(this.props.currentPlaylist, selected);
+        },
+      }
+    );
+
+    template.push(
+      {
+        type: 'separator',
+      },
+      {
+        label: 'Show in file manager',
+        click: () => {
+          shell.showItemInFolder(track.path);
+        },
+      },
+      {
+        label: 'Remove from library',
+        click: () => {
+          LibraryActions.remove(selected);
+        },
+      }
+    );
+
+    const context = Menu.buildFromTemplate(template);
+
+    context.popup(this.window, { async: true }); // Let it appear
   }
 
   startPlayback(_id) {

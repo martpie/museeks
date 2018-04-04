@@ -5,7 +5,6 @@
 const { Menu, app, ipcMain } = require('electron');
 
 const ModuleWindow = require('./module-window');
-const { IPCR_PLAYER_ACTION } = require('../../shared/constants/ipc');
 
 
 class DockMenuModule extends ModuleWindow {
@@ -29,7 +28,7 @@ class DockMenuModule extends ModuleWindow {
       {
         label: 'Play',
         click: () => {
-          this.window.webContents.send(IPCR_PLAYER_ACTION, 'play');
+          this.window.webContents.send('playback:play');
         },
       },
     ];
@@ -38,7 +37,7 @@ class DockMenuModule extends ModuleWindow {
       {
         label: 'Pause',
         click: () => {
-          this.window.webContents.send(IPCR_PLAYER_ACTION, 'pause');
+          this.window.webContents.send('playback:pause');
         },
       },
     ];
@@ -47,35 +46,29 @@ class DockMenuModule extends ModuleWindow {
       {
         label: 'Previous',
         click: () => {
-          this.window.webContents.send(IPCR_PLAYER_ACTION, 'prev');
+          this.window.webContents.send('playback:prev');
         },
       },
       {
         label: 'Next',
         click: () => {
-          this.window.webContents.send(IPCR_PLAYER_ACTION, 'next');
+          this.window.webContents.send('playback:next');
         },
       },
     ],
 
     // Load events listener for player actions
-    ipcMain.on(IPCR_PLAYER_ACTION, (event, reply, data) => {
-      switch(reply) {
-        case 'play': {
-          this.setDockMenu('play');
-          break;
-        }
+    ipcMain.on('playback:play', () => {
+      this.setDockMenu('play');
+    });
 
-        case 'pause': {
-          this.setDockMenu('pause');
-          break;
-        }
-        case 'trackStart': {
-          this.updateTrayMetadata(data);
-          this.setDockMenu('play');
-          break;
-        }
-      }
+    ipcMain.on('playback:pause', () => {
+      this.setDockMenu('pause');
+    });
+
+    ipcMain.on('playback:trackChange', (event, track) => {
+      this.updateTrayMetadata(track);
+      this.setDockMenu('play');
     });
 
     this.setDockMenu('pause');
