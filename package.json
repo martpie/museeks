@@ -35,7 +35,7 @@
     "files": [
       "dist/**/*",
       "src/images/**/*",
-      "src/main-process/**/*",
+      "src/main/**/*",
       "src/shared/**/*",
       "node_modules/teeny-conf/**/*"
     ],
