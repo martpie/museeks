@@ -74,7 +74,7 @@ class TrayModule extends ModuleWindow {
       {
         label: 'Previous',
         click: () => {
-          this.window.webContents.send('playback:prev');
+          this.window.webContents.send('playback:previous');
         },
       },
       {

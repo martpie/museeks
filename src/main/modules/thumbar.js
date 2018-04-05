@@ -66,7 +66,7 @@ class ThumbarModule extends ModuleWindow {
         tooltip: 'Prev',
         icon: icons.prev,
         click: () => {
-          window.webContents.send('playback:prev');
+          window.webContents.send('playback:previous');
         },
       },
       prevDisabled: {
