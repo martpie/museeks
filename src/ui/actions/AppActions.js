@@ -36,9 +36,10 @@ const init = () => {
   Player.getAudio().addEventListener('play', async () => {
     ipcRenderer.send('playback:play');
 
-    const path = decodeURIComponent(Player.getSrc()).replace('file://', '');
+    // HACK, on win32, a prefix slash is weirdly added
+    const trackPath = decodeURIComponent(Player.getSrc().replace('file:///', '').replace('file://', ''));
 
-    const track = await utils.getMetadata(path);
+    const track = await utils.getMetadata(trackPath);
 
     ipcRenderer.send('playback:trackChange', track);
 
