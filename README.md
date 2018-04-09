@@ -29,20 +29,13 @@ Museeks aims to be a minimalistic and easy to use music player, you will not fin
 - 🚤 Playback speed control
 - 😴 Sleep mode blocker
 - 🔊 Minimize to tray
-- 🎧 Supported formats:
-    - mp3
-    - mp4
-    - m4a/aac
-    - flac
-    - wav
-    - ogg
-    - 3gpp
+- 🎧 Supported formats: mp3, mp4, m4a/aac, flac, wav, ogg, 3gpp
 
 ---
 
 ### Releases notes
 
-- [Releases notes](https://github.com/KeitIG/museeks/releases)
+- [Over here!](https://github.com/KeitIG/museeks/releases)
 
 ---
 
@@ -54,7 +47,7 @@ Builds and installers can be found [on this page](https://github.com/KeitIG/muse
 
 #### Build (advanced)
 
-Please consider that **`master` is unstable.**
+Please consider that **`master` is unstable**.
 
 - `git clone git@github.com:KeitIG/museeks.git`
 - `cd museeks`
