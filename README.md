@@ -52,7 +52,7 @@ Please consider that **`master` is unstable**.
 - `git clone git@github.com:KeitIG/museeks.git`
 - `cd museeks`
 - `npm install`
-- `npm run compile` or `npm run dev`
+- `npm run build` or `npm run dev`
 - `npm run museeks` or `npm run museeks:debug`
 
 ---
