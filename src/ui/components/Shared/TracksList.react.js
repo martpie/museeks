@@ -2,6 +2,7 @@ import electron from 'electron';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import KeyBinding from 'react-keybinding-component';
+import chunk from 'lodash/chunk';
 
 import TrackRow from './TrackRow.react';
 import CustomScrollbar from './CustomScrollbar.react';
@@ -123,7 +124,7 @@ export default class TracksList extends Component {
     const { selected, tilesScrolled } = this.state;
     const { trackPlayingId, tracks } = this.props;
 
-    const tracksChunked = utils.chunkArray(tracks, CHUNK_LENGTH);
+    const tracksChunked = chunk(tracks, CHUNK_LENGTH);
 
     return tracksChunked.splice(tilesScrolled, TILES_TO_DISPLAY).map((tracksChunk, indexChunk) => {
       const list = tracksChunk.map((track, index) => {
