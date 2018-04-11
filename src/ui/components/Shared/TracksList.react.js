@@ -47,11 +47,11 @@ export default class TracksList extends Component {
       tilesScrolled: 0,
     };
 
-    this.showContextMenu  = this.showContextMenu.bind(this);
-    this.startPlayback    = this.startPlayback.bind(this);
+    this.showContextMenu = this.showContextMenu.bind(this);
+    this.startPlayback = this.startPlayback.bind(this);
     this.onScroll = this.onScroll.bind(this);
-    this.selectTrack      = this.selectTrack.bind(this);
-    this.onKey            = this.onKey.bind(this);
+    this.selectTrack = this.selectTrack.bind(this);
+    this.onKey = this.onKey.bind(this);
   }
 
   componentDidMount() {
