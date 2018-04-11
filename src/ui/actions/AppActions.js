@@ -11,7 +11,6 @@ import * as NotificationsActions from './NotificationsActions';
 import * as PlayerActions from './PlayerActions';
 import * as SettingsActions from './SettingsActions';
 
-const globalShortcut = electron.remote.globalShortcut;
 const ipcRenderer    = electron.ipcRenderer;
 
 const init = () => {
@@ -19,8 +18,9 @@ const init = () => {
   LibraryActions.load();
   PlaylistsActions.refresh();
   SettingsActions.check();
-  initShortcuts();
-  start();
+
+  // Tell the main process to show the window
+  ipcRenderer.send('app:ready');
 
   // Bind player events
   // Audio Events
@@ -75,6 +75,10 @@ const init = () => {
     PlayerActions.pause();
   });
 
+  ipcRenderer.on('playback:playpause', () => {
+    PlayerActions.playPause();
+  });
+
   ipcRenderer.on('playback:previous', () => {
     PlayerActions.previous();
   });
@@ -97,10 +101,6 @@ const init = () => {
 
   currentWindow.on('resize', saveBounds);
   currentWindow.on('move', saveBounds);
-};
-
-const start = () => {
-  ipcRenderer.send('app:ready');
 };
 
 const restart = () => {
@@ -134,28 +134,11 @@ const saveBounds = () => {
   }, 250);
 };
 
-const initShortcuts = () => {
-  // Global shortcuts - Player
-  globalShortcut.register('MediaPlayPause', () => {
-    PlayerActions.playToggle();
-  });
-
-  globalShortcut.register('MediaPreviousTrack', () => {
-    PlayerActions.previous();
-  });
-
-  globalShortcut.register('MediaNextTrack', () => {
-    PlayerActions.next();
-  });
-};
-
 export default {
   close,
   init,
-  initShortcuts,
   maximize,
   minimize,
   saveBounds,
-  start,
   restart,
 };
