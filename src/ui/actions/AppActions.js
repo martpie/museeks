@@ -1,4 +1,5 @@
 import electron from 'electron';
+import os from 'os';
 
 import Player from '../lib/player';
 import { browserWindows, config }  from '../lib/app';
@@ -37,7 +38,15 @@ const init = () => {
     ipcRenderer.send('playback:play');
 
     // HACK, on win32, a prefix slash is weirdly added
-    const trackPath = decodeURIComponent(Player.getSrc().replace('file:///', '').replace('file://', ''));
+    let trackPath = Player.getSrc();
+
+    if (os.platform() === 'win32') {
+      trackPath = trackPath.replace('file:///', '');
+    } else {
+      trackPath = trackPath.replace('file://', '');
+    }
+
+    trackPath = decodeURIComponent(trackPath);
 
     const track = await utils.getMetadata(trackPath);
 
