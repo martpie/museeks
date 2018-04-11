@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import KeyBinding from 'react-keybinding-component';
 
 import TrackRow from './TrackRow.react';
-import PlayingIndicator from './PlayingIndicator.react';
 import CustomScrollbar from './CustomScrollbar.react';
 import TracksListHeader from './TracksListHeader.react';
 
@@ -13,7 +12,6 @@ import * as PlaylistsActions from '../../actions/PlaylistsActions';
 import * as PlayerActions from '../../actions/PlayerActions';
 import * as QueueActions from '../../actions/QueueActions';
 
-import Player from '../../lib/player';
 import * as utils from '../../utils/utils';
 import { isCtrlKey } from '../../utils/utils-platform';
 
@@ -180,10 +178,6 @@ export default class TracksList extends Component {
         </div>
       );
     });
-  }
-
-  pausePlayState() {
-    return Player.isPaused() ? 'pause' : 'play';
   }
 
   toggleSelectionById(id) {
