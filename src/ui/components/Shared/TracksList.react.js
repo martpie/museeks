@@ -2,9 +2,9 @@ import electron from 'electron';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import KeyBinding from 'react-keybinding-component';
+import chunk from 'lodash/chunk';
 
 import TrackRow from './TrackRow.react';
-import PlayingIndicator from './PlayingIndicator.react';
 import CustomScrollbar from './CustomScrollbar.react';
 import TracksListHeader from './TracksListHeader.react';
 
@@ -13,7 +13,6 @@ import * as PlaylistsActions from '../../actions/PlaylistsActions';
 import * as PlayerActions from '../../actions/PlayerActions';
 import * as QueueActions from '../../actions/QueueActions';
 
-import Player from '../../lib/player';
 import * as utils from '../../utils/utils';
 import { isCtrlKey } from '../../utils/utils-platform';
 
@@ -21,11 +20,15 @@ const { shell, remote } = electron;
 const { Menu } = remote;
 
 
-/*
-|--------------------------------------------------------------------------
-| Child - ArtistList
-|--------------------------------------------------------------------------
-*/
+const CHUNK_LENGTH = 20;
+const ROW_HEIGHT = 30;
+const TILES_TO_DISPLAY = 5;
+const TILE_HEIGHT = ROW_HEIGHT * CHUNK_LENGTH;
+
+
+//--------------------------------------------------------------------------
+// TrackList
+//--------------------------------------------------------------------------
 
 export default class TracksList extends Component {
   static propTypes = {
@@ -40,25 +43,27 @@ export default class TracksList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selected  : [],
-      scrollTop : 0,
+      selected: [],
+      tilesScrolled: 0,
     };
 
-    this.showContextMenu  = this.showContextMenu.bind(this);
-    this.startPlayback    = this.startPlayback.bind(this);
-    this.scrollTracksList = this.scrollTracksList.bind(this);
-    this.selectTrack      = this.selectTrack.bind(this);
-    this.onKey            = this.onKey.bind(this);
-
-    this.rowHeight = 30;
+    this.showContextMenu = this.showContextMenu.bind(this);
+    this.startPlayback = this.startPlayback.bind(this);
+    this.onScroll = this.onScroll.bind(this);
+    this.selectTrack = this.selectTrack.bind(this);
+    this.onKey = this.onKey.bind(this);
   }
 
   componentDidMount() {
     this.renderView = document.querySelector('.tracks-list-render-view');
   }
 
-  scrollTracksList() {
-    this.setState({ scrollTop : this.renderView.scrollTop });
+  onScroll() {
+    const tilesScrolled = Math.floor(this.renderView.scrollTop / TILE_HEIGHT);
+
+    if (this.state.tilesScrolled !== tilesScrolled) {
+      this.setState({ tilesScrolled });
+    }
   }
 
   selectTrack(e, id, index) {
@@ -116,60 +121,30 @@ export default class TracksList extends Component {
   }
 
   getTrackTiles() {
-    const { selected } = this.state;
+    const { selected, tilesScrolled } = this.state;
     const { trackPlayingId, tracks } = this.props;
 
-    const chunkLength = 20;
-    const tilesToDisplay = 5;
-    const tileHeight = this.rowHeight * chunkLength;
+    const tracksChunked = chunk(tracks, CHUNK_LENGTH);
 
-    const tracksChunked = utils.chunkArray(tracks, chunkLength);
-    const tilesScrolled = Math.floor(this.state.scrollTop / tileHeight);
-
-    return tracksChunked.splice(tilesScrolled, tilesToDisplay).map((tracksChunk, indexChunk) => {
+    return tracksChunked.splice(tilesScrolled, TILES_TO_DISPLAY).map((tracksChunk, indexChunk) => {
       const list = tracksChunk.map((track, index) => {
-        const trackRowIndex = (tilesScrolled + indexChunk) * chunkLength + index;
-
-        let playingIndicator = undefined;
-
-        if(trackPlayingId === track._id) {
-          playingIndicator = <PlayingIndicator state={this.pausePlayState()} />;
-        }
+        const trackRowIndex = (tilesScrolled + indexChunk) * CHUNK_LENGTH + index;
 
         return(
           <TrackRow
             selected={selected.includes(track._id)}
-            trackId={track._id}
+            track={track}
+            isPlaying={trackPlayingId === track._id}
             key={`track-${track._id}`}
             index={trackRowIndex}
             onMouseDown={this.selectTrack}
             onContextMenu={this.showContextMenu}
             onDoubleClick={this.startPlayback}
-          >
-            <div className='cell cell-track-playing text-center'>
-              { playingIndicator }
-            </div>
-            <div className='cell cell-track'>
-              { track.title }
-            </div>
-            <div className='cell cell-duration'>
-              { utils.parseDuration(track.duration) }
-            </div>
-            <div className='cell cell-artist'>
-              { track.artist[0] }
-            </div>
-            <div className='cell cell-album'>
-              { track.album }
-            </div>
-            <div className='cell cell-genre'>
-              { track.genre.join(', ') }
-            </div>
-          </TrackRow>
+          />
         );
       });
 
-      const translationDistance = (tilesScrolled * this.rowHeight * chunkLength) +
-                                      (indexChunk * this.rowHeight * chunkLength);
+      const translationDistance = (tilesScrolled * ROW_HEIGHT * CHUNK_LENGTH) + (indexChunk * ROW_HEIGHT * CHUNK_LENGTH);
       const tracksListTileStyles = {
         transform: `translate3d(0, ${translationDistance}px, 0)`,
       };
@@ -180,10 +155,6 @@ export default class TracksList extends Component {
         </div>
       );
     });
-  }
-
-  pausePlayState() {
-    return Player.isPaused() ? 'pause' : 'play';
   }
 
   toggleSelectionById(id) {
@@ -242,7 +213,7 @@ export default class TracksList extends Component {
     if(i - 1 >= 0) {
       this.setState({ selected : tracks[i - 1]._id }, () => {
         const container = document.querySelector('.tracks-list .tracks-list-render-view');
-        const nodeOffsetTop = (i - 1) * this.rowHeight;
+        const nodeOffsetTop = (i - 1) * ROW_HEIGHT;
 
         if(container.scrollTop > nodeOffsetTop) container.scrollTop = nodeOffsetTop;
       });
@@ -253,10 +224,10 @@ export default class TracksList extends Component {
     if(i + 1 < tracks.length) {
       this.setState({ selected : tracks[i + 1]._id }, () => {
         const container = document.querySelector('.tracks-list .tracks-list-render-view');
-        const nodeOffsetTop = (i + 1) * this.rowHeight;
+        const nodeOffsetTop = (i + 1) * ROW_HEIGHT;
 
         if(container.scrollTop + container.offsetHeight <= nodeOffsetTop) {
-          container.scrollTop = nodeOffsetTop - container.offsetHeight + this.rowHeight;
+          container.scrollTop = nodeOffsetTop - container.offsetHeight + ROW_HEIGHT;
         }
       });
     }
@@ -420,9 +391,9 @@ export default class TracksList extends Component {
         <TracksListHeader enableSort={type === 'library'} />
         <CustomScrollbar
           className='tracks-list-body'
-          onScroll={this.scrollTracksList}
+          onScroll={this.onScroll}
         >
-          <div className='tracks-list-tiles' style={{ height : tracks.length * this.rowHeight }}>
+          <div className='tracks-list-tiles' style={{ height : tracks.length * ROW_HEIGHT }}>
             { this.getTrackTiles() }
           </div>
         </CustomScrollbar>
