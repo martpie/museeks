@@ -46,14 +46,6 @@ export default class TrackRow extends PureComponent {
     this.props.onDoubleClick(this.props.track._id);
   }
 
-  getPlayingIndicator(props) {
-    if (props.isPlaying) {
-      return <PlayingIndicator />;
-    }
-
-    return null;
-  }
-
   render() {
     const { track } = this.props;
     const trackClasses = classnames('track', {
@@ -68,7 +60,7 @@ export default class TrackRow extends PureComponent {
         onContextMenu={this.onContextMenu}
       >
         <div className='cell cell-track-playing text-center'>
-          {this.getPlayingIndicator(this.props)}
+          {this.props.isPlaying ? <PlayingIndicator /> : null}
         </div>
         <div className='cell cell-track'>
           { track.title }
