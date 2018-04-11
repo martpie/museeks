@@ -34,7 +34,7 @@ export default class PlayerControls extends PureComponent {
         <button
           className='player-control play'
           title={this.props.playerStatus === 'play' ? 'Pause' : 'Play'}
-          onClick={PlayerActions.playToggle}
+          onClick={PlayerActions.playPause}
         >
           <Icon name={this.props.playerStatus === 'play' ? 'pause' : 'play'} fixedWidth />
         </button>

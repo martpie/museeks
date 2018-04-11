@@ -63,7 +63,7 @@ export default class TrackRow extends Component {
 
     return (
       <div className={classNames}
-        onClick={PlayerActions.playToggle}
+        onClick={PlayerActions.playPause}
         onMouseEnter={this.onMouseEnter}
         onMouseLeave= {this.onMouseLeave}
       >
