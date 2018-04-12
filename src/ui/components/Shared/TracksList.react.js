@@ -386,7 +386,7 @@ export default class TracksList extends Component {
     const { tracks, type } = this.props;
 
     return (
-      <div className='tracks-list'> {/* there used to be a tabIndex={ 0 }, I don't remember why */}
+      <div className='tracks-list'>
         <KeyBinding onKey={this.onKey} preventInputConflict />
         <TracksListHeader enableSort={type === 'library'} />
         <CustomScrollbar
