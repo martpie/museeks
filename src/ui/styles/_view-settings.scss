@@ -4,11 +4,25 @@
 
 .view-settings {
 
-  .settings-switcher .nav.nav-pills {
-    margin: 10px 15px;
+  .settings-link {
+    display: inline-block;
+    padding: 15px;
+    color: #333;
+    font-weight: bold;
+
+
+    &:hover,
+    &:active,
+    &:focus {
+      text-decoration: none;
+    }
+
+    &.active {
+      color: $main-color;
+    }
   }
 
-  .tab-content {
+  .settings-content {
     border-top: 1px solid #d2d2d2;
     padding: 10px 15px;
 
