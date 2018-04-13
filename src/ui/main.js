@@ -19,8 +19,6 @@ import store from './store.js';
 |--------------------------------------------------------------------------
 */
 
-import 'bootstrap-css-only/css/bootstrap.min.css';
-import 'font-awesome/css/font-awesome.css';
 import './styles/main.scss';
 
 
