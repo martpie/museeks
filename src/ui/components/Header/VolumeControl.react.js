@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Icon from 'react-fontawesome';
 import classnames from 'classnames';
+import Slider from 'react-rangeslider';
 
 import * as PlayerActions from '../../actions/PlayerActions';
 import Player from '../../lib/player';
@@ -46,8 +47,8 @@ export default class VolumeControl extends Component {
     return muted || volume === 0 ? 'volume-off' : volume > 0.5 ? 'volume-up' : 'volume-down';
   }
 
-  setVolume(e) {
-    const smoothVolume = smoothifyVolume(e.currentTarget.value);
+  setVolume(value) {
+    const smoothVolume = smoothifyVolume(value);
 
     PlayerActions.setVolume(smoothVolume);
     this.setState({ volume: smoothVolume });
@@ -85,12 +86,12 @@ export default class VolumeControl extends Component {
       >
         <Icon name={this.getVolumeIcon(unsmoothifyVolume(this.state.volume), this.state.muted)} />
         <div className={volumeClasses}>
-          <input type='range'
+          <Slider
             min={0}
             max={1}
             step={0.01}
-            defaultValue={this.state.volume}
-            ref='volume'
+            tooltip={false}
+            value={unsmoothifyVolume(this.state.volume)}
             onChange={this.setVolume}
           />
         </div>
