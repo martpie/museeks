@@ -228,7 +228,7 @@ export const getMetadata = async (trackPath) => {
   // Let's try another wat to retrieve a track duration
   if (!metadata.duration) {
     try {
-      metadata.duration = await getAudioDurationAsync(trackPath);
+      metadata.duration = await getAudioDuration(trackPath);
     } catch (err) {
       console.warn(`An error occured while getting ${trackPath} duration: ${err}`);
     }
@@ -237,7 +237,7 @@ export const getMetadata = async (trackPath) => {
   return metadata;
 };
 
-export const getAudioDurationAsync = (path) => {
+export const getAudioDuration = (trackPath) => {
   const audio = new Audio;
 
   return new Promise((resolve, reject) => {
@@ -246,12 +246,13 @@ export const getAudioDurationAsync = (path) => {
     });
 
     audio.addEventListener('error', (e) => {
-      const message = `Error getting audio duration: (${e.target.error.code}) ${path}`;
+      const message = `Error getting audio duration: (${e.target.error.code}) ${trackPath}`;
       reject(new Error(message));
     });
 
     audio.preload = 'metadata';
-    audio.src = path;
+    // HACK no idea what other caracters could fuck things up
+    audio.src = encodeURI(trackPath).replace('#', '%23');
   });
 };
 
