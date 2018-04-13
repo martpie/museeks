@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import { Row, Col, ButtonGroup, ProgressBar } from 'react-bootstrap';
 import Icon from 'react-fontawesome';
 import { connect } from 'react-redux';
-import classnames from 'classnames';
 
 import { getStatus } from '../../utils/utils-library';
 
@@ -28,18 +27,28 @@ class Footer extends Component {
 
   getStatus(props) {
     const { library } = props;
+    const { processed, total } = library.refresh;
 
-    const progressBarClasses = classnames('library-refresh-progress', {
-      'hidden': !this.props.library.refreshing,
-    });
-
+    // If the library is being scanned, show the scan progress
+    // const progressBarClasses = classnames('library-refresh-progress', {
+    //   'hidden': !this.props.library.refreshing,
+    // });
     if (library.refreshing) {
-      const progress = Math.round(library.refresh.processed / library.refresh.total * 100);
-
-      return <ProgressBar className={progressBarClasses} now={progress} />;
+      const progress = total > 0 ? Math.round(processed / total * 100) : 100;
+      return (
+        <div className='library-refresh'>
+          <ProgressBar className='library-refresh-progress' now={progress} active={total === 0} />
+          {total > 0 && (
+            <div className='library-refresh-count'>
+              {processed} / {total}
+            </div>
+          )}
+        </div>
+      );
     }
 
-
+    // Else, return the amount of time for the library or the playlist depending
+    // of the route
     return (
       <Switch>
         <Route
@@ -61,7 +70,7 @@ class Footer extends Component {
   render() {
     return (
       <footer className='container-fluid'>
-        <Row>
+        <Row className='footer-row'>
           <Col sm={3}>
             <ButtonGroup className='view-switcher'>
               <NavLink
@@ -90,7 +99,7 @@ class Footer extends Component {
               </NavLink>
             </ButtonGroup>
           </Col>
-          <Col sm={5} className='status text-center'>
+          <Col sm={5} className='library-status text-center'>
             {this.getStatus(this.props)}
           </Col>
         </Row>
