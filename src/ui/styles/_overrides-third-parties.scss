@@ -34,13 +34,13 @@
   box-shadow: none;
   margin: 0;
   background-color: #dadada;
-  border: none;
+  border: 0;
 }
 
 .rangeslider-horizontal .rangeslider__fill {
   box-shadow: none;
   background-color: $main-color;
-  border-radius: 1px
+  border-radius: 1px;
 }
 
 .rangeslider .rangeslider__handle {
@@ -53,7 +53,7 @@
   outline: none;
   // opacity: 0;
 
-  &:after {
+  &::after {
     display: none;
   }
 }
