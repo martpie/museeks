@@ -1,0 +1,26 @@
+appId: io.museeks.app
+electronVersion: 1.8.3
+directories:
+  buildResources: "./dist"
+  output: "./build"
+files:
+  - dist/**/*
+  - src/images/**/*
+  - src/main/**/*
+  - src/shared/**/*
+  - node_modules/teeny-conf/**/*
+mac:
+  category: public.app-category.music
+  target:
+  - dmg
+  icon: src/images/logos/museeks.icns
+linux:
+  category: AudioVideo
+  target:
+    - deb
+    - AppImage
+    - rpm
+  executableName: museeks
+win:
+  target: nsis
+  icon: src/images/logos/museeks.ico

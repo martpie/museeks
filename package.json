@@ -25,41 +25,6 @@
     "package:w": "build -w --ia32 --x64",
     "package:m": "build -m"
   },
-  "build": {
-    "appId": "io.museeks.app",
-    "electronVersion": "1.8.3",
-    "directories": {
-      "buildResources": "./dist",
-      "output": "./build"
-    },
-    "files": [
-      "dist/**/*",
-      "src/images/**/*",
-      "src/main/**/*",
-      "src/shared/**/*",
-      "node_modules/teeny-conf/**/*"
-    ],
-    "mac": {
-      "category": "public.app-category.music",
-      "target": [
-        "dmg"
-      ],
-      "icon": "src/images/logos/museeks.icns"
-    },
-    "linux": {
-      "category": "AudioVideo",
-      "target": [
-        "deb",
-        "AppImage",
-        "rpm"
-      ],
-      "executableName": "museeks"
-    },
-    "win": {
-      "target": "nsis",
-      "icon": "src/images/logos/museeks.ico"
-    }
-  },
   "dependencies": {
     "bootstrap-css-only": "3.3.7",
     "classnames": "2.2.5",
