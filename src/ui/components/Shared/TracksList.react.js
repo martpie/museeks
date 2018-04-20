@@ -226,7 +226,7 @@ export default class TracksList extends Component {
         const container = document.querySelector('.tracks-list .tracks-list-render-view');
         const nodeOffsetTop = (i + 1) * ROW_HEIGHT;
 
-        if(container.scrollTop + container.offsetHeight <= nodeOffsetTop) {
+        if(container.scrollTop + container.offsetHeight <= nodeOffsetTop + ROW_HEIGHT) {
           container.scrollTop = nodeOffsetTop - container.offsetHeight + ROW_HEIGHT;
         }
       });
