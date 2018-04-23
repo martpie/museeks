@@ -1,4 +1,5 @@
 import electron from 'electron';
+import os from 'os';
 
 import Player from '../lib/player';
 import { browserWindows, config }  from '../lib/app';
@@ -10,7 +11,6 @@ import * as NotificationsActions from './NotificationsActions';
 import * as PlayerActions from './PlayerActions';
 import * as SettingsActions from './SettingsActions';
 
-const globalShortcut = electron.remote.globalShortcut;
 const ipcRenderer    = electron.ipcRenderer;
 
 const init = () => {
@@ -18,8 +18,9 @@ const init = () => {
   LibraryActions.load();
   PlaylistsActions.refresh();
   SettingsActions.check();
-  initShortcuts();
-  start();
+
+  // Tell the main process to show the window
+  ipcRenderer.send('app:ready');
 
   // Bind player events
   // Audio Events
@@ -36,9 +37,18 @@ const init = () => {
   Player.getAudio().addEventListener('play', async () => {
     ipcRenderer.send('playback:play');
 
-    const path = decodeURIComponent(Player.getSrc()).replace('file://', '');
+    // HACK, on win32, a prefix slash is weirdly added
+    let trackPath = Player.getSrc();
 
-    const track = await utils.getMetadata(path);
+    if (os.platform() === 'win32') {
+      trackPath = trackPath.replace('file:///', '');
+    } else {
+      trackPath = trackPath.replace('file://', '');
+    }
+
+    trackPath = decodeURIComponent(trackPath);
+
+    const track = await utils.getMetadata(trackPath);
 
     ipcRenderer.send('playback:trackChange', track);
 
@@ -65,6 +75,10 @@ const init = () => {
     PlayerActions.pause();
   });
 
+  ipcRenderer.on('playback:playpause', () => {
+    PlayerActions.playPause();
+  });
+
   ipcRenderer.on('playback:previous', () => {
     PlayerActions.previous();
   });
@@ -87,10 +101,6 @@ const init = () => {
 
   currentWindow.on('resize', saveBounds);
   currentWindow.on('move', saveBounds);
-};
-
-const start = () => {
-  ipcRenderer.send('app:ready');
 };
 
 const restart = () => {
@@ -124,28 +134,11 @@ const saveBounds = () => {
   }, 250);
 };
 
-const initShortcuts = () => {
-  // Global shortcuts - Player
-  globalShortcut.register('MediaPlayPause', () => {
-    PlayerActions.playToggle();
-  });
-
-  globalShortcut.register('MediaPreviousTrack', () => {
-    PlayerActions.previous();
-  });
-
-  globalShortcut.register('MediaNextTrack', () => {
-    PlayerActions.next();
-  });
-};
-
 export default {
   close,
   init,
-  initShortcuts,
   maximize,
   minimize,
   saveBounds,
-  start,
   restart,
 };

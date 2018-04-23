@@ -4,13 +4,14 @@ const path     = require('path');
 const os       = require('os');
 const electron = require('electron');
 
-const IpcModule     = require('./modules/ipc'); // Manages IPC events
-const MenuModule    = require('./modules/menu'); // Manage menu
-const TrayModule    = require('./modules/tray'); // Manages Tray
-const ConfigModule  = require('./modules/config'); // Handles config
-const PowerModule   = require('./modules/power-monitor'); // Handle power events
+const IpcModule = require('./modules/ipc'); // Manages IPC events
+const MenuModule = require('./modules/menu'); // Manage menu
+const TrayModule = require('./modules/tray'); // Manages Tray
+const ConfigModule = require('./modules/config'); // Handles config
+const PowerModule = require('./modules/power-monitor'); // Handle power events
 const ThumbarModule = require('./modules/thumbar'); // Handle Windows Thumbar
 const DockMenuModule = require('./modules/dock-menu');
+const GlobalShortcutsModule = require('./modules/global-shortcuts');
 
 const ModulesManager = require('./lib/modules-manager');
 const { checkBounds } = require('./utils');
@@ -110,6 +111,7 @@ app.on('ready', () => {
     new PowerModule(mainWindow),
     new TrayModule(mainWindow),
     new ThumbarModule(mainWindow),
-    new DockMenuModule(mainWindow)
+    new DockMenuModule(mainWindow),
+    new GlobalShortcutsModule(mainWindow),
   );
 });

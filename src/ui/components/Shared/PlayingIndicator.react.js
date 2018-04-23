@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Icon from 'react-fontawesome';
+import { connect } from 'react-redux';
 
 import classnames from 'classnames';
 
@@ -13,7 +14,7 @@ import * as PlayerActions from '../../actions/PlayerActions';
 |--------------------------------------------------------------------------
 */
 
-export default class TrackRow extends Component {
+class TrackPlayingIndicator extends Component {
   static propTypes = {
     state: PropTypes.string.isRequired,
   }
@@ -63,7 +64,7 @@ export default class TrackRow extends Component {
 
     return (
       <div className={classNames}
-        onClick={PlayerActions.playToggle}
+        onClick={PlayerActions.playPause}
         onMouseEnter={this.onMouseEnter}
         onMouseLeave= {this.onMouseLeave}
       >
@@ -74,3 +75,8 @@ export default class TrackRow extends Component {
     );
   }
 }
+
+
+const mapStateToProps = (state) => ({ state: state.player.playerStatus });
+
+export default connect(mapStateToProps)(TrackPlayingIndicator);

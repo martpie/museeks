@@ -27,7 +27,7 @@ const audioErrors = {
 /**
  * Toggle play/pause
  */
-export const playToggle = () => {
+export const playPause = () => {
   const { paused } = Player.getAudio();
   // TODO (y.solovyov | KeitIG): calling getState is a hack.
   const { queue, playerStatus } = store.getState().player;

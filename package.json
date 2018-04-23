@@ -16,49 +16,14 @@
   "scripts": {
     "build": "webpack --config webpack.prod.js --env.production --progress --colors",
     "lint:js": "eslint . --config .eslintrc",
-    "lint:sass": "sass-lint --config .sasslintrc -v -q",
+    "lint:sass": "sass-lint --config .sass-lint.yml -v",
     "dev": "webpack --config webpack.dev.js --progress --colors --watch",
-    "museeks": "./node_modules/electron/cli.js .",
-    "museeks:debug": "./node_modules/electron/cli.js . --enable-logging",
+    "museeks": "./node_modules/.bin/electron .",
+    "museeks:debug": "./node_modules/.bin/electron . --enable-logging",
     "package:lmw": "build -lmw --ia32 --x64",
     "package:l": "build -l --ia32 --x64",
     "package:w": "build -w --ia32 --x64",
     "package:m": "build -m"
-  },
-  "build": {
-    "appId": "io.museeks.app",
-    "electronVersion": "1.8.3",
-    "directories": {
-      "buildResources": "./dist",
-      "output": "./build"
-    },
-    "files": [
-      "dist/**/*",
-      "src/images/**/*",
-      "src/main/**/*",
-      "src/shared/**/*",
-      "node_modules/teeny-conf/**/*"
-    ],
-    "mac": {
-      "category": "public.app-category.music",
-      "target": [
-        "dmg"
-      ],
-      "icon": "src/images/logos/museeks.icns"
-    },
-    "linux": {
-      "category": "AudioVideo",
-      "target": [
-        "deb",
-        "AppImage",
-        "rpm"
-      ],
-      "executableName": "museeks"
-    },
-    "win": {
-      "target": "nsis",
-      "icon": "src/images/logos/museeks.ico"
-    }
   },
   "dependencies": {
     "bootstrap-css-only": "3.3.7",
@@ -69,17 +34,17 @@
     "keymirror": "0.1.1",
     "level-js": "2.2.4",
     "linvodb3": "3.25.1",
-    "lodash": "^4.17.5",
+    "lodash": "4.17.5",
     "music-metadata": "0.10.2",
-    "open-sans-fontface": "1.4.0",
     "prop-types": "15.6.1",
     "queue": "4.4.2",
-    "react": "16.3.0",
+    "react": "16.3.2",
     "react-bootstrap": "0.32.1",
     "react-custom-scrollbars": "4.2.1",
-    "react-dom": "16.3.0",
+    "react-dom": "16.3.2",
     "react-fontawesome": "1.6.1",
     "react-keybinding-component": "0.5.1",
+    "react-rangeslider": "2.2.0",
     "react-redux": "5.0.7",
     "react-router": "4.2.0",
     "react-router-bootstrap": "0.24.4",
@@ -93,7 +58,7 @@
   },
   "devDependencies": {
     "babel-core": "6.26.0",
-    "babel-eslint": "8.2.2",
+    "babel-eslint": "8.2.3",
     "babel-loader": "7.1.4",
     "babel-minify-webpack-plugin": "0.3.1",
     "babel-plugin-transform-class-properties": "6.24.1",
@@ -103,23 +68,23 @@
     "clean-terminal-webpack-plugin": "1.0.1",
     "css-loader": "0.28.11",
     "electron": "1.8.4",
-    "electron-builder": "20.8.1",
+    "electron-builder": "20.9.2",
     "eslint": "4.19.1",
-    "eslint-plugin-import": "2.10.0",
+    "eslint-plugin-import": "2.11.0",
     "eslint-plugin-react": "7.7.0",
     "file-loader": "1.1.11",
-    "html-webpack-plugin": "3.1.0",
+    "html-webpack-plugin": "3.2.0",
     "install": "0.11.0",
-    "mini-css-extract-plugin": "^0.4.0",
+    "mini-css-extract-plugin": "0.4.0",
     "node-sass": "4.8.3",
     "redux-logger": "3.0.6",
     "sass-lint": "1.12.1",
-    "sass-loader": "6.0.7",
-    "style-loader": "0.20.3",
+    "sass-loader": "7.0.1",
+    "style-loader": "0.21.0",
     "svg-inline-loader": "0.8.0",
     "url-loader": "1.0.1",
-    "webpack": "4.4.1",
-    "webpack-cli": "^2.0.13",
+    "webpack": "4.6.0",
+    "webpack-cli": "2.0.14",
     "webpack-merge": "4.1.2"
   }
 }
