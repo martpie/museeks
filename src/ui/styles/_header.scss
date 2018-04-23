@@ -367,9 +367,7 @@ header {
         }
       }
     }
-    // .now-playing
   }
-  // .player-controls
 
   .col-search-controls {
     width: 220px;
@@ -411,10 +409,10 @@ header {
     position: absolute;
     z-index: 10;
     background-color: rgb(244, 244, 244);
-    top: -3px;
+    top: -1px;
     right: 25px;
     display: none;
-    padding: 5px 12px;
+    padding: 10px 12px;
 
     &.visible {
       display: block;

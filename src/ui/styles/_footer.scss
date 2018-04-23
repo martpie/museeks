@@ -10,48 +10,65 @@ footer {
   background-color: rgb(244, 244, 244);
   padding: 0;
   width: 100%;
+}
 
-  .view-switcher {
+.footer-row {
+  display: flex;
+  align-items: center;
+}
 
-    .btn {
+.view-switcher {
+  .btn {
+    background-color: transparent;
+    border-top: 0;
+    border-bottom: 0;
+
+    &.btn-default:hover {
       background-color: transparent;
-      border-top: 0;
-      border-bottom: 0;
+    }
 
-      &.btn-default:hover {
-        background-color: transparent;
-      }
+    &.btn-default.active,
+    &.btn-default:active {
+      box-shadow: none;
+      -webkit-box-shadow: none;
+      background-color: #e6e6e6;
+    }
 
-      &.btn-default.active,
-      &.btn-default:active {
-        box-shadow: none;
-        -webkit-box-shadow: none;
-        background-color: #e6e6e6;
-      }
-
-      &.btn-default.active {
-        color: $main-color;
-      }
+    &.btn-default.active {
+      color: $main-color;
     }
   }
+}
 
+.library-status {
+  font-size: 12px;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  color: #888;
 
-  .status {
-    font-size: 12px;
-    padding-top: 7px;
-    padding-bottom: 7px;
-    color: #888;
+  .progress {
+    display: inline-block;
+    width: 100%;
+    vertical-align: middle;
+    height: 5px;
+    margin-bottom: 0;
 
-    .progress {
-      display: inline-block;
-      width: 100%;
-      vertical-align: middle;
-      height: 5px;
-      margin-bottom: 0;
-
-      .progress-bar {
-        background-color: $main-color;
-      }
+    .progress-bar {
+      background-color: $main-color;
     }
   }
+}
+
+.library-refresh {
+  display: flex;
+  align-items: center;
+}
+
+.library-refresh-progress {
+  flex: 1;
+  margin-right: 10px;
+}
+
+.library-refresh-count {
+  font-variant-numeric: tabular-nums;
 }

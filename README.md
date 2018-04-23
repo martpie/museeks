@@ -1,6 +1,6 @@
 # museeks
 
-[![Build Status](https://travis-ci.org/KeitIG/museeks.svg?branch=master)](https://travis-ci.org/KeitIG/museeks)
+[![Build Status](https://img.shields.io/circleci/project/github/KeitIG/museeks.svg)](https://circleci.com/gh/KeitIG/museeks)
 [![Dependencies](https://david-dm.org/KeitIG/museeks.svg)](https://github.com/KeitIG/museeks)
 [![Gitter](https://badges.gitter.im/KeitIG/museeks.svg)](https://gitter.im/KeitIG/museeks?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
@@ -29,20 +29,13 @@ Museeks aims to be a minimalistic and easy to use music player, you will not fin
 - 🚤 Playback speed control
 - 😴 Sleep mode blocker
 - 🔊 Minimize to tray
-- 🎧 Supported formats:
-    - mp3
-    - mp4
-    - m4a/aac
-    - flac
-    - wav
-    - ogg
-    - 3gpp
+- 🎧 Supported formats: mp3, mp4, m4a/aac, flac, wav, ogg, 3gpp
 
 ---
 
 ### Releases notes
 
-- [Releases notes](https://github.com/KeitIG/museeks/releases)
+- [Over here!](https://github.com/KeitIG/museeks/releases)
 
 ---
 
@@ -54,12 +47,12 @@ Builds and installers can be found [on this page](https://github.com/KeitIG/muse
 
 #### Build (advanced)
 
-Please consider that **`master` is unstable.**
+Please consider that **`master` is unstable**.
 
 - `git clone git@github.com:KeitIG/museeks.git`
 - `cd museeks`
 - `npm install`
-- `npm run compile` or `npm run dev`
+- `npm run build` or `npm run dev`
 - `npm run museeks` or `npm run museeks:debug`
 
 ---

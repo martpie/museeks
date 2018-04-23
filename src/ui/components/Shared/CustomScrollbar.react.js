@@ -15,7 +15,9 @@ class CustomScrollbar extends React.Component {
   }
 
   getRenderView(props) {
-    return <div {...props} className='tracks-list-render-view' />;
+    // the tabIndex={0} is needed to make the pageup/pagedown/home/end keys
+    // work propery
+    return <div {...props} className='tracks-list-render-view' tabIndex={0} />;
   }
 
   getTrackVertical(props) {

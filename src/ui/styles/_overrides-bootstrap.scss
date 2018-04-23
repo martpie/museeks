@@ -147,6 +147,11 @@
 .progress {
   background-color: #dadada;
   box-shadow: none;
+  border-radius: 1px;
+
+  .progress-bar {
+    border-radius: 1px;
+  }
 }
 
 .btn-default.active,

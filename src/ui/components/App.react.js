@@ -44,7 +44,7 @@ class Museeks extends Component {
       case 32:
         e.preventDefault();
         e.stopPropagation();
-        PlayerActions.playToggle();
+        PlayerActions.playPause();
         break;
     }
   }
