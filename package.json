@@ -1,7 +1,7 @@
 {
   "name": "museeks",
   "productName": "Museeks",
-  "version": "0.9.3",
+  "version": "0.9.4",
   "description": "A simple, clean and cross-platform music player, written with Node.js, Electron and React.js.",
   "main": "./src/main/main.js",
   "repository": {
@@ -35,7 +35,7 @@
     "level-js": "2.2.4",
     "linvodb3": "3.25.1",
     "lodash": "4.17.5",
-    "music-metadata": "0.9.15",
+    "music-metadata": "0.10.2",
     "prop-types": "15.6.1",
     "queue": "4.4.2",
     "react": "16.3.2",
