@@ -247,21 +247,15 @@ body.theme-dark {
 
   .view-settings {
 
-    .nav-pills {
+    .settings-link {
+      color: #eeeeee;
 
-      &>li>a {
-        color: #eeeeee;
-      }
-
-      &>li.active>a,
-      &>li.active>a:focus,
-      &>li.active>a:hover {
-        background-color: transparent;
-        color: #459ce7;
+      &.active {
+        color: $main-color;
       }
     }
 
-    .tab-content {
+    .settings-content {
       border-top-color: #1b1b1b;
 
       .setting-section {

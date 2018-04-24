@@ -51,7 +51,7 @@
     "react-router-dom": "4.2.2",
     "react-simple-input": "0.4.1",
     "react-svg-inline": "2.1.0",
-    "redux": "3.7.2",
+    "redux": "4.0.0",
     "redux-thunk": "2.2.0",
     "semver": "5.5.0",
     "teeny-conf": "1.1.0"
