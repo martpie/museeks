@@ -86,7 +86,6 @@ If you want to report a bug, first, thanks a lot, that helps us a lot. Please op
 
 - Fork and clone
 - Master is usually unstable, checkout to a tag to have a stable state of the app
-
 - `npm install && npm run dev` then run in a separate terminal `npm run museeks:debug`
 - `npm run dev` will watch for file changes using Webpack which will recompile JSX and SASS files.
 
