@@ -1,6 +1,6 @@
 const electron = require('electron');
 
-module.exports.checkBounds = function(bounds) {
+module.exports.checkBounds = function (bounds) {
   // check if the browser window is offscreen
   const display = electron.screen.getDisplayNearestPoint(bounds).workArea;
 
@@ -9,7 +9,7 @@ module.exports.checkBounds = function(bounds) {
     && bounds.y >= display.y
     && bounds.y + bounds.height <= display.y + display.height;
 
-  if(!onScreen) {
+  if (!onScreen) {
     return {
       width: 900,
       height: 550,

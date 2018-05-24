@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
+import { ProgressBar } from 'react-bootstrap';
 
 import ButtonShuffle from './ButtonShuffle.react';
 import ButtonRepeat from './ButtonRepeat.react';
-import { ProgressBar } from 'react-bootstrap';
 
 import * as PlayerActions from '../../actions/PlayerActions';
 import Player from '../../lib/player';
@@ -13,9 +13,9 @@ import * as utils from '../../utils/utils';
 
 class PlayingBarInfos extends React.Component {
   static propTypes = {
-    trackPlaying: PropTypes.object,
-    shuffle: PropTypes.bool,
-    repeat: PropTypes.string,
+    trackPlaying: PropTypes.object.isRequired,
+    shuffle: PropTypes.bool.isRequired,
+    repeat: PropTypes.string.isRequired,
   }
 
   constructor(props) {
@@ -23,11 +23,12 @@ class PlayingBarInfos extends React.Component {
 
     this.state = {
       elapsed: 0,
-      showTooltip: false,
       duration: null,
       x: null,
       dragging: false,
     };
+
+    this.playingBar = React.createRef();
 
     this.tick = this.tick.bind(this);
 
@@ -73,15 +74,15 @@ class PlayingBarInfos extends React.Component {
   dragOver(e) {
     // Check if a currentTime update is needed
     if (this.state.dragging) {
+      const { playingBar } = this;
       const { trackPlaying } = this.props;
 
-      const playingBar = this.refs.playingBar;
       const playingBarRect = playingBar.getBoundingClientRect();
 
       const barWidth = playingBar.offsetWidth;
       const offsetX = Math.min(Math.max(0, e.pageX - playingBarRect.left), barWidth);
 
-      const percent = offsetX / barWidth * 100;
+      const percent = (offsetX / barWidth) * 100;
 
       const jumpTo = (percent * trackPlaying.duration) / 100;
 
@@ -98,10 +99,10 @@ class PlayingBarInfos extends React.Component {
   showTooltip(e) {
     const { trackPlaying } = this.props;
 
-    const offsetX = e.nativeEvent.offsetX;
+    const { offsetX } = e.nativeEvent;
     const barWidth = e.currentTarget.offsetWidth;
 
-    const percent = offsetX / barWidth * 100;
+    const percent = (offsetX / barWidth) * 100;
 
     const time = (percent * trackPlaying.duration) / 100;
 
@@ -120,38 +121,38 @@ class PlayingBarInfos extends React.Component {
 
   render() {
     const { trackPlaying } = this.props;
-    const elapsedPercent = this.state.elapsed * 100 / trackPlaying.duration;
+    const elapsedPercent = (this.state.elapsed * 100) / trackPlaying.duration;
 
     const nowPlayingTooltipClasses = classnames('playing-bar-tooltip', {
       hidden: this.state.duration === null,
     });
 
     return (
-      <div className='now-playing-infos'>
-        <div className='now-playing-metas'>
-          <div className='player-options'>
+      <div className="now-playing-infos">
+        <div className="now-playing-metas">
+          <div className="player-options">
             <ButtonRepeat repeat={this.props.repeat} />
             <ButtonShuffle shuffle={this.props.shuffle} />
           </div>
-          <div className='metas'>
-            <strong className='meta-title'>
+          <div className="metas">
+            <strong className="meta-title">
               {trackPlaying.title}
             </strong>
             &nbsp;by&nbsp;
-            <strong className='meta-artist'>
+            <strong className="meta-artist">
               {trackPlaying.artist.join(', ')}
             </strong>
             &nbsp;on&nbsp;
-            <strong className='meta-album'>
+            <strong className="meta-album">
               {trackPlaying.album}
             </strong>
           </div>
 
-          <span className='duration'>
+          <span className="duration">
             {utils.parseDuration(this.state.elapsed)} / {utils.parseDuration(trackPlaying.duration)}
           </span>
         </div>
-        <div className='now-playing-bar' ref='playingBar'>
+        <div className="now-playing-bar" ref={this.playingBar}>
           <div className={nowPlayingTooltipClasses} style={{ left: `${this.state.x}%` }}>
             {utils.parseDuration(this.state.duration)}
           </div>

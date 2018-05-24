@@ -12,7 +12,7 @@ import * as utils from '../../utils/utils';
 
 export default class TrackCover extends PureComponent {
   static propTypes = {
-    path: PropTypes.string,
+    path: PropTypes.string.isRequired,
   }
 
   constructor(props) {
@@ -28,8 +28,8 @@ export default class TrackCover extends PureComponent {
     this.fetchInitialCover();
   }
 
-  async componentWillUpdate(nextProps) {
-    if(nextProps.path !== this.props.path) {
+  async componentWillReceiveProps(nextProps) {
+    if (nextProps.path !== this.props.path) {
       const coverPath = await utils.fetchCover(nextProps.path);
       this.setState({ coverPath });
     }
@@ -41,18 +41,18 @@ export default class TrackCover extends PureComponent {
   }
 
   render() {
-    if(this.state.coverPath) {
+    if (this.state.coverPath) {
       const coverPath = encodeURI(this.state.coverPath)
         .replace(/'/g, '\\\'')
         .replace(/"/g, '\\"');
       const styles = { backgroundImage: `url('${coverPath}')` };
 
-      return <div className='cover' style={styles} />;
+      return <div className="cover" style={styles} />;
     }
 
-    return(
-      <div className='cover empty'>
-        <div className='note'>♪</div>
+    return (
+      <div className="cover empty">
+        <div className="note">♪</div>
       </div>
     );
   }

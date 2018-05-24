@@ -1,5 +1,5 @@
-import store from '../store.js';
-import types  from '../constants/action-types';
+import store from '../store';
+import types from '../constants/action-types';
 
 /**
  * Add a toast
@@ -12,13 +12,13 @@ export const add = (type, content, duration = 3000) => {
   const toast = { _id, type, content };
 
   store.dispatch({
-    type   : types.APP_TOAST_ADD,
+    type: types.APP_TOAST_ADD,
     toast,
   });
 
   setTimeout(() => {
     store.dispatch({
-      type : types.APP_TOAST_REMOVE,
+      type: types.APP_TOAST_REMOVE,
       _id,
     });
   }, duration);

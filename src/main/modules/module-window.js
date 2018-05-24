@@ -10,7 +10,7 @@ class ModuleWindow extends Module {
     super();
 
     if (!window || typeof window !== 'object') {
-      throw(new TypeError('ModuleWindow expecs a valid BrowserWindow to be passed as argument'));
+      throw (new TypeError('ModuleWindow expecs a valid BrowserWindow to be passed as argument'));
     }
 
     this.window = window;

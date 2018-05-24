@@ -9,19 +9,16 @@ import PropTypes from 'prop-types';
 
 export default class FullViewMessage extends PureComponent {
   static propTypes = {
-    children: PropTypes.oneOfType([
-      PropTypes.array,
-      PropTypes.object,
-    ]),
+    children: PropTypes.node,
   }
 
-  constructor(props) {
-    super(props);
+  static defaultProps = {
+    children: '',
   }
 
   render() {
     return (
-      <div className='full-message'>
+      <div className="full-message">
         { this.props.children }
       </div>
     );

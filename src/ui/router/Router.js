@@ -15,9 +15,9 @@ const AppRouter = () => (
   <Router history={history}>
     <App>
       <Switch>
-        <Route path='/library' component={Library} />
-        <Route path='/settings' component={Settings} />
-        <Route path='/playlists' component={Playlists} />
+        <Route path="/library" component={Library} />
+        <Route path="/settings" component={Settings} />
+        <Route path="/playlists" component={Playlists} />
       </Switch>
     </App>
   </Router>

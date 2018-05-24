@@ -1,9 +1,9 @@
 import electron from 'electron';
 
-import history from '../router/history.js';
-import store from '../store.js';
+import history from '../router/history';
+import store from '../store';
 
-import types  from '../constants/action-types';
+import types from '../constants/action-types';
 import * as SORT_ORDERS from '../constants/sort-orders';
 
 import * as ToastsActions from './ToastsActions';
@@ -14,32 +14,15 @@ import Player from '../lib/player';
 import { sortTracks, filterTracks } from '../utils/utils-library';
 import { shuffleTracks } from '../utils/utils-player';
 
-const ipcRenderer = electron.ipcRenderer;
+const { ipcRenderer } = electron;
 
 const audioErrors = {
-  aborted:  'The video playback was aborted.',
-  corrupt:  'The audio playback was aborted due to a corruption problem.',
+  aborted: 'The video playback was aborted.',
+  corrupt: 'The audio playback was aborted due to a corruption problem.',
   notFound: 'The track file could not be found. It may be due to a file move or an unmounted partition.',
-  unknown:  'An unknown error occurred.',
+  unknown: 'An unknown error occurred.',
 };
 
-
-/**
- * Toggle play/pause
- */
-export const playPause = () => {
-  const { paused } = Player.getAudio();
-  // TODO (y.solovyov | KeitIG): calling getState is a hack.
-  const { queue, playerStatus } = store.getState().player;
-
-  if(playerStatus === 'stop') {
-    start();
-  } else if (paused && queue.length > 0) {
-    play();
-  } else {
-    pause();
-  }
-};
 
 /**
  * Play/resume audio
@@ -47,10 +30,10 @@ export const playPause = () => {
 export const play = () => {
   // TODO (y.solovyov | KeitIG): calling getState is a hack.
   const { queue } = store.getState().player;
-  if(queue !== null) {
+  if (queue !== null) {
     Player.play();
     store.dispatch({
-      type : types.APP_PLAYER_PLAY,
+      type: types.APP_PLAYER_PLAY,
     });
   }
 };
@@ -61,10 +44,10 @@ export const play = () => {
 export const pause = () => {
   // TODO (y.solovyov | KeitIG): calling getState is a hack.
   const { queue } = store.getState().player;
-  if(queue !== null) {
+  if (queue !== null) {
     Player.pause();
     store.dispatch({
-      type : types.APP_PLAYER_PAUSE,
+      type: types.APP_PLAYER_PAUSE,
     });
   }
 };
@@ -99,7 +82,7 @@ export const start = (queue, _id) => {
 
       newQueue = sortTracks(
         filterTracks(newQueue, search),
-        SORT_ORDERS[sort.by][sort.order]
+        SORT_ORDERS[sort.by][sort.order],
       );
     }
   }
@@ -110,12 +93,10 @@ export const start = (queue, _id) => {
   const trackId = _id || newQueue[0]._id;
 
   // Typically, if we are in the playlists generic view without any view selected
-  if(newQueue.length === 0) return;
+  if (newQueue.length === 0) return;
 
 
-  const queuePosition = newQueue.findIndex((track) => {
-    return track._id === trackId;
-  });
+  const queuePosition = newQueue.findIndex(track => track._id === trackId);
 
   // If a track exists
   if (queuePosition > -1) {
@@ -135,11 +116,28 @@ export const start = (queue, _id) => {
     }
 
     store.dispatch({
-      type : types.APP_PLAYER_START,
+      type: types.APP_PLAYER_START,
       queue: newQueue,
       oldQueue,
       queueCursor,
     });
+  }
+};
+
+/**
+ * Toggle play/pause
+ */
+export const playPause = () => {
+  const { paused } = Player.getAudio();
+  // TODO (y.solovyov | KeitIG): calling getState is a hack.
+  const { queue, playerStatus } = store.getState().player;
+
+  if (playerStatus === 'stop') {
+    start();
+  } else if (paused && queue.length > 0) {
+    play();
+  } else {
+    pause();
   }
 };
 
@@ -149,7 +147,7 @@ export const start = (queue, _id) => {
 export const stop = () => {
   Player.stop();
   store.dispatch({
-    type : types.APP_PLAYER_STOP,
+    type: types.APP_PLAYER_STOP,
   });
 
   ipcRenderer.send('playback:stop');
@@ -163,7 +161,7 @@ export const next = () => {
   const { queue, queueCursor, repeat } = store.getState().player;
   let newQueueCursor;
 
-  if(repeat === 'one') {
+  if (repeat === 'one') {
     newQueueCursor = queueCursor;
   } else if (repeat === 'all' && queueCursor === queue.length - 1) { // is last track
     newQueueCursor = 0; // start with new track
@@ -179,7 +177,7 @@ export const next = () => {
     Player.setAudioSrc(uri);
     Player.play();
     store.dispatch({
-      type : types.APP_PLAYER_NEXT,
+      type: types.APP_PLAYER_NEXT,
       newQueueCursor,
     });
   } else {
@@ -213,7 +211,7 @@ export const previous = () => {
     Player.play();
 
     store.dispatch({
-      type : types.APP_PLAYER_PREVIOUS,
+      type: types.APP_PLAYER_PREVIOUS,
       currentTime,
       newQueueCursor,
     });
@@ -224,29 +222,29 @@ export const previous = () => {
 
 /**
  * Enable/disable shuffle
- * @param {Boolean} shuffle
+ * @param {Boolean} value
  */
-export const shuffle = (shuffle) => {
-  app.config.set('audioShuffle', shuffle);
+export const shuffle = (value) => {
+  app.config.set('audioShuffle', value);
   app.config.saveSync();
 
   store.dispatch({
-    type : types.APP_PLAYER_SHUFFLE,
-    shuffle,
+    type: types.APP_PLAYER_SHUFFLE,
+    shuffle: value,
   });
 };
 
 /**
  * Enable disable repeat
- * @param {String} repeat
+ * @param {String} value
  */
-export const repeat = (repeat) => {
-  app.config.set('audioRepeat', repeat);
+export const repeat = (value) => {
+  app.config.set('audioRepeat', value);
   app.config.saveSync();
 
   store.dispatch({
-    type : types.APP_PLAYER_REPEAT,
-    repeat,
+    type: types.APP_PLAYER_REPEAT,
+    repeat: value,
   });
 };
 
@@ -255,13 +253,13 @@ export const repeat = (repeat) => {
  * @param {Number} volume between 0 and 1
  */
 export const setVolume = (volume) => {
-  if(!isNaN(parseFloat(volume)) && isFinite(volume)) {
+  if (!Number.isNaN(parseFloat(volume)) && Number.isFinite(volume)) {
     Player.setAudioVolume(volume);
 
     app.config.set('audioVolume', volume);
     app.config.saveSync();
     store.dispatch({
-      type : types.APP_REFRESH_CONFIG,
+      type: types.APP_REFRESH_CONFIG,
     });
   }
 };
@@ -271,13 +269,13 @@ export const setVolume = (volume) => {
  * @param {Boolean} [muted=false]
  */
 export const setMuted = (muted = false) => {
-  if(muted) Player.mute();
+  if (muted) Player.mute();
   else Player.unmute();
 
   app.config.set('audioMuted', muted);
   app.config.saveSync();
   store.dispatch({
-    type : types.APP_REFRESH_CONFIG,
+    type: types.APP_REFRESH_CONFIG,
   });
 };
 
@@ -286,14 +284,14 @@ export const setMuted = (muted = false) => {
  * @param {Number} value between 0 and 1
  */
 export const setPlaybackRate = (value) => {
-  if(!isNaN(parseFloat(value)) && isFinite(value)) { // if is numeric
-    if(value >= 0.5 && value <= 5) { // if in allowed range
+  if (!Number.isNaN(parseFloat(value)) && Number.isFinite(value)) { // if is numeric
+    if (value >= 0.5 && value <= 5) { // if in allowed range
       Player.setAudioPlaybackRate(value);
 
       app.config.set('audioPlaybackRate', parseFloat(value));
       app.config.saveSync();
       store.dispatch({
-        type : types.APP_REFRESH_CONFIG,
+        type: types.APP_REFRESH_CONFIG,
       });
     }
   }
@@ -308,7 +306,7 @@ export const jumpTo = (to) => {
   // if yes, what should it be? if not, do we need this actions at all?
   Player.setAudioCurrentTime(to);
   store.dispatch({
-    type : types.APP_PLAYER_JUMP_TO,
+    type: types.APP_PLAYER_JUMP_TO,
   });
 };
 

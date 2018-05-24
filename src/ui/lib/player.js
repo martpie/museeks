@@ -16,7 +16,7 @@ class Player {
     this.audio.volume = mergedOptions.volume;
     this.audio.muted = mergedOptions.muted;
 
-    this.threshold = .75;
+    this.threshold = 0.75;
     this.durationThresholdReached = false;
   }
 
@@ -84,15 +84,16 @@ class Player {
   }
 
   isThresholdReached() {
-    if(! this.durationThresholdReached && this.audio.currentTime >= this.audio.duration * this.threshold) {
+    if (!this.durationThresholdReached && this.audio.currentTime >= this.audio.duration * this.threshold) {
       this.durationThresholdReached = true;
-      return this.durationThresholdReached;
     }
+
+    return this.durationThresholdReached;
   }
 }
 
 export default new Player({
-  volume       : app.config.get('audioVolume'),
-  playbackRate : app.config.get('audioPlaybackRate'),
-  muted        : app.config.get('audioMuted'),
+  volume: app.config.get('audioVolume'),
+  playbackRate: app.config.get('audioPlaybackRate'),
+  muted: app.config.get('audioMuted'),
 });

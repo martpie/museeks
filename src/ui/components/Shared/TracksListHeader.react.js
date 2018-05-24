@@ -13,7 +13,12 @@ class TracksListHeader extends React.Component {
     sort: PropTypes.object,
   }
 
-  getIcon(sort, sortType) {
+  static defaultProps = {
+    enableSort: false,
+    sort: {},
+  }
+
+  static getIcon = (sort, sortType) => {
     if (typeof sort === 'object' && sort.by === sortType) {
       if (sort.order === SORT.ASC) {
         return 'angle-up';
@@ -30,40 +35,40 @@ class TracksListHeader extends React.Component {
     const { enableSort, sort } = this.props;
 
     return (
-      <div className='tracks-list-header'>
+      <div className="tracks-list-header">
         <TracksListHeaderCell
-          className='cell-track-playing'
-          title='&nbsp;'
+          className="cell-track-playing"
+          title="&nbsp;"
         />
         <TracksListHeaderCell
-          className='cell-track'
-          title='Title'
+          className="cell-track"
+          title="Title"
           sortBy={enableSort ? SORT.TITLE : null}
-          icon={this.getIcon(sort, SORT.TITLE)}
+          icon={TracksListHeader.getIcon(sort, SORT.TITLE)}
         />
         <TracksListHeaderCell
-          className='cell-duration'
-          title='Duration'
+          className="cell-duration"
+          title="Duration"
           sortBy={enableSort ? SORT.DURATION : null}
-          icon={this.getIcon(sort, SORT.DURATION)}
+          icon={TracksListHeader.getIcon(sort, SORT.DURATION)}
         />
         <TracksListHeaderCell
-          className='cell-artist'
-          title='Artist'
+          className="cell-artist"
+          title="Artist"
           sortBy={enableSort ? SORT.ARTIST : null}
-          icon={this.getIcon(sort, SORT.ARTIST)}
+          icon={TracksListHeader.getIcon(sort, SORT.ARTIST)}
         />
         <TracksListHeaderCell
-          className='cell-album'
-          title='Album'
+          className="cell-album"
+          title="Album"
           sortBy={enableSort ? SORT.ALBUM : null}
-          icon={this.getIcon(sort, SORT.ALBUM)}
+          icon={TracksListHeader.getIcon(sort, SORT.ALBUM)}
         />
         <TracksListHeaderCell
-          className='cell-genre'
-          title='Genre'
+          className="cell-genre"
+          title="Genre"
           sortBy={enableSort ? SORT.GENRE : null}
-          icon={this.getIcon(sort, SORT.GENRE)}
+          icon={TracksListHeader.getIcon(sort, SORT.GENRE)}
         />
       </div>
     );

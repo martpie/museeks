@@ -10,6 +10,7 @@
 
 const path = require('path');
 const { nativeImage, ipcMain } = require('electron');
+
 const { createFromPath } = nativeImage;
 
 const ModuleWindow = require('./module-window');
@@ -24,17 +25,17 @@ class ThumbarModule extends ModuleWindow {
   }
 
   load() {
-    const window = this.window;
+    const { window } = this;
 
     const icons = {
-      play:          createFromPath(path.join(iconsDirectory, 'play.ico')),
-      playDisabled:  createFromPath(path.join(iconsDirectory, 'play-disabled.ico')),
-      pause:         createFromPath(path.join(iconsDirectory, 'pause.ico')),
+      play: createFromPath(path.join(iconsDirectory, 'play.ico')),
+      playDisabled: createFromPath(path.join(iconsDirectory, 'play-disabled.ico')),
+      pause: createFromPath(path.join(iconsDirectory, 'pause.ico')),
       pauseDisabled: createFromPath(path.join(iconsDirectory, 'pause-disabled.ico')),
-      prev:          createFromPath(path.join(iconsDirectory, 'backward.ico')),
-      prevDisabled:  createFromPath(path.join(iconsDirectory, 'backward-disabled.ico')),
-      next:          createFromPath(path.join(iconsDirectory, 'forward.ico')),
-      nextDisabled:  createFromPath(path.join(iconsDirectory, 'forward-disabled.ico')),
+      prev: createFromPath(path.join(iconsDirectory, 'backward.ico')),
+      prevDisabled: createFromPath(path.join(iconsDirectory, 'backward-disabled.ico')),
+      next: createFromPath(path.join(iconsDirectory, 'forward.ico')),
+      nextDisabled: createFromPath(path.join(iconsDirectory, 'forward-disabled.ico')),
     };
 
     const thumbarButtons = {

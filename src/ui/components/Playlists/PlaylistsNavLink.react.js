@@ -11,9 +11,13 @@ import { NavLink } from 'react-router-dom';
 
 export default class PlaylistsNavLink extends Component {
   static propTypes = {
-    children: PropTypes.string,
-    playlistId: PropTypes.string,
-    onContextMenu: PropTypes.func,
+    children: PropTypes.node,
+    playlistId: PropTypes.string.isRequired,
+    onContextMenu: PropTypes.func.isRequired,
+  }
+
+  static defaultProps = {
+    children: null,
   }
 
   constructor(props) {
@@ -29,8 +33,8 @@ export default class PlaylistsNavLink extends Component {
   render() {
     return (
       <NavLink
-        className='playlist-link'
-        activeClassName='active'
+        className="playlist-link"
+        activeClassName="active"
         to={`/playlists/${this.props.playlistId}`}
         onContextMenu={this.onContextMenu}
       >

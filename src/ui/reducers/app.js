@@ -4,7 +4,7 @@ const initialState = null;
 
 export default (state = initialState, payload) => {
   switch (payload.type) {
-    case(types.APP_REFRESH_CONFIG): {
+    case (types.APP_REFRESH_CONFIG): {
       return { ...state };
     }
 

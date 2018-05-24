@@ -9,10 +9,6 @@ const Module = require('./module');
 
 
 class MenuModule extends Module {
-  constructor(window) {
-    super(window);
-  }
-
   load() {
     if (process.platform === 'darwin') {
       const template = [
@@ -56,7 +52,7 @@ class MenuModule extends Module {
           submenu: [
             {
               label: 'Learn More',
-              click () {
+              click() {
                 shell.openExternal('https://github.com/KeitIG/museeks');
               },
             },
@@ -89,7 +85,7 @@ class MenuModule extends Module {
               { role: 'startspeaking' },
               { role: 'stopspeaking' },
             ],
-          }
+          },
         );
 
         // Window menu

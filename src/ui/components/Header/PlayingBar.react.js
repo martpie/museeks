@@ -16,22 +16,24 @@ import Cover from '../Shared/Cover.react';
 
 export default class PlayingBar extends Component {
   static propTypes = {
-    queue: PropTypes.array,
-    queueCursor: PropTypes.number,
-    shuffle: PropTypes.bool,
-    repeat: PropTypes.string,
+    queue: PropTypes.array.isRequired,
+    queueCursor: PropTypes.number.isRequired,
+    shuffle: PropTypes.bool.isRequired,
+    repeat: PropTypes.string.isRequired,
   }
 
   render() {
-    const { queue, queueCursor, repeat, shuffle } = this.props;
+    const {
+      queue, queueCursor, repeat, shuffle,
+    } = this.props;
 
-    if(queueCursor === null) return null;
+    if (queueCursor === null) return null;
 
     const trackPlaying = queue[queueCursor];
 
     return (
-      <div className='now-playing text-center' >
-        <div className='now-playing-cover'>
+      <div className="now-playing text-center" >
+        <div className="now-playing-cover">
           <Cover path={trackPlaying.path} />
         </div>
         <PlayingBarInfos
@@ -39,10 +41,10 @@ export default class PlayingBar extends Component {
           shuffle={shuffle}
           repeat={repeat}
         />
-        <div className='now-playing-queue'>
-          <Dropdown id='queue-dropdown' className='queue-dropdown'>
-            <Dropdown.Toggle noCaret className='queue-toggle'>
-              <Icon name='list' />
+        <div className="now-playing-queue">
+          <Dropdown id="queue-dropdown" className="queue-dropdown">
+            <Dropdown.Toggle noCaret className="queue-toggle">
+              <Icon name="list" />
             </Dropdown.Toggle>
             <Dropdown.Menu>
               <Queue
