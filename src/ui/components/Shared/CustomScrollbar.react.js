@@ -5,27 +5,30 @@ import { Scrollbars } from 'react-custom-scrollbars';
 
 class CustomScrollbar extends React.Component {
   static propTypes = {
-    children: PropTypes.object,
+    children: PropTypes.node,
     className: PropTypes.string,
-    onScroll: PropTypes.func,
+    onScroll: PropTypes.func.isRequired,
   }
 
-  constructor(props) {
-    super(props);
+  static defaultProps = {
+    children: null,
+    className: '',
   }
 
-  getRenderView(props) {
+  static getRenderView(props) {
     // the tabIndex={0} is needed to make the pageup/pagedown/home/end keys
     // work propery
-    return <div {...props} className='tracks-list-render-view' tabIndex={0} />;
+    return (
+      <div {...props} className="tracks-list-render-view" />
+    );
   }
 
-  getTrackVertical(props) {
-    return <div {...props} className='track-vertical' />;
+  static getTrackVertical(props) {
+    return <div {...props} className="track-vertical" />;
   }
 
-  getThumbVertical(props) {
-    return <div {...props} className='thumb-vertical' />;
+  static getThumbVertical(props) {
+    return <div {...props} className="thumb-vertical" />;
   }
 
   render() {
@@ -33,9 +36,9 @@ class CustomScrollbar extends React.Component {
       <Scrollbars
         className={this.props.className}
         onScroll={this.props.onScroll}
-        renderView={this.getRenderView}
-        renderTrackVertical={this.getTrackVertical}
-        renderThumbVertical={this.getThumbVertical}
+        renderView={CustomScrollbar.getRenderView}
+        renderTrackVertical={CustomScrollbar.getTrackVertical}
+        renderThumbVertical={CustomScrollbar.getThumbVertical}
         autoHide
         autoHideTimeout={1000}
       >

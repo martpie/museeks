@@ -1,7 +1,7 @@
 // For perforances reasons, otherwise _.orderBy will perform weird check
 // the is far more resource/time impactful
-const parseArtist = (t) => t.loweredMetas.artist.toString();
-const parseGenre = (t) => t.loweredMetas.genre.toString();
+const parseArtist = t => t.loweredMetas.artist.toString();
+const parseGenre = t => t.loweredMetas.genre.toString();
 
 // Declarations
 export const ARTIST = {

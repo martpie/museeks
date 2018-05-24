@@ -13,38 +13,34 @@ import * as PlayerActions from '../../actions/PlayerActions';
 
 export default class PlayerControls extends PureComponent {
   static propTypes = {
-    playerStatus: PropTypes.string,
-  }
-
-  constructor(props) {
-    super(props);
+    playerStatus: PropTypes.string.isRequired,
   }
 
   render() {
     return (
-      <div className='player-controls'>
+      <div className="player-controls">
         <button
-          type='button'
-          className='player-control previous'
-          title='Previous'
+          type="button"
+          className="player-control previous"
+          title="Previous"
           onClick={PlayerActions.previous}
         >
-          <Icon name='backward' />
+          <Icon name="backward" />
         </button>
         <button
-          className='player-control play'
+          className="player-control play"
           title={this.props.playerStatus === 'play' ? 'Pause' : 'Play'}
           onClick={PlayerActions.playPause}
         >
           <Icon name={this.props.playerStatus === 'play' ? 'pause' : 'play'} fixedWidth />
         </button>
         <button
-          type='button'
-          className='player-control forward'
-          title='Next'
+          type="button"
+          className="player-control forward"
+          title="Next"
           onClick={PlayerActions.next}
         >
-          <Icon name='forward' />
+          <Icon name="forward" />
         </button>
         <VolumeControl />
       </div>

@@ -2,13 +2,14 @@
  * Shuffle an array with a Player behavior in mind:
  * the currently-playing track should remain the same,
  *
- * @param {Array} tracks
+ * @param {Array} tracksArray
  * @return {Array}
  */
 export const shuffleTracks = (tracks, index) => {
-  const currentTrack = tracks.splice(index, 1)[0];
+  const shuffledTracks = [...tracks];
+  const currentTrack = shuffledTracks.splice(index, 1)[0];
 
-  let m = tracks.length;
+  let m = shuffledTracks.length;
   let t;
   let i;
   while (m) {
@@ -16,12 +17,12 @@ export const shuffleTracks = (tracks, index) => {
     i = Math.floor(Math.random() * m--);
 
     // And swap it with the current element.
-    t = tracks[m];
-    tracks[m] = tracks[i];
-    tracks[i] = t;
+    t = shuffledTracks[m];
+    shuffledTracks[m] = shuffledTracks[i];
+    shuffledTracks[i] = t;
   }
 
-  tracks.unshift(currentTrack);
+  shuffledTracks.unshift(currentTrack);
 
-  return tracks;
+  return shuffledTracks;
 };

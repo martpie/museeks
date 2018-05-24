@@ -4,7 +4,7 @@ import { shuffleTracks } from '../utils/utils-player';
 
 const initialState = {
   queue: [], // Tracks to be played
-  oldQueue: null, // Queue backup (in case of shuffle)
+  oldQueue: [], // Queue backup (in case of shuffle)
   queueCursor: null, // The cursor of the queue
   repeat: config.get('audioRepeat'), // the current repeat state (one, all, none)
   shuffle: config.get('audioShuffle'), // If shuffle mode is enabled
@@ -13,7 +13,7 @@ const initialState = {
 
 export default (state = initialState, payload) => {
   switch (payload.type) {
-    case(types.APP_PLAYER_START): {
+    case (types.APP_PLAYER_START): {
       const { queue, queueCursor, oldQueue } = payload;
 
       // Backup that and change the UI
@@ -22,36 +22,36 @@ export default (state = initialState, payload) => {
         queue,
         queueCursor,
         oldQueue,
-        playerStatus : 'play',
+        playerStatus: 'play',
       };
     }
 
-    case(types.APP_PLAYER_PLAY): {
+    case (types.APP_PLAYER_PLAY): {
       return {
         ...state,
         playerStatus: 'play',
       };
     }
 
-    case(types.APP_PLAYER_PAUSE): {
+    case (types.APP_PLAYER_PAUSE): {
       return {
         ...state,
         playerStatus: 'pause',
       };
     }
 
-    case(types.APP_PLAYER_STOP): {
+    case (types.APP_PLAYER_STOP): {
       const newState = {
         ...state,
-        queue          :  [],
-        queueCursor    :  null,
-        playerStatus   : 'stop',
+        queue: [],
+        queueCursor: null,
+        playerStatus: 'stop',
       };
 
       return newState;
     }
 
-    case(types.APP_PLAYER_NEXT): {
+    case (types.APP_PLAYER_NEXT): {
       return {
         ...state,
         playerStatus: 'play',
@@ -59,7 +59,7 @@ export default (state = initialState, payload) => {
       };
     }
 
-    case(types.APP_PLAYER_PREVIOUS): {
+    case (types.APP_PLAYER_PREVIOUS): {
       return {
         ...state,
         playerStatus: 'play',
@@ -67,15 +67,15 @@ export default (state = initialState, payload) => {
       };
     }
 
-    case(types.APP_PLAYER_JUMP_TO): {
+    case (types.APP_PLAYER_JUMP_TO): {
       return state;
     }
 
-    case(types.APP_PLAYER_SHUFFLE): {
+    case (types.APP_PLAYER_SHUFFLE): {
       const trackPlayingId = state.queue[state.queueCursor]._id;
 
       // If we need to shuffle everything
-      if(payload.shuffle) {
+      if (payload.shuffle) {
         // Let's shuffle that
         const { queueCursor } = state;
         const queue = shuffleTracks([...state.queue], queueCursor);
@@ -90,7 +90,7 @@ export default (state = initialState, payload) => {
       }
 
       // Unshuffle the queue by restoring the initial queue
-      const currentTrackIndex = state.oldQueue.findIndex((track) => (
+      const currentTrackIndex = state.oldQueue.findIndex(track => (
         trackPlayingId === track._id
       ));
 
@@ -103,14 +103,14 @@ export default (state = initialState, payload) => {
       };
     }
 
-    case(types.APP_PLAYER_REPEAT): {
+    case (types.APP_PLAYER_REPEAT): {
       return {
         ...state,
         repeat: payload.repeat,
       };
     }
 
-    case(types.APP_QUEUE_START): {
+    case (types.APP_QUEUE_START): {
       const queue = [...state.queue];
       const queueCursor = payload.index;
 
@@ -123,7 +123,7 @@ export default (state = initialState, payload) => {
       };
     }
 
-    case(types.APP_QUEUE_CLEAR): {
+    case (types.APP_QUEUE_CLEAR): {
       const queue = [...state.queue];
       const { queueCursor } = state;
       queue.splice(queueCursor + 1, queue.length - queueCursor);
@@ -134,7 +134,7 @@ export default (state = initialState, payload) => {
       };
     }
 
-    case(types.APP_QUEUE_REMOVE): {
+    case (types.APP_QUEUE_REMOVE): {
       const queue = [...state.queue];
       queue.splice(state.queueCursor + payload.index + 1, 1);
       return {
@@ -143,7 +143,7 @@ export default (state = initialState, payload) => {
       };
     }
 
-    case(types.APP_QUEUE_ADD): {
+    case (types.APP_QUEUE_ADD): {
       const queue = [...state.queue, ...payload.tracks];
       return {
         ...state,
@@ -151,7 +151,7 @@ export default (state = initialState, payload) => {
       };
     }
 
-    case(types.APP_QUEUE_ADD_NEXT): {
+    case (types.APP_QUEUE_ADD_NEXT): {
       const queue = [...state.queue];
       queue.splice(state.queueCursor + 1, 0, ...payload.tracks);
       return {
@@ -160,7 +160,7 @@ export default (state = initialState, payload) => {
       };
     }
 
-    case(types.APP_QUEUE_SET_QUEUE): {
+    case (types.APP_QUEUE_SET_QUEUE): {
       return {
         ...state,
         queue: payload.tracks,

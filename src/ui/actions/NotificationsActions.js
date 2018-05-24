@@ -1,5 +1,5 @@
-import store from '../store.js';
-import types  from '../constants/action-types';
+import store from '../store';
+import types from '../constants/action-types';
 import * as app from '../lib/app';
 
 /**
@@ -16,7 +16,7 @@ export const add = (notificationData) => {
           icon: notificationData.icon,
           silent: true,
           tag: 'museeks-notification',
-        }
+        },
       );
 
     notification.onclick = () => {
@@ -25,7 +25,7 @@ export const add = (notificationData) => {
     };
 
     store.dispatch({
-      type   : types.APP_NOTIFICATION_NEW,
+      type: types.APP_NOTIFICATION_NEW,
       notification,
     });
   }

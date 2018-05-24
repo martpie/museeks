@@ -19,20 +19,10 @@ class TrackPlayingIndicator extends Component {
     state: PropTypes.string.isRequired,
   }
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      hovered: false,
-    };
-
-    this.onMouseEnter = this.onMouseEnter.bind(this);
-    this.onMouseLeave = this.onMouseLeave.bind(this);
-  }
-
-  getIcon(state, hovered) {
-    if(state === 'play') {
-      if(hovered) {
-        return <Icon name='pause' fixedWidth />;
+  static getIcon = (state, hovered) => {
+    if (state === 'play') {
+      if (hovered) {
+        return <Icon name="pause" fixedWidth />;
       }
 
       return (
@@ -44,7 +34,17 @@ class TrackPlayingIndicator extends Component {
       );
     }
 
-    return <Icon name='play' fixedWidth />;
+    return <Icon name="play" fixedWidth />;
+  }
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      hovered: false,
+    };
+
+    this.onMouseEnter = this.onMouseEnter.bind(this);
+    this.onMouseLeave = this.onMouseLeave.bind(this);
   }
 
   onMouseEnter() {
@@ -56,27 +56,29 @@ class TrackPlayingIndicator extends Component {
   }
 
   render() {
-    const classNames = classnames('playing-indicator', this.props.state, {
-      'hovered': this.state.hovered,
+    const classNames = classnames('playing-indicator', 'reset', this.props.state, {
+      hovered: this.state.hovered,
     });
 
-    const icon = this.getIcon(this.props.state, this.state.hovered);
+    const icon = TrackPlayingIndicator.getIcon(this.props.state, this.state.hovered);
 
     return (
-      <div className={classNames}
+      <button
+        className={classNames}
         onClick={PlayerActions.playPause}
         onMouseEnter={this.onMouseEnter}
-        onMouseLeave= {this.onMouseLeave}
+        onMouseLeave={this.onMouseLeave}
+        tabIndex="0"
       >
         <div className="playing-indicator">
           { icon }
         </div>
-      </div>
+      </button>
     );
   }
 }
 
 
-const mapStateToProps = (state) => ({ state: state.player.playerStatus });
+const mapStateToProps = state => ({ state: state.player.playerStatus });
 
 export default connect(mapStateToProps)(TrackPlayingIndicator);

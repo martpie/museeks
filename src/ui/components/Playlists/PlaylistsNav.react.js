@@ -19,7 +19,7 @@ const { Menu } = electron.remote;
 
 class PlaylistsNav extends Component {
   static propTypes = {
-    playlists: PropTypes.array,
+    playlists: PropTypes.array.isRequired,
   }
 
   constructor(props) {
@@ -66,7 +66,7 @@ class PlaylistsNav extends Component {
   }
 
   keyDown(e) {
-    switch(e.keyCode) {
+    switch (e.keyCode) {
       case 13: { // Enter
         this.rename(this.state.renamed, e.currentTarget.value);
         this.setState({ renamed: null });
@@ -74,6 +74,9 @@ class PlaylistsNav extends Component {
       }
       case 27: { // Escape
         this.setState({ renamed: null });
+        break;
+      }
+      default: {
         break;
       }
     }
@@ -96,11 +99,10 @@ class PlaylistsNav extends Component {
     const nav = playlists.map((elem) => {
       let navItemContent;
 
-      if(elem._id === self.state.renamed) {
+      if (elem._id === self.state.renamed) {
         navItemContent = (
           <input
-            type='text'
-            autoFocus
+            type="text"
             defaultValue={elem.name}
             onKeyDown={self.keyDown}
             onBlur={self.blur}
@@ -119,21 +121,21 @@ class PlaylistsNav extends Component {
       }
 
       return (
-        <div className='playlist-nav-item' key={`playlist-${elem._id}`}>
+        <div className="playlist-nav-item" key={`playlist-${elem._id}`}>
           { navItemContent }
         </div>
       );
     });
 
     return (
-      <div className='playlists-nav'>
-        <div className='playlists-nav-body'>
+      <div className="playlists-nav">
+        <div className="playlists-nav-body">
           { nav }
         </div>
-        <div className='playlists-nav-footer'>
-          <ButtonGroup className='playlists-management'>
-            <Button bsStyle='link' bsSize='xs' onClick={this.createPlaylist}>
-              <Icon name='plus' />
+        <div className="playlists-nav-footer">
+          <ButtonGroup className="playlists-management">
+            <Button bsStyle="link" bsSize="xs" onClick={this.createPlaylist}>
+              <Icon name="plus" />
             </Button>
           </ButtonGroup>
         </div>

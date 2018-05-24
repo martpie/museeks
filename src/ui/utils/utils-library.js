@@ -1,5 +1,5 @@
-import * as utils from './utils';
 import orderBy from 'lodash/orderBy';
+import * as utils from './utils';
 
 /**
  * Filter an array of tracks
@@ -7,14 +7,10 @@ import orderBy from 'lodash/orderBy';
  * @param {array} tracks
  * @param {string} search
  */
-export const filterTracks = (tracks, search) => {
-  return tracks.filter((track) => {
-    return track.loweredMetas.artist.toString().includes(search)
+export const filterTracks = (tracks, search) => tracks.filter(track => track.loweredMetas.artist.toString().includes(search)
       || track.loweredMetas.album.includes(search)
       || track.loweredMetas.genre.toString().includes(search)
-      || track.loweredMetas.title.includes(search);
-  });
-};
+      || track.loweredMetas.title.includes(search));
 
 /**
  * Sort an array of tracks (simple alias to lodash.orderby)
@@ -22,9 +18,7 @@ export const filterTracks = (tracks, search) => {
  * @param {array} sort
  * @return {array}
  */
-export const sortTracks = (tracks, sort) => {
-  return orderBy(tracks, ...sort);
-};
+export const sortTracks = (tracks, sort) => orderBy(tracks, ...sort);
 
 
 /**
@@ -34,6 +28,6 @@ export const sortTracks = (tracks, sort) => {
  * @return string
  */
 export const getStatus = (tracks) => {
-  const status = utils.parseDuration(tracks.map((d) => d.duration).reduce((a, b) => a + b, 0));
+  const status = utils.parseDuration(tracks.map(d => d.duration).reduce((a, b) => a + b, 0));
   return `${tracks.length} tracks, ${status}`;
 };

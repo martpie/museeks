@@ -1,5 +1,5 @@
-import store from '../store.js';
-import types  from '../constants/action-types';
+import store from '../store';
+import types from '../constants/action-types';
 
 import * as app from '../lib/app';
 import Player from '../lib/player';
@@ -18,7 +18,7 @@ export const start = (index) => {
   Player.play();
 
   store.dispatch({
-    type : types.APP_QUEUE_START,
+    type: types.APP_QUEUE_START,
     index,
   });
 };
@@ -28,7 +28,7 @@ export const start = (index) => {
  */
 export const clear = () => {
   store.dispatch({
-    type : types.APP_QUEUE_CLEAR,
+    type: types.APP_QUEUE_CLEAR,
   });
 };
 
@@ -38,7 +38,7 @@ export const clear = () => {
  */
 export const remove = (index) => {
   store.dispatch({
-    type : types.APP_QUEUE_REMOVE,
+    type: types.APP_QUEUE_REMOVE,
     index,
   });
 };
@@ -50,7 +50,7 @@ export const remove = (index) => {
 export const addAfter = async (tracksIds) => {
   const tracks = await app.models.Track.findAsync({ _id: { $in: tracksIds } });
   store.dispatch({
-    type : types.APP_QUEUE_ADD,
+    type: types.APP_QUEUE_ADD,
     tracks,
   });
 };
@@ -62,7 +62,7 @@ export const addAfter = async (tracksIds) => {
 export const addNext = async (tracksIds) => {
   const tracks = await app.models.Track.findAsync({ _id: { $in: tracksIds } });
   store.dispatch({
-    type : types.APP_QUEUE_ADD_NEXT,
+    type: types.APP_QUEUE_ADD_NEXT,
     tracks,
   });
 };
@@ -73,7 +73,7 @@ export const addNext = async (tracksIds) => {
  */
 export const setQueue = (tracks) => {
   store.dispatch({
-    type : types.APP_QUEUE_SET_QUEUE,
+    type: types.APP_QUEUE_SET_QUEUE,
     tracks,
   });
 };
