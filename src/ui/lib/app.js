@@ -1,12 +1,12 @@
 import electron from 'electron';
-import linvodb  from 'linvodb3';
-import leveljs  from 'level-js';
-import path     from 'path';
-import teeny    from 'teeny-conf';
-import Promise  from 'bluebird';
+import linvodb from 'linvodb3';
+import leveljs from 'level-js';
+import path from 'path';
+import teeny from 'teeny-conf';
+import Promise from 'bluebird';
 
-const remote = electron.remote;
-const app    = remote.app;
+const { remote } = electron;
+const { app } = remote;
 
 
 /*
@@ -20,7 +20,7 @@ export const browserWindows = {
 };
 
 export const pathUserData = app.getPath('userData');
-export const pathSrc      = __dirname;
+export const pathSrc = __dirname;
 
 
 /*
@@ -82,12 +82,12 @@ const Track = new linvodb('track', {
   },
   duration: Number,
   genre: [String],
-  loweredMetas : {
-    artist      : [String],
-    album       : String,
-    albumartist : [String],
-    title       : String,
-    genre       : [String],
+  loweredMetas: {
+    artist: [String],
+    album: String,
+    albumartist: [String],
+    title: String,
+    genre: [String],
   },
   path: String,
   playCount: Number,
@@ -114,7 +114,7 @@ export const models = {
   Playlist,
 };
 
-Promise.promisifyAll(models.Track.find().__proto__);
+Promise.promisifyAll(Object.getPrototypeOf(models.Track.find()));
 Promise.promisifyAll(models.Track);
 Promise.promisifyAll(models.Playlist);
 
@@ -125,6 +125,6 @@ Promise.promisifyAll(models.Playlist);
 |--------------------------------------------------------------------------
 */
 
-export const version       = app.getVersion(); // Museeks version
-export const config        = conf; // teeny-conf
+export const version = app.getVersion(); // Museeks version
+export const config = conf; // teeny-conf
 export const initialConfig = conf.getAll(); // the config at the start of the application

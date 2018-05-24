@@ -15,11 +15,11 @@ class ThumbarModule extends ModuleWindow {
 
   load() {
     ipcMain.on('settings:toggleSleepBlocker', (event, toggle, mode) => {
-      if(toggle) {
+      if (toggle) {
         this.instance.sleepBlockerId = powerSaveBlocker.start(mode);
       } else {
         powerSaveBlocker.stop(this.instance.sleepBlockerId);
-        delete(this.instance.sleepBlockerId);
+        delete (this.instance.sleepBlockerId);
       }
     });
   }

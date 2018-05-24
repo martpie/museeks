@@ -12,10 +12,6 @@ const { app } = electron;
 
 
 class ConfigModule extends Module {
-  constructor(window) {
-    super(window);
-  }
-
   load() {
     this.workArea = electron.screen.getPrimaryDisplay().workArea;
 
@@ -28,15 +24,15 @@ class ConfigModule extends Module {
     // Check if config update
     let configChanged = false;
 
-    for(const key in defaultConfig) {
-      if(this.conf.get(key) === undefined) {
+    Object.keys(defaultConfig).forEach((key) => {
+      if (this.conf.get(key) === undefined) {
         this.conf.set(key, defaultConfig[key]);
         configChanged = true;
       }
-    }
+    });
 
     // save config if changed
-    if(configChanged) this.conf.saveSync();
+    if (configChanged) this.conf.saveSync();
   }
 
   getDefaultConfig() {
@@ -57,8 +53,8 @@ class ConfigModule extends Module {
       bounds: {
         width: 1000,
         height: 600,
-        x: parseInt(this.workArea.width / 2),
-        y: parseInt(this.workArea.height / 2),
+        x: parseInt(this.workArea.width / 2, 10),
+        y: parseInt(this.workArea.height / 2, 10),
       },
     };
   }

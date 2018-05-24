@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-
-import TracksList    from '../Shared/TracksList.react.js';
-import FullViewMessage from '../Shared/FullViewMessage.react';
 import { Link } from 'react-router-dom';
+
+import TracksList from '../Shared/TracksList.react';
+import FullViewMessage from '../Shared/FullViewMessage.react';
 
 import * as PlaylistsActions from '../../actions/PlaylistsActions';
 import { filterTracks } from '../../utils/utils-library';
@@ -18,15 +18,11 @@ import { filterTracks } from '../../utils/utils-library';
 
 class Playlist extends Component {
   static propTypes = {
-    match: PropTypes.object,
-    tracks: PropTypes.array,
-    trackPlayingId: PropTypes.string,
-    playlists: PropTypes.array,
-    playerStatus: PropTypes.string,
-  }
-
-  constructor(props) {
-    super(props);
+    match: PropTypes.object.isRequired,
+    tracks: PropTypes.array.isRequired,
+    trackPlayingId: PropTypes.string.isRequired,
+    playlists: PropTypes.array.isRequired,
+    playerStatus: PropTypes.string.isRequired,
   }
 
   componentDidMount() {
@@ -34,7 +30,7 @@ class Playlist extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const playlistId = this.props.match.params.playlistId;
+    const { playlistId } = this.props.match.params;
     const nextPlaylistId = nextProps.match.params.playlistId;
 
     if (nextPlaylistId !== playlistId) {
@@ -43,17 +39,19 @@ class Playlist extends Component {
   }
 
   render() {
-    const { tracks, trackPlayingId, playerStatus, playlists, match } = this.props;
+    const {
+      tracks, trackPlayingId, playerStatus, playlists, match,
+    } = this.props;
 
-    if(Array.isArray(tracks) && tracks.length > 0) {
+    if (Array.isArray(tracks) && tracks.length > 0) {
       return (
         <TracksList
-          type='playlist'
-          currentPlaylist={match.params.playlistId}
+          type="playlist"
+          playerStatus={playerStatus}
           tracks={tracks}
           trackPlayingId={trackPlayingId}
           playlists={playlists}
-          playerStatus={playerStatus}
+          currentPlaylist={match.params.playlistId}
         />
       );
     }
@@ -61,7 +59,7 @@ class Playlist extends Component {
     return (
       <FullViewMessage>
         <p>Empty playlist</p>
-        <p className='sub-message'>You can add tracks from the <Link to='/library'>library view</Link></p>
+        <p className="sub-message">You can add tracks from the <Link to="/library">library view</Link></p>
       </FullViewMessage>
     );
   }

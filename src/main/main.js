@@ -1,7 +1,7 @@
-'use strict';
 
-const path     = require('path');
-const os       = require('os');
+
+const path = require('path');
+const os = require('os');
 const electron = require('electron');
 
 const IpcModule = require('./modules/ipc'); // Manages IPC events
@@ -27,8 +27,8 @@ let mainWindow = null;
 // Make the app a single-instance app
 const shouldQuit = app.makeSingleInstance(() => {
   // Someone tried to run a second instance, we should focus our window.
-  if(mainWindow) {
-    if(mainWindow.isMinimized()) mainWindow.restore();
+  if (mainWindow) {
+    if (mainWindow.isMinimized()) mainWindow.restore();
     mainWindow.show();
     mainWindow.focus();
   }
@@ -51,7 +51,7 @@ app.on('ready', () => {
   const configModule = new ConfigModule();
   ModulesManager.init(
     configModule,
-    new MenuModule()
+    new MenuModule(),
   );
 
   const config = configModule.getConfig();
@@ -62,15 +62,15 @@ app.on('ready', () => {
 
   // Browser Window options
   const mainWindowOptions = {
-    title     : 'Museeks',
-    x         :  bounds.x,
-    y         :  bounds.y,
-    width     :  bounds.width,
-    height    :  bounds.height,
-    minWidth  :  900,
-    minHeight :  550,
-    frame     :  useNativeFrame,
-    show      :  false,
+    title: 'Museeks',
+    x: bounds.x,
+    y: bounds.y,
+    width: bounds.width,
+    height: bounds.height,
+    minWidth: 900,
+    minHeight: 550,
+    frame: useNativeFrame,
+    show: false,
   };
 
   if (os.platform() === 'darwin' && !useNativeFrame) {

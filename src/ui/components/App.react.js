@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { Row } from 'react-bootstrap';
 import KeyBinding from 'react-keybinding-component';
 import { withRouter } from 'react-router';
-import { connect } from 'react-redux';
 import classnames from 'classnames';
 
 import Header from './Header/Header.react';
@@ -25,55 +24,48 @@ import { config } from '../lib/app';
 
 class Museeks extends Component {
   static propTypes = {
-    toasts: PropTypes.array,
-    children: PropTypes.object,
+    children: PropTypes.node,
   }
 
-  constructor(props) {
-    super(props);
+  static defaultProps = {
+    children: null,
+  }
 
-    this.onKey = this.onKey.bind(this);
+  static onKey(e) {
+    switch (e.keyCode) {
+      case 32: // Space
+        e.preventDefault();
+        e.stopPropagation();
+        PlayerActions.playPause();
+        break;
+      default:
+        break;
+    }
   }
 
   componentDidMount() {
     AppActions.init();
   }
 
-  onKey(e) {
-    switch(e.keyCode) {
-      case 32:
-        e.preventDefault();
-        e.stopPropagation();
-        PlayerActions.playPause();
-        break;
-    }
-  }
-
   render() {
-    const { toasts } = this.props;
-
     const wrapClasses = classnames('root', `os-${os.platform()}`, {
       'native-frame': config.get('useNativeFrame'),
     });
 
     return (
       <div className={wrapClasses}>
-        <KeyBinding onKey={this.onKey} preventInputConflict />
+        <KeyBinding onKey={Museeks.onKey} preventInputConflict />
         <Header />
-        <main className='main-content container-fluid'>
-          <Row className='content'>
+        <main className="main-content container-fluid">
+          <Row className="content">
             {this.props.children}
           </Row>
         </main>
         <Footer />
-        <Toasts toasts={toasts} />
+        <Toasts />
       </div>
     );
   }
 }
 
-function mapStateToProps(state) {
-  return { toasts: state.toasts };
-}
-
-export default withRouter(connect(mapStateToProps)(Museeks));
+export default withRouter(Museeks);

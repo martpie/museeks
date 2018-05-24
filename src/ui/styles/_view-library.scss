@@ -93,6 +93,7 @@
 
           .track {
             display: flex;
+            outline: none;
 
             &:nth-child(odd) {
               background-color: #F4F4F4;

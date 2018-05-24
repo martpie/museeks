@@ -15,8 +15,8 @@ import Player from '../../lib/player';
 
 const factor = 4;
 
-const smoothifyVolume = (value) => Math.pow(value, factor);
-const unsmoothifyVolume = (value) => Math.pow(value, 1 / factor); // Linearize a smoothed volume value
+const smoothifyVolume = value => value ** factor;
+const unsmoothifyVolume = value => value ** (1 / factor); // Linearize a smoothed volume value
 
 
 /*
@@ -32,19 +32,21 @@ export default class VolumeControl extends Component {
     const audio = Player.getAudio();
 
     this.state = {
-      showVolume : false,
-      volume     : unsmoothifyVolume(audio.volume),
-      muted      : audio.muted,
+      showVolume: false,
+      volume: unsmoothifyVolume(audio.volume),
+      muted: audio.muted,
     };
 
-    this.mute       = this.mute.bind(this);
+    this.mute = this.mute.bind(this);
     this.showVolume = this.showVolume.bind(this);
     this.hideVolume = this.hideVolume.bind(this);
-    this.setVolume  = this.setVolume.bind(this);
+    this.setVolume = this.setVolume.bind(this);
   }
 
   getVolumeIcon(volume, muted) {
-    return muted || volume === 0 ? 'volume-off' : volume > 0.5 ? 'volume-up' : 'volume-down';
+    if (muted || volume === 0) return 'volume-off';
+    if (volume < 0.5) return 'volume-down';
+    return 'volume-up';
   }
 
   setVolume(value) {
@@ -63,7 +65,7 @@ export default class VolumeControl extends Component {
   }
 
   mute(e) {
-    if(e.target.classList.contains('player-control') || e.target.classList.contains('fa')) {
+    if (e.target.classList.contains('player-control') || e.target.classList.contains('fa')) {
       const muted = !Player.isMuted();
 
       PlayerActions.setMuted(muted);
@@ -77,9 +79,10 @@ export default class VolumeControl extends Component {
     });
 
     return (
-      <button type='button'
-        className='player-control volume'
-        title='Volume'
+      <button
+        type="button"
+        className="player-control volume"
+        title="Volume"
         onMouseEnter={this.showVolume}
         onMouseLeave={this.hideVolume}
         onClick={this.mute}

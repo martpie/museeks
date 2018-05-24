@@ -9,15 +9,12 @@ import classnames from 'classnames';
 |--------------------------------------------------------------------------
 */
 
-export default class TrackRow extends Component {
+export default class Dropzone extends Component {
   static propTypes = {
     title: PropTypes.string.isRequired,
-    subtitle: PropTypes.string,
-    onDrop: PropTypes.func,
-    onClick: PropTypes.func,
-    onDragEnter: PropTypes.func,
-    onDragLeave: PropTypes.func,
-    onDragOver: PropTypes.func,
+    subtitle: PropTypes.string.isRequired,
+    onDrop: PropTypes.func.isRequired,
+    onClick: PropTypes.func.isRequired,
   }
 
   constructor(props) {
@@ -29,28 +26,40 @@ export default class TrackRow extends Component {
     this.onDrop = this.onDrop.bind(this);
     this.onDragEnter = this.onDragEnter.bind(this);
     this.onDragLeave = this.onDragLeave.bind(this);
-    this.onDragOver = this.onDragOver.bind(this);
+    this.onKeyDown = this.onKeyDown.bind(this);
+  }
+
+  onKeyDown(e) {
+    e.stopPropagation();
+    e.nativeEvent.stopImmediatePropagation();
+
+    switch (e.keyCode) {
+      case 32: { // Space
+        this.props.onClick();
+        break;
+      }
+      default: {
+        break;
+      }
+    }
   }
 
   onDragEnter() {
-    if(this.props.onDragEnter) this.props.onDragEnter();
+    this.setState({ state: 'dragging' });
   }
 
   onDragLeave() {
     this.setState({ state: 'idle' });
-    if(this.props.onDragLeave) this.props.onDragLeave();
   }
 
   onDragOver(e) {
     e.preventDefault();
-    this.setState({ state: 'dragging' });
-    if(this.props.onDragOver) this.props.onDragOver();
   }
 
   onDrop(e) {
     e.preventDefault();
     this.setState({ state: 'idle' });
-    if(this.props.onDrop) this.props.onDrop(e.nativeEvent);
+    if (this.props.onDrop) this.props.onDrop(e.nativeEvent);
   }
 
   render() {
@@ -64,9 +73,12 @@ export default class TrackRow extends Component {
         onDragLeave={this.onDragLeave}
         onDrop={this.onDrop}
         onClick={this.props.onClick}
+        onKeyDown={this.onKeyDown}
+        role="button"
+        tabIndex="0"
       >
-        <div className='title'>{ this.props.title }</div>
-        <div className='subtitle'>{ this.props.subtitle }</div>
+        <div className="title">{ this.props.title }</div>
+        <div className="subtitle">{ this.props.subtitle }</div>
       </div>
     );
   }

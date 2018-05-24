@@ -15,14 +15,21 @@ import { parseDuration } from '../../utils/utils';
 
 export default class TrackRow extends PureComponent {
   static propTypes = {
-    children: PropTypes.array,
     selected: PropTypes.bool,
-    track: PropTypes.object,
-    index: PropTypes.number,
+    track: PropTypes.object.isRequired,
+    index: PropTypes.number.isRequired,
     isPlaying: PropTypes.bool,
     onDoubleClick: PropTypes.func,
     onMouseDown: PropTypes.func,
     onContextMenu: PropTypes.func,
+  }
+
+  static defaultProps = {
+    selected: false,
+    isPlaying: false,
+    onDoubleClick: () => {},
+    onMouseDown: () => {},
+    onContextMenu: () => {},
   }
 
   constructor(props) {
@@ -30,7 +37,7 @@ export default class TrackRow extends PureComponent {
     this.state = {};
 
     this.onDoubleClick = this.onDoubleClick.bind(this);
-    this.onMouseDown   = this.onMouseDown.bind(this);
+    this.onMouseDown = this.onMouseDown.bind(this);
     this.onContextMenu = this.onContextMenu.bind(this);
   }
 
@@ -47,9 +54,9 @@ export default class TrackRow extends PureComponent {
   }
 
   render() {
-    const { track } = this.props;
+    const { track, selected } = this.props;
     const trackClasses = classnames('track', {
-      selected: this.props.selected,
+      selected,
     });
 
     return (
@@ -58,23 +65,26 @@ export default class TrackRow extends PureComponent {
         onDoubleClick={this.onDoubleClick}
         onMouseDown={this.onMouseDown}
         onContextMenu={this.onContextMenu}
+        role="option"
+        aria-selected={selected}
+        tabIndex="-1" // we do not want trackrows to be focusable by the keyboard
       >
-        <div className='cell cell-track-playing text-center'>
+        <div className="cell cell-track-playing text-center">
           {this.props.isPlaying ? <PlayingIndicator /> : null}
         </div>
-        <div className='cell cell-track'>
+        <div className="cell cell-track">
           { track.title }
         </div>
-        <div className='cell cell-duration'>
+        <div className="cell cell-duration">
           { parseDuration(track.duration) }
         </div>
-        <div className='cell cell-artist'>
+        <div className="cell cell-artist">
           { track.artist[0] }
         </div>
-        <div className='cell cell-album'>
+        <div className="cell cell-album">
           { track.album }
         </div>
-        <div className='cell cell-genre'>
+        <div className="cell cell-genre">
           { track.genre.join(', ') }
         </div>
       </div>

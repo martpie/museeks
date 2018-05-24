@@ -6,6 +6,8 @@ import classnames from 'classnames';
 import * as PlayerActions from '../../actions/PlayerActions';
 
 
+const svg = require('../../../images/icons/player-shuffle.svg');
+
 /*
 |--------------------------------------------------------------------------
 | ShuffleButton
@@ -14,7 +16,7 @@ import * as PlayerActions from '../../actions/PlayerActions';
 
 export default class ButtonShuffle extends Component {
   static propTypes = {
-    shuffle: PropTypes.bool,
+    shuffle: PropTypes.bool.isRequired,
   }
 
   constructor(props) {
@@ -28,15 +30,13 @@ export default class ButtonShuffle extends Component {
   }
 
   render() {
-    const svg = require('../../../images/icons/player-shuffle.svg');
-
     const buttonClasses = classnames('button', {
       active: this.props.shuffle,
     });
 
     return (
-      <button type='button' className={buttonClasses} onClick={this.toggleShuffle}>
-        <InlineSVG svg={svg} className='icon shuffle' />
+      <button type="button" className={buttonClasses} onClick={this.toggleShuffle}>
+        <InlineSVG svg={svg} className="icon shuffle" />
       </button>
     );
   }

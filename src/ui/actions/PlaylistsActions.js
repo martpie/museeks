@@ -1,6 +1,6 @@
-import store from '../store.js';
+import store from '../store';
 import history from '../router/history';
-import types  from '../constants/action-types';
+import types from '../constants/action-types';
 import * as ToastsActions from './ToastsActions';
 
 import * as app from '../lib/app';
@@ -61,6 +61,8 @@ export const create = async (name, redirect = false) => {
   } catch (err) {
     console.warn(err);
   }
+
+  return null;
 };
 
 /**
@@ -123,9 +125,7 @@ export const addTracksTo = async (_id, tracks, isShown) => {
 export const removeTracks = async (_id, tracks) => {
   try {
     const playlist = await app.models.Playlist.findOneAsync({ _id });
-    const playlistTracks = playlist.tracks.filter((elem) => {
-      return !tracks.includes(elem);
-    });
+    const playlistTracks = playlist.tracks.filter(elem => !tracks.includes(elem));
     await app.models.Playlist.updateAsync({ _id }, { $set: { tracks: playlistTracks } });
     load(_id);
   } catch (err) {

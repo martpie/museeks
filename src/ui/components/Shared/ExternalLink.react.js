@@ -12,8 +12,12 @@ import { openExternal } from '../../lib/electron';
 
 export default class ExternalLink extends Component {
   static propTypes = {
-    href: PropTypes.string,
-    children: PropTypes.string,
+    href: PropTypes.string.isRequired,
+    children: PropTypes.node,
+  }
+
+  static defaultProps = {
+    children: '',
   }
 
   constructor(props) {
@@ -29,9 +33,13 @@ export default class ExternalLink extends Component {
 
   render() {
     return (
-      <a href="" onClick={this.openLink}>
+      <button
+        className="external-link"
+        role="link"
+        onClick={this.openLink}
+      >
         { this.props.children }
-      </a>
+      </button>
     );
   }
 }

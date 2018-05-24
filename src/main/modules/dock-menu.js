@@ -55,7 +55,7 @@ class DockMenuModule extends ModuleWindow {
           this.window.webContents.send('playback:next');
         },
       },
-    ],
+    ];
 
     // Load events listener for player actions
     ipcMain.on('playback:play', () => {
