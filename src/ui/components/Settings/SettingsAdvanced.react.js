@@ -14,21 +14,18 @@ import CheckboxSetting from './CheckboxSetting.react';
 
 export default class SettingsAdvanced extends Component {
   static propTypes = {
-    config: PropTypes.object,
-  }
-
-  constructor(props) {
-    super(props);
+    config: PropTypes.object.isRequired,
   }
 
   render() {
-    const config = this.props.config;
+    const { config } = this.props;
 
     return (
-      <div className='setting setting-dev-mode'>
+      <div className="setting setting-dev-mode">
         <CheckboxSetting
-          title='Dev mode'
-          description='Enable dev mode'
+          slug="devmode"
+          title="Dev mode"
+          description="Enable dev mode"
           defaultValue={config.devMode}
           onClick={SettingsActions.toggleDevMode}
         />

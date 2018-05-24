@@ -17,16 +17,16 @@ import { getStatus } from '../../utils/utils-library';
 
 class Footer extends Component {
   static propTypes = {
-    tracks: PropTypes.array,
-    library: PropTypes.object,
+    library: PropTypes.object.isRequired,
   }
 
   constructor(props) {
     super(props);
+    this.getStatus = this.getStatus.bind(this);
   }
 
-  getStatus(props) {
-    const { library } = props;
+  getStatus() {
+    const { library } = this.props;
     const { processed, total } = library.refresh;
 
     // If the library is being scanned, show the scan progress
@@ -34,12 +34,12 @@ class Footer extends Component {
     //   'hidden': !this.props.library.refreshing,
     // });
     if (library.refreshing) {
-      const progress = total > 0 ? Math.round(processed / total * 100) : 100;
+      const progress = total > 0 ? Math.round((processed / total) * 100) : 100;
       return (
-        <div className='library-refresh'>
-          <ProgressBar className='library-refresh-progress' now={progress} active={total === 0} />
+        <div className="library-refresh">
+          <ProgressBar className="library-refresh-progress" now={progress} active={total === 0} />
           {total > 0 && (
-            <div className='library-refresh-count'>
+            <div className="library-refresh-count">
               {processed} / {total}
             </div>
           )}
@@ -52,13 +52,13 @@ class Footer extends Component {
     return (
       <Switch>
         <Route
-          path='/library'
+          path="/library"
           render={() => (
             getStatus(library.tracks.library)
           )}
         />
         <Route
-          path='/playlists'
+          path="/playlists"
           render={() => (
             getStatus(library.tracks.playlist)
           )}
@@ -69,37 +69,37 @@ class Footer extends Component {
 
   render() {
     return (
-      <footer className='container-fluid'>
-        <Row className='footer-row'>
+      <footer className="container-fluid">
+        <Row className="footer-row">
           <Col sm={3}>
-            <ButtonGroup className='view-switcher'>
+            <ButtonGroup className="view-switcher">
               <NavLink
-                to='/library'
-                activeClassName='active'
-                className='btn btn-default view-link'
-                title='Library'
+                to="/library"
+                activeClassName="active"
+                className="btn btn-default view-link"
+                title="Library"
               >
-                <Icon name='align-justify' fixedWidth />
+                <Icon name="align-justify" fixedWidth />
               </NavLink>
               <NavLink
-                to='/playlists'
-                activeClassName='active'
-                className='btn btn-default view-link '
-                title='Playlists'
+                to="/playlists"
+                activeClassName="active"
+                className="btn btn-default view-link "
+                title="Playlists"
               >
-                <Icon name='star' fixedWidth />
+                <Icon name="star" fixedWidth />
               </NavLink>
               <NavLink
-                to='/settings'
-                activeClassName='active'
-                className='btn btn-default view-link'
-                title='Settings'
+                to="/settings"
+                activeClassName="active"
+                className="btn btn-default view-link"
+                title="Settings"
               >
-                <Icon name='gear' fixedWidth />
+                <Icon name="gear" fixedWidth />
               </NavLink>
             </ButtonGroup>
           </Col>
-          <Col sm={5} className='library-status text-center'>
+          <Col sm={5} className="library-status text-center">
             {this.getStatus(this.props)}
           </Col>
         </Row>
@@ -108,10 +108,8 @@ class Footer extends Component {
   }
 }
 
-const mapsStateToProps = (state) => {
-  return {
-    library: state.library,
-  };
-};
+const mapsStateToProps = state => ({
+  library: state.library,
+});
 
 export default withRouter(connect(mapsStateToProps)(Footer));

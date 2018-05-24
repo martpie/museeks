@@ -20,13 +20,7 @@ import { config } from '../../lib/app';
 
 class Settings extends Component {
   static propTypes = {
-    config: PropTypes.object,
-    library: PropTypes.object,
-    children: PropTypes.object,
-  }
-
-  constructor(props) {
-    super(props);
+    library: PropTypes.object.isRequired,
   }
 
   render() {
@@ -34,21 +28,21 @@ class Settings extends Component {
     const conf = config.getAll();
 
     return (
-      <div className='view view-settings'>
-        <nav className='settings-menu'>
-          <NavLink to='/settings/library' className='settings-link' activeClassName='active'>
+      <div className="view view-settings">
+        <nav className="settings-menu">
+          <NavLink to="/settings/library" className="settings-link" activeClassName="active">
             Library
           </NavLink>
-          <NavLink to='/settings/audio' className='settings-link' activeClassName='active'>
+          <NavLink to="/settings/audio" className="settings-link" activeClassName="active">
             Audio
           </NavLink>
-          <NavLink to='/settings/interface' className='settings-link' activeClassName='active'>
+          <NavLink to="/settings/interface" className="settings-link" activeClassName="active">
             Interface
           </NavLink>
-          <NavLink to='/settings/advanced' className='settings-link' activeClassName='active'>
+          <NavLink to="/settings/advanced" className="settings-link" activeClassName="active">
             Advanced
           </NavLink>
-          <NavLink to='/settings/about' className='settings-link' activeClassName='active'>
+          <NavLink to="/settings/about" className="settings-link" activeClassName="active">
             About
           </NavLink>
         </nav>
@@ -56,29 +50,29 @@ class Settings extends Component {
         <div className="settings-content">
           <Switch>
             <Route
-              path='/settings'
+              path="/settings"
               exact
-              render={() => (<Redirect to='/settings/library' />)}
+              render={() => (<Redirect to="/settings/library" />)}
             />
             <Route
-              path='/settings/library'
-              render={(p) => (<SettingsLibrary {...p} config={conf} library={library} />)}
+              path="/settings/library"
+              render={p => (<SettingsLibrary {...p} config={conf} library={library} />)}
             />
             <Route
-              path='/settings/interface'
-              render={(p) => (<SettingsUI {...p} config={conf} library={library} />)}
+              path="/settings/interface"
+              render={p => (<SettingsUI {...p} config={conf} library={library} />)}
             />
             <Route
-              path='/settings/audio'
-              render={(p) => (<SettingsAudio {...p} config={conf} library={library} />)}
+              path="/settings/audio"
+              render={p => (<SettingsAudio {...p} config={conf} library={library} />)}
             />
             <Route
-              path='/settings/advanced'
-              render={(p) => (<SettingsAdvanced {...p} config={conf} library={library} />)}
+              path="/settings/advanced"
+              render={p => (<SettingsAdvanced {...p} config={conf} library={library} />)}
             />
             <Route
-              path='/settings/about'
-              render={(p) => (<SettingsAbout {...p} config={conf} library={library} />)}
+              path="/settings/about"
+              render={p => (<SettingsAbout {...p} config={conf} library={library} />)}
             />
           </Switch>
         </div>

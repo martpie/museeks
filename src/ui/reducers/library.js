@@ -25,7 +25,7 @@ const initialState = {
 
 export default (state = initialState, payload) => {
   switch (payload.type) {
-    case(types.APP_LIBRARY_REFRESH): {
+    case (types.APP_LIBRARY_REFRESH): {
       return {
         ...state,
         tracks: {
@@ -36,7 +36,7 @@ export default (state = initialState, payload) => {
       };
     }
 
-    case(types.APP_LIBRARY_SORT): {
+    case (types.APP_LIBRARY_SORT): {
       const { sortBy } = payload;
       const prevSort = state.sort;
 
@@ -59,19 +59,19 @@ export default (state = initialState, payload) => {
       };
     }
 
-    case(types.APP_FILTER_SEARCH): {
+    case (types.APP_FILTER_SEARCH): {
       return {
         ...state,
         search: utils.stripAccents(payload.search),
       };
     }
 
-    case(types.APP_LIBRARY_ADD_FOLDERS): { // TODO Redux -> move to a thunk
-      const{ folders } = payload;
+    case (types.APP_LIBRARY_ADD_FOLDERS): { // TODO Redux -> move to a thunk
+      const { folders } = payload;
       let musicFolders = app.config.get('musicFolders');
 
       // Check if we received folders
-      if(folders !== undefined) {
+      if (folders !== undefined) {
         musicFolders = musicFolders.concat(folders);
 
         // Remove duplicates, useless children, ect...
@@ -86,8 +86,8 @@ export default (state = initialState, payload) => {
       return { ...state };
     }
 
-    case(types.APP_LIBRARY_REMOVE_FOLDER): { // TODO Redux -> move to a thunk
-      if(!state.library.refreshing) {
+    case (types.APP_LIBRARY_REMOVE_FOLDER): { // TODO Redux -> move to a thunk
+      if (!state.library.refreshing) {
         const musicFolders = app.config.get('musicFolders');
 
         musicFolders.splice(payload.index, 1);
@@ -101,41 +101,41 @@ export default (state = initialState, payload) => {
       return state;
     }
 
-    case(types.APP_LIBRARY_RESET): {
+    case (types.APP_LIBRARY_RESET): {
       return initialState;
     }
 
-    case(types.APP_LIBRARY_REFRESH_START): {
+    case (types.APP_LIBRARY_REFRESH_START): {
       return {
         ...state,
         refreshing: true,
       };
     }
 
-    case(types.APP_LIBRARY_REFRESH_END): {
+    case (types.APP_LIBRARY_REFRESH_END): {
       return {
         ...state,
         refreshing: false,
-        refresh : {
+        refresh: {
           processed: 0,
           total: 0,
         },
       };
     }
 
-    case(types.APP_LIBRARY_REFRESH_PROGRESS): {
+    case (types.APP_LIBRARY_REFRESH_PROGRESS): {
       return {
         ...state,
-        refresh : {
+        refresh: {
           processed: payload.processed,
           total: payload.total,
         },
       };
     }
 
-    case(types.APP_LIBRARY_REMOVE_TRACKS): {
-      const tracksIds = payload.tracksIds;
-      const removeTrack = (track) => !tracksIds.includes(track._id);
+    case (types.APP_LIBRARY_REMOVE_TRACKS): {
+      const { tracksIds } = payload;
+      const removeTrack = track => !tracksIds.includes(track._id);
 
       const tracks = {
         library: [...state.tracks.library].filter(removeTrack),
@@ -145,11 +145,11 @@ export default (state = initialState, payload) => {
       return {
         ...state,
         tracks,
-        refreshProgress : payload.percentage,
+        refreshProgress: payload.percentage,
       };
     }
 
-    case(types.APP_PLAYLISTS_LOAD_ONE): {
+    case (types.APP_PLAYLISTS_LOAD_ONE): {
       const newState = { ...state };
       newState.tracks.playlist = [...payload.tracks];
 

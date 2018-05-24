@@ -17,18 +17,22 @@ import * as SORT_ORDERS from '../../constants/sort-orders';
 
 class Library extends Component {
   static propTypes = {
-    library: PropTypes.object,
-    playlists: PropTypes.array,
-    playerStatus: PropTypes.string,
-    queue: PropTypes.any,
+    library: PropTypes.object.isRequired,
+    playlists: PropTypes.array.isRequired,
+    playerStatus: PropTypes.string.isRequired,
+    player: PropTypes.object.isRequired,
+    tracks: PropTypes.array.isRequired,
   }
 
   constructor(props) {
     super(props);
+    this.getLibraryComponent = this.getLibraryComponent.bind(this);
   }
 
-  getLibraryComponent(props) {
-    const { library, playerStatus, playlists, player, tracks } = props;
+  getLibraryComponent() {
+    const {
+      library, playerStatus, playlists, player, tracks,
+    } = this.props;
     const trackPlayingId = (player.queue.length > 0 && player.queueCursor !== null) ? player.queue[player.queueCursor]._id : null;
 
     // Loading library
@@ -46,7 +50,7 @@ class Library extends Component {
         return (
           <FullViewMessage>
             <p>Your library is being scanned =)</p>
-            <p className='sub-message'>hold on...</p>
+            <p className="sub-message">hold on...</p>
           </FullViewMessage>
         );
       }
@@ -54,9 +58,10 @@ class Library extends Component {
       return (
         <FullViewMessage>
           <p>Too bad, there is no music in your library =(</p>
-          <p className='sub-message'>
-            <span>nothing found yet, but that's fine, you can always </span>
-            <Link to='/settings/library'>add your music here</Link>
+          <p className="sub-message">
+            <span>nothing found yet, but that{"'"}s fine, you can always</span>
+            {' '}
+            <Link to="/settings/library">add your music here</Link>
           </p>
         </FullViewMessage>
       );
@@ -67,8 +72,8 @@ class Library extends Component {
       return (
         <FullViewMessage>
           <p>Your search returned no results</p>
-          <p className='sub-message'>
-            <span>nothing found yet, but that's fine, you can always <Link to='/settings/library'>add your music here</Link>
+          <p className="sub-message">
+            <span>{"nothing found yet, but that's fine, you can always"} <Link to="/settings/library">add your music here</Link>
             </span>
           </p>
         </FullViewMessage>
@@ -78,7 +83,7 @@ class Library extends Component {
     // All good !
     return (
       <TracksList
-        type='library'
+        type="library"
         playerStatus={playerStatus}
         tracks={tracks}
         trackPlayingId={trackPlayingId}
@@ -89,8 +94,8 @@ class Library extends Component {
 
   render() {
     return (
-      <div className='view view-library' >
-        { this.getLibraryComponent(this.props) }
+      <div className="view view-library" >
+        { this.getLibraryComponent() }
       </div>
     );
   }
@@ -103,7 +108,7 @@ const mapStateToProps = (state) => {
   // sorting being a costly operation, do it after filtering
   const filteredTracks = sortTracks(
     filterTracks(tracks.library, search),
-    SORT_ORDERS[sort.by][sort.order]
+    SORT_ORDERS[sort.by][sort.order],
   );
 
   return {

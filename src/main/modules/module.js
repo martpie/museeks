@@ -17,7 +17,7 @@ class Module {
 
   // To not be overriden
   init() {
-    if (this.loaded) throw(new TypeError('Module is already loaded'));
+    if (this.loaded) throw (new TypeError('Module is already loaded'));
 
     if (this.platforms.includes(os.platform())) {
       this.load();
@@ -28,7 +28,7 @@ class Module {
   }
 
   load() {
-    throw(new TypeError('Module should have a load() method'));
+    throw (new TypeError('Module should have a load() method'));
     // Do whatever you want here :)
   }
 }

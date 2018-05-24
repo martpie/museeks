@@ -1,0 +1,11 @@
+.external-link {
+  -webkit-appearance: none;
+  border: 0;
+  background: transparent;
+  color: $main-color;
+  padding: 0;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}

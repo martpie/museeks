@@ -5,7 +5,7 @@ import util from 'util';
 import globby from 'globby';
 import queue from 'queue';
 
-import store from '../store.js';
+import store from '../store';
 
 import types from '../constants/action-types';
 import * as LibraryActions from './LibraryActions';
@@ -14,7 +14,7 @@ import * as app from '../lib/app';
 import * as utils from '../utils/utils';
 
 
-const dialog = electron.remote.dialog;
+const { dialog } = electron.remote;
 const stat = util.promisify(fs.stat);
 
 /**
@@ -38,10 +38,10 @@ export const load = async () => {
  * Filter tracks by search
  * @param {String} search
  */
-export const search = (search) => {
+export const search = (value) => {
   store.dispatch({
     type: types.APP_FILTER_SEARCH,
-    search,
+    search: value,
   });
 };
 
@@ -100,12 +100,10 @@ export const add = (pathsToScan) => {
 
   // Scan folders and add files to library
   new Promise((resolve) => {
-    const promises = pathsToScan.map(async (path) => {
-      return {
-        path,
-        stat: await stat(path),
-      };
-    });
+    const promises = pathsToScan.map(async folderPath => ({
+      path: folderPath,
+      stat: await stat(folderPath),
+    }));
 
     const paths = Promise.all(promises);
 
@@ -146,29 +144,25 @@ export const add = (pathsToScan) => {
     scan.total += supportedFiles.length;
 
     supportedFiles.forEach((filePath) => {
-      scanQueue.push((callback) => {
-        return app.models.Track.findAsync({ path: filePath }).then((docs) => {
-          if (docs.length === 0) {
-            return utils.getMetadata(filePath);
-          }
-          return null;
-        }).then((track) => {
-          // If null, that means a track with the same absolute path already exists in the database
-          if (track === null) return;
-          // else, insert the new document in the database
-          return app.models.Track.insertAsync(track);
-        }).then(() => {
-          scan.processed++;
-          callback();
-          return null;
-        });
+      scanQueue.push(async (callback) => {
+        // Check if there is an existing record in the DB
+        const docs = await app.models.Track.findAsync({ path: filePath });
+
+        // If there is existing document
+        if (docs.length === 0) {
+          // Get metadata
+          const track = await utils.getMetadata(filePath);
+          await app.models.Track.insertAsync(track);
+        }
+
+        scan.processed++;
+        callback();
       });
     });
-
-    return null;
-  }).catch((err) => {
-    console.warn(err);
-  });
+  })
+    .catch((err) => {
+      console.warn(err);
+    });
 
   // TODO progressive loading in the store, don't freeze the app, able to add files/folders when scanning
 };

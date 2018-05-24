@@ -9,10 +9,15 @@ import React, { PureComponent } from 'react';
 
 export default class CheckboxSetting extends PureComponent {
   static propTypes = {
-    title: PropTypes.string,
+    title: PropTypes.string.isRequired,
+    slug: PropTypes.string.isRequired,
+    defaultValue: PropTypes.bool.isRequired,
+    onClick: PropTypes.func.isRequired,
     description: PropTypes.string,
-    defaultValue: PropTypes.bool,
-    onClick: PropTypes.func,
+  }
+
+  static defaultProps = {
+    description: '',
   }
 
   constructor(props) {
@@ -26,16 +31,19 @@ export default class CheckboxSetting extends PureComponent {
   }
 
   render() {
+    const { slug, title, description } = this.props;
     return (
-      <div className='setting-section'>
-        <div className='checkbox'>
-          <label>
-            <input type='checkbox'
+      <div className="setting-section">
+        <div className="checkbox">
+          <label htmlFor={`setting-option-${slug}`}>
+            <input
+              id={`setting-option-${slug}`}
+              type="checkbox"
               onClick={this.onClick}
               defaultChecked={this.props.defaultValue}
             />
-            <span className='setting-title'>{ this.props.title }</span>
-            <p className='setting-description'>{ this.props.description }</p>
+            <span className="setting-title">{ title }</span>
+            <p className="setting-description">{ description }</p>
           </label>
         </div>
       </div>

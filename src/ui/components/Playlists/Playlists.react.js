@@ -18,10 +18,8 @@ import Playlist from './Playlist.react';
 
 class Playlists extends Component {
   static propTypes = {
-    params: PropTypes.object,
-    playlists: PropTypes.array,
-    playerStatus: PropTypes.string,
-    match: PropTypes.object,
+    playlists: PropTypes.array.isRequired,
+    match: PropTypes.object.isRequired,
   }
 
   constructor(props) {
@@ -47,9 +45,9 @@ class Playlists extends Component {
     // (after deleting a library for example)
     const { playlists } = this.props;
 
-    if (playlists.every((elem) => elem._id !== playlistId)) {
+    if (playlists.every(elem => elem._id !== playlistId)) {
       if (playlists.length === 0) {
-        <Redirect to='/playlists' />;
+        return <Redirect to="/playlists" />;
       }
 
       return <Redirect to={`/playlists/${this.props.playlists[0]._id}`} />;
@@ -62,18 +60,24 @@ class Playlists extends Component {
     const { playlists } = this.props;
     let playlistContent;
 
-    if(playlists === null) {
+    if (playlists === null) {
       playlistContent = (
         <FullViewMessage>
           <p>Loading playlists</p>
         </FullViewMessage>
       );
-    } else if(playlists.length === 0) {
+    } else if (playlists.length === 0) {
       playlistContent = (
         <FullViewMessage>
-          <p>You haven't created any playlist yet</p>
-          <p className='sub-message'>
-            <a onClick={this.createPlaylist}>create one now</a>
+          <p>You haven{"'"}t created any playlist yet</p>
+          <p className="sub-message">
+            <button
+              onClick={this.createPlaylist}
+              className="button-link"
+              tabIndex="0"
+            >
+              create one now
+            </button>
           </p>
         </FullViewMessage>
       );
@@ -81,15 +85,15 @@ class Playlists extends Component {
       playlistContent = (
         <React.Fragment>
           <Route path="/playlists" render={this.autoRedirect} />
-          <Route path='/playlists/:playlistId' component={Playlist} />
+          <Route path="/playlists/:playlistId" component={Playlist} />
         </React.Fragment>
       );
     }
 
     return (
-      <div className='view view-playlists'>
+      <div className="view view-playlists">
         <PlaylistsNav playlists={playlists} />
-        <div className='playlist'>
+        <div className="playlist">
           { playlistContent }
         </div>
       </div>
