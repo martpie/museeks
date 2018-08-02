@@ -63,7 +63,7 @@ class PlayingBarInfos extends React.Component {
 
     const { trackPlaying } = this.props;
 
-    const bar = document.querySelector('.now-playing-bar');
+    const bar = this.playingBar.current;
     const percent = ((e.pageX - (bar.offsetLeft + bar.offsetParent.offsetLeft)) / bar.offsetWidth) * 100;
 
     const jumpTo = (percent * trackPlaying.duration) / 100;
@@ -74,7 +74,7 @@ class PlayingBarInfos extends React.Component {
   dragOver(e) {
     // Check if a currentTime update is needed
     if (this.state.dragging) {
-      const { playingBar } = this;
+      const playingBar = this.playingBar.current;
       const { trackPlaying } = this.props;
 
       const playingBarRect = playingBar.getBoundingClientRect();
@@ -121,7 +121,7 @@ class PlayingBarInfos extends React.Component {
 
   render() {
     const { trackPlaying } = this.props;
-    const elapsedPercent = (this.state.elapsed * 100) / trackPlaying.duration;
+    const elapsed = this.state.elapsed / trackPlaying.duration;
 
     const nowPlayingTooltipClasses = classnames('playing-bar-tooltip', {
       hidden: this.state.duration === null,
@@ -156,12 +156,19 @@ class PlayingBarInfos extends React.Component {
           <div className={nowPlayingTooltipClasses} style={{ left: `${this.state.x}%` }}>
             {utils.parseDuration(this.state.duration)}
           </div>
-          <ProgressBar
-            now={elapsedPercent}
+          <div
+            className="progress"
+            role="progressbar"
+            tabIndex="0"
             onMouseDown={this.jumpAudioTo}
             onMouseMove={this.showTooltip}
             onMouseLeave={this.hideTooltip}
-          />
+          >
+            <div
+              className="progress-bar"
+              style={{ transform: `translate3d(0, 0, 0) scaleX(${elapsed})` }}
+            />
+          </div>
         </div>
       </div>
     );
