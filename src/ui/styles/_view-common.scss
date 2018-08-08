@@ -122,11 +122,11 @@
       align-items: baseline;
       background-color: #333;
       animation: bar-animate;
-      animation-duration: .8s;
+      animation-duration: 1s;
       animation-timing-function: ease-in-out;
       animation-iteration-count: infinite;
       transform-origin: bottom;
-      transform: scaleY(0) translate3d(0, 0, 0);
+      transform: scale3d(1, 0, 1);
       will-change: transform;
 
       &.bar-second {
@@ -147,14 +147,14 @@
 @keyframes bar-animate {
 
   from {
-    transform: scaleY(0) translate3d(0, 0, 0);
+    transform: scale3d(1, 0, 1);
   }
 
   50% {
-    transform: scaleY(1) translate3d(0, 0, 0);
+    transform: scale3d(1, 1, 1);
   }
 
   to {
-    transform: scaleY(0) translate3d(0, 0, 0);
+    transform: scale3d(1, 0, 1);
   }
 }

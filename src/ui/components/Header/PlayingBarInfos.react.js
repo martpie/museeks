@@ -166,7 +166,7 @@ class PlayingBarInfos extends React.Component {
           >
             <div
               className="progress-bar"
-              style={{ transform: `translate3d(0, 0, 0) scaleX(${elapsed})` }}
+              style={{ transform: `scale3d(${elapsed}, 1, 1)` }}
             />
           </div>
         </div>
