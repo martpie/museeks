@@ -379,7 +379,7 @@ export default class TracksList extends Component {
 
     const context = Menu.buildFromTemplate(template);
 
-    context.popup(this.window, { async: true }); // Let it appear
+    context.popup({ async: true }); // Let it appear
   }
 
   startPlayback(_id) {
