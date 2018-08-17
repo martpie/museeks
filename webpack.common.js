@@ -7,7 +7,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: {
-    main: ['./src/ui/main.js'],
+    main: ['./src/ui/main.tsx'],
   },
   target: 'electron-renderer',
   output: {
@@ -17,6 +17,11 @@ module.exports = {
   },
   module: {
     rules: [
+      {
+        test: /\.(ts|tsx)([?]?.*)$/,
+        loader: 'ts-loader',
+        exclude: /node_modules/,
+      },
       {
         test: /\.js$/,
         use: ['babel-loader'],
