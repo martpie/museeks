@@ -55,7 +55,6 @@ app.on('ready', () => {
   );
 
   const config = configModule.getConfig();
-  const { useNativeFrame } = config;
   let { bounds } = config;
 
   bounds = checkBounds(bounds);
@@ -69,13 +68,10 @@ app.on('ready', () => {
     height: bounds.height,
     minWidth: 900,
     minHeight: 550,
-    frame: useNativeFrame,
+    frame: true,
+    titleBarStyle: 'hiddenInset', // MacOS polished window
     show: false
   };
-
-  if (os.platform() === 'darwin' && !useNativeFrame) {
-    mainWindowOptions.titleBarStyle = 'hiddenInset';
-  }
 
   // Create the browser window
   mainWindow = new BrowserWindow(mainWindowOptions);
