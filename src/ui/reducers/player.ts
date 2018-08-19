@@ -84,7 +84,7 @@ export default (state = initialState, action: Action): PlayerState => {
     case (types.APP_PLAYER_SHUFFLE): {
       const { queueCursor } = state;
 
-      if (queueCursor) {
+      if (queueCursor !== null) {
         const trackPlayingId = state.queue[queueCursor]._id;
 
         // If we need to shuffle everything
@@ -143,7 +143,7 @@ export default (state = initialState, action: Action): PlayerState => {
       const queue = [...state.queue];
       const { queueCursor } = state;
 
-      if (queueCursor) {
+      if (queueCursor !== null) {
         queue.splice(queueCursor + 1, queue.length - queueCursor);
 
         return {
@@ -176,7 +176,7 @@ export default (state = initialState, action: Action): PlayerState => {
       const queue = [...state.queue];
       const { queueCursor } = state;
 
-      if (queueCursor) {
+      if (queueCursor !== null) {
         queue.splice(queueCursor + 1, 0, ...action.payload.tracks);
         return {
           ...state,

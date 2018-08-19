@@ -14,7 +14,7 @@ import * as SettingsActions from './SettingsActions';
 const { ipcRenderer } = electron;
 
 let lastSaveBounds: number = 0;
-let saveBoundsTimeout: NodeJS.Timer | null = null;
+let saveBoundsTimeout: number | null = null;
 
 const saveBounds = () => {
   const now = window.performance.now();
@@ -25,7 +25,7 @@ const saveBounds = () => {
 
   lastSaveBounds = now;
 
-  saveBoundsTimeout = setTimeout(() => {
+  saveBoundsTimeout = window.setTimeout(() => {
     config.set('bounds', browserWindows.main.getBounds());
     config.saveSync();
   }, 250);

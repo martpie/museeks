@@ -45,7 +45,8 @@ export default class QueueList extends React.Component<Props, State> {
 
   dragStart(e: React.DragEvent<HTMLDivElement>, index: number) {
     e.dataTransfer.effectAllowed = 'move';
-    e.dataTransfer.setData('text/html', e.currentTarget.id); // TODO double check
+    // @ts-ignore
+    e.dataTransfer.setData('text/html', e.currentTarget); // TODO double check
 
     this.setState({ draggedTrackIndex: index });
   }
@@ -59,7 +60,10 @@ export default class QueueList extends React.Component<Props, State> {
     const draggedIndex = this.state.draggedTrackIndex;
     const draggedOverIndex = this.state.draggedOverTrackIndex;
 
-    if (draggedIndex && draggedOverIndex && queueCursor) {
+    if (draggedIndex !== null
+      && draggedOverIndex !== null
+      && queueCursor !== null
+    ) {
       const offsetPosition = dragPosition === 'below' ? 1 : 0;
       const offsetHigherIndex = draggedOverIndex < draggedIndex || (draggedOverIndex === draggedIndex && dragPosition === 'above') ? 1 : 0;
 

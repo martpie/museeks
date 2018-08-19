@@ -72,11 +72,11 @@ class PlayingBarInfos extends React.Component<Props, State> {
 
     const { trackPlaying } = this.props;
 
-    const bar = this.playingBar.current;
+    const playingBar = this.playingBar.current;
 
-    if (bar) {
-      const parent = bar.offsetParent as HTMLDivElement;
-      const percent = ((e.pageX - (bar.offsetLeft + parent.offsetLeft)) / bar.offsetWidth) * 100;
+    if (playingBar) {
+      const parent = playingBar.offsetParent as HTMLDivElement;
+      const percent = ((e.pageX - (playingBar.offsetLeft + parent.offsetLeft)) / playingBar.offsetWidth) * 100;
 
       const jumpTo = (percent * trackPlaying.duration) / 100;
 

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as InlineSVG from 'react-svg-inline';
+import InlineSVG from 'svg-inline-react';
 import classnames from 'classnames';
 
 import * as PlayerActions from '../../actions/PlayerActions';
@@ -36,7 +36,7 @@ export default class ButtonShuffle extends React.Component<Props> {
 
     return (
       <button type="button" className={buttonClasses} onClick={this.toggleShuffle}>
-        <InlineSVG svg={svg} className="icon shuffle" />
+        <InlineSVG src={svg} className="icon shuffle" />
       </button>
     );
   }

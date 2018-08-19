@@ -33,7 +33,7 @@ export default class PlayerControls extends React.PureComponent<Props> {
           title={this.props.playerStatus === PlayerStatus.PLAY ? 'Pause' : 'Play'}
           onClick={PlayerActions.playPause}
         >
-          <Icon name={this.props.playerStatus === PlayerStatus.PLAY ? PlayerStatus.PAUSE : PlayerStatus.PLAY} fixedWidth />
+          <Icon name={this.props.playerStatus === PlayerStatus.PLAY ? 'pause' : 'play'} fixedWidth />
         </button>
         <button
           type="button"
