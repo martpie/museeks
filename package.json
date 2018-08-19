@@ -35,7 +35,7 @@
     "level-js": "3.0.0",
     "linvodb3": "3.25.1",
     "lodash-es": "4.17.10",
-    "music-metadata": "0.10.2",
+    "music-metadata": "2.6.0",
     "queue": "4.5.0",
     "react": "16.4.2",
     "react-bootstrap": "0.32.1",
