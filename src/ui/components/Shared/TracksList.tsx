@@ -1,4 +1,4 @@
-import * as electron from 'electron';
+ import * as electron from 'electron';
 import * as React from 'react';
 import KeyBinding from 'react-keybinding-component';
 import chunk from 'lodash-es/chunk';
@@ -280,7 +280,7 @@ export default class TracksList extends React.Component<Props, State> {
 
       if (playlists.length === 0) {
         playlistTemplate.push({
-          label: 'No playlist',
+          label: 'No playlists',
           enabled: false
         });
       } else {
