@@ -7,21 +7,20 @@ import * as utils from '../utils/utils';
 
 import { Track } from '../typings/interfaces';
 
-
 /**
  * Start audio playback from the queue
  */
-export const start = (index: number) => {
+export const start = async (index: number) => {
   const { queue } = store.getState().player;
   const uri = utils.parseUri(queue[index].path);
 
   Player.setAudioSrc(uri);
-  Player.play();
+  await Player.play();
 
   store.dispatch({
     type: types.APP_QUEUE_START,
     payload: {
-      index,
+      index
     }
   });
 };
@@ -31,7 +30,7 @@ export const start = (index: number) => {
  */
 export const clear = () => {
   store.dispatch({
-    type: types.APP_QUEUE_CLEAR,
+    type: types.APP_QUEUE_CLEAR
   });
 };
 
@@ -42,7 +41,7 @@ export const remove = (index: number) => {
   store.dispatch({
     type: types.APP_QUEUE_REMOVE,
     payload: {
-      index,
+      index
     }
   });
 };
@@ -55,7 +54,7 @@ export const addAfter = async (tracksIds: string[]) => {
   store.dispatch({
     type: types.APP_QUEUE_ADD,
     payload: {
-      tracks,
+      tracks
     }
   });
 };
@@ -68,7 +67,7 @@ export const addNext = async (tracksIds: string[]) => {
   store.dispatch({
     type: types.APP_QUEUE_ADD_NEXT,
     payload: {
-      tracks,
+      tracks
     }
   });
 };
@@ -80,7 +79,7 @@ export const setQueue = (tracks: Track[]) => {
   store.dispatch({
     type: types.APP_QUEUE_SET_QUEUE,
     payload: {
-      tracks,
+      tracks
     }
   });
 };

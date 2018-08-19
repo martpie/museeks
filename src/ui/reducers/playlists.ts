@@ -3,7 +3,6 @@ import { PlaylistModel, Action } from '../typings/interfaces';
 
 export type PlaylistsState = PlaylistModel[];
 
-
 const initialState: PlaylistsState = []; // Playlist[]
 
 export default (state = initialState, action: Action): PlaylistsState => {

@@ -11,7 +11,6 @@ import { LibraryState } from '../../reducers/library';
 import { PlayerState } from '../../reducers/player';
 import { RootState } from '../../reducers';
 
-
 /*
 |--------------------------------------------------------------------------
 | Global View
@@ -25,14 +24,13 @@ interface Props {
   tracks: TrackModel[];
 }
 
-
 class Library extends React.Component<Props> {
-  constructor(props: Props) {
+  constructor (props: Props) {
     super(props);
     this.getLibraryComponent = this.getLibraryComponent.bind(this);
   }
 
-  getLibraryComponent() {
+  getLibraryComponent () {
     const { library, playlists, player, tracks } = this.props;
     const { playerStatus } = player;
 
@@ -53,7 +51,7 @@ class Library extends React.Component<Props> {
         return (
           <FullViewMessage>
             <p>Your library is being scanned =)</p>
-            <p className="sub-message">hold on...</p>
+            <p className='sub-message'>hold on...</p>
           </FullViewMessage>
         );
       }
@@ -61,10 +59,10 @@ class Library extends React.Component<Props> {
       return (
         <FullViewMessage>
           <p>Too bad, there is no music in your library =(</p>
-          <p className="sub-message">
+          <p className='sub-message'>
             <span>nothing found yet, but that{"'"}s fine, you can always</span>
             {' '}
-            <Link to="/settings/library">add your music here</Link>
+            <Link to='/settings/library'>add your music here</Link>
           </p>
         </FullViewMessage>
       );
@@ -75,8 +73,8 @@ class Library extends React.Component<Props> {
       return (
         <FullViewMessage>
           <p>Your search returned no results</p>
-          <p className="sub-message">
-            <span>{"nothing found yet, but that's fine, you can always"} <Link to="/settings/library">add your music here</Link>
+          <p className='sub-message'>
+            <span>{"nothing found yet, but that's fine, you can always"} <Link to='/settings/library'>add your music here</Link>
             </span>
           </p>
         </FullViewMessage>
@@ -86,7 +84,7 @@ class Library extends React.Component<Props> {
     // All good !
     return (
       <TracksList
-        type="library"
+        type='library'
         playerStatus={playerStatus}
         tracks={tracks}
         trackPlayingId={trackPlayingId}
@@ -95,9 +93,9 @@ class Library extends React.Component<Props> {
     );
   }
 
-  render() {
+  render () {
     return (
-      <div className="view view-library" >
+      <div className='view view-library' >
         { this.getLibraryComponent() }
       </div>
     );
@@ -111,14 +109,14 @@ const mapStateToProps = (state: RootState) => {
   // sorting being a costly operation, do it after filtering
   const filteredTracks = sortTracks(
     filterTracks(tracks.library, search),
-    SORT_ORDERS[sort.by][sort.order],
+    SORT_ORDERS[sort.by][sort.order]
   );
 
   return {
     playlists: state.playlists,
     library: state.library,
     player: state.player,
-    tracks: filteredTracks,
+    tracks: filteredTracks
   };
 };
 

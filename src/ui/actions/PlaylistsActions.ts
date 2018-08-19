@@ -5,7 +5,6 @@ import * as ToastsActions from './ToastsActions';
 
 import * as app from '../lib/app';
 
-
 /**
  * Load one playlist from database (Tracks list)
  */
@@ -16,7 +15,7 @@ export const load = async (_id: string) => {
     store.dispatch({
       type: types.APP_PLAYLISTS_LOAD_ONE,
       payload: {
-        tracks,
+        tracks
       }
     });
   } catch (err) {
@@ -33,7 +32,7 @@ export const refresh = async () => {
     store.dispatch({
       type: types.APP_PLAYLISTS_REFRESH,
       payload: {
-        playlists,
+        playlists
       }
     });
   } catch (err) {
@@ -47,12 +46,12 @@ export const refresh = async () => {
 export const create = async (name: string, redirect = false): Promise<string> => {
   const playlist = {
     name,
-    tracks: [],
+    tracks: []
   };
 
   const doc = await app.models.Playlist.insertAsync(playlist);
 
-  refresh();
+  await refresh();
 
   if (redirect) history.push(`/playlists/${doc._id}`);
   else ToastsActions.add('success', `The playlist "${name}" was created`);
@@ -66,7 +65,7 @@ export const create = async (name: string, redirect = false): Promise<string> =>
 export const rename = async (_id: string, name: string) => {
   try {
     await app.models.Playlist.updateAsync({ _id }, { $set: { name } });
-    refresh();
+    await refresh();
   } catch (err) {
     console.warn(err);
   }
@@ -78,7 +77,7 @@ export const rename = async (_id: string, name: string) => {
 export const remove = async (_id: string) => {
   try {
     await app.models.Playlist.removeAsync({ _id });
-    refresh();
+    await refresh();
   } catch (err) {
     console.warn(err);
   }
@@ -110,7 +109,7 @@ export const removeTracks = async (_id: string, tracksIds: string[]) => {
     const playlist = await app.models.Playlist.findOneAsync({ _id });
     const playlistTracks = playlist.tracks.filter((elem: string) => !tracksIds.includes(elem));
     await app.models.Playlist.updateAsync({ _id }, { $set: { tracks: playlistTracks } });
-    load(_id);
+    await load(_id);
   } catch (err) {
     console.warn(err);
   }

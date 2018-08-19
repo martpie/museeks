@@ -1,9 +1,9 @@
 import * as app from './app';
 
 interface PlayerOptions {
-  playbackRate: number,
-  volume: number,
-  muted: boolean,
+  playbackRate: number;
+  volume: number;
+  muted: boolean;
 }
 
 class Player {
@@ -11,12 +11,12 @@ class Player {
   private durationThresholdReached: boolean;
   public threshold: number;
 
-  constructor(options: PlayerOptions) {
+  constructor (options: PlayerOptions) {
     const mergedOptions = {
       playbackRate: 1,
       volume: 1,
       muted: false,
-      ...options,
+      ...options
     };
 
     this.audio = new Audio();
@@ -30,70 +30,70 @@ class Player {
     this.durationThresholdReached = false;
   }
 
-  play() {
-    this.audio.play();
+  async play () {
+    await this.audio.play();
   }
 
-  pause() {
+  pause () {
     this.audio.pause();
   }
 
-  stop() {
+  stop () {
     this.audio.pause();
   }
 
-  mute() {
+  mute () {
     this.audio.muted = true;
   }
 
-  unmute() {
+  unmute () {
     this.audio.muted = false;
   }
 
-  getAudio() {
+  getAudio () {
     return this.audio;
   }
 
-  getCurrentTime() {
+  getCurrentTime () {
     return this.audio.currentTime;
   }
 
-  getVolume() {
+  getVolume () {
     return this.audio.volume;
   }
 
-  getSrc() {
+  getSrc () {
     return this.audio.src;
   }
 
-  setAudioVolume(volume: number) {
+  setAudioVolume (volume: number) {
     this.audio.volume = volume;
   }
 
-  setAudioPlaybackRate(playbackRate: number) {
+  setAudioPlaybackRate (playbackRate: number) {
     this.audio.playbackRate = playbackRate;
     this.audio.defaultPlaybackRate = playbackRate;
   }
 
-  setAudioSrc(src: string) {
+  setAudioSrc (src: string) {
     // When we change song, need to update the thresholdReached indicator.
     this.durationThresholdReached = false;
     this.audio.src = src;
   }
 
-  setAudioCurrentTime(currentTime: number) {
+  setAudioCurrentTime (currentTime: number) {
     this.audio.currentTime = currentTime;
   }
 
-  isMuted() {
+  isMuted () {
     return this.audio.muted;
   }
 
-  isPaused() {
+  isPaused () {
     return this.audio.paused;
   }
 
-  isThresholdReached() {
+  isThresholdReached () {
     if (!this.durationThresholdReached && this.audio.currentTime >= this.audio.duration * this.threshold) {
       this.durationThresholdReached = true;
     }
@@ -105,5 +105,5 @@ class Player {
 export default new Player({
   volume: app.config.get('audioVolume'),
   playbackRate: app.config.get('audioPlaybackRate'),
-  muted: app.config.get('audioMuted'),
+  muted: app.config.get('audioMuted')
 });

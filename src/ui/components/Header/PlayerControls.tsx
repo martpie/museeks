@@ -15,33 +15,32 @@ interface Props {
   playerStatus: PlayerStatus;
 }
 
-
 export default class PlayerControls extends React.PureComponent<Props> {
-  render() {
+  render () {
     return (
-      <div className="player-controls">
+      <div className='player-controls'>
         <button
-          type="button"
-          className="player-control previous"
-          title="Previous"
+          type='button'
+          className='player-control previous'
+          title='Previous'
           onClick={PlayerActions.previous}
         >
-          <Icon name="backward" />
+          <Icon name='backward' />
         </button>
         <button
-          className="player-control play"
+          className='player-control play'
           title={this.props.playerStatus === PlayerStatus.PLAY ? 'Pause' : 'Play'}
           onClick={PlayerActions.playPause}
         >
           <Icon name={this.props.playerStatus === PlayerStatus.PLAY ? 'pause' : 'play'} fixedWidth />
         </button>
         <button
-          type="button"
-          className="player-control forward"
-          title="Next"
+          type='button'
+          className='player-control forward'
+          title='Next'
           onClick={PlayerActions.next}
         >
-          <Icon name="forward" />
+          <Icon name='forward' />
         </button>
         <VolumeControl />
       </div>

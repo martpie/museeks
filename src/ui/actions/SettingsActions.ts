@@ -8,14 +8,11 @@ import * as ToastsActions from './ToastsActions';
 
 import * as app from '../lib/app';
 
-
 const { ipcRenderer } = electron;
-
 
 type UpdateCheckOptions = {
   silentFail?: boolean
 };
-
 
 /**
  * Check and enable dev mode if needed
@@ -71,11 +68,11 @@ export const checkForUpdate = async (options: UpdateCheckOptions = {}) => {
 /**
  * Init all settings
  */
-export const check = () => {
+export const check = async () => {
   checkTheme();
   checkDevMode();
   checkSleepBlocker();
-  if (app.config.get('autoUpdateChecker')) checkForUpdate({ silentFail: true });
+  if (app.config.get('autoUpdateChecker')) await checkForUpdate({ silentFail: true });
 };
 
 /**
@@ -96,7 +93,7 @@ export const toggleDarkTheme = (value: boolean) => {
     app.config.saveSync();
 
     store.dispatch({
-      type: types.APP_REFRESH_CONFIG,
+      type: types.APP_REFRESH_CONFIG
     });
   }
 };
@@ -111,7 +108,7 @@ export const toggleSleepBlocker = (value: boolean) => {
   ipcRenderer.send('settings:toggleSleepBlocker', value, 'prevent-app-suspension');
 
   store.dispatch({
-    type: types.APP_REFRESH_CONFIG,
+    type: types.APP_REFRESH_CONFIG
   });
 };
 
@@ -128,7 +125,7 @@ export const toggleDevMode = (value: boolean) => {
   app.config.saveSync();
 
   store.dispatch({
-    type: types.APP_REFRESH_CONFIG,
+    type: types.APP_REFRESH_CONFIG
   });
 };
 
@@ -140,7 +137,7 @@ export const toggleAutoUpdateChecker = (value: boolean) => {
   app.config.saveSync();
 
   store.dispatch({
-    type: types.APP_REFRESH_CONFIG,
+    type: types.APP_REFRESH_CONFIG
   });
 };
 
@@ -161,7 +158,7 @@ export const toggleMinimizeToTray = (value: boolean) => {
   app.config.saveSync();
 
   store.dispatch({
-    type: types.APP_REFRESH_CONFIG,
+    type: types.APP_REFRESH_CONFIG
   });
 };
 
@@ -173,6 +170,6 @@ export const toggleDisplayNotifications = (value: boolean) => {
   app.config.saveSync();
 
   store.dispatch({
-    type: types.APP_REFRESH_CONFIG,
+    type: types.APP_REFRESH_CONFIG
   });
 };

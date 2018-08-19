@@ -14,7 +14,6 @@ import { isCtrlKey } from '../../utils/utils-platform';
 import { RootState } from '../../reducers';
 import { TrackModel, PlayerStatus, Repeat } from '../../typings/interfaces';
 
-
 /*
 |--------------------------------------------------------------------------
 | Header
@@ -30,18 +29,17 @@ interface Props {
   showTopHeader: boolean;
 }
 
-
 class Header extends React.Component<Props> {
   input: React.RefObject<HTMLInputElement>;
 
-  constructor(props: Props) {
+  constructor (props: Props) {
     super(props);
 
     this.input = React.createRef();
     this.onKey = this.onKey.bind(this);
   }
 
-  onKey(e: React.KeyboardEvent) {
+  onKey (e: React.KeyboardEvent) {
     // ctrl-f shortcut
     if (isCtrlKey(e) && e.keyCode === 70) {
       if (this.input.current) {
@@ -50,31 +48,31 @@ class Header extends React.Component<Props> {
     }
   }
 
-  search(e: React.ChangeEvent<HTMLInputElement>) {
+  search (e: React.ChangeEvent<HTMLInputElement>) {
     LibraryActions.search(e.target.value);
   }
 
-  render() {
+  render () {
     const {
-      playerStatus, queue, queueCursor, shuffle, repeat, showTopHeader,
+      playerStatus, queue, queueCursor, shuffle, repeat, showTopHeader
     } = this.props;
 
     return (
       <header>
         {
           showTopHeader && (
-            <div className="top-header">
+            <div className='top-header'>
               <WindowControls />
             </div>
           )
         }
-        <div className="main-header">
-          <div className="col-main-controls">
+        <div className='main-header'>
+          <div className='col-main-controls'>
             <PlayerControls
               playerStatus={playerStatus}
             />
           </div>
-          <div className="col-player-infos">
+          <div className='col-player-infos'>
             <PlayingBar
               queue={queue}
               queueCursor={queueCursor}
@@ -82,11 +80,11 @@ class Header extends React.Component<Props> {
               repeat={repeat}
             />
           </div>
-          <div className="col-search-controls">
+          <div className='col-search-controls'>
             <Input
               selectOnClick
-              placeholder="search"
-              className="form-control input-sm search"
+              placeholder='search'
+              className='form-control input-sm search'
               changeTimeout={250}
               clearButton
               ref={this.input}
@@ -106,7 +104,7 @@ const mapStateToProps = ({ player }: RootState) => ({
   shuffle: player.shuffle,
   queue: player.queue,
   queueCursor: player.queueCursor,
-  showTopHeader: os.platform() !== 'darwin' && !config.get('useNativeFrame'),
+  showTopHeader: os.platform() !== 'darwin' && !config.get('useNativeFrame')
 });
 
 export default connect(mapStateToProps)(Header);

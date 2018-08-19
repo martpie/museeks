@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { NavLink } from 'react-router-dom';
 
-
 /*
 |--------------------------------------------------------------------------
 | PlaylistsNav
@@ -9,26 +8,26 @@ import { NavLink } from 'react-router-dom';
 */
 
 interface Props {
-  playlistId: string,
-  onContextMenu: (playlistId: string) => void,
+  playlistId: string;
+  onContextMenu: (playlistId: string) => void;
 }
 
 export default class PlaylistsNavLink extends React.Component<Props> {
-  constructor(props: Props) {
+  constructor (props: Props) {
     super(props);
 
     this.onContextMenu = this.onContextMenu.bind(this);
   }
 
-  onContextMenu() {
+  onContextMenu () {
     this.props.onContextMenu(this.props.playlistId);
   }
 
-  render() {
+  render () {
     return (
       <NavLink
-        className="playlist-link"
-        activeClassName="active"
+        className='playlist-link'
+        activeClassName='active'
         to={`/playlists/${this.props.playlistId}`}
         onContextMenu={this.onContextMenu}
       >

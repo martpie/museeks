@@ -12,7 +12,6 @@ import { config } from '../../lib/app';
 import { LibraryState } from '../../reducers/library';
 import { RootState } from '../../reducers';
 
-
 /*
 |--------------------------------------------------------------------------
 | Global View
@@ -20,7 +19,7 @@ import { RootState } from '../../reducers';
 */
 
 interface Props {
-  library: LibraryState
+  library: LibraryState;
 }
 
 const Settings: React.SFC<Props> = (props) => {
@@ -28,50 +27,50 @@ const Settings: React.SFC<Props> = (props) => {
   const conf = config.getAll();
 
   return (
-    <div className="view view-settings">
-      <nav className="settings-menu">
-        <NavLink to="/settings/library" className="settings-link" activeClassName="active">
+    <div className='view view-settings'>
+      <nav className='settings-menu'>
+        <NavLink to='/settings/library' className='settings-link' activeClassName='active'>
           Library
           </NavLink>
-        <NavLink to="/settings/audio" className="settings-link" activeClassName="active">
+        <NavLink to='/settings/audio' className='settings-link' activeClassName='active'>
           Audio
           </NavLink>
-        <NavLink to="/settings/interface" className="settings-link" activeClassName="active">
+        <NavLink to='/settings/interface' className='settings-link' activeClassName='active'>
           Interface
           </NavLink>
-        <NavLink to="/settings/advanced" className="settings-link" activeClassName="active">
+        <NavLink to='/settings/advanced' className='settings-link' activeClassName='active'>
           Advanced
           </NavLink>
-        <NavLink to="/settings/about" className="settings-link" activeClassName="active">
+        <NavLink to='/settings/about' className='settings-link' activeClassName='active'>
           About
           </NavLink>
       </nav>
 
-      <div className="settings-content">
+      <div className='settings-content'>
         <Switch>
           <Route
-            path="/settings"
+            path='/settings'
             exact
-            render={() => (<Redirect to="/settings/library" />)}
+            render={() => (<Redirect to='/settings/library' />)}
           />
           <Route
-            path="/settings/library"
+            path='/settings/library'
             render={p => (<SettingsLibrary {...p} library={library} />)}
           />
           <Route
-            path="/settings/interface"
+            path='/settings/interface'
             render={p => (<SettingsUI {...p} config={conf} />)}
           />
           <Route
-            path="/settings/audio"
+            path='/settings/audio'
             render={p => (<SettingsAudio {...p} config={conf} />)}
           />
           <Route
-            path="/settings/advanced"
+            path='/settings/advanced'
             render={p => (<SettingsAdvanced {...p} config={conf} />)}
           />
           <Route
-            path="/settings/about"
+            path='/settings/about'
             render={p => (<SettingsAbout {...p} />)}
           />
         </Switch>

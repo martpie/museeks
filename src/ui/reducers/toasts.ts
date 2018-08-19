@@ -4,7 +4,6 @@ import { Toast, Action } from '../typings/interfaces';
 
 export type ToastsState = Toast[];
 
-
 const initialState: ToastsState = [];
 
 export default (state = initialState, action: Action): ToastsState => {

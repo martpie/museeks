@@ -1,6 +1,5 @@
 import * as React from 'react';
 
-
 /*
 |--------------------------------------------------------------------------
 | EmptyQueue
@@ -8,10 +7,10 @@ import * as React from 'react';
 */
 
 export default class QueueEmpty extends React.PureComponent {
-  render() {
+  render () {
     return (
-      <div className="queue text-left">
-        <div className="empty-queue text-center">
+      <div className='queue text-left'>
+        <div className='empty-queue text-center'>
           queue is empty
         </div>
       </div>

@@ -1,6 +1,5 @@
 import * as os from 'os';
 
-
 /**
  * Returns true if
  * - the control key was pressed on a non-mac platform

@@ -8,7 +8,6 @@ import * as PlayerActions from '../../actions/PlayerActions';
 import { PlayerStatus } from '../../typings/interfaces';
 import { RootState } from '../../reducers';
 
-
 /*
 |--------------------------------------------------------------------------
 | PlayingIndicator
@@ -27,42 +26,42 @@ class TrackPlayingIndicator extends React.Component<Props, State> {
   static getIcon = (state: PlayerStatus, hovered: boolean) => {
     if (state === PlayerStatus.PLAY) {
       if (hovered) {
-        return <Icon name="pause" fixedWidth />;
+        return <Icon name='pause' fixedWidth />;
       }
 
       return (
-        <div className="animation">
-          <div className="bar bar-first" />
-          <div className="bar bar-second" />
-          <div className="bar bar-third" />
+        <div className='animation'>
+          <div className='bar bar-first' />
+          <div className='bar bar-second' />
+          <div className='bar bar-third' />
         </div>
       );
     }
 
-    return <Icon name="play" fixedWidth />;
+    return <Icon name='play' fixedWidth />;
   }
 
-  constructor(props: Props) {
+  constructor (props: Props) {
     super(props);
     this.state = {
-      hovered: false,
+      hovered: false
     };
 
     this.onMouseEnter = this.onMouseEnter.bind(this);
     this.onMouseLeave = this.onMouseLeave.bind(this);
   }
 
-  onMouseEnter() {
+  onMouseEnter () {
     this.setState({ hovered: true });
   }
 
-  onMouseLeave() {
+  onMouseLeave () {
     this.setState({ hovered: false });
   }
 
-  render() {
+  render () {
     const classNames = classnames('playing-indicator', 'reset', this.props.state, {
-      hovered: this.state.hovered,
+      hovered: this.state.hovered
     });
 
     const icon = TrackPlayingIndicator.getIcon(this.props.state, this.state.hovered);
@@ -75,14 +74,13 @@ class TrackPlayingIndicator extends React.Component<Props, State> {
         onMouseLeave={this.onMouseLeave}
         tabIndex={0}
       >
-        <div className="playing-indicator">
+        <div className='playing-indicator'>
           { icon }
         </div>
       </button>
     );
   }
 }
-
 
 const mapStateToProps = (state: RootState): Props => ({ state: state.player.playerStatus });
 

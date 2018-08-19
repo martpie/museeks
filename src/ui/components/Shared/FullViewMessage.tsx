@@ -7,9 +7,9 @@ import * as React from 'react';
 */
 
 export default class FullViewMessage extends React.PureComponent {
-  render() {
+  render () {
     return (
-      <div className="full-message">
+      <div className='full-message'>
         { this.props.children }
       </div>
     );

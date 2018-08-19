@@ -10,7 +10,6 @@ import Playlist from './Playlist';
 import { PlaylistModel } from '../../typings/interfaces';
 import { RootState } from '../../reducers';
 
-
 /*
 |--------------------------------------------------------------------------
 | Playlists
@@ -18,7 +17,7 @@ import { RootState } from '../../reducers';
 */
 
 interface OwnProps {
-  playlists: PlaylistModel[],
+  playlists: PlaylistModel[];
 }
 
 interface RouteParams {
@@ -28,18 +27,18 @@ interface RouteParams {
 type Props = OwnProps & RouteComponentProps<RouteParams>;
 
 class Playlists extends React.Component<Props> {
-  constructor(props: Props) {
+  constructor (props: Props) {
     super(props);
 
     this.autoRedirect = this.autoRedirect.bind(this);
     this.createPlaylist = this.createPlaylist.bind(this);
   }
 
-  createPlaylist() {
-    PlaylistsActions.create('New playlist', true);
+  async createPlaylist () {
+    await PlaylistsActions.create('New playlist', true);
   }
 
-  autoRedirect() {
+  autoRedirect () {
     const { playlistId } = this.props.match.params;
 
     // If there is not playlist selected, redirect to the first one
@@ -53,7 +52,7 @@ class Playlists extends React.Component<Props> {
 
     if (playlists.every(elem => elem._id !== playlistId)) {
       if (playlists.length === 0) {
-        return <Redirect to="/playlists" />;
+        return <Redirect to='/playlists' />;
       }
 
       return <Redirect to={`/playlists/${this.props.playlists[0]._id}`} />;
@@ -62,24 +61,24 @@ class Playlists extends React.Component<Props> {
     return null;
   }
 
-  render() {
+  render () {
     const { playlists } = this.props;
     let playlistContent;
 
-    if (playlists === null) {
+    /* if (playlists === null) {
       playlistContent = (
         <FullViewMessage>
           <p>Loading playlists</p>
         </FullViewMessage>
       );
-    } else if (playlists.length === 0) {
+    } else */ if (playlists.length === 0) {
       playlistContent = (
         <FullViewMessage>
           <p>You haven{"'"}t created any playlist yet</p>
-          <p className="sub-message">
+          <p className='sub-message'>
             <button
               onClick={this.createPlaylist}
-              className="button-link"
+              className='button-link'
               tabIndex={0}
             >
               create one now
@@ -90,16 +89,16 @@ class Playlists extends React.Component<Props> {
     } else {
       playlistContent = (
         <React.Fragment>
-          <Route path="/playlists" render={this.autoRedirect} />
-          <Route path="/playlists/:playlistId" component={Playlist} />
+          <Route path='/playlists' render={this.autoRedirect} />
+          <Route path='/playlists/:playlistId' component={Playlist} />
         </React.Fragment>
       );
     }
 
     return (
-      <div className="view view-playlists">
+      <div className='view view-playlists'>
         <PlaylistsNav playlists={playlists} />
-        <div className="playlist">
+        <div className='playlist'>
           { playlistContent }
         </div>
       </div>
@@ -107,11 +106,9 @@ class Playlists extends React.Component<Props> {
   }
 }
 
-
 const mapStateToProps = ({ playlists, player }: RootState) => ({
   playlists,
-  playerStatus: player.playerStatus,
+  playerStatus: player.playerStatus
 });
-
 
 export default withRouter(connect(mapStateToProps)(Playlists));

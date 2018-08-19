@@ -6,7 +6,6 @@ import ToastItem from './ToastItem';
 import { Toast } from '../../typings/interfaces';
 import { RootState } from '../../reducers';
 
-
 /*
 |--------------------------------------------------------------------------
 | Toasts
@@ -19,7 +18,7 @@ interface InjectedProps {
 
 const Toasts: React.SFC<InjectedProps> = (props) => {
   return (
-    <div className="toasts">
+    <div className='toasts'>
       {props.toasts.map(toast => (
         <ToastItem
           type={toast.type}
@@ -29,10 +28,9 @@ const Toasts: React.SFC<InjectedProps> = (props) => {
       ))}
     </div>
   );
-}
+};
 
-
-function mapStateToProps(state: RootState) {
+function mapStateToProps (state: RootState) {
   return { toasts: state.toasts };
 }
 

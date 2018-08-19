@@ -7,17 +7,15 @@ import { SortBy, SortOrder } from '../../typings/interfaces';
 import { RootState } from '../../reducers';
 import { LibrarySort } from '../../reducers/library';
 
-
 interface OwnProps {
   enableSort: boolean;
 }
 
 interface InjectedProps {
-  sort?: LibrarySort
+  sort?: LibrarySort;
 }
 
 type Props = OwnProps & InjectedProps;
-
 
 class TracksListHeader extends React.Component<Props> {
   static getIcon = (sort: LibrarySort | undefined, sortType: SortBy) => {
@@ -33,42 +31,42 @@ class TracksListHeader extends React.Component<Props> {
     return null;
   }
 
-  render() {
+  render () {
     const { enableSort, sort } = this.props;
 
     return (
-      <div className="tracks-list-header">
+      <div className='tracks-list-header'>
         <TracksListHeaderCell
-          className="cell-track-playing"
-          title="&nbsp;"
+          className='cell-track-playing'
+          title='&nbsp;'
         />
         <TracksListHeaderCell
-          className="cell-track"
-          title="Title"
+          className='cell-track'
+          title='Title'
           sortBy={enableSort ? SortBy.TITLE : null}
           icon={TracksListHeader.getIcon(sort, SortBy.TITLE)}
         />
         <TracksListHeaderCell
-          className="cell-duration"
-          title="Duration"
+          className='cell-duration'
+          title='Duration'
           sortBy={enableSort ? SortBy.DURATION : null}
           icon={TracksListHeader.getIcon(sort, SortBy.DURATION)}
         />
         <TracksListHeaderCell
-          className="cell-artist"
-          title="Artist"
+          className='cell-artist'
+          title='Artist'
           sortBy={enableSort ? SortBy.ARTIST : null}
           icon={TracksListHeader.getIcon(sort, SortBy.ARTIST)}
         />
         <TracksListHeaderCell
-          className="cell-album"
-          title="Album"
+          className='cell-album'
+          title='Album'
           sortBy={enableSort ? SortBy.ALBUM : null}
           icon={TracksListHeader.getIcon(sort, SortBy.ALBUM)}
         />
         <TracksListHeaderCell
-          className="cell-genre"
-          title="Genre"
+          className='cell-genre'
+          title='Genre'
           sortBy={enableSort ? SortBy.GENRE : null}
           icon={TracksListHeader.getIcon(sort, SortBy.GENRE)}
         />
@@ -77,11 +75,10 @@ class TracksListHeader extends React.Component<Props> {
   }
 }
 
-
 const mapStateToProps = (state: RootState, ownProps: OwnProps): InjectedProps => {
   if (ownProps.enableSort) {
     return {
-      sort: state.library.sort,
+      sort: state.library.sort
     };
   }
 

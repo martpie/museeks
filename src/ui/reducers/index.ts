@@ -7,11 +7,11 @@ import player, { PlayerState } from './player';
 import playlists, { PlaylistsState } from './playlists';
 
 export interface RootState {
-  app: AppState,
-  library: LibraryState,
-  toasts: ToastsState,
-  player: PlayerState,
-  playlists: PlaylistsState
+  app: AppState;
+  library: LibraryState;
+  toasts: ToastsState;
+  player: PlayerState;
+  playlists: PlaylistsState;
 }
 
 const rootReducer = combineReducers({
@@ -19,7 +19,7 @@ const rootReducer = combineReducers({
   library,
   toasts,
   player,
-  playlists,
+  playlists
 });
 
 export default rootReducer;

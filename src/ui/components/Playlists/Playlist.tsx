@@ -10,7 +10,6 @@ import { filterTracks } from '../../utils/utils-library';
 import { TrackModel, PlaylistModel, PlayerStatus } from '../../typings/interfaces';
 import { RootState } from '../../reducers';
 
-
 /*
 |--------------------------------------------------------------------------
 | Playlist
@@ -18,10 +17,10 @@ import { RootState } from '../../reducers';
 */
 
 interface OwnProps {
-  tracks: TrackModel[],
-  trackPlayingId: string | null,
-  playlists: PlaylistModel[],
-  playerStatus: PlayerStatus,
+  tracks: TrackModel[];
+  trackPlayingId: string | null;
+  playlists: PlaylistModel[];
+  playerStatus: PlayerStatus;
 }
 
 interface RouteParams {
@@ -31,28 +30,28 @@ interface RouteParams {
 type Props = OwnProps & RouteComponentProps<RouteParams>;
 
 class Playlist extends React.Component<Props> {
-  componentDidMount() {
-    PlaylistsActions.load(this.props.match.params.playlistId);
+  async componentDidMount () {
+    await PlaylistsActions.load(this.props.match.params.playlistId);
   }
 
-  componentWillReceiveProps(nextProps: Props) {
+  async componentWillReceiveProps (nextProps: Props) {
     const { playlistId } = this.props.match.params;
     const nextPlaylistId = nextProps.match.params.playlistId;
 
     if (nextPlaylistId !== playlistId) {
-      PlaylistsActions.load(nextPlaylistId);
+      await PlaylistsActions.load(nextPlaylistId);
     }
   }
 
-  render() {
+  render () {
     const {
-      tracks, trackPlayingId, playerStatus, playlists, match,
+      tracks, trackPlayingId, playerStatus, playlists, match
     } = this.props;
 
     if (Array.isArray(tracks) && tracks.length > 0) {
       return (
         <TracksList
-          type="playlist"
+          type='playlist'
           playerStatus={playerStatus}
           tracks={tracks}
           trackPlayingId={trackPlayingId}
@@ -65,7 +64,7 @@ class Playlist extends React.Component<Props> {
     return (
       <FullViewMessage>
         <p>Empty playlist</p>
-        <p className="sub-message">You can add tracks from the <Link to="/library">library view</Link></p>
+        <p className='sub-message'>You can add tracks from the <Link to='/library'>library view</Link></p>
       </FullViewMessage>
     );
   }
@@ -79,7 +78,7 @@ const mapStateToProps = ({ library, playlists, player }: RootState) => {
     playlists,
     tracks: filteredTracks,
     playerStatus: player.playerStatus,
-    trackPlayingId: (player.queue.length > 0 && player.queueCursor !== null) ? player.queue[player.queueCursor]._id : null,
+    trackPlayingId: (player.queue.length > 0 && player.queueCursor !== null) ? player.queue[player.queueCursor]._id : null
   };
 };
 
