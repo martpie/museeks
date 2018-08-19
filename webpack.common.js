@@ -7,7 +7,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: {
-    main: ['./src/ui/main.js'],
+    main: ['./src/ui/main.tsx'],
   },
   target: 'electron-renderer',
   output: {
@@ -15,11 +15,14 @@ module.exports = {
     filename: 'bundle.js',
     publicPath: '',
   },
+  resolve: {
+    extensions: ['.ts', '.tsx', '.js', '.json'],
+  },
   module: {
     rules: [
       {
-        test: /\.js$/,
-        use: ['babel-loader'],
+        test: /\.(ts|tsx)([?]?.*)$/,
+        loader: 'ts-loader',
         exclude: /node_modules/,
       },
       {
