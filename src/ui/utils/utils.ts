@@ -189,7 +189,7 @@ export const getAudioDuration = (trackPath: string): Promise<number> => {
 export const getMetadata = async (trackPath: string): Promise<Track> => {
   const defaultMetadata = getDefaultMetadata();
 
-  const metadata: Track = {
+  const basicMetadata: Track = {
     ...defaultMetadata,
     path: trackPath
   };
@@ -219,11 +219,13 @@ export const getMetadata = async (trackPath: string): Promise<Track> => {
         console.warn(`An error occured while getting ${trackPath} duration: ${err}`);
       }
     }
+
+    return metadata;
   } catch (err) {
     console.warn(`An error occured while reading ${trackPath} id3 tags: ${err}`);
   }
 
-  return metadata;
+  return basicMetadata;
 };
 
 export const fetchCover = async (trackPath: string): Promise<string | null> => {
