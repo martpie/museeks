@@ -101,7 +101,6 @@ export type ToastType = 'success' | 'danger' | 'warning';
 /**
  * Config
  */
-
 export interface Config {
   theme: 'light' | 'dark';
   audioVolume: number;
@@ -109,6 +108,10 @@ export interface Config {
   audioMuted: boolean;
   audioShuffle: boolean;
   audioRepeat: Repeat;
+  librarySort: {
+    by: SortBy;
+    order: SortOrder;
+  };
   // musicFolders: string[],
   sleepBlocker: boolean;
   autoUpdateChecker: boolean;
