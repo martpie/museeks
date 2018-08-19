@@ -96,7 +96,7 @@ export const add = (pathsToScan: string[]) => {
   scanQueue.on('end', endScan);
   scanQueue.on('success', () => {
     // Every 10 scans, update progress bar
-    if (scan.processed % 20 === 0) {
+    if (scan.processed % 100 === 0) {
       // Progress bar update
       store.dispatch({
         type: types.APP_LIBRARY_REFRESH_PROGRESS,
