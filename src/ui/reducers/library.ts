@@ -1,4 +1,6 @@
 import types from '../constants/action-types';
+
+import { config } from '../lib/app';
 import * as utils from '../utils/utils';
 import { Action, TrackModel, SortBy, SortOrder } from '../types/interfaces';
 
@@ -28,10 +30,7 @@ const initialState: LibraryState = {
     playlist: []
   },
   search: '',
-  sort: {
-    by: SortBy.ARTIST,
-    order: SortOrder.ASC
-  },
+  sort: config.get('librarySort'),
   loading: true,
   refreshing: false,
   refresh: {
@@ -67,12 +66,17 @@ export default (state = initialState, action: Action): LibraryState => {
         };
       }
 
+      const sort: LibrarySort = {
+        by: sortBy,
+        order: SortOrder.ASC
+      };
+
+      config.set('librarySort', sort);
+      config.saveSync();
+
       return {
         ...state,
-        sort: {
-          by: sortBy,
-          order: SortOrder.ASC
-        }
+        sort
       };
     }
 

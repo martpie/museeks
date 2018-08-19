@@ -70,10 +70,7 @@ app.on('ready', () => {
     minWidth: 900,
     minHeight: 550,
     frame: useNativeFrame,
-    show: false,
-    webPreferences: {
-      contextIsolation: true,
-    }
+    show: false
   };
 
   if (os.platform() === 'darwin' && !useNativeFrame) {
