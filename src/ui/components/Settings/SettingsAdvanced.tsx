@@ -5,7 +5,6 @@ import * as SettingsActions from '../../actions/SettingsActions';
 import CheckboxSetting from './CheckboxSetting';
 import { Config } from '../../typings/interfaces';
 
-
 /*
 |--------------------------------------------------------------------------
 | Child - Advanced Settings
@@ -16,17 +15,16 @@ interface Props {
   config: Config;
 }
 
-
 export default class SettingsAdvanced extends React.Component<Props> {
-  render() {
+  render () {
     const { config } = this.props;
 
     return (
-      <div className="setting setting-dev-mode">
+      <div className='setting setting-dev-mode'>
         <CheckboxSetting
-          slug="devmode"
-          title="Dev mode"
-          description="Enable dev mode"
+          slug='devmode'
+          title='Dev mode'
+          description='Enable dev mode'
           defaultValue={config.devMode}
           onClick={SettingsActions.toggleDevMode}
         />

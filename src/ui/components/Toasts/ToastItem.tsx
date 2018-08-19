@@ -1,6 +1,5 @@
 import * as React from 'react';
 
-
 /*
 |--------------------------------------------------------------------------
 | Toast
@@ -12,7 +11,6 @@ interface Props {
   content: string;
 }
 
-
 const ToastItem: React.SFC<Props> = (props) => {
   const { type, content } = props;
 
@@ -21,6 +19,6 @@ const ToastItem: React.SFC<Props> = (props) => {
       {content}
     </div>
   );
-}
+};
 
 export default ToastItem;

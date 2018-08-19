@@ -14,7 +14,6 @@ import * as app from '../lib/app';
 import * as utils from '../utils/utils';
 import { SortBy } from '../typings/interfaces';
 
-
 const { dialog } = electron.remote;
 const stat = util.promisify(fs.stat);
 
@@ -34,7 +33,7 @@ export const load = async () => {
       type: types.APP_LIBRARY_REFRESH,
       payload: {
         tracks
-      },
+      }
     });
   } catch (err) {
     console.warn(err);
@@ -48,7 +47,7 @@ export const search = (value: string) => {
   store.dispatch({
     type: types.APP_FILTER_SEARCH,
     payload: {
-      search: value,
+      search: value
     }
   });
 };
@@ -61,7 +60,7 @@ export const sort = (sortBy: SortBy) => {
     type: types.APP_LIBRARY_SORT,
     payload: {
       sortBy
-    },
+    }
   });
 };
 
@@ -72,18 +71,18 @@ export const add = (pathsToScan: string[]) => {
   // Instantiate queue
   const scan = {
     processed: 0,
-    total: 0,
+    total: 0
   };
 
-  const endScan = () => {
+  const endScan = async () => {
     scan.processed = 0;
     scan.total = 0;
 
     store.dispatch({
-      type: types.APP_LIBRARY_REFRESH_END,
+      type: types.APP_LIBRARY_REFRESH_END
     });
 
-    LibraryActions.load();
+    await LibraryActions.load();
   };
 
   // @ts-ignore Outdated types
@@ -98,14 +97,14 @@ export const add = (pathsToScan: string[]) => {
       type: types.APP_LIBRARY_REFRESH_PROGRESS,
       payload: {
         processed: scan.processed,
-        total: scan.total,
+        total: scan.total
       }
     });
   });
   // End queue instantiation
 
   store.dispatch({
-    type: types.APP_LIBRARY_REFRESH_START,
+    type: types.APP_LIBRARY_REFRESH_START
   });
 
   let rootFiles: string[]; // HACK Kind of hack, looking for a better solution
@@ -114,7 +113,7 @@ export const add = (pathsToScan: string[]) => {
   new Promise<ScanFile[]>((resolve) => {
     const promises = pathsToScan.map(async folderPath => ({
       path: folderPath,
-      stat: await stat(folderPath),
+      stat: await stat(folderPath)
     }));
 
     const paths = Promise.all(promises);
@@ -187,11 +186,11 @@ export const remove = (tracksIds: string[]) => {
   dialog.showMessageBox(app.browserWindows.main, {
     buttons: [
       'Cancel',
-      'Remove',
+      'Remove'
     ],
     title: 'Remove tracks from library?',
     message: `Are you sure you want to remove ${tracksIds.length} element(s) from your library?`,
-    type: 'warning',
+    type: 'warning'
   }, (result) => {
     if (result === 1) { // button possition, here 'remove'
       // Remove tracks from the Track collection
@@ -200,7 +199,7 @@ export const remove = (tracksIds: string[]) => {
       store.dispatch({
         type: types.APP_LIBRARY_REMOVE_TRACKS,
         payload: {
-          tracksIds,
+          tracksIds
         }
       });
       // That would be great to remove those ids from all the playlists, but it's not easy
@@ -215,34 +214,33 @@ export const remove = (tracksIds: string[]) => {
  */
 export const reset = async () => {
   try {
-    const result = await dialog.showMessageBox(app.browserWindows.main, {
+    const result = dialog.showMessageBox(app.browserWindows.main, {
       buttons: [
         'Cancel',
-        'Reset',
+        'Reset'
       ],
       title: 'Reset library?',
       message: 'Are you sure you want to reset your library ? All your tracks and playlists will be cleared.',
-      type: 'warning',
+      type: 'warning'
     });
 
     if (result === 1) {
       store.dispatch({
-        type: types.APP_LIBRARY_REFRESH_START,
+        type: types.APP_LIBRARY_REFRESH_START
       });
 
       await app.models.Track.removeAsync({}, { multi: true });
       await app.models.Playlist.removeAsync({}, { multi: true });
 
-
       store.dispatch({
-        type: types.APP_LIBRARY_RESET,
+        type: types.APP_LIBRARY_RESET
       });
 
       store.dispatch({
-        type: types.APP_LIBRARY_REFRESH_END,
+        type: types.APP_LIBRARY_REFRESH_END
       });
 
-      load();
+      await load();
     }
   } catch (err) {
     console.error(err);

@@ -31,11 +31,11 @@ const saveBounds = () => {
   }, 250);
 };
 
-const init = () => {
+const init = async () => {
   // Usual tasks
-  LibraryActions.load();
-  PlaylistsActions.refresh();
-  SettingsActions.check();
+  await LibraryActions.load();
+  await PlaylistsActions.refresh();
+  await SettingsActions.check();
 
   // Tell the main process to show the window
   ipcRenderer.send('app:ready');
@@ -44,9 +44,9 @@ const init = () => {
   // Audio Events
   Player.getAudio().addEventListener('ended', PlayerActions.next);
   Player.getAudio().addEventListener('error', PlayerActions.audioError);
-  Player.getAudio().addEventListener('timeupdate', () => {
+  Player.getAudio().addEventListener('timeupdate', async () => {
     if (Player.isThresholdReached()) {
-      LibraryActions.incrementPlayCount(Player.getSrc());
+      await LibraryActions.incrementPlayCount(Player.getSrc());
     }
   });
 
@@ -76,7 +76,7 @@ const init = () => {
 
     NotificationsActions.add(track.title, {
       body: `${track.artist}\n${track.album}`,
-      icon: cover || '',
+      icon: cover || ''
     });
   });
 
@@ -85,11 +85,11 @@ const init = () => {
   });
 
   // Listen for main-process events
-  ipcRenderer.on('playback:play', () => {
+  ipcRenderer.on('playback:play', async () => {
     if (Player.getSrc()) {
-      PlayerActions.play();
+      await PlayerActions.play();
     } else {
-      PlayerActions.start();
+      await PlayerActions.start();
     }
   });
 
@@ -97,16 +97,16 @@ const init = () => {
     PlayerActions.pause();
   });
 
-  ipcRenderer.on('playback:playpause', () => {
-    PlayerActions.playPause();
+  ipcRenderer.on('playback:playpause', async () => {
+    await PlayerActions.playPause();
   });
 
-  ipcRenderer.on('playback:previous', () => {
-    PlayerActions.previous();
+  ipcRenderer.on('playback:previous', async () => {
+    await PlayerActions.previous();
   });
 
-  ipcRenderer.on('playback:next', () => {
-    PlayerActions.next();
+  ipcRenderer.on('playback:next', async () => {
+    await PlayerActions.next();
   });
 
   // Prevent some events
@@ -150,5 +150,5 @@ export default {
   maximize,
   minimize,
   saveBounds,
-  restart,
+  restart
 };

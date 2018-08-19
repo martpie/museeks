@@ -13,8 +13,8 @@ export const add = (type: ToastType, content: string, duration = 3000) => {
   store.dispatch({
     type: types.APP_TOAST_ADD,
     payload: {
-      toast,
-    },
+      toast
+    }
   });
 
   window.setTimeout(() => {
@@ -22,7 +22,7 @@ export const add = (type: ToastType, content: string, duration = 3000) => {
       type: types.APP_TOAST_REMOVE,
       payload: {
         toastId: _id
-      },
+      }
     });
   }, duration);
 };

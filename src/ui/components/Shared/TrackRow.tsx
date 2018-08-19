@@ -6,7 +6,6 @@ import PlayingIndicator from './PlayingIndicator';
 import { parseDuration } from '../../utils/utils';
 import { TrackModel } from '../../typings/interfaces';
 
-
 /*
 |--------------------------------------------------------------------------
 | TrackRow
@@ -15,17 +14,16 @@ import { TrackModel } from '../../typings/interfaces';
 
 interface Props {
   selected: boolean;
-  track: TrackModel,
-  index: number,
-  isPlaying: boolean,
-  onDoubleClick: Function,
-  onMouseDown: Function,
-  onContextMenu: Function,
+  track: TrackModel;
+  index: number;
+  isPlaying: boolean;
+  onDoubleClick: Function;
+  onMouseDown: Function;
+  onContextMenu: Function;
 }
 
-
 export default class TrackRow extends React.PureComponent<Props> {
-  constructor(props: Props) {
+  constructor (props: Props) {
     super(props);
 
     this.onDoubleClick = this.onDoubleClick.bind(this);
@@ -33,22 +31,22 @@ export default class TrackRow extends React.PureComponent<Props> {
     this.onContextMenu = this.onContextMenu.bind(this);
   }
 
-  onMouseDown(e: React.SyntheticEvent) {
+  onMouseDown (e: React.SyntheticEvent) {
     this.props.onMouseDown(e, this.props.track._id, this.props.index);
   }
 
-  onContextMenu(e: React.SyntheticEvent) {
+  onContextMenu (e: React.SyntheticEvent) {
     this.props.onContextMenu(e, this.props.index);
   }
 
-  onDoubleClick() {
+  onDoubleClick () {
     this.props.onDoubleClick(this.props.track._id);
   }
 
-  render() {
+  render () {
     const { track, selected } = this.props;
     const trackClasses = classnames('track', {
-      selected,
+      selected
     });
 
     return (
@@ -57,26 +55,26 @@ export default class TrackRow extends React.PureComponent<Props> {
         onDoubleClick={this.onDoubleClick}
         onMouseDown={this.onMouseDown}
         onContextMenu={this.onContextMenu}
-        role="option"
+        role='option'
         aria-selected={selected}
         tabIndex={-1} // we do not want trackrows to be focusable by the keyboard
       >
-        <div className="cell cell-track-playing text-center">
+        <div className='cell cell-track-playing text-center'>
           {this.props.isPlaying ? <PlayingIndicator /> : null}
         </div>
-        <div className="cell cell-track">
+        <div className='cell cell-track'>
           { track.title }
         </div>
-        <div className="cell cell-duration">
+        <div className='cell cell-duration'>
           { parseDuration(track.duration) }
         </div>
-        <div className="cell cell-artist">
+        <div className='cell cell-artist'>
           { track.artist[0] }
         </div>
-        <div className="cell cell-album">
+        <div className='cell cell-album'>
           { track.album }
         </div>
-        <div className="cell cell-genre">
+        <div className='cell cell-genre'>
           { track.genre.join(', ') }
         </div>
       </div>

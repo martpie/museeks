@@ -11,15 +11,14 @@ export const filterTracks = (tracks: TrackModel[], search: string): TrackModel[]
     || track.loweredMetas.album.includes(search)
     || track.loweredMetas.genre.toString().includes(search)
     || track.loweredMetas.title.includes(search));
-}
+};
 
 /**
  * Sort an array of tracks (alias to lodash.orderby)
  */
 export const sortTracks = (tracks: TrackModel[], sort: any[]): TrackModel[] => {
   return orderBy(tracks, ...sort);
-}
-
+};
 
 /**
  * Format a list of tracks to a nice status

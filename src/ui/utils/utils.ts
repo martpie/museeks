@@ -13,7 +13,6 @@ import pickBy from 'lodash-es/pickBy';
 
 import { Track } from '../typings/interfaces';
 
-
 const stat = util.promisify(fs.stat);
 
 /**
@@ -55,7 +54,7 @@ export const parseUri = (uri: string): string => {
  */
 export const parseBase64 = (format: string, data: string) => {
   return `data:image/${format};base64,${data}`;
-}
+};
 
 /**
  * Sort an array of string by ASC or DESC, then remove all duplicates
@@ -66,7 +65,6 @@ export const simpleSort = (array: string[], sorting: 'asc' | 'desc') => {
   } else if (sorting === 'desc') {
     array.sort((a, b) => b > a ? -1 : 1);
   }
-
 
   const result: string[] = [];
   array.forEach((item) => {
@@ -85,7 +83,7 @@ export const stripAccents = (str: string): string => {
   const split = accents.split('').join('|');
   const reg = new RegExp(`(${split})`, 'g');
 
-  function replacement(a: string) {
+  function replacement (a: string) {
     return fixes[accents.indexOf(a)] || '';
   }
 
@@ -120,7 +118,7 @@ export const getDefaultMetadata = (): Track => ({
   artist: ['Unknown artist'],
   disk: {
     no: 0,
-    of: 0,
+    of: 0
   },
   duration: 0,
   genre: [],
@@ -128,16 +126,16 @@ export const getDefaultMetadata = (): Track => ({
     artist: ['unknown artist'],
     album: 'unknown',
     title: '',
-    genre: [],
+    genre: []
   },
   path: '',
   playCount: 0,
   title: '',
   track: {
     no: 0,
-    of: 0,
+    of: 0
   },
-  year: null,
+  year: null
 });
 
 export const parseMusicMetadata = (data: mmd.IAudioMetadata, trackPath: string): Partial<Track> => {
@@ -151,7 +149,7 @@ export const parseMusicMetadata = (data: mmd.IAudioMetadata, trackPath: string):
     genre: common.genre,
     title: common.title || path.parse(trackPath).base,
     track: common.track,
-    year: common.year,
+    year: common.year
   };
 
   // @ts-ignore
@@ -162,7 +160,7 @@ export const getLoweredMeta = (metadata: Track) => ({
   artist: metadata.artist.map(meta => stripAccents(meta.toLowerCase())),
   album: stripAccents(metadata.album.toLowerCase()),
   title: stripAccents(metadata.title.toLowerCase()),
-  genre: metadata.genre.map(meta => stripAccents(meta.toLowerCase())),
+  genre: metadata.genre.map(meta => stripAccents(meta.toLowerCase()))
 });
 
 export const getAudioDuration = (trackPath: string): Promise<number> => {
@@ -193,13 +191,13 @@ export const getMetadata = async (trackPath: string): Promise<Track> => {
 
   const metadata: Track = {
     ...defaultMetadata,
-    path: trackPath,
+    path: trackPath
   };
 
   try {
     const stats = await stat(trackPath);
     const data = await mmd.parseFile(trackPath, {
-      native: true, skipCovers: true, fileSize: stats.size, duration: true,
+      native: true, skipCovers: true, fileSize: stats.size, duration: true
     });
 
     // Let's try to define something with what we got so far...
@@ -208,7 +206,7 @@ export const getMetadata = async (trackPath: string): Promise<Track> => {
     const metadata: Track = {
       ...defaultMetadata,
       ...parsedData,
-      path: trackPath,
+      path: trackPath
     };
 
     metadata.loweredMetas = getLoweredMeta(metadata);

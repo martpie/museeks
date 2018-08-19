@@ -2,7 +2,6 @@ import types from '../constants/action-types';
 import * as utils from '../utils/utils';
 import { Action, TrackModel, SortBy, SortOrder } from '../typings/interfaces';
 
-
 export interface LibrarySort {
   by: SortBy;
   order: SortOrder;
@@ -26,21 +25,20 @@ export interface LibraryState {
 const initialState: LibraryState = {
   tracks: {
     library: [],
-    playlist: [],
+    playlist: []
   },
   search: '',
   sort: {
     by: SortBy.ARTIST,
-    order: SortOrder.ASC,
+    order: SortOrder.ASC
   },
   loading: true,
   refreshing: false,
   refresh: {
     processed: 0,
-    total: 0,
-  },
+    total: 0
+  }
 };
-
 
 export default (state = initialState, action: Action): LibraryState => {
   switch (action.type) {
@@ -49,9 +47,9 @@ export default (state = initialState, action: Action): LibraryState => {
         ...state,
         tracks: {
           library: [...action.payload.tracks],
-          playlist: [],
+          playlist: []
         },
-        loading: false,
+        loading: false
       };
     }
 
@@ -64,8 +62,8 @@ export default (state = initialState, action: Action): LibraryState => {
           ...state,
           sort: {
             ...state.sort,
-            order: prevSort.order === SortOrder.ASC ? SortOrder.DSC : SortOrder.ASC,
-          },
+            order: prevSort.order === SortOrder.ASC ? SortOrder.DSC : SortOrder.ASC
+          }
         };
       }
 
@@ -73,15 +71,15 @@ export default (state = initialState, action: Action): LibraryState => {
         ...state,
         sort: {
           by: sortBy,
-          order: SortOrder.ASC,
-        },
+          order: SortOrder.ASC
+        }
       };
     }
 
     case (types.APP_FILTER_SEARCH): {
       return {
         ...state,
-        search: utils.stripAccents(action.payload.search),
+        search: utils.stripAccents(action.payload.search)
       };
     }
 
@@ -127,7 +125,7 @@ export default (state = initialState, action: Action): LibraryState => {
     case (types.APP_LIBRARY_REFRESH_START): {
       return {
         ...state,
-        refreshing: true,
+        refreshing: true
       };
     }
 
@@ -137,8 +135,8 @@ export default (state = initialState, action: Action): LibraryState => {
         refreshing: false,
         refresh: {
           processed: 0,
-          total: 0,
-        },
+          total: 0
+        }
       };
     }
 
@@ -147,8 +145,8 @@ export default (state = initialState, action: Action): LibraryState => {
         ...state,
         refresh: {
           processed: action.payload.processed,
-          total: action.payload.total,
-        },
+          total: action.payload.total
+        }
       };
     }
 
@@ -158,12 +156,12 @@ export default (state = initialState, action: Action): LibraryState => {
 
       const tracks = {
         library: [...state.tracks.library].filter(removeTrack),
-        playlist: [...state.tracks.playlist].filter(removeTrack),
+        playlist: [...state.tracks.playlist].filter(removeTrack)
       };
 
       return {
         ...state,
-        tracks,
+        tracks
       };
     }
 

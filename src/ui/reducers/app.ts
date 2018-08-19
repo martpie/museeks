@@ -3,7 +3,6 @@ import { Action } from '../typings/interfaces';
 
 export type AppState = null;
 
-
 const initialState = null;
 
 export default (state = initialState, action: Action) => {

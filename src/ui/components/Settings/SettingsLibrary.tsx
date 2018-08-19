@@ -10,7 +10,6 @@ import { LibraryState } from '../../reducers/library';
 
 const { dialog } = electron.remote;
 
-
 /*
 |--------------------------------------------------------------------------
 | Child - SettingsLibrary - manage import folders for library
@@ -21,10 +20,9 @@ interface Props {
   library: LibraryState;
 }
 
-
 export default class SettingsLibrary extends React.Component<Props> {
 
-  onDrop(e: DragEvent) {
+  onDrop (e: DragEvent) {
     const files = [];
     const eventFiles = e.dataTransfer.files;
 
@@ -35,14 +33,14 @@ export default class SettingsLibrary extends React.Component<Props> {
     LibraryActions.add(files);
   }
 
-  resetLibrary() {
+  async resetLibrary () {
     PlayerActions.stop();
-    LibraryActions.reset();
+    await LibraryActions.reset();
   }
 
-  openFolderSelector() {
+  openFolderSelector () {
     dialog.showOpenDialog({
-      properties: ['multiSelections', 'openDirectory'],
+      properties: ['multiSelections', 'openDirectory']
     }, (result) => {
       if (result) {
         LibraryActions.add(result);
@@ -50,22 +48,22 @@ export default class SettingsLibrary extends React.Component<Props> {
     });
   }
 
-  render() {
+  render () {
     return (
-      <div className="setting settings-musicfolder">
-        <div className="setting-section">
+      <div className='setting settings-musicfolder'>
+        <div className='setting-section'>
           <h4>Manage library</h4>
           <Dropzone
-            title="Add music to library"
-            subtitle="Drop files or folders here"
+            title='Add music to library'
+            subtitle='Drop files or folders here'
             onDrop={this.onDrop}
             onClick={this.openFolderSelector}
           />
           <ButtonGroup>
             <Button
-              bsSize="small"
-              bsStyle="danger"
-              title="Fully reset the library"
+              bsSize='small'
+              bsStyle='danger'
+              title='Fully reset the library'
               disabled={this.props.library.refreshing}
               onClick={this.resetLibrary}
             >

@@ -4,7 +4,6 @@ import QueueEmpty from './QueueEmpty';
 import QueueList from './QueueList';
 import { TrackModel } from '../../typings/interfaces';
 
-
 /*
 |--------------------------------------------------------------------------
 | Header - Queue
@@ -17,7 +16,7 @@ interface Props {
 }
 
 export default class Queue extends React.PureComponent<Props> {
-  render() {
+  render () {
     const { queue, queueCursor } = this.props;
 
     if (queueCursor !== null) {

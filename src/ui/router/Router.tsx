@@ -10,14 +10,13 @@ import Library from '../components/Library/Library';
 import Playlists from '../components/Playlists/Playlists';
 import Settings from '../components/Settings/Settings';
 
-
 const AppRouter: React.SFC<{}> = () => (
   <Router history={history}>
     <App>
       <Switch>
-        <Route path="/library" component={Library} />
-        <Route path="/settings" component={Settings} />
-        <Route path="/playlists" component={Playlists} />
+        <Route path='/library' component={Library} />
+        <Route path='/settings' component={Settings} />
+        <Route path='/playlists' component={Playlists} />
       </Switch>
     </App>
   </Router>

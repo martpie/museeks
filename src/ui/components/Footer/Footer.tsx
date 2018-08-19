@@ -9,7 +9,6 @@ import { getStatus } from '../../utils/utils-library';
 import { RootState } from '../../reducers';
 import { LibraryState } from '../../reducers/library';
 
-
 /*
 |--------------------------------------------------------------------------
 | Footer
@@ -17,19 +16,18 @@ import { LibraryState } from '../../reducers/library';
 */
 
 interface InjectedProps {
-  library: LibraryState,
+  library: LibraryState;
 }
 
 type Props = InjectedProps & RouteComponentProps<{}>;
 
-
 class Footer extends React.Component<Props> {
-  constructor(props: Props) {
+  constructor (props: Props) {
     super(props);
     this.getStatus = this.getStatus.bind(this);
   }
 
-  getStatus() {
+  getStatus () {
     const { library } = this.props;
     const { processed, total } = library.refresh;
 
@@ -41,10 +39,10 @@ class Footer extends React.Component<Props> {
     if (library.refreshing) {
       const progress = total > 0 ? Math.round((processed / total) * 100) : 100;
       return (
-        <div className="library-refresh">
-          <ProgressBar className="library-refresh-progress" now={progress} active={total === 0} />
+        <div className='library-refresh'>
+          <ProgressBar className='library-refresh-progress' now={progress} active={total === 0} />
           {total > 0 && (
-            <div className="library-refresh-count">
+            <div className='library-refresh-count'>
               {processed} / {total}
             </div>
           )}
@@ -57,13 +55,13 @@ class Footer extends React.Component<Props> {
     return (
       <Switch>
         <Route
-          path="/library"
+          path='/library'
           render={() => (
             getStatus(library.tracks.library)
           )}
         />
         <Route
-          path="/playlists"
+          path='/playlists'
           render={() => (
             getStatus(library.tracks.playlist)
           )}
@@ -72,39 +70,39 @@ class Footer extends React.Component<Props> {
     );
   }
 
-  render() {
+  render () {
     return (
-      <footer className="container-fluid">
-        <Row className="footer-row">
+      <footer className='container-fluid'>
+        <Row className='footer-row'>
           <Col sm={3}>
-            <ButtonGroup className="view-switcher">
+            <ButtonGroup className='view-switcher'>
               <NavLink
-                to="/library"
-                activeClassName="active"
-                className="btn btn-default view-link"
-                title="Library"
+                to='/library'
+                activeClassName='active'
+                className='btn btn-default view-link'
+                title='Library'
               >
-                <Icon name="align-justify" fixedWidth />
+                <Icon name='align-justify' fixedWidth />
               </NavLink>
               <NavLink
-                to="/playlists"
-                activeClassName="active"
-                className="btn btn-default view-link "
-                title="Playlists"
+                to='/playlists'
+                activeClassName='active'
+                className='btn btn-default view-link '
+                title='Playlists'
               >
-                <Icon name="star" fixedWidth />
+                <Icon name='star' fixedWidth />
               </NavLink>
               <NavLink
-                to="/settings"
-                activeClassName="active"
-                className="btn btn-default view-link"
-                title="Settings"
+                to='/settings'
+                activeClassName='active'
+                className='btn btn-default view-link'
+                title='Settings'
               >
-                <Icon name="gear" fixedWidth />
+                <Icon name='gear' fixedWidth />
               </NavLink>
             </ButtonGroup>
           </Col>
-          <Col sm={5} className="library-status text-center">
+          <Col sm={5} className='library-status text-center'>
             {this.getStatus()}
           </Col>
         </Row>
@@ -114,7 +112,7 @@ class Footer extends React.Component<Props> {
 }
 
 const mapsStateToProps = (state: RootState): InjectedProps => ({
-  library: state.library,
+  library: state.library
 });
 
 // TODO with router

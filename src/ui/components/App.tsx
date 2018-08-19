@@ -14,7 +14,6 @@ import * as PlayerActions from '../actions/PlayerActions';
 
 import { config } from '../lib/app';
 
-
 /*
 |--------------------------------------------------------------------------
 | The App
@@ -23,35 +22,34 @@ import { config } from '../lib/app';
 
 type Props = RouteComponentProps<{}>;
 
-
 class Museeks extends React.Component<Props> {
-  static onKey(e: React.KeyboardEvent) {
+  static async onKey (e: React.KeyboardEvent) {
     switch (e.keyCode) {
       case 32: // Space
         e.preventDefault();
         e.stopPropagation();
-        PlayerActions.playPause();
+        await PlayerActions.playPause();
         break;
       default:
         break;
     }
   }
 
-  componentDidMount() {
-    AppActions.init();
+  async componentDidMount () {
+    await AppActions.init();
   }
 
-  render() {
+  render () {
     const wrapClasses = classnames('root', `os-${os.platform()}`, {
-      'native-frame': config.get('useNativeFrame'),
+      'native-frame': config.get('useNativeFrame')
     });
 
     return (
       <div className={wrapClasses}>
         <KeyBinding onKey={Museeks.onKey} preventInputConflict />
         <Header />
-        <main className="main-content container-fluid">
-          <Row className="content">
+        <main className='main-content container-fluid'>
+          <Row className='content'>
             {this.props.children}
           </Row>
         </main>

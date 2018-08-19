@@ -19,12 +19,10 @@ import { PlaylistModel, TrackModel, PlayerStatus } from '../../typings/interface
 const { shell, remote } = electron;
 const { Menu } = remote;
 
-
 const CHUNK_LENGTH = 20;
 const ROW_HEIGHT = 30; // FIXME
 const TILES_TO_DISPLAY = 5;
 const TILE_HEIGHT = ROW_HEIGHT * CHUNK_LENGTH;
-
 
 // --------------------------------------------------------------------------
 // TrackList
@@ -36,7 +34,7 @@ interface Props {
   tracks: TrackModel[];
   trackPlayingId: string | null;
   playlists: PlaylistModel[];
-  currentPlaylist?: string,
+  currentPlaylist?: string;
 }
 
 interface State {
@@ -44,10 +42,9 @@ interface State {
   tilesScrolled: number;
 }
 
-
 export default class TracksList extends React.Component<Props, State> {
   static defaultProps = {
-    currentPlaylist: '',
+    currentPlaylist: ''
   };
 
   static isLeftClick = (e: React.MouseEvent) => e.button === 0;
@@ -55,11 +52,11 @@ export default class TracksList extends React.Component<Props, State> {
 
   renderView: HTMLDivElement | null = null;
 
-  constructor(props: Props) {
+  constructor (props: Props) {
     super(props);
     this.state = {
       selected: [],
-      tilesScrolled: 0,
+      tilesScrolled: 0
     };
 
     this.showContextMenu = this.showContextMenu.bind(this);
@@ -69,11 +66,11 @@ export default class TracksList extends React.Component<Props, State> {
     this.onKey = this.onKey.bind(this);
   }
 
-  componentDidMount() {
+  componentDidMount () {
     this.renderView = document.querySelector('.tracks-list-render-view');
   }
 
-  onScroll() {
+  onScroll () {
     if (this.renderView) {
       const tilesScrolled = Math.floor(this.renderView.scrollTop / TILE_HEIGHT);
 
@@ -83,33 +80,33 @@ export default class TracksList extends React.Component<Props, State> {
     }
   }
 
-  onKey(e: React.KeyboardEvent) {
+  async onKey (e: React.KeyboardEvent) {
     const { selected } = this.state;
     const { tracks } = this.props;
 
-    const firstSelectedTrackIdx = tracks.findIndex(track => selected.includes(track._id));
+    const firstSelectedTrackId = tracks.findIndex(track => selected.includes(track._id));
 
     switch (e.keyCode) {
       case 38: // up
         e.preventDefault();
-        this.onUp(firstSelectedTrackIdx, tracks);
+        this.onUp(firstSelectedTrackId, tracks);
         break;
 
       case 40: // down
         e.preventDefault();
-        this.onDown(firstSelectedTrackIdx, tracks);
+        this.onDown(firstSelectedTrackId, tracks);
         break;
 
       case 13: // enter
         e.preventDefault();
-        this.onEnter(firstSelectedTrackIdx, tracks);
+        await this.onEnter(firstSelectedTrackId, tracks);
         break;
       default:
         break;
     }
   }
 
-  onUp(i: number, tracks: TrackModel[]) {
+  onUp (i: number, tracks: TrackModel[]) {
     if (i - 1 >= 0) {
       this.setState({ selected: [tracks[i - 1]._id] }, () => {
         const container = document.querySelector('.tracks-list .tracks-list-render-view');
@@ -120,7 +117,7 @@ export default class TracksList extends React.Component<Props, State> {
     }
   }
 
-  onDown(i: number, tracks: TrackModel[]) {
+  onDown (i: number, tracks: TrackModel[]) {
     if (i + 1 < tracks.length) {
       this.setState({ selected: [tracks[i + 1]._id] }, () => {
         const container: HTMLDivElement | null = document.querySelector('.tracks-list .tracks-list-render-view');
@@ -133,11 +130,11 @@ export default class TracksList extends React.Component<Props, State> {
     }
   }
 
-  onEnter(i: number, tracks: TrackModel[]) {
-    if (i !== undefined) PlayerActions.start(tracks, tracks[i]._id);
+  async onEnter (i: number, tracks: TrackModel[]) {
+    if (i !== -1) await PlayerActions.start(tracks, tracks[i]._id);
   }
 
-  getTrackTiles() {
+  getTrackTiles () {
     const { selected, tilesScrolled } = this.state;
     const { trackPlayingId, tracks } = this.props;
 
@@ -163,12 +160,12 @@ export default class TracksList extends React.Component<Props, State> {
 
       const translationDistance = (tilesScrolled * ROW_HEIGHT * CHUNK_LENGTH) + (indexChunk * ROW_HEIGHT * CHUNK_LENGTH);
       const tracksListTileStyles = {
-        transform: `translate3d(0, ${translationDistance}px, 0)`,
+        transform: `translate3d(0, ${translationDistance}px, 0)`
       };
 
       return (
         <div
-          className="tracks-list-tile"
+          className='tracks-list-tile'
           key={`chunk-${tracksChunk[0]._id}`}
           style={tracksListTileStyles}
         >
@@ -178,11 +175,11 @@ export default class TracksList extends React.Component<Props, State> {
     });
   }
 
-  isSelectableTrack(id: string) {
+  isSelectableTrack (id: string) {
     return !this.state.selected.includes(id);
   }
 
-  selectTrack(e: React.MouseEvent, id: string, index: number) {
+  selectTrack (e: React.MouseEvent, id: string, index: number) {
     if (TracksList.isLeftClick(e) || (TracksList.isRightClick(e) && this.isSelectableTrack(id))) {
       if (isCtrlKey(e)) {
         this.toggleSelectionById(id);
@@ -198,7 +195,7 @@ export default class TracksList extends React.Component<Props, State> {
     }
   }
 
-  toggleSelectionById(id: string) {
+  toggleSelectionById (id: string) {
     let selected = [...this.state.selected];
 
     if (selected.includes(id)) {
@@ -213,7 +210,7 @@ export default class TracksList extends React.Component<Props, State> {
     this.setState({ selected });
   }
 
-  multiSelect(index: number) {
+  multiSelect (index: number) {
     const { tracks } = this.props;
     const { selected } = this.state;
 
@@ -251,12 +248,11 @@ export default class TracksList extends React.Component<Props, State> {
     this.setState({ selected: newSelected });
   }
 
-  showContextMenu(_e: React.MouseEvent, index: number) {
+  showContextMenu (_e: React.MouseEvent, index: number) {
     const { type, playerStatus } = this.props;
     const { selected } = this.state;
     const selectedCount = selected.length;
     const track = this.props.tracks[index];
-
 
     let playlists = [...this.props.playlists];
 
@@ -274,26 +270,26 @@ export default class TracksList extends React.Component<Props, State> {
           label: 'Create new playlist...',
           click: async () => {
             const playlistId = await PlaylistsActions.create('New playlist', false);
-            PlaylistsActions.addTracksTo(playlistId, selected);
-          },
+            await PlaylistsActions.addTracksTo(playlistId, selected);
+          }
         },
         {
-          type: 'separator',
-        },
+          type: 'separator'
+        }
       );
 
       if (playlists.length === 0) {
         playlistTemplate.push({
           label: 'No playlist',
-          enabled: false,
+          enabled: false
         });
       } else {
         playlists.forEach((playlist) => {
           playlistTemplate.push({
             label: playlist.name,
-            click: () => {
-              PlaylistsActions.addTracksTo(playlist._id, selected);
-            },
+            click: async () => {
+              await PlaylistsActions.addTracksTo(playlist._id, selected);
+            }
           });
         });
       }
@@ -303,37 +299,37 @@ export default class TracksList extends React.Component<Props, State> {
       addToQueueTemplate = [
         {
           label: 'Add to queue',
-          click: () => {
-            QueueActions.addAfter(selected);
-          },
+          click: async () => {
+            await QueueActions.addAfter(selected);
+          }
         },
         {
           label: 'Play next',
-          click: () => {
-            QueueActions.addNext(selected);
-          },
+          click: async () => {
+            await QueueActions.addNext(selected);
+          }
         },
         {
-          type: 'separator',
-        },
+          type: 'separator'
+        }
       ];
     }
 
     const template: electron.MenuItemConstructorOptions[] = [
       {
         label: selectedCount > 1 ? `${selectedCount} tracks selected` : `${selectedCount} track selected`,
-        enabled: false,
+        enabled: false
       },
       {
-        type: 'separator',
+        type: 'separator'
       },
       ...addToQueueTemplate,
       {
         label: 'Add to playlist',
-        submenu: playlistTemplate,
+        submenu: playlistTemplate
       },
       {
-        type: 'separator',
+        type: 'separator'
       },
       {
         label: `Search for "${track.artist[0]}" `,
@@ -345,7 +341,7 @@ export default class TracksList extends React.Component<Props, State> {
             searchInput.value = track.artist[0];
             searchInput.dispatchEvent(new Event('input', { bubbles: true }));
           }
-        },
+        }
       },
       {
         label: `Search for "${track.album}"`,
@@ -357,8 +353,8 @@ export default class TracksList extends React.Component<Props, State> {
             searchInput.value = track.album;
             searchInput.dispatchEvent(new Event('input', { bubbles: true }));
           }
-        },
-      },
+        }
+      }
     ];
 
     const currentPlaylist = this.props.currentPlaylist;
@@ -366,33 +362,33 @@ export default class TracksList extends React.Component<Props, State> {
     if (type === 'playlist' && currentPlaylist) {
       template.push(
         {
-          type: 'separator',
+          type: 'separator'
         },
         {
           label: 'Remove from playlist',
-          click: () => {
-            PlaylistsActions.removeTracks(currentPlaylist, selected);
-          },
-        },
+          click: async () => {
+            await PlaylistsActions.removeTracks(currentPlaylist, selected);
+          }
+        }
       );
     }
 
     template.push(
       {
-        type: 'separator',
+        type: 'separator'
       },
       {
         label: 'Show in file manager',
         click: () => {
           shell.showItemInFolder(track.path);
-        },
+        }
       },
       {
         label: 'Remove from library',
         click: () => {
           LibraryActions.remove(selected);
-        },
-      },
+        }
+      }
     );
 
     const context = Menu.buildFromTemplate(template);
@@ -400,24 +396,24 @@ export default class TracksList extends React.Component<Props, State> {
     context.popup({}); // Let it appear
   }
 
-  startPlayback(_id: string) {
-    PlayerActions.start(this.props.tracks, _id);
+  async startPlayback (_id: string) {
+    await PlayerActions.start(this.props.tracks, _id);
   }
 
-  render() {
+  render () {
     const { tracks, type } = this.props;
 
     return (
-      <div className="tracks-list">
+      <div className='tracks-list'>
         <KeyBinding onKey={this.onKey} preventInputConflict />
         <TracksListHeader enableSort={type === 'library'} />
         <CustomScrollbar
-          className="tracks-list-body"
+          className='tracks-list-body'
           onScroll={this.onScroll}
         >
           <div
-            className="tracks-list-tiles"
-            role="listbox"
+            className='tracks-list-tiles'
+            role='listbox'
             style={{ height: tracks.length * ROW_HEIGHT }}
           >
             { this.getTrackTiles() }

@@ -14,9 +14,9 @@ const sortOrders = {
         'year',
         'loweredMetas.album',
         'disk.no',
-        'track.no',
+        'track.no'
       ],
-      null,
+      null
     ],
     [SortOrder.DSC]: [
       [
@@ -24,10 +24,10 @@ const sortOrders = {
         'year',
         'loweredMetas.album',
         'disk.no',
-        'track.no',
+        'track.no'
       ],
-      ['desc'],
-    ],
+      ['desc']
+    ]
   },
   [SortBy.TITLE]: {
     [SortOrder.ASC]: [
@@ -37,9 +37,9 @@ const sortOrders = {
         'year',
         'loweredMetas.album',
         'disk.no',
-        'track.no',
+        'track.no'
       ],
-      null,
+      null
     ],
     [SortOrder.DSC]: [
       [
@@ -48,10 +48,10 @@ const sortOrders = {
         'year',
         'loweredMetas.album',
         'disk.no',
-        'track.no',
+        'track.no'
       ],
-      ['desc'],
-    ],
+      ['desc']
+    ]
   },
   [SortBy.DURATION]: {
     [SortOrder.ASC]: [
@@ -61,9 +61,9 @@ const sortOrders = {
         'year',
         'loweredMetas.album',
         'disk.no',
-        'track.no',
+        'track.no'
       ],
-      null,
+      null
     ],
     [SortOrder.DSC]: [
       [
@@ -72,10 +72,10 @@ const sortOrders = {
         'year',
         'loweredMetas.album',
         'disk.no',
-        'track.no',
+        'track.no'
       ],
-      ['desc'],
-    ],
+      ['desc']
+    ]
   },
   [SortBy.ALBUM]: {
     [SortOrder.ASC]: [
@@ -84,9 +84,9 @@ const sortOrders = {
         parseArtist,
         'year',
         'disk.no',
-        'track.no',
+        'track.no'
       ],
-      null,
+      null
     ],
     [SortOrder.DSC]: [
       [
@@ -94,10 +94,10 @@ const sortOrders = {
         parseArtist,
         'year',
         'disk.no',
-        'track.no',
+        'track.no'
       ],
-      ['desc'],
-    ],
+      ['desc']
+    ]
   },
   [SortBy.GENRE]: {
     [SortOrder.ASC]: [
@@ -107,9 +107,9 @@ const sortOrders = {
         'year',
         'loweredMetas.album',
         'disk.no',
-        'track.no',
+        'track.no'
       ],
-      null,
+      null
     ],
     [SortOrder.DSC]: [
       [
@@ -118,11 +118,11 @@ const sortOrders = {
         'year',
         'loweredMetas.album',
         'disk.no',
-        'track.no',
+        'track.no'
       ],
-      ['desc'],
-    ],
+      ['desc']
+    ]
   }
-}
+};
 
 export default sortOrders;

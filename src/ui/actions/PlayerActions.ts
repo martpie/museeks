@@ -21,47 +21,37 @@ const AUDIO_ERRORS = {
   aborted: 'The video playback was aborted.',
   corrupt: 'The audio playback was aborted due to a corruption problem.',
   notFound: 'The track file could not be found. It may be due to a file move or an unmounted partition.',
-  unknown: 'An unknown error occurred.',
+  unknown: 'An unknown error occurred.'
 };
-
 
 /**
  * Play/resume audio
  */
-export const play = () => {
-  // TODO (y.solovyov | KeitIG): calling getState is a hack.
-  const { queue } = store.getState().player;
-  if (queue !== null) {
-    Player.play();
-    store.dispatch({
-      type: types.APP_PLAYER_PLAY,
-    });
-  }
+export const play = async () => {
+  await Player.play();
+  store.dispatch({
+    type: types.APP_PLAYER_PLAY
+  });
 };
 
 /**
  * Pause audio
  */
 export const pause = () => {
-  // TODO (y.solovyov | KeitIG): calling getState is a hack.
-  const { queue } = store.getState().player;
-  if (queue !== null) {
-    Player.pause();
-    store.dispatch({
-      type: types.APP_PLAYER_PAUSE,
-    });
-  }
+  Player.pause();
+  store.dispatch({
+    type: types.APP_PLAYER_PAUSE
+  });
 };
 
 /**
  * Start playing audio (queue instantiation...
  * TODO this function could probably be refactored a bit)
  */
-export const start = (queue?: TrackModel[], _id?: string) => {
+export const start = async (queue?: TrackModel[], _id?: string) => {
   const state = store.getState();
 
   let newQueue = queue ? [...queue] : null;
-
 
   // If no queue is provided, let's search it from the store
   if (!newQueue) {
@@ -80,7 +70,7 @@ export const start = (queue?: TrackModel[], _id?: string) => {
 
       newQueue = sortTracks(
         filterTracks(newQueue, search),
-        SORT_ORDERS[sort.by][sort.order],
+        SORT_ORDERS[sort.by][sort.order]
       );
     }
   }
@@ -93,7 +83,6 @@ export const start = (queue?: TrackModel[], _id?: string) => {
   // Typically, if we are in the playlists generic view without any view selected
   if (newQueue.length === 0) return;
 
-
   const queuePosition = newQueue.findIndex(track => track._id === trackId);
 
   // If a track exists
@@ -101,7 +90,7 @@ export const start = (queue?: TrackModel[], _id?: string) => {
     const uri = utils.parseUri(newQueue[queuePosition].path);
 
     Player.setAudioSrc(uri);
-    Player.play();
+    await Player.play();
 
     let queueCursor = queuePosition; // Clean that variable mess later
 
@@ -118,7 +107,7 @@ export const start = (queue?: TrackModel[], _id?: string) => {
       payload: {
         queue: newQueue,
         oldQueue,
-        queueCursor,
+        queueCursor
       }
     });
   }
@@ -127,15 +116,15 @@ export const start = (queue?: TrackModel[], _id?: string) => {
 /**
  * Toggle play/pause
  */
-export const playPause = () => {
+export const playPause = async () => {
   const { paused } = Player.getAudio();
   // TODO (y.solovyov | KeitIG): calling getState is a hack.
   const { queue, playerStatus } = store.getState().player;
 
   if (playerStatus === PlayerStatus.STOP) {
-    start();
+    await start();
   } else if (paused && queue.length > 0) {
-    play();
+    await play();
   } else {
     pause();
   }
@@ -147,7 +136,7 @@ export const playPause = () => {
 export const stop = () => {
   Player.stop();
   store.dispatch({
-    type: types.APP_PLAYER_STOP,
+    type: types.APP_PLAYER_STOP
   });
 
   ipcRenderer.send('playback:stop');
@@ -156,7 +145,7 @@ export const stop = () => {
 /**
  * Jump to the next track
  */
-export const next = () => {
+export const next = async () => {
   // TODO (y.solovyov | KeitIG): calling getState is a hack.
   const { queue, queueCursor, repeat } = store.getState().player;
   let newQueueCursor;
@@ -172,16 +161,17 @@ export const next = () => {
 
     const track = queue[newQueueCursor];
 
+    // tslint:disable-next-line
     if (track !== undefined) {
       const uri = utils.parseUri(track.path);
 
       Player.setAudioSrc(uri);
-      Player.play();
+      await Player.play();
       store.dispatch({
         type: types.APP_PLAYER_NEXT,
         payload: {
           newQueueCursor
-        },
+        }
       });
     } else {
       stop();
@@ -193,7 +183,7 @@ export const next = () => {
  * Jump to the previous track, or restart the current track after a certain
  * treshold
  */
-export const previous = () => {
+export const previous = async () => {
   const currentTime = Player.getCurrentTime();
 
   // TODO (y.solovyov | KeitIG): calling getState is a hack.
@@ -209,17 +199,18 @@ export const previous = () => {
 
     const newTrack = queue[newQueueCursor];
 
+    // tslint:disable-next-line
     if (newTrack !== undefined) {
       const uri = utils.parseUri(newTrack.path);
 
       Player.setAudioSrc(uri);
-      Player.play();
+      await Player.play();
 
       store.dispatch({
         type: types.APP_PLAYER_PREVIOUS,
         payload: {
           currentTime,
-          newQueueCursor,
+          newQueueCursor
         }
       });
     } else {
@@ -238,7 +229,7 @@ export const shuffle = (value: boolean) => {
   store.dispatch({
     type: types.APP_PLAYER_SHUFFLE,
     payload: {
-      shuffle: value,
+      shuffle: value
     }
   });
 };
@@ -253,7 +244,7 @@ export const repeat = (value: Repeat) => {
   store.dispatch({
     type: types.APP_PLAYER_REPEAT,
     payload: {
-      repeat: value,
+      repeat: value
     }
   });
 };
@@ -267,7 +258,7 @@ export const setVolume = (volume: number) => {
   app.config.set('audioVolume', volume);
   app.config.saveSync();
   store.dispatch({
-    type: types.APP_REFRESH_CONFIG,
+    type: types.APP_REFRESH_CONFIG
   });
 };
 
@@ -281,7 +272,7 @@ export const setMuted = (muted = false) => {
   app.config.set('audioMuted', muted);
   app.config.saveSync();
   store.dispatch({
-    type: types.APP_REFRESH_CONFIG,
+    type: types.APP_REFRESH_CONFIG
   });
 };
 
@@ -295,7 +286,7 @@ export const setPlaybackRate = (value: number) => {
     app.config.set('audioPlaybackRate', value);
     app.config.saveSync();
     store.dispatch({
-      type: types.APP_REFRESH_CONFIG,
+      type: types.APP_REFRESH_CONFIG
     });
   }
 };
@@ -308,7 +299,7 @@ export const jumpTo = (to: number) => {
   // if yes, what should it be? if not, do we need this actions at all?
   Player.setAudioCurrentTime(to);
   store.dispatch({
-    type: types.APP_PLAYER_JUMP_TO,
+    type: types.APP_PLAYER_JUMP_TO
   });
 };
 

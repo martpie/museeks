@@ -1,7 +1,6 @@
 import * as React from 'react';
 import classnames from 'classnames';
 
-
 /*
 |--------------------------------------------------------------------------
 | Dropzone
@@ -9,22 +8,21 @@ import classnames from 'classnames';
 */
 
 interface Props {
-  title: string,
-  subtitle: string,
-  onDrop: (e: DragEvent) => void,
-  onClick: (e?: React.SyntheticEvent<HTMLDivElement>) => void,
+  title: string;
+  subtitle: string;
+  onDrop: (e: DragEvent) => void;
+  onClick: (e?: React.SyntheticEvent<HTMLDivElement>) => void;
 }
 
 interface State {
   state: string;
 }
 
-
 export default class Dropzone extends React.Component<Props, State> {
-  constructor(props: Props) {
+  constructor (props: Props) {
     super(props);
     this.state = {
-      state: 'idle',
+      state: 'idle'
     };
 
     this.onDrop = this.onDrop.bind(this);
@@ -33,7 +31,7 @@ export default class Dropzone extends React.Component<Props, State> {
     this.onKeyDown = this.onKeyDown.bind(this);
   }
 
-  onKeyDown(e: React.KeyboardEvent<HTMLDivElement>) {
+  onKeyDown (e: React.KeyboardEvent<HTMLDivElement>) {
     e.stopPropagation();
     e.nativeEvent.stopImmediatePropagation();
 
@@ -48,25 +46,25 @@ export default class Dropzone extends React.Component<Props, State> {
     }
   }
 
-  onDragEnter() {
+  onDragEnter () {
     this.setState({ state: 'dragging' });
   }
 
-  onDragLeave() {
+  onDragLeave () {
     this.setState({ state: 'idle' });
   }
 
-  onDragOver(e: React.SyntheticEvent<HTMLDivElement>) {
+  onDragOver (e: React.SyntheticEvent<HTMLDivElement>) {
     e.preventDefault();
   }
 
-  onDrop(e: React.SyntheticEvent<HTMLDivElement>) {
+  onDrop (e: React.SyntheticEvent<HTMLDivElement>) {
     e.preventDefault();
     this.setState({ state: 'idle' });
     if (this.props.onDrop) this.props.onDrop(e.nativeEvent as DragEvent);
   }
 
-  render() {
+  render () {
     const classes = classnames('dropzone', this.state.state);
 
     return (
@@ -78,11 +76,11 @@ export default class Dropzone extends React.Component<Props, State> {
         onDrop={this.onDrop}
         onClick={this.props.onClick}
         onKeyDown={this.onKeyDown}
-        role="button"
+        role='button'
         tabIndex={0}
       >
-        <div className="title">{ this.props.title }</div>
-        <div className="subtitle">{ this.props.subtitle }</div>
+        <div className='title'>{ this.props.title }</div>
+        <div className='subtitle'>{ this.props.subtitle }</div>
       </div>
     );
   }

@@ -5,7 +5,6 @@ import * as Icon from 'react-fontawesome';
 import * as LibraryActions from '../../actions/LibraryActions';
 import { SortBy } from '../../typings/interfaces';
 
-
 interface Props {
   title: string;
   className?: string;
@@ -13,44 +12,43 @@ interface Props {
   icon?: string | null;
 }
 
-
 class TracksListHeaderCell extends React.Component<Props> {
   static defaultProps = {
     className: '',
     sortBy: null,
-    icon: null,
-  }
+    icon: null
+  };
 
-  constructor(props: Props) {
+  constructor (props: Props) {
     super(props);
     this.sort = this.sort.bind(this);
   }
 
-  sort() {
+  sort () {
     if (this.props.sortBy) {
       LibraryActions.sort(this.props.sortBy);
     }
   }
 
-  render() {
+  render () {
     const {
       sortBy,
       className,
       title,
-      icon,
+      icon
     } = this.props;
 
     const classes = classnames('track-cell-header', className, {
-      sort: sortBy,
+      sort: sortBy
     });
 
     const content = (
       <React.Fragment>
-        <div className="col-name">
+        <div className='col-name'>
           {title}
         </div>
         {icon &&
-          <div className="col-icon">
+          <div className='col-icon'>
             <Icon name={icon} />
           </div>
         }

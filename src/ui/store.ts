@@ -5,7 +5,7 @@ import { createLogger } from 'redux-logger';
 import rootReducer, { RootState } from './reducers';
 
 const logger = createLogger({
-  collapsed: true,
+  collapsed: true
 });
 
 const middlewares = applyMiddleware(thunk, logger);

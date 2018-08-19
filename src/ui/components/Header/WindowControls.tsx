@@ -9,23 +9,23 @@ import AppActions from '../../actions/AppActions';
 */
 
 export default class WindowControls extends React.PureComponent {
-  render() {
+  render () {
     return (
-      <div className="window-controls">
+      <div className='window-controls'>
         <button
-          className="window-control window-minimize"
+          className='window-control window-minimize'
           onClick={AppActions.minimize}
-          title="Minimize"
+          title='Minimize'
         /> { /* custom line with ::after */ }
         <button
-          className="window-control window-maximize"
+          className='window-control window-maximize'
           onClick={AppActions.maximize}
-          title="Maximize"
+          title='Maximize'
         /> { /* custom square with ::after */ }
         <button
-          className="window-control window-close"
+          className='window-control window-close'
           onClick={AppActions.close}
-          title="Close"
+          title='Close'
         /> { /* custom cross with ::before and ::after */ }
       </div>
     );

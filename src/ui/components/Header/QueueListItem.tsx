@@ -25,10 +25,10 @@ interface Props {
 
 export default class QueueListItem extends React.PureComponent<Props> {
   static defaultProps = {
-    dragPosition: null,
-  }
+    dragPosition: null
+  };
 
-  constructor(props: Props) {
+  constructor (props: Props) {
     super(props);
 
     this.remove = this.remove.bind(this);
@@ -37,28 +37,28 @@ export default class QueueListItem extends React.PureComponent<Props> {
     this.onDragOver = this.onDragOver.bind(this);
   }
 
-  onDragStart(e: React.DragEvent<HTMLDivElement>) {
+  onDragStart (e: React.DragEvent<HTMLDivElement>) {
     this.props.onDragStart(e, this.props.index);
   }
 
-  onDragOver(e: React.DragEvent<HTMLDivElement>) {
+  onDragOver (e: React.DragEvent<HTMLDivElement>) {
     this.props.onDragOver(e, this.props.index);
   }
 
-  remove() {
+  remove () {
     QueueActions.remove(this.props.index);
   }
 
-  play() {
-    QueueActions.start(this.props.queueCursor + this.props.index + 1);
+  async play () {
+    await QueueActions.start(this.props.queueCursor + this.props.index + 1);
   }
 
-  render() {
+  render () {
     const queueContentClasses = classnames('track', {
       dragged: this.props.dragged,
       'dragged-over': this.props.draggedOver,
       above: this.props.draggedOver && this.props.dragPosition === 'above',
-      below: this.props.draggedOver && this.props.dragPosition === 'below',
+      below: this.props.draggedOver && this.props.dragPosition === 'below'
     });
 
     const { track } = this.props;
@@ -71,15 +71,15 @@ export default class QueueListItem extends React.PureComponent<Props> {
         onDragOver={this.onDragOver}
         onDragEnd={this.props.onDragEnd}
       >
-        <div className="track-infos" onDoubleClick={this.play} >
-          <div className="title">
+        <div className='track-infos' onDoubleClick={this.play} >
+          <div className='title'>
             { track.title }
           </div>
-          <div className="other-infos">
-            <span className="artist">{ track.artist }</span> - <span className="album">{ track.album }</span>
+          <div className='other-infos'>
+            <span className='artist'>{ track.artist }</span> - <span className='album'>{ track.album }</span>
           </div>
         </div>
-        <Button bsSize="xsmall" bsStyle="link" className="remove" onClick={this.remove}>
+        <Button bsSize='xsmall' bsStyle='link' className='remove' onClick={this.remove}>
           &times;
         </Button>
       </div>

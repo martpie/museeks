@@ -9,7 +9,6 @@ import Player from '../../lib/player';
 import * as utils from '../../utils/utils';
 import { TrackModel, Repeat } from '../../typings/interfaces';
 
-
 interface Props {
   trackPlaying: TrackModel;
   shuffle: boolean;
@@ -23,18 +22,17 @@ interface State {
   dragging: boolean;
 }
 
-
 class PlayingBarInfos extends React.Component<Props, State> {
-  playingBar: React.RefObject<HTMLDivElement>
+  playingBar: React.RefObject<HTMLDivElement>;
 
-  constructor(props: Props) {
+  constructor (props: Props) {
     super(props);
 
     this.state = {
       elapsed: 0,
       duration: null,
       x: null,
-      dragging: false,
+      dragging: false
     };
 
     this.playingBar = React.createRef();
@@ -49,25 +47,25 @@ class PlayingBarInfos extends React.Component<Props, State> {
     this.hideTooltip = this.hideTooltip.bind(this);
   }
 
-  componentDidMount() {
+  componentDidMount () {
     Player.getAudio().addEventListener('timeupdate', this.tick);
 
     window.addEventListener('mousemove', this.dragOver);
     window.addEventListener('mouseup', this.dragEnd);
   }
 
-  componentWillUnmount() {
+  componentWillUnmount () {
     Player.getAudio().removeEventListener('timeupdate', this.tick);
 
     window.removeEventListener('mousemove', this.dragOver);
     window.removeEventListener('mouseup', this.dragEnd);
   }
 
-  tick() {
+  tick () {
     this.setState({ elapsed: Player.getCurrentTime() });
   }
 
-  jumpAudioTo(e: React.MouseEvent<HTMLDivElement>) {
+  jumpAudioTo (e: React.MouseEvent<HTMLDivElement>) {
     this.setState({ dragging: true });
 
     const { trackPlaying } = this.props;
@@ -84,7 +82,7 @@ class PlayingBarInfos extends React.Component<Props, State> {
     }
   }
 
-  dragOver(e: MouseEvent) {
+  dragOver (e: MouseEvent) {
     // Check if a currentTime update is needed
     if (this.state.dragging) {
       const playingBar = this.playingBar.current;
@@ -105,13 +103,13 @@ class PlayingBarInfos extends React.Component<Props, State> {
     }
   }
 
-  dragEnd() {
+  dragEnd () {
     if (this.state.dragging) {
       this.setState({ dragging: false });
     }
   }
 
-  showTooltip(e: React.MouseEvent<HTMLDivElement>) {
+  showTooltip (e: React.MouseEvent<HTMLDivElement>) {
     const { trackPlaying } = this.props;
 
     const { offsetX } = e.nativeEvent;
@@ -123,64 +121,64 @@ class PlayingBarInfos extends React.Component<Props, State> {
 
     this.setState({
       duration: time,
-      x: percent,
+      x: percent
     });
   }
 
-  hideTooltip() {
+  hideTooltip () {
     this.setState({
       duration: null,
-      x: null,
+      x: null
     });
   }
 
-  render() {
+  render () {
     const { trackPlaying } = this.props;
     const elapsed = this.state.elapsed / trackPlaying.duration;
 
     const nowPlayingTooltipClasses = classnames('playing-bar-tooltip', {
-      hidden: this.state.duration === null,
+      hidden: this.state.duration === null
     });
 
     return (
-      <div className="now-playing-infos">
-        <div className="now-playing-metas">
-          <div className="player-options">
+      <div className='now-playing-infos'>
+        <div className='now-playing-metas'>
+          <div className='player-options'>
             <ButtonRepeat repeat={this.props.repeat} />
             <ButtonShuffle shuffle={this.props.shuffle} />
           </div>
-          <div className="metas">
-            <strong className="meta-title">
+          <div className='metas'>
+            <strong className='meta-title'>
               {trackPlaying.title}
             </strong>
             &nbsp;by&nbsp;
-            <strong className="meta-artist">
+            <strong className='meta-artist'>
               {trackPlaying.artist.join(', ')}
             </strong>
             &nbsp;on&nbsp;
-            <strong className="meta-album">
+            <strong className='meta-album'>
               {trackPlaying.album}
             </strong>
           </div>
 
-          <span className="duration">
+          <span className='duration'>
             {utils.parseDuration(this.state.elapsed)} / {utils.parseDuration(trackPlaying.duration)}
           </span>
         </div>
-        <div className="now-playing-bar" ref={this.playingBar}>
+        <div className='now-playing-bar' ref={this.playingBar}>
           <div className={nowPlayingTooltipClasses} style={{ left: `${this.state.x}%` }}>
             {utils.parseDuration(this.state.duration)}
           </div>
           <div
-            className="progress"
-            role="progressbar"
+            className='progress'
+            role='progressbar'
             tabIndex={0}
             onMouseDown={this.jumpAudioTo}
             onMouseMove={this.showTooltip}
             onMouseLeave={this.hideTooltip}
           >
             <div
-              className="progress-bar"
+              className='progress-bar'
               style={{ transform: `scale3d(${elapsed}, 1, 1)` }}
             />
           </div>

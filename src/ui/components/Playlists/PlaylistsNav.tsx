@@ -10,7 +10,6 @@ import { PlaylistModel } from '../../typings/interfaces';
 
 const { Menu } = electron.remote;
 
-
 /*
 |--------------------------------------------------------------------------
 | PlaylistsNav
@@ -26,11 +25,11 @@ interface State {
 }
 
 class PlaylistsNav extends React.Component<Props, State> {
-  constructor(props: Props) {
+  constructor (props: Props) {
     super(props);
 
     this.state = {
-      renamed: null, // the playlist being renamed if there's one
+      renamed: null // the playlist being renamed if there's one
     };
 
     this.blur = this.blur.bind(this);
@@ -40,20 +39,20 @@ class PlaylistsNav extends React.Component<Props, State> {
     this.createPlaylist = this.createPlaylist.bind(this);
   }
 
-  showContextMenu(_id: string) {
+  showContextMenu (_id: string) {
     const template = [
       {
         label: 'Delete',
-        click: () => {
-          PlaylistsActions.remove(_id);
-        },
+        click: async () => {
+          await PlaylistsActions.remove(_id);
+        }
       },
       {
         label: 'Rename',
         click: () => {
           this.setState({ renamed: _id });
-        },
-      },
+        }
+      }
     ];
 
     const context = Menu.buildFromTemplate(template);
@@ -61,20 +60,20 @@ class PlaylistsNav extends React.Component<Props, State> {
     context.popup({}); // Let it appear
   }
 
-  createPlaylist() {
+  async createPlaylist () {
     // Todo 'new playlist 1', 'new playlist 2' ...
-    PlaylistsActions.create('New playlist', true);
+    await PlaylistsActions.create('New playlist', true);
   }
 
-  rename(_id: string, name: string) {
-    PlaylistsActions.rename(_id, name);
+  async rename (_id: string, name: string) {
+    await PlaylistsActions.rename(_id, name);
   }
 
-  keyDown(e: React.KeyboardEvent<HTMLInputElement>) {
+  async keyDown (e: React.KeyboardEvent<HTMLInputElement>) {
     switch (e.keyCode) {
       case 13: { // Enter
         if (this.state.renamed && e.currentTarget) {
-          this.rename(this.state.renamed, e.currentTarget.value);
+          await this.rename(this.state.renamed, e.currentTarget.value);
           this.setState({ renamed: null });
         }
         break;
@@ -89,19 +88,19 @@ class PlaylistsNav extends React.Component<Props, State> {
     }
   }
 
-  blur(e: React.FocusEvent<HTMLInputElement>) {
+  async blur (e: React.FocusEvent<HTMLInputElement>) {
     if (this.state.renamed) {
-      this.rename(this.state.renamed, e.currentTarget.value);
+      await this.rename(this.state.renamed, e.currentTarget.value);
     }
 
     this.setState({ renamed: null });
   }
 
-  focus(e: React.FocusEvent<HTMLInputElement>) {
+  focus (e: React.FocusEvent<HTMLInputElement>) {
     e.currentTarget.select();
   }
 
-  render() {
+  render () {
     const self = this;
     const { playlists } = this.props;
 
@@ -112,7 +111,7 @@ class PlaylistsNav extends React.Component<Props, State> {
       if (elem._id === self.state.renamed) {
         navItemContent = (
           <input
-            type="text"
+            type='text'
             defaultValue={elem.name}
             onKeyDown={self.keyDown}
             onBlur={self.blur}
@@ -131,21 +130,21 @@ class PlaylistsNav extends React.Component<Props, State> {
       }
 
       return (
-        <div className="playlist-nav-item" key={`playlist-${elem._id}`}>
+        <div className='playlist-nav-item' key={`playlist-${elem._id}`}>
           { navItemContent }
         </div>
       );
     });
 
     return (
-      <div className="playlists-nav">
-        <div className="playlists-nav-body">
+      <div className='playlists-nav'>
+        <div className='playlists-nav-body'>
           { nav }
         </div>
-        <div className="playlists-nav-footer">
-          <ButtonGroup className="playlists-management">
-            <Button bsStyle="link" bsSize="xs" onClick={this.createPlaylist}>
-              <Icon name="plus" />
+        <div className='playlists-nav-footer'>
+          <ButtonGroup className='playlists-management'>
+            <Button bsStyle='link' bsSize='xs' onClick={this.createPlaylist}>
+              <Icon name='plus' />
             </Button>
           </ButtonGroup>
         </div>

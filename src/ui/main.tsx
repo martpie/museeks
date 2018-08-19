@@ -11,7 +11,6 @@ import { Provider } from 'react-redux';
 import Router from './router/Router';
 import store from './store';
 
-
 /*
 |--------------------------------------------------------------------------
 | Styles
@@ -19,7 +18,6 @@ import store from './store';
 */
 
 import './styles/main.scss';
-
 
 /*
 |--------------------------------------------------------------------------
@@ -31,5 +29,5 @@ ReactDOM.render(
   <Provider store={store}>
     <Router />
   </Provider>,
-  document.getElementById('wrap'),
+  document.getElementById('wrap')
 );
