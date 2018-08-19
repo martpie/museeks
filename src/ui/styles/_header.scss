@@ -207,6 +207,7 @@ header {
           }
 
           .progress {
+            outline: none;
             height: 5px;
             margin-bottom: 0;
             margin-top: 3px;
@@ -215,9 +216,10 @@ header {
 
             .progress-bar {
               background-color: $main-color;
-              -webkit-transition: none;
-              -o-transition: none;
               transition: none;
+              transform-origin: left;
+              will-change: transform;
+              width: 100%;
             }
           }
         }

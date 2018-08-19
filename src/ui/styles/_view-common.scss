@@ -103,7 +103,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: transform ease-in-out .25s;
   cursor: pointer;
 
   &:hover {
@@ -116,7 +115,6 @@
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
-    overflow: hidden;
 
     .bar {
       height: 8px;
@@ -124,10 +122,12 @@
       align-items: baseline;
       background-color: #333;
       animation: bar-animate;
-      animation-duration: .8s;
+      animation-duration: 1s;
       animation-timing-function: ease-in-out;
       animation-iteration-count: infinite;
-      transform: translate3d(0, 8px, 0);
+      transform-origin: bottom;
+      transform: scale3d(1, 0, 1);
+      will-change: transform;
 
       &.bar-second {
         animation-delay: .55s;
@@ -147,14 +147,14 @@
 @keyframes bar-animate {
 
   from {
-    transform: translate3d(0, 8px, 0);
+    transform: scale3d(1, 0, 1);
   }
 
   50% {
-    transform: translate3d(0, 0, 0);
+    transform: scale3d(1, 1, 1);
   }
 
   to {
-    transform: translate3d(0, 8px, 0);
+    transform: scale3d(1, 0, 1);
   }
 }
