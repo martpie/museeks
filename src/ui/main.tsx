@@ -8,6 +8,7 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 
+import Root from './components/Root';
 import Router from './router/Router';
 import store from './store';
 
@@ -37,8 +38,10 @@ window.eval = global.eval = function () {
 */
 
 ReactDOM.render(
-  <Provider store={store}>
-    <Router />
-  </Provider>,
+  <Root>
+    <Provider store={store}>
+      <Router />
+    </Provider>
+  </Root>,
   document.getElementById('wrap')
 );
