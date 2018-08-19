@@ -80,7 +80,7 @@ app.on('ready', () => {
   mainWindow.loadURL(`file://${distPath}/index.html#/library`);
 
   // Open dev tools if museeks is run in edbug mode
-  if (process.argv.includes('--enable-logging')) mainWindow.openDevTools();
+  if (process.argv.includes('--enable-logging')) mainWindow.openDevTools({ mode: 'detach' });
 
   mainWindow.on('closed', () => {
     // Dereference the window object

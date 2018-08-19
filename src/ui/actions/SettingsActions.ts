@@ -17,7 +17,7 @@ type UpdateCheckOptions = {
  * Check and enable dev mode if needed
  */
 export const checkDevMode = () => {
-  if (app.config.get('devMode')) app.browserWindows.main.webContents.openDevTools();
+  if (app.config.get('devMode')) app.browserWindows.main.webContents.openDevTools({ mode: 'detach' });
 };
 
 const checkTheme = () => {
@@ -118,7 +118,7 @@ export const toggleDevMode = (value: boolean) => {
   app.config.set('devMode', value);
 
   // Open dev tools if needed
-  if (value) app.browserWindows.main.webContents.openDevTools();
+  if (value) app.browserWindows.main.webContents.openDevTools({ mode: 'detach' });
   else app.browserWindows.main.webContents.closeDevTools();
 
   app.config.saveSync();
