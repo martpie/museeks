@@ -17,7 +17,7 @@ export const add = (type: ToastType, content: string, duration = 3000) => {
     },
   });
 
-  setTimeout(() => {
+  window.setTimeout(() => {
     store.dispatch({
       type: types.APP_TOAST_REMOVE,
       payload: {

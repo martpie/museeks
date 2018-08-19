@@ -1,11 +1,10 @@
 import * as React from 'react';
-import * as InlineSVG from 'react-svg-inline';
+import InlineSVG from 'svg-inline-react';
 import classnames from 'classnames';
 
 import * as PlayerActions from '../../actions/PlayerActions';
 import { Repeat } from '../../typings/interfaces';
 
-/* eslint-disable global-require */
 const svgMap = {
   [Repeat.ONE]: require('../../../images/icons/player-repeat-one.svg'),
   [Repeat.ALL]: require('../../../images/icons/player-repeat.svg'),
@@ -63,7 +62,7 @@ export default class ButtonRepeat extends React.Component<Props> {
 
     return (
       <button className={buttonClasses} onClick={this.toggleRepeat}>
-        <InlineSVG svg={svg} className={svgClasses} />
+        <InlineSVG src={svg} className={svgClasses} />
       </button>
     );
   }

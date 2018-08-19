@@ -161,7 +161,7 @@ export const next = () => {
   const { queue, queueCursor, repeat } = store.getState().player;
   let newQueueCursor;
 
-  if (queueCursor) {
+  if (queueCursor !== null) {
     if (repeat === Repeat.ONE) {
       newQueueCursor = queueCursor;
     } else if (repeat === Repeat.ALL && queueCursor === queue.length - 1) { // is last track
@@ -200,7 +200,7 @@ export const previous = () => {
   const { queue, queueCursor } = store.getState().player;
   let newQueueCursor = queueCursor;
 
-  if (queueCursor && newQueueCursor) {
+  if (queueCursor !== null && newQueueCursor !== null) {
     // If track started less than 5 seconds ago, play th previous track,
     // otherwise replay the current one
     if (currentTime < 5) {

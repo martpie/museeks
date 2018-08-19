@@ -20,7 +20,7 @@ export default class Queue extends React.PureComponent<Props> {
   render() {
     const { queue, queueCursor } = this.props;
 
-    if (queueCursor) {
+    if (queueCursor !== null) {
       const shownQueue = queue.slice(queueCursor + 1, queueCursor + 21);
 
       if (shownQueue.length === 0) {

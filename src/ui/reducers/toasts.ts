@@ -10,7 +10,7 @@ const initialState: ToastsState = [];
 export default (state = initialState, action: Action): ToastsState => {
   switch (action.type) {
     case (types.APP_TOAST_ADD): {
-      const toasts = [...state, action.payload];
+      const toasts = [...state, action.payload.toast];
       return toasts;
     }
 

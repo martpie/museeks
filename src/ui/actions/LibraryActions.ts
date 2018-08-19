@@ -47,7 +47,9 @@ export const load = async () => {
 export const search = (value: string) => {
   store.dispatch({
     type: types.APP_FILTER_SEARCH,
-    search: value,
+    payload: {
+      search: value,
+    }
   });
 };
 

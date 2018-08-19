@@ -9,7 +9,7 @@ import * as fs from 'fs';
 import * as util from 'util';
 import * as globby from 'globby';
 import * as mmd from 'music-metadata';
-import * as pickBy from 'lodash-es/pickBy';
+import pickBy from 'lodash-es/pickBy';
 
 import { Track } from '../typings/interfaces';
 
@@ -20,10 +20,10 @@ const stat = util.promisify(fs.stat);
  * Parse an int to a more readable string
  */
 export const parseDuration = (duration: number | null): string => {
-  if (duration !== null && duration !== undefined) {
-    let hours = duration / 3600;
-    let minutes = (duration / 60) % 60;
-    let seconds = duration % 60;
+  if (duration !== null) {
+    let hours = Math.trunc(duration / 3600);
+    let minutes = Math.trunc(duration / 60) % 60;
+    let seconds = Math.trunc(duration) % 60;
 
     const hoursStringified = hours < 10 ? `0${hours}` : hours;
     const minutesStringified = minutes < 10 ? `0${minutes}` : minutes;
