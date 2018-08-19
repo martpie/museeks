@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import * as React from 'react';
 
 /*
 |--------------------------------------------------------------------------
@@ -15,7 +15,7 @@ interface Props {
 }
 
 
-export default class CheckboxSetting extends PureComponent<Props> {
+export default class CheckboxSetting extends React.PureComponent<Props> {
   static defaultProps = {
     description: '',
   }

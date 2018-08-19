@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
@@ -26,7 +26,7 @@ interface Props {
 }
 
 
-class Library extends Component<Props> {
+class Library extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
     this.getLibraryComponent = this.getLibraryComponent.bind(this);

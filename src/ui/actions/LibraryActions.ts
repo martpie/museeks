@@ -1,9 +1,9 @@
-import electron from 'electron';
-import fs from 'fs';
-import path from 'path';
-import util from 'util';
-import globby from 'globby';
-import queue from 'queue';
+import * as electron from 'electron';
+import * as fs from 'fs';
+import * as path from 'path';
+import * as util from 'util';
+import * as globby from 'globby';
+import * as queue from 'queue';
 
 import store from '../store';
 

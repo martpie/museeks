@@ -1,5 +1,5 @@
-import os from 'os';
-import React, { Component } from 'react';
+import * as os from 'os';
+import * as React from 'react';
 import { connect } from 'react-redux';
 import Input from 'react-simple-input';
 import KeyBinding from 'react-keybinding-component';
@@ -31,7 +31,7 @@ interface Props {
 }
 
 
-class Header extends Component<Props> {
+class Header extends React.Component<Props> {
   input: React.RefObject<HTMLInputElement>;
 
   constructor(props: Props) {

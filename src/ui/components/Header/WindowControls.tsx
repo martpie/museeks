@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import * as React from 'react';
 
 import AppActions from '../../actions/AppActions';
 
@@ -8,7 +8,7 @@ import AppActions from '../../actions/AppActions';
 |--------------------------------------------------------------------------
 */
 
-export default class WindowControls extends PureComponent {
+export default class WindowControls extends React.PureComponent {
   render() {
     return (
       <div className="window-controls">

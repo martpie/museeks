@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
 
 import * as SettingsActions from '../../actions/SettingsActions';
 
@@ -18,11 +17,7 @@ interface Props {
 }
 
 
-export default class SettingsUI extends Component<Props> {
-  static propTypes = {
-    config: PropTypes.object.isRequired,
-  }
-
+export default class SettingsUI extends React.Component<Props> {
   render() {
     const { config } = this.props;
 

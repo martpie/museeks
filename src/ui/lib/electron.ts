@@ -1,4 +1,4 @@
-import electron from 'electron';
+import * as electron from 'electron';
 
 const { shell } = electron;
 

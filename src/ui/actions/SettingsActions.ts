@@ -1,5 +1,5 @@
-import electron from 'electron';
-import semver from 'semver';
+import * as electron from 'electron';
+import * as semver from 'semver';
 
 import store from '../store';
 import types from '../constants/action-types';

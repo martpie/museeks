@@ -1,5 +1,5 @@
-import os from 'os';
-import React, { Component } from 'react';
+import * as os from 'os';
+import * as React from 'react';
 import { Row } from 'react-bootstrap';
 import KeyBinding from 'react-keybinding-component';
 import { withRouter, RouteComponentProps } from 'react-router';
@@ -24,7 +24,7 @@ import { config } from '../lib/app';
 type Props = RouteComponentProps<{}>;
 
 
-class Museeks extends Component<Props> {
+class Museeks extends React.Component<Props> {
   static onKey(e: React.KeyboardEvent) {
     switch (e.keyCode) {
       case 32: // Space

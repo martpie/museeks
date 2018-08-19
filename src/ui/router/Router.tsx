@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { Router, Switch, Route } from 'react-router-dom';
 
 // History
@@ -11,7 +11,7 @@ import Playlists from '../components/Playlists/Playlists';
 import Settings from '../components/Settings/Settings';
 
 
-const AppRouter = () => (
+const AppRouter: React.SFC<{}> = () => (
   <Router history={history}>
     <App>
       <Switch>

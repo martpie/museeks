@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import * as React from 'react';
 
 /*
 |--------------------------------------------------------------------------
@@ -6,7 +6,7 @@ import React, { PureComponent } from 'react';
 |--------------------------------------------------------------------------
 */
 
-export default class FullViewMessage extends PureComponent {
+export default class FullViewMessage extends React.PureComponent {
   render() {
     return (
       <div className="full-message">

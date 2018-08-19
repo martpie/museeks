@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import * as React from 'react';
 import { Route, Switch, withRouter, RouteComponentProps } from 'react-router';
 import { NavLink } from 'react-router-dom';
 import { Row, Col, ButtonGroup, ProgressBar } from 'react-bootstrap';
-import Icon from 'react-fontawesome';
+import * as Icon from 'react-fontawesome';
 import { connect } from 'react-redux';
 
 import { getStatus } from '../../utils/utils-library';
@@ -23,7 +23,7 @@ interface InjectedProps {
 type Props = InjectedProps & RouteComponentProps<{}>;
 
 
-class Footer extends Component<Props> {
+class Footer extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
     this.getStatus = this.getStatus.bind(this);

@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import * as React from 'react';
 import { Dropdown } from 'react-bootstrap';
-import Icon from 'react-fontawesome';
+import * as Icon from 'react-fontawesome';
 
 import Queue from './Queue';
 import PlayingBarInfos from './PlayingBarInfos';
@@ -21,7 +21,7 @@ interface Props {
   repeat: Repeat;
 }
 
-export default class PlayingBar extends Component<Props> {
+export default class PlayingBar extends React.Component<Props> {
   render() {
     const {
       queue, queueCursor, repeat, shuffle,

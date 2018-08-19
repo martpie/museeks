@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import * as React from 'react';
 import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 
@@ -30,7 +30,7 @@ interface RouteParams {
 
 type Props = OwnProps & RouteComponentProps<RouteParams>;
 
-class Playlist extends Component<Props> {
+class Playlist extends React.Component<Props> {
   componentDidMount() {
     PlaylistsActions.load(this.props.match.params.playlistId);
   }

@@ -1,7 +1,7 @@
-import electron from 'electron';
-import React, { Component } from 'react';
+import * as electron from 'electron';
+import * as React from 'react';
 import { ButtonGroup, Button } from 'react-bootstrap';
-import Icon from 'react-fontawesome';
+import * as Icon from 'react-fontawesome';
 
 import * as PlaylistsActions from '../../actions/PlaylistsActions';
 
@@ -25,7 +25,7 @@ interface State {
   renamed: string | null;
 }
 
-class PlaylistsNav extends Component<Props, State> {
+class PlaylistsNav extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
 

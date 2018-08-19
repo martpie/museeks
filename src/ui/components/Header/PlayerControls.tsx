@@ -1,5 +1,5 @@
-import React, { PureComponent } from 'react';
-import Icon from 'react-fontawesome';
+import * as React from 'react';
+import * as Icon from 'react-fontawesome';
 import VolumeControl from './VolumeControl';
 
 import * as PlayerActions from '../../actions/PlayerActions';
@@ -16,7 +16,7 @@ interface Props {
 }
 
 
-export default class PlayerControls extends PureComponent<Props> {
+export default class PlayerControls extends React.PureComponent<Props> {
   render() {
     return (
       <div className="player-controls">
