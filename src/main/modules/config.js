@@ -43,10 +43,10 @@ class ConfigModule extends Module {
       audioMuted: false,
       audioShuffle: false,
       audioRepeat: 'none',
-      // librarySort: {
-      //   by: 'ARTIST',
-      //   order: 'ASC',
-      // },
+      librarySort: {
+        by: 'artist',
+        order: 'asc',
+      },
       musicFolders: [],
       sleepBlocker: false,
       autoUpdateChecker: true,

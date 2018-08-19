@@ -2,28 +2,28 @@
  * Player related stuff
  */
 export enum PlayerStatus {
-  PLAY = 'PLAY',
-  PAUSE = 'PAUSE',
-  STOP = 'STOP'
+  PLAY = 'play',
+  PAUSE = 'pause',
+  STOP = 'stop'
 }
 
 export enum Repeat {
-  ALL = 'ALL',
-  ONE = 'ONE',
-  NONE = 'NONE'
+  ALL = 'all',
+  ONE = 'one',
+  NONE = 'none'
 }
 
 export enum SortBy {
-  ARTIST = 'ARTIST',
-  ALBUM = 'ALBUM',
-  TITLE = 'TITLE',
-  DURATION = 'DURATION',
-  GENRE = 'GENRE'
+  ARTIST = 'artist',
+  ALBUM = 'album',
+  TITLE = 'title',
+  DURATION = 'duration',
+  GENRE = 'genre'
 }
 
 export enum SortOrder {
-  ASC = 'ASC',
-  DSC = 'DSC'
+  ASC = 'asc',
+  DSC = 'dsc'
 }
 
 /**
