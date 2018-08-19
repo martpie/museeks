@@ -1,4 +1,4 @@
-import { Track, SortOrder, SortBy } from '../typings/interfaces';
+import { Track, SortOrder, SortBy } from '../types/interfaces';
 
 // For perforances reasons, otherwise _.orderBy will perform weird check
 // the is far more resource/time impactful

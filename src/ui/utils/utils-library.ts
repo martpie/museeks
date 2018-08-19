@@ -1,7 +1,7 @@
 import orderBy from 'lodash-es/orderBy';
 import * as utils from './utils';
 
-import { TrackModel } from '../typings/interfaces';
+import { TrackModel } from '../types/interfaces';
 
 /**
  * Filter an array of tracks by string

@@ -14,7 +14,7 @@ import * as QueueActions from '../../actions/QueueActions';
 
 import * as utils from '../../utils/utils';
 import { isCtrlKey } from '../../utils/utils-platform';
-import { PlaylistModel, TrackModel, PlayerStatus } from '../../typings/interfaces';
+import { PlaylistModel, TrackModel, PlayerStatus } from '../../types/interfaces';
 
 const { shell, remote } = electron;
 const { Menu } = remote;

@@ -7,7 +7,7 @@ import FullViewMessage from '../Shared/FullViewMessage';
 
 import * as PlaylistsActions from '../../actions/PlaylistsActions';
 import Playlist from './Playlist';
-import { PlaylistModel } from '../../typings/interfaces';
+import { PlaylistModel } from '../../types/interfaces';
 import { RootState } from '../../reducers';
 
 /*

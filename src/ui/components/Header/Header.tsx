@@ -12,7 +12,7 @@ import * as LibraryActions from '../../actions/LibraryActions';
 import { config } from '../../lib/app';
 import { isCtrlKey } from '../../utils/utils-platform';
 import { RootState } from '../../reducers';
-import { TrackModel, PlayerStatus, Repeat } from '../../typings/interfaces';
+import { TrackModel, PlayerStatus, Repeat } from '../../types/interfaces';
 
 /*
 |--------------------------------------------------------------------------

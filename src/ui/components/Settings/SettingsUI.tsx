@@ -3,7 +3,7 @@ import * as React from 'react';
 import * as SettingsActions from '../../actions/SettingsActions';
 
 import CheckboxSetting from './CheckboxSetting';
-import { Config } from '../../typings/interfaces';
+import { Config } from '../../types/interfaces';
 
 /*
 |--------------------------------------------------------------------------

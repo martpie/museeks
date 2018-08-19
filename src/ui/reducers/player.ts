@@ -1,7 +1,7 @@
 import types from '../constants/action-types';
 import { config } from '../lib/app';
 import { shuffleTracks } from '../utils/utils-player';
-import { TrackModel, Action, Repeat, PlayerStatus } from '../typings/interfaces';
+import { TrackModel, Action, Repeat, PlayerStatus } from '../types/interfaces';
 
 export interface PlayerState {
   queue: TrackModel[];

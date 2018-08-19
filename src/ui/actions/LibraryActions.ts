@@ -12,7 +12,7 @@ import * as LibraryActions from './LibraryActions';
 
 import * as app from '../lib/app';
 import * as utils from '../utils/utils';
-import { SortBy } from '../typings/interfaces';
+import { SortBy } from '../types/interfaces';
 
 const { dialog } = electron.remote;
 const stat = util.promisify(fs.stat);
