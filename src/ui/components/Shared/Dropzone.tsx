@@ -1,4 +1,4 @@
-import React, { Component, SyntheticEvent } from 'react';
+import * as React from 'react';
 import classnames from 'classnames';
 
 
@@ -12,7 +12,7 @@ interface Props {
   title: string,
   subtitle: string,
   onDrop: (e: DragEvent) => void,
-  onClick: (e?: SyntheticEvent<HTMLDivElement>) => void,
+  onClick: (e?: React.SyntheticEvent<HTMLDivElement>) => void,
 }
 
 interface State {
@@ -20,7 +20,7 @@ interface State {
 }
 
 
-export default class Dropzone extends Component<Props, State> {
+export default class Dropzone extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -56,11 +56,11 @@ export default class Dropzone extends Component<Props, State> {
     this.setState({ state: 'idle' });
   }
 
-  onDragOver(e: SyntheticEvent<HTMLDivElement>) {
+  onDragOver(e: React.SyntheticEvent<HTMLDivElement>) {
     e.preventDefault();
   }
 
-  onDrop(e: SyntheticEvent<HTMLDivElement>) {
+  onDrop(e: React.SyntheticEvent<HTMLDivElement>) {
     e.preventDefault();
     this.setState({ state: 'idle' });
     if (this.props.onDrop) this.props.onDrop(e.nativeEvent as DragEvent);

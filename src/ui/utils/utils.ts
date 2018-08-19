@@ -4,12 +4,12 @@
 |--------------------------------------------------------------------------
 */
 
-import path from 'path';
-import fs from 'fs';
-import util from 'util';
-import globby from 'globby';
+import * as path from 'path';
+import * as fs from 'fs';
+import * as util from 'util';
+import * as globby from 'globby';
 import * as mmd from 'music-metadata';
-import pickBy from 'lodash/pickBy';
+import * as pickBy from 'lodash-es/pickBy';
 
 import { Track } from '../typings/interfaces';
 
@@ -154,6 +154,7 @@ export const parseMusicMetadata = (data: mmd.IAudioMetadata, trackPath: string):
     year: common.year,
   };
 
+  // @ts-ignore
   return pickBy(metadata);
 };
 

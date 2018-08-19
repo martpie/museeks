@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import * as React from 'react';
 import { Button } from 'react-bootstrap';
 import classnames from 'classnames';
 
@@ -23,7 +23,7 @@ interface Props {
   queueCursor: number;
 }
 
-export default class QueueListItem extends PureComponent<Props> {
+export default class QueueListItem extends React.PureComponent<Props> {
   static defaultProps = {
     dragPosition: null,
   }

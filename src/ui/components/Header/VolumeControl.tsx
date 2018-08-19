@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import Icon from 'react-fontawesome';
+import * as React from 'react';
+import * as Icon from 'react-fontawesome';
 import classnames from 'classnames';
 import Slider from 'react-rangeslider';
 
@@ -34,7 +34,7 @@ interface State {
 }
 
 
-export default class VolumeControl extends Component<Props, State> {
+export default class VolumeControl extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
 

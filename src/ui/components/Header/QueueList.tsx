@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import * as React from 'react';
 import { ButtonGroup, Button } from 'react-bootstrap';
 import classnames from 'classnames';
 
@@ -28,7 +28,7 @@ interface State {
 }
 
 
-export default class QueueList extends Component<Props, State> {
+export default class QueueList extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
 

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import * as React from 'react';
 import { Button } from 'react-bootstrap';
 
 import ExternalLink from '../Shared/ExternalLink';
@@ -13,7 +13,7 @@ import * as SettingsActions from '../../actions/SettingsActions';
 |--------------------------------------------------------------------------
 */
 
-export default class SettingsAbout extends Component {
+export default class SettingsAbout extends React.Component {
   render() {
     return (
       <div className="setting setting-about">

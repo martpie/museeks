@@ -1,4 +1,4 @@
-import orderBy from 'lodash/orderBy';
+import orderBy from 'lodash-es/orderBy';
 import * as utils from './utils';
 
 import { TrackModel } from '../typings/interfaces';

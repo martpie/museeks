@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import * as React from 'react';
 import { connect } from 'react-redux';
 import { Route, Redirect, withRouter, RouteComponentProps } from 'react-router-dom';
 
@@ -27,7 +27,7 @@ interface RouteParams {
 
 type Props = OwnProps & RouteComponentProps<RouteParams>;
 
-class Playlists extends Component<Props> {
+class Playlists extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
 

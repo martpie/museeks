@@ -1,4 +1,4 @@
-import React, { PureComponent, SyntheticEvent } from 'react';
+import * as React from 'react';
 
 import classnames from 'classnames';
 
@@ -24,7 +24,7 @@ interface Props {
 }
 
 
-export default class TrackRow extends PureComponent<Props> {
+export default class TrackRow extends React.PureComponent<Props> {
   constructor(props: Props) {
     super(props);
 
@@ -33,11 +33,11 @@ export default class TrackRow extends PureComponent<Props> {
     this.onContextMenu = this.onContextMenu.bind(this);
   }
 
-  onMouseDown(e: SyntheticEvent) {
+  onMouseDown(e: React.SyntheticEvent) {
     this.props.onMouseDown(e, this.props.track._id, this.props.index);
   }
 
-  onContextMenu(e: SyntheticEvent) {
+  onContextMenu(e: React.SyntheticEvent) {
     this.props.onContextMenu(e, this.props.index);
   }
 

@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import Icon from 'react-fontawesome';
+import * as React from 'react';
+import * as Icon from 'react-fontawesome';
 import { connect } from 'react-redux';
 
 import classnames from 'classnames';
@@ -23,7 +23,7 @@ interface State {
   hovered: boolean;
 }
 
-class TrackPlayingIndicator extends Component<Props, State> {
+class TrackPlayingIndicator extends React.Component<Props, State> {
   static getIcon = (state: PlayerStatus, hovered: boolean) => {
     if (state === PlayerStatus.PLAY) {
       if (hovered) {

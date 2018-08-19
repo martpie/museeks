@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import * as React from 'react';
 
 
 /*
@@ -7,7 +7,7 @@ import React, { PureComponent } from 'react';
 |--------------------------------------------------------------------------
 */
 
-export default class QueueEmpty extends PureComponent {
+export default class QueueEmpty extends React.PureComponent {
   render() {
     return (
       <div className="queue text-left">

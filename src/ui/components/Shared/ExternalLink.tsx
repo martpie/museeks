@@ -1,4 +1,4 @@
-import React, { Component, SyntheticEvent } from 'react';
+import * as React from 'react';
 
 import { openExternal } from '../../lib/electron';
 
@@ -14,14 +14,14 @@ interface Props {
 }
 
 
-export default class ExternalLink extends Component<Props> {
+export default class ExternalLink extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
 
     this.openLink = this.openLink.bind(this);
   }
 
-  openLink(e: SyntheticEvent) {
+  openLink(e: React.SyntheticEvent) {
     e.preventDefault();
     openExternal(this.props.href);
   }

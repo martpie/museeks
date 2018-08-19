@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import * as React from 'react';
 
 import * as SettingsActions from '../../actions/SettingsActions';
 
@@ -17,7 +17,7 @@ interface Props {
 }
 
 
-export default class SettingsAdvanced extends Component<Props> {
+export default class SettingsAdvanced extends React.Component<Props> {
   render() {
     const { config } = this.props;
 

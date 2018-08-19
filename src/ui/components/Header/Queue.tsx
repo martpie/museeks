@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import * as React from 'react';
 
 import QueueEmpty from './QueueEmpty';
 import QueueList from './QueueList';
@@ -16,7 +16,7 @@ interface Props {
   queueCursor: number;
 }
 
-export default class Queue extends PureComponent<Props> {
+export default class Queue extends React.PureComponent<Props> {
   render() {
     const { queue, queueCursor } = this.props;
 

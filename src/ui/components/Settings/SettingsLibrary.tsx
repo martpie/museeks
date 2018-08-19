@@ -1,5 +1,5 @@
-import electron from 'electron';
-import React, { Component } from 'react';
+import * as electron from 'electron';
+import * as React from 'react';
 import { ButtonGroup, Button } from 'react-bootstrap';
 
 import Dropzone from '../Shared/Dropzone';
@@ -22,7 +22,7 @@ interface Props {
 }
 
 
-export default class SettingsLibrary extends Component<Props> {
+export default class SettingsLibrary extends React.Component<Props> {
 
   onDrop(e: DragEvent) {
     const files = [];

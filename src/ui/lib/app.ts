@@ -1,9 +1,9 @@
-import electron from 'electron';
+import * as electron from 'electron';
 import linvodb from 'linvodb3';
 import leveljs from 'level-js';
-import path from 'path';
+import * as path from 'path';
 import teeny from 'teeny-conf';
-import Promise from 'bluebird';
+import * as Promise from 'bluebird';
 
 const { remote } = electron;
 const { app } = remote;

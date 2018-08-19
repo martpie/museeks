@@ -1,7 +1,7 @@
-import electron from 'electron';
-import React, { Component } from 'react';
+import * as electron from 'electron';
+import * as React from 'react';
 import KeyBinding from 'react-keybinding-component';
-import chunk from 'lodash/chunk';
+import chunk from 'lodash-es/chunk';
 
 import TrackRow from './TrackRow';
 import CustomScrollbar from './CustomScrollbar';
@@ -45,7 +45,7 @@ interface State {
 }
 
 
-export default class TracksList extends Component<Props, State> {
+export default class TracksList extends React.Component<Props, State> {
   static defaultProps = {
     currentPlaylist: '',
   };

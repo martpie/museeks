@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import * as React from 'react';
 
 import * as utils from '../../utils/utils';
 
@@ -18,7 +18,7 @@ interface State {
 }
 
 
-export default class TrackCover extends PureComponent<Props, State> {
+export default class TrackCover extends React.PureComponent<Props, State> {
 
   constructor(props: Props) {
     super(props);

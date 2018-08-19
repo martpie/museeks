@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import * as React from 'react';
 import { NavLink } from 'react-router-dom';
 
 
@@ -13,7 +13,7 @@ interface Props {
   onContextMenu: (playlistId: string) => void,
 }
 
-export default class PlaylistsNavLink extends Component<Props> {
+export default class PlaylistsNavLink extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
 

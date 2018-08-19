@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import * as React from 'react';
 
 import * as PlayerActions from '../../actions/PlayerActions';
 import { Config } from '../../typings/interfaces';
@@ -15,7 +15,7 @@ interface Props {
 }
 
 
-export default class SettingsAudio extends Component<Props> {
+export default class SettingsAudio extends React.Component<Props> {
   setPlaybackRate(e: React.SyntheticEvent<HTMLInputElement>) {
     PlayerActions.setPlaybackRate(parseInt(e.currentTarget.value, 10));
   }

@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import InlineSVG from 'react-svg-inline';
+import * as React from 'react';
+import * as InlineSVG from 'react-svg-inline';
 import classnames from 'classnames';
 
 import * as PlayerActions from '../../actions/PlayerActions';
@@ -18,7 +18,7 @@ interface Props {
 }
 
 
-export default class ButtonShuffle extends Component<Props> {
+export default class ButtonShuffle extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
 
