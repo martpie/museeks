@@ -93,13 +93,16 @@ export const add = (pathsToScan: string[]) => {
 
   scanQueue.on('end', endScan);
   scanQueue.on('success', () => {
-    store.dispatch({
-      type: types.APP_LIBRARY_REFRESH_PROGRESS,
-      payload: {
-        processed: scan.processed,
-        total: scan.total
-      }
-    });
+    // Every 10 scans, update progress bar
+    if (scan.processed % 10 === 0) {
+      store.dispatch({
+        type: types.APP_LIBRARY_REFRESH_PROGRESS,
+        payload: {
+          processed: scan.processed,
+          total: scan.total
+        }
+      });
+    }
   });
   // End queue instantiation
 
