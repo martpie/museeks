@@ -72,6 +72,7 @@
     "@types/redux-logger": "3.0.6",
     "@types/semver": "5.5.0",
     "awesome-typescript-loader": "5.2.0",
+    "babel-eslint": "^8.2.6",
     "clean-terminal-webpack-plugin": "1.0.1",
     "css-loader": "0.28.11",
     "electron": "2.0.7",
