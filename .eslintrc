@@ -30,5 +30,5 @@
     "jsx-a11y/anchor-is-valid": [ "error", { "specialLink": [ "to" ] } ],
     "import/no-extraneous-dependencies": "off",
     "import/prefer-default-export": "off"
-  },
+  }
 }
