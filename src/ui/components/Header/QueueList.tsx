@@ -59,7 +59,7 @@ export default class QueueList extends React.Component<Props, State> {
     const draggedIndex = this.state.draggedTrackIndex;
     const draggedOverIndex = this.state.draggedOverTrackIndex;
 
-    if (draggedIndex && draggedOverIndex) {
+    if (draggedIndex && draggedOverIndex && queueCursor) {
       const offsetPosition = dragPosition === 'below' ? 1 : 0;
       const offsetHigherIndex = draggedOverIndex < draggedIndex || (draggedOverIndex === draggedIndex && dragPosition === 'above') ? 1 : 0;
 
