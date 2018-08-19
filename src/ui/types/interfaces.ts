@@ -115,7 +115,6 @@ export interface Config {
   // musicFolders: string[],
   sleepBlocker: boolean;
   autoUpdateChecker: boolean;
-  useNativeFrame: boolean;
   minimizeToTray: boolean;
   displayNotifications: boolean;
   devMode: boolean;

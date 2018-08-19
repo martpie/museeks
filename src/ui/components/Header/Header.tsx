@@ -1,15 +1,12 @@
-import * as os from 'os';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import Input from 'react-simple-input';
 import KeyBinding from 'react-keybinding-component';
 
 import PlayingBar from './PlayingBar';
-import WindowControls from './WindowControls';
 import PlayerControls from './PlayerControls';
 
 import * as LibraryActions from '../../actions/LibraryActions';
-import { config } from '../../lib/app';
 import { isCtrlKey } from '../../utils/utils-platform';
 import { RootState } from '../../reducers';
 import { TrackModel, PlayerStatus, Repeat } from '../../types/interfaces';
@@ -26,7 +23,6 @@ interface Props {
   shuffle: boolean;
   queue: TrackModel[];
   queueCursor: number | null;
-  showTopHeader: boolean;
 }
 
 class Header extends React.Component<Props> {
@@ -54,18 +50,11 @@ class Header extends React.Component<Props> {
 
   render () {
     const {
-      playerStatus, queue, queueCursor, shuffle, repeat, showTopHeader
+      playerStatus, queue, queueCursor, shuffle, repeat
     } = this.props;
 
     return (
       <header>
-        {
-          showTopHeader && (
-            <div className='top-header'>
-              <WindowControls />
-            </div>
-          )
-        }
         <div className='main-header'>
           <div className='col-main-controls'>
             <PlayerControls
@@ -103,8 +92,7 @@ const mapStateToProps = ({ player }: RootState) => ({
   repeat: player.repeat,
   shuffle: player.shuffle,
   queue: player.queue,
-  queueCursor: player.queueCursor,
-  showTopHeader: os.platform() !== 'darwin' && !config.get('useNativeFrame')
+  queueCursor: player.queueCursor
 });
 
 export default connect(mapStateToProps)(Header);

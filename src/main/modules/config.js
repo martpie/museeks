@@ -50,7 +50,6 @@ class ConfigModule extends Module {
       musicFolders: [],
       sleepBlocker: false,
       autoUpdateChecker: true,
-      useNativeFrame: false,
       minimizeToTray: true,
       displayNotifications: true,
       devMode: false,

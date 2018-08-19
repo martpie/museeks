@@ -4,14 +4,13 @@ $_window-control-bg-hover: rgba(0, 0, 0, .1);
 $_window-control-bg-active: rgba(0, 0, 0, .15);
 $_window-control-close-bg-hover: rgb(196, 36, 36);
 $_window-control-close-bg-active: darken($_window-control-close-bg-hover, 5%);
-$_window-control-size: #{$top-header-height}px;
 
 
 //--------------------------------------------------------------------------
 // Header
 //--------------------------------------------------------------------------
 
-.root.os-darwin:not(.native-frame) .col-main-controls {
+.root.os-darwin .col-main-controls {
   padding-left: 65px; // let some space for titleBarStyle
 }
 
@@ -32,14 +31,6 @@ header {
     -webkit-app-region: no-drag;
   }
   // End of draggable region
-
-  .top-header {
-    display: flex;
-    justify-content: flex-end;
-    height: #{$top-header-height}px;
-    background-color: rgba(0, 0, 0, .065);
-    border-bottom: 1px solid rgb(210, 210, 210);
-  }
 
   .main-header {
     padding: 0 10px;
@@ -424,102 +415,6 @@ header {
       width: 88px;
       height: 20px;
       background-color: transparent;
-    }
-  }
-}
-
-
-.window-controls {
-  display: flex;
-  position: absolute;
-  top: 0;
-  right: 0;
-  height: 24px;
-
-
-  .window-control {
-    width: $_window-control-size;
-    font-size: 15px;
-    color: $_header-color;
-    border: 0;
-    text-align: center;
-    padding: 0;
-    line-height: $_window-control-size;
-    background-color: transparent;
-    -webkit-app-region: no-drag;
-
-    &:hover {
-      background-color: $_window-control-bg-hover;
-    }
-
-    &:active {
-      background-color: $_window-control-bg-active;
-    }
-
-    &.window-minimize {
-
-      &::after {
-        content: "";
-        display: block;
-        margin: auto;
-        border-bottom: solid 2px #555;
-        width: 10px;
-      }
-    }
-
-    &.window-maximize {
-
-      &::after {
-        content: "";
-        display: block;
-        margin: auto;
-        border: solid 1px #555;
-        border-top-width: 2px;
-        height: 9px;
-        width: 10px;
-      }
-    }
-
-    &.window-close {
-      position: relative;
-
-      &:hover {
-        background-color: $_window-control-close-bg-hover;
-
-        &::before,
-        &::after {
-          background-color: $generic-white;
-        }
-      }
-
-      &:active {
-        background-color: $_window-control-close-bg-active;
-
-        &::before,
-        &::after {
-          background-color: $generic-white;
-        }
-      }
-
-      &::before,
-      &::after {
-        display: block;
-        position: absolute;
-        content: " ";
-        height: 11px;
-        width: 2px;
-        background-color: #555;
-        top: 7px;
-        left: 11px;
-      }
-
-      &::before {
-        transform: rotate(45deg);
-      }
-
-      &::after {
-        transform: rotate(-45deg);
-      }
     }
   }
 }

@@ -3,7 +3,6 @@ import * as semver from 'semver';
 
 import store from '../store';
 import types from '../constants/action-types';
-import AppActions from './AppActions';
 import * as ToastsActions from './ToastsActions';
 
 import * as app from '../lib/app';
@@ -139,15 +138,6 @@ export const toggleAutoUpdateChecker = (value: boolean) => {
   store.dispatch({
     type: types.APP_REFRESH_CONFIG
   });
-};
-
-/**
- * Toggle native frame
- */
-export const toggleNativeFrame = (value: boolean) => {
-  app.config.set('useNativeFrame', value);
-  app.config.saveSync();
-  AppActions.restart();
 };
 
 /**

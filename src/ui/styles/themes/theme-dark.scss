@@ -26,10 +26,6 @@ body.theme-dark {
     background-color: #33393b;
     color: #EEE;
 
-    .top-header {
-      border-bottom-color: #1b1b1b;
-    }
-
     .main-header {
       border-bottom-color: #1b1b1b;
     }
@@ -111,26 +107,6 @@ body.theme-dark {
             }
           }
         }
-      }
-    }
-  }
-
-  .window-controls .window-control {
-    color: #EEE;
-
-    &.window-minimize,
-    &.window-maximize {
-
-      &::after {
-        border-color: #EEE;
-      }
-    }
-
-    &.window-close {
-
-      &::before,
-      &::after {
-        background-color: $generic-white;
       }
     }
   }

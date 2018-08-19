@@ -12,8 +12,6 @@ import Toasts from './Toasts/Toasts';
 import AppActions from '../actions/AppActions';
 import * as PlayerActions from '../actions/PlayerActions';
 
-import { config } from '../lib/app';
-
 /*
 |--------------------------------------------------------------------------
 | The App
@@ -40,9 +38,7 @@ class Museeks extends React.Component<Props> {
   }
 
   render () {
-    const wrapClasses = classnames('root', `os-${os.platform()}`, {
-      'native-frame': config.get('useNativeFrame')
-    });
+    const wrapClasses = classnames('root', `os-${os.platform()}`);
 
     return (
       <div className={wrapClasses}>

@@ -36,13 +36,6 @@ export default class SettingsUI extends React.Component<Props> {
           onClick={SettingsActions.toggleDisplayNotifications}
         />
         <CheckboxSetting
-          slug='nativeframe'
-          title='Use native frame'
-          description='Run Museeks with default window controls (will restart the app)'
-          defaultValue={config.useNativeFrame}
-          onClick={SettingsActions.toggleNativeFrame}
-        />
-        <CheckboxSetting
           slug='sleepmode'
           title='Sleep mode blocker'
           description='Prevent the computer from going into sleep mode'
