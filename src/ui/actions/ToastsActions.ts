@@ -1,7 +1,7 @@
 import store from '../store';
 import types from '../constants/action-types';
 
-import { ToastType } from '../typings/interfaces';
+import { ToastType } from '../types/interfaces';
 
 /**
  * Add a toast

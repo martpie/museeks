@@ -5,7 +5,7 @@ import * as Icon from 'react-fontawesome';
 import Queue from './Queue';
 import PlayingBarInfos from './PlayingBarInfos';
 import Cover from '../Shared/Cover';
-import { TrackModel, Repeat } from '../../typings/interfaces';
+import { TrackModel, Repeat } from '../../types/interfaces';
 
 /*
 |--------------------------------------------------------------------------

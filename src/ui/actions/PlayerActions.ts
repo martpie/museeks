@@ -13,7 +13,7 @@ import * as utils from '../utils/utils';
 import Player from '../lib/player';
 import { sortTracks, filterTracks } from '../utils/utils-library';
 import { shuffleTracks } from '../utils/utils-player';
-import { TrackModel, PlayerStatus, Repeat } from '../typings/interfaces';
+import { TrackModel, PlayerStatus, Repeat } from '../types/interfaces';
 
 const { ipcRenderer } = electron;
 

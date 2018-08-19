@@ -11,7 +11,7 @@ import * as globby from 'globby';
 import * as mmd from 'music-metadata';
 import pickBy from 'lodash-es/pickBy';
 
-import { Track } from '../typings/interfaces';
+import { Track } from '../types/interfaces';
 
 const stat = util.promisify(fs.stat);
 

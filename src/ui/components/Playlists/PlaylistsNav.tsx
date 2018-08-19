@@ -6,7 +6,7 @@ import * as Icon from 'react-fontawesome';
 import * as PlaylistsActions from '../../actions/PlaylistsActions';
 
 import PlaylistsNavLink from './PlaylistsNavLink';
-import { PlaylistModel } from '../../typings/interfaces';
+import { PlaylistModel } from '../../types/interfaces';
 
 const { Menu } = electron.remote;
 

@@ -1,6 +1,6 @@
 import types from '../constants/action-types';
 
-import { Toast, Action } from '../typings/interfaces';
+import { Toast, Action } from '../types/interfaces';
 
 export type ToastsState = Toast[];
 

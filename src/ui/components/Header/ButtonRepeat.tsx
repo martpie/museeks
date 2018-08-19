@@ -3,7 +3,7 @@ import InlineSVG from 'svg-inline-react';
 import classnames from 'classnames';
 
 import * as PlayerActions from '../../actions/PlayerActions';
-import { Repeat } from '../../typings/interfaces';
+import { Repeat } from '../../types/interfaces';
 
 const svgMap = {
   [Repeat.ONE]: require('../../../images/icons/player-repeat-one.svg'),

@@ -4,7 +4,7 @@ import classnames from 'classnames';
 
 import PlayingIndicator from './PlayingIndicator';
 import { parseDuration } from '../../utils/utils';
-import { TrackModel } from '../../typings/interfaces';
+import { TrackModel } from '../../types/interfaces';
 
 /*
 |--------------------------------------------------------------------------

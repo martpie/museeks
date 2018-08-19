@@ -1,6 +1,6 @@
 import types from '../constants/action-types';
 import * as utils from '../utils/utils';
-import { Action, TrackModel, SortBy, SortOrder } from '../typings/interfaces';
+import { Action, TrackModel, SortBy, SortOrder } from '../types/interfaces';
 
 export interface LibrarySort {
   by: SortBy;

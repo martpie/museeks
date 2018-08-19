@@ -7,7 +7,7 @@ import QueueListItem from './QueueListItem';
 import * as QueueActions from '../../actions/QueueActions';
 
 import { getStatus } from '../../utils/utils-library';
-import { TrackModel } from '../../typings/interfaces';
+import { TrackModel } from '../../types/interfaces';
 
 /*
 |--------------------------------------------------------------------------

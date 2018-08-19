@@ -47,7 +47,7 @@ export const checkForUpdate = async (options: UpdateCheckOptions = {}) => {
     const response = await fetch('https://api.github.com/repos/KeitIG/museeks/releases');
     const releases = await response.json();
 
-    // TODO Github API typings?
+    // TODO Github API types?
     const newRelease = releases.find((release: any) => semver.valid(release.tag_name) !== null && semver.gt(release.tag_name, currentVersion));
 
     let message;

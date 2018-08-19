@@ -3,7 +3,7 @@ import classnames from 'classnames';
 import * as Icon from 'react-fontawesome';
 
 import * as LibraryActions from '../../actions/LibraryActions';
-import { SortBy } from '../../typings/interfaces';
+import { SortBy } from '../../types/interfaces';
 
 interface Props {
   title: string;
