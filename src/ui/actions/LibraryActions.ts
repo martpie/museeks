@@ -12,7 +12,7 @@ import * as LibraryActions from './LibraryActions';
 
 import * as app from '../lib/app';
 import * as utils from '../utils/utils';
-import { SortBy } from '../types/interfaces';
+import { SortBy, TrackModel } from '../types/interfaces';
 
 const { dialog } = electron.remote;
 const stat = util.promisify(fs.stat);
@@ -74,6 +74,8 @@ export const add = (pathsToScan: string[]) => {
     total: 0
   };
 
+  let scannedFiles: TrackModel[] = [];
+
   const endScan = async () => {
     scan.processed = 0;
     scan.total = 0;
@@ -94,7 +96,8 @@ export const add = (pathsToScan: string[]) => {
   scanQueue.on('end', endScan);
   scanQueue.on('success', () => {
     // Every 10 scans, update progress bar
-    if (scan.processed % 10 === 0) {
+    if (scan.processed % 20 === 0) {
+      // Progress bar update
       store.dispatch({
         type: types.APP_LIBRARY_REFRESH_PROGRESS,
         payload: {
@@ -102,6 +105,18 @@ export const add = (pathsToScan: string[]) => {
           total: scan.total
         }
       });
+
+      // Add tracks to the library view
+      const tracks = [...scannedFiles];
+      scannedFiles = []; // Reset current selection
+      store.dispatch({
+        type: types.APP_LIBRARY_ADD_TRACKS,
+        payload: {
+          tracks
+        }
+      });
+
+      // TODO progressive loading in the store, don't freeze the app, able to add files/folders when scanning
     }
   });
   // End queue instantiation
@@ -166,19 +181,17 @@ export const add = (pathsToScan: string[]) => {
         if (!existingDoc) {
           // Get metadata
           const track = await utils.getMetadata(filePath);
-          await app.models.Track.insertAsync(track);
+          const insertedDoc: TrackModel = await app.models.Track.insertAsync(track);
+          scannedFiles.push(insertedDoc);
         }
 
         scan.processed++;
         callback();
       });
     });
-  })
-    .catch((err) => {
-      console.warn(err);
-    });
-
-  // TODO progressive loading in the store, don't freeze the app, able to add files/folders when scanning
+  }).catch((err) => {
+    console.warn(err);
+  });
 };
 
 /**

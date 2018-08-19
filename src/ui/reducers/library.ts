@@ -169,6 +169,20 @@ export default (state = initialState, action: Action): LibraryState => {
       };
     }
 
+    case (types.APP_LIBRARY_ADD_TRACKS): {
+      const { tracks } = action.payload;
+
+      const libraryTracks: TrackModel[] = [...state.tracks.library, ...tracks];
+
+      return {
+        ...state,
+        tracks: {
+          playlist: state.tracks.playlist,
+          library: libraryTracks
+        }
+      };
+    }
+
     case (types.APP_PLAYLISTS_LOAD_ONE): {
       const newState = { ...state };
       newState.tracks.playlist = [...action.payload.tracks];
