@@ -65,45 +65,10 @@ linvodb.defaults.store = { db: leveljs }; // Comment out to use LevelDB instead 
 // Set dbPath - this should be done explicitly and will be the dir where each model's store is saved
 linvodb.dbPath = pathUserData;
 
-const Track = new linvodb('track', {
-  album: String,
-  albumartist: [String],
-  artist: [String],
-  cover: {
-    default: null
-  },
-  disk: {
-    no: Number,
-    of: Number
-  },
-  duration: Number,
-  genre: [String],
-  loweredMetas: {
-    artist: [String],
-    album: String,
-    albumartist: [String],
-    title: String,
-    genre: [String]
-  },
-  path: String,
-  playCount: Number,
-  title: String,
-  track: {
-    no: Number,
-    of: Number
-  },
-  year: String
-});
-
+const Track = new linvodb('track');
 Track.ensureIndex({ fieldName: 'path', unique: true });
 
-const Playlist = new linvodb('playlist', {
-  name: String,
-  tracks: {
-    type: [String],
-    default: []
-  }
-});
+const Playlist = new linvodb('playlist');
 
 export const models = {
   Track,
@@ -111,6 +76,7 @@ export const models = {
 };
 
 Promise.promisifyAll(Object.getPrototypeOf(models.Track.find()));
+Promise.promisifyAll(Object.getPrototypeOf(models.Track.findOne()));
 Promise.promisifyAll(models.Track);
 Promise.promisifyAll(models.Playlist);
 

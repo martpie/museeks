@@ -88,7 +88,7 @@ export const add = (pathsToScan: string[]) => {
   // @ts-ignore Outdated types
   // https://github.com/jessetane/queue/pull/15#issuecomment-414091539
   const scanQueue = queue();
-  scanQueue.concurrency = 16;
+  scanQueue.concurrency = 32;
   scanQueue.autostart = true;
 
   scanQueue.on('end', endScan);
@@ -157,10 +157,10 @@ export const add = (pathsToScan: string[]) => {
     supportedFiles.forEach((filePath) => {
       scanQueue.push(async (callback: Function) => {
         // Check if there is an existing record in the DB
-        const docs = await app.models.Track.findAsync({ path: filePath });
+        const existingDoc = await app.models.Track.findOneAsync({ path: filePath });
 
         // If there is existing document
-        if (docs.length === 0) {
+        if (!existingDoc) {
           // Get metadata
           const track = await utils.getMetadata(filePath);
           await app.models.Track.insertAsync(track);
