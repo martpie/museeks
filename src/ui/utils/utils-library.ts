@@ -7,6 +7,9 @@ import { TrackModel } from '../types/interfaces';
  * Filter an array of tracks by string
  */
 export const filterTracks = (tracks: TrackModel[], search: string): TrackModel[] => {
+  // Avoid performing useless searches
+  if (search.length === 0) return tracks;
+
   return tracks.filter(track => track.loweredMetas.artist.toString().includes(search)
     || track.loweredMetas.album.includes(search)
     || track.loweredMetas.genre.toString().includes(search)
