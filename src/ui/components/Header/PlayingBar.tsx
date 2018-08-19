@@ -16,7 +16,7 @@ import { TrackModel, Repeat } from '../../typings/interfaces';
 
 interface Props {
   queue: TrackModel[];
-  queueCursor: number;
+  queueCursor: number | null;
   shuffle: boolean;
   repeat: Repeat;
 }

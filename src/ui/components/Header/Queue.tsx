@@ -13,19 +13,23 @@ import { TrackModel } from '../../typings/interfaces';
 
 interface Props {
   queue: TrackModel[];
-  queueCursor: number;
+  queueCursor: number | null;
 }
 
 export default class Queue extends React.PureComponent<Props> {
   render() {
     const { queue, queueCursor } = this.props;
 
-    const shownQueue = queue.slice(queueCursor + 1, queueCursor + 21);
+    if (queueCursor) {
+      const shownQueue = queue.slice(queueCursor + 1, queueCursor + 21);
 
-    if (shownQueue.length === 0) {
-      return <QueueEmpty />;
+      if (shownQueue.length === 0) {
+        return <QueueEmpty />;
+      }
+
+      return <QueueList queue={queue} queueCursor={queueCursor} />;
     }
 
-    return <QueueList {...this.props} />;
+    return null;
   }
 }

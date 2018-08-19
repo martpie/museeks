@@ -26,7 +26,7 @@ interface Props {
   repeat: Repeat;
   shuffle: boolean;
   queue: TrackModel[];
-  queueCursor: number;
+  queueCursor: number | null;
   showTopHeader: boolean;
 }
 
@@ -105,7 +105,7 @@ const mapStateToProps = ({ player }: RootState) => ({
   repeat: player.repeat,
   shuffle: player.shuffle,
   queue: player.queue,
-  queueCursor: player.queueCursor || 0,
+  queueCursor: player.queueCursor,
   showTopHeader: os.platform() !== 'darwin' && !config.get('useNativeFrame'),
 });
 
