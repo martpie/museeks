@@ -2,21 +2,19 @@
  * Example of Module, other modules should extent this class
  */
 
-const os = require('os');
-
+import * as os from 'os';
 
 class Module {
-  constructor() {
+  protected loaded: boolean;
+  protected platforms: string[];
+
+  constructor () {
     this.loaded = false;
     this.platforms = ['win32', 'linux', 'darwin'];
   }
 
-  getConfig() {
-    return this.config;
-  }
-
   // To not be overriden
-  init() {
+  init () {
     if (this.loaded) throw (new TypeError('Module is already loaded'));
 
     if (this.platforms.includes(os.platform())) {
@@ -27,10 +25,10 @@ class Module {
     }
   }
 
-  load() {
+  load () {
     throw (new TypeError('Module should have a load() method'));
     // Do whatever you want here :)
   }
 }
 
-module.exports = Module;
+export default Module;

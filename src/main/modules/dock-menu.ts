@@ -2,26 +2,36 @@
  * Module in charge of the dock menu on macOS
  */
 
-const { Menu, app, ipcMain } = require('electron');
+import { Menu, app, ipcMain } from 'electron';
 
-const ModuleWindow = require('./module-window');
-
+import ModuleWindow from './module-window';
+import { PlayerStatus, TrackModel } from '../../shared/types/interfaces';
 
 class DockMenuModule extends ModuleWindow {
-  constructor(window) {
+  protected menu: Electron.MenuItemConstructorOptions[];
+  protected songDetails: Electron.MenuItemConstructorOptions[];
+  protected playToggle: Electron.MenuItemConstructorOptions[];
+  protected pauseToggle: Electron.MenuItemConstructorOptions[];
+
+  constructor (window: Electron.BrowserWindow) {
     super(window);
     this.platforms = ['darwin'];
+
+    this.menu = [];
+    this.songDetails = [];
+    this.playToggle = [];
+    this.pauseToggle = [];
   }
 
-  load() {
+  load () {
     this.songDetails = [
       {
         label: 'Not playing',
-        enabled: false,
+        enabled: false
       },
       {
-        type: 'separator',
-      },
+        type: 'separator'
+      }
     ];
 
     this.playToggle = [
@@ -29,8 +39,8 @@ class DockMenuModule extends ModuleWindow {
         label: 'Play',
         click: () => {
           this.window.webContents.send('playback:play');
-        },
-      },
+        }
+      }
     ];
 
     this.pauseToggle = [
@@ -38,8 +48,8 @@ class DockMenuModule extends ModuleWindow {
         label: 'Pause',
         click: () => {
           this.window.webContents.send('playback:pause');
-        },
-      },
+        }
+      }
     ];
 
     this.menu = [
@@ -47,59 +57,58 @@ class DockMenuModule extends ModuleWindow {
         label: 'Previous',
         click: () => {
           this.window.webContents.send('playback:previous');
-        },
+        }
       },
       {
         label: 'Next',
         click: () => {
           this.window.webContents.send('playback:next');
-        },
-      },
+        }
+      }
     ];
 
     // Load events listener for player actions
     ipcMain.on('playback:play', () => {
-      this.setDockMenu('play');
+      this.setDockMenu(PlayerStatus.PLAY);
     });
 
     ipcMain.on('playback:pause', () => {
-      this.setDockMenu('pause');
+      this.setDockMenu(PlayerStatus.PAUSE);
     });
 
-    ipcMain.on('playback:trackChange', (event, track) => {
+    ipcMain.on('playback:trackChange', (_e: Event, track: TrackModel) => {
       this.updateTrayMetadata(track);
-      this.setDockMenu('play');
+      this.setDockMenu(PlayerStatus.PLAY);
     });
 
-    this.setDockMenu('pause');
+    this.setDockMenu(PlayerStatus.PAUSE);
   }
 
-  setDockMenu(state) {
+  setDockMenu (state: PlayerStatus) {
     const playPauseItem = state === 'play' ? this.pauseToggle : this.playToggle;
     const menuTemplate = [...this.songDetails, ...playPauseItem, ...this.menu];
     app.dock.setMenu(Menu.buildFromTemplate(menuTemplate));
   }
 
-
-  updateTrayMetadata(metadata) {
+  updateTrayMetadata (metadata: TrackModel) {
     this.songDetails = [
       {
         label: `${metadata.title}`,
-        enabled: false,
+        enabled: false
       },
       {
         label: `by ${metadata.artist}`,
-        enabled: false,
+        enabled: false
       },
       {
         label: `on ${metadata.album}`,
-        enabled: false,
+        enabled: false
       },
       {
-        type: 'separator',
-      },
+        type: 'separator'
+      }
     ];
   }
 }
 
-module.exports = DockMenuModule;
+export default DockMenuModule;

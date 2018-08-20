@@ -101,6 +101,14 @@ export type ToastType = 'success' | 'danger' | 'warning';
 /**
  * Config
  */
+
+export interface ConfigBounds {
+  width: number;
+  height: number;
+  x: number;
+  y: number;
+}
+
 export interface Config {
   theme: 'light' | 'dark';
   audioVolume: number;
@@ -117,10 +125,9 @@ export interface Config {
   autoUpdateChecker: boolean;
   minimizeToTray: boolean;
   displayNotifications: boolean;
-  bounds: {
-    width: number,
-    height: number,
-    x: number,
-    y: number
-  };
+  bounds: ConfigBounds;
 }
+
+/**
+ * Main Process
+ */

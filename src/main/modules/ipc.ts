@@ -6,37 +6,38 @@
  * made async without blocking the rendering process
  */
 
-const { ipcMain, app } = require('electron');
+import { ipcMain, app } from 'electron';
 
-const ModuleWindow = require('./module-window');
-
+import ModuleWindow from './module-window';
+import ConfigModule from './config';
 
 class IpcModule extends ModuleWindow {
-  constructor(window, config) {
+  config: ConfigModule;
+  forceQuit: boolean;
+
+  constructor (window: Electron.BrowserWindow, config: ConfigModule) {
     super(window);
 
     this.config = config;
-    this.instance = {};
     this.forceQuit = false;
   }
 
-  load() {
+  load () {
     ipcMain.on('app:restart', () => {
-      app.relaunch({ args: process.argv.slice(1) + ['--relaunch'] });
+      app.relaunch({ args: ['process.argv.slice(1)', '--relaunch'] });
       app.exit(0);
     });
 
-
     this.window.on('closed', () => {
       // Dereference the window object
-      this.window = null;
+      // this.window = null;
     });
 
     // Prevent the window to be closed, hide it instead (to continue audio playback)
-    this.window.on('close', (e) => {
+    this.window.on('close', (e: Event) => {
       this.close(e);
     });
-    ipcMain.on('app:close', (e) => {
+    ipcMain.on('app:close', (e: Event) => {
       this.close(e);
     });
 
@@ -47,7 +48,7 @@ class IpcModule extends ModuleWindow {
     });
   }
 
-  close(e) {
+  close (e: Event) {
     this.config.reload(); // HACKY
     const minimizeToTray = this.config.get('minimizeToTray');
 
@@ -61,4 +62,4 @@ class IpcModule extends ModuleWindow {
   }
 }
 
-module.exports = IpcModule;
+export default IpcModule;

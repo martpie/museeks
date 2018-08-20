@@ -3,15 +3,14 @@
  * Litteraly stolen from: https://electronjs.org/docs/api/menu#examples
  */
 
-const { app, Menu, shell } = require('electron');
+import { app, Menu, shell } from 'electron';
 
-const ModuleWindow = require('./module-window');
-
+import ModuleWindow from './module-window';
 
 class MenuModule extends ModuleWindow {
-  load() {
+  load () {
     if (process.platform === 'darwin') {
-      const template = [
+      const template: Electron.MenuItemConstructorOptions[] = [
         {
           label: 'Edit',
           submenu: [
@@ -23,8 +22,8 @@ class MenuModule extends ModuleWindow {
             { role: 'paste' },
             { role: 'pasteandmatchstyle' },
             { role: 'delete' },
-            { role: 'selectall' },
-          ],
+            { role: 'selectall' }
+          ]
         },
         {
           label: 'View',
@@ -38,27 +37,27 @@ class MenuModule extends ModuleWindow {
             { role: 'reload' },
             { role: 'forcereload' },
             { type: 'separator' },
-            { role: 'toggledevtools' },
-          ],
+            { role: 'toggledevtools' }
+          ]
         },
         {
           role: 'window',
           submenu: [
             { role: 'minimize' },
-            { role: 'close' },
-          ],
+            { role: 'close' }
+          ]
         },
         {
           role: 'help',
           submenu: [
             {
               label: 'Learn More',
-              click() {
+              click () {
                 shell.openExternal('https://github.com/KeitIG/museeks');
-              },
-            },
-          ],
-        },
+              }
+            }
+          ]
+        }
       ];
 
       if (process.platform === 'darwin') {
@@ -73,21 +72,21 @@ class MenuModule extends ModuleWindow {
             { role: 'hideothers' },
             { role: 'unhide' },
             { type: 'separator' },
-            { role: 'quit' },
-          ],
+            { role: 'quit' }
+          ]
         });
 
         // Edit menu
-        template[1].submenu.push(
-          { type: 'separator' },
-          {
-            label: 'Speech',
-            submenu: [
-              { role: 'startspeaking' },
-              { role: 'stopspeaking' },
-            ],
-          },
-        );
+        // template[1].submenu.push(
+        //   { type: 'separator' },
+        //   {
+        //     label: 'Speech',
+        //     submenu: [
+        //       { role: 'startspeaking' },
+        //       { role: 'stopspeaking' }
+        //     ]
+        //   }
+        // );
 
         // Window menu
         template[3].submenu = [
@@ -95,7 +94,7 @@ class MenuModule extends ModuleWindow {
           { role: 'minimize' },
           { role: 'zoom' },
           { type: 'separator' },
-          { role: 'front' },
+          { role: 'front' }
         ];
       }
 
@@ -105,4 +104,4 @@ class MenuModule extends ModuleWindow {
   }
 }
 
-module.exports = MenuModule;
+export default MenuModule;
