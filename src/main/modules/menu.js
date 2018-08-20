@@ -5,10 +5,10 @@
 
 const { app, Menu, shell } = require('electron');
 
-const Module = require('./module');
+const ModuleWindow = require('./module-window');
 
 
-class MenuModule extends Module {
+class MenuModule extends ModuleWindow {
   load() {
     if (process.platform === 'darwin') {
       const template = [
@@ -29,15 +29,16 @@ class MenuModule extends Module {
         {
           label: 'View',
           submenu: [
-            { role: 'reload' },
-            { role: 'forcereload' },
-            { role: 'toggledevtools' },
+            { role: 'togglefullscreen' },
             { type: 'separator' },
             { role: 'resetzoom' },
             { role: 'zoomin' },
             { role: 'zoomout' },
             { type: 'separator' },
-            { role: 'togglefullscreen' },
+            { role: 'reload' },
+            { role: 'forcereload' },
+            { type: 'separator' },
+            { role: 'toggledevtools' },
           ],
         },
         {
@@ -98,8 +99,8 @@ class MenuModule extends Module {
         ];
       }
 
-      const osxMenu = Menu.buildFromTemplate(template);
-      Menu.setApplicationMenu(osxMenu);
+      const menu = Menu.buildFromTemplate(template);
+      Menu.setApplicationMenu(menu);
     }
   }
 }

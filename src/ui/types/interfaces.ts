@@ -117,7 +117,6 @@ export interface Config {
   autoUpdateChecker: boolean;
   minimizeToTray: boolean;
   displayNotifications: boolean;
-  devMode: boolean;
   bounds: {
     width: number,
     height: number,

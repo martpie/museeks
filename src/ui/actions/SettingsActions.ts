@@ -13,13 +13,6 @@ type UpdateCheckOptions = {
   silentFail?: boolean
 };
 
-/**
- * Check and enable dev mode if needed
- */
-export const checkDevMode = () => {
-  if (app.config.get('devMode')) app.browserWindows.main.webContents.openDevTools({ mode: 'detach' });
-};
-
 const checkTheme = () => {
   const themeName = app.config.get('theme');
   const body = document.querySelector('body');
@@ -69,7 +62,6 @@ export const checkForUpdate = async (options: UpdateCheckOptions = {}) => {
  */
 export const check = async () => {
   checkTheme();
-  checkDevMode();
   checkSleepBlocker();
   if (app.config.get('autoUpdateChecker')) await checkForUpdate({ silentFail: true });
 };
