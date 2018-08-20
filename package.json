@@ -19,7 +19,7 @@
     "lint:sass": "sass-lint --config .sass-lint.yml -v",
     "dev": "webpack --config webpack.dev.js --progress --colors --watch",
     "museeks": "./node_modules/.bin/electron .",
-    "museeks:debug": "./node_modules/.bin/electron . --enable-logging",
+    "museeks:debug": "./node_modules/.bin/electron . --enable-logging --devtools",
     "package:lmw": "build -lmw --ia32 --x64",
     "package:l": "build -l --ia32 --x64",
     "package:w": "build -w --ia32 --x64",
