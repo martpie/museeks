@@ -6,7 +6,7 @@ import FullViewMessage from '../Shared/FullViewMessage';
 import TracksList from '../Shared/TracksList';
 import { filterTracks, sortTracks } from '../../utils/utils-library';
 import SORT_ORDERS from '../../constants/sort-orders';
-import { PlaylistModel, TrackModel } from '../../types/interfaces';
+import { PlaylistModel, TrackModel } from '../../../shared/types/interfaces';
 import { LibraryState } from '../../reducers/library';
 import { PlayerState } from '../../reducers/player';
 import { RootState } from '../../reducers';

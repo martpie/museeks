@@ -7,7 +7,7 @@ import FullViewMessage from '../Shared/FullViewMessage';
 
 import * as PlaylistsActions from '../../actions/PlaylistsActions';
 import { filterTracks } from '../../utils/utils-library';
-import { TrackModel, PlaylistModel, PlayerStatus } from '../../types/interfaces';
+import { TrackModel, PlaylistModel, PlayerStatus } from '../../../shared/types/interfaces';
 import { RootState } from '../../reducers';
 
 /*

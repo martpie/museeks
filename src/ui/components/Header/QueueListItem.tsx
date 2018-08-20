@@ -3,7 +3,7 @@ import { Button } from 'react-bootstrap';
 import classnames from 'classnames';
 
 import * as QueueActions from '../../actions/QueueActions';
-import { TrackModel } from '../../types/interfaces';
+import { TrackModel } from '../../../shared/types/interfaces';
 
 /*
 |--------------------------------------------------------------------------

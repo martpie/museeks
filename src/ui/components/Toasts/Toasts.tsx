@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import ToastItem from './ToastItem';
 
-import { Toast } from '../../types/interfaces';
+import { Toast } from '../../../shared/types/interfaces';
 import { RootState } from '../../reducers';
 
 /*

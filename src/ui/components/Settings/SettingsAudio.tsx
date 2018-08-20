@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import * as PlayerActions from '../../actions/PlayerActions';
-import { Config } from '../../types/interfaces';
+import { Config } from '../../../shared/types/interfaces';
 
 /*
 |--------------------------------------------------------------------------

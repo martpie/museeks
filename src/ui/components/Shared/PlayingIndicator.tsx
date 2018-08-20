@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import classnames from 'classnames';
 
 import * as PlayerActions from '../../actions/PlayerActions';
-import { PlayerStatus } from '../../types/interfaces';
+import { PlayerStatus } from '../../../shared/types/interfaces';
 import { RootState } from '../../reducers';
 
 /*

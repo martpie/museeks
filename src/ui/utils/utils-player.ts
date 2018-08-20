@@ -1,4 +1,4 @@
-import { TrackModel } from '../types/interfaces';
+import { TrackModel } from '../../shared/types/interfaces';
 
 /**
  * Shuffle an array with a Player behavior in mind:
