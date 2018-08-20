@@ -68,6 +68,7 @@ app.on('ready', () => {
     minWidth: 900,
     minHeight: 550,
     frame: true,
+    autoHideMenuBar: true,
     titleBarStyle: 'hiddenInset', // MacOS polished window
     show: false
   };
