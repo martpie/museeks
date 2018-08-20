@@ -2,11 +2,12 @@
  * Example of Module, other modules should extent this class
  */
 
-const Module = require('./module');
-
+import Module from './module';
 
 class ModuleWindow extends Module {
-  constructor(window) {
+  protected window: Electron.BrowserWindow;
+
+  constructor (window: Electron.BrowserWindow) {
     super();
 
     if (!window || typeof window !== 'object') {
@@ -15,6 +16,10 @@ class ModuleWindow extends Module {
 
     this.window = window;
   }
+
+  getWindow () {
+    return this.window;
+  }
 }
 
-module.exports = ModuleWindow;
+export default ModuleWindow;

@@ -36,7 +36,7 @@ const uiConfig = {
  */
 const mainConfig = {
   entry: {
-    main: ['./src/main/main.js'],
+    main: ['./src/main/main.ts'],
   },
   output: {
     path: `${__dirname}/dist/main`,
@@ -89,11 +89,11 @@ const sharedConfig = {
         }],
       },
       {
-        test: /\.(png|jpg)([?]?.*)$/,
+        test: /\.(png|jpg|ico)([?]?.*)$/,
         use: [{
           loader: 'file-loader',
           options: {
-            name: 'img/[name].[ext]',
+            name: 'images/[name].[ext]',
           },
         }],
         exclude: /node_modules/,

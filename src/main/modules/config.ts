@@ -2,19 +2,26 @@
  * Essential module for creating/loading the app config
  */
 
-const teeny = require('teeny-conf');
-const electron = require('electron');
-const path = require('path');
+import * as electron from 'electron';
+import * as teeny from 'teeny-conf';
+import * as path from 'path';
 
-const Module = require('./module');
+import Module from './module';
+import { Config, Repeat, SortBy, SortOrder } from '../../shared/types/interfaces';
 
 const { app } = electron;
 
-
 class ConfigModule extends Module {
-  load() {
-    this.workArea = electron.screen.getPrimaryDisplay().workArea;
+  protected workArea: Electron.Rectangle;
+  protected conf: typeof teeny;
 
+  constructor () {
+    super();
+
+    this.workArea = electron.screen.getPrimaryDisplay().workArea;
+  }
+
+  load () {
     const defaultConfig = this.getDefaultConfig();
     const pathUserData = app.getPath('userData');
 
@@ -24,7 +31,7 @@ class ConfigModule extends Module {
     // Check if config update
     let configChanged = false;
 
-    Object.keys(defaultConfig).forEach((key) => {
+    (Object.keys(defaultConfig) as (keyof Config)[]).forEach((key) => {
       if (this.conf.get(key) === undefined) {
         this.conf.set(key, defaultConfig[key]);
         configChanged = true;
@@ -35,19 +42,19 @@ class ConfigModule extends Module {
     if (configChanged) this.conf.saveSync();
   }
 
-  getDefaultConfig() {
+  getDefaultConfig (): Config {
     return {
       theme: 'light',
       audioVolume: 1,
       audioPlaybackRate: 1,
       audioMuted: false,
       audioShuffle: false,
-      audioRepeat: 'none',
+      audioRepeat: Repeat.NONE,
       librarySort: {
-        by: 'artist',
-        order: 'asc',
+        by: SortBy.ARTIST,
+        order: SortOrder.ASC
       },
-      musicFolders: [],
+      // musicFolders: [],
       sleepBlocker: false,
       autoUpdateChecker: true,
       minimizeToTray: true,
@@ -55,23 +62,23 @@ class ConfigModule extends Module {
       bounds: {
         width: 1000,
         height: 600,
-        x: parseInt(this.workArea.width / 2, 10),
-        y: parseInt(this.workArea.height / 2, 10),
-      },
+        x: this.workArea.width / 2,
+        y: this.workArea.height / 2
+      }
     };
   }
 
-  getConfig() {
+  getConfig () {
     return this.conf.getAll();
   }
 
-  get(key) {
+  get (key: keyof Config) {
     return this.conf.get(key);
   }
 
-  reload() {
+  reload () {
     this.conf.loadOrCreateSync(this.getDefaultConfig());
   }
 }
 
-module.exports = ConfigModule;
+export default ConfigModule;

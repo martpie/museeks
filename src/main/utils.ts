@@ -1,6 +1,8 @@
-const electron = require('electron');
+import * as electron from 'electron';
 
-module.exports.checkBounds = function (bounds) {
+import { ConfigBounds } from '../shared/types/interfaces';
+
+export const checkBounds = function (bounds: ConfigBounds) {
   // check if the browser window is offscreen
   const display = electron.screen.getDisplayNearestPoint(bounds).workArea;
 
@@ -12,7 +14,7 @@ module.exports.checkBounds = function (bounds) {
   if (!onScreen) {
     return {
       width: 900,
-      height: 550,
+      height: 550
     };
   }
 

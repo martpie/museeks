@@ -2,14 +2,12 @@
  * Module in charge of the Tray
  */
 
-const os = require('os');
-const path = require('path');
-const {
-  Tray, Menu, app, ipcMain, nativeImage,
-} = require('electron');
+import * as os from 'os';
+import * as path from 'path';
+import { Tray, Menu, app, ipcMain, nativeImage } from 'electron';
 
-const ModuleWindow = require('./module-window');
-
+import ModuleWindow from './module-window';
+import { TrackModel, PlayerStatus } from '../../shared/types/interfaces';
 
 class TrayModule extends ModuleWindow {
   // Darwin used to be supported, it is now disabled because its usage do not
@@ -19,33 +17,54 @@ class TrayModule extends ModuleWindow {
   // patch release
   // this.platforms = ['win32', 'linux'];
 
-  load() {
-    const appRoot = path.resolve(__dirname, '../../..'); // Maybe a better way to know this?
-    const logosPath = path.join(appRoot, 'src', 'images', 'logos');
+  protected tray: Electron.Tray | null;
+  protected trayIcon: Electron.NativeImage;
+  protected playToggle: Electron.MenuItemConstructorOptions[];
+  protected pauseToggle: Electron.MenuItemConstructorOptions[];
+  protected songDetails: Electron.MenuItemConstructorOptions[];
+  protected menu: Electron.MenuItemConstructorOptions[];
+
+  constructor (window: Electron.BrowserWindow) {
+    super(window);
+
+    this.tray = null;
+    this.playToggle = [];
+    this.pauseToggle = [];
+    this.songDetails = [];
+    this.menu = [];
+
+    // I don't like it, but will do for now
+    const logosPath = path.resolve(path.join(__dirname, '../../src/images/logos'));
+
     const trayIcons = {
       tray: nativeImage.createFromPath(path.join(logosPath, 'museeks-tray.png')).resize({ width: 24, height: 24 }),
       'tray-win32': nativeImage.createFromPath(path.join(logosPath, 'museeks-tray.ico')),
-      'tray-darwin-dark': nativeImage.createFromPath(path.join(logosPath, 'museeks-tray-dark.png')),
+      'tray-darwin-dark': nativeImage.createFromPath(path.join(logosPath, 'museeks-tray-dark.png'))
     };
+
+    console.log(trayIcons);
 
     // Make it "lightable" on macOS
     trayIcons['tray-darwin-dark'].setTemplateImage(true);
 
-    this.tray = null;
-
     // Pick the right icon for the right platform
     this.trayIcon = trayIcons.tray;
+
     if (os.platform() === 'win32') this.trayIcon = trayIcons['tray-win32'];
     else if (os.platform() === 'darwin') this.trayIcon = trayIcons['tray-darwin-dark'];
+  }
+
+  load () {
+    this.tray = null;
 
     this.songDetails = [
       {
         label: 'Not playing',
-        enabled: false,
+        enabled: false
       },
       {
-        type: 'separator',
-      },
+        type: 'separator'
+      }
     ];
 
     this.playToggle = [
@@ -53,8 +72,8 @@ class TrayModule extends ModuleWindow {
         label: 'Play',
         click: () => {
           this.window.webContents.send('playback:play');
-        },
-      },
+        }
+      }
     ];
 
     this.pauseToggle = [
@@ -62,8 +81,8 @@ class TrayModule extends ModuleWindow {
         label: 'Pause',
         click: () => {
           this.window.webContents.send('playback:pause');
-        },
-      },
+        }
+      }
     ];
 
     this.menu = [
@@ -71,57 +90,55 @@ class TrayModule extends ModuleWindow {
         label: 'Previous',
         click: () => {
           this.window.webContents.send('playback:previous');
-        },
+        }
       },
       {
         label: 'Next',
         click: () => {
           this.window.webContents.send('playback:next');
-        },
+        }
       },
       {
-        type: 'separator',
+        type: 'separator'
       },
       {
         label: 'Show',
         click: () => {
           this.window.show();
           this.window.focus();
-        },
+        }
       },
       {
-        type: 'separator',
+        type: 'separator'
       },
       {
         label: 'Quit',
         click: () => {
           app.quit();
           this.window.destroy();
-        },
-      },
+        }
+      }
     ];
 
     // Load events listener for player actions
     ipcMain.on('playback:play', () => {
-      this.setContextMenu('play');
+      this.setContextMenu(PlayerStatus.PLAY);
     });
 
     ipcMain.on('playback:pause', () => {
-      this.setContextMenu('pause');
+      this.setContextMenu(PlayerStatus.PAUSE);
     });
 
-    ipcMain.on('playback:trackChange', (event, track) => {
+    ipcMain.on('playback:trackChange', (_e: Event, track: TrackModel) => {
       this.updateTrayMetadata(track);
-      this.setContextMenu('play');
+      this.setContextMenu(PlayerStatus.PLAY);
     });
 
     this.show();
   }
 
-  show() {
+  show () {
     this.tray = new Tray(this.trayIcon);
-    if (this.trayIconHovered) this.tray.setPressedImage(this.trayIconHovered);
-
     this.tray.setToolTip('Museeks');
 
     if (os.platform() === 'win32') {
@@ -136,35 +153,37 @@ class TrayModule extends ModuleWindow {
       });
     }
 
-    this.setContextMenu('pause');
+    this.setContextMenu(PlayerStatus.PAUSE);
   }
 
-  setContextMenu(state) {
+  setContextMenu (state: PlayerStatus) {
     const playPauseItem = state === 'play' ? this.pauseToggle : this.playToggle;
     const menuTemplate = [...this.songDetails, ...playPauseItem, ...this.menu];
-    this.tray.setContextMenu(Menu.buildFromTemplate(menuTemplate));
+
+    if (this.tray) {
+      this.tray.setContextMenu(Menu.buildFromTemplate(menuTemplate));
+    }
   }
 
-
-  updateTrayMetadata(track) {
+  updateTrayMetadata (track: TrackModel) {
     this.songDetails = [
       {
         label: `${track.title}`,
-        enabled: false,
+        enabled: false
       },
       {
         label: `by ${track.artist}`,
-        enabled: false,
+        enabled: false
       },
       {
         label: `on ${track.album}`,
-        enabled: false,
+        enabled: false
       },
       {
-        type: 'separator',
-      },
+        type: 'separator'
+      }
     ];
   }
 }
 
-module.exports = TrayModule;
+export default TrayModule;

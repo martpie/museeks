@@ -2,12 +2,11 @@
  * Module in charge of pausing the player when going into sleep
  */
 
-const electron = require('electron');
-const ModuleWindow = require('./module-window');
-
+import * as electron from 'electron';
+import ModuleWindow from './module-window';
 
 class PowerMonitorModule extends ModuleWindow {
-  load() {
+  load () {
     const { powerMonitor } = electron;
     const { window } = this;
 
@@ -17,4 +16,4 @@ class PowerMonitorModule extends ModuleWindow {
   }
 }
 
-module.exports = PowerMonitorModule;
+export default PowerMonitorModule;

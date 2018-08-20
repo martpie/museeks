@@ -2,12 +2,11 @@
  * Module in charge of registering global shortcuts
  */
 
-const { globalShortcut } = require('electron');
-const ModuleWindow = require('./module-window');
-
+import { globalShortcut } from 'electron';
+import ModuleWindow from './module-window';
 
 class GlobalShortcutsModule extends ModuleWindow {
-  load() {
+  load () {
     globalShortcut.register('MediaPlayPause', () => {
       this.window.webContents.send('playback:playpause');
     });
@@ -22,4 +21,4 @@ class GlobalShortcutsModule extends ModuleWindow {
   }
 }
 
-module.exports = GlobalShortcutsModule;
+export default GlobalShortcutsModule;
