@@ -1,10 +1,10 @@
 const webpack = require('webpack');
 const merge = require('webpack-merge');
 
-const common = require('./webpack.common.js');
+const { ui, main } = require('./webpack.common.js');
 
 
-module.exports = merge(common, {
+const prodConfig = {
   mode: 'production',
   plugins: [
     new webpack.DefinePlugin({
@@ -13,4 +13,9 @@ module.exports = merge(common, {
       },
     }),
   ],
-});
+};
+
+const prodUiConfig = merge(ui, prodConfig);
+const prodMainConfig = merge(main, prodConfig);
+
+module.exports = [prodUiConfig, prodMainConfig];
