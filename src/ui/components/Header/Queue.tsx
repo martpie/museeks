@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import QueueEmpty from './QueueEmpty';
 import QueueList from './QueueList';
-import { TrackModel } from '../../types/interfaces';
+import { TrackModel } from '../../../shared/types/interfaces';
 
 /*
 |--------------------------------------------------------------------------

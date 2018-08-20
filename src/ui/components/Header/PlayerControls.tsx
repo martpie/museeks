@@ -3,7 +3,7 @@ import * as Icon from 'react-fontawesome';
 import VolumeControl from './VolumeControl';
 
 import * as PlayerActions from '../../actions/PlayerActions';
-import { PlayerStatus } from '../../types/interfaces';
+import { PlayerStatus } from '../../../shared/types/interfaces';
 
 /*
 |--------------------------------------------------------------------------

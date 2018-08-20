@@ -9,7 +9,7 @@ import PlayerControls from './PlayerControls';
 import * as LibraryActions from '../../actions/LibraryActions';
 import { isCtrlKey } from '../../utils/utils-platform';
 import { RootState } from '../../reducers';
-import { TrackModel, PlayerStatus, Repeat } from '../../types/interfaces';
+import { TrackModel, PlayerStatus, Repeat } from '../../../shared/types/interfaces';
 
 /*
 |--------------------------------------------------------------------------

@@ -1,5 +1,5 @@
 import types from '../constants/action-types';
-import { Action } from '../types/interfaces';
+import { Action } from '../../shared/types/interfaces';
 
 export type AppState = null;
 

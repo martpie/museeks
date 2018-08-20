@@ -7,7 +7,7 @@ import ButtonRepeat from './ButtonRepeat';
 import * as PlayerActions from '../../actions/PlayerActions';
 import Player from '../../lib/player';
 import * as utils from '../../utils/utils';
-import { TrackModel, Repeat } from '../../types/interfaces';
+import { TrackModel, Repeat } from '../../../shared/types/interfaces';
 
 interface Props {
   trackPlaying: TrackModel;

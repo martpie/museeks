@@ -1,5 +1,5 @@
 import types from '../constants/action-types';
-import { PlaylistModel, Action } from '../types/interfaces';
+import { PlaylistModel, Action } from '../../shared/types/interfaces';
 
 export type PlaylistsState = PlaylistModel[];
 
