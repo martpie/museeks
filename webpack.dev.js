@@ -2,18 +2,22 @@ const webpack = require('webpack');
 const merge = require('webpack-merge');
 const CleanTerminalPlugin = require('clean-terminal-webpack-plugin');
 
-const common = require('./webpack.common.js');
+const { ui, main } = require('./webpack.common.js');
 
-
-module.exports = merge(common, {
+const devConfig = {
   mode: 'development',
   devtool: 'source-map',
   plugins: [
-    new CleanTerminalPlugin(),
+    // new CleanTerminalPlugin(),
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: '"development"',
       },
     }),
   ],
-});
+};
+
+const devUiConfig = merge(ui, devConfig);
+const devMainConfig = merge(main, devConfig);
+
+module.exports = [devUiConfig, devMainConfig];

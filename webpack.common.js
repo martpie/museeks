@@ -1,27 +1,66 @@
 
 
 const path = require('path');
+
+const merge = require('webpack-merge');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-
-module.exports = {
+/**
+ * Renderer process bundle
+ */
+const uiConfig = {
   entry: {
     main: ['./src/ui/main.tsx'],
   },
-  target: 'electron-renderer',
   output: {
-    path: `${__dirname}/dist`,
+    path: `${__dirname}/dist/ui`,
     filename: 'bundle.js',
-    publicPath: '',
+    publicPath: path.join(__dirname, 'dist', 'ui'),
   },
+  target: 'electron-renderer',
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: '[name].css',
+      chunkFilename: '[id].css',
+    }),
+    new HtmlWebpackPlugin({
+      title: 'Museeks',
+      template: 'src/app.html',
+    }),
+  ]
+}
+
+/**
+ * Main process bundle
+ */
+const mainConfig = {
+  entry: {
+    main: ['./src/main/main.js'],
+  },
+  output: {
+    path: `${__dirname}/dist/main`,
+    filename: 'bundle.js',
+    publicPath: path.join(__dirname, 'dist', 'main'),
+  },
+  target: 'electron-main',
+  node: {
+    __dirname: false,
+    __filename: false,
+  }
+}
+
+/**
+ * Shared config
+ */
+const sharedConfig = {
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.json'],
   },
   module: {
     rules: [
       {
-        test: /\.(ts|tsx)([?]?.*)$/,
+        test: /\.(ts|tsx|js)([?]?.*)$/,
         loader: 'ts-loader',
         exclude: /node_modules/,
       },
@@ -45,7 +84,7 @@ module.exports = {
         use: [{
           loader: 'file-loader',
           options: {
-            name: 'fonts/[name].[ext]',
+            name: '/fonts/[name].[ext]',
           },
         }],
       },
@@ -75,15 +114,11 @@ module.exports = {
         include: /node_modules/,
       },
     ],
-  },
-  plugins: [
-    new MiniCssExtractPlugin({
-      filename: '[name].css',
-      chunkFilename: '[id].css',
-    }),
-    new HtmlWebpackPlugin({
-      title: 'Museeks',
-      template: 'src/app.html',
-    }),
-  ],
+  }
 };
+
+/**
+ * Exports
+ */
+module.exports.ui = merge(uiConfig, sharedConfig);
+module.exports.main = merge(mainConfig, sharedConfig);
