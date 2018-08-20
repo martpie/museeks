@@ -60,7 +60,7 @@ const sharedConfig = {
   module: {
     rules: [
       {
-        test: /\.(ts|tsx|js)([?]?.*)$/,
+        test: /\.(ts|tsx)([?]?.*)$/,
         loader: 'ts-loader',
         exclude: /node_modules/,
       },
