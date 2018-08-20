@@ -42,8 +42,6 @@ class TrayModule extends ModuleWindow {
       'tray-darwin-dark': nativeImage.createFromPath(path.join(logosPath, 'museeks-tray-dark.png'))
     };
 
-    console.log(trayIcons);
-
     // Make it "lightable" on macOS
     trayIcons['tray-darwin-dark'].setTemplateImage(true);
 

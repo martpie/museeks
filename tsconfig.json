@@ -4,15 +4,12 @@
     "target": "es5",
     "module": "esnext",
     "jsx": "react",
-    "allowJs": true,
     "moduleResolution": "node",
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "removeComments": false,
-    "preserveConstEnums": true,
     "sourceMap": true,
     "strict": true,
-    "skipLibCheck": true,
     "baseUrl": ".",
     "typeRoots": [
       "types/**/*.d.ts"
