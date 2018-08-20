@@ -51,7 +51,6 @@ app.on('ready', () => {
   const configModule = new ConfigModule();
   ModulesManager.init(
     configModule,
-    new MenuModule(),
   );
 
   const config = configModule.getConfig();
@@ -105,6 +104,7 @@ app.on('ready', () => {
   ModulesManager.init(
     new IpcModule(mainWindow, configModule),
     new PowerModule(mainWindow),
+    new MenuModule(mainWindow),
     new TrayModule(mainWindow),
     new ThumbarModule(mainWindow),
     new DockMenuModule(mainWindow),

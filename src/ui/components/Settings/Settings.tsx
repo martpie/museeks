@@ -5,7 +5,6 @@ import { Switch, Route, Redirect, NavLink } from 'react-router-dom';
 import SettingsLibrary from './SettingsLibrary';
 import SettingsUI from './SettingsUI';
 import SettingsAudio from './SettingsAudio';
-import SettingsAdvanced from './SettingsAdvanced';
 import SettingsAbout from './SettingsAbout';
 
 import { config } from '../../lib/app';
@@ -31,19 +30,16 @@ const Settings: React.SFC<Props> = (props) => {
       <nav className='settings-menu'>
         <NavLink to='/settings/library' className='settings-link' activeClassName='active'>
           Library
-          </NavLink>
+        </NavLink>
         <NavLink to='/settings/audio' className='settings-link' activeClassName='active'>
           Audio
-          </NavLink>
+        </NavLink>
         <NavLink to='/settings/interface' className='settings-link' activeClassName='active'>
           Interface
-          </NavLink>
-        <NavLink to='/settings/advanced' className='settings-link' activeClassName='active'>
-          Advanced
-          </NavLink>
+        </NavLink>
         <NavLink to='/settings/about' className='settings-link' activeClassName='active'>
           About
-          </NavLink>
+        </NavLink>
       </nav>
 
       <div className='settings-content'>
@@ -64,10 +60,6 @@ const Settings: React.SFC<Props> = (props) => {
           <Route
             path='/settings/audio'
             render={p => (<SettingsAudio {...p} config={conf} />)}
-          />
-          <Route
-            path='/settings/advanced'
-            render={p => (<SettingsAdvanced {...p} config={conf} />)}
           />
           <Route
             path='/settings/about'

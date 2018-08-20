@@ -52,7 +52,6 @@ class ConfigModule extends Module {
       autoUpdateChecker: true,
       minimizeToTray: true,
       displayNotifications: true,
-      devMode: false,
       bounds: {
         width: 1000,
         height: 600,
