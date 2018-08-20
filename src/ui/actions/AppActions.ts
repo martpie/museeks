@@ -33,9 +33,9 @@ const saveBounds = () => {
 
 const init = async () => {
   // Usual tasks
+  await SettingsActions.check();
   await LibraryActions.load();
   await PlaylistsActions.refresh();
-  await SettingsActions.check();
 
   // Tell the main process to show the window
   ipcRenderer.send('app:ready');
