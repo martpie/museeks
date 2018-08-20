@@ -104,23 +104,6 @@ export const toggleSleepBlocker = (value: boolean) => {
 };
 
 /**
- * Toggle dev mode (show/hide dev tools)
- */
-export const toggleDevMode = (value: boolean) => {
-  app.config.set('devMode', value);
-
-  // Open dev tools if needed
-  if (value) app.browserWindows.main.webContents.openDevTools({ mode: 'detach' });
-  else app.browserWindows.main.webContents.closeDevTools();
-
-  app.config.saveSync();
-
-  store.dispatch({
-    type: types.APP_REFRESH_CONFIG
-  });
-};
-
-/**
  * Toggle update check on startup
  */
 export const toggleAutoUpdateChecker = (value: boolean) => {
