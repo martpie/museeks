@@ -85,15 +85,19 @@ export default class VolumeControl extends React.Component<Props, State> {
     });
 
     return (
-      <button
-        type='button'
-        className='player-control volume'
-        title='Volume'
+      <div
+        className='volume-control-container'
         onMouseEnter={this.showVolume}
         onMouseLeave={this.hideVolume}
-        onClick={this.mute}
       >
-        <Icon name={this.getVolumeIcon(unsmoothifyVolume(this.state.volume), this.state.muted)} />
+        <button
+          type='button'
+          className='player-control volume'
+          title='Volume'
+          onClick={this.mute}
+        >
+          <Icon name={this.getVolumeIcon(unsmoothifyVolume(this.state.volume), this.state.muted)} />
+        </button>
         <div className={volumeClasses}>
           <Slider
             min={0}
@@ -104,7 +108,7 @@ export default class VolumeControl extends React.Component<Props, State> {
             onChange={this.setVolume}
           />
         </div>
-      </button>
+      </div>
     );
   }
 }
