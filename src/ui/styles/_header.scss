@@ -402,19 +402,13 @@ header {
     position: absolute;
     z-index: 10;
     background-color: rgb(244, 244, 244);
-    top: -1px;
+    top: 2px;
     right: 25px;
     display: none;
     padding: 10px 12px;
 
     &.visible {
       display: block;
-    }
-
-    input[type=range] {
-      width: 88px;
-      height: 20px;
-      background-color: transparent;
     }
   }
 }
