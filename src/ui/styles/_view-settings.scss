@@ -4,6 +4,12 @@
 
 .view-settings {
 
+  .settings-menu {
+    width: 75%;
+    max-width: 700px;
+    margin: auto;
+  }
+
   .settings-link {
     display: inline-block;
     padding: 15px;
@@ -23,7 +29,10 @@
   }
 
   .settings-content {
-    border-top: 1px solid #d2d2d2;
+    width: 75%;
+    max-width: 700px;
+    margin: auto;
+
     padding: 10px 15px;
 
     .setting-title {
@@ -32,12 +41,15 @@
       margin-top: 4px;
     }
 
-    .setting-description {
+    /* .setting-description {
       font-size: .85rem;
       margin-top: 3px;
-    }
+    } */
 
     .setting-section {
+      .form-group {
+        margin-top: 10px;
+      }
 
       .checkbox {
 

@@ -38,9 +38,6 @@ export default class SettingsAbout extends React.Component {
               (<ExternalLink href='http://pierrevanmart.com'>KeitIG</ExternalLink>)
               and a bunch of <ExternalLink href='https://github.com/KeitIG/museeks/graphs/contributors'>great people</ExternalLink>.
             </p>
-            <p>
-              Want to contribute? Come and <ExternalLink href='https://gitter.im/KeitIG/museeks'>chat with us</ExternalLink>.
-            </p>
           </div>
         </div>
         <div className='setting-section'>

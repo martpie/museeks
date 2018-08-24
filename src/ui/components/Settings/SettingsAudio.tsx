@@ -24,21 +24,21 @@ export default class SettingsAudio extends React.Component<Props> {
     return (
       <div className='setting setting-audio'>
         <div className='setting-section'>
-          <h4>Playback rate</h4>
-          <div className='formGroup'>
+          <div className='form-group'>
             <label htmlFor='setting-playbackrate'>
-              Increase the playback rate: a value of 2 will play your music at a 2x speed
-              <input
-                className='form-control'
-                id='setting-playbackrate'
-                defaultValue={`${config.audioPlaybackRate}`}
-                onChange={this.setPlaybackRate}
-                type='number'
-                min='0.5'
-                max='5'
-                step='0.1'
-              />
+              Playback rate
             </label>
+            <input
+              className='form-control'
+              id='setting-playbackrate'
+              defaultValue={`${config.audioPlaybackRate}`}
+              onChange={this.setPlaybackRate}
+              type='number'
+              min='0.5'
+              max='5'
+              step='0.1'
+            />
+            <p className='help-block'>Increase the playback rate: a value of 2 will play your music at a 2x speed</p>
           </div>
         </div>
       </div>
