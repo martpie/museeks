@@ -42,7 +42,7 @@ export default class CheckboxSetting extends React.PureComponent<Props> {
               defaultChecked={this.props.defaultValue}
             />
             <span className='setting-title'>{ title }</span>
-            <p className='setting-description'>{ description }</p>
+            <p className='setting-description help-block'>{ description }</p>
           </label>
         </div>
       </div>
