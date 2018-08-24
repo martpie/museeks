@@ -14,6 +14,16 @@ $_window-control-close-bg-active: darken($_window-control-close-bg-hover, 5%);
   padding-left: 65px; // let some space for titleBarStyle
 }
 
+// The native frame may be light, so we need to increase the contrast between
+// the frame and the header
+.root.os-win32,
+.root.os-linux {
+
+  .main-header {
+    border-top: 1px solid #d2d2d2
+  }
+}
+
 header {
   background-color: rgb(244, 244, 244);
   color: $_header-color;

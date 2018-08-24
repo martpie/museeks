@@ -16,7 +16,7 @@ const uiConfig = {
   output: {
     path: `${__dirname}/dist/ui`,
     filename: 'bundle.js',
-    publicPath: path.join(__dirname, 'dist', 'ui'),
+    publicPath: './',
   },
   target: 'electron-renderer',
   plugins: [
@@ -41,7 +41,7 @@ const mainConfig = {
   output: {
     path: `${__dirname}/dist/main`,
     filename: 'bundle.js',
-    publicPath: path.join(__dirname, 'dist', 'main'),
+    publicPath: './',
   },
   target: 'electron-main',
   node: {
@@ -82,7 +82,11 @@ const sharedConfig = {
       {
         test: /\.(eot|woff|woff2|ttf)([?]?.*)$/,
         use: [{
-          loader: 'url-loader?limit=100000',
+          loader: 'file-loader',
+          options: {
+            name: '/fonts/[name].[ext]',
+            useRelativePath: true
+          }
         }],
       },
       {
