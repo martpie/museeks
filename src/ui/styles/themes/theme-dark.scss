@@ -2,6 +2,14 @@
 // Dark Theme
 //
 
+.root.os-win32,
+.root.os-linux {
+
+  .main-header {
+    border-top: 1px solid #1b1b1b;
+  }
+}
+
 body.theme-dark {
   border-color: #1f1f1f;
 
@@ -15,6 +23,10 @@ body.theme-dark {
 
   ::-webkit-scrollbar-thumb {
     background: rgba(255, 255, 255, .2);
+  }
+
+  .help-block {
+    color: #CCC;
   }
 
 
