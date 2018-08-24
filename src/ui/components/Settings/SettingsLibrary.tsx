@@ -21,7 +21,6 @@ interface Props {
 }
 
 export default class SettingsLibrary extends React.Component<Props> {
-
   onDrop (e: DragEvent) {
     const files = [];
     const eventFiles = e.dataTransfer.files;
@@ -52,7 +51,6 @@ export default class SettingsLibrary extends React.Component<Props> {
     return (
       <div className='setting settings-musicfolder'>
         <div className='setting-section'>
-          <h4>Manage library</h4>
           <Dropzone
             title='Add music to library'
             subtitle='Drop files or folders here'
