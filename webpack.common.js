@@ -82,10 +82,7 @@ const sharedConfig = {
       {
         test: /\.(eot|woff|woff2|ttf)([?]?.*)$/,
         use: [{
-          loader: 'file-loader',
-          options: {
-            name: '/fonts/[name].[ext]',
-          },
+          loader: 'url-loader?limit=100000',
         }],
       },
       {
