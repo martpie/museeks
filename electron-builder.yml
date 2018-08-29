@@ -6,8 +6,6 @@ directories:
 files:
   - dist/**/*
   - src/images/**/*
-  - src/main/**/*
-  - src/shared/**/*
   - node_modules/teeny-conf/**/*
 mac:
   category: public.app-category.music
