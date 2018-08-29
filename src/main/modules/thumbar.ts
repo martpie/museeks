@@ -3,9 +3,6 @@
  * (buttons appearing on Museeks preview when hovering the icon)
  *
  * Windows only
- *
- * CURRENTLY IN A BROKEN STATE
- * https://github.com/electron/electron/issues/9049
  */
 
 import * as path from 'path';
@@ -15,7 +12,7 @@ import ModuleWindow from './module-window';
 
 const { createFromPath } = nativeImage;
 
-const iconsDirectory = path.resolve(__dirname, '../..', 'images', 'icons', 'windows');
+const iconsDirectory = path.resolve(path.join(__dirname, '../../src/images/icons/windows'));
 
 class ThumbarModule extends ModuleWindow {
   constructor (window: Electron.BrowserWindow) {

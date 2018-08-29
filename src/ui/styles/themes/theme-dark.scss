@@ -2,14 +2,6 @@
 // Dark Theme
 //
 
-.root.os-win32,
-.root.os-linux {
-
-  .main-header {
-    border-top: 1px solid #1b1b1b;
-  }
-}
-
 body.theme-dark {
   border-color: #1f1f1f;
 
@@ -27,6 +19,14 @@ body.theme-dark {
 
   .help-block {
     color: #CCC;
+  }
+
+  .root.os-win32,
+  .root.os-linux {
+
+    .main-header {
+      border-top: 1px solid #1b1b1b;
+    }
   }
 
 

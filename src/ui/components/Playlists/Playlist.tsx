@@ -48,24 +48,45 @@ class Playlist extends React.Component<Props> {
       tracks, trackPlayingId, playerStatus, playlists, match
     } = this.props;
 
-    if (Array.isArray(tracks) && tracks.length > 0) {
+    // A bit hacky though, maybe this should be in mapstatetoprops
+    const currentPlaylist = playlists.find(p => p._id === match.params.playlistId);
+
+    if (currentPlaylist && currentPlaylist.tracks.length === 0) {
       return (
-        <TracksList
-          type='playlist'
-          playerStatus={playerStatus}
-          tracks={tracks}
-          trackPlayingId={trackPlayingId}
-          playlists={playlists}
-          currentPlaylist={match.params.playlistId}
-        />
+        <FullViewMessage>
+          <p>Empty playlist</p>
+          <p className='sub-message'>You can add tracks from the <Link to='/library'>library view</Link></p>
+        </FullViewMessage>
+      );
+    }
+
+    if (tracks.length === 0) {
+      return (
+        <FullViewMessage>
+          <p>Your search returned no results</p>
+        </FullViewMessage>
+      );
+    }
+
+    // A bit hacky though
+    if (currentPlaylist && currentPlaylist.tracks.length === 0) {
+      return (
+        <FullViewMessage>
+          <p>Empty playlist</p>
+          <p className='sub-message'>You can add tracks from the <Link to='/library'>library view</Link></p>
+        </FullViewMessage>
       );
     }
 
     return (
-      <FullViewMessage>
-        <p>Empty playlist</p>
-        <p className='sub-message'>You can add tracks from the <Link to='/library'>library view</Link></p>
-      </FullViewMessage>
+      <TracksList
+        type='playlist'
+        playerStatus={playerStatus}
+        tracks={tracks}
+        trackPlayingId={trackPlayingId}
+        playlists={playlists}
+        currentPlaylist={match.params.playlistId}
+      />
     );
   }
 }
