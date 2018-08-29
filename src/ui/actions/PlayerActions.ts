@@ -161,7 +161,6 @@ export const next = async () => {
 
     const track = queue[newQueueCursor];
 
-    // tslint:disable-next-line
     if (track !== undefined) {
       const uri = utils.parseUri(track.path);
 
