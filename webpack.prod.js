@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 const merge = require('webpack-merge');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 const { ui, main } = require('./webpack.common.js');
 
@@ -13,6 +14,15 @@ const prodConfig = {
       },
     }),
   ],
+  optimization: {
+    minimizer: [
+      new UglifyJsPlugin({
+        uglifyOptions: {
+          mangle: false
+        }
+      })
+    ]
+  }
 };
 
 const prodUiConfig = merge(ui, prodConfig);
