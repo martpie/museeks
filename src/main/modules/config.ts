@@ -3,8 +3,8 @@
  */
 
 import * as electron from 'electron';
-import * as teeny from 'teeny-conf';
 import * as path from 'path';
+import teeny from 'teeny-conf';
 
 import Module from './module';
 import { Config, Repeat, SortBy, SortOrder } from '../../shared/types/interfaces';
@@ -62,8 +62,8 @@ class ConfigModule extends Module {
       bounds: {
         width: 1000,
         height: 600,
-        x: this.workArea.width / 2,
-        y: this.workArea.height / 2
+        x: Math.round(this.workArea.width / 2),
+        y: Math.round(this.workArea.height / 2)
       }
     };
   }
