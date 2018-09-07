@@ -1,7 +1,7 @@
 {
   "name": "museeks",
   "productName": "Museeks",
-  "version": "0.10.0",
+  "version": "0.10.1",
   "description": "A simple, clean and cross-platform music player, written with Node.js, Electron and React.js.",
   "main": "./dist/main/bundle.js",
   "repository": {
