@@ -22,8 +22,7 @@ export default class SettingsAbout extends React.Component {
             Museeks { app.version }{ ' - ' }
             <ExternalLink href='http://museeks.io'>museeks.io</ExternalLink>
             { ' - ' }
-            <ExternalLink href={`https://github.com/KeitIG/Museeks/releases/tag/$
-            {app.version}`}>release notes</ExternalLink>
+            <ExternalLink href={`https://github.com/KeitIG/Museeks/releases/tag/${app.version}`}>release notes</ExternalLink>
           </p>
           <Button
             bsSize='small' className='update-checker'
