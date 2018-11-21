@@ -110,6 +110,6 @@ app.on('ready', () => {
     new TrayModule(mainWindow),
     new ThumbarModule(mainWindow),
     new DockMenuModule(mainWindow),
-    new GlobalShortcutsModule(mainWindow),
+    new GlobalShortcutsModule(mainWindow)
   );
 });

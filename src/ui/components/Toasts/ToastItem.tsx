@@ -11,7 +11,7 @@ interface Props {
   content: string;
 }
 
-const ToastItem: React.SFC<Props> = (props) => {
+const ToastItem: React.FunctionComponent<Props> = (props) => {
   const { type, content } = props;
 
   return (
