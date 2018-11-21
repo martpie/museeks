@@ -9,6 +9,7 @@ import PowerModule from './modules/power-monitor'; // Handle power events
 import ThumbarModule from './modules/thumbar'; // Handle Windows Thumbar
 import DockMenuModule from './modules/dock-menu';
 import GlobalShortcutsModule from './modules/global-shortcuts';
+import MprisModule from './modules/mpris';
 
 import * as ModulesManager from './lib/modules-manager';
 import { checkBounds } from './utils';
@@ -109,6 +110,7 @@ app.on('ready', () => {
     new TrayModule(mainWindow),
     new ThumbarModule(mainWindow),
     new DockMenuModule(mainWindow),
-    new GlobalShortcutsModule(mainWindow)
+    new GlobalShortcutsModule(mainWindow),
+    new MprisModule(mainWindow)
   );
 });

@@ -23,13 +23,16 @@ interface Props {
 export default class SettingsLibrary extends React.Component<Props> {
   onDrop (e: DragEvent) {
     const files = [];
-    const eventFiles = e.dataTransfer.files;
 
-    for (let i = 0; i < eventFiles.length; i++) {
-      files.push(eventFiles[i].path);
+    if (e.dataTransfer) {
+      const eventFiles = e.dataTransfer.files;
+
+      for (let i = 0; i < eventFiles.length; i++) {
+        files.push(eventFiles[i].path);
+      }
+
+      LibraryActions.add(files);
     }
-
-    LibraryActions.add(files);
   }
 
   async resetLibrary () {
