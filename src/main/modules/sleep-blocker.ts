@@ -8,7 +8,7 @@ import ModuleWindow from './module-window';
 
 type PowerSaveBlockerMode = 'prevent-app-suspension' | 'prevent-display-sleep';
 
-class ThumbarModule extends ModuleWindow {
+class SleepBlocker extends ModuleWindow {
   protected sleepBlockerId: number | null;
 
   constructor (window: Electron.BrowserWindow) {
@@ -31,4 +31,4 @@ class ThumbarModule extends ModuleWindow {
   }
 }
 
-export default ThumbarModule;
+export default SleepBlocker;
