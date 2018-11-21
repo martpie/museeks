@@ -9,7 +9,6 @@ import PowerModule from './modules/power-monitor'; // Handle power events
 import ThumbarModule from './modules/thumbar'; // Handle Windows Thumbar
 import DockMenuModule from './modules/dock-menu';
 import GlobalShortcutsModule from './modules/global-shortcuts';
-import MprisModule from './modules/mpris';
 
 import * as ModulesManager from './lib/modules-manager';
 import { checkBounds } from './utils';
@@ -24,17 +23,18 @@ const uiDistPath = path.join(appRoot, 'dist/ui');
 let mainWindow: Electron.BrowserWindow | null = null;
 
 // Make the app a single-instance app
-const shouldQuit = app.makeSingleInstance(() => {
+const gotTheLock = app.requestSingleInstanceLock();
+
+app.on('second-instance', () => {
   // Someone tried to run a second instance, we should focus our window.
   if (mainWindow) {
     if (mainWindow.isMinimized()) mainWindow.restore();
-    mainWindow.show();
     mainWindow.focus();
   }
 });
 
-if (shouldQuit) {
-  app.exit();
+if (!gotTheLock) {
+  app.quit();
 }
 
 // Quit when all windows are closed
@@ -111,6 +111,5 @@ app.on('ready', () => {
     new ThumbarModule(mainWindow),
     new DockMenuModule(mainWindow),
     new GlobalShortcutsModule(mainWindow),
-    new MprisModule(mainWindow)
   );
 });
