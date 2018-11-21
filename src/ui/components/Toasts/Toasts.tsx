@@ -16,7 +16,7 @@ interface InjectedProps {
   toasts: Toast[];
 }
 
-const Toasts: React.SFC<InjectedProps> = (props) => {
+const Toasts: React.FunctionComponent<InjectedProps> = (props) => {
   return (
     <div className='toasts'>
       {props.toasts.map(toast => (

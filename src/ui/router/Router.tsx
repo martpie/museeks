@@ -10,7 +10,7 @@ import Library from '../components/Library/Library';
 import Playlists from '../components/Playlists/Playlists';
 import Settings from '../components/Settings/Settings';
 
-const AppRouter: React.SFC<{}> = () => (
+const AppRouter: React.FunctionComponent<{}> = () => (
   <Router history={history}>
     <App>
       <Switch>

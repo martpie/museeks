@@ -21,7 +21,7 @@ interface Props {
   library: LibraryState;
 }
 
-const Settings: React.SFC<Props> = (props) => {
+const Settings: React.FunctionComponent<Props> = (props) => {
   const { library } = props;
   const conf = config.getAll();
 
