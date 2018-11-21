@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { openExternal } from '../../lib/electron';
+import { shell } from 'electron';
 
 /*
 |--------------------------------------------------------------------------
@@ -21,7 +21,8 @@ export default class ExternalLink extends React.Component<Props> {
 
   openLink (e: React.SyntheticEvent) {
     e.preventDefault();
-    openExternal(this.props.href);
+    console.log(this.props.href);
+    shell.openExternal(this.props.href);
   }
 
   render () {
