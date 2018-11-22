@@ -9,7 +9,6 @@ import * as fs from 'fs';
 import * as util from 'util';
 import * as globby from 'globby';
 import * as mmd from 'music-metadata';
-import { IAudioMetadata } from 'music-metadata/lib/type';
 import pickBy from 'lodash-es/pickBy';
 
 import { Track } from '../../shared/types/interfaces';
@@ -139,7 +138,7 @@ export const getDefaultMetadata = (): Track => ({
   year: null
 });
 
-export const parseMusicMetadata = (data: IAudioMetadata, trackPath: string): Partial<Track> => {
+export const parseMusicMetadata = (data: mmd.IAudioMetadata, trackPath: string): Partial<Track> => {
   const { common, format } = data;
 
   const metadata = {
