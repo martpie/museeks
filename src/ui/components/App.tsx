@@ -21,7 +21,7 @@ import * as PlayerActions from '../actions/PlayerActions';
 type Props = RouteComponentProps<{}>;
 
 class Museeks extends React.Component<Props> {
-  static async onKey (e: React.KeyboardEvent) {
+  static async onKey (e: KeyboardEvent) {
     switch (e.keyCode) {
       case 32: // Space
         e.preventDefault();

@@ -14,19 +14,20 @@ class Module {
   }
 
   // To not be overriden
-  init () {
-    if (this.loaded) throw (new TypeError('Module is already loaded'));
+  async init () {
+    if (this.loaded) throw (new TypeError(`Module ${this.constructor.name} is already loaded`));
 
     if (this.platforms.includes(os.platform())) {
-      this.load();
+      await this.load();
       this.loaded = true;
     } else {
       console.info(`[INFO] Skipping load of ${this.constructor.name}`);
     }
   }
 
+  // Can (now) be an asynchronous method
   load () {
-    throw (new TypeError('Module should have a load() method'));
+    throw (new TypeError(`Module ${this.constructor.name} should have a load() method`));
     // Do whatever you want here :)
   }
 }

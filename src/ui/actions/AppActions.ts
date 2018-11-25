@@ -16,7 +16,7 @@ const { ipcRenderer } = electron;
 let lastSaveBounds: number = 0;
 let saveBoundsTimeout: number | null = null;
 
-const saveBounds = () => {
+const saveBounds = async () => {
   const now = window.performance.now();
 
   if (now - lastSaveBounds < 250 && saveBoundsTimeout) {
@@ -25,9 +25,9 @@ const saveBounds = () => {
 
   lastSaveBounds = now;
 
-  saveBoundsTimeout = window.setTimeout(() => {
+  saveBoundsTimeout = window.setTimeout(async () => {
     config.set('bounds', browserWindows.main.getBounds());
-    config.saveSync();
+    config.save();
   }, 250);
 };
 

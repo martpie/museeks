@@ -13,7 +13,7 @@ const { app } = electron;
 
 class ConfigModule extends Module {
   protected workArea: Electron.Rectangle;
-  protected conf: typeof teeny;
+  protected conf: teeny | undefined;
 
   constructor () {
     super();
@@ -22,24 +22,23 @@ class ConfigModule extends Module {
   }
 
   load () {
-    const defaultConfig = this.getDefaultConfig();
+    const defaultConfig: Record<string, any> = this.getDefaultConfig();
     const pathUserData = app.getPath('userData');
 
-    this.conf = new teeny(path.join(pathUserData, 'config.json'));
-    this.conf.loadOrCreateSync(defaultConfig);
+    this.conf = new teeny(path.join(pathUserData, 'config.json'), defaultConfig);
 
     // Check if config update
     let configChanged = false;
 
     (Object.keys(defaultConfig) as (keyof Config)[]).forEach((key) => {
-      if (this.conf.get(key) === undefined) {
+      if (this.conf && this.conf.get(key) === undefined) {
         this.conf.set(key, defaultConfig[key]);
         configChanged = true;
       }
     });
 
     // save config if changed
-    if (configChanged) this.conf.saveSync();
+    if (configChanged) this.conf.save();
   }
 
   getDefaultConfig (): Config {
@@ -68,16 +67,28 @@ class ConfigModule extends Module {
     };
   }
 
-  getConfig () {
-    return this.conf.getAll();
+  getConfig (): Config {
+    if (!this.conf) {
+      throw (new Error('Config not loaded'));
+    }
+
+    return this.conf.get() as Config; // Maybe possible to type TeenyConf with Generics?
   }
 
   get (key: keyof Config) {
+    if (!this.conf) {
+      throw (new Error('Config not loaded'));
+    }
+
     return this.conf.get(key);
   }
 
   reload () {
-    this.conf.loadOrCreateSync(this.getDefaultConfig());
+    if (!this.conf) {
+      throw (new Error('Config not loaded'));
+    }
+
+    this.conf.reload();
   }
 }
 

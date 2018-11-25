@@ -27,8 +27,7 @@ export const pathSrc = __dirname;
 |--------------------------------------------------------------------------
 */
 
-const conf = new teeny(path.join(pathUserData, 'config.json'));
-conf.loadOrCreateSync();
+export const config = new teeny(path.join(pathUserData, 'config.json'));
 
 /*
 |--------------------------------------------------------------------------
@@ -87,5 +86,3 @@ Promise.promisifyAll(models.Playlist);
 */
 
 export const version = app.getVersion(); // Museeks version
-export const config = conf; // teeny-conf
-export const initialConfig = conf.getAll(); // the config at the start of the application
