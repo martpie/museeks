@@ -1,9 +1,9 @@
 import * as app from './app';
 
 interface PlayerOptions {
-  playbackRate: number;
-  volume: number;
-  muted: boolean;
+  playbackRate?: number;
+  volume?: number;
+  muted?: boolean;
 }
 
 class Player {
@@ -11,7 +11,7 @@ class Player {
   private durationThresholdReached: boolean;
   public threshold: number;
 
-  constructor (options: PlayerOptions) {
+  constructor (options?: PlayerOptions) {
     const mergedOptions = {
       playbackRate: 1,
       volume: 1,

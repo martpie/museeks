@@ -80,7 +80,7 @@ export default class TracksList extends React.Component<Props, State> {
     }
   }
 
-  async onKey (e: React.KeyboardEvent) {
+  async onKey (e: KeyboardEvent) {
     const { selected } = this.state;
     const { tracks } = this.props;
 

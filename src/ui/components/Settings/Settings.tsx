@@ -10,6 +10,7 @@ import SettingsAbout from './SettingsAbout';
 import { config } from '../../lib/app';
 import { LibraryState } from '../../reducers/library';
 import { RootState } from '../../reducers';
+import { Config } from 'src/shared/types/interfaces';
 
 /*
 |--------------------------------------------------------------------------
@@ -23,7 +24,7 @@ interface Props {
 
 const Settings: React.FunctionComponent<Props> = (props) => {
   const { library } = props;
-  const conf = config.getAll();
+  const conf = config.get() as Config;
 
   return (
     <div className='view view-settings'>

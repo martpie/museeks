@@ -224,7 +224,7 @@ export const previous = async () => {
  */
 export const shuffle = (value: boolean) => {
   app.config.set('audioShuffle', value);
-  app.config.saveSync();
+  app.config.save();
 
   store.dispatch({
     type: types.APP_PLAYER_SHUFFLE,
@@ -239,7 +239,7 @@ export const shuffle = (value: boolean) => {
  */
 export const repeat = (value: Repeat) => {
   app.config.set('audioRepeat', value);
-  app.config.saveSync();
+  app.config.save();
 
   store.dispatch({
     type: types.APP_PLAYER_REPEAT,
@@ -256,7 +256,8 @@ export const setVolume = (volume: number) => {
   Player.setAudioVolume(volume);
 
   app.config.set('audioVolume', volume);
-  app.config.saveSync();
+  app.config.save();
+
   store.dispatch({
     type: types.APP_REFRESH_CONFIG
   });
@@ -270,7 +271,8 @@ export const setMuted = (muted = false) => {
   else Player.unmute();
 
   app.config.set('audioMuted', muted);
-  app.config.saveSync();
+  app.config.save();
+
   store.dispatch({
     type: types.APP_REFRESH_CONFIG
   });
@@ -284,7 +286,8 @@ export const setPlaybackRate = (value: number) => {
     Player.setAudioPlaybackRate(value);
 
     app.config.set('audioPlaybackRate', value);
-    app.config.saveSync();
+    app.config.save();
+
     store.dispatch({
       type: types.APP_REFRESH_CONFIG
     });

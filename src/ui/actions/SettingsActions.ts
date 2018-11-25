@@ -81,7 +81,7 @@ export const toggleDarkTheme = (value: boolean) => {
     body.classList.add(`theme-${newTheme}`);
 
     app.config.set('theme', newTheme);
-    app.config.saveSync();
+    app.config.save();
 
     store.dispatch({
       type: types.APP_REFRESH_CONFIG
@@ -94,7 +94,7 @@ export const toggleDarkTheme = (value: boolean) => {
  */
 export const toggleSleepBlocker = (value: boolean) => {
   app.config.set('sleepBlocker', value);
-  app.config.saveSync();
+  app.config.save();
 
   ipcRenderer.send('settings:toggleSleepBlocker', value, 'prevent-app-suspension');
 
@@ -108,7 +108,7 @@ export const toggleSleepBlocker = (value: boolean) => {
  */
 export const toggleAutoUpdateChecker = (value: boolean) => {
   app.config.set('autoUpdateChecker', value);
-  app.config.saveSync();
+  app.config.save();
 
   store.dispatch({
     type: types.APP_REFRESH_CONFIG
@@ -120,7 +120,7 @@ export const toggleAutoUpdateChecker = (value: boolean) => {
  */
 export const toggleMinimizeToTray = (value: boolean) => {
   app.config.set('minimizeToTray', value);
-  app.config.saveSync();
+  app.config.save();
 
   store.dispatch({
     type: types.APP_REFRESH_CONFIG
@@ -132,7 +132,7 @@ export const toggleMinimizeToTray = (value: boolean) => {
  */
 export const toggleDisplayNotifications = (value: boolean) => {
   app.config.set('displayNotifications', value);
-  app.config.saveSync();
+  app.config.save();
 
   store.dispatch({
     type: types.APP_REFRESH_CONFIG

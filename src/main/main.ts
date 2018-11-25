@@ -46,9 +46,9 @@ app.on('window-all-closed', () => {
 
 // This method will be called when Electron has finished its
 // initialization and ready to create browser windows.
-app.on('ready', () => {
+app.on('ready', async () => {
   const configModule = new ConfigModule();
-  ModulesManager.init(
+  await ModulesManager.init(
     configModule
   );
 
@@ -103,7 +103,7 @@ app.on('ready', () => {
     e.preventDefault();
   });
 
-  ModulesManager.init(
+  await ModulesManager.init(
     new IpcModule(mainWindow, configModule),
     new PowerModule(mainWindow),
     new MenuModule(mainWindow),

@@ -72,7 +72,7 @@ export default (state = initialState, action: Action): LibraryState => {
       };
 
       config.set('librarySort', sort);
-      config.saveSync();
+      config.save();
 
       return {
         ...state,

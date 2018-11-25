@@ -5,7 +5,7 @@ import * as os from 'os';
  * - the control key was pressed on a non-mac platform
  * - the cmd key is pressed on macOS
  */
-export const isCtrlKey = (e: React.KeyboardEvent | React.MouseEvent): boolean => {
+export const isCtrlKey = (e: React.KeyboardEvent | React.MouseEvent | KeyboardEvent): boolean => {
   const isMacOS = os.platform() === 'darwin';
 
   return (isMacOS && e.metaKey)
