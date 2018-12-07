@@ -52,7 +52,7 @@ class TrayModule extends ModuleWindow {
     else if (os.platform() === 'darwin') this.trayIcon = trayIcons['tray-darwin-dark'];
   }
 
-  load () {
+  async load () {
     this.tray = null;
 
     this.songDetails = [

@@ -22,7 +22,7 @@ class IpcModule extends ModuleWindow {
     this.forceQuit = false;
   }
 
-  load () {
+  async load () {
     ipcMain.on('app:restart', () => {
       app.relaunch({ args: ['process.argv.slice(1)', '--relaunch'] });
       app.exit(0);

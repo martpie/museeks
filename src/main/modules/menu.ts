@@ -8,7 +8,7 @@ import { app, Menu, shell } from 'electron';
 import ModuleWindow from './module-window';
 
 class MenuModule extends ModuleWindow {
-  load () {
+  async load () {
     if (process.platform === 'darwin') {
       const template: Electron.MenuItemConstructorOptions[] = [
         {

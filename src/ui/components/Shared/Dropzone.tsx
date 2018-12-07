@@ -32,11 +32,12 @@ export default class Dropzone extends React.Component<Props, State> {
   }
 
   onKeyDown (e: React.KeyboardEvent<HTMLDivElement>) {
+    e.persist();
     e.stopPropagation();
     e.nativeEvent.stopImmediatePropagation();
 
-    switch (e.keyCode) {
-      case 32: { // Space
+    switch (e.nativeEvent.code) {
+      case 'Space': {
         this.props.onClick();
         break;
       }

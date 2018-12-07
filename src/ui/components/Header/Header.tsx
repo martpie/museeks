@@ -37,7 +37,7 @@ class Header extends React.Component<Props> {
 
   onKey (e: KeyboardEvent) {
     // ctrl-f shortcut
-    if (isCtrlKey(e) && e.keyCode === 70) {
+    if (isCtrlKey(e) && e.code === 'KeyF') {
       if (this.input.current) {
         this.input.current.select(); // HACKY
       }
