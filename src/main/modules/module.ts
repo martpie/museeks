@@ -18,7 +18,8 @@ class Module {
     if (this.loaded) throw (new TypeError(`Module ${this.constructor.name} is already loaded`));
 
     if (this.platforms.includes(os.platform())) {
-      await this.load();
+
+      await this.load().catch(err => { throw(err); });
       this.loaded = true;
     } else {
       console.info(`[INFO] Skipping load of ${this.constructor.name}`);
@@ -26,7 +27,7 @@ class Module {
   }
 
   // Can (now) be an asynchronous method
-  load () {
+  async load () {
     throw (new TypeError(`Module ${this.constructor.name} should have a load() method`));
     // Do whatever you want here :)
   }

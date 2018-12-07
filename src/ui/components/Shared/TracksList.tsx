@@ -86,18 +86,18 @@ export default class TracksList extends React.Component<Props, State> {
 
     const firstSelectedTrackId = tracks.findIndex(track => selected.includes(track._id));
 
-    switch (e.keyCode) {
-      case 38: // up
+    switch (e.code) {
+      case 'ArrowUp':
         e.preventDefault();
         this.onUp(firstSelectedTrackId, tracks);
         break;
 
-      case 40: // down
+      case 'ArrowDown':
         e.preventDefault();
         this.onDown(firstSelectedTrackId, tracks);
         break;
 
-      case 13: // enter
+      case 'Enter':
         e.preventDefault();
         await this.onEnter(firstSelectedTrackId, tracks);
         break;

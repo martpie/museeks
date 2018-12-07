@@ -70,15 +70,17 @@ class PlaylistsNav extends React.Component<Props, State> {
   }
 
   async keyDown (e: React.KeyboardEvent<HTMLInputElement>) {
-    switch (e.keyCode) {
-      case 13: { // Enter
+    e.persist();
+
+    switch (e.nativeEvent.code) {
+      case 'Enter': { // Enter
         if (this.state.renamed && e.currentTarget) {
           await this.rename(this.state.renamed, e.currentTarget.value);
           this.setState({ renamed: null });
         }
         break;
       }
-      case 27: { // Escape
+      case 'Escape': { // Escape
         this.setState({ renamed: null });
         break;
       }

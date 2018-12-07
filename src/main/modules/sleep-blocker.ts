@@ -18,7 +18,7 @@ class SleepBlocker extends ModuleWindow {
     this.platforms = ['win32'];
   }
 
-  load () {
+  async load () {
     ipcMain.on('settings:toggleSleepBlocker', (_e: Event, toggle: boolean, mode: PowerSaveBlockerMode) => {
       if (toggle) {
         this.sleepBlockerId = powerSaveBlocker.start(mode);

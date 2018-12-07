@@ -21,7 +21,7 @@ class ConfigModule extends Module {
     this.workArea = electron.screen.getPrimaryDisplay().workArea;
   }
 
-  load () {
+  async load () {
     const defaultConfig: Record<string, any> = this.getDefaultConfig();
     const pathUserData = app.getPath('userData');
 

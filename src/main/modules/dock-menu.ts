@@ -23,7 +23,7 @@ class DockMenuModule extends ModuleWindow {
     this.pauseToggle = [];
   }
 
-  load () {
+  async load () {
     this.songDetails = [
       {
         label: 'Not playing',
