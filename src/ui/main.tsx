@@ -8,7 +8,7 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 
-import Root from './components/Root';
+import Root from './elements/Root';
 import Router from './router/Router';
 import store from './store';
 
