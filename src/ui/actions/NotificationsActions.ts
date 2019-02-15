@@ -24,7 +24,7 @@ export const add = (title: string, notificationData: NotificationOptions) => {
     };
 
     store.dispatch({
-      type: types.APP_NOTIFICATION_NEW,
+      type: types.NOTIFICATION_NEW,
       payload: {
         notification
       }

@@ -18,7 +18,7 @@ export const start = async (index: number) => {
   await Player.play();
 
   store.dispatch({
-    type: types.APP_QUEUE_START,
+    type: types.QUEUE_START,
     payload: {
       index
     }
@@ -30,7 +30,7 @@ export const start = async (index: number) => {
  */
 export const clear = () => {
   store.dispatch({
-    type: types.APP_QUEUE_CLEAR
+    type: types.QUEUE_CLEAR
   });
 };
 
@@ -39,7 +39,7 @@ export const clear = () => {
  */
 export const remove = (index: number) => {
   store.dispatch({
-    type: types.APP_QUEUE_REMOVE,
+    type: types.QUEUE_REMOVE,
     payload: {
       index
     }
@@ -52,7 +52,7 @@ export const remove = (index: number) => {
 export const addAfter = async (tracksIds: string[]) => {
   const tracks = await app.models.Track.findAsync({ _id: { $in: tracksIds } });
   store.dispatch({
-    type: types.APP_QUEUE_ADD,
+    type: types.QUEUE_ADD,
     payload: {
       tracks
     }
@@ -65,7 +65,7 @@ export const addAfter = async (tracksIds: string[]) => {
 export const addNext = async (tracksIds: string[]) => {
   const tracks = await app.models.Track.findAsync({ _id: { $in: tracksIds } });
   store.dispatch({
-    type: types.APP_QUEUE_ADD_NEXT,
+    type: types.QUEUE_ADD_NEXT,
     payload: {
       tracks
     }
@@ -77,7 +77,7 @@ export const addNext = async (tracksIds: string[]) => {
  */
 export const setQueue = (tracks: Track[]) => {
   store.dispatch({
-    type: types.APP_QUEUE_SET_QUEUE,
+    type: types.QUEUE_SET_QUEUE,
     payload: {
       tracks
     }

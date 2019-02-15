@@ -30,7 +30,7 @@ const AUDIO_ERRORS = {
 export const play = async () => {
   await Player.play();
   store.dispatch({
-    type: types.APP_PLAYER_PLAY
+    type: types.PLAYER_PLAY
   });
 };
 
@@ -40,7 +40,7 @@ export const play = async () => {
 export const pause = () => {
   Player.pause();
   store.dispatch({
-    type: types.APP_PLAYER_PAUSE
+    type: types.PLAYER_PAUSE
   });
 };
 
@@ -103,7 +103,7 @@ export const start = async (queue?: TrackModel[], _id?: string) => {
     }
 
     store.dispatch({
-      type: types.APP_PLAYER_START,
+      type: types.PLAYER_START,
       payload: {
         queue: newQueue,
         oldQueue,
@@ -136,7 +136,7 @@ export const playPause = async () => {
 export const stop = () => {
   Player.stop();
   store.dispatch({
-    type: types.APP_PLAYER_STOP
+    type: types.PLAYER_STOP
   });
 
   ipcRenderer.send('playback:stop');
@@ -168,7 +168,7 @@ export const next = async () => {
       Player.setAudioSrc(uri);
       await Player.play();
       store.dispatch({
-        type: types.APP_PLAYER_NEXT,
+        type: types.PLAYER_NEXT,
         payload: {
           newQueueCursor
         }
@@ -207,7 +207,7 @@ export const previous = async () => {
       await Player.play();
 
       store.dispatch({
-        type: types.APP_PLAYER_PREVIOUS,
+        type: types.PLAYER_PREVIOUS,
         payload: {
           currentTime,
           newQueueCursor
@@ -227,7 +227,7 @@ export const shuffle = (value: boolean) => {
   app.config.save();
 
   store.dispatch({
-    type: types.APP_PLAYER_SHUFFLE,
+    type: types.PLAYER_SHUFFLE,
     payload: {
       shuffle: value
     }
@@ -242,7 +242,7 @@ export const repeat = (value: Repeat) => {
   app.config.save();
 
   store.dispatch({
-    type: types.APP_PLAYER_REPEAT,
+    type: types.PLAYER_REPEAT,
     payload: {
       repeat: value
     }
@@ -259,7 +259,7 @@ export const setVolume = (volume: number) => {
   app.config.save();
 
   store.dispatch({
-    type: types.APP_REFRESH_CONFIG
+    type: types.REFRESH_CONFIG
   });
 };
 
@@ -274,7 +274,7 @@ export const setMuted = (muted = false) => {
   app.config.save();
 
   store.dispatch({
-    type: types.APP_REFRESH_CONFIG
+    type: types.REFRESH_CONFIG
   });
 };
 
@@ -289,7 +289,7 @@ export const setPlaybackRate = (value: number) => {
     app.config.save();
 
     store.dispatch({
-      type: types.APP_REFRESH_CONFIG
+      type: types.REFRESH_CONFIG
     });
   }
 };
@@ -302,7 +302,7 @@ export const jumpTo = (to: number) => {
   // if yes, what should it be? if not, do we need this actions at all?
   Player.setAudioCurrentTime(to);
   store.dispatch({
-    type: types.APP_PLAYER_JUMP_TO
+    type: types.PLAYER_JUMP_TO
   });
 };
 

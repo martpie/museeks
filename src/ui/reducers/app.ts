@@ -7,7 +7,7 @@ const initialState = null;
 
 export default (state = initialState, action: Action) => {
   switch (action.type) {
-    case (types.APP_REFRESH_CONFIG): {
+    case (types.REFRESH_CONFIG): {
       // Nothing particular here for the moment
       return state;
     }

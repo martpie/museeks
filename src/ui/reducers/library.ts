@@ -41,7 +41,7 @@ const initialState: LibraryState = {
 
 export default (state = initialState, action: Action): LibraryState => {
   switch (action.type) {
-    case (types.APP_LIBRARY_REFRESH): {
+    case (types.LIBRARY_REFRESH): {
       return {
         ...state,
         tracks: {
@@ -52,7 +52,7 @@ export default (state = initialState, action: Action): LibraryState => {
       };
     }
 
-    case (types.APP_LIBRARY_SORT): {
+    case (types.LIBRARY_SORT): {
       const { sortBy } = action.payload;
       const prevSort = state.sort;
 
@@ -80,14 +80,14 @@ export default (state = initialState, action: Action): LibraryState => {
       };
     }
 
-    case (types.APP_FILTER_SEARCH): {
+    case (types.FILTER_SEARCH): {
       return {
         ...state,
         search: utils.stripAccents(action.payload.search)
       };
     }
 
-    // case (types.APP_LIBRARY_ADD_FOLDERS): { // TODO Redux -> move to a thunk
+    // case (types.LIBRARY_ADD_FOLDERS): { // TODO Redux -> move to a thunk
     //   const { folders } = action.payload;
     //   let musicFolders = app.config.get('musicFolders');
 
@@ -107,7 +107,7 @@ export default (state = initialState, action: Action): LibraryState => {
     //   return { ...state };
     // }
 
-    // case (types.APP_LIBRARY_REMOVE_FOLDER): { // TODO Redux -> move to a thunk
+    // case (types.LIBRARY_REMOVE_FOLDER): { // TODO Redux -> move to a thunk
     //   if (!state.library.refreshing) {
     //     const musicFolders = app.config.get('musicFolders');
 
@@ -122,18 +122,18 @@ export default (state = initialState, action: Action): LibraryState => {
     //   return state;
     // }
 
-    case (types.APP_LIBRARY_RESET): {
+    case (types.LIBRARY_RESET): {
       return initialState;
     }
 
-    case (types.APP_LIBRARY_REFRESH_START): {
+    case (types.LIBRARY_REFRESH_START): {
       return {
         ...state,
         refreshing: true
       };
     }
 
-    case (types.APP_LIBRARY_REFRESH_END): {
+    case (types.LIBRARY_REFRESH_END): {
       return {
         ...state,
         refreshing: false,
@@ -144,7 +144,7 @@ export default (state = initialState, action: Action): LibraryState => {
       };
     }
 
-    case (types.APP_LIBRARY_REFRESH_PROGRESS): {
+    case (types.LIBRARY_REFRESH_PROGRESS): {
       return {
         ...state,
         refresh: {
@@ -154,7 +154,7 @@ export default (state = initialState, action: Action): LibraryState => {
       };
     }
 
-    case (types.APP_LIBRARY_REMOVE_TRACKS): {
+    case (types.LIBRARY_REMOVE_TRACKS): {
       const { tracksIds } = action.payload;
       const removeTrack = (track: TrackModel) => !tracksIds.includes(track._id);
 
@@ -169,7 +169,7 @@ export default (state = initialState, action: Action): LibraryState => {
       };
     }
 
-    case (types.APP_LIBRARY_ADD_TRACKS): {
+    case (types.LIBRARY_ADD_TRACKS): {
       const { tracks } = action.payload;
 
       const libraryTracks: TrackModel[] = [...state.tracks.library, ...tracks];
@@ -183,7 +183,7 @@ export default (state = initialState, action: Action): LibraryState => {
       };
     }
 
-    case (types.APP_PLAYLISTS_LOAD_ONE): {
+    case (types.PLAYLISTS_LOAD_ONE): {
       const newState = { ...state };
       newState.tracks.playlist = [...action.payload.tracks];
 
