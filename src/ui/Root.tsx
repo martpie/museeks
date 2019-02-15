@@ -24,7 +24,7 @@ class Root extends React.Component<{}, State> {
         <ViewMessage.Notice>
           <p>💥 Something wrong happened</p>
           <ViewMessage.Sub>
-            If it happens again, please <ExternalLink href='https://github.com/KeitIG/museeks/issues'>report an issue</ExternalLink>
+            If it happens again, please <ExternalLink href='https://github.com/martpie/museeks/issues'>report an issue</ExternalLink>
           </ViewMessage.Sub>
         </ViewMessage.Notice>
       );

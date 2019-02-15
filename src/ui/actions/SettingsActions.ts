@@ -36,7 +36,7 @@ export const checkForUpdate = async (options: UpdateCheckOptions = {}) => {
   const currentVersion = app.version;
 
   try {
-    const response = await fetch('https://api.github.com/repos/KeitIG/museeks/releases');
+    const response = await fetch('https://api.github.com/repos/martpie/museeks/releases');
     const releases = await response.json();
 
     // TODO Github API types?

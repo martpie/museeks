@@ -24,7 +24,7 @@ export default class SettingsAbout extends React.Component {
             Museeks { app.version }{ ' - ' }
             <ExternalLink href='http://museeks.io'>museeks.io</ExternalLink>
             { ' - ' }
-            <ExternalLink href={`https://github.com/KeitIG/Museeks/releases/tag/${app.version}`}>release notes</ExternalLink>
+            <ExternalLink href={`https://github.com/martpie/Museeks/releases/tag/${app.version}`}>release notes</ExternalLink>
           </p>
           <Button
             bsSize='small' className='update-checker'
@@ -35,8 +35,8 @@ export default class SettingsAbout extends React.Component {
           <h4>Contributors</h4>
           <p>
             Made with <Heart /> by Pierre de la Martinière
-            (<ExternalLink href='http://pierrevanmart.com'>KeitIG</ExternalLink>)
-            and a bunch of <ExternalLink href='https://github.com/KeitIG/museeks/graphs/contributors'>great people</ExternalLink>.
+            (<ExternalLink href='http://pierrevanmart.com'>martpie</ExternalLink>)
+            and a bunch of <ExternalLink href='https://github.com/martpie/museeks/graphs/contributors'>great people</ExternalLink>.
           </p>
         </Setting.Section>
         <Setting.Section>
@@ -44,7 +44,7 @@ export default class SettingsAbout extends React.Component {
           <p>
             Although Museeks is mostly stable, a few bugs may still occur. Please, do
             not hesitate to report them or to ask for features you would like to
-            see, using our <ExternalLink href='http://github.com/KeitIG/Museeks/issues'>issue tracker</ExternalLink>.
+            see, using our <ExternalLink href='http://github.com/martpie/Museeks/issues'>issue tracker</ExternalLink>.
           </p>
         </Setting.Section>
       </div>

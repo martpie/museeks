@@ -118,7 +118,7 @@ export const start = async (queue?: TrackModel[], _id?: string) => {
  */
 export const playPause = async () => {
   const { paused } = Player.getAudio();
-  // TODO (y.solovyov | KeitIG): calling getState is a hack.
+  // TODO (y.solovyov | martpie): calling getState is a hack.
   const { queue, playerStatus } = store.getState().player;
 
   if (playerStatus === PlayerStatus.STOP) {
@@ -146,7 +146,7 @@ export const stop = () => {
  * Jump to the next track
  */
 export const next = async () => {
-  // TODO (y.solovyov | KeitIG): calling getState is a hack.
+  // TODO (y.solovyov | martpie): calling getState is a hack.
   const { queue, queueCursor, repeat } = store.getState().player;
   let newQueueCursor;
 
@@ -186,7 +186,7 @@ export const next = async () => {
 export const previous = async () => {
   const currentTime = Player.getCurrentTime();
 
-  // TODO (y.solovyov | KeitIG): calling getState is a hack.
+  // TODO (y.solovyov | martpie): calling getState is a hack.
   const { queue, queueCursor } = store.getState().player;
   let newQueueCursor = queueCursor;
 
