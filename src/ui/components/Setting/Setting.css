@@ -1,0 +1,9 @@
+.setting-section {}
+
+.setting-title {
+  display: inline-block;
+  font-weight: bold;
+  margin-top: 4px;
+}
+
+.setting-description {}

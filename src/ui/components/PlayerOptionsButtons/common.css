@@ -1,0 +1,26 @@
+.icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 16px;
+  width: 16px;
+}
+
+.button {
+  border: 0;
+  background: transparent;
+  font-size: 18px;
+  -webkit-app-region: no-drag;
+
+  &.active {
+
+    svg {
+      fill: #337ab7;
+    }
+  }
+
+  svg {
+    width: 16px;
+    height: auto;
+  }
+}

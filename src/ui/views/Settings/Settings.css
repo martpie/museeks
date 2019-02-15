@@ -1,0 +1,18 @@
+.view-settings {
+  display: flex;
+  padding-top: 50px;
+}
+
+.settings__nav {
+  padding: 0 30px;
+}
+
+.settings__content {
+  padding: 10px 15px 10px 15px;
+  width: 400px;
+  max-width: calc(100% - 170px);
+
+  :global .form-group {
+    margin-top: 10px;
+  }
+}

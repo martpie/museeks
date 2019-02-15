@@ -1,0 +1,21 @@
+.queue__header {
+  padding: 5px 10px;
+  background-color: rgb(244, 244, 244);
+}
+
+.queue__header__infos {
+  float: right;
+  font-size: 11px;
+  padding-top: 1px;
+  padding-bottom: 1px;
+}
+
+.queue__header__empty {
+  font-size: 10px;
+  padding: 1px 5px;
+}
+
+.queue__content {
+  max-height: 250px;
+  overflow: auto;
+}

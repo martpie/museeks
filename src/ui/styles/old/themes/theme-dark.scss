@@ -1,0 +1,394 @@
+// //
+// // Dark Theme
+// //
+
+// body.theme-dark {
+//   border-color: #1f1f1f;
+
+//   hr {
+//     border-top-color: #33393b;
+//   }
+
+//   ::-webkit-scrollbar {
+//     background-color: #293032;
+//   }
+
+//   ::-webkit-scrollbar-thumb {
+//     background: rgba(255, 255, 255, .2);
+//   }
+
+//   .help-block {
+//     color: #CCC;
+//   }
+
+//   .root.os-win32,
+//   .root.os-linux {
+
+//     .main-header {
+//       border-top: 1px solid #1b1b1b;
+//     }
+//   }
+
+
+//   //--------------------------------------------------------------------------
+//   // Header
+//   //--------------------------------------------------------------------------
+
+//   header {
+//     background-color: #33393b;
+//     color: #EEE;
+
+//     .main-header {
+//       border-bottom-color: #1b1b1b;
+//     }
+
+//     .search {
+//       border-color: #232323;
+//       background-color: #23292b;
+//       color: #EEE;
+//     }
+
+//     .header__playing-bar {
+
+//       .playing-bar {
+
+//         .playing-bar__cover {
+
+//           .cover {
+//             border-color: #1b1b1b;
+//           }
+//         }
+
+//         .playing-bar__info {
+
+//           .player-options .button {
+
+//             svg {
+//               fill: #EEE;
+//             }
+
+//             &.active svg {
+//               fill: #459ce7;
+//             }
+//           }
+
+//           .playing-bar__info__progress .progress {
+//             background-color: #23292b;
+//           }
+//         }
+
+//         .playing-bar__queue .queue {
+//           background-color: #23292b;
+//           border-color: #666;
+//           box-shadow: 0 5px 3px -5px rgba(255, 255, 255, .5);
+
+//           .queue__header {
+//             background-color: #33393b;
+
+//             .queue__header__infos {
+//               color: #DDD;
+//             }
+
+//             .queue__header__empty {
+//               background-color: #33393b;
+//               color: #EEE;
+//               border-color: #23292b;
+//             }
+//           }
+
+//           .queue__content {
+
+//             .track {
+
+//               &:not(:last-child) {
+//                 border-bottom-color: #33393b;
+//               }
+
+//               .queue__item__info {
+
+//                 .title,
+//                 .other-infos {
+//                   color: #EEE;
+//                 }
+//               }
+
+//               .remove,
+//               .remove:hover {
+//                 color: #EEE;
+//               }
+//             }
+//           }
+//         }
+//       }
+//     }
+//   }
+
+//   .player-controls {
+
+//     .player-control {
+//       color: #EEE;
+//     }
+
+//     .volume-control {
+//       background-color: #33393b;
+//     }
+//   }
+
+
+//   //--------------------------------------------------------------------------
+//   // Footer
+//   //--------------------------------------------------------------------------
+
+//   footer {
+//     border-top-color: #1f1f1f;
+//     background-color: #33393b;
+//     color: #EEE;
+
+//     .view-switcher .btn.btn-default {
+//       color: #EEE;
+//       border-color: #1f1f1f;
+//       background-color: #33393b;
+
+//       &:hover {
+//         color: #EEE;
+//         border-color: #1f1f1f;
+//         background-color: #33393b;
+//       }
+
+//       &:focus,
+//       &:active:hover,
+//       &.active {
+//         background-color: #23292b;
+//         border-color: #1f1f1f;
+//         color: #EEE;
+//       }
+
+//       &.active {
+//         color: #459CE7;
+//       }
+//     }
+
+//     .status {
+//       color: #AAA;
+//     }
+//   }
+
+
+//   //--------------------------------------------------------------------------
+//   // View -- General
+//   //--------------------------------------------------------------------------
+
+//   .view {
+//     background-color: #23292b;
+//     color: #EEE;
+
+//     .tracks-list {
+
+//       .tracks-list-header {
+//         border-bottom: 1px solid #1b1b1b;
+//         background-color: #23292b;
+//         color: #eeeeee;
+
+//         .track-cell-header {
+//           &:not(:first-child) {
+//             .col-name {
+//               border-color: #777;
+//             }
+//           }
+//         }
+//       }
+
+//       .tracks-list-body {
+
+//         .track-vertical {
+//           background-color: #293032;
+//           background-color: #232323;
+//         }
+
+//         .thumb-vertical {
+//           background: rgba(255, 255, 255, 0.2);
+//         }
+
+
+//         .tracks-list-tiles {
+
+//           .track:nth-of-type(odd) {
+//             background-color: #2E3436;
+
+//             &.selected {
+//               background-color: #459CE7;
+//             }
+//           }
+//         }
+//       }
+//     }
+
+//     &.view-settings .musicfolders-list {
+//       border-color: #33393b;
+//     }
+//   }
+
+
+//   //--------------------------------------------------------------------------
+//   // View -- Settings
+//   //--------------------------------------------------------------------------
+
+//   .view-settings {
+
+//     .settings-link {
+//       color: #eeeeee;
+
+//       &.active {
+//         color: $main-color;
+//       }
+//     }
+
+//     .settings__content {
+//       border-top-color: #1b1b1b;
+
+//       .setting-section {
+
+//         .checkbox {
+
+//           label {
+//             padding-left: 28px; // Bootstrap default is 20
+
+//             input[type="checkbox"] {
+//               background-color: #555;
+//               border: 1px solid darken(#555, 20%);
+
+//               &:checked {
+//                 background-color: $main-color;
+//                 border: darken($main-color, 20%);
+//               }
+//             }
+//           }
+//         }
+//       }
+//     }
+//   }
+
+
+//   //--------------------------------------------------------------------------
+//   // View -- Playlists
+//   //--------------------------------------------------------------------------
+
+//   .view-playlists {
+
+//     .playlists-nav {
+//       border-right: 1px solid #1f1f1f;
+//       background-color: #33393b;
+
+
+//       .playlists-nav-body {
+
+//         .playlist-nav-item {
+
+//           a {
+
+//             &:hover {
+//               background-color: #23292b;
+//             }
+
+//             &.active {
+//               border-style: solid;
+//               border-color: #1f1f1f;
+//               background-color: #23292b;
+//               color: #eee;
+//             }
+//           }
+
+//           input[type="text"] {
+//             background-color: #23292b;
+//             color: #eee;
+//             border-style: solid;
+//             border-color: #1f1f1f;
+//           }
+//         }
+//       }
+
+//       .playlists-nav-footer {
+
+//         .playlists-management {
+//           border: solid 1px #1f1f1f;
+
+//           button {
+//             color: #eee;
+//             background-color: #33393b;
+//           }
+//         }
+//       }
+//     }
+//   }
+
+
+//   //--------------------------------------------------------------------------
+//   // Views -- Shared
+//   //--------------------------------------------------------------------------
+
+//   .playing-indicator {
+
+//     .animation {
+
+//       .bar {
+//         background-color: #EEE;
+//       }
+//     }
+//   }
+
+
+//   //--------------------------------------------------------------------------
+//   // Bootstrap overrides
+//   //--------------------------------------------------------------------------
+
+//   a {
+//     color: #459ce7;
+//   }
+
+//   button.btn-default {
+//     background-color: #33393b;
+//     color: #eee;
+//     border-color: #1b1b1b;
+
+//     &:hover,
+//     &:active,
+//     &:focus,
+//     &:focus:active {
+//       color: #EEE;
+//       background-color: #33393b;
+//       border-color: #1b1b1b;
+//     }
+//   }
+
+//   .alert {
+//     border-color: #23292b;
+//     background-color: #33393b;
+//     color: #EEE;
+
+//     &.alert-success {
+//       border-left-color: #5cb85c;
+//     }
+
+//     &.alert-info {
+//       border-left-color: #5bc0de;
+//     }
+
+//     &.alert-warning {
+//       border-left-color: #f0ad4e;
+//     }
+
+//     &.alert-danger {
+//       border-left-color: #d9534f;
+//     }
+//   }
+
+//   .form-control {
+//     border-color: #6D6D6D;
+//     background-color: #23292b;
+//     color: #EEE;
+//   }
+
+//   .full-message {
+//     color: #EEE;
+//   }
+// }

@@ -5,12 +5,12 @@ import { Router, Switch, Route } from 'react-router-dom';
 import history from './history';
 
 // Views
-import App from '../elements/App';
-import Library from '../elements/Library/Library';
-import Playlists from '../elements/Playlists/Playlists';
-import Settings from '../elements/Settings/Settings';
+import App from '../App';
+import Library from '../views/Library/Library';
+import Playlists from '../views/Playlists/Playlists';
+import Settings from '../views/Settings/Settings';
 
-const AppRouter: React.FunctionComponent<{}> = () => (
+const AppRouter: React.FC<{}> = () => (
   <Router history={history}>
     <App>
       <Switch>

@@ -1,0 +1,25 @@
+.tracks-list-header {
+  border-bottom: 1px solid rgb(210, 210, 210);
+  color: #555;
+  display: flex;
+  width: 100%;
+  background-color: white;
+}
+
+.cell-track-playing {
+  width: 30px;
+}
+
+.cell-track {
+  flex: 1;
+}
+
+.cell-duration {
+  width: 7%;
+}
+
+.cell-artist,
+.cell-album,
+.cell-genre {
+  width: 20%;
+}

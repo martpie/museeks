@@ -1,0 +1,68 @@
+//--------------------------------------------------------------------------
+// Colors (default theme)
+//--------------------------------------------------------------------------
+
+:root {
+  --main-color: #459CE7;
+  --link-color: #459CE7;
+
+  --header-color: #555555;
+
+  --footer-border-color: #AAAAAA;
+  --footer-bg-color: #F4F4F4;
+  --footer-status-color: #888888;
+  --footer-navigation-color-active: #E6E6E6;
+}
+
+
+//--------------------------------------------------------------------------
+// Global styles
+//--------------------------------------------------------------------------
+
+html {
+  font-size: 12px;
+  user-select: none;
+  -webkit-user-select: none;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-size: 12px;
+  user-select: none;
+  -webkit-user-select: none;
+  height: 100%;
+  overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+}
+
+* {
+  -webkit-user-drag: none;
+}
+
+*:focus {
+  // Make it keyboard only
+  // outline: 2px solid var(--main-color) !important;
+  // outline-offset: -2px;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+  background-color: #DDD;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, .25);
+}
+
+button {
+  outline: none;
+}
+
+//--------------------------------------------------------------------------
+// Wrapper
+//--------------------------------------------------------------------------
+
+:global #wrap {
+  height: 100vh;
+}

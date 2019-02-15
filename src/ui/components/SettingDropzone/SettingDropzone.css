@@ -1,0 +1,21 @@
+
+.dropzone {
+  border: dashed 1px lightgrey;
+  margin-bottom: 15px;
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.dropzone:global(.-is-dragging) {
+  border-color: var(--main-color);
+}
+
+.dropzone__title {
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+.dropzone__subtitle {
+  color: #7d7d7d;
+}

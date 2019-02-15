@@ -1,0 +1,14 @@
+:global .no-padding {
+  padding: 0;
+}
+
+:global .no-margin {
+  margin: 0;
+}
+
+:global .reset {
+  border: 0;
+  background-color: inherit;
+  border-radius: 0;
+  color: inherit;
+}

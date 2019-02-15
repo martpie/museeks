@@ -1,0 +1,13 @@
+.volume-control {
+  position: absolute;
+  z-index: 10;
+  background-color: rgb(244, 244, 244);
+  top: 2px;
+  right: 25px;
+  display: none;
+  padding: 10px 12px;
+
+  &.visible {
+    display: block;
+  }
+}
