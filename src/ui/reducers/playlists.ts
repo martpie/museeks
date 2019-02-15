@@ -7,11 +7,11 @@ const initialState: PlaylistsState = []; // Playlist[]
 
 export default (state = initialState, action: Action): PlaylistsState => {
   switch (action.type) {
-    case (types.APP_PLAYLISTS_REFRESH): {
+    case (types.PLAYLISTS_REFRESH): {
       return action.payload.playlists;
     }
 
-    case (types.APP_LIBRARY_RESET): {
+    case (types.LIBRARY_RESET): {
       return initialState;
     }
 
