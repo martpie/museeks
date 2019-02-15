@@ -1,0 +1,31 @@
+.checkbox {
+  label {
+    padding-left: 28px; // Bootstrap default is 20
+
+    input[type="checkbox"] {
+      -webkit-appearance: none; // reset everything
+      width: 18px;
+      height: 18px;
+      border-radius: 3px;
+      display: inline-block;
+      background-color: #F4F4F4;
+      outline: none;
+      margin-left: -28px;
+
+      &:checked {
+        background-color: var(--main-color);
+        border: red;
+
+        &::after {
+          content: "\f00c";
+          font-family: FontAwesome;
+          font-size: 14px;
+          color: white;
+          position: absolute;
+          top: 2px;
+          left: 2px;
+        }
+      }
+    }
+  }
+}

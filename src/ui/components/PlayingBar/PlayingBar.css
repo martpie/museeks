@@ -1,0 +1,36 @@
+.playing-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-align: center;
+}
+
+.playing-bar__cover {
+  width: 60px;
+  flex: 0 0 auto;
+}
+
+.playing-bar__queue {
+  width: 60px;
+  flex: 0 0 auto;
+  position: relative;
+}
+
+// Queue toggle
+.queue-toggle {
+  border: 0;
+  background: transparent;
+  font-size: 14px;
+  box-shadow: none;
+}
+
+.queue-dropdown {
+  :global .dropdown-menu {
+    border: 0;
+    padding: 0;
+    margin: 0;
+    left: auto;
+    right: -15px;
+    box-shadow: none;
+  }
+}

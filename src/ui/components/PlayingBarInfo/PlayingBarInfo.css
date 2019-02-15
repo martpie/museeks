@@ -1,0 +1,99 @@
+.playing-bar__info {
+  flex: 1 1 auto;
+}
+
+.playing-bar__info__metas {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 4px;
+}
+
+.metas {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  vertical-align: middle;
+  text-align: center;
+  flex: 1;
+}
+
+.duration {
+  display: inline-block;
+  padding: 0 6px;
+  font-size: 10px;
+  padding-left: 10px;
+  text-align: right;
+  // force numbers to have the same width and avoid .duration
+  // to have different width based on its content
+  font-variant-numeric: tabular-nums;
+}
+
+.player-options {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding-right: 10px;
+}
+
+.playing-bar__info__progress {
+  position: relative;
+}
+
+.progress-tooltip {
+  position: absolute;
+  background-color: white;
+  border: 1px solid #CECECE;
+  color: var(--header-color);
+  font-size: 10px;
+  padding: 2px 5px;
+  bottom: 9px;
+  z-index: 1;
+  transform: translateX(-11px);
+
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-color: transparent;
+    border-bottom: 0;
+  }
+
+  // Stroke
+  &::before {
+    top: 18px;
+    left: 5px;
+
+    // If 1px darken stroke slightly
+    border-top-color: #CECECE;
+    border-width: 6px;
+  }
+
+  // Fill
+  &::after {
+    top: 18px;
+    left: 6px;
+    border-top-color: white;
+    border-width: 5px;
+  }
+}
+
+.progress {
+  outline: none;
+  height: 5px;
+  margin-bottom: 0;
+  margin-top: 3px;
+  cursor: pointer;
+  background-color: rgb(219, 219, 219);
+
+  :global .progress-bar {
+    background-color: var(--main-color);
+    transition: none;
+    transform-origin: left;
+    will-change: transform;
+    width: 100%;
+  }
+}

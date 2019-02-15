@@ -1,0 +1,6 @@
+.playlist-link {
+  &:hover,
+  &:focus {
+    text-decoration: none;
+  }
+}

@@ -1,0 +1,38 @@
+.toast {
+  box-shadow: 0 5px 3px -5px rgba(0, 0, 0, .5);
+  border: solid 1px;
+  border-left-width: 5px;
+  background-color: white;
+  padding: 15px;
+
+  & + .toast {
+    margin-top: 5px;
+  }
+}
+
+.toast--danger,
+.toast--info,
+.toast--warning,
+.toast--success {
+  border-color: #ddd;
+}
+
+.toast--success {
+  border-left-color: #5cb85c;
+  color: #5cb85c;
+}
+
+.toast--info {
+  border-left-color: #5bc0de;
+  color: #5bc0de;
+}
+
+.toast--warning {
+  border-left-color: #f0ad4e;
+  color: #f0ad4e;
+}
+
+.toast--danger {
+  border-left-color: #d9534f;
+  color: #d9534f;
+}
