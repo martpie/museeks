@@ -63,7 +63,11 @@ export const checkForUpdate = async (options: UpdateCheckOptions = {}) => {
 export const check = async () => {
   checkTheme();
   checkSleepBlocker();
-  if (app.config.get('autoUpdateChecker')) checkForUpdate({ silentFail: true });
+  if (app.config.get('autoUpdateChecker')) {
+    checkForUpdate({ silentFail: true }).catch((err) => {
+      console.error(err);
+    });
+  }
 };
 
 /**
