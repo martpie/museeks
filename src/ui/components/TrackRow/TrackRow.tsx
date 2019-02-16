@@ -48,7 +48,7 @@ export default class TrackRow extends React.PureComponent<Props> {
   render () {
     const { track, selected } = this.props;
     const trackClasses = cx(styles.track, {
-      [styles.selected]: selected,
+      [styles.selected]: selected
     });
 
     return (

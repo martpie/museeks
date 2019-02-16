@@ -71,7 +71,7 @@ app.on('ready', async () => {
     titleBarStyle: 'hiddenInset', // MacOS polished window
     show: false,
     webPreferences: {
-      nodeIntegration: true,
+      nodeIntegration: true
     }
   });
 
