@@ -1,0 +1,66 @@
+.playing-indicator {
+  height: 100%;
+  width: 100%;
+  font-size: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transform-origin: center;
+}
+
+.playing-indicator :global(.fa) {
+  transition: transform ease-in-out 0.2s;
+}
+
+.playing-indicator:hover :global(.fa) {
+  transform: scale(1.3);
+}
+
+.animation {
+  width: 8px;
+  height: 8px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.animation .bar {
+  height: 8px;
+  width: 2px;
+  align-items: baseline;
+  background-color: var(--text-color);
+  animation: bar-animate;
+  animation-duration: 1s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  transform-origin: bottom;
+  transform: scale3d(1, 0, 1);
+  will-change: transform;
+}
+
+.animation .bar.bar-second {
+  animation-delay: 0.55s;
+}
+
+.animation .bar.bar-third {
+  animation-delay: 0.25s;
+}
+
+.animation .bar:not(:last-child) {
+  margin-right: 1px;
+}
+
+@keyframes bar-animate {
+  from {
+    transform: scale3d(1, 0, 1);
+  }
+
+  50% {
+    transform: scale3d(1, 1, 1);
+  }
+
+  to {
+    transform: scale3d(1, 0, 1);
+  }
+}

@@ -1,0 +1,54 @@
+:global(.os-darwin) .header__main-controls {
+  padding-left: 65px; /* let some space for titleBarStyle */
+}
+
+/* The native frame may be light, so we need to increase the contrast between
+   the frame and the header */
+:global .os-win32,
+:global .os-linux {
+  .main-header {
+    border-top: 1px solid #d2d2d2;
+  }
+}
+
+.header {
+  border-bottom: 1px solid var(--border-color);
+  background-color: var(--header-bg);
+  color: var(--header-color);
+  padding: 0 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 50px;
+  flex: 0 0 auto;
+
+  /* Draggable region (zone able to move the window) */
+  -webkit-app-region: drag;
+}
+
+.header__main-controls {
+  width: 220px;
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  padding-right: 10px;
+}
+
+.header__search {
+  -webkit-app-region: no-drag;
+  width: 220px;
+  flex: 0 0 auto;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.header__search__input {
+  display: block;
+  width: 100%;
+  background-color: var(--search-bg);
+}
+
+.header__playing-bar {
+  flex: 1 1 auto;
+  max-width: 600px;
+}

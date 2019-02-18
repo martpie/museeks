@@ -1,0 +1,7 @@
+.toasts {
+  position: fixed;
+  bottom: 40px;
+  right: 12px;
+  width: 350px;
+  z-index: 1000;
+}

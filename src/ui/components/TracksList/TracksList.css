@@ -1,0 +1,21 @@
+.tracks-list {
+  outline: none;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+}
+
+.tracks-list-body {
+  overflow: auto;
+  flex: 1 1 auto;
+}
+
+.tiles {
+  position: relative;
+}
+
+.tile {
+  position: absolute;
+  width: 100%;
+  z-index: 10;
+}

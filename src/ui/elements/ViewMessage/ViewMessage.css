@@ -1,0 +1,28 @@
+.full-message {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  font-size: 25px;
+  font-weight: 100;
+  padding: 30px;
+  margin: auto;
+  text-align: center;
+
+  a {
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
+  button {
+    color: var(--link-color);
+    text-decoration: none;
+  }
+}
+
+.sub-message {
+  font-size: 70%;
+}

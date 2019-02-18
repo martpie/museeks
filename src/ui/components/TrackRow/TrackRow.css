@@ -1,0 +1,37 @@
+.cell {
+  padding: 3px 4px;
+  cursor: default;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 24px;
+}
+
+.track {
+  display: flex;
+  outline: none;
+
+  &:nth-child(odd) {
+    background-color: var(--tracks-bg-odd);
+  }
+
+  &:nth-child(even) {
+    background-color: var(--tracks-bg-even);
+  }
+
+  &.selected {
+    background-color: var(--main-color);
+    color: white;
+
+    /* // put that elsewhere someday
+    .playing-indicator {
+
+      .animation {
+
+        .bar {
+          background-color: #EEE;
+        }
+      }
+    } */
+  }
+}

@@ -3,19 +3,15 @@ import { connect } from 'react-redux';
 import Input from 'react-simple-input';
 import KeyBinding from 'react-keybinding-component';
 
-import PlayingBar from './PlayingBar';
-import PlayerControls from './PlayerControls';
+import PlayingBar from '../PlayingBar/PlayingBar';
+import PlayerControls from '../PlayerControls/PlayerControls';
 
 import * as LibraryActions from '../../actions/LibraryActions';
 import { isCtrlKey } from '../../utils/utils-platform';
 import { RootState } from '../../reducers';
 import { TrackModel, PlayerStatus, Repeat } from '../../../shared/types/interfaces';
 
-/*
-|--------------------------------------------------------------------------
-| Header
-|--------------------------------------------------------------------------
-*/
+import * as styles from './Header.css';
 
 interface Props {
   playerStatus: PlayerStatus;
@@ -54,32 +50,30 @@ class Header extends React.Component<Props> {
     } = this.props;
 
     return (
-      <header>
-        <div className='main-header'>
-          <div className='col-main-controls'>
-            <PlayerControls
-              playerStatus={playerStatus}
-            />
-          </div>
-          <div className='col-player-infos'>
-            <PlayingBar
-              queue={queue}
-              queueCursor={queueCursor}
-              shuffle={shuffle}
-              repeat={repeat}
-            />
-          </div>
-          <div className='col-search-controls'>
-            <Input
-              selectOnClick
-              placeholder='search'
-              className='form-control input-sm search'
-              changeTimeout={250}
-              clearButton
-              ref={this.input}
-              onChange={this.search}
-            />
-          </div>
+      <header className={styles.header}>
+        <div className={styles.header__mainControls}>
+          <PlayerControls
+            playerStatus={playerStatus}
+          />
+        </div>
+        <div className={styles.header__playingBar}>
+          <PlayingBar
+            queue={queue}
+            queueCursor={queueCursor}
+            shuffle={shuffle}
+            repeat={repeat}
+          />
+        </div>
+        <div className={styles.header__search}>
+          <Input
+            selectOnClick
+            placeholder='search'
+            className={styles.header__search__input}
+            changeTimeout={250}
+            clearButton
+            ref={this.input}
+            onChange={this.search}
+          />
         </div>
         <KeyBinding onKey={this.onKey} preventInputConflict />
       </header>

@@ -1,0 +1,5 @@
+.view-library {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}

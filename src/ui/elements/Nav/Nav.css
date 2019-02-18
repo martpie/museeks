@@ -1,0 +1,26 @@
+.nav {
+  display: flex;
+
+  &.nav--vertical {
+    flex-direction: column;
+  }
+}
+
+.nav__link {
+  display: inline-block;
+  padding: 15px;
+  color: var(--text-color);
+  font-weight: bold;
+  text-decoration: none;
+
+  &:hover,
+  &:active,
+  &:focus {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  &.nav__link--active {
+    color: var(--main-color);
+  }
+}

@@ -1,0 +1,39 @@
+.track-cell-header {
+  font-weight: 700;
+  -webkit-appearance: none;
+  border: 0;
+  background: transparent;
+  text-align: left;
+  padding: 0;
+  cursor: default;
+  display: flex;
+  align-items: center;
+  color: inherit;
+
+  &.sort:focus {
+    background-color: rgba(0, 0, 0, 0.025);
+  }
+
+  &.sort:active {
+    background-color: rgba(0, 0, 0, 0.04);
+  }
+
+  .icon {
+    padding-right: 6px;
+  }
+
+  .name {
+    flex: 1;
+    margin: 4px 0;
+    padding: 0 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &:not(:first-child) {
+    .name {
+      border-left: 1px solid var(--border-color);
+    }
+  }
+}

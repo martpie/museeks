@@ -1,0 +1,67 @@
+::-webkit-scrollbar {
+  width: 5px;
+  background-color: var(--scrollbar-track);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar-thumb);
+}
+
+/* Colors (default theme) */
+:root {
+  --main-color: #459ce7;
+  --link-color: #459ce7;
+  --link-color-hover: #52afff;
+}
+
+*,
+::before,
+::after {
+  box-sizing: border-box;
+}
+
+/* Global styles */
+html {
+  font-size: 12px;
+  user-select: none;
+  -webkit-user-select: none;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  -webkit-user-select: none;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  color: var(--text-color);
+  font-size: 12px;
+  user-select: none;
+  height: 100%;
+  overflow: hidden;
+}
+
+*:focus {
+  /* Make it keyboard only
+  outline: 2px solid var(--main-color) !important;
+  outline-offset: -2px; */
+}
+
+button {
+  outline: none;
+}
+
+a {
+  color: var(--link-color);
+
+  &:hover,
+  &:focus,
+  &:active,
+  &:visited {
+    color: var(--link-color-hover);
+  }
+}
+
+/* App wrapper */
+:global #wrap {
+  height: 100vh;
+}

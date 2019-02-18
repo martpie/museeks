@@ -2,19 +2,13 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 
-import TracksList from '../Shared/TracksList';
-import FullViewMessage from '../Shared/FullViewMessage';
+import TracksList from '../TracksList/TracksList';
+import * as ViewMessage from '../../elements/ViewMessage/ViewMessage';
 
 import * as PlaylistsActions from '../../actions/PlaylistsActions';
 import { filterTracks } from '../../utils/utils-library';
 import { TrackModel, PlaylistModel, PlayerStatus } from '../../../shared/types/interfaces';
 import { RootState } from '../../reducers';
-
-/*
-|--------------------------------------------------------------------------
-| Playlist
-|--------------------------------------------------------------------------
-*/
 
 interface OwnProps {
   tracks: TrackModel[];
@@ -53,28 +47,32 @@ class Playlist extends React.Component<Props> {
 
     if (currentPlaylist && currentPlaylist.tracks.length === 0) {
       return (
-        <FullViewMessage>
+        <ViewMessage.Notice>
           <p>Empty playlist</p>
-          <p className='sub-message'>You can add tracks from the <Link to='/library'>library view</Link></p>
-        </FullViewMessage>
+          <ViewMessage.Sub>
+            You can add tracks from the <Link to='/library'>library view</Link>
+          </ViewMessage.Sub>
+        </ViewMessage.Notice>
       );
     }
 
     if (tracks.length === 0) {
       return (
-        <FullViewMessage>
+        <ViewMessage.Notice>
           <p>Your search returned no results</p>
-        </FullViewMessage>
+        </ViewMessage.Notice>
       );
     }
 
     // A bit hacky though
     if (currentPlaylist && currentPlaylist.tracks.length === 0) {
       return (
-        <FullViewMessage>
+        <ViewMessage.Notice>
           <p>Empty playlist</p>
-          <p className='sub-message'>You can add tracks from the <Link to='/library'>library view</Link></p>
-        </FullViewMessage>
+          <ViewMessage.Sub>
+            You can add tracks from the <Link to='/library'>library view</Link>
+          </ViewMessage.Sub>
+        </ViewMessage.Notice>
       );
     }
 

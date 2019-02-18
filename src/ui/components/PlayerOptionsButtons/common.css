@@ -1,0 +1,27 @@
+.icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 16px;
+  width: 16px;
+}
+
+.button {
+  -webkit-app-region: no-drag;
+  border: 0;
+  color: inherit;
+  background: transparent;
+  font-size: 18px;
+
+  &.active {
+    .icon > svg {
+      fill: var(--main-color);
+    }
+  }
+
+  .icon > svg {
+    fill: currentColor;
+    width: 16px;
+    height: auto;
+  }
+}

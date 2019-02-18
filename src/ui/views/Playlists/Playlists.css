@@ -1,0 +1,9 @@
+.view-playlists {
+  display: flex;
+  overflow: hidden;
+}
+
+.playlist {
+  flex: 1;
+  display: flex;
+}

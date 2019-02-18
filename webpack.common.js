@@ -27,7 +27,7 @@ const uiConfig = {
     new HtmlWebpackPlugin({
       title: 'Museeks',
       template: 'src/app.html',
-    }),
+    })
   ]
 }
 
@@ -61,8 +61,26 @@ const sharedConfig = {
     rules: [
       {
         test: /\.(ts|tsx)([?]?.*)$/,
-        loader: 'ts-loader',
+        loader: ['ts-loader'],
         exclude: /node_modules/,
+      },
+      {
+        test: /\.css$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader',
+            options: {
+              modules: true,
+              importLoaders: 1,
+              localIdentName: '[local]___[hash:base64:5]',
+              camelCase: 'dashesOnly',
+              sourceMap: true,
+            }
+          },
+          'postcss-loader'
+        ],
+        exclude: path.join(__dirname, 'node_modules')
       },
       {
         test: /\.css$/,
@@ -70,14 +88,7 @@ const sharedConfig = {
           MiniCssExtractPlugin.loader,
           'css-loader',
         ],
-      },
-      {
-        test: /\.scss$/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          'css-loader',
-          'sass-loader',
-        ],
+        include: path.join(__dirname, 'node_modules')
       },
       {
         test: /\.(eot|woff|woff2|ttf)([?]?.*)$/,
