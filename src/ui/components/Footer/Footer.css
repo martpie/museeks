@@ -1,9 +1,8 @@
 .footer {
   background-color: var(--footer-bg);
   border-top: solid 1px var(--border-color);
-
   flex: 0 0 auto;
-  padding: 0px 15px;
+  padding: 0 15px;
   display: flex;
   align-items: stretch;
 }

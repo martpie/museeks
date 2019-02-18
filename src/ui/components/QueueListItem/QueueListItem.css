@@ -13,14 +13,12 @@
   }
 
   &.is-dragged {
-
     .queue__item__info {
-      opacity: .25;
+      opacity: 0.25;
     }
   }
 
   &.is-dragged-over {
-
     &::after {
       position: absolute;
       z-index: 1;

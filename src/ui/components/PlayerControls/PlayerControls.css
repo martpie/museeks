@@ -1,6 +1,5 @@
 .player-controls {
   -webkit-app-region: no-drag;
-
   display: flex;
   align-items: center;
   position: relative;

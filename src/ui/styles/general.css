@@ -9,11 +9,10 @@
 
 /* Colors (default theme) */
 :root {
-  --main-color: #459CE7;
-  --link-color: #459CE7;
+  --main-color: #459ce7;
+  --link-color: #459ce7;
   --link-color-hover: #52afff;
 }
-
 
 /* Global styles */
 html {

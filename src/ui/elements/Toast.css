@@ -1,14 +1,12 @@
 .toast {
   border: solid 1px;
   border-left-width: 5px;
-
   background-color: var(--toasts-bg);
   border-top-color: var(--border-color);
   border-right-color: var(--border-color);
   border-bottom-color: var(--border-color);
   color: var(--text-color);
-
-  box-shadow: 0 5px 3px -5px rgba(0, 0, 0, .5);
+  box-shadow: 0 5px 3px -5px rgba(0, 0, 0, 0.5);
   padding: 15px;
 
   & + .toast {

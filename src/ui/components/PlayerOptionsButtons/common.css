@@ -13,7 +13,6 @@
   -webkit-app-region: no-drag;
 
   &.active {
-
     .icon > svg {
       fill: var(--main-color);
     }
