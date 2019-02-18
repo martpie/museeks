@@ -1,6 +1,6 @@
 {
   "extends": [
-    "stylelint-config-recommended",
+    "stylelint-config-standard",
     "stylelint-config-css-modules"
   ],
   "rules": {

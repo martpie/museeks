@@ -63,7 +63,6 @@
   &::before {
     top: 18px;
     left: 5px;
-
     border-top-color: var(--border-color);
     border-width: 6px;
   }
