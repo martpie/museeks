@@ -1,4 +1,6 @@
-.setting-section {}
+.setting-section {
+  padding-bottom: 10px;
+}
 
 .setting-title {
   display: inline-block;

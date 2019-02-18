@@ -1,6 +1,6 @@
 .checkbox {
   label {
-    padding-left: 28px; // Bootstrap default is 20
+    padding-left: 28px;
 
     /* input[type="checkbox"] {
       -webkit-appearance: none; // reset everything
