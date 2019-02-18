@@ -6,7 +6,7 @@ import SettingsLibrary from './SettingsLibrary';
 import SettingsUI from './SettingsUI';
 import SettingsAudio from './SettingsAudio';
 import SettingsAbout from './SettingsAbout';
-import * as Nav from '../../elements/Navs';
+import * as Nav from '../../elements/Nav/Nav';
 
 import { config } from '../../lib/app';
 import { LibraryState } from '../../reducers/library';

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import * as ViewMessage from '../../elements/ViewMessage';
+import * as ViewMessage from '../../elements/ViewMessage/ViewMessage';
 import TracksList from '../../components/TracksList/TracksList';
 import { filterTracks, sortTracks } from '../../utils/utils-library';
 import SORT_ORDERS from '../../constants/sort-orders';

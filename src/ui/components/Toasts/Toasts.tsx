@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 
-import ToastItem from '../../elements/Toast';
+import ToastItem from '../../elements/Toast/Toast';
 
 import { Toast } from '../../../shared/types/interfaces';
 import { RootState } from '../../reducers';

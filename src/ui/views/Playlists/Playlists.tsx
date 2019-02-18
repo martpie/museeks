@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Route, Redirect, withRouter, RouteComponentProps } from 'react-router-dom';
 
 import PlaylistsNav from '../../components/PlaylistsNav/PlaylistsNav';
-import * as ViewMessage from '../../elements/ViewMessage';
+import * as ViewMessage from '../../elements/ViewMessage/ViewMessage';
 
 import * as PlaylistsActions from '../../actions/PlaylistsActions';
 import Playlist from '../../components/Playlists/Playlist';

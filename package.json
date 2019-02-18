@@ -42,7 +42,7 @@
     "react-dom": "16.8.2",
     "react-fontawesome": "1.6.1",
     "react-keybinding-component": "1.0.0",
-    "react-onclickout": "^2.0.8",
+    "react-onclickout": "2.0.8",
     "react-rangeslider": "2.2.0",
     "react-redux": "6.0.0",
     "react-router": "4.3.1",

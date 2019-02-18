@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 
 import TracksList from '../TracksList/TracksList';
-import * as ViewMessage from '../../elements/ViewMessage';
+import * as ViewMessage from '../../elements/ViewMessage/ViewMessage';
 
 import * as PlaylistsActions from '../../actions/PlaylistsActions';
 import { filterTracks } from '../../utils/utils-library';
