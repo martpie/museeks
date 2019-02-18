@@ -16,23 +16,19 @@
 }
 
 // Undraggable regions
-.playing-bar__info__progress,
-.now-playing-info-buttons,
-.playing-bar__queue,
-.search,
-.window-controls {
+.header__search {
   -webkit-app-region: no-drag;
 }
 
 .header {
-  background-color: rgb(244, 244, 244);
+  border-bottom: 1px solid var(--border-color);
+  background-color: var(--header-bg);
   color: var(--header-color);
   padding: 0 10px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   height: 50px;
-  border-bottom: 1px solid rgb(210, 210, 210);
   flex: 0 0 auto;
 
   // Draggable region (zone able to move the window)
@@ -52,6 +48,12 @@
   flex: 0 0 auto;
   display: flex;
   justify-content: flex-end;
+}
+
+.header__search__input {
+  display: block;
+  width: 100%;
+  background-color: var(--search-bg);
 }
 
 // .windows-controls

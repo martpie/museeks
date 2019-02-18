@@ -42,9 +42,8 @@
 
 .progress-tooltip {
   position: absolute;
-  background-color: white;
-  border: 1px solid #CECECE;
-  color: var(--header-color);
+  background-color: var(--view-bg);
+  border: 1px solid var(--border-color);
   font-size: 10px;
   padding: 2px 5px;
   bottom: 9px;
@@ -67,8 +66,7 @@
     top: 18px;
     left: 5px;
 
-    // If 1px darken stroke slightly
-    border-top-color: #CECECE;
+    border-top-color: var(--border-color);
     border-width: 6px;
   }
 
@@ -76,18 +74,19 @@
   &::after {
     top: 18px;
     left: 6px;
-    border-top-color: white;
+    border-top-color: var(--view-bg);
     border-width: 5px;
   }
 }
 
 .progress {
+  -webkit-app-region: no-drag;
+  background-color: var(--progress-bg);
   outline: none;
   height: 5px;
   margin-bottom: 0;
   margin-top: 3px;
   cursor: pointer;
-  background-color: rgb(219, 219, 219);
 
   :global .progress-bar {
     background-color: var(--main-color);

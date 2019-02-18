@@ -14,7 +14,7 @@ export const Title: React.FC = (props) => (
 );
 
 export const Description: React.FC = (props) => (
-  <p className={`${styles.settingDescription} help-block`}>
+  <p className={styles.settingDescription}>
     {props.children}
   </p>
 );

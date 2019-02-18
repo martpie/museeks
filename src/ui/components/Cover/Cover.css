@@ -6,7 +6,7 @@
   background-size: cover;
   text-align: center;
   border-style: solid;
-  border-color: #D2D2D2;
+  border-color: var(--border-color);
   border-width: 0 1px;
   display: flex;
   align-items: center;

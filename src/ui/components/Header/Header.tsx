@@ -68,7 +68,7 @@ class Header extends React.Component<Props> {
           <Input
             selectOnClick
             placeholder='search'
-            className='form-control input-sm search'
+            className={styles.header__search__input}
             changeTimeout={250}
             clearButton
             ref={this.input}

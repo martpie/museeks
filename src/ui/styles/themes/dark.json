@@ -1,0 +1,41 @@
+{
+  "name": "Dark",
+  "variables": {
+    "--text-color": "#EEEEEE",
+    "--view-bg": "#23292B",
+    "--border-color": "#1F1F1F",
+
+    "--header-color": "#EEEEEE",
+    "--header-bg": "#33393b",
+
+    "--footer-bg": "#33393B",
+    "--footer-nav-bg-color-active": "#23292B",
+
+    "--tracks-bg-even": "#23292B",
+    "--tracks-bg-odd": "#2E3436",
+
+    "--tracks-header-bg": "#23292B",
+    "--tracks-header-color": "#EEEEEE",
+
+    "--success-color": "#5CB85C",
+    "--info-color": "#5BC0DE",
+    "--warning-color": "#F0AD4E",
+    "--danger-color": "#D9534F",
+
+    "--toasts-bg": "#23292B",
+
+    "--progress-bg": "#23292B",
+
+    "--sidebar-bg": "#33393b",
+    "--sidebar-item-active-bg": "#23292B",
+
+    "--search-bg": "#23292B",
+    "--slider-bg": "#23292B",
+
+    "--scrollbar-track": "#293032",
+    "--scrollbar-thumb": "rgba(255, 255, 255, 0.2)",
+
+    "--queue-bg": "#23292B",
+    "--queue-header-bg": "#33393b"
+  }
+}

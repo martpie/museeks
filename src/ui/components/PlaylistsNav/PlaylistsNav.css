@@ -1,10 +1,37 @@
 .playlists-nav {
-  width: 240px;
-  border-right: 1px solid #d2d2d2;
-  background-color: #F4F4F4;
+  width: 200px;
+  border-right: 1px solid var(--border-color);
+  background-color: var(--sidebar-bg);
   max-height: 100%;
   overflow: hidden;
   position: relative;
+}
+
+.playlists-nav__header {
+  display: flex;
+  align-items: center;
+}
+
+.actions {
+  padding-right: 4px;
+}
+
+.action {
+  background: transparent;
+  border: none;
+  color: var(--text-color);
+
+  :global .fa {
+    margin-right: 0;
+  }
+}
+
+.playlists-nav__title {
+  padding: 0px 12px;
+  margin: 10px 0;
+  font-size: 11px;
+  font-weight: bold;
+  flex: 1;
 }
 
 .playlists-nav__body {
@@ -12,26 +39,7 @@
   overflow: auto;
 }
 
-.playlists-nav__footer {
-  position: absolute;
-  bottom: 0;
-}
-
 .playlists-nav__item {
-  &:first-child {
-    a {
-      border-width: 0 0 1px 0;
-
-      &:global(.-is-active) {
-        border-width: 0 0 1px 0;
-      }
-    }
-
-    input[type="text"] {
-      border-width: 0 0 1px 0;
-    }
-  }
-
   a {
     display: block;
     color: inherit;
@@ -39,21 +47,23 @@
     white-space: nowrap;
     overflow: hidden;
     cursor: pointer;
-    padding: 12px 15px;
+    padding: 8px 12px;
     text-decoration: none;
     border-style: solid;
     border-color: transparent;
     border-width: 1px 0;
 
     &:hover {
-      background-color: #e6e6e6;
+      background-color: var(--sidebar-item-active-bg);
+      color: var(--text-color);
     }
 
     &:global(.-is-active) {
+      z-index: 10;
       border-style: solid;
-      border-color: #d2d2d2;
+      border-color: var(--border-color);
       border-width: 1px 0;
-      background-color: #e6e6e6;
+      background-color: var(--sidebar-item-active-bg);
       color: var(--main-color);
     }
   }
@@ -63,26 +73,10 @@
     width: 100%;
     background-color: white;
     color: var(--main-color);
-    padding: 12px 15px;
+    padding: 8px 12px;
     outline: none;
     border-style: solid;
-    border-color: #d2d2d2;
+    border-color: var(--border-color);
     border-width: 1px 0;
-  }
-}
-
-.playlists-management {
-  margin: 10px;
-  border: solid 1px #CCC;
-
-  button {
-    text-align: center;
-    color: #555;
-    width: 22px;
-    text-align: center;
-
-    :global .fa {
-      margin-right: 0;
-    }
   }
 }

@@ -8,8 +8,8 @@
 
   :global(.react-simple-input) {
     padding: 6px 12px;
-    border: 1px solid #C7C7C7;
-    color: #555;
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
     border-radius: 2px;
   }
 
@@ -33,7 +33,7 @@
 :global .rangeslider {
   box-shadow: none;
   margin: 0;
-  background-color: #dadada;
+  background-color: var(--slider-bg);
   border: 0;
 }
 

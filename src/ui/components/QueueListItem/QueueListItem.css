@@ -9,7 +9,7 @@
   -webkit-user-drag: element;
 
   &:not(:last-child) {
-    border-bottom: dashed 1px #D8D8D8;
+    border-bottom: dashed 1px var(--border-color);
   }
 
   &.is-dragged {
@@ -27,7 +27,7 @@
       display: block;
       width: 100%;
       content: "";
-      border-bottom: solid 3px #459CE7;
+      border-bottom: solid 3px var(--main-color);
     }
 
     &.is-above::after {
@@ -45,7 +45,7 @@
 }
 
 .queue__item__remove {
-  color: var(--header-color);
+  color: var(--text-color);
   width: 25px;
   height: 25px;
   line-height: 10px;
@@ -57,7 +57,7 @@
   &:hover,
   &:focus,
   &:active {
-    color: var(--header-color);
+    color: var(--text-color);
     text-decoration: none;
   }
 }
@@ -74,7 +74,6 @@
 .queue__item__info__title,
 .queue__item__info__other-infos {
   padding: 0 10px;
-  color: rgb(51, 51, 51);
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;

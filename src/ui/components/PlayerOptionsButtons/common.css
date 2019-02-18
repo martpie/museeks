@@ -14,12 +14,13 @@
 
   &.active {
 
-    svg {
-      fill: #337ab7;
+    .icon > svg {
+      fill: var(--main-color);
     }
   }
 
-  svg {
+  .icon > svg {
+    fill: currentColor;
     width: 16px;
     height: auto;
   }

@@ -39,7 +39,7 @@ export default class SettingsAudio extends React.Component<Props> {
               max='5'
               step='0.1'
             />
-            <p className='help-block'>Increase the playback rate: a value of 2 will play your music at a 2x speed</p>
+            <Setting.Description>Increase the playback rate: a value of 2 will play your music at a 2x speed</Setting.Description>
           </div>
         </Setting.Section>
       </div>

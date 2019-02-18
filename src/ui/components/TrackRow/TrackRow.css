@@ -12,7 +12,11 @@
   outline: none;
 
   &:nth-child(odd) {
-    background-color: #F4F4F4;
+    background-color: var(--tracks-bg-odd);
+  }
+
+  &:nth-child(even) {
+    background-color: var(--tracks-bg-even);
   }
 
   &.selected {

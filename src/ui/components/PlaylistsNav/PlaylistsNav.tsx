@@ -1,6 +1,5 @@
 import * as electron from 'electron';
 import * as React from 'react';
-import { ButtonGroup, Button } from 'react-bootstrap';
 import * as Icon from 'react-fontawesome';
 
 import * as PlaylistsActions from '../../actions/PlaylistsActions';
@@ -135,15 +134,20 @@ class PlaylistsNav extends React.Component<Props, State> {
 
     return (
       <div className={styles.playlistsNav}>
+        <div className={styles.playlistsNav__header}>
+          <h4 className={styles.playlistsNav__title}>Playlists</h4>
+          <div className={styles.actions}>
+            <button
+              className={styles.action}
+              onClick={this.createPlaylist}
+              title='New playlist'
+            >
+              <Icon name='plus' />
+            </button>
+          </div>
+        </div>
         <div className={styles.playlistsNav__body}>
           { nav }
-        </div>
-        <div className={styles.playlistsNav__footer}>
-          <ButtonGroup className={styles.playlistsManagement}>
-            <Button bsStyle='link' bsSize='xs' onClick={this.createPlaylist}>
-              <Icon name='plus' />
-            </Button>
-          </ButtonGroup>
         </div>
       </div>
     );

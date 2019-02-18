@@ -18,6 +18,7 @@
 
 // Queue toggle
 .queue-toggle {
+  -webkit-app-region: no-drag;
   border: 0;
   background: transparent;
   font-size: 14px;

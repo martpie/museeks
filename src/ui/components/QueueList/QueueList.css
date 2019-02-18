@@ -1,6 +1,6 @@
 .queue__header {
   padding: 5px 10px;
-  background-color: rgb(244, 244, 244);
+  background-color: var(--queue-header-bg);
 }
 
 .queue__header__infos {

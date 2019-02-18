@@ -1,8 +1,14 @@
 .toast {
-  box-shadow: 0 5px 3px -5px rgba(0, 0, 0, .5);
   border: solid 1px;
   border-left-width: 5px;
-  background-color: white;
+
+  background-color: var(--toasts-bg);
+  border-top-color: var(--border-color);
+  border-right-color: var(--border-color);
+  border-bottom-color: var(--border-color);
+  color: var(--text-color);
+
+  box-shadow: 0 5px 3px -5px rgba(0, 0, 0, .5);
   padding: 15px;
 
   & + .toast {
@@ -10,29 +16,18 @@
   }
 }
 
-.toast--danger,
-.toast--info,
-.toast--warning,
 .toast--success {
-  border-color: #ddd;
-}
-
-.toast--success {
-  border-left-color: #5cb85c;
-  color: #5cb85c;
+  border-left-color: var(--success-color);
 }
 
 .toast--info {
-  border-left-color: #5bc0de;
-  color: #5bc0de;
+  border-left-color: var(--info-color);
 }
 
 .toast--warning {
-  border-left-color: #f0ad4e;
-  color: #f0ad4e;
+  border-left-color: var(--warning-color);
 }
 
 .toast--danger {
-  border-left-color: #d9534f;
-  color: #d9534f;
+  border-left-color: var(--danger-color);
 }
