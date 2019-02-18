@@ -23,8 +23,8 @@ jobs:
           name: "Lint check: TS"
           command: "npm run lint:ts"
       - run:
-          name: "Lint check: Sass"
-          command: "npm run lint:sass"
+          name: "Lint check: CSS"
+          command: "npm run lint:css"
       - run:
           name: Build application
           command: npm run build

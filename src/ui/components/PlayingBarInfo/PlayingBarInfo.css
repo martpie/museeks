@@ -24,8 +24,6 @@
   font-size: 10px;
   padding-left: 10px;
   text-align: right;
-  // force numbers to have the same width and avoid .duration
-  // to have different width based on its content
   font-variant-numeric: tabular-nums;
 }
 
@@ -61,7 +59,7 @@
     border-bottom: 0;
   }
 
-  // Stroke
+  /* Stroke */
   &::before {
     top: 18px;
     left: 5px;
@@ -70,7 +68,7 @@
     border-width: 6px;
   }
 
-  // Fill
+  /* Fill */
   &::after {
     top: 18px;
     left: 6px;

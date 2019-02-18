@@ -91,15 +91,6 @@ const sharedConfig = {
         include: path.join(__dirname, 'node_modules')
       },
       {
-        test: /\.scss$/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          'css-loader',
-          'sass-loader',
-        ],
-        include: path.join(__dirname, '/src/ui/styles')
-      },
-      {
         test: /\.(eot|woff|woff2|ttf)([?]?.*)$/,
         use: [{
           loader: 'file-loader',

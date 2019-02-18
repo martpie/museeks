@@ -1,23 +1,14 @@
-//--------------------------------------------------------------------------
-// Header
-//--------------------------------------------------------------------------
-
 :global(.os-darwin) .header__main-controls {
-  padding-left: 65px; // let some space for titleBarStyle
+  padding-left: 65px; /* let some space for titleBarStyle */
 }
 
-// The native frame may be light, so we need to increase the contrast between
-// the frame and the header
+/* The native frame may be light, so we need to increase the contrast between
+   the frame and the header */
 :global .os-win32,
 :global .os-linux {
   .main-header {
     border-top: 1px solid #d2d2d2;
   }
-}
-
-// Undraggable regions
-.header__search {
-  -webkit-app-region: no-drag;
 }
 
 .header {
@@ -31,7 +22,7 @@
   height: 50px;
   flex: 0 0 auto;
 
-  // Draggable region (zone able to move the window)
+  /* Draggable region (zone able to move the window) */
   -webkit-app-region: drag;
 }
 
@@ -44,6 +35,7 @@
 }
 
 .header__search {
+  -webkit-app-region: no-drag;
   width: 220px;
   flex: 0 0 auto;
   display: flex;
@@ -56,7 +48,6 @@
   background-color: var(--search-bg);
 }
 
-// .windows-controls
 .header__playing-bar {
   flex: 1 1 auto;
   max-width: 600px;

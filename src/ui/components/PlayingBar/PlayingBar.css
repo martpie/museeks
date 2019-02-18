@@ -16,7 +16,6 @@
   position: relative;
 }
 
-// Queue toggle
 .queue-toggle {
   -webkit-app-region: no-drag;
   border: 0;

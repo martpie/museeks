@@ -1,8 +1,13 @@
-//--------------------------------------------------------------------------
-// Colors (default theme)
-//--------------------------------------------------------------------------
+::-webkit-scrollbar {
+  width: 5px;
+  background-color: var(--scrollbar-track);
+}
 
-// Move to theme
+::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar-thumb);
+}
+
+/* Colors (default theme) */
 :root {
   --main-color: #459CE7;
   --link-color: #459CE7;
@@ -10,10 +15,7 @@
 }
 
 
-//--------------------------------------------------------------------------
-// Global styles
-//--------------------------------------------------------------------------
-
+/* Global styles */
 html {
   font-size: 12px;
   user-select: none;
@@ -37,18 +39,9 @@ body {
 }
 
 *:focus {
-  // Make it keyboard only
-  // outline: 2px solid var(--main-color) !important;
-  // outline-offset: -2px;
-}
-
-::-webkit-scrollbar {
-  width: 5px;
-  background-color: var(--scrollbar-track);
-}
-
-::-webkit-scrollbar-thumb {
-  background-color: var(--scrollbar-thumb);
+  /* Make it keyboard only
+  outline: 2px solid var(--main-color) !important;
+  outline-offset: -2px; */
 }
 
 button {
@@ -66,10 +59,7 @@ a {
   }
 }
 
-//--------------------------------------------------------------------------
-// Wrapper
-//--------------------------------------------------------------------------
-
+/* App wrapper */
 :global #wrap {
   height: 100vh;
 }
