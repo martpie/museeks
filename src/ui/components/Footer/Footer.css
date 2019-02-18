@@ -54,22 +54,14 @@
   font-size: 12px;
   padding-top: 7px;
   padding-bottom: 7px;
-
-  .progress {
-    display: inline-block;
-    width: 100%;
-    vertical-align: middle;
-    height: 5px;
-    margin-bottom: 0;
-
-    .progress-bar {
-      background-color: var(--main-color);
-    }
-  }
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .footer__library-refresh {
   display: flex;
+  flex: 1;
   align-items: center;
 }
 

@@ -1,4 +1,5 @@
 .playing-bar {
+  -webkit-app-region: no-drag;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -11,26 +12,29 @@
 }
 
 .playing-bar__queue {
+  -webkit-app-region: no-drag;
   width: 60px;
   flex: 0 0 auto;
   position: relative;
 }
 
 .queue-toggle {
-  -webkit-app-region: no-drag;
+  color: inherit;
   border: 0;
   background: transparent;
   font-size: 14px;
   box-shadow: none;
 }
 
-.queue-dropdown {
-  :global .dropdown-menu {
-    border: 0;
-    padding: 0;
-    margin: 0;
-    left: auto;
-    right: -15px;
-    box-shadow: none;
+.queue-container {
+  display: none;
+  position: absolute;
+  z-index: 1000;
+  text-align: left;
+  right: 0;
+  top: 26px;
+
+  &.is-open {
+    display: block;
   }
 }

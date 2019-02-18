@@ -9,22 +9,11 @@ import Player from '../../lib/player';
 import * as styles from './VolumeControl.css';
 import * as controlStyles from '../PlayerControls/PlayerControls.css';
 
-/*
-|--------------------------------------------------------------------------
-| Volume easing - http://www.dr-lex.be/info-stuff/volumecontrols.html#about
-|--------------------------------------------------------------------------
-*/
+// Volume easing - http://www.dr-lex.be/info-stuff/volumecontrols.html#about
+const SMOOTHING_FACTOR = 4;
 
-const factor = 4;
-
-const smoothifyVolume = (value: number): number => value ** factor;
-const unsmoothifyVolume = (value: number): number => value ** (1 / factor); // Linearize a smoothed volume value
-
-/*
-|--------------------------------------------------------------------------
-| VolumeControl
-|--------------------------------------------------------------------------
-*/
+const smoothifyVolume = (value: number): number => value ** SMOOTHING_FACTOR;
+const unsmoothifyVolume = (value: number): number => value ** (1 / SMOOTHING_FACTOR);
 
 interface Props {}
 

@@ -32,7 +32,7 @@ export default class CheckboxSetting extends React.PureComponent<Props> {
     return (
       <Setting.Section>
         <div className={styles.checkbox}>
-          <label htmlFor={`setting-${slug}`}>
+          <Setting.Label htmlFor={`setting-${slug}`}>
             <input
               id={`setting-${slug}`}
               type='checkbox'
@@ -41,7 +41,7 @@ export default class CheckboxSetting extends React.PureComponent<Props> {
             />
             <Setting.Title>{title}</Setting.Title>
             <Setting.Description>{description}</Setting.Description>
-          </label>
+          </Setting.Label>
         </div>
       </Setting.Section>
     );

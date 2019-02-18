@@ -8,12 +8,6 @@ import { TrackModel } from '../../../shared/types/interfaces';
 import * as styles from './TrackRow.css';
 import * as cellStyles from '../TracksListHeader/TracksListHeader.css';
 
-/*
-|--------------------------------------------------------------------------
-| TrackRow
-|--------------------------------------------------------------------------
-*/
-
 interface Props {
   selected: boolean;
   track: TrackModel;

@@ -1,3 +1,4 @@
+
 .queue__item {
   display: flex;
   flex-wrap: nowrap;
@@ -44,13 +45,16 @@
 
 .queue__item__remove {
   color: var(--text-color);
+  border: none;
+  background-color: transparent;
   width: 25px;
   height: 25px;
   line-height: 10px;
   padding: 3px;
-  margin-top: 5px;
+  margin-top: 3px;
   margin-right: 5px;
   visibility: hidden;
+  font-size: 14px;
 
   &:hover,
   &:focus,

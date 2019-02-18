@@ -18,7 +18,6 @@ import store from './store';
 |--------------------------------------------------------------------------
 */
 
-import 'bootstrap-css-only/css/bootstrap.min.css';
 import 'font-awesome/css/font-awesome.css';
 import 'react-rangeslider/lib/index.css';
 import './styles/main.css';

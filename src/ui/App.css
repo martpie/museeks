@@ -8,6 +8,8 @@
   width: 100%;
   flex: 1 1 auto;
   position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
 .content {
@@ -15,15 +17,6 @@
   height: 100%;
   width: 100%;
   padding: 0;
-
-  /* h2 {
-    margin-top: 0;
-  }
-
-  .btn .fa {
-    display: inline-block;
-    margin-right: 12px;
-  } */
 }
 
 .view,
@@ -34,6 +27,7 @@
 
 .view {
   background-color: var(--view-bg);
+  flex: 1 1 auto;
   overflow: auto;
   position: relative;
 }

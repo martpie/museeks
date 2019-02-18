@@ -10,12 +10,6 @@ import { filterTracks } from '../../utils/utils-library';
 import { TrackModel, PlaylistModel, PlayerStatus } from '../../../shared/types/interfaces';
 import { RootState } from '../../reducers';
 
-/*
-|--------------------------------------------------------------------------
-| Playlist
-|--------------------------------------------------------------------------
-*/
-
 interface OwnProps {
   tracks: TrackModel[];
   trackPlayingId: string | null;

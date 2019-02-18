@@ -3,6 +3,7 @@
     "stylelint-config-standard",
     "stylelint-config-css-modules"
   ],
+  "ignoreFiles": ["./src/**/*.tsx", "./src/**/*.ts"],
   "rules": {
     "no-descending-specificity": null
   }

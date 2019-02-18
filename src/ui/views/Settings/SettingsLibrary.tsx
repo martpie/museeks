@@ -1,6 +1,5 @@
 import * as electron from 'electron';
 import * as React from 'react';
-import { ButtonGroup, Button } from 'react-bootstrap';
 
 import * as Setting from '../../components/Setting/Setting';
 import Dropzone from '../../components/SettingDropzone/SettingDropzone';
@@ -10,12 +9,6 @@ import * as PlayerActions from '../../actions/PlayerActions';
 import { LibraryState } from '../../reducers/library';
 
 const { dialog } = electron.remote;
-
-/*
-|--------------------------------------------------------------------------
-| Child - SettingsLibrary - manage import folders for library
-|--------------------------------------------------------------------------
-*/
 
 interface Props {
   library: LibraryState;
@@ -61,17 +54,13 @@ export default class SettingsLibrary extends React.Component<Props> {
             onDrop={this.onDrop}
             onClick={this.openFolderSelector}
           />
-          <ButtonGroup>
-            <Button
-              bsSize='small'
-              bsStyle='danger'
-              title='Fully reset the library'
-              disabled={this.props.library.refreshing}
-              onClick={this.resetLibrary}
-            >
-              Reset library
-            </Button>
-          </ButtonGroup>
+          <button
+            title='Fully reset the library'
+            disabled={this.props.library.refreshing}
+            onClick={this.resetLibrary}
+          >
+            Reset library
+          </button>
         </Setting.Section>
       </div>
     );

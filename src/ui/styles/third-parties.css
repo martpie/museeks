@@ -7,7 +7,7 @@
     padding: 6px 12px;
     border: 1px solid var(--border-color);
     color: var(--text-color);
-    border-radius: 2px;
+    border-radius: var(--border-radius);
   }
 
   :global(.react-simple-input-clear) {
@@ -22,7 +22,7 @@
 }
 
 :global .rangeslider-horizontal {
-  border-radius: 1px;
+  border-radius: var(--border-radius);
   height: 5px;
   width: 90px;
 }
@@ -37,7 +37,7 @@
 :global .rangeslider-horizontal .rangeslider__fill {
   box-shadow: none;
   background-color: var(--main-color);
-  border-radius: 1px;
+  border-radius: var(--border-radius);
 }
 
 :global .rangeslider .rangeslider__handle {

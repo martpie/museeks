@@ -4,6 +4,7 @@
     "--text-color": "#333333",
     "--view-bg": "white",
     "--border-color": "#D2D2D2",
+    "--border-radius": "2px",
 
     "--header-color": "#555555",
     "--header-bg": "rgb(244, 244, 244)",

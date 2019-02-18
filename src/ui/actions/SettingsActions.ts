@@ -21,7 +21,7 @@ type UpdateCheckOptions = {
  */
 export const applyTheme = (theme: Theme) => {
   // TODO think about variables validity
-  let root = document.documentElement;
+  const root = document.documentElement;
 
   Object.entries(theme.variables).forEach(([property, value]) => {
     root.style.setProperty(property, value);
