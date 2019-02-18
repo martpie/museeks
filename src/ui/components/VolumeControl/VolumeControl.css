@@ -1,0 +1,17 @@
+.volume-control-container {
+  position: relative;
+}
+
+.volume-control {
+  background-color: var(--header-bg);
+  position: absolute;
+  z-index: 10;
+  top: -2px;
+  left: -110px;
+  display: none;
+  padding: 10px 12px;
+
+  &.visible {
+    display: block;
+  }
+}

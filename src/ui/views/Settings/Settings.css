@@ -1,0 +1,17 @@
+.view-settings {
+  display: flex;
+  justify-content: center;
+  padding-top: 50px;
+}
+
+.settings__nav {
+  padding: 0 30px;
+  width: 150px;
+  margin-left: -150px;
+}
+
+.settings__content {
+  padding: 10px 15px 10px 15px;
+  width: 400px;
+  max-width: calc(100% - 170px);
+}

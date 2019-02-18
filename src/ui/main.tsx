@@ -8,7 +8,7 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 
-import Root from './components/Root';
+import Root from './Root';
 import Router from './router/Router';
 import store from './store';
 
@@ -18,7 +18,9 @@ import store from './store';
 |--------------------------------------------------------------------------
 */
 
-import './styles/main.scss';
+import 'font-awesome/css/font-awesome.css';
+import 'react-rangeslider/lib/index.css';
+import './styles/main.css';
 
 /*
 |--------------------------------------------------------------------------

@@ -53,7 +53,7 @@ class MenuModule extends ModuleWindow {
             {
               label: 'Learn More',
               click () {
-                shell.openExternal('https://github.com/KeitIG/museeks');
+                shell.openExternal('https://github.com/martpie/museeks');
               }
             }
           ]

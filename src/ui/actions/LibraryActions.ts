@@ -30,7 +30,7 @@ export const load = async () => {
     const tracks = await app.models.Track.find().execAsync();
 
     store.dispatch({
-      type: types.APP_LIBRARY_REFRESH,
+      type: types.LIBRARY_REFRESH,
       payload: {
         tracks
       }
@@ -45,7 +45,7 @@ export const load = async () => {
  */
 export const search = (value: string) => {
   store.dispatch({
-    type: types.APP_FILTER_SEARCH,
+    type: types.FILTER_SEARCH,
     payload: {
       search: value
     }
@@ -57,7 +57,7 @@ export const search = (value: string) => {
  */
 export const sort = (sortBy: SortBy) => {
   store.dispatch({
-    type: types.APP_LIBRARY_SORT,
+    type: types.LIBRARY_SORT,
     payload: {
       sortBy
     }
@@ -81,7 +81,7 @@ export const add = (pathsToScan: string[]) => {
     scan.total = 0;
 
     store.dispatch({
-      type: types.APP_LIBRARY_REFRESH_END
+      type: types.LIBRARY_REFRESH_END
     });
 
     await LibraryActions.load();
@@ -99,7 +99,7 @@ export const add = (pathsToScan: string[]) => {
     if (scan.processed % 100 === 0) {
       // Progress bar update
       store.dispatch({
-        type: types.APP_LIBRARY_REFRESH_PROGRESS,
+        type: types.LIBRARY_REFRESH_PROGRESS,
         payload: {
           processed: scan.processed,
           total: scan.total
@@ -110,7 +110,7 @@ export const add = (pathsToScan: string[]) => {
       const tracks = [...scannedFiles];
       scannedFiles = []; // Reset current selection
       store.dispatch({
-        type: types.APP_LIBRARY_ADD_TRACKS,
+        type: types.LIBRARY_ADD_TRACKS,
         payload: {
           tracks
         }
@@ -122,7 +122,7 @@ export const add = (pathsToScan: string[]) => {
   // End queue instantiation
 
   store.dispatch({
-    type: types.APP_LIBRARY_REFRESH_START
+    type: types.LIBRARY_REFRESH_START
   });
 
   let rootFiles: string[]; // HACK Kind of hack, looking for a better solution
@@ -213,7 +213,7 @@ export const remove = (tracksIds: string[]) => {
       app.models.Track.removeAsync({ _id: { $in: tracksIds } }, { multi: true });
 
       store.dispatch({
-        type: types.APP_LIBRARY_REMOVE_TRACKS,
+        type: types.LIBRARY_REMOVE_TRACKS,
         payload: {
           tracksIds
         }
@@ -242,18 +242,18 @@ export const reset = async () => {
 
     if (result === 1) {
       store.dispatch({
-        type: types.APP_LIBRARY_REFRESH_START
+        type: types.LIBRARY_REFRESH_START
       });
 
       await app.models.Track.removeAsync({}, { multi: true });
       await app.models.Playlist.removeAsync({}, { multi: true });
 
       store.dispatch({
-        type: types.APP_LIBRARY_RESET
+        type: types.LIBRARY_RESET
       });
 
       store.dispatch({
-        type: types.APP_LIBRARY_REFRESH_END
+        type: types.LIBRARY_REFRESH_END
       });
 
       await load();

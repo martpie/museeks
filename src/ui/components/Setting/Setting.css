@@ -1,0 +1,32 @@
+.setting-section {
+  padding-bottom: 10px;
+}
+
+.setting-title {
+  display: inline-block;
+  font-weight: bold;
+  margin-top: 4px;
+  margin-left: 6px;
+}
+
+.setting-description {
+  font-weight: normal;
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+
+.setting-label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+.setting-input {
+  display: block;
+  border: solid 1px var(--border-color);
+  padding: 8px 12px;
+  width: 100%;
+
+  /* background-color: var(--header-bg);
+  color: var(--text-color); */
+}

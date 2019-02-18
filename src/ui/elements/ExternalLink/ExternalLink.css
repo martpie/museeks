@@ -1,0 +1,11 @@
+.external-link {
+  color: var(--main-color);
+  -webkit-appearance: none;
+  border: 0;
+  background: transparent;
+  padding: 0;
+}
+
+.external-link:hover {
+  text-decoration: underline;
+}

@@ -13,7 +13,7 @@ export const load = async (_id: string) => {
     const playlist = await app.models.Playlist.findOneAsync({ _id });
     const tracks = await app.models.Track.findAsync({ _id: { $in: playlist.tracks } });
     store.dispatch({
-      type: types.APP_PLAYLISTS_LOAD_ONE,
+      type: types.PLAYLISTS_LOAD_ONE,
       payload: {
         tracks
       }
@@ -30,7 +30,7 @@ export const refresh = async () => {
   try {
     const playlists = await app.models.Playlist.find({}).sort({ name: 1 }).execAsync();
     store.dispatch({
-      type: types.APP_PLAYLISTS_REFRESH,
+      type: types.PLAYLISTS_REFRESH,
       payload: {
         playlists
       }

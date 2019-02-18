@@ -11,7 +11,7 @@ export const add = (type: ToastType, content: string, duration = 3000) => {
   const toast = { _id, type, content };
 
   store.dispatch({
-    type: types.APP_TOAST_ADD,
+    type: types.TOAST_ADD,
     payload: {
       toast
     }
@@ -19,7 +19,7 @@ export const add = (type: ToastType, content: string, duration = 3000) => {
 
   window.setTimeout(() => {
     store.dispatch({
-      type: types.APP_TOAST_REMOVE,
+      type: types.TOAST_REMOVE,
       payload: {
         toastId: _id
       }

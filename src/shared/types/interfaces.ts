@@ -129,5 +129,10 @@ export interface Config {
 }
 
 /**
- * Main Process
+ * Themes
  */
+
+export interface Theme {
+  name: string;
+  variables: Record<string, string>;
+}
