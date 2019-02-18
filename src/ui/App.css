@@ -33,6 +33,7 @@
 }
 
 .view {
+  background-color: var(--view-bg);
   overflow: auto;
   position: relative;
 }

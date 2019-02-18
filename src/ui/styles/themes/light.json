@@ -1,0 +1,41 @@
+{
+  "name": "Light (default)",
+  "variables": {
+    "--text-color": "#333333",
+    "--view-bg": "white",
+    "--border-color": "#D2D2D2",
+
+    "--header-color": "#555555",
+    "--header-bg": "rgb(244, 244, 244)",
+
+    "--footer-bg": "#F4F4F4",
+    "--footer-nav-bg-color-active": "#E6E6E6",
+
+    "--tracks-bg-even": "white",
+    "--tracks-bg-odd": "#F4F4F4",
+
+    "--tracks-header-bg": "white",
+    "--tracks-header-color": "#555555",
+
+    "--success-color": "#5CB85C",
+    "--info-color": "#5BC0DE",
+    "--warning-color": "#F0AD4E",
+    "--danger-color": "#D9534F",
+
+    "--toasts-bg": "white",
+
+    "--progress-bg": "rgb(219, 219, 219)",
+
+    "--sidebar-bg": "#F4F4F4",
+    "--sidebar-item-active-bg": "#E6E6E6",
+
+    "--search-bg": "white",
+    "--slider-bg": "#DADADA",
+
+    "--scrollbar-track": "#DDDDDD",
+    "--scrollbar-thumb": "rgba(0, 0, 0, .25)",
+
+    "--queue-bg": "white",
+    "--queue-header-bg": "rgb(244, 244, 244)"
+  }
+}

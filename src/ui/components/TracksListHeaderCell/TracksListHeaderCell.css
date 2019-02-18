@@ -34,7 +34,7 @@
 
   &:not(:first-child) {
     .name {
-      border-left: 1px solid #D2D2D2;
+      border-left: 1px solid var(--border-color);
     }
   }
 }

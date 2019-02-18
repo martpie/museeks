@@ -35,7 +35,7 @@ export default class SettingsAbout extends React.Component {
           <h4>Contributors</h4>
           <p>
             Made with <Heart /> by Pierre de la Martinière
-            (<ExternalLink href='http://pierrevanmart.com'>martpie</ExternalLink>)
+            (<ExternalLink href='http://pierrevanmart.com'>@martpie</ExternalLink>)
             and a bunch of <ExternalLink href='https://github.com/martpie/museeks/graphs/contributors'>great people</ExternalLink>.
           </p>
         </Setting.Section>

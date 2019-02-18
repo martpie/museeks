@@ -6,7 +6,7 @@ import { ToastType } from '../../shared/types/interfaces';
 /**
  * Add a toast
  */
-export const add = (type: ToastType, content: string, duration = 3000) => {
+export const add = (type: ToastType, content: string, duration = 30000000) => {
   const _id = Date.now();
   const toast = { _id, type, content };
 

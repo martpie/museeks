@@ -6,18 +6,32 @@ import types from '../constants/action-types';
 import * as ToastsActions from './ToastsActions';
 
 import * as app from '../lib/app';
+import { Theme } from 'src/shared/types/interfaces';
 
 const { ipcRenderer } = electron;
+const darkTheme: Theme = require('../styles/themes/dark.json');
+const lightTheme: Theme = require('../styles/themes/light.json');
 
 type UpdateCheckOptions = {
   silentFail?: boolean
 };
 
-const checkTheme = () => {
-  const themeName = app.config.get('theme');
-  const body = document.querySelector('body');
+/**
+ * Apply theme
+ */
+export const applyTheme = (theme: Theme) => {
+  // TODO think about variables validity
+  let root = document.documentElement;
 
-  if (body) body.classList.add(`theme-${themeName}`);
+  Object.entries(theme.variables).forEach(([property, value]) => {
+    root.style.setProperty(property, value);
+  });
+};
+
+export const checkTheme = () => {
+  const themeName = app.config.get('theme');
+
+  applyTheme(themeName === 'dark' ? darkTheme : lightTheme);
 };
 
 /**
@@ -74,23 +88,20 @@ export const check = async () => {
  * Toggle dark/light theme
  */
 export const toggleDarkTheme = (value: boolean) => {
-  const oldTheme = value ? 'light' : 'dark';
   const newTheme = value ? 'dark' : 'light';
 
-  const body = document.querySelector('body');
-
-  if (body) {
-    // At some point use a nicer library for these
-    body.classList.remove(`theme-${oldTheme}`);
-    body.classList.add(`theme-${newTheme}`);
-
-    app.config.set('theme', newTheme);
-    app.config.save();
-
-    store.dispatch({
-      type: types.REFRESH_CONFIG
-    });
+  if (newTheme === 'dark') {
+    applyTheme(darkTheme);
+  } else {
+    applyTheme(lightTheme);
   }
+
+  app.config.set('theme', newTheme);
+  app.config.save();
+
+  store.dispatch({
+    type: types.REFRESH_CONFIG
+  });
 };
 
 /**

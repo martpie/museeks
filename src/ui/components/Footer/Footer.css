@@ -1,6 +1,7 @@
 .footer {
-  background-color: var(--footer-bg-color);
-  border-top: solid 1px var(--footer-border-color);
+  background-color: var(--footer-bg);
+  border-top: solid 1px var(--border-color);
+
   flex: 0 0 auto;
   padding: 0px 15px;
   display: flex;
@@ -19,7 +20,7 @@
 }
 
 .footer__navigation__link {
-  border: solid 1px var(--footer-border-color);
+  border: solid 1px var(--border-color);
   border-width: 0 1px;
   color: inherit;
   padding: 7px 12px;
@@ -30,7 +31,7 @@
   }
 
   &:active {
-    background-color: var(--footer-navigation-color-active);
+    background-color: var(--footer-nav-bg-color-active);
     z-index: 1;
   }
 
@@ -43,7 +44,7 @@
   }
 
   &.footer__navigation__link--is-active {
-    background-color: var(--footer-navigation-color-active);
+    background-color: var(--footer-nav-bg-color-active);
     color: var(--main-color);
   }
 }
@@ -54,7 +55,6 @@
   font-size: 12px;
   padding-top: 7px;
   padding-bottom: 7px;
-  color: var(--footer-status-color);
 
   .progress {
     display: inline-block;

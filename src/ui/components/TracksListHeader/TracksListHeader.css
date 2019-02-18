@@ -1,9 +1,10 @@
 .tracks-list-header {
-  border-bottom: 1px solid rgb(210, 210, 210);
-  color: #555;
+  border-bottom: 1px solid var(--border-color);
+  color: var(--tracks-header-color);
+  background-color: var(--tracks-header-bg);
+
   display: flex;
   width: 100%;
-  background-color: white;
 }
 
 .cell-track-playing {

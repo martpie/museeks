@@ -89,6 +89,7 @@ export default class VolumeControl extends React.Component<Props, State> {
 
     return (
       <div
+        className={styles.volumeControlContainer}
         onMouseEnter={this.showVolume}
         onMouseLeave={this.hideVolume}
       >
