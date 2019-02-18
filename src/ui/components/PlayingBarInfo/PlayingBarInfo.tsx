@@ -1,5 +1,4 @@
 import * as React from 'react';
-import cx from 'classnames';
 
 import ButtonShuffle from '../PlayerOptionsButtons/ButtonShuffle';
 import ButtonRepeat from '../PlayerOptionsButtons/ButtonRepeat';
@@ -138,10 +137,6 @@ class PlayingBarInfo extends React.Component<Props, State> {
     const { trackPlaying } = this.props;
     const elapsed = this.state.elapsed / trackPlaying.duration;
 
-    const nowPlayingTooltipClasses = cx(styles.progressTooltip, {
-      hidden: this.state.duration === null
-    });
-
     return (
       <div className={styles.playingBar__info}>
         <div className={styles.playingBar__info__metas}>
@@ -168,7 +163,11 @@ class PlayingBarInfo extends React.Component<Props, State> {
           </span>
         </div>
         <div className={styles.playingBar__info__progress} ref={this.playingBar}>
-          <div className={nowPlayingTooltipClasses} style={{ left: `${this.state.x}%` }}>
+          <div
+            className={styles.progressTooltip}
+            hidden={this.state.duration === null}
+            style={{ left: `${this.state.x}%` }}
+          >
             {utils.parseDuration(this.state.duration)}
           </div>
           <div

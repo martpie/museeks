@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { ButtonGroup, Button } from 'react-bootstrap';
 
 import QueueListItem from '../QueueListItem/QueueListItem';
 
@@ -104,16 +103,12 @@ export default class QueueList extends React.Component<Props, State> {
           <div className={styles.queue__header__infos}>
             { getStatus(incomingQueue) }
           </div>
-          <ButtonGroup>
-            <Button
-              bsSize='xsmall'
-              bsStyle='default'
-              className={styles.queue__header__empty}
-              onClick={QueueActions.clear}
-            >
-              clear queue
-            </Button>
-          </ButtonGroup>
+          <button
+            className={styles.queue__header__empty}
+            onClick={QueueActions.clear}
+          >
+            clear queue
+          </button>
         </div>
         <div className={styles.queue__content}>
           { shownQueue.map((track, index) => (

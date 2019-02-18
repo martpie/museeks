@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Button } from 'react-bootstrap';
 import cx from 'classnames';
 
 import * as QueueActions from '../../actions/QueueActions';
@@ -75,14 +74,12 @@ export default class QueueListItem extends React.PureComponent<Props> {
             <span>{ track.artist }</span> - <span>{ track.album }</span>
           </div>
         </div>
-        <Button
-          bsSize='xsmall'
-          bsStyle='link'
+        <button
           className={styles.queue__item__remove}
           onClick={this.remove}
         >
           &times;
-        </Button>
+        </button>
       </div>
     );
   }

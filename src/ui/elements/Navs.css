@@ -11,6 +11,7 @@
   padding: 15px;
   color: var(--text-color);
   font-weight: bold;
+  text-decoration: none;
 
   &:hover,
   &:active,

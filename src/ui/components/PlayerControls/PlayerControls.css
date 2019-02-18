@@ -9,6 +9,7 @@
     background: transparent;
     font-size: 16px;
     padding: 0 10px;
+    color: inherit;
 
     &.play {
       font-size: 20px;

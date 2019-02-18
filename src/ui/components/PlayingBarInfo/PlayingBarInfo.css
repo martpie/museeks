@@ -44,7 +44,7 @@
   border: 1px solid var(--border-color);
   font-size: 10px;
   padding: 2px 5px;
-  bottom: 9px;
+  bottom: 10px;
   z-index: 1;
   transform: translateX(-11px);
 
@@ -61,7 +61,7 @@
 
   /* Stroke */
   &::before {
-    top: 18px;
+    top: 16px;
     left: 5px;
     border-top-color: var(--border-color);
     border-width: 6px;
@@ -69,7 +69,7 @@
 
   /* Fill */
   &::after {
-    top: 18px;
+    top: 16px;
     left: 6px;
     border-top-color: var(--view-bg);
     border-width: 5px;

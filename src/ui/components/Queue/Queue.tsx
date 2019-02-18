@@ -11,7 +11,7 @@ interface Props {
   queueCursor: number | null;
 }
 
-export default class Queue extends React.PureComponent<Props> {
+class Queue extends React.PureComponent<Props> {
   render () {
     const { queue, queueCursor } = this.props;
     let content: React.ReactNode;
@@ -35,3 +35,5 @@ export default class Queue extends React.PureComponent<Props> {
     return null;
   }
 }
+
+export default Queue;

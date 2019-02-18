@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { Route, Switch, withRouter, RouteComponentProps } from 'react-router';
 import { NavLink } from 'react-router-dom';
-import { ProgressBar } from 'react-bootstrap';
 import * as Icon from 'react-fontawesome';
 import { connect } from 'react-redux';
 
@@ -10,6 +9,7 @@ import { RootState } from '../../reducers';
 import { LibraryState } from '../../reducers/library';
 
 import * as styles from './Footer.css';
+import ProgressBar from '../ProgressBar/ProgressBar';
 
 interface InjectedProps {
   library: LibraryState;
@@ -27,16 +27,13 @@ class Footer extends React.Component<Props> {
     const { library } = this.props;
     const { processed, total } = library.refresh;
 
-    // If the library is being scanned, show the scan progress
-    // const progressBarClasses = classnames('library-refresh-progress', {
-    //   'hidden': !this.props.library.refreshing,
-    // });
-
     if (library.refreshing) {
       const progress = total > 0 ? Math.round((processed / total) * 100) : 100;
       return (
         <div className={styles.footer__libraryRefresh}>
-          <ProgressBar className={styles.footer__libraryRefresh__progress} now={progress} active={total === 0} />
+          <div className={styles.footer__libraryRefresh__progress}>
+            <ProgressBar progress={progress} animated={total === 0} />
+          </div>
           {total > 0 && (
             <div className={styles.footer__libraryRefresh__count}>
               {processed} / {total}
@@ -69,37 +66,37 @@ class Footer extends React.Component<Props> {
   render () {
     return (
       <footer className={styles.footer}>
-          <div className={styles.footer__navigation}>
-            <div className={styles.footer__navigation__linkgroup}>
-              <NavLink
-                to='/library'
-                activeClassName={styles.footer__navigation__linkIsActive}
-                className={styles.footer__navigation__link}
-                title='Library'
-              >
-                <Icon name='align-justify' fixedWidth />
-              </NavLink>
-              <NavLink
-                to='/playlists'
-                activeClassName={styles.footer__navigation__linkIsActive}
-                className={styles.footer__navigation__link}
-                title='Playlists'
-              >
-                <Icon name='star' fixedWidth />
-              </NavLink>
-              <NavLink
-                to='/settings'
-                activeClassName={styles.footer__navigation__linkIsActive}
-                className={styles.footer__navigation__link}
-                title='Settings'
-              >
-                <Icon name='gear' fixedWidth />
-              </NavLink>
-            </div>
+        <div className={styles.footer__navigation}>
+          <div className={styles.footer__navigation__linkgroup}>
+            <NavLink
+              to='/library'
+              activeClassName={styles.footer__navigation__linkIsActive}
+              className={styles.footer__navigation__link}
+              title='Library'
+            >
+              <Icon name='align-justify' fixedWidth />
+            </NavLink>
+            <NavLink
+              to='/playlists'
+              activeClassName={styles.footer__navigation__linkIsActive}
+              className={styles.footer__navigation__link}
+              title='Playlists'
+            >
+              <Icon name='star' fixedWidth />
+            </NavLink>
+            <NavLink
+              to='/settings'
+              activeClassName={styles.footer__navigation__linkIsActive}
+              className={styles.footer__navigation__link}
+              title='Settings'
+            >
+              <Icon name='gear' fixedWidth />
+            </NavLink>
           </div>
-          <div className={styles.footer__status}>
-            {this.getStatus()}
-          </div>
+        </div>
+        <div className={styles.footer__status}>
+          {this.getStatus()}
+        </div>
       </footer>
     );
   }

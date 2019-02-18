@@ -7,10 +7,11 @@
 }
 
 .button {
+  -webkit-app-region: no-drag;
   border: 0;
+  color: inherit;
   background: transparent;
   font-size: 18px;
-  -webkit-app-region: no-drag;
 
   &.active {
     .icon > svg {

@@ -5,12 +5,6 @@ import * as SettingsActions from '../../actions/SettingsActions';
 import CheckboxSetting from '../../components/SettingCheckbox/SettingCheckbox';
 import { Config } from '../../../shared/types/interfaces';
 
-/*
-|--------------------------------------------------------------------------
-| Child - UI Settings
-|--------------------------------------------------------------------------
-*/
-
 interface Props {
   config: Config;
 }

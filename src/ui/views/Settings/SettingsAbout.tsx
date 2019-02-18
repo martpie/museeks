@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Button } from 'react-bootstrap';
 
 import ExternalLink from '../../elements/ExternalLink';
 import Heart from '../../elements/Heart';
@@ -7,12 +6,6 @@ import * as Setting from '../../components/Setting/Setting';
 
 import * as app from '../../lib/app';
 import * as SettingsActions from '../../actions/SettingsActions';
-
-/*
-|--------------------------------------------------------------------------
-| Child - About
-|--------------------------------------------------------------------------
-*/
 
 export default class SettingsAbout extends React.Component {
   render () {
@@ -26,10 +19,9 @@ export default class SettingsAbout extends React.Component {
             { ' - ' }
             <ExternalLink href={`https://github.com/martpie/Museeks/releases/tag/${app.version}`}>release notes</ExternalLink>
           </p>
-          <Button
-            bsSize='small' className='update-checker'
+          <button
             onClick={async () => { await SettingsActions.checkForUpdate(); }}
-          >Check for update</Button>
+          >Check for update</button>
         </Setting.Section>
         <Setting.Section>
           <h4>Contributors</h4>

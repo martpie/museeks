@@ -14,8 +14,4 @@
   padding: 10px 15px 10px 15px;
   width: 400px;
   max-width: calc(100% - 170px);
-
-  :global .form-group {
-    margin-top: 10px;
-  }
 }

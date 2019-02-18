@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { Dropdown } from 'react-bootstrap';
 import * as Icon from 'react-fontawesome';
+import cx from 'classnames';
+import ClickOutHandler from 'react-onclickout';
 
 import Queue from '../Queue/Queue';
 import PlayingBarInfos from '../PlayingBarInfo/PlayingBarInfo';
@@ -16,11 +17,42 @@ interface Props {
   repeat: Repeat;
 }
 
-export default class PlayingBar extends React.Component<Props> {
+interface State {
+  queueOpen: boolean;
+}
+
+export default class PlayingBar extends React.Component<Props, State> {
+  state = {
+    queueOpen: false
+  };
+
+  constructor (props: Props) {
+    super(props);
+
+    this.toggleQueue = this.toggleQueue.bind(this);
+    this.closeQueue = this.closeQueue.bind(this);
+  }
+
+  toggleQueue () {
+    this.setState({
+      queueOpen: !this.state.queueOpen
+    });
+  }
+
+  closeQueue () {
+    if (this.state.queueOpen) {
+      this.setState({
+        queueOpen: false
+      });
+    }
+  }
+
   render () {
-    const {
-      queue, queueCursor, repeat, shuffle
-    } = this.props;
+    const { queue, queueCursor, repeat, shuffle } = this.props;
+
+    const queueContainerClasses = cx(styles.queueContainer, {
+      [styles.isOpen]: this.state.queueOpen
+    });
 
     if (queueCursor === null) return null;
 
@@ -37,17 +69,20 @@ export default class PlayingBar extends React.Component<Props> {
           repeat={repeat}
         />
         <div className={styles.playingBar__queue}>
-          <Dropdown id='queue-dropdown' className={styles.queueDropdown}>
-            <Dropdown.Toggle noCaret className={styles.queueToggle}>
+          <ClickOutHandler onClickOut={this.closeQueue}>
+            <button
+              onClick={this.toggleQueue}
+              className={styles.queueToggle}
+            >
               <Icon name='list' />
-            </Dropdown.Toggle>
-            <Dropdown.Menu>
+            </button>
+            <div className={queueContainerClasses}>
               <Queue
                 queue={this.props.queue}
                 queueCursor={this.props.queueCursor}
               />
-            </Dropdown.Menu>
-          </Dropdown>
+            </div>
+          </ClickOutHandler>
         </div>
       </div>
     );

@@ -8,6 +8,7 @@
   cursor: default;
   display: flex;
   align-items: center;
+  color: inherit;
 
   &.sort:focus {
     background-color: rgba(0, 0, 0, 0.025);

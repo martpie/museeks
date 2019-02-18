@@ -1,6 +1,5 @@
 import * as os from 'os';
 import * as React from 'react';
-import { Row } from 'react-bootstrap';
 import KeyBinding from 'react-keybinding-component';
 import { withRouter, RouteComponentProps } from 'react-router';
 
@@ -44,9 +43,7 @@ class Museeks extends React.Component<Props> {
         <KeyBinding onKey={Museeks.onKey} preventInputConflict />
         <Header />
         <main className={`${styles.mainContent} container-fluid`}>
-          <Row className={styles.content}>
-            {this.props.children}
-          </Row>
+          {this.props.children}
         </main>
         <Footer />
         <Toasts />
