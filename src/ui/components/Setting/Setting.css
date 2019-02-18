@@ -25,7 +25,8 @@
   display: block;
   border: solid 1px var(--border-color);
   padding: 8px 12px;
-  // background-color: var(--header-bg);
-  // color: var(--text-color);
   width: 100%;
+
+  /* background-color: var(--header-bg);
+  color: var(--text-color); */
 }
