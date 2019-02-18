@@ -88,11 +88,13 @@
   margin-top: 3px;
   cursor: pointer;
 
-  :global .progress-bar {
+  .progress-bar {
     background-color: var(--main-color);
+    pointer-events: none;
     transition: none;
     transform-origin: left;
     will-change: transform;
     width: 100%;
+    height: 100%;
   }
 }

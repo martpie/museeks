@@ -180,7 +180,7 @@ class PlayingBarInfo extends React.Component<Props, State> {
             onMouseLeave={this.hideTooltip}
           >
             <div
-              className='progress-bar'
+              className={styles.progressBar}
               style={{ transform: `scale3d(${elapsed}, 1, 1)` }}
             />
           </div>
