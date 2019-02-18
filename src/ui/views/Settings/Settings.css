@@ -1,10 +1,13 @@
 .view-settings {
   display: flex;
+  justify-content: center;
   padding-top: 50px;
 }
 
 .settings__nav {
   padding: 0 30px;
+  width: 150px;
+  margin-left: -150px;
 }
 
 .settings__content {
