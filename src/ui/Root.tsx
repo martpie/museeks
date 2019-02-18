@@ -1,7 +1,7 @@
 import * as React from 'react';
 
-import * as ViewMessage from './elements/ViewMessage';
-import ExternalLink from './elements/ExternalLink';
+import * as ViewMessage from './elements/ViewMessage/ViewMessage';
+import ExternalLink from './elements/ExternalLink/ExternalLink';
 
 interface State {
   hasError: boolean;

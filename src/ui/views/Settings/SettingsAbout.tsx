@@ -1,7 +1,7 @@
 import * as React from 'react';
 
-import ExternalLink from '../../elements/ExternalLink';
-import Heart from '../../elements/Heart';
+import ExternalLink from '../../elements/ExternalLink/ExternalLink';
+import Heart from '../../elements/Heart/Heart';
 import * as Setting from '../../components/Setting/Setting';
 
 import * as app from '../../lib/app';
