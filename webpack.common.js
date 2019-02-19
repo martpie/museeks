@@ -5,6 +5,7 @@ const path = require('path');
 const merge = require('webpack-merge');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const WebpackBar = require('webpackbar');
 
 /**
  * Renderer process bundle
@@ -27,6 +28,10 @@ const uiConfig = {
     new HtmlWebpackPlugin({
       title: 'Museeks',
       template: 'src/app.html',
+    }),
+    new WebpackBar({
+      name: 'UI  ',
+      basic: true
     })
   ]
 }
@@ -47,7 +52,14 @@ const mainConfig = {
   node: {
     __dirname: false,
     __filename: false,
-  }
+  },
+  plugins: [
+    new WebpackBar({
+      name: 'Main',
+      color: 'yellow',
+      basic: true
+    })
+  ]
 }
 
 /**
