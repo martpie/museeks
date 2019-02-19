@@ -11,3 +11,10 @@ export const isCtrlKey = (e: React.KeyboardEvent | React.MouseEvent | KeyboardEv
   return (isMacOS && e.metaKey)
     || (!isMacOS && e.ctrlKey);
 };
+
+export const isAltKey = (e: React.KeyboardEvent | React.MouseEvent | KeyboardEvent): boolean => {
+  const isMacOS = os.platform() === 'darwin';
+
+  return (isMacOS && e.ctrlKey)
+    || (!isMacOS && e.metaKey);
+};
