@@ -6,28 +6,40 @@ import { powerSaveBlocker, ipcMain } from 'electron';
 
 import ModuleWindow from './module-window';
 
-type PowerSaveBlockerMode = 'prevent-app-suspension' | 'prevent-display-sleep';
-
 class SleepBlocker extends ModuleWindow {
-  protected sleepBlockerId: number | null;
+  protected sleepBlockerId: number;
+  protected enabled: boolean;
 
   constructor (window: Electron.BrowserWindow) {
     super(window);
 
-    this.sleepBlockerId = null;
-    this.platforms = ['win32'];
+    this.enabled = false;
+    this.sleepBlockerId = 0;
+    this.platforms = ['win32', 'darwin', 'linux'];
+  }
+
+  onStartPlayback = (_event: Event) => {
+    if (this.enabled && !powerSaveBlocker.isStarted(this.sleepBlockerId)) {
+      // or 'prevent-app-suspension'
+      this.sleepBlockerId = powerSaveBlocker.start('prevent-display-sleep');
+    }
+  }
+
+  onStopPlayback = (_event: Event) => {
+    if (powerSaveBlocker.isStarted(this.sleepBlockerId)) {
+      powerSaveBlocker.stop(this.sleepBlockerId);
+    }
+  }
+
+  toggleSleepBlocker = (_event: Event, value: boolean) => {
+    this.enabled = value;
   }
 
   async load () {
-    ipcMain.on('settings:toggleSleepBlocker', (_e: Event, toggle: boolean, mode: PowerSaveBlockerMode) => {
-      if (toggle) {
-        this.sleepBlockerId = powerSaveBlocker.start(mode);
-      } else {
-        if (this.sleepBlockerId) {
-          powerSaveBlocker.stop(this.sleepBlockerId);
-        }
-      }
-    });
+    ipcMain.on('settings:toggleSleepBlocker', this.toggleSleepBlocker);
+    ipcMain.on('playback:play', this.onStartPlayback);
+    ipcMain.on('playback:pause', this.onStopPlayback);
+    ipcMain.on('playback:stop', this.onStopPlayback);
   }
 }
 
