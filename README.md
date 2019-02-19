@@ -3,7 +3,6 @@
 [![Build Status](https://img.shields.io/circleci/project/github/martpie/museeks.svg)](https://circleci.com/gh/martpie/museeks)
 [![Dependencies](https://david-dm.org/martpie/museeks.svg)](https://github.com/martpie/museeks)
 ![Github All Releases](https://img.shields.io/github/downloads/martpie/museeks/total.svg)
-[![Gitter](https://badges.gitter.im/martpie/museeks.svg)](https://gitter.im/martpie/museeks?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 A simple, clean and cross-platform music player. ([museeks.io](http://museeks.io))
 
