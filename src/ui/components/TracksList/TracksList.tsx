@@ -13,7 +13,7 @@ import * as PlayerActions from '../../actions/PlayerActions';
 import * as QueueActions from '../../actions/QueueActions';
 
 import * as utils from '../../utils/utils';
-import { isCtrlKey } from '../../utils/utils-platform';
+import { isCtrlKey, isAltKey } from '../../utils/utils-platform';
 import { PlaylistModel, TrackModel, PlayerStatus } from '../../../shared/types/interfaces';
 
 import * as styles from './TracksList.css';
@@ -182,18 +182,22 @@ export default class TracksList extends React.Component<Props, State> {
     return !this.state.selected.includes(id);
   }
 
-  selectTrack (e: React.MouseEvent, id: string, index: number) {
-    if (TracksList.isLeftClick(e) || (TracksList.isRightClick(e) && this.isSelectableTrack(id))) {
-      if (isCtrlKey(e)) {
+  selectTrack (event: React.MouseEvent, id: string, index: number) {
+    if (TracksList.isLeftClick(event)
+      || (TracksList.isRightClick(event) && this.isSelectableTrack(id))
+    ) {
+      if (isCtrlKey(event)) {
         this.toggleSelectionById(id);
-      } else if (e.shiftKey) {
+      } else if (event.shiftKey) {
         if (this.state.selected.length === 0) {
           const selected = [id];
           this.setState({ selected });
         } else this.multiSelect(index);
       } else {
-        const selected = [id];
-        this.setState({ selected });
+        if (!isAltKey(event)) {
+          const selected = [id];
+          this.setState({ selected });
+        }
       }
     }
   }
