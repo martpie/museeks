@@ -1,14 +1,15 @@
 import * as path from 'path';
 import * as electron from 'electron';
 
-import IpcModule from './modules/ipc'; // Manages IPC events
-import MenuModule from './modules/menu'; // Manage menu
-import TrayModule from './modules/tray'; // Manages Tray
-import ConfigModule from './modules/config'; // Handles config
-import PowerModule from './modules/power-monitor'; // Handle power events
-import ThumbarModule from './modules/thumbar'; // Handle Windows Thumbar
+import IpcModule from './modules/ipc';
+import MenuModule from './modules/menu';
+import TrayModule from './modules/tray';
+import ConfigModule from './modules/config';
+import PowerModule from './modules/power-monitor';
+import ThumbarModule from './modules/thumbar';
 import DockMenuModule from './modules/dock-menu';
 import GlobalShortcutsModule from './modules/global-shortcuts';
+import SleepBlockerModule from './modules/sleep-blocker';
 
 import * as ModulesManager from './lib/modules-manager';
 import { checkBounds } from './utils';
@@ -113,6 +114,7 @@ app.on('ready', async () => {
     new TrayModule(mainWindow),
     new ThumbarModule(mainWindow),
     new DockMenuModule(mainWindow),
-    new GlobalShortcutsModule(mainWindow)
+    new GlobalShortcutsModule(mainWindow),
+    new SleepBlockerModule(mainWindow)
   );
 });

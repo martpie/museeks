@@ -39,7 +39,7 @@ export const checkTheme = () => {
  */
 export const checkSleepBlocker = () => {
   if (app.config.get('sleepBlocker')) {
-    ipcRenderer.send('settings:toggleSleepBlocker', true, 'prevent-app-suspension');
+    ipcRenderer.send('settings:toggleSleepBlocker', true);
   }
 };
 
@@ -111,7 +111,7 @@ export const toggleSleepBlocker = (value: boolean) => {
   app.config.set('sleepBlocker', value);
   app.config.save();
 
-  ipcRenderer.send('settings:toggleSleepBlocker', value, 'prevent-app-suspension');
+  ipcRenderer.send('settings:toggleSleepBlocker', value);
 
   store.dispatch({
     type: types.REFRESH_CONFIG
