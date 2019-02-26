@@ -19,10 +19,10 @@ interface Props {
 
   draggable?: boolean;
   reordered?: boolean;
-  onDragStart?: (trackId: string) => void;
+  onDragStart?: () => void;
   onDragOver?: (trackId: string, position: 'above' | 'below') => void ;
   onDragEnd?: () => void ;
-  onDrop?: (trackId: string, targetTrackId: string, position: 'above' | 'below') => void;
+  onDrop?: (targetTrackId: string, position: 'above' | 'below') => void;
 }
 
 interface State {
@@ -60,7 +60,7 @@ export default class TrackRow extends React.PureComponent<Props, State> {
       event.dataTransfer.dropEffect = 'move';
       event.dataTransfer.effectAllowed = 'move';
 
-      onDragStart(this.props.track._id);
+      onDragStart();
     }
   }
 
@@ -83,14 +83,12 @@ export default class TrackRow extends React.PureComponent<Props, State> {
     });
   }
 
-  onDrop = (event: React.DragEvent<HTMLDivElement>) => {
+  onDrop = (_event: React.DragEvent<HTMLDivElement>) => {
     const { reorderPosition } = this.state;
     const { onDrop } = this.props;
 
     if (reorderPosition && onDrop) {
-      event.persist();
-      const trackId = event.dataTransfer.getData('text/plain');
-      onDrop(trackId, this.props.track._id, reorderPosition);
+      onDrop(this.props.track._id, reorderPosition);
     }
 
     this.setState({

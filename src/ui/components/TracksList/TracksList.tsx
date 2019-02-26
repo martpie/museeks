@@ -45,14 +45,13 @@ interface Props {
 interface State {
   selected: string[];
   tilesScrolled: number;
-  reordered: string | null; // TODO make it an array of strings (one day)
+  reordered: string[] | null; // TODO make it an array of strings (one day)
 }
 
 export default class TracksList extends React.Component<Props, State> {
   static defaultProps = {
     currentPlaylist: '',
     reorderable: false
-    // onReorder: () => {}
   };
 
   static isLeftClick = (e: React.MouseEvent) => e.button === 0;
@@ -133,9 +132,9 @@ export default class TracksList extends React.Component<Props, State> {
     }
   }
 
-  onReorderStart = (trackId: string) => {
+  onReorderStart = () => {
     this.setState({
-      reordered: trackId
+      reordered: this.state.selected
     });
   }
 
@@ -153,14 +152,14 @@ export default class TracksList extends React.Component<Props, State> {
   // }
 
   onReorder = async (
-    trackId: string,
     targetTrackId: string,
     position: 'above' | 'below'
   ) => {
     const { currentPlaylist } = this.props;
+    const { reordered } = this.state;
 
-    if (currentPlaylist) {
-      await PlaylistsActions.reorderTracks(currentPlaylist, trackId, targetTrackId, position);
+    if (currentPlaylist && reordered) {
+      await PlaylistsActions.reorderTracks(currentPlaylist, reordered, targetTrackId, position);
     }
   }
 
@@ -189,7 +188,7 @@ export default class TracksList extends React.Component<Props, State> {
             onContextMenu={this.showContextMenu}
             onDoubleClick={this.startPlayback}
             draggable={reorderable}
-            reordered={reordered === track._id}
+            reordered={reordered && reordered.includes(track._id) || false}
             onDragStart={this.onReorderStart}
             onDragEnd={this.onReorderEnd}
             onDrop={this.onReorder}
@@ -218,20 +217,24 @@ export default class TracksList extends React.Component<Props, State> {
     return !this.state.selected.includes(id);
   }
 
-  selectTrack = (event: React.MouseEvent, id: string, index: number) => {
+  selectTrack = (event: React.MouseEvent, trackId: string, index: number) => {
+    // To allow selection drag-and-drop, we need to prevent track selection
+    // when selection a track that is already selected
+    if (this.state.selected.includes(trackId)) return;
+
     if (TracksList.isLeftClick(event)
-      || (TracksList.isRightClick(event) && this.isSelectableTrack(id))
+      || (TracksList.isRightClick(event) && this.isSelectableTrack(trackId))
     ) {
       if (isCtrlKey(event)) {
-        this.toggleSelectionById(id);
+        this.toggleSelectionById(trackId);
       } else if (event.shiftKey) {
         if (this.state.selected.length === 0) {
-          const selected = [id];
+          const selected = [trackId];
           this.setState({ selected });
         } else this.multiSelect(index);
       } else {
         if (!isAltKey(event)) {
-          const selected = [id];
+          const selected = [trackId];
           this.setState({ selected });
         }
       }

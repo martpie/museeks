@@ -123,16 +123,16 @@ export const removeTracks = async (playlistId: string, tracksIds: string[]) => {
  */
 export const reorderTracks = async (
   playlistId: string,
-  trackId: string,
+  tracksIds: string[],
   targetTrackId: string,
   position: 'above' | 'below'
 ) => {
-  if (trackId === targetTrackId) return;
+  if (tracksIds.includes(targetTrackId)) return;
 
   try {
     const playlist: Playlist = await app.models.Playlist.findOneAsync({ _id: playlistId });
 
-    const newTracks = playlist.tracks.filter((id) => id !== trackId);
+    const newTracks = playlist.tracks.filter((id) => !tracksIds.includes(id));
     let targetIndex = newTracks.indexOf(targetTrackId);
 
     if (targetIndex === -1) {
@@ -143,8 +143,7 @@ export const reorderTracks = async (
       targetIndex -= 1;
     }
 
-
-    newTracks.splice(targetIndex + 1, 0, trackId);
+    newTracks.splice(targetIndex + 1, 0, ...tracksIds);
 
     await app.models.Playlist.updateAsync({ _id: playlistId }, { $set: { tracks: newTracks } });
     await load(playlistId);
