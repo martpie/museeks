@@ -39,44 +39,44 @@
   overflow: auto;
 }
 
-.playlists-nav__item {
-  a {
-    display: block;
-    color: inherit;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-    cursor: pointer;
-    padding: 8px 12px;
-    text-decoration: none;
-    border-style: solid;
-    border-color: transparent;
-    border-width: 1px 0;
+.item__link {
+  font-size: 1rem;
+  display: block;
+  color: inherit;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  cursor: pointer;
+  padding: 8px 12px;
+  text-decoration: none;
+  border-style: solid;
+  border-color: transparent;
+  border-width: 1px 0;
 
-    &:hover {
-      background-color: var(--sidebar-item-active-bg);
-      color: var(--text-color);
-    }
-
-    &:global(.-is-active) {
-      z-index: 10;
-      border-style: solid;
-      border-color: var(--border-color);
-      border-width: 1px 0;
-      background-color: var(--sidebar-item-active-bg);
-      color: var(--main-color);
-    }
+  &:hover {
+    background-color: var(--sidebar-item-active-bg);
+    color: var(--text-color);
   }
 
-  input[type="text"] {
-    display: block;
-    width: 100%;
-    background-color: white;
-    color: var(--main-color);
-    padding: 8px 12px;
-    outline: none;
+  &:global(.-is-active) {
+    z-index: 10;
     border-style: solid;
     border-color: var(--border-color);
     border-width: 1px 0;
+    background-color: var(--sidebar-item-active-bg);
+    color: var(--main-color);
   }
+}
+
+.item__input {
+  font-size: 1rem;
+  display: block;
+  width: 100%;
+  background-color: var(--sidebar-item-input-bg);
+  color: var(--main-color);
+  padding: 8px 12px;
+  outline: none;
+  border-style: solid;
+  border-color: var(--border-color);
+  border-width: 1px 0;
 }

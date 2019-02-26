@@ -29,6 +29,7 @@
 
     "--sidebar-bg": "#F4F4F4",
     "--sidebar-item-active-bg": "#E6E6E6",
+    "--sidebar-item-input-bg": "white",
 
     "--search-bg": "white",
     "--slider-bg": "#DADADA",
