@@ -39,11 +39,24 @@ export interface Action { // TODO action specific types
  */
 export type LinvoSchema<Schema> = {
   _id: string;
+  find: Function;
+  findOne: Function;
+  insert: Function;
   copy: Function; // TODO better types?
   remove: Function;
   save: Function;
   serialize: Function;
   update: Function;
+  ensureIndex: Function;
+  // bluebird-injected
+  findAsync: Function;
+  findOneAsync: Function;
+  insertAsync: Function;
+  copyAsync: Function;
+  removeAsync: Function;
+  saveAsync: Function;
+  serializeAsync: Function;
+  updateAsync: Function;
 } & {
   [Property in keyof Schema]: Schema[Property];
 };
