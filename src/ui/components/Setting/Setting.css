@@ -24,8 +24,13 @@
 .setting-input {
   display: block;
   border: solid 1px var(--border-color);
+  border-radius: var(--border-radius);
   padding: 8px 12px;
   width: 100%;
+
+  &:focus {
+    outline: none;
+  }
 
   /* background-color: var(--header-bg);
   color: var(--text-color); */

@@ -3,13 +3,6 @@
   position: relative;
   width: 180px;
 
-  :global(.react-simple-input) {
-    padding: 6px 12px;
-    border: 1px solid var(--border-color);
-    color: var(--text-color);
-    border-radius: var(--border-radius);
-  }
-
   :global(.react-simple-input-clear) {
     position: absolute;
     right: 6px;
