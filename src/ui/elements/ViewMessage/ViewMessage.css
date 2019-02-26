@@ -10,7 +10,7 @@
   text-align: center;
 
   a {
-    cursor: pointer;
+    text-decoration: none;
 
     &:hover {
       text-decoration: none;
@@ -18,8 +18,15 @@
   }
 
   button {
+    cursor: pointer;
+    font-size: 1em;
     color: var(--link-color);
     text-decoration: none;
+    font-weight: normal;
+
+    &:hover {
+      color: var(--link-color-hover);
+    }
   }
 }
 
