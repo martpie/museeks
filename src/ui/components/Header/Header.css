@@ -45,7 +45,16 @@
 .header__search__input {
   display: block;
   width: 100%;
+  padding: 6px 12px;
   background-color: var(--search-bg);
+  border: 1px solid var(--border-color);
+  color: var(--text-color);
+  border-radius: var(--border-radius);
+
+  &:focus {
+    outline: none;
+    border: solid 1px var(--main-color);
+  }
 }
 
 .header__playing-bar {
