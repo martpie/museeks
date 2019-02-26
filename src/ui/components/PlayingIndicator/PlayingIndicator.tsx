@@ -25,7 +25,7 @@ class TrackPlayingIndicator extends React.Component<Props, State> {
 
       return (
         <div className={styles.animation}>
-          <div className={`${styles.bar} ${styles.barFirst}`} />
+          <div className={`${styles.bar}`} />
           <div className={`${styles.bar} ${styles.barSecond}`} />
           <div className={`${styles.bar} ${styles.barThird}`} />
         </div>
