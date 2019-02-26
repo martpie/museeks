@@ -13,9 +13,10 @@ interface Props {
   track: TrackModel;
   index: number;
   isPlaying: boolean;
-  onDoubleClick: Function;
-  onMouseDown: Function;
-  onContextMenu: Function;
+  onDoubleClick: (trackId: string) => void;
+  onMouseDown: (event: React.MouseEvent, trackId: string, index: number) => void;
+  onContextMenu: (event: React.MouseEvent, index: number) => void;
+  onClick: (event: React.MouseEvent, trackId: string) => void;
 
   draggable?: boolean;
   reordered?: boolean;
@@ -40,11 +41,15 @@ export default class TrackRow extends React.PureComponent<Props, State> {
     };
   }
 
-  onMouseDown = (e: React.SyntheticEvent) => {
+  onMouseDown = (e: React.MouseEvent) => {
     this.props.onMouseDown(e, this.props.track._id, this.props.index);
   }
 
-  onContextMenu = (e: React.SyntheticEvent) => {
+  onClick = (e: React.MouseEvent) => {
+    this.props.onClick(e, this.props.track._id);
+  }
+
+  onContextMenu = (e: React.MouseEvent) => {
     this.props.onContextMenu(e, this.props.index);
   }
 
@@ -114,6 +119,7 @@ export default class TrackRow extends React.PureComponent<Props, State> {
         className={trackClasses}
         onDoubleClick={this.onDoubleClick}
         onMouseDown={this.onMouseDown}
+        onClick={this.onClick}
         onContextMenu={this.onContextMenu}
         role='option'
         aria-selected={selected}
