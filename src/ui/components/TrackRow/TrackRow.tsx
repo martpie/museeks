@@ -16,33 +16,99 @@ interface Props {
   onDoubleClick: Function;
   onMouseDown: Function;
   onContextMenu: Function;
+
+  draggable?: boolean;
+  reordered?: boolean;
+  onDragStart?: (trackId: string) => void;
+  onDragOver?: (trackId: string, position: 'above' | 'below') => void ;
+  onDragEnd?: () => void ;
+  onDrop?: (trackId: string, targetTrackId: string, position: 'above' | 'below') => void;
 }
 
-export default class TrackRow extends React.PureComponent<Props> {
+interface State {
+  reorderOver: boolean;
+  reorderPosition: 'above' | 'below' | null;
+}
+
+export default class TrackRow extends React.PureComponent<Props, State> {
   constructor (props: Props) {
     super(props);
 
-    this.onDoubleClick = this.onDoubleClick.bind(this);
-    this.onMouseDown = this.onMouseDown.bind(this);
-    this.onContextMenu = this.onContextMenu.bind(this);
+    this.state = {
+      reorderOver: false,
+      reorderPosition: null
+    };
   }
 
-  onMouseDown (e: React.SyntheticEvent) {
+  onMouseDown = (e: React.SyntheticEvent) => {
     this.props.onMouseDown(e, this.props.track._id, this.props.index);
   }
 
-  onContextMenu (e: React.SyntheticEvent) {
+  onContextMenu = (e: React.SyntheticEvent) => {
     this.props.onContextMenu(e, this.props.index);
   }
 
-  onDoubleClick () {
+  onDoubleClick = () => {
     this.props.onDoubleClick(this.props.track._id);
   }
 
+  onDragStart = (event: React.DragEvent<HTMLDivElement>) => {
+    const { onDragStart } = this.props;
+
+    if (onDragStart) {
+      event.dataTransfer.setData('text/plain', this.props.track._id);
+      event.dataTransfer.dropEffect = 'move';
+      event.dataTransfer.effectAllowed = 'move';
+
+      onDragStart(this.props.track._id);
+    }
+  }
+
+  onDragOver = (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+
+    const relativePosition = event.nativeEvent.offsetY / event.currentTarget.offsetHeight;
+    const dragPosition = relativePosition < 0.5 ? 'above' : 'below';
+
+    this.setState({
+      reorderOver: true,
+      reorderPosition: dragPosition
+    });
+  }
+
+  onDragLeave = (_event: React.DragEvent<HTMLDivElement>) => {
+    this.setState({
+      reorderOver: false,
+      reorderPosition: null
+    });
+  }
+
+  onDrop = (event: React.DragEvent<HTMLDivElement>) => {
+    const { reorderPosition } = this.state;
+    const { onDrop } = this.props;
+
+    if (reorderPosition && onDrop) {
+      event.persist();
+      const trackId = event.dataTransfer.getData('text/plain');
+      onDrop(trackId, this.props.track._id, reorderPosition);
+    }
+
+    this.setState({
+      reorderOver: false,
+      reorderPosition: null
+    });
+  }
+
   render () {
-    const { track, selected } = this.props;
+    const { track, selected, reordered, draggable } = this.props;
+    const { reorderOver, reorderPosition } = this.state;
+
     const trackClasses = cx(styles.track, {
-      [styles.selected]: selected
+      [styles.selected]: selected,
+      [styles.reordered]: reordered,
+      [styles.isReorderedOver]: reorderOver,
+      [styles.isAbove]: reorderPosition === 'above',
+      [styles.isBelow]: reorderPosition === 'below'
     });
 
     return (
@@ -54,8 +120,15 @@ export default class TrackRow extends React.PureComponent<Props> {
         role='option'
         aria-selected={selected}
         tabIndex={-1} // we do not want trackrows to be focusable by the keyboard
+
+        draggable={draggable}
+        onDragStart={(draggable && this.onDragStart) || undefined}
+        onDragOver={(draggable && this.onDragOver) || undefined}
+        onDragLeave={(draggable && this.onDragLeave) || undefined}
+        onDrop={(draggable && this.onDrop) || undefined}
+        onDragEnd={(draggable && this.props.onDragEnd) || undefined}
       >
-        <div className={`${styles.cell} ${cellStyles.cellTrackPlaying} text-center`}>
+        <div className={`${styles.cell} ${cellStyles.cellTrackPlaying}`}>
           {this.props.isPlaying ? <PlayingIndicator /> : null}
         </div>
         <div className={`${styles.cell} ${cellStyles.cellTrack}`}>

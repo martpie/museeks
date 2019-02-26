@@ -79,6 +79,10 @@ class Playlist extends React.Component<Props> {
     return (
       <TracksList
         type='playlist'
+        reorderable={true}
+        onReorder={() => {
+          console.log('REORDER');
+        }}
         playerStatus={playerStatus}
         tracks={tracks}
         trackPlayingId={trackPlayingId}
