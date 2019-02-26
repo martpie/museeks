@@ -39,7 +39,12 @@ interface Props {
   playlists: PlaylistModel[];
   currentPlaylist?: string;
   reorderable?: boolean;
-  onReorder?: (trackId: string, targetTrackId: string, position: 'above' | 'below') => void;
+  onReorder?: (
+    playlistId: string,
+    tracksIds: string[],
+    targetTrackId: string,
+    position: 'above' | 'below'
+  ) => void;
 }
 
 interface State {
@@ -144,22 +149,15 @@ export default class TracksList extends React.Component<Props, State> {
     });
   }
 
-  // onReorderOver = (trackId: string, position: 'above' | 'below') => {
-  //   this.setState({
-  //     reorderOver: trackId,
-  //     reorderPosition: position
-  //   });
-  // }
-
   onReorder = async (
     targetTrackId: string,
     position: 'above' | 'below'
   ) => {
-    const { currentPlaylist } = this.props;
     const { reordered } = this.state;
+    const { onReorder, currentPlaylist } = this.props;
 
-    if (currentPlaylist && reordered) {
-      await PlaylistsActions.reorderTracks(currentPlaylist, reordered, targetTrackId, position);
+    if (onReorder && currentPlaylist && reordered) {
+      onReorder(currentPlaylist, reordered, targetTrackId, position);
     }
   }
 
