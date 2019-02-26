@@ -16,7 +16,7 @@ const AppRouter: React.FC<{}> = () => (
       <Switch>
         <Route path='/library' component={Library} />
         <Route path='/settings' component={Settings} />
-        <Route path='/playlists' component={Playlists} />
+        <Route path='/playlists/:playlistId?' component={Playlists} />
       </Switch>
     </App>
   </Router>
