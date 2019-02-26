@@ -12,7 +12,6 @@ import * as PlaylistsActions from '../../actions/PlaylistsActions';
 import * as PlayerActions from '../../actions/PlayerActions';
 import * as QueueActions from '../../actions/QueueActions';
 
-import * as utils from '../../utils/utils';
 import { isCtrlKey, isAltKey } from '../../utils/utils-platform';
 import { PlaylistModel, TrackModel, PlayerStatus } from '../../../shared/types/interfaces';
 
@@ -216,6 +215,12 @@ export default class TracksList extends React.Component<Props, State> {
     return !this.state.selected.includes(id);
   }
 
+  sortSelected = (a: string, b: string): number => {
+    const allTracksIds = this.props.tracks.map(track => track._id);
+
+    return allTracksIds.indexOf(a) - allTracksIds.indexOf(b);
+  }
+
   selectTrack = (event: React.MouseEvent, trackId: string, index: number) => {
     // To allow selection drag-and-drop, we need to prevent track selection
     // when selection a track that is already selected
@@ -271,7 +276,7 @@ export default class TracksList extends React.Component<Props, State> {
       selected.push(id);
     }
 
-    selected = utils.simpleSort(selected, 'asc');
+    selected = selected.sort(this.sortSelected);
     this.setState({ selected });
   }
 
@@ -310,7 +315,7 @@ export default class TracksList extends React.Component<Props, State> {
       }
     }
 
-    this.setState({ selected: newSelected });
+    this.setState({ selected: newSelected.sort(this.sortSelected) });
   }
 
   showContextMenu = (_e: React.MouseEvent, index: number) => {
