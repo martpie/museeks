@@ -4,6 +4,7 @@ import { NavLink } from 'react-router-dom';
 import * as styles from './PlaylistsNavLink.css';
 
 interface Props {
+  className?: string;
   playlistId: string;
   onContextMenu: (playlistId: string) => void;
 }
@@ -22,7 +23,7 @@ export default class PlaylistsNavLink extends React.Component<Props> {
   render () {
     return (
       <NavLink
-        className={styles.playlistLink}
+        className={`${this.props.className} ${styles.playlistLink}`}
         activeClassName='-is-active'
         to={`/playlists/${this.props.playlistId}`}
         onContextMenu={this.onContextMenu}

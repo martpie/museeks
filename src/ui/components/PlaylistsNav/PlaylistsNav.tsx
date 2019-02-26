@@ -107,16 +107,19 @@ class PlaylistsNav extends React.Component<Props, State> {
       if (elem._id === self.state.renamed) {
         navItemContent = (
           <input
+            className={styles.item__input}
             type='text'
             defaultValue={elem.name}
             onKeyDown={self.keyDown}
             onBlur={self.blur}
             onFocus={self.focus}
+            autoFocus
           />
         );
       } else {
         navItemContent = (
           <PlaylistsNavLink
+            className={styles.item__link}
             playlistId={elem._id}
             onContextMenu={self.showContextMenu}
           >
@@ -126,7 +129,7 @@ class PlaylistsNav extends React.Component<Props, State> {
       }
 
       return (
-        <div className={styles.playlistsNav__item} key={`playlist-${elem._id}`}>
+        <div key={`playlist-${elem._id}`}>
           { navItemContent }
         </div>
       );
