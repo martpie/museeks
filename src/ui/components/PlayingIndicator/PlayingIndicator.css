@@ -29,7 +29,7 @@
   height: 8px;
   width: 2px;
   align-items: baseline;
-  background-color: var(--text-color);
+  background-color: currentColor;
   animation: bar-animate;
   animation-duration: 1s;
   animation-timing-function: ease-in-out;
