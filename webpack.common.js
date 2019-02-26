@@ -138,7 +138,14 @@ const sharedConfig = {
         include: /node_modules/,
       },
     ],
-  }
+  },
+  stats: {
+    children: false,
+    chunks: false,
+    chunkModules: false,
+    modules: false,
+    reasons: false,
+  },
 };
 
 /**

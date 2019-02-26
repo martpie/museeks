@@ -14,10 +14,10 @@
     "url": "https://github.com/martpie/museeks/issues"
   },
   "scripts": {
-    "build": "webpack --config webpack.prod.js --env.production --progress --colors",
+    "build": "webpack --config webpack.prod.js --env.production --colors",
     "lint:ts": "tslint -p ./tsconfig.json -t stylish",
     "lint:css": "stylelint \"src/**/*.css\"",
-    "dev": "webpack --config webpack.dev.js --progress --colors --watch",
+    "dev": "webpack --config webpack.dev.js --colors --watch",
     "museeks": "./node_modules/.bin/electron .",
     "museeks:debug": "./node_modules/.bin/electron . --enable-logging --devtools",
     "package:lmw": "build -lmw --ia32 --x64",
