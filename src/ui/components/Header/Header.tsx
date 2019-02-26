@@ -36,6 +36,7 @@ class Header extends React.Component<Props> {
     if (isCtrlKey(e) && e.code === 'KeyF') {
       if (this.input.current) {
         // @ts-ignore
+        // tslint:disable-next-line
         this.input.current.refs.input.select(); // HACKY
       }
     }
