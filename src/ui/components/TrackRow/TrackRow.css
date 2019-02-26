@@ -8,6 +8,7 @@
 }
 
 .track {
+  position: relative;
   display: flex;
   outline: none;
 
@@ -33,5 +34,29 @@
         }
       }
     } */
+  }
+
+  &.reordered {
+    opacity: 0.5;
+  }
+
+  &.is-reordered-over {
+    &::after {
+      pointer-events: none;
+      position: absolute;
+      z-index: 1;
+      display: block;
+      width: 100%;
+      content: "";
+      border-bottom: solid 2px var(--main-color);
+    }
+
+    &.is-above::after {
+      top: -1px;
+    }
+
+    &.is-below::after {
+      bottom: -1px;
+    }
   }
 }

@@ -4,6 +4,7 @@ import types from '../constants/action-types';
 import * as ToastsActions from './ToastsActions';
 
 import * as app from '../lib/app';
+import { Playlist } from 'src/shared/types/interfaces';
 
 /**
  * Load one playlist from database (Tracks list)
@@ -104,12 +105,48 @@ export const addTracksTo = async (_id: string, tracksIds: string[], isShown?: bo
 /**
  * Remove tracks from a playlist
  */
-export const removeTracks = async (_id: string, tracksIds: string[]) => {
+export const removeTracks = async (playlistId: string, tracksIds: string[]) => {
   try {
-    const playlist = await app.models.Playlist.findOneAsync({ _id });
+    const playlist = await app.models.Playlist.findOneAsync({ _id: playlistId });
     const playlistTracks = playlist.tracks.filter((elem: string) => !tracksIds.includes(elem));
-    await app.models.Playlist.updateAsync({ _id }, { $set: { tracks: playlistTracks } });
-    await load(_id);
+    await app.models.Playlist.updateAsync({ _id: playlistId }, { $set: { tracks: playlistTracks } });
+    await load(playlistId);
+  } catch (err) {
+    console.warn(err);
+  }
+};
+
+/**
+ * Reorder tracks in a playlists
+ * TODO: currently only supports one track at a time, at a point you should be
+ * able to re-order a selection of tracks
+ */
+export const reorderTracks = async (
+  playlistId: string,
+  tracksIds: string[],
+  targetTrackId: string,
+  position: 'above' | 'below'
+) => {
+  if (tracksIds.includes(targetTrackId)) return;
+
+  try {
+    const playlist: Playlist = await app.models.Playlist.findOneAsync({ _id: playlistId });
+
+    const newTracks = playlist.tracks.filter((id) => !tracksIds.includes(id));
+    let targetIndex = newTracks.indexOf(targetTrackId);
+
+    if (targetIndex === -1) {
+      throw new Error(`Could not find targetTrackId in the playlist "${playlist.name}"`);
+    }
+
+    if (position === 'above') {
+      targetIndex -= 1;
+    }
+
+    newTracks.splice(targetIndex + 1, 0, ...tracksIds);
+
+    await app.models.Playlist.updateAsync({ _id: playlistId }, { $set: { tracks: newTracks } });
+    await load(playlistId);
   } catch (err) {
     console.warn(err);
   }

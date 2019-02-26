@@ -4,6 +4,7 @@ import leveljs from 'level-js';
 import * as path from 'path';
 import teeny from 'teeny-conf';
 import * as Promise from 'bluebird';
+import { TrackModel, PlaylistModel } from 'src/shared/types/interfaces';
 
 const { remote } = electron;
 const { app } = remote;
@@ -64,10 +65,10 @@ linvodb.defaults.store = { db: leveljs }; // Comment out to use LevelDB instead 
 // Set dbPath - this should be done explicitly and will be the dir where each model's store is saved
 linvodb.dbPath = pathUserData;
 
-const Track = new linvodb('track');
+const Track: TrackModel = new linvodb('track');
 Track.ensureIndex({ fieldName: 'path', unique: true });
 
-const Playlist = new linvodb('playlist');
+const Playlist: PlaylistModel = new linvodb('playlist');
 
 export const models = {
   Track,

@@ -36,9 +36,9 @@ export default class QueueList extends React.Component<Props, State> {
   }
 
   dragStart (e: React.DragEvent<HTMLDivElement>, index: number) {
+    e.dataTransfer.setData('text/html', this.props.queue[index]._id);
+    e.dataTransfer.dropEffect = 'move';
     e.dataTransfer.effectAllowed = 'move';
-    // @ts-ignore
-    e.dataTransfer.setData('text/html', e.currentTarget); // TODO double check
 
     this.setState({ draggedTrackIndex: index });
   }
