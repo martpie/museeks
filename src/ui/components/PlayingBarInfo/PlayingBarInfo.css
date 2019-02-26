@@ -1,5 +1,6 @@
 .playing-bar__info {
   flex: 1 1 auto;
+  min-width: 0;
 }
 
 .playing-bar__info__metas {
@@ -10,24 +11,26 @@
 }
 
 .metas {
+  flex: 1 1 auto;
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
   vertical-align: middle;
   text-align: center;
-  flex: 1;
 }
 
 .duration {
-  display: inline-block;
-  padding: 0 6px;
+  flex: 0 0 auto;
   font-size: 10px;
+  padding-right: 6px;
   padding-left: 10px;
   text-align: right;
   font-variant-numeric: tabular-nums;
+  white-space: nowrap;
 }
 
 .player-options {
+  flex: 0 0 auto;
   display: flex;
   align-items: center;
   justify-content: flex-start;
