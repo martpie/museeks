@@ -50,7 +50,7 @@ class Playlist extends React.Component<Props> {
         <ViewMessage.Notice>
           <p>Empty playlist</p>
           <ViewMessage.Sub>
-            You can add tracks from the <Link to='/library'>library view</Link>
+            You can add tracks from the <Link to='/library' draggable={false}>library view</Link>
           </ViewMessage.Sub>
         </ViewMessage.Notice>
       );
@@ -70,7 +70,7 @@ class Playlist extends React.Component<Props> {
         <ViewMessage.Notice>
           <p>Empty playlist</p>
           <ViewMessage.Sub>
-            You can add tracks from the <Link to='/library'>library view</Link>
+            You can add tracks from the <Link to='/library' draggable={false}>library view</Link>
           </ViewMessage.Sub>
         </ViewMessage.Notice>
       );

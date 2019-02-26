@@ -59,7 +59,7 @@ class Library extends React.Component<Props> {
           <ViewMessage.Sub>
             <span>nothing found yet, but that{"'"}s fine, you can always</span>
             {' '}
-            <Link to='/settings/library'>add your music here</Link>
+            <Link to='/settings/library' draggable={false}>add your music here</Link>
           </ViewMessage.Sub>
         </ViewMessage.Notice>
       );
