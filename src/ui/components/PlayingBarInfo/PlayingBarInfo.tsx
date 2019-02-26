@@ -158,9 +158,9 @@ class PlayingBarInfo extends React.Component<Props, State> {
             </strong>
           </div>
 
-          <span className={styles.duration}>
+          <div className={styles.duration}>
             {utils.parseDuration(this.state.elapsed)} / {utils.parseDuration(trackPlaying.duration)}
-          </span>
+          </div>
         </div>
         <div className={styles.playingBar__info__progress} ref={this.playingBar}>
           <div
