@@ -27,6 +27,7 @@ export default class PlaylistsNavLink extends React.Component<Props> {
         activeClassName='-is-active'
         to={`/playlists/${this.props.playlistId}`}
         onContextMenu={this.onContextMenu}
+        draggable={false}
       >
         { this.props.children }
       </NavLink>

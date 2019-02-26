@@ -73,6 +73,7 @@ class Footer extends React.Component<Props> {
               activeClassName={styles.footer__navigation__linkIsActive}
               className={styles.footer__navigation__link}
               title='Library'
+              draggable={false}
             >
               <Icon name='align-justify' fixedWidth />
             </NavLink>
@@ -81,6 +82,7 @@ class Footer extends React.Component<Props> {
               activeClassName={styles.footer__navigation__linkIsActive}
               className={styles.footer__navigation__link}
               title='Playlists'
+              draggable={false}
             >
               <Icon name='star' fixedWidth />
             </NavLink>
@@ -89,6 +91,7 @@ class Footer extends React.Component<Props> {
               activeClassName={styles.footer__navigation__linkIsActive}
               className={styles.footer__navigation__link}
               title='Settings'
+              draggable={false}
             >
               <Icon name='gear' fixedWidth />
             </NavLink>

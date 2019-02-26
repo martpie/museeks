@@ -23,6 +23,7 @@ export const Link: React.FC<LinkProps> = (props) => (
     to={props.to}
     className={styles.nav__link}
     activeClassName={styles.nav__linkActive}
+    draggable={false}
   >
     {props.children}
   </NavLink>
