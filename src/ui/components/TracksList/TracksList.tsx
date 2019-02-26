@@ -185,6 +185,7 @@ export default class TracksList extends React.Component<Props, State> {
             key={`track-${track._id}`}
             index={trackRowIndex}
             onMouseDown={this.selectTrack}
+            onClick={this.selectTrackClick}
             onContextMenu={this.showContextMenu}
             onDoubleClick={this.startPlayback}
             draggable={reorderable}
@@ -220,7 +221,13 @@ export default class TracksList extends React.Component<Props, State> {
   selectTrack = (event: React.MouseEvent, trackId: string, index: number) => {
     // To allow selection drag-and-drop, we need to prevent track selection
     // when selection a track that is already selected
-    if (this.state.selected.includes(trackId)) return;
+    if (this.state.selected.includes(trackId)
+      && !event.metaKey
+      && !event.ctrlKey
+      && !event.shiftKey
+    ) {
+      return;
+    }
 
     if (TracksList.isLeftClick(event)
       || (TracksList.isRightClick(event) && this.isSelectableTrack(trackId))
@@ -238,6 +245,20 @@ export default class TracksList extends React.Component<Props, State> {
           this.setState({ selected });
         }
       }
+    }
+  }
+
+  selectTrackClick = (event: React.MouseEvent, trackId: string) => {
+    const { selected } = this.state;
+
+    if (!event.metaKey
+      && !event.ctrlKey
+      && !event.shiftKey
+      && selected.includes(trackId)
+    ) {
+      this.setState({
+        selected: [trackId]
+      });
     }
   }
 
