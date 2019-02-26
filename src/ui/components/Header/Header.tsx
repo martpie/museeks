@@ -22,7 +22,7 @@ interface Props {
 }
 
 class Header extends React.Component<Props> {
-  input: React.RefObject<HTMLInputElement>;
+  input: React.RefObject<React.Component>;
 
   constructor (props: Props) {
     super(props);
@@ -35,7 +35,8 @@ class Header extends React.Component<Props> {
     // ctrl-f shortcut
     if (isCtrlKey(e) && e.code === 'KeyF') {
       if (this.input.current) {
-        this.input.current.select(); // HACKY
+        // @ts-ignore
+        this.input.current.refs.input.select(); // HACKY
       }
     }
   }
