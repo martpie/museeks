@@ -37,6 +37,15 @@ class Playlist extends React.Component<Props> {
     }
   }
 
+  onReorder = async (
+    playlistId: string,
+    tracksIds: string[],
+    targetTrackId: string,
+    position: 'above' | 'below'
+  ) => {
+    await PlaylistsActions.reorderTracks(playlistId, tracksIds, targetTrackId, position);
+  }
+
   render () {
     const {
       tracks, trackPlayingId, playerStatus, playlists, match
@@ -79,6 +88,8 @@ class Playlist extends React.Component<Props> {
     return (
       <TracksList
         type='playlist'
+        reorderable={true}
+        onReorder={this.onReorder}
         playerStatus={playerStatus}
         tracks={tracks}
         trackPlayingId={trackPlayingId}
