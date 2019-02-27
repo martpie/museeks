@@ -1,6 +1,6 @@
 
 .dropzone {
-  border: dashed 1px lightgrey;
+  border: dashed 1px var(--border-color);
   margin-bottom: 15px;
   padding: 20px;
   text-align: center;

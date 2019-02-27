@@ -12,7 +12,7 @@ export default class SettingsAbout extends React.Component {
     return (
       <div className='setting setting-about'>
         <Setting.Section>
-          <h4>About Museeks</h4>
+          <h3 style={{ marginTop: 0 }}>About Museeks</h3>
           <p>
             Museeks { app.version }{ ' - ' }
             <ExternalLink href='http://museeks.io'>museeks.io</ExternalLink>
@@ -24,15 +24,15 @@ export default class SettingsAbout extends React.Component {
           >Check for update</button>
         </Setting.Section>
         <Setting.Section>
-          <h4>Contributors</h4>
+          <h3>Contributors</h3>
           <p>
             Made with <Heart /> by Pierre de la Martinière
-            (<ExternalLink href='http://pierrevanmart.com'>@martpie</ExternalLink>)
+            (<ExternalLink href='https://martpie.io'>@martpie</ExternalLink>)
             and a bunch of <ExternalLink href='https://github.com/martpie/museeks/graphs/contributors'>great people</ExternalLink>.
           </p>
         </Setting.Section>
         <Setting.Section>
-          <h4>Report issue / Ask for a feature</h4>
+          <h3>Report issue / Ask for a feature</h3>
           <p>
             Although Museeks is mostly stable, a few bugs may still occur. Please, do
             not hesitate to report them or to ask for features you would like to
