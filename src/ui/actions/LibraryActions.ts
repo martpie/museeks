@@ -67,7 +67,7 @@ export const sort = (sortBy: SortBy) => {
 /**
  * Add tracks to Library
  */
-export const add = (pathsToScan: string[]) => {
+export const add = async (pathsToScan: string[]) => {
   // Instantiate queue
   const scan = {
     processed: 0,
@@ -125,19 +125,16 @@ export const add = (pathsToScan: string[]) => {
     type: types.LIBRARY_REFRESH_START
   });
 
-  let rootFiles: string[]; // HACK Kind of hack, looking for a better solution
-
-  // Scan folders and add files to library
-  new Promise<ScanFile[]>((resolve) => {
-    const promises = pathsToScan.map(async folderPath => ({
+  try {
+    // 1. Get the stats for all the files/paths
+    const statsPromises: Promise<ScanFile>[] = pathsToScan.map(async folderPath => ({
       path: folderPath,
       stat: await stat(folderPath)
     }));
 
-    const paths = Promise.all(promises);
+    const paths = await Promise.all(statsPromises);
 
-    resolve(paths);
-  }).then((paths) => {
+    // 2. Split directories and files
     const files: string[] = [];
     const folders: string[] = [];
 
@@ -146,30 +143,29 @@ export const add = (pathsToScan: string[]) => {
       if (elem.stat.isDirectory() || elem.stat.isSymbolicLink()) folders.push(elem.path);
     });
 
-    rootFiles = files;
-
+    // 3. Scan all the directories with globby
     const globbies = folders.map((folder) => {
       const pattern = path.join(folder, '**/*.*');
       return globby(pattern, { followSymlinkedDirectories: true });
     });
 
-    return Promise.all(globbies);
-  }).then((files) => {
-    // Merge all path arrays together and filter them with the extensions we support
-    const flatFiles = files.reduce((acc, array) => acc.concat(array), [])
-      .concat(rootFiles)
+    const subDirectoriesFiles = await Promise.all(globbies);
+    // Scan folders and add files to library
+
+    // 4. Merge all path arrays together and filter them with the extensions we support
+    const supportedFiles = subDirectoriesFiles
+      .reduce((acc, array) => acc.concat(array), [] as string[])
+      .concat(files) // Add the initial files
       .filter((filePath) => {
         const extension = path.extname(filePath).toLowerCase();
-        return app.supportedExtensions.includes(extension);
+        return app.SUPPORTED_EXTENSIONS.includes(extension);
       });
 
-    return flatFiles;
-  }).then((supportedFiles) => {
     if (supportedFiles.length === 0) {
       return;
     }
 
-    // Add files to be processed to the scan object
+    // 5. Add files to be processed by the queue
     scan.total += supportedFiles.length;
 
     supportedFiles.forEach((filePath) => {
@@ -189,9 +185,9 @@ export const add = (pathsToScan: string[]) => {
         callback();
       });
     });
-  }).catch((err) => {
+  } catch (err) {
     console.warn(err);
-  });
+  }
 };
 
 /**

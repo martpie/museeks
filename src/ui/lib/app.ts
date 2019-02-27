@@ -36,7 +36,7 @@ export const config = new teeny(path.join(pathUserData, 'config.json'));
 |--------------------------------------------------------------------------
 */
 
-export const supportedExtensions = [
+export const SUPPORTED_EXTENSIONS = [
   // MP3 / MP4
   '.mp3',
   '.mp4',
