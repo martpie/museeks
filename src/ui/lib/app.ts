@@ -63,7 +63,7 @@ const Track: TrackModel = new linvodb('track');
 Track.ensureIndex({ fieldName: 'path', unique: true });
 
 const Playlist: PlaylistModel = new linvodb('playlist');
-// Playlist.ensureIndex({ fieldName: 'path', unique: true });
+Playlist.ensureIndex({ fieldName: 'importPath', unique: true, sparse: true });
 
 export const models = {
   Track,
