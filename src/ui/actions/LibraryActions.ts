@@ -8,10 +8,12 @@ import * as queue from 'queue';
 import store from '../store';
 
 import types from '../constants/action-types';
-import * as LibraryActions from './LibraryActions';
+import * as ToastsActions from './ToastsActions';
+import * as PlaylistsActions from './PlaylistsActions';
 
 import * as app from '../lib/app';
 import * as utils from '../utils/utils';
+import * as m3u from '../utils/utils-m3u';
 import { SortBy, TrackModel } from '../../shared/types/interfaces';
 
 const { dialog } = electron.remote;
@@ -25,7 +27,7 @@ interface ScanFile {
 /**
  * Load tracks from database
  */
-export const load = async () => {
+export const refresh = async () => {
   try {
     const tracks = await app.models.Track.find().execAsync();
 
@@ -64,63 +66,117 @@ export const sort = (sortBy: SortBy) => {
   });
 };
 
+const scanPlaylists = async (paths: string[]) => {
+  return Promise.all(paths.map(async filePath => {
+    try {
+      const playlistFiles = m3u.parse(filePath);
+      const playlistName = path.parse(filePath).name;
+
+      const existingTracks: TrackModel[] = await app.models.Track.findAsync({
+        $or: playlistFiles.map(filePath => ({ path: filePath }))
+      });
+
+      const playlistId = await PlaylistsActions.create(playlistName);
+
+      if (existingTracks.length > 0) {
+        await PlaylistsActions.addTracksTo(
+          playlistId,
+          existingTracks.map(track => track._id)
+        );
+      }
+    } catch (err) {
+      console.warn(err);
+    }
+  }));
+};
+
+const scan = {
+  processed: 0,
+  total: 0
+};
+
+const scanTracks = async (paths: string[]): Promise<void> => {
+  return new Promise((resolve, reject) => {
+    if (paths.length === 0) resolve();
+
+    try {
+      // Instantiate queue
+      let scannedFiles: TrackModel[] = [];
+
+      // @ts-ignore Outdated types
+      // https://github.com/jessetane/queue/pull/15#issuecomment-414091539
+      const scanQueue = queue();
+      scanQueue.concurrency = 32;
+      scanQueue.autostart = true;
+
+      scanQueue.on('end', async () => {
+        scan.processed = 0;
+        scan.total = 0;
+
+        resolve();
+      });
+
+      scanQueue.on('success', () => {
+        // Every 10 scans, update progress bar
+        if (scan.processed % 100 === 0) {
+          // Progress bar update
+          store.dispatch({
+            type: types.LIBRARY_REFRESH_PROGRESS,
+            payload: {
+              processed: scan.processed,
+              total: scan.total
+            }
+          });
+
+          // Add tracks to the library view
+          const tracks = [...scannedFiles];
+          scannedFiles = []; // Reset current selection
+          store.dispatch({
+            type: types.LIBRARY_ADD_TRACKS,
+            payload: {
+              tracks
+            }
+          });
+
+          // TODO progressive loading in the store, don't freeze the app, able to add files/folders when scanning
+        }
+      });
+      // End queue instantiation
+
+      scan.total += paths.length;
+
+      paths.forEach((filePath) => {
+        scanQueue.push(async (callback: Function) => {
+          try {
+            // Check if there is an existing record in the DB
+            const existingDoc = await app.models.Track.findOneAsync({ path: filePath });
+
+            // If there is existing document
+            if (!existingDoc) {
+              // Get metadata
+              const track = await utils.getMetadata(filePath);
+              const insertedDoc: TrackModel = await app.models.Track.insertAsync(track);
+              scannedFiles.push(insertedDoc);
+            }
+
+            scan.processed++;
+          } catch (err) {
+            console.warn(err);
+          }
+
+          callback();
+        });
+      });
+    } catch (err) {
+      reject(err);
+    }
+  });
+};
+
 /**
  * Add tracks to Library
  */
 export const add = async (pathsToScan: string[]) => {
-  // Instantiate queue
-  const scan = {
-    processed: 0,
-    total: 0
-  };
-
-  let scannedFiles: TrackModel[] = [];
-
-  const endScan = async () => {
-    scan.processed = 0;
-    scan.total = 0;
-
-    store.dispatch({
-      type: types.LIBRARY_REFRESH_END
-    });
-
-    await LibraryActions.load();
-  };
-
-  // @ts-ignore Outdated types
-  // https://github.com/jessetane/queue/pull/15#issuecomment-414091539
-  const scanQueue = queue();
-  scanQueue.concurrency = 32;
-  scanQueue.autostart = true;
-
-  scanQueue.on('end', endScan);
-  scanQueue.on('success', () => {
-    // Every 10 scans, update progress bar
-    if (scan.processed % 100 === 0) {
-      // Progress bar update
-      store.dispatch({
-        type: types.LIBRARY_REFRESH_PROGRESS,
-        payload: {
-          processed: scan.processed,
-          total: scan.total
-        }
-      });
-
-      // Add tracks to the library view
-      const tracks = [...scannedFiles];
-      scannedFiles = []; // Reset current selection
-      store.dispatch({
-        type: types.LIBRARY_ADD_TRACKS,
-        payload: {
-          tracks
-        }
-      });
-
-      // TODO progressive loading in the store, don't freeze the app, able to add files/folders when scanning
-    }
-  });
-  // End queue instantiation
-
   store.dispatch({
     type: types.LIBRARY_REFRESH_START
   });
@@ -153,41 +209,38 @@ export const add = async (pathsToScan: string[]) => {
     // Scan folders and add files to library
 
     // 4. Merge all path arrays together and filter them with the extensions we support
-    const supportedFiles = subDirectoriesFiles
+    const allFiles = subDirectoriesFiles
       .reduce((acc, array) => acc.concat(array), [] as string[])
-      .concat(files) // Add the initial files
-      .filter((filePath) => {
-        const extension = path.extname(filePath).toLowerCase();
-        return app.SUPPORTED_EXTENSIONS.includes(extension);
-      });
+      .concat(files); // Add the initial files
 
-    if (supportedFiles.length === 0) {
+    const supportedTrackFiles = allFiles.filter((filePath) => {
+      const extension = path.extname(filePath).toLowerCase();
+      return app.SUPPORTED_TRACKS_EXTENSIONS.includes(extension);
+    });
+
+    const supportedPlaylistsFiles = allFiles.filter((filePath) => {
+      const extension = path.extname(filePath).toLowerCase();
+      return app.SUPPORTED_PLAYLISTS_EXTENSIONS.includes(extension);
+    });
+
+    if (supportedTrackFiles.length === 0 && supportedPlaylistsFiles.length === 0) {
       return;
     }
 
-    // 5. Add files to be processed by the queue
-    scan.total += supportedFiles.length;
+    // 5. Scan tracks then scan playlists
+    await scanTracks(supportedTrackFiles);
+    await scanPlaylists(supportedPlaylistsFiles);
 
-    supportedFiles.forEach((filePath) => {
-      scanQueue.push(async (callback: Function) => {
-        // Check if there is an existing record in the DB
-        const existingDoc = await app.models.Track.findOneAsync({ path: filePath });
-
-        // If there is existing document
-        if (!existingDoc) {
-          // Get metadata
-          const track = await utils.getMetadata(filePath);
-          const insertedDoc: TrackModel = await app.models.Track.insertAsync(track);
-          scannedFiles.push(insertedDoc);
-        }
-
-        scan.processed++;
-        callback();
-      });
-    });
+    await refresh();
+    await PlaylistsActions.refresh();
   } catch (err) {
+    ToastsActions.add('danger', 'An error occured when scanning the library');
     console.warn(err);
   }
+
+  store.dispatch({
+    type: types.LIBRARY_REFRESH_END
+  });
 };
 
 /**
@@ -252,7 +305,7 @@ export const reset = async () => {
         type: types.LIBRARY_REFRESH_END
       });
 
-      await load();
+      await refresh();
     }
   } catch (err) {
     console.error(err);
