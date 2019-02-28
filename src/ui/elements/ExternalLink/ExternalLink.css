@@ -5,6 +5,9 @@
   background: transparent;
   padding: 0;
   cursor: pointer;
+  display: inline;
+  line-height: inherit;
+  font-size: inherit;
 }
 
 .external-link:hover {

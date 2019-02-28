@@ -5,6 +5,14 @@
   padding: 20px;
   text-align: center;
   cursor: pointer;
+
+  &:focus {
+    outline: 0;
+  }
+
+  &:active {
+    border-color: var(--main-color);
+  }
 }
 
 .dropzone:global(.-is-dragging) {

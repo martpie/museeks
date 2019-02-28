@@ -12,7 +12,7 @@ export default class SettingsAbout extends React.Component {
     return (
       <div className='setting setting-about'>
         <Setting.Section>
-          <h3 style={{ marginTop: 0 }}>About Museeks</h3>
+        <h3 style={{ marginTop: 0 }}>About Museeks</h3>
           <p>
             Museeks { app.version }{ ' - ' }
             <ExternalLink href='http://museeks.io'>museeks.io</ExternalLink>
