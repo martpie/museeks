@@ -92,7 +92,7 @@ export interface Track {
 export interface Playlist {
   name: string;
   tracks: string[];
-  path: null | string;
+  importPath?: string; // associated m3u file
 }
 
 /**

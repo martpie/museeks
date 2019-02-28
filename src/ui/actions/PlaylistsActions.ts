@@ -44,11 +44,18 @@ export const refresh = async () => {
 /**
  * Create a new playlist
  */
-export const create = async (name: string, redirect = false): Promise<string> => {
-  const playlist = {
+export const create = async (
+  name: string,
+  tracks: string[] = [],
+  importPath: string | false = false,
+  redirect = false
+): Promise<string> => {
+  const playlist: Playlist = {
     name,
-    tracks: []
+    tracks
   };
+
+  if (importPath) playlist.importPath = importPath;
 
   const doc = await app.models.Playlist.insertAsync(playlist);
 
