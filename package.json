@@ -36,6 +36,7 @@
     "level-js": "4.0.0",
     "linvodb3": "3.26.0",
     "lodash-es": "4.17.11",
+    "m3ujs": "^0.2.1",
     "music-metadata": "3.5.2",
     "postcss-scss": "2.0.0",
     "queue": "5.0.1",

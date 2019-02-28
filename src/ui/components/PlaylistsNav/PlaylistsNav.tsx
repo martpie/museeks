@@ -34,7 +34,13 @@ class PlaylistsNav extends React.Component<Props, State> {
   }
 
   showContextMenu (_id: string) {
-    const template = [
+    const template: electron.MenuItemConstructorOptions[] = [
+      {
+        label: 'Rename',
+        click: () => {
+          this.setState({ renamed: _id });
+        }
+      },
       {
         label: 'Delete',
         click: async () => {
@@ -42,9 +48,12 @@ class PlaylistsNav extends React.Component<Props, State> {
         }
       },
       {
-        label: 'Rename',
-        click: () => {
-          this.setState({ renamed: _id });
+        type: 'separator'
+      },
+      {
+        label: 'Export',
+        click: async () => {
+          await PlaylistsActions.exportToM3u(_id);
         }
       }
     ];
