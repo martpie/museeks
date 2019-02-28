@@ -2,7 +2,12 @@
   padding-bottom: 10px;
 }
 
-.setting-title {}
+.setting-title {
+  display: inline-block;
+  font-weight: bold;
+  margin-top: 4px;
+  margin-left: 6px;
+}
 
 .setting-description {
   font-weight: normal;
@@ -29,12 +34,4 @@
 
   /* background-color: var(--header-bg);
   color: var(--text-color); */
-}
-
-
-.setting-label-title {
-  display: inline-block;
-  font-weight: bold;
-  margin-top: 4px;
-  margin-left: 6px;
 }
