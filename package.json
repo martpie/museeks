@@ -27,10 +27,12 @@
   },
   "dependencies": {
     "bluebird": "3.5.3",
+    "chardet": "0.7.0",
     "classnames": "2.2.6",
     "font-awesome": "4.7.0",
     "globby": "9.0.0",
     "history": "4.7.2",
+    "iconv-lite": "0.4.24",
     "level-js": "4.0.0",
     "linvodb3": "3.26.0",
     "lodash-es": "4.17.11",
@@ -56,9 +58,11 @@
   },
   "devDependencies": {
     "@types/bluebird": "3.5.25",
+    "@types/chardet": "0.5.0",
     "@types/classnames": "2.2.7",
     "@types/globby": "8.0.0",
     "@types/history": "4.7.2",
+    "@types/iconv-lite": "0.0.1",
     "@types/lodash-es": "4.17.2",
     "@types/react": "16.8.3",
     "@types/react-custom-scrollbars": "4.0.5",
@@ -95,6 +99,6 @@
     "webpack": "4.29.4",
     "webpack-cli": "3.2.3",
     "webpack-merge": "4.2.1",
-    "webpackbar": "^3.1.5"
+    "webpackbar": "3.1.5"
   }
 }

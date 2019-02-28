@@ -25,7 +25,7 @@ export default class SettingsLibrary extends React.Component<Props> {
         files.push(eventFiles[i].path);
       }
 
-      LibraryActions.add(files);
+      LibraryActions.add(files).catch(err => { console.warn(err); });
     }
   }
 
@@ -36,10 +36,10 @@ export default class SettingsLibrary extends React.Component<Props> {
 
   openFolderSelector () {
     dialog.showOpenDialog({
-      properties: ['multiSelections', 'openDirectory']
+      properties: ['multiSelections', 'openDirectory', 'openFile']
     }, (result) => {
       if (result) {
-        LibraryActions.add(result);
+        LibraryActions.add(result).catch(err => { console.warn(err); });
       }
     });
   }

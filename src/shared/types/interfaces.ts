@@ -92,6 +92,7 @@ export interface Track {
 export interface Playlist {
   name: string;
   tracks: string[];
+  path: null | string;
 }
 
 /**

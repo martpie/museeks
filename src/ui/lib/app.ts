@@ -36,23 +36,17 @@ export const config = new teeny(path.join(pathUserData, 'config.json'));
 |--------------------------------------------------------------------------
 */
 
-export const SUPPORTED_EXTENSIONS = [
+export const SUPPORTED_TRACKS_EXTENSIONS = [
   // MP3 / MP4
-  '.mp3',
-  '.mp4',
-  '.aac',
-  '.m4a',
-  '.3gp',
-  '.wav',
-
+  '.mp3', '.mp4', '.aac', '.m4a', '.3gp', '.wav',
   // Opus
-  '.ogg',
-  '.ogv',
-  '.ogm',
-  '.opus',
-
+  '.ogg', '.ogv', '.ogm', '.opus',
   // Flac
   '.flac'
+];
+
+export const SUPPORTED_PLAYLISTS_EXTENSIONS = [
+  '.m3u'
 ];
 
 /*
@@ -69,6 +63,7 @@ const Track: TrackModel = new linvodb('track');
 Track.ensureIndex({ fieldName: 'path', unique: true });
 
 const Playlist: PlaylistModel = new linvodb('playlist');
+// Playlist.ensureIndex({ fieldName: 'path', unique: true });
 
 export const models = {
   Track,
