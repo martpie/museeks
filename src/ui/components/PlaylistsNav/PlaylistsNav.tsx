@@ -33,18 +33,27 @@ class PlaylistsNav extends React.Component<Props, State> {
     this.createPlaylist = this.createPlaylist.bind(this);
   }
 
-  showContextMenu (_id: string) {
+  showContextMenu (playlistId: string) {
     const template: electron.MenuItemConstructorOptions[] = [
       {
         label: 'Rename',
         click: () => {
-          this.setState({ renamed: _id });
+          this.setState({ renamed: playlistId });
         }
       },
       {
         label: 'Delete',
         click: async () => {
-          await PlaylistsActions.remove(_id);
+          await PlaylistsActions.remove(playlistId);
+        }
+      },
+      {
+        type: 'separator'
+      },
+      {
+        label: 'Duplicate',
+        click: async () => {
+          await PlaylistsActions.duplicate(playlistId);
         }
       },
       {
@@ -53,7 +62,7 @@ class PlaylistsNav extends React.Component<Props, State> {
       {
         label: 'Export',
         click: async () => {
-          await PlaylistsActions.exportToM3u(_id);
+          await PlaylistsActions.exportToM3u(playlistId);
         }
       }
     ];
