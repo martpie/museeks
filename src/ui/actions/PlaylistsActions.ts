@@ -130,6 +130,26 @@ export const removeTracks = async (playlistId: string, tracksIds: string[]) => {
 };
 
 /**
+ * Duplicate a playlist
+ */
+export const duplicate = async (playlistId: string) => {
+  try {
+    const playlist = await app.models.Playlist.findOneAsync({ _id: playlistId });
+    const { tracks } = playlist;
+
+    const newPlaylist: Playlist = {
+      name: `Copy of ${playlist.name}`,
+      tracks: tracks
+    };
+
+    await app.models.Playlist.insertAsync(newPlaylist);
+    await refresh();
+  } catch (err) {
+    console.warn(err);
+  }
+};
+
+/**
  * Reorder tracks in a playlists
  * TODO: currently only supports one track at a time, at a point you should be
  * able to re-order a selection of tracks
