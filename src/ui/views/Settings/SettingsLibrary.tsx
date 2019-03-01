@@ -25,7 +25,7 @@ export default class SettingsLibrary extends React.Component<Props> {
         files.push(eventFiles[i].path);
       }
 
-      LibraryActions.add(files);
+      LibraryActions.add(files).catch(err => { console.warn(err); });
     }
   }
 
@@ -36,10 +36,10 @@ export default class SettingsLibrary extends React.Component<Props> {
 
   openFolderSelector () {
     dialog.showOpenDialog({
-      properties: ['multiSelections', 'openDirectory']
+      properties: ['multiSelections', 'openDirectory', 'openFile']
     }, (result) => {
       if (result) {
-        LibraryActions.add(result);
+        LibraryActions.add(result).catch(err => { console.warn(err); });
       }
     });
   }
@@ -48,12 +48,21 @@ export default class SettingsLibrary extends React.Component<Props> {
     return (
       <div className='setting settings-musicfolder'>
         <Setting.Section>
+          <h3 style={{ marginTop: 0 }}>
+            Import music
+          </h3>
           <Dropzone
-            title='Add music to library'
+            title='Add music to the library'
             subtitle='Drop files or folders here'
             onDrop={this.onDrop}
             onClick={this.openFolderSelector}
           />
+          <Setting.Description>
+            This will also scan for <code>.m3u</code> files and create corresponding playlists.
+          </Setting.Description>
+        </Setting.Section>
+        <Setting.Section>
+          <h3>Danger zone</h3>
           <button
             title='Fully reset the library'
             disabled={this.props.library.refreshing}

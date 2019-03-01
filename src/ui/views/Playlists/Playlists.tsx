@@ -32,7 +32,7 @@ class Playlists extends React.Component<Props> {
   }
 
   async createPlaylist () {
-    await PlaylistsActions.create('New playlist', true);
+    await PlaylistsActions.create('New playlist', [], false, true);
   }
 
   autoRedirect () {

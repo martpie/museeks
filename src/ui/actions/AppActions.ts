@@ -34,7 +34,7 @@ const saveBounds = async () => {
 const init = async () => {
   // Usual tasks
   await SettingsActions.check();
-  await LibraryActions.load();
+  await LibraryActions.refresh();
   await PlaylistsActions.refresh();
 
   // Tell the main process to show the window
