@@ -11,7 +11,7 @@ import types from '../constants/action-types';
 import * as LibraryActions from './LibraryActions';
 
 import * as app from '../lib/app';
-import * as utils from '../utils/utils';
+import * as utils from '../../shared/utils';
 import { SortBy, TrackModel } from '../../shared/types/interfaces';
 
 const { dialog } = electron.remote;

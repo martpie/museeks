@@ -137,6 +137,10 @@ const sharedConfig = {
         }],
         include: /node_modules/,
       },
+      {
+        test: /\.node$/,
+        use: 'node-loader'
+      }
     ],
   },
   stats: {
