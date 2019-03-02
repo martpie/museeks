@@ -64,7 +64,7 @@ const Settings: React.FC<Props> = (props) => {
           />
           <Route
             path='/settings/about'
-            render={p => (<SettingsAbout {...p} />)}
+            render={() => (<SettingsAbout />)}
           />
         </Switch>
       </div>
