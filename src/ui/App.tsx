@@ -11,6 +11,7 @@ import AppActions from './actions/AppActions';
 import * as PlayerActions from './actions/PlayerActions';
 
 import * as styles from './App.css';
+import { isCtrlKey } from './utils/utils-platform';
 
 /*
 |--------------------------------------------------------------------------
@@ -21,12 +22,19 @@ import * as styles from './App.css';
 type Props = RouteComponentProps<{}>;
 
 class Museeks extends React.Component<Props> {
-  static async onKey (e: KeyboardEvent) {
+  onKey = async (e: KeyboardEvent) => {
     switch (e.code) {
       case 'Space':
         e.preventDefault();
         e.stopPropagation();
         await PlayerActions.playPause();
+        break;
+      case 'Comma':
+        if (isCtrlKey(e)) {
+          e.preventDefault();
+          e.stopPropagation();
+          this.props.history.push('/settings');
+        }
         break;
       default:
         break;
@@ -40,7 +48,7 @@ class Museeks extends React.Component<Props> {
   render () {
     return (
       <div className={`${styles.root} os-${os.platform()}`}>
-        <KeyBinding onKey={Museeks.onKey} preventInputConflict />
+        <KeyBinding onKey={this.onKey} preventInputConflict />
         <Header />
         <main className={`${styles.mainContent} container-fluid`}>
           {this.props.children}
