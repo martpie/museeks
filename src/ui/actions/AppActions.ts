@@ -3,7 +3,7 @@ import * as os from 'os';
 
 import Player from '../lib/player';
 import { browserWindows, config } from '../lib/app';
-import * as utils from '../utils/utils';
+import * as utils from '../../shared/utils';
 
 import * as LibraryActions from './LibraryActions';
 import * as PlaylistsActions from './PlaylistsActions';
@@ -107,6 +107,10 @@ const init = async () => {
 
   ipcRenderer.on('playback:next', async () => {
     await PlayerActions.next();
+  });
+
+  ipcRenderer.on('playback:stop', async () => {
+    PlayerActions.stop();
   });
 
   // Prevent some events
