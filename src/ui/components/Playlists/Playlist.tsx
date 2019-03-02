@@ -105,7 +105,7 @@ const mapStateToProps = ({ library, playlists, player }: RootState) => {
   const filteredTracks = filterTracks(tracks.playlist, search);
 
   return {
-    playlists,
+    playlists: playlists.list,
     tracks: filteredTracks,
     playerStatus: player.playerStatus,
     trackPlayingId: (player.queue.length > 0 && player.queueCursor !== null) ? player.queue[player.queueCursor]._id : null
