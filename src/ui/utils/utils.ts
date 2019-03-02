@@ -47,7 +47,7 @@ export const parseUri = (uri: string): string => {
  * Parse data to be used by img/background-image with base64
  */
 export const parseBase64 = (format: string, data: string) => {
-  return `data:image/${format};base64,${data}`;
+  return `data:${format};base64,${data}`;
 };
 
 /**

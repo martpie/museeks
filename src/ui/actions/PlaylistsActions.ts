@@ -100,7 +100,7 @@ export const remove = async (_id: string) => {
 /**
  * Add tracks to a playlist
  */
-export const addTracksTo = async (_id: string, tracksIds: string[], isShown?: boolean) => {
+export const addTracks = async (_id: string, tracksIds: string[], isShown?: boolean) => {
   // isShown should never be true, letting it here anyway to remember of a design issue
   if (isShown) return;
 

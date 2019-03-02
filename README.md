@@ -1,4 +1,4 @@
-# museeks
+# Museeks
 
 [![Build Status](https://img.shields.io/circleci/project/github/martpie/museeks.svg)](https://circleci.com/gh/martpie/museeks)
 [![Dependencies](https://david-dm.org/martpie/museeks.svg)](https://github.com/martpie/museeks)
@@ -8,15 +8,9 @@ A simple, clean and cross-platform music player. ([museeks.io](http://museeks.io
 
 ![Screenshot](screenshot.png)
 
-It uses:
-* [Node.js](https://nodejs.org/en/)
-* [Electron](https://github.com/atom/electron/) (formerly atom-shell)
-* [React.js](https://facebook.github.io/react/) as UI framework and [Flux](https://facebook.github.io/flux/) with [Redux](http://redux.js.org/) as data-flow pattern
-
-
 ## Features
 
-Museeks aims to be a simple and easy to use music player with a clean UI, you will not find tons of features. Here is a little preview though:
+Museeks aims to be a simple and easy to use music player with a clean UI. You will not find tons of features, as its goals is not to compete with more complete and more famous music players. Here is a little preview though:
 
 - 💻 Cross-platform music player (Linux, macOS and Windows)
 - 🎧 Supported formats: mp3, mp4, m4a/aac, flac, wav, ogg, 3gpp
@@ -29,6 +23,9 @@ Museeks aims to be a simple and easy to use music player with a clean UI, you wi
 - 🚤 Playback speed control
 - 😴 Sleep mode blocker
 - 🔊 Minimize to tray
+- 🔄 `.m3u` import/export
+
+Want more? Open a new issue or 👍 an existing one so we can talk about it.
 
 ## Releases notes
 
@@ -41,6 +38,17 @@ Museeks aims to be a simple and easy to use music player with a clean UI, you wi
 Builds and installers can be found [on this page](https://github.com/martpie/museeks/releases).
 
 ### Build (advanced)
+
+Museeks is built upon:
+
+* [Node.js](https://nodejs.org/en/)
+* [Electron](https://github.com/atom/electron/) (formerly atom-shell)
+* [React.js](https://facebook.github.io/react/) as UI library and [Flux](https://facebook.github.io/flux/) with [Redux](http://redux.js.org/) as data-flow pattern
+
+Requirements:
+
+- `node` > 10
+- `npm` > 6
 
 Please consider that **`master` is unstable**.
 
