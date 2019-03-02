@@ -15,6 +15,7 @@ import * as appStyles from '../../App.css';
 
 interface OwnProps {
   playlists: PlaylistModel[];
+  playlistsLoading: boolean;
 }
 
 interface RouteParams {
@@ -59,16 +60,18 @@ class Playlists extends React.Component<Props> {
   }
 
   render () {
-    const { playlists } = this.props;
+    const { playlists, playlistsLoading } = this.props;
     let playlistContent;
 
-    /* if (playlists === null) {
+    console.log('play', playlists);
+
+    if (playlistsLoading) {
       playlistContent = (
         <ViewMessage.Notice>
-          <p>Loading playlists</p>
+          <p>Loading playlists...</p>
         </ViewMessage.Notice>
       );
-    } else */ if (playlists.length === 0) {
+    } else if (playlists.length === 0) {
       playlistContent = (
         <ViewMessage.Notice>
           <p>You haven{"'"}t created any playlist yet</p>
@@ -103,9 +106,9 @@ class Playlists extends React.Component<Props> {
   }
 }
 
-const mapStateToProps = ({ playlists, player }: RootState) => ({
-  playlists,
-  playerStatus: player.playerStatus
+const mapStateToProps = ({ playlists }: RootState): OwnProps => ({
+  playlistsLoading: playlists.loading,
+  playlists: playlists.list
 });
 
 export default withRouter(connect(mapStateToProps)(Playlists));

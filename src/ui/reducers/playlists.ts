@@ -1,14 +1,23 @@
 import types from '../constants/action-types';
 import { PlaylistModel, Action } from '../../shared/types/interfaces';
 
-export type PlaylistsState = PlaylistModel[];
+export type PlaylistsState = {
+  list: PlaylistModel[],
+  loading: boolean
+};
 
-const initialState: PlaylistsState = []; // Playlist[]
+const initialState: PlaylistsState = {
+  list: [],
+  loading: true
+};
 
 export default (state = initialState, action: Action): PlaylistsState => {
   switch (action.type) {
     case (types.PLAYLISTS_REFRESH): {
-      return action.payload.playlists;
+      return {
+        list: action.payload.playlists,
+        loading: false
+      };
     }
 
     case (types.LIBRARY_RESET): {

@@ -106,7 +106,7 @@ const mapStateToProps = (state: RootState) => {
   );
 
   return {
-    playlists: state.playlists,
+    playlists: state.playlists.list,
     library: state.library,
     player: state.player,
     tracks: filteredTracks
