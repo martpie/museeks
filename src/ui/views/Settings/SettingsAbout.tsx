@@ -17,7 +17,7 @@ export default class SettingsAbout extends React.Component {
             Museeks { app.version }{ ' - ' }
             <ExternalLink href='http://museeks.io'>museeks.io</ExternalLink>
             { ' - ' }
-            <ExternalLink href={`https://github.com/martpie/Museeks/releases/tag/${app.version}`}>release notes</ExternalLink>
+            <ExternalLink href={`https://github.com/martpie/museeks/releases/tag/${app.version}`}>release notes</ExternalLink>
           </p>
           <button
             onClick={async () => { await SettingsActions.checkForUpdate(); }}
@@ -36,7 +36,7 @@ export default class SettingsAbout extends React.Component {
           <p>
             Although Museeks is mostly stable, a few bugs may still occur. Please, do
             not hesitate to report them or to ask for features you would like to
-            see, using our <ExternalLink href='http://github.com/martpie/Museeks/issues'>issue tracker</ExternalLink>.
+            see, using the <ExternalLink href='http://github.com/martpie/Museeks/issues'>issue tracker</ExternalLink>.
           </p>
         </Setting.Section>
       </div>

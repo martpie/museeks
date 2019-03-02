@@ -13,16 +13,24 @@
 }
 
 .actions {
-  padding-right: 4px;
+  align-items: stretch;
 }
 
 .action {
   background: transparent;
   border: none;
   color: var(--text-color);
+  width: 33px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  text-align: center;
 
   :global .fa {
     margin-right: 0;
+  }
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.05);
   }
 }
 
@@ -65,6 +73,10 @@
     border-width: 1px 0;
     background-color: var(--sidebar-item-active-bg);
     color: var(--main-color);
+  }
+
+  &:focus {
+    color: inherit;
   }
 }
 

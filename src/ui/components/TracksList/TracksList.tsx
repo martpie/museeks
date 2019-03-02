@@ -340,7 +340,7 @@ export default class TracksList extends React.Component<Props, State> {
           label: 'Create new playlist...',
           click: async () => {
             const playlistId = await PlaylistsActions.create('New playlist');
-            await PlaylistsActions.addTracksTo(playlistId, selected);
+            await PlaylistsActions.addTracks(playlistId, selected);
           }
         },
         {
@@ -358,7 +358,7 @@ export default class TracksList extends React.Component<Props, State> {
           playlistTemplate.push({
             label: playlist.name,
             click: async () => {
-              await PlaylistsActions.addTracksTo(playlist._id, selected);
+              await PlaylistsActions.addTracks(playlist._id, selected);
             }
           });
         });
