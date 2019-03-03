@@ -221,6 +221,10 @@ export const add = async (pathsToScan: string[]) => {
     });
 
     if (supportedTrackFiles.length === 0 && supportedPlaylistsFiles.length === 0) {
+      store.dispatch({
+        type: types.LIBRARY_REFRESH_END
+      });
+
       return;
     }
 
