@@ -127,6 +127,7 @@ export interface Config {
   theme: 'light' | 'dark';
   audioVolume: number;
   audioPlaybackRate: number;
+  audioOutputDevice: string;
   audioMuted: boolean;
   audioShuffle: boolean;
   audioRepeat: Repeat;
