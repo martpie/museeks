@@ -295,6 +295,25 @@ export const setPlaybackRate = (value: number) => {
 };
 
 /**
+ * Set audio's output device
+ */
+export const setOutputDevice = (deviceId: string = 'default') => {
+  if (deviceId) {
+    try {
+      Player.setOutputDevice(deviceId)
+        .then(() => {
+          app.config.set('audioOutputDevice', deviceId);
+          app.config.save();
+        })
+        .catch(err => { throw err; });
+    } catch (err) {
+      console.warn(err);
+      ToastsActions.add('danger', 'An error occured when trying to switch to the new output device');
+    }
+  }
+};
+
+/**
  * Jump to a time in the track
  */
 export const jumpTo = (to: number) => {
