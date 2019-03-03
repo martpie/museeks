@@ -7,12 +7,6 @@ export const Section: React.FC = (props) => (
   </section>
 );
 
-export const Title: React.FC = (props) => (
-  <span className={styles.settingTitle}>
-    {props.children}
-  </span>
-);
-
 export const Description: React.FC = (props) => (
   <p className={styles.settingDescription}>
     {props.children}
@@ -31,6 +25,12 @@ export const Label: React.FC<React.HTMLProps<HTMLLabelElement>> = (props) => {
     </label>
   );
 };
+
+export const Title: React.FC = (props) => (
+  <span className={styles.settingLabelTitle}>
+    {props.children}
+  </span>
+);
 
 export const Input: React.FC<React.HTMLProps<HTMLInputElement>> = (props) => {
   const { children, ...restProps } = props;
