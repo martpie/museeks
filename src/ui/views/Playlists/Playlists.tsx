@@ -63,8 +63,6 @@ class Playlists extends React.Component<Props> {
     const { playlists, playlistsLoading } = this.props;
     let playlistContent;
 
-    console.log('play', playlists);
-
     if (playlistsLoading) {
       playlistContent = (
         <ViewMessage.Notice>
