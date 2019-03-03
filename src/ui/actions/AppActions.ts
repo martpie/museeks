@@ -84,6 +84,14 @@ const init = async () => {
     ipcRenderer.send('playback:pause');
   });
 
+  navigator.mediaDevices.addEventListener('devicechange', async () => {
+    try {
+      await Player.setOutputDevice('default');
+    } catch (err) {
+      console.warn(err);
+    }
+  });
+
   // Listen for main-process events
   ipcRenderer.on('playback:play', async () => {
     if (Player.getSrc()) {

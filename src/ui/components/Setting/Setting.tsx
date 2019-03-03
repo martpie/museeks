@@ -44,3 +44,9 @@ export const Input: React.FC<React.HTMLProps<HTMLInputElement>> = (props) => {
     </input>
   );
 };
+
+export const Error: React.FC = (props) => (
+  <p className={styles.settingError}>
+    {props.children}
+  </p>
+);
