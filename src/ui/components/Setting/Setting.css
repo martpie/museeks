@@ -35,3 +35,7 @@
   /* background-color: var(--header-bg);
   color: var(--text-color); */
 }
+
+.setting-error {
+  color: red;
+}

@@ -42,10 +42,11 @@ class ConfigModule extends Module {
   }
 
   getDefaultConfig (): Config {
-    return {
+    const config: Config = {
       theme: 'light',
       audioVolume: 1,
       audioPlaybackRate: 1,
+      audioOutputDevice: 'default',
       audioMuted: false,
       audioShuffle: false,
       audioRepeat: Repeat.NONE,
@@ -65,6 +66,8 @@ class ConfigModule extends Module {
         y: Math.round(this.workArea.height / 2)
       }
     };
+
+    return config;
   }
 
   getConfig (): Config {

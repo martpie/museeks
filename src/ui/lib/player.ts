@@ -2,6 +2,7 @@ import * as app from './app';
 
 interface PlayerOptions {
   playbackRate?: number;
+  audioOutputDevice?: string;
   volume?: number;
   muted?: boolean;
 }
@@ -16,12 +17,15 @@ class Player {
       playbackRate: 1,
       volume: 1,
       muted: false,
+      audioOutputDevice: 'default',
       ...options
     };
 
     this.audio = new Audio();
 
     this.audio.defaultPlaybackRate = mergedOptions.playbackRate;
+    // @ts-ignore
+    this.audio.setSinkId(mergedOptions.audioOutputDevice);
     this.audio.playbackRate = mergedOptions.playbackRate;
     this.audio.volume = mergedOptions.volume;
     this.audio.muted = mergedOptions.muted;
@@ -75,6 +79,11 @@ class Player {
     this.audio.defaultPlaybackRate = playbackRate;
   }
 
+  async setOutputDevice (deviceId: string) {
+    // @ts-ignore
+    await this.audio.setSinkId(deviceId);
+  }
+
   setAudioSrc (src: string) {
     // When we change song, need to update the thresholdReached indicator.
     this.durationThresholdReached = false;
@@ -105,5 +114,6 @@ class Player {
 export default new Player({
   volume: app.config.get('audioVolume'),
   playbackRate: app.config.get('audioPlaybackRate'),
+  audioOutputDevice: app.config.get('audioOutputDevice'),
   muted: app.config.get('audioMuted')
 });
