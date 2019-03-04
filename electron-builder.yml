@@ -8,10 +8,10 @@ files:
 mac:
   category: public.app-category.music
   target:
-  - dmg
+    - dmg
   icon: src/images/logos/museeks.icns
 linux:
-  category: AudioVideo
+  category: Audio
   target:
     - deb
     - AppImage
