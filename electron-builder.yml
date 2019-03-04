@@ -1,5 +1,4 @@
 appId: io.museeks.app
-electronVersion: 2.0.8
 directories:
   buildResources: "./dist"
   output: "./build"
