@@ -64,6 +64,8 @@ class TrayModule extends ModuleWindow {
               'museeks-tray.png'
             )
           );
+
+          this.refreshTrayIcon();
         }
       });
     }
@@ -175,6 +177,12 @@ class TrayModule extends ModuleWindow {
 
     if (this.tray) {
       this.tray.setContextMenu(Menu.buildFromTemplate(menuTemplate));
+    }
+  }
+
+  refreshTrayIcon () {
+    if (this.tray) {
+      this.tray.setImage(this.trayIcon);
     }
   }
 
