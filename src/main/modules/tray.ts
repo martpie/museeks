@@ -4,6 +4,7 @@
 
 import * as os from 'os';
 import * as path from 'path';
+import ps from 'ps-node';
 import { Tray, Menu, app, ipcMain, nativeImage } from 'electron';
 
 import ModuleWindow from './module-window';
@@ -49,6 +50,24 @@ class TrayModule extends ModuleWindow {
   }
 
   async load () {
+    // Fix for gnome-shell and high-dpi
+    if (os.platform() === 'linux') {
+      ps.lookup({
+        command: 'gnome-shell'
+      }, (err: Error, _processes: Object) => {
+        if (err) {
+          console.warn(err);
+        } else {
+          this.trayIcon = nativeImage.createFromPath(
+            path.join(
+              path.resolve(path.join(__dirname, '../../src/images/logos')),
+              'museeks-tray.png'
+            )
+          );
+        }
+      });
+    }
+
     this.tray = null;
 
     this.songDetails = [

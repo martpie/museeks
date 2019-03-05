@@ -39,6 +39,7 @@
     "m3ujs": "^0.2.1",
     "music-metadata": "3.5.2",
     "postcss-scss": "2.0.0",
+    "ps-node": "0.1.6",
     "queue": "6.0.0",
     "react": "16.8.4",
     "react-custom-scrollbars": "4.2.1",
