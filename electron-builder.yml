@@ -5,6 +5,7 @@ directories:
 files:
   - dist/**/*
   - src/images/**/*
+  - "!node_modules/**/*"
 mac:
   category: public.app-category.music
   target:
