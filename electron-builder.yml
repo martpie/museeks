@@ -10,6 +10,7 @@ mac:
   target:
     - dmg
   icon: src/images/logos/museeks.icns
+  artifactName: ${name}.${ext}
 linux:
   category: Audio
   target:
@@ -17,6 +18,8 @@ linux:
     - AppImage
     - rpm
   executableName: museeks
+  artifactName: ${name}-${arch}.${ext}
 win:
   target: nsis
   icon: src/images/logos/museeks.ico
+  artifactName: ${name}-setup.${ext}
