@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import * as utils from '../../utils/utils';
+import * as utils from '../../../shared/utils';
 
 import * as styles from './Cover.css';
 

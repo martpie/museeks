@@ -12,7 +12,7 @@ import * as ToastsActions from './ToastsActions';
 import * as PlaylistsActions from './PlaylistsActions';
 
 import * as app from '../lib/app';
-import * as utils from '../utils/utils';
+import * as utils from '../../shared/utils';
 import * as m3u from '../utils/utils-m3u';
 import { SortBy, TrackModel } from '../../shared/types/interfaces';
 

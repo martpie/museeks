@@ -10,6 +10,7 @@ import ThumbarModule from './modules/thumbar';
 import DockMenuModule from './modules/dock-menu';
 import GlobalShortcutsModule from './modules/global-shortcuts';
 import SleepBlockerModule from './modules/sleep-blocker';
+import MprisModule from './modules/mpris';
 
 import * as ModulesManager from './lib/modules-manager';
 import { checkBounds } from './utils';
@@ -115,6 +116,7 @@ app.on('ready', async () => {
     new ThumbarModule(mainWindow),
     new DockMenuModule(mainWindow),
     new GlobalShortcutsModule(mainWindow),
-    new SleepBlockerModule(mainWindow)
+    new SleepBlockerModule(mainWindow),
+    new MprisModule(mainWindow)
   );
 });

@@ -5,7 +5,7 @@ import ButtonRepeat from '../PlayerOptionsButtons/ButtonRepeat';
 
 import * as PlayerActions from '../../actions/PlayerActions';
 import Player from '../../lib/player';
-import * as utils from '../../utils/utils';
+import * as utils from '../../../shared/utils';
 import { TrackModel, Repeat } from '../../../shared/types/interfaces';
 
 import * as styles from './PlayingBarInfo.css';
