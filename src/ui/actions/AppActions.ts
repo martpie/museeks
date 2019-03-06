@@ -117,7 +117,7 @@ const init = async () => {
     await PlayerActions.next();
   });
 
-  ipcRenderer.on('playback:stop', async () => {
+  ipcRenderer.on('playback:stop', () => {
     PlayerActions.stop();
   });
 
