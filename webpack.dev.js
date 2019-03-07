@@ -6,7 +6,7 @@ const { ui, main } = require('./webpack.common.js');
 
 const devConfig = {
   mode: 'development',
-  devtool: 'source-map',
+  devtool: 'inline-source-map',
   plugins: [
     // new CleanTerminalPlugin(),
     new webpack.DefinePlugin({
