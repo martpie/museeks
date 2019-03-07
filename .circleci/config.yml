@@ -16,9 +16,16 @@ jobs:
             - npm-cache-{{ checksum "package-lock.json" }}
             # fallback to using the latest cache if no exact match is found
             - mpm-cache
+
+      # - run:
+      #     name: Install native dependencies
+      #     command: apt update && apt install -y libdbus-1-dev libglib2.0-dev
       - run:
           name: Install dependencies
           command: npm install
+      - run:
+          name: Rebuild native modules
+          command: npm run modules:rebuild
       - run:
           name: "Lint check: TS"
           command: "npm run lint:ts"
