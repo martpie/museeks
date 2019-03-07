@@ -13,11 +13,12 @@ class MprisModule extends ModuleWindow {
 
   player = mpris({
     name: 'museeks',
-    identity: 'Museeks Music Player',
+    identity: 'Museeks',
+    desktopEntry: 'museeks',
     canRaise: true,
     supportedUriSchemes: ['file', 'data'],
     supportedMimeTypes: ['audio/mpeg', 'application/ogg'], // TODO
-    supportedInterfaces: ['player', 'trackList'] // Do we need trackList?
+    supportedInterfaces: ['player']
   });
 
   constructor (window: Electron.BrowserWindow) {
