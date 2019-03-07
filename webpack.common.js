@@ -70,7 +70,8 @@ const mainConfig = {
  */
 const sharedConfig = {
   resolve: {
-    extensions: ['.ts', '.tsx', '.js', '.json'],
+    // mainFields: ['browser', 'main', 'module'],
+    extensions: ['.mjs', '.ts', '.tsx', '.js', '.json'],
   },
   module: {
     rules: [
