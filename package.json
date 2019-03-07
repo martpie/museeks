@@ -76,7 +76,7 @@
     "@types/semver": "5.5.0",
     "clean-terminal-webpack-plugin": "2.0.1",
     "css-loader": "2.1.0",
-    "electron": "4.0.6",
+    "electron": "4.0.7",
     "electron-builder": "20.38.5",
     "electron-rebuild": "1.8.4",
     "file-loader": "3.0.1",
