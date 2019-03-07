@@ -12,6 +12,7 @@ mac:
   - dmg
   icon: src/images/logos/museeks.icns
 linux:
+  depends: ['libdbus-1-dev', 'libglib2.0-dev']
   category: AudioVideo
   target:
     - deb
