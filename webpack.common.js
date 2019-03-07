@@ -137,6 +137,10 @@ const sharedConfig = {
         }],
         include: /node_modules/,
       },
+      {
+        test: /\.node$/,
+        use: 'node-loader'
+      },
       { // Hotfix for iconv-lite https://github.com/ashtuchkin/iconv-lite/issues/204
         test: /node_modules[\/\\](iconv-lite)[\/\\].+/,
         resolve: { aliasFields: ['main'] }
