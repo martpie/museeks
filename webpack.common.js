@@ -1,5 +1,3 @@
-
-
 const path = require('path');
 
 const merge = require('webpack-merge');
@@ -42,6 +40,11 @@ const uiConfig = {
 const mainConfig = {
   entry: {
     main: ['./src/main/main.ts'],
+  },
+  resolve: {
+    alias: {
+      jsbi: path.resolve(__dirname, 'node_modules', 'jsbi', 'dist', 'jsbi-cjs.js')
+    }
   },
   output: {
     path: `${__dirname}/dist/main`,
