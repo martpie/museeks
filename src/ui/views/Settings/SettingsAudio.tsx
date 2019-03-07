@@ -40,13 +40,13 @@ export default class SettingsAudio extends React.Component<Props> {
         </Setting.Section>
         <Setting.Section>
           <Setting.Label htmlFor='setting-playbackrate'>
-            Audio output device
+            Audio output
           </Setting.Label>
           <AudioOutputSelect
             defaultValue={config.audioOutputDevice}
             onChange={this.setOutputDevice}
           />
-          <Setting.Description>Advanced: set a custom audio output device. It is recommended to stay on default.</Setting.Description>
+          <Setting.Description>Advanced: set a custom audio output device.</Setting.Description>
         </Setting.Section>
       </div>
     );
