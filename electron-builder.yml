@@ -1,24 +1,27 @@
 appId: io.museeks.app
-electronVersion: 2.0.8
 directories:
   buildResources: "./dist"
   output: "./build"
 files:
   - dist/**/*
   - src/images/**/*
+  - "!node_modules/**/*"
 mac:
   category: public.app-category.music
   target:
-  - dmg
+    - dmg
   icon: src/images/logos/museeks.icns
+  artifactName: ${name}.${ext}
 linux:
   depends: ['libdbus-1-dev', 'libglib2.0-dev']
-  category: AudioVideo
+  category: Audio
   target:
     - deb
     - AppImage
     - rpm
   executableName: museeks
+  artifactName: ${name}-${arch}.${ext}
 win:
   target: nsis
   icon: src/images/logos/museeks.ico
+  artifactName: ${name}-setup.${ext}
