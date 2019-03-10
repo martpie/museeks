@@ -6,6 +6,7 @@ import * as QueueActions from '../../actions/QueueActions';
 
 import { getStatus } from '../../utils/utils-library';
 import { TrackModel } from '../../../shared/types/interfaces';
+import Button from '../../elements/Button/Button';
 
 import * as styles from './QueueList.css';
 
@@ -103,12 +104,12 @@ export default class QueueList extends React.Component<Props, State> {
           <div className={styles.queue__header__infos}>
             { getStatus(incomingQueue) }
           </div>
-          <button
-            className={styles.queue__header__empty}
+          <Button
+            bSize='small'
             onClick={QueueActions.clear}
           >
             clear queue
-          </button>
+          </Button>
         </div>
         <div className={styles.queue__content}>
           { shownQueue.map((track, index) => (

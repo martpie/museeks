@@ -26,6 +26,7 @@
 }
 
 .queue-container {
+  -webkit-app-region: no-drag;
   display: none;
   position: absolute;
   z-index: 1000;
