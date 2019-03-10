@@ -50,3 +50,9 @@ export const Error: React.FC = (props) => (
     {props.children}
   </p>
 );
+
+export const Select: React.FC<React.HTMLProps<HTMLSelectElement>> = (props) => (
+  <select className={styles.settingSelect} {...props}>
+    {props.children}
+  </select>
+);

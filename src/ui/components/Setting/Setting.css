@@ -21,12 +21,17 @@
   font-weight: bold;
 }
 
+.setting-select,
 .setting-input {
   display: block;
+  background-color: white;
   border: solid 1px var(--border-color);
   border-radius: var(--border-radius);
   padding: 8px 12px;
   width: 100%;
+  font-size: 1rem;
+  line-height: 1;
+  height: 32px; /* shame */
 
   &:focus {
     outline: none;
