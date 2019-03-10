@@ -4,10 +4,10 @@
 
 /* The native frame may be light, so we need to increase the contrast between
    the frame and the header */
-:global .os-win32,
-:global .os-linux {
-  .main-header {
-    border-top: 1px solid #d2d2d2;
+:global(.os-win32),
+:global(.os-linux) {
+  .header {
+    border-top: 1px solid var(--border-color);
   }
 }
 
