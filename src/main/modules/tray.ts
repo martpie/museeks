@@ -8,15 +8,10 @@ import { Tray, Menu, app, ipcMain, nativeImage } from 'electron';
 
 import ModuleWindow from './module-window';
 import { TrackModel, PlayerStatus } from '../../shared/types/interfaces';
+import ConfigModule from './config';
 
 class TrayModule extends ModuleWindow {
-  // Darwin used to be supported, it is now disabled because its usage do not
-  // make a lot of sense on this platform, as the icon always stay in the dock
-  //
-  // 01/04/2018 actually not for now, I do not want to break a feature in a
-  // patch release
-  // this.platforms = ['win32', 'linux'];
-
+  protected config: ConfigModule;
   protected tray: Electron.Tray | null;
   protected trayIcon: Electron.NativeImage;
   protected playToggle: Electron.MenuItemConstructorOptions[];
@@ -24,9 +19,10 @@ class TrayModule extends ModuleWindow {
   protected songDetails: Electron.MenuItemConstructorOptions[];
   protected menu: Electron.MenuItemConstructorOptions[];
 
-  constructor (window: Electron.BrowserWindow) {
+  constructor (window: Electron.BrowserWindow, config: ConfigModule) {
     super(window);
 
+    this.config = config;
     this.tray = null;
     this.playToggle = [];
     this.pauseToggle = [];
@@ -132,7 +128,7 @@ class TrayModule extends ModuleWindow {
       this.setContextMenu(PlayerStatus.PLAY);
     });
 
-    this.show();
+    if (this.config.get('minimizeToTray')) this.show();
   }
 
   show () {
