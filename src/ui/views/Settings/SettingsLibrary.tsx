@@ -7,6 +7,7 @@ import Dropzone from '../../components/SettingDropzone/SettingDropzone';
 import * as LibraryActions from '../../actions/LibraryActions';
 import * as PlayerActions from '../../actions/PlayerActions';
 import { LibraryState } from '../../reducers/library';
+import Button from '../../elements/Button/Button';
 
 const { dialog } = electron.remote;
 
@@ -63,13 +64,14 @@ export default class SettingsLibrary extends React.Component<Props> {
         </Setting.Section>
         <Setting.Section>
           <h3>Danger zone</h3>
-          <button
+          <Button
+            relevancy='danger'
             title='Fully reset the library'
             disabled={this.props.library.refreshing}
             onClick={this.resetLibrary}
           >
             Reset library
-          </button>
+          </Button>
         </Setting.Section>
       </div>
     );
