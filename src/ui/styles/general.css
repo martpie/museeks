@@ -40,11 +40,6 @@ body {
   overflow: hidden;
 }
 
-/* *:focus {
-  outline: 2px solid var(--main-color) !important;
-  outline-offset: -2px;
-} */
-
 button {
   outline: none;
 }
