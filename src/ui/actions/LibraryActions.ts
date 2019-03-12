@@ -2,7 +2,7 @@ import * as electron from 'electron';
 import * as fs from 'fs';
 import * as path from 'path';
 import * as util from 'util';
-import * as globby from 'globby';
+import globby from 'globby';
 import * as queue from 'queue';
 
 import store from '../store';
@@ -12,7 +12,7 @@ import * as ToastsActions from './ToastsActions';
 import * as PlaylistsActions from './PlaylistsActions';
 
 import * as app from '../lib/app';
-import * as utils from '../../shared/utils';
+import * as utils from '../utils/utils';
 import * as m3u from '../utils/utils-m3u';
 import { SortBy, TrackModel } from '../../shared/types/interfaces';
 

@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import * as utils from '../../../shared/utils';
+import * as coverUtils from '../../../shared/utils/cover';
 
 import * as styles from './Cover.css';
 
@@ -29,13 +29,13 @@ export default class TrackCover extends React.PureComponent<Props, State> {
 
   async componentWillReceiveProps (nextProps: Props) {
     if (nextProps.path !== this.props.path) {
-      const coverPath = await utils.fetchCover(nextProps.path);
+      const coverPath = await coverUtils.fetchCover(nextProps.path);
       this.setState({ coverPath });
     }
   }
 
   async fetchInitialCover () {
-    const coverPath = await utils.fetchCover(this.props.path);
+    const coverPath = await coverUtils.fetchCover(this.props.path);
     this.setState({ coverPath });
   }
 

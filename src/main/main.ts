@@ -39,6 +39,10 @@ if (!gotTheLock) {
   app.quit();
 }
 
+// Fix the player not being able to play audio when the user did not interact
+// with the page
+app.commandLine.appendSwitch('autoplay-policy', 'no-user-gesture-required');
+
 // Quit when all windows are closed
 app.on('window-all-closed', () => {
   app.quit();
@@ -108,15 +112,15 @@ app.on('ready', async () => {
     e.preventDefault();
   });
 
-  await ModulesManager.init(
+  ModulesManager.init(
     new IpcModule(mainWindow, configModule),
     new PowerModule(mainWindow),
     new MenuModule(mainWindow),
-    new TrayModule(mainWindow),
+    new TrayModule(mainWindow, configModule),
     new ThumbarModule(mainWindow),
     new DockMenuModule(mainWindow),
     new GlobalShortcutsModule(mainWindow),
     new SleepBlockerModule(mainWindow),
     new MprisModule(mainWindow)
-  );
+  ).catch(console.error);
 });

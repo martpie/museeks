@@ -1,7 +1,7 @@
 import types from '../constants/action-types';
 
 import { config } from '../lib/app';
-import * as utils from '../../shared/utils';
+import * as utils from '../utils/utils';
 import { Action, TrackModel, SortBy, SortOrder } from '../../shared/types/interfaces';
 
 export interface LibrarySort {

@@ -5,7 +5,7 @@
 import * as electron from 'electron';
 import ModuleWindow from './module-window';
 import { TrackModel } from '../../shared/types/interfaces';
-import { fetchCover } from '../../shared/utils';
+import { fetchCover } from '../../shared/utils/cover';
 import * as mpris from 'mpris-service';
 const { app, ipcMain } = electron;
 

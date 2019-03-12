@@ -6,6 +6,7 @@ import * as Setting from '../../components/Setting/Setting';
 
 import * as app from '../../lib/app';
 import * as SettingsActions from '../../actions/SettingsActions';
+import Button from '../../elements/Button/Button';
 
 export default class SettingsAbout extends React.Component {
   render () {
@@ -19,9 +20,9 @@ export default class SettingsAbout extends React.Component {
             { ' - ' }
             <ExternalLink href={`https://github.com/martpie/museeks/releases/tag/${app.version}`}>release notes</ExternalLink>
           </p>
-          <button
+          <Button
             onClick={async () => { await SettingsActions.checkForUpdate(); }}
-          >Check for update</button>
+          >Check for update</Button>
         </Setting.Section>
         <Setting.Section>
           <h3>Contributors</h3>
