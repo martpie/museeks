@@ -35,7 +35,7 @@
   }
 
   &:focus {
-    z-index: 2;
+    color: inherit;
   }
 
   & + .footer__navigation__link {
