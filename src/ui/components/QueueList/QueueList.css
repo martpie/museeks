@@ -10,11 +10,6 @@
   padding-bottom: 1px;
 }
 
-.queue__header__empty {
-  font-size: 10px;
-  padding: 1px 5px;
-}
-
 .queue__content {
   max-height: 250px;
   overflow: auto;

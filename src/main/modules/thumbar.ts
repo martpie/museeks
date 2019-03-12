@@ -25,7 +25,7 @@ class ThumbarModule extends ModuleWindow {
 
     const icons = {
       play: createFromPath(path.join(iconsDirectory, 'play.ico')),
-      playDisabled: createFromPath(path.join(iconsDirectory, 'play-disabled.ico')),
+      // playDisabled: createFromPath(path.join(iconsDirectory, 'play-disabled.ico')),
       pause: createFromPath(path.join(iconsDirectory, 'pause.ico')),
       pauseDisabled: createFromPath(path.join(iconsDirectory, 'pause-disabled.ico')),
       prev: createFromPath(path.join(iconsDirectory, 'backward.ico')),
@@ -42,12 +42,12 @@ class ThumbarModule extends ModuleWindow {
           window.webContents.send('playback:play');
         }
       },
-      playDisabled: {
+      /* playDisabled: {
         tooltip: 'Play',
         flags: ['disabled'],
         icon: icons.playDisabled,
         click: () => { return null; } // Electron's TypeScript definition issue
-      },
+      }, */
       pause: {
         tooltip: 'Pause',
         icon: icons.pause,
@@ -92,7 +92,7 @@ class ThumbarModule extends ModuleWindow {
     ipcMain.on('app:ready', () => {
       window.setThumbarButtons([
         thumbarButtons.prevDisabled,
-        thumbarButtons.playDisabled,
+        thumbarButtons.play,
         thumbarButtons.nextDisabled
       ]);
     });
@@ -116,7 +116,7 @@ class ThumbarModule extends ModuleWindow {
     ipcMain.on('playback:stop', () => {
       window.setThumbarButtons([
         thumbarButtons.prevDisabled,
-        thumbarButtons.playDisabled,
+        thumbarButtons.play,
         thumbarButtons.nextDisabled
       ]);
     });

@@ -3,7 +3,8 @@ import * as os from 'os';
 
 import Player from '../lib/player';
 import { browserWindows, config } from '../lib/app';
-import * as utils from '../../shared/utils';
+import * as utils from '../utils/utils';
+import * as coverUtils from '../../shared/utils/cover';
 
 import * as LibraryActions from './LibraryActions';
 import * as PlaylistsActions from './PlaylistsActions';
@@ -72,7 +73,7 @@ const init = async () => {
 
     if (browserWindows.main.isFocused()) return;
 
-    const cover = await utils.fetchCover(track.path);
+    const cover = await coverUtils.fetchCover(track.path);
 
     NotificationsActions.add(track.title, {
       body: `${track.artist}\n${track.album}`,

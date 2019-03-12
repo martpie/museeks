@@ -9,7 +9,7 @@ import SORT_ORDERS from '../constants/sort-orders';
 import * as ToastsActions from './ToastsActions';
 
 import * as app from '../lib/app';
-import * as utils from '../../shared/utils';
+import * as utils from '../utils/utils';
 import Player from '../lib/player';
 import { sortTracks, filterTracks } from '../utils/utils-library';
 import { shuffleTracks } from '../utils/utils-player';

@@ -1,5 +1,5 @@
 import orderBy from 'lodash-es/orderBy';
-import * as utils from '../../shared/utils';
+import * as utils from './utils';
 
 import { TrackModel } from '../../shared/types/interfaces';
 

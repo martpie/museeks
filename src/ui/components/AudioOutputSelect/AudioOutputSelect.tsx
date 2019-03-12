@@ -1,5 +1,7 @@
 import * as React from 'react';
 
+import * as Setting from '../Setting/Setting';
+
 type Props = {
   defaultValue: string;
   onChange: (deviceId: string) => void;
@@ -64,7 +66,7 @@ class AudioOutputSelect extends React.Component<Props, State> {
     }
 
     return (
-      <select
+      <Setting.Select
         key='devicesOk' // avoid default value problems
         defaultValue={this.props.defaultValue}
         onChange={this.setAudioOutputDevice}
@@ -77,7 +79,7 @@ class AudioOutputSelect extends React.Component<Props, State> {
             >{device.label}</option>
           );
         })}
-      </select>
+      </Setting.Select>
     );
   }
 }
