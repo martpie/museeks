@@ -22,7 +22,7 @@ jobs:
       #     command: apt update && apt install -y libdbus-1-dev libglib2.0-dev
       - run:
           name: Install dependencies
-          command: npm install
+          command: npm ci
       - run:
           name: Rebuild native modules
           command: npm run modules:rebuild
