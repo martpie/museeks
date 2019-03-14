@@ -23,6 +23,8 @@ class TrayModule extends ModuleWindow {
   constructor (window: Electron.BrowserWindow, config: ConfigModule) {
     super(window);
 
+    this.platforms = ['linux', 'win32'];
+
     this.config = config;
     this.tray = null;
     this.playToggle = [];
