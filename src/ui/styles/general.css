@@ -55,6 +55,10 @@ a {
   }
 }
 
+p {
+  line-height: 1.3;
+}
+
 /* App wrapper */
 :global #wrap {
   height: 100vh;
