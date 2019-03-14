@@ -151,7 +151,7 @@ class TrayModule extends ModuleWindow {
       this.setContextMenu(PlayerStatus.PLAY);
     });
 
-    if (this.config.get('minimizeToTray')) this.show();
+    this.show();
   }
 
   show () {
