@@ -38,6 +38,8 @@
     "--scrollbar-thumb": "rgba(0, 0, 0, .25)",
 
     "--queue-bg": "white",
-    "--queue-header-bg": "rgb(244, 244, 244)"
+    "--queue-header-bg": "rgb(244, 244, 244)",
+
+    "--checkbox-bg": "#F4F4F4"
   }
 }

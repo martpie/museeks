@@ -5,7 +5,7 @@
     height: 16px;
     border-radius: var(--border-radius);
     display: inline-block;
-    background-color: #F4F4F4;
+    background-color: var(--checkbox-bg);
     outline: none;
     vertical-align: sub;
     position: relative;
@@ -20,7 +20,8 @@
 
       &::after {
         content: "\f00c";
-        font-family: FontAwesome;
+        /* stylelint-disable-next-line */
+        font-family: FontAwesome inherit;
         font-size: 10px;
         color: white;
         position: absolute;
