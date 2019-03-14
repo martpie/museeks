@@ -20,8 +20,8 @@ class SleepBlocker extends ModuleWindow {
 
   onStartPlayback = (_event: Event) => {
     if (this.enabled && !powerSaveBlocker.isStarted(this.sleepBlockerId)) {
-      // or 'prevent-app-suspension'
-      this.sleepBlockerId = powerSaveBlocker.start('prevent-display-sleep');
+      // or 'prevent-display-sleep'
+      this.sleepBlockerId = powerSaveBlocker.start('prevent-app-suspension');
     }
   }
 

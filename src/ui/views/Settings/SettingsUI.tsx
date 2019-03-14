@@ -1,4 +1,5 @@
 import * as React from 'react';
+import * as os from 'os';
 
 import * as SettingsActions from '../../actions/SettingsActions';
 
@@ -36,17 +37,19 @@ export default class SettingsUI extends React.Component<Props> {
           defaultValue={config.sleepBlocker}
           onClick={SettingsActions.toggleSleepBlocker}
         />
-        <CheckboxSetting
-          slug='tray'
-          title='Minimize on close'
-          description='Minimize when closing the app'
-          defaultValue={config.minimizeToTray}
-          onClick={SettingsActions.toggleMinimizeToTray}
-        />
+        {os.platform() !== 'darwin' && (
+          <CheckboxSetting
+            slug='tray'
+            title='Minimize on close'
+            description='Minimize when closing the app'
+            defaultValue={config.minimizeToTray}
+            onClick={SettingsActions.toggleMinimizeToTray}
+          />
+        )}
         <CheckboxSetting
           slug='update'
           title='Auto update checker'
-          description='Automatically check for update on startup'
+          description='Automatically check for updates on startup'
           defaultValue={config.autoUpdateChecker}
           onClick={SettingsActions.toggleAutoUpdateChecker}
         />

@@ -7,6 +7,7 @@
  */
 
 import { ipcMain, app } from 'electron';
+import * as os from 'os';
 
 import ModuleWindow from './module-window';
 import ConfigModule from './config';
@@ -52,7 +53,7 @@ class IpcModule extends ModuleWindow {
     this.config.reload(); // HACKY
     const minimizeToTray = this.config.get('minimizeToTray');
 
-    if (this.forceQuit || !minimizeToTray) {
+    if (this.forceQuit || (!minimizeToTray && os.platform() !== 'darwin')) {
       app.quit();
       this.window.destroy();
     } else {
