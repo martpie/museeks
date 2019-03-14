@@ -1,14 +1,19 @@
 .checkbox {
-  /* input[type="checkbox"] {
-    -webkit-appearance: none; // reset everything
-    width: 18px;
-    height: 18px;
-    border-radius: 3px;
+  input[type="checkbox"] {
+    -webkit-appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: var(--border-radius);
     display: inline-block;
     background-color: #F4F4F4;
     outline: none;
-    margin-left: -28px;
+    vertical-align: sub;
     position: relative;
+    margin-right: 6px;
+
+    &:focus {
+      box-shadow: 0 0 0 3px var(--border-color);
+    }
 
     &:checked {
       background-color: var(--main-color);
@@ -16,12 +21,12 @@
       &::after {
         content: "\f00c";
         font-family: FontAwesome;
-        font-size: 14px;
+        font-size: 10px;
         color: white;
         position: absolute;
-        top: 2px;
-        left: 2px;
+        top: 3px;
+        left: 3px;
       }
     }
-  } */
+  }
 }
