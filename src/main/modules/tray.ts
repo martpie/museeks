@@ -4,6 +4,7 @@
 
 import * as os from 'os';
 import * as path from 'path';
+import ps from 'ps-node';
 import { Tray, Menu, app, ipcMain, nativeImage } from 'electron';
 
 import ModuleWindow from './module-window';
@@ -21,6 +22,8 @@ class TrayModule extends ModuleWindow {
 
   constructor (window: Electron.BrowserWindow, config: ConfigModule) {
     super(window);
+
+    this.platforms = ['linux', 'win32'];
 
     this.config = config;
     this.tray = null;
@@ -49,6 +52,26 @@ class TrayModule extends ModuleWindow {
   }
 
   async load () {
+    // Fix for gnome-shell and high-dpi
+    if (os.platform() === 'linux') {
+      ps.lookup({
+        command: 'gnome-shell'
+      }, (err: Error, _processes: Object) => {
+        if (err) {
+          console.warn(err);
+        } else {
+          this.trayIcon = nativeImage.createFromPath(
+            path.join(
+              path.resolve(path.join(__dirname, '../../src/images/logos')),
+              'museeks-tray.png'
+            )
+          );
+
+          this.refreshTrayIcon();
+        }
+      });
+    }
+
     this.tray = null;
 
     this.songDetails = [
@@ -128,7 +151,7 @@ class TrayModule extends ModuleWindow {
       this.setContextMenu(PlayerStatus.PLAY);
     });
 
-    if (this.config.get('minimizeToTray')) this.show();
+    this.show();
   }
 
   show () {
@@ -156,6 +179,12 @@ class TrayModule extends ModuleWindow {
 
     if (this.tray) {
       this.tray.setContextMenu(Menu.buildFromTemplate(menuTemplate));
+    }
+  }
+
+  refreshTrayIcon () {
+    if (this.tray) {
+      this.tray.setImage(this.trayIcon);
     }
   }
 
