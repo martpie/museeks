@@ -14,9 +14,7 @@ jobs:
       - restore_cache:
           keys:
             - npm-cache-{{ checksum "package-lock.json" }}
-            # fallback to using the latest cache if no exact match is found
             - mpm-cache
-
       # - run:
       #     name: Install native dependencies
       #     command: apt update && apt install -y libdbus-1-dev libglib2.0-dev
