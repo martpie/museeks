@@ -19,6 +19,7 @@ class TrayModule extends ModuleWindow {
   protected pauseToggle: Electron.MenuItemConstructorOptions[];
   protected songDetails: Electron.MenuItemConstructorOptions[];
   protected menu: Electron.MenuItemConstructorOptions[];
+  protected status: PlayerStatus;
 
   constructor (window: Electron.BrowserWindow, config: ConfigModule) {
     super(window);
@@ -31,6 +32,7 @@ class TrayModule extends ModuleWindow {
     this.pauseToggle = [];
     this.songDetails = [];
     this.menu = [];
+    this.status = PlayerStatus.PAUSE;
 
     // I don't like it, but will do for now
     const logosPath = path.resolve(path.join(__dirname, '../../src/images/logos'));
@@ -139,22 +141,31 @@ class TrayModule extends ModuleWindow {
 
     // Load events listener for player actions
     ipcMain.on('playback:play', () => {
+      this.status = PlayerStatus.PLAY;
       this.setContextMenu(PlayerStatus.PLAY);
     });
 
     ipcMain.on('playback:pause', () => {
+      this.status = PlayerStatus.PAUSE;
       this.setContextMenu(PlayerStatus.PAUSE);
     });
 
     ipcMain.on('playback:trackChange', (_e: Event, track: TrackModel) => {
+      this.status = PlayerStatus.PLAY;
       this.updateTrayMetadata(track);
       this.setContextMenu(PlayerStatus.PLAY);
     });
 
-    this.show();
+    this.window.on('hide', () => {
+      this.create();
+    });
+
+    this.window.on('show', () => {
+      this.destroy();
+    });
   }
 
-  show () {
+  create () {
     this.tray = new Tray(this.trayIcon);
     this.tray.setToolTip('Museeks');
 
@@ -170,14 +181,20 @@ class TrayModule extends ModuleWindow {
       });
     }
 
-    this.setContextMenu(PlayerStatus.PAUSE);
+    this.setContextMenu(this.status);
+  }
+
+  destroy () {
+    if (this.tray) {
+      this.tray.destroy();
+    }
   }
 
   setContextMenu (state: PlayerStatus) {
     const playPauseItem = state === 'play' ? this.pauseToggle : this.playToggle;
     const menuTemplate = [...this.songDetails, ...playPauseItem, ...this.menu];
 
-    if (this.tray) {
+    if (this.tray && !this.tray.isDestroyed()) {
       this.tray.setContextMenu(Menu.buildFromTemplate(menuTemplate));
     }
   }

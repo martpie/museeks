@@ -40,8 +40,8 @@ export default class SettingsUI extends React.Component<Props> {
         {os.platform() !== 'darwin' && (
           <CheckboxSetting
             slug='tray'
-            title='Minimize on close'
-            description='Minimize when closing the app'
+            title='Minimize to tray on close'
+            description='Prevent the app from shutting down when clicking the "close" window button'
             defaultValue={config.minimizeToTray}
             onClick={SettingsActions.toggleMinimizeToTray}
           />
