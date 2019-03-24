@@ -58,6 +58,7 @@ class IpcModule extends ModuleWindow {
       this.window.destroy();
     } else {
       e.preventDefault();
+      // Should we minimize on Linux in case of the Tray not being displayed?
       this.window.hide();
     }
   }
