@@ -8,6 +8,7 @@ import ConfigModule from './modules/config';
 import PowerModule from './modules/power-monitor';
 import ThumbarModule from './modules/thumbar';
 import DockMenuDarwinModule from './modules/dock-menu-darwin';
+import DockMenuModule from './modules/dock-menu';
 import GlobalShortcutsModule from './modules/global-shortcuts';
 import SleepBlockerModule from './modules/sleep-blocker';
 
@@ -118,6 +119,7 @@ app.on('ready', async () => {
     new TrayModule(mainWindow, configModule),
     new ThumbarModule(mainWindow),
     new DockMenuDarwinModule(mainWindow),
+    new DockMenuModule(mainWindow),
     new GlobalShortcutsModule(mainWindow),
     new SleepBlockerModule(mainWindow)
   ).catch(console.error);
