@@ -7,7 +7,7 @@ import { Menu, app, ipcMain } from 'electron';
 import ModuleWindow from './module-window';
 import { PlayerStatus, TrackModel } from '../../shared/types/interfaces';
 
-class DockMenuModule extends ModuleWindow {
+class DockMenuDarwinModule extends ModuleWindow {
   protected menu: Electron.MenuItemConstructorOptions[];
   protected songDetails: Electron.MenuItemConstructorOptions[];
   protected playToggle: Electron.MenuItemConstructorOptions[];
@@ -111,4 +111,4 @@ class DockMenuModule extends ModuleWindow {
   }
 }
 
-export default DockMenuModule;
+export default DockMenuDarwinModule;
