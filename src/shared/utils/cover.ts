@@ -12,7 +12,7 @@ export const parseBase64 = (format: string, data: string) => {
 /**
  * Smart fetch cover
  */
-export const fetchCover = async (trackPath: string): Promise<string | null> => {
+export const fetchCover = async (trackPath: string, ignoreBase64 = false): Promise<string | null> => {
   if (!trackPath) {
     return null;
   }
@@ -20,7 +20,7 @@ export const fetchCover = async (trackPath: string): Promise<string | null> => {
   const data = await mmd.parseFile(trackPath);
   const picture = data.common.picture && data.common.picture[0];
 
-  if (picture) { // If cover in id3
+  if (picture && !ignoreBase64) { // If cover in id3
     return parseBase64(picture.format, picture.data.toString('base64'));
   }
 

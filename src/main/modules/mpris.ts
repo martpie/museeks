@@ -3,21 +3,24 @@
  */
 
 import * as electron from 'electron';
+import * as mpris from 'mpris-service';
+import * as mime from 'mime-types';
+
 import ModuleWindow from './module-window';
 import { TrackModel } from '../../shared/types/interfaces';
 import { fetchCover } from '../../shared/utils/cover';
-import * as mpris from 'mpris-service';
+import { SUPPORTED_TRACKS_EXTENSIONS } from '../../shared/constants';
+
 const { app, ipcMain } = electron;
 
 class MprisModule extends ModuleWindow {
-
-  player = mpris({
+  protected player = mpris({
     name: 'museeks',
     identity: 'Museeks',
     desktopEntry: 'museeks',
     canRaise: true,
     supportedUriSchemes: ['file', 'data'],
-    supportedMimeTypes: ['audio/mpeg', 'application/ogg'], // TODO
+    supportedMimeTypes: SUPPORTED_TRACKS_EXTENSIONS.map(mime.lookup).filter(Boolean),
     supportedInterfaces: ['player']
   });
 
@@ -89,7 +92,7 @@ class MprisModule extends ModuleWindow {
   }
 
   async updateCurrentTrack (track: TrackModel) {
-    let cover = await fetchCover(track.path);
+    let cover = await fetchCover(track.path, true);
 
     // this.player.canSeek = true;
     this.player.canPlay = true;
@@ -98,7 +101,7 @@ class MprisModule extends ModuleWindow {
     this.player.canGoNext = true;
     this.player.metadata = {
       'mpris:length': Math.ceil(track.duration * 1000000), // should be in microseconds
-      'mpris:artUrl': cover,
+      'mpris:artUrl': `file://${cover}`,
       'xesam:title': track.title,
       'xesam:album': track.album,
       'xesam:artist': track.artist
