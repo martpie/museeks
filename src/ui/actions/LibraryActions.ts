@@ -15,6 +15,7 @@ import * as app from '../lib/app';
 import * as utils from '../utils/utils';
 import * as m3u from '../utils/utils-m3u';
 import { SortBy, TrackModel } from '../../shared/types/interfaces';
+import { SUPPORTED_PLAYLISTS_EXTENSIONS, SUPPORTED_TRACKS_EXTENSIONS } from '../../shared/constants';
 
 const { dialog } = electron.remote;
 const stat = util.promisify(fs.stat);
@@ -212,12 +213,12 @@ export const add = async (pathsToScan: string[]) => {
 
     const supportedTrackFiles = allFiles.filter((filePath) => {
       const extension = path.extname(filePath).toLowerCase();
-      return app.SUPPORTED_TRACKS_EXTENSIONS.includes(extension);
+      return SUPPORTED_TRACKS_EXTENSIONS.includes(extension);
     });
 
     const supportedPlaylistsFiles = allFiles.filter((filePath) => {
       const extension = path.extname(filePath).toLowerCase();
-      return app.SUPPORTED_PLAYLISTS_EXTENSIONS.includes(extension);
+      return SUPPORTED_PLAYLISTS_EXTENSIONS.includes(extension);
     });
 
     if (supportedTrackFiles.length === 0 && supportedPlaylistsFiles.length === 0) {

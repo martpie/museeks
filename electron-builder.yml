@@ -13,6 +13,7 @@ mac:
   icon: src/images/logos/museeks.icns
   artifactName: ${name}.${ext}
 linux:
+  depends: ['libdbus-1-dev', 'libglib2.0-dev']
   category: Audio
   target:
     - deb
