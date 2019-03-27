@@ -5,23 +5,35 @@
 import { Menu, app, ipcMain } from 'electron';
 
 import ModuleWindow from './module-window';
-import { PlayerStatus } from '../../shared/types/interfaces';
+import { PlayerStatus, TrackModel } from '../../shared/types/interfaces';
 
-class DockMenuModule extends ModuleWindow {
+class DockMenuDarwinModule extends ModuleWindow {
   protected menu: Electron.MenuItemConstructorOptions[];
+  protected songDetails: Electron.MenuItemConstructorOptions[];
   protected playToggle: Electron.MenuItemConstructorOptions[];
   protected pauseToggle: Electron.MenuItemConstructorOptions[];
 
   constructor (window: Electron.BrowserWindow) {
     super(window);
-    this.platforms = ['win32', 'linux'];
+    this.platforms = ['darwin'];
 
     this.menu = [];
+    this.songDetails = [];
     this.playToggle = [];
     this.pauseToggle = [];
   }
 
   async load () {
+    this.songDetails = [
+      {
+        label: 'Not playing',
+        enabled: false
+      },
+      {
+        type: 'separator'
+      }
+    ];
+
     this.playToggle = [
       {
         label: 'Play',
@@ -52,16 +64,6 @@ class DockMenuModule extends ModuleWindow {
         click: () => {
           this.window.webContents.send('playback:next');
         }
-      },
-      {
-        type: 'separator'
-      },
-      {
-        label: 'Quit',
-        click: () => {
-          app.quit();
-          this.window.destroy();
-        }
       }
     ];
 
@@ -74,14 +76,39 @@ class DockMenuModule extends ModuleWindow {
       this.setDockMenu(PlayerStatus.PAUSE);
     });
 
+    ipcMain.on('playback:trackChange', (_e: Event, track: TrackModel) => {
+      this.updateTrayMetadata(track);
+      this.setDockMenu(PlayerStatus.PLAY);
+    });
+
     this.setDockMenu(PlayerStatus.PAUSE);
   }
 
   setDockMenu (state: PlayerStatus) {
     const playPauseItem = state === 'play' ? this.pauseToggle : this.playToggle;
-    const menuTemplate = [...playPauseItem, ...this.menu];
+    const menuTemplate = [...this.songDetails, ...playPauseItem, ...this.menu];
     app.dock.setMenu(Menu.buildFromTemplate(menuTemplate));
+  }
+
+  updateTrayMetadata (metadata: TrackModel) {
+    this.songDetails = [
+      {
+        label: `${metadata.title}`,
+        enabled: false
+      },
+      {
+        label: `by ${metadata.artist}`,
+        enabled: false
+      },
+      {
+        label: `on ${metadata.album}`,
+        enabled: false
+      },
+      {
+        type: 'separator'
+      }
+    ];
   }
 }
 
-export default DockMenuModule;
+export default DockMenuDarwinModule;
