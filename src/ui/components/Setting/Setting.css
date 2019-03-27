@@ -31,7 +31,6 @@
   width: 100%;
   font-size: 1rem;
   line-height: 1;
-  height: 32px; /* shame */
 
   &:focus {
     outline: none;

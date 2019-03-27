@@ -4,6 +4,7 @@
 
 import * as os from 'os';
 import * as path from 'path';
+import ps from 'ps-node';
 import { Tray, Menu, app, ipcMain, nativeImage } from 'electron';
 
 import ModuleWindow from './module-window';
@@ -18,9 +19,12 @@ class TrayModule extends ModuleWindow {
   protected pauseToggle: Electron.MenuItemConstructorOptions[];
   protected songDetails: Electron.MenuItemConstructorOptions[];
   protected menu: Electron.MenuItemConstructorOptions[];
+  protected status: PlayerStatus;
 
   constructor (window: Electron.BrowserWindow, config: ConfigModule) {
     super(window);
+
+    this.platforms = ['linux', 'win32'];
 
     this.config = config;
     this.tray = null;
@@ -28,6 +32,7 @@ class TrayModule extends ModuleWindow {
     this.pauseToggle = [];
     this.songDetails = [];
     this.menu = [];
+    this.status = PlayerStatus.PAUSE;
 
     // I don't like it, but will do for now
     const logosPath = path.resolve(path.join(__dirname, '../../src/images/logos'));
@@ -49,6 +54,26 @@ class TrayModule extends ModuleWindow {
   }
 
   async load () {
+    // Fix for gnome-shell and high-dpi
+    if (os.platform() === 'linux') {
+      ps.lookup({
+        command: 'gnome-shell'
+      }, (err: Error, _processes: Object) => {
+        if (err) {
+          console.warn(err);
+        } else {
+          this.trayIcon = nativeImage.createFromPath(
+            path.join(
+              path.resolve(path.join(__dirname, '../../src/images/logos')),
+              'museeks-tray.png'
+            )
+          );
+
+          this.refreshTrayIcon();
+        }
+      });
+    }
+
     this.tray = null;
 
     this.songDetails = [
@@ -116,22 +141,31 @@ class TrayModule extends ModuleWindow {
 
     // Load events listener for player actions
     ipcMain.on('playback:play', () => {
+      this.status = PlayerStatus.PLAY;
       this.setContextMenu(PlayerStatus.PLAY);
     });
 
     ipcMain.on('playback:pause', () => {
+      this.status = PlayerStatus.PAUSE;
       this.setContextMenu(PlayerStatus.PAUSE);
     });
 
     ipcMain.on('playback:trackChange', (_e: Event, track: TrackModel) => {
+      this.status = PlayerStatus.PLAY;
       this.updateTrayMetadata(track);
       this.setContextMenu(PlayerStatus.PLAY);
     });
 
-    if (this.config.get('minimizeToTray')) this.show();
+    this.window.on('hide', () => {
+      this.create();
+    });
+
+    this.window.on('show', () => {
+      this.destroy();
+    });
   }
 
-  show () {
+  create () {
     this.tray = new Tray(this.trayIcon);
     this.tray.setToolTip('Museeks');
 
@@ -147,15 +181,27 @@ class TrayModule extends ModuleWindow {
       });
     }
 
-    this.setContextMenu(PlayerStatus.PAUSE);
+    this.setContextMenu(this.status);
+  }
+
+  destroy () {
+    if (this.tray) {
+      this.tray.destroy();
+    }
   }
 
   setContextMenu (state: PlayerStatus) {
     const playPauseItem = state === 'play' ? this.pauseToggle : this.playToggle;
     const menuTemplate = [...this.songDetails, ...playPauseItem, ...this.menu];
 
-    if (this.tray) {
+    if (this.tray && !this.tray.isDestroyed()) {
       this.tray.setContextMenu(Menu.buildFromTemplate(menuTemplate));
+    }
+  }
+
+  refreshTrayIcon () {
+    if (this.tray) {
+      this.tray.setImage(this.trayIcon);
     }
   }
 
