@@ -1,5 +1,3 @@
-
-
 const path = require('path');
 
 const merge = require('webpack-merge');
@@ -43,6 +41,11 @@ const mainConfig = {
   entry: {
     main: ['./src/main/main.ts'],
   },
+  resolve: {
+    alias: {
+      jsbi: path.resolve(__dirname, 'node_modules', 'jsbi', 'dist', 'jsbi-cjs.js')
+    }
+  },
   output: {
     path: `${__dirname}/dist/main`,
     filename: 'bundle.js',
@@ -67,7 +70,8 @@ const mainConfig = {
  */
 const sharedConfig = {
   resolve: {
-    extensions: ['.ts', '.tsx', '.js', '.json'],
+    // mainFields: ['browser', 'main', 'module'],
+    extensions: ['.mjs', '.ts', '.tsx', '.js', '.json'],
   },
   module: {
     rules: [
@@ -136,6 +140,10 @@ const sharedConfig = {
           },
         }],
         include: /node_modules/,
+      },
+      {
+        test: /\.node$/,
+        use: 'node-loader'
       },
       { // Hotfix for iconv-lite https://github.com/ashtuchkin/iconv-lite/issues/204
         test: /node_modules[\/\\](iconv-lite)[\/\\].+/,
