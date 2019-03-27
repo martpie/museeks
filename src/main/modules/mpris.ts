@@ -91,13 +91,13 @@ class MprisModule extends ModuleWindow {
   async updateCurrentTrack (track: TrackModel) {
     let cover = await fetchCover(track.path);
 
-    this.player.canSeek = true;
+    // this.player.canSeek = true;
     this.player.canPlay = true;
     this.player.canPause = true;
     this.player.canGoPrevious = true;
     this.player.canGoNext = true;
     this.player.metadata = {
-      'mpris:length': track.duration,
+      'mpris:length': Math.ceil(track.duration * 1000000), // should be in microseconds
       'mpris:artUrl': cover,
       'xesam:title': track.title,
       'xesam:album': track.album,
