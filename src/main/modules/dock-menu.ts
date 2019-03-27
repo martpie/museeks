@@ -14,7 +14,7 @@ class DockMenuModule extends ModuleWindow {
 
   constructor (window: Electron.BrowserWindow) {
     super(window);
-    this.platforms = ['win32', 'linux'];
+    this.platforms = ['linux'];
 
     this.menu = [];
     this.playToggle = [];
