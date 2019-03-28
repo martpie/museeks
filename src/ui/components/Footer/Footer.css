@@ -22,7 +22,7 @@
   border: solid 1px var(--border-color);
   border-width: 0 1px;
   color: inherit;
-  padding: 7px 12px;
+  padding: 8px 12px;
   display: inline-block;
 
   &:hover {
