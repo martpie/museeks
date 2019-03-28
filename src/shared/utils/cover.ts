@@ -2,6 +2,9 @@ import * as path from 'path';
 import * as mmd from 'music-metadata';
 import globby from 'globby';
 
+const SUPPORTED_COVER_EXTENSIONS = ['.png', '.jpg', '.jpeg', '.bmp', '.gif'];
+const SUPPORTED_COVER_NAMES = ['album', 'albumart', 'folder', 'cover', 'front'];
+
 /**
  * Parse data to be used by img/background-image with base64
  */
@@ -10,18 +13,32 @@ export const parseBase64 = (format: string, data: string) => {
 };
 
 /**
- * Smart fetch cover
+ * Determine if a file is a valid cover or not
  */
-export const fetchCover = async (trackPath: string, ignoreBase64 = false): Promise<string | null> => {
+const isValidFilename = (pathname: path.ParsedPath): boolean => {
+  const isExtensionValid = SUPPORTED_COVER_EXTENSIONS.includes(pathname.ext.toLowerCase());
+  const isNameValid = SUPPORTED_COVER_NAMES.some((name) => {
+    return pathname.name.toLowerCase().includes(name);
+  });
+
+  return isExtensionValid && isNameValid;
+};
+
+/**
+ * Smart fetch cover (from id3 or file directory)
+ */
+export const fetchCover = async (trackPath: string, ignoreId3 = false): Promise<string | null> => {
   if (!trackPath) {
     return null;
   }
 
-  const data = await mmd.parseFile(trackPath);
-  const picture = data.common.picture && data.common.picture[0];
+  if (!ignoreId3) {
+    const data = await mmd.parseFile(trackPath);
+    const picture = data.common.picture && data.common.picture[0];
 
-  if (picture && !ignoreBase64) { // If cover in id3
-    return parseBase64(picture.format, picture.data.toString('base64'));
+    if (picture) { // If cover in id3
+      return parseBase64(picture.format, picture.data.toString('base64'));
+    }
   }
 
   // scan folder for any cover image
@@ -30,10 +47,7 @@ export const fetchCover = async (trackPath: string, ignoreBase64 = false): Promi
   const matches = await globby(pattern, { followSymlinkedDirectories: false });
 
   const match = matches.find((elem) => {
-    const parsedPath = path.parse(elem);
-
-    return ['album', 'albumart', 'folder', 'cover'].includes(parsedPath.name.toLowerCase())
-      && ['.png', '.jpg', '.bmp', '.gif'].includes(parsedPath.ext.toLowerCase()); // TODO jpeg?
+    return isValidFilename(path.parse(elem));
   });
 
   if (match) return match;
