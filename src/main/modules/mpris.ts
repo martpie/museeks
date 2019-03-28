@@ -14,15 +14,7 @@ import { SUPPORTED_TRACKS_EXTENSIONS } from '../../shared/constants';
 const { app, ipcMain } = electron;
 
 class MprisModule extends ModuleWindow {
-  protected player = mpris({
-    name: 'museeks',
-    identity: 'Museeks',
-    desktopEntry: 'museeks',
-    canRaise: true,
-    supportedUriSchemes: ['file', 'data'],
-    supportedMimeTypes: SUPPORTED_TRACKS_EXTENSIONS.map(mime.lookup).filter(Boolean),
-    supportedInterfaces: ['player']
-  });
+  protected player: null | any;
 
   constructor (window: Electron.BrowserWindow) {
     super(window);
@@ -30,6 +22,16 @@ class MprisModule extends ModuleWindow {
   }
 
   async load () {
+    this.player = mpris({
+      name: 'museeks',
+      identity: 'Museeks',
+      desktopEntry: 'museeks',
+      canRaise: true,
+      supportedUriSchemes: ['file', 'data'],
+      supportedMimeTypes: SUPPORTED_TRACKS_EXTENSIONS.map(mime.lookup).filter(Boolean),
+      supportedInterfaces: ['player']
+    });
+
     this.player.canEditTracks = false;
     this.player.playbackStatus = 'Stopped';
 
