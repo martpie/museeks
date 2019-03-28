@@ -55,6 +55,10 @@ a {
   }
 }
 
+input {
+  outline: none;
+}
+
 p {
   line-height: 1.3;
 }

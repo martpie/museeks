@@ -25,5 +25,5 @@
 }
 
 .dropzone__subtitle {
-  color: #7d7d7d;
+  color: var(--text-color);
 }
