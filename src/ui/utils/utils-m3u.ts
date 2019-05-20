@@ -18,7 +18,7 @@ export const parse = (filePath: string): string[] => {
     const decodedContent = iconv.decode(content, encoding);
 
     const files = decodedContent
-      .split('\n')
+      .split(/\r?\n/)
       .reduce((acc, line) => {
         if (line.length === 0) {
           return acc;
