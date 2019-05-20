@@ -23,13 +23,13 @@ type Props = RouteComponentProps<{}>;
 
 class Museeks extends React.Component<Props> {
   onKey = async (e: KeyboardEvent) => {
-    switch (e.code) {
-      case 'Space':
+    switch (e.key) {
+      case ' ':
         e.preventDefault();
         e.stopPropagation();
         await PlayerActions.playPause();
         break;
-      case 'Comma':
+      case ',':
         if (isCtrlKey(e)) {
           e.preventDefault();
           e.stopPropagation();
