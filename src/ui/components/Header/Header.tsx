@@ -33,7 +33,7 @@ class Header extends React.Component<Props> {
 
   onKey (e: KeyboardEvent) {
     // ctrl-f shortcut
-    if (isCtrlKey(e) && e.code === 'KeyF') {
+    if (isCtrlKey(e) && e.key.toLowerCase() === 'f') {
       if (this.input.current) {
         // @ts-ignore
         // tslint:disable-next-line
