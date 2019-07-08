@@ -1,7 +1,11 @@
 import * as React from 'react';
 import { NavLink } from 'react-router-dom';
 
+import * as app from '../../lib/app';
+import * as PlayerActions from '../../actions/PlayerActions';
 import * as styles from './PlaylistsNavLink.css';
+
+import { TrackModel, PlaylistModel } from 'src/shared/types/interfaces';
 
 interface Props {
   className?: string;
@@ -10,6 +14,13 @@ interface Props {
 }
 
 export default class PlaylistsNavLink extends React.Component<Props> {
+  // Start playing playlist on double click (Issue #495)
+  handleDoubleClick = async () => {
+    const playlist: PlaylistModel = await app.models.Playlist.findOneAsync({ _id: this.props.playlistId });
+    const tracks: TrackModel[] = await app.models.Track.findAsync({ _id: { $in: playlist.tracks } });
+    PlayerActions.start(tracks);
+  }
+
   constructor (props: Props) {
     super(props);
 
@@ -28,6 +39,7 @@ export default class PlaylistsNavLink extends React.Component<Props> {
         to={`/playlists/${this.props.playlistId}`}
         onContextMenu={this.onContextMenu}
         draggable={false}
+        onDoubleClick={this.handleDoubleClick}
       >
         { this.props.children }
       </NavLink>
