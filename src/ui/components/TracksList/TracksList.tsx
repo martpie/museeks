@@ -90,17 +90,24 @@ export default class TracksList extends React.Component<Props, State> {
     const { selected } = this.state;
     const { tracks } = this.props;
 
-    const firstSelectedTrackId = tracks.findIndex(track => selected.includes(track._id));
+    let firstSelectedTrackId = tracks.findIndex(track => selected.includes(track._id));
 
     switch (e.code) {
+      // CTRL+All selection
+      case 'KeyA':
+        if (e.ctrlKey) this.onControlAll(firstSelectedTrackId, tracks);
+        break;
+
       case 'ArrowUp':
         e.preventDefault();
-        this.onUp(firstSelectedTrackId, tracks);
+        this.onUp(firstSelectedTrackId, tracks, e.shiftKey);
         break;
 
       case 'ArrowDown':
+        // This effectively becomes lastSelectedTrackID
+        firstSelectedTrackId = tracks.findIndex(track => selected[selected.length - 1] === track._id);
         e.preventDefault();
-        this.onDown(firstSelectedTrackId, tracks);
+        this.onDown(firstSelectedTrackId, tracks, e.shiftKey);
         break;
 
       case 'Enter':
@@ -112,9 +119,24 @@ export default class TracksList extends React.Component<Props, State> {
     }
   }
 
-  onUp (i: number, tracks: TrackModel[]) {
+  onControlAll (i: number, tracks: TrackModel[]) {
+    this.setState({ selected: tracks.map((track) => track._id) }, () => {
+      const container = this.renderView;
+      const nodeOffsetTop = (i - 1) * ROW_HEIGHT;
+
+      if (container && container.scrollTop > nodeOffsetTop) container.scrollTop = nodeOffsetTop;
+    });
+  }
+
+  onUp (i: number, tracks: TrackModel[], shiftKeyPressed: boolean) {
     if (i - 1 >= 0) {
-      this.setState({ selected: [tracks[i - 1]._id] }, () => {
+
+      // Issue #489, shift key modifier
+      let newSelected = this.state.selected;
+      if (shiftKeyPressed) newSelected = [tracks[i - 1]._id, ...this.state.selected];
+      else newSelected = [tracks[i - 1]._id];
+
+      this.setState({ selected: newSelected }, () => {
         const container = this.renderView;
         const nodeOffsetTop = (i - 1) * ROW_HEIGHT;
 
@@ -123,9 +145,15 @@ export default class TracksList extends React.Component<Props, State> {
     }
   }
 
-  onDown (i: number, tracks: TrackModel[]) {
+  onDown (i: number, tracks: TrackModel[], shiftKeyPressed: boolean) {
     if (i + 1 < tracks.length) {
-      this.setState({ selected: [tracks[i + 1]._id] }, () => {
+
+      // Issue #489, shift key modifier
+      let newSelected = this.state.selected;
+      if (shiftKeyPressed) newSelected.push(tracks[i + 1]._id);
+      else newSelected = [tracks[i + 1]._id];
+
+      this.setState({ selected: newSelected }, () => {
         const container: HTMLDivElement | null = this.renderView;
         const nodeOffsetTop = (i + 1) * ROW_HEIGHT;
 
