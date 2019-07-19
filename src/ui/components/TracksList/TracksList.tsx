@@ -88,9 +88,8 @@ export default class TracksList extends React.Component<Props, State> {
     let firstSelectedTrackId = tracks.findIndex((track) => selected.includes(track._id));
 
     switch (e.code) {
-      // CTRL+All selection
       case 'KeyA':
-        if (e.ctrlKey) this.onControlAll(firstSelectedTrackId, tracks);
+        if (isCtrlKey(e)) this.onControlAll(firstSelectedTrackId, tracks);
         break;
 
       case 'ArrowUp':
