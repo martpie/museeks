@@ -8,7 +8,7 @@ interface Props {
   bSize?: 'small';
 }
 
-const Button: React.FC<Props & React.HTMLProps<HTMLButtonElement>> = (props) => {
+const Button: React.FC<Props & JSX.IntrinsicElements['button']> = (props) => {
   const { relevancy, bSize, ...rest } = props;
 
   const classes = cx(styles.button, {
