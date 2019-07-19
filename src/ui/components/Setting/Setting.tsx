@@ -13,7 +13,7 @@ export const Description: React.FC = (props) => (
   </p>
 );
 
-export const Label: React.FC<React.HTMLProps<HTMLLabelElement>> = (props) => {
+export const Label: React.FC<JSX.IntrinsicElements['label']> = (props) => {
   const { children, ...restProps } = props;
 
   return (
@@ -32,7 +32,7 @@ export const Title: React.FC = (props) => (
   </span>
 );
 
-export const Input: React.FC<React.HTMLProps<HTMLInputElement>> = (props) => {
+export const Input: React.FC<JSX.IntrinsicElements['input']> = (props) => {
   const { children, ...restProps } = props;
 
   return (
@@ -51,7 +51,7 @@ export const Error: React.FC = (props) => (
   </p>
 );
 
-export const Select: React.FC<React.HTMLProps<HTMLSelectElement>> = (props) => (
+export const Select: React.FC<JSX.IntrinsicElements['select']> = (props) => (
   <select className={styles.settingSelect} {...props}>
     {props.children}
   </select>
