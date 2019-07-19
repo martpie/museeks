@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { NavLink } from 'react-router-dom';
 
+import * as PlaylistActions from '../../actions/PlaylistsActions';
+
 import * as styles from './PlaylistsNavLink.css';
 
 interface Props {
@@ -28,6 +30,7 @@ export default class PlaylistsNavLink extends React.Component<Props> {
         to={`/playlists/${this.props.playlistId}`}
         onContextMenu={this.onContextMenu}
         draggable={false}
+        onDoubleClick={() => PlaylistActions.play(this.props.playlistId)}
       >
         { this.props.children }
       </NavLink>
