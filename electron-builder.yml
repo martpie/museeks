@@ -1,11 +1,11 @@
 appId: io.museeks.app
 directories:
-  buildResources: "./dist"
-  output: "./build"
+  buildResources: './dist'
+  output: './build'
 files:
   - dist/**/*
   - src/images/**/*
-  - "!node_modules/**/*"
+  - '!node_modules/**/*'
 mac:
   category: public.app-category.music
   target:

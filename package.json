@@ -25,10 +25,10 @@
     "museeks:debug": "electron . --enable-logging --devtools",
     "lint:css": "stylelint \"src/**/*.css\"",
     "modules:rebuild": "electron-rebuild -f",
-    "package:lmw": "build -lmw --ia32 --x64",
-    "package:l": "build -l --ia32 --x64",
-    "package:w": "build -w --ia32 --x64",
-    "package:m": "build -m"
+    "package:lmw": "electron-builder -lmw --ia32 --x64",
+    "package:l": "electron-builder -l --ia32 --x64",
+    "package:w": "electron-builder -w --ia32 --x64",
+    "package:m": "electron-builder -m"
   },
   "dependencies": {
     "bluebird": "3.5.5",
@@ -85,7 +85,7 @@
     "clean-terminal-webpack-plugin": "2.0.4",
     "css-loader": "2.1.1",
     "electron": "4.1.1",
-    "electron-builder": "21.1.1",
+    "electron-builder": "20.44.4",
     "electron-rebuild": "1.8.5",
     "eslint": "6.0.1",
     "eslint-config-prettier": "6.0.0",
