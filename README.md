@@ -41,9 +41,9 @@ Builds and installers can be found [on this page](https://github.com/martpie/mus
 
 Museeks is built upon:
 
-* [Node.js](https://nodejs.org/en/)
-* [Electron](https://github.com/atom/electron/) (formerly atom-shell)
-* [React.js](https://facebook.github.io/react/) as UI library and [Flux](https://facebook.github.io/flux/) with [Redux](http://redux.js.org/) as data-flow pattern
+- [Node.js](https://nodejs.org/en/)
+- [Electron](https://github.com/atom/electron/) (formerly atom-shell)
+- [React.js](https://facebook.github.io/react/) as UI library and [Flux](https://facebook.github.io/flux/) with [Redux](http://redux.js.org/) as data-flow pattern
 
 Requirements:
 
@@ -54,9 +54,18 @@ Please consider that **`master` is unstable**.
 
 - `git clone git@github.com:martpie/museeks.git`
 - `cd museeks`
-- `npm install`
+- `npm ci`
+- `npm modules:rebuild`
 - `npm run build` or `npm run dev`
 - `npm run museeks` or `npm run museeks:debug`
+
+### Package (advanced)
+
+- `rm -rf node_modules dist build`
+- `npm ci`
+- `npm modules:rebuild`
+- `npm build`
+- `npm run package:lmw`
 
 ## Troubleshooting
 
@@ -65,12 +74,12 @@ Museeks is currently in development. This implies some things can break after an
 If you encounter freezes or crashes when using the app, you can reset Museeks by following these steps:
 
 - Go to the Museeks folder directory
-    - Windows: `%AppData%\museeks`
-    - OSX: `~/Library/Application Support/museeks`
-    - Linux: `~/.config/museeks/` or `$XDG_CONFIG_HOME/museeks`
+  - Windows: `%AppData%\museeks`
+  - OSX: `~/Library/Application Support/museeks`
+  - Linux: `~/.config/museeks/` or `$XDG_CONFIG_HOME/museeks`
 - Delete:
-    - `IndexedDB` folder
-    - `config.json` file
+  - `IndexedDB` folder
+  - `config.json` file
 - Restart Museeks
 
 If you still get problems after that, please open an issue :)
