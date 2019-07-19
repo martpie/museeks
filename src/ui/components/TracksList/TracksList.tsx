@@ -343,8 +343,7 @@ export default class TracksList extends React.Component<Props, State> {
         {
           label: 'Create new playlist...',
           click: async () => {
-            const playlistId = await PlaylistsActions.create('New playlist');
-            await PlaylistsActions.addTracks(playlistId, selected);
+            await PlaylistsActions.create('New playlist', selected);
           }
         },
         {
