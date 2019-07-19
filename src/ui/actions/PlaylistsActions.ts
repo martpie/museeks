@@ -6,11 +6,25 @@ import store from '../store';
 import history from '../router/history';
 import types from '../constants/action-types';
 import * as ToastsActions from './ToastsActions';
+import * as PlayerActions from './PlayerActions';
 
 import * as app from '../lib/app';
 import { Playlist, TrackModel, PlaylistModel } from 'src/shared/types/interfaces';
 
 const { dialog } = electron.remote;
+
+/**
+ * Start playing playlist (on double click)
+ */
+export const play = async (playlistId: string) => {
+  try {
+    const playlist: PlaylistModel = await app.models.Playlist.findOneAsync({ _id: playlistId });
+    const tracks: TrackModel[] = await app.models.Track.findAsync({ _id: { $in: playlist.tracks } });
+    PlayerActions.start(tracks).catch((err) => console.warn(err));
+  } catch (err) {
+    console.warn(err);
+  }
+};
 
 /**
  * Load one playlist from database (Tracks list)
