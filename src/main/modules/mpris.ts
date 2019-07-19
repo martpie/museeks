@@ -6,22 +6,22 @@ import * as electron from 'electron';
 import * as mpris from 'mpris-service';
 import * as mime from 'mime-types';
 
-import ModuleWindow from './module-window';
 import { TrackModel } from '../../shared/types/interfaces';
 import { fetchCover } from '../../shared/utils/cover';
 import { SUPPORTED_TRACKS_EXTENSIONS } from '../../shared/constants';
+import ModuleWindow from './module-window';
 
 const { app, ipcMain } = electron;
 
 class MprisModule extends ModuleWindow {
   protected player: null | any;
 
-  constructor (window: Electron.BrowserWindow) {
+  constructor(window: Electron.BrowserWindow) {
     super(window);
     this.platforms = ['linux'];
   }
 
-  async load () {
+  async load() {
     this.player = mpris({
       name: 'museeks',
       identity: 'Museeks',
@@ -93,7 +93,7 @@ class MprisModule extends ModuleWindow {
     });
   }
 
-  async updateCurrentTrack (track: TrackModel) {
+  async updateCurrentTrack(track: TrackModel) {
     let cover = await fetchCover(track.path, true);
 
     // this.player.canSeek = true;

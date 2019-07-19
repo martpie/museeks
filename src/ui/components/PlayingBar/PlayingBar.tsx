@@ -26,20 +26,20 @@ export default class PlayingBar extends React.Component<Props, State> {
     queueOpen: false
   };
 
-  constructor (props: Props) {
+  constructor(props: Props) {
     super(props);
 
     this.toggleQueue = this.toggleQueue.bind(this);
     this.closeQueue = this.closeQueue.bind(this);
   }
 
-  toggleQueue () {
+  toggleQueue() {
     this.setState({
       queueOpen: !this.state.queueOpen
     });
   }
 
-  closeQueue () {
+  closeQueue() {
     if (this.state.queueOpen) {
       this.setState({
         queueOpen: false
@@ -47,7 +47,7 @@ export default class PlayingBar extends React.Component<Props, State> {
     }
   }
 
-  render () {
+  render() {
     const { queue, queueCursor, repeat, shuffle } = this.props;
 
     const queueContainerClasses = cx(styles.queueContainer, {
@@ -59,28 +59,18 @@ export default class PlayingBar extends React.Component<Props, State> {
     const trackPlaying = queue[queueCursor];
 
     return (
-      <div className={styles.playingBar} >
+      <div className={styles.playingBar}>
         <div className={styles.playingBar__cover}>
           <Cover path={trackPlaying.path} />
         </div>
-        <PlayingBarInfos
-          trackPlaying={trackPlaying}
-          shuffle={shuffle}
-          repeat={repeat}
-        />
+        <PlayingBarInfos trackPlaying={trackPlaying} shuffle={shuffle} repeat={repeat} />
         <div className={styles.playingBar__queue}>
           <ClickOutHandler onClickOut={this.closeQueue}>
-            <button
-              onClick={this.toggleQueue}
-              className={styles.queueToggle}
-            >
+            <button onClick={this.toggleQueue} className={styles.queueToggle}>
               <Icon name='list' />
             </button>
             <div className={queueContainerClasses}>
-              <Queue
-                queue={this.props.queue}
-                queueCursor={this.props.queueCursor}
-              />
+              <Queue queue={this.props.queue} queueCursor={this.props.queueCursor} />
             </div>
           </ClickOutHandler>
         </div>

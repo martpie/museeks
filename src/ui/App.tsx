@@ -39,20 +39,18 @@ class Museeks extends React.Component<Props> {
       default:
         break;
     }
-  }
+  };
 
-  async componentDidMount () {
+  async componentDidMount() {
     await AppActions.init();
   }
 
-  render () {
+  render() {
     return (
       <div className={`${styles.root} os-${os.platform()}`}>
         <KeyBinding onKey={this.onKey} preventInputConflict />
         <Header />
-        <main className={`${styles.mainContent} container-fluid`}>
-          {this.props.children}
-        </main>
+        <main className={`${styles.mainContent} container-fluid`}>{this.props.children}</main>
         <Footer />
         <Toasts />
       </div>

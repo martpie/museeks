@@ -8,8 +8,8 @@ import { getStatus } from '../../utils/utils-library';
 import { RootState } from '../../reducers';
 import { LibraryState } from '../../reducers/library';
 
-import * as styles from './Footer.css';
 import ProgressBar from '../ProgressBar/ProgressBar';
+import * as styles from './Footer.css';
 
 interface InjectedProps {
   library: LibraryState;
@@ -18,12 +18,12 @@ interface InjectedProps {
 type Props = InjectedProps & RouteComponentProps<{}>;
 
 class Footer extends React.Component<Props> {
-  constructor (props: Props) {
+  constructor(props: Props) {
     super(props);
     this.getStatus = this.getStatus.bind(this);
   }
 
-  getStatus () {
+  getStatus() {
     const { library } = this.props;
     const { processed, total } = library.refresh;
 
@@ -47,23 +47,13 @@ class Footer extends React.Component<Props> {
     // of the route
     return (
       <Switch>
-        <Route
-          path='/library'
-          render={() => (
-            getStatus(library.tracks.library)
-          )}
-        />
-        <Route
-          path='/playlists'
-          render={() => (
-            getStatus(library.tracks.playlist)
-          )}
-        />
+        <Route path='/library' render={() => getStatus(library.tracks.library)} />
+        <Route path='/playlists' render={() => getStatus(library.tracks.playlist)} />
       </Switch>
     );
   }
 
-  render () {
+  render() {
     return (
       <footer className={styles.footer}>
         <div className={styles.footer__navigation}>
@@ -97,9 +87,7 @@ class Footer extends React.Component<Props> {
             </NavLink>
           </div>
         </div>
-        <div className={styles.footer__status}>
-          {this.getStatus()}
-        </div>
+        <div className={styles.footer__status}>{this.getStatus()}</div>
       </footer>
     );
   }

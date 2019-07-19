@@ -29,7 +29,8 @@ export enum SortOrder {
 /**
  * Redux
  */
-export interface Action { // TODO action specific types
+export interface Action {
+  // TODO action specific types
   type: string;
   payload?: any;
 }
@@ -68,8 +69,8 @@ export interface Track {
   album: string;
   artist: string[];
   disk: {
-    no: number,
-    of: number
+    no: number;
+    of: number;
   };
   duration: number;
   genre: string[];
@@ -83,8 +84,8 @@ export interface Track {
   playCount: number;
   title: string;
   track: {
-    no: number,
-    of: number
+    no: number;
+    of: number;
   };
   year: number | null;
 }

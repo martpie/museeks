@@ -2,18 +2,18 @@ import * as React from 'react';
 
 import * as Setting from '../Setting/Setting';
 
-type Props = {
+interface Props {
   defaultValue: string;
   onChange: (deviceId: string) => void;
-};
+}
 
-type State = {
+interface State {
   devices: MediaDeviceInfo[] | null;
   hasError: boolean;
-};
+}
 
 class AudioOutputSelect extends React.Component<Props, State> {
-  constructor (props: Props) {
+  constructor(props: Props) {
     super(props);
 
     this.state = {
@@ -22,7 +22,7 @@ class AudioOutputSelect extends React.Component<Props, State> {
     };
   }
 
-  async componentDidMount () {
+  async componentDidMount() {
     await this.updateDevices();
   }
 
@@ -31,7 +31,7 @@ class AudioOutputSelect extends React.Component<Props, State> {
       const devices = await navigator.mediaDevices.enumerateDevices();
 
       this.setState({
-        devices: devices.filter(device => device.kind === 'audiooutput')
+        devices: devices.filter((device) => device.kind === 'audiooutput')
       });
     } catch (err) {
       this.setState({
@@ -40,13 +40,13 @@ class AudioOutputSelect extends React.Component<Props, State> {
       });
       console.warn(err);
     }
-  }
+  };
 
   setAudioOutputDevice = (e: React.ChangeEvent<HTMLSelectElement>) => {
     this.props.onChange(e.currentTarget.value);
-  }
+  };
 
-  render () {
+  render() {
     const { devices, hasError } = this.state;
 
     if (!devices) {
@@ -71,12 +71,11 @@ class AudioOutputSelect extends React.Component<Props, State> {
         defaultValue={this.props.defaultValue}
         onChange={this.setAudioOutputDevice}
       >
-        {devices.map(device => {
+        {devices.map((device) => {
           return (
-            <option
-              key={device.deviceId}
-              value={device.deviceId}
-            >{device.label}</option>
+            <option key={device.deviceId} value={device.deviceId}>
+              {device.label}
+            </option>
           );
         })}
       </Setting.Select>

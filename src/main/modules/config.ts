@@ -2,12 +2,12 @@
  * Essential module for creating/loading the app config
  */
 
-import * as electron from 'electron';
 import * as path from 'path';
+import * as electron from 'electron';
 import teeny from 'teeny-conf';
 
-import Module from './module';
 import { Config, Repeat, SortBy, SortOrder } from '../../shared/types/interfaces';
+import Module from './module';
 
 const { app } = electron;
 
@@ -15,13 +15,13 @@ class ConfigModule extends Module {
   protected workArea: Electron.Rectangle;
   protected conf: teeny | undefined;
 
-  constructor () {
+  constructor() {
     super();
 
     this.workArea = electron.screen.getPrimaryDisplay().workArea;
   }
 
-  async load () {
+  async load() {
     const defaultConfig: Record<string, any> = this.getDefaultConfig();
     const pathUserData = app.getPath('userData');
 
@@ -41,7 +41,7 @@ class ConfigModule extends Module {
     if (configChanged) this.conf.save();
   }
 
-  getDefaultConfig (): Config {
+  getDefaultConfig(): Config {
     const config: Config = {
       theme: 'light',
       audioVolume: 1,
@@ -70,25 +70,25 @@ class ConfigModule extends Module {
     return config;
   }
 
-  getConfig (): Config {
+  getConfig(): Config {
     if (!this.conf) {
-      throw (new Error('Config not loaded'));
+      throw new Error('Config not loaded');
     }
 
     return this.conf.get() as Config; // Maybe possible to type TeenyConf with Generics?
   }
 
-  get (key: keyof Config) {
+  get(key: keyof Config) {
     if (!this.conf) {
-      throw (new Error('Config not loaded'));
+      throw new Error('Config not loaded');
     }
 
     return this.conf.get(key);
   }
 
-  reload () {
+  reload() {
     if (!this.conf) {
-      throw (new Error('Config not loaded'));
+      throw new Error('Config not loaded');
     }
 
     this.conf.reload();

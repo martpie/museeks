@@ -18,11 +18,7 @@ const ToastItem: React.FC<Props> = (props) => {
     [styles.toastInfo]: type === 'info'
   });
 
-  return (
-    <div className={classes}>
-      {content}
-    </div>
-  );
+  return <div className={classes}>{content}</div>;
 };
 
 export default ToastItem;

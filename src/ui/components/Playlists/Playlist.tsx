@@ -24,11 +24,11 @@ interface RouteParams {
 type Props = OwnProps & RouteComponentProps<RouteParams>;
 
 class Playlist extends React.Component<Props> {
-  async componentDidMount () {
+  async componentDidMount() {
     await PlaylistsActions.load(this.props.match.params.playlistId);
   }
 
-  async componentWillReceiveProps (nextProps: Props) {
+  async componentWillReceiveProps(nextProps: Props) {
     const { playlistId } = this.props.match.params;
     const nextPlaylistId = nextProps.match.params.playlistId;
 
@@ -37,29 +37,25 @@ class Playlist extends React.Component<Props> {
     }
   }
 
-  onReorder = async (
-    playlistId: string,
-    tracksIds: string[],
-    targetTrackId: string,
-    position: 'above' | 'below'
-  ) => {
+  onReorder = async (playlistId: string, tracksIds: string[], targetTrackId: string, position: 'above' | 'below') => {
     await PlaylistsActions.reorderTracks(playlistId, tracksIds, targetTrackId, position);
-  }
+  };
 
-  render () {
-    const {
-      tracks, trackPlayingId, playerStatus, playlists, match
-    } = this.props;
+  render() {
+    const { tracks, trackPlayingId, playerStatus, playlists, match } = this.props;
 
     // A bit hacky though, maybe this should be in mapstatetoprops
-    const currentPlaylist = playlists.find(p => p._id === match.params.playlistId);
+    const currentPlaylist = playlists.find((p) => p._id === match.params.playlistId);
 
     if (currentPlaylist && currentPlaylist.tracks.length === 0) {
       return (
         <ViewMessage.Notice>
           <p>Empty playlist</p>
           <ViewMessage.Sub>
-            You can add tracks from the <Link to='/library' draggable={false}>library view</Link>
+            You can add tracks from the{' '}
+            <Link to='/library' draggable={false}>
+              library view
+            </Link>
           </ViewMessage.Sub>
         </ViewMessage.Notice>
       );
@@ -79,7 +75,10 @@ class Playlist extends React.Component<Props> {
         <ViewMessage.Notice>
           <p>Empty playlist</p>
           <ViewMessage.Sub>
-            You can add tracks from the <Link to='/library' draggable={false}>library view</Link>
+            You can add tracks from the{' '}
+            <Link to='/library' draggable={false}>
+              library view
+            </Link>
           </ViewMessage.Sub>
         </ViewMessage.Notice>
       );
@@ -108,7 +107,7 @@ const mapStateToProps = ({ library, playlists, player }: RootState) => {
     playlists: playlists.list,
     tracks: filteredTracks,
     playerStatus: player.playerStatus,
-    trackPlayingId: (player.queue.length > 0 && player.queueCursor !== null) ? player.queue[player.queueCursor]._id : null
+    trackPlayingId: player.queue.length > 0 && player.queueCursor !== null ? player.queue[player.queueCursor]._id : null
   };
 };
 

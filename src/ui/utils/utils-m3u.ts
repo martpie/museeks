@@ -12,14 +12,13 @@ export const parse = (filePath: string): string[] => {
     const content = fs.readFileSync(filePath);
 
     if (typeof encoding !== 'string') {
-      throw (new Error(`could not guess the file encoding (${filePath})`));
+      throw new Error(`could not guess the file encoding (${filePath})`);
     }
 
     const decodedContent = iconv.decode(content, encoding);
 
-    const files = decodedContent
-      .split(/\r?\n/)
-      .reduce((acc, line) => {
+    const files = decodedContent.split(/\r?\n/).reduce(
+      (acc, line) => {
         if (line.length === 0) {
           return acc;
         }
@@ -31,14 +30,15 @@ export const parse = (filePath: string): string[] => {
         }
 
         // If relative Path
-        if (fs.existsSync(path.resolve(baseDir, line)) && isFile(path.resolve(baseDir, line))
-        ) {
+        if (fs.existsSync(path.resolve(baseDir, line)) && isFile(path.resolve(baseDir, line))) {
           acc.push(path.resolve(baseDir, line));
           return acc;
         }
 
         return acc;
-      }, [] as string[]);
+      },
+      [] as string[]
+    );
 
     return files;
   } catch (err) {

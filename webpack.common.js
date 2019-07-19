@@ -10,36 +10,36 @@ const WebpackBar = require('webpackbar');
  */
 const uiConfig = {
   entry: {
-    main: ['./src/ui/main.tsx'],
+    main: ['./src/ui/main.tsx']
   },
   output: {
     path: `${__dirname}/dist/ui`,
     filename: 'bundle.js',
-    publicPath: './',
+    publicPath: './'
   },
   target: 'electron-renderer',
   plugins: [
     new MiniCssExtractPlugin({
       filename: '[name].css',
-      chunkFilename: '[id].css',
+      chunkFilename: '[id].css'
     }),
     new HtmlWebpackPlugin({
       title: 'Museeks',
-      template: 'src/app.html',
+      template: 'src/app.html'
     }),
     new WebpackBar({
       name: 'UI  ',
       basic: true
     })
   ]
-}
+};
 
 /**
  * Main process bundle
  */
 const mainConfig = {
   entry: {
-    main: ['./src/main/main.ts'],
+    main: ['./src/main/main.ts']
   },
   resolve: {
     alias: {
@@ -49,12 +49,12 @@ const mainConfig = {
   output: {
     path: `${__dirname}/dist/main`,
     filename: 'bundle.js',
-    publicPath: './',
+    publicPath: './'
   },
   target: 'electron-main',
   node: {
     __dirname: false,
-    __filename: false,
+    __filename: false
   },
   plugins: [
     new WebpackBar({
@@ -63,7 +63,7 @@ const mainConfig = {
       basic: true
     })
   ]
-}
+};
 
 /**
  * Shared config
@@ -71,14 +71,14 @@ const mainConfig = {
 const sharedConfig = {
   resolve: {
     // mainFields: ['browser', 'main', 'module'],
-    extensions: ['.mjs', '.ts', '.tsx', '.js', '.json'],
+    extensions: ['.mjs', '.ts', '.tsx', '.js', '.json']
   },
   module: {
     rules: [
       {
         test: /\.(ts|tsx)([?]?.*)$/,
         loader: ['ts-loader'],
-        exclude: /node_modules/,
+        exclude: /node_modules/
       },
       {
         test: /\.css$/,
@@ -91,7 +91,7 @@ const sharedConfig = {
               importLoaders: 1,
               localIdentName: '[local]___[hash:base64:5]',
               camelCase: 'dashesOnly',
-              sourceMap: true,
+              sourceMap: true
             }
           },
           'postcss-loader'
@@ -100,64 +100,68 @@ const sharedConfig = {
       },
       {
         test: /\.css$/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          'css-loader',
-        ],
+        use: [MiniCssExtractPlugin.loader, 'css-loader'],
         include: path.join(__dirname, 'node_modules')
       },
       {
         test: /\.(eot|woff|woff2|ttf)([?]?.*)$/,
-        use: [{
-          loader: 'file-loader',
-          options: {
-            name: '/fonts/[name].[ext]',
-            useRelativePath: true
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '/fonts/[name].[ext]',
+              useRelativePath: true
+            }
           }
-        }],
+        ]
       },
       {
         test: /\.(png|jpg|ico)([?]?.*)$/,
-        use: [{
-          loader: 'file-loader',
-          options: {
-            name: 'images/[name].[ext]',
-          },
-        }],
-        exclude: /node_modules/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: 'images/[name].[ext]'
+            }
+          }
+        ],
+        exclude: /node_modules/
       },
       {
         test: /\.svg$/,
         use: ['svg-inline-loader'],
-        include: path.resolve(__dirname, 'src'),
+        include: path.resolve(__dirname, 'src')
       },
       {
         test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-        use: [{
-          loader: 'url-loader',
-          options: {
-            mimetype: 'image/svg+xml',
-          },
-        }],
-        include: /node_modules/,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              mimetype: 'image/svg+xml'
+            }
+          }
+        ],
+        include: /node_modules/
       },
       {
         test: /\.node$/,
         use: 'node-loader'
       },
-      { // Hotfix for iconv-lite https://github.com/ashtuchkin/iconv-lite/issues/204
+      {
+        // Hotfix for iconv-lite https://github.com/ashtuchkin/iconv-lite/issues/204
         test: /node_modules[\/\\](iconv-lite)[\/\\].+/,
         resolve: { aliasFields: ['main'] }
       }
-    ],
+    ]
   },
   stats: {
     children: false,
     chunks: false,
     chunkModules: false,
     modules: false,
-    reasons: false,
-  },
+    reasons: false
+  }
 };
 
 /**

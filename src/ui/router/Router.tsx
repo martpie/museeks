@@ -2,13 +2,13 @@ import * as React from 'react';
 import { Router, Switch, Route } from 'react-router-dom';
 
 // History
-import history from './history';
 
 // Views
 import App from '../App';
 import Library from '../views/Library/Library';
 import Playlists from '../views/Playlists/Playlists';
 import Settings from '../views/Settings/Settings';
+import history from './history';
 
 const AppRouter: React.FC<{}> = () => (
   <Router history={history}>

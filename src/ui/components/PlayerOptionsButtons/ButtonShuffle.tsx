@@ -13,17 +13,17 @@ interface Props {
 }
 
 export default class ButtonShuffle extends React.Component<Props> {
-  constructor (props: Props) {
+  constructor(props: Props) {
     super(props);
 
     this.toggleShuffle = this.toggleShuffle.bind(this);
   }
 
-  toggleShuffle () {
+  toggleShuffle() {
     PlayerActions.shuffle(!this.props.shuffle);
   }
 
-  render () {
+  render() {
     const buttonClasses = cx(styles.button, {
       [styles.active]: this.props.shuffle
     });

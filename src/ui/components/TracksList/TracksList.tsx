@@ -1,4 +1,4 @@
- import * as electron from 'electron';
+import * as electron from 'electron';
 import * as React from 'react';
 import KeyBinding from 'react-keybinding-component';
 import chunk from 'lodash-es/chunk';
@@ -15,8 +15,8 @@ import * as QueueActions from '../../actions/QueueActions';
 import { isCtrlKey, isAltKey } from '../../utils/utils-platform';
 import { PlaylistModel, TrackModel, PlayerStatus } from '../../../shared/types/interfaces';
 
-import * as styles from './TracksList.css';
 import * as scrollbarStyles from '../CustomScrollbar/CustomScrollbar.css';
+import * as styles from './TracksList.css';
 
 const { shell, remote } = electron;
 const { Menu } = remote;
@@ -38,12 +38,7 @@ interface Props {
   playlists: PlaylistModel[];
   currentPlaylist?: string;
   reorderable?: boolean;
-  onReorder?: (
-    playlistId: string,
-    tracksIds: string[],
-    targetTrackId: string,
-    position: 'above' | 'below'
-  ) => void;
+  onReorder?: (playlistId: string, tracksIds: string[], targetTrackId: string, position: 'above' | 'below') => void;
 }
 
 interface State {
@@ -63,7 +58,7 @@ export default class TracksList extends React.Component<Props, State> {
 
   renderView: HTMLDivElement | null = null;
 
-  constructor (props: Props) {
+  constructor(props: Props) {
     super(props);
     this.state = {
       tilesScrolled: 0,
@@ -72,7 +67,7 @@ export default class TracksList extends React.Component<Props, State> {
     };
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this.renderView = document.querySelector(`.${scrollbarStyles.renderView}`);
   }
 
@@ -84,13 +79,13 @@ export default class TracksList extends React.Component<Props, State> {
         this.setState({ tilesScrolled });
       }
     }
-  }
+  };
 
   onKey = async (e: KeyboardEvent) => {
     const { selected } = this.state;
     const { tracks } = this.props;
 
-    let firstSelectedTrackId = tracks.findIndex(track => selected.includes(track._id));
+    let firstSelectedTrackId = tracks.findIndex((track) => selected.includes(track._id));
 
     switch (e.code) {
       // CTRL+All selection
@@ -105,7 +100,7 @@ export default class TracksList extends React.Component<Props, State> {
 
       case 'ArrowDown':
         // This effectively becomes lastSelectedTrackID
-        firstSelectedTrackId = tracks.findIndex(track => selected[selected.length - 1] === track._id);
+        firstSelectedTrackId = tracks.findIndex((track) => selected[selected.length - 1] === track._id);
         e.preventDefault();
         this.onDown(firstSelectedTrackId, tracks, e.shiftKey);
         break;
@@ -117,9 +112,9 @@ export default class TracksList extends React.Component<Props, State> {
       default:
         break;
     }
-  }
+  };
 
-  onControlAll (i: number, tracks: TrackModel[]) {
+  onControlAll(i: number, tracks: TrackModel[]) {
     this.setState({ selected: tracks.map((track) => track._id) }, () => {
       const container = this.renderView;
       const nodeOffsetTop = (i - 1) * ROW_HEIGHT;
@@ -128,9 +123,8 @@ export default class TracksList extends React.Component<Props, State> {
     });
   }
 
-  onUp (i: number, tracks: TrackModel[], shiftKeyPressed: boolean) {
+  onUp(i: number, tracks: TrackModel[], shiftKeyPressed: boolean) {
     if (i - 1 >= 0) {
-
       // Issue #489, shift key modifier
       let newSelected = this.state.selected;
       if (shiftKeyPressed) newSelected = [tracks[i - 1]._id, ...this.state.selected];
@@ -145,9 +139,8 @@ export default class TracksList extends React.Component<Props, State> {
     }
   }
 
-  onDown (i: number, tracks: TrackModel[], shiftKeyPressed: boolean) {
+  onDown(i: number, tracks: TrackModel[], shiftKeyPressed: boolean) {
     if (i + 1 < tracks.length) {
-
       // Issue #489, shift key modifier
       let newSelected = this.state.selected;
       if (shiftKeyPressed) newSelected.push(tracks[i + 1]._id);
@@ -158,7 +151,7 @@ export default class TracksList extends React.Component<Props, State> {
         const nodeOffsetTop = (i + 1) * ROW_HEIGHT;
 
         if (container && container.scrollTop + container.offsetHeight <= nodeOffsetTop + ROW_HEIGHT) {
-          container.scrollTop = (nodeOffsetTop - container.offsetHeight) + ROW_HEIGHT;
+          container.scrollTop = nodeOffsetTop - container.offsetHeight + ROW_HEIGHT;
         }
       });
     }
@@ -168,31 +161,28 @@ export default class TracksList extends React.Component<Props, State> {
     this.setState({
       reordered: this.state.selected
     });
-  }
+  };
 
   onReorderEnd = () => {
     this.setState({
       reordered: null
     });
-  }
+  };
 
-  onReorder = async (
-    targetTrackId: string,
-    position: 'above' | 'below'
-  ) => {
+  onReorder = async (targetTrackId: string, position: 'above' | 'below') => {
     const { reordered } = this.state;
     const { onReorder, currentPlaylist } = this.props;
 
     if (onReorder && currentPlaylist && reordered) {
       onReorder(currentPlaylist, reordered, targetTrackId, position);
     }
-  }
+  };
 
-  async onEnter (i: number, tracks: TrackModel[]) {
+  async onEnter(i: number, tracks: TrackModel[]) {
     if (i !== -1) await PlayerActions.start(tracks, tracks[i]._id);
   }
 
-  getTrackTiles () {
+  getTrackTiles() {
     const { selected, reordered, tilesScrolled } = this.state;
     const { trackPlayingId, tracks, reorderable } = this.props;
 
@@ -200,7 +190,7 @@ export default class TracksList extends React.Component<Props, State> {
 
     return tracksChunked.splice(tilesScrolled, TILES_TO_DISPLAY).map((tracksChunk, indexChunk) => {
       const list = tracksChunk.map((track, index) => {
-        const trackRowIndex = ((tilesScrolled + indexChunk) * CHUNK_LENGTH) + index;
+        const trackRowIndex = (tilesScrolled + indexChunk) * CHUNK_LENGTH + index;
 
         return (
           <TrackRow
@@ -214,7 +204,7 @@ export default class TracksList extends React.Component<Props, State> {
             onContextMenu={this.showContextMenu}
             onDoubleClick={this.startPlayback}
             draggable={reorderable}
-            reordered={reordered && reordered.includes(track._id) || false}
+            reordered={(reordered && reordered.includes(track._id)) || false}
             onDragStart={this.onReorderStart}
             onDragEnd={this.onReorderEnd}
             onDrop={this.onReorder}
@@ -222,47 +212,37 @@ export default class TracksList extends React.Component<Props, State> {
         );
       });
 
-      const translationDistance = (tilesScrolled * ROW_HEIGHT * CHUNK_LENGTH) + (indexChunk * ROW_HEIGHT * CHUNK_LENGTH);
+      const translationDistance = tilesScrolled * ROW_HEIGHT * CHUNK_LENGTH + indexChunk * ROW_HEIGHT * CHUNK_LENGTH;
       const tracksListTileStyles = {
         transform: `translate3d(0, ${translationDistance}px, 0)`
       };
 
       return (
-        <div
-          className={styles.tile}
-          key={`chunk-${tracksChunk[0]._id}`}
-          style={tracksListTileStyles}
-        >
-          { list }
+        <div className={styles.tile} key={`chunk-${tracksChunk[0]._id}`} style={tracksListTileStyles}>
+          {list}
         </div>
       );
     });
   }
 
-  isSelectableTrack (id: string) {
+  isSelectableTrack(id: string) {
     return !this.state.selected.includes(id);
   }
 
   sortSelected = (a: string, b: string): number => {
-    const allTracksIds = this.props.tracks.map(track => track._id);
+    const allTracksIds = this.props.tracks.map((track) => track._id);
 
     return allTracksIds.indexOf(a) - allTracksIds.indexOf(b);
-  }
+  };
 
   selectTrack = (event: React.MouseEvent, trackId: string, index: number) => {
     // To allow selection drag-and-drop, we need to prevent track selection
     // when selection a track that is already selected
-    if (this.state.selected.includes(trackId)
-      && !event.metaKey
-      && !event.ctrlKey
-      && !event.shiftKey
-    ) {
+    if (this.state.selected.includes(trackId) && !event.metaKey && !event.ctrlKey && !event.shiftKey) {
       return;
     }
 
-    if (TracksList.isLeftClick(event)
-      || (TracksList.isRightClick(event) && this.isSelectableTrack(trackId))
-    ) {
+    if (TracksList.isLeftClick(event) || (TracksList.isRightClick(event) && this.isSelectableTrack(trackId))) {
       if (isCtrlKey(event)) {
         this.toggleSelectionById(trackId);
       } else if (event.shiftKey) {
@@ -277,23 +257,19 @@ export default class TracksList extends React.Component<Props, State> {
         }
       }
     }
-  }
+  };
 
-  selectTrackClick = (event: React.MouseEvent, trackId: string) => {
+  selectTrackClick = (event: React.MouseEvent | React.KeyboardEvent, trackId: string) => {
     const { selected } = this.state;
 
-    if (!event.metaKey
-      && !event.ctrlKey
-      && !event.shiftKey
-      && selected.includes(trackId)
-    ) {
+    if (!event.metaKey && !event.ctrlKey && !event.shiftKey && selected.includes(trackId)) {
       this.setState({
         selected: [trackId]
       });
     }
-  }
+  };
 
-  toggleSelectionById (id: string) {
+  toggleSelectionById(id: string) {
     let selected = [...this.state.selected];
 
     if (selected.includes(id)) {
@@ -308,7 +284,7 @@ export default class TracksList extends React.Component<Props, State> {
     this.setState({ selected });
   }
 
-  multiSelect (index: number) {
+  multiSelect(index: number) {
     const { tracks } = this.props;
     const { selected } = this.state;
 
@@ -356,7 +332,7 @@ export default class TracksList extends React.Component<Props, State> {
 
     // Hide current playlist if needed
     if (this.props.type === 'playlist') {
-      playlists = playlists.filter(elem => elem._id !== this.props.currentPlaylist);
+      playlists = playlists.filter((elem) => elem._id !== this.props.currentPlaylist);
     }
 
     const playlistTemplate: electron.MenuItemConstructorOptions[] = [];
@@ -492,29 +468,22 @@ export default class TracksList extends React.Component<Props, State> {
     const context = Menu.buildFromTemplate(template);
 
     context.popup({}); // Let it appear
-  }
+  };
 
   startPlayback = async (_id: string) => {
     await PlayerActions.start(this.props.tracks, _id);
-  }
+  };
 
-  render () {
+  render() {
     const { tracks, type } = this.props;
 
     return (
       <div className={styles.tracksList}>
         <KeyBinding onKey={this.onKey} preventInputConflict />
         <TracksListHeader enableSort={type === 'library'} />
-        <CustomScrollbar
-          className={styles.tracksListBody}
-          onScroll={this.onScroll}
-        >
-          <div
-            className={styles.tiles}
-            role='listbox'
-            style={{ height: tracks.length * ROW_HEIGHT }}
-          >
-            { this.getTrackTiles() }
+        <CustomScrollbar className={styles.tracksListBody} onScroll={this.onScroll}>
+          <div className={styles.tiles} role='listbox' style={{ height: tracks.length * ROW_HEIGHT }}>
+            {this.getTrackTiles()}
           </div>
         </CustomScrollbar>
       </div>

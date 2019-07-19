@@ -31,17 +31,14 @@ class TracksListHeader extends React.Component<Props> {
     }
 
     return null;
-  }
+  };
 
-  render () {
+  render() {
     const { enableSort, sort } = this.props;
 
     return (
       <div className={styles.tracksListHeader}>
-        <TracksListHeaderCell
-          className={styles.cellTrackPlaying}
-          title='&nbsp;'
-        />
+        <TracksListHeaderCell className={styles.cellTrackPlaying} title='&nbsp;' />
         <TracksListHeaderCell
           className={styles.cellTrack}
           title='Title'

@@ -23,7 +23,7 @@ export default class QueueListItem extends React.PureComponent<Props> {
     dragPosition: null
   };
 
-  constructor (props: Props) {
+  constructor(props: Props) {
     super(props);
 
     this.remove = this.remove.bind(this);
@@ -32,23 +32,23 @@ export default class QueueListItem extends React.PureComponent<Props> {
     this.onDragOver = this.onDragOver.bind(this);
   }
 
-  onDragStart (e: React.DragEvent<HTMLDivElement>) {
+  onDragStart(e: React.DragEvent<HTMLDivElement>) {
     this.props.onDragStart(e, this.props.index);
   }
 
-  onDragOver (e: React.DragEvent<HTMLDivElement>) {
+  onDragOver(e: React.DragEvent<HTMLDivElement>) {
     this.props.onDragOver(e, this.props.index);
   }
 
-  remove () {
+  remove() {
     QueueActions.remove(this.props.index);
   }
 
-  async play () {
+  async play() {
     await QueueActions.start(this.props.queueCursor + this.props.index + 1);
   }
 
-  render () {
+  render() {
     const queueContentClasses = cx(styles.queue__item, {
       [styles.isDragged]: this.props.dragged,
       [styles.isDraggedOver]: this.props.draggedOver,
@@ -66,18 +66,13 @@ export default class QueueListItem extends React.PureComponent<Props> {
         onDragOver={this.onDragOver}
         onDragEnd={this.props.onDragEnd}
       >
-        <div className={styles.queue__item__info} onDoubleClick={this.play} >
-          <div className={styles.queue__item__info__title}>
-            { track.title }
-          </div>
+        <div className={styles.queue__item__info} onDoubleClick={this.play}>
+          <div className={styles.queue__item__info__title}>{track.title}</div>
           <div className={styles.queue__item__info__otherInfos}>
-            <span>{ track.artist }</span> - <span>{ track.album }</span>
+            <span>{track.artist}</span> - <span>{track.album}</span>
           </div>
         </div>
-        <button
-          className={styles.queue__item__remove}
-          onClick={this.remove}
-        >
+        <button className={styles.queue__item__remove} onClick={this.remove}>
           &times;
         </button>
       </div>

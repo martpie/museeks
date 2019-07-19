@@ -12,17 +12,17 @@ interface Props {
 }
 
 export default class PlaylistsNavLink extends React.Component<Props> {
-  constructor (props: Props) {
+  constructor(props: Props) {
     super(props);
 
     this.onContextMenu = this.onContextMenu.bind(this);
   }
 
-  onContextMenu () {
+  onContextMenu() {
     this.props.onContextMenu(this.props.playlistId);
   }
 
-  render () {
+  render() {
     return (
       <NavLink
         className={`${this.props.className} ${styles.playlistLink}`}
@@ -32,7 +32,7 @@ export default class PlaylistsNavLink extends React.Component<Props> {
         draggable={false}
         onDoubleClick={() => PlaylistActions.play(this.props.playlistId)}
       >
-        { this.props.children }
+        {this.props.children}
       </NavLink>
     );
   }

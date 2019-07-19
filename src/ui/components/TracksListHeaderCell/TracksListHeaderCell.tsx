@@ -21,24 +21,19 @@ class TracksListHeaderCell extends React.Component<Props> {
     icon: null
   };
 
-  constructor (props: Props) {
+  constructor(props: Props) {
     super(props);
     this.sort = this.sort.bind(this);
   }
 
-  sort () {
+  sort() {
     if (this.props.sortBy) {
       LibraryActions.sort(this.props.sortBy);
     }
   }
 
-  render () {
-    const {
-      sortBy,
-      className,
-      title,
-      icon
-    } = this.props;
+  render() {
+    const { sortBy, className, title, icon } = this.props;
 
     const classes = cx(styles.trackCellHeader, className, {
       [styles.sort]: sortBy
@@ -46,33 +41,24 @@ class TracksListHeaderCell extends React.Component<Props> {
 
     const content = (
       <React.Fragment>
-        <div className={styles.name}>
-          {title}
-        </div>
-        {icon &&
+        <div className={styles.name}>{title}</div>
+        {icon && (
           <div className={styles.icon}>
             <Icon name={icon} />
           </div>
-        }
+        )}
       </React.Fragment>
     );
 
     if (sortBy) {
       return (
-        <button
-          className={classes}
-          onClick={this.sort}
-        >
+        <button className={classes} onClick={this.sort}>
           {content}
         </button>
       );
     }
 
-    return (
-      <div className={classes}>
-        {content}
-      </div>
-    );
+    return <div className={classes}>{content}</div>;
   }
 }
 

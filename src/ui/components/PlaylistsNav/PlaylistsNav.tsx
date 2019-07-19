@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/no-autofocus */
+
 import * as electron from 'electron';
 import * as React from 'react';
 import * as Icon from 'react-fontawesome';
@@ -19,7 +21,7 @@ interface State {
 }
 
 class PlaylistsNav extends React.Component<Props, State> {
-  constructor (props: Props) {
+  constructor(props: Props) {
     super(props);
 
     this.state = {
@@ -33,7 +35,7 @@ class PlaylistsNav extends React.Component<Props, State> {
     this.createPlaylist = this.createPlaylist.bind(this);
   }
 
-  showContextMenu (playlistId: string) {
+  showContextMenu(playlistId: string) {
     const template: electron.MenuItemConstructorOptions[] = [
       {
         label: 'Rename',
@@ -72,27 +74,29 @@ class PlaylistsNav extends React.Component<Props, State> {
     context.popup({}); // Let it appear
   }
 
-  async createPlaylist () {
+  async createPlaylist() {
     // Todo 'new playlist 1', 'new playlist 2' ...
     await PlaylistsActions.create('New playlist', [], false, true);
   }
 
-  async rename (_id: string, name: string) {
+  async rename(_id: string, name: string) {
     await PlaylistsActions.rename(_id, name);
   }
 
-  async keyDown (e: React.KeyboardEvent<HTMLInputElement>) {
+  async keyDown(e: React.KeyboardEvent<HTMLInputElement>) {
     e.persist();
 
     switch (e.nativeEvent.code) {
-      case 'Enter': { // Enter
+      case 'Enter': {
+        // Enter
         if (this.state.renamed && e.currentTarget) {
           await this.rename(this.state.renamed, e.currentTarget.value);
           this.setState({ renamed: null });
         }
         break;
       }
-      case 'Escape': { // Escape
+      case 'Escape': {
+        // Escape
         this.setState({ renamed: null });
         break;
       }
@@ -102,7 +106,7 @@ class PlaylistsNav extends React.Component<Props, State> {
     }
   }
 
-  async blur (e: React.FocusEvent<HTMLInputElement>) {
+  async blur(e: React.FocusEvent<HTMLInputElement>) {
     if (this.state.renamed) {
       await this.rename(this.state.renamed, e.currentTarget.value);
     }
@@ -110,11 +114,11 @@ class PlaylistsNav extends React.Component<Props, State> {
     this.setState({ renamed: null });
   }
 
-  focus (e: React.FocusEvent<HTMLInputElement>) {
+  focus(e: React.FocusEvent<HTMLInputElement>) {
     e.currentTarget.select();
   }
 
-  render () {
+  render() {
     const self = this;
     const { playlists } = this.props;
 
@@ -136,21 +140,13 @@ class PlaylistsNav extends React.Component<Props, State> {
         );
       } else {
         navItemContent = (
-          <PlaylistsNavLink
-            className={styles.item__link}
-            playlistId={elem._id}
-            onContextMenu={self.showContextMenu}
-          >
-            { elem.name }
+          <PlaylistsNavLink className={styles.item__link} playlistId={elem._id} onContextMenu={self.showContextMenu}>
+            {elem.name}
           </PlaylistsNavLink>
         );
       }
 
-      return (
-        <div key={`playlist-${elem._id}`}>
-          { navItemContent }
-        </div>
-      );
+      return <div key={`playlist-${elem._id}`}>{navItemContent}</div>;
     });
 
     return (
@@ -158,18 +154,12 @@ class PlaylistsNav extends React.Component<Props, State> {
         <div className={styles.playlistsNav__header}>
           <h4 className={styles.playlistsNav__title}>Playlists</h4>
           <div className={styles.actions}>
-            <button
-              className={styles.action}
-              onClick={this.createPlaylist}
-              title='New playlist'
-            >
+            <button className={styles.action} onClick={this.createPlaylist} title='New playlist'>
               <Icon name='plus' />
             </button>
           </div>
         </div>
-        <div className={styles.playlistsNav__body}>
-          { nav }
-        </div>
+        <div className={styles.playlistsNav__body}>{nav}</div>
       </div>
     );
   }

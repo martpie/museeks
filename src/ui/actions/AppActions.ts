@@ -1,5 +1,5 @@
-import * as electron from 'electron';
 import * as os from 'os';
+import * as electron from 'electron';
 
 import Player from '../lib/player';
 import { browserWindows, config } from '../lib/app';
@@ -14,7 +14,7 @@ import * as SettingsActions from './SettingsActions';
 
 const { ipcRenderer } = electron;
 
-let lastSaveBounds: number = 0;
+let lastSaveBounds = 0;
 let saveBoundsTimeout: number | null = null;
 
 const saveBounds = async () => {
@@ -123,13 +123,21 @@ const init = async () => {
   });
 
   // Prevent some events
-  window.addEventListener('dragover', (e) => {
-    e.preventDefault();
-  }, false);
+  window.addEventListener(
+    'dragover',
+    (e) => {
+      e.preventDefault();
+    },
+    false
+  );
 
-  window.addEventListener('drop', (e) => {
-    e.preventDefault();
-  }, false);
+  window.addEventListener(
+    'drop',
+    (e) => {
+      e.preventDefault();
+    },
+    false
+  );
 
   // Remember dimensions and positionning
   const currentWindow = browserWindows.main;

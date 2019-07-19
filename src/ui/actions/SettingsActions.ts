@@ -1,20 +1,19 @@
 import * as electron from 'electron';
 import * as semver from 'semver';
 
+import { Theme } from '../../shared/types/interfaces';
 import store from '../store';
 import types from '../constants/action-types';
-import * as ToastsActions from './ToastsActions';
-
 import * as app from '../lib/app';
-import { Theme } from 'src/shared/types/interfaces';
+import * as ToastsActions from './ToastsActions';
 
 const { ipcRenderer } = electron;
 const darkTheme: Theme = require('../styles/themes/dark.json');
 const lightTheme: Theme = require('../styles/themes/light.json');
 
-type UpdateCheckOptions = {
-  silentFail?: boolean
-};
+interface UpdateCheckOptions {
+  silentFail?: boolean;
+}
 
 /**
  * Apply theme
@@ -54,7 +53,9 @@ export const checkForUpdate = async (options: UpdateCheckOptions = {}) => {
     const releases = await response.json();
 
     // TODO Github API types?
-    const newRelease = releases.find((release: any) => semver.valid(release.tag_name) !== null && semver.gt(release.tag_name, currentVersion));
+    const newRelease = releases.find(
+      (release: any) => semver.valid(release.tag_name) !== null && semver.gt(release.tag_name, currentVersion)
+    );
 
     let message;
     if (newRelease) {

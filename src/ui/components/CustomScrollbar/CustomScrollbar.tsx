@@ -13,23 +13,21 @@ class CustomScrollbar extends React.Component<Props> {
     className: ''
   };
 
-  static getRenderView (props: any) {
+  static getRenderView(props: any) {
     // the tabIndex={0} is needed to make the pageup/pagedown/home/end keys
     // work properly
-    return (
-      <div {...props} className={styles.renderView} />
-    );
+    return <div {...props} className={styles.renderView} />;
   }
 
-  static getTrackVertical (props: any) {
+  static getTrackVertical(props: any) {
     return <div {...props} className={styles.verticalTrack} />;
   }
 
-  static getThumbVertical (props: any) {
+  static getThumbVertical(props: any) {
     return <div {...props} className={styles.verticalThumb} />;
   }
 
-  render () {
+  render() {
     return (
       <Scrollbars
         className={this.props.className}

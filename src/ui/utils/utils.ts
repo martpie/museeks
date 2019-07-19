@@ -36,7 +36,8 @@ export const parseDuration = (duration: number | null): string => {
 export const parseUri = (uri: string): string => {
   const root = process.platform === 'win32' ? '' : path.parse(uri).root;
 
-  const location = path.resolve(uri)
+  const location = path
+    .resolve(uri)
     .split(path.sep)
     .map((d, i) => (i === 0 ? d : encodeURIComponent(d)))
     .reduce((a, b) => path.join(a, b));
@@ -49,9 +50,9 @@ export const parseUri = (uri: string): string => {
  */
 export const simpleSort = (array: string[], sorting: 'asc' | 'desc') => {
   if (sorting === 'asc') {
-    array.sort((a, b) => a > b ? 1 : -1);
+    array.sort((a, b) => (a > b ? 1 : -1));
   } else if (sorting === 'desc') {
-    array.sort((a, b) => b > a ? -1 : 1);
+    array.sort((a, b) => (b > a ? -1 : 1));
   }
 
   const result: string[] = [];
@@ -71,7 +72,7 @@ export const stripAccents = (str: string): string => {
   const split = accents.split('').join('|');
   const reg = new RegExp(`(${split})`, 'g');
 
-  function replacement (a: string) {
+  function replacement(a: string) {
     return fixes[accents.indexOf(a)] || '';
   }
 
@@ -95,7 +96,7 @@ export const removeUselessFolders = (folders: string[]): string[] => {
     });
   });
 
-  filteredFolders = filteredFolders.filter(elem => !foldersToBeRemoved.includes(elem));
+  filteredFolders = filteredFolders.filter((elem) => !foldersToBeRemoved.includes(elem));
 
   return filteredFolders;
 };
@@ -145,10 +146,10 @@ export const parseMusicMetadata = (data: mmd.IAudioMetadata, trackPath: string):
 };
 
 export const getLoweredMeta = (metadata: Track) => ({
-  artist: metadata.artist.map(meta => stripAccents(meta.toLowerCase())),
+  artist: metadata.artist.map((meta) => stripAccents(meta.toLowerCase())),
   album: stripAccents(metadata.album.toLowerCase()),
   title: stripAccents(metadata.title.toLowerCase()),
-  genre: metadata.genre.map(meta => stripAccents(meta.toLowerCase()))
+  genre: metadata.genre.map((meta) => stripAccents(meta.toLowerCase()))
 });
 
 export const getAudioDuration = (trackPath: string): Promise<number> => {
@@ -185,7 +186,10 @@ export const getMetadata = async (trackPath: string): Promise<Track> => {
   try {
     const stats = await stat(trackPath);
     const data = await mmd.parseFile(trackPath, {
-      native: true, skipCovers: true, fileSize: stats.size, duration: true
+      native: true,
+      skipCovers: true,
+      fileSize: stats.size,
+      duration: true
     });
 
     // Let's try to define something with what we got so far...

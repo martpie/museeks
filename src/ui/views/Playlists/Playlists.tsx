@@ -10,8 +10,8 @@ import Playlist from '../../components/Playlists/Playlist';
 import { PlaylistModel } from '../../../shared/types/interfaces';
 import { RootState } from '../../reducers';
 
-import * as styles from './Playlists.css';
 import * as appStyles from '../../App.css';
+import * as styles from './Playlists.css';
 
 interface OwnProps {
   playlists: PlaylistModel[];
@@ -25,18 +25,18 @@ interface RouteParams {
 type Props = OwnProps & RouteComponentProps<RouteParams>;
 
 class Playlists extends React.Component<Props> {
-  constructor (props: Props) {
+  constructor(props: Props) {
     super(props);
 
     this.autoRedirect = this.autoRedirect.bind(this);
     this.createPlaylist = this.createPlaylist.bind(this);
   }
 
-  async createPlaylist () {
+  async createPlaylist() {
     await PlaylistsActions.create('New playlist', [], false, true);
   }
 
-  autoRedirect () {
+  autoRedirect() {
     const { playlistId } = this.props.match.params;
 
     // If there is not playlist selected, redirect to the first one
@@ -48,7 +48,7 @@ class Playlists extends React.Component<Props> {
     // (after deleting a library for example)
     const { playlists } = this.props;
 
-    if (playlists.every(elem => elem._id !== playlistId)) {
+    if (playlists.every((elem) => elem._id !== playlistId)) {
       if (playlists.length === 0) {
         return <Redirect to='/playlists' />;
       }
@@ -59,7 +59,7 @@ class Playlists extends React.Component<Props> {
     return null;
   }
 
-  render () {
+  render() {
     const { playlists, playlistsLoading } = this.props;
     let playlistContent;
 
@@ -74,11 +74,7 @@ class Playlists extends React.Component<Props> {
         <ViewMessage.Notice>
           <p>You haven{"'"}t created any playlist yet</p>
           <ViewMessage.Sub>
-            <button
-              onClick={this.createPlaylist}
-              className='reset'
-              tabIndex={0}
-            >
+            <button onClick={this.createPlaylist} className='reset' tabIndex={0}>
               create one now
             </button>
           </ViewMessage.Sub>
@@ -96,9 +92,7 @@ class Playlists extends React.Component<Props> {
     return (
       <div className={`${appStyles.view} ${styles.viewPlaylists}`}>
         <PlaylistsNav playlists={playlists} />
-        <div className={styles.playlist}>
-          { playlistContent }
-        </div>
+        <div className={styles.playlist}>{playlistContent}</div>
       </div>
     );
   }

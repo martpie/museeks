@@ -1,5 +1,5 @@
-import * as React from 'react';
 import * as os from 'os';
+import * as React from 'react';
 
 import * as SettingsActions from '../../actions/SettingsActions';
 
@@ -11,7 +11,7 @@ interface Props {
 }
 
 export default class SettingsUI extends React.Component<Props> {
-  render () {
+  render() {
     const { config } = this.props;
 
     return (

@@ -17,17 +17,17 @@ export default class CheckboxSetting extends React.PureComponent<Props> {
     description: ''
   };
 
-  constructor (props: Props) {
+  constructor(props: Props) {
     super(props);
 
     this.onClick = this.onClick.bind(this);
   }
 
-  onClick (e: React.MouseEvent<HTMLInputElement>) {
+  onClick(e: React.MouseEvent<HTMLInputElement>) {
     this.props.onClick(e.currentTarget.checked);
   }
 
-  render () {
+  render() {
     const { slug, title, description } = this.props;
     return (
       <Setting.Section>

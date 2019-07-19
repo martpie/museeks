@@ -6,14 +6,13 @@ import store from '../store';
 import types from '../constants/action-types';
 import SORT_ORDERS from '../constants/sort-orders';
 
-import * as ToastsActions from './ToastsActions';
-
 import * as app from '../lib/app';
 import * as utils from '../utils/utils';
 import Player from '../lib/player';
 import { sortTracks, filterTracks } from '../utils/utils-library';
 import { shuffleTracks } from '../utils/utils-player';
 import { TrackModel, PlayerStatus, Repeat } from '../../shared/types/interfaces';
+import * as ToastsActions from './ToastsActions';
 
 const { ipcRenderer } = electron;
 
@@ -68,10 +67,7 @@ export const start = async (queue?: TrackModel[], _id?: string) => {
       const { sort, search } = library;
       newQueue = state.library.tracks.library;
 
-      newQueue = sortTracks(
-        filterTracks(newQueue, search),
-        SORT_ORDERS[sort.by][sort.order]
-      );
+      newQueue = sortTracks(filterTracks(newQueue, search), SORT_ORDERS[sort.by][sort.order]);
     }
   }
 
@@ -83,7 +79,7 @@ export const start = async (queue?: TrackModel[], _id?: string) => {
   // Typically, if we are in the playlists generic view without any view selected
   if (newQueue.length === 0) return;
 
-  const queuePosition = newQueue.findIndex(track => track._id === trackId);
+  const queuePosition = newQueue.findIndex((track) => track._id === trackId);
 
   // If a track exists
   if (queuePosition > -1) {
@@ -153,7 +149,8 @@ export const next = async () => {
   if (queueCursor !== null) {
     if (repeat === Repeat.ONE) {
       newQueueCursor = queueCursor;
-    } else if (repeat === Repeat.ALL && queueCursor === queue.length - 1) { // is last track
+    } else if (repeat === Repeat.ALL && queueCursor === queue.length - 1) {
+      // is last track
       newQueueCursor = 0; // start with new track
     } else {
       newQueueCursor = queueCursor + 1;
@@ -282,7 +279,8 @@ export const setMuted = (muted = false) => {
  * Set audio's playback rate
  */
 export const setPlaybackRate = (value: number) => {
-  if (value >= 0.5 && value <= 5) { // if in allowed range
+  if (value >= 0.5 && value <= 5) {
+    // if in allowed range
     Player.setAudioPlaybackRate(value);
 
     app.config.set('audioPlaybackRate', value);
@@ -305,7 +303,9 @@ export const setOutputDevice = (deviceId: string = 'default') => {
           app.config.set('audioOutputDevice', deviceId);
           app.config.save();
         })
-        .catch(err => { throw err; });
+        .catch((err) => {
+          throw err;
+        });
     } catch (err) {
       console.warn(err);
       ToastsActions.add('danger', 'An error occured when trying to switch to the new output device');
@@ -338,11 +338,11 @@ export const audioError = (e: ErrorEvent) => {
       case e.target.error.MEDIA_ERR_ABORTED:
         ToastsActions.add('warning', AUDIO_ERRORS.aborted);
         break;
-        // @ts-ignore TODO
+      // @ts-ignore TODO
       case e.target.error.MEDIA_ERR_DECODE:
         ToastsActions.add('danger', AUDIO_ERRORS.corrupt);
         break;
-        // @ts-ignore TODO
+      // @ts-ignore TODO
       case e.target.error.MEDIA_ERR_SRC_NOT_SUPPORTED:
         ToastsActions.add('danger', AUDIO_ERRORS.notFound);
         break;
