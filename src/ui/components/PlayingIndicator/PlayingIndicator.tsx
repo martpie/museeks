@@ -33,9 +33,9 @@ class TrackPlayingIndicator extends React.Component<Props, State> {
     }
 
     return <Icon name='play' fixedWidth />;
-  }
+  };
 
-  constructor (props: Props) {
+  constructor(props: Props) {
     super(props);
     this.state = {
       hovered: false
@@ -45,15 +45,15 @@ class TrackPlayingIndicator extends React.Component<Props, State> {
     this.onMouseLeave = this.onMouseLeave.bind(this);
   }
 
-  onMouseEnter () {
+  onMouseEnter() {
     this.setState({ hovered: true });
   }
 
-  onMouseLeave () {
+  onMouseLeave() {
     this.setState({ hovered: false });
   }
 
-  render () {
+  render() {
     const icon = TrackPlayingIndicator.getIcon(this.props.state, this.state.hovered);
 
     return (
@@ -64,7 +64,7 @@ class TrackPlayingIndicator extends React.Component<Props, State> {
         onMouseLeave={this.onMouseLeave}
         tabIndex={0}
       >
-        { icon }
+        {icon}
       </button>
     );
   }

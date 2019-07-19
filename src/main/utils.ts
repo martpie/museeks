@@ -5,17 +5,18 @@ import { ConfigBounds } from '../shared/types/interfaces';
 const DEFAULT_WIDTH = 900;
 const DEFAULT_HEIGHT = 550;
 
-export const checkBounds = function (bounds: ConfigBounds): ConfigBounds {
+export const checkBounds = function(bounds: ConfigBounds): ConfigBounds {
   // check if the browser window is offscreen
   const display = electron.screen.getDisplayNearestPoint({
     x: Math.round(bounds.x),
     y: Math.round(bounds.y)
   }).workArea;
 
-  const onScreen = bounds.x >= display.x
-    && bounds.x + bounds.width <= display.x + display.width
-    && bounds.y >= display.y
-    && bounds.y + bounds.height <= display.y + display.height;
+  const onScreen =
+    bounds.x >= display.x &&
+    bounds.x + bounds.width <= display.x + display.width &&
+    bounds.y >= display.y &&
+    bounds.y + bounds.height <= display.y + display.height;
 
   if (!onScreen) {
     return {

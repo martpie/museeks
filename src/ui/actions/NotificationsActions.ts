@@ -7,16 +7,12 @@ import * as app from '../lib/app';
  */
 export const add = (title: string, notificationData: NotificationOptions) => {
   if (app.config.get('displayNotifications')) {
-    const notification =
-      new Notification(
-        title,
-        {
-          body: notificationData.body,
-          icon: notificationData.icon,
-          silent: true,
-          tag: 'museeks-notification'
-        }
-      );
+    const notification = new Notification(title, {
+      body: notificationData.body,
+      icon: notificationData.icon,
+      silent: true,
+      tag: 'museeks-notification'
+    });
 
     notification.onclick = () => {
       app.browserWindows.main.show();

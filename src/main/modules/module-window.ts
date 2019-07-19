@@ -7,12 +7,12 @@ import Module from './module';
 class ModuleWindow extends Module {
   protected window: Electron.BrowserWindow;
 
-  constructor (window: Electron.BrowserWindow) {
+  constructor(window: Electron.BrowserWindow) {
     super();
     this.window = window;
   }
 
-  getWindow () {
+  getWindow() {
     return this.window;
   }
 }

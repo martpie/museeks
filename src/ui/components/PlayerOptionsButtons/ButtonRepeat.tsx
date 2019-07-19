@@ -19,13 +19,13 @@ interface Props {
 }
 
 export default class ButtonRepeat extends React.Component<Props> {
-  constructor (props: Props) {
+  constructor(props: Props) {
     super(props);
 
     this.toggleRepeat = this.toggleRepeat.bind(this);
   }
 
-  toggleRepeat () {
+  toggleRepeat() {
     let repeat = Repeat.NONE;
 
     switch (this.props.repeat) {
@@ -45,7 +45,7 @@ export default class ButtonRepeat extends React.Component<Props> {
     PlayerActions.repeat(repeat);
   }
 
-  render () {
+  render() {
     const svg = svgMap[this.props.repeat] || svgMap.default;
     const buttonClasses = cx(styles.button, {
       [styles.active]: this.props.repeat === Repeat.ONE || this.props.repeat === Repeat.ALL

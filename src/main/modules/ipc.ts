@@ -6,8 +6,8 @@
  * made async without blocking the rendering process
  */
 
-import { ipcMain, app } from 'electron';
 import * as os from 'os';
+import { ipcMain, app } from 'electron';
 
 import ModuleWindow from './module-window';
 import ConfigModule from './config';
@@ -16,14 +16,14 @@ class IpcModule extends ModuleWindow {
   config: ConfigModule;
   forceQuit: boolean;
 
-  constructor (window: Electron.BrowserWindow, config: ConfigModule) {
+  constructor(window: Electron.BrowserWindow, config: ConfigModule) {
     super(window);
 
     this.config = config;
     this.forceQuit = false;
   }
 
-  async load () {
+  async load() {
     ipcMain.on('app:restart', () => {
       app.relaunch({ args: ['process.argv.slice(1)', '--relaunch'] });
       app.exit(0);
@@ -49,7 +49,7 @@ class IpcModule extends ModuleWindow {
     });
   }
 
-  close (e: Event) {
+  close(e: Event) {
     this.config.reload(); // HACKY
     const minimizeToTray = this.config.get('minimizeToTray');
 

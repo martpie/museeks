@@ -12,7 +12,7 @@ interface Props {
 }
 
 class Queue extends React.PureComponent<Props> {
-  render () {
+  render() {
     const { queue, queueCursor } = this.props;
     let content: React.ReactNode;
 
@@ -25,11 +25,7 @@ class Queue extends React.PureComponent<Props> {
         content = <QueueList queue={queue} queueCursor={queueCursor} />;
       }
 
-      return (
-        <div className={`${styles.queue} text-left`}>
-          {content}
-        </div>
-      );
+      return <div className={`${styles.queue} text-left`}>{content}</div>;
     }
 
     return null;

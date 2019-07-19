@@ -1,0 +1,27 @@
+{
+  "parserOptions": { "parser": "@typescript-eslint/parser" },
+  "plugins": ["@typescript-eslint", "jsx-a11y", "import"],
+  "extends": [
+    "plugin:@typescript-eslint/recommended",
+    "plugin:jsx-a11y/recommended",
+    "plugin:import/errors",
+    "plugin:import/warnings",
+    "plugin:import/typescript",
+    "plugin:jsx-a11y/recommended",
+    "prettier",
+    "prettier/@typescript-eslint"
+  ],
+  "settings": { "react": { "version": "detect" } },
+  "env": { "jest": true },
+  "rules": {
+    "@typescript-eslint/no-var-requires": "off",
+    "@typescript-eslint/no-unused-vars": "off",
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "import/order": "error",
+    "import/named": "off",
+    "import/default": "off",
+    "@typescript-eslint/explicit-member-accessibility": "off",
+    "spaced-comment": ["error", "always"]
+  },
+  "globals": { "describe": true }
+}

@@ -7,8 +7,8 @@ import * as path from 'path';
 import ps from 'ps-node';
 import { Tray, Menu, app, ipcMain, nativeImage } from 'electron';
 
-import ModuleWindow from './module-window';
 import { TrackModel, PlayerStatus } from '../../shared/types/interfaces';
+import ModuleWindow from './module-window';
 import ConfigModule from './config';
 
 class TrayModule extends ModuleWindow {
@@ -21,7 +21,7 @@ class TrayModule extends ModuleWindow {
   protected menu: Electron.MenuItemConstructorOptions[];
   protected status: PlayerStatus;
 
-  constructor (window: Electron.BrowserWindow, config: ConfigModule) {
+  constructor(window: Electron.BrowserWindow, config: ConfigModule) {
     super(window);
 
     this.platforms = ['linux', 'win32'];
@@ -53,25 +53,25 @@ class TrayModule extends ModuleWindow {
     else if (os.platform() === 'darwin') this.trayIcon = trayIcons['tray-darwin-dark'];
   }
 
-  async load () {
+  async load() {
     // Fix for gnome-shell and high-dpi
     if (os.platform() === 'linux') {
-      ps.lookup({
-        command: 'gnome-shell'
-      }, (err: Error, _processes: Object) => {
-        if (err) {
-          console.warn(err);
-        } else {
-          this.trayIcon = nativeImage.createFromPath(
-            path.join(
-              path.resolve(path.join(__dirname, '../../src/images/logos')),
-              'museeks-tray.png'
-            )
-          );
+      ps.lookup(
+        {
+          command: 'gnome-shell'
+        },
+        (err: Error, _processes: Record<string, any>) => {
+          if (err) {
+            console.warn(err);
+          } else {
+            this.trayIcon = nativeImage.createFromPath(
+              path.join(path.resolve(path.join(__dirname, '../../src/images/logos')), 'museeks-tray.png')
+            );
 
-          this.refreshTrayIcon();
+            this.refreshTrayIcon();
+          }
         }
-      });
+      );
     }
 
     this.tray = null;
@@ -165,7 +165,7 @@ class TrayModule extends ModuleWindow {
     });
   }
 
-  create () {
+  create() {
     this.tray = new Tray(this.trayIcon);
     this.tray.setToolTip('Museeks');
 
@@ -184,13 +184,13 @@ class TrayModule extends ModuleWindow {
     this.setContextMenu(this.status);
   }
 
-  destroy () {
+  destroy() {
     if (this.tray) {
       this.tray.destroy();
     }
   }
 
-  setContextMenu (state: PlayerStatus) {
+  setContextMenu(state: PlayerStatus) {
     const playPauseItem = state === 'play' ? this.pauseToggle : this.playToggle;
     const menuTemplate = [...this.songDetails, ...playPauseItem, ...this.menu];
 
@@ -199,13 +199,13 @@ class TrayModule extends ModuleWindow {
     }
   }
 
-  refreshTrayIcon () {
+  refreshTrayIcon() {
     if (this.tray) {
       this.tray.setImage(this.trayIcon);
     }
   }
 
-  updateTrayMetadata (track: TrackModel) {
+  updateTrayMetadata(track: TrackModel) {
     this.songDetails = [
       {
         label: `${track.title}`,

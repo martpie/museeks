@@ -4,8 +4,8 @@
 
 import { Menu, app, ipcMain } from 'electron';
 
-import ModuleWindow from './module-window';
 import { PlayerStatus, TrackModel } from '../../shared/types/interfaces';
+import ModuleWindow from './module-window';
 
 class DockMenuDarwinModule extends ModuleWindow {
   protected menu: Electron.MenuItemConstructorOptions[];
@@ -13,7 +13,7 @@ class DockMenuDarwinModule extends ModuleWindow {
   protected playToggle: Electron.MenuItemConstructorOptions[];
   protected pauseToggle: Electron.MenuItemConstructorOptions[];
 
-  constructor (window: Electron.BrowserWindow) {
+  constructor(window: Electron.BrowserWindow) {
     super(window);
     this.platforms = ['darwin'];
 
@@ -23,7 +23,7 @@ class DockMenuDarwinModule extends ModuleWindow {
     this.pauseToggle = [];
   }
 
-  async load () {
+  async load() {
     this.songDetails = [
       {
         label: 'Not playing',
@@ -84,13 +84,13 @@ class DockMenuDarwinModule extends ModuleWindow {
     this.setDockMenu(PlayerStatus.PAUSE);
   }
 
-  setDockMenu (state: PlayerStatus) {
+  setDockMenu(state: PlayerStatus) {
     const playPauseItem = state === 'play' ? this.pauseToggle : this.playToggle;
     const menuTemplate = [...this.songDetails, ...playPauseItem, ...this.menu];
     app.dock.setMenu(Menu.buildFromTemplate(menuTemplate));
   }
 
-  updateTrayMetadata (metadata: TrackModel) {
+  updateTrayMetadata(metadata: TrackModel) {
     this.songDetails = [
       {
         label: `${metadata.title}`,

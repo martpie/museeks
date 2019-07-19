@@ -14,7 +14,7 @@ interface State {
 }
 
 export default class Dropzone extends React.Component<Props, State> {
-  constructor (props: Props) {
+  constructor(props: Props) {
     super(props);
     this.state = {
       state: 'idle'
@@ -26,7 +26,7 @@ export default class Dropzone extends React.Component<Props, State> {
     this.onKeyDown = this.onKeyDown.bind(this);
   }
 
-  onKeyDown (e: React.KeyboardEvent<HTMLDivElement>) {
+  onKeyDown(e: React.KeyboardEvent<HTMLDivElement>) {
     e.persist();
     e.stopPropagation();
     e.nativeEvent.stopImmediatePropagation();
@@ -42,25 +42,25 @@ export default class Dropzone extends React.Component<Props, State> {
     }
   }
 
-  onDragEnter () {
+  onDragEnter() {
     this.setState({ state: 'dragging' });
   }
 
-  onDragLeave () {
+  onDragLeave() {
     this.setState({ state: 'idle' });
   }
 
-  onDragOver (e: React.SyntheticEvent<HTMLDivElement>) {
+  onDragOver(e: React.SyntheticEvent<HTMLDivElement>) {
     e.preventDefault();
   }
 
-  onDrop (e: React.SyntheticEvent<HTMLDivElement>) {
+  onDrop(e: React.SyntheticEvent<HTMLDivElement>) {
     e.preventDefault();
     this.setState({ state: 'idle' });
     if (this.props.onDrop) this.props.onDrop(e.nativeEvent as DragEvent);
   }
 
-  render () {
+  render() {
     return (
       <div
         className={`${styles.dropzone} -is-${this.state.state}`}
@@ -73,8 +73,8 @@ export default class Dropzone extends React.Component<Props, State> {
         role='button'
         tabIndex={0}
       >
-        <div className={styles.dropzone__title}>{ this.props.title }</div>
-        <div className={styles.dropzone__subtitle}>{ this.props.subtitle }</div>
+        <div className={styles.dropzone__title}>{this.props.title}</div>
+        <div className={styles.dropzone__subtitle}>{this.props.subtitle}</div>
       </div>
     );
   }

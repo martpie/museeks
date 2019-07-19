@@ -13,7 +13,7 @@ interface State {
 }
 
 export default class TrackCover extends React.PureComponent<Props, State> {
-  constructor (props: Props) {
+  constructor(props: Props) {
     super(props);
 
     this.state = {
@@ -23,26 +23,26 @@ export default class TrackCover extends React.PureComponent<Props, State> {
     this.fetchInitialCover = this.fetchInitialCover.bind(this);
   }
 
-  async componentDidMount () {
+  async componentDidMount() {
     await this.fetchInitialCover();
   }
 
-  async componentWillReceiveProps (nextProps: Props) {
+  async componentWillReceiveProps(nextProps: Props) {
     if (nextProps.path !== this.props.path) {
       const coverPath = await coverUtils.fetchCover(nextProps.path);
       this.setState({ coverPath });
     }
   }
 
-  async fetchInitialCover () {
+  async fetchInitialCover() {
     const coverPath = await coverUtils.fetchCover(this.props.path);
     this.setState({ coverPath });
   }
 
-  render () {
+  render() {
     if (this.state.coverPath) {
       const coverPath = encodeURI(this.state.coverPath)
-        .replace(/'/g, '\\\'')
+        .replace(/'/g, "\\'")
         .replace(/"/g, '\\"');
       const inlineStyles = { backgroundImage: `url('${coverPath}')` };
 

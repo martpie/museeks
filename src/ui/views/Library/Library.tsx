@@ -11,8 +11,8 @@ import { LibraryState } from '../../reducers/library';
 import { PlayerState } from '../../reducers/player';
 import { RootState } from '../../reducers';
 
-import * as styles from './Library.css';
 import * as appStyles from '../../App.css';
+import * as styles from './Library.css';
 
 interface Props {
   library: LibraryState;
@@ -22,16 +22,17 @@ interface Props {
 }
 
 class Library extends React.Component<Props> {
-  constructor (props: Props) {
+  constructor(props: Props) {
     super(props);
     this.getLibraryComponent = this.getLibraryComponent.bind(this);
   }
 
-  getLibraryComponent () {
+  getLibraryComponent() {
     const { library, playlists, player, tracks } = this.props;
     const { playerStatus } = player;
 
-    const trackPlayingId = (player.queue.length > 0 && player.queueCursor !== null) ? player.queue[player.queueCursor]._id : null;
+    const trackPlayingId =
+      player.queue.length > 0 && player.queueCursor !== null ? player.queue[player.queueCursor]._id : null;
 
     // Loading library
     if (library.loading) {
@@ -57,9 +58,10 @@ class Library extends React.Component<Props> {
         <ViewMessage.Notice>
           <p>Too bad, there is no music in your library =(</p>
           <ViewMessage.Sub>
-            <span>nothing found yet, but that{"'"}s fine, you can always</span>
-            {' '}
-            <Link to='/settings/library' draggable={false}>add your music here</Link>
+            <span>nothing found yet, but that{"'"}s fine, you can always</span>{' '}
+            <Link to='/settings/library' draggable={false}>
+              add your music here
+            </Link>
           </ViewMessage.Sub>
         </ViewMessage.Notice>
       );
@@ -86,12 +88,8 @@ class Library extends React.Component<Props> {
     );
   }
 
-  render () {
-    return (
-      <div className={`${appStyles.view} ${styles.viewLibrary}`}>
-        { this.getLibraryComponent() }
-      </div>
-    );
+  render() {
+    return <div className={`${appStyles.view} ${styles.viewLibrary}`}>{this.getLibraryComponent()}</div>;
   }
 }
 
@@ -100,10 +98,7 @@ const mapStateToProps = (state: RootState) => {
 
   // Filter and sort TracksList
   // sorting being a costly operation, do it after filtering
-  const filteredTracks = sortTracks(
-    filterTracks(tracks.library, search),
-    SORT_ORDERS[sort.by][sort.order]
-  );
+  const filteredTracks = sortTracks(filterTracks(tracks.library, search), SORT_ORDERS[sort.by][sort.order]);
 
   return {
     playlists: state.playlists.list,

@@ -16,7 +16,7 @@ interface Props {
 }
 
 export default class SettingsLibrary extends React.Component<Props> {
-  onDrop (e: DragEvent) {
+  onDrop(e: DragEvent) {
     const files = [];
 
     if (e.dataTransfer) {
@@ -26,32 +26,37 @@ export default class SettingsLibrary extends React.Component<Props> {
         files.push(eventFiles[i].path);
       }
 
-      LibraryActions.add(files).catch(err => { console.warn(err); });
+      LibraryActions.add(files).catch((err) => {
+        console.warn(err);
+      });
     }
   }
 
-  async resetLibrary () {
+  async resetLibrary() {
     PlayerActions.stop();
     await LibraryActions.reset();
   }
 
-  openFolderSelector () {
-    dialog.showOpenDialog({
-      properties: ['multiSelections', 'openDirectory', 'openFile']
-    }, (result) => {
-      if (result) {
-        LibraryActions.add(result).catch(err => { console.warn(err); });
+  openFolderSelector() {
+    dialog.showOpenDialog(
+      {
+        properties: ['multiSelections', 'openDirectory', 'openFile']
+      },
+      (result) => {
+        if (result) {
+          LibraryActions.add(result).catch((err) => {
+            console.warn(err);
+          });
+        }
       }
-    });
+    );
   }
 
-  render () {
+  render() {
     return (
       <div className='setting settings-musicfolder'>
         <Setting.Section>
-          <h3 style={{ marginTop: 0 }}>
-            Import music
-          </h3>
+          <h3 style={{ marginTop: 0 }}>Import music</h3>
           <Dropzone
             title='Add music to the library'
             subtitle='Drop files or folders here'

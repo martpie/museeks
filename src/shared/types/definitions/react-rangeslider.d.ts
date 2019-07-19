@@ -13,7 +13,7 @@ declare module 'react-rangeslider' {
     onChange?(value: number): void;
     onChangeStart?(value: number): void;
     onChangeComplete?(value: number): void;
-    disabled?: boolean
+    disabled?: boolean;
   }
 
   export default class Slider extends React.Component<SliderProps> {}

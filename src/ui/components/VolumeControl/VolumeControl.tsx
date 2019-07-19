@@ -6,8 +6,8 @@ import Slider from 'react-rangeslider';
 import * as PlayerActions from '../../actions/PlayerActions';
 import Player from '../../lib/player';
 
-import * as styles from './VolumeControl.css';
 import * as controlStyles from '../PlayerControls/PlayerControls.css';
+import * as styles from './VolumeControl.css';
 
 // Volume easing - http://www.dr-lex.be/info-stuff/volumecontrols.html#about
 const SMOOTHING_FACTOR = 4;
@@ -15,16 +15,14 @@ const SMOOTHING_FACTOR = 4;
 const smoothifyVolume = (value: number): number => value ** SMOOTHING_FACTOR;
 const unsmoothifyVolume = (value: number): number => value ** (1 / SMOOTHING_FACTOR);
 
-interface Props {}
-
 interface State {
   showVolume: boolean;
   volume: number;
   muted: boolean;
 }
 
-export default class VolumeControl extends React.Component<Props, State> {
-  constructor (props: Props) {
+export default class VolumeControl extends React.Component<{}, State> {
+  constructor(props: {}) {
     super(props);
 
     const audio = Player.getAudio();
@@ -41,28 +39,28 @@ export default class VolumeControl extends React.Component<Props, State> {
     this.setVolume = this.setVolume.bind(this);
   }
 
-  getVolumeIcon (volume: number, muted: boolean) {
+  getVolumeIcon(volume: number, muted: boolean) {
     if (muted || volume === 0) return 'volume-off';
     if (volume < 0.5) return 'volume-down';
     return 'volume-up';
   }
 
-  setVolume (value: number) {
+  setVolume(value: number) {
     const smoothVolume = smoothifyVolume(value);
 
     PlayerActions.setVolume(smoothVolume);
     this.setState({ volume: smoothVolume });
   }
 
-  showVolume () {
+  showVolume() {
     this.setState({ showVolume: true });
   }
 
-  hideVolume () {
+  hideVolume() {
     this.setState({ showVolume: false });
   }
 
-  mute (e: React.MouseEvent<HTMLButtonElement>) {
+  mute(e: React.MouseEvent<HTMLButtonElement>) {
     if (e.currentTarget.classList.contains(controlStyles.control) || e.currentTarget.classList.contains('fa')) {
       const muted = !Player.isMuted();
 
@@ -71,23 +69,14 @@ export default class VolumeControl extends React.Component<Props, State> {
     }
   }
 
-  render () {
+  render() {
     const volumeClasses = cx(styles.volumeControl, {
       [styles.visible]: this.state.showVolume
     });
 
     return (
-      <div
-        className={styles.volumeControlContainer}
-        onMouseEnter={this.showVolume}
-        onMouseLeave={this.hideVolume}
-      >
-        <button
-          type='button'
-          className={controlStyles.control}
-          title='Volume'
-          onClick={this.mute}
-        >
+      <div className={styles.volumeControlContainer} onMouseEnter={this.showVolume} onMouseLeave={this.hideVolume}>
+        <button type='button' className={controlStyles.control} title='Volume' onClick={this.mute}>
           <Icon name={this.getVolumeIcon(unsmoothifyVolume(this.state.volume), this.state.muted)} />
         </button>
         <div className={volumeClasses}>

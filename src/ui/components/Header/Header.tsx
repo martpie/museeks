@@ -24,14 +24,14 @@ interface Props {
 class Header extends React.Component<Props> {
   input: React.RefObject<React.Component>;
 
-  constructor (props: Props) {
+  constructor(props: Props) {
     super(props);
 
     this.input = React.createRef();
     this.onKey = this.onKey.bind(this);
   }
 
-  onKey (e: KeyboardEvent) {
+  onKey(e: KeyboardEvent) {
     // ctrl-f shortcut
     if (isCtrlKey(e) && e.key.toLowerCase() === 'f') {
       if (this.input.current) {
@@ -42,29 +42,20 @@ class Header extends React.Component<Props> {
     }
   }
 
-  search (e: React.ChangeEvent<HTMLInputElement>) {
+  search(e: React.ChangeEvent<HTMLInputElement>) {
     LibraryActions.search(e.target.value);
   }
 
-  render () {
-    const {
-      playerStatus, queue, queueCursor, shuffle, repeat
-    } = this.props;
+  render() {
+    const { playerStatus, queue, queueCursor, shuffle, repeat } = this.props;
 
     return (
       <header className={styles.header}>
         <div className={styles.header__mainControls}>
-          <PlayerControls
-            playerStatus={playerStatus}
-          />
+          <PlayerControls playerStatus={playerStatus} />
         </div>
         <div className={styles.header__playingBar}>
-          <PlayingBar
-            queue={queue}
-            queueCursor={queueCursor}
-            shuffle={shuffle}
-            repeat={repeat}
-          />
+          <PlayingBar queue={queue} queueCursor={queueCursor} shuffle={shuffle} repeat={repeat} />
         </div>
         <div className={styles.header__search}>
           <Input

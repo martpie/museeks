@@ -1,4 +1,4 @@
-declare module 'mpris-service'; /*{
+declare module 'mpris-service'; /* {
 	export default class mpris {
 		serviceName?: string;
 		service?: object;

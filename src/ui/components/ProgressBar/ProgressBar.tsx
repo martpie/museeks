@@ -10,10 +10,7 @@ interface Props {
 
 const ProgressBar: React.FC<Props> = (props) => (
   <div className={cx(styles.progress, { [styles.animated]: props.animated })}>
-    <div
-      className={styles.progressBar}
-      style={{ width: `${props.progress}%` }}
-    ></div>
+    <div className={styles.progressBar} style={{ width: `${props.progress}%` }}></div>
   </div>
 );
 

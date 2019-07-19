@@ -1,15 +1,14 @@
+import * as path from 'path';
 import * as electron from 'electron';
 import * as m3u from 'm3ujs';
-import * as path from 'path';
 
+import { Playlist, TrackModel, PlaylistModel } from '../../shared/types/interfaces';
 import store from '../store';
 import history from '../router/history';
 import types from '../constants/action-types';
+import * as app from '../lib/app';
 import * as ToastsActions from './ToastsActions';
 import * as PlayerActions from './PlayerActions';
-
-import * as app from '../lib/app';
-import { Playlist, TrackModel, PlaylistModel } from 'src/shared/types/interfaces';
 
 const { dialog } = electron.remote;
 
@@ -49,7 +48,9 @@ export const load = async (_id: string) => {
  */
 export const refresh = async () => {
   try {
-    const playlists = await app.models.Playlist.find({}).sort({ name: 1 }).execAsync();
+    const playlists = await app.models.Playlist.find({})
+      .sort({ name: 1 })
+      .execAsync();
     store.dispatch({
       type: types.PLAYLISTS_REFRESH,
       payload: {
@@ -206,32 +207,40 @@ export const exportToM3u = async (playlistId: string) => {
   const playlist: PlaylistModel = await app.models.Playlist.findOneAsync({ _id: playlistId });
   const tracks: TrackModel[] = await app.models.Track.findAsync({ _id: { $in: playlist.tracks } });
 
-  dialog.showSaveDialog(app.browserWindows.main, {
-    title: 'Export playlist',
-    defaultPath: path.resolve(electron.remote.app.getPath('music'), playlist.name),
-    filters: [{
-      extensions: ['m3u'],
-      name: playlistId
-    }]
-  }, (fileName) => {
-    if (fileName) {
-      try {
-        const playlist = new m3u.Playlist(new m3u.TypeEXTM3U(entry => {
-          if (entry instanceof m3u.Mp3Entry) {
-            return `${entry.artist} - ${entry.album} - ${entry.track} - ${entry.title}`;
-          }
-          return entry.displayName;
-        }));
+  dialog.showSaveDialog(
+    app.browserWindows.main,
+    {
+      title: 'Export playlist',
+      defaultPath: path.resolve(electron.remote.app.getPath('music'), playlist.name),
+      filters: [
+        {
+          extensions: ['m3u'],
+          name: playlistId
+        }
+      ]
+    },
+    (fileName) => {
+      if (fileName) {
+        try {
+          const playlist = new m3u.Playlist(
+            new m3u.TypeEXTM3U((entry) => {
+              if (entry instanceof m3u.Mp3Entry) {
+                return `${entry.artist} - ${entry.album} - ${entry.track} - ${entry.title}`;
+              }
+              return entry.displayName;
+            })
+          );
 
-        tracks.forEach(track => {
-          playlist.add(new m3u.Mp3Entry(track.path));
-        });
+          tracks.forEach((track) => {
+            playlist.add(new m3u.Mp3Entry(track.path));
+          });
 
-        playlist.write(fileName);
-      } catch (err) {
-        ToastsActions.add('danger', `An error occured when exporting the playlist "${playlist.name}"`);
-        console.warn(err);
+          playlist.write(fileName);
+        } catch (err) {
+          ToastsActions.add('danger', `An error occured when exporting the playlist "${playlist.name}"`);
+          console.warn(err);
+        }
       }
     }
-  });
+  );
 };

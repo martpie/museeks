@@ -8,7 +8,7 @@ import { app, Menu, shell } from 'electron';
 import ModuleWindow from './module-window';
 
 class MenuModule extends ModuleWindow {
-  async load () {
+  async load() {
     if (process.platform === 'darwin') {
       const template: Electron.MenuItemConstructorOptions[] = [
         {
@@ -42,17 +42,14 @@ class MenuModule extends ModuleWindow {
         },
         {
           role: 'window',
-          submenu: [
-            { role: 'minimize' },
-            { role: 'close' }
-          ]
+          submenu: [{ role: 'minimize' }, { role: 'close' }]
         },
         {
           role: 'help',
           submenu: [
             {
               label: 'Learn More',
-              click () {
+              click() {
                 shell.openExternal('https://github.com/martpie/museeks');
               }
             }

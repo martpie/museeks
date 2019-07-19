@@ -23,7 +23,7 @@ const initialState: PlayerState = {
 
 export default (state = initialState, action: Action): PlayerState => {
   switch (action.type) {
-    case (types.PLAYER_START): {
+    case types.PLAYER_START: {
       const { queue, queueCursor, oldQueue } = action.payload;
 
       // Backup that and change the UI
@@ -36,21 +36,21 @@ export default (state = initialState, action: Action): PlayerState => {
       };
     }
 
-    case (types.PLAYER_PLAY): {
+    case types.PLAYER_PLAY: {
       return {
         ...state,
         playerStatus: PlayerStatus.PLAY
       };
     }
 
-    case (types.PLAYER_PAUSE): {
+    case types.PLAYER_PAUSE: {
       return {
         ...state,
         playerStatus: PlayerStatus.PAUSE
       };
     }
 
-    case (types.PLAYER_STOP): {
+    case types.PLAYER_STOP: {
       const newState = {
         ...state,
         queue: [],
@@ -61,7 +61,7 @@ export default (state = initialState, action: Action): PlayerState => {
       return newState;
     }
 
-    case (types.PLAYER_NEXT): {
+    case types.PLAYER_NEXT: {
       return {
         ...state,
         playerStatus: PlayerStatus.PLAY,
@@ -69,7 +69,7 @@ export default (state = initialState, action: Action): PlayerState => {
       };
     }
 
-    case (types.PLAYER_PREVIOUS): {
+    case types.PLAYER_PREVIOUS: {
       return {
         ...state,
         playerStatus: PlayerStatus.PLAY,
@@ -77,11 +77,11 @@ export default (state = initialState, action: Action): PlayerState => {
       };
     }
 
-    case (types.PLAYER_JUMP_TO): {
+    case types.PLAYER_JUMP_TO: {
       return state;
     }
 
-    case (types.PLAYER_SHUFFLE): {
+    case types.PLAYER_SHUFFLE: {
       const { queueCursor } = state;
 
       if (queueCursor !== null) {
@@ -103,9 +103,7 @@ export default (state = initialState, action: Action): PlayerState => {
         }
 
         // Unshuffle the queue by restoring the initial queue
-        const currentTrackIndex = state.oldQueue.findIndex(track => (
-          trackPlayingId === track._id
-        ));
+        const currentTrackIndex = state.oldQueue.findIndex((track) => trackPlayingId === track._id);
 
         // Roll back to the old but update queueCursor
         return {
@@ -119,14 +117,14 @@ export default (state = initialState, action: Action): PlayerState => {
       return state;
     }
 
-    case (types.PLAYER_REPEAT): {
+    case types.PLAYER_REPEAT: {
       return {
         ...state,
         repeat: action.payload.repeat
       };
     }
 
-    case (types.QUEUE_START): {
+    case types.QUEUE_START: {
       const queue = [...state.queue];
       const queueCursor = action.payload.index;
 
@@ -139,7 +137,7 @@ export default (state = initialState, action: Action): PlayerState => {
       };
     }
 
-    case (types.QUEUE_CLEAR): {
+    case types.QUEUE_CLEAR: {
       const queue = [...state.queue];
       const { queueCursor } = state;
 
@@ -155,7 +153,7 @@ export default (state = initialState, action: Action): PlayerState => {
       return state;
     }
 
-    case (types.QUEUE_REMOVE): {
+    case types.QUEUE_REMOVE: {
       const queue = [...state.queue];
       queue.splice(state.queueCursor + action.payload.index + 1, 1);
       return {
@@ -164,7 +162,7 @@ export default (state = initialState, action: Action): PlayerState => {
       };
     }
 
-    case (types.QUEUE_ADD): {
+    case types.QUEUE_ADD: {
       const queue = [...state.queue, ...action.payload.tracks];
       return {
         ...state,
@@ -172,7 +170,7 @@ export default (state = initialState, action: Action): PlayerState => {
       };
     }
 
-    case (types.QUEUE_ADD_NEXT): {
+    case types.QUEUE_ADD_NEXT: {
       const queue = [...state.queue];
       const { queueCursor } = state;
 
@@ -187,7 +185,7 @@ export default (state = initialState, action: Action): PlayerState => {
       return state;
     }
 
-    case (types.QUEUE_SET_QUEUE): {
+    case types.QUEUE_SET_QUEUE: {
       return {
         ...state,
         queue: action.payload.tracks

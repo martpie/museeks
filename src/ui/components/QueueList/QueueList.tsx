@@ -22,7 +22,7 @@ interface State {
 }
 
 export default class QueueList extends React.Component<Props, State> {
-  constructor (props: Props) {
+  constructor(props: Props) {
     super(props);
 
     this.state = {
@@ -36,7 +36,7 @@ export default class QueueList extends React.Component<Props, State> {
     this.dragEnd = this.dragEnd.bind(this);
   }
 
-  dragStart (e: React.DragEvent<HTMLDivElement>, index: number) {
+  dragStart(e: React.DragEvent<HTMLDivElement>, index: number) {
     e.dataTransfer.setData('text/html', this.props.queue[index]._id);
     e.dataTransfer.dropEffect = 'move';
     e.dataTransfer.effectAllowed = 'move';
@@ -44,7 +44,7 @@ export default class QueueList extends React.Component<Props, State> {
     this.setState({ draggedTrackIndex: index });
   }
 
-  dragEnd () {
+  dragEnd() {
     // Move that to a reducer may be a good idea
 
     const { queue, queueCursor } = this.props;
@@ -55,7 +55,8 @@ export default class QueueList extends React.Component<Props, State> {
 
     if (draggedIndex !== null && draggedOverIndex !== null) {
       const offsetPosition = dragPosition === 'below' ? 1 : 0;
-      const offsetHigherIndex = draggedOverIndex < draggedIndex || (draggedOverIndex === draggedIndex && dragPosition === 'above') ? 1 : 0;
+      const offsetHigherIndex =
+        draggedOverIndex < draggedIndex || (draggedOverIndex === draggedIndex && dragPosition === 'above') ? 1 : 0;
 
       // Real position in queue
       const draggedQueueIndex = draggedIndex + queueCursor + 1;
@@ -79,7 +80,7 @@ export default class QueueList extends React.Component<Props, State> {
     }
   }
 
-  dragOver (e: React.DragEvent<HTMLDivElement>, index: number) {
+  dragOver(e: React.DragEvent<HTMLDivElement>, index: number) {
     e.preventDefault();
 
     const relativePosition = e.nativeEvent.offsetY / e.currentTarget.offsetHeight;
@@ -91,7 +92,7 @@ export default class QueueList extends React.Component<Props, State> {
     });
   }
 
-  render () {
+  render() {
     const { queue, queueCursor } = this.props;
 
     // Get the 20 next tracks displayed
@@ -101,20 +102,14 @@ export default class QueueList extends React.Component<Props, State> {
     return (
       <>
         <div className={styles.queue__header}>
-          <div className={styles.queue__header__infos}>
-            { getStatus(incomingQueue) }
-          </div>
-          <Button
-            bSize='small'
-            onClick={QueueActions.clear}
-          >
+          <div className={styles.queue__header__infos}>{getStatus(incomingQueue)}</div>
+          <Button bSize='small' onClick={QueueActions.clear}>
             clear queue
           </Button>
         </div>
         <div className={styles.queue__content}>
-          { shownQueue.map((track, index) => (
+          {shownQueue.map((track, index) => (
             <QueueListItem
-              // eslint-disable-next-line react/no-array-index-key
               key={`track-${track._id}-${index}`}
               index={index}
               track={track}
@@ -126,7 +121,7 @@ export default class QueueList extends React.Component<Props, State> {
               onDragOver={this.dragOver}
               onDragEnd={this.dragEnd}
             />
-          )) }
+          ))}
         </div>
       </>
     );

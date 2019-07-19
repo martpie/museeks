@@ -54,9 +54,7 @@ app.on('window-all-closed', () => {
 // initialization and ready to create browser windows.
 app.on('ready', async () => {
   const configModule = new ConfigModule();
-  await ModulesManager.init(
-    configModule
-  );
+  await ModulesManager.init(configModule);
 
   const config = configModule.getConfig();
   let { bounds } = config;

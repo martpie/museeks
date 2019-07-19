@@ -12,7 +12,7 @@ class Player {
   private durationThresholdReached: boolean;
   public threshold: number;
 
-  constructor (options?: PlayerOptions) {
+  constructor(options?: PlayerOptions) {
     const mergedOptions = {
       playbackRate: 1,
       volume: 1,
@@ -34,75 +34,75 @@ class Player {
     this.durationThresholdReached = false;
   }
 
-  async play () {
+  async play() {
     await this.audio.play();
   }
 
-  pause () {
+  pause() {
     this.audio.pause();
   }
 
-  stop () {
+  stop() {
     this.audio.pause();
   }
 
-  mute () {
+  mute() {
     this.audio.muted = true;
   }
 
-  unmute () {
+  unmute() {
     this.audio.muted = false;
   }
 
-  getAudio () {
+  getAudio() {
     return this.audio;
   }
 
-  getCurrentTime () {
+  getCurrentTime() {
     return this.audio.currentTime;
   }
 
-  getVolume () {
+  getVolume() {
     return this.audio.volume;
   }
 
-  getSrc () {
+  getSrc() {
     return this.audio.src;
   }
 
-  setAudioVolume (volume: number) {
+  setAudioVolume(volume: number) {
     this.audio.volume = volume;
   }
 
-  setAudioPlaybackRate (playbackRate: number) {
+  setAudioPlaybackRate(playbackRate: number) {
     this.audio.playbackRate = playbackRate;
     this.audio.defaultPlaybackRate = playbackRate;
   }
 
-  async setOutputDevice (deviceId: string) {
+  async setOutputDevice(deviceId: string) {
     // @ts-ignore
     await this.audio.setSinkId(deviceId);
   }
 
-  setAudioSrc (src: string) {
+  setAudioSrc(src: string) {
     // When we change song, need to update the thresholdReached indicator.
     this.durationThresholdReached = false;
     this.audio.src = src;
   }
 
-  setAudioCurrentTime (currentTime: number) {
+  setAudioCurrentTime(currentTime: number) {
     this.audio.currentTime = currentTime;
   }
 
-  isMuted () {
+  isMuted() {
     return this.audio.muted;
   }
 
-  isPaused () {
+  isPaused() {
     return this.audio.paused;
   }
 
-  isThresholdReached () {
+  isThresholdReached() {
     if (!this.durationThresholdReached && this.audio.currentTime >= this.audio.duration * this.threshold) {
       this.durationThresholdReached = true;
     }

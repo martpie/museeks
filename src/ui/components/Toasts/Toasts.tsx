@@ -15,18 +15,14 @@ interface InjectedProps {
 const Toasts: React.FC<InjectedProps> = (props) => {
   return (
     <div className={styles.toasts}>
-      {props.toasts.map(toast => (
-        <ToastItem
-          type={toast.type}
-          content={toast.content}
-          key={toast._id}
-        />
+      {props.toasts.map((toast) => (
+        <ToastItem type={toast.type} content={toast.content} key={toast._id} />
       ))}
     </div>
   );
 };
 
-function mapStateToProps (state: RootState) {
+function mapStateToProps(state: RootState) {
   return { toasts: state.toasts };
 }
 

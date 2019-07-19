@@ -8,23 +8,29 @@ interface State {
 }
 
 class Root extends React.Component<{}, State> {
-  constructor (props: {}) {
+  constructor(props: {}) {
     super(props);
     this.state = { hasError: false };
   }
 
-  componentDidCatch () {
+  componentDidCatch() {
     // RIP
     this.setState({ hasError: true });
   }
 
-  render () {
+  render() {
     if (this.state.hasError) {
       return (
         <ViewMessage.Notice>
-          <p>💥 Something wrong happened</p>
+          <p>
+            <span role='img' aria-label='boom'>
+              💥
+            </span>{' '}
+            Something wrong happened
+          </p>
           <ViewMessage.Sub>
-            If it happens again, please <ExternalLink href='https://github.com/martpie/museeks/issues'>report an issue</ExternalLink>
+            If it happens again, please{' '}
+            <ExternalLink href='https://github.com/martpie/museeks/issues'>report an issue</ExternalLink>
           </ViewMessage.Sub>
         </ViewMessage.Notice>
       );

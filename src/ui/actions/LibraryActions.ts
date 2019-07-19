@@ -1,21 +1,21 @@
-import * as electron from 'electron';
 import * as fs from 'fs';
 import * as path from 'path';
 import * as util from 'util';
+import * as electron from 'electron';
 import globby from 'globby';
 import * as queue from 'queue';
 
 import store from '../store';
 
 import types from '../constants/action-types';
-import * as ToastsActions from './ToastsActions';
-import * as PlaylistsActions from './PlaylistsActions';
 
 import * as app from '../lib/app';
 import * as utils from '../utils/utils';
 import * as m3u from '../utils/utils-m3u';
 import { SortBy, TrackModel } from '../../shared/types/interfaces';
 import { SUPPORTED_PLAYLISTS_EXTENSIONS, SUPPORTED_TRACKS_EXTENSIONS } from '../../shared/constants';
+import * as PlaylistsActions from './PlaylistsActions';
+import * as ToastsActions from './ToastsActions';
 
 const { dialog } = electron.remote;
 const stat = util.promisify(fs.stat);
@@ -68,24 +68,22 @@ export const sort = (sortBy: SortBy) => {
 };
 
 const scanPlaylists = async (paths: string[]) => {
-  return Promise.all(paths.map(async filePath => {
-    try {
-      const playlistFiles = m3u.parse(filePath);
-      const playlistName = path.parse(filePath).name;
+  return Promise.all(
+    paths.map(async (filePath) => {
+      try {
+        const playlistFiles = m3u.parse(filePath);
+        const playlistName = path.parse(filePath).name;
 
-      const existingTracks: TrackModel[] = await app.models.Track.findAsync({
-        $or: playlistFiles.map(filePath => ({ path: filePath }))
-      });
+        const existingTracks: TrackModel[] = await app.models.Track.findAsync({
+          $or: playlistFiles.map((filePath) => ({ path: filePath }))
+        });
 
-      await PlaylistsActions.create(
-        playlistName,
-        existingTracks.map(track => track._id),
-        filePath
-      );
-    } catch (err) {
-      console.warn(err);
-    }
-  }));
+        await PlaylistsActions.create(playlistName, existingTracks.map((track) => track._id), filePath);
+      } catch (err) {
+        console.warn(err);
+      }
+    })
+  );
 };
 
 const scan = {
@@ -181,7 +179,7 @@ export const add = async (pathsToScan: string[]) => {
 
   try {
     // 1. Get the stats for all the files/paths
-    const statsPromises: Promise<ScanFile>[] = pathsToScan.map(async folderPath => ({
+    const statsPromises: Promise<ScanFile>[] = pathsToScan.map(async (folderPath) => ({
       path: folderPath,
       stat: await stat(folderPath)
     }));
@@ -207,9 +205,7 @@ export const add = async (pathsToScan: string[]) => {
     // Scan folders and add files to library
 
     // 4. Merge all path arrays together and filter them with the extensions we support
-    const allFiles = subDirectoriesFiles
-      .reduce((acc, array) => acc.concat(array), [] as string[])
-      .concat(files); // Add the initial files
+    const allFiles = subDirectoriesFiles.reduce((acc, array) => acc.concat(array), [] as string[]).concat(files); // Add the initial files
 
     const supportedTrackFiles = allFiles.filter((filePath) => {
       const extension = path.extname(filePath).toLowerCase();
@@ -250,30 +246,32 @@ export const add = async (pathsToScan: string[]) => {
  */
 export const remove = (tracksIds: string[]) => {
   // not calling await on it as it calls the synchonous message box
-  dialog.showMessageBox(app.browserWindows.main, {
-    buttons: [
-      'Cancel',
-      'Remove'
-    ],
-    title: 'Remove tracks from library?',
-    message: `Are you sure you want to remove ${tracksIds.length} element(s) from your library?`,
-    type: 'warning'
-  }, (result) => {
-    if (result === 1) { // button possition, here 'remove'
-      // Remove tracks from the Track collection
-      app.models.Track.removeAsync({ _id: { $in: tracksIds } }, { multi: true });
+  dialog.showMessageBox(
+    app.browserWindows.main,
+    {
+      buttons: ['Cancel', 'Remove'],
+      title: 'Remove tracks from library?',
+      message: `Are you sure you want to remove ${tracksIds.length} element(s) from your library?`,
+      type: 'warning'
+    },
+    (result) => {
+      if (result === 1) {
+        // button possition, here 'remove'
+        // Remove tracks from the Track collection
+        app.models.Track.removeAsync({ _id: { $in: tracksIds } }, { multi: true });
 
-      store.dispatch({
-        type: types.LIBRARY_REMOVE_TRACKS,
-        payload: {
-          tracksIds
-        }
-      });
-      // That would be great to remove those ids from all the playlists, but it's not easy
-      // and should not cause strange behaviors, all PR for that would be really appreciated
-      // TODO: see if it's possible to remove the Ids from the selected state of TracksList as it "could" lead to strange behaviors
+        store.dispatch({
+          type: types.LIBRARY_REMOVE_TRACKS,
+          payload: {
+            tracksIds
+          }
+        });
+        // That would be great to remove those ids from all the playlists, but it's not easy
+        // and should not cause strange behaviors, all PR for that would be really appreciated
+        // TODO: see if it's possible to remove the Ids from the selected state of TracksList as it "could" lead to strange behaviors
+      }
     }
-  });
+  );
 };
 
 /**
@@ -282,10 +280,7 @@ export const remove = (tracksIds: string[]) => {
 export const reset = async () => {
   try {
     const result = dialog.showMessageBox(app.browserWindows.main, {
-      buttons: [
-        'Cancel',
-        'Reset'
-      ],
+      buttons: ['Cancel', 'Reset'],
       title: 'Reset library?',
       message: 'Are you sure you want to reset your library ? All your tracks and playlists will be cleared.',
       type: 'warning'

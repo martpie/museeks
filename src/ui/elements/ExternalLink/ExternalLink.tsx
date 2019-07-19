@@ -8,25 +8,21 @@ interface Props {
 }
 
 export default class ExternalLink extends React.Component<Props> {
-  constructor (props: Props) {
+  constructor(props: Props) {
     super(props);
 
     this.openLink = this.openLink.bind(this);
   }
 
-  openLink (e: React.SyntheticEvent) {
+  openLink(e: React.SyntheticEvent) {
     e.preventDefault();
     shell.openExternal(this.props.href);
   }
 
-  render () {
+  render() {
     return (
-      <button
-        className={styles.externalLink}
-        role='link'
-        onClick={this.openLink}
-      >
-        { this.props.children }
+      <button className={styles.externalLink} role='link' onClick={this.openLink}>
+        {this.props.children}
       </button>
     );
   }

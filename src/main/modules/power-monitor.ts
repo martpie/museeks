@@ -6,7 +6,7 @@ import * as electron from 'electron';
 import ModuleWindow from './module-window';
 
 class PowerMonitorModule extends ModuleWindow {
-  async load () {
+  async load() {
     const { powerMonitor } = electron;
     const { window } = this;
 
