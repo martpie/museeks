@@ -37,6 +37,14 @@ Want more? Open a new issue or 👍 an existing one so we can talk about it.
 
 Builds and installers can be found [on this page](https://github.com/martpie/museeks/releases).
 
+### Package Manager
+
+Museeks can also be installed using [homebrew](https://brew.sh/) on macOS.
+
+```
+brew cask install museeks
+```
+
 ### Build (advanced)
 
 Museeks is built upon:
