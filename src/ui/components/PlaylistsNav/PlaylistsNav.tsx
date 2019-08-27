@@ -119,28 +119,27 @@ class PlaylistsNav extends React.Component<Props, State> {
   }
 
   render() {
-    const self = this;
     const { playlists } = this.props;
 
     // TODO (y.solovyov): extract into separate method that returns items
     const nav = playlists.map((elem) => {
       let navItemContent;
 
-      if (elem._id === self.state.renamed) {
+      if (elem._id === this.state.renamed) {
         navItemContent = (
           <input
             className={styles.item__input}
             type='text'
             defaultValue={elem.name}
-            onKeyDown={self.keyDown}
-            onBlur={self.blur}
-            onFocus={self.focus}
+            onKeyDown={this.keyDown}
+            onBlur={this.blur}
+            onFocus={this.focus}
             autoFocus
           />
         );
       } else {
         navItemContent = (
-          <PlaylistsNavLink className={styles.item__link} playlistId={elem._id} onContextMenu={self.showContextMenu}>
+          <PlaylistsNavLink className={styles.item__link} playlistId={elem._id} onContextMenu={this.showContextMenu}>
             {elem.name}
           </PlaylistsNavLink>
         );

@@ -99,6 +99,7 @@ const scanTracks = async (paths: string[]): Promise<void> => {
       // Instantiate queue
       let scannedFiles: TrackModel[] = [];
 
+      // eslint-disable-next-line
       // @ts-ignore Outdated types
       // https://github.com/jessetane/queue/pull/15#issuecomment-414091539
       const scanQueue = queue();

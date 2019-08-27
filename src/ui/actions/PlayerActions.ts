@@ -295,7 +295,7 @@ export const setPlaybackRate = (value: number) => {
 /**
  * Set audio's output device
  */
-export const setOutputDevice = (deviceId: string = 'default') => {
+export const setOutputDevice = (deviceId = 'default') => {
   if (deviceId) {
     try {
       Player.setOutputDevice(deviceId)
@@ -331,19 +331,21 @@ export const jumpTo = (to: number) => {
 export const audioError = (e: ErrorEvent) => {
   stop();
 
-  if (e.target) {
-    // @ts-ignore TODO e.target is not detected as HTMLAudioElement
-    switch (e.target.error.code) {
-      // @ts-ignore TODO
-      case e.target.error.MEDIA_ERR_ABORTED:
+  const element = e.target as HTMLAudioElement;
+
+  if (element) {
+    const { error } = element;
+
+    if (!error) return;
+
+    switch (error.code) {
+      case error.MEDIA_ERR_ABORTED:
         ToastsActions.add('warning', AUDIO_ERRORS.aborted);
         break;
-      // @ts-ignore TODO
-      case e.target.error.MEDIA_ERR_DECODE:
+      case error.MEDIA_ERR_DECODE:
         ToastsActions.add('danger', AUDIO_ERRORS.corrupt);
         break;
-      // @ts-ignore TODO
-      case e.target.error.MEDIA_ERR_SRC_NOT_SUPPORTED:
+      case error.MEDIA_ERR_SRC_NOT_SUPPORTED:
         ToastsActions.add('danger', AUDIO_ERRORS.notFound);
         break;
       default:
