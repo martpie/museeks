@@ -244,34 +244,30 @@ export const add = async (pathsToScan: string[]) => {
 /**
  * remove tracks from library
  */
-export const remove = (tracksIds: string[]) => {
+export const remove = async (tracksIds: string[]) => {
   // not calling await on it as it calls the synchonous message box
-  dialog.showMessageBox(
-    app.browserWindows.main,
-    {
-      buttons: ['Cancel', 'Remove'],
-      title: 'Remove tracks from library?',
-      message: `Are you sure you want to remove ${tracksIds.length} element(s) from your library?`,
-      type: 'warning'
-    },
-    (result) => {
-      if (result === 1) {
-        // button possition, here 'remove'
-        // Remove tracks from the Track collection
-        app.models.Track.removeAsync({ _id: { $in: tracksIds } }, { multi: true });
+  const result = await dialog.showMessageBox(app.browserWindows.main, {
+    buttons: ['Cancel', 'Remove'],
+    title: 'Remove tracks from library?',
+    message: `Are you sure you want to remove ${tracksIds.length} element(s) from your library?`,
+    type: 'warning'
+  });
 
-        store.dispatch({
-          type: types.LIBRARY_REMOVE_TRACKS,
-          payload: {
-            tracksIds
-          }
-        });
-        // That would be great to remove those ids from all the playlists, but it's not easy
-        // and should not cause strange behaviors, all PR for that would be really appreciated
-        // TODO: see if it's possible to remove the Ids from the selected state of TracksList as it "could" lead to strange behaviors
+  if (result.response === 1) {
+    // button possition, here 'remove'
+    // Remove tracks from the Track collection
+    app.models.Track.removeAsync({ _id: { $in: tracksIds } }, { multi: true });
+
+    store.dispatch({
+      type: types.LIBRARY_REMOVE_TRACKS,
+      payload: {
+        tracksIds
       }
-    }
-  );
+    });
+    // That would be great to remove those ids from all the playlists, but it's not easy
+    // and should not cause strange behaviors, all PR for that would be really appreciated
+    // TODO: see if it's possible to remove the Ids from the selected state of TracksList as it "could" lead to strange behaviors
+  }
 };
 
 /**
@@ -279,14 +275,14 @@ export const remove = (tracksIds: string[]) => {
  */
 export const reset = async () => {
   try {
-    const result = dialog.showMessageBox(app.browserWindows.main, {
+    const result = await dialog.showMessageBox(app.browserWindows.main, {
       buttons: ['Cancel', 'Reset'],
       title: 'Reset library?',
       message: 'Are you sure you want to reset your library ? All your tracks and playlists will be cleared.',
       type: 'warning'
     });
 
-    if (result === 1) {
+    if (result.response === 1) {
       store.dispatch({
         type: types.LIBRARY_REFRESH_START
       });

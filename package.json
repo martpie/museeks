@@ -84,7 +84,7 @@
     "@typescript-eslint/parser": "2.0.0",
     "clean-terminal-webpack-plugin": "2.0.4",
     "css-loader": "2.1.1",
-    "electron": "4.1.1",
+    "electron": "6.0.4",
     "electron-builder": "21.2.0",
     "electron-rebuild": "1.8.6",
     "eslint": "6.2.2",
