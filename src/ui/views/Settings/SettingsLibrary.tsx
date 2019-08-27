@@ -37,19 +37,16 @@ export default class SettingsLibrary extends React.Component<Props> {
     await LibraryActions.reset();
   }
 
-  openFolderSelector() {
-    dialog.showOpenDialog(
-      {
-        properties: ['multiSelections', 'openDirectory', 'openFile']
-      },
-      (result) => {
-        if (result) {
-          LibraryActions.add(result).catch((err) => {
-            console.warn(err);
-          });
-        }
-      }
-    );
+  async openFolderSelector() {
+    const result = await dialog.showOpenDialog({
+      properties: ['multiSelections', 'openDirectory', 'openFile']
+    });
+
+    if (result.filePaths) {
+      LibraryActions.add(result.filePaths).catch((err) => {
+        console.warn(err);
+      });
+    }
   }
 
   render() {
