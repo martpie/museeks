@@ -24,6 +24,7 @@ class Player {
     this.audio = new Audio();
 
     this.audio.defaultPlaybackRate = mergedOptions.playbackRate;
+    // eslint-disable-next-line
     // @ts-ignore
     this.audio.setSinkId(mergedOptions.audioOutputDevice);
     this.audio.playbackRate = mergedOptions.playbackRate;
@@ -80,6 +81,7 @@ class Player {
   }
 
   async setOutputDevice(deviceId: string) {
+    // eslint-disable-next-line
     // @ts-ignore
     await this.audio.setSinkId(deviceId);
   }

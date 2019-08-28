@@ -13,9 +13,9 @@ const stat = util.promisify(fs.stat);
  */
 export const parseDuration = (duration: number | null): string => {
   if (duration !== null) {
-    let hours = Math.trunc(duration / 3600);
-    let minutes = Math.trunc(duration / 60) % 60;
-    let seconds = Math.trunc(duration) % 60;
+    const hours = Math.trunc(duration / 3600);
+    const minutes = Math.trunc(duration / 60) % 60;
+    const seconds = Math.trunc(duration) % 60;
 
     const hoursStringified = hours < 10 ? `0${hours}` : hours;
     const minutesStringified = minutes < 10 ? `0${minutes}` : minutes;
@@ -141,7 +141,6 @@ export const parseMusicMetadata = (data: mmd.IAudioMetadata, trackPath: string):
     year: common.year
   };
 
-  // @ts-ignore
   return pickBy(metadata);
 };
 
@@ -161,7 +160,8 @@ export const getAudioDuration = (trackPath: string): Promise<number> => {
     });
 
     audio.addEventListener('error', (e) => {
-      // @ts-ignore
+      // eslint-disable-next-line
+      // @ts-ignore error event typing is wrong
       const message = `Error getting audio duration: (${e.currentTarget.error.code}) ${trackPath}`;
       reject(new Error(message));
     });
