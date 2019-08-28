@@ -83,8 +83,7 @@ app.on('ready', async () => {
   mainWindow.loadURL(`file://${uiDistPath}/index.html#/library`);
 
   // Open dev tools if museeks is run in debug mode
-  // @ts-ignore I don't know why it triggers this error
-  if (process.argv.includes('--devtools')) mainWindow.openDevTools({ mode: 'detach' });
+  if (process.argv.includes('--devtools')) mainWindow.webContents.openDevTools({ mode: 'detach' });
 
   mainWindow.on('closed', () => {
     // Dereference the window object

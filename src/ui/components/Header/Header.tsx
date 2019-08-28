@@ -35,8 +35,8 @@ class Header extends React.Component<Props> {
     // ctrl-f shortcut
     if (isCtrlKey(e) && e.key.toLowerCase() === 'f') {
       if (this.input.current) {
+        // eslint-disable-next-line
         // @ts-ignore
-        // tslint:disable-next-line
         this.input.current.refs.input.select(); // HACKY
       }
     }

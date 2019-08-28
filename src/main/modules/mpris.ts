@@ -94,7 +94,7 @@ class MprisModule extends ModuleWindow {
   }
 
   async updateCurrentTrack(track: TrackModel) {
-    let cover = await fetchCover(track.path, true);
+    const cover = await fetchCover(track.path, true);
 
     // this.player.canSeek = true;
     this.player.canPlay = true;
