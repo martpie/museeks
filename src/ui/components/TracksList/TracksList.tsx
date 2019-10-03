@@ -16,6 +16,7 @@ import { isCtrlKey, isAltKey } from '../../utils/utils-platform';
 import { PlaylistModel, TrackModel, PlayerStatus } from '../../../shared/types/interfaces';
 
 import * as scrollbarStyles from '../CustomScrollbar/CustomScrollbar.css';
+import * as headerStyles from '../Header/Header.css';
 import * as styles from './TracksList.css';
 
 const { shell, remote } = electron;
@@ -407,7 +408,9 @@ export default class TracksList extends React.Component<Props, State> {
         label: `Search for "${track.artist[0]}" `,
         click: () => {
           // HACK
-          const searchInput: HTMLInputElement | null = document.querySelector('input[type="text"].search');
+          const searchInput: HTMLInputElement | null = document.querySelector(
+            `input[type="text"].${headerStyles.header__search__input}`
+          );
 
           if (searchInput) {
             searchInput.value = track.artist[0];
@@ -419,7 +422,9 @@ export default class TracksList extends React.Component<Props, State> {
         label: `Search for "${track.album}"`,
         click: () => {
           // HACK
-          const searchInput: HTMLInputElement | null = document.querySelector('input[type="text"].search');
+          const searchInput: HTMLInputElement | null = document.querySelector(
+            `input[type="text"].${headerStyles.header__search__input}`
+          );
 
           if (searchInput) {
             searchInput.value = track.album;
