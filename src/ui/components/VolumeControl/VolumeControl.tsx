@@ -16,7 +16,6 @@ const smoothifyVolume = (value: number): number => value ** SMOOTHING_FACTOR;
 const unsmoothifyVolume = (value: number): number => value ** (1 / SMOOTHING_FACTOR);
 
 interface State {
-  showVolume: boolean;
   volume: number;
   muted: boolean;
 }
@@ -28,14 +27,11 @@ export default class VolumeControl extends React.Component<{}, State> {
     const audio = Player.getAudio();
 
     this.state = {
-      showVolume: false,
       volume: unsmoothifyVolume(audio.volume),
       muted: audio.muted
     };
 
     this.mute = this.mute.bind(this);
-    this.showVolume = this.showVolume.bind(this);
-    this.hideVolume = this.hideVolume.bind(this);
     this.setVolume = this.setVolume.bind(this);
   }
 
@@ -52,14 +48,6 @@ export default class VolumeControl extends React.Component<{}, State> {
     this.setState({ volume: smoothVolume });
   }
 
-  showVolume() {
-    this.setState({ showVolume: true });
-  }
-
-  hideVolume() {
-    this.setState({ showVolume: false });
-  }
-
   mute(e: React.MouseEvent<HTMLButtonElement>) {
     if (e.currentTarget.classList.contains(controlStyles.control) || e.currentTarget.classList.contains('fa')) {
       const muted = !Player.isMuted();
@@ -70,12 +58,10 @@ export default class VolumeControl extends React.Component<{}, State> {
   }
 
   render() {
-    const volumeClasses = cx(styles.volumeControl, {
-      [styles.visible]: this.state.showVolume
-    });
+    const volumeClasses = cx(styles.volumeControl);
 
     return (
-      <div className={styles.volumeControlContainer} onMouseEnter={this.showVolume} onMouseLeave={this.hideVolume}>
+      <div className={styles.volumeControlContainer}>
         <button type='button' className={controlStyles.control} title='Volume' onClick={this.mute}>
           <Icon name={this.getVolumeIcon(unsmoothifyVolume(this.state.volume), this.state.muted)} />
         </button>
