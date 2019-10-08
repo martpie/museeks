@@ -71,7 +71,7 @@ export default class VolumeControl extends React.Component<{}, State> {
             max={1}
             step={0.01}
             tooltip={false}
-            value={unsmoothifyVolume(this.state.volume)}
+            value={unsmoothifyVolume(this.state.muted ? 0.0 : this.state.volume)}
             onChange={this.setVolume}
           />
         </div>
