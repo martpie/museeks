@@ -27,7 +27,7 @@ export default class VolumeControl extends React.Component<{}, State> {
     const audio = Player.getAudio();
 
     this.state = {
-      volume: unsmoothifyVolume(audio.volume),
+      volume: audio.volume,
       muted: audio.muted
     };
 
