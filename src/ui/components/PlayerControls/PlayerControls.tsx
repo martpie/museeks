@@ -9,6 +9,7 @@ import * as styles from './PlayerControls.css';
 
 interface Props {
   playerStatus: PlayerStatus;
+  queueCursor: number | null;
 }
 
 export default class PlayerControls extends React.PureComponent<Props> {
@@ -28,7 +29,7 @@ export default class PlayerControls extends React.PureComponent<Props> {
         <button type='button' className={styles.control} title='Next' onClick={PlayerActions.next}>
           <Icon name='forward' />
         </button>
-        <VolumeControl />
+        <VolumeControl queueCursor={this.props.queueCursor} />
       </div>
     );
   }

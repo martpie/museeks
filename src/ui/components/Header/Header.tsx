@@ -52,7 +52,7 @@ class Header extends React.Component<Props> {
     return (
       <header className={styles.header}>
         <div className={styles.header__mainControls}>
-          <PlayerControls playerStatus={playerStatus} />
+          <PlayerControls playerStatus={playerStatus} queueCursor={queueCursor} />
         </div>
         <div className={styles.header__playingBar}>
           <PlayingBar queue={queue} queueCursor={queueCursor} shuffle={shuffle} repeat={repeat} />

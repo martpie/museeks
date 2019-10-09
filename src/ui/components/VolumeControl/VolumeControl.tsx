@@ -15,14 +15,18 @@ const SMOOTHING_FACTOR = 4;
 const smoothifyVolume = (value: number): number => value ** SMOOTHING_FACTOR;
 const unsmoothifyVolume = (value: number): number => value ** (1 / SMOOTHING_FACTOR);
 
+interface Props {
+  queueCursor: number | null;
+}
+
 interface State {
   showVolume: boolean;
   volume: number;
   muted: boolean;
 }
 
-export default class VolumeControl extends React.Component<{}, State> {
-  constructor(props: {}) {
+export default class VolumeControl extends React.Component<Props, State> {
+  constructor(props: Props) {
     super(props);
 
     const audio = Player.getAudio();
@@ -71,7 +75,8 @@ export default class VolumeControl extends React.Component<{}, State> {
 
   render() {
     const volumeClasses = cx(styles.volumeControl, {
-      [styles.visible]: this.state.showVolume
+      [styles.visible]: this.state.showVolume || this.props.queueCursor === null,
+      [styles.popup]: this.props.queueCursor != null
     });
 
     return (

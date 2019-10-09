@@ -19,6 +19,9 @@
 
     &.visible {
       display: block;
+    }
+
+    &.popup {
       border: 1px solid lightgray;
     }
   }
