@@ -9,7 +9,14 @@
   top: -4px;
   left: 30px;
   padding: 10px 5px;
+}
 
+:global(.os-win32),
+:global(.os-linux) .volume-control-position {
+  display: block;
+}
+
+:global(.os-darwin) .volume-control-position {
   @media (min-width: 1200px) {
     display: block;
   }

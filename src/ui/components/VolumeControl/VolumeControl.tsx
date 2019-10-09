@@ -74,7 +74,7 @@ export default class VolumeControl extends React.Component<Props, State> {
   }
 
   render() {
-    const volumeClasses = cx(styles.volumeControl, {
+    const volumeClasses = cx(styles.volumeControl, styles.volumeControlPosition, {
       [styles.visible]: this.state.showVolume || this.props.queueCursor === null,
       [styles.popup]: this.props.queueCursor != null
     });
