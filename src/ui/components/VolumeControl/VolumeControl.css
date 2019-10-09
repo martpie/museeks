@@ -8,6 +8,18 @@
   z-index: 10;
   top: -4px;
   left: 30px;
-  display: block;
   padding: 10px 5px;
+
+  @media (min-width: 1200px) {
+    display: block;
+  }
+
+  @media (max-width: 1199px) {
+    display: none;
+
+    &.visible {
+      display: block;
+      border: 1px solid lightgray;
+    }
+  }
 }
