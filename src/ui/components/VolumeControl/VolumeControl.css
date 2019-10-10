@@ -9,6 +9,7 @@
   top: -4px;
   left: 30px;
   padding: 10px 5px;
+  -webkit-app-region: no-drag;
 }
 
 :global(.os-win32),
