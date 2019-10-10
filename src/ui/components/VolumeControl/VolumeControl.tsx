@@ -53,7 +53,16 @@ export default class VolumeControl extends React.Component<Props, State> {
     const smoothVolume = smoothifyVolume(value);
 
     PlayerActions.setVolume(smoothVolume);
-    this.setState({ volume: smoothVolume });
+
+    // disable mute when it is still set
+    let muted = this.state.muted;
+    if (muted) {
+      PlayerActions.setMuted(false);
+
+      muted = false;
+    }
+
+    this.setState({ volume: smoothVolume, muted });
   }
 
   showVolume() {
