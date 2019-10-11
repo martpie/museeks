@@ -28,10 +28,10 @@ jobs:
       - name: 'Test: formatting'
         run: 'npm run test:formatting'
 
-      - name: 'Test: linting'
+      - name: 'Test: TS/JS linting'
         run: 'npm run test:lint'
 
-      - name: 'Lint check: CSS'
+      - name: 'Test: CSS linting'
         run: 'npm run test:css'
 
       - name: Build application
