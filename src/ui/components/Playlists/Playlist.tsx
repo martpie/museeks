@@ -28,12 +28,11 @@ class Playlist extends React.Component<Props> {
     await PlaylistsActions.load(this.props.match.params.playlistId);
   }
 
-  async componentWillReceiveProps(nextProps: Props) {
-    const { playlistId } = this.props.match.params;
-    const nextPlaylistId = nextProps.match.params.playlistId;
+  async componentDidUpdate(prevProps: Props) {
+    const playlistId = this.props.match.params.playlistId;
 
-    if (nextPlaylistId !== playlistId) {
-      await PlaylistsActions.load(nextPlaylistId);
+    if (playlistId !== prevProps.match.params.playlistId) {
+      PlaylistsActions.load(playlistId);
     }
   }
 
