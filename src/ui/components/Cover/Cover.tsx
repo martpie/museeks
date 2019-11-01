@@ -27,9 +27,9 @@ export default class TrackCover extends React.PureComponent<Props, State> {
     await this.fetchInitialCover();
   }
 
-  async componentWillReceiveProps(nextProps: Props) {
-    if (nextProps.path !== this.props.path) {
-      const coverPath = await coverUtils.fetchCover(nextProps.path);
+  async componentDidUpdate(prevProps: Props) {
+    if (prevProps.path !== this.props.path) {
+      const coverPath = await coverUtils.fetchCover(this.props.path);
       this.setState({ coverPath });
     }
   }
