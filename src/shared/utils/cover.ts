@@ -1,6 +1,6 @@
 import * as path from 'path';
 import * as mmd from 'music-metadata';
-import globby from 'globby';
+import * as globby from 'globby';
 
 const SUPPORTED_COVER_EXTENSIONS = ['.png', '.jpg', '.jpeg', '.bmp', '.gif'];
 const SUPPORTED_COVER_NAMES = ['album', 'albumart', 'folder', 'cover', 'front'];
@@ -45,7 +45,7 @@ export const fetchCover = async (trackPath: string, ignoreId3 = false): Promise<
   // scan folder for any cover image
   const folder = path.dirname(trackPath);
   const pattern = path.join(folder, '*');
-  const matches = await globby(pattern, { followSymlinkedDirectories: false });
+  const matches = await globby(pattern, { followSymbolicLinks: false });
 
   const match = matches.find((elem) => {
     return isValidFilename(path.parse(elem));

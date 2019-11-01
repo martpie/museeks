@@ -2,7 +2,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import * as util from 'util';
 import * as electron from 'electron';
-import globby from 'globby';
+import * as globby from 'globby';
 import * as queue from 'queue';
 
 import store from '../store';
@@ -199,7 +199,7 @@ export const add = async (pathsToScan: string[]) => {
     // 3. Scan all the directories with globby
     const globbies = folders.map((folder) => {
       const pattern = path.join(folder, '**/*.*');
-      return globby(pattern, { followSymlinkedDirectories: true });
+      return globby(pattern, { followSymbolicLinks: true });
     });
 
     const subDirectoriesFiles = await Promise.all(globbies);
