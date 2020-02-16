@@ -123,6 +123,7 @@ export const addTracks = async (_id: string, tracksIds: string[], isShown?: bool
     const playlist = await app.models.Playlist.findOneAsync({ _id });
     const playlistTracks = playlist.tracks.concat(tracksIds);
     await app.models.Playlist.updateAsync({ _id }, { $set: { tracks: playlistTracks } });
+    await refresh();
     ToastsActions.add('success', `${tracksIds.length} tracks were successfully added to "${playlist.name}"`);
   } catch (err) {
     console.warn(err);
