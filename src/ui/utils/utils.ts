@@ -1,12 +1,8 @@
 import * as path from 'path';
-import * as fs from 'fs';
-import * as util from 'util';
 import * as mmd from 'music-metadata';
 import pickBy from 'lodash-es/pickBy';
 
 import { Track } from '../../shared/types/interfaces';
-
-const stat = util.promisify(fs.stat);
 
 /**
  * Parse an int to a more readable string
@@ -184,11 +180,8 @@ export const getMetadata = async (trackPath: string): Promise<Track> => {
   };
 
   try {
-    const stats = await stat(trackPath);
     const data = await mmd.parseFile(trackPath, {
-      native: true,
       skipCovers: true,
-      fileSize: stats.size,
       duration: true
     });
 
@@ -204,7 +197,7 @@ export const getMetadata = async (trackPath: string): Promise<Track> => {
     metadata.loweredMetas = getLoweredMeta(metadata);
 
     // Let's try another wat to retrieve a track duration
-    if (!metadata.duration) {
+    if (metadata.duration < 0.5) {
       try {
         metadata.duration = await getAudioDuration(trackPath);
       } catch (err) {

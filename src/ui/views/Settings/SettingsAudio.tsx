@@ -11,7 +11,7 @@ interface Props {
 
 export default class SettingsAudio extends React.Component<Props> {
   setPlaybackRate(e: React.SyntheticEvent<HTMLInputElement>) {
-    PlayerActions.setPlaybackRate(parseInt(e.currentTarget.value, 10));
+    PlayerActions.setPlaybackRate(parseFloat(e.currentTarget.value));
   }
 
   setOutputDevice(deviceId: string) {
