@@ -204,7 +204,7 @@ export const getMetadata = async (trackPath: string): Promise<Track> => {
     metadata.loweredMetas = getLoweredMeta(metadata);
 
     // Let's try another wat to retrieve a track duration
-    if (!metadata.duration) {
+    if (metadata.duration < 0.5) {
       try {
         metadata.duration = await getAudioDuration(trackPath);
       } catch (err) {
