@@ -17,28 +17,25 @@ export const parse = (filePath: string): string[] => {
 
     const decodedContent = iconv.decode(content, encoding);
 
-    const files = decodedContent.split(/\r?\n/).reduce(
-      (acc, line) => {
-        if (line.length === 0) {
-          return acc;
-        }
-
-        // If absolute path
-        if (fs.existsSync(path.resolve(line)) && isFile(path.resolve(line))) {
-          acc.push(path.resolve(line));
-          return acc;
-        }
-
-        // If relative Path
-        if (fs.existsSync(path.resolve(baseDir, line)) && isFile(path.resolve(baseDir, line))) {
-          acc.push(path.resolve(baseDir, line));
-          return acc;
-        }
-
+    const files = decodedContent.split(/\r?\n/).reduce((acc, line) => {
+      if (line.length === 0) {
         return acc;
-      },
-      [] as string[]
-    );
+      }
+
+      // If absolute path
+      if (fs.existsSync(path.resolve(line)) && isFile(path.resolve(line))) {
+        acc.push(path.resolve(line));
+        return acc;
+      }
+
+      // If relative Path
+      if (fs.existsSync(path.resolve(baseDir, line)) && isFile(path.resolve(baseDir, line))) {
+        acc.push(path.resolve(baseDir, line));
+        return acc;
+      }
+
+      return acc;
+    }, [] as string[]);
 
     return files;
   } catch (err) {
