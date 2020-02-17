@@ -10,10 +10,13 @@ import { filterTracks } from '../../utils/utils-library';
 import { TrackModel, PlaylistModel, PlayerStatus } from '../../../shared/types/interfaces';
 import { RootState } from '../../reducers';
 
-interface OwnProps {
+type OwnProps = RouteComponentProps<RouteParams>;
+
+interface ReduxProps {
   tracks: TrackModel[];
   trackPlayingId: string | null;
   playlists: PlaylistModel[];
+  currentPlaylist: PlaylistModel | undefined;
   playerStatus: PlayerStatus;
 }
 
@@ -21,7 +24,7 @@ interface RouteParams {
   playlistId: string;
 }
 
-type Props = OwnProps & RouteComponentProps<RouteParams>;
+type Props = ReduxProps & OwnProps;
 
 class Playlist extends React.Component<Props> {
   async componentDidMount() {
@@ -41,10 +44,7 @@ class Playlist extends React.Component<Props> {
   };
 
   render() {
-    const { tracks, trackPlayingId, playerStatus, playlists, match } = this.props;
-
-    // A bit hacky though, maybe this should be in mapstatetoprops
-    const currentPlaylist = playlists.find((p) => p._id === match.params.playlistId);
+    const { tracks, trackPlayingId, playerStatus, playlists, currentPlaylist, match } = this.props;
 
     if (currentPlaylist && currentPlaylist.tracks.length === 0) {
       return (
@@ -98,12 +98,15 @@ class Playlist extends React.Component<Props> {
   }
 }
 
-const mapStateToProps = ({ library, playlists, player }: RootState) => {
+const mapStateToProps = ({ library, playlists, player }: RootState, ownProps: OwnProps): ReduxProps => {
   const { search, tracks } = library;
   const filteredTracks = filterTracks(tracks.playlist, search);
 
+  const currentPlaylist = playlists.list.find((p) => p._id === ownProps.match.params.playlistId);
+
   return {
     playlists: playlists.list,
+    currentPlaylist,
     tracks: filteredTracks,
     playerStatus: player.playerStatus,
     trackPlayingId: player.queue.length > 0 && player.queueCursor !== null ? player.queue[player.queueCursor]._id : null
