@@ -24,10 +24,11 @@
     "test:formatting": "prettier --check \"./**/*.{ts,tsx,js}\"",
     "test:formatting:fix": "prettier --write \"./**/*.{ts,tsx,js}\"",
     "test:css": "stylelint \"src/**/*.css\"",
-    "package:lmw": "electron-builder -lmw --ia32 --x64",
+    "package:lmw": "electron-builder -lmw --ia32 --x64 && npm run package:checksums",
     "package:l": "electron-builder -l --ia32 --x64",
     "package:w": "electron-builder -w --ia32 --x64",
-    "package:m": "electron-builder -m"
+    "package:m": "electron-builder -m",
+    "package:checksums": "bash scripts/checksum.sh"
   },
   "dependencies": {
     "bluebird": "3.7.2",
