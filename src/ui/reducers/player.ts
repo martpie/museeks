@@ -23,7 +23,6 @@ const initialState: PlayerState = {
   playerStatus: PlayerStatus.STOP // Player status
 };
 
-
 /**
  * What state from `PlayerState` to we need to calculate the queue of tracks
  * to send to Player
@@ -54,9 +53,9 @@ export const updatePlayerTrackQueue = <T extends RequiredQueueingState>(state: T
     // Normal playback
     tracks = queue.slice(queueCursor);
   }
-  Player.setTracks(tracks.map(track => utils.parseUri(track.path)));
+  Player.setTracks(tracks.map((track) => utils.parseUri(track.path)));
   return state;
-}
+};
 
 export default (state = initialState, action: Action): PlayerState => {
   switch (action.type) {

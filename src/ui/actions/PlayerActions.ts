@@ -83,7 +83,6 @@ export const start = async (queue?: TrackModel[], _id?: string) => {
 
   // If a track exists
   if (queuePosition > -1) {
-
     let queueCursor = queuePosition; // Clean that variable mess later
 
     // Check if we have to shuffle the queue
@@ -199,7 +198,6 @@ export const previous = async () => {
 
     // tslint:disable-next-line
     if (queue[newQueueCursor] !== undefined) {
-
       updatePlayerTrackQueue({
         queue,
         queueCursor: newQueueCursor,
