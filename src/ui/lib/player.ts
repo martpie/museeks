@@ -1,5 +1,5 @@
-import * as app from './app';
 import PreciseAudio from '@synesthesia-project/precise-audio';
+import * as app from './app';
 
 interface PlayerOptions {
   playbackRate?: number;
@@ -83,10 +83,11 @@ class Player {
     await this.audio.setSinkId(deviceId);
   }
 
-  setAudioSrc(src: string) {
+  setTracks(srcs: string[]) {
+    console.log('setTracks', srcs);
     // When we change song, need to update the thresholdReached indicator.
     this.durationThresholdReached = false;
-    this.audio.src = src;
+    this.audio.updateTracks(...srcs);
   }
 
   setAudioCurrentTime(currentTime: number) {

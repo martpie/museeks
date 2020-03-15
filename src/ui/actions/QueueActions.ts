@@ -3,18 +3,22 @@ import types from '../constants/action-types';
 
 import * as app from '../lib/app';
 import Player from '../lib/player';
-import * as utils from '../utils/utils';
 
 import { Track } from '../../shared/types/interfaces';
+import { updatePlayerTrackQueue } from '../reducers/player';
 
 /**
  * Start audio playback from the queue
  */
 export const start = async (index: number) => {
-  const { queue } = store.getState().player;
-  const uri = utils.parseUri(queue[index].path);
+  // TODO (y.solovyov | martpie): calling getState is a hack.
+  const { queue, repeat } = store.getState().player;
 
-  Player.setAudioSrc(uri);
+  updatePlayerTrackQueue({
+    queue,
+    queueCursor: index,
+    repeat
+  });
   await Player.play();
 
   store.dispatch({

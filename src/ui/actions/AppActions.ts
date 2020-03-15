@@ -43,6 +43,7 @@ const init = async () => {
 
   // Bind player events
   // Audio Events
+  Player.getAudio().addEventListener('next', PlayerActions.next);
   Player.getAudio().addEventListener('ended', PlayerActions.next);
   Player.getAudio().addEventListener('error', PlayerActions.audioError);
   Player.getAudio().addEventListener('timeupdate', async () => {

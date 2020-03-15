@@ -1,7 +1,9 @@
 import types from '../constants/action-types';
 import { config } from '../lib/app';
+import Player from '../lib/player';
+import * as utils from '../utils/utils';
 import { shuffleTracks } from '../utils/utils-player';
-import { TrackModel, Action, Repeat, PlayerStatus } from '../../shared/types/interfaces';
+import { TrackModel, Action, Repeat, PlayerStatus, LinvoSchema, Track } from '../../shared/types/interfaces';
 
 export interface PlayerState {
   queue: TrackModel[];
@@ -21,33 +23,68 @@ const initialState: PlayerState = {
   playerStatus: PlayerStatus.STOP // Player status
 };
 
+
+/**
+ * What state from `PlayerState` to we need to calculate the queue of tracks
+ * to send to Player
+ */
+type RequiredQueueingState = Pick<PlayerState, 'queue' | 'queueCursor' | 'repeat'>;
+
+/**
+ * Update the player with the src URIs that should be queued for the current
+ * and upcoming songs.
+ */
+export const updatePlayerTrackQueue = <T extends RequiredQueueingState>(state: T) => {
+  const { queue, queueCursor, repeat } = state;
+  if (queueCursor === null || queueCursor > queue.length - 1) {
+    Player.setTracks([]);
+    return state;
+  }
+
+  let tracks: LinvoSchema<Track>[];
+  if (repeat === Repeat.ONE) {
+    // If we are repeating the same track,
+    // it should be sent twice for gapless playback
+    tracks = [queue[queueCursor], queue[queueCursor]];
+  } else if (repeat === Repeat.ALL) {
+    // Send the remainder of the queue,
+    // plus the queue in it's entirety again
+    tracks = [...queue.slice(queueCursor), ...queue];
+  } else {
+    // Normal playback
+    tracks = queue.slice(queueCursor);
+  }
+  Player.setTracks(tracks.map(track => utils.parseUri(track.path)));
+  return state;
+}
+
 export default (state = initialState, action: Action): PlayerState => {
   switch (action.type) {
     case types.PLAYER_START: {
       const { queue, queueCursor, oldQueue } = action.payload;
 
       // Backup that and change the UI
-      return {
+      return updatePlayerTrackQueue({
         ...state,
         queue,
         queueCursor,
         oldQueue,
         playerStatus: PlayerStatus.PLAY
-      };
+      });
     }
 
     case types.PLAYER_PLAY: {
-      return {
+      return updatePlayerTrackQueue({
         ...state,
         playerStatus: PlayerStatus.PLAY
-      };
+      });
     }
 
     case types.PLAYER_PAUSE: {
-      return {
+      return updatePlayerTrackQueue({
         ...state,
         playerStatus: PlayerStatus.PAUSE
-      };
+      });
     }
 
     case types.PLAYER_STOP: {
@@ -58,23 +95,23 @@ export default (state = initialState, action: Action): PlayerState => {
         playerStatus: PlayerStatus.STOP
       };
 
-      return newState;
+      return updatePlayerTrackQueue(newState);
     }
 
     case types.PLAYER_NEXT: {
-      return {
+      return updatePlayerTrackQueue({
         ...state,
         playerStatus: PlayerStatus.PLAY,
         queueCursor: action.payload.newQueueCursor
-      };
+      });
     }
 
     case types.PLAYER_PREVIOUS: {
-      return {
+      return updatePlayerTrackQueue({
         ...state,
         playerStatus: PlayerStatus.PLAY,
         queueCursor: action.payload.newQueueCursor
-      };
+      });
     }
 
     case types.PLAYER_JUMP_TO: {
@@ -93,35 +130,35 @@ export default (state = initialState, action: Action): PlayerState => {
 
           const queue = shuffleTracks([...state.queue], queueCursor);
 
-          return {
+          return updatePlayerTrackQueue({
             ...state,
             queue,
             queueCursor: 0,
             oldQueue: state.queue,
             shuffle: true
-          };
+          });
         }
 
         // Unshuffle the queue by restoring the initial queue
         const currentTrackIndex = state.oldQueue.findIndex((track) => trackPlayingId === track._id);
 
         // Roll back to the old but update queueCursor
-        return {
+        return updatePlayerTrackQueue({
           ...state,
           queue: [...state.oldQueue],
           queueCursor: currentTrackIndex,
           shuffle: false
-        };
+        });
       }
 
       return state;
     }
 
     case types.PLAYER_REPEAT: {
-      return {
+      return updatePlayerTrackQueue({
         ...state,
         repeat: action.payload.repeat
-      };
+      });
     }
 
     case types.QUEUE_START: {
@@ -129,12 +166,12 @@ export default (state = initialState, action: Action): PlayerState => {
       const queueCursor = action.payload.index;
 
       // Backup that and change the UI
-      return {
+      return updatePlayerTrackQueue({
         ...state,
         queue,
         queueCursor,
         playerStatus: PlayerStatus.PLAY
-      };
+      });
     }
 
     case types.QUEUE_CLEAR: {
@@ -144,10 +181,10 @@ export default (state = initialState, action: Action): PlayerState => {
       if (queueCursor !== null) {
         queue.splice(queueCursor + 1, queue.length - queueCursor);
 
-        return {
+        return updatePlayerTrackQueue({
           ...state,
           queue
-        };
+        });
       }
 
       return state;
@@ -156,18 +193,18 @@ export default (state = initialState, action: Action): PlayerState => {
     case types.QUEUE_REMOVE: {
       const queue = [...state.queue];
       queue.splice(state.queueCursor + action.payload.index + 1, 1);
-      return {
+      return updatePlayerTrackQueue({
         ...state,
         queue
-      };
+      });
     }
 
     case types.QUEUE_ADD: {
       const queue = [...state.queue, ...action.payload.tracks];
-      return {
+      return updatePlayerTrackQueue({
         ...state,
         queue
-      };
+      });
     }
 
     case types.QUEUE_ADD_NEXT: {
@@ -176,20 +213,20 @@ export default (state = initialState, action: Action): PlayerState => {
 
       if (queueCursor !== null) {
         queue.splice(queueCursor + 1, 0, ...action.payload.tracks);
-        return {
+        return updatePlayerTrackQueue({
           ...state,
           queue
-        };
+        });
       }
 
       return state;
     }
 
     case types.QUEUE_SET_QUEUE: {
-      return {
+      return updatePlayerTrackQueue({
         ...state,
         queue: action.payload.tracks
-      };
+      });
     }
 
     default: {

@@ -7,11 +7,11 @@ import types from '../constants/action-types';
 import SORT_ORDERS from '../constants/sort-orders';
 
 import * as app from '../lib/app';
-import * as utils from '../utils/utils';
 import Player from '../lib/player';
 import { sortTracks, filterTracks } from '../utils/utils-library';
 import { shuffleTracks } from '../utils/utils-player';
 import { TrackModel, PlayerStatus, Repeat } from '../../shared/types/interfaces';
+import { updatePlayerTrackQueue } from '../reducers/player';
 import * as ToastsActions from './ToastsActions';
 
 const { ipcRenderer } = electron;
@@ -71,7 +71,7 @@ export const start = async (queue?: TrackModel[], _id?: string) => {
     }
   }
 
-  const { shuffle } = state.player;
+  const { shuffle, repeat } = state.player;
 
   const oldQueue = [...newQueue];
   const trackId = _id || newQueue[0]._id;
@@ -83,10 +83,6 @@ export const start = async (queue?: TrackModel[], _id?: string) => {
 
   // If a track exists
   if (queuePosition > -1) {
-    const uri = utils.parseUri(newQueue[queuePosition].path);
-
-    Player.setAudioSrc(uri);
-    await Player.play();
 
     let queueCursor = queuePosition; // Clean that variable mess later
 
@@ -97,6 +93,13 @@ export const start = async (queue?: TrackModel[], _id?: string) => {
       // Let's set the cursor to 0
       queueCursor = 0;
     }
+
+    updatePlayerTrackQueue({
+      queue: newQueue,
+      queueCursor,
+      repeat
+    });
+    await Player.play();
 
     store.dispatch({
       type: types.PLAYER_START,
@@ -156,13 +159,13 @@ export const next = async () => {
       newQueueCursor = queueCursor + 1;
     }
 
-    const track = queue[newQueueCursor];
-
     // tslint:disable-next-line strict-type-predicates
-    if (track !== undefined) {
-      const uri = utils.parseUri(track.path);
-
-      Player.setAudioSrc(uri);
+    if (queue[newQueueCursor] !== undefined) {
+      updatePlayerTrackQueue({
+        queue,
+        queueCursor: newQueueCursor,
+        repeat
+      });
       await Player.play();
       store.dispatch({
         type: types.PLAYER_NEXT,
@@ -184,7 +187,7 @@ export const previous = async () => {
   const currentTime = Player.getCurrentTime();
 
   // TODO (y.solovyov | martpie): calling getState is a hack.
-  const { queue, queueCursor } = store.getState().player;
+  const { queue, queueCursor, repeat } = store.getState().player;
   let newQueueCursor = queueCursor;
 
   if (queueCursor !== null && newQueueCursor !== null) {
@@ -194,13 +197,14 @@ export const previous = async () => {
       newQueueCursor = queueCursor - 1;
     }
 
-    const newTrack = queue[newQueueCursor];
-
     // tslint:disable-next-line
-    if (newTrack !== undefined) {
-      const uri = utils.parseUri(newTrack.path);
+    if (queue[newQueueCursor] !== undefined) {
 
-      Player.setAudioSrc(uri);
+      updatePlayerTrackQueue({
+        queue,
+        queueCursor: newQueueCursor,
+        repeat
+      });
       await Player.play();
 
       store.dispatch({
