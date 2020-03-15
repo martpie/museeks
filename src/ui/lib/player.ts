@@ -1,4 +1,5 @@
 import * as app from './app';
+import PreciseAudio from '@synesthesia-project/precise-audio';
 
 interface PlayerOptions {
   playbackRate?: number;
@@ -8,7 +9,7 @@ interface PlayerOptions {
 }
 
 class Player {
-  private audio: HTMLAudioElement;
+  private audio: PreciseAudio;
   private durationThresholdReached: boolean;
   public threshold: number;
 
@@ -21,11 +22,9 @@ class Player {
       ...options
     };
 
-    this.audio = new Audio();
+    this.audio = new PreciseAudio();
 
     this.audio.defaultPlaybackRate = mergedOptions.playbackRate;
-    // eslint-disable-next-line
-    // @ts-ignore
     this.audio.setSinkId(mergedOptions.audioOutputDevice);
     this.audio.playbackRate = mergedOptions.playbackRate;
     this.audio.volume = mergedOptions.volume;
@@ -81,8 +80,6 @@ class Player {
   }
 
   async setOutputDevice(deviceId: string) {
-    // eslint-disable-next-line
-    // @ts-ignore
     await this.audio.setSinkId(deviceId);
   }
 
