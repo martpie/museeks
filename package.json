@@ -31,7 +31,7 @@
     "package:checksums": "bash scripts/checksum.sh"
   },
   "dependencies": {
-    "@synesthesia-project/precise-audio": "^0.2.3",
+    "@synesthesia-project/precise-audio": "^0.3.1",
     "bluebird": "3.7.2",
     "chardet": "0.8.0",
     "classnames": "2.2.6",
