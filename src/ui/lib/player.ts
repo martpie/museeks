@@ -24,6 +24,9 @@ class Player {
 
     this.audio = new PreciseAudio();
 
+    // Disable gapless for any songs longer than 10 minutes
+    // TODO: allow user configuration of this
+    this.audio.thresholds.basicModeThresholdSeconds = 60 * 10;
     this.audio.defaultPlaybackRate = mergedOptions.playbackRate;
     this.audio.setSinkId(mergedOptions.audioOutputDevice);
     this.audio.playbackRate = mergedOptions.playbackRate;
