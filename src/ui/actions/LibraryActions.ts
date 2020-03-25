@@ -204,7 +204,7 @@ export const add = async (pathsToScan: string[]) => {
     const globbies = folders.map((folder) => {
       const pattern = `${folder.replace(/\\/g, '/')}/**/*.*`;
 
-      console.log(pattern)
+      console.log(pattern);
       return globby(pattern, { followSymbolicLinks: true });
     });
 
