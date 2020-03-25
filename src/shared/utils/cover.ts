@@ -44,7 +44,8 @@ export const fetchCover = async (trackPath: string, ignoreId3 = false): Promise<
 
   // scan folder for any cover image
   const folder = path.dirname(trackPath);
-  const pattern = path.join(folder, '*');
+  const pattern = `${folder.replace(/\\/g, '/')}/*`;
+
   const matches = await globby(pattern, { followSymbolicLinks: false });
 
   const match = matches.find((elem) => {
