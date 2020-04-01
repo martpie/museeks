@@ -1,7 +1,7 @@
 # Museeks
 
-[![Build Status](https://img.shields.io/circleci/project/github/martpie/museeks.svg)](https://circleci.com/gh/martpie/museeks)
-[![Dependencies](https://david-dm.org/martpie/museeks.svg)](https://github.com/martpie/museeks)
+![Build Status](https://github.com/martpie/museeks/workflows/build/badge.svg)
+![Dependencies](https://david-dm.org/martpie/museeks.svg)
 ![Github All Releases](https://img.shields.io/github/downloads/martpie/museeks/total.svg)
 
 A simple, clean and cross-platform music player. ([museeks.io](http://museeks.io))
