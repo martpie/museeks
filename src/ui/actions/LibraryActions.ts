@@ -118,7 +118,7 @@ const scanTracks = async (paths: string[]): Promise<void> => {
       });
 
       scanQueue.on('success', () => {
-        // Every 10 scans, update progress bar
+        // Every 100 scans, update progress bar
         if (scan.processed % 100 === 0) {
           // Progress bar update
           store.dispatch({
@@ -149,6 +149,9 @@ const scanTracks = async (paths: string[]): Promise<void> => {
       paths.forEach((filePath) => {
         scanQueue.push(async (callback: Function) => {
           try {
+            // Normalize (back)slashes on Windows
+            filePath = path.resolve(filePath);
+
             // Check if there is an existing record in the DB
             const existingDoc = await app.models.Track.findOneAsync({ path: filePath });
 
