@@ -205,7 +205,8 @@ export const add = async (pathsToScan: string[]) => {
 
     // 3. Scan all the directories with globby
     const globbies = folders.map((folder) => {
-      const pattern = `${folder.replace(/\\/g, '/')}/**/*.*`;
+      // Normalize slashes and escape regex special characters
+      const pattern = `${folder.replace(/\\/g, '/').replace(/([$^*+?()\[\]])/g, '\\$1')}/**/*.*`;
 
       console.log(pattern);
       return globby(pattern, { followSymbolicLinks: true });
