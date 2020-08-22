@@ -1,6 +1,6 @@
 const path = require('path');
 
-const merge = require('webpack-merge');
+const webpackMerge = require('webpack-merge');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackBar = require('webpackbar');
@@ -88,10 +88,10 @@ const sharedConfig = {
             loader: 'css-loader',
             options: {
               modules: {
-                localIdentName: '[local]___[hash:base64:5]'
+                localIdentName: '[local]___[hash:base64:5]',
+                exportLocalsConvention: 'dashesOnly'
               },
               importLoaders: 1,
-              localsConvention: 'dashesOnly',
               sourceMap: true
             }
           },
@@ -168,5 +168,5 @@ const sharedConfig = {
 /**
  * Exports
  */
-module.exports.ui = merge(uiConfig, sharedConfig);
-module.exports.main = merge(mainConfig, sharedConfig);
+module.exports.ui = webpackMerge.merge(uiConfig, sharedConfig);
+module.exports.main = webpackMerge.merge(mainConfig, sharedConfig);
