@@ -1,4 +1,4 @@
-const merge = require('webpack-merge');
+const webpackMerge = require('webpack-merge');
 const CleanTerminalPlugin = require('clean-terminal-webpack-plugin');
 
 const { ui, main } = require('./webpack.common.js');
@@ -9,7 +9,7 @@ const devConfig = {
   plugins: [new CleanTerminalPlugin()]
 };
 
-const devUiConfig = merge(ui, devConfig);
-const devMainConfig = merge(main, devConfig);
+const devUiConfig = webpackMerge.merge(ui, devConfig);
+const devMainConfig = webpackMerge.merge(main, devConfig);
 
 module.exports = [devUiConfig, devMainConfig];
