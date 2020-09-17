@@ -7,9 +7,9 @@ declare module 'react-rangeslider' {
     orientation?: string;
     reverse?: boolean;
     tooltip?: boolean;
-    labels?: object;
+    labels?: Record<string, string>;
     handleLabel?: boolean;
-    format?: Function;
+    format?: (value: string) => string;
     onChange?(value: number): void;
     onChangeStart?(value: number): void;
     onChangeComplete?(value: number): void;

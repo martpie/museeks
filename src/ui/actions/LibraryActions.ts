@@ -147,7 +147,7 @@ const scanTracks = async (paths: string[]): Promise<void> => {
       scan.total += paths.length;
 
       paths.forEach((filePath) => {
-        scanQueue.push(async (callback: Function) => {
+        scanQueue.push(async (callback: () => void) => {
           try {
             // Normalize (back)slashes on Windows
             filePath = path.resolve(filePath);

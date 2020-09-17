@@ -40,24 +40,24 @@ export interface Action {
  */
 export type LinvoSchema<Schema> = {
   _id: string;
-  find: Function;
-  findOne: Function;
-  insert: Function;
-  copy: Function; // TODO better types?
-  remove: Function;
-  save: Function;
-  serialize: Function;
-  update: Function;
-  ensureIndex: Function;
+  find: any;
+  findOne: any;
+  insert: any;
+  copy: any; // TODO better types?
+  remove: any;
+  save: any;
+  serialize: any;
+  update: any;
+  ensureIndex: any;
   // bluebird-injected
-  findAsync: Function;
-  findOneAsync: Function;
-  insertAsync: Function;
-  copyAsync: Function;
-  removeAsync: Function;
-  saveAsync: Function;
-  serializeAsync: Function;
-  updateAsync: Function;
+  findAsync: any;
+  findOneAsync: any;
+  insertAsync: any;
+  copyAsync: any;
+  removeAsync: any;
+  saveAsync: any;
+  serializeAsync: any;
+  updateAsync: any;
 } & {
   [Property in keyof Schema]: Schema[Property];
 };

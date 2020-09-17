@@ -7,8 +7,8 @@ interface State {
   hasError: boolean;
 }
 
-class Root extends React.Component<{}, State> {
-  constructor(props: {}) {
+class Root extends React.Component<Record<string, undefined>, State> {
+  constructor(props: Record<string, undefined>) {
     super(props);
     this.state = { hasError: false };
   }

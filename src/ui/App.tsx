@@ -19,7 +19,7 @@ import { isCtrlKey } from './utils/utils-platform';
 |--------------------------------------------------------------------------
 */
 
-type Props = RouteComponentProps<{}>;
+type Props = RouteComponentProps;
 
 class Museeks extends React.Component<Props> {
   onKey = async (e: KeyboardEvent) => {

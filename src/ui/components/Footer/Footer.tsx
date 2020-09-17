@@ -15,7 +15,7 @@ interface InjectedProps {
   library: LibraryState;
 }
 
-type Props = InjectedProps & RouteComponentProps<{}>;
+type Props = InjectedProps & RouteComponentProps;
 
 class Footer extends React.Component<Props> {
   constructor(props: Props) {

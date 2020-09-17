@@ -17,10 +17,10 @@
     "@typescript-eslint/no-var-requires": "off",
     "@typescript-eslint/no-unused-vars": "off",
     "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/explicit-member-accessibility": "off",
     "import/order": "error",
     "import/named": "off",
     "import/default": "off",
-    "@typescript-eslint/explicit-member-accessibility": "off",
     "spaced-comment": ["error", "always"]
   },
   "globals": { "describe": true }
