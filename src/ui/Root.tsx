@@ -7,8 +7,10 @@ interface State {
   hasError: boolean;
 }
 
-class Root extends React.Component<Record<string, undefined>, State> {
-  constructor(props: Record<string, undefined>) {
+// eslint-disable-next-line
+class Root extends React.Component<{}, State> {
+  // eslint-disable-next-line
+  constructor(props: {}) {
     super(props);
     this.state = { hasError: false };
   }
