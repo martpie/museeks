@@ -17,7 +17,7 @@ export default class Dropzone extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      state: 'idle'
+      state: 'idle',
     };
 
     this.onDrop = this.onDrop.bind(this);

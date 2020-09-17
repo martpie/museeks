@@ -11,7 +11,7 @@ export const add = (title: string, notificationData: NotificationOptions) => {
       body: notificationData.body,
       icon: notificationData.icon,
       silent: true,
-      tag: 'museeks-notification'
+      tag: 'museeks-notification',
     });
 
     notification.onclick = () => {
@@ -22,8 +22,8 @@ export const add = (title: string, notificationData: NotificationOptions) => {
     store.dispatch({
       type: types.NOTIFICATION_NEW,
       payload: {
-        notification
-      }
+        notification,
+      },
     });
   }
 };

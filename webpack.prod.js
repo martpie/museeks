@@ -9,11 +9,11 @@ const prodConfig = {
     minimizer: [
       new TerserPlugin({
         terserOptions: {
-          mangle: false
-        }
-      })
-    ]
-  }
+          mangle: false,
+        },
+      }),
+    ],
+  },
 };
 
 const prodUiConfig = webpackMerge.merge(ui, prodConfig);

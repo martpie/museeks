@@ -18,7 +18,7 @@ class AudioOutputSelect extends React.Component<Props, State> {
 
     this.state = {
       devices: null,
-      hasError: false
+      hasError: false,
     };
   }
 
@@ -31,12 +31,12 @@ class AudioOutputSelect extends React.Component<Props, State> {
       const devices = await navigator.mediaDevices.enumerateDevices();
 
       this.setState({
-        devices: devices.filter((device) => device.kind === 'audiooutput')
+        devices: devices.filter((device) => device.kind === 'audiooutput'),
       });
     } catch (err) {
       this.setState({
         hasError: true,
-        devices: []
+        devices: [],
       });
       console.warn(err);
     }

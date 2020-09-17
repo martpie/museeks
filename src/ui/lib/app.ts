@@ -16,7 +16,7 @@ const { app } = remote;
 */
 
 export const browserWindows = {
-  main: remote.getCurrentWindow()
+  main: remote.getCurrentWindow(),
 };
 
 export const pathUserData = app.getPath('userData');
@@ -48,7 +48,7 @@ Playlist.ensureIndex({ fieldName: 'importPath', unique: true, sparse: true });
 
 export const models = {
   Track,
-  Playlist
+  Playlist,
 };
 
 Promise.promisifyAll(Object.getPrototypeOf(models.Track.find()));

@@ -37,7 +37,7 @@ export default class TrackRow extends React.PureComponent<Props, State> {
 
     this.state = {
       reorderOver: false,
-      reorderPosition: null
+      reorderPosition: null,
     };
   }
 
@@ -77,14 +77,14 @@ export default class TrackRow extends React.PureComponent<Props, State> {
 
     this.setState({
       reorderOver: true,
-      reorderPosition: dragPosition
+      reorderPosition: dragPosition,
     });
   };
 
   onDragLeave = (_event: React.DragEvent<HTMLDivElement>) => {
     this.setState({
       reorderOver: false,
-      reorderPosition: null
+      reorderPosition: null,
     });
   };
 
@@ -98,7 +98,7 @@ export default class TrackRow extends React.PureComponent<Props, State> {
 
     this.setState({
       reorderOver: false,
-      reorderPosition: null
+      reorderPosition: null,
     });
   };
 
@@ -111,7 +111,7 @@ export default class TrackRow extends React.PureComponent<Props, State> {
       [styles.reordered]: reordered,
       [styles.isReorderedOver]: reorderOver,
       [styles.isAbove]: reorderPosition === 'above',
-      [styles.isBelow]: reorderPosition === 'below'
+      [styles.isBelow]: reorderPosition === 'below',
     });
 
     return (

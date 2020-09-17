@@ -52,7 +52,7 @@ class ConfigModule extends Module {
       audioRepeat: Repeat.NONE,
       librarySort: {
         by: SortBy.ARTIST,
-        order: SortOrder.ASC
+        order: SortOrder.ASC,
       },
       // musicFolders: [],
       sleepBlocker: false,
@@ -63,8 +63,8 @@ class ConfigModule extends Module {
         width: 1000,
         height: 600,
         x: Math.round(this.workArea.width / 2),
-        y: Math.round(this.workArea.height / 2)
-      }
+        y: Math.round(this.workArea.height / 2),
+      },
     };
 
     return config;

@@ -40,7 +40,7 @@ class TrayModule extends ModuleWindow {
     const trayIcons = {
       tray: nativeImage.createFromPath(path.join(logosPath, 'museeks-tray.png')).resize({ width: 24, height: 24 }),
       'tray-win32': nativeImage.createFromPath(path.join(logosPath, 'museeks-tray.ico')),
-      'tray-darwin-dark': nativeImage.createFromPath(path.join(logosPath, 'museeks-tray-dark.png'))
+      'tray-darwin-dark': nativeImage.createFromPath(path.join(logosPath, 'museeks-tray-dark.png')),
     };
 
     // Make it "lightable" on macOS
@@ -58,7 +58,7 @@ class TrayModule extends ModuleWindow {
     if (os.platform() === 'linux') {
       ps.lookup(
         {
-          command: 'gnome-shell'
+          command: 'gnome-shell',
         },
         (err: Error, _processes: Record<string, any>) => {
           if (err) {
@@ -79,11 +79,11 @@ class TrayModule extends ModuleWindow {
     this.songDetails = [
       {
         label: 'Not playing',
-        enabled: false
+        enabled: false,
       },
       {
-        type: 'separator'
-      }
+        type: 'separator',
+      },
     ];
 
     this.playToggle = [
@@ -91,8 +91,8 @@ class TrayModule extends ModuleWindow {
         label: 'Play',
         click: () => {
           this.window.webContents.send('playback:play');
-        }
-      }
+        },
+      },
     ];
 
     this.pauseToggle = [
@@ -100,8 +100,8 @@ class TrayModule extends ModuleWindow {
         label: 'Pause',
         click: () => {
           this.window.webContents.send('playback:pause');
-        }
-      }
+        },
+      },
     ];
 
     this.menu = [
@@ -109,34 +109,34 @@ class TrayModule extends ModuleWindow {
         label: 'Previous',
         click: () => {
           this.window.webContents.send('playback:previous');
-        }
+        },
       },
       {
         label: 'Next',
         click: () => {
           this.window.webContents.send('playback:next');
-        }
+        },
       },
       {
-        type: 'separator'
+        type: 'separator',
       },
       {
         label: 'Show',
         click: () => {
           this.window.show();
           this.window.focus();
-        }
+        },
       },
       {
-        type: 'separator'
+        type: 'separator',
       },
       {
         label: 'Quit',
         click: () => {
           app.quit();
           this.window.destroy();
-        }
-      }
+        },
+      },
     ];
 
     // Load events listener for player actions
@@ -209,19 +209,19 @@ class TrayModule extends ModuleWindow {
     this.songDetails = [
       {
         label: `${track.title}`,
-        enabled: false
+        enabled: false,
       },
       {
         label: `by ${track.artist}`,
-        enabled: false
+        enabled: false,
       },
       {
         label: `on ${track.album}`,
-        enabled: false
+        enabled: false,
       },
       {
-        type: 'separator'
-      }
+        type: 'separator',
+      },
     ];
   }
 }

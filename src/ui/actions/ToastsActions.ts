@@ -13,16 +13,16 @@ export const add = (type: ToastType, content: string, duration = 3000) => {
   store.dispatch({
     type: types.TOAST_ADD,
     payload: {
-      toast
-    }
+      toast,
+    },
   });
 
   window.setTimeout(() => {
     store.dispatch({
       type: types.TOAST_REMOVE,
       payload: {
-        toastId: _id
-      }
+        toastId: _id,
+      },
     });
   }, duration);
 };

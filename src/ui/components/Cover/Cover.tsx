@@ -17,7 +17,7 @@ export default class TrackCover extends React.PureComponent<Props, State> {
     super(props);
 
     this.state = {
-      coverPath: null
+      coverPath: null,
     };
 
     this.fetchInitialCover = this.fetchInitialCover.bind(this);
@@ -41,9 +41,7 @@ export default class TrackCover extends React.PureComponent<Props, State> {
 
   render() {
     if (this.state.coverPath) {
-      const coverPath = encodeURI(this.state.coverPath)
-        .replace(/'/g, "\\'")
-        .replace(/"/g, '\\"');
+      const coverPath = encodeURI(this.state.coverPath).replace(/'/g, "\\'").replace(/"/g, '\\"');
       const inlineStyles = { backgroundImage: `url('${coverPath}')` };
 
       return <div className={styles.cover} style={inlineStyles} />;

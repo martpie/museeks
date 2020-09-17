@@ -11,7 +11,7 @@ const svgMap = {
   [Repeat.ONE]: require('../../../images/icons/player-repeat-one.svg'),
   [Repeat.ALL]: require('../../../images/icons/player-repeat.svg'),
   [Repeat.NONE]: require('../../../images/icons/player-repeat.svg'),
-  default: require('../../../images/icons/player-repeat.svg')
+  default: require('../../../images/icons/player-repeat.svg'),
 };
 
 interface Props {
@@ -48,7 +48,7 @@ export default class ButtonRepeat extends React.Component<Props> {
   render() {
     const svg = svgMap[this.props.repeat] || svgMap.default;
     const buttonClasses = cx(styles.button, {
-      [styles.active]: this.props.repeat === Repeat.ONE || this.props.repeat === Repeat.ALL
+      [styles.active]: this.props.repeat === Repeat.ONE || this.props.repeat === Repeat.ALL,
     });
 
     return (

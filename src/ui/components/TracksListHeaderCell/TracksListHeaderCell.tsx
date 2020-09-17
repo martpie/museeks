@@ -18,7 +18,7 @@ class TracksListHeaderCell extends React.Component<Props> {
   static defaultProps = {
     className: '',
     sortBy: null,
-    icon: null
+    icon: null,
   };
 
   constructor(props: Props) {
@@ -36,7 +36,7 @@ class TracksListHeaderCell extends React.Component<Props> {
     const { sortBy, className, title, icon } = this.props;
 
     const classes = cx(styles.trackCellHeader, className, {
-      [styles.sort]: sortBy
+      [styles.sort]: sortBy,
     });
 
     const content = (

@@ -20,7 +20,7 @@ const AUDIO_ERRORS = {
   aborted: 'The video playback was aborted.',
   corrupt: 'The audio playback was aborted due to a corruption problem.',
   notFound: 'The track file could not be found. It may be due to a file move or an unmounted partition.',
-  unknown: 'An unknown error occurred.'
+  unknown: 'An unknown error occurred.',
 };
 
 /**
@@ -29,7 +29,7 @@ const AUDIO_ERRORS = {
 export const play = async () => {
   await Player.play();
   store.dispatch({
-    type: types.PLAYER_PLAY
+    type: types.PLAYER_PLAY,
   });
 };
 
@@ -39,7 +39,7 @@ export const play = async () => {
 export const pause = () => {
   Player.pause();
   store.dispatch({
-    type: types.PLAYER_PAUSE
+    type: types.PLAYER_PAUSE,
   });
 };
 
@@ -103,8 +103,8 @@ export const start = async (queue?: TrackModel[], _id?: string) => {
       payload: {
         queue: newQueue,
         oldQueue,
-        queueCursor
-      }
+        queueCursor,
+      },
     });
   }
 };
@@ -132,7 +132,7 @@ export const playPause = async () => {
 export const stop = () => {
   Player.stop();
   store.dispatch({
-    type: types.PLAYER_STOP
+    type: types.PLAYER_STOP,
   });
 
   ipcRenderer.send('playback:stop');
@@ -167,8 +167,8 @@ export const next = async () => {
       store.dispatch({
         type: types.PLAYER_NEXT,
         payload: {
-          newQueueCursor
-        }
+          newQueueCursor,
+        },
       });
     } else {
       stop();
@@ -207,8 +207,8 @@ export const previous = async () => {
         type: types.PLAYER_PREVIOUS,
         payload: {
           currentTime,
-          newQueueCursor
-        }
+          newQueueCursor,
+        },
       });
     } else {
       stop();
@@ -226,8 +226,8 @@ export const shuffle = (value: boolean) => {
   store.dispatch({
     type: types.PLAYER_SHUFFLE,
     payload: {
-      shuffle: value
-    }
+      shuffle: value,
+    },
   });
 };
 
@@ -241,8 +241,8 @@ export const repeat = (value: Repeat) => {
   store.dispatch({
     type: types.PLAYER_REPEAT,
     payload: {
-      repeat: value
-    }
+      repeat: value,
+    },
   });
 };
 
@@ -256,7 +256,7 @@ export const setVolume = (volume: number) => {
   app.config.save();
 
   store.dispatch({
-    type: types.REFRESH_CONFIG
+    type: types.REFRESH_CONFIG,
   });
 };
 
@@ -271,7 +271,7 @@ export const setMuted = (muted = false) => {
   app.config.save();
 
   store.dispatch({
-    type: types.REFRESH_CONFIG
+    type: types.REFRESH_CONFIG,
   });
 };
 
@@ -287,7 +287,7 @@ export const setPlaybackRate = (value: number) => {
     app.config.save();
 
     store.dispatch({
-      type: types.REFRESH_CONFIG
+      type: types.REFRESH_CONFIG,
     });
   }
 };
@@ -321,7 +321,7 @@ export const jumpTo = (to: number) => {
   // if yes, what should it be? if not, do we need this actions at all?
   Player.setAudioCurrentTime(to);
   store.dispatch({
-    type: types.PLAYER_JUMP_TO
+    type: types.PLAYER_JUMP_TO,
   });
 };
 

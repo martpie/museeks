@@ -31,7 +31,7 @@ class ThumbarModule extends ModuleWindow {
       prev: createFromPath(path.join(iconsDirectory, 'backward.ico')),
       prevDisabled: createFromPath(path.join(iconsDirectory, 'backward-disabled.ico')),
       next: createFromPath(path.join(iconsDirectory, 'forward.ico')),
-      nextDisabled: createFromPath(path.join(iconsDirectory, 'forward-disabled.ico'))
+      nextDisabled: createFromPath(path.join(iconsDirectory, 'forward-disabled.ico')),
     };
 
     const thumbarButtons = {
@@ -40,7 +40,7 @@ class ThumbarModule extends ModuleWindow {
         icon: icons.play,
         click: () => {
           window.webContents.send('playback:play');
-        }
+        },
       },
       /* playDisabled: {
         tooltip: 'Play',
@@ -53,7 +53,7 @@ class ThumbarModule extends ModuleWindow {
         icon: icons.pause,
         click: () => {
           window.webContents.send('playback:pause');
-        }
+        },
       },
       pauseDisabled: {
         tooltip: 'Pause',
@@ -61,14 +61,14 @@ class ThumbarModule extends ModuleWindow {
         icon: icons.pauseDisabled,
         click: () => {
           return null;
-        } // Electron's TypeScript definition issue
+        }, // Electron's TypeScript definition issue
       },
       prev: {
         tooltip: 'Prev',
         icon: icons.prev,
         click: () => {
           window.webContents.send('playback:previous');
-        }
+        },
       },
       prevDisabled: {
         tooltip: 'Prev',
@@ -76,14 +76,14 @@ class ThumbarModule extends ModuleWindow {
         icon: icons.prevDisabled,
         click: () => {
           return null;
-        } // Electron's TypeScript definition issue
+        }, // Electron's TypeScript definition issue
       },
       next: {
         tooltip: 'Next',
         icon: icons.next,
         click: () => {
           window.webContents.send('playback:next');
-        }
+        },
       },
       nextDisabled: {
         tooltip: 'Next',
@@ -91,8 +91,8 @@ class ThumbarModule extends ModuleWindow {
         icon: icons.nextDisabled,
         click: () => {
           return null;
-        } // Electron's TypeScript definition issue
-      }
+        }, // Electron's TypeScript definition issue
+      },
     };
 
     ipcMain.on('app:ready', () => {

@@ -18,7 +18,7 @@ const initialState: PlayerState = {
   queueCursor: null, // The cursor of the queue
   repeat: config.get('audioRepeat'), // the current repeat state (one, all, none)
   shuffle: config.get('audioShuffle'), // If shuffle mode is enabled
-  playerStatus: PlayerStatus.STOP // Player status
+  playerStatus: PlayerStatus.STOP, // Player status
 };
 
 export default (state = initialState, action: Action): PlayerState => {
@@ -32,21 +32,21 @@ export default (state = initialState, action: Action): PlayerState => {
         queue,
         queueCursor,
         oldQueue,
-        playerStatus: PlayerStatus.PLAY
+        playerStatus: PlayerStatus.PLAY,
       };
     }
 
     case types.PLAYER_PLAY: {
       return {
         ...state,
-        playerStatus: PlayerStatus.PLAY
+        playerStatus: PlayerStatus.PLAY,
       };
     }
 
     case types.PLAYER_PAUSE: {
       return {
         ...state,
-        playerStatus: PlayerStatus.PAUSE
+        playerStatus: PlayerStatus.PAUSE,
       };
     }
 
@@ -55,7 +55,7 @@ export default (state = initialState, action: Action): PlayerState => {
         ...state,
         queue: [],
         queueCursor: null,
-        playerStatus: PlayerStatus.STOP
+        playerStatus: PlayerStatus.STOP,
       };
 
       return newState;
@@ -65,7 +65,7 @@ export default (state = initialState, action: Action): PlayerState => {
       return {
         ...state,
         playerStatus: PlayerStatus.PLAY,
-        queueCursor: action.payload.newQueueCursor
+        queueCursor: action.payload.newQueueCursor,
       };
     }
 
@@ -73,7 +73,7 @@ export default (state = initialState, action: Action): PlayerState => {
       return {
         ...state,
         playerStatus: PlayerStatus.PLAY,
-        queueCursor: action.payload.newQueueCursor
+        queueCursor: action.payload.newQueueCursor,
       };
     }
 
@@ -98,7 +98,7 @@ export default (state = initialState, action: Action): PlayerState => {
             queue,
             queueCursor: 0,
             oldQueue: state.queue,
-            shuffle: true
+            shuffle: true,
           };
         }
 
@@ -110,7 +110,7 @@ export default (state = initialState, action: Action): PlayerState => {
           ...state,
           queue: [...state.oldQueue],
           queueCursor: currentTrackIndex,
-          shuffle: false
+          shuffle: false,
         };
       }
 
@@ -120,7 +120,7 @@ export default (state = initialState, action: Action): PlayerState => {
     case types.PLAYER_REPEAT: {
       return {
         ...state,
-        repeat: action.payload.repeat
+        repeat: action.payload.repeat,
       };
     }
 
@@ -133,7 +133,7 @@ export default (state = initialState, action: Action): PlayerState => {
         ...state,
         queue,
         queueCursor,
-        playerStatus: PlayerStatus.PLAY
+        playerStatus: PlayerStatus.PLAY,
       };
     }
 
@@ -146,7 +146,7 @@ export default (state = initialState, action: Action): PlayerState => {
 
         return {
           ...state,
-          queue
+          queue,
         };
       }
 
@@ -158,7 +158,7 @@ export default (state = initialState, action: Action): PlayerState => {
       queue.splice(state.queueCursor + action.payload.index + 1, 1);
       return {
         ...state,
-        queue
+        queue,
       };
     }
 
@@ -166,7 +166,7 @@ export default (state = initialState, action: Action): PlayerState => {
       const queue = [...state.queue, ...action.payload.tracks];
       return {
         ...state,
-        queue
+        queue,
       };
     }
 
@@ -178,7 +178,7 @@ export default (state = initialState, action: Action): PlayerState => {
         queue.splice(queueCursor + 1, 0, ...action.payload.tracks);
         return {
           ...state,
-          queue
+          queue,
         };
       }
 
@@ -188,7 +188,7 @@ export default (state = initialState, action: Action): PlayerState => {
     case types.QUEUE_SET_QUEUE: {
       return {
         ...state,
-        queue: action.payload.tracks
+        queue: action.payload.tracks,
       };
     }
 

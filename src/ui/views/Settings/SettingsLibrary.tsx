@@ -39,7 +39,7 @@ export default class SettingsLibrary extends React.Component<Props> {
 
   async openFolderSelector() {
     const result = await dialog.showOpenDialog({
-      properties: ['multiSelections', 'openDirectory', 'openFile']
+      properties: ['multiSelections', 'openDirectory', 'openFile'],
     });
 
     if (result.filePaths) {

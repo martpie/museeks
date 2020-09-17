@@ -35,8 +35,8 @@ export const refresh = async () => {
     store.dispatch({
       type: types.LIBRARY_REFRESH,
       payload: {
-        tracks
-      }
+        tracks,
+      },
     });
   } catch (err) {
     console.warn(err);
@@ -50,8 +50,8 @@ export const search = (value: string) => {
   store.dispatch({
     type: types.FILTER_SEARCH,
     payload: {
-      search: value
-    }
+      search: value,
+    },
   });
 };
 
@@ -62,8 +62,8 @@ export const sort = (sortBy: SortBy) => {
   store.dispatch({
     type: types.LIBRARY_SORT,
     payload: {
-      sortBy
-    }
+      sortBy,
+    },
   });
 };
 
@@ -75,7 +75,7 @@ const scanPlaylists = async (paths: string[]) => {
         const playlistName = path.parse(filePath).name;
 
         const existingTracks: TrackModel[] = await app.models.Track.findAsync({
-          $or: playlistFiles.map((filePath) => ({ path: filePath }))
+          $or: playlistFiles.map((filePath) => ({ path: filePath })),
         });
 
         await PlaylistsActions.create(
@@ -92,7 +92,7 @@ const scanPlaylists = async (paths: string[]) => {
 
 const scan = {
   processed: 0,
-  total: 0
+  total: 0,
 };
 
 const scanTracks = async (paths: string[]): Promise<void> => {
@@ -125,8 +125,8 @@ const scanTracks = async (paths: string[]): Promise<void> => {
             type: types.LIBRARY_REFRESH_PROGRESS,
             payload: {
               processed: scan.processed,
-              total: scan.total
-            }
+              total: scan.total,
+            },
           });
 
           // Add tracks to the library view
@@ -135,8 +135,8 @@ const scanTracks = async (paths: string[]): Promise<void> => {
           store.dispatch({
             type: types.LIBRARY_ADD_TRACKS,
             payload: {
-              tracks
-            }
+              tracks,
+            },
           });
 
           // TODO progressive loading in the store, don't freeze the app, able to add files/folders when scanning
@@ -182,14 +182,14 @@ const scanTracks = async (paths: string[]): Promise<void> => {
  */
 export const add = async (pathsToScan: string[]) => {
   store.dispatch({
-    type: types.LIBRARY_REFRESH_START
+    type: types.LIBRARY_REFRESH_START,
   });
 
   try {
     // 1. Get the stats for all the files/paths
     const statsPromises: Promise<ScanFile>[] = pathsToScan.map(async (folderPath) => ({
       path: folderPath,
-      stat: await stat(folderPath)
+      stat: await stat(folderPath),
     }));
 
     const paths = await Promise.all(statsPromises);
@@ -230,7 +230,7 @@ export const add = async (pathsToScan: string[]) => {
 
     if (supportedTrackFiles.length === 0 && supportedPlaylistsFiles.length === 0) {
       store.dispatch({
-        type: types.LIBRARY_REFRESH_END
+        type: types.LIBRARY_REFRESH_END,
       });
 
       return;
@@ -248,7 +248,7 @@ export const add = async (pathsToScan: string[]) => {
   }
 
   store.dispatch({
-    type: types.LIBRARY_REFRESH_END
+    type: types.LIBRARY_REFRESH_END,
   });
 };
 
@@ -261,7 +261,7 @@ export const remove = async (tracksIds: string[]) => {
     buttons: ['Cancel', 'Remove'],
     title: 'Remove tracks from library?',
     message: `Are you sure you want to remove ${tracksIds.length} element(s) from your library?`,
-    type: 'warning'
+    type: 'warning',
   });
 
   if (result.response === 1) {
@@ -272,8 +272,8 @@ export const remove = async (tracksIds: string[]) => {
     store.dispatch({
       type: types.LIBRARY_REMOVE_TRACKS,
       payload: {
-        tracksIds
-      }
+        tracksIds,
+      },
     });
     // That would be great to remove those ids from all the playlists, but it's not easy
     // and should not cause strange behaviors, all PR for that would be really appreciated
@@ -290,23 +290,23 @@ export const reset = async () => {
       buttons: ['Cancel', 'Reset'],
       title: 'Reset library?',
       message: 'Are you sure you want to reset your library ? All your tracks and playlists will be cleared.',
-      type: 'warning'
+      type: 'warning',
     });
 
     if (result.response === 1) {
       store.dispatch({
-        type: types.LIBRARY_REFRESH_START
+        type: types.LIBRARY_REFRESH_START,
       });
 
       await app.models.Track.removeAsync({}, { multi: true });
       await app.models.Playlist.removeAsync({}, { multi: true });
 
       store.dispatch({
-        type: types.LIBRARY_RESET
+        type: types.LIBRARY_RESET,
       });
 
       store.dispatch({
-        type: types.LIBRARY_REFRESH_END
+        type: types.LIBRARY_REFRESH_END,
       });
 
       await refresh();

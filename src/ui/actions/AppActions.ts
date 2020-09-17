@@ -77,7 +77,7 @@ const init = async () => {
 
     NotificationsActions.add(track.title, {
       body: `${track.artist}\n${track.album}`,
-      icon: cover || ''
+      icon: cover || '',
     });
   });
 
@@ -171,5 +171,5 @@ export default {
   maximize,
   minimize,
   saveBounds,
-  restart
+  restart,
 };

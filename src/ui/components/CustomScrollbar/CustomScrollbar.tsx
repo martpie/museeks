@@ -10,7 +10,7 @@ interface Props {
 
 class CustomScrollbar extends React.Component<Props> {
   static defaultProps = {
-    className: ''
+    className: '',
   };
 
   static getRenderView(props: any) {

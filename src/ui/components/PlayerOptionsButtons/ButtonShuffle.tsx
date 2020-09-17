@@ -25,7 +25,7 @@ export default class ButtonShuffle extends React.Component<Props> {
 
   render() {
     const buttonClasses = cx(styles.button, {
-      [styles.active]: this.props.shuffle
+      [styles.active]: this.props.shuffle,
     });
 
     return (

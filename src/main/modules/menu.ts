@@ -22,10 +22,10 @@ class MenuModule extends ModuleWindow {
             label: 'Learn More',
             click: async () => {
               await shell.openExternal('https://museeks.io');
-            }
-          }
-        ]
-      }
+            },
+          },
+        ],
+      },
     ];
 
     const menu = Menu.buildFromTemplate(template);

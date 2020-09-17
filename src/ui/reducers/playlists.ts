@@ -8,7 +8,7 @@ export interface PlaylistsState {
 
 const initialState: PlaylistsState = {
   list: [],
-  loading: true
+  loading: true,
 };
 
 export default (state = initialState, action: Action): PlaylistsState => {
@@ -16,7 +16,7 @@ export default (state = initialState, action: Action): PlaylistsState => {
     case types.PLAYLISTS_REFRESH: {
       return {
         list: action.payload.playlists,
-        loading: false
+        loading: false,
       };
     }
 
