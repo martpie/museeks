@@ -10,7 +10,7 @@ import Playlists from '../views/Playlists/Playlists';
 import Settings from '../views/Settings/Settings';
 import history from './history';
 
-const AppRouter: React.FC<{}> = () => (
+const AppRouter: React.FC = () => (
   <Router history={history}>
     <App>
       <Switch>

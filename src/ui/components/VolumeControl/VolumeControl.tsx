@@ -21,8 +21,8 @@ interface State {
   muted: boolean;
 }
 
-export default class VolumeControl extends React.Component<{}, State> {
-  constructor(props: {}) {
+export default class VolumeControl extends React.Component<Record<string, undefined>, State> {
+  constructor(props: Record<string, undefined>) {
     super(props);
 
     const audio = Player.getAudio();
