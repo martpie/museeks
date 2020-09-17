@@ -100,7 +100,7 @@ class Playlists extends React.Component<Props> {
 
 const mapStateToProps = ({ playlists }: RootState): OwnProps => ({
   playlistsLoading: playlists.loading,
-  playlists: playlists.list
+  playlists: playlists.list,
 });
 
 export default withRouter(connect(mapStateToProps)(Playlists));

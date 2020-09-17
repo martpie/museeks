@@ -101,7 +101,7 @@ export const toggleDarkTheme = (value: boolean) => {
   app.config.save();
 
   store.dispatch({
-    type: types.REFRESH_CONFIG
+    type: types.REFRESH_CONFIG,
   });
 };
 
@@ -115,7 +115,7 @@ export const toggleSleepBlocker = (value: boolean) => {
   ipcRenderer.send('settings:toggleSleepBlocker', value);
 
   store.dispatch({
-    type: types.REFRESH_CONFIG
+    type: types.REFRESH_CONFIG,
   });
 };
 
@@ -127,7 +127,7 @@ export const toggleAutoUpdateChecker = (value: boolean) => {
   app.config.save();
 
   store.dispatch({
-    type: types.REFRESH_CONFIG
+    type: types.REFRESH_CONFIG,
   });
 };
 
@@ -139,7 +139,7 @@ export const toggleMinimizeToTray = (value: boolean) => {
   app.config.save();
 
   store.dispatch({
-    type: types.REFRESH_CONFIG
+    type: types.REFRESH_CONFIG,
   });
 };
 
@@ -151,6 +151,6 @@ export const toggleDisplayNotifications = (value: boolean) => {
   app.config.save();
 
   store.dispatch({
-    type: types.REFRESH_CONFIG
+    type: types.REFRESH_CONFIG,
   });
 };

@@ -27,11 +27,11 @@ class DockMenuDarwinModule extends ModuleWindow {
     this.songDetails = [
       {
         label: 'Not playing',
-        enabled: false
+        enabled: false,
       },
       {
-        type: 'separator'
-      }
+        type: 'separator',
+      },
     ];
 
     this.playToggle = [
@@ -39,8 +39,8 @@ class DockMenuDarwinModule extends ModuleWindow {
         label: 'Play',
         click: () => {
           this.window.webContents.send('playback:play');
-        }
-      }
+        },
+      },
     ];
 
     this.pauseToggle = [
@@ -48,8 +48,8 @@ class DockMenuDarwinModule extends ModuleWindow {
         label: 'Pause',
         click: () => {
           this.window.webContents.send('playback:pause');
-        }
-      }
+        },
+      },
     ];
 
     this.menu = [
@@ -57,14 +57,14 @@ class DockMenuDarwinModule extends ModuleWindow {
         label: 'Previous',
         click: () => {
           this.window.webContents.send('playback:previous');
-        }
+        },
       },
       {
         label: 'Next',
         click: () => {
           this.window.webContents.send('playback:next');
-        }
-      }
+        },
+      },
     ];
 
     // Load events listener for player actions
@@ -94,19 +94,19 @@ class DockMenuDarwinModule extends ModuleWindow {
     this.songDetails = [
       {
         label: `${metadata.title}`,
-        enabled: false
+        enabled: false,
       },
       {
         label: `by ${metadata.artist}`,
-        enabled: false
+        enabled: false,
       },
       {
         label: `on ${metadata.album}`,
-        enabled: false
+        enabled: false,
       },
       {
-        type: 'separator'
-      }
+        type: 'separator',
+      },
     ];
   }
 }

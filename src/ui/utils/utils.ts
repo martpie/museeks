@@ -103,7 +103,7 @@ export const getDefaultMetadata = (): Track => ({
   artist: ['Unknown artist'],
   disk: {
     no: 0,
-    of: 0
+    of: 0,
   },
   duration: 0,
   genre: [],
@@ -111,16 +111,16 @@ export const getDefaultMetadata = (): Track => ({
     artist: ['unknown artist'],
     album: 'unknown',
     title: '',
-    genre: []
+    genre: [],
   },
   path: '',
   playCount: 0,
   title: '',
   track: {
     no: 0,
-    of: 0
+    of: 0,
   },
-  year: null
+  year: null,
 });
 
 export const parseMusicMetadata = (data: mmd.IAudioMetadata, trackPath: string): Partial<Track> => {
@@ -134,7 +134,7 @@ export const parseMusicMetadata = (data: mmd.IAudioMetadata, trackPath: string):
     genre: common.genre,
     title: common.title || path.parse(trackPath).base,
     track: common.track,
-    year: common.year
+    year: common.year,
   };
 
   return pickBy(metadata);
@@ -144,7 +144,7 @@ export const getLoweredMeta = (metadata: Track) => ({
   artist: metadata.artist.map((meta) => stripAccents(meta.toLowerCase())),
   album: stripAccents(metadata.album.toLowerCase()),
   title: stripAccents(metadata.title.toLowerCase()),
-  genre: metadata.genre.map((meta) => stripAccents(meta.toLowerCase()))
+  genre: metadata.genre.map((meta) => stripAccents(meta.toLowerCase())),
 });
 
 export const getAudioDuration = (trackPath: string): Promise<number> => {
@@ -176,13 +176,13 @@ export const getMetadata = async (trackPath: string): Promise<Track> => {
 
   const basicMetadata: Track = {
     ...defaultMetadata,
-    path: trackPath
+    path: trackPath,
   };
 
   try {
     const data = await mmd.parseFile(trackPath, {
       skipCovers: true,
-      duration: true
+      duration: true,
     });
 
     // Let's try to define something with what we got so far...
@@ -191,7 +191,7 @@ export const getMetadata = async (trackPath: string): Promise<Track> => {
     const metadata: Track = {
       ...defaultMetadata,
       ...parsedData,
-      path: trackPath
+      path: trackPath,
     };
 
     metadata.loweredMetas = getLoweredMeta(metadata);

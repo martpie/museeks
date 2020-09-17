@@ -20,8 +20,8 @@ export const start = async (index: number) => {
   store.dispatch({
     type: types.QUEUE_START,
     payload: {
-      index
-    }
+      index,
+    },
   });
 };
 
@@ -30,7 +30,7 @@ export const start = async (index: number) => {
  */
 export const clear = () => {
   store.dispatch({
-    type: types.QUEUE_CLEAR
+    type: types.QUEUE_CLEAR,
   });
 };
 
@@ -41,8 +41,8 @@ export const remove = (index: number) => {
   store.dispatch({
     type: types.QUEUE_REMOVE,
     payload: {
-      index
-    }
+      index,
+    },
   });
 };
 
@@ -54,8 +54,8 @@ export const addAfter = async (tracksIds: string[]) => {
   store.dispatch({
     type: types.QUEUE_ADD,
     payload: {
-      tracks
-    }
+      tracks,
+    },
   });
 };
 
@@ -67,8 +67,8 @@ export const addNext = async (tracksIds: string[]) => {
   store.dispatch({
     type: types.QUEUE_ADD_NEXT,
     payload: {
-      tracks
-    }
+      tracks,
+    },
   });
 };
 
@@ -79,7 +79,7 @@ export const setQueue = (tracks: Track[]) => {
   store.dispatch({
     type: types.QUEUE_SET_QUEUE,
     payload: {
-      tracks
-    }
+      tracks,
+    },
   });
 };

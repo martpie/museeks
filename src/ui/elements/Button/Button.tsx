@@ -13,7 +13,7 @@ const Button: React.FC<Props & JSX.IntrinsicElements['button']> = (props) => {
 
   const classes = cx(styles.button, {
     [styles.danger]: relevancy === 'danger',
-    [styles.small]: bSize === 'small'
+    [styles.small]: bSize === 'small',
   });
 
   return (

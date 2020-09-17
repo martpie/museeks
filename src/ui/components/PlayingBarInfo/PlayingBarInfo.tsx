@@ -33,7 +33,7 @@ class PlayingBarInfo extends React.Component<Props, State> {
       elapsed: 0,
       duration: null,
       x: null,
-      dragging: false
+      dragging: false,
     };
 
     this.playingBar = React.createRef();
@@ -122,14 +122,14 @@ class PlayingBarInfo extends React.Component<Props, State> {
 
     this.setState({
       duration: time,
-      x: percent
+      x: percent,
     });
   }
 
   hideTooltip() {
     this.setState({
       duration: null,
-      x: null
+      x: null,
     });
   }
 

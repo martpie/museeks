@@ -77,7 +77,7 @@ class TracksListHeader extends React.Component<Props> {
 const mapStateToProps = (state: RootState, ownProps: OwnProps): InjectedProps => {
   if (ownProps.enableSort) {
     return {
-      sort: state.library.sort
+      sort: state.library.sort,
     };
   }
 

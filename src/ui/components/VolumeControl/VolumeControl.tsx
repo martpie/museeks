@@ -30,7 +30,7 @@ export default class VolumeControl extends React.Component<{}, State> {
     this.state = {
       showVolume: false,
       volume: unsmoothifyVolume(audio.volume),
-      muted: audio.muted
+      muted: audio.muted,
     };
 
     this.mute = this.mute.bind(this);
@@ -71,7 +71,7 @@ export default class VolumeControl extends React.Component<{}, State> {
 
   render() {
     const volumeClasses = cx(styles.volumeControl, {
-      [styles.visible]: this.state.showVolume
+      [styles.visible]: this.state.showVolume,
     });
 
     return (

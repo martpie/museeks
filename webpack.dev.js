@@ -6,7 +6,7 @@ const { ui, main } = require('./webpack.common.js');
 const devConfig = {
   mode: 'development',
   devtool: 'inline-source-map',
-  plugins: [new CleanTerminalPlugin()]
+  plugins: [new CleanTerminalPlugin()],
 };
 
 const devUiConfig = webpackMerge.merge(ui, devConfig);

@@ -35,8 +35,8 @@ export const load = async (_id: string) => {
     store.dispatch({
       type: types.PLAYLISTS_LOAD_ONE,
       payload: {
-        tracks
-      }
+        tracks,
+      },
     });
   } catch (err) {
     console.warn(err);
@@ -48,14 +48,12 @@ export const load = async (_id: string) => {
  */
 export const refresh = async () => {
   try {
-    const playlists = await app.models.Playlist.find({})
-      .sort({ name: 1 })
-      .execAsync();
+    const playlists = await app.models.Playlist.find({}).sort({ name: 1 }).execAsync();
     store.dispatch({
       type: types.PLAYLISTS_REFRESH,
       payload: {
-        playlists
-      }
+        playlists,
+      },
     });
   } catch (err) {
     console.warn(err);
@@ -73,7 +71,7 @@ export const create = async (
 ): Promise<string> => {
   const playlist: Playlist = {
     name,
-    tracks
+    tracks,
   };
 
   if (importPath) playlist.importPath = importPath;
@@ -155,7 +153,7 @@ export const duplicate = async (playlistId: string) => {
 
     const newPlaylist: Playlist = {
       name: `Copy of ${playlist.name}`,
-      tracks: tracks
+      tracks: tracks,
     };
 
     await app.models.Playlist.insertAsync(newPlaylist);
@@ -214,9 +212,9 @@ export const exportToM3u = async (playlistId: string) => {
     filters: [
       {
         extensions: ['m3u'],
-        name: playlistId
-      }
-    ]
+        name: playlistId,
+      },
+    ],
   });
 
   if (filePath) {

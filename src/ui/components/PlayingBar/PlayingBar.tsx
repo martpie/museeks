@@ -23,7 +23,7 @@ interface State {
 
 export default class PlayingBar extends React.Component<Props, State> {
   state = {
-    queueOpen: false
+    queueOpen: false,
   };
 
   constructor(props: Props) {
@@ -35,14 +35,14 @@ export default class PlayingBar extends React.Component<Props, State> {
 
   toggleQueue() {
     this.setState({
-      queueOpen: !this.state.queueOpen
+      queueOpen: !this.state.queueOpen,
     });
   }
 
   closeQueue() {
     if (this.state.queueOpen) {
       this.setState({
-        queueOpen: false
+        queueOpen: false,
       });
     }
   }
@@ -51,7 +51,7 @@ export default class PlayingBar extends React.Component<Props, State> {
     const { queue, queueCursor, repeat, shuffle } = this.props;
 
     const queueContainerClasses = cx(styles.queueContainer, {
-      [styles.isOpen]: this.state.queueOpen
+      [styles.isOpen]: this.state.queueOpen,
     });
 
     if (queueCursor === null) return null;

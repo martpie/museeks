@@ -38,7 +38,7 @@ class TrackPlayingIndicator extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      hovered: false
+      hovered: false,
     };
 
     this.onMouseEnter = this.onMouseEnter.bind(this);

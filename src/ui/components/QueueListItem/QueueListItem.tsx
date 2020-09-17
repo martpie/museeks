@@ -20,7 +20,7 @@ interface Props {
 
 export default class QueueListItem extends React.PureComponent<Props> {
   static defaultProps = {
-    dragPosition: null
+    dragPosition: null,
   };
 
   constructor(props: Props) {
@@ -53,7 +53,7 @@ export default class QueueListItem extends React.PureComponent<Props> {
       [styles.isDragged]: this.props.dragged,
       [styles.isDraggedOver]: this.props.draggedOver,
       [styles.isAbove]: this.props.draggedOver && this.props.dragPosition === 'above',
-      [styles.isBelow]: this.props.draggedOver && this.props.dragPosition === 'below'
+      [styles.isBelow]: this.props.draggedOver && this.props.dragPosition === 'below',
     });
 
     const { track } = this.props;

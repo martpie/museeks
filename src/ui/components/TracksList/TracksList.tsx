@@ -51,7 +51,7 @@ interface State {
 export default class TracksList extends React.Component<Props, State> {
   static defaultProps = {
     currentPlaylist: '',
-    reorderable: false
+    reorderable: false,
   };
 
   static isLeftClick = (e: React.MouseEvent) => e.button === 0;
@@ -64,7 +64,7 @@ export default class TracksList extends React.Component<Props, State> {
     this.state = {
       tilesScrolled: 0,
       selected: [],
-      reordered: null
+      reordered: null,
     };
   }
 
@@ -159,13 +159,13 @@ export default class TracksList extends React.Component<Props, State> {
 
   onReorderStart = () => {
     this.setState({
-      reordered: this.state.selected
+      reordered: this.state.selected,
     });
   };
 
   onReorderEnd = () => {
     this.setState({
-      reordered: null
+      reordered: null,
     });
   };
 
@@ -214,7 +214,7 @@ export default class TracksList extends React.Component<Props, State> {
 
       const translationDistance = tilesScrolled * ROW_HEIGHT * CHUNK_LENGTH + indexChunk * ROW_HEIGHT * CHUNK_LENGTH;
       const tracksListTileStyles = {
-        transform: `translate3d(0, ${translationDistance}px, 0)`
+        transform: `translate3d(0, ${translationDistance}px, 0)`,
       };
 
       return (
@@ -264,7 +264,7 @@ export default class TracksList extends React.Component<Props, State> {
 
     if (!event.metaKey && !event.ctrlKey && !event.shiftKey && selected.includes(trackId)) {
       this.setState({
-        selected: [trackId]
+        selected: [trackId],
       });
     }
   };
@@ -344,17 +344,17 @@ export default class TracksList extends React.Component<Props, State> {
           label: 'Create new playlist...',
           click: async () => {
             await PlaylistsActions.create('New playlist', selected);
-          }
+          },
         },
         {
-          type: 'separator'
+          type: 'separator',
         }
       );
 
       if (playlists.length === 0) {
         playlistTemplate.push({
           label: 'No playlists',
-          enabled: false
+          enabled: false,
         });
       } else {
         playlists.forEach((playlist) => {
@@ -362,7 +362,7 @@ export default class TracksList extends React.Component<Props, State> {
             label: playlist.name,
             click: async () => {
               await PlaylistsActions.addTracks(playlist._id, selected);
-            }
+            },
           });
         });
       }
@@ -374,35 +374,35 @@ export default class TracksList extends React.Component<Props, State> {
           label: 'Add to queue',
           click: async () => {
             await QueueActions.addAfter(selected);
-          }
+          },
         },
         {
           label: 'Play next',
           click: async () => {
             await QueueActions.addNext(selected);
-          }
+          },
         },
         {
-          type: 'separator'
-        }
+          type: 'separator',
+        },
       ];
     }
 
     const template: electron.MenuItemConstructorOptions[] = [
       {
         label: selectedCount > 1 ? `${selectedCount} tracks selected` : `${selectedCount} track selected`,
-        enabled: false
+        enabled: false,
       },
       {
-        type: 'separator'
+        type: 'separator',
       },
       ...addToQueueTemplate,
       {
         label: 'Add to playlist',
-        submenu: playlistTemplate
+        submenu: playlistTemplate,
       },
       {
-        type: 'separator'
+        type: 'separator',
       },
       {
         label: `Search for "${track.artist[0]}" `,
@@ -416,7 +416,7 @@ export default class TracksList extends React.Component<Props, State> {
             searchInput.value = track.artist[0];
             searchInput.dispatchEvent(new Event('input', { bubbles: true }));
           }
-        }
+        },
       },
       {
         label: `Search for "${track.album}"`,
@@ -430,8 +430,8 @@ export default class TracksList extends React.Component<Props, State> {
             searchInput.value = track.album;
             searchInput.dispatchEvent(new Event('input', { bubbles: true }));
           }
-        }
-      }
+        },
+      },
     ];
 
     const currentPlaylist = this.props.currentPlaylist;
@@ -439,32 +439,32 @@ export default class TracksList extends React.Component<Props, State> {
     if (type === 'playlist' && currentPlaylist) {
       template.push(
         {
-          type: 'separator'
+          type: 'separator',
         },
         {
           label: 'Remove from playlist',
           click: async () => {
             await PlaylistsActions.removeTracks(currentPlaylist, selected);
-          }
+          },
         }
       );
     }
 
     template.push(
       {
-        type: 'separator'
+        type: 'separator',
       },
       {
         label: 'Show in file manager',
         click: () => {
           shell.showItemInFolder(track.path);
-        }
+        },
       },
       {
         label: 'Remove from library',
         click: () => {
           LibraryActions.remove(selected);
-        }
+        },
       }
     );
 

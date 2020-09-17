@@ -18,7 +18,7 @@ export const SUPPORTED_TRACKS_EXTENSIONS = [
   '.ogm',
   '.opus',
   // Flac
-  '.flac'
+  '.flac',
 ];
 
 export const SUPPORTED_PLAYLISTS_EXTENSIONS = ['.m3u'];

@@ -79,7 +79,7 @@ const mapStateToProps = ({ player }: RootState) => ({
   repeat: player.repeat,
   shuffle: player.shuffle,
   queue: player.queue,
-  queueCursor: player.queueCursor
+  queueCursor: player.queueCursor,
 });
 
 export default connect(mapStateToProps)(Header);

@@ -104,7 +104,7 @@ const mapStateToProps = (state: RootState) => {
     playlists: state.playlists.list,
     library: state.library,
     player: state.player,
-    tracks: filteredTracks
+    tracks: filteredTracks,
   };
 };
 

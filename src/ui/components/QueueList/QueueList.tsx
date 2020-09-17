@@ -28,7 +28,7 @@ export default class QueueList extends React.Component<Props, State> {
     this.state = {
       draggedTrackIndex: null,
       draggedOverTrackIndex: null,
-      dragPosition: null
+      dragPosition: null,
     };
 
     this.dragStart = this.dragStart.bind(this);
@@ -73,7 +73,7 @@ export default class QueueList extends React.Component<Props, State> {
       this.setState({
         draggedTrackIndex: null,
         draggedOverTrackIndex: null,
-        dragPosition: null
+        dragPosition: null,
       });
 
       QueueActions.setQueue(newQueue);
@@ -88,7 +88,7 @@ export default class QueueList extends React.Component<Props, State> {
 
     this.setState({
       draggedOverTrackIndex: index,
-      dragPosition
+      dragPosition,
     });
   }
 

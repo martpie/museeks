@@ -14,7 +14,7 @@ interface Props {
 
 export default class CheckboxSetting extends React.PureComponent<Props> {
   static defaultProps = {
-    description: ''
+    description: '',
   };
 
   constructor(props: Props) {

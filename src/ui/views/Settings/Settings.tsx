@@ -48,7 +48,7 @@ const Settings: React.FC<Props> = (props) => {
 };
 
 const mapStateToProps = (state: RootState) => ({
-  library: state.library
+  library: state.library,
 });
 
 export default connect(mapStateToProps)(Settings);

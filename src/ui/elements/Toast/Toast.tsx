@@ -15,7 +15,7 @@ const ToastItem: React.FC<Props> = (props) => {
     [styles.toastSuccess]: type === 'success',
     [styles.toastWarning]: type === 'warning',
     [styles.toastDanger]: type === 'danger',
-    [styles.toastInfo]: type === 'info'
+    [styles.toastInfo]: type === 'info',
   });
 
   return <div className={classes}>{content}</div>;

@@ -94,7 +94,7 @@ class Footer extends React.Component<Props> {
 }
 
 const mapsStateToProps = (state: RootState): InjectedProps => ({
-  library: state.library
+  library: state.library,
 });
 
 // TODO with router

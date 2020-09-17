@@ -25,7 +25,7 @@ class PlaylistsNav extends React.Component<Props, State> {
     super(props);
 
     this.state = {
-      renamed: null // the playlist being renamed if there's one
+      renamed: null, // the playlist being renamed if there's one
     };
 
     this.blur = this.blur.bind(this);
@@ -41,32 +41,32 @@ class PlaylistsNav extends React.Component<Props, State> {
         label: 'Rename',
         click: () => {
           this.setState({ renamed: playlistId });
-        }
+        },
       },
       {
         label: 'Delete',
         click: async () => {
           await PlaylistsActions.remove(playlistId);
-        }
+        },
       },
       {
-        type: 'separator'
+        type: 'separator',
       },
       {
         label: 'Duplicate',
         click: async () => {
           await PlaylistsActions.duplicate(playlistId);
-        }
+        },
       },
       {
-        type: 'separator'
+        type: 'separator',
       },
       {
         label: 'Export',
         click: async () => {
           await PlaylistsActions.exportToM3u(playlistId);
-        }
-      }
+        },
+      },
     ];
 
     const context = Menu.buildFromTemplate(template);

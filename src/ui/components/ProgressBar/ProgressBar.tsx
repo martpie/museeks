@@ -16,7 +16,7 @@ const ProgressBar: React.FC<Props> = (props) => (
 
 ProgressBar.defaultProps = {
   progress: 100,
-  animated: false
+  animated: false,
 };
 
 export default ProgressBar;

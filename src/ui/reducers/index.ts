@@ -19,7 +19,7 @@ const rootReducer = combineReducers({
   library,
   toasts,
   player,
-  playlists
+  playlists,
 });
 
 export default rootReducer;

@@ -4,13 +4,13 @@
 export enum PlayerStatus {
   PLAY = 'play',
   PAUSE = 'pause',
-  STOP = 'stop'
+  STOP = 'stop',
 }
 
 export enum Repeat {
   ALL = 'all',
   ONE = 'one',
-  NONE = 'none'
+  NONE = 'none',
 }
 
 export enum SortBy {
@@ -18,12 +18,12 @@ export enum SortBy {
   ALBUM = 'album',
   TITLE = 'title',
   DURATION = 'duration',
-  GENRE = 'genre'
+  GENRE = 'genre',
 }
 
 export enum SortOrder {
   ASC = 'asc',
-  DSC = 'dsc'
+  DSC = 'dsc',
 }
 
 /**

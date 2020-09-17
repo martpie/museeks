@@ -29,7 +29,7 @@ class MprisModule extends ModuleWindow {
       canRaise: true,
       supportedUriSchemes: ['file', 'data'],
       supportedMimeTypes: SUPPORTED_TRACKS_EXTENSIONS.map(mime.lookup).filter(Boolean),
-      supportedInterfaces: ['player']
+      supportedInterfaces: ['player'],
     });
 
     this.player.canEditTracks = false;
@@ -106,7 +106,7 @@ class MprisModule extends ModuleWindow {
       'mpris:artUrl': `file://${cover}`,
       'xesam:title': track.title,
       'xesam:album': track.album,
-      'xesam:artist': track.artist
+      'xesam:artist': track.artist,
     };
   }
 }
