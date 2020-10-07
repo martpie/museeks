@@ -1,5 +1,10 @@
 #!/bin/bash
 
+if [ ! -f ./package.json ]; then
+    echo "You should run Museeks scripts from the project root directory, exiting..."
+    exit 1
+fi
+
 checksum_file () {
   shasum -a 256 $1 > $1.sha256
 }
