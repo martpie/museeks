@@ -77,7 +77,7 @@ const sharedConfig = {
     rules: [
       {
         test: /\.(ts|tsx)([?]?.*)$/,
-        loader: ['ts-loader'],
+        use: 'ts-loader',
         exclude: /node_modules/,
       },
       {
@@ -130,7 +130,7 @@ const sharedConfig = {
       },
       {
         test: /\.svg$/,
-        use: ['svg-inline-loader'],
+        use: 'svg-inline-loader',
         include: path.resolve(__dirname, 'src'),
       },
       {
