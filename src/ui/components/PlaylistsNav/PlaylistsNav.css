@@ -1,4 +1,6 @@
 .playlists-nav {
+  display: flex;
+  flex-flow: column;
   width: 200px;
   border-right: 1px solid var(--border-color);
   background-color: var(--sidebar-bg);
@@ -8,6 +10,7 @@
 }
 
 .playlists-nav__header {
+  flex: 0 0 auto;
   display: flex;
   align-items: center;
 }
@@ -43,7 +46,7 @@
 }
 
 .playlists-nav__body {
-  max-height: 100%;
+  flex: 1 1 auto;
   overflow: auto;
 }
 
