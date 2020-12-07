@@ -76,83 +76,87 @@ const sharedConfig = {
   module: {
     rules: [
       {
-        test: /\.(ts|tsx)([?]?.*)$/,
-        loader: ['ts-loader'],
-        exclude: /node_modules/,
-      },
-      {
-        test: /\.css$/,
-        use: [
-          MiniCssExtractPlugin.loader,
+        oneOf: [
           {
-            loader: 'css-loader',
-            options: {
-              modules: {
-                localIdentName: '[local]___[hash:base64:5]',
-                exportLocalsConvention: 'dashesOnly',
+            test: /\.(ts|tsx)([?]?.*)$/,
+            use: 'ts-loader',
+            exclude: /node_modules/,
+          },
+          {
+            test: /\.css$/,
+            use: [
+              MiniCssExtractPlugin.loader,
+              {
+                loader: 'css-loader',
+                options: {
+                  modules: {
+                    localIdentName: '[local]___[hash:base64:5]',
+                    exportLocalsConvention: 'dashesOnly',
+                  },
+                  importLoaders: 1,
+                  sourceMap: true,
+                },
               },
-              importLoaders: 1,
-              sourceMap: true,
-            },
+              'postcss-loader',
+            ],
+            exclude: path.join(__dirname, 'node_modules'),
           },
-          'postcss-loader',
-        ],
-        exclude: path.join(__dirname, 'node_modules'),
-      },
-      {
-        test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader'],
-        include: path.join(__dirname, 'node_modules'),
-      },
-      {
-        test: /\.(eot|woff|woff2|ttf)([?]?.*)$/,
-        use: [
           {
-            loader: 'file-loader',
-            options: {
-              name: '/fonts/[name].[ext]',
-              useRelativePath: true,
-            },
+            test: /\.css$/,
+            use: [MiniCssExtractPlugin.loader, 'css-loader'],
+            include: path.join(__dirname, 'node_modules'),
           },
-        ],
-      },
-      {
-        test: /\.(png|jpg|ico)([?]?.*)$/,
-        use: [
           {
-            loader: 'file-loader',
-            options: {
-              name: 'images/[name].[ext]',
-            },
+            test: /\.(eot|woff|woff2|ttf)([?]?.*)$/,
+            use: [
+              {
+                loader: 'file-loader',
+                options: {
+                  name: '/fonts/[name].[ext]',
+                  useRelativePath: true,
+                },
+              },
+            ],
           },
-        ],
-        exclude: /node_modules/,
-      },
-      {
-        test: /\.svg$/,
-        use: ['svg-inline-loader'],
-        include: path.resolve(__dirname, 'src'),
-      },
-      {
-        test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-        use: [
           {
-            loader: 'url-loader',
-            options: {
-              mimetype: 'image/svg+xml',
-            },
+            test: /\.(png|jpg|ico)([?]?.*)$/,
+            use: [
+              {
+                loader: 'file-loader',
+                options: {
+                  name: 'images/[name].[ext]',
+                },
+              },
+            ],
+            exclude: /node_modules/,
+          },
+          {
+            test: /\.svg$/,
+            use: 'svg-inline-loader',
+            include: path.resolve(__dirname, 'src'),
+          },
+          {
+            test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+            use: [
+              {
+                loader: 'url-loader',
+                options: {
+                  mimetype: 'image/svg+xml',
+                },
+              },
+            ],
+            include: /node_modules/,
+          },
+          {
+            test: /\.node$/,
+            use: 'node-loader',
+          },
+          {
+            // Hotfix for iconv-lite https://github.com/ashtuchkin/iconv-lite/issues/204
+            test: /node_modules[\/\\](iconv-lite)[\/\\].+/,
+            resolve: { aliasFields: ['main'] },
           },
         ],
-        include: /node_modules/,
-      },
-      {
-        test: /\.node$/,
-        use: 'node-loader',
-      },
-      {
-        // Hotfix for iconv-lite https://github.com/ashtuchkin/iconv-lite/issues/204
-        test: /node_modules[\/\\](iconv-lite)[\/\\].+/,
-        resolve: { aliasFields: ['main'] },
       },
     ],
   },
