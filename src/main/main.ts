@@ -71,7 +71,7 @@ app.on('ready', async () => {
     minWidth: 900,
     minHeight: 550,
     frame: true,
-    autoHideMenuBar: true,
+    autoHideMenuBar: false,
     titleBarStyle: 'hiddenInset', // MacOS polished window
     show: false,
     webPreferences: {
