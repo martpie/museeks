@@ -76,6 +76,7 @@ app.on('ready', async () => {
     show: false,
     webPreferences: {
       nodeIntegration: true,
+      enableRemoteModule: true,
     },
   });
 
