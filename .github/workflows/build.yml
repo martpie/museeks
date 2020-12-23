@@ -11,7 +11,7 @@ on:
       - '*'
 
 jobs:
-  build:
+  qa:
     # Let's implement different jobs for Windows and Linux at some point, especially for packaging scripts
     runs-on: ubuntu-20.04
 
