@@ -66,7 +66,7 @@ jobs:
         run: npm ci --only=production
 
       - name: Package Linux binaries
-        run: npm package:l
+        run: npm run package:l
 
       - uses: actions/upload-artifact@v2
         with:
