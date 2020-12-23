@@ -57,7 +57,7 @@ jobs:
 
   binaries-linux:
     runs-on: ubuntu-20.04
-    needs: [build]
+    needs: [qa]
 
     strategy:
       matrix:
