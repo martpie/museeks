@@ -63,9 +63,20 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Display Node.js and npm informations
+        run: |
+          echo "node version $(node -v) running"
+          echo "npm version $(npm -v) running"
+
       - uses: actions/download-artifact@v2
         with:
           name: application-build
+          path: dist/
 
       - name: Install production dependencies
         run: npm ci
