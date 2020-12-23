@@ -5,14 +5,14 @@ on: [push, pull_request]
 jobs:
   build:
     # Let's implement different jobs for Windows and Linux at some point, especially for packaging scripts
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
 
     strategy:
       matrix:
-        node-version: [12.x]
+        node-version: [14.x]
 
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
 
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
@@ -41,3 +41,40 @@ jobs:
 
       - name: Build application
         run: npm run build
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: application-build
+          path: dist/
+
+  binaries-linux:
+    runs-on: ubuntu-20.04
+    needs: [build]
+
+    strategy:
+      matrix:
+        node-version: [14.x]
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/download-artifact@v2
+        with:
+          name: application-build
+
+      - name: Install production dependencies
+        run: npm ci --only=production
+
+      - name: Package Linux binaries
+        run: npm package:l
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: application-build
+          path: |
+            dist/museeks-i386.deb
+            dist/museeks-amd64.deb
+            dist/museeks-i386.AppImage
+            dist/museeks-x86_64.AppImage
+            dist/museeks-i686.rpm
+            dist/museeks-x86_64.rpm
