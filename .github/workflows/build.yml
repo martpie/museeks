@@ -86,6 +86,8 @@ jobs:
 
       - name: Package Linux binaries
         run: npm run package:l
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
 
       - uses: actions/upload-artifact@v2
         with:
