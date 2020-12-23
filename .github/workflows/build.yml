@@ -78,6 +78,9 @@ jobs:
           name: application-build
           path: dist/
 
+      - name: Install Linux dependencies
+        run: sudo apt-get install --no-install-recommends -y libopenjp2-tools rpm gcc-multilib g++-multilib
+
       - name: Install production dependencies
         run: npm ci
 
