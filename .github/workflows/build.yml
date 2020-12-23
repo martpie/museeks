@@ -35,9 +35,6 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Rebuild native modules
-        run: npm run modules:rebuild
-
       - name: 'Test: formatting'
         run: 'npm run test:formatting'
 
@@ -71,7 +68,7 @@ jobs:
           name: application-build
 
       - name: Install production dependencies
-        run: npm ci --only=production
+        run: npm ci
 
       - name: Package Linux binaries
         run: npm run package:l

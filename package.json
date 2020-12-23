@@ -14,11 +14,11 @@
     "url": "https://github.com/martpie/museeks/issues"
   },
   "scripts": {
+    "postinstall": "electron-builder install-app-deps",
     "build": "webpack --config webpack.prod.js --color",
     "dev": "webpack --config webpack.dev.js --color --watch",
     "museeks": "electron .",
     "museeks:debug": "electron . --enable-logging --devtools",
-    "modules:rebuild": "electron-rebuild -f",
     "test:lint": "eslint . --ext .tsx,.ts,.js",
     "test:lint:fix": "eslint . --ext .tsx,.ts,.js --fix",
     "test:formatting": "prettier --check \"./**/*.{ts,tsx,js}\"",
@@ -85,7 +85,6 @@
     "css-loader": "4.3.0",
     "electron": "11.0.4",
     "electron-builder": "22.9.1",
-    "electron-rebuild": "2.3.4",
     "eslint": "7.15.0",
     "eslint-config-prettier": "7.0.0",
     "eslint-plugin-import": "2.22.1",
