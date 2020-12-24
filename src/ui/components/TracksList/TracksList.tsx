@@ -15,9 +15,9 @@ import * as QueueActions from '../../actions/QueueActions';
 import { isCtrlKey, isAltKey } from '../../utils/utils-platform';
 import { PlaylistModel, TrackModel, PlayerStatus } from '../../../shared/types/interfaces';
 
-import * as scrollbarStyles from '../CustomScrollbar/CustomScrollbar.css';
-import * as headerStyles from '../Header/Header.css';
-import * as styles from './TracksList.css';
+import * as scrollbarStyles from '../CustomScrollbar/CustomScrollbar.module.css';
+import * as headerStyles from '../Header/Header.module.css';
+import * as styles from './TracksList.module.css';
 
 const { shell, remote } = electron;
 const { Menu } = remote;

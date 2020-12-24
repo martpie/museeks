@@ -5,7 +5,7 @@ import * as Icon from 'react-fontawesome';
 import * as LibraryActions from '../../actions/LibraryActions';
 import { SortBy } from '../../../shared/types/interfaces';
 
-import * as styles from './TracksListHeaderCell.css';
+import * as styles from './TracksListHeaderCell.module.css';
 
 interface Props {
   title: string;

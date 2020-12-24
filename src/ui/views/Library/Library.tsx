@@ -11,8 +11,8 @@ import { LibraryState } from '../../reducers/library';
 import { PlayerState } from '../../reducers/player';
 import { RootState } from '../../reducers';
 
-import * as appStyles from '../../App.css';
-import * as styles from './Library.css';
+import * as appStyles from '../../App.module.css';
+import * as styles from './Library.module.css';
 
 interface Props {
   library: LibraryState;

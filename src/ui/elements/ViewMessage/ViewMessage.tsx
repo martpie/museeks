@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import * as styles from './ViewMessage.css';
+import * as styles from './ViewMessage.module.css';
 
 export const Notice: React.FC = (props) => <div className={styles.fullMessage}>{props.children}</div>;
 

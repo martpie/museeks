@@ -1,7 +1,7 @@
 import * as React from 'react';
 import cx from 'classnames';
 
-import * as styles from './ProgressBar.css';
+import * as styles from './ProgressBar.module.css';
 
 interface Props {
   progress?: number;

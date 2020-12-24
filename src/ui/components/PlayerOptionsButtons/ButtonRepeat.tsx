@@ -5,7 +5,7 @@ import cx from 'classnames';
 import * as PlayerActions from '../../actions/PlayerActions';
 import { Repeat } from '../../../shared/types/interfaces';
 
-import * as styles from './common.css';
+import * as styles from './common.module.css';
 
 const svgMap = {
   [Repeat.ONE]: require('../../../images/icons/player-repeat-one.svg'),

@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 
 import * as PlaylistActions from '../../actions/PlaylistsActions';
 
-import * as styles from './PlaylistsNavLink.css';
+import * as styles from './PlaylistsNavLink.module.css';
 
 interface Props {
   className?: string;

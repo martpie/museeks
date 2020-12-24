@@ -11,7 +11,7 @@ import { isCtrlKey } from '../../utils/utils-platform';
 import { RootState } from '../../reducers';
 import { TrackModel, PlayerStatus, Repeat } from '../../../shared/types/interfaces';
 
-import * as styles from './Header.css';
+import * as styles from './Header.module.css';
 
 interface Props {
   playerStatus: PlayerStatus;

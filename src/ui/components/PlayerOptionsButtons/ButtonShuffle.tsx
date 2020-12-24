@@ -4,7 +4,7 @@ import cx from 'classnames';
 
 import * as PlayerActions from '../../actions/PlayerActions';
 
-import * as styles from './common.css';
+import * as styles from './common.module.css';
 
 const svg = require('../../../images/icons/player-shuffle.svg');
 
