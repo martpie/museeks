@@ -21,8 +21,8 @@ class ConfigModule extends Module {
     this.workArea = electron.screen.getPrimaryDisplay().workArea;
   }
 
-  async load() {
-    const defaultConfig: Record<string, any> = this.getDefaultConfig();
+  async load(): Promise<void> {
+    const defaultConfig: Partial<Config> = this.getDefaultConfig();
     const pathUserData = app.getPath('userData');
 
     this.conf = new teeny(path.join(pathUserData, 'config.json'), defaultConfig);
@@ -78,7 +78,7 @@ class ConfigModule extends Module {
     return this.conf.get() as Config; // Maybe possible to type TeenyConf with Generics?
   }
 
-  get(key: keyof Config) {
+  get<T extends keyof Config>(key: T): Config[T] {
     if (!this.conf) {
       throw new Error('Config not loaded');
     }
@@ -86,7 +86,7 @@ class ConfigModule extends Module {
     return this.conf.get(key);
   }
 
-  reload() {
+  reload(): void {
     if (!this.conf) {
       throw new Error('Config not loaded');
     }

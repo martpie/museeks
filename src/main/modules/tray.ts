@@ -53,7 +53,7 @@ class TrayModule extends ModuleWindow {
     else if (os.platform() === 'darwin') this.trayIcon = trayIcons['tray-darwin-dark'];
   }
 
-  async load() {
+  async load(): Promise<void> {
     // Fix for gnome-shell and high-dpi
     if (os.platform() === 'linux') {
       ps.lookup(
@@ -165,7 +165,7 @@ class TrayModule extends ModuleWindow {
     });
   }
 
-  create() {
+  create(): void {
     this.tray = new Tray(this.trayIcon);
     this.tray.setToolTip('Museeks');
 
@@ -184,13 +184,13 @@ class TrayModule extends ModuleWindow {
     this.setContextMenu(this.status);
   }
 
-  destroy() {
+  destroy(): void {
     if (this.tray) {
       this.tray.destroy();
     }
   }
 
-  setContextMenu(state: PlayerStatus) {
+  setContextMenu(state: PlayerStatus): void {
     const playPauseItem = state === 'play' ? this.pauseToggle : this.playToggle;
     const menuTemplate = [...this.songDetails, ...playPauseItem, ...this.menu];
 
@@ -199,13 +199,13 @@ class TrayModule extends ModuleWindow {
     }
   }
 
-  refreshTrayIcon() {
+  refreshTrayIcon(): void {
     if (this.tray) {
       this.tray.setImage(this.trayIcon);
     }
   }
 
-  updateTrayMetadata(track: TrackModel) {
+  updateTrayMetadata(track: TrackModel): void {
     this.songDetails = [
       {
         label: `${track.title}`,

@@ -23,7 +23,7 @@ class DockMenuDarwinModule extends ModuleWindow {
     this.pauseToggle = [];
   }
 
-  async load() {
+  async load(): Promise<void> {
     this.songDetails = [
       {
         label: 'Not playing',
@@ -84,13 +84,13 @@ class DockMenuDarwinModule extends ModuleWindow {
     this.setDockMenu(PlayerStatus.PAUSE);
   }
 
-  setDockMenu(state: PlayerStatus) {
+  setDockMenu(state: PlayerStatus): void {
     const playPauseItem = state === 'play' ? this.pauseToggle : this.playToggle;
     const menuTemplate = [...this.songDetails, ...playPauseItem, ...this.menu];
     app.dock.setMenu(Menu.buildFromTemplate(menuTemplate));
   }
 
-  updateTrayMetadata(metadata: TrackModel) {
+  updateTrayMetadata(metadata: TrackModel): void {
     this.songDetails = [
       {
         label: `${metadata.title}`,

@@ -14,7 +14,7 @@ class Module {
   }
 
   // To not be overriden
-  async init() {
+  async init(): Promise<void> {
     if (this.loaded) throw new TypeError(`Module ${this.constructor.name} is already loaded`);
 
     if (this.platforms.includes(os.platform())) {
@@ -28,7 +28,7 @@ class Module {
   }
 
   // Can (now) be an asynchronous method
-  async load() {
+  async load(): Promise<void> {
     throw new TypeError(`Module ${this.constructor.name} should have a load() method`);
     // Do whatever you want here :)
   }
