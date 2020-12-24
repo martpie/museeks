@@ -85,9 +85,10 @@ jobs:
         with:
           name: application-build
           path: |
-            dist/museeks-i386.deb
-            dist/museeks-amd64.deb
-            dist/museeks-i386.AppImage
-            dist/museeks-x86_64.AppImage
-            dist/museeks-i686.rpm
-            dist/museeks-x86_64.rpm
+            build/museeks-i386.deb
+            build/museeks-amd64.deb
+            build/museeks-i386.AppImage
+            build/museeks-x86_64.AppImage
+            build/museeks-i686.rpm
+            build/museeks-x86_64.rpm
+            build/museeks-setup.exe
