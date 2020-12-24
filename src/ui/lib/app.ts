@@ -24,6 +24,19 @@ export const pathSrc = __dirname;
 
 /*
 |--------------------------------------------------------------------------
+| Files association
+|--------------------------------------------------------------------------
+*/
+
+// TODO: only working on macOS, issue to follow:
+// https://github.com/electron/electron/issues/27116
+remote.app.on('open-file', (event, path) => {
+  event.preventDefault();
+  console.info(path); // absolute path to file
+});
+
+/*
+|--------------------------------------------------------------------------
 | Config
 |--------------------------------------------------------------------------
 */
