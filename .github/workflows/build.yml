@@ -48,8 +48,11 @@ jobs:
           name: application-build
           path: dist/
 
-  binaries-linux-windows:
-    runs-on: ubuntu-20.04
+  # Documentation on environments:
+  # https://docs.github.com/en/free-pro-team@latest/actions/reference/specifications-for-github-hosted-runners
+
+  binaries-linux:
+    runs-on: ubuntu-18.04
     needs: [qa]
 
     steps:
@@ -73,13 +76,6 @@ jobs:
       - name: Install Linux dependencies
         run: |
           sudo apt install --no-install-recommends -y libopenjp2-tools rpm gcc-multilib g++-multilib
-        # sudo add-apt-repository -r 'deb https://dl.winehq.org/wine-builds/ubuntu/ $(lsb_release -cs) main'
-        # sudo add-apt-repository main
-        # sudo add-apt-repository universe
-        # sudo add-apt-repository multiverse
-        # sudo dpkg --add-architecture i386
-        # sudo apt-get update
-        # sudo apt-get install wine
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile
@@ -101,10 +97,45 @@ jobs:
             build/museeks-x86_64.AppImage
             build/museeks-i686.rpm
             build/museeks-x86_64.rpm
-          # build/museeks-setup.exe
+
+  binaries-windows:
+    runs-on: windows-2019
+    needs: [qa]
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+
+      - name: Display Node.js and npm informations
+        run: |
+          echo "node version $(node -v) running"
+          echo "npm version $(npm -v) running"
+
+      - uses: actions/download-artifact@v2
+        with:
+          name: application-build
+          path: dist/
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Package Windows binaries
+        run: yarn run package:w
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: binaries-linux-windows
+          path: |
+            build/museeks-setup.exe
 
   binaries-macos:
-    runs-on: macos-11.0
+    runs-on: macos-10.15
     needs: [qa]
 
     steps:
