@@ -50,7 +50,7 @@ export const remove = (index: number) => {
  * Add tracks at the end of the queue
  */
 export const addAfter = async (tracksIds: string[]) => {
-  const tracks = await app.models.Track.findAsync({ _id: { $in: tracksIds } });
+  const tracks = await app.db.Track.findAsync({ _id: { $in: tracksIds } });
   store.dispatch({
     type: types.QUEUE_ADD,
     payload: {
@@ -63,7 +63,7 @@ export const addAfter = async (tracksIds: string[]) => {
  * Add tracks at the beginning of the queue
  */
 export const addNext = async (tracksIds: string[]) => {
-  const tracks = await app.models.Track.findAsync({ _id: { $in: tracksIds } });
+  const tracks = await app.db.Track.findAsync({ _id: { $in: tracksIds } });
   store.dispatch({
     type: types.QUEUE_ADD_NEXT,
     payload: {

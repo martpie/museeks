@@ -46,15 +46,15 @@ Track.ensureIndex({ fieldName: 'path', unique: true });
 const Playlist: PlaylistModel = new linvodb('playlist');
 Playlist.ensureIndex({ fieldName: 'importPath', unique: true, sparse: true });
 
-export const models = {
+export const db = {
   Track,
   Playlist,
 };
 
-Promise.promisifyAll(Object.getPrototypeOf(models.Track.find()));
-Promise.promisifyAll(Object.getPrototypeOf(models.Track.findOne()));
-Promise.promisifyAll(models.Track);
-Promise.promisifyAll(models.Playlist);
+Promise.promisifyAll(Object.getPrototypeOf(db.Track.find()));
+Promise.promisifyAll(Object.getPrototypeOf(db.Track.findOne()));
+Promise.promisifyAll(db.Track);
+Promise.promisifyAll(db.Playlist);
 
 /*
 |--------------------------------------------------------------------------
