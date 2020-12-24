@@ -23,7 +23,7 @@ class IpcModule extends ModuleWindow {
     this.forceQuit = false;
   }
 
-  async load() {
+  async load(): Promise<void> {
     ipcMain.on('app:restart', () => {
       app.relaunch({ args: ['process.argv.slice(1)', '--relaunch'] });
       app.exit(0);
@@ -49,7 +49,7 @@ class IpcModule extends ModuleWindow {
     });
   }
 
-  close(e: Event) {
+  close(e: Event): void {
     this.config.reload(); // HACKY
     const minimizeToTray = this.config.get('minimizeToTray');
 
