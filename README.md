@@ -49,23 +49,22 @@ Requirements:
 
 - `node` > 10
 - `npm` > 6
+- `yarn` 1
 
 Please consider that **`master` is unstable**.
 
 - `git clone git@github.com:martpie/museeks.git`
 - `cd museeks`
-- `npm ci`
-- `npm run modules:rebuild`
-- `npm run build` or `npm run dev`
-- `npm run museeks` or `npm run museeks:debug`
+- `yarn install --frozen-lockfile`
+- `yarn run build` or `yarn run dev`
+- `yarn run museeks` or `yarn run museeks:debug`
 
 ### Package (advanced)
 
 - `rm -rf node_modules dist build`
-- `npm ci`
-- `npm run modules:rebuild`
-- `npm run build`
-- `npm run package:lmw`
+- `yarn install --frozen-lockfile`
+- `yarn run build`
+- `yarn run package:lmw`
 
 ## Troubleshooting
 
@@ -92,8 +91,8 @@ If you want to report a bug, first, thanks a lot, that helps us a lot. Please op
 
 - Fork and clone
 - Master may be unstable, checkout to a tag to have a stable state of the app
-- `npm install && npm run dev` then run in a separate terminal `npm run museeks:debug`
-- `npm run dev` will watch for file changes using Webpack which will recompile JSX and CSS files.
+- `yarn install --frozen-lockfile && yarn run dev` then run in a separate terminal `yarn run museeks:debug`
+- `yarn run dev` will watch for file changes using Webpack which will recompile JSX and CSS files.
 
 Please respect a few rules:
 

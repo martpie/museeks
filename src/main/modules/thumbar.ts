@@ -20,7 +20,7 @@ class ThumbarModule extends ModuleWindow {
     this.platforms = ['win32'];
   }
 
-  async load() {
+  async load(): Promise<void> {
     const { window } = this;
 
     const icons = {

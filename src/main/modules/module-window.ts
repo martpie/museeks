@@ -12,7 +12,7 @@ class ModuleWindow extends Module {
     this.window = window;
   }
 
-  getWindow() {
+  getWindow(): Electron.BrowserWindow {
     return this.window;
   }
 }

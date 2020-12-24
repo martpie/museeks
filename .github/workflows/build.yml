@@ -1,0 +1,172 @@
+name: build
+
+on:
+  # Trigger the workflow on push or pull request,
+  # but only for the main branch
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - '*'
+
+jobs:
+  qa:
+    # Let's implement different jobs for Windows and Linux at some point, especially for packaging scripts
+    runs-on: ubuntu-20.04
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+
+      - name: Display Node.js and npm informations
+        run: |
+          echo "node version $(node -v) running"
+          echo "npm version $(npm -v) running"
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: 'Test: formatting'
+        run: 'yarn run test:formatting'
+
+      - name: 'Test: TS/JS linting'
+        run: 'yarn run test:lint'
+
+      - name: 'Test: CSS linting'
+        run: 'yarn run test:css'
+
+      - name: Build application
+        run: yarn run build
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: application-build
+          path: dist/
+
+  # Documentation on environments:
+  # https://docs.github.com/en/free-pro-team@latest/actions/reference/specifications-for-github-hosted-runners
+
+  binaries-linux:
+    runs-on: ubuntu-18.04
+    needs: [qa]
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+
+      - name: Display Node.js and npm informations
+        run: |
+          echo "node version $(node -v) running"
+          echo "npm version $(npm -v) running"
+
+      - uses: actions/download-artifact@v2
+        with:
+          name: application-build
+          path: dist/
+
+      - name: Install Linux dependencies
+        run: |
+          sudo apt update
+          sudo apt install --no-install-recommends -y libopenjp2-tools rpm gcc-multilib g++-multilib
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Package Linux binaries
+        # - name: Package Linux/Windows binaries
+        run: yarn run package:l
+        # run: yarn run package:lw
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: binaries-linux
+          path: |
+            build/museeks-i386.deb
+            build/museeks-amd64.deb
+            build/museeks-i386.AppImage
+            build/museeks-x86_64.AppImage
+            build/museeks-i686.rpm
+            build/museeks-x86_64.rpm
+
+  binaries-macos:
+    runs-on: macos-10.15
+    needs: [qa]
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+
+      - name: Display Node.js and npm informations
+        run: |
+          echo "node version $(node -v) running"
+          echo "npm version $(npm -v) running"
+
+      - uses: actions/download-artifact@v2
+        with:
+          name: application-build
+          path: dist/
+
+      - name: Install production dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Package macOS binaries
+        run: yarn run package:m
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: binaries-macos
+          path: |
+            build/museeks.dmg
+
+  binaries-windows:
+    runs-on: windows-2019
+    needs: [qa]
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+
+      - name: Display Node.js and npm informations
+        run: |
+          echo "node version $(node -v) running"
+          echo "npm version $(npm -v) running"
+
+      - uses: actions/download-artifact@v2
+        with:
+          name: application-build
+          path: dist/
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Package Windows binaries
+        run: yarn run package:w
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: binaries-windows
+          path: |
+            build/museeks-setup.exe
