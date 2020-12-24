@@ -15,17 +15,13 @@ jobs:
     # Let's implement different jobs for Windows and Linux at some point, especially for packaging scripts
     runs-on: ubuntu-20.04
 
-    strategy:
-      matrix:
-        node-version: [14.x]
-
     steps:
       - uses: actions/checkout@v2
 
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 14.x
 
       - name: Display Node.js and npm informations
         run: |
@@ -52,13 +48,9 @@ jobs:
           name: application-build
           path: dist/
 
-  binaries-linux:
+  binaries-linux-windows:
     runs-on: ubuntu-20.04
     needs: [qa]
-
-    strategy:
-      matrix:
-        node-version: [14.x]
 
     steps:
       - uses: actions/checkout@v2
@@ -66,7 +58,7 @@ jobs:
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 14.x
 
       - name: Display Node.js and npm informations
         run: |
@@ -84,8 +76,8 @@ jobs:
       - name: Install production dependencies
         run: npm ci
 
-      - name: Package Linux binaries
-        run: npm run package:l
+      - name: Package Linux/Windows binaries
+        run: npm run package:lw
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 

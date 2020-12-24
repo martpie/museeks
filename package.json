@@ -25,6 +25,7 @@
     "test:formatting:fix": "prettier --write \"./**/*.{ts,tsx,js}\"",
     "test:css": "stylelint \"src/**/*.css\"",
     "package:lmw": "electron-builder -lmw --ia32 --x64 && npm run package:checksums",
+    "package:lw": "electron-builder -lw --ia32 --x64",
     "package:l": "electron-builder -l --ia32 --x64",
     "package:w": "electron-builder -w --ia32 --x64",
     "package:m": "electron-builder -m",
