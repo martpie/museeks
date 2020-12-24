@@ -21,7 +21,7 @@ class MprisModule extends ModuleWindow {
     this.platforms = ['linux'];
   }
 
-  async load() {
+  async load(): Promise<void> {
     this.player = mpris({
       name: 'museeks',
       identity: 'Museeks',

@@ -6,7 +6,7 @@ import { globalShortcut } from 'electron';
 import ModuleWindow from './module-window';
 
 class GlobalShortcutsModule extends ModuleWindow {
-  async load() {
+  async load(): Promise<void> {
     globalShortcut.register('MediaPlayPause', () => {
       this.window.webContents.send('playback:playpause');
     });

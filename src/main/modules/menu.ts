@@ -8,7 +8,7 @@ import { Menu, shell } from 'electron';
 import ModuleWindow from './module-window';
 
 class MenuModule extends ModuleWindow {
-  async load() {
+  async load(): Promise<void> {
     const template: Electron.MenuItemConstructorOptions[] = [
       { role: 'appMenu' },
       { role: 'fileMenu' },

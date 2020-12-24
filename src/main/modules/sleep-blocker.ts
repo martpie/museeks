@@ -18,24 +18,24 @@ class SleepBlocker extends ModuleWindow {
     this.platforms = ['win32', 'darwin', 'linux'];
   }
 
-  onStartPlayback = (_event: Event) => {
+  onStartPlayback = (_event: Event): void => {
     if (this.enabled && !powerSaveBlocker.isStarted(this.sleepBlockerId)) {
       // or 'prevent-display-sleep'
       this.sleepBlockerId = powerSaveBlocker.start('prevent-app-suspension');
     }
   };
 
-  onStopPlayback = (_event: Event) => {
+  onStopPlayback = (_event: Event): void => {
     if (powerSaveBlocker.isStarted(this.sleepBlockerId)) {
       powerSaveBlocker.stop(this.sleepBlockerId);
     }
   };
 
-  toggleSleepBlocker = (_event: Event, value: boolean) => {
+  toggleSleepBlocker = (_event: Event, value: boolean): void => {
     this.enabled = value;
   };
 
-  async load() {
+  async load(): Promise<void> {
     ipcMain.on('settings:toggleSleepBlocker', this.toggleSleepBlocker);
     ipcMain.on('playback:play', this.onStartPlayback);
     ipcMain.on('playback:pause', this.onStopPlayback);
