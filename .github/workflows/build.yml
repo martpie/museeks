@@ -18,7 +18,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Use Node.js
         uses: actions/setup-node@v1
         with:
           node-version: 14.x
@@ -48,53 +48,58 @@ jobs:
           name: application-build
           path: dist/
 
-  binaries-linux-windows:
-    runs-on: ubuntu-20.04
-    needs: [qa]
+  # binaries-linux-windows:
+  #   runs-on: ubuntu-20.04
+  #   needs: [qa]
 
-    steps:
-      - uses: actions/checkout@v2
+  #   steps:
+  #     - uses: actions/checkout@v2
 
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: 14.x
+  #     - name: Use Node.js ${{ matrix.node-version }}
+  #       uses: actions/setup-node@v1
+  #       with:
+  #         node-version: 14.x
 
-      - name: Display Node.js and npm informations
-        run: |
-          echo "node version $(node -v) running"
-          echo "npm version $(npm -v) running"
+  #     - name: Display Node.js and npm informations
+  #       run: |
+  #         echo "node version $(node -v) running"
+  #         echo "npm version $(npm -v) running"
 
-      - uses: actions/download-artifact@v2
-        with:
-          name: application-build
-          path: dist/
+  #     - uses: actions/download-artifact@v2
+  #       with:
+  #         name: application-build
+  #         path: dist/
 
-      - name: Install Linux dependencies
-        run: |
-          sudo apt install --no-install-recommends -y libopenjp2-tools rpm gcc-multilib g++-multilib wine
-          sudo dpkg --add-architecture i386
-          sudo apt update && sudo apt install wine32
+  #     - name: Install Linux dependencies
+  #       run: |
+  #         sudo apt install --no-install-recommends -y libopenjp2-tools rpm gcc-multilib g++-multilib
+  #         sudo add-apt-repository -r 'deb https://dl.winehq.org/wine-builds/ubuntu/ $(lsb_release -cs) main'
+  #         sudo add-apt-repository main
+  #         sudo add-apt-repository universe
+  #         sudo add-apt-repository multiverse
+  #         sudo dpkg --add-architecture i386
+  #         sudo apt-get update
+  #         sudo apt-get install wine
 
-      - name: Install production dependencies
-        run: npm ci
+  #     - name: Install production dependencies
+  #       run: npm ci
 
-      - name: Package Linux/Windows binaries
-        run: npm run package:lw
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #     - name: Package Linux/Windows binaries
+  #       run: npm run package:lw
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - uses: actions/upload-artifact@v2
-        with:
-          name: application-build
-          path: |
-            build/museeks-i386.deb
-            build/museeks-amd64.deb
-            build/museeks-i386.AppImage
-            build/museeks-x86_64.AppImage
-            build/museeks-i686.rpm
-            build/museeks-x86_64.rpm
-            build/museeks-setup.exe
+  #     - uses: actions/upload-artifact@v2
+  #       with:
+  #         name: application-build
+  #         path: |
+  #           build/museeks-i386.deb
+  #           build/museeks-amd64.deb
+  #           build/museeks-i386.AppImage
+  #           build/museeks-x86_64.AppImage
+  #           build/museeks-i686.rpm
+  #           build/museeks-x86_64.rpm
+  #           build/museeks-setup.exe
 
   binaries-macos:
     runs-on: macos-11.0
@@ -103,7 +108,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Use Node.js
         uses: actions/setup-node@v1
         with:
           node-version: 14.x
