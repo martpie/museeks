@@ -75,6 +75,7 @@ jobs:
 
       - name: Install Linux dependencies
         run: |
+          sudo apt update
           sudo apt install --no-install-recommends -y libopenjp2-tools rpm gcc-multilib g++-multilib
 
       - name: Install dependencies
@@ -89,7 +90,7 @@ jobs:
 
       - uses: actions/upload-artifact@v2
         with:
-          name: binaries-linux-windows
+          name: binaries-linux
           path: |
             build/museeks-i386.deb
             build/museeks-amd64.deb
@@ -97,42 +98,6 @@ jobs:
             build/museeks-x86_64.AppImage
             build/museeks-i686.rpm
             build/museeks-x86_64.rpm
-
-  binaries-windows:
-    runs-on: windows-2019
-    needs: [qa]
-
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: Use Node.js
-        uses: actions/setup-node@v1
-        with:
-          node-version: 14.x
-
-      - name: Display Node.js and npm informations
-        run: |
-          echo "node version $(node -v) running"
-          echo "npm version $(npm -v) running"
-
-      - uses: actions/download-artifact@v2
-        with:
-          name: application-build
-          path: dist/
-
-      - name: Install dependencies
-        run: yarn install --frozen-lockfile
-
-      - name: Package Windows binaries
-        run: yarn run package:w
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - uses: actions/upload-artifact@v2
-        with:
-          name: binaries-linux-windows
-          path: |
-            build/museeks-setup.exe
 
   binaries-macos:
     runs-on: macos-10.15
@@ -169,3 +134,39 @@ jobs:
           name: binaries-macos
           path: |
             build/museeks.dmg
+
+  binaries-windows:
+    runs-on: windows-2019
+    needs: [qa]
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+
+      - name: Display Node.js and npm informations
+        run: |
+          echo "node version $(node -v) running"
+          echo "npm version $(npm -v) running"
+
+      - uses: actions/download-artifact@v2
+        with:
+          name: application-build
+          path: dist/
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Package Windows binaries
+        run: yarn run package:w
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: binaries-windows
+          path: |
+            build/museeks-setup.exe
