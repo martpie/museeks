@@ -71,7 +71,13 @@ jobs:
           path: dist/
 
       - name: Install Linux dependencies
-        run: sudo apt-get install --no-install-recommends -y libopenjp2-tools rpm gcc-multilib g++-multilib
+        run: |
+          sudo apt-get install --no-install-recommends -y libopenjp2-tools rpm gcc-multilib g++-multilib
+          sudo dpkg --add-architecture i386
+          wget -qO - https://dl.winehq.org/wine-builds/winehq.key | sudo apt-key add -
+          sudo add-apt-repository ppa:cybermax-dexter/sdl2-backport
+          sudo apt-add-repository "deb https://dl.winehq.org/wine-builds/ubuntu $(lsb_release -cs) main"
+          sudo apt install --install-recommends winehq-stable
 
       - name: Install production dependencies
         run: npm ci
