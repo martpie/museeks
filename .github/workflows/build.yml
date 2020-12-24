@@ -84,8 +84,10 @@ jobs:
       - name: Install dependencies
         run: yarn install --frozen-lockfile
 
-      - name: Package Linux/Windows binaries
-        run: yarn run package:lw
+      - name: Package Linux binaries
+        # - name: Package Linux/Windows binaries
+        run: yarn run package:l
+        # run: yarn run package:lw
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
