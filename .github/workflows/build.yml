@@ -29,19 +29,19 @@ jobs:
           echo "npm version $(npm -v) running"
 
       - name: Install dependencies
-        run: npm ci
+        run: yarn install --frozen-lockfile
 
       - name: 'Test: formatting'
-        run: 'npm run test:formatting'
+        run: 'yarn run test:formatting'
 
       - name: 'Test: TS/JS linting'
-        run: 'npm run test:lint'
+        run: 'yarn run test:lint'
 
       - name: 'Test: CSS linting'
-        run: 'npm run test:css'
+        run: 'yarn run test:css'
 
       - name: Build application
-        run: npm run build
+        run: yarn run build
 
       - uses: actions/upload-artifact@v2
         with:
@@ -81,11 +81,11 @@ jobs:
   #         sudo apt-get update
   #         sudo apt-get install wine
 
-  #     - name: Install production dependencies
-  #       run: npm ci
+  #     - name: Install dependencies
+  #       run: yarn install --frozen-lockfile
 
   #     - name: Package Linux/Windows binaries
-  #       run: npm run package:lw
+  #       run: yarn run package:lw
   #       env:
   #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -124,10 +124,10 @@ jobs:
           path: dist/
 
       - name: Install production dependencies
-        run: npm ci
+        run: yarn install --frozen-lockfile
 
       - name: Package macOS binaries
-        run: npm run package:m
+        run: yarn run package:m
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
