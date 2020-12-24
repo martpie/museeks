@@ -1,7 +1,7 @@
 import * as os from 'os';
 import * as React from 'react';
 import KeyBinding from 'react-keybinding-component';
-import { withRouter, RouteComponentProps } from 'react-router';
+import { useHistory } from 'react-router';
 
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
@@ -19,10 +19,10 @@ import { isCtrlKey } from './utils/utils-platform';
 |--------------------------------------------------------------------------
 */
 
-type Props = RouteComponentProps;
+const Museeks: React.FC = (props) => {
+  const history = useHistory();
 
-class Museeks extends React.Component<Props> {
-  onKey = async (e: KeyboardEvent) => {
+  const onKey = async (e: KeyboardEvent) => {
     switch (e.key) {
       case ' ':
         e.preventDefault();
@@ -33,7 +33,7 @@ class Museeks extends React.Component<Props> {
         if (isCtrlKey(e)) {
           e.preventDefault();
           e.stopPropagation();
-          this.props.history.push('/settings');
+          history.push('/settings');
         }
         break;
       default:
@@ -41,21 +41,19 @@ class Museeks extends React.Component<Props> {
     }
   };
 
-  async componentDidMount() {
-    await AppActions.init();
-  }
+  React.useEffect(() => {
+    AppActions.init();
+  }, []);
 
-  render() {
-    return (
-      <div className={`${styles.root} os-${os.platform()}`}>
-        <KeyBinding onKey={this.onKey} preventInputConflict />
-        <Header />
-        <main className={`${styles.mainContent} container-fluid`}>{this.props.children}</main>
-        <Footer />
-        <Toasts />
-      </div>
-    );
-  }
-}
+  return (
+    <div className={`${styles.root} os-${os.platform()}`}>
+      <KeyBinding onKey={onKey} preventInputConflict />
+      <Header />
+      <main className={`${styles.mainContent} container-fluid`}>{props.children}</main>
+      <Footer />
+      <Toasts />
+    </div>
+  );
+};
 
-export default withRouter(Museeks);
+export default Museeks;
