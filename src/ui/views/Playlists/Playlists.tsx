@@ -10,8 +10,8 @@ import Playlist from '../../components/Playlists/Playlist';
 import { PlaylistModel } from '../../../shared/types/interfaces';
 import { RootState } from '../../reducers';
 
-import * as appStyles from '../../App.css';
-import * as styles from './Playlists.css';
+import * as appStyles from '../../App.module.css';
+import * as styles from './Playlists.module.css';
 
 interface OwnProps {
   playlists: PlaylistModel[];

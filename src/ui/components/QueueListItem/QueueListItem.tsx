@@ -4,7 +4,7 @@ import cx from 'classnames';
 import * as QueueActions from '../../actions/QueueActions';
 import { TrackModel } from '../../../shared/types/interfaces';
 
-import * as styles from './QueueListItem.css';
+import * as styles from './QueueListItem.module.css';
 
 interface Props {
   dragged: boolean;

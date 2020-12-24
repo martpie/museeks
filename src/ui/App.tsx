@@ -10,7 +10,7 @@ import Toasts from './components/Toasts/Toasts';
 import AppActions from './actions/AppActions';
 import * as PlayerActions from './actions/PlayerActions';
 
-import * as styles from './App.css';
+import * as styles from './App.module.css';
 import { isCtrlKey } from './utils/utils-platform';
 
 /*

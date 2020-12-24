@@ -5,7 +5,7 @@ import VolumeControl from '../VolumeControl/VolumeControl';
 import * as PlayerActions from '../../actions/PlayerActions';
 import { PlayerStatus } from '../../../shared/types/interfaces';
 
-import * as styles from './PlayerControls.css';
+import * as styles from './PlayerControls.module.css';
 
 interface Props {
   playerStatus: PlayerStatus;

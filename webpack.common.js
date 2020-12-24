@@ -83,7 +83,7 @@ const sharedConfig = {
             exclude: /node_modules/,
           },
           {
-            test: /\.css$/,
+            test: /\.module\.css$/,
             use: [
               MiniCssExtractPlugin.loader,
               {

@@ -7,13 +7,13 @@ import * as Nav from '../../elements/Nav/Nav';
 import { config } from '../../lib/app';
 import { LibraryState } from '../../reducers/library';
 import { RootState } from '../../reducers';
-import * as appStyles from '../../App.css';
+import * as appStyles from '../../App.module.css';
 import SettingsLibrary from './SettingsLibrary';
 import SettingsUI from './SettingsUI';
 import SettingsAudio from './SettingsAudio';
 import SettingsAbout from './SettingsAbout';
 
-import * as styles from './Settings.css';
+import * as styles from './Settings.module.css';
 
 interface Props {
   library: LibraryState;

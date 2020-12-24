@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import * as styles from './QueueEmpty.css';
+import * as styles from './QueueEmpty.module.css';
 
 export default class QueueEmpty extends React.PureComponent {
   render() {

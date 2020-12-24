@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import * as styles from './SettingDropzone.css';
+import * as styles from './SettingDropzone.module.css';
 
 interface Props {
   title: string;
