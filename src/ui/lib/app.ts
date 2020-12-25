@@ -1,9 +1,9 @@
-import * as path from 'path';
-import * as electron from 'electron';
+import path from 'path';
+import electron from 'electron';
 import linvodb from 'linvodb3';
 import leveljs from 'level-js';
 import teeny from 'teeny-conf';
-import * as Promise from 'bluebird';
+import Promise from 'bluebird';
 import { TrackModel, PlaylistModel } from '../../shared/types/interfaces';
 
 const { remote } = electron;

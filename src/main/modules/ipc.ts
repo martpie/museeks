@@ -6,7 +6,7 @@
  * made async without blocking the rendering process
  */
 
-import * as os from 'os';
+import os from 'os';
 import { ipcMain, app } from 'electron';
 
 import ModuleWindow from './module-window';

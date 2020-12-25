@@ -1,4 +1,4 @@
-import * as path from 'path';
+import path from 'path';
 import * as mmd from 'music-metadata';
 import pickBy from 'lodash-es/pickBy';
 

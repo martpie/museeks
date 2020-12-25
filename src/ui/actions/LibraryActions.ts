@@ -1,8 +1,8 @@
 import * as fs from 'fs';
-import * as path from 'path';
+import path from 'path';
 import * as util from 'util';
-import * as electron from 'electron';
-import * as globby from 'globby';
+import electron from 'electron';
+import globby from 'globby';
 import * as queue from 'queue';
 
 import store from '../store';

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 
 import * as ViewMessage from './elements/ViewMessage/ViewMessage';
 import ExternalLink from './elements/ExternalLink/ExternalLink';

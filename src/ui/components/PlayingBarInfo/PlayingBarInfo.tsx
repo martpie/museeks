@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 
 import ButtonShuffle from '../PlayerOptionsButtons/ButtonShuffle';
 import ButtonRepeat from '../PlayerOptionsButtons/ButtonRepeat';

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 
 import QueueEmpty from '../QueueEmpty/QueueEmpty';
 import QueueList from '../QueueList/QueueList';

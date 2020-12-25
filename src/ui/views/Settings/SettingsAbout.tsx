@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 
 import ExternalLink from '../../elements/ExternalLink/ExternalLink';
 import Heart from '../../elements/Heart/Heart';

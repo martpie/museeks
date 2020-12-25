@@ -1,4 +1,4 @@
-import * as electron from 'electron';
+import electron from 'electron';
 
 import { ConfigBounds } from '../shared/types/interfaces';
 

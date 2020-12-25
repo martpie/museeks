@@ -1,5 +1,5 @@
-import * as React from 'react';
-import * as Icon from 'react-fontawesome';
+import React from 'react';
+import Icon from 'react-fontawesome';
 import VolumeControl from '../VolumeControl/VolumeControl';
 
 import * as PlayerActions from '../../actions/PlayerActions';
