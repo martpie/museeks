@@ -3,7 +3,7 @@ import electron from 'electron';
 
 import Player from '../lib/player';
 import { browserWindows, config } from '../lib/app';
-import * as utils from '../utils/utils';
+import * as utils from '../lib/utils';
 import * as coverUtils from '../../shared/utils/cover';
 
 import * as LibraryActions from './LibraryActions';

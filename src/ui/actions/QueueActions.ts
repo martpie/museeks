@@ -3,7 +3,7 @@ import types from '../constants/action-types';
 
 import * as app from '../lib/app';
 import Player from '../lib/player';
-import * as utils from '../utils/utils';
+import * as utils from '../lib/utils';
 
 import { Track } from '../../shared/types/interfaces';
 

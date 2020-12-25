@@ -6,7 +6,7 @@ import TracksList from '../TracksList/TracksList';
 import * as ViewMessage from '../../elements/ViewMessage/ViewMessage';
 
 import * as PlaylistsActions from '../../actions/PlaylistsActions';
-import { filterTracks } from '../../utils/utils-library';
+import { filterTracks } from '../../lib/utils-library';
 import { TrackModel, PlaylistModel, PlayerStatus } from '../../../shared/types/interfaces';
 import { RootState } from '../../reducers';
 

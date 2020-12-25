@@ -7,10 +7,10 @@ import types from '../constants/action-types';
 import SORT_ORDERS from '../constants/sort-orders';
 
 import * as app from '../lib/app';
-import * as utils from '../utils/utils';
+import * as utils from '../lib/utils';
 import Player from '../lib/player';
-import { sortTracks, filterTracks } from '../utils/utils-library';
-import { shuffleTracks } from '../utils/utils-player';
+import { sortTracks, filterTracks } from '../lib/utils-library';
+import { shuffleTracks } from '../lib/utils-player';
 import { TrackModel, PlayerStatus, Repeat } from '../../shared/types/interfaces';
 import * as ToastsActions from './ToastsActions';
 

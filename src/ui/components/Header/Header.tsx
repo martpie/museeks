@@ -7,7 +7,7 @@ import PlayingBar from '../PlayingBar/PlayingBar';
 import PlayerControls from '../PlayerControls/PlayerControls';
 
 import * as LibraryActions from '../../actions/LibraryActions';
-import { isCtrlKey } from '../../utils/utils-platform';
+import { isCtrlKey } from '../../lib/utils-platform';
 import { RootState } from '../../reducers';
 import { TrackModel, PlayerStatus, Repeat } from '../../../shared/types/interfaces';
 

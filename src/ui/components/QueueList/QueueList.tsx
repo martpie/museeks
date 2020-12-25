@@ -4,7 +4,7 @@ import QueueListItem from '../QueueListItem/QueueListItem';
 
 import * as QueueActions from '../../actions/QueueActions';
 
-import { getStatus } from '../../utils/utils-library';
+import { getStatus } from '../../lib/utils-library';
 import { TrackModel } from '../../../shared/types/interfaces';
 import Button from '../../elements/Button/Button';
 

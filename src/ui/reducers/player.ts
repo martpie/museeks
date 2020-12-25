@@ -1,6 +1,6 @@
 import types from '../constants/action-types';
 import { config } from '../lib/app';
-import { shuffleTracks } from '../utils/utils-player';
+import { shuffleTracks } from '../lib/utils-player';
 import { TrackModel, Action, Repeat, PlayerStatus } from '../../shared/types/interfaces';
 
 export interface PlayerState {
