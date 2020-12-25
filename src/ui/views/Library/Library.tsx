@@ -1,34 +1,31 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import * as ViewMessage from '../../elements/ViewMessage/ViewMessage';
 import TracksList from '../../components/TracksList/TracksList';
 import { filterTracks, sortTracks } from '../../utils/utils-library';
 import SORT_ORDERS from '../../constants/sort-orders';
-import { PlaylistModel, TrackModel } from '../../../shared/types/interfaces';
-import { LibraryState } from '../../reducers/library';
-import { PlayerState } from '../../reducers/player';
 import { RootState } from '../../reducers';
 
 import * as appStyles from '../../App.module.css';
 import * as styles from './Library.module.css';
 
-interface Props {
-  library: LibraryState;
-  playlists: PlaylistModel[];
-  player: PlayerState;
-  tracks: TrackModel[];
-}
+const Library: React.FC = () => {
+  const library = useSelector((state: RootState) => state.library);
+  const player = useSelector((state: RootState) => state.player);
+  const playlists = useSelector((state: RootState) => state.playlists.list);
+  const tracks = useSelector((state: RootState) => {
+    const { search, tracks, sort } = state.library;
 
-class Library extends React.Component<Props> {
-  constructor(props: Props) {
-    super(props);
-    this.getLibraryComponent = this.getLibraryComponent.bind(this);
-  }
+    // Filter and sort TracksList
+    // sorting being a costly operation, do it after filtering
+    const filteredTracks = sortTracks(filterTracks(tracks.library, search), SORT_ORDERS[sort.by][sort.order]);
 
-  getLibraryComponent() {
-    const { library, playlists, player, tracks } = this.props;
+    return filteredTracks;
+  });
+
+  const getLibraryComponent = useMemo(() => {
     const { playerStatus } = player;
 
     const trackPlayingId =
@@ -86,26 +83,9 @@ class Library extends React.Component<Props> {
         playlists={playlists}
       />
     );
-  }
+  }, [library, playlists, player, tracks]);
 
-  render() {
-    return <div className={`${appStyles.view} ${styles.viewLibrary}`}>{this.getLibraryComponent()}</div>;
-  }
-}
-
-const mapStateToProps = (state: RootState) => {
-  const { search, tracks, sort } = state.library;
-
-  // Filter and sort TracksList
-  // sorting being a costly operation, do it after filtering
-  const filteredTracks = sortTracks(filterTracks(tracks.library, search), SORT_ORDERS[sort.by][sort.order]);
-
-  return {
-    playlists: state.playlists.list,
-    library: state.library,
-    player: state.player,
-    tracks: filteredTracks,
-  };
+  return <div className={`${appStyles.view} ${styles.viewLibrary}`}>{getLibraryComponent}</div>;
 };
 
-export default connect(mapStateToProps)(Library);
+export default Library;
