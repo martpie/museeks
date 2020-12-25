@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import * as styles from './Setting.module.css';
 
 export const Section: React.FC = (props) => <section className={styles.settingSection}>{props.children}</section>;

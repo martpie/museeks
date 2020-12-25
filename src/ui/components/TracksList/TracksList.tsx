@@ -1,5 +1,5 @@
-import * as electron from 'electron';
-import * as React from 'react';
+import electron from 'electron';
+import React from 'react';
 import KeyBinding from 'react-keybinding-component';
 import chunk from 'lodash-es/chunk';
 

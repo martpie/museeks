@@ -1,5 +1,5 @@
-import * as path from 'path';
-import * as electron from 'electron';
+import path from 'path';
+import electron from 'electron';
 import * as m3u from 'm3ujs';
 
 import { Playlist, TrackModel, PlaylistModel } from '../../shared/types/interfaces';

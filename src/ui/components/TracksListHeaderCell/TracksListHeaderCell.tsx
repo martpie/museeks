@@ -1,6 +1,6 @@
-import * as React from 'react';
+import React from 'react';
 import cx from 'classnames';
-import * as Icon from 'react-fontawesome';
+import Icon from 'react-fontawesome';
 
 import * as LibraryActions from '../../actions/LibraryActions';
 import { SortBy } from '../../../shared/types/interfaces';

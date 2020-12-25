@@ -1,7 +1,7 @@
-import * as React from 'react';
+import React from 'react';
 import { Route, Switch, withRouter, RouteComponentProps } from 'react-router';
 import { NavLink } from 'react-router-dom';
-import * as Icon from 'react-fontawesome';
+import Icon from 'react-fontawesome';
 import { connect } from 'react-redux';
 
 import { getStatus } from '../../utils/utils-library';

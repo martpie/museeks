@@ -1,8 +1,8 @@
 /* eslint-disable jsx-a11y/no-autofocus */
 
-import * as electron from 'electron';
-import * as React from 'react';
-import * as Icon from 'react-fontawesome';
+import electron from 'electron';
+import React from 'react';
+import Icon from 'react-fontawesome';
 
 import * as PlaylistsActions from '../../actions/PlaylistsActions';
 import PlaylistsNavLink from '../PlaylistsNavLink/PlaylistsNavLink';

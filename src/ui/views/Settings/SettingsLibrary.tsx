@@ -1,5 +1,5 @@
-import * as electron from 'electron';
-import * as React from 'react';
+import electron from 'electron';
+import React from 'react';
 
 import * as Setting from '../../components/Setting/Setting';
 import Dropzone from '../../components/SettingDropzone/SettingDropzone';

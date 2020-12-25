@@ -1,5 +1,5 @@
-import * as React from 'react';
-import * as Icon from 'react-fontawesome';
+import React from 'react';
+import Icon from 'react-fontawesome';
 import cx from 'classnames';
 import Slider from 'react-rangeslider';
 

@@ -1,5 +1,5 @@
-import * as React from 'react';
-import * as Icon from 'react-fontawesome';
+import React from 'react';
+import Icon from 'react-fontawesome';
 import { connect } from 'react-redux';
 
 import * as PlayerActions from '../../actions/PlayerActions';

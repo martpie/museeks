@@ -2,7 +2,7 @@
  * Module in charge of setting and manage mpris service for linux
  */
 
-import * as electron from 'electron';
+import electron from 'electron';
 import * as mpris from 'mpris-service';
 import * as mime from 'mime-types';
 

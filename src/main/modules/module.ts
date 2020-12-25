@@ -2,7 +2,7 @@
  * Example of Module, other modules should extent this class
  */
 
-import * as os from 'os';
+import os from 'os';
 
 class Module {
   protected loaded: boolean;

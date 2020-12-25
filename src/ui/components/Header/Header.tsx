@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import Input from 'react-simple-input';
 import KeyBinding from 'react-keybinding-component';

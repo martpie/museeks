@@ -1,5 +1,5 @@
-import * as path from 'path';
-import * as electron from 'electron';
+import path from 'path';
+import electron from 'electron';
 
 import IpcModule from './modules/ipc';
 import MenuModule from './modules/menu';

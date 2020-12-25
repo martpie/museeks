@@ -1,4 +1,4 @@
-import * as electron from 'electron';
+import electron from 'electron';
 
 import history from '../router/history';
 import store from '../store';

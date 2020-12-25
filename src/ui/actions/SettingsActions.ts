@@ -1,4 +1,4 @@
-import * as electron from 'electron';
+import electron from 'electron';
 import * as semver from 'semver';
 
 import { Theme } from '../../shared/types/interfaces';
