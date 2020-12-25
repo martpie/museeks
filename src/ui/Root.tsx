@@ -8,9 +8,10 @@ interface State {
 }
 
 // eslint-disable-next-line
-class Root extends React.Component<{}, State> {
-  // eslint-disable-next-line
-  constructor(props: {}) {
+type Props = {};
+
+class Root extends React.Component<Props, State> {
+  constructor(props: Props) {
     super(props);
     this.state = { hasError: false };
   }
