@@ -1,5 +1,5 @@
 import os from 'os';
-import React from 'react';
+import React, { useCallback, useEffect } from 'react';
 import KeyBinding from 'react-keybinding-component';
 import { useHistory } from 'react-router';
 
@@ -22,26 +22,29 @@ import { isCtrlKey } from './utils/utils-platform';
 const Museeks: React.FC = (props) => {
   const history = useHistory();
 
-  const onKey = async (e: KeyboardEvent) => {
-    switch (e.key) {
-      case ' ':
-        e.preventDefault();
-        e.stopPropagation();
-        await PlayerActions.playPause();
-        break;
-      case ',':
-        if (isCtrlKey(e)) {
+  const onKey = useCallback(
+    async (e: KeyboardEvent) => {
+      switch (e.key) {
+        case ' ':
           e.preventDefault();
           e.stopPropagation();
-          history.push('/settings');
-        }
-        break;
-      default:
-        break;
-    }
-  };
+          await PlayerActions.playPause();
+          break;
+        case ',':
+          if (isCtrlKey(e)) {
+            e.preventDefault();
+            e.stopPropagation();
+            history.push('/settings');
+          }
+          break;
+        default:
+          break;
+      }
+    },
+    [history]
+  );
 
-  React.useEffect(() => {
+  useEffect(() => {
     AppActions.init();
   }, []);
 
@@ -49,7 +52,7 @@ const Museeks: React.FC = (props) => {
     <div className={`${styles.root} os-${os.platform()}`}>
       <KeyBinding onKey={onKey} preventInputConflict />
       <Header />
-      <main className={`${styles.mainContent} container-fluid`}>{props.children}</main>
+      <main className={styles.mainContent}>{props.children}</main>
       <Footer />
       <Toasts />
     </div>
