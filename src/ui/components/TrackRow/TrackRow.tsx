@@ -2,7 +2,7 @@ import React from 'react';
 import cx from 'classnames';
 
 import PlayingIndicator from '../PlayingIndicator/PlayingIndicator';
-import { parseDuration } from '../../utils/utils';
+import { parseDuration } from '../../lib/utils';
 import { TrackModel } from '../../../shared/types/interfaces';
 
 import * as cellStyles from '../TracksListHeader/TracksListHeader.module.css';

@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 import Icon from 'react-fontawesome';
 import { connect } from 'react-redux';
 
-import { getStatus } from '../../utils/utils-library';
+import { getStatus } from '../../lib/utils-library';
 import { RootState } from '../../reducers';
 import { LibraryState } from '../../reducers/library';
 

@@ -12,7 +12,7 @@ import * as PlaylistsActions from '../../actions/PlaylistsActions';
 import * as PlayerActions from '../../actions/PlayerActions';
 import * as QueueActions from '../../actions/QueueActions';
 
-import { isCtrlKey, isAltKey } from '../../utils/utils-platform';
+import { isCtrlKey, isAltKey } from '../../lib/utils-platform';
 import { PlaylistModel, TrackModel, PlayerStatus } from '../../../shared/types/interfaces';
 
 import * as scrollbarStyles from '../CustomScrollbar/CustomScrollbar.module.css';
