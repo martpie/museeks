@@ -36,6 +36,8 @@ class Player {
   }
 
   async play() {
+    if (!this.audio.src) throw new Error('Trying to play a track but not audio.src is defined');
+
     await this.audio.play();
   }
 
