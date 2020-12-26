@@ -1,15 +1,13 @@
 import electron from 'electron';
 import * as semver from 'semver';
 
-import { Theme } from '../../shared/types/interfaces';
 import store from '../store';
 import types from '../constants/action-types';
 import * as app from '../lib/app';
+import { themes } from '../styles/themes/themes';
 import * as ToastsActions from './ToastsActions';
 
 const { ipcRenderer } = electron;
-const darkTheme: Theme = require('../styles/themes/dark.json');
-const lightTheme: Theme = require('../styles/themes/light.json');
 
 interface UpdateCheckOptions {
   silentFail?: boolean;
@@ -18,9 +16,20 @@ interface UpdateCheckOptions {
 /**
  * Apply theme
  */
-export const applyTheme = (theme: Theme) => {
+export const applyTheme = (themeId: string) => {
   // TODO think about variables validity
   const root = document.documentElement;
+
+  const theme = themes.find((theme) => theme._id === themeId);
+
+  if (!theme) throw new RangeError(`No theme found with ID ${themeId}`);
+
+  app.config.set('theme', themeId);
+  app.config.save();
+
+  store.dispatch({
+    type: types.REFRESH_CONFIG,
+  });
 
   Object.entries(theme.variables).forEach(([property, value]) => {
     root.style.setProperty(property, value);
@@ -28,9 +37,9 @@ export const applyTheme = (theme: Theme) => {
 };
 
 export const checkTheme = () => {
-  const themeName = app.config.get('theme');
+  const themeId = app.config.get('theme');
 
-  applyTheme(themeName === 'dark' ? darkTheme : lightTheme);
+  applyTheme(themeId);
 };
 
 /**
@@ -83,26 +92,6 @@ export const check = async () => {
       console.error(err);
     });
   }
-};
-
-/**
- * Toggle dark/light theme
- */
-export const toggleDarkTheme = (value: boolean) => {
-  const newTheme = value ? 'dark' : 'light';
-
-  if (newTheme === 'dark') {
-    applyTheme(darkTheme);
-  } else {
-    applyTheme(lightTheme);
-  }
-
-  app.config.set('theme', newTheme);
-  app.config.save();
-
-  store.dispatch({
-    type: types.REFRESH_CONFIG,
-  });
 };
 
 /**

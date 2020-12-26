@@ -149,6 +149,7 @@ export interface Config {
  */
 
 export interface Theme {
+  _id: string;
   name: string;
   variables: Record<string, string>;
 }
