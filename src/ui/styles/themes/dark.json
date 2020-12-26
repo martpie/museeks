@@ -22,7 +22,7 @@
     "--success-color": "#5CB85C",
     "--info-color": "#5BC0DE",
     "--warning-color": "#F0AD4E",
-    "--danger-color": "#D9534F",
+    "--danger-color": "#de4343",
 
     "--toasts-bg": "hsl(210deg 11% 10%)",
 
@@ -30,7 +30,6 @@
 
     "--sidebar-bg": "hsl(210deg 11% 13%)",
     "--sidebar-item-active-bg": "hsl(210deg 11% 10%)",
-    "--sidebar-item-input-bg": "white",
 
     "--search-bg": "hsl(210deg 11% 10%)",
     "--slider-bg": "hsl(210deg 11% 10%)",
@@ -41,6 +40,10 @@
     "--queue-bg": "hsl(210deg 11% 10%)",
     "--queue-header-bg": "hsl(210deg 11% 13%)",
 
-    "--checkbox-bg": "hsl(210deg 11% 17%)"
+    "--checkbox-bg": "hsl(210deg 11% 17%)",
+    "--input-bg": "hsl(210deg 11% 15%)",
+    "--input-color": "#efefef",
+    "--button-bg": "hsl(210deg 11% 15%)",
+    "--button-color": "#efefef"
   }
 }
