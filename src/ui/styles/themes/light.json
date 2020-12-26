@@ -1,4 +1,5 @@
 {
+  "_id": "light",
   "name": "Light (default)",
   "variables": {
     "--text-color": "#333333",

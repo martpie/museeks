@@ -1,4 +1,5 @@
 {
+  "_id": "dark",
   "name": "Dark",
   "variables": {
     "--text-color": "#EEEEEE",
