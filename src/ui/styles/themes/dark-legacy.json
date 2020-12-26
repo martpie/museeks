@@ -10,7 +10,7 @@
     "--header-color": "#EEEEEE",
     "--header-bg": "#33393b",
 
-    "--footer-bg": "#33393B",
+    "--footer-bg": "#33393b",
     "--footer-nav-bg-color-active": "#23292B",
 
     "--tracks-bg-even": "#23292B",
@@ -22,7 +22,7 @@
     "--success-color": "#5CB85C",
     "--info-color": "#5BC0DE",
     "--warning-color": "#F0AD4E",
-    "--danger-color": "#D9534F",
+    "--danger-color": "#de4343",
 
     "--toasts-bg": "#23292B",
 
@@ -30,7 +30,6 @@
 
     "--sidebar-bg": "#33393b",
     "--sidebar-item-active-bg": "#23292B",
-    "--sidebar-item-input-bg": "white",
 
     "--search-bg": "#23292B",
     "--slider-bg": "#23292B",
@@ -41,6 +40,10 @@
     "--queue-bg": "#23292B",
     "--queue-header-bg": "#33393b",
 
-    "--checkbox-bg": "#555555"
+    "--checkbox-bg": "#555555",
+    "--input-bg": "#33393b",
+    "--input-color": "#EEEEEE",
+    "--button-bg": "#33393b",
+    "--button-color": "#EEEEEE"
   }
 }
