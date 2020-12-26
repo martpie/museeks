@@ -45,14 +45,14 @@ export const pause = () => {
 
 /**
  * Start playing audio (queue instantiation...
- * TODO this function could probably be refactored a bit)
+ * TODO: this function ~could probably~ needs to be refactored ~a bit~
  */
 export const start = async (queue?: TrackModel[], _id?: string) => {
   const state = store.getState();
 
   let newQueue = queue ? [...queue] : null;
 
-  // If no queue is provided, let's search it from the store
+  // If no queue is provided, we create it based on the screen the user is on
   if (!newQueue) {
     const { pathname } = history.location;
 
