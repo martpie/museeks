@@ -2,8 +2,8 @@
   "_id": "light",
   "name": "Light (default)",
   "variables": {
-    "--text-color": "#333333",
-    "--view-bg": "white",
+    "--text": "#333333",
+    "--background": "white",
     "--border-color": "#D2D2D2",
     "--border-radius": "2px",
 

@@ -43,7 +43,7 @@
 
 .progress-tooltip {
   position: absolute;
-  background-color: var(--view-bg);
+  background-color: var(--background);
   border: 1px solid var(--border-color);
   font-size: 10px;
   padding: 2px 5px;
@@ -53,7 +53,7 @@
 
   &::before,
   &::after {
-    content: "";
+    content: '';
     position: absolute;
     width: 0;
     height: 0;
@@ -74,7 +74,7 @@
   &::after {
     top: 16px;
     left: 6px;
-    border-top-color: var(--view-bg);
+    border-top-color: var(--background);
     border-width: 5px;
   }
 }
