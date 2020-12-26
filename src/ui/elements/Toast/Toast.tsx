@@ -8,6 +8,9 @@ interface Props {
   content: string;
 }
 
+/**
+ * Toast single item
+ */
 const ToastItem: React.FC<Props> = (props) => {
   const { type, content } = props;
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { shell } from 'electron';
 
 import * as styles from './ExternalLink.module.css';
@@ -7,23 +7,20 @@ interface Props {
   href: string;
 }
 
-export default class ExternalLink extends React.Component<Props> {
-  constructor(props: Props) {
-    super(props);
+const ExternalLink: React.FC<Props> = (props) => {
+  const openLink = useCallback(
+    (e: React.SyntheticEvent) => {
+      e.preventDefault();
+      shell.openExternal(props.href);
+    },
+    [props.href]
+  );
 
-    this.openLink = this.openLink.bind(this);
-  }
+  return (
+    <button className={styles.externalLink} role='link' onClick={openLink}>
+      {props.children}
+    </button>
+  );
+};
 
-  openLink(e: React.SyntheticEvent) {
-    e.preventDefault();
-    shell.openExternal(this.props.href);
-  }
-
-  render() {
-    return (
-      <button className={styles.externalLink} role='link' onClick={this.openLink}>
-        {this.props.children}
-      </button>
-    );
-  }
-}
+export default ExternalLink;
