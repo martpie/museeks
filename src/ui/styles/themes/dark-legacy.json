@@ -2,8 +2,8 @@
   "_id": "dark-legacy",
   "name": "Dark (legacy)",
   "variables": {
-    "--text-color": "#EEEEEE",
-    "--view-bg": "#23292B",
+    "--text": "#EEEEEE",
+    "--background": "#23292B",
     "--border-color": "#1F1F1F",
     "--border-radius": "2px",
 

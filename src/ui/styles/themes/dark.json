@@ -2,8 +2,9 @@
   "_id": "dark",
   "name": "Dark",
   "variables": {
-    "--text-color": "#efefef",
-    "--view-bg": "hsl(210deg 11% 10%)",
+    "--text": "#efefef",
+    "--background": "hsl(210deg 11% 10%)",
+
     "--border-color": "#0e0e0e",
     "--border-radius": "2px",
 
