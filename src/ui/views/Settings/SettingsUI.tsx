@@ -6,7 +6,7 @@ import * as Setting from '../../components/Setting/Setting';
 
 import CheckboxSetting from '../../components/SettingCheckbox/SettingCheckbox';
 import { Config } from '../../../shared/types/interfaces';
-import { themes } from '../../styles/themes/themes';
+import { themes } from '../../lib/themes';
 
 interface Props {
   config: Config;
@@ -32,6 +32,7 @@ const SettingsUI: React.FC<Props> = (props) => {
             );
           })}
         </Setting.Select>
+        <Setting.Description>Change the appearance of the interface</Setting.Description>
       </Setting.Section>
       <Setting.Section>
         <CheckboxSetting

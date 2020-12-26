@@ -4,7 +4,7 @@ import * as semver from 'semver';
 import store from '../store';
 import types from '../constants/action-types';
 import * as app from '../lib/app';
-import { themes } from '../styles/themes/themes';
+import { themes } from '../lib/themes';
 import * as ToastsActions from './ToastsActions';
 
 const { ipcRenderer } = electron;
