@@ -38,7 +38,7 @@ const SettingsUI: React.FC<Props> = (props) => {
         <CheckboxSetting
           slug='native-notifications'
           title='Display Notifications'
-          description='Allow the app to send native notifications'
+          description='Send notifications when the playing track changes'
           defaultValue={config.displayNotifications}
           onClick={SettingsActions.toggleDisplayNotifications}
         />
