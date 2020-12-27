@@ -219,7 +219,7 @@ export const exportToM3u = async (playlistId: string) => {
 
   if (filePath) {
     try {
-      const playlist = new m3u.Playlist(
+      const playlistExport = new m3u.Playlist(
         new m3u.TypeEXTM3U((entry) => {
           if (entry instanceof m3u.Mp3Entry) {
             return `${entry.artist} - ${entry.album} - ${entry.track} - ${entry.title}`;
@@ -229,10 +229,15 @@ export const exportToM3u = async (playlistId: string) => {
       );
 
       tracks.forEach((track) => {
-        playlist.add(new m3u.Mp3Entry(track.path));
+        try {
+          playlistExport.add(new m3u.Mp3Entry(track.path));
+        } catch (err) {
+          console.warn(err);
+        }
       });
 
-      playlist.write(filePath);
+      playlistExport.write(filePath);
+      ToastsActions.add('success', `Playlist "${playlist.name}" succesfully exported`);
     } catch (err) {
       ToastsActions.add('danger', `An error occured when exporting the playlist "${playlist.name}"`);
       console.warn(err);
