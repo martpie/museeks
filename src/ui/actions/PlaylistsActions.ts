@@ -201,6 +201,7 @@ export const reorderTracks = async (
 
 /**
  * Export a playlist to a .m3u file
+ * TODO: investigate why the export playlist path are relative, and not absolute
  */
 export const exportToM3u = async (playlistId: string) => {
   const playlist: PlaylistModel = await app.db.Playlist.findOneAsync({ _id: playlistId });
