@@ -10,7 +10,7 @@
 .track {
   position: relative;
   display: flex;
-  outline: none;
+  outline: none !important;
 
   &:nth-child(odd) {
     background-color: var(--tracks-bg-odd);
@@ -23,17 +23,6 @@
   &.selected {
     background-color: var(--main-color);
     color: white;
-
-    /* // put that elsewhere someday
-    .playing-indicator {
-
-      .animation {
-
-        .bar {
-          background-color: #EEE;
-        }
-      }
-    } */
   }
 
   &.reordered {
@@ -47,7 +36,7 @@
       z-index: 1;
       display: block;
       width: 100%;
-      content: "";
+      content: '';
       border-bottom: solid 2px var(--main-color);
     }
 
