@@ -40,10 +40,6 @@ body {
   overflow: hidden;
 }
 
-button {
-  outline: none;
-}
-
 a {
   color: var(--link-color);
 
@@ -53,10 +49,6 @@ a {
   &:visited {
     color: var(--link-color-hover);
   }
-}
-
-input {
-  outline: none;
 }
 
 p {
