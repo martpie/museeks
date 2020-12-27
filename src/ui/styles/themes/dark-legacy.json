@@ -1,6 +1,7 @@
 {
   "_id": "dark-legacy",
   "name": "Dark (legacy)",
+  "themeSource": "dark",
   "variables": {
     "--text": "#EEEEEE",
     "--background": "#23292B",

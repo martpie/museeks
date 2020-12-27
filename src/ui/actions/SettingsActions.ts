@@ -24,6 +24,9 @@ export const applyTheme = (themeId: string) => {
 
   if (!theme) throw new RangeError(`No theme found with ID ${themeId}`);
 
+  // https://www.electronjs.org/docs/api/native-theme#nativethemethemesource
+  electron.remote.nativeTheme.themeSource = theme.themeSource;
+
   app.config.set('theme', themeId);
   app.config.save();
 
