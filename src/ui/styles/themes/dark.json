@@ -1,6 +1,7 @@
 {
   "_id": "dark",
   "name": "Dark",
+  "themeSource": "dark",
   "variables": {
     "--text": "#efefef",
     "--background": "hsl(210deg 11% 10%)",
