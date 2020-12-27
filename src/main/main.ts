@@ -39,10 +39,6 @@ if (!gotTheLock) {
   app.quit();
 }
 
-// Fix the player not being able to play audio when the user did not interact
-// with the page
-app.commandLine.appendSwitch('autoplay-policy', 'no-user-gesture-required');
-
 // Quit when all windows are closed
 app.on('window-all-closed', () => {
   app.quit();
@@ -77,6 +73,7 @@ app.on('ready', async () => {
     webPreferences: {
       nodeIntegration: true,
       enableRemoteModule: true,
+      autoplayPolicy: 'no-user-gesture-required',
     },
   });
 
