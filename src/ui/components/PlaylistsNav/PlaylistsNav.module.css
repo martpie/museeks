@@ -86,6 +86,7 @@
   background-color: var(--sidebar-item-active-bg);
   color: var(--main-color);
   padding: 8px 12px;
+  outline: none;
   border-style: solid;
   border-color: var(--border-color);
   border-width: 1px 0;

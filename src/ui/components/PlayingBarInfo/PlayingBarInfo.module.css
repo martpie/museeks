@@ -82,6 +82,7 @@
 .progress {
   -webkit-app-region: no-drag;
   background-color: var(--progress-bg);
+  outline: none;
   height: 5px;
   margin-bottom: 0;
   margin-top: 3px;

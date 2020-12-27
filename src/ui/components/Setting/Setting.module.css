@@ -32,6 +32,10 @@
   width: 100%;
   font-size: 1rem;
   line-height: 1;
+
+  &:focus {
+    outline: none;
+  }
 }
 
 .setting-error {
