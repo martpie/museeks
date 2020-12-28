@@ -5,8 +5,8 @@ import PlayingIndicator from '../PlayingIndicator/PlayingIndicator';
 import { parseDuration } from '../../lib/utils';
 import { TrackModel } from '../../../shared/types/interfaces';
 
-import * as cellStyles from '../TracksListHeader/TracksListHeader.module.css';
-import * as styles from './TrackRow.module.css';
+import cellStyles from '../TracksListHeader/TracksListHeader.module.css';
+import styles from './TrackRow.module.css';
 
 interface Props {
   selected: boolean;

@@ -8,7 +8,7 @@ import { getStatus } from '../../lib/utils-library';
 import { TrackModel } from '../../../shared/types/interfaces';
 import Button from '../../elements/Button/Button';
 
-import * as styles from './QueueList.module.css';
+import styles from './QueueList.module.css';
 
 interface Props {
   queue: TrackModel[];

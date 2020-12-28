@@ -6,7 +6,7 @@ import ToastItem from '../../elements/Toast/Toast';
 import { Toast } from '../../../shared/types/interfaces';
 import { RootState } from '../../reducers';
 
-import * as styles from './Toasts.module.css';
+import styles from './Toasts.module.css';
 
 interface InjectedProps {
   toasts: Toast[];

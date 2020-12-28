@@ -1,7 +1,7 @@
 import React from 'react';
 import Scrollbars from 'react-custom-scrollbars';
 
-import * as styles from './CustomScrollbar.module.css';
+import styles from './CustomScrollbar.module.css';
 
 interface Props {
   className: string;

@@ -1,7 +1,7 @@
 import React from 'react';
 import cx from 'classnames';
 
-import * as styles from './Button.module.css';
+import styles from './Button.module.css';
 
 interface Props {
   relevancy?: 'danger';

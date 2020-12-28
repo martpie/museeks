@@ -8,8 +8,8 @@ import { filterTracks, sortTracks } from '../../lib/utils-library';
 import SORT_ORDERS from '../../constants/sort-orders';
 import { RootState } from '../../reducers';
 
-import * as appStyles from '../../App.module.css';
-import * as styles from './Library.module.css';
+import appStyles from '../../App.module.css';
+import styles from './Library.module.css';
 
 const Library: React.FC = () => {
   const library = useSelector((state: RootState) => state.library);

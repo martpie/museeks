@@ -2,7 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import cx from 'classnames';
 
-import * as styles from './Nav.module.css';
+import styles from './Nav.module.css';
 
 interface WrapProps {
   vertical?: boolean;

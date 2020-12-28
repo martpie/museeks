@@ -1,6 +1,6 @@
 import React from 'react';
 
-import * as styles from './Heart.module.css';
+import styles from './Heart.module.css';
 
 /**
  * ♥

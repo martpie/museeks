@@ -6,8 +6,8 @@ import Slider from 'react-rangeslider';
 import * as PlayerActions from '../../actions/PlayerActions';
 import Player from '../../lib/player';
 
-import * as controlStyles from '../PlayerControls/PlayerControls.module.css';
-import * as styles from './VolumeControl.module.css';
+import controlStyles from '../PlayerControls/PlayerControls.module.css';
+import styles from './VolumeControl.module.css';
 
 // Volume easing - http://www.dr-lex.be/info-stuff/volumecontrols.html#about
 const SMOOTHING_FACTOR = 4;

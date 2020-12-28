@@ -8,7 +8,7 @@ import * as PlaylistsActions from '../../actions/PlaylistsActions';
 import PlaylistsNavLink from '../PlaylistsNavLink/PlaylistsNavLink';
 import { PlaylistModel } from '../../../shared/types/interfaces';
 
-import * as styles from './PlaylistsNav.module.css';
+import styles from './PlaylistsNav.module.css';
 
 const { Menu } = electron.remote;
 
