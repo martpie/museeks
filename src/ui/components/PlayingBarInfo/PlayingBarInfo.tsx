@@ -8,7 +8,7 @@ import Player from '../../lib/player';
 import * as utils from '../../lib/utils';
 import { TrackModel, Repeat } from '../../../shared/types/interfaces';
 
-import * as styles from './PlayingBarInfo.module.css';
+import styles from './PlayingBarInfo.module.css';
 
 interface Props {
   trackPlaying: TrackModel;

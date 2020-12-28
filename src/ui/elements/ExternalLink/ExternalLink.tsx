@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { shell } from 'electron';
 
-import * as styles from './ExternalLink.module.css';
+import styles from './ExternalLink.module.css';
 
 interface Props {
   href: string;

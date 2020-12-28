@@ -1,7 +1,7 @@
 import React from 'react';
 import cx from 'classnames';
 
-import * as styles from './Toast.module.css';
+import styles from './Toast.module.css';
 
 interface Props {
   type: 'danger' | 'info' | 'warning' | 'success';

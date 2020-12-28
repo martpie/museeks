@@ -4,7 +4,7 @@ import QueueEmpty from '../QueueEmpty/QueueEmpty';
 import QueueList from '../QueueList/QueueList';
 import { TrackModel } from '../../../shared/types/interfaces';
 
-import * as styles from './Queue.module.css';
+import styles from './Queue.module.css';
 
 interface Props {
   queue: TrackModel[];

@@ -8,7 +8,7 @@ import PlayingBarInfos from '../PlayingBarInfo/PlayingBarInfo';
 import Cover from '../Cover/Cover';
 import { TrackModel, Repeat } from '../../../shared/types/interfaces';
 
-import * as styles from './PlayingBar.module.css';
+import styles from './PlayingBar.module.css';
 
 interface Props {
   queue: TrackModel[];

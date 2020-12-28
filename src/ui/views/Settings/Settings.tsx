@@ -6,13 +6,13 @@ import { Config } from '../../../shared/types/interfaces';
 import * as Nav from '../../elements/Nav/Nav';
 import { config } from '../../lib/app';
 import { RootState } from '../../reducers';
-import * as appStyles from '../../App.module.css';
+import appStyles from '../../App.module.css';
 import SettingsLibrary from './SettingsLibrary';
 import SettingsUI from './SettingsUI';
 import SettingsAudio from './SettingsAudio';
 import SettingsAbout from './SettingsAbout';
 
-import * as styles from './Settings.module.css';
+import styles from './Settings.module.css';
 
 const Settings: React.FC = () => {
   const library = useSelector((state: RootState) => state.library);

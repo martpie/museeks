@@ -9,8 +9,8 @@ import * as PlaylistsActions from '../../actions/PlaylistsActions';
 import Playlist from '../../components/Playlists/Playlist';
 import { RootState } from '../../reducers';
 
-import * as appStyles from '../../App.module.css';
-import * as styles from './Playlists.module.css';
+import appStyles from '../../App.module.css';
+import styles from './Playlists.module.css';
 
 const Playlists: React.FC = () => {
   const { playlistId } = useParams<{ playlistId?: string }>();

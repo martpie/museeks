@@ -7,7 +7,7 @@ import { SortBy, SortOrder } from '../../../shared/types/interfaces';
 import { RootState } from '../../reducers';
 import { LibrarySort } from '../../reducers/library';
 
-import * as styles from './TracksListHeader.module.css';
+import styles from './TracksListHeader.module.css';
 
 interface OwnProps {
   enableSort: boolean;

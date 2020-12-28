@@ -2,7 +2,7 @@ import React from 'react';
 
 import * as coverUtils from '../../../shared/utils/cover';
 
-import * as styles from './Cover.module.css';
+import styles from './Cover.module.css';
 
 interface Props {
   path: string;

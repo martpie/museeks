@@ -6,7 +6,7 @@ import * as PlayerActions from '../../actions/PlayerActions';
 import { PlayerStatus } from '../../../shared/types/interfaces';
 import { RootState } from '../../reducers';
 
-import * as styles from './PlayingIndicator.module.css';
+import styles from './PlayingIndicator.module.css';
 
 interface Props {
   state: PlayerStatus;

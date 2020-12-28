@@ -2,7 +2,7 @@ import React from 'react';
 
 import * as Setting from '../Setting/Setting';
 
-import * as styles from './SettingCheckbox.module.css';
+import styles from './SettingCheckbox.module.css';
 
 interface Props {
   title: string;

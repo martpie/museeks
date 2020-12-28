@@ -9,7 +9,7 @@ import { RootState } from '../../reducers';
 import { LibraryState } from '../../reducers/library';
 
 import ProgressBar from '../ProgressBar/ProgressBar';
-import * as styles from './Footer.module.css';
+import styles from './Footer.module.css';
 
 interface InjectedProps {
   library: LibraryState;

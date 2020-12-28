@@ -16,9 +16,9 @@ import { isLeftClick, isRightClick } from '../../lib/utils-events';
 import { isCtrlKey, isAltKey } from '../../lib/utils-platform';
 import { PlaylistModel, TrackModel, PlayerStatus } from '../../../shared/types/interfaces';
 
-import * as scrollbarStyles from '../CustomScrollbar/CustomScrollbar.module.css';
-import * as headerStyles from '../Header/Header.module.css';
-import * as styles from './TracksList.module.css';
+import scrollbarStyles from '../CustomScrollbar/CustomScrollbar.module.css';
+import headerStyles from '../Header/Header.module.css';
+import styles from './TracksList.module.css';
 
 const { shell, remote } = electron;
 const { Menu } = remote;

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import * as styles from './ViewMessage.module.css';
+import styles from './ViewMessage.module.css';
 
 /**
  * Main message of a ViewMessage
