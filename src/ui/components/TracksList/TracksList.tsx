@@ -14,7 +14,7 @@ import * as QueueActions from '../../actions/QueueActions';
 
 import { isLeftClick, isRightClick } from '../../lib/utils-events';
 import { isCtrlKey, isAltKey } from '../../lib/utils-platform';
-import { PlaylistModel, TrackModel, PlayerStatus } from '../../../shared/types/interfaces';
+import { PlaylistModel, TrackModel, PlayerStatus } from '../../../shared/types/museeks';
 
 import scrollbarStyles from '../CustomScrollbar/CustomScrollbar.module.css';
 import headerStyles from '../Header/Header.module.css';

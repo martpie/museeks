@@ -12,7 +12,7 @@ import types from '../constants/action-types';
 import * as app from '../lib/app';
 import * as utils from '../lib/utils';
 import * as m3u from '../lib/utils-m3u';
-import { SortBy, TrackModel } from '../../shared/types/interfaces';
+import { SortBy, TrackModel } from '../../shared/types/museeks';
 import { SUPPORTED_PLAYLISTS_EXTENSIONS, SUPPORTED_TRACKS_EXTENSIONS } from '../../shared/constants';
 import * as PlaylistsActions from './PlaylistsActions';
 import * as ToastsActions from './ToastsActions';

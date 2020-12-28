@@ -2,7 +2,7 @@ import React from 'react';
 
 import QueueEmpty from '../QueueEmpty/QueueEmpty';
 import QueueList from '../QueueList/QueueList';
-import { TrackModel } from '../../../shared/types/interfaces';
+import { TrackModel } from '../../../shared/types/museeks';
 
 import styles from './Queue.module.css';
 

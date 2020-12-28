@@ -7,7 +7,7 @@ import path from 'path';
 import ps from 'ps-node';
 import { Tray, Menu, app, ipcMain, nativeImage } from 'electron';
 
-import { TrackModel, PlayerStatus } from '../../shared/types/interfaces';
+import { TrackModel, PlayerStatus } from '../../shared/types/museeks';
 import ModuleWindow from './module-window';
 import ConfigModule from './config';
 

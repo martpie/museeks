@@ -3,7 +3,7 @@ import Icon from 'react-fontawesome';
 import { connect } from 'react-redux';
 
 import * as PlayerActions from '../../actions/PlayerActions';
-import { PlayerStatus } from '../../../shared/types/interfaces';
+import { PlayerStatus } from '../../../shared/types/museeks';
 import { RootState } from '../../reducers';
 
 import styles from './PlayingIndicator.module.css';

@@ -1,4 +1,4 @@
-import { Theme } from '../../shared/types/interfaces';
+import { Theme } from '../../shared/types/museeks';
 
 // IMPROVE ME: scan the directory for all json files instead
 const lightTheme: Theme = require('../styles/themes/light.json');

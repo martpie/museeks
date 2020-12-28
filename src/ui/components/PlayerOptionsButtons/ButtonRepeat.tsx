@@ -3,7 +3,7 @@ import InlineSVG from 'svg-inline-react';
 import cx from 'classnames';
 
 import * as PlayerActions from '../../actions/PlayerActions';
-import { Repeat } from '../../../shared/types/interfaces';
+import { Repeat } from '../../../shared/types/museeks';
 
 import styles from './common.module.css';
 

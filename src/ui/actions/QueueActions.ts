@@ -5,7 +5,7 @@ import * as app from '../lib/app';
 import Player from '../lib/player';
 import * as utils from '../lib/utils';
 
-import { Track } from '../../shared/types/interfaces';
+import { Track } from '../../shared/types/museeks';
 
 /**
  * Start audio playback from the queue
