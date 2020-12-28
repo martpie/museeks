@@ -13,7 +13,7 @@ import SleepBlockerModule from './modules/sleep-blocker';
 import MprisModule from './modules/mpris';
 
 import * as ModulesManager from './lib/modules-manager';
-import { checkBounds } from './utils';
+import { checkBounds } from './lib/utils';
 
 const { app, BrowserWindow } = electron;
 
