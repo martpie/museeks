@@ -1,4 +1,3 @@
-
 .render-view {
   overflow-x: hidden !important; /* Overriding react-custom-scrollbars */
   margin-bottom: 0 !important; /* there is no overflow-x */
