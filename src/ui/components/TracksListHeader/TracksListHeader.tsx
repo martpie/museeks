@@ -1,13 +1,13 @@
-import * as React from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 
 import TracksListHeaderCell from '../TracksListHeaderCell/TracksListHeaderCell';
 
-import { SortBy, SortOrder } from '../../../shared/types/interfaces';
+import { SortBy, SortOrder } from '../../../shared/types/museeks';
 import { RootState } from '../../reducers';
 import { LibrarySort } from '../../reducers/library';
 
-import * as styles from './TracksListHeader.css';
+import styles from './TracksListHeader.module.css';
 
 interface OwnProps {
   enableSort: boolean;

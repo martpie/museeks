@@ -1,13 +1,13 @@
-import * as React from 'react';
-import * as Icon from 'react-fontawesome';
+import React from 'react';
+import Icon from 'react-fontawesome';
 import cx from 'classnames';
 import Slider from 'react-rangeslider';
 
 import * as PlayerActions from '../../actions/PlayerActions';
 import Player from '../../lib/player';
 
-import * as controlStyles from '../PlayerControls/PlayerControls.css';
-import * as styles from './VolumeControl.css';
+import controlStyles from '../PlayerControls/PlayerControls.module.css';
+import styles from './VolumeControl.module.css';
 
 // Volume easing - http://www.dr-lex.be/info-stuff/volumecontrols.html#about
 const SMOOTHING_FACTOR = 4;

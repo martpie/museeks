@@ -1,10 +1,10 @@
-import * as React from 'react';
+import React from 'react';
 import InlineSVG from 'svg-inline-react';
 import cx from 'classnames';
 
 import * as PlayerActions from '../../actions/PlayerActions';
 
-import * as styles from './common.css';
+import styles from './common.module.css';
 
 const svg = require('../../../images/icons/player-shuffle.svg');
 

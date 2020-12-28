@@ -1,32 +1,44 @@
-import * as os from 'os';
-import * as React from 'react';
+import os from 'os';
+import React, { useCallback, ChangeEventHandler } from 'react';
 
 import * as SettingsActions from '../../actions/SettingsActions';
+import * as Setting from '../../components/Setting/Setting';
 
 import CheckboxSetting from '../../components/SettingCheckbox/SettingCheckbox';
-import { Config } from '../../../shared/types/interfaces';
+import { Config } from '../../../shared/types/museeks';
+import { themes } from '../../lib/themes';
 
 interface Props {
   config: Config;
 }
 
-export default class SettingsUI extends React.Component<Props> {
-  render() {
-    const { config } = this.props;
+const SettingsUI: React.FC<Props> = (props) => {
+  const { config } = props;
 
-    return (
-      <div className='setting setting-interface'>
-        <CheckboxSetting
-          slug='dark-theme'
-          title='Dark Theme'
-          description='Enable dark theme'
-          defaultValue={config.theme === 'dark'}
-          onClick={SettingsActions.toggleDarkTheme}
-        />
+  const onThemeChange = useCallback<ChangeEventHandler<HTMLSelectElement>>((e) => {
+    SettingsActions.applyTheme(e.currentTarget.value);
+  }, []);
+
+  return (
+    <div className='setting setting-interface'>
+      <Setting.Section>
+        <Setting.Label htmlFor='setting-theme'>Theme</Setting.Label>
+        <Setting.Select defaultValue={config.theme} onChange={onThemeChange} id='setting-theme'>
+          {themes.map((theme) => {
+            return (
+              <option key={theme._id} value={theme._id}>
+                {theme.name}
+              </option>
+            );
+          })}
+        </Setting.Select>
+        <Setting.Description>Change the appearance of the interface</Setting.Description>
+      </Setting.Section>
+      <Setting.Section>
         <CheckboxSetting
           slug='native-notifications'
           title='Display Notifications'
-          description='Allow the app to send native notifications'
+          description='Send notifications when the playing track changes'
           defaultValue={config.displayNotifications}
           onClick={SettingsActions.toggleDisplayNotifications}
         />
@@ -53,7 +65,9 @@ export default class SettingsUI extends React.Component<Props> {
           defaultValue={config.autoUpdateChecker}
           onClick={SettingsActions.toggleAutoUpdateChecker}
         />
-      </div>
-    );
-  }
-}
+      </Setting.Section>
+    </div>
+  );
+};
+
+export default SettingsUI;

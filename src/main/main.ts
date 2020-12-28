@@ -1,5 +1,5 @@
-import * as path from 'path';
-import * as electron from 'electron';
+import path from 'path';
+import electron from 'electron';
 
 import IpcModule from './modules/ipc';
 import MenuModule from './modules/menu';
@@ -13,7 +13,7 @@ import SleepBlockerModule from './modules/sleep-blocker';
 import MprisModule from './modules/mpris';
 
 import * as ModulesManager from './lib/modules-manager';
-import { checkBounds } from './utils';
+import { checkBounds } from './lib/utils';
 
 const { app, BrowserWindow } = electron;
 
@@ -38,10 +38,6 @@ app.on('second-instance', () => {
 if (!gotTheLock) {
   app.quit();
 }
-
-// Fix the player not being able to play audio when the user did not interact
-// with the page
-app.commandLine.appendSwitch('autoplay-policy', 'no-user-gesture-required');
 
 // Quit when all windows are closed
 app.on('window-all-closed', () => {
@@ -77,6 +73,7 @@ app.on('ready', async () => {
     webPreferences: {
       nodeIntegration: true,
       enableRemoteModule: true,
+      autoplayPolicy: 'no-user-gesture-required',
     },
   });
 

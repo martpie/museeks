@@ -1,10 +1,10 @@
-import * as React from 'react';
+import React from 'react';
 import cx from 'classnames';
 
 import * as QueueActions from '../../actions/QueueActions';
-import { TrackModel } from '../../../shared/types/interfaces';
+import { TrackModel } from '../../../shared/types/museeks';
 
-import * as styles from './QueueListItem.css';
+import styles from './QueueListItem.module.css';
 
 interface Props {
   dragged: boolean;

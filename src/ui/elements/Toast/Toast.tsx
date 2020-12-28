@@ -1,13 +1,16 @@
-import * as React from 'react';
+import React from 'react';
 import cx from 'classnames';
 
-import * as styles from './Toast.css';
+import styles from './Toast.module.css';
 
 interface Props {
   type: 'danger' | 'info' | 'warning' | 'success';
   content: string;
 }
 
+/**
+ * Toast single item
+ */
 const ToastItem: React.FC<Props> = (props) => {
   const { type, content } = props;
 

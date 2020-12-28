@@ -2,11 +2,11 @@
  * Essential module for creating/loading the app config
  */
 
-import * as path from 'path';
-import * as electron from 'electron';
+import path from 'path';
+import electron from 'electron';
 import teeny from 'teeny-conf';
 
-import { Config, Repeat, SortBy, SortOrder } from '../../shared/types/interfaces';
+import { Config, Repeat, SortBy, SortOrder } from '../../shared/types/museeks';
 import Module from './module';
 
 const { app } = electron;

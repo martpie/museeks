@@ -1,14 +1,14 @@
-import * as React from 'react';
+import React from 'react';
 
 import ButtonShuffle from '../PlayerOptionsButtons/ButtonShuffle';
 import ButtonRepeat from '../PlayerOptionsButtons/ButtonRepeat';
 
 import * as PlayerActions from '../../actions/PlayerActions';
 import Player from '../../lib/player';
-import * as utils from '../../utils/utils';
-import { TrackModel, Repeat } from '../../../shared/types/interfaces';
+import * as utils from '../../lib/utils';
+import { TrackModel, Repeat } from '../../../shared/types/museeks';
 
-import * as styles from './PlayingBarInfo.css';
+import styles from './PlayingBarInfo.module.css';
 
 interface Props {
   trackPlaying: TrackModel;

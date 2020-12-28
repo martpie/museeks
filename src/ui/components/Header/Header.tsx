@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import Input from 'react-simple-input';
 import KeyBinding from 'react-keybinding-component';
@@ -7,11 +7,11 @@ import PlayingBar from '../PlayingBar/PlayingBar';
 import PlayerControls from '../PlayerControls/PlayerControls';
 
 import * as LibraryActions from '../../actions/LibraryActions';
-import { isCtrlKey } from '../../utils/utils-platform';
+import { isCtrlKey } from '../../lib/utils-platform';
 import { RootState } from '../../reducers';
-import { TrackModel, PlayerStatus, Repeat } from '../../../shared/types/interfaces';
+import { TrackModel, PlayerStatus, Repeat } from '../../../shared/types/museeks';
 
-import * as styles from './Header.css';
+import styles from './Header.module.css';
 
 interface Props {
   playerStatus: PlayerStatus;

@@ -1,10 +1,10 @@
-import * as React from 'react';
+import React from 'react';
 
 import QueueEmpty from '../QueueEmpty/QueueEmpty';
 import QueueList from '../QueueList/QueueList';
-import { TrackModel } from '../../../shared/types/interfaces';
+import { TrackModel } from '../../../shared/types/museeks';
 
-import * as styles from './Queue.css';
+import styles from './Queue.module.css';
 
 interface Props {
   queue: TrackModel[];

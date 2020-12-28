@@ -1,8 +1,8 @@
 import * as fs from 'fs';
-import * as path from 'path';
+import path from 'path';
 import * as util from 'util';
-import * as electron from 'electron';
-import * as globby from 'globby';
+import electron from 'electron';
+import globby from 'globby';
 import * as queue from 'queue';
 
 import store from '../store';
@@ -10,9 +10,9 @@ import store from '../store';
 import types from '../constants/action-types';
 
 import * as app from '../lib/app';
-import * as utils from '../utils/utils';
-import * as m3u from '../utils/utils-m3u';
-import { SortBy, TrackModel } from '../../shared/types/interfaces';
+import * as utils from '../lib/utils';
+import * as m3u from '../lib/utils-m3u';
+import { SortBy, TrackModel } from '../../shared/types/museeks';
 import { SUPPORTED_PLAYLISTS_EXTENSIONS, SUPPORTED_TRACKS_EXTENSIONS } from '../../shared/constants';
 import * as PlaylistsActions from './PlaylistsActions';
 import * as ToastsActions from './ToastsActions';
@@ -30,7 +30,7 @@ interface ScanFile {
  */
 export const refresh = async () => {
   try {
-    const tracks = await app.models.Track.find().execAsync();
+    const tracks = await app.db.Track.find().execAsync();
 
     store.dispatch({
       type: types.LIBRARY_REFRESH,
@@ -74,7 +74,7 @@ const scanPlaylists = async (paths: string[]) => {
         const playlistFiles = m3u.parse(filePath);
         const playlistName = path.parse(filePath).name;
 
-        const existingTracks: TrackModel[] = await app.models.Track.findAsync({
+        const existingTracks: TrackModel[] = await app.db.Track.findAsync({
           $or: playlistFiles.map((filePath) => ({ path: filePath })),
         });
 
@@ -153,13 +153,13 @@ const scanTracks = async (paths: string[]): Promise<void> => {
             filePath = path.resolve(filePath);
 
             // Check if there is an existing record in the DB
-            const existingDoc = await app.models.Track.findOneAsync({ path: filePath });
+            const existingDoc = await app.db.Track.findOneAsync({ path: filePath });
 
             // If there is existing document
             if (!existingDoc) {
               // Get metadata
               const track = await utils.getMetadata(filePath);
-              const insertedDoc: TrackModel = await app.models.Track.insertAsync(track);
+              const insertedDoc: TrackModel = await app.db.Track.insertAsync(track);
               scannedFiles.push(insertedDoc);
             }
 
@@ -267,7 +267,7 @@ export const remove = async (tracksIds: string[]) => {
   if (result.response === 1) {
     // button possition, here 'remove'
     // Remove tracks from the Track collection
-    app.models.Track.removeAsync({ _id: { $in: tracksIds } }, { multi: true });
+    app.db.Track.removeAsync({ _id: { $in: tracksIds } }, { multi: true });
 
     store.dispatch({
       type: types.LIBRARY_REMOVE_TRACKS,
@@ -298,8 +298,8 @@ export const reset = async () => {
         type: types.LIBRARY_REFRESH_START,
       });
 
-      await app.models.Track.removeAsync({}, { multi: true });
-      await app.models.Playlist.removeAsync({}, { multi: true });
+      await app.db.Track.removeAsync({}, { multi: true });
+      await app.db.Playlist.removeAsync({}, { multi: true });
 
       store.dispatch({
         type: types.LIBRARY_RESET,
@@ -323,7 +323,7 @@ export const incrementPlayCount = async (source: string) => {
   const query = { src: source }; // HACK Not great, should be done with an _id
   const update = { $inc: { playcount: 1 } };
   try {
-    await app.models.Track.updateAsync(query, update);
+    await app.db.Track.updateAsync(query, update);
   } catch (err) {
     console.warn(err);
   }

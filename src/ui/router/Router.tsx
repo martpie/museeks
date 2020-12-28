@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { Router, Switch, Route } from 'react-router-dom';
 
 // History

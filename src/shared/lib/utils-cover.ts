@@ -1,6 +1,6 @@
-import * as path from 'path';
+import path from 'path';
 import * as mmd from 'music-metadata';
-import * as globby from 'globby';
+import globby from 'globby';
 
 const SUPPORTED_COVER_EXTENSIONS = ['.png', '.jpg', '.jpeg', '.bmp', '.gif'];
 const SUPPORTED_COVER_NAMES = ['album', 'albumart', 'folder', 'cover', 'front'];

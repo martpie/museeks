@@ -1,7 +1,7 @@
-import * as os from 'os';
-import * as React from 'react';
+import os from 'os';
+import React, { useCallback, useEffect } from 'react';
 import KeyBinding from 'react-keybinding-component';
-import { withRouter, RouteComponentProps } from 'react-router';
+import { useHistory } from 'react-router';
 
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
@@ -10,8 +10,8 @@ import Toasts from './components/Toasts/Toasts';
 import AppActions from './actions/AppActions';
 import * as PlayerActions from './actions/PlayerActions';
 
-import * as styles from './App.css';
-import { isCtrlKey } from './utils/utils-platform';
+import styles from './App.module.css';
+import { isCtrlKey } from './lib/utils-platform';
 
 /*
 |--------------------------------------------------------------------------
@@ -19,43 +19,44 @@ import { isCtrlKey } from './utils/utils-platform';
 |--------------------------------------------------------------------------
 */
 
-type Props = RouteComponentProps;
+const Museeks: React.FC = (props) => {
+  const history = useHistory();
 
-class Museeks extends React.Component<Props> {
-  onKey = async (e: KeyboardEvent) => {
-    switch (e.key) {
-      case ' ':
-        e.preventDefault();
-        e.stopPropagation();
-        await PlayerActions.playPause();
-        break;
-      case ',':
-        if (isCtrlKey(e)) {
+  const onKey = useCallback(
+    async (e: KeyboardEvent) => {
+      switch (e.key) {
+        case ' ':
           e.preventDefault();
           e.stopPropagation();
-          this.props.history.push('/settings');
-        }
-        break;
-      default:
-        break;
-    }
-  };
+          await PlayerActions.playPause();
+          break;
+        case ',':
+          if (isCtrlKey(e)) {
+            e.preventDefault();
+            e.stopPropagation();
+            history.push('/settings');
+          }
+          break;
+        default:
+          break;
+      }
+    },
+    [history]
+  );
 
-  async componentDidMount() {
-    await AppActions.init();
-  }
+  useEffect(() => {
+    AppActions.init();
+  }, []);
 
-  render() {
-    return (
-      <div className={`${styles.root} os-${os.platform()}`}>
-        <KeyBinding onKey={this.onKey} preventInputConflict />
-        <Header />
-        <main className={`${styles.mainContent} container-fluid`}>{this.props.children}</main>
-        <Footer />
-        <Toasts />
-      </div>
-    );
-  }
-}
+  return (
+    <div className={`${styles.root} os-${os.platform()}`}>
+      <KeyBinding onKey={onKey} preventInputConflict />
+      <Header />
+      <main className={styles.mainContent}>{props.children}</main>
+      <Footer />
+      <Toasts />
+    </div>
+  );
+};
 
-export default withRouter(Museeks);
+export default Museeks;

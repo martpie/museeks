@@ -1,4 +1,4 @@
-import * as electron from 'electron';
+import electron from 'electron';
 
 import history from '../router/history';
 import store from '../store';
@@ -7,11 +7,11 @@ import types from '../constants/action-types';
 import SORT_ORDERS from '../constants/sort-orders';
 
 import * as app from '../lib/app';
-import * as utils from '../utils/utils';
+import * as utils from '../lib/utils';
 import Player from '../lib/player';
-import { sortTracks, filterTracks } from '../utils/utils-library';
-import { shuffleTracks } from '../utils/utils-player';
-import { TrackModel, PlayerStatus, Repeat } from '../../shared/types/interfaces';
+import { sortTracks, filterTracks } from '../lib/utils-library';
+import { shuffleTracks } from '../lib/utils-player';
+import { TrackModel, PlayerStatus, Repeat } from '../../shared/types/museeks';
 import * as ToastsActions from './ToastsActions';
 
 const { ipcRenderer } = electron;
@@ -45,14 +45,14 @@ export const pause = () => {
 
 /**
  * Start playing audio (queue instantiation...
- * TODO this function could probably be refactored a bit)
+ * TODO: this function ~could probably~ needs to be refactored ~a bit~
  */
 export const start = async (queue?: TrackModel[], _id?: string) => {
   const state = store.getState();
 
   let newQueue = queue ? [...queue] : null;
 
-  // If no queue is provided, let's search it from the store
+  // If no queue is provided, we create it based on the screen the user is on
   if (!newQueue) {
     const { pathname } = history.location;
 
