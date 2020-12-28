@@ -2,7 +2,7 @@ import React from 'react';
 import cx from 'classnames';
 
 import * as QueueActions from '../../actions/QueueActions';
-import { TrackModel } from '../../../shared/types/interfaces';
+import { TrackModel } from '../../../shared/types/museeks';
 
 import styles from './QueueListItem.module.css';
 

@@ -1,4 +1,4 @@
-import { Track, SortOrder, SortBy } from '../../shared/types/interfaces';
+import { Track, SortOrder, SortBy } from '../../shared/types/museeks';
 
 // For perforances reasons, otherwise _.orderBy will perform weird check
 // the is far more resource/time impactful

@@ -3,7 +3,7 @@ import cx from 'classnames';
 import Icon from 'react-fontawesome';
 
 import * as LibraryActions from '../../actions/LibraryActions';
-import { SortBy } from '../../../shared/types/interfaces';
+import { SortBy } from '../../../shared/types/museeks';
 
 import styles from './TracksListHeaderCell.module.css';
 

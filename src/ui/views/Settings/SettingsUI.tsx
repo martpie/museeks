@@ -5,7 +5,7 @@ import * as SettingsActions from '../../actions/SettingsActions';
 import * as Setting from '../../components/Setting/Setting';
 
 import CheckboxSetting from '../../components/SettingCheckbox/SettingCheckbox';
-import { Config } from '../../../shared/types/interfaces';
+import { Config } from '../../../shared/types/museeks';
 import { themes } from '../../lib/themes';
 
 interface Props {

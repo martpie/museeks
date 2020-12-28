@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import ToastItem from '../../elements/Toast/Toast';
 
-import { Toast } from '../../../shared/types/interfaces';
+import { Toast } from '../../../shared/types/museeks';
 import { RootState } from '../../reducers';
 
 import styles from './Toasts.module.css';

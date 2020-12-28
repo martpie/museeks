@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import TracksListHeaderCell from '../TracksListHeaderCell/TracksListHeaderCell';
 
-import { SortBy, SortOrder } from '../../../shared/types/interfaces';
+import { SortBy, SortOrder } from '../../../shared/types/museeks';
 import { RootState } from '../../reducers';
 import { LibrarySort } from '../../reducers/library';
 

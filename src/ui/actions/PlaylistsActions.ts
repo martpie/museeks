@@ -2,7 +2,7 @@ import path from 'path';
 import electron from 'electron';
 import * as m3u from 'm3ujs';
 
-import { Playlist, TrackModel, PlaylistModel } from '../../shared/types/interfaces';
+import { Playlist, TrackModel, PlaylistModel } from '../../shared/types/museeks';
 import store from '../store';
 import history from '../router/history';
 import types from '../constants/action-types';

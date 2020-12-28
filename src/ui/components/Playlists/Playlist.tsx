@@ -7,7 +7,7 @@ import * as ViewMessage from '../../elements/ViewMessage/ViewMessage';
 
 import * as PlaylistsActions from '../../actions/PlaylistsActions';
 import { filterTracks } from '../../lib/utils-library';
-import { TrackModel, PlaylistModel, PlayerStatus } from '../../../shared/types/interfaces';
+import { TrackModel, PlaylistModel, PlayerStatus } from '../../../shared/types/museeks';
 import { RootState } from '../../reducers';
 
 type OwnProps = RouteComponentProps<RouteParams>;

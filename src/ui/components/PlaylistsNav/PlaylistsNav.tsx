@@ -6,7 +6,7 @@ import Icon from 'react-fontawesome';
 
 import * as PlaylistsActions from '../../actions/PlaylistsActions';
 import PlaylistsNavLink from '../PlaylistsNavLink/PlaylistsNavLink';
-import { PlaylistModel } from '../../../shared/types/interfaces';
+import { PlaylistModel } from '../../../shared/types/museeks';
 
 import styles from './PlaylistsNav.module.css';
 

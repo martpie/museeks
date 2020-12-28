@@ -4,7 +4,7 @@ import linvodb from 'linvodb3';
 import leveljs from 'level-js';
 import teeny from 'teeny-conf';
 import Promise from 'bluebird';
-import { TrackModel, PlaylistModel } from '../../shared/types/interfaces';
+import { TrackModel, PlaylistModel } from '../../shared/types/museeks';
 
 const { remote } = electron;
 const { app } = remote;

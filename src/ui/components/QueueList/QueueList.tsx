@@ -5,7 +5,7 @@ import QueueListItem from '../QueueListItem/QueueListItem';
 import * as QueueActions from '../../actions/QueueActions';
 
 import { getStatus } from '../../lib/utils-library';
-import { TrackModel } from '../../../shared/types/interfaces';
+import { TrackModel } from '../../../shared/types/museeks';
 import Button from '../../elements/Button/Button';
 
 import styles from './QueueList.module.css';

@@ -6,7 +6,7 @@ import ClickOutHandler from 'react-onclickout';
 import Queue from '../Queue/Queue';
 import PlayingBarInfos from '../PlayingBarInfo/PlayingBarInfo';
 import Cover from '../Cover/Cover';
-import { TrackModel, Repeat } from '../../../shared/types/interfaces';
+import { TrackModel, Repeat } from '../../../shared/types/museeks';
 
 import styles from './PlayingBar.module.css';
 

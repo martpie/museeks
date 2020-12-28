@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Switch, Route, Redirect } from 'react-router-dom';
 
-import { Config } from '../../../shared/types/interfaces';
+import { Config } from '../../../shared/types/museeks';
 import * as Nav from '../../elements/Nav/Nav';
 import { config } from '../../lib/app';
 import { RootState } from '../../reducers';

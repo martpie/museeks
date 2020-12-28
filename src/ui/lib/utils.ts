@@ -2,7 +2,7 @@ import path from 'path';
 import * as mmd from 'music-metadata';
 import pickBy from 'lodash-es/pickBy';
 
-import { Track } from '../../shared/types/interfaces';
+import { Track } from '../../shared/types/museeks';
 
 /**
  * Parse an int to a more readable string
