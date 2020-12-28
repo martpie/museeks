@@ -7,7 +7,7 @@ import * as mpris from 'mpris-service';
 import * as mime from 'mime-types';
 
 import { TrackModel } from '../../shared/types/museeks';
-import { fetchCover } from '../../shared/utils/cover';
+import { fetchCover } from '../../shared/lib/utils-cover';
 import { SUPPORTED_TRACKS_EXTENSIONS } from '../../shared/constants';
 import ModuleWindow from './module-window';
 
