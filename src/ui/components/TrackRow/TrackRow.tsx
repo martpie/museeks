@@ -1,12 +1,12 @@
-import * as React from 'react';
+import React from 'react';
 import cx from 'classnames';
 
 import PlayingIndicator from '../PlayingIndicator/PlayingIndicator';
-import { parseDuration } from '../../utils/utils';
-import { TrackModel } from '../../../shared/types/interfaces';
+import { parseDuration } from '../../lib/utils';
+import { TrackModel } from '../../../shared/types/museeks';
 
-import * as cellStyles from '../TracksListHeader/TracksListHeader.css';
-import * as styles from './TrackRow.css';
+import cellStyles from '../TracksListHeader/TracksListHeader.module.css';
+import styles from './TrackRow.module.css';
 
 interface Props {
   selected: boolean;

@@ -1,8 +1,8 @@
-import * as React from 'react';
+import React from 'react';
 
-import * as coverUtils from '../../../shared/utils/cover';
+import * as coverUtils from '../../../shared/lib/utils-cover';
 
-import * as styles from './Cover.css';
+import styles from './Cover.module.css';
 
 interface Props {
   path: string;

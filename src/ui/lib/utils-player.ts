@@ -1,4 +1,4 @@
-import { TrackModel } from '../../shared/types/interfaces';
+import { TrackModel } from '../../shared/types/museeks';
 
 /**
  * Shuffle an array with a Player behavior in mind:

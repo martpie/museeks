@@ -1,47 +1,43 @@
-import * as React from 'react';
-import Scrollbars from 'react-custom-scrollbars';
+import React, { useCallback } from 'react';
+import Scrollbars from 'rc-scrollbars';
 
-import * as styles from './CustomScrollbar.css';
+import styles from './CustomScrollbar.module.css';
 
 interface Props {
   className: string;
-  onScroll: React.UIEventHandler<any>;
+  onScroll: React.UIEventHandler<HTMLElement>;
 }
 
-class CustomScrollbar extends React.Component<Props> {
-  static defaultProps = {
-    className: '',
-  };
+const CustomScrollbar: React.FC<Props> = (props) => {
+  const { onScroll } = props;
 
-  static getRenderView(props: any) {
-    // the tabIndex={0} is needed to make the pageup/pagedown/home/end keys
-    // work properly
+  const getRenderView = useCallback((props: any) => {
     return <div {...props} className={styles.renderView} />;
-  }
+  }, []);
 
-  static getTrackVertical(props: any) {
+  const getTrackVertical = useCallback((props: any) => {
     return <div {...props} className={styles.verticalTrack} />;
-  }
+  }, []);
 
-  static getThumbVertical(props: any) {
+  const getThumbVertical = useCallback((props: any) => {
     return <div {...props} className={styles.verticalThumb} />;
-  }
+  }, []);
 
-  render() {
-    return (
-      <Scrollbars
-        className={this.props.className}
-        onScroll={this.props.onScroll}
-        renderView={CustomScrollbar.getRenderView}
-        renderTrackVertical={CustomScrollbar.getTrackVertical}
-        renderThumbVertical={CustomScrollbar.getThumbVertical}
-        autoHide
-        autoHideTimeout={1000}
-      >
-        {this.props.children}
-      </Scrollbars>
-    );
-  }
-}
+  return (
+    <Scrollbars
+      // eslint-disable-next-line
+      // @ts-ignore
+      className={props.className}
+      renderView={getRenderView}
+      renderTrackVertical={getTrackVertical}
+      renderThumbVertical={getThumbVertical}
+      autoHide
+      autoHideTimeout={1000}
+      onScroll={onScroll}
+    >
+      {props.children}
+    </Scrollbars>
+  );
+};
 
 export default CustomScrollbar;

@@ -3,9 +3,9 @@ import types from '../constants/action-types';
 
 import * as app from '../lib/app';
 import Player from '../lib/player';
-import * as utils from '../utils/utils';
+import * as utils from '../lib/utils';
 
-import { Track } from '../../shared/types/interfaces';
+import { Track } from '../../shared/types/museeks';
 
 /**
  * Start audio playback from the queue
@@ -50,7 +50,7 @@ export const remove = (index: number) => {
  * Add tracks at the end of the queue
  */
 export const addAfter = async (tracksIds: string[]) => {
-  const tracks = await app.models.Track.findAsync({ _id: { $in: tracksIds } });
+  const tracks = await app.db.Track.findAsync({ _id: { $in: tracksIds } });
   store.dispatch({
     type: types.QUEUE_ADD,
     payload: {
@@ -63,7 +63,7 @@ export const addAfter = async (tracksIds: string[]) => {
  * Add tracks at the beginning of the queue
  */
 export const addNext = async (tracksIds: string[]) => {
-  const tracks = await app.models.Track.findAsync({ _id: { $in: tracksIds } });
+  const tracks = await app.db.Track.findAsync({ _id: { $in: tracksIds } });
   store.dispatch({
     type: types.QUEUE_ADD_NEXT,
     payload: {

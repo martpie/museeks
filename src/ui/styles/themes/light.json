@@ -1,8 +1,10 @@
 {
+  "_id": "light",
   "name": "Light (default)",
+  "themeSource": "light",
   "variables": {
-    "--text-color": "#333333",
-    "--view-bg": "white",
+    "--text": "#333333",
+    "--background": "white",
     "--border-color": "#D2D2D2",
     "--border-radius": "2px",
 
@@ -21,7 +23,7 @@
     "--success-color": "#5CB85C",
     "--info-color": "#5BC0DE",
     "--warning-color": "#F0AD4E",
-    "--danger-color": "#D9534F",
+    "--danger-color": "#de4343",
 
     "--toasts-bg": "white",
 
@@ -29,7 +31,6 @@
 
     "--sidebar-bg": "#F4F4F4",
     "--sidebar-item-active-bg": "#E6E6E6",
-    "--sidebar-item-input-bg": "white",
 
     "--search-bg": "white",
     "--slider-bg": "#DADADA",
@@ -40,6 +41,10 @@
     "--queue-bg": "white",
     "--queue-header-bg": "rgb(244, 244, 244)",
 
-    "--checkbox-bg": "#F4F4F4"
+    "--checkbox-bg": "#F4F4F4",
+    "--input-bg": "#F4F4F4",
+    "--input-color": "#333333",
+    "--button-bg": "#F4F4F4",
+    "--button-color": "#333333"
   }
 }

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 
@@ -6,8 +6,8 @@ import TracksList from '../TracksList/TracksList';
 import * as ViewMessage from '../../elements/ViewMessage/ViewMessage';
 
 import * as PlaylistsActions from '../../actions/PlaylistsActions';
-import { filterTracks } from '../../utils/utils-library';
-import { TrackModel, PlaylistModel, PlayerStatus } from '../../../shared/types/interfaces';
+import { filterTracks } from '../../lib/utils-library';
+import { TrackModel, PlaylistModel, PlayerStatus } from '../../../shared/types/museeks';
 import { RootState } from '../../reducers';
 
 type OwnProps = RouteComponentProps<RouteParams>;

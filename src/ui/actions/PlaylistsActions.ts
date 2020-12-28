@@ -1,8 +1,8 @@
-import * as path from 'path';
-import * as electron from 'electron';
+import path from 'path';
+import electron from 'electron';
 import * as m3u from 'm3ujs';
 
-import { Playlist, TrackModel, PlaylistModel } from '../../shared/types/interfaces';
+import { Playlist, TrackModel, PlaylistModel } from '../../shared/types/museeks';
 import store from '../store';
 import history from '../router/history';
 import types from '../constants/action-types';
@@ -17,8 +17,8 @@ const { dialog } = electron.remote;
  */
 export const play = async (playlistId: string) => {
   try {
-    const playlist: PlaylistModel = await app.models.Playlist.findOneAsync({ _id: playlistId });
-    const tracks: TrackModel[] = await app.models.Track.findAsync({ _id: { $in: playlist.tracks } });
+    const playlist: PlaylistModel = await app.db.Playlist.findOneAsync({ _id: playlistId });
+    const tracks: TrackModel[] = await app.db.Track.findAsync({ _id: { $in: playlist.tracks } });
     PlayerActions.start(tracks).catch((err) => console.warn(err));
   } catch (err) {
     console.warn(err);
@@ -30,8 +30,8 @@ export const play = async (playlistId: string) => {
  */
 export const load = async (_id: string) => {
   try {
-    const playlist = await app.models.Playlist.findOneAsync({ _id });
-    const tracks = await app.models.Track.findAsync({ _id: { $in: playlist.tracks } });
+    const playlist = await app.db.Playlist.findOneAsync({ _id });
+    const tracks = await app.db.Track.findAsync({ _id: { $in: playlist.tracks } });
     store.dispatch({
       type: types.PLAYLISTS_LOAD_ONE,
       payload: {
@@ -48,7 +48,7 @@ export const load = async (_id: string) => {
  */
 export const refresh = async () => {
   try {
-    const playlists = await app.models.Playlist.find({}).sort({ name: 1 }).execAsync();
+    const playlists = await app.db.Playlist.find({}).sort({ name: 1 }).execAsync();
     store.dispatch({
       type: types.PLAYLISTS_REFRESH,
       payload: {
@@ -76,7 +76,7 @@ export const create = async (
 
   if (importPath) playlist.importPath = importPath;
 
-  const doc = await app.models.Playlist.insertAsync(playlist);
+  const doc = await app.db.Playlist.insertAsync(playlist);
 
   await refresh();
 
@@ -91,7 +91,7 @@ export const create = async (
  */
 export const rename = async (_id: string, name: string) => {
   try {
-    await app.models.Playlist.updateAsync({ _id }, { $set: { name } });
+    await app.db.Playlist.updateAsync({ _id }, { $set: { name } });
     await refresh();
   } catch (err) {
     console.warn(err);
@@ -103,7 +103,7 @@ export const rename = async (_id: string, name: string) => {
  */
 export const remove = async (_id: string) => {
   try {
-    await app.models.Playlist.removeAsync({ _id });
+    await app.db.Playlist.removeAsync({ _id });
     await refresh();
   } catch (err) {
     console.warn(err);
@@ -118,9 +118,9 @@ export const addTracks = async (_id: string, tracksIds: string[], isShown?: bool
   if (isShown) return;
 
   try {
-    const playlist = await app.models.Playlist.findOneAsync({ _id });
+    const playlist = await app.db.Playlist.findOneAsync({ _id });
     const playlistTracks = playlist.tracks.concat(tracksIds);
-    await app.models.Playlist.updateAsync({ _id }, { $set: { tracks: playlistTracks } });
+    await app.db.Playlist.updateAsync({ _id }, { $set: { tracks: playlistTracks } });
     await refresh();
     ToastsActions.add('success', `${tracksIds.length} tracks were successfully added to "${playlist.name}"`);
   } catch (err) {
@@ -134,9 +134,9 @@ export const addTracks = async (_id: string, tracksIds: string[], isShown?: bool
  */
 export const removeTracks = async (playlistId: string, tracksIds: string[]) => {
   try {
-    const playlist = await app.models.Playlist.findOneAsync({ _id: playlistId });
+    const playlist = await app.db.Playlist.findOneAsync({ _id: playlistId });
     const playlistTracks = playlist.tracks.filter((elem: string) => !tracksIds.includes(elem));
-    await app.models.Playlist.updateAsync({ _id: playlistId }, { $set: { tracks: playlistTracks } });
+    await app.db.Playlist.updateAsync({ _id: playlistId }, { $set: { tracks: playlistTracks } });
     await load(playlistId);
   } catch (err) {
     console.warn(err);
@@ -148,7 +148,7 @@ export const removeTracks = async (playlistId: string, tracksIds: string[]) => {
  */
 export const duplicate = async (playlistId: string) => {
   try {
-    const playlist = await app.models.Playlist.findOneAsync({ _id: playlistId });
+    const playlist = await app.db.Playlist.findOneAsync({ _id: playlistId });
     const { tracks } = playlist;
 
     const newPlaylist: Playlist = {
@@ -156,7 +156,7 @@ export const duplicate = async (playlistId: string) => {
       tracks: tracks,
     };
 
-    await app.models.Playlist.insertAsync(newPlaylist);
+    await app.db.Playlist.insertAsync(newPlaylist);
     await refresh();
   } catch (err) {
     console.warn(err);
@@ -177,7 +177,7 @@ export const reorderTracks = async (
   if (tracksIds.includes(targetTrackId)) return;
 
   try {
-    const playlist: Playlist = await app.models.Playlist.findOneAsync({ _id: playlistId });
+    const playlist: Playlist = await app.db.Playlist.findOneAsync({ _id: playlistId });
 
     const newTracks = playlist.tracks.filter((id) => !tracksIds.includes(id));
     let targetIndex = newTracks.indexOf(targetTrackId);
@@ -192,7 +192,7 @@ export const reorderTracks = async (
 
     newTracks.splice(targetIndex + 1, 0, ...tracksIds);
 
-    await app.models.Playlist.updateAsync({ _id: playlistId }, { $set: { tracks: newTracks } });
+    await app.db.Playlist.updateAsync({ _id: playlistId }, { $set: { tracks: newTracks } });
     await load(playlistId);
   } catch (err) {
     console.warn(err);
@@ -201,10 +201,11 @@ export const reorderTracks = async (
 
 /**
  * Export a playlist to a .m3u file
+ * TODO: investigate why the export playlist path are relative, and not absolute
  */
 export const exportToM3u = async (playlistId: string) => {
-  const playlist: PlaylistModel = await app.models.Playlist.findOneAsync({ _id: playlistId });
-  const tracks: TrackModel[] = await app.models.Track.findAsync({ _id: { $in: playlist.tracks } });
+  const playlist: PlaylistModel = await app.db.Playlist.findOneAsync({ _id: playlistId });
+  const tracks: TrackModel[] = await app.db.Track.findAsync({ _id: { $in: playlist.tracks } });
 
   const { filePath } = await dialog.showSaveDialog(app.browserWindows.main, {
     title: 'Export playlist',
@@ -219,7 +220,7 @@ export const exportToM3u = async (playlistId: string) => {
 
   if (filePath) {
     try {
-      const playlist = new m3u.Playlist(
+      const playlistExport = new m3u.Playlist(
         new m3u.TypeEXTM3U((entry) => {
           if (entry instanceof m3u.Mp3Entry) {
             return `${entry.artist} - ${entry.album} - ${entry.track} - ${entry.title}`;
@@ -229,10 +230,15 @@ export const exportToM3u = async (playlistId: string) => {
       );
 
       tracks.forEach((track) => {
-        playlist.add(new m3u.Mp3Entry(track.path));
+        try {
+          playlistExport.add(new m3u.Mp3Entry(track.path));
+        } catch (err) {
+          console.warn(err);
+        }
       });
 
-      playlist.write(filePath);
+      playlistExport.write(filePath);
+      ToastsActions.add('success', `Playlist "${playlist.name}" succesfully exported`);
     } catch (err) {
       ToastsActions.add('danger', `An error occured when exporting the playlist "${playlist.name}"`);
       console.warn(err);

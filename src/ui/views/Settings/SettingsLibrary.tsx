@@ -1,5 +1,5 @@
-import * as electron from 'electron';
-import * as React from 'react';
+import electron from 'electron';
+import React, { useCallback } from 'react';
 
 import * as Setting from '../../components/Setting/Setting';
 import Dropzone from '../../components/SettingDropzone/SettingDropzone';
@@ -15,8 +15,8 @@ interface Props {
   library: LibraryState;
 }
 
-export default class SettingsLibrary extends React.Component<Props> {
-  onDrop(e: DragEvent) {
+const SettingsLibrary: React.FC<Props> = (props) => {
+  const onDrop = useCallback((e: DragEvent) => {
     const files = [];
 
     if (e.dataTransfer) {
@@ -30,14 +30,14 @@ export default class SettingsLibrary extends React.Component<Props> {
         console.warn(err);
       });
     }
-  }
+  }, []);
 
-  async resetLibrary() {
+  const resetLibrary = useCallback(async () => {
     PlayerActions.stop();
     await LibraryActions.reset();
-  }
+  }, []);
 
-  async openFolderSelector() {
+  const openFolderSelector = useCallback(async () => {
     const result = await dialog.showOpenDialog({
       properties: ['multiSelections', 'openDirectory', 'openFile'],
     });
@@ -47,35 +47,35 @@ export default class SettingsLibrary extends React.Component<Props> {
         console.warn(err);
       });
     }
-  }
+  }, []);
 
-  render() {
-    return (
-      <div className='setting settings-musicfolder'>
-        <Setting.Section>
-          <h3 style={{ marginTop: 0 }}>Import music</h3>
-          <Dropzone
-            title='Add music to the library'
-            subtitle='Drop files or folders here'
-            onDrop={this.onDrop}
-            onClick={this.openFolderSelector}
-          />
-          <Setting.Description>
-            This will also scan for <code>.m3u</code> files and create corresponding playlists.
-          </Setting.Description>
-        </Setting.Section>
-        <Setting.Section>
-          <h3>Danger zone</h3>
-          <Button
-            relevancy='danger'
-            title='Fully reset the library'
-            disabled={this.props.library.refreshing}
-            onClick={this.resetLibrary}
-          >
-            Reset library
-          </Button>
-        </Setting.Section>
-      </div>
-    );
-  }
-}
+  return (
+    <div className='setting settings-musicfolder'>
+      <Setting.Section>
+        <h3 style={{ marginTop: 0 }}>Import music</h3>
+        <Dropzone
+          title='Add music to the library'
+          subtitle='Drop files or folders here'
+          onDrop={onDrop}
+          onClick={openFolderSelector}
+        />
+        <Setting.Description>
+          This will also scan for <code>.m3u</code> files and create corresponding playlists.
+        </Setting.Description>
+      </Setting.Section>
+      <Setting.Section>
+        <h3>Danger zone</h3>
+        <Button
+          relevancy='danger'
+          title='Fully reset the library'
+          disabled={props.library.refreshing}
+          onClick={resetLibrary}
+        >
+          Reset library
+        </Button>
+      </Setting.Section>
+    </div>
+  );
+};
+
+export default SettingsLibrary;

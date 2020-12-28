@@ -1,11 +1,11 @@
-import * as React from 'react';
-import * as Icon from 'react-fontawesome';
+import React from 'react';
+import Icon from 'react-fontawesome';
 import VolumeControl from '../VolumeControl/VolumeControl';
 
 import * as PlayerActions from '../../actions/PlayerActions';
-import { PlayerStatus } from '../../../shared/types/interfaces';
+import { PlayerStatus } from '../../../shared/types/museeks';
 
-import * as styles from './PlayerControls.css';
+import styles from './PlayerControls.module.css';
 
 interface Props {
   playerStatus: PlayerStatus;

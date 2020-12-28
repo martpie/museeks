@@ -1,12 +1,12 @@
-import * as React from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 
 import ToastItem from '../../elements/Toast/Toast';
 
-import { Toast } from '../../../shared/types/interfaces';
+import { Toast } from '../../../shared/types/museeks';
 import { RootState } from '../../reducers';
 
-import * as styles from './Toasts.css';
+import styles from './Toasts.module.css';
 
 interface InjectedProps {
   toasts: Toast[];

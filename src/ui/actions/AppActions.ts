@@ -1,10 +1,10 @@
-import * as os from 'os';
-import * as electron from 'electron';
+import os from 'os';
+import electron from 'electron';
 
 import Player from '../lib/player';
 import { browserWindows, config } from '../lib/app';
-import * as utils from '../utils/utils';
-import * as coverUtils from '../../shared/utils/cover';
+import * as utils from '../lib/utils';
+import * as coverUtils from '../../shared/lib/utils-cover';
 
 import * as LibraryActions from './LibraryActions';
 import * as PlaylistsActions from './PlaylistsActions';

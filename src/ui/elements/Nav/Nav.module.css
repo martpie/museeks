@@ -9,7 +9,7 @@
 .nav__link {
   display: inline-block;
   padding: 15px;
-  color: var(--text-color);
+  color: var(--text);
   font-weight: bold;
   text-decoration: none;
 

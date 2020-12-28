@@ -2,12 +2,12 @@
  * Module in charge of the Tray
  */
 
-import * as os from 'os';
-import * as path from 'path';
+import os from 'os';
+import path from 'path';
 import ps from 'ps-node';
 import { Tray, Menu, app, ipcMain, nativeImage } from 'electron';
 
-import { TrackModel, PlayerStatus } from '../../shared/types/interfaces';
+import { TrackModel, PlayerStatus } from '../../shared/types/museeks';
 import ModuleWindow from './module-window';
 import ConfigModule from './config';
 

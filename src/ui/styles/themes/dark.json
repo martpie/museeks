@@ -1,45 +1,51 @@
 {
+  "_id": "dark",
   "name": "Dark",
+  "themeSource": "dark",
   "variables": {
-    "--text-color": "#EEEEEE",
-    "--view-bg": "#23292B",
-    "--border-color": "#1F1F1F",
+    "--text": "#efefef",
+    "--background": "hsl(210deg 11% 10%)",
+
+    "--border-color": "#0e0e0e",
     "--border-radius": "2px",
 
-    "--header-color": "#EEEEEE",
-    "--header-bg": "#33393b",
+    "--header-color": "#efefef",
+    "--header-bg": "hsl(210deg 11% 13%)",
 
-    "--footer-bg": "#33393B",
-    "--footer-nav-bg-color-active": "#23292B",
+    "--footer-bg": "hsl(210deg 11% 13%)",
+    "--footer-nav-bg-color-active": "hsl(210deg 11% 10%)",
 
-    "--tracks-bg-even": "#23292B",
-    "--tracks-bg-odd": "#2E3436",
+    "--tracks-bg-even": "hsl(210deg 11% 10%)",
+    "--tracks-bg-odd": "hsl(210deg 11% 12.5%)",
 
-    "--tracks-header-bg": "#23292B",
-    "--tracks-header-color": "#EEEEEE",
+    "--tracks-header-bg": "hsl(210deg 11% 10%)",
+    "--tracks-header-color": "#efefef",
 
     "--success-color": "#5CB85C",
     "--info-color": "#5BC0DE",
     "--warning-color": "#F0AD4E",
-    "--danger-color": "#D9534F",
+    "--danger-color": "#de4343",
 
-    "--toasts-bg": "#23292B",
+    "--toasts-bg": "hsl(210deg 11% 10%)",
 
-    "--progress-bg": "#23292B",
+    "--progress-bg": "hsl(210deg 11% 10%)",
 
-    "--sidebar-bg": "#33393b",
-    "--sidebar-item-active-bg": "#23292B",
-    "--sidebar-item-input-bg": "white",
+    "--sidebar-bg": "hsl(210deg 11% 13%)",
+    "--sidebar-item-active-bg": "hsl(210deg 11% 10%)",
 
-    "--search-bg": "#23292B",
-    "--slider-bg": "#23292B",
+    "--search-bg": "hsl(210deg 11% 10%)",
+    "--slider-bg": "hsl(210deg 11% 10%)",
 
-    "--scrollbar-track": "#293032",
+    "--scrollbar-track": "hsl(210deg 11% 15%)",
     "--scrollbar-thumb": "rgba(255, 255, 255, 0.2)",
 
-    "--queue-bg": "#23292B",
-    "--queue-header-bg": "#33393b",
+    "--queue-bg": "hsl(210deg 11% 10%)",
+    "--queue-header-bg": "hsl(210deg 11% 13%)",
 
-    "--checkbox-bg": "#555555"
+    "--checkbox-bg": "hsl(210deg 11% 17%)",
+    "--input-bg": "hsl(210deg 11% 15%)",
+    "--input-color": "#efefef",
+    "--button-bg": "hsl(210deg 11% 15%)",
+    "--button-color": "#efefef"
   }
 }

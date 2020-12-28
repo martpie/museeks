@@ -5,7 +5,7 @@
  * Windows only
  */
 
-import * as path from 'path';
+import path from 'path';
 import { nativeImage, ipcMain } from 'electron';
 
 import ModuleWindow from './module-window';

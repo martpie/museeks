@@ -1,26 +1,21 @@
-import * as React from 'react';
-import { connect } from 'react-redux';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import { Switch, Route, Redirect } from 'react-router-dom';
 
-import { Config } from '../../../shared/types/interfaces';
+import { Config } from '../../../shared/types/museeks';
 import * as Nav from '../../elements/Nav/Nav';
 import { config } from '../../lib/app';
-import { LibraryState } from '../../reducers/library';
 import { RootState } from '../../reducers';
-import * as appStyles from '../../App.css';
+import appStyles from '../../App.module.css';
 import SettingsLibrary from './SettingsLibrary';
 import SettingsUI from './SettingsUI';
 import SettingsAudio from './SettingsAudio';
 import SettingsAbout from './SettingsAbout';
 
-import * as styles from './Settings.css';
+import styles from './Settings.module.css';
 
-interface Props {
-  library: LibraryState;
-}
-
-const Settings: React.FC<Props> = (props) => {
-  const { library } = props;
+const Settings: React.FC = () => {
+  const library = useSelector((state: RootState) => state.library);
   const conf = config.get() as Config;
 
   return (
@@ -47,8 +42,4 @@ const Settings: React.FC<Props> = (props) => {
   );
 };
 
-const mapStateToProps = (state: RootState) => ({
-  library: state.library,
-});
-
-export default connect(mapStateToProps)(Settings);
+export default Settings;

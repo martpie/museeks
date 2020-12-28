@@ -24,7 +24,8 @@
 .setting-select,
 .setting-input {
   display: block;
-  background-color: white;
+  background: var(--input-bg);
+  color: var(--input-color);
   border: solid 1px var(--border-color);
   border-radius: var(--border-radius);
   padding: 8px 12px;
@@ -35,9 +36,6 @@
   &:focus {
     outline: none;
   }
-
-  /* background-color: var(--header-bg);
-  color: var(--text-color); */
 }
 
 .setting-error {

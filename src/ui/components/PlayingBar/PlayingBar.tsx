@@ -1,14 +1,14 @@
-import * as React from 'react';
-import * as Icon from 'react-fontawesome';
+import React from 'react';
+import Icon from 'react-fontawesome';
 import cx from 'classnames';
 import ClickOutHandler from 'react-onclickout';
 
 import Queue from '../Queue/Queue';
 import PlayingBarInfos from '../PlayingBarInfo/PlayingBarInfo';
 import Cover from '../Cover/Cover';
-import { TrackModel, Repeat } from '../../../shared/types/interfaces';
+import { TrackModel, Repeat } from '../../../shared/types/museeks';
 
-import * as styles from './PlayingBar.css';
+import styles from './PlayingBar.module.css';
 
 interface Props {
   queue: TrackModel[];

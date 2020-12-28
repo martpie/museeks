@@ -1,7 +1,10 @@
-import * as React from 'react';
+import React from 'react';
 
-import * as styles from './Heart.css';
+import styles from './Heart.module.css';
 
+/**
+ * ♥
+ */
 const Heart: React.FC = () => <span className={styles.heart}>♥</span>;
 
 export default Heart;

@@ -2,12 +2,12 @@
  * Module in charge of setting and manage mpris service for linux
  */
 
-import * as electron from 'electron';
+import electron from 'electron';
 import * as mpris from 'mpris-service';
 import * as mime from 'mime-types';
 
-import { TrackModel } from '../../shared/types/interfaces';
-import { fetchCover } from '../../shared/utils/cover';
+import { TrackModel } from '../../shared/types/museeks';
+import { fetchCover } from '../../shared/lib/utils-cover';
 import { SUPPORTED_TRACKS_EXTENSIONS } from '../../shared/constants';
 import ModuleWindow from './module-window';
 

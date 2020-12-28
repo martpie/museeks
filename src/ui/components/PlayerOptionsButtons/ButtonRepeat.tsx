@@ -1,11 +1,11 @@
-import * as React from 'react';
+import React from 'react';
 import InlineSVG from 'svg-inline-react';
 import cx from 'classnames';
 
 import * as PlayerActions from '../../actions/PlayerActions';
-import { Repeat } from '../../../shared/types/interfaces';
+import { Repeat } from '../../../shared/types/museeks';
 
-import * as styles from './common.css';
+import styles from './common.module.css';
 
 const svgMap = {
   [Repeat.ONE]: require('../../../images/icons/player-repeat-one.svg'),

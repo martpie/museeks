@@ -149,6 +149,8 @@ export interface Config {
  */
 
 export interface Theme {
+  _id: string;
   name: string;
+  themeSource: 'dark' | 'light' | 'system';
   variables: Record<string, string>;
 }

@@ -6,6 +6,20 @@ files:
   - dist/**/*
   - src/images/**/*
   - '!node_modules/**/*'
+# fileAssociations:
+#   ext:
+#     - mp3
+#     - mp4
+#     - aac
+#     - m4a
+#     - 3gp
+#     - wav
+#     - ogg
+#     - ogv
+#     - ogm
+#     - opus
+#     - flac
+#   role: Viewer
 mac:
   category: public.app-category.music
   target:
@@ -26,3 +40,5 @@ win:
   target: nsis
   icon: src/images/logos/museeks.ico
   artifactName: ${name}-setup.${ext}
+# nsis:
+#   perMachine: true

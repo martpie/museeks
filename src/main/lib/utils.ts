@@ -1,6 +1,6 @@
-import * as electron from 'electron';
+import electron from 'electron';
 
-import { ConfigBounds } from '../shared/types/interfaces';
+import { ConfigBounds } from '../../shared/types/museeks';
 
 const DEFAULT_WIDTH = 900;
 const DEFAULT_HEIGHT = 550;

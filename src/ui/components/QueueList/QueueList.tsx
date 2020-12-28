@@ -1,14 +1,14 @@
-import * as React from 'react';
+import React from 'react';
 
 import QueueListItem from '../QueueListItem/QueueListItem';
 
 import * as QueueActions from '../../actions/QueueActions';
 
-import { getStatus } from '../../utils/utils-library';
-import { TrackModel } from '../../../shared/types/interfaces';
+import { getStatus } from '../../lib/utils-library';
+import { TrackModel } from '../../../shared/types/museeks';
 import Button from '../../elements/Button/Button';
 
-import * as styles from './QueueList.css';
+import styles from './QueueList.module.css';
 
 interface Props {
   queue: TrackModel[];

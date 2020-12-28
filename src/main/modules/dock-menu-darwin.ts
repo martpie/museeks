@@ -4,7 +4,7 @@
 
 import { Menu, app, ipcMain } from 'electron';
 
-import { PlayerStatus, TrackModel } from '../../shared/types/interfaces';
+import { PlayerStatus, TrackModel } from '../../shared/types/museeks';
 import ModuleWindow from './module-window';
 
 class DockMenuDarwinModule extends ModuleWindow {
