@@ -8,8 +8,8 @@ const isFile = (path: string) => fs.lstatSync(path).isFile();
 export const parse = (filePath: string): string[] => {
   try {
     const baseDir = path.parse(filePath).dir;
-    const encoding = chardet.detectFileSync(filePath);
     const content = fs.readFileSync(filePath);
+    const encoding = chardet.detect(content);
 
     if (typeof encoding !== 'string') {
       throw new Error(`could not guess the file encoding (${filePath})`);
