@@ -73,6 +73,7 @@ app.on('ready', async () => {
     webPreferences: {
       nodeIntegration: true,
       enableRemoteModule: true,
+      contextIsolation: false,
       autoplayPolicy: 'no-user-gesture-required',
     },
   });
