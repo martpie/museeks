@@ -29,7 +29,7 @@ const rendererConfig = {
     }),
     new WebpackBar({
       name: 'Renderer',
-      color: 'purple',
+      color: 'green',
       basic: true,
     }),
   ],
@@ -60,7 +60,7 @@ const mainConfig = {
   plugins: [
     new WebpackBar({
       name: 'Main    ',
-      color: 'blue',
+      color: 'cyan',
       basic: true,
     }),
   ],
