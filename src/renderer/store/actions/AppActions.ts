@@ -94,11 +94,11 @@ const init = async () => {
   });
 
   // Listen for main-process events
-  ipcRenderer.on('playback:play', async () => {
+  ipcRenderer.on('playback:play', () => {
     if (Player.getSrc()) {
-      await PlayerActions.play();
+      PlayerActions.play();
     } else {
-      await PlayerActions.start();
+      PlayerActions.start();
     }
   });
 
@@ -106,16 +106,16 @@ const init = async () => {
     PlayerActions.pause();
   });
 
-  ipcRenderer.on('playback:playpause', async () => {
-    await PlayerActions.playPause();
+  ipcRenderer.on('playback:playpause', () => {
+    PlayerActions.playPause();
   });
 
-  ipcRenderer.on('playback:previous', async () => {
-    await PlayerActions.previous();
+  ipcRenderer.on('playback:previous', () => {
+    PlayerActions.previous();
   });
 
-  ipcRenderer.on('playback:next', async () => {
-    await PlayerActions.next();
+  ipcRenderer.on('playback:next', () => {
+    PlayerActions.next();
   });
 
   ipcRenderer.on('playback:stop', () => {

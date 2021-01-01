@@ -64,7 +64,7 @@ const TracksList: React.FC<Props> = (props) => {
 
   const startPlayback = useCallback(
     async (_id: string) => {
-      await PlayerActions.start(tracks, _id);
+      PlayerActions.start(tracks, _id);
     },
     [tracks]
   );
@@ -73,7 +73,7 @@ const TracksList: React.FC<Props> = (props) => {
    * Keyboard navigations events/helpers
    */
   const onEnter = useCallback(async (i: number, tracks: TrackModel[]) => {
-    if (i !== -1) await PlayerActions.start(tracks, tracks[i]._id);
+    if (i !== -1) PlayerActions.start(tracks, tracks[i]._id);
   }, []);
 
   const onControlAll = useCallback(
