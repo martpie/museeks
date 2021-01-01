@@ -8,12 +8,12 @@ const WebpackBar = require('webpackbar');
 /**
  * Renderer process bundle
  */
-const uiConfig = {
+const rendererConfig = {
   entry: {
-    main: ['./src/ui/main.tsx'],
+    main: ['./src/renderer/main.tsx'],
   },
   output: {
-    path: `${__dirname}/dist/ui`,
+    path: `${__dirname}/dist/renderer`,
     filename: 'bundle.js',
     publicPath: './',
   },
@@ -28,7 +28,8 @@ const uiConfig = {
       template: 'src/app.html',
     }),
     new WebpackBar({
-      name: 'UI  ',
+      name: 'Renderer',
+      color: 'purple',
       basic: true,
     }),
   ],
@@ -58,8 +59,8 @@ const mainConfig = {
   },
   plugins: [
     new WebpackBar({
-      name: 'Main',
-      color: 'yellow',
+      name: 'Main    ',
+      color: 'blue',
       basic: true,
     }),
   ],
@@ -172,5 +173,5 @@ const sharedConfig = {
 /**
  * Exports
  */
-module.exports.ui = webpackMerge.merge(uiConfig, sharedConfig);
+module.exports.renderer = webpackMerge.merge(rendererConfig, sharedConfig);
 module.exports.main = webpackMerge.merge(mainConfig, sharedConfig);
