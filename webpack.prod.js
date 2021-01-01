@@ -1,7 +1,7 @@
 const webpackMerge = require('webpack-merge');
 const TerserPlugin = require('terser-webpack-plugin');
 
-const { ui, main } = require('./webpack.common.js');
+const { renderer, main } = require('./webpack.common.js');
 
 const prodConfig = {
   mode: 'production',
@@ -16,7 +16,7 @@ const prodConfig = {
   },
 };
 
-const prodUiConfig = webpackMerge.merge(ui, prodConfig);
+const prodRendererConfig = webpackMerge.merge(renderer, prodConfig);
 const prodMainConfig = webpackMerge.merge(main, prodConfig);
 
-module.exports = [prodUiConfig, prodMainConfig];
+module.exports = [prodRendererConfig, prodMainConfig];
