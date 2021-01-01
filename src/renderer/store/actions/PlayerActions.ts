@@ -1,17 +1,17 @@
 import electron from 'electron';
 
-import history from '../router/history';
+import history from '../../router/history';
 import store from '../store';
 
-import types from '../constants/action-types';
-import SORT_ORDERS from '../constants/sort-orders';
+import types from '../action-types';
+import SORT_ORDERS from '../../constants/sort-orders';
 
-import * as app from '../lib/app';
-import * as utils from '../lib/utils';
-import Player from '../lib/player';
-import { sortTracks, filterTracks } from '../lib/utils-library';
-import { shuffleTracks } from '../lib/utils-player';
-import { TrackModel, PlayerStatus, Repeat } from '../../shared/types/museeks';
+import * as app from '../../lib/app';
+import * as utils from '../../lib/utils';
+import Player from '../../lib/player';
+import { sortTracks, filterTracks } from '../../lib/utils-library';
+import { shuffleTracks } from '../../lib/utils-player';
+import { TrackModel, PlayerStatus, Repeat } from '../../../shared/types/museeks';
 import * as ToastsActions from './ToastsActions';
 
 const { ipcRenderer } = electron;

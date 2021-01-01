@@ -6,7 +6,7 @@ import * as ViewMessage from '../../elements/ViewMessage/ViewMessage';
 import TracksList from '../../components/TracksList/TracksList';
 import { filterTracks, sortTracks } from '../../lib/utils-library';
 import SORT_ORDERS from '../../constants/sort-orders';
-import { RootState } from '../../reducers';
+import { RootState } from '../../store/reducers';
 
 import appStyles from '../../App.module.css';
 import styles from './Library.module.css';

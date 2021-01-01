@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import ToastItem from '../../elements/Toast/Toast';
 
 import { Toast } from '../../../shared/types/museeks';
-import { RootState } from '../../reducers';
+import { RootState } from '../../store/reducers';
 
 import styles from './Toasts.module.css';
 

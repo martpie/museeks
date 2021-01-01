@@ -1,8 +1,8 @@
-import types from '../constants/action-types';
+import types from '../action-types';
 
-import { config } from '../lib/app';
-import * as utils from '../lib/utils';
-import { Action, TrackModel, SortBy, SortOrder } from '../../shared/types/museeks';
+import { config } from '../../lib/app';
+import * as utils from '../../lib/utils';
+import { Action, TrackModel, SortBy, SortOrder } from '../../../shared/types/museeks';
 
 export interface LibrarySort {
   by: SortBy;

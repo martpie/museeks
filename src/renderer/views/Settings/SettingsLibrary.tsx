@@ -4,9 +4,9 @@ import React, { useCallback } from 'react';
 import * as Setting from '../../components/Setting/Setting';
 import Dropzone from '../../components/SettingDropzone/SettingDropzone';
 
-import * as LibraryActions from '../../actions/LibraryActions';
-import * as PlayerActions from '../../actions/PlayerActions';
-import { LibraryState } from '../../reducers/library';
+import * as LibraryActions from '../../store/actions/LibraryActions';
+import * as PlayerActions from '../../store/actions/PlayerActions';
+import { LibraryState } from '../../store/reducers/library';
 import Button from '../../elements/Button/Button';
 
 const { dialog } = electron.remote;

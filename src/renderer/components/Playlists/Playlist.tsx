@@ -5,10 +5,10 @@ import { Link, RouteComponentProps } from 'react-router-dom';
 import TracksList from '../TracksList/TracksList';
 import * as ViewMessage from '../../elements/ViewMessage/ViewMessage';
 
-import * as PlaylistsActions from '../../actions/PlaylistsActions';
+import * as PlaylistsActions from '../../store/actions/PlaylistsActions';
 import { filterTracks } from '../../lib/utils-library';
 import { TrackModel, PlaylistModel, PlayerStatus } from '../../../shared/types/museeks';
-import { RootState } from '../../reducers';
+import { RootState } from '../../store/reducers';
 
 type OwnProps = RouteComponentProps<RouteParams>;
 

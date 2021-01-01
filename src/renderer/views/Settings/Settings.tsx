@@ -5,7 +5,7 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import { Config } from '../../../shared/types/museeks';
 import * as Nav from '../../elements/Nav/Nav';
 import { config } from '../../lib/app';
-import { RootState } from '../../reducers';
+import { RootState } from '../../store/reducers';
 import appStyles from '../../App.module.css';
 import SettingsLibrary from './SettingsLibrary';
 import SettingsUI from './SettingsUI';

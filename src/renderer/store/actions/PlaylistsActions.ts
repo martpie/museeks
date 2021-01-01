@@ -2,11 +2,11 @@ import path from 'path';
 import electron from 'electron';
 import * as m3u from 'm3ujs';
 
-import { Playlist, TrackModel, PlaylistModel } from '../../shared/types/museeks';
+import { Playlist, TrackModel, PlaylistModel } from '../../../shared/types/museeks';
 import store from '../store';
-import history from '../router/history';
-import types from '../constants/action-types';
-import * as app from '../lib/app';
+import history from '../../router/history';
+import types from '../action-types';
+import * as app from '../../lib/app';
 import * as ToastsActions from './ToastsActions';
 import * as PlayerActions from './PlayerActions';
 

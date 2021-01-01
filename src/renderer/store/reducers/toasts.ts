@@ -1,6 +1,6 @@
-import types from '../constants/action-types';
+import types from '../action-types';
 
-import { Toast, Action } from '../../shared/types/museeks';
+import { Toast, Action } from '../../../shared/types/museeks';
 
 export type ToastsState = Toast[];
 

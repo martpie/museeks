@@ -1,7 +1,7 @@
 import store from '../store';
-import types from '../constants/action-types';
+import types from '../action-types';
 
-import { ToastType } from '../../shared/types/museeks';
+import { ToastType } from '../../../shared/types/museeks';
 
 /**
  * Add a toast

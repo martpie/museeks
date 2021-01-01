@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
-import * as PlaylistActions from '../../actions/PlaylistsActions';
+import * as PlaylistActions from '../../store/actions/PlaylistsActions';
 
 import styles from './PlaylistsNavLink.module.css';
 

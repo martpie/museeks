@@ -3,7 +3,7 @@ import Icon from 'react-fontawesome';
 import cx from 'classnames';
 import Slider from 'react-rangeslider';
 
-import * as PlayerActions from '../../actions/PlayerActions';
+import * as PlayerActions from '../../store/actions/PlayerActions';
 import Player from '../../lib/player';
 
 import controlStyles from '../PlayerControls/PlayerControls.module.css';

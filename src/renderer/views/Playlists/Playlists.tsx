@@ -5,9 +5,9 @@ import { Route, Redirect, useParams } from 'react-router-dom';
 import PlaylistsNav from '../../components/PlaylistsNav/PlaylistsNav';
 import * as ViewMessage from '../../elements/ViewMessage/ViewMessage';
 
-import * as PlaylistsActions from '../../actions/PlaylistsActions';
+import * as PlaylistsActions from '../../store/actions/PlaylistsActions';
 import Playlist from '../../components/Playlists/Playlist';
-import { RootState } from '../../reducers';
+import { RootState } from '../../store/reducers';
 
 import appStyles from '../../App.module.css';
 import styles from './Playlists.module.css';

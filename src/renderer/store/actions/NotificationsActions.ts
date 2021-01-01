@@ -1,6 +1,6 @@
 import store from '../store';
-import types from '../constants/action-types';
-import * as app from '../lib/app';
+import types from '../action-types';
+import * as app from '../../lib/app';
 
 /**
  * Show a native notification
