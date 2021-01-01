@@ -28,7 +28,7 @@ const Museeks: React.FC = (props) => {
         case ' ':
           e.preventDefault();
           e.stopPropagation();
-          await PlayerActions.playPause();
+          PlayerActions.playPause();
           break;
         case ',':
           if (isCtrlKey(e)) {
