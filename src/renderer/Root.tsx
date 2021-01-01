@@ -7,11 +7,8 @@ interface State {
   hasError: boolean;
 }
 
-// eslint-disable-next-line
-type Props = {};
-
-class Root extends React.Component<Props, State> {
-  constructor(props: Props) {
+class Root extends React.Component<unknown, State> {
+  constructor(props: unknown) {
     super(props);
     this.state = { hasError: false };
   }

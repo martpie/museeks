@@ -9,7 +9,7 @@ import * as ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 
 import Root from './Root';
-import Router from './router/Router';
+import Router from './Router';
 import store from './store/store';
 
 /*
