@@ -1,6 +1,6 @@
 import path from 'path';
 import electron from 'electron';
-import installExtension, { REDUX_DEVTOOLS } from 'electron-devtools-installer';
+import installExtension, { REDUX_DEVTOOLS, REACT_DEVELOPER_TOOLS, REACT_PERF } from 'electron-devtools-installer';
 
 import IpcModule from './modules/ipc';
 import MenuModule from './modules/menu';
@@ -54,7 +54,7 @@ app.on('window-all-closed', () => {
 app.on('ready', async () => {
   // Let's install some extensions so it's easier for us to debug things
   if (!isProduction) {
-    installExtension([REDUX_DEVTOOLS])
+    installExtension([REDUX_DEVTOOLS, REACT_DEVELOPER_TOOLS, REACT_PERF])
       .then((name) => console.info(`[INFO] Added Extension: ${name}`))
       .catch((err) => console.info('[WARN] An error occurred while trying to add extensions: ', err));
   }
