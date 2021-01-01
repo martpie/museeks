@@ -1,6 +1,6 @@
 import electron from 'electron';
 
-import history from '../../router/history';
+import history from '../../lib/history';
 import store from '../store';
 
 import types from '../action-types';
