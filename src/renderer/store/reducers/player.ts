@@ -1,7 +1,7 @@
-import types from '../constants/action-types';
-import { config } from '../lib/app';
-import { shuffleTracks } from '../lib/utils-player';
-import { TrackModel, Action, Repeat, PlayerStatus } from '../../shared/types/museeks';
+import types from '../action-types';
+import { config } from '../../lib/app';
+import { shuffleTracks } from '../../lib/utils-player';
+import { TrackModel, Action, Repeat, PlayerStatus } from '../../../shared/types/museeks';
 
 export interface PlayerState {
   queue: TrackModel[];

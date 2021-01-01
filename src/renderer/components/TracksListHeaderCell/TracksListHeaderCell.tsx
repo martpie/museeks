@@ -2,7 +2,7 @@ import React from 'react';
 import cx from 'classnames';
 import Icon from 'react-fontawesome';
 
-import * as LibraryActions from '../../actions/LibraryActions';
+import * as LibraryActions from '../../store/actions/LibraryActions';
 import { SortBy } from '../../../shared/types/museeks';
 
 import styles from './TracksListHeaderCell.module.css';

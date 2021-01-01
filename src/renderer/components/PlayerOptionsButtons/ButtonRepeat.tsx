@@ -2,7 +2,7 @@ import React from 'react';
 import InlineSVG from 'svg-inline-react';
 import cx from 'classnames';
 
-import * as PlayerActions from '../../actions/PlayerActions';
+import * as PlayerActions from '../../store/actions/PlayerActions';
 import { Repeat } from '../../../shared/types/museeks';
 
 import styles from './common.module.css';

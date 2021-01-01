@@ -7,10 +7,10 @@ import TrackRow from '../TrackRow/TrackRow';
 import CustomScrollbar from '../CustomScrollbar/CustomScrollbar';
 import TracksListHeader from '../TracksListHeader/TracksListHeader';
 
-import * as LibraryActions from '../../actions/LibraryActions';
-import * as PlaylistsActions from '../../actions/PlaylistsActions';
-import * as PlayerActions from '../../actions/PlayerActions';
-import * as QueueActions from '../../actions/QueueActions';
+import * as LibraryActions from '../../store/actions/LibraryActions';
+import * as PlaylistsActions from '../../store/actions/PlaylistsActions';
+import * as PlayerActions from '../../store/actions/PlayerActions';
+import * as QueueActions from '../../store/actions/QueueActions';
 
 import { isLeftClick, isRightClick } from '../../lib/utils-events';
 import { isCtrlKey, isAltKey } from '../../lib/utils-platform';

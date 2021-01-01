@@ -1,11 +1,11 @@
 import store from '../store';
-import types from '../constants/action-types';
+import types from '../action-types';
 
-import * as app from '../lib/app';
-import Player from '../lib/player';
-import * as utils from '../lib/utils';
+import * as app from '../../lib/app';
+import Player from '../../lib/player';
+import * as utils from '../../lib/utils';
 
-import { Track } from '../../shared/types/museeks';
+import { Track } from '../../../shared/types/museeks';
 
 /**
  * Start audio playback from the queue

@@ -4,7 +4,7 @@ import electron from 'electron';
 import React from 'react';
 import Icon from 'react-fontawesome';
 
-import * as PlaylistsActions from '../../actions/PlaylistsActions';
+import * as PlaylistsActions from '../../store/actions/PlaylistsActions';
 import PlaylistsNavLink from '../PlaylistsNavLink/PlaylistsNavLink';
 import { PlaylistModel } from '../../../shared/types/museeks';
 

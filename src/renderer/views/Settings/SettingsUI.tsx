@@ -1,7 +1,7 @@
 import os from 'os';
 import React, { useCallback, ChangeEventHandler } from 'react';
 
-import * as SettingsActions from '../../actions/SettingsActions';
+import * as SettingsActions from '../../store/actions/SettingsActions';
 import * as Setting from '../../components/Setting/Setting';
 
 import CheckboxSetting from '../../components/SettingCheckbox/SettingCheckbox';

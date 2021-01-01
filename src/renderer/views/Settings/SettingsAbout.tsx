@@ -5,7 +5,7 @@ import Heart from '../../elements/Heart/Heart';
 import * as Setting from '../../components/Setting/Setting';
 
 import * as app from '../../lib/app';
-import * as SettingsActions from '../../actions/SettingsActions';
+import * as SettingsActions from '../../store/actions/SettingsActions';
 import Button from '../../elements/Button/Button';
 
 const SettingsAbout: React.FC = () => {

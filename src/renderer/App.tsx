@@ -7,8 +7,8 @@ import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import Toasts from './components/Toasts/Toasts';
 
-import AppActions from './actions/AppActions';
-import * as PlayerActions from './actions/PlayerActions';
+import AppActions from './store/actions/AppActions';
+import * as PlayerActions from './store/actions/PlayerActions';
 
 import styles from './App.module.css';
 import { isCtrlKey } from './lib/utils-platform';

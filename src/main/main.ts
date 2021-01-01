@@ -1,5 +1,6 @@
 import path from 'path';
 import electron from 'electron';
+import installExtension, { REDUX_DEVTOOLS } from 'electron-devtools-installer';
 
 import IpcModule from './modules/ipc';
 import MenuModule from './modules/menu';
@@ -16,6 +17,8 @@ import * as ModulesManager from './lib/modules-manager';
 import { checkBounds } from './lib/utils';
 
 const { app, BrowserWindow } = electron;
+
+const isProduction = process.env.NODE_ENV === 'production';
 
 const appRoot = path.resolve(__dirname, '../..'); // Careful, not future-proof
 const rendererDistPath = path.join(appRoot, 'dist', 'renderer');
@@ -49,6 +52,13 @@ app.on('window-all-closed', () => {
 // This method will be called when Electron has finished its
 // initialization and ready to create browser windows.
 app.on('ready', async () => {
+  // Let's install some extensions so it's easier for us to debug things
+  if (!isProduction) {
+    installExtension([REDUX_DEVTOOLS])
+      .then((name) => console.info(`[INFO] Added Extension: ${name}`))
+      .catch((err) => console.info('[WARN] An error occurred while trying to add extensions: ', err));
+  }
+
   const configModule = new ConfigModule();
   await ModulesManager.init(configModule);
 

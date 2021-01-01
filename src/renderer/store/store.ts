@@ -1,13 +1,12 @@
-import { createStore, applyMiddleware, Store } from 'redux';
-import thunk from 'redux-thunk';
+import { configureStore, Store } from '@reduxjs/toolkit';
 import { createLogger } from 'redux-logger';
 import { persistStore, persistReducer, createTransform } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
-import { PlayerStatus } from '../shared/types/museeks';
+import { PlayerStatus } from '../../shared/types/museeks';
+import player from '../lib/player';
 import rootReducer, { RootState } from './reducers';
 import { PlayerState } from './reducers/player';
-import player from './lib/player';
 
 const logger = createLogger({
   collapsed: true,
@@ -36,8 +35,7 @@ const persistConfig = {
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-const middlewares = applyMiddleware(thunk, logger);
-const store: Store<RootState> = createStore(persistedReducer, middlewares);
+const store: Store<RootState> = configureStore({ reducer: persistedReducer, middleware: [logger], devTools: true });
 
 export const persistor = persistStore(store, null, () => {
   // Let's set the player's src and currentTime with the info we have persisted in store

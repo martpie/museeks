@@ -2,9 +2,9 @@ import React from 'react';
 import Icon from 'react-fontawesome';
 import { connect } from 'react-redux';
 
-import * as PlayerActions from '../../actions/PlayerActions';
+import * as PlayerActions from '../../store/actions/PlayerActions';
 import { PlayerStatus } from '../../../shared/types/museeks';
-import { RootState } from '../../reducers';
+import { RootState } from '../../store/reducers';
 
 import styles from './PlayingIndicator.module.css';
 

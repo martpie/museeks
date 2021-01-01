@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 
 import * as Setting from '../../components/Setting/Setting';
 import AudioOutputSelect from '../../components/AudioOutputSelect/AudioOutputSelect';
-import * as PlayerActions from '../../actions/PlayerActions';
+import * as PlayerActions from '../../store/actions/PlayerActions';
 import { Config } from '../../../shared/types/museeks';
 
 interface Props {

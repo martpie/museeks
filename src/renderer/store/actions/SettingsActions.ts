@@ -2,9 +2,9 @@ import electron from 'electron';
 import * as semver from 'semver';
 
 import store from '../store';
-import types from '../constants/action-types';
-import * as app from '../lib/app';
-import { themes } from '../lib/themes';
+import types from '../action-types';
+import * as app from '../../lib/app';
+import { themes } from '../../lib/themes';
 import * as ToastsActions from './ToastsActions';
 
 const { ipcRenderer } = electron;

@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import TracksListHeaderCell from '../TracksListHeaderCell/TracksListHeaderCell';
 
 import { SortBy, SortOrder } from '../../../shared/types/museeks';
-import { RootState } from '../../reducers';
-import { LibrarySort } from '../../reducers/library';
+import { RootState } from '../../store/reducers';
+import { LibrarySort } from '../../store/reducers/library';
 
 import styles from './TracksListHeader.module.css';
 

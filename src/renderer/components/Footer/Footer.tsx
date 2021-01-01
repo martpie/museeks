@@ -5,8 +5,8 @@ import Icon from 'react-fontawesome';
 import { connect } from 'react-redux';
 
 import { getStatus } from '../../lib/utils-library';
-import { RootState } from '../../reducers';
-import { LibraryState } from '../../reducers/library';
+import { RootState } from '../../store/reducers';
+import { LibraryState } from '../../store/reducers/library';
 
 import ProgressBar from '../ProgressBar/ProgressBar';
 import styles from './Footer.module.css';
