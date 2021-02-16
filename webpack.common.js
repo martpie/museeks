@@ -1,12 +1,15 @@
 const path = require('path');
 
+const webpack = require('webpack');
 const webpackMerge = require('webpack-merge');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackBar = require('webpackbar');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 /**
  * Renderer process bundle
+ * @type {webpack.WebpackOptionsNormalized}
  */
 const rendererConfig = {
   entry: {
@@ -37,6 +40,7 @@ const rendererConfig = {
 
 /**
  * Main process bundle
+ * @type {webpack.WebpackOptionsNormalized}
  */
 const mainConfig = {
   entry: {
@@ -68,6 +72,7 @@ const mainConfig = {
 
 /**
  * Shared config
+ * @type {webpack.WebpackOptionsNormalized}
  */
 const sharedConfig = {
   resolve: {
@@ -168,6 +173,7 @@ const sharedConfig = {
     modules: false,
     reasons: false,
   },
+  plugins: [new CleanWebpackPlugin()],
 };
 
 /**
