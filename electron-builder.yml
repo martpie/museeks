@@ -23,21 +23,37 @@ files:
 mac:
   category: public.app-category.music
   target:
-    - dmg
+    - target: dmg
+      arch:
+        - x64
+        - arm64
   icon: src/images/logos/museeks.icns
   artifactName: ${name}.${ext}
 linux:
   category: Audio
   target:
-    - deb
-    - AppImage
-    - rpm
+    - target: deb
+      arch:
+        - x64
+        - ia32
+    - target: AppImage
+      arch:
+        - x64
+        - ia32
+    - target: rpm
+      arch:
+        - x64
+        - ia32
   executableName: museeks
   artifactName: ${name}-${arch}.${ext}
 deb:
   depends: ['libdbus-1-dev', 'libglib2.0-dev']
 win:
-  target: nsis
+  target:
+    - target: nsis
+      arch:
+        - x64
+        - ia32
   icon: src/images/logos/museeks.ico
   artifactName: ${name}-setup.${ext}
 # nsis:
