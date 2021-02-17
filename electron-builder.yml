@@ -30,7 +30,7 @@ mac:
   icon: src/images/logos/museeks.icns
   artifactName: ${name}.${ext}
 linux:
-  category: Audio
+  category: AudioVideo
   target:
     - target: deb
       arch:
