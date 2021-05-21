@@ -1,19 +1,22 @@
 const path = require('path');
 
+const webpack = require('webpack');
 const webpackMerge = require('webpack-merge');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackBar = require('webpackbar');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 /**
  * Renderer process bundle
+ * @type {webpack.WebpackOptionsNormalized}
  */
-const uiConfig = {
+const rendererConfig = {
   entry: {
-    main: ['./src/ui/main.tsx'],
+    main: ['./src/renderer/main.tsx'],
   },
   output: {
-    path: `${__dirname}/dist/ui`,
+    path: `${__dirname}/dist/renderer`,
     filename: 'bundle.js',
     publicPath: './',
   },
@@ -28,7 +31,8 @@ const uiConfig = {
       template: 'src/app.html',
     }),
     new WebpackBar({
-      name: 'UI  ',
+      name: 'Renderer',
+      color: 'green',
       basic: true,
     }),
   ],
@@ -36,6 +40,7 @@ const uiConfig = {
 
 /**
  * Main process bundle
+ * @type {webpack.WebpackOptionsNormalized}
  */
 const mainConfig = {
   entry: {
@@ -58,8 +63,8 @@ const mainConfig = {
   },
   plugins: [
     new WebpackBar({
-      name: 'Main',
-      color: 'yellow',
+      name: 'Main    ',
+      color: 'cyan',
       basic: true,
     }),
   ],
@@ -67,6 +72,7 @@ const mainConfig = {
 
 /**
  * Shared config
+ * @type {webpack.WebpackOptionsNormalized}
  */
 const sharedConfig = {
   resolve: {
@@ -167,10 +173,11 @@ const sharedConfig = {
     modules: false,
     reasons: false,
   },
+  plugins: [new CleanWebpackPlugin()],
 };
 
 /**
  * Exports
  */
-module.exports.ui = webpackMerge.merge(uiConfig, sharedConfig);
+module.exports.renderer = webpackMerge.merge(rendererConfig, sharedConfig);
 module.exports.main = webpackMerge.merge(mainConfig, sharedConfig);
