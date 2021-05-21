@@ -17,7 +17,7 @@
     "noErrorTruncation": true,
     "lib": ["dom", "es2015", "es2016", "es2017.object"],
     "paths": {
-      "~styles/*": ["src/ui/styles/*"]
+      "~styles/*": ["src/renderer/styles/*"]
     }
   },
   "exclude": ["**/node_modules", "**/__tests__", "./build/**/*", "./dist/**/*"]
