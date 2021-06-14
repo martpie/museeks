@@ -12,6 +12,7 @@ import * as PlayerActions from './store/actions/PlayerActions';
 
 import styles from './App.module.css';
 import { isCtrlKey } from './lib/utils-platform';
+import Player from './lib/player';
 
 /*
 |--------------------------------------------------------------------------
@@ -36,6 +37,16 @@ const Museeks: React.FC = (props) => {
             e.stopPropagation();
             history.push('/settings');
           }
+          break;
+        case 'ArrowLeft':
+          e.preventDefault();
+          e.stopPropagation();
+          PlayerActions.jumpTo(Player.getCurrentTime() - 10);
+          break;
+        case 'ArrowRight':
+          e.preventDefault();
+          e.stopPropagation();
+          PlayerActions.jumpTo(Player.getCurrentTime() + 10);
           break;
         default:
           break;
