@@ -123,18 +123,51 @@ export const getDefaultMetadata = (): Track => ({
   year: null,
 });
 
+export const convertHMStoS = (timeString: string): number => {
+  const arr = timeString.split(":");
+  const seconds = parseInt(arr[0]) * 3600 + parseInt(arr[1]) * 60 + parseInt(arr[2]);
+
+  return seconds;
+}
+
+const extractMetadataFromNative = (native: Record<string, Array<{id: string; value: string}>>): Partial<Track> => {
+  const metadata: Record<string,string> = {};
+  const regexList = [/album/gi, /artist/gi, /disk/gi, /duration/gi, /genre/gi, /title/gi, /year/gi];
+  for (const nativeParser in native) {
+    for (const field of native[nativeParser]) {
+      for (const key of regexList) {
+        if (field.value && key.test(field.id)) {
+          metadata[key.source] = field.value;
+          break;
+        }
+      }
+    }
+    break;
+  }
+
+  if (metadata.duration) {
+    metadata.duration = convertHMStoS(metadata.duration).toString();
+  }
+
+  return pickBy(metadata);
+} 
+
 export const parseMusicMetadata = (data: mmd.IAudioMetadata, trackPath: string): Partial<Track> => {
-  const { common, format } = data;
+  const { common, format, native } = data;
+  const nativeMetadata = extractMetadataFromNative(native);
 
   const metadata = {
-    album: common.album,
-    artist: common.artists || (common.artist && [common.artist]) || (common.albumartist && [common.albumartist]),
-    disk: common.disk,
-    duration: format.duration,
-    genre: common.genre,
-    title: common.title || path.parse(trackPath).base,
-    track: common.track,
-    year: common.year,
+    album: common.album || nativeMetadata.album,
+    artist: common.artists || 
+      (common.artist && [common.artist]) ||
+      (common.albumartist && [common.albumartist]) ||
+      (nativeMetadata.artist && [nativeMetadata.artist]),
+    disk: common.disk || nativeMetadata.disk,
+    duration: format.duration || nativeMetadata.duration,
+    genre: common.genre || (nativeMetadata.genre && [nativeMetadata.genre]),
+    title: common.title || nativeMetadata.title || path.parse(trackPath).base,
+    track: common.track || nativeMetadata.track,
+    year: common.year || nativeMetadata.year,
   };
 
   return pickBy(metadata);
