@@ -9,8 +9,7 @@
     "plugin:import/typescript",
     "plugin:jsx-a11y/recommended",
     "plugin:react-hooks/recommended",
-    "prettier",
-    "prettier/@typescript-eslint"
+    "prettier"
   ],
   "settings": { "react": { "version": "detect" } },
   "env": { "jest": true },
