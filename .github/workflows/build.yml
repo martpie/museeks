@@ -40,6 +40,9 @@ jobs:
       - name: 'Test: CSS linting'
         run: 'yarn run test:css'
 
+      - name: 'Test: unit'
+        run: 'yarn run test:unit'
+
       - name: Build application
         run: yarn run build
 
