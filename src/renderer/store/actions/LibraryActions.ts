@@ -257,10 +257,14 @@ export const add = async (pathsToScan: string[]): Promise<void> => {
  */
 export const remove = async (tracksIds: string[]): Promise<void> => {
   // not calling await on it as it calls the synchonous message box
-  const result: electron.MessageBoxReturnValue = await ipcRenderer.invoke(
-    messages.LIBRARY_REMOVAL_WARNING,
-    tracksIds.length
-  );
+  const options: Electron.MessageBoxOptions = {
+    buttons: ['Cancel', 'Remove'],
+    title: 'Remove tracks from library?',
+    message: `Are you sure you want to remove ${tracksIds.length} element(s) from your library?`,
+    type: 'warning',
+  };
+
+  const result: electron.MessageBoxReturnValue = await ipcRenderer.invoke(messages.DIALOG_MESSAGE_BOX, options);
 
   if (result.response === 1) {
     // button possition, here 'remove'
@@ -284,7 +288,14 @@ export const remove = async (tracksIds: string[]): Promise<void> => {
  */
 export const reset = async (): Promise<void> => {
   try {
-    const result = await ipcRenderer.invoke(messages.LIBRARY_RESET_WARNING);
+    const options: Electron.MessageBoxOptions = {
+      buttons: ['Cancel', 'Reset'],
+      title: 'Reset library?',
+      message: 'Are you sure you want to reset your library? All your tracks and playlists will be cleared.',
+      type: 'warning',
+    };
+
+    const result = await ipcRenderer.invoke(messages.DIALOG_MESSAGE_BOX, options);
 
     if (result.response === 1) {
       store.dispatch({
