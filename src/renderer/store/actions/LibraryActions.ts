@@ -1,12 +1,11 @@
 import * as fs from 'fs';
 import path from 'path';
 import * as util from 'util';
-import electron from 'electron';
+import electron, { ipcRenderer } from 'electron';
 import globby from 'globby';
 import * as queue from 'queue';
 
 import store from '../store';
-
 import types from '../action-types';
 
 import * as app from '../../lib/app';
@@ -14,10 +13,11 @@ import * as utils from '../../lib/utils';
 import * as m3u from '../../lib/utils-m3u';
 import { SortBy, TrackModel } from '../../../shared/types/museeks';
 import { SUPPORTED_PLAYLISTS_EXTENSIONS, SUPPORTED_TRACKS_EXTENSIONS } from '../../../shared/constants';
+import messages from '../../../shared/lib/ipc-messages';
+
 import * as PlaylistsActions from './PlaylistsActions';
 import * as ToastsActions from './ToastsActions';
 
-const { dialog } = electron.remote;
 const stat = util.promisify(fs.stat);
 
 interface ScanFile {
@@ -28,7 +28,7 @@ interface ScanFile {
 /**
  * Load tracks from database
  */
-export const refresh = async () => {
+export const refresh = async (): Promise<void> => {
   try {
     const tracks = await app.db.Track.find().execAsync();
 
@@ -46,7 +46,7 @@ export const refresh = async () => {
 /**
  * Filter tracks by search
  */
-export const search = (value: string) => {
+export const search = (value: string): void => {
   store.dispatch({
     type: types.FILTER_SEARCH,
     payload: {
@@ -58,7 +58,7 @@ export const search = (value: string) => {
 /**
  * Filter tracks by sort query
  */
-export const sort = (sortBy: SortBy) => {
+export const sort = (sortBy: SortBy): void => {
   store.dispatch({
     type: types.LIBRARY_SORT,
     payload: {
@@ -180,7 +180,7 @@ const scanTracks = async (paths: string[]): Promise<void> => {
 /**
  * Add tracks to Library
  */
-export const add = async (pathsToScan: string[]) => {
+export const add = async (pathsToScan: string[]): Promise<void> => {
   store.dispatch({
     type: types.LIBRARY_REFRESH_START,
   });
@@ -255,14 +255,12 @@ export const add = async (pathsToScan: string[]) => {
 /**
  * remove tracks from library
  */
-export const remove = async (tracksIds: string[]) => {
+export const remove = async (tracksIds: string[]): Promise<void> => {
   // not calling await on it as it calls the synchonous message box
-  const result = await dialog.showMessageBox(app.browserWindows.main, {
-    buttons: ['Cancel', 'Remove'],
-    title: 'Remove tracks from library?',
-    message: `Are you sure you want to remove ${tracksIds.length} element(s) from your library?`,
-    type: 'warning',
-  });
+  const result: electron.MessageBoxReturnValue = await ipcRenderer.invoke(
+    messages.LIBRARY_REMOVAL_WARNING,
+    tracksIds.length
+  );
 
   if (result.response === 1) {
     // button possition, here 'remove'
@@ -284,14 +282,9 @@ export const remove = async (tracksIds: string[]) => {
 /**
  * Reset the library
  */
-export const reset = async () => {
+export const reset = async (): Promise<void> => {
   try {
-    const result = await dialog.showMessageBox(app.browserWindows.main, {
-      buttons: ['Cancel', 'Reset'],
-      title: 'Reset library?',
-      message: 'Are you sure you want to reset your library ? All your tracks and playlists will be cleared.',
-      type: 'warning',
-    });
+    const result = await ipcRenderer.invoke(messages.LIBRARY_RESET_WARNING);
 
     if (result.response === 1) {
       store.dispatch({
@@ -319,7 +312,7 @@ export const reset = async () => {
 /**
  * Update the play count attribute.
  */
-export const incrementPlayCount = async (source: string) => {
+export const incrementPlayCount = async (source: string): Promise<void> => {
   const query = { src: source }; // HACK Not great, should be done with an _id
   const update = { $inc: { playcount: 1 } };
   try {
