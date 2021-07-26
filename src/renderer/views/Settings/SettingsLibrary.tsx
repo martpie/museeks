@@ -37,7 +37,11 @@ const SettingsLibrary: React.FC<Props> = (props) => {
   }, []);
 
   const openFolderSelector = useCallback(async () => {
-    const result = await ipcRenderer.invoke(messages.LIBRARY_ADD_TRACKS_SELECTION);
+    const options: Electron.OpenDialogOptions = {
+      properties: ['multiSelections', 'openDirectory', 'openFile'],
+    };
+
+    const result = await ipcRenderer.invoke(messages.DIALOG_OPEN, options);
 
     if (result.filePaths) {
       LibraryActions.add(result.filePaths).catch((err) => {

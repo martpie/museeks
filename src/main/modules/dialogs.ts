@@ -10,40 +10,19 @@ import ModuleWindow from './module-window';
 class DialogsModule extends ModuleWindow {
   async load(): Promise<void> {
     /**
-     * Warning when removing files from the library
+     * showMessageBox
      */
-    ipcMain.handle(messages.LIBRARY_REMOVAL_WARNING, async (_event, tracksLength) => {
-      const result = await dialog.showMessageBox(this.window, {
-        buttons: ['Cancel', 'Remove'],
-        title: 'Remove tracks from library?',
-        message: `Are you sure you want to remove ${tracksLength} element(s) from your library?`,
-        type: 'warning',
-      });
+    ipcMain.handle(messages.DIALOG_MESSAGE_BOX, async (_event, options: Electron.MessageBoxOptions) => {
+      const result = await dialog.showMessageBox(this.window, options);
 
       return result;
     });
 
     /**
-     * Warning when resetting the library
+     * showOpenDialog
      */
-    ipcMain.handle(messages.LIBRARY_RESET_WARNING, async (_event) => {
-      const result = await dialog.showMessageBox(this.window, {
-        buttons: ['Cancel', 'Reset'],
-        title: 'Reset library?',
-        message: 'Are you sure you want to reset your library? All your tracks and playlists will be cleared.',
-        type: 'warning',
-      });
-
-      return result;
-    });
-
-    /**
-     * Warning when resetting the library
-     */
-    ipcMain.handle(messages.LIBRARY_ADD_TRACKS_SELECTION, async (_event) => {
-      const result = await dialog.showOpenDialog({
-        properties: ['multiSelections', 'openDirectory', 'openFile'],
-      });
+    ipcMain.handle(messages.DIALOG_OPEN, async (_event, options: Electron.OpenDialogOptions) => {
+      const result = await dialog.showOpenDialog(options);
 
       return result;
     });
