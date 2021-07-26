@@ -36,6 +36,17 @@ class DialogsModule extends ModuleWindow {
 
       return result;
     });
+
+    /**
+     * Warning when resetting the library
+     */
+    ipcMain.handle(messages.LIBRARY_ADD_TRACKS_SELECTION, async (_event) => {
+      const result = await dialog.showOpenDialog({
+        properties: ['multiSelections', 'openDirectory', 'openFile'],
+      });
+
+      return result;
+    });
   }
 }
 
