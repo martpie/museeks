@@ -12,6 +12,7 @@ import DockMenuModule from './modules/dock-menu-darwin';
 import GlobalShortcutsModule from './modules/global-shortcuts';
 import SleepBlockerModule from './modules/sleep-blocker';
 import MprisModule from './modules/mpris';
+import DialogsModule from './modules/dialogs';
 
 import * as ModulesManager from './lib/modules-manager';
 import { checkBounds } from './lib/utils';
@@ -127,6 +128,7 @@ app.on('ready', async () => {
     new DockMenuModule(mainWindow),
     new GlobalShortcutsModule(mainWindow),
     new SleepBlockerModule(mainWindow),
-    new MprisModule(mainWindow)
+    new MprisModule(mainWindow),
+    new DialogsModule(mainWindow)
   ).catch(console.error);
 });
