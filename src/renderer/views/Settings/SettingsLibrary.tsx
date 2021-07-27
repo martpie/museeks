@@ -8,7 +8,7 @@ import * as LibraryActions from '../../store/actions/LibraryActions';
 import * as PlayerActions from '../../store/actions/PlayerActions';
 import { LibraryState } from '../../store/reducers/library';
 import Button from '../../elements/Button/Button';
-import messages from '../../../shared/lib/ipc-messages';
+import channels from '../../../shared/lib/ipc-channels';
 
 interface Props {
   library: LibraryState;
@@ -41,7 +41,7 @@ const SettingsLibrary: React.FC<Props> = (props) => {
       properties: ['multiSelections', 'openDirectory', 'openFile'],
     };
 
-    const result = await ipcRenderer.invoke(messages.DIALOG_OPEN, options);
+    const result = await ipcRenderer.invoke(channels.DIALOG_OPEN, options);
 
     if (result.filePaths) {
       LibraryActions.add(result.filePaths).catch((err) => {

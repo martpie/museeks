@@ -8,7 +8,7 @@ import ps from 'ps-node';
 import { Tray, Menu, app, ipcMain, nativeImage } from 'electron';
 
 import { TrackModel, PlayerStatus } from '../../shared/types/museeks';
-import messages from '../../shared/lib/ipc-messages';
+import channels from '../../shared/lib/ipc-channels';
 import ModuleWindow from './module-window';
 import ConfigModule from './config';
 
@@ -91,7 +91,7 @@ class TrayModule extends ModuleWindow {
       {
         label: 'Play',
         click: () => {
-          this.window.webContents.send(messages.PLAYBACK_PLAY);
+          this.window.webContents.send(channels.PLAYBACK_PLAY);
         },
       },
     ];
@@ -100,7 +100,7 @@ class TrayModule extends ModuleWindow {
       {
         label: 'Pause',
         click: () => {
-          this.window.webContents.send(messages.PLAYBACK_PAUSE);
+          this.window.webContents.send(channels.PLAYBACK_PAUSE);
         },
       },
     ];
@@ -109,13 +109,13 @@ class TrayModule extends ModuleWindow {
       {
         label: 'Previous',
         click: () => {
-          this.window.webContents.send(messages.PLAYBACK_PREVIOUS);
+          this.window.webContents.send(channels.PLAYBACK_PREVIOUS);
         },
       },
       {
         label: 'Next',
         click: () => {
-          this.window.webContents.send(messages.PLAYBACK_NEXT);
+          this.window.webContents.send(channels.PLAYBACK_NEXT);
         },
       },
       {
@@ -141,17 +141,17 @@ class TrayModule extends ModuleWindow {
     ];
 
     // Load events listener for player actions
-    ipcMain.on(messages.PLAYBACK_PLAY, () => {
+    ipcMain.on(channels.PLAYBACK_PLAY, () => {
       this.status = PlayerStatus.PLAY;
       this.setContextMenu(PlayerStatus.PLAY);
     });
 
-    ipcMain.on(messages.PLAYBACK_PAUSE, () => {
+    ipcMain.on(channels.PLAYBACK_PAUSE, () => {
       this.status = PlayerStatus.PAUSE;
       this.setContextMenu(PlayerStatus.PAUSE);
     });
 
-    ipcMain.on(messages.PLAYBACK_TRACK_CHANGE, (_e: Event, track: TrackModel) => {
+    ipcMain.on(channels.PLAYBACK_TRACK_CHANGE, (_e: Event, track: TrackModel) => {
       this.status = PlayerStatus.PLAY;
       this.updateTrayMetadata(track);
       this.setContextMenu(PlayerStatus.PLAY);
