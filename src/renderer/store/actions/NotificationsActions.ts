@@ -5,7 +5,7 @@ import * as app from '../../lib/app';
 /**
  * Show a native notification
  */
-export const add = (title: string, notificationData: NotificationOptions) => {
+export const add = (title: string, notificationData: NotificationOptions): void => {
   if (app.config.get('displayNotifications')) {
     const notification = new Notification(title, {
       body: notificationData.body,

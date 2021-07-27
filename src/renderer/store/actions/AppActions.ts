@@ -5,6 +5,7 @@ import Player from '../../lib/player';
 import { browserWindows, config } from '../../lib/app';
 import * as utils from '../../lib/utils';
 import * as coverUtils from '../../../shared/lib/utils-cover';
+import channels from '../../../shared/lib/ipc-channels';
 
 import * as LibraryActions from './LibraryActions';
 import * as PlaylistsActions from './PlaylistsActions';
@@ -17,7 +18,7 @@ const { ipcRenderer } = electron;
 let lastSaveBounds = 0;
 let saveBoundsTimeout: number | null = null;
 
-const saveBounds = async () => {
+const saveBounds = async (): Promise<void> => {
   const now = window.performance.now();
 
   if (now - lastSaveBounds < 250 && saveBoundsTimeout) {
@@ -32,14 +33,14 @@ const saveBounds = async () => {
   }, 250);
 };
 
-const init = async () => {
+const init = async (): Promise<void> => {
   // Usual tasks
   await SettingsActions.check();
   await LibraryActions.refresh();
   await PlaylistsActions.refresh();
 
   // Tell the main process to show the window
-  ipcRenderer.send('app:ready');
+  ipcRenderer.send(channels.APP_READY);
 
   // Bind player events
   // Audio Events
@@ -54,7 +55,7 @@ const init = async () => {
   // Should be moved to PlayerActions.play at some point, currently here due to
   // how Audio works
   Player.getAudio().addEventListener('play', async () => {
-    ipcRenderer.send('playback:play');
+    ipcRenderer.send(channels.PLAYBACK_PLAY);
 
     // HACK, on win32, a prefix slash is weirdly added
     let trackPath = Player.getSrc();
@@ -69,7 +70,7 @@ const init = async () => {
 
     const track = await utils.getMetadata(trackPath);
 
-    ipcRenderer.send('playback:trackChange', track);
+    ipcRenderer.send(channels.PLAYBACK_TRACK_CHANGE, track);
 
     if (browserWindows.main.isFocused()) return;
 
@@ -82,7 +83,7 @@ const init = async () => {
   });
 
   Player.getAudio().addEventListener('pause', () => {
-    ipcRenderer.send('playback:pause');
+    ipcRenderer.send(channels.PLAYBACK_PAUSE);
   });
 
   navigator.mediaDevices.addEventListener('devicechange', async () => {
@@ -94,7 +95,7 @@ const init = async () => {
   });
 
   // Listen for main-process events
-  ipcRenderer.on('playback:play', () => {
+  ipcRenderer.on(channels.PLAYBACK_PLAY, () => {
     if (Player.getSrc()) {
       PlayerActions.play();
     } else {
@@ -102,23 +103,23 @@ const init = async () => {
     }
   });
 
-  ipcRenderer.on('playback:pause', () => {
+  ipcRenderer.on(channels.PLAYBACK_PAUSE, () => {
     PlayerActions.pause();
   });
 
-  ipcRenderer.on('playback:playpause', () => {
+  ipcRenderer.on(channels.PLAYBACK_PLAYPAUSE, () => {
     PlayerActions.playPause();
   });
 
-  ipcRenderer.on('playback:previous', () => {
+  ipcRenderer.on(channels.PLAYBACK_PREVIOUS, () => {
     PlayerActions.previous();
   });
 
-  ipcRenderer.on('playback:next', () => {
+  ipcRenderer.on(channels.PLAYBACK_NEXT, () => {
     PlayerActions.next();
   });
 
-  ipcRenderer.on('playback:stop', () => {
+  ipcRenderer.on(channels.PLAYBACK_STOP, () => {
     PlayerActions.stop();
   });
 
@@ -146,19 +147,19 @@ const init = async () => {
   currentWindow.on('move', saveBounds);
 };
 
-const restart = () => {
-  ipcRenderer.send('app:restart');
+const restart = (): void => {
+  ipcRenderer.send(channels.APP_RESTART);
 };
 
-const close = () => {
-  ipcRenderer.send('app:close');
+const close = (): void => {
+  ipcRenderer.send(channels.APP_CLOSE);
 };
 
-const minimize = () => {
+const minimize = (): void => {
   browserWindows.main.minimize();
 };
 
-const maximize = () => {
+const maximize = (): void => {
   const mainWindow = browserWindows.main;
 
   if (mainWindow.isMaximized()) mainWindow.unmaximize();

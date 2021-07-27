@@ -54,7 +54,11 @@ win:
       arch:
         - x64
         - ia32
+    - target: portable
+      arch:
+        - x64
+        - ia32
   icon: src/images/logos/museeks.ico
-  artifactName: ${name}-setup.${ext}
-# nsis:
-#   perMachine: true
+  artifactName: ${name}-${arch}-setup.${ext}
+portable:
+  artifactName: ${name}-${arch}-portable.${ext}

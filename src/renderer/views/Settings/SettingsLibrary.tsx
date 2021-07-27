@@ -1,5 +1,5 @@
-import electron from 'electron';
 import React, { useCallback } from 'react';
+import { ipcRenderer } from 'electron';
 
 import * as Setting from '../../components/Setting/Setting';
 import Dropzone from '../../components/SettingDropzone/SettingDropzone';
@@ -8,8 +8,7 @@ import * as LibraryActions from '../../store/actions/LibraryActions';
 import * as PlayerActions from '../../store/actions/PlayerActions';
 import { LibraryState } from '../../store/reducers/library';
 import Button from '../../elements/Button/Button';
-
-const { dialog } = electron.remote;
+import channels from '../../../shared/lib/ipc-channels';
 
 interface Props {
   library: LibraryState;
@@ -38,9 +37,11 @@ const SettingsLibrary: React.FC<Props> = (props) => {
   }, []);
 
   const openFolderSelector = useCallback(async () => {
-    const result = await dialog.showOpenDialog({
+    const options: Electron.OpenDialogOptions = {
       properties: ['multiSelections', 'openDirectory', 'openFile'],
-    });
+    };
+
+    const result = await ipcRenderer.invoke(channels.DIALOG_OPEN, options);
 
     if (result.filePaths) {
       LibraryActions.add(result.filePaths).catch((err) => {

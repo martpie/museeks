@@ -4,21 +4,21 @@
   "themeSource": "dark",
   "variables": {
     "--text": "#efefef",
-    "--background": "hsl(210deg 11% 10%)",
+    "--background": "hsl(216, 20%, 7%)",
 
-    "--border-color": "#0e0e0e",
+    "--border-color": "#0a0a0a",
     "--border-radius": "2px",
 
     "--header-color": "#efefef",
-    "--header-bg": "hsl(210deg 11% 13%)",
+    "--header-bg": "hsl(216, 20%, 11%)",
 
-    "--footer-bg": "hsl(210deg 11% 13%)",
-    "--footer-nav-bg-color-active": "hsl(210deg 11% 10%)",
+    "--footer-bg": "hsl(216, 20%, 11%)",
+    "--footer-nav-bg-color-active": "hsl(216, 20%, 7%)",
 
-    "--tracks-bg-even": "hsl(210deg 11% 10%)",
-    "--tracks-bg-odd": "hsl(210deg 11% 12.5%)",
+    "--tracks-bg-even": "hsl(216, 20%, 7%)",
+    "--tracks-bg-odd": "hsl(216, 20%, 10%)",
 
-    "--tracks-header-bg": "hsl(210deg 11% 10%)",
+    "--tracks-header-bg": "hsl(216, 20%, 7%)",
     "--tracks-header-color": "#efefef",
 
     "--success-color": "#5CB85C",
@@ -26,26 +26,26 @@
     "--warning-color": "#F0AD4E",
     "--danger-color": "#de4343",
 
-    "--toasts-bg": "hsl(210deg 11% 10%)",
+    "--toasts-bg": "hsl(216, 20%, 7%)",
 
-    "--progress-bg": "hsl(210deg 11% 10%)",
+    "--progress-bg": "hsl(216, 20%, 7%)",
 
-    "--sidebar-bg": "hsl(210deg 11% 13%)",
-    "--sidebar-item-active-bg": "hsl(210deg 11% 10%)",
+    "--sidebar-bg": "hsl(216, 20%, 11%)",
+    "--sidebar-item-active-bg": "hsl(216, 20%, 7%)",
 
-    "--search-bg": "hsl(210deg 11% 10%)",
-    "--slider-bg": "hsl(210deg 11% 10%)",
+    "--search-bg": "hsl(216, 20%, 7%)",
+    "--slider-bg": "hsl(216, 20%, 7%)",
 
-    "--scrollbar-track": "hsl(210deg 11% 15%)",
+    "--scrollbar-track": "hsl(216, 20%, 15%)",
     "--scrollbar-thumb": "rgba(255, 255, 255, 0.2)",
 
-    "--queue-bg": "hsl(210deg 11% 10%)",
-    "--queue-header-bg": "hsl(210deg 11% 13%)",
+    "--queue-bg": "hsl(216, 20%, 7%)",
+    "--queue-header-bg": "hsl(216, 20%, 11%)",
 
-    "--checkbox-bg": "hsl(210deg 11% 17%)",
-    "--input-bg": "hsl(210deg 11% 15%)",
+    "--checkbox-bg": "hsl(216, 20%, 17%)",
+    "--input-bg": "hsl(216, 20%, 15%)",
     "--input-color": "#efefef",
-    "--button-bg": "hsl(210deg 11% 15%)",
+    "--button-bg": "hsl(216, 20%, 15%)",
     "--button-color": "#efefef"
   }
 }
