@@ -12,6 +12,7 @@ import Player from '../../lib/player';
 import { sortTracks, filterTracks } from '../../lib/utils-library';
 import { shuffleTracks } from '../../lib/utils-player';
 import { TrackModel, PlayerStatus, Repeat } from '../../../shared/types/museeks';
+import messages from '../../../shared/lib/ipc-messages';
 import * as ToastsActions from './ToastsActions';
 
 const { ipcRenderer } = electron;
@@ -135,7 +136,7 @@ export const stop = (): void => {
     type: types.PLAYER_STOP,
   });
 
-  ipcRenderer.send('playback:stop');
+  ipcRenderer.send(messages.PLAYBACK_STOP);
 };
 
 /**

@@ -64,9 +64,7 @@ app.on('ready', async () => {
   await ModulesManager.init(configModule);
 
   const config = configModule.getConfig();
-  let { bounds } = config;
-
-  bounds = checkBounds(bounds);
+  const bounds = checkBounds(config.bounds);
 
   // Create the browser window
   mainWindow = new BrowserWindow({

@@ -8,6 +8,7 @@ import ps from 'ps-node';
 import { Tray, Menu, app, ipcMain, nativeImage } from 'electron';
 
 import { TrackModel, PlayerStatus } from '../../shared/types/museeks';
+import messages from '../../shared/lib/ipc-messages';
 import ModuleWindow from './module-window';
 import ConfigModule from './config';
 
@@ -90,7 +91,7 @@ class TrayModule extends ModuleWindow {
       {
         label: 'Play',
         click: () => {
-          this.window.webContents.send('playback:play');
+          this.window.webContents.send(messages.PLAYBACK_PLAY);
         },
       },
     ];
@@ -99,7 +100,7 @@ class TrayModule extends ModuleWindow {
       {
         label: 'Pause',
         click: () => {
-          this.window.webContents.send('playback:pause');
+          this.window.webContents.send(messages.PLAYBACK_PAUSE);
         },
       },
     ];
@@ -108,13 +109,13 @@ class TrayModule extends ModuleWindow {
       {
         label: 'Previous',
         click: () => {
-          this.window.webContents.send('playback:previous');
+          this.window.webContents.send(messages.PLAYBACK_PREVIOUS);
         },
       },
       {
         label: 'Next',
         click: () => {
-          this.window.webContents.send('playback:next');
+          this.window.webContents.send(messages.PLAYBACK_NEXT);
         },
       },
       {
@@ -140,17 +141,17 @@ class TrayModule extends ModuleWindow {
     ];
 
     // Load events listener for player actions
-    ipcMain.on('playback:play', () => {
+    ipcMain.on(messages.PLAYBACK_PLAY, () => {
       this.status = PlayerStatus.PLAY;
       this.setContextMenu(PlayerStatus.PLAY);
     });
 
-    ipcMain.on('playback:pause', () => {
+    ipcMain.on(messages.PLAYBACK_PAUSE, () => {
       this.status = PlayerStatus.PAUSE;
       this.setContextMenu(PlayerStatus.PAUSE);
     });
 
-    ipcMain.on('playback:trackChange', (_e: Event, track: TrackModel) => {
+    ipcMain.on(messages.PLAYBACK_TRACK_CHANGE, (_e: Event, track: TrackModel) => {
       this.status = PlayerStatus.PLAY;
       this.updateTrayMetadata(track);
       this.setContextMenu(PlayerStatus.PLAY);
