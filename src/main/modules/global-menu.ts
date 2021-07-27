@@ -7,7 +7,7 @@ import { Menu, shell } from 'electron';
 
 import ModuleWindow from './module-window';
 
-class MenuModule extends ModuleWindow {
+class GlobalMenuModule extends ModuleWindow {
   async load(): Promise<void> {
     const template: Electron.MenuItemConstructorOptions[] = [
       { role: 'appMenu' },
@@ -33,4 +33,4 @@ class MenuModule extends ModuleWindow {
   }
 }
 
-export default MenuModule;
+export default GlobalMenuModule;

@@ -3,7 +3,7 @@ import electron from 'electron';
 import installExtension, { REDUX_DEVTOOLS, REACT_DEVELOPER_TOOLS, REACT_PERF } from 'electron-devtools-installer';
 
 import IpcModule from './modules/ipc';
-import MenuModule from './modules/menu';
+import GlobalMenuModule from './modules/global-menu';
 import TrayModule from './modules/tray';
 import ConfigModule from './modules/config';
 import PowerModule from './modules/power-monitor';
@@ -122,7 +122,7 @@ app.on('ready', async () => {
   ModulesManager.init(
     new IpcModule(mainWindow, configModule),
     new PowerModule(mainWindow),
-    new MenuModule(mainWindow),
+    new GlobalMenuModule(mainWindow),
     new TrayModule(mainWindow, configModule),
     new ThumbarModule(mainWindow),
     new DockMenuModule(mainWindow),
