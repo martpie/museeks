@@ -15,7 +15,7 @@ const { dialog } = electron.remote;
 /**
  * Start playing playlist (on double click)
  */
-export const play = async (playlistId: string) => {
+export const play = async (playlistId: string): Promise<void> => {
   try {
     const playlist: PlaylistModel = await app.db.Playlist.findOneAsync({ _id: playlistId });
     const tracks: TrackModel[] = await app.db.Track.findAsync({ _id: { $in: playlist.tracks } });
@@ -28,7 +28,7 @@ export const play = async (playlistId: string) => {
 /**
  * Load one playlist from database (Tracks list)
  */
-export const load = async (_id: string) => {
+export const load = async (_id: string): Promise<void> => {
   try {
     const playlist = await app.db.Playlist.findOneAsync({ _id });
     const tracks = await app.db.Track.findAsync({ _id: { $in: playlist.tracks } });
@@ -46,7 +46,7 @@ export const load = async (_id: string) => {
 /**
  * Refresh all playlists (Playlists list)
  */
-export const refresh = async () => {
+export const refresh = async (): Promise<void> => {
   try {
     const playlists = await app.db.Playlist.find({}).sort({ name: 1 }).execAsync();
     store.dispatch({
@@ -89,7 +89,7 @@ export const create = async (
 /**
  * Rename a playlist
  */
-export const rename = async (_id: string, name: string) => {
+export const rename = async (_id: string, name: string): Promise<void> => {
   try {
     await app.db.Playlist.updateAsync({ _id }, { $set: { name } });
     await refresh();
@@ -101,7 +101,7 @@ export const rename = async (_id: string, name: string) => {
 /**
  * Delete a playlist
  */
-export const remove = async (_id: string) => {
+export const remove = async (_id: string): Promise<void> => {
   try {
     await app.db.Playlist.removeAsync({ _id });
     await refresh();
@@ -113,7 +113,7 @@ export const remove = async (_id: string) => {
 /**
  * Add tracks to a playlist
  */
-export const addTracks = async (_id: string, tracksIds: string[], isShown?: boolean) => {
+export const addTracks = async (_id: string, tracksIds: string[], isShown?: boolean): Promise<void> => {
   // isShown should never be true, letting it here anyway to remember of a design issue
   if (isShown) return;
 
@@ -132,7 +132,7 @@ export const addTracks = async (_id: string, tracksIds: string[], isShown?: bool
 /**
  * Remove tracks from a playlist
  */
-export const removeTracks = async (playlistId: string, tracksIds: string[]) => {
+export const removeTracks = async (playlistId: string, tracksIds: string[]): Promise<void> => {
   try {
     const playlist = await app.db.Playlist.findOneAsync({ _id: playlistId });
     const playlistTracks = playlist.tracks.filter((elem: string) => !tracksIds.includes(elem));
@@ -146,7 +146,7 @@ export const removeTracks = async (playlistId: string, tracksIds: string[]) => {
 /**
  * Duplicate a playlist
  */
-export const duplicate = async (playlistId: string) => {
+export const duplicate = async (playlistId: string): Promise<void> => {
   try {
     const playlist = await app.db.Playlist.findOneAsync({ _id: playlistId });
     const { tracks } = playlist;
@@ -173,7 +173,7 @@ export const reorderTracks = async (
   tracksIds: string[],
   targetTrackId: string,
   position: 'above' | 'below'
-) => {
+): Promise<void> => {
   if (tracksIds.includes(targetTrackId)) return;
 
   try {
@@ -203,7 +203,7 @@ export const reorderTracks = async (
  * Export a playlist to a .m3u file
  * TODO: investigate why the export playlist path are relative, and not absolute
  */
-export const exportToM3u = async (playlistId: string) => {
+export const exportToM3u = async (playlistId: string): Promise<void> => {
   const playlist: PlaylistModel = await app.db.Playlist.findOneAsync({ _id: playlistId });
   const tracks: TrackModel[] = await app.db.Track.findAsync({ _id: { $in: playlist.tracks } });
 

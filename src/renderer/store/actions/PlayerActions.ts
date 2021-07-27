@@ -12,6 +12,7 @@ import Player from '../../lib/player';
 import { sortTracks, filterTracks } from '../../lib/utils-library';
 import { shuffleTracks } from '../../lib/utils-player';
 import { TrackModel, PlayerStatus, Repeat } from '../../../shared/types/museeks';
+import channels from '../../../shared/lib/ipc-channels';
 import * as ToastsActions from './ToastsActions';
 
 const { ipcRenderer } = electron;
@@ -26,7 +27,7 @@ const AUDIO_ERRORS = {
 /**
  * Play/resume audio
  */
-export const play = async () => {
+export const play = async (): Promise<void> => {
   await Player.play();
   store.dispatch({
     type: types.PLAYER_PLAY,
@@ -36,7 +37,7 @@ export const play = async () => {
 /**
  * Pause audio
  */
-export const pause = () => {
+export const pause = (): void => {
   Player.pause();
   store.dispatch({
     type: types.PLAYER_PAUSE,
@@ -47,7 +48,7 @@ export const pause = () => {
  * Start playing audio (queue instantiation...
  * TODO: this function ~could probably~ needs to be refactored ~a bit~
  */
-export const start = async (queue?: TrackModel[], _id?: string) => {
+export const start = async (queue?: TrackModel[], _id?: string): Promise<void> => {
   const state = store.getState();
 
   let newQueue = queue ? [...queue] : null;
@@ -112,7 +113,7 @@ export const start = async (queue?: TrackModel[], _id?: string) => {
 /**
  * Toggle play/pause
  */
-export const playPause = async () => {
+export const playPause = async (): Promise<void> => {
   const { paused } = Player.getAudio();
   // TODO (y.solovyov | martpie): calling getState is a hack.
   const { queue, playerStatus } = store.getState().player;
@@ -129,19 +130,19 @@ export const playPause = async () => {
 /**
  * Stop the player
  */
-export const stop = () => {
+export const stop = (): void => {
   Player.stop();
   store.dispatch({
     type: types.PLAYER_STOP,
   });
 
-  ipcRenderer.send('playback:stop');
+  ipcRenderer.send(channels.PLAYBACK_STOP);
 };
 
 /**
  * Jump to the next track
  */
-export const next = async () => {
+export const next = async (): Promise<void> => {
   // TODO (y.solovyov | martpie): calling getState is a hack.
   const { queue, queueCursor, repeat } = store.getState().player;
   let newQueueCursor;
@@ -180,7 +181,7 @@ export const next = async () => {
  * Jump to the previous track, or restart the current track after a certain
  * treshold
  */
-export const previous = async () => {
+export const previous = async (): Promise<void> => {
   const currentTime = Player.getCurrentTime();
 
   // TODO (y.solovyov | martpie): calling getState is a hack.
@@ -219,7 +220,7 @@ export const previous = async () => {
 /**
  * Enable/disable shuffle
  */
-export const shuffle = (value: boolean) => {
+export const shuffle = (value: boolean): void => {
   app.config.set('audioShuffle', value);
   app.config.save();
 
@@ -234,7 +235,7 @@ export const shuffle = (value: boolean) => {
 /**
  * Enable disable repeat
  */
-export const repeat = (value: Repeat) => {
+export const repeat = (value: Repeat): void => {
   app.config.set('audioRepeat', value);
   app.config.save();
 
@@ -249,7 +250,7 @@ export const repeat = (value: Repeat) => {
 /**
  * Set volume
  */
-export const setVolume = (volume: number) => {
+export const setVolume = (volume: number): void => {
   Player.setAudioVolume(volume);
 
   app.config.set('audioVolume', volume);
@@ -263,7 +264,7 @@ export const setVolume = (volume: number) => {
 /**
  * Mute/unmute the audio
  */
-export const setMuted = (muted = false) => {
+export const setMuted = (muted = false): void => {
   if (muted) Player.mute();
   else Player.unmute();
 
@@ -278,7 +279,7 @@ export const setMuted = (muted = false) => {
 /**
  * Set audio's playback rate
  */
-export const setPlaybackRate = (value: number) => {
+export const setPlaybackRate = (value: number): void => {
   if (value >= 0.5 && value <= 5) {
     // if in allowed range
     Player.setAudioPlaybackRate(value);
@@ -295,7 +296,7 @@ export const setPlaybackRate = (value: number) => {
 /**
  * Set audio's output device
  */
-export const setOutputDevice = (deviceId = 'default') => {
+export const setOutputDevice = (deviceId = 'default'): void => {
   if (deviceId) {
     try {
       Player.setOutputDevice(deviceId)
@@ -316,7 +317,7 @@ export const setOutputDevice = (deviceId = 'default') => {
 /**
  * Jump to a time in the track
  */
-export const jumpTo = (to: number) => {
+export const jumpTo = (to: number): void => {
   // TODO (y.solovyov) do we want to set some explicit state?
   // if yes, what should it be? if not, do we need this actions at all?
   Player.setAudioCurrentTime(to);
@@ -328,7 +329,7 @@ export const jumpTo = (to: number) => {
 /**
  * Handle audio errors
  */
-export const audioError = (e: ErrorEvent) => {
+export const audioError = (e: ErrorEvent): void => {
   stop();
 
   const element = e.target as HTMLAudioElement;

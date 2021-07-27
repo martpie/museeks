@@ -3,6 +3,7 @@
  */
 
 import { Menu, app, ipcMain } from 'electron';
+import channels from '../../shared/lib/ipc-channels';
 
 import { PlayerStatus, TrackModel } from '../../shared/types/museeks';
 import ModuleWindow from './module-window';
@@ -38,7 +39,7 @@ class DockMenuDarwinModule extends ModuleWindow {
       {
         label: 'Play',
         click: () => {
-          this.window.webContents.send('playback:play');
+          this.window.webContents.send(channels.PLAYBACK_PLAY);
         },
       },
     ];
@@ -47,7 +48,7 @@ class DockMenuDarwinModule extends ModuleWindow {
       {
         label: 'Pause',
         click: () => {
-          this.window.webContents.send('playback:pause');
+          this.window.webContents.send(channels.PLAYBACK_PAUSE);
         },
       },
     ];
@@ -56,27 +57,27 @@ class DockMenuDarwinModule extends ModuleWindow {
       {
         label: 'Previous',
         click: () => {
-          this.window.webContents.send('playback:previous');
+          this.window.webContents.send(channels.PLAYBACK_PREVIOUS);
         },
       },
       {
         label: 'Next',
         click: () => {
-          this.window.webContents.send('playback:next');
+          this.window.webContents.send(channels.PLAYBACK_NEXT);
         },
       },
     ];
 
     // Load events listener for player actions
-    ipcMain.on('playback:play', () => {
+    ipcMain.on(channels.PLAYBACK_PLAY, () => {
       this.setDockMenu(PlayerStatus.PLAY);
     });
 
-    ipcMain.on('playback:pause', () => {
+    ipcMain.on(channels.PLAYBACK_PAUSE, () => {
       this.setDockMenu(PlayerStatus.PAUSE);
     });
 
-    ipcMain.on('playback:trackChange', (_e: Event, track: TrackModel) => {
+    ipcMain.on(channels.PLAYBACK_TRACK_CHANGE, (_e: Event, track: TrackModel) => {
       this.updateTrayMetadata(track);
       this.setDockMenu(PlayerStatus.PLAY);
     });
