@@ -4,7 +4,7 @@
  */
 
 import { dialog, ipcMain } from 'electron';
-import messages from '../../shared/lib/ipc-messages';
+import channels from '../../shared/lib/ipc-channels';
 import ModuleWindow from './module-window';
 
 class DialogsModule extends ModuleWindow {
@@ -12,7 +12,7 @@ class DialogsModule extends ModuleWindow {
     /**
      * showMessageBox
      */
-    ipcMain.handle(messages.DIALOG_MESSAGE_BOX, async (_event, options: Electron.MessageBoxOptions) => {
+    ipcMain.handle(channels.DIALOG_MESSAGE_BOX, async (_event, options: Electron.MessageBoxOptions) => {
       const result = await dialog.showMessageBox(this.window, options);
 
       return result;
@@ -21,7 +21,7 @@ class DialogsModule extends ModuleWindow {
     /**
      * showOpenDialog
      */
-    ipcMain.handle(messages.DIALOG_OPEN, async (_event, options: Electron.OpenDialogOptions) => {
+    ipcMain.handle(channels.DIALOG_OPEN, async (_event, options: Electron.OpenDialogOptions) => {
       const result = await dialog.showOpenDialog(options);
 
       return result;

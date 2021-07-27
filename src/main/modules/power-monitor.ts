@@ -4,7 +4,7 @@
 
 import electron from 'electron';
 
-import messages from '../../shared/lib/ipc-messages';
+import channels from '../../shared/lib/ipc-channels';
 import ModuleWindow from './module-window';
 
 class PowerMonitorModule extends ModuleWindow {
@@ -13,7 +13,7 @@ class PowerMonitorModule extends ModuleWindow {
     const { window } = this;
 
     powerMonitor.on('suspend', () => {
-      window.webContents.send(messages.PLAYBACK_PAUSE);
+      window.webContents.send(channels.PLAYBACK_PAUSE);
     });
   }
 }

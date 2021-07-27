@@ -1,4 +1,4 @@
-const messages = {
+const channels = {
   APP_READY: 'APP_READY',
   APP_CLOSE: 'APP_CLOSE',
   APP_RESTART: 'APP_RESTART',
@@ -17,4 +17,4 @@ const messages = {
   DIALOG_OPEN: 'DIALOG_OPEN',
 };
 
-export default messages;
+export default channels;

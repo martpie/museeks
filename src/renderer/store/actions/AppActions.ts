@@ -5,7 +5,7 @@ import Player from '../../lib/player';
 import { browserWindows, config } from '../../lib/app';
 import * as utils from '../../lib/utils';
 import * as coverUtils from '../../../shared/lib/utils-cover';
-import messages from '../../../shared/lib/ipc-messages';
+import channels from '../../../shared/lib/ipc-channels';
 
 import * as LibraryActions from './LibraryActions';
 import * as PlaylistsActions from './PlaylistsActions';
@@ -40,7 +40,7 @@ const init = async (): Promise<void> => {
   await PlaylistsActions.refresh();
 
   // Tell the main process to show the window
-  ipcRenderer.send(messages.APP_READY);
+  ipcRenderer.send(channels.APP_READY);
 
   // Bind player events
   // Audio Events
@@ -55,7 +55,7 @@ const init = async (): Promise<void> => {
   // Should be moved to PlayerActions.play at some point, currently here due to
   // how Audio works
   Player.getAudio().addEventListener('play', async () => {
-    ipcRenderer.send(messages.PLAYBACK_PLAY);
+    ipcRenderer.send(channels.PLAYBACK_PLAY);
 
     // HACK, on win32, a prefix slash is weirdly added
     let trackPath = Player.getSrc();
@@ -70,7 +70,7 @@ const init = async (): Promise<void> => {
 
     const track = await utils.getMetadata(trackPath);
 
-    ipcRenderer.send(messages.PLAYBACK_TRACK_CHANGE, track);
+    ipcRenderer.send(channels.PLAYBACK_TRACK_CHANGE, track);
 
     if (browserWindows.main.isFocused()) return;
 
@@ -83,7 +83,7 @@ const init = async (): Promise<void> => {
   });
 
   Player.getAudio().addEventListener('pause', () => {
-    ipcRenderer.send(messages.PLAYBACK_PAUSE);
+    ipcRenderer.send(channels.PLAYBACK_PAUSE);
   });
 
   navigator.mediaDevices.addEventListener('devicechange', async () => {
@@ -95,7 +95,7 @@ const init = async (): Promise<void> => {
   });
 
   // Listen for main-process events
-  ipcRenderer.on(messages.PLAYBACK_PLAY, () => {
+  ipcRenderer.on(channels.PLAYBACK_PLAY, () => {
     if (Player.getSrc()) {
       PlayerActions.play();
     } else {
@@ -103,23 +103,23 @@ const init = async (): Promise<void> => {
     }
   });
 
-  ipcRenderer.on(messages.PLAYBACK_PAUSE, () => {
+  ipcRenderer.on(channels.PLAYBACK_PAUSE, () => {
     PlayerActions.pause();
   });
 
-  ipcRenderer.on(messages.PLAYBACK_PLAYPAUSE, () => {
+  ipcRenderer.on(channels.PLAYBACK_PLAYPAUSE, () => {
     PlayerActions.playPause();
   });
 
-  ipcRenderer.on(messages.PLAYBACK_PREVIOUS, () => {
+  ipcRenderer.on(channels.PLAYBACK_PREVIOUS, () => {
     PlayerActions.previous();
   });
 
-  ipcRenderer.on(messages.PLAYBACK_NEXT, () => {
+  ipcRenderer.on(channels.PLAYBACK_NEXT, () => {
     PlayerActions.next();
   });
 
-  ipcRenderer.on(messages.PLAYBACK_STOP, () => {
+  ipcRenderer.on(channels.PLAYBACK_STOP, () => {
     PlayerActions.stop();
   });
 
@@ -148,11 +148,11 @@ const init = async (): Promise<void> => {
 };
 
 const restart = (): void => {
-  ipcRenderer.send(messages.APP_RESTART);
+  ipcRenderer.send(channels.APP_RESTART);
 };
 
 const close = (): void => {
-  ipcRenderer.send(messages.APP_CLOSE);
+  ipcRenderer.send(channels.APP_CLOSE);
 };
 
 const minimize = (): void => {

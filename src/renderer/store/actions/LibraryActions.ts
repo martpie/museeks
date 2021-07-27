@@ -13,7 +13,7 @@ import * as utils from '../../lib/utils';
 import * as m3u from '../../lib/utils-m3u';
 import { SortBy, TrackModel } from '../../../shared/types/museeks';
 import { SUPPORTED_PLAYLISTS_EXTENSIONS, SUPPORTED_TRACKS_EXTENSIONS } from '../../../shared/constants';
-import messages from '../../../shared/lib/ipc-messages';
+import channels from '../../../shared/lib/ipc-channels';
 
 import * as PlaylistsActions from './PlaylistsActions';
 import * as ToastsActions from './ToastsActions';
@@ -264,7 +264,7 @@ export const remove = async (tracksIds: string[]): Promise<void> => {
     type: 'warning',
   };
 
-  const result: electron.MessageBoxReturnValue = await ipcRenderer.invoke(messages.DIALOG_MESSAGE_BOX, options);
+  const result: electron.MessageBoxReturnValue = await ipcRenderer.invoke(channels.DIALOG_MESSAGE_BOX, options);
 
   if (result.response === 1) {
     // button possition, here 'remove'
@@ -295,7 +295,7 @@ export const reset = async (): Promise<void> => {
       type: 'warning',
     };
 
-    const result = await ipcRenderer.invoke(messages.DIALOG_MESSAGE_BOX, options);
+    const result = await ipcRenderer.invoke(channels.DIALOG_MESSAGE_BOX, options);
 
     if (result.response === 1) {
       store.dispatch({
