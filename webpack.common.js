@@ -114,26 +114,11 @@ const sharedConfig = {
           },
           {
             test: /\.(eot|woff|woff2|ttf)([?]?.*)$/,
-            use: [
-              {
-                loader: 'file-loader',
-                options: {
-                  name: '/fonts/[name].[ext]',
-                  useRelativePath: true,
-                },
-              },
-            ],
+            type: 'asset/resource',
           },
           {
             test: /\.(png|jpg|ico)([?]?.*)$/,
-            use: [
-              {
-                loader: 'file-loader',
-                options: {
-                  name: 'images/[name].[ext]',
-                },
-              },
-            ],
+            type: 'asset/resource',
             exclude: /node_modules/,
           },
           {
@@ -143,14 +128,7 @@ const sharedConfig = {
           },
           {
             test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-            use: [
-              {
-                loader: 'url-loader',
-                options: {
-                  mimetype: 'image/svg+xml',
-                },
-              },
-            ],
+            type: 'asset/resource',
             include: /node_modules/,
           },
           {
