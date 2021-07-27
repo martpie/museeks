@@ -17,7 +17,7 @@ const { ipcRenderer } = electron;
 let lastSaveBounds = 0;
 let saveBoundsTimeout: number | null = null;
 
-const saveBounds = async () => {
+const saveBounds = async (): Promise<void> => {
   const now = window.performance.now();
 
   if (now - lastSaveBounds < 250 && saveBoundsTimeout) {
@@ -32,7 +32,7 @@ const saveBounds = async () => {
   }, 250);
 };
 
-const init = async () => {
+const init = async (): Promise<void> => {
   // Usual tasks
   await SettingsActions.check();
   await LibraryActions.refresh();
@@ -146,19 +146,19 @@ const init = async () => {
   currentWindow.on('move', saveBounds);
 };
 
-const restart = () => {
+const restart = (): void => {
   ipcRenderer.send('app:restart');
 };
 
-const close = () => {
+const close = (): void => {
   ipcRenderer.send('app:close');
 };
 
-const minimize = () => {
+const minimize = (): void => {
   browserWindows.main.minimize();
 };
 
-const maximize = () => {
+const maximize = (): void => {
   const mainWindow = browserWindows.main;
 
   if (mainWindow.isMaximized()) mainWindow.unmaximize();
