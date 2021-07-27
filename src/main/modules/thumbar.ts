@@ -8,6 +8,7 @@
 import path from 'path';
 import { nativeImage, ipcMain } from 'electron';
 
+import channels from '../../shared/lib/ipc-channels';
 import ModuleWindow from './module-window';
 
 const { createFromPath } = nativeImage;
@@ -39,7 +40,7 @@ class ThumbarModule extends ModuleWindow {
         tooltip: 'Play',
         icon: icons.play,
         click: () => {
-          window.webContents.send('playback:play');
+          window.webContents.send(channels.PLAYBACK_PLAY);
         },
       },
       /* playDisabled: {
@@ -52,7 +53,7 @@ class ThumbarModule extends ModuleWindow {
         tooltip: 'Pause',
         icon: icons.pause,
         click: () => {
-          window.webContents.send('playback:pause');
+          window.webContents.send(channels.PLAYBACK_PAUSE);
         },
       },
       pauseDisabled: {
@@ -67,7 +68,7 @@ class ThumbarModule extends ModuleWindow {
         tooltip: 'Prev',
         icon: icons.prev,
         click: () => {
-          window.webContents.send('playback:previous');
+          window.webContents.send(channels.PLAYBACK_PREVIOUS);
         },
       },
       prevDisabled: {
@@ -82,7 +83,7 @@ class ThumbarModule extends ModuleWindow {
         tooltip: 'Next',
         icon: icons.next,
         click: () => {
-          window.webContents.send('playback:next');
+          window.webContents.send(channels.PLAYBACK_NEXT);
         },
       },
       nextDisabled: {
@@ -95,19 +96,19 @@ class ThumbarModule extends ModuleWindow {
       },
     };
 
-    ipcMain.on('app:ready', () => {
+    ipcMain.on(channels.APP_READY, () => {
       window.setThumbarButtons([thumbarButtons.prevDisabled, thumbarButtons.play, thumbarButtons.nextDisabled]);
     });
 
-    ipcMain.on('playback:play', () => {
+    ipcMain.on(channels.PLAYBACK_PLAY, () => {
       window.setThumbarButtons([thumbarButtons.prev, thumbarButtons.pause, thumbarButtons.next]);
     });
 
-    ipcMain.on('playback:pause', () => {
+    ipcMain.on(channels.PLAYBACK_PAUSE, () => {
       window.setThumbarButtons([thumbarButtons.prev, thumbarButtons.play, thumbarButtons.next]);
     });
 
-    ipcMain.on('playback:stop', () => {
+    ipcMain.on(channels.PLAYBACK_STOP, () => {
       window.setThumbarButtons([thumbarButtons.prevDisabled, thumbarButtons.play, thumbarButtons.nextDisabled]);
     });
   }

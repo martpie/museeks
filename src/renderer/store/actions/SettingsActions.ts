@@ -16,7 +16,7 @@ interface UpdateCheckOptions {
 /**
  * Apply theme
  */
-export const applyTheme = (themeId: string) => {
+export const applyTheme = (themeId: string): void => {
   // TODO think about variables validity
   const root = document.documentElement;
 
@@ -39,7 +39,7 @@ export const applyTheme = (themeId: string) => {
   });
 };
 
-export const checkTheme = () => {
+export const checkTheme = (): void => {
   const themeId = app.config.get('theme');
 
   applyTheme(themeId);
@@ -48,7 +48,7 @@ export const checkTheme = () => {
 /**
  * Check and enable sleep blocker if needed
  */
-export const checkSleepBlocker = () => {
+export const checkSleepBlocker = (): void => {
   if (app.config.get('sleepBlocker')) {
     ipcRenderer.send('settings:toggleSleepBlocker', true);
   }
@@ -57,7 +57,7 @@ export const checkSleepBlocker = () => {
 /**
  * Check if a new release is available
  */
-export const checkForUpdate = async (options: UpdateCheckOptions = {}) => {
+export const checkForUpdate = async (options: UpdateCheckOptions = {}): Promise<void> => {
   const currentVersion = app.version;
 
   try {
@@ -87,7 +87,7 @@ export const checkForUpdate = async (options: UpdateCheckOptions = {}) => {
 /**
  * Init all settings
  */
-export const check = async () => {
+export const check = async (): Promise<void> => {
   checkTheme();
   checkSleepBlocker();
   if (app.config.get('autoUpdateChecker')) {
@@ -100,7 +100,7 @@ export const check = async () => {
 /**
  * Toggle sleep blocker
  */
-export const toggleSleepBlocker = (value: boolean) => {
+export const toggleSleepBlocker = (value: boolean): void => {
   app.config.set('sleepBlocker', value);
   app.config.save();
 
@@ -114,7 +114,7 @@ export const toggleSleepBlocker = (value: boolean) => {
 /**
  * Toggle update check on startup
  */
-export const toggleAutoUpdateChecker = (value: boolean) => {
+export const toggleAutoUpdateChecker = (value: boolean): void => {
   app.config.set('autoUpdateChecker', value);
   app.config.save();
 
@@ -126,7 +126,7 @@ export const toggleAutoUpdateChecker = (value: boolean) => {
 /**
  * Toggle minimize-to-tray
  */
-export const toggleMinimizeToTray = (value: boolean) => {
+export const toggleMinimizeToTray = (value: boolean): void => {
   app.config.set('minimizeToTray', value);
   app.config.save();
 
@@ -138,7 +138,7 @@ export const toggleMinimizeToTray = (value: boolean) => {
 /**
  * Toggle native notifications display
  */
-export const toggleDisplayNotifications = (value: boolean) => {
+export const toggleDisplayNotifications = (value: boolean): void => {
   app.config.set('displayNotifications', value);
   app.config.save();
 

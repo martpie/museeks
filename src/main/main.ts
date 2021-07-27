@@ -1,9 +1,9 @@
 import path from 'path';
 import electron from 'electron';
-import installExtension, { REDUX_DEVTOOLS, REACT_DEVELOPER_TOOLS, REACT_PERF } from 'electron-devtools-installer';
+import installExtension, { REDUX_DEVTOOLS, REACT_DEVELOPER_TOOLS } from 'electron-devtools-installer';
 
 import IpcModule from './modules/ipc';
-import MenuModule from './modules/menu';
+import ApplicationMenuModule from './modules/application-menu';
 import TrayModule from './modules/tray';
 import ConfigModule from './modules/config';
 import PowerModule from './modules/power-monitor';
@@ -12,6 +12,7 @@ import DockMenuModule from './modules/dock-menu-darwin';
 import GlobalShortcutsModule from './modules/global-shortcuts';
 import SleepBlockerModule from './modules/sleep-blocker';
 import MprisModule from './modules/mpris';
+import DialogsModule from './modules/dialogs';
 
 import * as ModulesManager from './lib/modules-manager';
 import { checkBounds } from './lib/utils';
@@ -54,7 +55,7 @@ app.on('window-all-closed', () => {
 app.on('ready', async () => {
   // Let's install some extensions so it's easier for us to debug things
   if (!isProduction) {
-    installExtension([REDUX_DEVTOOLS, REACT_DEVELOPER_TOOLS, REACT_PERF])
+    installExtension([REDUX_DEVTOOLS, REACT_DEVELOPER_TOOLS])
       .then((name) => console.info(`[INFO] Added Extension: ${name}`))
       .catch((err) => console.info('[WARN] An error occurred while trying to add extensions: ', err));
   }
@@ -63,9 +64,7 @@ app.on('ready', async () => {
   await ModulesManager.init(configModule);
 
   const config = configModule.getConfig();
-  let { bounds } = config;
-
-  bounds = checkBounds(bounds);
+  const bounds = checkBounds(config.bounds);
 
   // Create the browser window
   mainWindow = new BrowserWindow({
@@ -121,12 +120,13 @@ app.on('ready', async () => {
   ModulesManager.init(
     new IpcModule(mainWindow, configModule),
     new PowerModule(mainWindow),
-    new MenuModule(mainWindow),
+    new ApplicationMenuModule(mainWindow),
     new TrayModule(mainWindow, configModule),
     new ThumbarModule(mainWindow),
     new DockMenuModule(mainWindow),
     new GlobalShortcutsModule(mainWindow),
     new SleepBlockerModule(mainWindow),
-    new MprisModule(mainWindow)
+    new MprisModule(mainWindow),
+    new DialogsModule(mainWindow)
   ).catch(console.error);
 });
