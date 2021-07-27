@@ -9,6 +9,7 @@
 import os from 'os';
 import { ipcMain, app } from 'electron';
 
+import messages from '../../shared/lib/ipc-messages';
 import ModuleWindow from './module-window';
 import ConfigModule from './config';
 
@@ -24,7 +25,7 @@ class IpcModule extends ModuleWindow {
   }
 
   async load(): Promise<void> {
-    ipcMain.on('app:restart', () => {
+    ipcMain.on(messages.APP_RESTART, () => {
       app.relaunch({ args: ['process.argv.slice(1)', '--relaunch'] });
       app.exit(0);
     });
@@ -38,7 +39,7 @@ class IpcModule extends ModuleWindow {
     this.window.on('close', (e: Event) => {
       this.close(e);
     });
-    ipcMain.on('app:close', (e: Event) => {
+    ipcMain.on(messages.APP_CLOSE, (e: Event) => {
       this.close(e);
     });
 

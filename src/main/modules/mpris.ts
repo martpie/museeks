@@ -9,6 +9,7 @@ import * as mime from 'mime-types';
 import { TrackModel } from '../../shared/types/museeks';
 import { fetchCover } from '../../shared/lib/utils-cover';
 import { SUPPORTED_TRACKS_EXTENSIONS } from '../../shared/constants';
+import messages from '../../shared/lib/ipc-messages';
 import ModuleWindow from './module-window';
 
 const { app, ipcMain } = electron;
@@ -36,23 +37,23 @@ class MprisModule extends ModuleWindow {
     this.player.playbackStatus = 'Stopped';
 
     // Manage playbackStatus for the current song
-    ipcMain.on('playback:play', () => {
+    ipcMain.on(messages.PLAYBACK_PLAY, () => {
       this.player.playbackStatus = 'Playing';
     });
 
-    ipcMain.on('playback:pause', () => {
+    ipcMain.on(messages.PLAYBACK_PAUSE, () => {
       this.player.playbackStatus = 'Paused';
     });
 
-    ipcMain.on('playback:trackChange', async (_e: Event, track: TrackModel) => {
+    ipcMain.on(messages.PLAYBACK_TRACK_CHANGE, async (_e: Event, track: TrackModel) => {
       await this.updateCurrentTrack(track);
     });
 
-    ipcMain.on('playback:play', () => {
+    ipcMain.on(messages.PLAYBACK_PLAY, () => {
       this.player.playbackStatus = 'Playing';
     });
 
-    ipcMain.on('playback:pause', () => {
+    ipcMain.on(messages.PLAYBACK_PAUSE, () => {
       this.player.playbackStatus = 'Paused';
     });
 
@@ -66,29 +67,29 @@ class MprisModule extends ModuleWindow {
     });
 
     this.player.on('playpause', () => {
-      this.window.webContents.send('playback:playpause');
+      this.window.webContents.send(messages.PLAYBACK_PLAYPAUSE);
     });
 
     this.player.on('play', () => {
-      this.window.webContents.send('playback:play');
+      this.window.webContents.send(messages.PLAYBACK_PLAY);
       this.player.playbackStatus = 'Playing';
     });
 
     this.player.on('pause', () => {
-      this.window.webContents.send('playback:pause');
+      this.window.webContents.send(messages.PLAYBACK_PAUSE);
       this.player.playbackStatus = 'Paused';
     });
 
     this.player.on('next', () => {
-      this.window.webContents.send('playback:next');
+      this.window.webContents.send(messages.PLAYBACK_NEXT);
     });
 
     this.player.on('previous', () => {
-      this.window.webContents.send('playback:previous');
+      this.window.webContents.send(messages.PLAYBACK_PREVIOUS);
     });
 
     this.player.on('stop', () => {
-      this.window.webContents.send('playback:stop');
+      this.window.webContents.send(messages.PLAYBACK_STOP);
       this.player.playbackStatus = 'Stopped';
     });
   }

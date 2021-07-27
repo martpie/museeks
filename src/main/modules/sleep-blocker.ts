@@ -4,6 +4,7 @@
 
 import { powerSaveBlocker, ipcMain } from 'electron';
 
+import messages from '../../shared/lib/ipc-messages';
 import ModuleWindow from './module-window';
 
 class SleepBlocker extends ModuleWindow {
@@ -36,10 +37,10 @@ class SleepBlocker extends ModuleWindow {
   };
 
   async load(): Promise<void> {
-    ipcMain.on('settings:toggleSleepBlocker', this.toggleSleepBlocker);
-    ipcMain.on('playback:play', this.onStartPlayback);
-    ipcMain.on('playback:pause', this.onStopPlayback);
-    ipcMain.on('playback:stop', this.onStopPlayback);
+    ipcMain.on(messages.SETTINGS_TOGGLE_SLEEP_BLOCKER, this.toggleSleepBlocker);
+    ipcMain.on(messages.PLAYBACK_PLAY, this.onStartPlayback);
+    ipcMain.on(messages.PLAYBACK_PAUSE, this.onStopPlayback);
+    ipcMain.on(messages.PLAYBACK_STOP, this.onStopPlayback);
   }
 }
 
