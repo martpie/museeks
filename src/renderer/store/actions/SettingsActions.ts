@@ -1,48 +1,43 @@
-import electron from 'electron';
+import { ipcRenderer } from 'electron';
 import * as semver from 'semver';
 
 import store from '../store';
 import types from '../action-types';
+import channels from '../../../shared/lib/ipc-channels';
 import * as app from '../../lib/app';
-import { themes } from '../../lib/themes';
+import { Theme } from '../../../shared/types/museeks';
 import * as ToastsActions from './ToastsActions';
-
-const { ipcRenderer } = electron;
 
 interface UpdateCheckOptions {
   silentFail?: boolean;
 }
 
+export const getTheme = async (): Promise<string> => {
+  const themeId = await ipcRenderer.invoke(channels.THEME_GET_ID);
+
+  return themeId;
+};
+
+export const setTheme = async (themeId: string): Promise<void> => {
+  await ipcRenderer.invoke(channels.THEME_SET_ID, themeId);
+};
+
 /**
- * Apply theme
+ * Apply theme colors to  the BrowserWindow
  */
-export const applyTheme = (themeId: string): void => {
-  // TODO think about variables validity
+export const applyThemeToUI = async (theme: Theme): Promise<void> => {
+  // TODO think about variables validity?
   const root = document.documentElement;
-
-  const theme = themes.find((theme) => theme._id === themeId);
-
-  if (!theme) throw new RangeError(`No theme found with ID ${themeId}`);
-
-  // https://www.electronjs.org/docs/api/native-theme#nativethemethemesource
-  electron.remote.nativeTheme.themeSource = theme.themeSource;
-
-  app.config.set('theme', themeId);
-  app.config.save();
-
-  store.dispatch({
-    type: types.REFRESH_CONFIG,
-  });
 
   Object.entries(theme.variables).forEach(([property, value]) => {
     root.style.setProperty(property, value);
   });
 };
 
-export const checkTheme = (): void => {
-  const themeId = app.config.get('theme');
+export const checkTheme = async (): Promise<void> => {
+  const theme = await ipcRenderer.invoke(channels.THEME_GET);
 
-  applyTheme(themeId);
+  applyThemeToUI(theme);
 };
 
 /**
@@ -88,7 +83,7 @@ export const checkForUpdate = async (options: UpdateCheckOptions = {}): Promise<
  * Init all settings
  */
 export const check = async (): Promise<void> => {
-  checkTheme();
+  await checkTheme();
   checkSleepBlocker();
   if (app.config.get('autoUpdateChecker')) {
     checkForUpdate({ silentFail: true }).catch((err) => {
