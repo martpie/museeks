@@ -83,7 +83,7 @@ export const checkForUpdate = async (options: UpdateCheckOptions = {}): Promise<
  * Init all settings
  */
 export const check = async (): Promise<void> => {
-  checkTheme();
+  await checkTheme();
   checkSleepBlocker();
   if (app.config.get('autoUpdateChecker')) {
     checkForUpdate({ silentFail: true }).catch((err) => {
