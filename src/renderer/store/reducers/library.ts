@@ -22,6 +22,7 @@ export interface LibraryState {
     processed: number;
     total: number;
   };
+  highlightPlayingTrack: boolean;
 }
 
 const initialState: LibraryState = {
@@ -37,6 +38,7 @@ const initialState: LibraryState = {
     processed: 0,
     total: 0,
   },
+  highlightPlayingTrack: false,
 };
 
 export default (state = initialState, action: Action): LibraryState => {
@@ -180,6 +182,13 @@ export default (state = initialState, action: Action): LibraryState => {
           playlist: state.tracks.playlist,
           library: libraryTracks,
         },
+      };
+    }
+
+    case types.LIBRARY_HIGHLIGHT_PLAYING_TRACK: {
+      return {
+        ...state,
+        highlightPlayingTrack: action.payload.highlight,
       };
     }
 

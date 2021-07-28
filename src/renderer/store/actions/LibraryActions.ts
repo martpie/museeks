@@ -331,3 +331,15 @@ export const incrementPlayCount = async (source: string): Promise<void> => {
     console.warn(err);
   }
 };
+
+/**
+ * Set highlight trigger for a track
+ */
+export const highlightPlayingTrack = (highlight: boolean): void => {
+  store.dispatch({
+    type: types.LIBRARY_HIGHLIGHT_PLAYING_TRACK,
+    payload: {
+      highlight,
+    },
+  });
+};
