@@ -135,6 +135,7 @@ export interface Config {
   audioMuted: boolean;
   audioShuffle: boolean;
   audioRepeat: Repeat;
+  defaultView: string;
   librarySort: {
     by: SortBy;
     order: SortOrder;
