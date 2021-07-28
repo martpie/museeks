@@ -50,6 +50,7 @@ class ConfigModule extends Module {
       audioMuted: false,
       audioShuffle: false,
       audioRepeat: Repeat.NONE,
+      defaultView: 'library',
       librarySort: {
         by: SortBy.ARTIST,
         order: SortOrder.ASC,

@@ -107,6 +107,18 @@ export const toggleSleepBlocker = (value: boolean): void => {
 };
 
 /**
+ * Set the default view of the app
+ */
+export const setDefaultView = (value: string): void => {
+  app.config.set('defaultView', value);
+  app.config.save();
+
+  store.dispatch({
+    type: types.REFRESH_CONFIG,
+  });
+};
+
+/**
  * Toggle update check on startup
  */
 export const toggleAutoUpdateChecker = (value: boolean): void => {
