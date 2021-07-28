@@ -40,13 +40,6 @@ class NativeThemeModule extends ModuleWindow {
       this.setThemeId(themeId);
     });
 
-    /**
-     * Simply ask if the current native theme is dark or not
-     */
-    ipcMain.handle(channels.THEME_SYSTEM_IS_DARK, () => {
-      return nativeTheme.shouldUseDarkColors;
-    });
-
     ipcMain.handle(channels.THEME_GET, (_event) => {
       let themeId = this.getThemeId();
 
@@ -66,6 +59,7 @@ class NativeThemeModule extends ModuleWindow {
 
   setThemeId(themeId: Config['theme']): void {
     this.config.set('theme', themeId);
+    this.config.save();
 
     if (themeId === '__system') {
       nativeTheme.themeSource = 'system';

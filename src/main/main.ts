@@ -1,5 +1,5 @@
 import path from 'path';
-import { app, BrowserWindow, nativeTheme } from 'electron';
+import { app, BrowserWindow } from 'electron';
 import installExtension, { REDUX_DEVTOOLS, REACT_DEVELOPER_TOOLS } from 'electron-devtools-installer';
 
 import IpcModule from './modules/ipc';
@@ -17,9 +17,6 @@ import NativeThemeModule from './modules/native-theme';
 
 import * as ModulesManager from './lib/modules-manager';
 import { checkBounds } from './lib/utils';
-
-// TODO: nope
-nativeTheme.themeSource = 'system';
 
 const isProduction = process.env.NODE_ENV === 'production';
 
@@ -54,7 +51,7 @@ app.on('window-all-closed', () => {
 
 // This method will be called when Electron has finished its
 // initialization and ready to create browser windows.
-app.whenReady().then(async () => {
+app.on('ready', async () => {
   // Let's install some extensions so it's easier for us to debug things
   if (!isProduction) {
     installExtension([REDUX_DEVTOOLS, REACT_DEVELOPER_TOOLS])
