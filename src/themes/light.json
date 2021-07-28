@@ -1,6 +1,6 @@
 {
   "_id": "light",
-  "name": "Light (default)",
+  "name": "Light",
   "themeSource": "light",
   "variables": {
     "--text": "#333333",

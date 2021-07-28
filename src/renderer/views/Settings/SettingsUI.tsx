@@ -6,7 +6,7 @@ import * as Setting from '../../components/Setting/Setting';
 
 import CheckboxSetting from '../../components/SettingCheckbox/SettingCheckbox';
 import { Config } from '../../../shared/types/museeks';
-import { themes } from '../../lib/themes';
+import { themes } from '../../../shared/lib/themes';
 
 interface Props {
   config: Config;
@@ -16,7 +16,7 @@ const SettingsUI: React.FC<Props> = (props) => {
   const { config } = props;
 
   const onThemeChange = useCallback<ChangeEventHandler<HTMLSelectElement>>((e) => {
-    SettingsActions.applyTheme(e.currentTarget.value);
+    SettingsActions.setTheme(e.currentTarget.value);
   }, []);
 
   return (
@@ -24,6 +24,7 @@ const SettingsUI: React.FC<Props> = (props) => {
       <Setting.Section>
         <Setting.Label htmlFor='setting-theme'>Theme</Setting.Label>
         <Setting.Select defaultValue={config.theme} onChange={onThemeChange} id='setting-theme'>
+          <option value='__system'>System (default)</option>
           {themes.map((theme) => {
             return (
               <option key={theme._id} value={theme._id}>

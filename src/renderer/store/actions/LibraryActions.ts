@@ -208,7 +208,6 @@ export const add = async (pathsToScan: string[]): Promise<void> => {
       // Normalize slashes and escape regex special characters
       const pattern = `${folder.replace(/\\/g, '/').replace(/([$^*+?()\[\]])/g, '\\$1')}/**/*.*`;
 
-      console.log(pattern);
       return globby(pattern, { followSymbolicLinks: true });
     });
 
