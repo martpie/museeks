@@ -19,6 +19,10 @@ const SettingsUI: React.FC<Props> = (props) => {
     SettingsActions.setTheme(e.currentTarget.value);
   }, []);
 
+  const onDefaultViewChange = useCallback<ChangeEventHandler<HTMLSelectElement>>((e) => {
+    SettingsActions.setDefaultView(e.currentTarget.value);
+  }, []);
+
   return (
     <div className='setting setting-interface'>
       <Setting.Section>
@@ -34,6 +38,14 @@ const SettingsUI: React.FC<Props> = (props) => {
           })}
         </Setting.Select>
         <Setting.Description>Change the appearance of the interface</Setting.Description>
+      </Setting.Section>
+      <Setting.Section>
+        <Setting.Label htmlFor='setting-default-view'>Default view</Setting.Label>
+        <Setting.Select defaultValue={config.theme} onChange={onDefaultViewChange} id='setting-default-view'>
+          <option value='library'>Library (default)</option>
+          <option value='playlists'>Playlists</option>
+        </Setting.Select>
+        <Setting.Description>Change the default view when starting the application</Setting.Description>
       </Setting.Section>
       <Setting.Section>
         <CheckboxSetting
