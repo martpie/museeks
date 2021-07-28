@@ -6,6 +6,7 @@ import { browserWindows, config } from '../../lib/app';
 import * as utils from '../../lib/utils';
 import * as coverUtils from '../../../shared/lib/utils-cover';
 import channels from '../../../shared/lib/ipc-channels';
+import { Theme } from '../../../shared/types/museeks';
 
 import * as LibraryActions from './LibraryActions';
 import * as PlaylistsActions from './PlaylistsActions';
@@ -121,6 +122,11 @@ const init = async (): Promise<void> => {
 
   ipcRenderer.on(channels.PLAYBACK_STOP, () => {
     PlayerActions.stop();
+  });
+
+  // Auto-update theme if set to system and the native theme changes
+  ipcRenderer.on(channels.THEME_APPLY, (_event, theme: Theme) => {
+    SettingsActions.applyThemeToUI(theme);
   });
 
   // Prevent some events

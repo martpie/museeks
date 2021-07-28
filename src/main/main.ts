@@ -1,5 +1,5 @@
 import path from 'path';
-import electron from 'electron';
+import { app, BrowserWindow } from 'electron';
 import installExtension, { REDUX_DEVTOOLS, REACT_DEVELOPER_TOOLS } from 'electron-devtools-installer';
 
 import IpcModule from './modules/ipc';
@@ -13,11 +13,10 @@ import GlobalShortcutsModule from './modules/global-shortcuts';
 import SleepBlockerModule from './modules/sleep-blocker';
 import MprisModule from './modules/mpris';
 import DialogsModule from './modules/dialogs';
+import NativeThemeModule from './modules/native-theme';
 
 import * as ModulesManager from './lib/modules-manager';
 import { checkBounds } from './lib/utils';
-
-const { app, BrowserWindow } = electron;
 
 const isProduction = process.env.NODE_ENV === 'production';
 
@@ -121,12 +120,13 @@ app.on('ready', async () => {
     new IpcModule(mainWindow, configModule),
     new PowerModule(mainWindow),
     new ApplicationMenuModule(mainWindow),
-    new TrayModule(mainWindow, configModule),
+    new TrayModule(mainWindow),
     new ThumbarModule(mainWindow),
     new DockMenuModule(mainWindow),
     new GlobalShortcutsModule(mainWindow),
     new SleepBlockerModule(mainWindow),
     new MprisModule(mainWindow),
-    new DialogsModule(mainWindow)
+    new DialogsModule(mainWindow),
+    new NativeThemeModule(mainWindow, configModule)
   ).catch(console.error);
 });

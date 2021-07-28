@@ -10,10 +10,8 @@ import { Tray, Menu, app, ipcMain, nativeImage } from 'electron';
 import { TrackModel, PlayerStatus } from '../../shared/types/museeks';
 import channels from '../../shared/lib/ipc-channels';
 import ModuleWindow from './module-window';
-import ConfigModule from './config';
 
 class TrayModule extends ModuleWindow {
-  protected config: ConfigModule;
   protected tray: Electron.Tray | null;
   protected trayIcon: Electron.NativeImage;
   protected playToggle: Electron.MenuItemConstructorOptions[];
@@ -22,12 +20,11 @@ class TrayModule extends ModuleWindow {
   protected menu: Electron.MenuItemConstructorOptions[];
   protected status: PlayerStatus;
 
-  constructor(window: Electron.BrowserWindow, config: ConfigModule) {
+  constructor(window: Electron.BrowserWindow) {
     super(window);
 
     this.platforms = ['linux', 'win32'];
 
-    this.config = config;
     this.tray = null;
     this.playToggle = [];
     this.pauseToggle = [];
