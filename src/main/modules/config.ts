@@ -94,6 +94,14 @@ class ConfigModule extends Module {
     return this.conf.set(key, value);
   }
 
+  save(): void {
+    if (!this.conf) {
+      throw new Error('Config not loaded');
+    }
+
+    return this.conf.save();
+  }
+
   reload(): void {
     if (!this.conf) {
       throw new Error('Config not loaded');
