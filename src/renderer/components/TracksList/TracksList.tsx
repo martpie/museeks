@@ -2,6 +2,7 @@ import electron from 'electron';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import KeyBinding from 'react-keybinding-component';
 import chunk from 'lodash-es/chunk';
+import { useSelector } from 'react-redux';
 
 import TrackRow from '../TrackRow/TrackRow';
 import CustomScrollbar from '../CustomScrollbar/CustomScrollbar';
@@ -15,6 +16,7 @@ import * as QueueActions from '../../store/actions/QueueActions';
 import { isLeftClick, isRightClick } from '../../lib/utils-events';
 import { isCtrlKey, isAltKey } from '../../lib/utils-platform';
 import { PlaylistModel, TrackModel, PlayerStatus } from '../../../shared/types/museeks';
+import { RootState } from '../../store/reducers';
 
 import scrollbarStyles from '../CustomScrollbar/CustomScrollbar.module.css';
 import headerStyles from '../Header/Header.module.css';
@@ -50,6 +52,25 @@ const TracksList: React.FC<Props> = (props) => {
   const [selected, setSelected] = useState<string[]>([]);
   const [reordered, setReordered] = useState<string[] | null>([]);
   const [renderView, setRenderView] = useState<HTMLElement | null>(null);
+
+  const highlight = useSelector<RootState, boolean>((state) => state.library.highlightPlayingTrack);
+
+  // Highlight playing track and scroll to it
+  useEffect(() => {
+    if (highlight === true && trackPlayingId && renderView) {
+      setSelected([trackPlayingId]);
+
+      const playingTrackIndex = tracks.findIndex((track) => track._id === trackPlayingId);
+
+      if (playingTrackIndex >= 0) {
+        const nodeOffsetTop = playingTrackIndex * ROW_HEIGHT;
+
+        renderView.scrollTop = nodeOffsetTop;
+      }
+
+      LibraryActions.highlightPlayingTrack(false);
+    }
+  }, [highlight, trackPlayingId, renderView, tracks]);
 
   // FIXME: find a way to use a real ref for the render view
   useEffect(() => {

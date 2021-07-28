@@ -135,6 +135,7 @@ export default class TrackRow extends React.PureComponent<Props, State> {
         onDragLeave={(draggable && this.onDragLeave) || undefined}
         onDrop={(draggable && this.onDrop) || undefined}
         onDragEnd={(draggable && this.props.onDragEnd) || undefined}
+        {...(this.props.isPlaying ? { 'data-is-playing': true } : {})}
       >
         <div className={`${styles.cell} ${cellStyles.cellTrackPlaying}`}>
           {this.props.isPlaying ? <PlayingIndicator /> : null}
