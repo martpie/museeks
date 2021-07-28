@@ -139,6 +139,10 @@ const init = async (): Promise<void> => {
     history.push('/playlists');
   });
 
+  ipcRenderer.on(channels.MENU_JUMP_TO_PLAYING_TRACK, () => {
+    PlayerActions.jumpToPlayingTrack();
+  });
+
   // Prevent some events
   window.addEventListener(
     'dragover',

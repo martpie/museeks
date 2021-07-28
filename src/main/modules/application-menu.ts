@@ -18,6 +18,14 @@ class ApplicationMenuModule extends ModuleWindow {
         label: 'View',
         submenu: [
           {
+            label: 'Jump to playing track',
+            accelerator: 'CmdOrCtrl+T',
+            click: () => {
+              this.window.webContents.send(channels.MENU_JUMP_TO_PLAYING_TRACK);
+            },
+          },
+          { type: 'separator' },
+          {
             label: 'Go to library',
             accelerator: 'CmdOrCtrl+L',
             click: () => {
