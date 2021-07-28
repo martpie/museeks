@@ -38,20 +38,6 @@ const Museeks: React.FC = (props) => {
             history.push('/settings');
           }
           break;
-        case 'l':
-          if (isCtrlKey(e)) {
-            e.preventDefault();
-            e.stopPropagation();
-            history.push('/library');
-          }
-          break;
-        case 'p':
-          if (isCtrlKey(e)) {
-            e.preventDefault();
-            e.stopPropagation();
-            history.push('/playlists');
-          }
-          break;
         case 'ArrowLeft':
           e.preventDefault();
           e.stopPropagation();

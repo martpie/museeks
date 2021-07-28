@@ -4,6 +4,7 @@ import electron from 'electron';
 import Player from '../../lib/player';
 import { browserWindows, config } from '../../lib/app';
 import * as utils from '../../lib/utils';
+import history from '../../lib/history';
 import * as coverUtils from '../../../shared/lib/utils-cover';
 import channels from '../../../shared/lib/ipc-channels';
 import { Theme } from '../../../shared/types/museeks';
@@ -127,6 +128,15 @@ const init = async (): Promise<void> => {
   // Auto-update theme if set to system and the native theme changes
   ipcRenderer.on(channels.THEME_APPLY, (_event, theme: Theme) => {
     SettingsActions.applyThemeToUI(theme);
+  });
+
+  // Shortcuts from the application menu
+  ipcRenderer.on(channels.MENU_GO_TO_LIBRARY, () => {
+    history.push('/library');
+  });
+
+  ipcRenderer.on(channels.MENU_GO_TO_PLAYLISTS, () => {
+    history.push('/playlists');
   });
 
   // Prevent some events
