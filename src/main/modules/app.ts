@@ -88,6 +88,7 @@ class AppModule extends ModuleWindow {
     });
 
     if (!gotTheLock) {
+      console.info('[INFO] Another instance of Museeks is already running, quitting...');
       app.quit();
     }
   }
