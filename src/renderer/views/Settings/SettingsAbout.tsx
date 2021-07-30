@@ -47,13 +47,13 @@ const SettingsAbout: React.FC = () => {
         </p>
       </Setting.Section>
       <Setting.Section>
-        <h3>Show support</h3>
+        <h3>Support me</h3>
         <p>
-          Maintaining Museeks include some costs. All the work is done on contributors' free time, but I still have
-          recurring costs like domain names or developer certificates.
+          Maintaining Museeks includes some costs. All the work is done on contributors' free time, but I still have
+          recurring costs like domain names and developer certificates.
         </p>
         <p>
-          If you appreciate my work, and if you can afford it, you can for show support by{' '}
+          If you appreciate my work, and if you can afford it, you can for example show support by{' '}
           <ExternalLink href='https://github.com/sponsors/martpie'>sponsoring me</ExternalLink> (or just{' '}
           <ExternalLink href='https://github.com/sponsors/martpie?frequency=one-time'>buying me a beer</ExternalLink>)
           on GitHub (🙌).
