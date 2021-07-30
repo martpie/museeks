@@ -1,9 +1,6 @@
 /**
- * Module in charge of communicating with the render process, especially
- * in TracksList.
- *
- * TODO parts of this file should return to ui/, as content menus can now be
- * made async without blocking the rendering process
+ * Module in charge of handling the different window behavior based on platforms
+ * and tray options
  */
 
 import os from 'os';
@@ -13,9 +10,9 @@ import channels from '../../shared/lib/ipc-channels';
 import ModuleWindow from './module-window';
 import ConfigModule from './config';
 
-class IpcModule extends ModuleWindow {
-  config: ConfigModule;
-  forceQuit: boolean;
+class AppModule extends ModuleWindow {
+  protected config: ConfigModule;
+  protected forceQuit: boolean;
 
   constructor(window: Electron.BrowserWindow, config: ConfigModule) {
     super(window);
@@ -25,22 +22,37 @@ class IpcModule extends ModuleWindow {
   }
 
   async load(): Promise<void> {
-    ipcMain.on(channels.APP_RESTART, () => {
-      app.relaunch({ args: ['process.argv.slice(1)', '--relaunch'] });
-      app.exit(0);
+    // Make the app a single-instance app
+    this.ensureSingleInstance();
+
+    // Shows app only once it is loaded (avoid initial white flash)
+    ipcMain.on(channels.APP_READY, () => {
+      if (this.window) {
+        this.window.show();
+      }
     });
 
-    this.window.on('closed', () => {
-      // Dereference the window object
-      // this.window = null;
+    // Restart the app with the same arguments
+    ipcMain.on(channels.APP_RESTART, () => {
+      app.relaunch({ args: process.argv.slice(1).concat(['--relaunch']) });
+      app.exit(0);
     });
 
     // Prevent the window to be closed, hide it instead (to continue audio playback)
     this.window.on('close', (e: Event) => {
       this.close(e);
     });
+
     ipcMain.on(channels.APP_CLOSE, (e: Event) => {
       this.close(e);
+    });
+
+    // Click on the dock icon to show the app again on macOS
+    app.on('activate', () => {
+      if (this.window) {
+        this.window.show();
+        this.window.focus();
+      }
     });
 
     // Small hack to check on MacOS if the dock close action has been clicked
@@ -63,6 +75,22 @@ class IpcModule extends ModuleWindow {
       this.window.hide();
     }
   }
+
+  ensureSingleInstance(): void {
+    const gotTheLock = app.requestSingleInstanceLock();
+
+    app.on('second-instance', () => {
+      // Someone tried to run a second instance, we should focus our window.
+      if (this.window) {
+        if (this.window.isMinimized()) this.window.restore();
+        this.window.focus();
+      }
+    });
+
+    if (!gotTheLock) {
+      app.quit();
+    }
+  }
 }
 
-export default IpcModule;
+export default AppModule;
