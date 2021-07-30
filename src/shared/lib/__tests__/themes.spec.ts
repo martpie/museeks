@@ -1,7 +1,7 @@
 import { themes } from '../themes';
 
 describe('themes', () => {
-  test('all themes should have a unique identifier', () => {
+  test('themes should have a unique identifier', () => {
     const themeIds = themes.map((theme) => theme._id);
 
     expect(new Set(themeIds).size).toBe(themeIds.length);
@@ -10,6 +10,14 @@ describe('themes', () => {
   test('themeSource should be either "light" or "dark"', () => {
     themes.forEach((theme) => {
       expect(['dark', 'light'].includes(theme.themeSource)).toBe(true);
+    });
+  });
+
+  test('keys should be the same for every theme', () => {
+    const [firstTheme] = themes;
+
+    themes.forEach((theme) => {
+      expect(Object.keys(theme)).toStrictEqual(Object.keys(firstTheme));
     });
   });
 

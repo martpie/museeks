@@ -28,7 +28,7 @@ export const sortTracks = (tracks: TrackModel[], sort: any[]): TrackModel[] => {
 /**
  * Format a list of tracks to a nice status
  */
-export const getStatus = (tracks: TrackModel[]) => {
+export const getStatus = (tracks: TrackModel[]): string => {
   const status = utils.parseDuration(tracks.map((d) => d.duration).reduce((a, b) => a + b, 0));
   return `${tracks.length} tracks, ${status}`;
 };

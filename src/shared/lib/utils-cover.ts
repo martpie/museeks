@@ -8,7 +8,7 @@ const SUPPORTED_COVER_NAMES = ['album', 'albumart', 'folder', 'cover', 'front'];
 /**
  * Parse data to be used by img/background-image with base64
  */
-export const parseBase64 = (format: string, data: string) => {
+export const parseBase64 = (format: string, data: string): string => {
   return `data:${format};base64,${data}`;
 };
 
