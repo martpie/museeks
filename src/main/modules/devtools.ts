@@ -3,7 +3,7 @@
  * experience
  */
 
-import installExtension, { REDUX_DEVTOOLS, REACT_DEVELOPER_TOOLS } from 'electron-devtools-installer';
+import installExtensions, { REDUX_DEVTOOLS, REACT_DEVELOPER_TOOLS } from 'electron-devtools-installer';
 
 import ModuleWindow from './module-window';
 
@@ -13,8 +13,12 @@ class DevtoolsModule extends ModuleWindow {
 
     // Let's install some extensions so it's easier for us to debug things
     if (!isProduction) {
+      const options = {
+        loadExtensionOptions: { allowFileAccess: true },
+      };
+
       try {
-        await Promise.all([installExtension(REDUX_DEVTOOLS), installExtension(REACT_DEVELOPER_TOOLS)]);
+        await installExtensions([REDUX_DEVTOOLS, REACT_DEVELOPER_TOOLS], options);
         console.info(`[INFO] Added devtools extensions`);
       } catch (err) {
         console.info('[WARN] An error occurred while trying to add extensions:\n', err);
