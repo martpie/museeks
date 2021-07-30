@@ -28,7 +28,7 @@ const rendererConfig = {
     }),
     new HtmlWebpackPlugin({
       title: 'Museeks',
-      template: 'src/app.html',
+      template: 'src/renderer/app.html',
     }),
     new WebpackBar({
       name: 'Renderer',

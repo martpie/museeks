@@ -44,7 +44,7 @@ export const parseUri = (uri: string): string => {
 /**
  * Sort an array of string by ASC or DESC, then remove all duplicates
  */
-export const simpleSort = (array: string[], sorting: 'asc' | 'desc') => {
+export const simpleSort = (array: string[], sorting: 'asc' | 'desc'): string[] => {
   if (sorting === 'asc') {
     array.sort((a, b) => (a > b ? 1 : -1));
   } else if (sorting === 'desc') {
@@ -140,7 +140,7 @@ export const parseMusicMetadata = (data: mmd.IAudioMetadata, trackPath: string):
   return pickBy(metadata);
 };
 
-export const getLoweredMeta = (metadata: Track) => ({
+export const getLoweredMeta = (metadata: Track): Track['loweredMetas'] => ({
   artist: metadata.artist.map((meta) => stripAccents(meta.toLowerCase())),
   album: stripAccents(metadata.album.toLowerCase()),
   title: stripAccents(metadata.title.toLowerCase()),
