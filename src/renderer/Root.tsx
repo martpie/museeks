@@ -13,8 +13,9 @@ class Root extends React.Component<unknown, State> {
     this.state = { hasError: false };
   }
 
-  componentDidCatch() {
+  componentDidCatch(err: Error) {
     // RIP
+    console.error(`Museeks crashed: ${err}`);
     this.setState({ hasError: true });
   }
 
