@@ -61,8 +61,10 @@ app.on('ready', async () => {
     },
   });
 
-  // Open dev tools if museeks is run in debug mode
-  if (process.argv.includes('--devtools')) mainWindow.webContents.openDevTools({ mode: 'detach' });
+  // Open dev tools if museeks runs in debug or development mode
+  if (process.argv.includes('--devtools') || process.env.NODE_ENV === 'development') {
+    mainWindow.webContents.openDevTools({ mode: 'detach' });
+  }
 
   mainWindow.on('closed', () => {
     // Dereference the window object
