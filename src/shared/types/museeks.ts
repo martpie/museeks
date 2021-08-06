@@ -124,14 +124,18 @@ export interface ConfigBounds {
   y: number;
 }
 
+// TODO: how to automate this? Maybe losen types to "string"
+type ThemeIds = 'dark' | 'light' | 'dark-legacy';
+
 export interface Config {
-  theme: 'light' | 'dark';
+  theme: ThemeIds | '__system';
   audioVolume: number;
   audioPlaybackRate: number;
   audioOutputDevice: string;
   audioMuted: boolean;
   audioShuffle: boolean;
   audioRepeat: Repeat;
+  defaultView: string;
   librarySort: {
     by: SortBy;
     order: SortOrder;
@@ -149,8 +153,8 @@ export interface Config {
  */
 
 export interface Theme {
-  _id: string;
+  _id: ThemeIds;
   name: string;
-  themeSource: 'dark' | 'light' | 'system';
+  themeSource: Electron.NativeTheme['themeSource'];
   variables: Record<string, string>;
 }

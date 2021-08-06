@@ -2,6 +2,7 @@ import electron from 'electron';
 
 import history from '../../lib/history';
 import store from '../store';
+import { PlayerState } from '../reducers/player';
 
 import types from '../action-types';
 import SORT_ORDERS from '../../constants/sort-orders';
@@ -14,6 +15,7 @@ import { shuffleTracks } from '../../lib/utils-player';
 import { TrackModel, PlayerStatus, Repeat } from '../../../shared/types/museeks';
 import channels from '../../../shared/lib/ipc-channels';
 import * as ToastsActions from './ToastsActions';
+import * as LibraryActions from './LibraryActions';
 
 const { ipcRenderer } = electron;
 
@@ -53,10 +55,10 @@ export const start = async (queue?: TrackModel[], _id?: string): Promise<void> =
 
   let newQueue = queue ? [...queue] : null;
 
+  const { pathname } = history.location;
+
   // If no queue is provided, we create it based on the screen the user is on
   if (!newQueue) {
-    const { pathname } = history.location;
-
     if (pathname.indexOf('/playlists') === 0) {
       newQueue = state.library.tracks.playlist;
     } else {
@@ -99,10 +101,21 @@ export const start = async (queue?: TrackModel[], _id?: string): Promise<void> =
       queueCursor = 0;
     }
 
+    // Determine the queue origin in case the user wants to jump to the current
+    // track
+    let queueOrigin: PlayerState['queueOrigin'] = null;
+
+    if (pathname.indexOf('/playlists') === 0) {
+      queueOrigin = pathname;
+    } else {
+      queueOrigin = '/library';
+    }
+
     store.dispatch({
       type: types.PLAYER_START,
       payload: {
         queue: newQueue,
+        queueOrigin,
         oldQueue,
         queueCursor,
       },
@@ -324,6 +337,16 @@ export const jumpTo = (to: number): void => {
   store.dispatch({
     type: types.PLAYER_JUMP_TO,
   });
+};
+
+/**
+ * Toggle play/pause
+ */
+export const jumpToPlayingTrack = async (): Promise<void> => {
+  const queueOrigin = store.getState().player.queueOrigin ?? '/library';
+  history.push(queueOrigin);
+
+  LibraryActions.highlightPlayingTrack(true);
 };
 
 /**

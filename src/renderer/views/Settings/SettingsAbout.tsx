@@ -46,6 +46,19 @@ const SettingsAbout: React.FC = () => {
           <ExternalLink href='http://github.com/martpie/Museeks/issues'>issue tracker</ExternalLink>.
         </p>
       </Setting.Section>
+      <Setting.Section>
+        <h3>Support me</h3>
+        <p>
+          Maintaining Museeks includes some costs. All the work is done on contributors' free time, but I still have
+          recurring costs like domain names and developer certificates.
+        </p>
+        <p>
+          If you appreciate my work, and if you can afford it, you can for example show support by{' '}
+          <ExternalLink href='https://github.com/sponsors/martpie'>sponsoring me</ExternalLink> (or just{' '}
+          <ExternalLink href='https://github.com/sponsors/martpie?frequency=one-time'>buying me a beer</ExternalLink>)
+          on GitHub (🙌).
+        </p>
+      </Setting.Section>
     </div>
   );
 };

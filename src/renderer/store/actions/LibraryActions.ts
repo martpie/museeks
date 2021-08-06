@@ -208,7 +208,6 @@ export const add = async (pathsToScan: string[]): Promise<void> => {
       // Normalize slashes and escape regex special characters
       const pattern = `${folder.replace(/\\/g, '/').replace(/([$^*+?()\[\]])/g, '\\$1')}/**/*.*`;
 
-      console.log(pattern);
       return globby(pattern, { followSymbolicLinks: true });
     });
 
@@ -331,4 +330,16 @@ export const incrementPlayCount = async (source: string): Promise<void> => {
   } catch (err) {
     console.warn(err);
   }
+};
+
+/**
+ * Set highlight trigger for a track
+ */
+export const highlightPlayingTrack = (highlight: boolean): void => {
+  store.dispatch({
+    type: types.LIBRARY_HIGHLIGHT_PLAYING_TRACK,
+    payload: {
+      highlight,
+    },
+  });
 };

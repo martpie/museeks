@@ -43,13 +43,14 @@ class ConfigModule extends Module {
 
   getDefaultConfig(): Config {
     const config: Config = {
-      theme: 'light',
+      theme: '__system',
       audioVolume: 1,
       audioPlaybackRate: 1,
       audioOutputDevice: 'default',
       audioMuted: false,
       audioShuffle: false,
       audioRepeat: Repeat.NONE,
+      defaultView: 'library',
       librarySort: {
         by: SortBy.ARTIST,
         order: SortOrder.ASC,
@@ -84,6 +85,22 @@ class ConfigModule extends Module {
     }
 
     return this.conf.get(key);
+  }
+
+  set<T extends keyof Config>(key: T, value: Config[T]): void {
+    if (!this.conf) {
+      throw new Error('Config not loaded');
+    }
+
+    return this.conf.set(key, value);
+  }
+
+  save(): void {
+    if (!this.conf) {
+      throw new Error('Config not loaded');
+    }
+
+    return this.conf.save();
   }
 
   reload(): void {

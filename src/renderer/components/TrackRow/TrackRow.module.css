@@ -47,7 +47,7 @@
       z-index: 1;
       display: block;
       width: 100%;
-      content: "";
+      content: '';
       border-bottom: solid 2px var(--main-color);
     }
 
