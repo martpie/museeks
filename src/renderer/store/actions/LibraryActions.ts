@@ -343,7 +343,7 @@ export const updateTrack = async (track: Track): Promise<void> => {
     await app.db.Track.updateAsync(query, update);
     await refresh();
   } catch (err) {
-    console.log("error actionnn");
+    console.log('error actionnn');
     console.warn(err);
   }
 };
