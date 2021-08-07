@@ -11,7 +11,7 @@ import types from '../action-types';
 import * as app from '../../lib/app';
 import * as utils from '../../lib/utils';
 import * as m3u from '../../lib/utils-m3u';
-import { SortBy, TrackModel } from '../../../shared/types/museeks';
+import { SortBy, Track, TrackModel } from '../../../shared/types/museeks';
 import { SUPPORTED_PLAYLISTS_EXTENSIONS, SUPPORTED_TRACKS_EXTENSIONS } from '../../../shared/constants';
 import channels from '../../../shared/lib/ipc-channels';
 
@@ -328,6 +328,22 @@ export const incrementPlayCount = async (source: string): Promise<void> => {
   try {
     await app.db.Track.updateAsync(query, update);
   } catch (err) {
+    console.warn(err);
+  }
+};
+
+/**
+ * Update the id3 attributes.
+ */
+export const updateTrack = async (track: Track): Promise<void> => {
+  const query = { _id: track._id }; // HACK Not great, should be done with an _id
+  const update = track;
+  // const update = { $set: { title: track.title, artist: [track.artist], album: track.album } };
+  try {
+    await app.db.Track.updateAsync(query, update);
+    await refresh();
+  } catch (err) {
+    console.log("error actionnn");
     console.warn(err);
   }
 };

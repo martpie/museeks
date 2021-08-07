@@ -21,6 +21,7 @@ import { RootState } from '../../store/reducers';
 import scrollbarStyles from '../CustomScrollbar/CustomScrollbar.module.css';
 import headerStyles from '../Header/Header.module.css';
 import styles from './TracksList.module.css';
+import { useHistory } from 'react-router';
 
 const { shell, remote } = electron;
 const { Menu } = remote;
@@ -52,6 +53,7 @@ const TracksList: React.FC<Props> = (props) => {
   const [selected, setSelected] = useState<string[]>([]);
   const [reordered, setReordered] = useState<string[] | null>([]);
   const [renderView, setRenderView] = useState<HTMLElement | null>(null);
+  const history = useHistory()
 
   const highlight = useSelector<RootState, boolean>((state) => state.library.highlightPlayingTrack);
 
@@ -150,6 +152,10 @@ const TracksList: React.FC<Props> = (props) => {
       switch (e.code) {
         case 'KeyA':
           if (isCtrlKey(e)) onControlAll(firstSelectedTrackId, tracks);
+          break;
+
+          case 'KeyD':
+          if (isCtrlKey(e)) history.push(`/detail/${selected[0]}`);
           break;
 
         case 'ArrowUp':
@@ -378,6 +384,13 @@ const TracksList: React.FC<Props> = (props) => {
         {
           label: 'Add to playlist',
           submenu: playlistTemplate,
+        },
+        {
+          type: 'separator',
+        },
+        {
+          label: 'View Detail',
+          click: () => {history.push(`/detail/${track._id}`)}
         },
         {
           type: 'separator',
