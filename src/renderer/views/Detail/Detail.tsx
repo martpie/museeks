@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Switch, Route, Redirect, useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import { Section, Label, Input } from '../../components/Setting/Setting';
 import Button from '../../elements/Button/Button';
-import { Config } from '../../../shared/types/museeks';
-import * as Nav from '../../elements/Nav/Nav';
-import { config } from '../../lib/app';
 import { RootState } from '../../store/reducers';
 import appStyles from '../../App.module.css';
 import * as LibraryActions from '../../store/actions/LibraryActions';
@@ -16,7 +13,6 @@ import { parseDuration } from '../../lib/utils';
 import styles from './Detail.module.css';
 
 const Detail: React.FC = () => {
-  const dispatch = useDispatch();
   const { trackId } = useParams<{ trackId: string }>();
   const tracks = useSelector((state: RootState) => state.library.tracks.library);
   const [track, setTrack] = useState(undefined);
@@ -29,7 +25,7 @@ const Detail: React.FC = () => {
     duration: '',
   });
 
-  const getCover = async (path) => {
+  const getCover = async (path: string) => {
     const data = await coverUtils.fetchCover(path);
     if (data !== null) {
       setCoverSrc(data);

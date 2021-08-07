@@ -336,7 +336,7 @@ export const incrementPlayCount = async (source: string): Promise<void> => {
  * Update the id3 attributes.
  */
 export const updateTrack = async (track: Track): Promise<void> => {
-  const query = { _id: track._id }; // HACK Not great, should be done with an _id
+  const query = { path: track.path }; // HACK Not great, should be done with an _id
   const update = track;
   // const update = { $set: { title: track.title, artist: [track.artist], album: track.album } };
   try {
