@@ -5,6 +5,7 @@
   position: relative;
 
   .control {
+    display: flex;
     border: 0;
     background: transparent;
     font-size: 16px;
