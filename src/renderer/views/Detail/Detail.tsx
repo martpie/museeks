@@ -8,7 +8,7 @@ import appStyles from '../../App.module.css';
 import * as LibraryActions from '../../store/actions/LibraryActions';
 import * as coverUtils from '../../../shared/lib/utils-cover';
 import Placeholder from '../../../images/assets/placeholder.png';
-import { parseDuration } from '../../lib/utils';
+import { getLoweredMeta, parseDuration } from '../../lib/utils';
 
 import styles from './Detail.module.css';
 
@@ -38,6 +38,7 @@ const Detail: React.FC = () => {
     song.artist[0] = data.artist;
     song.album = data.album;
     song.genre[0] = data.genre;
+    song.loweredMetas = getLoweredMeta(song);
     return song;
   };
 

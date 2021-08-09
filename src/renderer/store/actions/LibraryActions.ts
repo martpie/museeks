@@ -338,12 +338,11 @@ export const incrementPlayCount = async (source: string): Promise<void> => {
 export const updateTrack = async (track: Track): Promise<void> => {
   const query = { path: track.path }; // HACK Not great, should be done with an _id
   const update = track;
-  // const update = { $set: { title: track.title, artist: [track.artist], album: track.album } };
+
   try {
     await app.db.Track.updateAsync(query, update);
     await refresh();
   } catch (err) {
-    console.log('error actionnn');
     console.warn(err);
   }
 };
