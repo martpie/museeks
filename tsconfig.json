@@ -18,7 +18,8 @@
     "lib": ["dom", "es2015", "es2016", "es2017.object"],
     "paths": {
       "~styles/*": ["src/renderer/styles/*"]
-    }
+    },
+    "isolatedModules": true
   },
   "exclude": ["**/node_modules", "**/__tests__", "./build/**/*", "./dist/**/*"]
 }
