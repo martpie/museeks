@@ -1,8 +1,8 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "target": "es5",
-    "module": "es2015",
+    "target": "es2020",
+    "module": "es2020",
     "jsx": "react",
     "moduleResolution": "node",
     "esModuleInterop": true,
