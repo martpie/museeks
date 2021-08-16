@@ -19,7 +19,7 @@ import store from './store/store';
 */
 
 import 'normalize.css/normalize.css';
-import 'font-awesome/css/font-awesome.css';
+// import 'font-awesome/css/font-awesome.css';
 import 'react-rangeslider/lib/index.css';
 import './styles/main.module.css';
 

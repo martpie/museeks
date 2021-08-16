@@ -6,7 +6,7 @@ import * as PlayerActions from '../../store/actions/PlayerActions';
 
 import styles from './common.module.css';
 
-const svg = require('../../../images/icons/player-shuffle.svg');
+import playerShuffleIcon from '../../../images/icons/player-shuffle.svg';
 
 interface Props {
   shuffle: boolean;
@@ -30,7 +30,7 @@ export default class ButtonShuffle extends React.Component<Props> {
 
     return (
       <button type='button' className={buttonClasses} onClick={this.toggleShuffle}>
-        <InlineSVG src={svg} className={styles.icon} />
+        <InlineSVG src={playerShuffleIcon} className={styles.icon} />
       </button>
     );
   }

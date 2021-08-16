@@ -58,6 +58,9 @@ typings/
 .env
 
 dist/
+dist_esbuild/*
+!dist_esbuild/.keep
+!dist_esbuild/app.html
 cache/
 build/
 
