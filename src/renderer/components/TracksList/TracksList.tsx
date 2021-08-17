@@ -157,11 +157,6 @@ const TracksList: React.FC<Props> = (props) => {
           }
           break;
 
-        case 'KeyD':
-          if (isCtrlKey(e)) history.push(`/detail/${selected[0]}`);
-
-          break;
-
         case 'ArrowUp':
           e.preventDefault();
           onUp(firstSelectedTrackId, tracks, e.shiftKey);
