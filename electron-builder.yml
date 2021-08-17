@@ -26,9 +26,10 @@ mac:
     - target: dmg
       arch:
         - x64
-        # - arm64
+        - arm64
   icon: src/images/logos/museeks.icns
-  artifactName: ${name}.${ext}
+  artifactName: ${name}-${arch}.${ext}
+  darkModeSupport: true
 linux:
   category: AudioVideo
   target:
