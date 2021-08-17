@@ -19,4 +19,5 @@ checksum_file build/museeks-ia32-portable.exe
 checksum_file build/museeks-x64-portable.exe
 checksum_file build/museeks-x86_64.AppImage
 checksum_file build/museeks-x86_64.rpm
-checksum_file build/museeks.dmg
+checksum_file build/museeks-x64.dmg
+checksum_file build/museeks-arm64.dmg
