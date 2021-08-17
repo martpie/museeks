@@ -149,7 +149,7 @@ const TracksList: React.FC<Props> = (props) => {
 
       switch (e.code) {
         case 'KeyA':
-          if (isCtrlKey(e)) { 
+          if (isCtrlKey(e)) {
             onControlAll(firstSelectedTrackId, tracks);
             e.preventDefault();
           }
