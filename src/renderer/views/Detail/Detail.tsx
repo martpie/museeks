@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { Section, Label, Input } from '../../components/Setting/Setting';
+import { db } from '../../lib/app';
 import Button from '../../elements/Button/Button';
 import { RootState } from '../../store/reducers';
 import appStyles from '../../App.module.css';
@@ -14,7 +15,6 @@ import styles from './Detail.module.css';
 
 const Detail: React.FC = () => {
   const { trackId } = useParams<{ trackId: string }>();
-  const tracks = useSelector((state: RootState) => state.library.tracks.library);
   const [track, setTrack] = useState(undefined);
   const [coverSrc, setCoverSrc] = useState(undefined);
   const [data, setData] = useState({
@@ -72,17 +72,20 @@ const Detail: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    const song = tracks.find((tr) => tr._id === trackId);
-    getCover(song.path);
+    db.Track.findOne({ _id: trackId }, (err, song) => {
+      if (err !== null) return console.log(err);
+      getCover(song.path);
 
-    setTrack(song);
-    setData({
-      title: song.title || '',
-      artist: song.artist[0] || '',
-      album: song.album || '',
-      genre: song.genre[0] || '',
-      duration: parseDuration(song.duration) || '',
+      setTrack(song);
+      setData({
+        title: song.title || '',
+        artist: song.artist[0] || '',
+        album: song.album || '',
+        genre: song.genre[0] || '',
+        duration: parseDuration(song.duration) || '',
+      });
     });
+
     return () => {
       setData({
         title: '',
@@ -92,7 +95,7 @@ const Detail: React.FC = () => {
         duration: '',
       });
     };
-  }, [getCover, trackId, tracks]);
+  }, [getCover, trackId]);
 
   return (
     <div className={`${appStyles.view} ${styles.viewDetail}`}>
