@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { Section, Label, Input } from '../../components/Setting/Setting';
@@ -25,43 +25,51 @@ const Detail: React.FC = () => {
     duration: '',
   });
 
-  const getCover = async (path: string) => {
+  const getCover = useCallback(async (path: string) => {
     const data = await coverUtils.fetchCover(path);
     if (data !== null) {
       setCoverSrc(data);
     }
-  };
+  }, []);
 
-  const updateSong = (data) => {
-    const song = { ...track };
-    song.title = data.title;
-    song.artist[0] = data.artist;
-    song.album = data.album;
-    song.genre[0] = data.genre;
-    song.loweredMetas = getLoweredMeta(song);
-    return song;
-  };
+  const updateSong = useCallback(
+    (data) => {
+      const song = { ...track };
+      song.title = data.title;
+      song.artist[0] = data.artist;
+      song.album = data.album;
+      song.genre[0] = data.genre;
+      song.loweredMetas = getLoweredMeta(song);
+      return song;
+    },
+    [track]
+  );
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = useCallback(
+    async (e) => {
+      e.preventDefault();
+      const song = updateSong(data);
+      await LibraryActions.updateTrack(song);
+      history.back();
+    },
+    [data, updateSong]
+  );
+
+  const handleChange = useCallback(
+    (e) => {
+      e.preventDefault();
+      setData({
+        ...data,
+        [e.target.name]: e.target.value,
+      });
+    },
+    [data]
+  );
+
+  const handleCancel = useCallback((e) => {
     e.preventDefault();
-    const song = updateSong(data);
-    await LibraryActions.updateTrack(song);
-    // dispatch(LibraryActions.refresh());
     history.back();
-  };
-
-  const handleChange = (e) => {
-    e.preventDefault();
-    setData({
-      ...data,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const handleCancel = (e) => {
-    e.preventDefault();
-    history.back();
-  };
+  }, []);
 
   useEffect(() => {
     const song = tracks.find((tr) => tr._id === trackId);
@@ -84,7 +92,7 @@ const Detail: React.FC = () => {
         duration: '',
       });
     };
-  }, [trackId, tracks]);
+  }, [getCover, trackId, tracks]);
 
   return (
     <div className={`${appStyles.view} ${styles.viewDetail}`}>
