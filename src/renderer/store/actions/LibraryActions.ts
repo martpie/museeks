@@ -14,10 +14,10 @@ import * as m3u from '../../lib/utils-m3u';
 import { SortBy, Track, TrackModel } from '../../../shared/types/museeks';
 import { SUPPORTED_PLAYLISTS_EXTENSIONS, SUPPORTED_TRACKS_EXTENSIONS } from '../../../shared/constants';
 import channels from '../../../shared/lib/ipc-channels';
+import persistTags from '../../lib/id3';
 
 import * as PlaylistsActions from './PlaylistsActions';
 import * as ToastsActions from './ToastsActions';
-import persistTags from '../../lib/id3';
 
 const stat = util.promisify(fs.stat);
 
