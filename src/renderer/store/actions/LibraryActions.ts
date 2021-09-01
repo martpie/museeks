@@ -17,6 +17,7 @@ import channels from '../../../shared/lib/ipc-channels';
 
 import * as PlaylistsActions from './PlaylistsActions';
 import * as ToastsActions from './ToastsActions';
+import persistTags from '../../lib/id3';
 
 const stat = util.promisify(fs.stat);
 
@@ -339,8 +340,12 @@ export const updateTrack = async (track: Track): Promise<void> => {
   const query = { path: track.path };
   const update = track;
 
+  store.dispatch({ type: types.LIBRARY_UPDATE_TRACK });
+
   try {
     await app.db.Track.updateAsync(query, update);
+    persistTags(track);
+    store.dispatch({ type: types.LIBRARY_UPDATE_TRACK_END });
     await refresh();
   } catch (err) {
     console.warn(err);

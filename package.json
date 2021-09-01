@@ -49,6 +49,7 @@
     "mime-types": "2.1.31",
     "mpris-service": "2.1.0",
     "music-metadata": "7.11.0",
+    "node-id3": "^0.2.3",
     "postcss-scss": "4.0.0",
     "ps-node": "0.1.6",
     "queue": "6.0.2",
