@@ -5,7 +5,7 @@ import { Track } from '../../shared/types/museeks';
 const persistTags = (track: Track): void => {
   console.log('dentro del persistTags');
   const fileBuffer = readFileSync(track.path);
-  
+
   const tags = {
     title: track.title,
     artist: track.artist,
@@ -13,7 +13,7 @@ const persistTags = (track: Track): void => {
     year: track.year,
     genre: track.genre,
   };
-  
+
   const updatedBuffer = NodeID3.update(tags, fileBuffer);
   writeFileSync(track.path, updatedBuffer);
 };
