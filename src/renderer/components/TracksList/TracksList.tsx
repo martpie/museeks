@@ -462,7 +462,7 @@ const TracksList: React.FC<Props> = (props) => {
 
       context.popup({}); // Let it appear
     },
-    [currentPlaylist, playerStatus, playlists, selected, tracks, type]
+    [currentPlaylist, history, playerStatus, playlists, selected, tracks, type]
   );
 
   /**
