@@ -88,7 +88,6 @@ const Detail: React.FC = () => {
       []
     );
 
-
     return () => {
       setData({
         title: '',
