@@ -8,10 +8,10 @@ const persistTags = (track: Track): void => {
 
   const tags = {
     title: track.title,
-    artist: track.artist,
+    artist: track.artist[0],
     album: track.album,
-    year: track.year,
-    genre: track.genre,
+    year: track.year?.toString(),
+    genre: track.genre[0],
   };
 
   const updatedBuffer = NodeID3.update(tags, fileBuffer);

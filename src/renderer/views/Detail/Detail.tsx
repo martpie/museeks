@@ -1,22 +1,20 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { Section, Label, Input } from '../../components/Setting/Setting';
-import { db } from '../../lib/app';
-import Button from '../../elements/Button/Button';
-import { RootState } from '../../store/reducers';
-import appStyles from '../../App.module.css';
-import * as LibraryActions from '../../store/actions/LibraryActions';
-import * as coverUtils from '../../../shared/lib/utils-cover';
 import Placeholder from '../../../images/assets/placeholder.png';
+import * as coverUtils from '../../../shared/lib/utils-cover';
+import { Track } from '../../../shared/types/museeks';
+import appStyles from '../../App.module.css';
+import { Input, Label, Section } from '../../components/Setting/Setting';
+import Button from '../../elements/Button/Button';
+import { db } from '../../lib/app';
 import { getLoweredMeta, parseDuration } from '../../lib/utils';
-
+import * as LibraryActions from '../../store/actions/LibraryActions';
 import styles from './Detail.module.css';
 
 const Detail: React.FC = () => {
   const { trackId } = useParams<{ trackId: string }>();
-  const [track, setTrack] = useState(undefined);
-  const [coverSrc, setCoverSrc] = useState(undefined);
+  const [track, setTrack] = useState({} as Track);
+  const [coverSrc, setCoverSrc] = useState('');
   const [data, setData] = useState({
     title: '',
     artist: '',
@@ -25,7 +23,7 @@ const Detail: React.FC = () => {
     duration: '',
   });
 
-  const getCover = useCallback(async (path: string) => {
+  const getCover = useCallback(async (path) => {
     const data = await coverUtils.fetchCover(path);
     if (data !== null) {
       setCoverSrc(data);
@@ -36,7 +34,7 @@ const Detail: React.FC = () => {
     (data) => {
       const song = { ...track };
       song.title = data.title;
-      song.artist[0] = data.artist;
+      song.artist.push(data.artist);
       song.album = data.album;
       song.genre[0] = data.genre;
       song.loweredMetas = getLoweredMeta(song);
@@ -72,19 +70,24 @@ const Detail: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    db.Track.findOne({ _id: trackId }, (err, song) => {
-      if (err !== null) return console.log(err);
-      getCover(song.path);
+    db.Track.findOne(
+      { _id: trackId },
+      (err: Error, song: Track) => {
+        if (err !== null) return console.log(err);
+        getCover(song.path);
 
-      setTrack(song);
-      setData({
-        title: song.title || '',
-        artist: song.artist[0] || '',
-        album: song.album || '',
-        genre: song.genre[0] || '',
-        duration: parseDuration(song.duration) || '',
-      });
-    });
+        setTrack(song);
+        setData({
+          title: song.title || '',
+          artist: song.artist[0] || '',
+          album: song.album || '',
+          genre: song.genre[0] || '',
+          duration: parseDuration(song.duration) || '',
+        });
+      },
+      []
+    );
+
 
     return () => {
       setData({

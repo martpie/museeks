@@ -150,6 +150,7 @@ const sharedConfig = {
     chunkModules: false,
     modules: false,
     reasons: false,
+    errorDetails: true,
   },
   plugins: [new CleanWebpackPlugin()],
 };
