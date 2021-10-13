@@ -94,7 +94,7 @@
     "css-loader": "6.2.0",
     "electron": "13.1.9",
     "electron-builder": "22.11.7",
-    "esbuild": "0.12.26",
+    "esbuild": "0.13.5",
     "esbuild-css-modules-plugin": "2.0.2",
     "esbuild-plugin-postcss2": "0.1.0",
     "esbuild-plugin-svg": "0.1.0",
