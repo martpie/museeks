@@ -52,7 +52,7 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: application-build
-          path: dist/
+          path: dist_esbuild/
 
   # Documentation on environments:
   # https://docs.github.com/en/free-pro-team@latest/actions/reference/specifications-for-github-hosted-runners
@@ -77,7 +77,7 @@ jobs:
       - uses: actions/download-artifact@v2
         with:
           name: application-build
-          path: dist/
+          path: dist_esbuild/
 
       - name: Install Linux dependencies
         run: |
