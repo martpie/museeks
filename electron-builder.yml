@@ -1,9 +1,9 @@
 appId: io.museeks.app
 directories:
-  buildResources: './dist'
+  buildResources: './dist_esbuild'
   output: './build'
 files:
-  - dist/**/*
+  - dist/_esbuild**/*
   - src/images/**/*
   - '!node_modules/**/*'
 # fileAssociations:
