@@ -57,10 +57,9 @@ typings/
 # dotenv environment variables file
 .env
 
-dist/
-dist_esbuild/*
-!dist_esbuild/.keep
-!dist_esbuild/app.html
+dist/*
+!dist/.keep
+!dist/app.html
 cache/
 build/
 
