@@ -1,6 +1,6 @@
 appId: io.museeks.app
 directories:
-  buildResources: './dist_esbuild'
+  buildResources: './dist'
   output: './build'
 files:
   - dist/_esbuild**/*
