@@ -17,6 +17,7 @@
     "typeRoots": ["types/**/*.d.ts"],
     "noErrorTruncation": true,
     "lib": ["dom", "es2015", "es2016", "es2017.object"],
+    "plugins": [{ "name": "typescript-plugin-css-modules" }],
     "paths": {
       "~styles/*": ["src/renderer/styles/*"]
     },
