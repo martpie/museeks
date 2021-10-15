@@ -1,9 +1,9 @@
-.render-view {
+.renderView {
   overflow-x: hidden !important; /* Overriding react-custom-scrollbars */
   margin-bottom: 0 !important; /* there is no overflow-x */
 }
 
-.vertical-track {
+.verticalTrack {
   right: 8px;
   background-color: var(--scrollbar-track);
   top: 8px;
@@ -11,6 +11,6 @@
   z-index: 10;
 }
 
-.vertical-thumb {
+.verticalThumb {
   background-color: var(--scrollbar-thumb);
 }

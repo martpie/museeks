@@ -19,7 +19,7 @@ import * as ModulesManager from './lib/modules-manager';
 import { checkBounds } from './lib/utils';
 
 const appRoot = path.resolve(__dirname, '..'); // Careful, not future-proof
-const rendererDistPath = path.join(appRoot, 'dist');
+const rendererDistPath = path.join(appRoot, 'renderer');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the javascript object is GCed.

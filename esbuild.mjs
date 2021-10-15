@@ -6,8 +6,10 @@ import esbuildPluginSvg from 'esbuild-plugin-svg';
 
 import postCssImport from 'postcss-import';
 import postCssNested from 'postcss-nested';
+import postCssUrl from 'postcss-url';
 
-const shouldWatch = process.argv.includes('--watch');
+// const shouldWatch = process.argv.includes('--watch'); // infinite watch loop
+const shouldWatch = false;
 const isProduction = !process.argv.includes('--production');
 
 /*
@@ -77,14 +79,28 @@ esbuild
       // htmlPlugin(),
       esbuildPluginSvg(),
       postCssPlugin.default({
-        plugins: [postCssImport, postCssNested],
+        plugins: [postCssImport, postCssNested, postCssUrl({ url: 'inline' })],
       }),
       cssModulesPlugin({
         inject: true,
-        localsConvention: 'dashesOnly',
         v2: true,
       }),
     ],
+    loader: {
+      '.eot': 'file',
+      '.woff': 'file',
+      '.woff2': 'file',
+      '.svg': 'file',
+      '.ttf': 'file',
+      // '.png': 'file',
+      // '.jpg': 'file',
+      // '.ico': 'file',
+      // '.eot': 'file',
+      // '.woff': 'file',
+      // '.woff2': 'file',
+      // '.ttf': 'file',
+      // '.svg': 'file',
+    },
   })
   .then(() => {
     console.log('===== Renderer bundle built =====');
