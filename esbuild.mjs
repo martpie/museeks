@@ -92,14 +92,6 @@ esbuild
       '.woff2': 'file',
       '.svg': 'file',
       '.ttf': 'file',
-      // '.png': 'file',
-      // '.jpg': 'file',
-      // '.ico': 'file',
-      // '.eot': 'file',
-      // '.woff': 'file',
-      // '.woff2': 'file',
-      // '.ttf': 'file',
-      // '.svg': 'file',
     },
   })
   .then(() => {

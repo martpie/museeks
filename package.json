@@ -19,6 +19,7 @@
     "dev": "node esbuild.mjs --watch",
     "museeks": "electron .",
     "museeks:debug": "electron . --enable-logging --devtools",
+    "test:typings": "tsc --noEmit",
     "test:unit": "jest",
     "test:lint": "eslint . --ext .tsx,.ts,.js",
     "test:lint:fix": "eslint . --ext .tsx,.ts,.js --fix",

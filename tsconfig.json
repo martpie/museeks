@@ -12,6 +12,7 @@
     "removeComments": false,
     "sourceMap": true,
     "strict": true,
+    "skipLibCheck": true,
     "baseUrl": ".",
     "typeRoots": ["types/**/*.d.ts"],
     "noErrorTruncation": true,
@@ -21,5 +22,5 @@
     },
     "isolatedModules": true
   },
-  "exclude": ["**/node_modules", "**/__tests__", "./build/**/*", "./dist/**/*"]
+  "exclude": ["**/node_modules/**", "**/__tests__", "./build/**/*", "./dist/**/*"]
 }
