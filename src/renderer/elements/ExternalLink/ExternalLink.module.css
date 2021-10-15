@@ -1,4 +1,4 @@
-.external-link {
+.externalLink {
   color: var(--main-color);
   -webkit-appearance: none;
   border: 0;
@@ -10,6 +10,6 @@
   font-size: inherit;
 }
 
-.external-link:hover {
+.externalLink:hover {
   text-decoration: underline;
 }

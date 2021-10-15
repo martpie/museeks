@@ -3,7 +3,7 @@ directories:
   buildResources: './dist'
   output: './build'
 files:
-  - dist/_esbuild**/*
+  - dist/**/*
   - src/images/**/*
   - '!node_modules/**/*'
 # fileAssociations:

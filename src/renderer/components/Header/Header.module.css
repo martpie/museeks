@@ -1,11 +1,11 @@
-:global(.os-darwin) .header__main-controls {
+:global(.os__darwin) .header__mainControls {
   padding-left: 65px; /* let some space for titleBarStyle */
 }
 
 /* The native frame may be light, so we need to increase the contrast between
    the frame and the header */
-:global(.os-win32),
-:global(.os-linux) {
+:global(.os__win32),
+:global(.os__linux) {
   .header {
     border-top: 1px solid var(--border-color);
   }
@@ -26,7 +26,7 @@
   -webkit-app-region: drag;
 }
 
-.header__main-controls {
+.header__mainControls {
   width: 220px;
   flex: 0 0 auto;
   display: flex;
@@ -53,7 +53,7 @@
   border-radius: var(--border-radius);
 }
 
-.header__playing-bar {
+.header__playinBar {
   flex: 1 1 auto;
   min-width: 0;
   max-width: 600px;

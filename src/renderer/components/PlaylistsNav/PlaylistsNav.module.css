@@ -1,4 +1,4 @@
-.playlists-nav {
+.playlistsNav {
   display: flex;
   flex-flow: column;
   width: 200px;
@@ -9,7 +9,7 @@
   position: relative;
 }
 
-.playlists-nav__header {
+.playlistsNav__header {
   flex: 0 0 auto;
   display: flex;
   align-items: center;
@@ -37,7 +37,7 @@
   }
 }
 
-.playlists-nav__title {
+.playlistsNav__title {
   padding: 0 12px;
   margin: 10px 0;
   font-size: 11px;
@@ -45,7 +45,7 @@
   flex: 1;
 }
 
-.playlists-nav__body {
+.playlistsNav__body {
   flex: 1 1 auto;
   overflow: auto;
 }
@@ -69,7 +69,7 @@
     color: var(--text);
   }
 
-  &:global(.-is-active) {
+  &:global(.isActive) {
     z-index: 10;
     border-style: solid;
     border-color: var(--border-color);

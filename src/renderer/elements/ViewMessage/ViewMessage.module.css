@@ -1,4 +1,4 @@
-.full-message {
+.fullMessage {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -29,6 +29,6 @@
   }
 }
 
-.sub-message {
+.subMessage {
   font-size: 70%;
 }

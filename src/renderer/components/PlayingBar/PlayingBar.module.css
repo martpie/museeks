@@ -1,23 +1,23 @@
-.playing-bar {
+.playingBar {
   display: flex;
   align-items: center;
   justify-content: space-between;
   text-align: center;
 }
 
-.playing-bar__cover {
+.playingBar__cover {
   width: 60px;
   flex: 0 0 auto;
 }
 
-.playing-bar__queue {
+.playingBar__queue {
   -webkit-app-region: no-drag;
   width: 60px;
   flex: 0 0 auto;
   position: relative;
 }
 
-.queue-toggle {
+.queueToggle {
   color: inherit;
   border: 0;
   background: transparent;
@@ -25,7 +25,7 @@
   box-shadow: none;
 }
 
-.queue-container {
+.queueContainer {
   -webkit-app-region: no-drag;
   display: none;
   position: absolute;
@@ -34,7 +34,7 @@
   right: 0;
   top: 26px;
 
-  &.is-open {
+  &.isOpen {
     display: block;
   }
 }

@@ -14,7 +14,7 @@
   }
 }
 
-.dropzone:global(.-is-dragging) {
+.dropzoneDraggedOver {
   border-color: var(--main-color);
 }
 
