@@ -384,7 +384,8 @@ const TracksList: React.FC<Props> = (props) => {
         },
         {
           type: 'separator',
-      }]
+        },
+      ];
 
       for (const artist of track.artist) {
         template.push({
@@ -400,23 +401,23 @@ const TracksList: React.FC<Props> = (props) => {
               searchInput.dispatchEvent(new Event('input', { bubbles: true }));
             }
           },
-        })
+        });
       }
 
       template.push({
-          label: `Search for "${track.album}"`,
-          click: () => {
-            // HACK
-            const searchInput: HTMLInputElement | null = document.querySelector(
-              `input[type="text"].${headerStyles.header__search__input}`
-            );
+        label: `Search for "${track.album}"`,
+        click: () => {
+          // HACK
+          const searchInput: HTMLInputElement | null = document.querySelector(
+            `input[type="text"].${headerStyles.header__search__input}`
+          );
 
-            if (searchInput) {
-              searchInput.value = track.album;
-              searchInput.dispatchEvent(new Event('input', { bubbles: true }));
-            }
-          },
-      })
+          if (searchInput) {
+            searchInput.value = track.album;
+            searchInput.dispatchEvent(new Event('input', { bubbles: true }));
+          }
+        },
+      });
 
       if (type === 'playlist' && currentPlaylist) {
         template.push(
