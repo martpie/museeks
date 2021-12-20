@@ -15,7 +15,7 @@ export const Label: React.FC<JSX.IntrinsicElements['label']> = (props) => {
   );
 };
 
-export const Title: React.FC = (props) => <span className={styles.settingLabelTitle}>{props.children}</span>;
+export const Title: React.FC = (props) => <span className={styles.settingTitle}>{props.children}</span>;
 
 export const Input: React.FC<JSX.IntrinsicElements['input']> = (props) => {
   const { children, ...restProps } = props;
