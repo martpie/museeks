@@ -23,6 +23,7 @@ export default class Dropzone extends React.Component<Props, State> {
     this.onDrop = this.onDrop.bind(this);
     this.onDragEnter = this.onDragEnter.bind(this);
     this.onDragLeave = this.onDragLeave.bind(this);
+    this.onDragOver = this.onDragOver.bind(this);
     this.onKeyDown = this.onKeyDown.bind(this);
   }
 
@@ -51,6 +52,7 @@ export default class Dropzone extends React.Component<Props, State> {
   }
 
   onDragOver(e: React.SyntheticEvent<HTMLDivElement>) {
+    this.setState({ state: 'draggedOver' });
     e.preventDefault();
   }
 
@@ -63,7 +65,7 @@ export default class Dropzone extends React.Component<Props, State> {
   render() {
     return (
       <div
-        className={`${styles.dropzone} -is-${this.state.state}`}
+        className={`${styles.dropzone} ${this.state.state === 'draggedOver' ? styles.dropzoneDraggedOver : ''}`}
         onDragEnter={this.onDragEnter}
         onDragOver={this.onDragOver}
         onDragLeave={this.onDragLeave}

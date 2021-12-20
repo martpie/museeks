@@ -1,28 +1,28 @@
-.setting-section {
+.settingSection {
   padding-bottom: 10px;
 }
 
-.setting-title {
+.settingTitle {
   display: inline-block;
   font-weight: bold;
   margin-top: 4px;
   margin-left: 6px;
 }
 
-.setting-description {
+.settingDescription {
   font-weight: normal;
   margin-top: 5px;
   margin-bottom: 10px;
 }
 
-.setting-label {
+.settingLabel {
   display: block;
   margin-bottom: 8px;
   font-weight: bold;
 }
 
-.setting-select,
-.setting-input {
+.settingSelect,
+.settingInput {
   display: block;
   background: var(--input-bg);
   color: var(--input-color);
@@ -38,6 +38,6 @@
   }
 }
 
-.setting-error {
+.settingError {
   color: red;
 }

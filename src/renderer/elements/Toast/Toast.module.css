@@ -14,18 +14,18 @@
   }
 }
 
-.toast--success {
+.toastSuccess {
   border-left-color: var(--success-color);
 }
 
-.toast--info {
+.toastInfo {
   border-left-color: var(--info-color);
 }
 
-.toast--warning {
+.toastWarning {
   border-left-color: var(--warning-color);
 }
 
-.toast--danger {
+.toastDanger {
   border-left-color: var(--danger-color);
 }
