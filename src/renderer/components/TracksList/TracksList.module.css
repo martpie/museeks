@@ -1,11 +1,11 @@
-.tracks-list {
+.tracksList {
   outline: none;
   display: flex;
   flex-direction: column;
   flex: 1 1 auto;
 }
 
-.tracks-list-body {
+.tracksListBody {
   overflow: auto;
   flex: 1 1 auto;
 }

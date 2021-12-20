@@ -3,7 +3,7 @@
  */
 
 import electron from 'electron';
-import * as mpris from 'mpris-service';
+import mpris from 'mpris-service';
 import * as mime from 'mime-types';
 
 import { TrackModel } from '../../shared/types/museeks';

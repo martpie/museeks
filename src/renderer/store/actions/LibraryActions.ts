@@ -3,7 +3,7 @@ import path from 'path';
 import * as util from 'util';
 import electron, { ipcRenderer } from 'electron';
 import globby from 'globby';
-import * as queue from 'queue';
+import queue from 'queue';
 
 import store from '../store';
 import types from '../action-types';
@@ -147,7 +147,7 @@ const scanTracks = async (paths: string[]): Promise<void> => {
       scan.total += paths.length;
 
       paths.forEach((filePath) => {
-        scanQueue.push(async (callback: () => void) => {
+        scanQueue.push(async (callback) => {
           try {
             // Normalize (back)slashes on Windows
             filePath = path.resolve(filePath);
@@ -168,7 +168,7 @@ const scanTracks = async (paths: string[]): Promise<void> => {
             console.warn(err);
           }
 
-          callback();
+          if (callback) callback();
         });
       });
     } catch (err) {

@@ -1,4 +1,4 @@
-.playing-indicator {
+.playingIndicator {
   height: 100%;
   width: 100%;
   font-size: 10px;
@@ -9,11 +9,11 @@
   transform-origin: center;
 }
 
-.playing-indicator :global(.fa) {
+.playingIndicator :global(.fa) {
   transition: transform ease-in-out 0.2s;
 }
 
-.playing-indicator:hover :global(.fa) {
+.playingIndicator:hover :global(.fa) {
   transform: scale(1.3);
 }
 
@@ -39,11 +39,11 @@
   will-change: transform;
 }
 
-.animation .bar.bar-second {
+.animation .bar.barSecond {
   animation-delay: 0.55s;
 }
 
-.animation .bar.bar-third {
+.animation .bar.barThird {
   animation-delay: 0.25s;
 }
 

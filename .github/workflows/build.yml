@@ -34,6 +34,9 @@ jobs:
       - name: 'Test: formatting'
         run: 'yarn run test:formatting'
 
+      - name: 'Test: typings'
+        run: 'yarn run test:typings'
+
       - name: 'Test: TS/JS linting'
         run: 'yarn run test:lint'
 
@@ -45,6 +48,9 @@ jobs:
 
       - name: Build application
         run: yarn run build
+
+      - name: Build application (ESBuild)
+        run: node esbuild.mjs
 
       - uses: actions/upload-artifact@v2
         with:
