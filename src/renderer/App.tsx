@@ -63,7 +63,7 @@ const Museeks: React.FC = (props) => {
     <div className={`${styles.root} os__${os.platform()}`}>
       <KeyBinding onKey={onKey} preventInputConflict />
       <Header />
-      <main className={`test ${styles.mainContent}`}>{props.children}</main>
+      <main className={styles.mainContent}>{props.children}</main>
       <Footer />
       <Toasts />
     </div>
