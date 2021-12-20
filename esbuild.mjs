@@ -2,10 +2,8 @@ import fs from 'fs';
 import path from 'path';
 
 import esbuild from 'esbuild';
-import cssModulesPlugin from 'esbuild-css-modules-plugin';
 import postCssPlugin from 'esbuild-plugin-postcss2';
 import esbuildPluginSvg from 'esbuild-plugin-svg';
-// import htmlPlugin from '@chialab/esbuild-plugin-html';
 
 import postCssImport from 'postcss-import';
 import postCssNested from 'postcss-nested';
@@ -63,7 +61,6 @@ const configMain = {
 /** @type esbuild.BuildOptions */
 let configRenderer = {
   entryPoints: ['./src/renderer/main.tsx'],
-  // entryPoints: ['./src/renderer/app.html'],
   bundle: true,
   outfile: 'dist/renderer/bundle.js',
   platform: 'browser',
@@ -77,14 +74,16 @@ let configRenderer = {
     'process.env.NODE_ENV': isProduction ? '"production"' : '"development"',
   },
   plugins: [
-    // htmlPlugin(),
     esbuildPluginSvg(),
     postCssPlugin.default({
       plugins: [postCssImport, postCssNested, postCssUrl({ url: 'inline' })],
-    }),
-    cssModulesPlugin({
-      inject: true,
-      v2: true,
+      // https://github.com/martonlederer/esbuild-plugin-postcss2/pull/30
+      modules: true,
+      rootDir: process.cwd(),
+      sassOptions: {},
+      lessOptions: {},
+      stylusOptions: {},
+      writeToFile: true,
     }),
   ],
   loader: {
