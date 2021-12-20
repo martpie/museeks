@@ -56,7 +56,7 @@ const SettingsLibrary: React.FC<Props> = (props) => {
         <h3 style={{ marginTop: 0 }}>Import music</h3>
         <Dropzone
           title='Add music to the library'
-          subtitle='Drop files or folders here'
+          subtitle='Click here or drop files or folders anywhere'
           onDrop={onDrop}
           onClick={openFolderSelector}
         />
