@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+
 import Placeholder from '../../../images/assets/placeholder.png';
 import * as coverUtils from '../../../shared/lib/utils-cover';
 import { Track } from '../../../shared/types/museeks';

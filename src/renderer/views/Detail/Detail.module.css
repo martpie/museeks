@@ -1,10 +1,10 @@
-.view-detail {
+.viewDetail {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.detail-form {
+.detailForm {
   width: 400px;
   height: 100%;
   display: flex;
@@ -18,27 +18,27 @@ section {
   width: 100%;
 }
 
-.detail-row {
+.detailRow {
   width: 100%;
   display: flex;
   justify-content: space-between;
 }
 
-.detail-col {
+.detailCol {
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
-.detail-cover {
+.detailCover {
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.detail-actions {
+.detailActions {
   padding-top: 30px;
   width: 100%;
   display: flex;
