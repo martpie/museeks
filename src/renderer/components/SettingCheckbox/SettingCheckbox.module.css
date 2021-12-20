@@ -1,6 +1,5 @@
 .checkbox {
-  input[type="checkbox"] {
-    -webkit-appearance: none;
+  input[type='checkbox'] {
     width: 16px;
     height: 16px;
     border-radius: var(--border-radius);
@@ -19,7 +18,7 @@
       background-color: var(--main-color);
 
       &::after {
-        content: "\f00c";
+        content: '\f00c';
         /* stylelint-disable-next-line */
         font-family: FontAwesome;
         font-size: 10px;

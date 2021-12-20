@@ -125,7 +125,11 @@ export const addTracks = async (_id: string, tracksIds: string[], isShown?: bool
     ToastsActions.add('success', `${tracksIds.length} tracks were successfully added to "${playlist.name}"`);
   } catch (err) {
     console.warn(err);
-    ToastsActions.add('danger', err);
+    if (err instanceof Error) {
+      ToastsActions.add('danger', err.message);
+    } else {
+      ToastsActions.add('danger', 'An unknown error happened while trying to add tracks.');
+    }
   }
 };
 
