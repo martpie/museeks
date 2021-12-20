@@ -5,13 +5,16 @@ import cx from 'classnames';
 import * as PlayerActions from '../../store/actions/PlayerActions';
 import { Repeat } from '../../../shared/types/museeks';
 
+import playerRepeatOneIcon from '../../../images/icons/player-repeat-one.svg';
+import playerRepeatIcon from '../../../images/icons/player-repeat.svg';
+
 import styles from './common.module.css';
 
 const svgMap = {
-  [Repeat.ONE]: require('../../../images/icons/player-repeat-one.svg'),
-  [Repeat.ALL]: require('../../../images/icons/player-repeat.svg'),
-  [Repeat.NONE]: require('../../../images/icons/player-repeat.svg'),
-  default: require('../../../images/icons/player-repeat.svg'),
+  [Repeat.ONE]: playerRepeatOneIcon,
+  [Repeat.ALL]: playerRepeatIcon,
+  [Repeat.NONE]: playerRepeatIcon,
+  default: playerRepeatIcon,
 };
 
 interface Props {

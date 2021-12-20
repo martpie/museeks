@@ -1,9 +1,9 @@
-.playing-bar__info {
+.playingBar__info {
   flex: 1 1 auto;
   min-width: 0;
 }
 
-.playing-bar__info__metas {
+.playingBar__info__metas {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -29,7 +29,7 @@
   white-space: nowrap;
 }
 
-.player-options {
+.playerOptions {
   flex: 0 0 auto;
   display: flex;
   align-items: center;
@@ -37,11 +37,11 @@
   padding-right: 10px;
 }
 
-.playing-bar__info__progress {
+.playingBar__info__progress {
   position: relative;
 }
 
-.progress-tooltip {
+.progressTooltip {
   position: absolute;
   background-color: var(--background);
   border: 1px solid var(--border-color);
@@ -88,7 +88,7 @@
   margin-top: 3px;
   cursor: pointer;
 
-  .progress-bar {
+  .progressBar {
     background-color: var(--main-color);
     pointer-events: none;
     transition: none;

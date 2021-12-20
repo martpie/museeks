@@ -11,13 +11,13 @@
     border-bottom: dashed 1px var(--border-color);
   }
 
-  &.is-dragged {
+  &.isDragged {
     .queue__item__info {
       opacity: 0.25;
     }
   }
 
-  &.is-dragged-over {
+  &.isDraggedOver {
     &::after {
       position: absolute;
       z-index: 1;
@@ -27,11 +27,11 @@
       border-bottom: solid 3px var(--main-color);
     }
 
-    &.is-above::after {
+    &.isAbove::after {
       top: -2px;
     }
 
-    &.is-below::after {
+    &.isBelow::after {
       bottom: -2px;
     }
   }
@@ -72,7 +72,7 @@
 }
 
 .queue__item__info__title,
-.queue__item__info__other-infos {
+.queue__item__info__otherInfos {
   padding: 0 10px;
   text-overflow: ellipsis;
   overflow: hidden;

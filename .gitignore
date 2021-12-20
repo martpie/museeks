@@ -57,7 +57,9 @@ typings/
 # dotenv environment variables file
 .env
 
-dist/
+dist/main/*
+dist/renderer/*
+!dist/renderer/app.html
 cache/
 build/
 

@@ -1,7 +1,7 @@
 .nav {
   display: flex;
 
-  &.nav--vertical {
+  &.navVertical {
     flex-direction: column;
   }
 }
@@ -20,7 +20,7 @@
     text-decoration: none;
   }
 
-  &.nav__link--active {
+  &.nav__linkActive {
     color: var(--main-color);
   }
 }

@@ -25,7 +25,7 @@
     color: white;
 
     /* // put that elsewhere someday
-    .playing-indicator {
+    .playingIndicator {
 
       .animation {
 
@@ -40,7 +40,7 @@
     opacity: 0.5;
   }
 
-  &.is-reordered-over {
+  &.isReorderedOver {
     &::after {
       pointer-events: none;
       position: absolute;
@@ -51,11 +51,11 @@
       border-bottom: solid 2px var(--main-color);
     }
 
-    &.is-above::after {
+    &.isAbove::after {
       top: -1px;
     }
 
-    &.is-below::after {
+    &.isBelow::after {
       bottom: -1px;
     }
   }
