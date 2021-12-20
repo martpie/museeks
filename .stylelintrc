@@ -3,8 +3,15 @@
     "stylelint-config-standard",
     "stylelint-config-css-modules"
   ],
-  "ignoreFiles": ["./src/**/*.tsx", "./src/**/*.ts"],
+  "ignoreFiles": [
+    "./src/**/*.tsx",
+    "./src/**/*.ts"
+  ],
   "rules": {
-    "no-descending-specificity": null
+    "no-descending-specificity": null,
+    "string-quotes": "single",
+    "max-line-length": 500,
+    "selector-class-pattern": null,
+    "alpha-value-notation": "number"
   }
 }

@@ -6,11 +6,11 @@
   border: solid 1px var(--border-color);
 
   &:hover {
-    border: solid 1px rgba(0, 0, 0, 0.4);
+    border: solid 1px rgba(0 0 0 0.4);
   }
 
   &:focus {
-    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 0 2px rgba(0 0 0 0.1);
   }
 }
 
