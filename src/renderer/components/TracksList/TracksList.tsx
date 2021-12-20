@@ -4,6 +4,7 @@ import KeyBinding from 'react-keybinding-component';
 import chunk from 'lodash-es/chunk';
 import { useSelector } from 'react-redux';
 
+import { useHistory } from 'react-router';
 import TrackRow from '../TrackRow/TrackRow';
 import CustomScrollbar from '../CustomScrollbar/CustomScrollbar';
 import TracksListHeader from '../TracksListHeader/TracksListHeader';
@@ -52,6 +53,7 @@ const TracksList: React.FC<Props> = (props) => {
   const [selected, setSelected] = useState<string[]>([]);
   const [reordered, setReordered] = useState<string[] | null>([]);
   const [renderView, setRenderView] = useState<HTMLElement | null>(null);
+  const history = useHistory();
 
   const highlight = useSelector<RootState, boolean>((state) => state.library.highlightPlayingTrack);
 
@@ -386,6 +388,15 @@ const TracksList: React.FC<Props> = (props) => {
           type: 'separator',
         },
         {
+          label: 'View Detail',
+          click: () => {
+            history.push(`/detail/${track._id}`);
+          },
+        },
+        {
+          type: 'separator',
+        },
+        {
           label: `Search for "${track.artist[0]}" `,
           click: () => {
             // HACK
@@ -451,7 +462,7 @@ const TracksList: React.FC<Props> = (props) => {
 
       context.popup({}); // Let it appear
     },
-    [currentPlaylist, playerStatus, playlists, selected, tracks, type]
+    [currentPlaylist, history, playerStatus, playlists, selected, tracks, type]
   );
 
   /**
