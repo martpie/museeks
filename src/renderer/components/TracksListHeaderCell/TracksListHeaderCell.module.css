@@ -1,6 +1,6 @@
 .trackCellHeader {
   font-weight: 700;
-  -webkit-appearance: none;
+  appearance: none;
   border: 0;
   background: transparent;
   text-align: left;
@@ -11,11 +11,11 @@
   color: inherit;
 
   &.sort:focus {
-    background-color: rgba(0, 0, 0, 0.025);
+    background-color: rgba(0 0 0 0.025);
   }
 
   &.sort:active {
-    background-color: rgba(0, 0, 0, 0.04);
+    background-color: rgba(0 0 0 0.04);
   }
 
   .icon {

@@ -6,7 +6,7 @@
 
   &.animated {
     .progressBar {
-      background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.25) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.25) 50%, rgba(255, 255, 255, 0.25) 75%, transparent 75%, transparent);
+      background-image: linear-gradient(45deg, rgba(255 255 255 0.25) 25%, transparent 25%, transparent 50%, rgba(255 255 255 0.25) 50%, rgba(255 255 255 0.25) 75%, transparent 75%, transparent);
       background-size: 10px 10px;
       animation: progress-bar-animation 1s linear infinite;
     }
@@ -19,6 +19,11 @@
 }
 
 @keyframes progress-bar-animation {
-  from { background-position: 10px 0; }
-  to { background-position: 0 0; }
+  from {
+    background-position: 10px 0;
+  }
+
+  to {
+    background-position: 0 0;
+  }
 }
