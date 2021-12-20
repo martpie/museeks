@@ -55,7 +55,7 @@ const Library: React.FC = () => {
         <ViewMessage.Notice>
           <p>Too bad, there is no music in your library =(</p>
           <ViewMessage.Sub>
-            <span>nothing found yet, but that{"'"}s fine, you can always</span>{' '}
+            <span>you can always just drop files and folders anywhere or</span>{' '}
             <Link to='/settings/library' draggable={false}>
               add your music here
             </Link>
