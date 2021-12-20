@@ -1,10 +1,7 @@
 import os from 'os';
 import React, { useCallback, useEffect, useState } from 'react';
-import { ipcRenderer } from 'electron';
 import KeyBinding from 'react-keybinding-component';
 import { useHistory } from 'react-router';
-
-import channels from '../shared/lib/ipc-channels';
 
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
