@@ -3730,16 +3730,6 @@ esbuild-android-arm64@0.13.5:
   resolved "https://registry.yarnpkg.com/esbuild-android-arm64/-/esbuild-android-arm64-0.13.5.tgz#a299a18fd8a016ae19fd948fc659b3f65d1b992f"
   integrity sha512-xaNH58b9XRAWT5q0rwA2GNTgJynb51JhdotlNKdLmSCyKXPVlF87yqNLNdmlX/zndzRDrZdtpCWSALdn/J63Ug==
 
-esbuild-css-modules-plugin@2.0.2:
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/esbuild-css-modules-plugin/-/esbuild-css-modules-plugin-2.0.2.tgz#80db22cf188c8aee4f302e326eebd9b67852b989"
-  integrity sha512-/ZyH97+r3ckB9RnNG5Lkh4fP3o024yfFl3ISquZYKzpT2vPUgd1GHWeISyb5Se7T2o/iGlucmkgaNv+Kfy3kZQ==
-  dependencies:
-    fs-extra "^9.1.0"
-    postcss "^8.2.7"
-    postcss-modules "^4.0.0"
-    tmp "^0.2.1"
-
 esbuild-darwin-64@0.13.5:
   version "0.13.5"
   resolved "https://registry.yarnpkg.com/esbuild-darwin-64/-/esbuild-darwin-64-0.13.5.tgz#01359f2c6921bd2704d0a895f5603ab33f2eeb1b"
@@ -7384,7 +7374,7 @@ postcss-value-parser@^4.0.0, postcss-value-parser@^4.1.0:
   resolved "https://registry.yarnpkg.com/postcss-value-parser/-/postcss-value-parser-4.1.0.tgz#443f6a20ced6481a2bda4fa8532a6e55d789a2cb"
   integrity sha512-97DXOFbQJhk71ne5/Mt6cOu6yxsSfM0QGQyl0L25Gca4yGWEGJaig7l7gbCX623VqTBNGLRLaVUCnNkcedlRSQ==
 
-postcss@8.3.6, postcss@8.x, postcss@^8.2.7:
+postcss@8.3.6, postcss@8.x:
   version "8.3.6"
   resolved "https://registry.yarnpkg.com/postcss/-/postcss-8.3.6.tgz#2730dd76a97969f37f53b9a6096197be311cc4ea"
   integrity sha512-wG1cc/JhRgdqB6WHEuyLTedf3KIRuD0hG6ldkFEZNCjRxiC+3i6kkWUUbiJQayP28iwG35cEmAbe98585BYV0A==
