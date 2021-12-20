@@ -35,7 +35,7 @@ jobs:
         run: 'yarn run test:formatting'
 
       - name: 'Test: typings'
-        run: 'yarn run test:formatting'
+        run: 'yarn run test:typings'
 
       - name: 'Test: TS/JS linting'
         run: 'yarn run test:lint'
