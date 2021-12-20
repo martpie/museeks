@@ -48,7 +48,7 @@ export default class TrackCover extends React.PureComponent<Props, State> {
     }
 
     return (
-      <div className={`${styles.cover} -is-empty`}>
+      <div className={`${styles.cover} isEmpty`}>
         <div className={styles.cover__note}>♪</div>
       </div>
     );

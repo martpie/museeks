@@ -1,8 +1,8 @@
-:global .no-padding {
+:global .noPadding {
   padding: 0;
 }
 
-:global .no-margin {
+:global .noMargin {
   margin: 0;
 }
 

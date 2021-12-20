@@ -1,8 +1,8 @@
-.volume-control-container {
+.volumeControlContainer {
   position: relative;
 }
 
-.volume-control {
+.volumeControl {
   background-color: var(--header-bg);
   position: absolute;
   z-index: 10;

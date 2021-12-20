@@ -42,7 +42,7 @@
     margin-left: -1px;
   }
 
-  &.footer__navigation__link--is-active {
+  &.footer__navigation__linkIsActive {
     background-color: var(--footer-nav-bg-color-active);
     color: var(--main-color);
   }
@@ -59,17 +59,17 @@
   justify-content: center;
 }
 
-.footer__library-refresh {
+.footer__libraryRefresh {
   display: flex;
   flex: 1;
   align-items: center;
 }
 
-.footer__library-refresh__progress {
+.footer__libraryRefresh__progress {
   flex: 1;
   margin-right: 10px;
 }
 
-.footer__library-refresh__count {
+.footer__libraryRefresh__count {
   font-variant-numeric: tabular-nums;
 }
