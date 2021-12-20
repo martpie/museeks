@@ -5,6 +5,7 @@
   "variables": {
     "--text": "#efefef",
     "--background": "hsl(216, 20%, 7%)",
+    "--faded": "rgba(0, 0, 0, 0.8)",
 
     "--border-color": "#0a0a0a",
     "--border-radius": "2px",
