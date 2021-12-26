@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 
 import QueueListItem from '../QueueListItem/QueueListItem';
 
@@ -10,48 +10,34 @@ import Button from '../../elements/Button/Button';
 
 import styles from './QueueList.module.css';
 
-interface Props {
+type Props = {
   queue: TrackModel[];
   queueCursor: number;
-}
+};
 
-interface State {
-  draggedTrackIndex: number | null;
-  draggedOverTrackIndex: number | null;
-  dragPosition: null | 'above' | 'below';
-}
+const QueueList: React.FC<Props> = (props) => {
+  const [draggedTrackIndex, setDraggedTrackIndex] = useState<number | null>(null);
+  const [draggedOverTrackIndex, setDraggedOverTrackIndex] = useState<number | null>(null);
+  const [dragPosition, setDragPosition] = useState<null | 'above' | 'below'>(null);
 
-export default class QueueList extends React.Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
+  const dragStart = useCallback(
+    (e: React.DragEvent<HTMLDivElement>, index: number) => {
+      e.dataTransfer.setData('text/html', props.queue[index]._id);
+      e.dataTransfer.dropEffect = 'move';
+      e.dataTransfer.effectAllowed = 'move';
 
-    this.state = {
-      draggedTrackIndex: null,
-      draggedOverTrackIndex: null,
-      dragPosition: null,
-    };
+      setDraggedTrackIndex(index);
+    },
+    [props.queue]
+  );
 
-    this.dragStart = this.dragStart.bind(this);
-    this.dragOver = this.dragOver.bind(this);
-    this.dragEnd = this.dragEnd.bind(this);
-  }
-
-  dragStart(e: React.DragEvent<HTMLDivElement>, index: number) {
-    e.dataTransfer.setData('text/html', this.props.queue[index]._id);
-    e.dataTransfer.dropEffect = 'move';
-    e.dataTransfer.effectAllowed = 'move';
-
-    this.setState({ draggedTrackIndex: index });
-  }
-
-  dragEnd() {
+  const dragEnd = useCallback(() => {
     // Move that to a reducer may be a good idea
 
-    const { queue, queueCursor } = this.props;
-    const { dragPosition } = this.state;
+    const { queue, queueCursor } = props;
 
-    const draggedIndex = this.state.draggedTrackIndex;
-    const draggedOverIndex = this.state.draggedOverTrackIndex;
+    const draggedIndex = draggedTrackIndex;
+    const draggedOverIndex = draggedOverTrackIndex;
 
     if (draggedIndex !== null && draggedOverIndex !== null) {
       const offsetPosition = dragPosition === 'below' ? 1 : 0;
@@ -70,60 +56,56 @@ export default class QueueList extends React.Component<Props, State> {
       // add removed track at its new position
       newQueue.splice(draggedOverQueueIndex, 0, movedTrack);
 
-      this.setState({
-        draggedTrackIndex: null,
-        draggedOverTrackIndex: null,
-        dragPosition: null,
-      });
+      setDraggedTrackIndex(null);
+      setDraggedOverTrackIndex(null);
+      setDragPosition(null);
 
       QueueActions.setQueue(newQueue);
     }
-  }
+  }, [dragPosition, draggedOverTrackIndex, draggedTrackIndex, props]);
 
-  dragOver(e: React.DragEvent<HTMLDivElement>, index: number) {
+  const dragOver = useCallback((e: React.DragEvent<HTMLDivElement>, index: number) => {
     e.preventDefault();
 
     const relativePosition = e.nativeEvent.offsetY / e.currentTarget.offsetHeight;
     const dragPosition = relativePosition < 0.5 ? 'above' : 'below';
 
-    this.setState({
-      draggedOverTrackIndex: index,
-      dragPosition,
-    });
-  }
+    setDraggedOverTrackIndex(index);
+    setDragPosition(dragPosition);
+  }, []);
 
-  render() {
-    const { queue, queueCursor } = this.props;
+  const { queue, queueCursor } = props;
 
-    // Get the 20 next tracks displayed
-    const shownQueue = queue.slice(queueCursor + 1, queueCursor + 21);
-    const incomingQueue = queue.slice(queueCursor + 1);
+  // Get the 20 next tracks displayed
+  const shownQueue = queue.slice(queueCursor + 1, queueCursor + 21);
+  const incomingQueue = queue.slice(queueCursor + 1);
 
-    return (
-      <>
-        <div className={styles.queue__header}>
-          <div className={styles.queue__header__infos}>{getStatus(incomingQueue)}</div>
-          <Button bSize='small' onClick={QueueActions.clear}>
-            clear queue
-          </Button>
-        </div>
-        <div className={styles.queue__content}>
-          {shownQueue.map((track, index) => (
-            <QueueListItem
-              key={`track-${track._id}-${index}`}
-              index={index}
-              track={track}
-              queueCursor={this.props.queueCursor}
-              dragged={index === this.state.draggedTrackIndex}
-              draggedOver={index === this.state.draggedOverTrackIndex}
-              dragPosition={index === this.state.draggedOverTrackIndex ? this.state.dragPosition : null}
-              onDragStart={this.dragStart}
-              onDragOver={this.dragOver}
-              onDragEnd={this.dragEnd}
-            />
-          ))}
-        </div>
-      </>
-    );
-  }
-}
+  return (
+    <>
+      <div className={styles.queue__header}>
+        <div className={styles.queue__header__infos}>{getStatus(incomingQueue)}</div>
+        <Button bSize='small' onClick={QueueActions.clear}>
+          clear queue
+        </Button>
+      </div>
+      <div className={styles.queue__content}>
+        {shownQueue.map((track, index) => (
+          <QueueListItem
+            key={`track-${track._id}-${index}`}
+            index={index}
+            track={track}
+            queueCursor={props.queueCursor}
+            dragged={index === draggedTrackIndex}
+            draggedOver={index === draggedOverTrackIndex}
+            dragPosition={index === draggedOverTrackIndex ? dragPosition : null}
+            onDragStart={dragStart}
+            onDragOver={dragOver}
+            onDragEnd={dragEnd}
+          />
+        ))}
+      </div>
+    </>
+  );
+};
+
+export default QueueList;
