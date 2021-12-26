@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import cx from 'classnames';
 
 import * as QueueActions from '../../store/actions/QueueActions';
@@ -18,64 +18,57 @@ interface Props {
   queueCursor: number;
 }
 
-export default class QueueListItem extends React.PureComponent<Props> {
-  static defaultProps = {
-    dragPosition: null,
-  };
+const QueueListItem: React.FC<Props> = (props) => {
+  const { track } = props;
 
-  constructor(props: Props) {
-    super(props);
+  const onDragStart = useCallback(
+    (e: React.DragEvent<HTMLDivElement>) => {
+      props.onDragStart(e, props.index);
+    },
+    [props]
+  );
 
-    this.remove = this.remove.bind(this);
-    this.play = this.play.bind(this);
-    this.onDragStart = this.onDragStart.bind(this);
-    this.onDragOver = this.onDragOver.bind(this);
-  }
+  const onDragOver = useCallback(
+    (e: React.DragEvent<HTMLDivElement>) => {
+      props.onDragOver(e, props.index);
+    },
+    [props]
+  );
 
-  onDragStart(e: React.DragEvent<HTMLDivElement>) {
-    this.props.onDragStart(e, this.props.index);
-  }
+  const remove = useCallback(() => {
+    QueueActions.remove(props.index);
+  }, [props.index]);
 
-  onDragOver(e: React.DragEvent<HTMLDivElement>) {
-    this.props.onDragOver(e, this.props.index);
-  }
+  const play = useCallback(() => {
+    QueueActions.start(props.queueCursor + props.index + 1);
+  }, [props.index, props.queueCursor]);
 
-  remove() {
-    QueueActions.remove(this.props.index);
-  }
+  const queueContentClasses = cx(styles.queue__item, {
+    [styles.isDragged]: props.dragged,
+    [styles.isDraggedOver]: props.draggedOver,
+    [styles.isAbove]: props.draggedOver && props.dragPosition === 'above',
+    [styles.isBelow]: props.draggedOver && props.dragPosition === 'below',
+  });
 
-  async play() {
-    await QueueActions.start(this.props.queueCursor + this.props.index + 1);
-  }
-
-  render() {
-    const queueContentClasses = cx(styles.queue__item, {
-      [styles.isDragged]: this.props.dragged,
-      [styles.isDraggedOver]: this.props.draggedOver,
-      [styles.isAbove]: this.props.draggedOver && this.props.dragPosition === 'above',
-      [styles.isBelow]: this.props.draggedOver && this.props.dragPosition === 'below',
-    });
-
-    const { track } = this.props;
-
-    return (
-      <div
-        className={queueContentClasses}
-        draggable={true}
-        onDragStart={this.onDragStart}
-        onDragOver={this.onDragOver}
-        onDragEnd={this.props.onDragEnd}
-      >
-        <div className={styles.queue__item__info} onDoubleClick={this.play}>
-          <div className={styles.queue__item__info__title}>{track.title}</div>
-          <div className={styles.queue__item__info__otherInfos}>
-            <span>{track.artist}</span> - <span>{track.album}</span>
-          </div>
+  return (
+    <div
+      className={queueContentClasses}
+      draggable={true}
+      onDragStart={onDragStart}
+      onDragOver={onDragOver}
+      onDragEnd={props.onDragEnd}
+    >
+      <div className={styles.queue__item__info} onDoubleClick={play}>
+        <div className={styles.queue__item__info__title}>{track.title}</div>
+        <div className={styles.queue__item__info__otherInfos}>
+          <span>{track.artist}</span> - <span>{track.album}</span>
         </div>
-        <button className={styles.queue__item__remove} onClick={this.remove}>
-          &times;
-        </button>
       </div>
-    );
-  }
-}
+      <button className={styles.queue__item__remove} onClick={remove}>
+        &times;
+      </button>
+    </div>
+  );
+};
+
+export default QueueListItem;
