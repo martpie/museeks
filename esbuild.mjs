@@ -47,9 +47,6 @@ const configMain = {
   // watch: shouldWatch ? onWatch('main') : null,
   incremental: shouldWatch,
   minify,
-  define: {
-    'process.env.NODE_ENV': isProduction ? '"production"' : '"development"',
-  },
 };
 
 /*
@@ -70,9 +67,6 @@ let configRenderer = {
   incremental: shouldWatch,
   minify,
   sourcemap: !isProduction,
-  define: {
-    'process.env.NODE_ENV': isProduction ? '"production"' : '"development"',
-  },
   plugins: [
     esbuildPluginSvg(),
     postCssPlugin.default({
