@@ -1,22 +1,18 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { Outlet, useMatch } from 'react-router';
+import { Navigate } from 'react-router-dom';
 
-import { Config } from '../../../shared/types/museeks';
 import * as Nav from '../../elements/Nav/Nav';
-import { config } from '../../lib/app';
-import { RootState } from '../../store/reducers';
 import appStyles from '../../App.module.css';
-import SettingsLibrary from './SettingsLibrary';
-import SettingsUI from './SettingsUI';
-import SettingsAudio from './SettingsAudio';
-import SettingsAbout from './SettingsAbout';
 
 import styles from './Settings.module.css';
 
 const Settings: React.FC = () => {
-  const library = useSelector((state: RootState) => state.library);
-  const conf = config.get() as Config;
+  const match = useMatch('/settings');
+
+  if (match) {
+    return <Navigate to='/settings/library' />;
+  }
 
   return (
     <div className={`${appStyles.view} ${styles.viewSettings}`}>
@@ -30,13 +26,7 @@ const Settings: React.FC = () => {
       </div>
 
       <div className={styles.settings__content}>
-        <Switch>
-          <Route path='/settings' exact render={() => <Redirect to='/settings/library' />} />
-          <Route path='/settings/library' render={(p) => <SettingsLibrary {...p} library={library} />} />
-          <Route path='/settings/interface' render={(p) => <SettingsUI {...p} config={conf} />} />
-          <Route path='/settings/audio' render={(p) => <SettingsAudio {...p} config={conf} />} />
-          <Route path='/settings/about' render={() => <SettingsAbout />} />
-        </Switch>
+        <Outlet />
       </div>
     </div>
   );
