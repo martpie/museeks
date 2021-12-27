@@ -3,7 +3,6 @@ import types from '../action-types';
 
 import * as app from '../../lib/app';
 import Player from '../../lib/player';
-import * as utils from '../../lib/utils';
 
 import { Track } from '../../../shared/types/museeks';
 
@@ -12,9 +11,9 @@ import { Track } from '../../../shared/types/museeks';
  */
 export const start = async (index: number): Promise<void> => {
   const { queue } = store.getState().player;
-  const uri = utils.parseUri(queue[index].path);
+  const track = queue[index];
 
-  Player.setAudioSrc(uri);
+  Player.setSrc(track);
   await Player.play();
 
   store.dispatch({
