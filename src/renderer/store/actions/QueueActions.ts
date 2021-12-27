@@ -13,7 +13,7 @@ export const start = async (index: number): Promise<void> => {
   const { queue } = store.getState().player;
   const track = queue[index];
 
-  Player.setSrc(track);
+  Player.setTrack(track);
   await Player.play();
 
   store.dispatch({
