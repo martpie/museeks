@@ -1,5 +1,4 @@
-import path from 'path';
-import electron, { remote } from 'electron';
+import electron from 'electron';
 
 import Player from '../../lib/player';
 import { browserWindows, config } from '../../lib/app';
@@ -15,7 +14,6 @@ import * as PlayerActions from './PlayerActions';
 import * as SettingsActions from './SettingsActions';
 
 const { ipcRenderer } = electron;
-const { app } = remote;
 
 let lastSaveBounds = 0;
 let saveBoundsTimeout: number | null = null;
@@ -85,13 +83,7 @@ const init = async (): Promise<void> => {
   Player.getAudio().addEventListener('loadstart', async () => {
     const track = Player.getTrack();
     if (track) {
-      let cover = await coverUtils.fetchCover(track.path, false, true);
-
-      if (!cover) {
-        cover = await coverUtils.getFileAsBase64(
-          (cover = path.join(app.getAppPath(), 'src', 'images', 'logos', 'museeks-tray.png'))
-        );
-      }
+      const cover = await coverUtils.fetchCover(track.path, false, true);
 
       navigator.mediaSession.metadata = new MediaMetadata({
         title: track.title,
