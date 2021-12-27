@@ -19,7 +19,11 @@ class MprisModule extends ModuleWindow {
 
   constructor(window: Electron.BrowserWindow) {
     super(window);
-    this.platforms = ['linux'];
+
+    // Temporarily disabled everywhere, was we use window.mediaSession to control
+    // the player on all platforms.
+    this.platforms = [];
+    // this.platforms = ['linux'];
   }
 
   async load(): Promise<void> {

@@ -102,6 +102,30 @@ const init = async (): Promise<void> => {
     }
   });
 
+  Player.getAudio().addEventListener('play', async () => {
+    navigator.mediaSession.playbackState = 'playing';
+  });
+
+  Player.getAudio().addEventListener('pause', async () => {
+    navigator.mediaSession.playbackState = 'paused';
+  });
+
+  navigator.mediaSession.setActionHandler('play', async () => {
+    PlayerActions.play();
+  });
+
+  navigator.mediaSession.setActionHandler('pause', async () => {
+    PlayerActions.pause();
+  });
+
+  navigator.mediaSession.setActionHandler('previoustrack', async () => {
+    PlayerActions.previous();
+  });
+
+  navigator.mediaSession.setActionHandler('nexttrack', async () => {
+    PlayerActions.next();
+  });
+
   // Support for multiple audio output
   navigator.mediaDevices.addEventListener('devicechange', async () => {
     try {
