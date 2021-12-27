@@ -1,3 +1,4 @@
+import { fetchCover } from '../../shared/lib/utils-cover';
 import { Track } from '../../shared/types/museeks';
 import * as utils from '../lib/utils';
 
@@ -10,6 +11,9 @@ interface PlayerOptions {
   muted?: boolean;
 }
 
+/**
+ * Library in charge of playing audio. Currently uses HTMLAudioElement.
+ */
 class Player {
   private audio: HTMLAudioElement;
   private durationThresholdReached: boolean;
@@ -95,6 +99,17 @@ class Player {
     // When we change song, need to update the thresholdReached indicator.
     this.durationThresholdReached = false;
     this.audio.src = utils.parseUri(track.path);
+
+    setTimeout(async () => {
+      const cover = await fetchCover(track.path);
+
+      navigator.mediaSession.metadata = new MediaMetadata({
+        title: track.title,
+        artist: track.artist.join(', '),
+        album: track.album,
+        artwork: cover ? [{ src: cover }] : undefined,
+      });
+    }, 0);
   }
 
   setCurrentTime(currentTime: number) {
