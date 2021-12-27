@@ -8,9 +8,7 @@ import ConfigModule from './modules/config';
 import PowerModule from './modules/power-monitor';
 import ThumbarModule from './modules/thumbar';
 import DockMenuModule from './modules/dock-menu-darwin';
-import GlobalShortcutsModule from './modules/global-shortcuts';
 import SleepBlockerModule from './modules/sleep-blocker';
-import MprisModule from './modules/mpris';
 import DialogsModule from './modules/dialogs';
 import NativeThemeModule from './modules/native-theme';
 import DevtoolsModule from './modules/devtools';
@@ -84,9 +82,7 @@ app.on('ready', async () => {
     new TrayModule(mainWindow),
     new ThumbarModule(mainWindow),
     new DockMenuModule(mainWindow),
-    new GlobalShortcutsModule(mainWindow),
     new SleepBlockerModule(mainWindow),
-    new MprisModule(mainWindow),
     new DialogsModule(mainWindow),
     new NativeThemeModule(mainWindow, configModule),
     new DevtoolsModule(mainWindow)
