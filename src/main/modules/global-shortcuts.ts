@@ -8,6 +8,14 @@ import channels from '../../shared/lib/ipc-channels';
 import ModuleWindow from './module-window';
 
 class GlobalShortcutsModule extends ModuleWindow {
+  constructor(window: Electron.BrowserWindow) {
+    super(window);
+
+    // Temporarily disabled everywhere, was we use window.mediaSession to control
+    // the player on all platforms.
+    this.platforms = [];
+  }
+
   async load(): Promise<void> {
     globalShortcut.register('MediaPlayPause', () => {
       this.window.webContents.send(channels.PLAYBACK_PLAYPAUSE);
