@@ -1,30 +1,21 @@
-import React from 'react';
-import { Route, Switch, withRouter, RouteComponentProps } from 'react-router';
+import React, { useCallback } from 'react';
+import { useLocation } from 'react-router';
 import { NavLink } from 'react-router-dom';
 import Icon from 'react-fontawesome';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import { getStatus } from '../../lib/utils-library';
 import { RootState } from '../../store/reducers';
-import { LibraryState } from '../../store/reducers/library';
 
 import ProgressBar from '../ProgressBar/ProgressBar';
 import styles from './Footer.module.css';
 
-interface InjectedProps {
-  library: LibraryState;
-}
+const Footer: React.FC = () => {
+  const library = useSelector((state: RootState) => state.library);
+  useLocation();
+  const isPlaylistView = useLocation().pathname.startsWith('/playlists');
 
-type Props = InjectedProps & RouteComponentProps;
-
-class Footer extends React.Component<Props> {
-  constructor(props: Props) {
-    super(props);
-    this.getStatus = this.getStatus.bind(this);
-  }
-
-  getStatus() {
-    const { library } = this.props;
+  const getStatusContent = useCallback(() => {
     const { processed, total } = library.refresh;
 
     if (library.refreshing) {
@@ -45,57 +36,48 @@ class Footer extends React.Component<Props> {
 
     // Else, return the amount of time for the library or the playlist depending
     // of the route
-    return (
-      <Switch>
-        <Route path='/library' render={() => getStatus(library.tracks.library)} />
-        <Route path='/playlists' render={() => getStatus(library.tracks.playlist)} />
-      </Switch>
-    );
-  }
+    return <>{getStatus(isPlaylistView ? library.tracks.playlist : library.tracks.library)}</>;
+  }, [library.refresh, library.refreshing, library.tracks.library, library.tracks.playlist, isPlaylistView]);
 
-  render() {
-    return (
-      <footer className={styles.footer}>
-        <div className={styles.footer__navigation}>
-          <div className={styles.footer__navigation__linkgroup}>
-            <NavLink
-              to='/library'
-              activeClassName={styles.footer__navigation__linkIsActive}
-              className={styles.footer__navigation__link}
-              title='Library'
-              draggable={false}
-            >
-              <Icon name='align-justify' fixedWidth />
-            </NavLink>
-            <NavLink
-              to='/playlists'
-              activeClassName={styles.footer__navigation__linkIsActive}
-              className={styles.footer__navigation__link}
-              title='Playlists'
-              draggable={false}
-            >
-              <Icon name='star' fixedWidth />
-            </NavLink>
-            <NavLink
-              to='/settings'
-              activeClassName={styles.footer__navigation__linkIsActive}
-              className={styles.footer__navigation__link}
-              title='Settings'
-              draggable={false}
-            >
-              <Icon name='gear' fixedWidth />
-            </NavLink>
-          </div>
+  return (
+    <footer className={styles.footer}>
+      <div className={styles.footer__navigation}>
+        <div className={styles.footer__navigation__linkgroup}>
+          <NavLink
+            to='/library'
+            className={({ isActive }) =>
+              `${styles.footer__navigation__link} ${isActive && styles.footer__navigation__linkIsActive}`
+            }
+            title='Library'
+            draggable={false}
+          >
+            <Icon name='align-justify' fixedWidth />
+          </NavLink>
+          <NavLink
+            to='/playlists'
+            className={({ isActive }) =>
+              `${styles.footer__navigation__link} ${isActive && styles.footer__navigation__linkIsActive}`
+            }
+            title='Playlists'
+            draggable={false}
+          >
+            <Icon name='star' fixedWidth />
+          </NavLink>
+          <NavLink
+            to='/settings'
+            className={({ isActive }) =>
+              `${styles.footer__navigation__link} ${isActive && styles.footer__navigation__linkIsActive}`
+            }
+            title='Settings'
+            draggable={false}
+          >
+            <Icon name='gear' fixedWidth />
+          </NavLink>
         </div>
-        <div className={styles.footer__status}>{this.getStatus()}</div>
-      </footer>
-    );
-  }
-}
+      </div>
+      <div className={styles.footer__status}>{getStatusContent()}</div>
+    </footer>
+  );
+};
 
-const mapsStateToProps = (state: RootState): InjectedProps => ({
-  library: state.library,
-});
-
-// TODO with router
-export default withRouter(connect(mapsStateToProps)(Footer));
+export default Footer;
