@@ -8,7 +8,6 @@ import types from '../action-types';
 import SORT_ORDERS from '../../constants/sort-orders';
 
 import * as app from '../../lib/app';
-import * as utils from '../../lib/utils';
 import Player from '../../lib/player';
 import { sortTracks, filterTracks } from '../../lib/utils-library';
 import { shuffleTracks } from '../../lib/utils-player';
@@ -86,9 +85,9 @@ export const start = async (queue?: TrackModel[], _id?: string): Promise<void> =
 
   // If a track exists
   if (queuePosition > -1) {
-    const uri = utils.parseUri(newQueue[queuePosition].path);
+    const track = newQueue[queuePosition];
 
-    Player.setAudioSrc(uri);
+    Player.setSrc(track);
     await Player.play();
 
     let queueCursor = queuePosition; // Clean that variable mess later
@@ -174,9 +173,7 @@ export const next = async (): Promise<void> => {
 
     // tslint:disable-next-line strict-type-predicates
     if (track !== undefined) {
-      const uri = utils.parseUri(track.path);
-
-      Player.setAudioSrc(uri);
+      Player.setSrc(track);
       await Player.play();
       store.dispatch({
         type: types.PLAYER_NEXT,
@@ -212,9 +209,7 @@ export const previous = async (): Promise<void> => {
 
     // tslint:disable-next-line
     if (newTrack !== undefined) {
-      const uri = utils.parseUri(newTrack.path);
-
-      Player.setAudioSrc(uri);
+      Player.setSrc(newTrack);
       await Player.play();
 
       store.dispatch({
@@ -264,7 +259,7 @@ export const repeat = (value: Repeat): void => {
  * Set volume
  */
 export const setVolume = (volume: number): void => {
-  Player.setAudioVolume(volume);
+  Player.setVolume(volume);
 
   app.config.set('audioVolume', volume);
   app.config.save();
@@ -295,7 +290,7 @@ export const setMuted = (muted = false): void => {
 export const setPlaybackRate = (value: number): void => {
   if (value >= 0.5 && value <= 5) {
     // if in allowed range
-    Player.setAudioPlaybackRate(value);
+    Player.setPlaybackRate(value);
 
     app.config.set('audioPlaybackRate', value);
     app.config.save();
@@ -333,7 +328,7 @@ export const setOutputDevice = (deviceId = 'default'): void => {
 export const jumpTo = (to: number): void => {
   // TODO (y.solovyov) do we want to set some explicit state?
   // if yes, what should it be? if not, do we need this actions at all?
-  Player.setAudioCurrentTime(to);
+  Player.setCurrentTime(to);
   store.dispatch({
     type: types.PLAYER_JUMP_TO,
   });
