@@ -1,3 +1,6 @@
+import { Track } from '../../shared/types/museeks';
+import * as utils from '../lib/utils';
+
 import * as app from './app';
 
 interface PlayerOptions {
@@ -69,15 +72,11 @@ class Player {
     return this.audio.volume;
   }
 
-  getSrc() {
-    return this.audio.src;
-  }
-
-  setAudioVolume(volume: number) {
+  setVolume(volume: number) {
     this.audio.volume = volume;
   }
 
-  setAudioPlaybackRate(playbackRate: number) {
+  setPlaybackRate(playbackRate: number) {
     this.audio.playbackRate = playbackRate;
     this.audio.defaultPlaybackRate = playbackRate;
   }
@@ -88,13 +87,17 @@ class Player {
     await this.audio.setSinkId(deviceId);
   }
 
-  setAudioSrc(src: string) {
-    // When we change song, need to update the thresholdReached indicator.
-    this.durationThresholdReached = false;
-    this.audio.src = src;
+  getSrc() {
+    return this.audio.src;
   }
 
-  setAudioCurrentTime(currentTime: number) {
+  setSrc(track: Track) {
+    // When we change song, need to update the thresholdReached indicator.
+    this.durationThresholdReached = false;
+    this.audio.src = utils.parseUri(track.path);
+  }
+
+  setCurrentTime(currentTime: number) {
     this.audio.currentTime = currentTime;
   }
 
