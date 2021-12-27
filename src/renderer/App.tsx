@@ -1,7 +1,7 @@
 import os from 'os';
 import React, { useCallback, useEffect } from 'react';
 import KeyBinding from 'react-keybinding-component';
-import { useHistory } from 'react-router';
+import { useNavigate } from 'react-router';
 import { useDrop } from 'react-dnd';
 import { NativeTypes } from 'react-dnd-html5-backend';
 
@@ -25,7 +25,7 @@ import DropzoneImport from './components/DropzoneImport/DropzoneImport';
 */
 
 const Museeks: React.FC = (props) => {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   // App shortcuts (not using Electron's global shortcuts API to avoid conflicts
   // with other applications)
@@ -41,7 +41,7 @@ const Museeks: React.FC = (props) => {
           if (isCtrlKey(e)) {
             e.preventDefault();
             e.stopPropagation();
-            history.push('/settings');
+            navigate('/settings');
           }
           break;
         case 'ArrowLeft':
@@ -58,12 +58,12 @@ const Museeks: React.FC = (props) => {
           break;
       }
     },
-    [history]
+    [navigate]
   );
 
   useEffect(() => {
     AppActions.init();
-  }, []);
+  }, [navigate]);
 
   // Drop behavior to add tracks to the library from any string
   const [{ isOver }, drop] = useDrop(() => {
