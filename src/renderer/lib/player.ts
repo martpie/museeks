@@ -1,3 +1,7 @@
+import { fetchCover } from '../../shared/lib/utils-cover';
+import { Track } from '../../shared/types/museeks';
+import * as utils from '../lib/utils';
+
 import * as app from './app';
 
 interface PlayerOptions {
@@ -7,6 +11,9 @@ interface PlayerOptions {
   muted?: boolean;
 }
 
+/**
+ * Library in charge of playing audio. Currently uses HTMLAudioElement.
+ */
 class Player {
   private audio: HTMLAudioElement;
   private durationThresholdReached: boolean;
@@ -69,15 +76,11 @@ class Player {
     return this.audio.volume;
   }
 
-  getSrc() {
-    return this.audio.src;
-  }
-
-  setAudioVolume(volume: number) {
+  setVolume(volume: number) {
     this.audio.volume = volume;
   }
 
-  setAudioPlaybackRate(playbackRate: number) {
+  setPlaybackRate(playbackRate: number) {
     this.audio.playbackRate = playbackRate;
     this.audio.defaultPlaybackRate = playbackRate;
   }
@@ -88,13 +91,28 @@ class Player {
     await this.audio.setSinkId(deviceId);
   }
 
-  setAudioSrc(src: string) {
-    // When we change song, need to update the thresholdReached indicator.
-    this.durationThresholdReached = false;
-    this.audio.src = src;
+  getSrc() {
+    return this.audio.src;
   }
 
-  setAudioCurrentTime(currentTime: number) {
+  setSrc(track: Track) {
+    // When we change song, need to update the thresholdReached indicator.
+    this.durationThresholdReached = false;
+    this.audio.src = utils.parseUri(track.path);
+
+    setTimeout(async () => {
+      const cover = await fetchCover(track.path);
+
+      navigator.mediaSession.metadata = new MediaMetadata({
+        title: track.title,
+        artist: track.artist.join(', '),
+        album: track.album,
+        artwork: cover ? [{ src: cover }] : undefined,
+      });
+    }, 0);
+  }
+
+  setCurrentTime(currentTime: number) {
     this.audio.currentTime = currentTime;
   }
 
