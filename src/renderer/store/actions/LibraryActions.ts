@@ -95,9 +95,9 @@ const scan = {
   total: 0,
 };
 
-const scanTracks = async (paths: string[]): Promise<void> => {
+const scanTracks = async (paths: string[]): Promise<TrackModel[]> => {
   return new Promise((resolve, reject) => {
-    if (paths.length === 0) resolve();
+    if (paths.length === 0) resolve([]);
 
     try {
       // Instantiate queue
@@ -114,7 +114,7 @@ const scanTracks = async (paths: string[]): Promise<void> => {
         scan.processed = 0;
         scan.total = 0;
 
-        resolve();
+        resolve(scannedFiles);
       });
 
       scanQueue.on('success', () => {
@@ -138,8 +138,6 @@ const scanTracks = async (paths: string[]): Promise<void> => {
               tracks,
             },
           });
-
-          // TODO progressive loading in the store, don't freeze the app, able to add files/folders when scanning
         }
       });
       // End queue instantiation
@@ -180,7 +178,7 @@ const scanTracks = async (paths: string[]): Promise<void> => {
 /**
  * Add tracks to Library
  */
-export const add = async (pathsToScan: string[]): Promise<void> => {
+export const add = async (pathsToScan: string[]): Promise<TrackModel[]> => {
   store.dispatch({
     type: types.LIBRARY_REFRESH_START,
   });
@@ -232,23 +230,26 @@ export const add = async (pathsToScan: string[]): Promise<void> => {
         type: types.LIBRARY_REFRESH_END,
       });
 
-      return;
+      return [];
     }
 
     // 5. Scan tracks then scan playlists
-    await scanTracks(supportedTrackFiles);
+    const importedTracks = await scanTracks(supportedTrackFiles);
     await scanPlaylists(supportedPlaylistsFiles);
 
     await refresh();
     await PlaylistsActions.refresh();
+
+    return importedTracks;
   } catch (err) {
     ToastsActions.add('danger', 'An error occured when scanning the library');
     console.warn(err);
+    return [];
+  } finally {
+    store.dispatch({
+      type: types.LIBRARY_REFRESH_END,
+    });
   }
-
-  store.dispatch({
-    type: types.LIBRARY_REFRESH_END,
-  });
 };
 
 /**

@@ -72,9 +72,13 @@ const Museeks: React.FC = (props) => {
       drop(item: { files: Array<File> }) {
         const files = item.files.map((file) => file.path);
 
-        LibraryActions.add(files).catch((err) => {
-          console.warn(err);
-        });
+        LibraryActions.add(files)
+          .then((_importedTracks) => {
+            // TODO: Import to playlist here
+          })
+          .catch((err) => {
+            console.warn(err);
+          });
       },
       collect: (monitor) => ({
         isOver: monitor.isOver(),
