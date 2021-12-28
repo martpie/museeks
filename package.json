@@ -76,6 +76,7 @@
   "devDependencies": {
     "@babel/preset-env": "^7.16.5",
     "@babel/preset-typescript": "^7.16.5",
+    "@chialab/esbuild-plugin-html": "^0.14.10",
     "@types/bluebird": "^3.5.36",
     "@types/electron-devtools-installer": "^2.2.1",
     "@types/jest": "^27.0.3",
