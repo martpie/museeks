@@ -1,13 +1,10 @@
 import path from 'path';
-import electron from 'electron';
+import { app, getCurrentWindow } from '@electron/remote';
 import linvodb from 'linvodb3';
 import leveljs from 'level-js';
 import teeny from 'teeny-conf';
 import Promise from 'bluebird';
 import { TrackModel, PlaylistModel } from '../../shared/types/museeks';
-
-const { remote } = electron;
-const { app } = remote;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,7 +13,7 @@ const { app } = remote;
 */
 
 export const browserWindows = {
-  main: remote.getCurrentWindow(),
+  main: getCurrentWindow(),
 };
 
 export const pathUserData = app.getPath('userData');
@@ -30,7 +27,7 @@ export const pathSrc = __dirname;
 
 // TODO: only working on macOS, issue to follow:
 // https://github.com/electron/electron/issues/27116
-remote.app.on('open-file', (event, path) => {
+app.on('open-file', (event, path) => {
   event.preventDefault();
   console.info(path); // absolute path to file
 });
