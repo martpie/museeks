@@ -1,4 +1,5 @@
 import electron from 'electron';
+import { Menu } from '@electron/remote';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import KeyBinding from 'react-keybinding-component';
 import chunk from 'lodash-es/chunk';
@@ -22,8 +23,7 @@ import scrollbarStyles from '../CustomScrollbar/CustomScrollbar.module.css';
 import headerStyles from '../Header/Header.module.css';
 import styles from './TracksList.module.css';
 
-const { shell, remote } = electron;
-const { Menu } = remote;
+const { shell } = electron;
 
 const CHUNK_LENGTH = 20;
 const ROW_HEIGHT = 30; // FIXME

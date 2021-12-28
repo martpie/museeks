@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/no-autofocus */
 
 import electron from 'electron';
+import { Menu } from '@electron/remote';
 import React from 'react';
 import Icon from 'react-fontawesome';
 
@@ -9,8 +10,6 @@ import PlaylistsNavLink from '../PlaylistsNavLink/PlaylistsNavLink';
 import { PlaylistModel } from '../../../shared/types/museeks';
 
 import styles from './PlaylistsNav.module.css';
-
-const { Menu } = electron.remote;
 
 interface Props {
   playlists: PlaylistModel[];
