@@ -1193,6 +1193,34 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
+"@chialab/esbuild-plugin-html@^0.14.10":
+  version "0.14.10"
+  resolved "https://registry.yarnpkg.com/@chialab/esbuild-plugin-html/-/esbuild-plugin-html-0.14.10.tgz#e194e860cca3ee57793e8fc0e582dab16321c685"
+  integrity sha512-IvHB+aR+Y1+Oje3ZVA1Nya9P/GMqmLUa68NqKdwMq3JsPwaorhwo+l99SnF07/5sH6YPy7RD0WRrF2xt9kJECA==
+  dependencies:
+    "@chialab/esbuild-rna" "^0.14.10"
+    "@chialab/node-resolve" "^0.14.10"
+
+"@chialab/esbuild-rna@^0.14.10":
+  version "0.14.10"
+  resolved "https://registry.yarnpkg.com/@chialab/esbuild-rna/-/esbuild-rna-0.14.10.tgz#27bf3cb670b398cd753e4789f5ed014f02f12586"
+  integrity sha512-iaF6njdmB9dbjnb4cLViA32WlmQRJxgiiIXDSTQpP9z97NQYEwDLgjarJi8T1XBwe7xlXKZOM91mJYzJLS8NoQ==
+  dependencies:
+    "@chialab/estransform" "^0.14.10"
+    "@chialab/node-resolve" "^0.14.10"
+
+"@chialab/estransform@^0.14.10":
+  version "0.14.10"
+  resolved "https://registry.yarnpkg.com/@chialab/estransform/-/estransform-0.14.10.tgz#c309e75f4250452e395b920466397b49086bee7a"
+  integrity sha512-MJtLK4h+EFIsdJ+JXLH0EzSSVdwlnOColy92qllygi79Y9cuzWUpvEIBkbtdfG50m8G70hiJbs3rGc7GmyAuFg==
+  dependencies:
+    "@parcel/source-map" "^2.0.0"
+
+"@chialab/node-resolve@^0.14.10":
+  version "0.14.10"
+  resolved "https://registry.yarnpkg.com/@chialab/node-resolve/-/node-resolve-0.14.10.tgz#e78871c5bc411c8fe10cf5870a30dd910dcc2791"
+  integrity sha512-I/rNiWVUOgbLBMeJJlndl9HXKd6vS+jw6XTHsYJDWE//1mKxh5yuLZbfeVvawa3Tngc3NbWxbdrYyDyl29lncQ==
+
 "@develar/schema-utils@~2.6.5":
   version "2.6.5"
   resolved "https://registry.yarnpkg.com/@develar/schema-utils/-/schema-utils-2.6.5.tgz#3ece22c5838402419a6e0425f85742b961d9b6c6"
@@ -1495,6 +1523,14 @@
   dependencies:
     "@nodelib/fs.scandir" "2.1.4"
     fastq "^1.6.0"
+
+"@parcel/source-map@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@parcel/source-map/-/source-map-2.0.0.tgz#41cf004109bbf277ceaf096a58838ff6a59af774"
+  integrity sha512-njoUJpj2646NebfHp5zKJeYD1KwhsfQIoU9TnCTHmF9fGOaPbClmeq12G6/4ZqGASftRq+YhhukFBi/ncWKGvw==
+  dependencies:
+    detect-libc "^1.0.3"
+    globby "^11.0.3"
 
 "@react-dnd/asap@^4.0.0":
   version "4.0.0"
@@ -3331,6 +3367,11 @@ delayed-stream@~1.0.0:
   resolved "https://registry.yarnpkg.com/delayed-stream/-/delayed-stream-1.0.0.tgz#df3ae199acadfb7d440aaae0b29e2272b24ec619"
   integrity sha1-3zrhmayt+31ECqrgsp4icrJOxhk=
 
+detect-libc@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/detect-libc/-/detect-libc-1.0.3.tgz#fa137c4bd698edf55cd5cd02ac559f91a4c4ba9b"
+  integrity sha1-+hN8S9aY7fVc1c0CrFWfkaTEups=
+
 detect-newline@^3.0.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/detect-newline/-/detect-newline-3.1.0.tgz#576f5dfc63ae1a192ff192d8ad3af6308991b651"
@@ -4788,7 +4829,7 @@ globalthis@^1.0.1:
   dependencies:
     define-properties "^1.1.3"
 
-globby@^11.0.4:
+globby@^11.0.3, globby@^11.0.4:
   version "11.0.4"
   resolved "https://registry.yarnpkg.com/globby/-/globby-11.0.4.tgz#2cbaff77c2f2a62e71e9b2813a67b97a3a3001a5"
   integrity sha512-9O4MVG9ioZJ08ffbcyVYyLOJLk5JQ688pJ4eMGLpdWLHq/Wr1D9BlriLQyL0E+jbkuePVZXYFj47QM/v093wHg==
