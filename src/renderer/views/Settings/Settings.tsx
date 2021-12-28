@@ -10,10 +10,6 @@ import styles from './Settings.module.css';
 const Settings: React.FC = () => {
   const match = useMatch('/settings');
 
-  if (match) {
-    return <Navigate to='/settings/library' />;
-  }
-
   return (
     <div className={`${appStyles.view} ${styles.viewSettings}`}>
       <div className={styles.settings__nav}>
@@ -28,6 +24,8 @@ const Settings: React.FC = () => {
       <div className={styles.settings__content}>
         <Outlet />
       </div>
+
+      {match && <Navigate to='/settings/library' />}
     </div>
   );
 };
