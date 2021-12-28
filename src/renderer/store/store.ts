@@ -50,7 +50,7 @@ export const persistor = persistStore(store, null, () => {
   if (state.player.queue && state.player.queueCursor) {
     const track = state.player.queue[state.player.queueCursor];
 
-    player.setSrc(track);
+    player.setTrack(track);
   }
 });
 

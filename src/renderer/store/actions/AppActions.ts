@@ -1,9 +1,7 @@
-import os from 'os';
 import electron from 'electron';
 
 import Player from '../../lib/player';
 import { browserWindows, config } from '../../lib/app';
-import * as utils from '../../lib/utils';
 import history from '../../lib/history';
 import * as coverUtils from '../../../shared/lib/utils-cover';
 import channels from '../../../shared/lib/ipc-channels';
@@ -50,7 +48,8 @@ const init = async (): Promise<void> => {
   Player.getAudio().addEventListener('error', PlayerActions.audioError);
   Player.getAudio().addEventListener('timeupdate', async () => {
     if (Player.isThresholdReached()) {
-      await LibraryActions.incrementPlayCount(Player.getSrc());
+      const track = Player.getTrack();
+      if (track) await LibraryActions.incrementPlayCount(track.path);
     }
   });
 
@@ -59,18 +58,9 @@ const init = async (): Promise<void> => {
   Player.getAudio().addEventListener('play', async () => {
     ipcRenderer.send(channels.PLAYBACK_PLAY);
 
-    // HACK, on win32, a prefix slash is weirdly added
-    let trackPath = Player.getSrc();
+    const track = Player.getTrack();
 
-    if (os.platform() === 'win32') {
-      trackPath = trackPath.replace('file:///', '');
-    } else {
-      trackPath = trackPath.replace('file://', '');
-    }
-
-    trackPath = decodeURIComponent(trackPath);
-
-    const track = await utils.getMetadata(trackPath);
+    if (!track) return;
 
     ipcRenderer.send(channels.PLAYBACK_TRACK_CHANGE, track);
 
@@ -88,6 +78,47 @@ const init = async (): Promise<void> => {
     ipcRenderer.send(channels.PLAYBACK_PAUSE);
   });
 
+  // Support MediaSession (mpris, macOS player controls etc)...
+  // Media Session support
+  Player.getAudio().addEventListener('loadstart', async () => {
+    const track = Player.getTrack();
+    if (track) {
+      const cover = await coverUtils.fetchCover(track.path, false, true);
+
+      navigator.mediaSession.metadata = new MediaMetadata({
+        title: track.title,
+        artist: track.artist.join(', '),
+        album: track.album,
+        artwork: cover ? [{ src: cover }] : undefined,
+      });
+    }
+  });
+
+  Player.getAudio().addEventListener('play', async () => {
+    navigator.mediaSession.playbackState = 'playing';
+  });
+
+  Player.getAudio().addEventListener('pause', async () => {
+    navigator.mediaSession.playbackState = 'paused';
+  });
+
+  navigator.mediaSession.setActionHandler('play', async () => {
+    PlayerActions.play();
+  });
+
+  navigator.mediaSession.setActionHandler('pause', async () => {
+    PlayerActions.pause();
+  });
+
+  navigator.mediaSession.setActionHandler('previoustrack', async () => {
+    PlayerActions.previous();
+  });
+
+  navigator.mediaSession.setActionHandler('nexttrack', async () => {
+    PlayerActions.next();
+  });
+
+  // Support for multiple audio output
   navigator.mediaDevices.addEventListener('devicechange', async () => {
     try {
       await Player.setOutputDevice('default');
@@ -98,7 +129,7 @@ const init = async (): Promise<void> => {
 
   // Listen for main-process events
   ipcRenderer.on(channels.PLAYBACK_PLAY, () => {
-    if (Player.getSrc()) {
+    if (Player.getTrack()) {
       PlayerActions.play();
     } else {
       PlayerActions.start();

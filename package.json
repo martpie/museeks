@@ -48,7 +48,6 @@
     "lodash-es": "^4.17.21",
     "m3ujs": "^0.2.1",
     "mime-types": "^2.1.34",
-    "mpris-service": "2.1.0",
     "music-metadata": "^7.11.4",
     "postcss-scss": "^4.0.2",
     "postcss-url": "^10.1.3",
