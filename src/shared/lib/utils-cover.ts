@@ -1,4 +1,5 @@
 import path from 'path';
+import fs from 'fs';
 import * as mmd from 'music-metadata';
 import globby from 'globby';
 
@@ -27,7 +28,7 @@ const isValidFilename = (pathname: path.ParsedPath): boolean => {
 /**
  * Smart fetch cover (from id3 or file directory)
  */
-export const fetchCover = async (trackPath: string, ignoreId3 = false): Promise<string | null> => {
+export const fetchCover = async (trackPath: string, ignoreId3 = false, base64 = false): Promise<string | null> => {
   if (!trackPath) {
     return null;
   }
@@ -52,7 +53,23 @@ export const fetchCover = async (trackPath: string, ignoreId3 = false): Promise<
     return isValidFilename(path.parse(elem));
   });
 
-  if (match) return match;
+  if (match) {
+    if (base64) return getFileAsBase64(match);
+
+    return match;
+  }
 
   return null;
+};
+
+/**
+ * Returns the given file as a base64 string
+ */
+export const getFileAsBase64 = async (filePath: string): Promise<string | null> => {
+  try {
+    const content = fs.readFileSync(filePath, { encoding: 'base64' });
+    return parseBase64(path.extname(filePath).substr(1), content);
+  } catch {
+    return null;
+  }
 };

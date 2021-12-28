@@ -1,4 +1,3 @@
-import { fetchCover } from '../../shared/lib/utils-cover';
 import { Track } from '../../shared/types/museeks';
 import * as utils from '../lib/utils';
 
@@ -17,6 +16,7 @@ interface PlayerOptions {
 class Player {
   private audio: HTMLAudioElement;
   private durationThresholdReached: boolean;
+  private track: Track | null;
   public threshold: number;
 
   constructor(options?: PlayerOptions) {
@@ -29,6 +29,7 @@ class Player {
     };
 
     this.audio = new Audio();
+    this.track = null;
 
     this.audio.defaultPlaybackRate = mergedOptions.playbackRate;
     // eslint-disable-next-line
@@ -91,25 +92,16 @@ class Player {
     await this.audio.setSinkId(deviceId);
   }
 
-  getSrc() {
-    return this.audio.src;
+  getTrack() {
+    return this.track;
   }
 
-  setSrc(track: Track) {
-    // When we change song, need to update the thresholdReached indicator.
-    this.durationThresholdReached = false;
+  setTrack(track: Track) {
+    this.track = track;
     this.audio.src = utils.parseUri(track.path);
 
-    setTimeout(async () => {
-      const cover = await fetchCover(track.path);
-
-      navigator.mediaSession.metadata = new MediaMetadata({
-        title: track.title,
-        artist: track.artist.join(', '),
-        album: track.album,
-        artwork: cover ? [{ src: cover }] : undefined,
-      });
-    }, 0);
+    // When we change song, need to update the thresholdReached indicator.
+    this.durationThresholdReached = false;
   }
 
   setCurrentTime(currentTime: number) {
