@@ -87,7 +87,7 @@ export const start = async (queue?: TrackModel[], _id?: string): Promise<void> =
   if (queuePosition > -1) {
     const track = newQueue[queuePosition];
 
-    Player.setSrc(track);
+    Player.setTrack(track);
     await Player.play();
 
     let queueCursor = queuePosition; // Clean that variable mess later
@@ -173,7 +173,7 @@ export const next = async (): Promise<void> => {
 
     // tslint:disable-next-line strict-type-predicates
     if (track !== undefined) {
-      Player.setSrc(track);
+      Player.setTrack(track);
       await Player.play();
       store.dispatch({
         type: types.PLAYER_NEXT,
@@ -209,7 +209,7 @@ export const previous = async (): Promise<void> => {
 
     // tslint:disable-next-line
     if (newTrack !== undefined) {
-      Player.setSrc(newTrack);
+      Player.setTrack(newTrack);
       await Player.play();
 
       store.dispatch({
