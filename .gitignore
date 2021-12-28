@@ -59,7 +59,6 @@ typings/
 
 dist/main/*
 dist/renderer/*
-!dist/renderer/app.html
 cache/
 build/
 

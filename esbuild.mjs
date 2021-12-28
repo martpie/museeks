@@ -4,6 +4,7 @@ import path from 'path';
 import esbuild from 'esbuild';
 import postCssPlugin from 'esbuild-plugin-postcss2';
 import esbuildPluginSvg from 'esbuild-plugin-svg';
+import htmlPlugin from '@chialab/esbuild-plugin-html';
 
 import postCssImport from 'postcss-import';
 import postCssNested from 'postcss-nested';
@@ -57,9 +58,10 @@ const configMain = {
 
 /** @type esbuild.BuildOptions */
 let configRenderer = {
-  entryPoints: ['./src/renderer/main.tsx'],
+  entryPoints: ['./src/renderer/app.html'],
   bundle: true,
-  outfile: 'dist/renderer/bundle.js',
+  assetNames: '[name]',
+  outdir: 'dist/renderer',
   platform: 'browser',
   target: 'chrome91',
   external: ['electron', 'fs', 'stream', 'path', 'platform', 'assert', 'os', 'constants', 'util', 'events'],
@@ -68,6 +70,7 @@ let configRenderer = {
   minify,
   sourcemap: !isProduction,
   plugins: [
+    htmlPlugin(),
     esbuildPluginSvg(),
     postCssPlugin.default({
       plugins: [postCssImport, postCssNested, postCssUrl({ url: 'inline' })],
