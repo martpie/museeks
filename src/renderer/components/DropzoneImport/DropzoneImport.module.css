@@ -1,0 +1,30 @@
+.dropzone {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  pointer-events: none;
+  background: var(--faded);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  transition: opacity 0.1s ease-in-out;
+}
+
+.shown {
+  opacity: 1;
+}
+
+.dropzone__title {
+  font-size: 1.4rem;
+  margin-bottom: 8px;
+}
+
+.dropzone__subtitle {
+  /* nothing here for now */
+}

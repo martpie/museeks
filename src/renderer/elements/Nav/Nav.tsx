@@ -23,7 +23,11 @@ interface LinkProps {
  * Single navigation item (anchor)
  */
 export const Link: React.FC<LinkProps> = (props) => (
-  <NavLink to={props.to} className={styles.nav__link} activeClassName={styles.nav__linkActive} draggable={false}>
+  <NavLink
+    to={props.to}
+    className={({ isActive }) => `${styles.nav__link} ${isActive && styles.nav__linkActive}`}
+    draggable={false}
+  >
     {props.children}
   </NavLink>
 );

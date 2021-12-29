@@ -142,7 +142,7 @@ export default class TrackRow extends React.PureComponent<Props, State> {
         </div>
         <div className={`${styles.cell} ${cellStyles.cellTrack}`}>{track.title}</div>
         <div className={`${styles.cell} ${cellStyles.cellDuration}`}>{parseDuration(track.duration)}</div>
-        <div className={`${styles.cell} ${cellStyles.cellArtist}`}>{track.artist[0]}</div>
+        <div className={`${styles.cell} ${cellStyles.cellArtist}`}>{track.artist.sort().join(', ')}</div>
         <div className={`${styles.cell} ${cellStyles.cellAlbum}`}>{track.album}</div>
         <div className={`${styles.cell} ${cellStyles.cellGenre}`}>{track.genre.join(', ')}</div>
       </div>

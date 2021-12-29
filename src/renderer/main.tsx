@@ -7,6 +7,8 @@
 import React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
 import Root from './Root';
 import Router from './Router';
@@ -32,7 +34,9 @@ import './styles/main.module.css';
 ReactDOM.render(
   <Root>
     <Provider store={store}>
-      <Router />
+      <DndProvider backend={HTML5Backend}>
+        <Router />
+      </DndProvider>
     </Provider>
   </Root>,
   document.getElementById('wrap')

@@ -1,5 +1,4 @@
 import path from 'path';
-import electron from 'electron';
 import * as m3u from 'm3ujs';
 
 import { Playlist, TrackModel, PlaylistModel } from '../../../shared/types/museeks';
@@ -10,7 +9,7 @@ import * as app from '../../lib/app';
 import * as ToastsActions from './ToastsActions';
 import * as PlayerActions from './PlayerActions';
 
-const { dialog } = electron.remote;
+const remote = require('@electron/remote');
 
 /**
  * Start playing playlist (on double click)
@@ -125,7 +124,11 @@ export const addTracks = async (_id: string, tracksIds: string[], isShown?: bool
     ToastsActions.add('success', `${tracksIds.length} tracks were successfully added to "${playlist.name}"`);
   } catch (err) {
     console.warn(err);
-    ToastsActions.add('danger', err);
+    if (err instanceof Error) {
+      ToastsActions.add('danger', err.message);
+    } else {
+      ToastsActions.add('danger', 'An unknown error happened while trying to add tracks.');
+    }
   }
 };
 
@@ -207,9 +210,9 @@ export const exportToM3u = async (playlistId: string): Promise<void> => {
   const playlist: PlaylistModel = await app.db.Playlist.findOneAsync({ _id: playlistId });
   const tracks: TrackModel[] = await app.db.Track.findAsync({ _id: { $in: playlist.tracks } });
 
-  const { filePath } = await dialog.showSaveDialog(app.browserWindows.main, {
+  const { filePath } = await remote.dialog.showSaveDialog(app.browserWindows.main, {
     title: 'Export playlist',
-    defaultPath: path.resolve(electron.remote.app.getPath('music'), playlist.name),
+    defaultPath: path.resolve(remote.app.getPath('music'), playlist.name),
     filters: [
       {
         extensions: ['m3u'],

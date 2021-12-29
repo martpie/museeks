@@ -1,3 +1,6 @@
+import { Track } from '../../shared/types/museeks';
+import * as utils from '../lib/utils';
+
 import * as app from './app';
 
 interface PlayerOptions {
@@ -7,9 +10,13 @@ interface PlayerOptions {
   muted?: boolean;
 }
 
+/**
+ * Library in charge of playing audio. Currently uses HTMLAudioElement.
+ */
 class Player {
   private audio: HTMLAudioElement;
   private durationThresholdReached: boolean;
+  private track: Track | null;
   public threshold: number;
 
   constructor(options?: PlayerOptions) {
@@ -22,6 +29,7 @@ class Player {
     };
 
     this.audio = new Audio();
+    this.track = null;
 
     this.audio.defaultPlaybackRate = mergedOptions.playbackRate;
     // eslint-disable-next-line
@@ -69,15 +77,11 @@ class Player {
     return this.audio.volume;
   }
 
-  getSrc() {
-    return this.audio.src;
-  }
-
-  setAudioVolume(volume: number) {
+  setVolume(volume: number) {
     this.audio.volume = volume;
   }
 
-  setAudioPlaybackRate(playbackRate: number) {
+  setPlaybackRate(playbackRate: number) {
     this.audio.playbackRate = playbackRate;
     this.audio.defaultPlaybackRate = playbackRate;
   }
@@ -88,13 +92,19 @@ class Player {
     await this.audio.setSinkId(deviceId);
   }
 
-  setAudioSrc(src: string) {
-    // When we change song, need to update the thresholdReached indicator.
-    this.durationThresholdReached = false;
-    this.audio.src = src;
+  getTrack() {
+    return this.track;
   }
 
-  setAudioCurrentTime(currentTime: number) {
+  setTrack(track: Track) {
+    this.track = track;
+    this.audio.src = utils.parseUri(track.path);
+
+    // When we change song, need to update the thresholdReached indicator.
+    this.durationThresholdReached = false;
+  }
+
+  setCurrentTime(currentTime: number) {
     this.audio.currentTime = currentTime;
   }
 

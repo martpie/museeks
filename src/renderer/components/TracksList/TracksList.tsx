@@ -1,10 +1,11 @@
 import electron from 'electron';
+import { Menu } from '@electron/remote';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import KeyBinding from 'react-keybinding-component';
 import chunk from 'lodash-es/chunk';
 import { useSelector } from 'react-redux';
 
-import { useHistory } from 'react-router';
+import { useNavigate } from 'react-router';
 import TrackRow from '../TrackRow/TrackRow';
 import CustomScrollbar from '../CustomScrollbar/CustomScrollbar';
 import TracksListHeader from '../TracksListHeader/TracksListHeader';
@@ -23,8 +24,7 @@ import scrollbarStyles from '../CustomScrollbar/CustomScrollbar.module.css';
 import headerStyles from '../Header/Header.module.css';
 import styles from './TracksList.module.css';
 
-const { shell, remote } = electron;
-const { Menu } = remote;
+const { shell } = electron;
 
 const CHUNK_LENGTH = 20;
 const ROW_HEIGHT = 30; // FIXME
@@ -53,7 +53,7 @@ const TracksList: React.FC<Props> = (props) => {
   const [selected, setSelected] = useState<string[]>([]);
   const [reordered, setReordered] = useState<string[] | null>([]);
   const [renderView, setRenderView] = useState<HTMLElement | null>(null);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const highlight = useSelector<RootState, boolean>((state) => state.library.highlightPlayingTrack);
 
@@ -390,14 +390,17 @@ const TracksList: React.FC<Props> = (props) => {
         {
           label: 'View Detail',
           click: () => {
-            history.push(`/detail/${track._id}`);
+            navigate(`/detail/${track._id}`);
           },
         },
         {
           type: 'separator',
         },
-        {
-          label: `Search for "${track.artist[0]}" `,
+      ];
+
+      for (const artist of track.artist) {
+        template.push({
+          label: `Search for "${artist}" `,
           click: () => {
             // HACK
             const searchInput: HTMLInputElement | null = document.querySelector(
@@ -409,22 +412,23 @@ const TracksList: React.FC<Props> = (props) => {
               searchInput.dispatchEvent(new Event('input', { bubbles: true }));
             }
           },
-        },
-        {
-          label: `Search for "${track.album}"`,
-          click: () => {
-            // HACK
-            const searchInput: HTMLInputElement | null = document.querySelector(
-              `input[type="text"].${headerStyles.header__search__input}`
-            );
+        });
+      }
 
-            if (searchInput) {
-              searchInput.value = track.album;
-              searchInput.dispatchEvent(new Event('input', { bubbles: true }));
-            }
-          },
+      template.push({
+        label: `Search for "${track.album}"`,
+        click: () => {
+          // HACK
+          const searchInput: HTMLInputElement | null = document.querySelector(
+            `input[type="text"].${headerStyles.header__search__input}`
+          );
+
+          if (searchInput) {
+            searchInput.value = track.album;
+            searchInput.dispatchEvent(new Event('input', { bubbles: true }));
+          }
         },
-      ];
+      });
 
       if (type === 'playlist' && currentPlaylist) {
         template.push(
