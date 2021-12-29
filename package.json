@@ -43,6 +43,10 @@
     "font-awesome": "^4.7.0",
     "globby": "^11.0.4",
     "history": "^5.2.0",
+    "i18next": "^20.3.5",
+    "i18next-electron-language-detector": "^0.0.10",
+    "i18next-multiload-backend-adapter": "^1.0.0",
+
     "iconv-lite": "^0.6.3",
     "level-js": "^4.0.1",
     "linvodb3": "^3.26.0",
@@ -60,6 +64,7 @@
     "react-dnd-html5-backend": "^14.0.2",
     "react-dom": "^17.0.2",
     "react-fontawesome": "^1.7.1",
+    "react-i18next": "^11.11.4",
     "react-keybinding-component": "^1.0.0",
     "react-onclickout": "^2.0.8",
     "react-rangeslider": "^2.2.0",
