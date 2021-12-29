@@ -1,6 +1,5 @@
 .viewDetails {
   display: flex;
-  align-items: center;
   justify-content: center;
 }
 
@@ -9,26 +8,11 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
 }
 
 section {
   padding: 10px 0;
   width: 100%;
-}
-
-.detailRow {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-}
-
-.detailCol {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
 }
 
 .detailCover {
@@ -42,5 +26,5 @@ section {
   padding-top: 30px;
   width: 100%;
   display: flex;
-  justify-content: space-around;
+  justify-content: end;
 }

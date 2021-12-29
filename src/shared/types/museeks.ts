@@ -103,6 +103,11 @@ export type TrackModel = LinvoSchema<Track>;
 export type PlaylistModel = LinvoSchema<Playlist>;
 
 /**
+ * Editable track fields (via right-click -> edit track info)
+ */
+export type EditableTrackFields = Pick<TrackModel, 'title' | 'artist' | 'album' | 'genre'>;
+
+/**
  * Various
  */
 export interface Toast {

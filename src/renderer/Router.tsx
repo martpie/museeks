@@ -38,7 +38,7 @@ const Router: React.FC = () => {
           <Route path='/playlists' element={<PlaylistsView />}>
             <Route path=':playlistId' element={<Playlist />} />
           </Route>
-          <Route path='/detail/:trackId?' element={<DetailsView />} />
+          <Route path='/details/:trackId' element={<DetailsView />} />
         </Routes>
       </App>
     </HistoryRouter>

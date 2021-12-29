@@ -3,7 +3,6 @@ import * as NodeID3 from 'node-id3';
 import { Track } from '../../shared/types/museeks';
 
 const persistTags = (track: Track): void => {
-  console.log('dentro del persistTags');
   const fileBuffer = readFileSync(track.path);
 
   const tags = {

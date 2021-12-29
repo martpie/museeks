@@ -387,15 +387,6 @@ const TracksList: React.FC<Props> = (props) => {
         {
           type: 'separator',
         },
-        {
-          label: 'Edit track info',
-          click: () => {
-            navigate(`/detail/${track._id}`);
-          },
-        },
-        {
-          type: 'separator',
-        },
       ];
 
       for (const artist of track.artist) {
@@ -449,6 +440,15 @@ const TracksList: React.FC<Props> = (props) => {
           type: 'separator',
         },
         {
+          label: 'Edit track info',
+          click: () => {
+            navigate(`/details/${track._id}`);
+          },
+        },
+        {
+          type: 'separator',
+        },
+        {
           label: 'Show in file manager',
           click: () => {
             shell.showItemInFolder(track.path);
@@ -466,7 +466,7 @@ const TracksList: React.FC<Props> = (props) => {
 
       context.popup({}); // Let it appear
     },
-    [currentPlaylist, history, playerStatus, playlists, selected, tracks, type]
+    [currentPlaylist, playerStatus, playlists, selected, tracks, type, navigate]
   );
 
   /**
