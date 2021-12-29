@@ -10,9 +10,10 @@ import Button from '../../elements/Button/Button';
 import { db } from '../../lib/app';
 import { getLoweredMeta, parseDuration } from '../../lib/utils';
 import * as LibraryActions from '../../store/actions/LibraryActions';
-import styles from './Detail.module.css';
 
-const Detail: React.FC = () => {
+import styles from './Details.module.css';
+
+const Details: React.FC = () => {
   const { trackId } = useParams<{ trackId: string }>();
   const [track, setTrack] = useState({} as Track);
   const [coverSrc, setCoverSrc] = useState('');
@@ -101,7 +102,7 @@ const Detail: React.FC = () => {
   }, [getCover, trackId]);
 
   return (
-    <div className={`${appStyles.view} ${styles.viewDetail}`}>
+    <div className={`${appStyles.view} ${styles.viewDetails}`}>
       <form className={styles.detailForm} onSubmit={handleSubmit}>
         <Section>
           <Label htmlFor='title'>Title</Label>
@@ -142,4 +143,4 @@ const Detail: React.FC = () => {
   );
 };
 
-export default Detail;
+export default Details;

@@ -388,7 +388,7 @@ const TracksList: React.FC<Props> = (props) => {
           type: 'separator',
         },
         {
-          label: 'View Detail',
+          label: 'Edit track info',
           click: () => {
             navigate(`/detail/${track._id}`);
           },
