@@ -11,11 +11,11 @@ rm -rf ./build
 
 # Make sure we have the latest build
 rm -rf ./node_modules
-npm ci
-npm run build
+yarn install --frozen-lockfile
+yarn build
 
 # Package the whole application
-npm run package:lmw
+yarn package:lmw
 
 # Generate checksums
-npm run package:checksums
+yarn package:checksums
