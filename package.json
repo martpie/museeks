@@ -26,7 +26,7 @@
     "test:formatting": "prettier --check \"./**/*.{ts,tsx,js}\"",
     "test:formatting:fix": "prettier --write \"./**/*.{ts,tsx,js}\"",
     "test:css": "stylelint \"src/**/*.css\"",
-    "package:lmw": "electron-builder -lmw && npm run package:checksums",
+    "package:lmw": "electron-builder -lmw && yarn run package:checksums",
     "package:lw": "electron-builder -lw",
     "package:l": "electron-builder -l",
     "package:w": "electron-builder -w",
