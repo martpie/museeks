@@ -15,6 +15,7 @@ import SettingsLibrary from './views/Settings/SettingsLibrary';
 import SettingsUI from './views/Settings/SettingsUI';
 import SettingsAudio from './views/Settings/SettingsAudio';
 import SettingsAbout from './views/Settings/SettingsAbout';
+import DetailsView from './views/Details/Details';
 import { config } from './lib/app';
 import { RootState } from './store/reducers';
 import Playlist from './components/Playlists/Playlist';
@@ -37,6 +38,7 @@ const Router: React.FC = () => {
           <Route path='/playlists' element={<PlaylistsView />}>
             <Route path=':playlistId' element={<Playlist />} />
           </Route>
+          <Route path='/details/:trackId' element={<DetailsView />} />
         </Routes>
       </App>
     </HistoryRouter>

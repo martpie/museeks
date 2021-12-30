@@ -89,6 +89,7 @@ let configRenderer = {
     '.woff2': 'file',
     '.svg': 'file',
     '.ttf': 'file',
+    '.png': 'file',
   },
 };
 
