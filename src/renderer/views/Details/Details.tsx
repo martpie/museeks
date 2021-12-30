@@ -2,8 +2,8 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { useParams } from 'react-router-dom';
 
-import Placeholder from '../../../images/assets/placeholder.png';
-import * as coverUtils from '../../../shared/lib/utils-cover';
+// import Placeholder from '../../../images/assets/placeholder.png';
+// import * as coverUtils from '../../../shared/lib/utils-cover';
 import { TrackEditableFields, TrackModel } from '../../../shared/types/museeks';
 import appStyles from '../../App.module.css';
 import * as Setting from '../../components/Setting/Setting';
@@ -24,7 +24,7 @@ const INITIAL_FORM_DATA: TrackEditableFields = {
 
 const Details: React.FC = () => {
   const { trackId } = useParams<{ trackId: string }>();
-  const [coverSrc, setCoverSrc] = useState<string | null>(null);
+  // const [coverSrc, setCoverSrc] = useState<string | null>(null);
   const [formData, setFormData] = useState<TrackEditableFields>(INITIAL_FORM_DATA);
 
   const navigate = useNavigate();
@@ -61,7 +61,7 @@ const Details: React.FC = () => {
           genre: track.genre,
         });
 
-        coverUtils.fetchCover(track.path).then((cover) => setCoverSrc(cover));
+        // coverUtils.fetchCover(track.path).then((cover) => setCoverSrc(cover));
       },
       []
     );
@@ -125,19 +125,17 @@ const Details: React.FC = () => {
           />
           <Setting.Description>You can add multiple genre with commas</Setting.Description>
         </Setting.Section>
-        <div className={styles.detailsCover}>
+        {/* <div className={styles.detailsCover}>
           {coverSrc === null && <img src={Placeholder} alt='Cover' width='150' height='150' />}
           {coverSrc !== null && <img src={coverSrc} alt='Cover' width='150' height='150' />}
-        </div>
+        </div> */}
         <div className={styles.detailsActions}>
-          <Button onClick={handleCancel}>Cancel</Button>
+          <Button type='button' onClick={handleCancel}>
+            Cancel
+          </Button>
           <Button type='submit'>Save</Button>
-          <Button type='submit'>Save and persist</Button>
         </div>
-        <p>
-          Clicking "save" will only change the library data, but clicking "save and persist" will save the new track
-          information to the file on disk.
-        </p>
+        <p>Clicking "save" will only update the library data, and will not save it to the original file.</p>
       </form>
     </div>
   );
