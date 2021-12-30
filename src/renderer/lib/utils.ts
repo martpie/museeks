@@ -2,7 +2,7 @@ import path from 'path';
 import * as mmd from 'music-metadata';
 import pickBy from 'lodash-es/pickBy';
 
-import { Track } from '../../shared/types/museeks';
+import { Track, TrackEditableFields } from '../../shared/types/museeks';
 
 /**
  * Parse an int to a more readable string
@@ -140,7 +140,7 @@ export const parseMusicMetadata = (data: mmd.IAudioMetadata, trackPath: string):
   return pickBy(metadata);
 };
 
-export const getLoweredMeta = (metadata: Track): Track['loweredMetas'] => ({
+export const getLoweredMeta = (metadata: TrackEditableFields): Track['loweredMetas'] => ({
   artist: metadata.artist.map((meta) => stripAccents(meta.toLowerCase())),
   album: stripAccents(metadata.album.toLowerCase()),
   title: stripAccents(metadata.title.toLowerCase()),

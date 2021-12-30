@@ -11,7 +11,7 @@ import types from '../action-types';
 import * as app from '../../lib/app';
 import * as utils from '../../lib/utils';
 import * as m3u from '../../lib/utils-m3u';
-import { SortBy, TrackModel } from '../../../shared/types/museeks';
+import { TrackEditableFields, SortBy, TrackModel } from '../../../shared/types/museeks';
 import { SUPPORTED_PLAYLISTS_EXTENSIONS, SUPPORTED_TRACKS_EXTENSIONS } from '../../../shared/constants';
 import channels from '../../../shared/lib/ipc-channels';
 
@@ -331,6 +331,34 @@ export const incrementPlayCount = async (source: string): Promise<void> => {
   } catch (err) {
     console.warn(err);
   }
+};
+
+/**
+ * Update the id3 attributes.
+ * IMPROVE ME: add support for writing metadata (hint: node-id3 does not work
+ * well).
+ *
+ * @param trackId The ID of the track to update
+ * @param newFields The fields to be updated and their new value
+ */
+export const updateTrackMetadata = async (trackId: string, newFields: TrackEditableFields): Promise<void> => {
+  const query = { _id: trackId };
+
+  let track: TrackModel = await app.db.Track.findOneAsync(query);
+
+  track = {
+    ...track,
+    ...newFields,
+    loweredMetas: utils.getLoweredMeta(newFields),
+  };
+
+  if (!track) {
+    throw new Error('No track found while trying to update track metadata');
+  }
+
+  await app.db.Track.updateAsync(query, track);
+
+  await refresh();
 };
 
 /**

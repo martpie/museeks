@@ -5,6 +5,7 @@ import KeyBinding from 'react-keybinding-component';
 import chunk from 'lodash-es/chunk';
 import { useSelector } from 'react-redux';
 
+import { useNavigate } from 'react-router';
 import TrackRow from '../TrackRow/TrackRow';
 import CustomScrollbar from '../CustomScrollbar/CustomScrollbar';
 import TracksListHeader from '../TracksListHeader/TracksListHeader';
@@ -52,6 +53,7 @@ const TracksList: React.FC<Props> = (props) => {
   const [selected, setSelected] = useState<string[]>([]);
   const [reordered, setReordered] = useState<string[] | null>([]);
   const [renderView, setRenderView] = useState<HTMLElement | null>(null);
+  const navigate = useNavigate();
 
   const highlight = useSelector<RootState, boolean>((state) => state.library.highlightPlayingTrack);
 
@@ -438,6 +440,15 @@ const TracksList: React.FC<Props> = (props) => {
           type: 'separator',
         },
         {
+          label: 'Edit track',
+          click: () => {
+            navigate(`/details/${track._id}`);
+          },
+        },
+        {
+          type: 'separator',
+        },
+        {
           label: 'Show in file manager',
           click: () => {
             shell.showItemInFolder(track.path);
@@ -455,7 +466,7 @@ const TracksList: React.FC<Props> = (props) => {
 
       context.popup({}); // Let it appear
     },
-    [currentPlaylist, playerStatus, playlists, selected, tracks, type]
+    [currentPlaylist, playerStatus, playlists, selected, tracks, type, navigate]
   );
 
   /**
