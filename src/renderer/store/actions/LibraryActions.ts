@@ -14,7 +14,6 @@ import * as m3u from '../../lib/utils-m3u';
 import { TrackEditableFields, SortBy, TrackModel } from '../../../shared/types/museeks';
 import { SUPPORTED_PLAYLISTS_EXTENSIONS, SUPPORTED_TRACKS_EXTENSIONS } from '../../../shared/constants';
 import channels from '../../../shared/lib/ipc-channels';
-import persistTags from '../../lib/id3';
 
 import * as PlaylistsActions from './PlaylistsActions';
 import * as ToastsActions from './ToastsActions';
@@ -336,16 +335,13 @@ export const incrementPlayCount = async (source: string): Promise<void> => {
 
 /**
  * Update the id3 attributes.
+ * IMPROVE ME: add support for writing metadata (hint: node-id3 does not work
+ * well).
  *
  * @param trackId The ID of the track to update
  * @param newFields The fields to be updated and their new value
- * @param persist Wether to save the new tags on the source file or not
  */
-export const updateTrackMetadata = async (
-  trackId: string,
-  newFields: TrackEditableFields,
-  _persist = false
-): Promise<void> => {
+export const updateTrackMetadata = async (trackId: string, newFields: TrackEditableFields): Promise<void> => {
   const query = { _id: trackId };
 
   let track: TrackModel = await app.db.Track.findOneAsync(query);
@@ -361,9 +357,6 @@ export const updateTrackMetadata = async (
   }
 
   await app.db.Track.updateAsync(query, track);
-
-  // TODO: double check that
-  // if (persist) persistTags(track);
 
   await refresh();
 };
