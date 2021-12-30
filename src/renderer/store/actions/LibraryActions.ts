@@ -11,7 +11,7 @@ import types from '../action-types';
 import * as app from '../../lib/app';
 import * as utils from '../../lib/utils';
 import * as m3u from '../../lib/utils-m3u';
-import { SortBy, Track, TrackModel } from '../../../shared/types/museeks';
+import { TrackEditableFields, SortBy, TrackModel } from '../../../shared/types/museeks';
 import { SUPPORTED_PLAYLISTS_EXTENSIONS, SUPPORTED_TRACKS_EXTENSIONS } from '../../../shared/constants';
 import channels from '../../../shared/lib/ipc-channels';
 import persistTags from '../../lib/id3';
@@ -336,21 +336,36 @@ export const incrementPlayCount = async (source: string): Promise<void> => {
 
 /**
  * Update the id3 attributes.
+ *
+ * @param trackId The ID of the track to update
+ * @param newFields The fields to be updated and their new value
+ * @param persist Wether to save the new tags on the source file or not
  */
-export const updateTrack = async (track: Track): Promise<void> => {
-  const query = { path: track.path };
-  const update = track;
+export const updateTrackMetadata = async (
+  trackId: string,
+  newFields: TrackEditableFields,
+  _persist = false
+): Promise<void> => {
+  const query = { _id: trackId };
 
-  store.dispatch({ type: types.LIBRARY_UPDATE_TRACK });
+  let track: TrackModel = await app.db.Track.findOneAsync(query);
 
-  try {
-    await app.db.Track.updateAsync(query, update);
-    persistTags(track);
-    store.dispatch({ type: types.LIBRARY_UPDATE_TRACK_END });
-    await refresh();
-  } catch (err) {
-    console.warn(err);
+  track = {
+    ...track,
+    ...newFields,
+    loweredMetas: utils.getLoweredMeta(newFields),
+  };
+
+  if (!track) {
+    throw new Error('No track found while trying to update track metadata');
   }
+
+  await app.db.Track.updateAsync(query, track);
+
+  // TODO: double check that
+  // if (persist) persistTags(track);
+
+  await refresh();
 };
 
 /**

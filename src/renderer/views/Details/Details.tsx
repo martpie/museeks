@@ -4,63 +4,40 @@ import { useParams } from 'react-router-dom';
 
 import Placeholder from '../../../images/assets/placeholder.png';
 import * as coverUtils from '../../../shared/lib/utils-cover';
-import { EditableTrackFields, TrackModel } from '../../../shared/types/museeks';
+import { TrackEditableFields, TrackModel } from '../../../shared/types/museeks';
 import appStyles from '../../App.module.css';
-import { Input, Label, Section } from '../../components/Setting/Setting';
+import * as Setting from '../../components/Setting/Setting';
 import Button from '../../elements/Button/Button';
 import { db } from '../../lib/app';
-// import * as LibraryActions from '../../store/actions/LibraryActions';
+import * as LibraryActions from '../../store/actions/LibraryActions';
 
 import styles from './Details.module.css';
 
 // We assume no artist or genre has a comma in its name (fingers crossed)
-const DELIMITER = ', ';
+const DELIMITER = ',';
+const INITIAL_FORM_DATA: TrackEditableFields = {
+  title: '',
+  artist: [],
+  album: '',
+  genre: [],
+};
 
 const Details: React.FC = () => {
   const { trackId } = useParams<{ trackId: string }>();
   const [coverSrc, setCoverSrc] = useState<string | null>(null);
-  const [formData, setFormData] = useState<EditableTrackFields>({
-    title: '',
-    artist: [],
-    album: '',
-    genre: [],
-  });
+  const [formData, setFormData] = useState<TrackEditableFields>(INITIAL_FORM_DATA);
 
   const navigate = useNavigate();
 
-  // const updateSong = useCallback(
-  //   (data) => {
-  //     const song = { ...track };
-  //     song.title = data.title;
-  //     song.artist.push(data.artist);
-  //     song.album = data.album;
-  //     song.genre[0] = data.genre;
-  //     song.loweredMetas = getLoweredMeta(song);
-  //     return song;
-  //   },
-  //   [track]
-  // );
-
   const handleSubmit = useCallback(
     async (e) => {
+      if (!trackId) return;
+
       e.preventDefault();
-      // const song = updateSong(data);
-      // nope
-      // await LibraryActions.updateTrack(song);
+      await LibraryActions.updateTrackMetadata(trackId, formData);
       navigate(-1);
     },
-    [/* data, updateSong, */ navigate]
-  );
-
-  const handleChange = useCallback(
-    (e) => {
-      e.preventDefault();
-      // setFormData({
-      //   ...formData,
-      //   [e.target.name]: e.target.value,
-      // });
-    },
-    [formData]
+    [trackId, formData, navigate]
   );
 
   const handleCancel = useCallback(
@@ -90,45 +67,69 @@ const Details: React.FC = () => {
     );
 
     return () => {
-      setFormData({
-        title: '',
-        artist: [],
-        album: '',
-        genre: [],
-      });
+      setFormData(INITIAL_FORM_DATA);
     };
   }, [trackId]);
 
   return (
     <div className={`${appStyles.view} ${styles.viewDetails}`}>
-      <form className={styles.detailForm} onSubmit={handleSubmit}>
-        <Section>
-          <Label htmlFor='title'>Title</Label>
-          <Input id='title' name='title' type='text' onChange={handleChange} value={formData.title} />
-        </Section>
-        <Section>
-          <Label htmlFor='artist'>Artist</Label>
-          <Input
+      <form className={styles.detailsForm} onSubmit={handleSubmit}>
+        <h2>Edit "{formData.title}"</h2>
+        <Setting.Section>
+          <Setting.Label htmlFor='title'>Title</Setting.Label>
+          <Setting.Input
+            id='title'
+            name='title'
+            type='text'
+            value={formData.title}
+            onChange={(e) => {
+              setFormData({ ...formData, title: e.currentTarget.value });
+            }}
+          />
+          <Setting.Description>You can add multiple artists with commas</Setting.Description>
+        </Setting.Section>
+        <Setting.Section>
+          <Setting.Label htmlFor='artist'>Artist</Setting.Label>
+          <Setting.Input
             id='artist'
             name='artist'
             type='text'
-            onChange={handleChange}
             value={formData.artist.join(DELIMITER)}
+            onChange={(e) => {
+              setFormData({ ...formData, artist: e.currentTarget.value.split(DELIMITER) });
+            }}
           />
-        </Section>
-        <Section>
-          <Label htmlFor='album'>Album</Label>
-          <Input id='album' name='album' type='text' onChange={handleChange} value={formData.album} />
-        </Section>
-        <Section>
-          <Label htmlFor='genre'>Genre</Label>
-          <Input id='genre' name='genre' type='text' onChange={handleChange} value={formData.genre.join(DELIMITER)} />
-        </Section>
-        <div className={styles.detailCover}>
+        </Setting.Section>
+        <Setting.Section>
+          <Setting.Label htmlFor='album'>Album</Setting.Label>
+          <Setting.Input
+            id='album'
+            name='album'
+            type='text'
+            value={formData.album}
+            onChange={(e) => {
+              setFormData({ ...formData, album: e.currentTarget.value });
+            }}
+          />
+        </Setting.Section>
+        <Setting.Section>
+          <Setting.Label htmlFor='genre'>Genre</Setting.Label>
+          <Setting.Input
+            id='genre'
+            name='genre'
+            type='text'
+            value={formData.genre.join(DELIMITER)}
+            onChange={(e) => {
+              setFormData({ ...formData, genre: e.currentTarget.value.split(DELIMITER) });
+            }}
+          />
+          <Setting.Description>You can add multiple genre with commas</Setting.Description>
+        </Setting.Section>
+        <div className={styles.detailsCover}>
           {coverSrc === null && <img src={Placeholder} alt='Cover' width='150' height='150' />}
           {coverSrc !== null && <img src={coverSrc} alt='Cover' width='150' height='150' />}
         </div>
-        <div className={styles.detailActions}>
+        <div className={styles.detailsActions}>
           <Button onClick={handleCancel}>Cancel</Button>
           <Button type='submit'>Save</Button>
           <Button type='submit'>Save and persist</Button>

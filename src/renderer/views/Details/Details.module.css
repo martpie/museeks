@@ -1,28 +1,23 @@
 .viewDetails {
-  display: flex;
-  justify-content: center;
+  /* nothing */
 }
 
-.detailForm {
+.detailsForm {
   width: 400px;
-  height: 100%;
+  padding: 10px 15px;
+  margin: auto;
   display: flex;
   flex-direction: column;
 }
 
-section {
-  padding: 10px 0;
-  width: 100%;
-}
-
-.detailCover {
+.detailsCover {
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.detailActions {
+.detailsActions {
   padding-top: 30px;
   width: 100%;
   display: flex;

@@ -103,9 +103,9 @@ export type TrackModel = LinvoSchema<Track>;
 export type PlaylistModel = LinvoSchema<Playlist>;
 
 /**
- * Editable track fields (via right-click -> edit track info)
+ * Editable track fields (via right-click -> edit track)
  */
-export type EditableTrackFields = Pick<TrackModel, 'title' | 'artist' | 'album' | 'genre'>;
+export type TrackEditableFields = Pick<TrackModel, 'title' | 'artist' | 'album' | 'genre'>;
 
 /**
  * Various

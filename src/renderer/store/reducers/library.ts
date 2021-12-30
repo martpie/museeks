@@ -22,7 +22,6 @@ export interface LibraryState {
     processed: number;
     total: number;
   };
-  savingChanges: boolean;
   highlightPlayingTrack: boolean;
 }
 
@@ -39,7 +38,6 @@ const initialState: LibraryState = {
     processed: 0,
     total: 0,
   },
-  savingChanges: false,
   highlightPlayingTrack: false,
 };
 
@@ -170,20 +168,6 @@ export default (state = initialState, action: Action): LibraryState => {
       return {
         ...state,
         tracks,
-      };
-    }
-
-    case types.LIBRARY_UPDATE_TRACK: {
-      return {
-        ...state,
-        savingChanges: true,
-      };
-    }
-
-    case types.LIBRARY_UPDATE_TRACK_END: {
-      return {
-        ...state,
-        savingChanges: false,
       };
     }
 
