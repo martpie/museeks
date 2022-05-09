@@ -1,19 +1,4 @@
 /* Third Parties */
-:global(.react-simple-input-container) {
-  position: relative;
-  width: 180px;
-
-  :global(.react-simple-input-clear) {
-    position: absolute;
-    right: 6px;
-    top: 1px;
-    font-size: 16px;
-    color: #777;
-    cursor: pointer;
-    padding: 2px;
-  }
-}
-
 :global .rangeslider-horizontal {
   border-radius: var(--border-radius);
   height: 5px;
