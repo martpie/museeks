@@ -1,13 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Input from 'react-simple-input';
-import KeyBinding from 'react-keybinding-component';
 
 import PlayingBar from '../PlayingBar/PlayingBar';
 import PlayerControls from '../PlayerControls/PlayerControls';
+import Search from '../Search/Search';
 
 import * as LibraryActions from '../../store/actions/LibraryActions';
-import { isCtrlKey } from '../../lib/utils-platform';
 import { RootState } from '../../store/reducers';
 import { TrackModel, PlayerStatus, Repeat } from '../../../shared/types/museeks';
 
@@ -28,18 +26,6 @@ class Header extends React.Component<Props> {
     super(props);
 
     this.input = React.createRef();
-    this.onKey = this.onKey.bind(this);
-  }
-
-  onKey(e: KeyboardEvent) {
-    // ctrl-f shortcut
-    if (isCtrlKey(e) && e.key.toLowerCase() === 'f') {
-      if (this.input.current) {
-        // eslint-disable-next-line
-        // @ts-ignore
-        this.input.current.refs.input.select(); // HACKY
-      }
-    }
   }
 
   search(e: React.ChangeEvent<HTMLInputElement>) {
@@ -58,17 +44,8 @@ class Header extends React.Component<Props> {
           <PlayingBar queue={queue} queueCursor={queueCursor} shuffle={shuffle} repeat={repeat} />
         </div>
         <div className={styles.header__search}>
-          <Input
-            selectOnClick
-            placeholder='search'
-            className={styles.header__search__input}
-            changeTimeout={250}
-            clearButton
-            ref={this.input}
-            onChange={this.search}
-          />
+          <Search />
         </div>
-        <KeyBinding onKey={this.onKey} preventInputConflict />
       </header>
     );
   }

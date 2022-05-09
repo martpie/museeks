@@ -6618,7 +6618,7 @@ prompts@^2.0.1:
     kleur "^3.0.3"
     sisteransi "^1.0.5"
 
-prop-types@^15.5.0, prop-types@^15.5.10, prop-types@^15.5.6, prop-types@^15.6.2, prop-types@^15.7.2:
+prop-types@^15.5.0, prop-types@^15.5.6, prop-types@^15.6.2, prop-types@^15.7.2:
   version "15.8.0"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.8.0.tgz#d237e624c45a9846e469f5f31117f970017ff588"
   integrity sha512-fDGekdaHh65eI3lMi5OnErU6a8Ighg2KjcjQxO7m8VHyWjcPyj5kiOgV1LQDOOOgVy3+5FgjXvdSSX7B8/5/4g==
@@ -6801,13 +6801,6 @@ react-router@6.2.1, react-router@^6.2.1:
   integrity sha512-2fG0udBtxou9lXtK97eJeET2ki5//UWfQSl1rlJ7quwe6jrktK9FCCc8dQb5QY6jAv3jua8bBQRhhDOM/kVRsg==
   dependencies:
     history "^5.2.0"
-
-react-simple-input@^0.4.2:
-  version "0.4.2"
-  resolved "https://registry.yarnpkg.com/react-simple-input/-/react-simple-input-0.4.2.tgz#5ad80c3c7b7988bc05d5be41ecbb70dc229b35d7"
-  integrity sha512-KMERrSgdgVNRUBfg4wXz5wqoLH36CHel8fCSVPG/s77WtpMlogWgx39xdRHpWUov2Prdmq+An3M5P9VTsxZMWA==
-  dependencies:
-    prop-types "^15.5.10"
 
 react@^17.0.2:
   version "17.0.2"

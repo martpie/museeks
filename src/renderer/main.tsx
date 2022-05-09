@@ -32,12 +32,14 @@ import './styles/main.module.css';
 */
 
 ReactDOM.render(
-  <Root>
-    <Provider store={store}>
-      <DndProvider backend={HTML5Backend}>
-        <Router />
-      </DndProvider>
-    </Provider>
-  </Root>,
+  <React.StrictMode>
+    <Root>
+      <Provider store={store}>
+        <DndProvider backend={HTML5Backend}>
+          <Router />
+        </DndProvider>
+      </Provider>
+    </Root>
+  </React.StrictMode>,
   document.getElementById('wrap')
 );
