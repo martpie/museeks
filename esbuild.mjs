@@ -43,7 +43,7 @@ const configMain = {
   bundle: true,
   outfile: 'dist/main/bundle.js',
   platform: 'node',
-  target: 'node16.5',
+  target: 'node16.13',
   external: ['electron'],
   // watch: shouldWatch ? onWatch('main') : null,
   incremental: shouldWatch,
