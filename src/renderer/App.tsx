@@ -24,7 +24,11 @@ import DropzoneImport from './components/DropzoneImport/DropzoneImport';
 |--------------------------------------------------------------------------
 */
 
-const Museeks: React.FC = (props) => {
+type Props = {
+  children: React.ReactNode;
+};
+
+const Museeks: React.FC<Props> = (props) => {
   const navigate = useNavigate();
 
   // App shortcuts (not using Electron's global shortcuts API to avoid conflicts

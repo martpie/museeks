@@ -30,7 +30,7 @@ const Details: React.FC = () => {
   const navigate = useNavigate();
 
   const handleSubmit = useCallback(
-    async (e) => {
+    async (e: React.FormEvent<HTMLFormElement>) => {
       if (!trackId) return;
 
       e.preventDefault();
@@ -41,7 +41,7 @@ const Details: React.FC = () => {
   );
 
   const handleCancel = useCallback(
-    (e) => {
+    (e: React.MouseEvent<HTMLButtonElement>) => {
       e.preventDefault();
       navigate(-1);
     },
