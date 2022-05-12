@@ -20,7 +20,7 @@
   }
 
   .icon > svg {
-    fill: currentColor;
+    fill: currentcolor;
     width: 16px;
     height: auto;
   }

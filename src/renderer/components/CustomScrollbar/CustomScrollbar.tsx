@@ -4,6 +4,7 @@ import Scrollbars from 'rc-scrollbars';
 import styles from './CustomScrollbar.module.css';
 
 interface Props {
+  children: React.ReactNode;
   className: string;
   onScroll: React.UIEventHandler<HTMLElement>;
 }
@@ -24,6 +25,8 @@ const CustomScrollbar: React.FC<Props> = (props) => {
   }, []);
 
   return (
+    // eslint-disable-next-line
+    // @ts-ignore rc-scrollbars typings need to be updated
     <Scrollbars
       // eslint-disable-next-line
       // @ts-ignore

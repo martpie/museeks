@@ -6,6 +6,7 @@ import * as PlaylistActions from '../../store/actions/PlaylistsActions';
 import styles from './PlaylistsNavLink.module.css';
 
 interface Props {
+  children: React.ReactNode;
   className?: string;
   playlistId: string;
   onContextMenu: (playlistId: string) => void;

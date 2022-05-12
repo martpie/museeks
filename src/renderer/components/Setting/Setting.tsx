@@ -1,9 +1,15 @@
 import React from 'react';
 import styles from './Setting.module.css';
 
-export const Section: React.FC = (props) => <section className={styles.settingSection}>{props.children}</section>;
+type Props = {
+  children: React.ReactNode;
+};
 
-export const Description: React.FC = (props) => <p className={styles.settingDescription}>{props.children}</p>;
+export const Section: React.FC<Props> = (props) => (
+  <section className={styles.settingSection}>{props.children}</section>
+);
+
+export const Description: React.FC<Props> = (props) => <p className={styles.settingDescription}>{props.children}</p>;
 
 export const Label: React.FC<JSX.IntrinsicElements['label']> = (props) => {
   const { children, ...restProps } = props;
@@ -15,7 +21,7 @@ export const Label: React.FC<JSX.IntrinsicElements['label']> = (props) => {
   );
 };
 
-export const Title: React.FC = (props) => <span className={styles.settingTitle}>{props.children}</span>;
+export const Title: React.FC<Props> = (props) => <span className={styles.settingTitle}>{props.children}</span>;
 
 export const Input: React.FC<JSX.IntrinsicElements['input']> = (props) => {
   const { children, ...restProps } = props;
@@ -27,7 +33,7 @@ export const Input: React.FC<JSX.IntrinsicElements['input']> = (props) => {
   );
 };
 
-export const Error: React.FC = (props) => <p className={styles.settingError}>{props.children}</p>;
+export const Error: React.FC<Props> = (props) => <p className={styles.settingError}>{props.children}</p>;
 
 export const Select: React.FC<JSX.IntrinsicElements['select']> = (props) => (
   <select className={styles.settingSelect} {...props}>
