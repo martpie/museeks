@@ -4,6 +4,7 @@ import { shell } from 'electron';
 import styles from './ExternalLink.module.css';
 
 interface Props {
+  children: string;
   href: string;
 }
 

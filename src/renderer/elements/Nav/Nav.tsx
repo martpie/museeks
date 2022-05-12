@@ -5,6 +5,7 @@ import cx from 'classnames';
 import styles from './Nav.module.css';
 
 interface WrapProps {
+  children: React.ReactNode;
   vertical?: boolean;
 }
 
@@ -16,6 +17,7 @@ export const Wrap: React.FC<WrapProps> = (props) => (
 );
 
 interface LinkProps {
+  children: React.ReactNode;
   to: string;
 }
 
