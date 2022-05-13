@@ -141,7 +141,8 @@ jobs:
         with:
           name: binaries-macos
           path: |
-            build/museeks.dmg
+            build/museeks-arm64.dmg
+            build/museeks-x64.dmg
 
   binaries-windows:
     runs-on: windows-2019
