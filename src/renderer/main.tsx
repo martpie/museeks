@@ -5,7 +5,7 @@
 */
 
 import React from 'react';
-import * as ReactDOM from 'react-dom';
+import * as ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
@@ -31,15 +31,19 @@ import './styles/main.module.css';
 |--------------------------------------------------------------------------
 */
 
-ReactDOM.render(
-  <React.StrictMode>
-    <Root>
-      <Provider store={store}>
-        <DndProvider backend={HTML5Backend}>
-          <Router />
-        </DndProvider>
-      </Provider>
-    </Root>
-  </React.StrictMode>,
-  document.getElementById('wrap')
-);
+const wrap = document.getElementById('wrap');
+
+if (wrap) {
+  const root = ReactDOM.createRoot(wrap);
+  root.render(
+    <React.StrictMode>
+      <Root>
+        <Provider store={store}>
+          <DndProvider backend={HTML5Backend}>
+            <Router />
+          </DndProvider>
+        </Provider>
+      </Root>
+    </React.StrictMode>
+  );
+}
