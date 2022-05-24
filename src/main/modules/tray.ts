@@ -53,12 +53,13 @@ class TrayModule extends ModuleWindow {
 
   async load(): Promise<void> {
     // Fix for gnome-shell and high-dpi
+    // TODO: should we still use that?
     if (os.platform() === 'linux') {
       ps.lookup(
         {
           command: 'gnome-shell',
         },
-        (err: Error, _processes: Record<string, any>) => {
+        (err: Error) => {
           if (err) {
             console.warn(err);
           } else {
@@ -152,14 +153,6 @@ class TrayModule extends ModuleWindow {
       this.status = PlayerStatus.PLAY;
       this.updateTrayMetadata(track);
       this.setContextMenu(PlayerStatus.PLAY);
-    });
-
-    this.window.on('hide', () => {
-      this.create();
-    });
-
-    this.window.on('show', () => {
-      this.destroy();
     });
   }
 
