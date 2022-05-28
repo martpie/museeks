@@ -5,6 +5,9 @@
 
 A simple, clean and cross-platform music player. ([museeks.io](http://museeks.io))
 
+> **Note**
+> Museeks is on its way to a big rewrite with some major UI changes, please help shape the future of the music player [in the discussions section](https://github.com/martpie/museeks/discussions)! :] 
+
 ![Screenshot](screenshot.png)
 
 ## Features
