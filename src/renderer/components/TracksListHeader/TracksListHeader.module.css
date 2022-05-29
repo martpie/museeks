@@ -16,6 +16,7 @@
 }
 
 .cellYear,
+.cellDiskTrack,
 .cellDuration {
   width: 7%;
 }

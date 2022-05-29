@@ -2,7 +2,7 @@ import React from 'react';
 import cx from 'classnames';
 
 import PlayingIndicator from '../PlayingIndicator/PlayingIndicator';
-import { parseDuration } from '../../lib/utils';
+import { getDiskTrack, parseDuration } from '../../lib/utils';
 import { TrackModel } from '../../../shared/types/museeks';
 
 import cellStyles from '../TracksListHeader/TracksListHeader.module.css';
@@ -141,6 +141,7 @@ export default class TrackRow extends React.PureComponent<Props, State> {
           {this.props.isPlaying ? <PlayingIndicator /> : null}
         </div>
         <div className={`${styles.cell} ${cellStyles.cellYear}`}>{track.year}</div>
+        <div className={`${styles.cell} ${cellStyles.cellDiskTrack}`}>{getDiskTrack(track)}</div>
         <div className={`${styles.cell} ${cellStyles.cellTrack}`}>{track.title}</div>
         <div className={`${styles.cell} ${cellStyles.cellDuration}`}>{parseDuration(track.duration)}</div>
         <div className={`${styles.cell} ${cellStyles.cellArtist}`}>{track.artist.sort().join(', ')}</div>

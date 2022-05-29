@@ -212,3 +212,18 @@ export const getMetadata = async (trackPath: string): Promise<Track> => {
 
   return basicMetadata;
 };
+
+/**
+ * Format track information to DD.TT where DD is disk no and TT is track.no
+ */
+export function getDiskTrack(track: Track) {
+  const formatNo = (no: number|null, of: number|null) => {
+    const length = Math.max(2, of?.toString().length ?? 2);
+    return no?.toString().padStart(length, '0') ?? "";
+  }
+
+  const diskNo = formatNo(track.disk.no, track.disk.of);
+  const trackNo = formatNo(track.track.no, track.track.of);
+
+  return diskNo.length > 0 && trackNo.length > 0 ? `${diskNo}.${trackNo}` : `${diskNo}${trackNo}`;
+}
