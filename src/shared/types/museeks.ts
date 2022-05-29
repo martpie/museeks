@@ -19,6 +19,7 @@ export enum SortBy {
   TITLE = 'title',
   DURATION = 'duration',
   GENRE = 'genre',
+  YEAR = 'year',
 }
 
 export enum SortOrder {

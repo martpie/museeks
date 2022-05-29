@@ -15,6 +15,7 @@
   flex: 1;
 }
 
+.cellYear,
 .cellDuration {
   width: 7%;
 }
