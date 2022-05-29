@@ -15,7 +15,7 @@ export interface LibraryState {
     playlist: TrackModel[]; // List of tracks in Playlist view
   };
   search: string;
-  sort: LibrarySort;
+  sort: LibrarySort[];
   loading: boolean;
   refreshing: boolean;
   refresh: {
@@ -41,6 +41,11 @@ const initialState: LibraryState = {
   highlightPlayingTrack: false,
 };
 
+// backward compatibility
+if (initialState.sort && !Array.isArray(initialState.sort)) {
+  initialState.sort = [initialState.sort];
+}
+
 export default (state = initialState, action: Action): LibraryState => {
   switch (action.type) {
     case types.LIBRARY_REFRESH: {
@@ -57,21 +62,23 @@ export default (state = initialState, action: Action): LibraryState => {
     case types.LIBRARY_SORT: {
       const { sortBy } = action.payload;
       const prevSort = state.sort;
+      const prevOrder = prevSort.filter(s => s.by === sortBy).map(s => s.order)[0];
 
-      if (sortBy === prevSort.by) {
-        return {
-          ...state,
-          sort: {
-            ...state.sort,
-            order: prevSort.order === SortOrder.ASC ? SortOrder.DSC : SortOrder.ASC,
-          },
-        };
-      }
+      // loop sort in ASC -> DSC -> disabled order
+      const newHead: LibrarySort[] = prevOrder
+        ? (prevOrder === SortOrder.ASC ? [{
+          by: sortBy,
+          order: SortOrder.DSC,
+        }] : [])
+        : [{
+          by: sortBy,
+          order: SortOrder.ASC,
+        }];
 
-      const sort: LibrarySort = {
-        by: sortBy,
-        order: SortOrder.ASC,
-      };
+      const sort: LibrarySort[] = [
+        ...newHead,
+        ...prevSort.filter(s => s.by !== sortBy),
+      ]
 
       config.set('librarySort', sort);
       config.save();

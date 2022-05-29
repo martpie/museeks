@@ -5,7 +5,7 @@ import store from '../store';
 import { PlayerState } from '../reducers/player';
 
 import types from '../action-types';
-import SORT_ORDERS from '../../constants/sort-orders';
+import { createSortOrder } from '../../constants/sort-orders';
 
 import * as app from '../../lib/app';
 import Player from '../../lib/player';
@@ -69,7 +69,7 @@ export const start = async (queue?: TrackModel[], _id?: string): Promise<void> =
       const { sort, search } = library;
       newQueue = state.library.tracks.library;
 
-      newQueue = sortTracks(filterTracks(newQueue, search), SORT_ORDERS[sort.by][sort.order]);
+      newQueue = sortTracks(filterTracks(newQueue, search), createSortOrder(sort));
     }
   }
 

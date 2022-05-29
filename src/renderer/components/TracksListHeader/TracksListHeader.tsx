@@ -14,23 +14,19 @@ interface OwnProps {
 }
 
 interface InjectedProps {
-  sort?: LibrarySort;
+  sort?: LibrarySort[];
 }
 
 type Props = OwnProps & InjectedProps;
 
 class TracksListHeader extends React.Component<Props> {
-  static getIcon = (sort: LibrarySort | undefined, sortType: SortBy) => {
-    if (sort && sort.by === sortType) {
-      if (sort.order === SortOrder.ASC) {
-        return 'angle-up';
-      }
-
-      // Must be DSC then
-      return 'angle-down';
+  static getIcon = (sorts: LibrarySort[] | undefined, sortType: SortBy) => {
+    const sort = sorts?.find(s => s.by === sortType);
+    if (!sort) {
+      return null;
     }
 
-    return null;
+    return sort.order === SortOrder.ASC ? 'angle-up' : 'angle-down';
   };
 
   render() {

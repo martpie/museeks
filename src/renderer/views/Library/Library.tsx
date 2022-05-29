@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import * as ViewMessage from '../../elements/ViewMessage/ViewMessage';
 import TracksList from '../../components/TracksList/TracksList';
 import { filterTracks, sortTracks } from '../../lib/utils-library';
-import SORT_ORDERS from '../../constants/sort-orders';
+import { createSortOrder } from '../../constants/sort-orders';
 import { RootState } from '../../store/reducers';
 
 import appStyles from '../../App.module.css';
@@ -20,7 +20,7 @@ const Library: React.FC = () => {
 
     // Filter and sort TracksList
     // sorting being a costly operation, do it after filtering
-    const filteredTracks = sortTracks(filterTracks(tracks.library, search), SORT_ORDERS[sort.by][sort.order]);
+    const filteredTracks = sortTracks(filterTracks(tracks.library, search), createSortOrder(sort));
 
     return filteredTracks;
   });
