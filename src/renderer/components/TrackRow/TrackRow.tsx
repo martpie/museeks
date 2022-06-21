@@ -171,7 +171,6 @@ export default class TrackRow extends React.PureComponent<Props, State> {
         <div className={`${styles.cell} ${cellStyles.cellTrackPlaying}`}>
           {this.props.isPlaying ? <PlayingIndicator /> : null}
         </div>
-        {/* {this.props.layout.collapse_artist ? "Lol" : undefined} */}
         {...rows}
       </div>
     );

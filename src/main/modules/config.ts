@@ -52,7 +52,7 @@ class ConfigModule extends Module {
       audioRepeat: Repeat.NONE,
       defaultView: 'library',
       librarySort: {
-        by: SortBy.TITLE,
+        by: SortBy.ARTIST,
         order: SortOrder.ASC,
       },
       // musicFolders: [],
