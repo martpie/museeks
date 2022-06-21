@@ -1,7 +1,7 @@
 # blackshibe/museeks
 
-This fork seeks to implement at least a section of issue #401 and slight interface changes.
-![image](https://user-images.githubusercontent.com/57596776/174771584-8b38884e-ba57-4963-87cf-db8ede305211.png)
+This fork seeks to implement at least a section of issue #401.
+![image](https://user-images.githubusercontent.com/57596776/174799989-68dbb31a-2b10-4e90-9567-06ca77afc10c.png)
 
 # Issues
 
