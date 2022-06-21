@@ -23,6 +23,7 @@ import { RootState } from "../../store/reducers";
 import scrollbarStyles from "../CustomScrollbar/CustomScrollbar.module.css";
 import headerStyles from "../Header/Header.module.css";
 import styles from "./TracksList.module.css";
+import library from "src/renderer/store/reducers/library";
 
 const { shell } = electron;
 
@@ -43,11 +44,13 @@ interface Props {
 	playlists: PlaylistModel[];
 	currentPlaylist?: string;
 	reorderable?: boolean;
+	layout: LibraryActions.LibraryLayoutSettings;
 	onReorder?: (playlistId: string, tracksIds: string[], targetTrackId: string, position: "above" | "below") => void;
 }
 
 const TracksList: React.FC<Props> = (props) => {
-	const { tracks, type, trackPlayingId, reorderable, currentPlaylist, onReorder, playerStatus, playlists } = props;
+	const { tracks, type, trackPlayingId, reorderable, currentPlaylist, onReorder, playerStatus, playlists, layout } =
+		props;
 
 	const [tilesScrolled, setTilesScrolled] = useState(0);
 	const [selected, setSelected] = useState<string[]>([]);
@@ -541,7 +544,7 @@ const TracksList: React.FC<Props> = (props) => {
 	return (
 		<div className={styles.tracksList}>
 			<KeyBinding onKey={onKey} preventInputConflict />
-			<TracksListHeader enableSort={type === "library"} />
+			<TracksListHeader enableSort={type === "library"} libraryLayoutSettings={layout} />
 			<CustomScrollbar className={styles.tracksListBody} onScroll={onScroll}>
 				<div className={styles.tiles} role="listbox" style={{ height: tracks.length * ROW_HEIGHT }}>
 					{trackTiles}

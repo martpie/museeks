@@ -53,7 +53,7 @@ class TracksListHeaderCell extends React.Component<Props> {
 
 		if (sortBy) {
 			return (
-				<button className={classes} onClick={this.sort}>
+				<button className={classes} onClick={this.sort} onContextMenu={this.props.onContextMenu}>
 					{content}
 				</button>
 			);

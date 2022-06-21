@@ -67,6 +67,21 @@ export const sort = (sortBy: SortBy): void => {
 	});
 };
 
+// idk what to name or where to put this
+// also rename types.SET_LIBRARY_LAYOUT_STATE to something more appropiate as well
+// FIXME
+export interface LibraryLayoutSettings {
+	collapse_artist?: boolean;
+	visibility: string[];
+}
+
+export const set_context_state = (state: LibraryLayoutSettings): void => {
+	store.dispatch({
+		type: types.SET_LIBRARY_LAYOUT_STATE,
+		payload: state,
+	});
+};
+
 const scanPlaylists = async (paths: string[]) => {
 	return Promise.all(
 		paths.map(async (filePath) => {

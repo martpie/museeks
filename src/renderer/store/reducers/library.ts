@@ -1,206 +1,221 @@
-import types from '../action-types';
+import types from "../action-types";
 
-import { config } from '../../lib/app';
-import * as utils from '../../lib/utils';
-import { Action, TrackModel, SortBy, SortOrder } from '../../../shared/types/museeks';
+import { config } from "../../lib/app";
+import * as utils from "../../lib/utils";
+import { Action, TrackModel, SortBy, SortOrder } from "../../../shared/types/museeks";
+import { LibraryLayoutSettings as LibraryLayoutSettings } from "../actions/LibraryActions";
 
 export interface LibrarySort {
-  by: SortBy;
-  order: SortOrder;
+	by: SortBy;
+	order: SortOrder;
 }
 
 export interface LibraryState {
-  tracks: {
-    library: TrackModel[]; // List of tracks in Library view
-    playlist: TrackModel[]; // List of tracks in Playlist view
-  };
-  search: string;
-  sort: LibrarySort;
-  loading: boolean;
-  refreshing: boolean;
-  refresh: {
-    processed: number;
-    total: number;
-  };
-  highlightPlayingTrack: boolean;
+	tracks: {
+		library: TrackModel[]; // List of tracks in Library view
+		playlist: TrackModel[]; // List of tracks in Playlist view
+	};
+	search: string;
+	sort: LibrarySort;
+	loading: boolean;
+	refreshing: boolean;
+	refresh: {
+		processed: number;
+		total: number;
+	};
+	highlightPlayingTrack: boolean;
+	libraryLayoutSettings: LibraryLayoutSettings;
 }
 
 const initialState: LibraryState = {
-  tracks: {
-    library: [],
-    playlist: [],
-  },
-  search: '',
-  sort: config.get('librarySort'),
-  loading: true,
-  refreshing: false,
-  refresh: {
-    processed: 0,
-    total: 0,
-  },
-  highlightPlayingTrack: false,
+	tracks: {
+		library: [],
+		playlist: [],
+	},
+	search: "",
+	sort: config.get("librarySort"),
+	loading: true,
+	refreshing: false,
+	refresh: {
+		processed: 0,
+		total: 0,
+	},
+	highlightPlayingTrack: false,
+	libraryLayoutSettings: config.get("libraryLayoutSettings"),
 };
 
 export default (state = initialState, action: Action): LibraryState => {
-  switch (action.type) {
-    case types.LIBRARY_REFRESH: {
-      return {
-        ...state,
-        tracks: {
-          library: [...action.payload.tracks],
-          playlist: [],
-        },
-        loading: false,
-      };
-    }
+	switch (action.type) {
+		case types.LIBRARY_REFRESH: {
+			return {
+				...state,
+				tracks: {
+					library: [...action.payload.tracks],
+					playlist: [],
+				},
+				loading: false,
+			};
+		}
 
-    case types.LIBRARY_SORT: {
-      const { sortBy } = action.payload;
-      const prevSort = state.sort;
+		case types.LIBRARY_SORT: {
+			const { sortBy } = action.payload;
+			const prevSort = state.sort;
 
-      if (sortBy === prevSort.by) {
-        return {
-          ...state,
-          sort: {
-            ...state.sort,
-            order: prevSort.order === SortOrder.ASC ? SortOrder.DSC : SortOrder.ASC,
-          },
-        };
-      }
+			if (sortBy === prevSort.by) {
+				return {
+					...state,
+					sort: {
+						...state.sort,
+						order: prevSort.order === SortOrder.ASC ? SortOrder.DSC : SortOrder.ASC,
+					},
+				};
+			}
 
-      const sort: LibrarySort = {
-        by: sortBy,
-        order: SortOrder.ASC,
-      };
+			const sort: LibrarySort = {
+				by: sortBy,
+				order: SortOrder.ASC,
+			};
 
-      config.set('librarySort', sort);
-      config.save();
+			config.set("librarySort", sort);
+			config.save();
 
-      return {
-        ...state,
-        sort,
-      };
-    }
+			return {
+				...state,
+				sort,
+			};
+		}
 
-    case types.FILTER_SEARCH: {
-      return {
-        ...state,
-        search: utils.stripAccents(action.payload.search),
-      };
-    }
+		case types.SET_LIBRARY_LAYOUT_STATE: {
+			// const prevState = state.sort;
 
-    // case (types.LIBRARY_ADD_FOLDERS): { // TODO Redux -> move to a thunk
-    //   const { folders } = action.payload;
-    //   let musicFolders = app.config.get('musicFolders');
+			config.set("libraryLayoutSettings", action.payload);
+			config.save();
 
-    //   // Check if we received folders
-    //   if (folders !== undefined) {
-    //     musicFolders = musicFolders.concat(folders);
+			return {
+				...state,
+				libraryLayoutSettings: action.payload,
+			};
+		}
 
-    //     // Remove duplicates, useless children, ect...
-    //     musicFolders = utils.removeUselessFolders(musicFolders);
+		case types.FILTER_SEARCH: {
+			return {
+				...state,
+				search: utils.stripAccents(action.payload.search),
+			};
+		}
 
-    //     musicFolders.sort();
+		// case (types.LIBRARY_ADD_FOLDERS): { // TODO Redux -> move to a thunk
+		//   const { folders } = action.payload;
+		//   let musicFolders = app.config.get('musicFolders');
 
-    //     app.config.set('musicFolders', musicFolders);
-    //     app.config.saveSync();
-    //   }
+		//   // Check if we received folders
+		//   if (folders !== undefined) {
+		//     musicFolders = musicFolders.concat(folders);
 
-    //   return { ...state };
-    // }
+		//     // Remove duplicates, useless children, ect...
+		//     musicFolders = utils.removeUselessFolders(musicFolders);
 
-    // case (types.LIBRARY_REMOVE_FOLDER): { // TODO Redux -> move to a thunk
-    //   if (!state.library.refreshing) {
-    //     const musicFolders = app.config.get('musicFolders');
+		//     musicFolders.sort();
 
-    //     musicFolders.splice(action.index, 1);
+		//     app.config.set('musicFolders', musicFolders);
+		//     app.config.saveSync();
+		//   }
 
-    //     app.config.set('musicFolders', musicFolders);
-    //     app.config.saveSync();
+		//   return { ...state };
+		// }
 
-    //     return { ...state };
-    //   }
+		// case (types.LIBRARY_REMOVE_FOLDER): { // TODO Redux -> move to a thunk
+		//   if (!state.library.refreshing) {
+		//     const musicFolders = app.config.get('musicFolders');
 
-    //   return state;
-    // }
+		//     musicFolders.splice(action.index, 1);
 
-    case types.LIBRARY_RESET: {
-      return initialState;
-    }
+		//     app.config.set('musicFolders', musicFolders);
+		//     app.config.saveSync();
 
-    case types.LIBRARY_REFRESH_START: {
-      return {
-        ...state,
-        refreshing: true,
-      };
-    }
+		//     return { ...state };
+		//   }
 
-    case types.LIBRARY_REFRESH_END: {
-      return {
-        ...state,
-        refreshing: false,
-        refresh: {
-          processed: 0,
-          total: 0,
-        },
-      };
-    }
+		//   return state;
+		// }
 
-    case types.LIBRARY_REFRESH_PROGRESS: {
-      return {
-        ...state,
-        refresh: {
-          processed: action.payload.processed,
-          total: action.payload.total,
-        },
-      };
-    }
+		case types.LIBRARY_RESET: {
+			return initialState;
+		}
 
-    case types.LIBRARY_REMOVE_TRACKS: {
-      const { tracksIds } = action.payload;
-      const removeTrack = (track: TrackModel) => !tracksIds.includes(track._id);
+		case types.LIBRARY_REFRESH_START: {
+			return {
+				...state,
+				refreshing: true,
+			};
+		}
 
-      const tracks = {
-        library: [...state.tracks.library].filter(removeTrack),
-        playlist: [...state.tracks.playlist].filter(removeTrack),
-      };
+		case types.LIBRARY_REFRESH_END: {
+			return {
+				...state,
+				refreshing: false,
+				refresh: {
+					processed: 0,
+					total: 0,
+				},
+			};
+		}
 
-      return {
-        ...state,
-        tracks,
-      };
-    }
+		case types.LIBRARY_REFRESH_PROGRESS: {
+			return {
+				...state,
+				refresh: {
+					processed: action.payload.processed,
+					total: action.payload.total,
+				},
+			};
+		}
 
-    case types.LIBRARY_ADD_TRACKS: {
-      const { tracks } = action.payload;
+		case types.LIBRARY_REMOVE_TRACKS: {
+			const { tracksIds } = action.payload;
+			const removeTrack = (track: TrackModel) => !tracksIds.includes(track._id);
 
-      const libraryTracks: TrackModel[] = [...state.tracks.library, ...tracks];
+			const tracks = {
+				library: [...state.tracks.library].filter(removeTrack),
+				playlist: [...state.tracks.playlist].filter(removeTrack),
+			};
 
-      return {
-        ...state,
-        tracks: {
-          playlist: state.tracks.playlist,
-          library: libraryTracks,
-        },
-      };
-    }
+			return {
+				...state,
+				tracks,
+			};
+		}
 
-    case types.LIBRARY_HIGHLIGHT_PLAYING_TRACK: {
-      return {
-        ...state,
-        highlightPlayingTrack: action.payload.highlight,
-      };
-    }
+		case types.LIBRARY_ADD_TRACKS: {
+			const { tracks } = action.payload;
 
-    case types.PLAYLISTS_LOAD_ONE: {
-      const newState = { ...state };
-      newState.tracks.playlist = [...action.payload.tracks];
+			const libraryTracks: TrackModel[] = [...state.tracks.library, ...tracks];
 
-      return newState;
-    }
+			return {
+				...state,
+				tracks: {
+					playlist: state.tracks.playlist,
+					library: libraryTracks,
+				},
+			};
+		}
 
-    default: {
-      return state;
-    }
-  }
+		case types.LIBRARY_HIGHLIGHT_PLAYING_TRACK: {
+			return {
+				...state,
+				highlightPlayingTrack: action.payload.highlight,
+			};
+		}
+
+		case types.PLAYLISTS_LOAD_ONE: {
+			const newState = { ...state };
+			newState.tracks.playlist = [...action.payload.tracks];
+
+			return newState;
+		}
+
+		default: {
+			return state;
+		}
+	}
 };
