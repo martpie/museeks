@@ -15,6 +15,7 @@ export enum Repeat {
 
 export enum SortBy {
 	ALBUM = "album",
+	ARTIST = "artist",
 	TITLE = "title",
 	DURATION = "duration",
 	GENRE = "genre",

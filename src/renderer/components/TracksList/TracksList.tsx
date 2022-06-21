@@ -28,7 +28,7 @@ import library from "src/renderer/store/reducers/library";
 const { shell } = electron;
 
 const CHUNK_LENGTH = 20;
-const ROW_HEIGHT = 50; // FIXME
+const ROW_HEIGHT = 30; // FIXME
 const TILES_TO_DISPLAY = 5;
 const TILE_HEIGHT = ROW_HEIGHT * CHUNK_LENGTH;
 
@@ -495,6 +495,7 @@ const TracksList: React.FC<Props> = (props) => {
 
 				return (
 					<TrackRow
+						layout={layout}
 						selected={selected.includes(track._id)}
 						track={track}
 						isPlaying={trackPlayingId === track._id}
@@ -544,7 +545,7 @@ const TracksList: React.FC<Props> = (props) => {
 	return (
 		<div className={styles.tracksList}>
 			<KeyBinding onKey={onKey} preventInputConflict />
-			<TracksListHeader enableSort={type === "library"} libraryLayoutSettings={layout} />
+			<TracksListHeader enableSort={type === "library"} layout={layout} />
 			<CustomScrollbar className={styles.tracksListBody} onScroll={onScroll}>
 				<div className={styles.tiles} role="listbox" style={{ height: tracks.length * ROW_HEIGHT }}>
 					{trackTiles}

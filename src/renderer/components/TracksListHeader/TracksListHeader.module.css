@@ -7,7 +7,7 @@
 }
 
 .cellTrackPlaying {
-	width: 20px;
+	width: 30px;
 	text-align: center;
 }
 
@@ -19,14 +19,19 @@
 	width: 7%;
 }
 
+.cellArtist,
 .cellAlbum,
-.cellAdded,
+.cellTitle,
 .cellSection,
 .cellGenre {
 	width: 20%;
 }
 
 .cellSection {
-	height: 100%;
-	width: 30%;
+	width: 20%;
+	height: 45px;
+}
+
+.resetWidth {
+	width: unset;
 }

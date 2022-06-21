@@ -7,6 +7,7 @@ import { TrackModel } from "../../../shared/types/museeks";
 
 import cellStyles from "../TracksListHeader/TracksListHeader.module.css";
 import styles from "./TrackRow.module.css";
+import { LibraryLayoutSettings } from "src/renderer/store/actions/LibraryActions";
 
 interface Props {
 	selected: boolean;
@@ -24,6 +25,8 @@ interface Props {
 	onDragOver?: (trackId: string, position: "above" | "below") => void;
 	onDragEnd?: () => void;
 	onDrop?: (targetTrackId: string, position: "above" | "below") => void;
+
+	layout: LibraryLayoutSettings;
 }
 
 interface State {
@@ -103,7 +106,7 @@ export default class TrackRow extends React.PureComponent<Props, State> {
 	};
 
 	render() {
-		const { track, selected, reordered, draggable } = this.props;
+		const { track, selected, reordered, draggable, layout } = this.props;
 		const { reorderOver, reorderPosition } = this.state;
 
 		const trackClasses = cx(styles.track, {
@@ -113,6 +116,29 @@ export default class TrackRow extends React.PureComponent<Props, State> {
 			[styles.isAbove]: reorderPosition === "above",
 			[styles.isBelow]: reorderPosition === "below",
 		});
+
+		let sorts = [
+			[
+				layout.visibility.includes("title"),
+				<div className={`${styles.cell} ${cellStyles.cellTrack}`}>{track.title}</div>,
+			],
+			[
+				layout.visibility.includes("duration"),
+				<div className={`${styles.cell} ${cellStyles.cellDuration}`}>{parseDuration(track.duration)}</div>,
+			],
+			[
+				layout.visibility.includes("artist"),
+				<div className={`${styles.cell} ${cellStyles.cellArtist}`}>{track.artist.sort().join(", ")}</div>,
+			],
+			[
+				layout.visibility.includes("album"),
+				<div className={`${styles.cell} ${cellStyles.cellAlbum}`}>{track.album}</div>,
+			],
+			[
+				layout.visibility.includes("genre"),
+				<div className={`${styles.cell} ${cellStyles.cellGenre}`}>{track.genre.join(", ")}</div>,
+			],
+		];
 
 		return (
 			<div
@@ -140,16 +166,13 @@ export default class TrackRow extends React.PureComponent<Props, State> {
 				<div className={`${styles.cell} ${cellStyles.cellTrackPlaying}`}>
 					{this.props.isPlaying ? <PlayingIndicator /> : null}
 				</div>
-				<div className={`${cellStyles.cellSection}`}>
-					<div className={`${styles.cell} ${cellStyles.cellTrack}`}>{track.title}</div>
-					<div className={`${styles.cell} ${cellStyles.cellArtist}`}>{track.artist.sort().join(", ")}</div>
-				</div>
-				<div className={`${styles.cell} ${cellStyles.cellDuration}`}>{parseDuration(track.duration)}</div>
-				<div className={`${styles.cell} ${cellStyles.cellAlbum}`}>{track.album}</div>
-				<div className={`${styles.cell} ${cellStyles.cellAdded}`}>
+				{/* FIXME shit code  */}
+				{this.props.layout.collapse_artist ? "Lol" : undefined}
+				{sorts.filter((value) => value[0] && value[1])}
+
+				{/* <div className={`${styles.cell} ${cellStyles.cellAdded}`}>
 					{new Date(track.added || 0).toDateString()}
-				</div>
-				<div className={`${styles.cell} ${cellStyles.cellGenre}`}>{track.genre.join(", ")}</div>
+				</div> */}
 			</div>
 		);
 	}

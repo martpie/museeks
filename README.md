@@ -7,6 +7,8 @@ This fork seeks to implement at least a section of issue #401 and slight interfa
 
 Everything tagged with FIXME
 Casing (i'm not used to camelCase)
+Indentation (I couldn't stand spaces:2)
+Playlist always shows "Your search returned no results"
 
 # Museeks
 

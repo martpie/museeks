@@ -41,7 +41,12 @@ const initialState: LibraryState = {
 		total: 0,
 	},
 	highlightPlayingTrack: false,
-	libraryLayoutSettings: config.get("libraryLayoutSettings"),
+	// I'm not sure if this is a good layout for default settings
+	// FIXME
+	libraryLayoutSettings: config.get("libraryLayoutSettings") || {
+		visibility: ["title", "duration", "artist", "genre"],
+		collapse_artist: false,
+	},
 };
 
 export default (state = initialState, action: Action): LibraryState => {

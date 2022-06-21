@@ -12,6 +12,7 @@ interface Props {
 	className?: string;
 	sortBy?: SortBy | null;
 	icon?: string | null;
+	layout: LibraryActions.LibraryLayoutSettings;
 	onContextMenu?: (event: React.MouseEvent) => void;
 }
 

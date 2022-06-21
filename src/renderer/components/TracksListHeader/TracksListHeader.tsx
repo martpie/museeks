@@ -18,7 +18,7 @@ interface OwnProps {
 	enableSort: boolean;
 	// this should be in the interface below, but it doesn't want to work there
 	// FIXME?
-	libraryLayoutSettings: LibraryLayoutSettings;
+	layout: LibraryLayoutSettings;
 }
 
 interface InjectedProps {
@@ -26,6 +26,11 @@ interface InjectedProps {
 }
 
 type Props = OwnProps & InjectedProps;
+
+const LAYOUT_LISTS = ["artist", "duration", "title", "added", "genre"];
+const capitalize = (str: string) => {
+	return str.toUpperCase()[0] + str.substring(1);
+};
 
 class TracksListHeader extends React.Component<Props> {
 	static getIcon = (sort: LibrarySort | undefined, sortType: SortBy) => {
@@ -48,26 +53,35 @@ class TracksListHeader extends React.Component<Props> {
 		console.log(props);
 	}
 
-	showContextMenu(_e: React.MouseEvent, selected: string, title: string) {
+	showContextMenu(_e: React.MouseEvent, id: string) {
 		const template: electron.MenuItemConstructorOptions[] = [
 			{
-				label: `Selected: ${title}`,
+				label: `Selected: ${capitalize(id)}`,
 				enabled: false,
 			},
-			{
-				type: "checkbox",
-				label: "Collapse Artist and Title",
-				checked: this.props.libraryLayoutSettings.collapse_artist,
-				click: () => {
-					// I didn't know a better way to do this
-					// FIXME
-					set_context_state({
-						visibility: this.props.libraryLayoutSettings.visibility,
-						collapse_artist: !this.props.libraryLayoutSettings.collapse_artist,
-					});
-				},
-			},
 		];
+
+		LAYOUT_LISTS.forEach((tag) => {
+			template.push({
+				type: "checkbox",
+				label: capitalize(tag),
+				checked: this.props.layout.visibility.includes(tag),
+				click: () => {
+					// A very confusing toggle mechanism
+					const visibility = this.props.layout.visibility;
+					console.log(visibility);
+					if (visibility.includes(tag)) {
+						set_context_state({
+							visibility: visibility.filter((value) => value !== tag),
+						});
+					} else {
+						set_context_state({
+							visibility: [...visibility, tag],
+						});
+					}
+				},
+			});
+		});
 
 		const context = Menu.buildFromTemplate(template);
 
@@ -75,47 +89,79 @@ class TracksListHeader extends React.Component<Props> {
 	}
 
 	render() {
-		const { enableSort, sort } = this.props;
+		const { enableSort, sort, layout } = this.props;
 
-		return (
-			<div className={styles.tracksListHeader}>
-				{" "}
-				<TracksListHeaderCell className={styles.cellTrackPlaying} title="&nbsp;" />
+		let sorts = [
+			[
+				layout.visibility.includes("title"),
 				<TracksListHeaderCell
-					onContextMenu={(e) => this.showContextMenu(e, "title", "Title")}
-					className={styles.cellSection}
+					onContextMenu={(e) => this.showContextMenu(e, "title")}
+					className={styles.cellTrack}
 					title="Title"
 					sortBy={enableSort ? SortBy.TITLE : null}
 					icon={TracksListHeader.getIcon(sort, SortBy.TITLE)}
-				/>
+					layout={this.props.layout}
+				/>,
+			],
+			[
+				layout.visibility.includes("duration"),
 				<TracksListHeaderCell
-					onContextMenu={(e) => this.showContextMenu(e, "duration", "Duration")}
+					onContextMenu={(e) => this.showContextMenu(e, "duration")}
 					className={styles.cellDuration}
 					title="Duration"
 					sortBy={enableSort ? SortBy.DURATION : null}
 					icon={TracksListHeader.getIcon(sort, SortBy.DURATION)}
-				/>
+					layout={this.props.layout}
+				/>,
+			],
+			[
+				layout.visibility.includes("artist"),
 				<TracksListHeaderCell
-					onContextMenu={(e) => this.showContextMenu(e, "album", "Album")}
+					onContextMenu={(e) => this.showContextMenu(e, "artist")}
+					className={styles.cellArtist}
+					title="Artist"
+					sortBy={enableSort ? SortBy.ARTIST : null}
+					icon={TracksListHeader.getIcon(sort, SortBy.ARTIST)}
+					layout={this.props.layout}
+				/>,
+			],
+			[
+				layout.visibility.includes("album"),
+				<TracksListHeaderCell
+					onContextMenu={(e) => this.showContextMenu(e, "album")}
 					className={styles.cellAlbum}
 					title="Album"
 					sortBy={enableSort ? SortBy.ALBUM : null}
 					icon={TracksListHeader.getIcon(sort, SortBy.ALBUM)}
-				/>
+					layout={this.props.layout}
+				/>,
+			],
+			[
+				layout.visibility.includes("genre"),
 				<TracksListHeaderCell
+					onContextMenu={(e) => this.showContextMenu(e, "genre")}
+					className={styles.cellGenre}
+					title="Genre"
+					sortBy={enableSort ? SortBy.GENRE : null}
+					icon={TracksListHeader.getIcon(sort, SortBy.GENRE)}
+					layout={this.props.layout}
+				/>,
+			],
+		];
+
+		return (
+			<div className={styles.tracksListHeader}>
+				{" "}
+				<TracksListHeaderCell className={styles.cellTrackPlaying} title="&nbsp;" layout={this.props.layout} />
+				{sorts.filter((value) => value[0] && value[1])}
+				{/* <TracksListHeaderCell
 					onContextMenu={(e) => this.showContextMenu(e, "added", "Added")}
 					className={styles.cellAdded}
 					title="Date Added"
 					sortBy={enableSort ? SortBy.ADDED : null}
 					icon={TracksListHeader.getIcon(sort, SortBy.ADDED)}
-				/>
-				<TracksListHeaderCell
-					onContextMenu={(e) => this.showContextMenu(e, "genre", "Genre")}
-					className={styles.cellGenre}
-					title="Genre"
-					sortBy={enableSort ? SortBy.GENRE : null}
-					icon={TracksListHeader.getIcon(sort, SortBy.GENRE)}
-				/>
+					layout={this.props.layout}
+				/> */}
 			</div>
 		);
 	}
