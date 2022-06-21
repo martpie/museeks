@@ -71,7 +71,6 @@ export const sort = (sortBy: SortBy): void => {
 // also rename types.SET_LIBRARY_LAYOUT_STATE to something more appropiate as well
 // FIXME
 export interface LibraryLayoutSettings {
-	collapse_artist?: boolean;
 	visibility: string[];
 }
 

@@ -166,9 +166,8 @@ export default class TrackRow extends React.PureComponent<Props, State> {
 				<div className={`${styles.cell} ${cellStyles.cellTrackPlaying}`}>
 					{this.props.isPlaying ? <PlayingIndicator /> : null}
 				</div>
-				{/* FIXME shit code  */}
-				{this.props.layout.collapse_artist ? "Lol" : undefined}
-				{sorts.filter((value) => value[0] && value[1])}
+				{/* {this.props.layout.collapse_artist ? "Lol" : undefined} */}
+				{...sorts.filter((value) => value[0] && value[1])}
 
 				{/* <div className={`${styles.cell} ${cellStyles.cellAdded}`}>
 					{new Date(track.added || 0).toDateString()}

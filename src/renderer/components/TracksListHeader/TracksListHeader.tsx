@@ -27,7 +27,7 @@ interface InjectedProps {
 
 type Props = OwnProps & InjectedProps;
 
-const LAYOUT_LISTS = ["artist", "duration", "title", "added", "genre"];
+const LAYOUT_LISTS = ["artist", "duration", "title", "genre"];
 const capitalize = (str: string) => {
 	return str.toUpperCase()[0] + str.substring(1);
 };
@@ -101,6 +101,7 @@ class TracksListHeader extends React.Component<Props> {
 					sortBy={enableSort ? SortBy.TITLE : null}
 					icon={TracksListHeader.getIcon(sort, SortBy.TITLE)}
 					layout={this.props.layout}
+					key="Title"
 				/>,
 			],
 			[
@@ -112,6 +113,7 @@ class TracksListHeader extends React.Component<Props> {
 					sortBy={enableSort ? SortBy.DURATION : null}
 					icon={TracksListHeader.getIcon(sort, SortBy.DURATION)}
 					layout={this.props.layout}
+					key="Duration"
 				/>,
 			],
 			[
@@ -123,6 +125,7 @@ class TracksListHeader extends React.Component<Props> {
 					sortBy={enableSort ? SortBy.ARTIST : null}
 					icon={TracksListHeader.getIcon(sort, SortBy.ARTIST)}
 					layout={this.props.layout}
+					key="Artist"
 				/>,
 			],
 			[
@@ -134,6 +137,7 @@ class TracksListHeader extends React.Component<Props> {
 					sortBy={enableSort ? SortBy.ALBUM : null}
 					icon={TracksListHeader.getIcon(sort, SortBy.ALBUM)}
 					layout={this.props.layout}
+					key="Album"
 				/>,
 			],
 			[
@@ -145,15 +149,20 @@ class TracksListHeader extends React.Component<Props> {
 					sortBy={enableSort ? SortBy.GENRE : null}
 					icon={TracksListHeader.getIcon(sort, SortBy.GENRE)}
 					layout={this.props.layout}
+					key="Genre"
 				/>,
 			],
 		];
 
+		let headers = sorts.filter((value) => value[0] && value[1]);
 		return (
-			<div className={styles.tracksListHeader}>
+			<div
+				className={styles.tracksListHeader}
+				onContextMenu={headers.length === 0 ? (e) => this.showContextMenu(e, "background") : undefined}
+			>
 				{" "}
 				<TracksListHeaderCell className={styles.cellTrackPlaying} title="&nbsp;" layout={this.props.layout} />
-				{sorts.filter((value) => value[0] && value[1])}
+				{...headers}
 				{/* <TracksListHeaderCell
 					onContextMenu={(e) => this.showContextMenu(e, "added", "Added")}
 					className={styles.cellAdded}

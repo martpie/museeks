@@ -45,7 +45,6 @@ const initialState: LibraryState = {
 	// FIXME
 	libraryLayoutSettings: config.get("libraryLayoutSettings") || {
 		visibility: ["title", "duration", "artist", "genre"],
-		collapse_artist: false,
 	},
 };
 
