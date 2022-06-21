@@ -1,60 +1,61 @@
 :global(.os__darwin) .header__mainControls {
-  padding-left: 65px; /* let some space for titleBarStyle */
+	padding-left: 65px; /* let some space for titleBarStyle */
 }
 
 /* The native frame may be light, so we need to increase the contrast between
    the frame and the header */
 :global(.os__win32),
 :global(.os__linux) {
-  .header {
-    border-top: 1px solid var(--border-color);
-  }
+	.header {
+		border-top: 1px solid var(--border-color);
+	}
 }
 
 .header {
-  border-bottom: 1px solid var(--border-color);
-  background-color: var(--header-bg);
-  color: var(--header-color);
-  padding: 0 10px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 50px;
-  flex: 0 0 auto;
+	border-bottom: 1px solid var(--border-color);
+	background-color: var(--header-bg);
+	color: var(--header-color);
+	padding: 0 10px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	height: 50px;
+	padding: 5px;
+	flex: 0 0 auto;
 
-  /* Draggable region (zone able to move the window) */
-  -webkit-app-region: drag;
+	/* Draggable region (zone able to move the window) */
+	-webkit-app-region: drag;
 }
 
 .header__mainControls {
-  width: 220px;
-  flex: 0 0 auto;
-  display: flex;
-  align-items: center;
-  padding-right: 10px;
+	width: 220px;
+	flex: 0 0 auto;
+	display: flex;
+	align-items: center;
+	padding-right: 10px;
 }
 
 .header__search {
-  -webkit-app-region: no-drag;
-  width: 220px;
-  flex: 0 0 auto;
-  display: flex;
-  justify-content: flex-end;
+	-webkit-app-region: no-drag;
+	width: 220px;
+	flex: 0 0 auto;
+	display: flex;
+	justify-content: flex-end;
 }
 
 .header__search__input {
-  display: block;
-  font-size: inherit;
-  width: 100%;
-  padding: 6px 12px;
-  background-color: var(--search-bg);
-  border: 1px solid var(--border-color);
-  color: var(--text);
-  border-radius: var(--border-radius);
+	display: block;
+	font-size: inherit;
+	width: 100%;
+	padding: 6px 12px;
+	background-color: var(--search-bg);
+	border: 1px solid var(--border-color);
+	color: var(--text);
+	border-radius: var(--border-radius);
 }
 
 .header__playingBar {
-  flex: 1 1 auto;
-  min-width: 0;
-  max-width: 600px;
+	flex: 1 1 auto;
+	min-width: 0;
+	max-width: 600px;
 }
