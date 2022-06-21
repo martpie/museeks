@@ -113,7 +113,6 @@ export const getDefaultMetadata = (): Track => ({
     title: '',
     genre: [],
   },
-  added: 0,
   path: '',
   playCount: 0,
   title: '',

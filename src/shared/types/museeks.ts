@@ -19,7 +19,6 @@ export enum SortBy {
   TITLE = 'title',
   DURATION = 'duration',
   GENRE = 'genre',
-  ADDED = 'added',
 }
 
 export enum SortOrder {
@@ -75,7 +74,6 @@ export interface Track {
   };
   duration: number;
   genre: string[];
-  added: number;
   loweredMetas: {
     artist: string[];
     album: string;
