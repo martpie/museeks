@@ -41,7 +41,7 @@ const initialState: LibraryState = {
 		total: 0,
 	},
 	highlightPlayingTrack: false,
-	// I'm not sure if this is a good layout for default settings
+	// I'm not sure if this is a good place for the default settings
 	// FIXME
 	libraryLayoutSettings: config.get("libraryLayoutSettings") || {
 		visibility: ["title", "duration", "artist", "genre"],

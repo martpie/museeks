@@ -10,6 +10,7 @@ This fork seeks to implement at least a section of issue #401.
 - Indentation in some files
 - Playlist always shows "Your search returned no results"
 - Warning: Each child in a list should have a unique "key" prop. See https://reactjs.org/link/warning-keys for more information.
+- Cannot use the toggling context menu on empty sections of the header
 
 # Museeks
 

@@ -10,14 +10,10 @@ import { LibrarySort } from "../../store/reducers/library";
 import { Menu } from "@electron/remote";
 import styles from "./TracksListHeader.module.css";
 import electron from "electron";
-import { type } from "os";
-import playlists from "src/renderer/store/reducers/playlists";
 import { LibraryLayoutSettings, set_context_state } from "src/renderer/store/actions/LibraryActions";
 
 interface OwnProps {
 	enableSort: boolean;
-	// this should be in the interface below, but it doesn't want to work there
-	// FIXME?
 	layout: LibraryLayoutSettings;
 }
 

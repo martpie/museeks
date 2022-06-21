@@ -68,8 +68,6 @@ export const sort = (sortBy: SortBy): void => {
 };
 
 // idk what to name or where to put this
-// also rename types.SET_LIBRARY_LAYOUT_STATE to something more appropiate as well
-// FIXME
 export interface LibraryLayoutSettings {
 	visibility: string[];
 }
