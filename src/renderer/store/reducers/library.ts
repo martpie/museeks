@@ -44,7 +44,7 @@ const initialState: LibraryState = {
   // I'm not sure if this is a good place for the default settings
   // FIXME
   libraryLayoutSettings: config.get('libraryLayoutSettings') || {
-    visibility: ['title', 'duration', 'artist', 'genre'],
+    visibility: ['title', 'duration', 'album', 'artist', 'genre'],
   },
 };
 

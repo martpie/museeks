@@ -1,9 +1,9 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 
 import TracksListHeaderCell from '../TracksListHeaderCell/TracksListHeaderCell';
 
-import { PlayerStatus, SortBy, SortOrder } from '../../../shared/types/museeks';
+import { SortBy, SortOrder } from '../../../shared/types/museeks';
 import { RootState } from '../../store/reducers';
 import { LibrarySort } from '../../store/reducers/library';
 
@@ -23,7 +23,7 @@ interface InjectedProps {
 
 type Props = OwnProps & InjectedProps;
 
-const LAYOUT_LISTS = ['title', 'duration', 'artist', 'genre'];
+const LAYOUT_LISTS = ['title', 'duration', 'album', 'artist', 'genre'];
 const capitalize = (str: string) => {
   return str.toUpperCase()[0] + str.substring(1);
 };
