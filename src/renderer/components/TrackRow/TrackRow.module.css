@@ -1,32 +1,32 @@
 .cell {
-	padding: 3px 4px;
-	cursor: default;
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	line-height: 15px;
+  padding: 3px 4px;
+  cursor: default;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 15px;
 }
 
 .track {
-	position: relative;
-	display: flex;
-	outline: none;
-	height: 30px;
-	padding: 5px;
+  position: relative;
+  display: flex;
+  outline: none;
+  height: 30px;
+  padding: 5px;
 
-	&:nth-child(odd) {
-		background-color: var(--tracks-bg-odd);
-	}
+  &:nth-child(odd) {
+    background-color: var(--tracks-bg-odd);
+  }
 
-	&:nth-child(even) {
-		background-color: var(--tracks-bg-even);
-	}
+  &:nth-child(even) {
+    background-color: var(--tracks-bg-even);
+  }
 
-	&.selected {
-		background-color: var(--main-color);
-		color: white;
+  &.selected {
+    background-color: var(--main-color);
+    color: white;
 
-		/* // put that elsewhere someday
+    /* // put that elsewhere someday
     .playingIndicator {
 
       .animation {
@@ -36,29 +36,29 @@
         }
       }
     } */
-	}
+  }
 
-	&.reordered {
-		opacity: 0.5;
-	}
+  &.reordered {
+    opacity: 0.5;
+  }
 
-	&.isReorderedOver {
-		&::after {
-			pointer-events: none;
-			position: absolute;
-			z-index: 1;
-			display: block;
-			width: 100%;
-			content: "";
-			border-bottom: solid 2px var(--main-color);
-		}
+  &.isReorderedOver {
+    &::after {
+      pointer-events: none;
+      position: absolute;
+      z-index: 1;
+      display: block;
+      width: 100%;
+      content: '';
+      border-bottom: solid 2px var(--main-color);
+    }
 
-		&.isAbove::after {
-			top: -1px;
-		}
+    &.isAbove::after {
+      top: -1px;
+    }
 
-		&.isBelow::after {
-			bottom: -1px;
-		}
-	}
+    &.isBelow::after {
+      bottom: -1px;
+    }
+  }
 }

@@ -1,21 +1,21 @@
 .tracksList {
-	outline: none;
-	display: flex;
-	flex-direction: column;
-	flex: 1 1 auto;
+  outline: none;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
 }
 
 .tracksListBody {
-	overflow: auto;
-	flex: 1 1 auto;
+  overflow: auto;
+  flex: 1 1 auto;
 }
 
 .tiles {
-	position: relative;
+  position: relative;
 }
 
 .tile {
-	position: absolute;
-	width: 100%;
-	z-index: 10;
+  position: absolute;
+  width: 100%;
+  z-index: 10;
 }
