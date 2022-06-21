@@ -4,15 +4,15 @@
 |--------------------------------------------------------------------------
 */
 
-import React from "react";
-import * as ReactDOM from "react-dom/client";
-import { Provider } from "react-redux";
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
+import React from 'react';
+import * as ReactDOM from 'react-dom/client';
+import { Provider } from 'react-redux';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
-import Root from "./Root";
-import Router from "./Router";
-import store from "./store/store";
+import Root from './Root';
+import Router from './Router';
+import store from './store/store';
 
 /*
 |--------------------------------------------------------------------------
@@ -20,10 +20,10 @@ import store from "./store/store";
 |--------------------------------------------------------------------------
 */
 
-import "../../node_modules/normalize.css/normalize.css";
-import "../../node_modules/font-awesome/css/font-awesome.css";
-import "../../node_modules/react-rangeslider/lib/index.css";
-import "./styles/main.module.css";
+import '../../node_modules/normalize.css/normalize.css';
+import '../../node_modules/font-awesome/css/font-awesome.css';
+import '../../node_modules/react-rangeslider/lib/index.css';
+import './styles/main.module.css';
 
 /*
 |--------------------------------------------------------------------------
@@ -31,19 +31,19 @@ import "./styles/main.module.css";
 |--------------------------------------------------------------------------
 */
 
-const wrap = document.getElementById("wrap");
+const wrap = document.getElementById('wrap');
 
 if (wrap) {
-	const root = ReactDOM.createRoot(wrap);
-	root.render(
-		<React.StrictMode>
-			<Root>
-				<Provider store={store}>
-					<DndProvider backend={HTML5Backend}>
-						<Router />
-					</DndProvider>
-				</Provider>
-			</Root>
-		</React.StrictMode>
-	);
+  const root = ReactDOM.createRoot(wrap);
+  root.render(
+    <React.StrictMode>
+      <Root>
+        <Provider store={store}>
+          <DndProvider backend={HTML5Backend}>
+            <Router />
+          </DndProvider>
+        </Provider>
+      </Root>
+    </React.StrictMode>
+  );
 }

@@ -1,13 +1,11 @@
 {
-	"extends": ["stylelint-config-standard", "stylelint-config-css-modules"],
-	"ignoreFiles": ["./src/**/*.tsx", "./src/**/*.ts"],
-	"rules": {
-		"no-descending-specificity": null,
-		"string-quotes": "double",
-		"max-line-length": 500,
-		"selector-class-pattern": null,
-		"tabWidth": 4,
-		"useTabs": true,
-		"alpha-value-notation": "number"
-	}
+  "extends": ["stylelint-config-standard", "stylelint-config-css-modules"],
+  "ignoreFiles": ["./src/**/*.tsx", "./src/**/*.ts"],
+  "rules": {
+    "no-descending-specificity": null,
+    "string-quotes": "single",
+    "max-line-length": 500,
+    "selector-class-pattern": null,
+    "alpha-value-notation": "number"
+  }
 }

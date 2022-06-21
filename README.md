@@ -1,17 +1,3 @@
-# blackshibe/museeks
-
-This fork seeks to implement at least a section of issue #401.
-![image](https://user-images.githubusercontent.com/57596776/174799989-68dbb31a-2b10-4e90-9567-06ca77afc10c.png)
-
-# Issues
-
-- Everything tagged with FIXME
-- Fix occasional snake_case casing
-- Indentation in some files
-- Playlist always shows "Your search returned no results"
-- Warning: Each child in a list should have a unique "key" prop. See https://reactjs.org/link/warning-keys for more information.
-- Cannot use the toggling context menu on empty sections of the header
-
 # Museeks
 
 ![Build Status](https://github.com/martpie/museeks/workflows/build/badge.svg)
