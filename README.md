@@ -5,10 +5,11 @@ This fork seeks to implement at least a section of issue #401.
 
 # Issues
 
-Everything tagged with FIXME
-Casing (i'm not used to camelCase)
-Indentation (I couldn't stand spaces:2)
-Playlist always shows "Your search returned no results"
+- Everything tagged with FIXME
+- Fix occasional snake_case casing
+- Indentation in some files
+- Playlist always shows "Your search returned no results"
+- Warning: Each child in a list should have a unique "key" prop. See https://reactjs.org/link/warning-keys for more information.
 
 # Museeks
 

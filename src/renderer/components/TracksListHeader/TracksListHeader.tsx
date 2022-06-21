@@ -27,7 +27,7 @@ interface InjectedProps {
 
 type Props = OwnProps & InjectedProps;
 
-const LAYOUT_LISTS = ["artist", "duration", "title", "genre"];
+const LAYOUT_LISTS = ["title", "duration", "artist", "genre"];
 const capitalize = (str: string) => {
 	return str.toUpperCase()[0] + str.substring(1);
 };
@@ -91,7 +91,7 @@ class TracksListHeader extends React.Component<Props> {
 	render() {
 		const { enableSort, sort, layout } = this.props;
 
-		let sorts = [
+		let sorts: [boolean, React.ReactElement][] = [
 			[
 				layout.visibility.includes("title"),
 				<TracksListHeaderCell
@@ -154,7 +154,11 @@ class TracksListHeader extends React.Component<Props> {
 			],
 		];
 
-		let headers = sorts.filter((value) => value[0] && value[1]);
+		let headers: React.ReactElement[] = [];
+		sorts.forEach((element) => {
+			if (element[0]) headers.push(element[1]);
+		});
+
 		return (
 			<div
 				className={styles.tracksListHeader}
@@ -163,14 +167,6 @@ class TracksListHeader extends React.Component<Props> {
 				{" "}
 				<TracksListHeaderCell className={styles.cellTrackPlaying} title="&nbsp;" layout={this.props.layout} />
 				{...headers}
-				{/* <TracksListHeaderCell
-					onContextMenu={(e) => this.showContextMenu(e, "added", "Added")}
-					className={styles.cellAdded}
-					title="Date Added"
-					sortBy={enableSort ? SortBy.ADDED : null}
-					icon={TracksListHeader.getIcon(sort, SortBy.ADDED)}
-					layout={this.props.layout}
-				/> */}
 			</div>
 		);
 	}

@@ -117,7 +117,7 @@ export default class TrackRow extends React.PureComponent<Props, State> {
 			[styles.isBelow]: reorderPosition === "below",
 		});
 
-		let sorts = [
+		let sorts: [boolean, React.ReactElement][] = [
 			[
 				layout.visibility.includes("title"),
 				<div className={`${styles.cell} ${cellStyles.cellTrack}`}>{track.title}</div>,
@@ -139,6 +139,11 @@ export default class TrackRow extends React.PureComponent<Props, State> {
 				<div className={`${styles.cell} ${cellStyles.cellGenre}`}>{track.genre.join(", ")}</div>,
 			],
 		];
+
+		let rows: React.ReactElement[] = [];
+		sorts.forEach((element) => {
+			if (element[0]) rows.push(element[1]);
+		});
 
 		return (
 			<div
@@ -167,11 +172,7 @@ export default class TrackRow extends React.PureComponent<Props, State> {
 					{this.props.isPlaying ? <PlayingIndicator /> : null}
 				</div>
 				{/* {this.props.layout.collapse_artist ? "Lol" : undefined} */}
-				{...sorts.filter((value) => value[0] && value[1])}
-
-				{/* <div className={`${styles.cell} ${cellStyles.cellAdded}`}>
-					{new Date(track.added || 0).toDateString()}
-				</div> */}
+				{rows.length !== 0 ? rows : undefined}
 			</div>
 		);
 	}
