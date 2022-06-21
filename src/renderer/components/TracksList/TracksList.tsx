@@ -23,7 +23,6 @@ import { RootState } from '../../store/reducers';
 import scrollbarStyles from '../CustomScrollbar/CustomScrollbar.module.css';
 import headerStyles from '../Header/Header.module.css';
 import styles from './TracksList.module.css';
-import library from 'src/renderer/store/reducers/library';
 
 const { shell } = electron;
 
