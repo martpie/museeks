@@ -17,10 +17,9 @@ const Playlist: React.FC = () => {
   const { tracks, trackPlayingId, playerStatus, playlists, currentPlaylist, libraryLayoutSettings } = useSelector(
     (state: RootState) => {
       const { library, player, playlists } = state;
-
       const { search, tracks } = library;
-      const filteredTracks = filterTracks(tracks.playlist, search);
 
+      const filteredTracks = filterTracks(tracks.playlist, search);
       const currentPlaylist = playlists.list.find((p) => p._id === playlistId);
 
       return {

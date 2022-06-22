@@ -31,6 +31,7 @@ export const load = async (_id: string): Promise<void> => {
   try {
     const playlist = await app.db.Playlist.findOneAsync({ _id });
     const tracks = await app.db.Track.findAsync({ _id: { $in: playlist.tracks } });
+
     store.dispatch({
       type: types.PLAYLISTS_LOAD_ONE,
       payload: {

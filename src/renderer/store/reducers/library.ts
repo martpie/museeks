@@ -51,11 +51,13 @@ const initialState: LibraryState = {
 export default (state = initialState, action: Action): LibraryState => {
   switch (action.type) {
     case types.LIBRARY_REFRESH: {
+      const prevTracks = state.tracks.playlist;
+
       return {
         ...state,
         tracks: {
           library: [...action.payload.tracks],
-          playlist: [],
+          playlist: prevTracks,
         },
         loading: false,
       };
