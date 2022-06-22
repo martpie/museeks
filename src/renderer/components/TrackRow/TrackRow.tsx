@@ -1,13 +1,13 @@
 import React from 'react';
 import cx from 'classnames';
 
-import PlayingIndicator from '../PlayingIndicator/PlayingIndicator';
+import { LibraryLayoutSettings } from '../../store/actions/LibraryActions';
 import { parseDuration } from '../../lib/utils';
 import { TrackModel } from '../../../shared/types/museeks';
 
+import PlayingIndicator from '../PlayingIndicator/PlayingIndicator';
 import cellStyles from '../TracksListHeader/TracksListHeader.module.css';
 import styles from './TrackRow.module.css';
-import { LibraryLayoutSettings } from 'src/renderer/store/actions/LibraryActions';
 
 interface Props {
   selected: boolean;
@@ -117,7 +117,7 @@ export default class TrackRow extends React.PureComponent<Props, State> {
       [styles.isBelow]: reorderPosition === 'below',
     });
 
-    let sorts: [boolean, React.ReactElement][] = [
+    const sorts: [boolean, React.ReactElement][] = [
       [
         layout.visibility.includes('title'),
         <div className={`${styles.cell} ${cellStyles.cellTrack}`}>{track.title}</div>,
@@ -140,7 +140,7 @@ export default class TrackRow extends React.PureComponent<Props, State> {
       ],
     ];
 
-    let rows: React.ReactElement[] = [];
+    const rows: React.ReactElement[] = [];
     sorts.forEach((element) => {
       if (element[0]) rows.push(element[1]);
     });

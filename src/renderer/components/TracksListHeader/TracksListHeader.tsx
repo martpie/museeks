@@ -1,16 +1,15 @@
 import React from 'react';
+import { Menu } from '@electron/remote';
 import { connect } from 'react-redux';
+import electron from 'electron';
 
+import { LibraryLayoutSettings, set_context_state } from '../../store/actions/LibraryActions';
 import TracksListHeaderCell from '../TracksListHeaderCell/TracksListHeaderCell';
 
 import { SortBy, SortOrder } from '../../../shared/types/museeks';
 import { RootState } from '../../store/reducers';
 import { LibrarySort } from '../../store/reducers/library';
-
-import { Menu } from '@electron/remote';
 import styles from './TracksListHeader.module.css';
-import electron from 'electron';
-import { LibraryLayoutSettings, set_context_state } from 'src/renderer/store/actions/LibraryActions';
 
 interface OwnProps {
   enableSort: boolean;
@@ -84,7 +83,7 @@ class TracksListHeader extends React.Component<Props> {
   render() {
     const { enableSort, sort, layout } = this.props;
 
-    let sorts: [boolean, React.ReactElement][] = [
+    const sorts: [boolean, React.ReactElement][] = [
       [
         layout.visibility.includes('title'),
         <TracksListHeaderCell
@@ -147,7 +146,7 @@ class TracksListHeader extends React.Component<Props> {
       ],
     ];
 
-    let headers: React.ReactElement[] = [];
+    const headers: React.ReactElement[] = [];
     sorts.forEach((element) => {
       if (element[0]) headers.push(element[1]);
     });
