@@ -21,6 +21,13 @@
 
 .cellArtist,
 .cellAlbum,
+.cellTitle,
+.cellSection,
 .cellGenre {
   width: 20%;
+}
+
+.cellSection {
+  width: 20%;
+  height: 45px;
 }

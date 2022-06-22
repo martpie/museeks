@@ -3,6 +3,7 @@ import types from '../action-types';
 import { config } from '../../lib/app';
 import * as utils from '../../lib/utils';
 import { Action, TrackModel, SortBy, SortOrder } from '../../../shared/types/museeks';
+import { LibraryLayoutSettings as LibraryLayoutSettings } from '../actions/LibraryActions';
 
 export interface LibrarySort {
   by: SortBy;
@@ -23,6 +24,7 @@ export interface LibraryState {
     total: number;
   };
   highlightPlayingTrack: boolean;
+  libraryLayoutSettings: LibraryLayoutSettings;
 }
 
 const initialState: LibraryState = {
@@ -39,16 +41,23 @@ const initialState: LibraryState = {
     total: 0,
   },
   highlightPlayingTrack: false,
+  // I'm not sure if this is a good place for the default settings
+  // FIXME
+  libraryLayoutSettings: config.get('libraryLayoutSettings') || {
+    visibility: ['title', 'duration', 'album', 'artist', 'genre'],
+  },
 };
 
 export default (state = initialState, action: Action): LibraryState => {
   switch (action.type) {
     case types.LIBRARY_REFRESH: {
+      const prevTracks = state.tracks.playlist;
+
       return {
         ...state,
         tracks: {
           library: [...action.payload.tracks],
-          playlist: [],
+          playlist: prevTracks,
         },
         loading: false,
       };
@@ -79,6 +88,18 @@ export default (state = initialState, action: Action): LibraryState => {
       return {
         ...state,
         sort,
+      };
+    }
+
+    case types.SET_LIBRARY_LAYOUT: {
+      // const prevState = state.sort;
+
+      config.set('libraryLayoutSettings', action.payload);
+      config.save();
+
+      return {
+        ...state,
+        libraryLayoutSettings: action.payload,
       };
     }
 

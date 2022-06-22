@@ -77,6 +77,7 @@ const Library: React.FC = () => {
     return (
       <TracksList
         type='library'
+        layout={library.libraryLayoutSettings}
         playerStatus={playerStatus}
         tracks={tracks}
         trackPlayingId={trackPlayingId}

@@ -4,13 +4,15 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  line-height: 24px;
+  line-height: 15px;
 }
 
 .track {
   position: relative;
   display: flex;
   outline: none;
+  height: 30px;
+  padding: 5px;
 
   &:nth-child(odd) {
     background-color: var(--tracks-bg-odd);

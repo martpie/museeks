@@ -12,6 +12,8 @@ interface Props {
   className?: string;
   sortBy?: SortBy | null;
   icon?: string | null;
+  layout: LibraryActions.LibraryLayoutSettings;
+  onContextMenu?: (event: React.MouseEvent) => void;
 }
 
 class TracksListHeaderCell extends React.Component<Props> {
@@ -52,13 +54,17 @@ class TracksListHeaderCell extends React.Component<Props> {
 
     if (sortBy) {
       return (
-        <button className={classes} onClick={this.sort}>
+        <button className={classes} onClick={this.sort} onContextMenu={this.props.onContextMenu}>
           {content}
         </button>
       );
     }
 
-    return <div className={classes}>{content}</div>;
+    return (
+      <div className={classes} onContextMenu={this.props.onContextMenu}>
+        {content}
+      </div>
+    );
   }
 }
 

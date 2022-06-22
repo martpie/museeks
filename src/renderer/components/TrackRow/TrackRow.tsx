@@ -1,10 +1,11 @@
 import React from 'react';
 import cx from 'classnames';
 
-import PlayingIndicator from '../PlayingIndicator/PlayingIndicator';
+import { LibraryLayoutSettings } from '../../store/actions/LibraryActions';
 import { parseDuration } from '../../lib/utils';
 import { TrackModel } from '../../../shared/types/museeks';
 
+import PlayingIndicator from '../PlayingIndicator/PlayingIndicator';
 import cellStyles from '../TracksListHeader/TracksListHeader.module.css';
 import styles from './TrackRow.module.css';
 
@@ -24,6 +25,8 @@ interface Props {
   onDragOver?: (trackId: string, position: 'above' | 'below') => void;
   onDragEnd?: () => void;
   onDrop?: (targetTrackId: string, position: 'above' | 'below') => void;
+
+  layout: LibraryLayoutSettings;
 }
 
 interface State {
@@ -103,7 +106,7 @@ export default class TrackRow extends React.PureComponent<Props, State> {
   };
 
   render() {
-    const { track, selected, reordered, draggable } = this.props;
+    const { track, selected, reordered, draggable, layout } = this.props;
     const { reorderOver, reorderPosition } = this.state;
 
     const trackClasses = cx(styles.track, {
@@ -112,6 +115,34 @@ export default class TrackRow extends React.PureComponent<Props, State> {
       [styles.isReorderedOver]: reorderOver,
       [styles.isAbove]: reorderPosition === 'above',
       [styles.isBelow]: reorderPosition === 'below',
+    });
+
+    const sorts: [boolean, React.ReactElement][] = [
+      [
+        layout.visibility.includes('title'),
+        <div className={`${styles.cell} ${cellStyles.cellTrack}`}>{track.title}</div>,
+      ],
+      [
+        layout.visibility.includes('duration'),
+        <div className={`${styles.cell} ${cellStyles.cellDuration}`}>{parseDuration(track.duration)}</div>,
+      ],
+      [
+        layout.visibility.includes('artist'),
+        <div className={`${styles.cell} ${cellStyles.cellArtist}`}>{track.artist.sort().join(', ')}</div>,
+      ],
+      [
+        layout.visibility.includes('album'),
+        <div className={`${styles.cell} ${cellStyles.cellAlbum}`}>{track.album}</div>,
+      ],
+      [
+        layout.visibility.includes('genre'),
+        <div className={`${styles.cell} ${cellStyles.cellGenre}`}>{track.genre.join(', ')}</div>,
+      ],
+    ];
+
+    const rows: React.ReactElement[] = [];
+    sorts.forEach((element) => {
+      if (element[0]) rows.push(element[1]);
     });
 
     return (
@@ -140,11 +171,7 @@ export default class TrackRow extends React.PureComponent<Props, State> {
         <div className={`${styles.cell} ${cellStyles.cellTrackPlaying}`}>
           {this.props.isPlaying ? <PlayingIndicator /> : null}
         </div>
-        <div className={`${styles.cell} ${cellStyles.cellTrack}`}>{track.title}</div>
-        <div className={`${styles.cell} ${cellStyles.cellDuration}`}>{parseDuration(track.duration)}</div>
-        <div className={`${styles.cell} ${cellStyles.cellArtist}`}>{track.artist.sort().join(', ')}</div>
-        <div className={`${styles.cell} ${cellStyles.cellAlbum}`}>{track.album}</div>
-        <div className={`${styles.cell} ${cellStyles.cellGenre}`}>{track.genre.join(', ')}</div>
+        {...rows}
       </div>
     );
   }

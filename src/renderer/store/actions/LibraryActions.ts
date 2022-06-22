@@ -67,6 +67,18 @@ export const sort = (sortBy: SortBy): void => {
   });
 };
 
+// idk what to name or where to put this
+export interface LibraryLayoutSettings {
+  visibility: string[];
+}
+
+export const set_context_state = (state: LibraryLayoutSettings): void => {
+  store.dispatch({
+    type: types.SET_LIBRARY_LAYOUT,
+    payload: state,
+  });
+};
+
 const scanPlaylists = async (paths: string[]) => {
   return Promise.all(
     paths.map(async (filePath) => {

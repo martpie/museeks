@@ -15,11 +15,10 @@
   border-bottom: 1px solid var(--border-color);
   background-color: var(--header-bg);
   color: var(--header-color);
-  padding: 0 10px;
+  padding: 5px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 50px;
   flex: 0 0 auto;
 
   /* Draggable region (zone able to move the window) */
