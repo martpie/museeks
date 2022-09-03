@@ -52,7 +52,7 @@
 }
 
 @keyframes bar-animate {
-  from {
+  0% {
     transform: scale3d(1, 0, 1);
   }
 
@@ -60,7 +60,7 @@
     transform: scale3d(1, 1, 1);
   }
 
-  to {
+  100% {
     transform: scale3d(1, 0, 1);
   }
 }
