@@ -90,7 +90,7 @@
     "@types/semver": "^7.3.12",
     "@typescript-eslint/eslint-plugin": "^5.36.1",
     "@typescript-eslint/parser": "^5.36.1",
-    "electron": "^20.1.1",
+    "electron": "18.3.6",
     "electron-builder": "^23.3.3",
     "esbuild": "0.15.6",
     "esbuild-plugin-postcss2": "0.1.2",
