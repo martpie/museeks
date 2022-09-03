@@ -1,5 +1,5 @@
 .cell {
-  padding: 3px 4px;
+  padding: 2px 4px;
   cursor: default;
   white-space: nowrap;
   overflow: hidden;
@@ -11,6 +11,8 @@
   position: relative;
   display: flex;
   outline: none;
+  border-top: solid 1px transparent;
+  border-bottom: solid 1px transparent;
 
   &:nth-child(odd) {
     background-color: var(--tracks-bg-odd);
@@ -23,6 +25,10 @@
   &.selected {
     background-color: var(--main-color);
     color: white;
+
+    & + .selected {
+      border-top-color: rgba(255 255 255 / 0.2);
+    }
 
     /* // put that elsewhere someday
     .playingIndicator {
