@@ -1,3 +1,5 @@
+import { describe, test, expect } from 'vitest';
+
 import channels from '../ipc-channels';
 
 describe('messages', () => {

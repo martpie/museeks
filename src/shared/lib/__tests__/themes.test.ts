@@ -1,3 +1,5 @@
+import { describe, test, expect } from 'vitest';
+
 import { themes } from '../themes';
 
 describe('themes', () => {
