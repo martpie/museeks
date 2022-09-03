@@ -14,23 +14,26 @@ const Playlist: React.FC = () => {
   const params = useParams();
   const playlistId = params.playlistId;
 
-  const { tracks, trackPlayingId, playerStatus, playlists, currentPlaylist } = useSelector((state: RootState) => {
-    const { library, player, playlists } = state;
+  const { tracks, trackPlayingId, playerStatus, playlists, currentPlaylist, search } = useSelector(
+    (state: RootState) => {
+      const { library, player, playlists } = state;
 
-    const { search, tracks } = library;
-    const filteredTracks = filterTracks(tracks.playlist, search);
+      const { search, tracks } = library;
+      const filteredTracks = filterTracks(tracks.playlist, search);
 
-    const currentPlaylist = playlists.list.find((p) => p._id === playlistId);
+      const currentPlaylist = playlists.list.find((p) => p._id === playlistId);
 
-    return {
-      playlists: playlists.list,
-      currentPlaylist,
-      tracks: filteredTracks,
-      playerStatus: player.playerStatus,
-      trackPlayingId:
-        player.queue.length > 0 && player.queueCursor !== null ? player.queue[player.queueCursor]._id : null,
-    };
-  });
+      return {
+        playlists: playlists.list,
+        currentPlaylist,
+        tracks: filteredTracks,
+        playerStatus: player.playerStatus,
+        trackPlayingId:
+          player.queue.length > 0 && player.queueCursor !== null ? player.queue[player.queueCursor]._id : null,
+        search: library.search,
+      };
+    }
+  );
 
   useEffect(() => {
     if (playlistId) {
@@ -60,9 +63,18 @@ const Playlist: React.FC = () => {
   }
 
   if (tracks.length === 0) {
+    if (search.length > 0) {
+      return (
+        <ViewMessage.Notice>
+          <p>Your search returned no results</p>
+        </ViewMessage.Notice>
+      );
+    }
+
+    // VERY sketchy
     return (
       <ViewMessage.Notice>
-        <p>Your search returned no results</p>
+        <p>Loading playlist...</p>
       </ViewMessage.Notice>
     );
   }

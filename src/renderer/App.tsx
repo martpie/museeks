@@ -67,7 +67,7 @@ const Museeks: React.FC<Props> = (props) => {
 
   useEffect(() => {
     AppActions.init();
-  }, [navigate]);
+  }, []);
 
   // Drop behavior to add tracks to the library from any string
   const [{ isOver }, drop] = useDrop(() => {
