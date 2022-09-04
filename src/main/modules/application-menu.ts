@@ -4,7 +4,7 @@
  */
 
 import { Menu, shell } from 'electron';
-import channels from '../../../src/shared/lib/ipc-channels';
+import channels from '../../shared/lib/ipc-channels';
 
 import ModuleWindow from './module-window';
 

@@ -8,7 +8,7 @@ import ps from 'ps-node';
 import { Tray, Menu, app, ipcMain, nativeImage } from 'electron';
 
 import { TrackModel, PlayerStatus } from '../../shared/types/museeks';
-import channels from '../../../src/shared/lib/ipc-channels';
+import channels from '../../shared/lib/ipc-channels';
 import ModuleWindow from './module-window';
 
 class TrayModule extends ModuleWindow {

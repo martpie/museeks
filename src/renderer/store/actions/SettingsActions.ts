@@ -3,7 +3,7 @@ import * as semver from 'semver';
 
 import store from '../store';
 import types from '../action-types';
-import channels from '../../../../src/shared/lib/ipc-channels';
+import channels from '../../../shared/lib/ipc-channels';
 import * as app from '../../lib/app';
 import { Theme } from '../../../shared/types/museeks';
 import * as ToastsActions from './ToastsActions';

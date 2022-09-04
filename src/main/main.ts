@@ -1,5 +1,5 @@
 import path from 'path';
-import { app, BrowserWindow, protocol } from 'electron';
+import { app, BrowserWindow } from 'electron';
 import { initialize as remoteInitialize, enable as remoteEnable } from '@electron/remote/main';
 
 import AppModule from './modules/app';
