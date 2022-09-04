@@ -5,16 +5,15 @@ import cx from 'classnames';
 import * as PlayerActions from '../../store/actions/PlayerActions';
 import { Repeat } from '../../../shared/types/museeks';
 
-import playerRepeatOneIcon from '../../../images/icons/player-repeat-one.svg';
-import playerRepeatIcon from '../../../images/icons/player-repeat.svg';
+import icons from '../../lib/icons';
 
 import styles from './common.module.css';
 
 const svgMap = {
-  [Repeat.ONE]: playerRepeatOneIcon,
-  [Repeat.ALL]: playerRepeatIcon,
-  [Repeat.NONE]: playerRepeatIcon,
-  default: playerRepeatIcon,
+  [Repeat.ONE]: icons.REPEAT_ONE,
+  [Repeat.ALL]: icons.REPEAT,
+  [Repeat.NONE]: icons.REPEAT,
+  default: icons.REPEAT,
 };
 
 interface Props {

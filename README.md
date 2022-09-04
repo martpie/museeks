@@ -6,7 +6,7 @@
 A simple, clean and cross-platform music player. ([museeks.io](http://museeks.io))
 
 > **Note**
-> Museeks is on its way to a big rewrite with some major UI changes, please help shape the future of the music player [in the discussions section](https://github.com/martpie/museeks/discussions)! :] 
+> Museeks is on its way to a big rewrite with some major UI changes, please help shape the future of the music player [in the discussions section](https://github.com/martpie/museeks/discussions)! :]
 
 ![Screenshot](screenshot.png)
 
@@ -51,7 +51,7 @@ Museeks is built upon:
 
 Requirements:
 
-- `node` > 10
+- `node` > 16
 - `npm` > 6
 - `yarn` 1
 
@@ -61,14 +61,15 @@ Please consider that **`master` is unstable**.
 - `cd museeks`
 - `yarn install --frozen-lockfile`
 - `yarn build` or `yarn dev`
-- `yarn museeks` or `yarn museeks:debug`
 
 ### Package binaries (advanced)
 
 - `rm -rf node_modules dist build`
 - `yarn install --frozen-lockfile`
 - `yarn build`
-- `yarn package:lmw`, or:
+- to test the production build:
+  - `yarn museeks` or `yarn museeks:debug`
+- to test packaging `yarn package:lmw`, or:
   - `yarn package:l` (linux-only)
   - `yarn package:m` (mac-only)
   - `yarn package:w` (windows-only)
@@ -99,7 +100,7 @@ If you want to report a bug, first, thanks a lot, that helps us a lot. Please op
 - Fork and clone
 - Master may be unstable, checkout to a tag to have a stable state of the app
 - `yarn install --frozen-lockfile && yarn run dev` then run in a separate terminal `yarn run museeks:debug`
-- `yarn run dev` will watch for file changes using ESBuild which will recompile JSX and CSS files.
+- `yarn run dev` will launch electron and compile the app. Hot reload will work out of the box.
 
 Please respect a few rules:
 

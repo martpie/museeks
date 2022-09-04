@@ -13,7 +13,7 @@ import * as utils from '../../lib/utils';
 import * as m3u from '../../lib/utils-m3u';
 import { TrackEditableFields, SortBy, TrackModel } from '../../../shared/types/museeks';
 import { SUPPORTED_PLAYLISTS_EXTENSIONS, SUPPORTED_TRACKS_EXTENSIONS } from '../../../shared/constants';
-import channels from '../../../shared/lib/ipc-channels';
+import channels from '../../../../src/shared/lib/ipc-channels';
 
 import * as PlaylistsActions from './PlaylistsActions';
 import * as ToastsActions from './ToastsActions';

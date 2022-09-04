@@ -3,7 +3,7 @@
  */
 
 import { ipcMain, nativeTheme } from 'electron';
-import channels from '../../shared/lib/ipc-channels';
+import channels from '../../../src/shared/lib/ipc-channels';
 import { themes } from '../../shared/lib/themes';
 import { Config, Theme } from '../../shared/types/museeks';
 import ConfigModule from './config';

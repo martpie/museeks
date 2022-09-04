@@ -6,7 +6,7 @@
 import os from 'os';
 import { ipcMain, app } from 'electron';
 
-import channels from '../../shared/lib/ipc-channels';
+import channels from '../../../src/shared/lib/ipc-channels';
 import ModuleWindow from './module-window';
 import ConfigModule from './config';
 

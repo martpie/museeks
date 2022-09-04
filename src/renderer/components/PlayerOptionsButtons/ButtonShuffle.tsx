@@ -2,8 +2,7 @@ import React from 'react';
 import InlineSVG from 'svg-inline-react';
 import cx from 'classnames';
 
-import playerShuffleIcon from '../../../images/icons/player-shuffle.svg';
-
+import icons from '../../lib/icons';
 import * as PlayerActions from '../../store/actions/PlayerActions';
 
 import styles from './common.module.css';
@@ -30,7 +29,7 @@ export default class ButtonShuffle extends React.Component<Props> {
 
     return (
       <button type='button' className={buttonClasses} onClick={this.toggleShuffle}>
-        <InlineSVG src={playerShuffleIcon} className={styles.icon} />
+        <InlineSVG src={icons.SHUFFLE} className={styles.icon} />
       </button>
     );
   }

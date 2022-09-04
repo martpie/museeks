@@ -1,27 +1,20 @@
 {
-  "compileOnSave": false,
   "compilerOptions": {
-    "target": "es2020",
-    "module": "es2020",
-    "jsx": "react",
+    "target": "ESNext",
+    "module": "ESNext",
     "moduleResolution": "node",
+    "importHelpers": true,
+    "jsx": "preserve",
+    "isolatedModules": true,
     "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "removeComments": false,
+    "resolveJsonModule": true,
     "sourceMap": true,
+    "baseUrl": "./",
     "strict": true,
-    "skipLibCheck": true,
-    "baseUrl": ".",
-    "typeRoots": ["types/**/*.d.ts"],
-    "noErrorTruncation": true,
-    "lib": ["dom", "es2015", "es2016", "es2017.object"],
-    "plugins": [{ "name": "typescript-plugin-css-modules" }],
-    "paths": {
-      "~styles/*": ["src/renderer/styles/*"]
-    },
-    "isolatedModules": true
+    "paths": {},
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true
   },
-  "exclude": ["**/node_modules/**", "**/__tests__", "./build/**/*", "./dist/**/*"]
+  "include": ["src/renderer", "src/shared"],
+  "references": [{ "path": "./tsconfig.node.json" }]
 }

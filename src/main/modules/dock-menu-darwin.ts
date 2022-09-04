@@ -3,7 +3,7 @@
  */
 
 import { Menu, app, ipcMain } from 'electron';
-import channels from '../../shared/lib/ipc-channels';
+import channels from '../../../src/shared/lib/ipc-channels';
 
 import { PlayerStatus, TrackModel } from '../../shared/types/museeks';
 import ModuleWindow from './module-window';

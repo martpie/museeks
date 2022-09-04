@@ -1,5 +1,6 @@
 import path from 'path';
 import * as m3u from 'm3ujs';
+import remote from '@electron/remote';
 
 import { Playlist, TrackModel, PlaylistModel } from '../../../shared/types/museeks';
 import history from '../../lib/history';
@@ -8,8 +9,6 @@ import types from '../action-types';
 import * as app from '../../lib/app';
 import * as ToastsActions from './ToastsActions';
 import * as PlayerActions from './PlayerActions';
-
-const remote = require('@electron/remote');
 
 /**
  * Start playing playlist (on double click)

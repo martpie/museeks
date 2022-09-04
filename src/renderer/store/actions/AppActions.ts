@@ -4,7 +4,7 @@ import Player from '../../lib/player';
 import { browserWindows, config } from '../../lib/app';
 import history from '../../lib/history';
 import * as coverUtils from '../../../shared/lib/utils-cover';
-import channels from '../../../shared/lib/ipc-channels';
+import channels from '../../../../src/shared/lib/ipc-channels';
 import { Theme } from '../../../shared/types/museeks';
 
 import * as LibraryActions from './LibraryActions';
