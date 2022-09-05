@@ -10,15 +10,15 @@ rmSync(path.join(__dirname, 'dist'), { recursive: true, force: true });
 const externals = [
   'electron',
   'fs',
-  'stream',
   'path',
-  'platform',
-  'assert',
-  'constants',
-  'events',
   // @deprecated (still used by glob libraries)
   'os',
   'util',
+  'stream',
+  // @deprecated (still used by linvodb)
+  'events',
+  // @deprecated (still used by level-up)
+  'assert',
 ];
 const otherExternals = ['graceful-fs'];
 
