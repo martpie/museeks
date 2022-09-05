@@ -15,10 +15,10 @@ const externals = [
   'platform',
   'assert',
   'constants',
-  'util',
   'events',
   // @deprecated (still used by glob libraries)
   'os',
+  'util',
 ];
 const otherExternals = ['graceful-fs'];
 

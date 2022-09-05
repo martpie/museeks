@@ -1,6 +1,5 @@
 import * as fs from 'fs';
 import path from 'path';
-import * as util from 'util';
 import electron, { ipcRenderer } from 'electron';
 import globby from 'globby';
 import queue from 'queue';
@@ -18,8 +17,6 @@ import channels from '../../../shared/lib/ipc-channels';
 import logger from '../../../shared/lib/logger';
 import * as PlaylistsActions from './PlaylistsActions';
 import * as ToastsActions from './ToastsActions';
-
-const stat = util.promisify(fs.stat);
 
 interface ScanFile {
   path: string;
@@ -188,7 +185,7 @@ export const add = async (pathsToScan: string[]): Promise<TrackModel[]> => {
     // 1. Get the stats for all the files/paths
     const statsPromises: Promise<ScanFile>[] = pathsToScan.map(async (folderPath) => ({
       path: folderPath,
-      stat: await stat(folderPath),
+      stat: await fs.promises.stat(folderPath),
     }));
 
     const paths = await Promise.all(statsPromises);
