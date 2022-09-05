@@ -1,6 +1,6 @@
+import { ipcRenderer } from 'electron';
 import React from 'react';
-
-import * as coverUtils from '../../../shared/lib/utils-cover';
+import channels from '../../../shared/lib/ipc-channels';
 
 import styles from './Cover.module.css';
 
@@ -29,13 +29,13 @@ export default class TrackCover extends React.PureComponent<Props, State> {
 
   async componentDidUpdate(prevProps: Props) {
     if (prevProps.path !== this.props.path) {
-      const coverPath = await coverUtils.fetchCover(this.props.path);
+      const coverPath = await ipcRenderer.invoke(channels.COVER_GET, this.props.path);
       this.setState({ coverPath });
     }
   }
 
   async fetchInitialCover() {
-    const coverPath = await coverUtils.fetchCover(this.props.path);
+    const coverPath = await ipcRenderer.invoke(channels.COVER_GET, this.props.path);
     this.setState({ coverPath });
   }
 

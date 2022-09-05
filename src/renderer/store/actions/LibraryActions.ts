@@ -1,7 +1,6 @@
 import * as fs from 'fs';
 import path from 'path';
 import electron, { ipcRenderer } from 'electron';
-import globby from 'globby';
 import queue from 'queue';
 
 import store from '../store';
@@ -11,17 +10,11 @@ import * as app from '../../lib/app';
 import * as utils from '../../lib/utils';
 import * as m3u from '../../lib/utils-m3u';
 import { TrackEditableFields, SortBy, TrackModel } from '../../../shared/types/museeks';
-import { SUPPORTED_PLAYLISTS_EXTENSIONS, SUPPORTED_TRACKS_EXTENSIONS } from '../../../shared/constants';
 import channels from '../../../shared/lib/ipc-channels';
 
 import logger from '../../../shared/lib/logger';
 import * as PlaylistsActions from './PlaylistsActions';
 import * as ToastsActions from './ToastsActions';
-
-interface ScanFile {
-  path: string;
-  stat: fs.Stats;
-}
 
 /**
  * Load tracks from database
@@ -182,46 +175,12 @@ export const add = async (pathsToScan: string[]): Promise<TrackModel[]> => {
   });
 
   try {
-    // 1. Get the stats for all the files/paths
-    const statsPromises: Promise<ScanFile>[] = pathsToScan.map(async (folderPath) => ({
-      path: folderPath,
-      stat: await fs.promises.stat(folderPath),
-    }));
-
-    const paths = await Promise.all(statsPromises);
-
-    // 2. Split directories and files
-    const files: string[] = [];
-    const folders: string[] = [];
-
-    paths.forEach((elem) => {
-      if (elem.stat.isFile()) files.push(elem.path);
-      if (elem.stat.isDirectory() || elem.stat.isSymbolicLink()) folders.push(elem.path);
-    });
-
-    // 3. Scan all the directories with globby
-    const globbies = folders.map((folder) => {
-      // Normalize slashes and escape regex special characters
-      const pattern = `${folder.replace(/\\/g, '/').replace(/([$^*+?()\[\]])/g, '\\$1')}/**/*.*`;
-
-      return globby(pattern, { followSymbolicLinks: true });
-    });
-
-    const subDirectoriesFiles = await Promise.all(globbies);
-    // Scan folders and add files to library
-
-    // 4. Merge all path arrays together and filter them with the extensions we support
-    const allFiles = subDirectoriesFiles.reduce((acc, array) => acc.concat(array), [] as string[]).concat(files); // Add the initial files
-
-    const supportedTrackFiles = allFiles.filter((filePath) => {
-      const extension = path.extname(filePath).toLowerCase();
-      return SUPPORTED_TRACKS_EXTENSIONS.includes(extension);
-    });
-
-    const supportedPlaylistsFiles = allFiles.filter((filePath) => {
-      const extension = path.extname(filePath).toLowerCase();
-      return SUPPORTED_PLAYLISTS_EXTENSIONS.includes(extension);
-    });
+    // Get all valid track paths
+    // TODO move this whole function to main process
+    const [supportedTrackFiles, supportedPlaylistsFiles] = await ipcRenderer.invoke(
+      channels.LIBRARY_SCAN_TRACKS,
+      pathsToScan
+    );
 
     if (supportedTrackFiles.length === 0 && supportedPlaylistsFiles.length === 0) {
       store.dispatch({

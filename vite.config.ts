@@ -11,9 +11,7 @@ const externals = [
   'electron',
   'fs',
   'path',
-  // @deprecated (still used by glob libraries)
-  'os',
-  'util',
+  // @deprecated (still used by iconv-lite)
   'stream',
   // @deprecated (still used by linvodb)
   'events',
