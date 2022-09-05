@@ -6,6 +6,7 @@ import react from '@vitejs/plugin-react';
 
 rmSync(path.join(__dirname, 'dist'), { recursive: true, force: true });
 
+// TODO: all the modules below should be removed, and their usage transferred to the main process
 const externals = ['electron', 'fs', 'stream', 'path', 'platform', 'assert', 'os', 'constants', 'util', 'events'];
 const otherExternals = ['graceful-fs'];
 
@@ -21,9 +22,17 @@ export default defineConfig({
         entry: 'src/main/main.ts',
         vite: {
           build: {
-            // For Debug
             sourcemap: true,
             outDir: 'dist/main',
+          },
+        },
+      },
+      preload: {
+        input: './src/preload/main.ts',
+        vite: {
+          build: {
+            sourcemap: true,
+            outDir: 'dist/preload',
           },
         },
       },

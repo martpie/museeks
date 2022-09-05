@@ -59,6 +59,7 @@ typings/
 
 dist/main/*
 dist/renderer/*
+dist/preload/*
 cache/
 build/
 
