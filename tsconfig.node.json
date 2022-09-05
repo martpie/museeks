@@ -7,5 +7,5 @@
     "allowSyntheticDefaultImports": true,
     "types": ["vite-plugin-electron/electron-env"]
   },
-  "include": ["vite.config.ts", "src/main", "src/shared", "src/preload"]
+  "include": ["vite.config.ts", "src/main", "src/preload"]
 }
