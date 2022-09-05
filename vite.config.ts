@@ -10,6 +10,7 @@ const externals = ['electron', 'fs', 'stream', 'path', 'platform', 'assert', 'os
 const otherExternals = ['graceful-fs'];
 
 export default defineConfig({
+  appType: 'spa',
   plugins: [
     react(),
     electron({
