@@ -17,7 +17,6 @@ export const browserWindows = {
 };
 
 export const pathUserData = app.getPath('userData');
-export const pathSrc = __dirname;
 
 /*
 |--------------------------------------------------------------------------
