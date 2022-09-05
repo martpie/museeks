@@ -1,4 +1,5 @@
 import React from 'react';
+import logger from '../../../shared/lib/logger';
 
 import * as Setting from '../Setting/Setting';
 
@@ -38,7 +39,7 @@ class AudioOutputSelect extends React.Component<Props, State> {
         hasError: true,
         devices: [],
       });
-      console.warn(err);
+      logger.warn(err);
     }
   };
 

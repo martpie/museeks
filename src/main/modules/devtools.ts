@@ -5,6 +5,8 @@
 
 import installExtensions, { REDUX_DEVTOOLS, REACT_DEVELOPER_TOOLS } from 'electron-devtools-installer';
 
+import logger from '../../shared/lib/logger';
+
 import ModuleWindow from './module-window';
 
 class DevtoolsModule extends ModuleWindow {
@@ -15,9 +17,9 @@ class DevtoolsModule extends ModuleWindow {
     if (!isProduction) {
       try {
         await installExtensions([REDUX_DEVTOOLS, REACT_DEVELOPER_TOOLS]);
-        console.info(`[INFO] Added devtools extensions`);
+        logger.info('Added devtools extensions');
       } catch (err) {
-        console.info('[WARN] An error occurred while trying to add extensions:\n', err);
+        logger.warn('An error occurred while trying to add extensions:\n', err);
       }
     }
   }

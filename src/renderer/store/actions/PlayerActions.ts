@@ -13,6 +13,7 @@ import { sortTracks, filterTracks } from '../../lib/utils-library';
 import { shuffleTracks } from '../../lib/utils-player';
 import { TrackModel, PlayerStatus, Repeat } from '../../../shared/types/museeks';
 import channels from '../../../shared/lib/ipc-channels';
+import logger from '../../../shared/lib/logger';
 import * as ToastsActions from './ToastsActions';
 import * as LibraryActions from './LibraryActions';
 
@@ -316,7 +317,7 @@ export const setOutputDevice = (deviceId = 'default'): void => {
           throw err;
         });
     } catch (err) {
-      console.warn(err);
+      logger.warn(err);
       ToastsActions.add('danger', 'An error occured when trying to switch to the new output device');
     }
   }

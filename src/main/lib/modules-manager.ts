@@ -1,3 +1,4 @@
+import logger from '../../shared/lib/logger';
 import Module from '../modules/module';
 
 export const init = async (...modules: Module[]): Promise<void> => {
@@ -8,6 +9,6 @@ export const init = async (...modules: Module[]): Promise<void> => {
       })
     )
   ).catch((err) => {
-    console.error(`[ERROR] An error occured when loading ${module.constructor.name} could not be loaded:\n${err}`);
+    logger.error(`An error occured when loading ${module.constructor.name} could not be loaded:\n${err}`);
   });
 };

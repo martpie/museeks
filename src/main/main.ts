@@ -2,6 +2,8 @@ import path from 'path';
 import { app, BrowserWindow } from 'electron';
 import { initialize as remoteInitialize, enable as remoteEnable } from '@electron/remote/main';
 
+import logger from '../shared/lib/logger';
+
 import AppModule from './modules/app';
 import ApplicationMenuModule from './modules/application-menu';
 import TrayModule from './modules/tray';
@@ -97,7 +99,7 @@ app.on('ready', async () => {
     url = `file://${rendererDistPath}/index.html${viewSuffix}`;
   }
 
-  console.info(`[INFO] Loading file ${url}`);
+  logger.info(`Loading file ${url}`);
   mainWindow.loadURL(url);
 
   // Let's list the list of modules we will use for Museeks
@@ -112,5 +114,5 @@ app.on('ready', async () => {
     new DialogsModule(mainWindow),
     new NativeThemeModule(mainWindow, configModule),
     new DevtoolsModule(mainWindow)
-  ).catch(console.error);
+  ).catch(logger.error);
 });

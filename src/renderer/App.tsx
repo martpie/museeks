@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router';
 import { useDrop } from 'react-dnd';
 import { NativeTypes } from 'react-dnd-html5-backend';
 
+import logger from '../shared/lib/logger';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import Toasts from './components/Toasts/Toasts';
@@ -81,7 +82,7 @@ const Museeks: React.FC<Props> = (props) => {
             // TODO: Import to playlist here
           })
           .catch((err) => {
-            console.warn(err);
+            logger.warn(err);
           });
       },
       collect: (monitor) => ({

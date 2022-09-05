@@ -15,6 +15,7 @@ import { TrackEditableFields, SortBy, TrackModel } from '../../../shared/types/m
 import { SUPPORTED_PLAYLISTS_EXTENSIONS, SUPPORTED_TRACKS_EXTENSIONS } from '../../../shared/constants';
 import channels from '../../../shared/lib/ipc-channels';
 
+import logger from '../../../shared/lib/logger';
 import * as PlaylistsActions from './PlaylistsActions';
 import * as ToastsActions from './ToastsActions';
 
@@ -39,7 +40,7 @@ export const refresh = async (): Promise<void> => {
       },
     });
   } catch (err) {
-    console.warn(err);
+    logger.warn(err);
   }
 };
 
@@ -84,7 +85,7 @@ const scanPlaylists = async (paths: string[]) => {
           filePath
         );
       } catch (err) {
-        console.warn(err);
+        logger.warn(err);
       }
     })
   );
@@ -163,7 +164,7 @@ const scanTracks = async (paths: string[]): Promise<TrackModel[]> => {
 
             scan.processed++;
           } catch (err) {
-            console.warn(err);
+            logger.warn(err);
           }
 
           if (callback) callback();
@@ -243,7 +244,7 @@ export const add = async (pathsToScan: string[]): Promise<TrackModel[]> => {
     return importedTracks;
   } catch (err) {
     ToastsActions.add('danger', 'An error occured when scanning the library');
-    console.warn(err);
+    logger.warn(err);
     return [];
   } finally {
     store.dispatch({
@@ -316,7 +317,7 @@ export const reset = async (): Promise<void> => {
       await refresh();
     }
   } catch (err) {
-    console.error(err);
+    logger.error(err);
   }
 };
 
@@ -329,7 +330,7 @@ export const incrementPlayCount = async (source: string): Promise<void> => {
   try {
     await app.db.Track.updateAsync(query, update);
   } catch (err) {
-    console.warn(err);
+    logger.warn(err);
   }
 };
 

@@ -7,6 +7,7 @@ import * as coverUtils from '../../../shared/lib/utils-cover';
 import channels from '../../../shared/lib/ipc-channels';
 import { Theme } from '../../../shared/types/museeks';
 
+import logger from '../../../shared/lib/logger';
 import * as LibraryActions from './LibraryActions';
 import * as PlaylistsActions from './PlaylistsActions';
 import * as NotificationsActions from './NotificationsActions';
@@ -123,7 +124,7 @@ const init = async (): Promise<void> => {
     try {
       await Player.setOutputDevice('default');
     } catch (err) {
-      console.warn(err);
+      logger.warn(err);
     }
   });
 

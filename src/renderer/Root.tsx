@@ -1,5 +1,6 @@
 import React from 'react';
 
+import logger from '../shared/lib/logger';
 import * as ViewMessage from './elements/ViewMessage/ViewMessage';
 import ExternalLink from './elements/ExternalLink/ExternalLink';
 
@@ -19,7 +20,7 @@ class Root extends React.Component<Props, State> {
 
   componentDidCatch(err: Error) {
     // RIP
-    console.error(`Museeks crashed: ${err}`);
+    logger.error(`Museeks crashed: ${err}`);
     this.setState({ hasError: true });
   }
 

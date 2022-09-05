@@ -3,6 +3,7 @@
  */
 
 import os from 'os';
+import logger from '../../shared/lib/logger';
 
 class Module {
   protected loaded: boolean;
@@ -23,7 +24,7 @@ class Module {
       });
       this.loaded = true;
     } else {
-      console.info(`[INFO] Skipping load of ${this.constructor.name}`);
+      logger.info(`Skipping load of ${this.constructor.name} (supported platform: ${this.platforms.join(', ')})`);
     }
   }
 
