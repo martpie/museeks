@@ -1,4 +1,3 @@
-import os from 'os';
 import React, { useCallback, useEffect } from 'react';
 import KeyBinding from 'react-keybinding-component';
 import { useNavigate } from 'react-router';
@@ -17,6 +16,7 @@ import styles from './App.module.css';
 import { isCtrlKey } from './lib/utils-platform';
 import Player from './lib/player';
 import DropzoneImport from './components/DropzoneImport/DropzoneImport';
+import { getPlatform } from './lib/utils-xplat';
 
 /*
 |--------------------------------------------------------------------------
@@ -91,7 +91,7 @@ const Museeks: React.FC<Props> = (props) => {
   });
 
   return (
-    <div className={`${styles.root} os__${os.platform()}`} ref={drop}>
+    <div className={`${styles.root} os__${getPlatform()}`} ref={drop}>
       <KeyBinding onKey={onKey} preventInputConflict />
       <Header />
       <main className={styles.mainContent}>{props.children}</main>

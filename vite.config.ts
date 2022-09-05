@@ -7,7 +7,19 @@ import react from '@vitejs/plugin-react';
 rmSync(path.join(__dirname, 'dist'), { recursive: true, force: true });
 
 // TODO: all the modules below should be removed, and their usage transferred to the main process
-const externals = ['electron', 'fs', 'stream', 'path', 'platform', 'assert', 'os', 'constants', 'util', 'events'];
+const externals = [
+  'electron',
+  'fs',
+  'stream',
+  'path',
+  'platform',
+  'assert',
+  'constants',
+  'util',
+  'events',
+  // @deprecated (still used by glob libraries)
+  'os',
+];
 const otherExternals = ['graceful-fs'];
 
 export default defineConfig({
