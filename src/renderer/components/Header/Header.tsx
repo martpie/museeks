@@ -10,15 +10,7 @@ import { TrackModel, PlayerStatus, Repeat } from '../../../shared/types/museeks'
 
 import styles from './Header.module.css';
 
-interface Props {
-  playerStatus: PlayerStatus;
-  repeat: Repeat;
-  shuffle: boolean;
-  queue: TrackModel[];
-  queueCursor: number | null;
-}
-
-const Header: React.FC<Props> = (props) => {
+const Header: React.FC = () => {
   const { playerStatus, queue, queueCursor, shuffle, repeat } = useSelector(({ player }: RootState) => {
     return {
       playerStatus: player.playerStatus,

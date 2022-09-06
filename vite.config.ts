@@ -38,7 +38,7 @@ export default defineConfig({
         },
       },
       preload: {
-        input: './src/preload/main.ts',
+        input: 'src/preload/main.ts',
         vite: {
           build: {
             sourcemap: true,
