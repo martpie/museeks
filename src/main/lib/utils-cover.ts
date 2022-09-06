@@ -2,6 +2,7 @@ import path from 'path';
 import fs from 'fs';
 import * as mmd from 'music-metadata';
 import globby from 'globby';
+import logger from '../../shared/lib/logger';
 
 const SUPPORTED_COVER_EXTENSIONS = ['.png', '.jpg', '.jpeg', '.bmp', '.gif'];
 const SUPPORTED_COVER_NAMES = ['album', 'albumart', 'folder', 'cover', 'front'];
@@ -56,7 +57,7 @@ export const fetchCover = async (trackPath: string, ignoreId3 = false, base64 = 
   if (match) {
     if (base64) return getFileAsBase64(match);
 
-    return match;
+    return `file://${match}`;
   }
 
   return null;
