@@ -48,13 +48,18 @@ export const pause = (): void => {
 };
 
 /**
- * Start playing audio (queue instantiation...
+ * Start playing audio (queue instantiation, shuffle and everything...)
  * TODO: this function ~could probably~ needs to be refactored ~a bit~
  */
 export const start = async (queue?: TrackModel[], _id?: string): Promise<void> => {
   const state = store.getState();
 
   let newQueue = queue ? [...queue] : null;
+
+  // Check if there's already a queue planned
+  if (newQueue === null && state.player.queue !== null) {
+    newQueue = state.player.queue;
+  }
 
   const { pathname } = history.location;
 
