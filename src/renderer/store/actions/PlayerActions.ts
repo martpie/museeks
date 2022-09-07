@@ -1,5 +1,6 @@
 import electron from 'electron';
 
+import { debounce } from 'lodash-es';
 import history from '../../lib/history';
 import store from '../store';
 import { PlayerState } from '../reducers/player';
@@ -262,13 +263,17 @@ export const repeat = (value: Repeat): void => {
 export const setVolume = (volume: number): void => {
   Player.setVolume(volume);
 
+  saveVolume(volume);
+};
+
+const saveVolume = debounce((volume: number) => {
   app.config.set('audioVolume', volume);
   app.config.save();
 
   store.dispatch({
     type: types.REFRESH_CONFIG,
   });
-};
+}, 500);
 
 /**
  * Mute/unmute the audio

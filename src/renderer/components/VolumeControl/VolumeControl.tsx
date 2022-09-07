@@ -10,7 +10,7 @@ import controlStyles from '../PlayerControls/PlayerControls.module.css';
 import styles from './VolumeControl.module.css';
 
 // Volume easing - http://www.dr-lex.be/info-stuff/volumecontrols.html#about
-const SMOOTHING_FACTOR = 4;
+const SMOOTHING_FACTOR = 2.5;
 
 const smoothifyVolume = (value: number): number => value ** SMOOTHING_FACTOR;
 const unsmoothifyVolume = (value: number): number => value ** (1 / SMOOTHING_FACTOR);
@@ -29,7 +29,7 @@ export default class VolumeControl extends React.Component<Record<string, undefi
 
     this.state = {
       showVolume: false,
-      volume: unsmoothifyVolume(audio.volume),
+      volume: audio.volume,
       muted: audio.muted,
     };
 
