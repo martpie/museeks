@@ -6,7 +6,6 @@ import PlayerControls from '../PlayerControls/PlayerControls';
 import Search from '../Search/Search';
 
 import { RootState } from '../../store/reducers';
-import { TrackModel, PlayerStatus, Repeat } from '../../../shared/types/museeks';
 
 import styles from './Header.module.css';
 
