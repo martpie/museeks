@@ -8,6 +8,7 @@ import * as PlayerActions from '../../store/actions/PlayerActions';
 import { LibraryState } from '../../store/reducers/library';
 import Button from '../../elements/Button/Button';
 import channels from '../../../shared/lib/ipc-channels';
+import logger from '../../../shared/lib/logger';
 
 interface Props {
   library: LibraryState;
@@ -28,7 +29,7 @@ const SettingsLibrary: React.FC<Props> = (props) => {
 
     if (result.filePaths) {
       LibraryActions.add(result.filePaths).catch((err) => {
-        console.warn(err);
+        logger.warn(err);
       });
     }
   }, []);

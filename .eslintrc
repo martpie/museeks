@@ -21,7 +21,8 @@
     "import/order": "error",
     "import/named": "off",
     "import/default": "off",
-    "spaced-comment": ["error", "always"]
+    "spaced-comment": ["error", "always"],
+    "no-console": 2
   },
   "globals": { "describe": true }
 }

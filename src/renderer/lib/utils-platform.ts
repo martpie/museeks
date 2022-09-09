@@ -1,4 +1,4 @@
-import os from 'os';
+import { getPlatform } from './utils-xplat';
 
 /**
  * Returns true if
@@ -6,13 +6,13 @@ import os from 'os';
  * - the cmd key is pressed on macOS
  */
 export const isCtrlKey = (e: React.KeyboardEvent | React.MouseEvent | KeyboardEvent): boolean => {
-  const isMacOS = os.platform() === 'darwin';
+  const isMacOS = getPlatform() === 'darwin';
 
   return (isMacOS && e.metaKey) || (!isMacOS && e.ctrlKey);
 };
 
 export const isAltKey = (e: React.KeyboardEvent | React.MouseEvent | KeyboardEvent): boolean => {
-  const isMacOS = os.platform() === 'darwin';
+  const isMacOS = getPlatform() === 'darwin';
 
   return (isMacOS && e.ctrlKey) || (!isMacOS && e.metaKey);
 };

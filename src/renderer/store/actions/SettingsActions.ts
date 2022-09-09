@@ -6,6 +6,7 @@ import types from '../action-types';
 import channels from '../../../shared/lib/ipc-channels';
 import * as app from '../../lib/app';
 import { Theme } from '../../../shared/types/museeks';
+import logger from '../../../shared/lib/logger';
 import * as ToastsActions from './ToastsActions';
 
 interface UpdateCheckOptions {
@@ -87,7 +88,7 @@ export const check = async (): Promise<void> => {
   checkSleepBlocker();
   if (app.config.get('autoUpdateChecker')) {
     checkForUpdate({ silentFail: true }).catch((err) => {
-      console.error(err);
+      logger.error(err);
     });
   }
 };

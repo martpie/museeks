@@ -1,5 +1,6 @@
 import electron from 'electron';
 
+import { debounce } from 'lodash-es';
 import history from '../../lib/history';
 import store from '../store';
 import { PlayerState } from '../reducers/player';
@@ -13,6 +14,7 @@ import { sortTracks, filterTracks } from '../../lib/utils-library';
 import { shuffleTracks } from '../../lib/utils-player';
 import { TrackModel, PlayerStatus, Repeat } from '../../../shared/types/museeks';
 import channels from '../../../shared/lib/ipc-channels';
+import logger from '../../../shared/lib/logger';
 import * as ToastsActions from './ToastsActions';
 import * as LibraryActions from './LibraryActions';
 
@@ -46,13 +48,18 @@ export const pause = (): void => {
 };
 
 /**
- * Start playing audio (queue instantiation...
+ * Start playing audio (queue instantiation, shuffle and everything...)
  * TODO: this function ~could probably~ needs to be refactored ~a bit~
  */
 export const start = async (queue?: TrackModel[], _id?: string): Promise<void> => {
   const state = store.getState();
 
   let newQueue = queue ? [...queue] : null;
+
+  // Check if there's already a queue planned
+  if (newQueue === null && state.player.queue !== null) {
+    newQueue = state.player.queue;
+  }
 
   const { pathname } = history.location;
 
@@ -261,13 +268,17 @@ export const repeat = (value: Repeat): void => {
 export const setVolume = (volume: number): void => {
   Player.setVolume(volume);
 
+  saveVolume(volume);
+};
+
+const saveVolume = debounce((volume: number) => {
   app.config.set('audioVolume', volume);
   app.config.save();
 
   store.dispatch({
     type: types.REFRESH_CONFIG,
   });
-};
+}, 500);
 
 /**
  * Mute/unmute the audio
@@ -316,7 +327,7 @@ export const setOutputDevice = (deviceId = 'default'): void => {
           throw err;
         });
     } catch (err) {
-      console.warn(err);
+      logger.warn(err);
       ToastsActions.add('danger', 'An error occured when trying to switch to the new output device');
     }
   }

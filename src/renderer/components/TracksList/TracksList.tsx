@@ -351,25 +351,23 @@ const TracksList: React.FC<Props> = (props) => {
         }
       }
 
-      if (playerStatus !== PlayerStatus.STOP) {
-        addToQueueTemplate = [
-          {
-            label: 'Add to queue',
-            click: async () => {
-              await QueueActions.addAfter(selected);
-            },
+      addToQueueTemplate = [
+        {
+          label: 'Add to queue',
+          click: async () => {
+            await QueueActions.addAfter(selected);
           },
-          {
-            label: 'Play next',
-            click: async () => {
-              await QueueActions.addNext(selected);
-            },
+        },
+        {
+          label: 'Play next',
+          click: async () => {
+            await QueueActions.addNext(selected);
           },
-          {
-            type: 'separator',
-          },
-        ];
-      }
+        },
+        {
+          type: 'separator',
+        },
+      ];
 
       const template: electron.MenuItemConstructorOptions[] = [
         {

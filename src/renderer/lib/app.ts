@@ -5,6 +5,7 @@ import leveljs from 'level-js';
 import teeny from 'teeny-conf';
 import Promise from 'bluebird';
 import { TrackModel, PlaylistModel } from '../../shared/types/museeks';
+import logger from '../../shared/lib/logger';
 
 /*
 |--------------------------------------------------------------------------
@@ -28,7 +29,7 @@ export const pathUserData = app.getPath('userData');
 // https://github.com/electron/electron/issues/27116
 app.on('open-file', (event, path) => {
   event.preventDefault();
-  console.info(path); // absolute path to file
+  logger.info(path); // absolute path to file
 });
 
 /*

@@ -3,10 +3,10 @@ import electron from 'electron';
 import Player from '../../lib/player';
 import { browserWindows, config } from '../../lib/app';
 import history from '../../lib/history';
-import * as coverUtils from '../../../shared/lib/utils-cover';
 import channels from '../../../shared/lib/ipc-channels';
 import { Theme } from '../../../shared/types/museeks';
 
+import logger from '../../../shared/lib/logger';
 import * as LibraryActions from './LibraryActions';
 import * as PlaylistsActions from './PlaylistsActions';
 import * as NotificationsActions from './NotificationsActions';
@@ -66,7 +66,7 @@ const init = async (): Promise<void> => {
 
     if (browserWindows.main.isFocused()) return;
 
-    const cover = await coverUtils.fetchCover(track.path);
+    const cover = await ipcRenderer.invoke(channels.COVER_GET, track.path);
 
     NotificationsActions.add(track.title, {
       body: `${track.artist}\n${track.album}`,
@@ -83,7 +83,7 @@ const init = async (): Promise<void> => {
   Player.getAudio().addEventListener('loadstart', async () => {
     const track = Player.getTrack();
     if (track) {
-      const cover = await coverUtils.fetchCover(track.path, false, true);
+      const cover = await ipcRenderer.invoke(channels.COVER_GET, track.path, false, true);
 
       navigator.mediaSession.metadata = new MediaMetadata({
         title: track.title,
@@ -123,7 +123,7 @@ const init = async (): Promise<void> => {
     try {
       await Player.setOutputDevice('default');
     } catch (err) {
-      console.warn(err);
+      logger.warn(err);
     }
   });
 

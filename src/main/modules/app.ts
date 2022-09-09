@@ -6,6 +6,7 @@
 import os from 'os';
 import { ipcMain, app } from 'electron';
 
+import logger from '../../shared/lib/logger';
 import channels from '../../shared/lib/ipc-channels';
 import ModuleWindow from './module-window';
 import ConfigModule from './config';
@@ -88,7 +89,7 @@ class AppModule extends ModuleWindow {
     });
 
     if (!gotTheLock) {
-      console.info('[INFO] Another instance of Museeks is already running, quitting...');
+      logger.info('Another instance of Museeks is already running, quitting...');
       app.quit();
     }
   }

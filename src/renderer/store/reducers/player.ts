@@ -170,6 +170,8 @@ export default (state = initialState, action: Action): PlayerState => {
       return {
         ...state,
         queue,
+        // Set the queue cursor to zero if there is no current queue
+        queueCursor: state.queue.length === 0 ? 0 : state.queueCursor,
       };
     }
 
@@ -185,7 +187,11 @@ export default (state = initialState, action: Action): PlayerState => {
         };
       }
 
-      return state;
+      return {
+        ...state,
+        queue: action.payload.tracks,
+        queueCursor: 0,
+      };
     }
 
     case types.QUEUE_SET_QUEUE: {

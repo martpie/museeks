@@ -3,6 +3,7 @@ import * as mmd from 'music-metadata';
 import pickBy from 'lodash-es/pickBy';
 
 import { Track, TrackEditableFields } from '../../shared/types/museeks';
+import logger from '../../shared/lib/logger';
 
 /**
  * Parse an int to a more readable string
@@ -201,13 +202,13 @@ export const getMetadata = async (trackPath: string): Promise<Track> => {
       try {
         metadata.duration = await getAudioDuration(trackPath);
       } catch (err) {
-        console.warn(`An error occured while getting ${trackPath} duration: ${err}`);
+        logger.warn(`An error occured while getting ${trackPath} duration: ${err}`);
       }
     }
 
     return metadata;
   } catch (err) {
-    console.warn(`An error occured while reading ${trackPath} id3 tags: ${err}`);
+    logger.warn(`An error occured while reading ${trackPath} id3 tags: ${err}`);
   }
 
   return basicMetadata;

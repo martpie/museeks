@@ -9,6 +9,7 @@ import { Tray, Menu, app, ipcMain, nativeImage } from 'electron';
 
 import { TrackModel, PlayerStatus } from '../../shared/types/museeks';
 import channels from '../../shared/lib/ipc-channels';
+import logger from '../../shared/lib/logger';
 import ModuleWindow from './module-window';
 
 class TrayModule extends ModuleWindow {
@@ -61,7 +62,7 @@ class TrayModule extends ModuleWindow {
         },
         (err: Error) => {
           if (err) {
-            console.warn(err);
+            logger.warn(err);
           } else {
             this.trayIcon = nativeImage.createFromPath(
               path.join(path.resolve(path.join(__dirname, '../../src/images/logos')), 'museeks-tray.png')

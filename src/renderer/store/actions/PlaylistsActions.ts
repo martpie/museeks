@@ -7,6 +7,7 @@ import history from '../../lib/history';
 import store from '../store';
 import types from '../action-types';
 import * as app from '../../lib/app';
+import logger from '../../../shared/lib/logger';
 import * as ToastsActions from './ToastsActions';
 import * as PlayerActions from './PlayerActions';
 
@@ -17,9 +18,9 @@ export const play = async (playlistId: string): Promise<void> => {
   try {
     const playlist: PlaylistModel = await app.db.Playlist.findOneAsync({ _id: playlistId });
     const tracks: TrackModel[] = await app.db.Track.findAsync({ _id: { $in: playlist.tracks } });
-    PlayerActions.start(tracks).catch((err) => console.warn(err));
+    PlayerActions.start(tracks).catch((err) => logger.warn(err));
   } catch (err) {
-    console.warn(err);
+    logger.warn(err);
   }
 };
 
@@ -37,7 +38,7 @@ export const load = async (_id: string): Promise<void> => {
       },
     });
   } catch (err) {
-    console.warn(err);
+    logger.warn(err);
   }
 };
 
@@ -54,7 +55,7 @@ export const refresh = async (): Promise<void> => {
       },
     });
   } catch (err) {
-    console.warn(err);
+    logger.warn(err);
   }
 };
 
@@ -92,7 +93,7 @@ export const rename = async (_id: string, name: string): Promise<void> => {
     await app.db.Playlist.updateAsync({ _id }, { $set: { name } });
     await refresh();
   } catch (err) {
-    console.warn(err);
+    logger.warn(err);
   }
 };
 
@@ -104,7 +105,7 @@ export const remove = async (_id: string): Promise<void> => {
     await app.db.Playlist.removeAsync({ _id });
     await refresh();
   } catch (err) {
-    console.warn(err);
+    logger.warn(err);
   }
 };
 
@@ -122,7 +123,7 @@ export const addTracks = async (_id: string, tracksIds: string[], isShown?: bool
     await refresh();
     ToastsActions.add('success', `${tracksIds.length} tracks were successfully added to "${playlist.name}"`);
   } catch (err) {
-    console.warn(err);
+    logger.warn(err);
     if (err instanceof Error) {
       ToastsActions.add('danger', err.message);
     } else {
@@ -141,7 +142,7 @@ export const removeTracks = async (playlistId: string, tracksIds: string[]): Pro
     await app.db.Playlist.updateAsync({ _id: playlistId }, { $set: { tracks: playlistTracks } });
     await load(playlistId);
   } catch (err) {
-    console.warn(err);
+    logger.warn(err);
   }
 };
 
@@ -161,7 +162,7 @@ export const duplicate = async (playlistId: string): Promise<void> => {
     await app.db.Playlist.insertAsync(newPlaylist);
     await refresh();
   } catch (err) {
-    console.warn(err);
+    logger.warn(err);
   }
 };
 
@@ -197,7 +198,7 @@ export const reorderTracks = async (
     await app.db.Playlist.updateAsync({ _id: playlistId }, { $set: { tracks: newTracks } });
     await load(playlistId);
   } catch (err) {
-    console.warn(err);
+    logger.warn(err);
   }
 };
 
@@ -235,7 +236,7 @@ export const exportToM3u = async (playlistId: string): Promise<void> => {
         try {
           playlistExport.add(new m3u.Mp3Entry(track.path));
         } catch (err) {
-          console.warn(err);
+          logger.warn(err);
         }
       });
 
@@ -243,7 +244,7 @@ export const exportToM3u = async (playlistId: string): Promise<void> => {
       ToastsActions.add('success', `Playlist "${playlist.name}" succesfully exported`);
     } catch (err) {
       ToastsActions.add('danger', `An error occured when exporting the playlist "${playlist.name}"`);
-      console.warn(err);
+      logger.warn(err);
     }
   }
 };

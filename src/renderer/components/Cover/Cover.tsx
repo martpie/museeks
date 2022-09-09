@@ -1,6 +1,6 @@
-import React from 'react';
-
-import * as coverUtils from '../../../shared/lib/utils-cover';
+import { ipcRenderer } from 'electron';
+import React, { useEffect, useState } from 'react';
+import channels from '../../../shared/lib/ipc-channels';
 
 import styles from './Cover.module.css';
 
@@ -12,45 +12,30 @@ interface State {
   coverPath: string | null;
 }
 
-export default class TrackCover extends React.PureComponent<Props, State> {
-  constructor(props: Props) {
-    super(props);
+const Cover: React.FC<Props> = (props) => {
+  const [coverPath, setCoverPath] = useState<string | null>(null);
 
-    this.state = {
-      coverPath: null,
+  useEffect(() => {
+    const refreshCover = async () => {
+      const coverPath = await ipcRenderer.invoke(channels.COVER_GET, props.path);
+      setCoverPath(coverPath);
     };
 
-    this.fetchInitialCover = this.fetchInitialCover.bind(this);
+    refreshCover();
+  }, [props.path]);
+
+  if (coverPath) {
+    const encodedCoverPath = encodeURI(coverPath).replace(/'/g, "\\'").replace(/"/g, '\\"');
+    const inlineStyles = { backgroundImage: `url('${encodedCoverPath}')` };
+
+    return <div className={styles.cover} style={inlineStyles} />;
   }
 
-  async componentDidMount() {
-    await this.fetchInitialCover();
-  }
+  return (
+    <div className={`${styles.cover} isEmpty`}>
+      <div className={styles.cover__note}>♪</div>
+    </div>
+  );
+};
 
-  async componentDidUpdate(prevProps: Props) {
-    if (prevProps.path !== this.props.path) {
-      const coverPath = await coverUtils.fetchCover(this.props.path);
-      this.setState({ coverPath });
-    }
-  }
-
-  async fetchInitialCover() {
-    const coverPath = await coverUtils.fetchCover(this.props.path);
-    this.setState({ coverPath });
-  }
-
-  render() {
-    if (this.state.coverPath) {
-      const coverPath = encodeURI(this.state.coverPath).replace(/'/g, "\\'").replace(/"/g, '\\"');
-      const inlineStyles = { backgroundImage: `url('${coverPath}')` };
-
-      return <div className={styles.cover} style={inlineStyles} />;
-    }
-
-    return (
-      <div className={`${styles.cover} isEmpty`}>
-        <div className={styles.cover__note}>♪</div>
-      </div>
-    );
-  }
-}
+export default Cover;

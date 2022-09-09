@@ -6,7 +6,18 @@ import react from '@vitejs/plugin-react';
 
 rmSync(path.join(__dirname, 'dist'), { recursive: true, force: true });
 
-const externals = ['electron', 'fs', 'stream', 'path', 'platform', 'assert', 'os', 'constants', 'util', 'events'];
+// TODO: all the modules below should be removed, and their usage transferred to the main process
+const externals = [
+  'electron',
+  'fs',
+  'path',
+  // @deprecated (still used by iconv-lite)
+  'stream',
+  // @deprecated (still used by linvodb)
+  'events',
+  // @deprecated (still used by level-up)
+  'assert',
+];
 const otherExternals = ['graceful-fs'];
 
 export default defineConfig({
@@ -21,9 +32,17 @@ export default defineConfig({
         entry: 'src/main/main.ts',
         vite: {
           build: {
-            // For Debug
             sourcemap: true,
             outDir: 'dist/main',
+          },
+        },
+      },
+      preload: {
+        input: 'src/preload/main.ts',
+        vite: {
+          build: {
+            sourcemap: true,
+            outDir: 'dist/preload',
           },
         },
       },
