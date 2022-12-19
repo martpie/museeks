@@ -3721,6 +3721,11 @@ levn@^0.4.1:
     prelude-ls "^1.2.1"
     type-check "~0.4.0"
 
+lib-esm@~0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/lib-esm/-/lib-esm-0.3.0.tgz#774d59ef27d3ab2b0485386b5dc70b2556178086"
+  integrity sha512-P7YcG7OnoaGL2h4j46g/m0P2xHMXlYf+0iCDvVrEfzUVxLe+abytgd2VjUhj9puqEgqRGEDbT504YWj75jHacA==
+
 lie@~3.3.0:
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/lie/-/lie-3.3.0.tgz#dcf82dee545f46074daf200c7c1c5a08e0f40f6a"
@@ -6023,17 +6028,17 @@ verror@^1.10.0:
     core-util-is "1.0.2"
     extsprintf "^1.2.0"
 
-vite-plugin-electron-renderer@0.9.0, vite-plugin-electron-renderer@^0.9.0:
-  version "0.9.0"
-  resolved "https://registry.yarnpkg.com/vite-plugin-electron-renderer/-/vite-plugin-electron-renderer-0.9.0.tgz#12da19cf7c6fdb0d1b271a91873ee58883a264cb"
-  integrity sha512-Vc9rB3i0zlw32n5UGfoLmHAOZdH0ZbbA+tI0TPn36HbwXtmsfu+LVLqeccZh88iaQ3VJIm00rUDGMvswN2PLRg==
-
-vite-plugin-electron@^0.9.2:
-  version "0.9.2"
-  resolved "https://registry.yarnpkg.com/vite-plugin-electron/-/vite-plugin-electron-0.9.2.tgz#b7cfae4af3dbaafc114c7e80cdce372d150be156"
-  integrity sha512-8xUDn+Cdd1aFfCINpT9lRJNA9YaxIBW/Tlj4ALfPibFsntxEozJE4GpCog9bWhh8yMVd/ORsZgD6IbHYLwvzWg==
+vite-plugin-electron-renderer@^0.11.1:
+  version "0.11.3"
+  resolved "https://registry.yarnpkg.com/vite-plugin-electron-renderer/-/vite-plugin-electron-renderer-0.11.3.tgz#024cac1f4a5d4fa86a085945bbfdafd705620bde"
+  integrity sha512-Td8B+Q2Ncp5e4rG8ZL1/H59dVb7QLx3Aq9FGAgTXeMG4l7Kpfs6Hth5qV8OpJi6AVyicHkmeYC+o7gj0IRxpJg==
   dependencies:
-    vite-plugin-electron-renderer "0.9.0"
+    lib-esm "~0.3.0"
+
+vite-plugin-electron@^0.11.1:
+  version "0.11.1"
+  resolved "https://registry.yarnpkg.com/vite-plugin-electron/-/vite-plugin-electron-0.11.1.tgz#1a909c42e13c391e0700e03a0ed5192b67d2bf9a"
+  integrity sha512-pi9Wy4KCGjKIRvp7/5VUOT8BYEAJdZrpy3gI+GhGc5vYs2V9yPxLOtfCqNfSTYqH3uM6hYY6MyifFVku3Wg+2A==
 
 "vite@^3.0.0 || ^4.0.0", vite@^4.0.2:
   version "4.0.2"
