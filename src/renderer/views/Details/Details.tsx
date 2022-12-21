@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router';
 import { useParams } from 'react-router-dom';
 import logger from '../../../shared/lib/logger';
 
-// import Placeholder from '../../../images/assets/placeholder.png';
+// import Placeholder from '../../shared/assets/placeholder.png';
 // import * as coverUtils from '../../../shared/lib/utils-cover';
 import { TrackEditableFields, TrackModel } from '../../../shared/types/museeks';
 import appStyles from '../../App.module.css';

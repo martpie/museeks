@@ -13,7 +13,7 @@ import ModuleWindow from './module-window';
 
 const { createFromPath } = nativeImage;
 
-const iconsDirectory = path.resolve(path.join(__dirname, '../../src/images/icons/windows'));
+const iconsDirectory = path.resolve(path.join(__dirname, '../../src/shared/assets/icons/windows'));
 
 class ThumbarModule extends ModuleWindow {
   constructor(window: Electron.BrowserWindow) {
