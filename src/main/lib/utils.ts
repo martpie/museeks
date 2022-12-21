@@ -5,7 +5,16 @@ import { ConfigBounds } from '../../shared/types/museeks';
 const DEFAULT_WIDTH = 900;
 const DEFAULT_HEIGHT = 550;
 
-export const checkBounds = function (bounds: ConfigBounds): ConfigBounds {
+export const checkBounds = function (bounds: ConfigBounds | undefined): ConfigBounds {
+  if (bounds === undefined) {
+    bounds = {
+      x: 0,
+      y: 0,
+      height: 0,
+      width: 0,
+    };
+  }
+
   // check if the browser window is offscreen
   const display = electron.screen.getDisplayNearestPoint({
     x: Math.round(bounds.x),

@@ -3,16 +3,16 @@
  */
 
 import { ipcMain, nativeTheme } from 'electron';
+import TeenyConf from 'teeny-conf';
 import channels from '../../shared/lib/ipc-channels';
 import { themes } from '../../shared/lib/themes';
 import { Config, Theme } from '../../shared/types/museeks';
-import ConfigModule from './config';
 import ModuleWindow from './module-window';
 
 class NativeThemeModule extends ModuleWindow {
-  protected config: ConfigModule;
+  protected config: TeenyConf<Config>;
 
-  constructor(window: Electron.BrowserWindow, config: ConfigModule) {
+  constructor(window: Electron.BrowserWindow, config: TeenyConf<Config>) {
     super(window);
 
     this.config = config;
@@ -54,7 +54,7 @@ class NativeThemeModule extends ModuleWindow {
   }
 
   getThemeId(): Config['theme'] {
-    return this.config.get('theme');
+    return this.config.get('theme') ?? '__system';
   }
 
   setThemeId(themeId: Config['theme']): void {

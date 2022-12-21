@@ -9,6 +9,7 @@
       "styles/*": ["src/assets/styles/*"]
     },
     "allowJs": false,
+    "skipDefaultLibCheck": false,
     "skipLibCheck": true,
     "esModuleInterop": false,
     "allowSyntheticDefaultImports": true,

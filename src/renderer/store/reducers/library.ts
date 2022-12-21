@@ -30,7 +30,7 @@ const initialState: LibraryState = {
     playlist: [],
   },
   search: '',
-  sort: window.__museeks.config.get('librarySort'),
+  sort: window.__museeks.config.getx('librarySort'),
   loading: true,
   refreshing: false,
   refresh: {

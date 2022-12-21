@@ -2,12 +2,13 @@
 /// <reference types="vite/client" />
 
 import TeenyConf from 'teeny-conf';
+import { Config } from '../museeks';
 
 declare global {
   interface Window {
     __museeks: {
       platform: NodeJS.Platform;
-      config: TeenyConf;
+      config: TeenyConf<Config>;
     };
   }
 }

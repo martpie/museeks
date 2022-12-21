@@ -3805,6 +3805,11 @@ lodash.camelcase@^4.3.0:
   resolved "https://registry.yarnpkg.com/lodash.camelcase/-/lodash.camelcase-4.3.0.tgz#b28aa6288a2b9fc651035c7711f65ab6190331a6"
   integrity sha1-soqmKIorn8ZRA1x3EfZathkDMaY=
 
+lodash.clonedeep@^4.5.0:
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/lodash.clonedeep/-/lodash.clonedeep-4.5.0.tgz#e23f3f9c4f8fbdde872529c1071857a086e5ccef"
+  integrity sha512-H5ZhCF25riFd9uB5UCkVKo61m3S/xZk1x4wA6yp/L3RFP6Z/eHH1ymQcGLo7J3GMPfm0V/7m1tryHuGVxpqEBQ==
+
 lodash.get@^4.4.2:
   version "4.4.2"
   resolved "https://registry.yarnpkg.com/lodash.get/-/lodash.get-4.4.2.tgz#2d177f652fa31e939b4438d5341499dfa3825e99"
@@ -5680,12 +5685,13 @@ tar@^6.1.11:
     mkdirp "^1.0.3"
     yallist "^4.0.0"
 
-teeny-conf@^5.0.1:
-  version "5.0.1"
-  resolved "https://registry.yarnpkg.com/teeny-conf/-/teeny-conf-5.0.1.tgz#cd92116042f2b2ddbae8641f19365a064fe0a85b"
-  integrity sha512-bvn+UCKPHG6hHqD6VhqLtKYlyjxH0iBIVum5oTTSVLUMkq/0Fes6f+uithlVWSu7vy9E4uQfMZpA2RZNgEo2QQ==
+teeny-conf@^6.1.0:
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/teeny-conf/-/teeny-conf-6.1.0.tgz#9f18bd52b5c246f76b856451f58fe49b54ee9bb0"
+  integrity sha512-fT8Bw4DOW43QdL8jCnbeZps0mEuaRvOhb/OSzEkPyTskd7nWF/cKQ69YnJ06zkUaCN9iSJFhXiqH2mLYS4pZdw==
   dependencies:
     "@types/rimraf" "^3.0.2"
+    lodash.clonedeep "^4.5.0"
     lodash.get "^4.4.2"
     lodash.has "^4.5.2"
     lodash.set "^4.3.2"
