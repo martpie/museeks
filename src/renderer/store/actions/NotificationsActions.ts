@@ -6,7 +6,7 @@ import * as app from '../../lib/app';
  * Show a native notification
  */
 export const add = (title: string, notificationData: NotificationOptions): void => {
-  if (app.config.get('displayNotifications')) {
+  if (window.__museeks.config.get('displayNotifications')) {
     const notification = new Notification(title, {
       body: notificationData.body,
       icon: notificationData.icon,

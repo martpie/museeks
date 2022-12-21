@@ -126,8 +126,8 @@ class Player {
 }
 
 export default new Player({
-  volume: app.config.get('audioVolume'),
-  playbackRate: app.config.get('audioPlaybackRate'),
-  audioOutputDevice: app.config.get('audioOutputDevice'),
-  muted: app.config.get('audioMuted'),
+  volume: window.__museeks.config.get('audioVolume'),
+  playbackRate: window.__museeks.config.get('audioPlaybackRate'),
+  audioOutputDevice: window.__museeks.config.get('audioOutputDevice'),
+  muted: window.__museeks.config.get('audioMuted'),
 });

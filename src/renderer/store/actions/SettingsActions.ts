@@ -45,7 +45,7 @@ export const checkTheme = async (): Promise<void> => {
  * Check and enable sleep blocker if needed
  */
 export const checkSleepBlocker = (): void => {
-  if (app.config.get('sleepBlocker')) {
+  if (window.__museeks.config.get('sleepBlocker')) {
     ipcRenderer.send('settings:toggleSleepBlocker', true);
   }
 };
@@ -86,7 +86,7 @@ export const checkForUpdate = async (options: UpdateCheckOptions = {}): Promise<
 export const check = async (): Promise<void> => {
   await checkTheme();
   checkSleepBlocker();
-  if (app.config.get('autoUpdateChecker')) {
+  if (window.__museeks.config.get('autoUpdateChecker')) {
     checkForUpdate({ silentFail: true }).catch((err) => {
       logger.error(err);
     });
@@ -97,8 +97,8 @@ export const check = async (): Promise<void> => {
  * Toggle sleep blocker
  */
 export const toggleSleepBlocker = (value: boolean): void => {
-  app.config.set('sleepBlocker', value);
-  app.config.save();
+  window.__museeks.config.set('sleepBlocker', value);
+  window.__museeks.config.save();
 
   ipcRenderer.send('settings:toggleSleepBlocker', value);
 
@@ -111,8 +111,8 @@ export const toggleSleepBlocker = (value: boolean): void => {
  * Set the default view of the app
  */
 export const setDefaultView = (value: string): void => {
-  app.config.set('defaultView', value);
-  app.config.save();
+  window.__museeks.config.set('defaultView', value);
+  window.__museeks.config.save();
 
   store.dispatch({
     type: types.REFRESH_CONFIG,
@@ -123,8 +123,8 @@ export const setDefaultView = (value: string): void => {
  * Toggle update check on startup
  */
 export const toggleAutoUpdateChecker = (value: boolean): void => {
-  app.config.set('autoUpdateChecker', value);
-  app.config.save();
+  window.__museeks.config.set('autoUpdateChecker', value);
+  window.__museeks.config.save();
 
   store.dispatch({
     type: types.REFRESH_CONFIG,
@@ -135,8 +135,8 @@ export const toggleAutoUpdateChecker = (value: boolean): void => {
  * Toggle minimize-to-tray
  */
 export const toggleMinimizeToTray = (value: boolean): void => {
-  app.config.set('minimizeToTray', value);
-  app.config.save();
+  window.__museeks.config.set('minimizeToTray', value);
+  window.__museeks.config.save();
 
   store.dispatch({
     type: types.REFRESH_CONFIG,
@@ -147,8 +147,8 @@ export const toggleMinimizeToTray = (value: boolean): void => {
  * Toggle native notifications display
  */
 export const toggleDisplayNotifications = (value: boolean): void => {
-  app.config.set('displayNotifications', value);
-  app.config.save();
+  window.__museeks.config.set('displayNotifications', value);
+  window.__museeks.config.save();
 
   store.dispatch({
     type: types.REFRESH_CONFIG,

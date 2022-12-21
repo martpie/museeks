@@ -1,6 +1,5 @@
 import types from '../action-types';
 
-import { config } from '../../lib/app';
 import * as utils from '../../lib/utils';
 import { Action, TrackModel, SortBy, SortOrder } from '../../../shared/types/museeks';
 
@@ -31,7 +30,7 @@ const initialState: LibraryState = {
     playlist: [],
   },
   search: '',
-  sort: config.get('librarySort'),
+  sort: window.__museeks.config.get('librarySort'),
   loading: true,
   refreshing: false,
   refresh: {
@@ -73,8 +72,8 @@ export default (state = initialState, action: Action): LibraryState => {
         order: SortOrder.ASC,
       };
 
-      config.set('librarySort', sort);
-      config.save();
+      window.__museeks.config.set('librarySort', sort);
+      window.__museeks.config.save();
 
       return {
         ...state,
@@ -91,7 +90,7 @@ export default (state = initialState, action: Action): LibraryState => {
 
     // case (types.LIBRARY_ADD_FOLDERS): { // TODO Redux -> move to a thunk
     //   const { folders } = action.payload;
-    //   let musicFolders = app.config.get('musicFolders');
+    //   let musicFolders = window.__museeks.config.get('musicFolders');
 
     //   // Check if we received folders
     //   if (folders !== undefined) {
@@ -102,8 +101,8 @@ export default (state = initialState, action: Action): LibraryState => {
 
     //     musicFolders.sort();
 
-    //     app.config.set('musicFolders', musicFolders);
-    //     app.config.saveSync();
+    //     window.__museeks.config.set('musicFolders', musicFolders);
+    //     window.__museeks.config.saveSync();
     //   }
 
     //   return { ...state };
@@ -111,12 +110,12 @@ export default (state = initialState, action: Action): LibraryState => {
 
     // case (types.LIBRARY_REMOVE_FOLDER): { // TODO Redux -> move to a thunk
     //   if (!state.library.refreshing) {
-    //     const musicFolders = app.config.get('musicFolders');
+    //     const musicFolders = window.__museeks.config.get('musicFolders');
 
     //     musicFolders.splice(action.index, 1);
 
-    //     app.config.set('musicFolders', musicFolders);
-    //     app.config.saveSync();
+    //     window.__museeks.config.set('musicFolders', musicFolders);
+    //     window.__museeks.config.saveSync();
 
     //     return { ...state };
     //   }

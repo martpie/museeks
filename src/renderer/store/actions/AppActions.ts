@@ -1,7 +1,7 @@
 import electron from 'electron';
 
 import Player from '../../lib/player';
-import { browserWindows, config } from '../../lib/app';
+import { browserWindows } from '../../lib/app';
 import history from '../../lib/history';
 import channels from '../../../shared/lib/ipc-channels';
 import { Theme } from '../../../shared/types/museeks';
@@ -28,8 +28,8 @@ const saveBounds = async (): Promise<void> => {
   lastSaveBounds = now;
 
   saveBoundsTimeout = window.setTimeout(async () => {
-    config.set('bounds', browserWindows.main.getBounds());
-    config.save();
+    window.__museeks.config.set('bounds', browserWindows.main.getBounds());
+    window.__museeks.config.save();
   }, 250);
 };
 

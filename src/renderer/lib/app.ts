@@ -1,8 +1,6 @@
-import path from 'path';
 import { app, getCurrentWindow } from '@electron/remote';
 import linvodb from 'linvodb3';
 import leveljs from 'level-js';
-import teeny from 'teeny-conf';
 import Promise from 'bluebird';
 import { TrackModel, PlaylistModel } from '../../shared/types/museeks';
 import logger from '../../shared/lib/logger';
@@ -31,14 +29,6 @@ app.on('open-file', (event, path) => {
   event.preventDefault();
   logger.info(path); // absolute path to file
 });
-
-/*
-|--------------------------------------------------------------------------
-| Config
-|--------------------------------------------------------------------------
-*/
-
-export const config = new teeny(path.join(pathUserData, 'config.json'));
 
 /*
 |--------------------------------------------------------------------------

@@ -236,8 +236,8 @@ export const previous = async (): Promise<void> => {
  * Enable/disable shuffle
  */
 export const shuffle = (value: boolean): void => {
-  app.config.set('audioShuffle', value);
-  app.config.save();
+  window.__museeks.config.set('audioShuffle', value);
+  window.__museeks.config.save();
 
   store.dispatch({
     type: types.PLAYER_SHUFFLE,
@@ -251,8 +251,8 @@ export const shuffle = (value: boolean): void => {
  * Enable disable repeat
  */
 export const repeat = (value: Repeat): void => {
-  app.config.set('audioRepeat', value);
-  app.config.save();
+  window.__museeks.config.set('audioRepeat', value);
+  window.__museeks.config.save();
 
   store.dispatch({
     type: types.PLAYER_REPEAT,
@@ -272,8 +272,8 @@ export const setVolume = (volume: number): void => {
 };
 
 const saveVolume = debounce((volume: number) => {
-  app.config.set('audioVolume', volume);
-  app.config.save();
+  window.__museeks.config.set('audioVolume', volume);
+  window.__museeks.config.save();
 
   store.dispatch({
     type: types.REFRESH_CONFIG,
@@ -287,8 +287,8 @@ export const setMuted = (muted = false): void => {
   if (muted) Player.mute();
   else Player.unmute();
 
-  app.config.set('audioMuted', muted);
-  app.config.save();
+  window.__museeks.config.set('audioMuted', muted);
+  window.__museeks.config.save();
 
   store.dispatch({
     type: types.REFRESH_CONFIG,
@@ -303,8 +303,8 @@ export const setPlaybackRate = (value: number): void => {
     // if in allowed range
     Player.setPlaybackRate(value);
 
-    app.config.set('audioPlaybackRate', value);
-    app.config.save();
+    window.__museeks.config.set('audioPlaybackRate', value);
+    window.__museeks.config.save();
 
     store.dispatch({
       type: types.REFRESH_CONFIG,
@@ -320,8 +320,8 @@ export const setOutputDevice = (deviceId = 'default'): void => {
     try {
       Player.setOutputDevice(deviceId)
         .then(() => {
-          app.config.set('audioOutputDevice', deviceId);
-          app.config.save();
+          window.__museeks.config.set('audioOutputDevice', deviceId);
+          window.__museeks.config.save();
         })
         .catch((err) => {
           throw err;
