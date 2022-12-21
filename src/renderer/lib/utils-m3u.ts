@@ -1,7 +1,8 @@
 import path from 'path';
-import * as fs from 'fs';
-import * as chardet from 'chardet';
-import * as iconv from 'iconv-lite';
+import fs from 'fs';
+import chardet from 'chardet';
+import iconv from 'iconv-lite';
+
 import logger from '../../shared/lib/logger';
 
 const isFile = (path: string) => fs.lstatSync(path).isFile();

@@ -1,7 +1,8 @@
 import { rmSync } from 'fs';
 import path from 'path';
 import { defineConfig } from 'vite';
-import electron from 'vite-plugin-electron';
+import electronMain from 'vite-plugin-electron';
+import electronRenderer from 'vite-plugin-electron-renderer';
 import react from '@vitejs/plugin-react';
 
 rmSync(path.join(__dirname, 'dist'), { recursive: true, force: true });
@@ -18,17 +19,18 @@ const externals = [
   // @deprecated (still used by level-up)
   'assert',
 ];
-const otherExternals = ['graceful-fs'];
+const otherExternals = ['graceful-fs', 'iconv-lite'];
 
 export default defineConfig({
   appType: 'spa',
+  build: {
+    sourcemap: true,
+    outDir: 'dist/renderer',
+  },
   plugins: [
     react(),
-    electron({
-      renderer: {
-        resolve: () => [...externals, ...otherExternals],
-      },
-      main: {
+    electronMain([
+      {
         entry: 'src/main/main.ts',
         vite: {
           build: {
@@ -37,8 +39,8 @@ export default defineConfig({
           },
         },
       },
-      preload: {
-        input: 'src/preload/main.ts',
+      {
+        entry: 'src/preload/main.ts',
         vite: {
           build: {
             sourcemap: true,
@@ -46,9 +48,12 @@ export default defineConfig({
           },
         },
       },
+    ]),
+    electronRenderer({
+      nodeIntegration: true,
+      optimizeDeps: {
+        include: [...externals, ...otherExternals],
+      },
     }),
   ],
-  build: {
-    outDir: 'dist/renderer',
-  },
 });
