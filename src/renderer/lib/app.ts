@@ -55,11 +55,3 @@ Promise.promisifyAll(Object.getPrototypeOf(db.Track.find()));
 Promise.promisifyAll(Object.getPrototypeOf(db.Track.findOne()));
 Promise.promisifyAll(db.Track);
 Promise.promisifyAll(db.Playlist);
-
-/*
-|--------------------------------------------------------------------------
-| Other exports
-|--------------------------------------------------------------------------
-*/
-
-export const version = app.getVersion(); // Museeks version

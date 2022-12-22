@@ -4,7 +4,6 @@ import * as semver from 'semver';
 import store from '../store';
 import types from '../action-types';
 import channels from '../../../shared/lib/ipc-channels';
-import * as app from '../../lib/app';
 import { Theme } from '../../../shared/types/museeks';
 import logger from '../../../shared/lib/logger';
 import * as ToastsActions from './ToastsActions';
@@ -54,7 +53,7 @@ export const checkSleepBlocker = (): void => {
  * Check if a new release is available
  */
 export const checkForUpdate = async (options: UpdateCheckOptions = {}): Promise<void> => {
-  const currentVersion = app.version;
+  const currentVersion = window.__museeks.version;
 
   try {
     const response = await fetch('https://api.github.com/repos/martpie/museeks/releases');

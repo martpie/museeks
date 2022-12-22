@@ -8,6 +8,7 @@ declare global {
   interface Window {
     __museeks: {
       platform: NodeJS.Platform;
+      version: string;
       config: TeenyConf<Config>;
     };
   }
