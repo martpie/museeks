@@ -56,7 +56,7 @@ Promise.promisifyAll(Playlist);
 
 // When editing something here, please update museeks.d.ts to extend the
 // window.__museeks global object.
-window.__museeks = {
+const API = {
   platform: os.platform(),
   version: app.getVersion(),
   browserwindow: getCurrentWindow(), // FIXME
@@ -81,3 +81,7 @@ window.__museeks = {
     openExternal: shell.openExternal,
   },
 };
+
+export type MuseeksAPI = typeof API;
+
+window.__museeks = API;
