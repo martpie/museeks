@@ -15,7 +15,7 @@ import * as PlayerActions from '../../store/actions/PlayerActions';
 import * as QueueActions from '../../store/actions/QueueActions';
 
 import { isLeftClick, isRightClick } from '../../lib/utils-events';
-import { isCtrlKey, isAltKey } from '../../lib/utils-platform';
+import { isCtrlKey, isAltKey } from '../../lib/utils-events';
 import { PlaylistModel, TrackModel } from '../../../shared/types/museeks';
 import { RootState } from '../../store/reducers';
 

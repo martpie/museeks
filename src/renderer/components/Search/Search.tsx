@@ -3,7 +3,7 @@ import Keybinding from 'react-keybinding-component';
 
 import * as LibraryActions from '../../store/actions/LibraryActions';
 import useDebounce from '../../hooks/useDebounce';
-import { isCtrlKey } from '../../lib/utils-platform';
+import { isCtrlKey } from '../../lib/utils-events';
 
 import styles from './Search.module.css';
 

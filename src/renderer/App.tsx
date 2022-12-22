@@ -14,7 +14,7 @@ import * as LibraryActions from './store/actions/LibraryActions';
 import * as PlayerActions from './store/actions/PlayerActions';
 
 import styles from './App.module.css';
-import { isCtrlKey } from './lib/utils-platform';
+import { isCtrlKey } from './lib/utils-events';
 import Player from './lib/player';
 import DropzoneImport from './components/DropzoneImport/DropzoneImport';
 import { getPlatform } from './lib/utils-xplat';
