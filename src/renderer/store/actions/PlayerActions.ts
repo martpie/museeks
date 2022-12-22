@@ -1,4 +1,4 @@
-import electron from 'electron';
+import { ipcRenderer } from 'electron';
 
 import { debounce } from 'lodash-es';
 import history from '../../lib/history';
@@ -16,8 +16,6 @@ import channels from '../../../shared/lib/ipc-channels';
 import logger from '../../../shared/lib/logger';
 import * as ToastsActions from './ToastsActions';
 import * as LibraryActions from './LibraryActions';
-
-const { ipcRenderer } = electron;
 
 const AUDIO_ERRORS = {
   aborted: 'The video playback was aborted.',

@@ -1,4 +1,4 @@
-import electron from 'electron';
+import type electron from 'electron';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import KeyBinding from 'react-keybinding-component';
 import chunk from 'lodash-es/chunk';
@@ -23,8 +23,8 @@ import scrollbarStyles from '../CustomScrollbar/CustomScrollbar.module.css';
 import headerStyles from '../Header/Header.module.css';
 import styles from './TracksList.module.css';
 
+const { shell } = window.__museeks;
 const { Menu } = window.__museeks.remote;
-const { shell } = electron;
 
 const CHUNK_LENGTH = 20;
 const ROW_HEIGHT = 30; // FIXME

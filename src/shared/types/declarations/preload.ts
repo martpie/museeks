@@ -4,6 +4,7 @@
 import path from 'path';
 import remote from '@electron/remote';
 import TeenyConf from 'teeny-conf';
+import { shell } from 'electron';
 import { Config, PlaylistModel, TrackModel } from '../museeks';
 
 declare global {
@@ -26,6 +27,10 @@ declare global {
         parse: typeof path.parse;
         resolve: typeof path.resolve;
         join: typeof path.join;
+      };
+      shell: {
+        showItemInFolder: typeof shell.showItemInFolder;
+        openExternal: typeof shell.openExternal;
       };
     };
   }

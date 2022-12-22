@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/no-autofocus */
 
-import electron from 'electron';
+import type electron from 'electron';
 import React from 'react';
 import Icon from 'react-fontawesome';
 

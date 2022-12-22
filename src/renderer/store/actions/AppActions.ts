@@ -1,4 +1,4 @@
-import electron from 'electron';
+import { ipcRenderer } from 'electron';
 
 import Player from '../../lib/player';
 import history from '../../lib/history';
@@ -11,8 +11,6 @@ import * as PlaylistsActions from './PlaylistsActions';
 import * as NotificationsActions from './NotificationsActions';
 import * as PlayerActions from './PlayerActions';
 import * as SettingsActions from './SettingsActions';
-
-const { ipcRenderer } = electron;
 
 let lastSaveBounds = 0;
 let saveBoundsTimeout: number | null = null;

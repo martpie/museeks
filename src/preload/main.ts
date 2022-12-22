@@ -1,7 +1,7 @@
 import os from 'os';
 import path from 'path';
 import remote, { app, getCurrentWindow } from '@electron/remote';
-import { ipcRenderer } from 'electron';
+import { ipcRenderer, shell } from 'electron';
 import TeenyConf from 'teeny-conf';
 import linvodb from 'linvodb3';
 import leveljs from 'level-js';
@@ -75,5 +75,9 @@ window.__museeks = {
     parse: path.parse,
     resolve: path.resolve,
     join: path.join,
+  },
+  shell: {
+    showItemInFolder: shell.showItemInFolder,
+    openExternal: shell.openExternal,
   },
 };

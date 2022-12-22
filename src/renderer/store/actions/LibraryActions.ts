@@ -1,4 +1,5 @@
-import electron, { ipcRenderer } from 'electron';
+import type electron from 'electron';
+import { ipcRenderer } from 'electron';
 import queue from 'queue';
 
 import store from '../store';
