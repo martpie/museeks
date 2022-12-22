@@ -1,5 +1,4 @@
 import electron from 'electron';
-import { Menu } from '@electron/remote';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import KeyBinding from 'react-keybinding-component';
 import chunk from 'lodash-es/chunk';
@@ -24,6 +23,7 @@ import scrollbarStyles from '../CustomScrollbar/CustomScrollbar.module.css';
 import headerStyles from '../Header/Header.module.css';
 import styles from './TracksList.module.css';
 
+const { Menu } = window.__museeks.remote;
 const { shell } = electron;
 
 const CHUNK_LENGTH = 20;
@@ -464,7 +464,7 @@ const TracksList: React.FC<Props> = (props) => {
 
       context.popup({}); // Let it appear
     },
-    [currentPlaylist, playerStatus, playlists, selected, tracks, type, navigate]
+    [currentPlaylist, playlists, selected, tracks, type, navigate]
   );
 
   /**

@@ -1,6 +1,7 @@
 // eslint-disable-next-line spaced-comment
 /// <reference types="vite/client" />
 
+import remote from '@electron/remote';
 import TeenyConf from 'teeny-conf';
 import { Config, PlaylistModel, TrackModel } from '../museeks';
 
@@ -18,6 +19,7 @@ declare global {
       playlists: {
         resolveM3u: (path: string) => Promise<string[]>;
       };
+      remote: typeof remote;
     };
   }
 }

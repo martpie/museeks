@@ -1,6 +1,6 @@
 import os from 'os';
 import path from 'path';
-import { app, getCurrentWindow } from '@electron/remote';
+import remote, { app, getCurrentWindow } from '@electron/remote';
 import { ipcRenderer } from 'electron';
 import TeenyConf from 'teeny-conf';
 import linvodb from 'linvodb3';
@@ -68,4 +68,6 @@ window.__museeks = {
   playlists: {
     resolveM3u: (path: string) => ipcRenderer.invoke(channels.PLAYLISTS_RESOLVE_M3U, path),
   },
+  // To be removed:
+  remote,
 };

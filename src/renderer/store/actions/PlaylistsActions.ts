@@ -1,6 +1,5 @@
 import path from 'path';
 import * as m3u from 'm3ujs';
-import remote from '@electron/remote';
 
 import { Playlist, TrackModel, PlaylistModel } from '../../../shared/types/museeks';
 import history from '../../lib/history';
@@ -9,6 +8,8 @@ import types from '../action-types';
 import logger from '../../../shared/lib/logger';
 import * as ToastsActions from './ToastsActions';
 import * as PlayerActions from './PlayerActions';
+
+const { remote } = window.__museeks;
 
 /**
  * Start playing playlist (on double click)
@@ -208,7 +209,6 @@ export const reorderTracks = async (
 export const exportToM3u = async (playlistId: string): Promise<void> => {
   const playlist: PlaylistModel = await window.__museeks.db.Playlist.findOneAsync({ _id: playlistId });
   const tracks: TrackModel[] = await window.__museeks.db.Track.findAsync({ _id: { $in: playlist.tracks } });
-
   const { filePath } = await remote.dialog.showSaveDialog(window.__museeks.browserwindow, {
     title: 'Export playlist',
     defaultPath: path.resolve(remote.app.getPath('music'), playlist.name),
