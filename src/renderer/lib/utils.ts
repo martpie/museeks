@@ -1,9 +1,10 @@
-import path from 'path';
 import * as mmd from 'music-metadata';
 import pickBy from 'lodash-es/pickBy';
 
 import { Track, TrackEditableFields } from '../../shared/types/museeks';
 import logger from '../../shared/lib/logger';
+
+const { path } = window.__museeks;
 
 /**
  * Parse an int to a more readable string

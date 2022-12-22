@@ -70,4 +70,10 @@ window.__museeks = {
   },
   // To be removed:
   remote,
+  path: {
+    sep: path.sep,
+    parse: path.parse,
+    resolve: path.resolve,
+    join: path.join,
+  },
 };

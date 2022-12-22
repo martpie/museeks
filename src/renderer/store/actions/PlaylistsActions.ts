@@ -1,4 +1,3 @@
-import path from 'path';
 import * as m3u from 'm3ujs';
 
 import { Playlist, TrackModel, PlaylistModel } from '../../../shared/types/museeks';
@@ -9,7 +8,7 @@ import logger from '../../../shared/lib/logger';
 import * as ToastsActions from './ToastsActions';
 import * as PlayerActions from './PlayerActions';
 
-const { remote } = window.__museeks;
+const { remote, path } = window.__museeks;
 
 /**
  * Start playing playlist (on double click)

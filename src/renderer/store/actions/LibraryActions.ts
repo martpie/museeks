@@ -1,5 +1,3 @@
-import * as fs from 'fs';
-import path from 'path';
 import electron, { ipcRenderer } from 'electron';
 import queue from 'queue';
 
@@ -13,6 +11,8 @@ import channels from '../../../shared/lib/ipc-channels';
 import logger from '../../../shared/lib/logger';
 import * as PlaylistsActions from './PlaylistsActions';
 import * as ToastsActions from './ToastsActions';
+
+const { path } = window.__museeks;
 
 /**
  * Load tracks from database
