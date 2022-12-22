@@ -1,7 +1,6 @@
 import electron from 'electron';
 
 import Player from '../../lib/player';
-import { browserWindows } from '../../lib/app';
 import history from '../../lib/history';
 import channels from '../../../shared/lib/ipc-channels';
 import { Theme } from '../../../shared/types/museeks';
@@ -28,7 +27,7 @@ const saveBounds = async (): Promise<void> => {
   lastSaveBounds = now;
 
   saveBoundsTimeout = window.setTimeout(async () => {
-    window.__museeks.config.set('bounds', browserWindows.main.getBounds());
+    window.__museeks.config.set('bounds', window.__museeks.browserwindow.getBounds());
     window.__museeks.config.save();
   }, 250);
 };
@@ -64,7 +63,7 @@ const init = async (): Promise<void> => {
 
     ipcRenderer.send(channels.PLAYBACK_TRACK_CHANGE, track);
 
-    if (browserWindows.main.isFocused()) return;
+    if (window.__museeks.browserwindow.isFocused()) return;
 
     const cover = await ipcRenderer.invoke(channels.COVER_GET, track.path);
 
@@ -192,7 +191,7 @@ const init = async (): Promise<void> => {
   );
 
   // Remember dimensions and positionning
-  const currentWindow = browserWindows.main;
+  const currentWindow = window.__museeks.browserwindow;
 
   currentWindow.on('resize', saveBounds);
   currentWindow.on('move', saveBounds);
@@ -207,11 +206,11 @@ const close = (): void => {
 };
 
 const minimize = (): void => {
-  browserWindows.main.minimize();
+  window.__museeks.browserwindow.minimize();
 };
 
 const maximize = (): void => {
-  const mainWindow = browserWindows.main;
+  const mainWindow = window.__museeks.browserwindow;
 
   if (mainWindow.isMaximized()) mainWindow.unmaximize();
   else mainWindow.maximize();

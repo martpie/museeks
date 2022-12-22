@@ -1,8 +1,6 @@
 import { Track } from '../../shared/types/museeks';
 import * as utils from '../lib/utils';
 
-import * as app from './app';
-
 interface PlayerOptions {
   playbackRate?: number;
   audioOutputDevice?: string;

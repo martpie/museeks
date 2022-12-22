@@ -8,7 +8,6 @@ import { PlayerState } from '../reducers/player';
 import types from '../action-types';
 import SORT_ORDERS from '../../constants/sort-orders';
 
-import * as app from '../../lib/app';
 import Player from '../../lib/player';
 import { sortTracks, filterTracks } from '../../lib/utils-library';
 import { shuffleTracks } from '../../lib/utils-player';

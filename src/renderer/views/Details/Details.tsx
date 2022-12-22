@@ -9,7 +9,6 @@ import { TrackEditableFields, TrackModel } from '../../../shared/types/museeks';
 import appStyles from '../../App.module.css';
 import * as Setting from '../../components/Setting/Setting';
 import Button from '../../elements/Button/Button';
-import { db } from '../../lib/app';
 import * as LibraryActions from '../../store/actions/LibraryActions';
 
 import styles from './Details.module.css';
@@ -50,7 +49,7 @@ const Details: React.FC = () => {
   );
 
   useEffect(() => {
-    db.Track.findOne(
+    window.__museeks.db.Track.findOne(
       { _id: trackId },
       async (err: Error, track: TrackModel) => {
         if (err !== null) return logger.error(err);

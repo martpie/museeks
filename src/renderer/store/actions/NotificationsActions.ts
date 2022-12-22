@@ -1,6 +1,5 @@
 import store from '../store';
 import types from '../action-types';
-import * as app from '../../lib/app';
 
 /**
  * Show a native notification
@@ -15,8 +14,8 @@ export const add = (title: string, notificationData: NotificationOptions): void 
     });
 
     notification.onclick = () => {
-      app.browserWindows.main.show();
-      app.browserWindows.main.focus();
+      window.__museeks.browserwindow.show();
+      window.__museeks.browserwindow.focus();
     };
 
     store.dispatch({
