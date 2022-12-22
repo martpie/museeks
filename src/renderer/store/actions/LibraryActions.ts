@@ -65,7 +65,7 @@ const scanPlaylists = async (paths: string[]) => {
         const playlistName = path.parse(filePath).name;
 
         const existingTracks: TrackModel[] = await window.__museeks.db.Track.findAsync({
-          $or: playlistFiles.map((filePath) => ({ path: filePath })),
+          $or: playlistFiles.map((filePath: string) => ({ path: filePath })),
         });
 
         await PlaylistsActions.create(

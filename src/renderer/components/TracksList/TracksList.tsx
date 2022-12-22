@@ -16,7 +16,7 @@ import * as QueueActions from '../../store/actions/QueueActions';
 
 import { isLeftClick, isRightClick } from '../../lib/utils-events';
 import { isCtrlKey, isAltKey } from '../../lib/utils-platform';
-import { PlaylistModel, TrackModel, PlayerStatus } from '../../../shared/types/museeks';
+import { PlaylistModel, TrackModel } from '../../../shared/types/museeks';
 import { RootState } from '../../store/reducers';
 
 import scrollbarStyles from '../CustomScrollbar/CustomScrollbar.module.css';
@@ -37,7 +37,6 @@ const TILE_HEIGHT = ROW_HEIGHT * CHUNK_LENGTH;
 
 interface Props {
   type: string;
-  playerStatus: string;
   tracks: TrackModel[];
   trackPlayingId: string | null;
   playlists: PlaylistModel[];
@@ -47,7 +46,7 @@ interface Props {
 }
 
 const TracksList: React.FC<Props> = (props) => {
-  const { tracks, type, trackPlayingId, reorderable, currentPlaylist, onReorder, playerStatus, playlists } = props;
+  const { tracks, type, trackPlayingId, reorderable, currentPlaylist, onReorder, playlists } = props;
 
   const [tilesScrolled, setTilesScrolled] = useState(0);
   const [selected, setSelected] = useState<string[]>([]);

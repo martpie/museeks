@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Icon from 'react-fontawesome';
-import { connect, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import * as PlayerActions from '../../store/actions/PlayerActions';
 import { PlayerStatus } from '../../../shared/types/museeks';

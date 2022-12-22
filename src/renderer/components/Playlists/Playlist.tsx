@@ -14,26 +14,24 @@ const Playlist: React.FC = () => {
   const params = useParams();
   const playlistId = params.playlistId;
 
-  const { tracks, trackPlayingId, playerStatus, playlists, currentPlaylist, search } = useSelector(
-    (state: RootState) => {
-      const { library, player, playlists } = state;
+  const { tracks, trackPlayingId, playlists, currentPlaylist, search } = useSelector((state: RootState) => {
+    const { library, player, playlists } = state;
 
-      const { search, tracks } = library;
-      const filteredTracks = filterTracks(tracks.playlist, search);
+    const { search, tracks } = library;
+    const filteredTracks = filterTracks(tracks.playlist, search);
 
-      const currentPlaylist = playlists.list.find((p) => p._id === playlistId);
+    const currentPlaylist = playlists.list.find((p) => p._id === playlistId);
 
-      return {
-        playlists: playlists.list,
-        currentPlaylist,
-        tracks: filteredTracks,
-        playerStatus: player.playerStatus,
-        trackPlayingId:
-          player.queue.length > 0 && player.queueCursor !== null ? player.queue[player.queueCursor]._id : null,
-        search: library.search,
-      };
-    }
-  );
+    return {
+      playlists: playlists.list,
+      currentPlaylist,
+      tracks: filteredTracks,
+      playerStatus: player.playerStatus,
+      trackPlayingId:
+        player.queue.length > 0 && player.queueCursor !== null ? player.queue[player.queueCursor]._id : null,
+      search: library.search,
+    };
+  });
 
   useEffect(() => {
     if (playlistId) {
@@ -99,7 +97,6 @@ const Playlist: React.FC = () => {
       type='playlist'
       reorderable={true}
       onReorder={onReorder}
-      playerStatus={playerStatus}
       tracks={tracks}
       trackPlayingId={trackPlayingId}
       playlists={playlists}

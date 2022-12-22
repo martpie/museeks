@@ -8,6 +8,7 @@
       "@/*": ["src/*"],
       "styles/*": ["src/assets/styles/*"]
     },
+    "noUnusedLocals": true,
     "allowJs": false,
     "skipDefaultLibCheck": false,
     "skipLibCheck": true,

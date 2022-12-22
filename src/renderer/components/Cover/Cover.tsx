@@ -8,10 +8,6 @@ interface Props {
   path: string;
 }
 
-interface State {
-  coverPath: string | null;
-}
-
 const Cover: React.FC<Props> = (props) => {
   const [coverPath, setCoverPath] = useState<string | null>(null);
 
