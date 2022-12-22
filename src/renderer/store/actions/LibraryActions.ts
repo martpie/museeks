@@ -7,7 +7,6 @@ import store from '../store';
 import types from '../action-types';
 
 import * as utils from '../../lib/utils';
-import * as m3u from '../../lib/utils-m3u';
 import { TrackEditableFields, SortBy, TrackModel } from '../../../shared/types/museeks';
 import channels from '../../../shared/lib/ipc-channels';
 
@@ -61,7 +60,7 @@ const scanPlaylists = async (paths: string[]) => {
   return Promise.all(
     paths.map(async (filePath) => {
       try {
-        const playlistFiles = m3u.parse(filePath);
+        const playlistFiles = await window.__museeks.playlists.resolveM3u(filePath);
         const playlistName = path.parse(filePath).name;
 
         const existingTracks: TrackModel[] = await window.__museeks.db.Track.findAsync({

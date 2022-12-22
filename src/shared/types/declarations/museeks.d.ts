@@ -15,6 +15,9 @@ declare global {
         Track: TrackModel;
         Playlist: PlaylistModel;
       };
+      playlists: {
+        resolveM3u: (path: string) => Promise<string[]>;
+      };
     };
   }
 }

@@ -13,13 +13,16 @@ const externals = [
   'fs',
   'path',
   // @deprecated (still used by iconv-lite)
-  'stream',
+  // 'stream',
   // @deprecated (still used by linvodb)
   'events',
   // @deprecated (still used by level-up)
   'assert',
 ];
-const otherExternals = ['graceful-fs', 'iconv-lite'];
+const otherExternals = [
+  'graceful-fs',
+  // 'iconv-lite'
+];
 
 export default defineConfig({
   appType: 'spa',

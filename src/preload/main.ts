@@ -1,13 +1,14 @@
 import os from 'os';
 import path from 'path';
-import { app } from 'electron';
+import { app, getCurrentWindow } from '@electron/remote';
+import { ipcRenderer } from 'electron';
 import TeenyConf from 'teeny-conf';
 import linvodb from 'linvodb3';
 import leveljs from 'level-js';
 import Promise from 'bluebird';
 
-import { getCurrentWindow } from '@electron/remote';
 import { Config, TrackModel, PlaylistModel } from '../shared/types/museeks';
+import channels from '../shared/lib/ipc-channels';
 
 const pathUserData = app.getPath('userData');
 
@@ -58,10 +59,13 @@ Promise.promisifyAll(Playlist);
 window.__museeks = {
   platform: os.platform(),
   version: app.getVersion(),
-  browserwindow: getCurrentWindow(),
+  browserwindow: getCurrentWindow(), // FIXME
   config: new TeenyConf<Config>(path.join(pathUserData, 'config.json'), {}),
   db: {
     Track,
     Playlist,
+  },
+  playlists: {
+    resolveM3u: (path: string) => ipcRenderer.invoke(channels.PLAYLISTS_RESOLVE_M3U, path),
   },
 };
