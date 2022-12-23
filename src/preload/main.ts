@@ -55,6 +55,8 @@ Promise.promisifyAll(Playlist);
 |--------------------------------------------------------------------------
 */
 
+const browserwindow = getCurrentWindow();
+
 const config = new TeenyConf<Config>(path.join(pathUserData, 'config.json'), {});
 
 const player = new Player({
@@ -69,7 +71,11 @@ const player = new Player({
 const API = {
   platform: os.platform(),
   version: app.getVersion(),
-  browserwindow: getCurrentWindow(), // FIXME
+  browserwindow,
+  // After moving m3u export to the main process, re-enable me
+  // browserwindow: {
+  //   isFocused: browserwindow.isFocused,
+  // },
   player,
   config,
   db: {

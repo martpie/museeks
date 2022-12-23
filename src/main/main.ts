@@ -14,11 +14,12 @@ import SleepBlockerModule from './modules/sleep-blocker';
 import DialogsModule from './modules/dialogs';
 import NativeThemeModule from './modules/native-theme';
 import DevtoolsModule from './modules/devtools';
+import WindowPositionModule from './modules/window-position';
+import IPCCoverModule from './modules/ipc-cover';
+import IPCLibraryModule from './modules/ipc-library';
 
 import * as ModulesManager from './lib/modules-manager';
 import { checkBounds } from './lib/utils';
-import IPCCoverModule from './modules/ipc-cover';
-import IPCLibraryModule from './modules/ipc-library';
 
 const appRoot = path.resolve(__dirname, '..'); // Careful, not future-proof
 const rendererDistPath = path.join(appRoot, 'renderer');
@@ -115,6 +116,7 @@ app.on('ready', async () => {
     new DialogsModule(mainWindow),
     new NativeThemeModule(mainWindow, configModule.config),
     new DevtoolsModule(mainWindow),
+    new WindowPositionModule(mainWindow, configModule.config),
     // Modules used to handle IPC APIs
     new IPCCoverModule(mainWindow),
     new IPCLibraryModule(mainWindow)

@@ -11,24 +11,6 @@ import * as NotificationsActions from './NotificationsActions';
 import * as PlayerActions from './PlayerActions';
 import * as SettingsActions from './SettingsActions';
 
-let lastSaveBounds = 0;
-let saveBoundsTimeout: number | null = null;
-
-const saveBounds = async (): Promise<void> => {
-  const now = window.performance.now();
-
-  if (now - lastSaveBounds < 250 && saveBoundsTimeout) {
-    clearTimeout(saveBoundsTimeout);
-  }
-
-  lastSaveBounds = now;
-
-  saveBoundsTimeout = window.setTimeout(async () => {
-    window.__museeks.config.set('bounds', window.__museeks.browserwindow.getBounds());
-    window.__museeks.config.save();
-  }, 250);
-};
-
 const init = async (): Promise<void> => {
   // Usual tasks
   await SettingsActions.check();
@@ -186,12 +168,6 @@ const init = async (): Promise<void> => {
     },
     false
   );
-
-  // Remember dimensions and positionning
-  const currentWindow = window.__museeks.browserwindow;
-
-  currentWindow.on('resize', saveBounds);
-  currentWindow.on('move', saveBounds);
 };
 
 const restart = (): void => {
@@ -202,22 +178,8 @@ const close = (): void => {
   ipcRenderer.send(channels.APP_CLOSE);
 };
 
-const minimize = (): void => {
-  window.__museeks.browserwindow.minimize();
-};
-
-const maximize = (): void => {
-  const mainWindow = window.__museeks.browserwindow;
-
-  if (mainWindow.isMaximized()) mainWindow.unmaximize();
-  else mainWindow.maximize();
-};
-
 export default {
   close,
   init,
-  maximize,
-  minimize,
-  saveBounds,
   restart,
 };
