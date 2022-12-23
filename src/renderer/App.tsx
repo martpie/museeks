@@ -16,7 +16,6 @@ import * as PlayerActions from './store/actions/PlayerActions';
 import styles from './App.module.css';
 import { isCtrlKey } from './lib/utils-events';
 import DropzoneImport from './components/DropzoneImport/DropzoneImport';
-import { getPlatform } from './lib/utils-xplat';
 
 /*
 |--------------------------------------------------------------------------
@@ -91,7 +90,7 @@ const Museeks: React.FC<Props> = (props) => {
   });
 
   return (
-    <div className={`${styles.root} os__${getPlatform()}`} ref={drop}>
+    <div className={`${styles.root} os__${window.__museeks.platform}`} ref={drop}>
       <KeyBinding onKey={onKey} preventInputConflict />
       <Header />
       <main className={styles.mainContent}>{props.children}</main>
