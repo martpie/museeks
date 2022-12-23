@@ -1,8 +1,6 @@
 import store from '../store';
 import types from '../action-types';
 
-import Player from '../../lib/player';
-
 import { Track } from '../../../shared/types/museeks';
 
 /**
@@ -12,8 +10,8 @@ export const start = async (index: number): Promise<void> => {
   const { queue } = store.getState().player;
   const track = queue[index];
 
-  Player.setTrack(track);
-  await Player.play();
+  window.__museeks.player.setTrack(track);
+  await window.__museeks.player.play();
 
   store.dispatch({
     type: types.QUEUE_START,

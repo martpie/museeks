@@ -1,6 +1,5 @@
 import { ipcRenderer } from 'electron';
 
-import Player from '../../lib/player';
 import history from '../../lib/history';
 import channels from '../../../shared/lib/ipc-channels';
 import { Theme } from '../../../shared/types/museeks';
@@ -41,21 +40,21 @@ const init = async (): Promise<void> => {
 
   // Bind player events
   // Audio Events
-  Player.getAudio().addEventListener('ended', PlayerActions.next);
-  Player.getAudio().addEventListener('error', PlayerActions.audioError);
-  Player.getAudio().addEventListener('timeupdate', async () => {
-    if (Player.isThresholdReached()) {
-      const track = Player.getTrack();
+  window.__museeks.player.getAudio().addEventListener('ended', PlayerActions.next);
+  window.__museeks.player.getAudio().addEventListener('error', PlayerActions.audioError);
+  window.__museeks.player.getAudio().addEventListener('timeupdate', async () => {
+    if (window.__museeks.player.isThresholdReached()) {
+      const track = window.__museeks.player.getTrack();
       if (track) await LibraryActions.incrementPlayCount(track.path);
     }
   });
 
   // Should be moved to PlayerActions.play at some point, currently here due to
   // how Audio works
-  Player.getAudio().addEventListener('play', async () => {
+  window.__museeks.player.getAudio().addEventListener('play', async () => {
     ipcRenderer.send(channels.PLAYBACK_PLAY);
 
-    const track = Player.getTrack();
+    const track = window.__museeks.player.getTrack();
 
     if (!track) return;
 
@@ -71,14 +70,14 @@ const init = async (): Promise<void> => {
     });
   });
 
-  Player.getAudio().addEventListener('pause', () => {
+  window.__museeks.player.getAudio().addEventListener('pause', () => {
     ipcRenderer.send(channels.PLAYBACK_PAUSE);
   });
 
   // Support MediaSession (mpris, macOS player controls etc)...
   // Media Session support
-  Player.getAudio().addEventListener('loadstart', async () => {
-    const track = Player.getTrack();
+  window.__museeks.player.getAudio().addEventListener('loadstart', async () => {
+    const track = window.__museeks.player.getTrack();
     if (track) {
       const cover = await window.__museeks.covers.getCoverAsBase64(track);
 
@@ -91,11 +90,11 @@ const init = async (): Promise<void> => {
     }
   });
 
-  Player.getAudio().addEventListener('play', async () => {
+  window.__museeks.player.getAudio().addEventListener('play', async () => {
     navigator.mediaSession.playbackState = 'playing';
   });
 
-  Player.getAudio().addEventListener('pause', async () => {
+  window.__museeks.player.getAudio().addEventListener('pause', async () => {
     navigator.mediaSession.playbackState = 'paused';
   });
 
@@ -118,7 +117,7 @@ const init = async (): Promise<void> => {
   // Support for multiple audio output
   navigator.mediaDevices.addEventListener('devicechange', async () => {
     try {
-      await Player.setOutputDevice('default');
+      await window.__museeks.player.setOutputDevice('default');
     } catch (err) {
       logger.warn(err);
     }
@@ -126,7 +125,7 @@ const init = async (): Promise<void> => {
 
   // Listen for main-process events
   ipcRenderer.on(channels.PLAYBACK_PLAY, () => {
-    if (Player.getTrack()) {
+    if (window.__museeks.player.getTrack()) {
       PlayerActions.play();
     } else {
       PlayerActions.start();

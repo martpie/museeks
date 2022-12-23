@@ -4,7 +4,7 @@ import pickBy from 'lodash-es/pickBy';
 import { Track, TrackEditableFields } from '../../shared/types/museeks';
 import logger from '../../shared/lib/logger';
 
-const { path, platform } = window.__museeks;
+const { path } = window.__museeks;
 
 // TODO: move that to the main process at some point
 
@@ -28,21 +28,6 @@ export const parseDuration = (duration: number | null): string => {
   }
 
   return '00:00';
-};
-
-/**
- * Parse an URI, encoding some characters
- */
-export const parseUri = (uri: string): string => {
-  const root = platform === 'win32' ? '' : path.parse(uri).root;
-
-  const location = path
-    .resolve(uri)
-    .split(path.sep)
-    .map((d, i) => (i === 0 ? d : encodeURIComponent(d)))
-    .reduce((a, b) => path.join(a, b));
-
-  return `file://${root}${location}`;
 };
 
 /**

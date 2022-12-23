@@ -58,6 +58,7 @@ app.on('ready', async () => {
     titleBarStyle: 'hiddenInset', // MacOS polished window
     show: false,
     webPreferences: {
+      sandbox: false,
       nodeIntegration: true,
       contextIsolation: false,
       autoplayPolicy: 'no-user-gesture-required',

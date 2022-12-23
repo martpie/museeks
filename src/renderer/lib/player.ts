@@ -1,5 +1,5 @@
+import { parseUri } from '../../main/lib/utils-uri';
 import { Track } from '../../shared/types/museeks';
-import * as utils from '../lib/utils';
 
 interface PlayerOptions {
   playbackRate?: number;
@@ -96,7 +96,7 @@ class Player {
 
   setTrack(track: Track) {
     this.track = track;
-    this.audio.src = utils.parseUri(track.path);
+    this.audio.src = parseUri(track.path);
 
     // When we change song, need to update the thresholdReached indicator.
     this.durationThresholdReached = false;
@@ -123,9 +123,4 @@ class Player {
   }
 }
 
-export default new Player({
-  volume: window.__museeks.config.get('audioVolume'),
-  playbackRate: window.__museeks.config.get('audioPlaybackRate'),
-  audioOutputDevice: window.__museeks.config.get('audioOutputDevice'),
-  muted: window.__museeks.config.get('audioMuted'),
-});
+export default Player;

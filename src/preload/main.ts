@@ -9,6 +9,7 @@ import Promise from 'bluebird';
 
 import { Config, TrackModel, PlaylistModel, Track } from '../shared/types/museeks';
 import channels from '../shared/lib/ipc-channels';
+import Player from '../renderer/lib/player';
 
 const pathUserData = app.getPath('userData');
 
@@ -54,13 +55,23 @@ Promise.promisifyAll(Playlist);
 |--------------------------------------------------------------------------
 */
 
+const config = new TeenyConf<Config>(path.join(pathUserData, 'config.json'), {});
+
+const player = new Player({
+  volume: config.get('audioVolume'),
+  playbackRate: config.get('audioPlaybackRate'),
+  audioOutputDevice: config.get('audioOutputDevice'),
+  muted: config.get('audioMuted'),
+});
+
 // When editing something here, please update museeks.d.ts to extend the
 // window.__museeks global object.
 const API = {
   platform: os.platform(),
   version: app.getVersion(),
   browserwindow: getCurrentWindow(), // FIXME
-  config: new TeenyConf<Config>(path.join(pathUserData, 'config.json'), {}),
+  player,
+  config,
   db: {
     Track,
     Playlist,
@@ -85,6 +96,6 @@ const API = {
   },
 };
 
-export type MuseeksAPI = typeof API;
-
 window.__museeks = API;
+
+export type MuseeksAPI = typeof API;

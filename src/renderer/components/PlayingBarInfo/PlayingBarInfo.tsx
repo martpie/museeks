@@ -4,7 +4,6 @@ import ButtonShuffle from '../PlayerOptionsButtons/ButtonShuffle';
 import ButtonRepeat from '../PlayerOptionsButtons/ButtonRepeat';
 
 import * as PlayerActions from '../../store/actions/PlayerActions';
-import Player from '../../lib/player';
 import * as utils from '../../lib/utils';
 import { TrackModel, Repeat } from '../../../shared/types/museeks';
 
@@ -49,21 +48,21 @@ class PlayingBarInfo extends React.Component<Props, State> {
   }
 
   componentDidMount() {
-    Player.getAudio().addEventListener('timeupdate', this.tick);
+    window.__museeks.player.getAudio().addEventListener('timeupdate', this.tick);
 
     window.addEventListener('mousemove', this.dragOver);
     window.addEventListener('mouseup', this.dragEnd);
   }
 
   componentWillUnmount() {
-    Player.getAudio().removeEventListener('timeupdate', this.tick);
+    window.__museeks.player.getAudio().removeEventListener('timeupdate', this.tick);
 
     window.removeEventListener('mousemove', this.dragOver);
     window.removeEventListener('mouseup', this.dragEnd);
   }
 
   tick() {
-    this.setState({ elapsed: Player.getCurrentTime() });
+    this.setState({ elapsed: window.__museeks.player.getCurrentTime() });
   }
 
   jumpAudioTo(e: React.MouseEvent<HTMLDivElement>) {

@@ -15,7 +15,6 @@ import * as PlayerActions from './store/actions/PlayerActions';
 
 import styles from './App.module.css';
 import { isCtrlKey } from './lib/utils-events';
-import Player from './lib/player';
 import DropzoneImport from './components/DropzoneImport/DropzoneImport';
 import { getPlatform } from './lib/utils-xplat';
 
@@ -52,12 +51,12 @@ const Museeks: React.FC<Props> = (props) => {
         case 'ArrowLeft':
           e.preventDefault();
           e.stopPropagation();
-          PlayerActions.jumpTo(Player.getCurrentTime() - 10);
+          PlayerActions.jumpTo(window.__museeks.player.getCurrentTime() - 10);
           break;
         case 'ArrowRight':
           e.preventDefault();
           e.stopPropagation();
-          PlayerActions.jumpTo(Player.getCurrentTime() + 10);
+          PlayerActions.jumpTo(window.__museeks.player.getCurrentTime() + 10);
           break;
         default:
           break;
