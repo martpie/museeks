@@ -63,7 +63,7 @@ const init = async (): Promise<void> => {
 
     if (window.__museeks.browserwindow.isFocused()) return;
 
-    const cover = await ipcRenderer.invoke(channels.COVER_GET, track.path);
+    const cover = await window.__museeks.covers.getCoverAsBase64(track);
 
     NotificationsActions.add(track.title, {
       body: `${track.artist}\n${track.album}`,
@@ -80,7 +80,7 @@ const init = async (): Promise<void> => {
   Player.getAudio().addEventListener('loadstart', async () => {
     const track = Player.getTrack();
     if (track) {
-      const cover = await ipcRenderer.invoke(channels.COVER_GET, track.path, false, true);
+      const cover = await window.__museeks.covers.getCoverAsBase64(track);
 
       navigator.mediaSession.metadata = new MediaMetadata({
         title: track.title,

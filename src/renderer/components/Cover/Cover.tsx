@@ -1,11 +1,10 @@
-import { ipcRenderer } from 'electron';
 import React, { useEffect, useState } from 'react';
-import channels from '../../../shared/lib/ipc-channels';
+import { Track } from '../../../shared/types/museeks';
 
 import styles from './Cover.module.css';
 
 interface Props {
-  path: string;
+  track: Track;
 }
 
 const Cover: React.FC<Props> = (props) => {
@@ -13,12 +12,12 @@ const Cover: React.FC<Props> = (props) => {
 
   useEffect(() => {
     const refreshCover = async () => {
-      const coverPath = await ipcRenderer.invoke(channels.COVER_GET, props.path);
+      const coverPath = await window.__museeks.covers.getCoverAsBase64(props.track);
       setCoverPath(coverPath);
     };
 
     refreshCover();
-  }, [props.path]);
+  }, [props.track]);
 
   if (coverPath) {
     const encodedCoverPath = encodeURI(coverPath).replace(/'/g, "\\'").replace(/"/g, '\\"');

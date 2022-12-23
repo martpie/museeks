@@ -7,7 +7,7 @@ import linvodb from 'linvodb3';
 import leveljs from 'level-js';
 import Promise from 'bluebird';
 
-import { Config, TrackModel, PlaylistModel } from '../shared/types/museeks';
+import { Config, TrackModel, PlaylistModel, Track } from '../shared/types/museeks';
 import channels from '../shared/lib/ipc-channels';
 
 const pathUserData = app.getPath('userData');
@@ -67,6 +67,9 @@ const API = {
   },
   playlists: {
     resolveM3u: (path: string) => ipcRenderer.invoke(channels.PLAYLISTS_RESOLVE_M3U, path),
+  },
+  covers: {
+    getCoverAsBase64: (track: Track) => ipcRenderer.invoke(channels.COVER_GET, track.path),
   },
   // To be removed:
   remote,
