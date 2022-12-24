@@ -11,6 +11,20 @@ import { Config, TrackModel, PlaylistModel, Track } from '../shared/types/museek
 import channels from '../shared/lib/ipc-channels';
 import Player from '../renderer/lib/player';
 
+/**
+ * Ok, so what is there exactly?
+ *
+ * Preload is still very new to Museeks as I'm trying to upgrade Museeks to
+ * Electron's best practices, but basically:
+ *
+ *   - We were using XActions in the past as an "API"
+ *   - I am moving parts of those APIs here
+ *   - Those APIs should at some point get rid of Node.js to enable contextbridge
+ *   - Some of those APIs implementations may need to go to the main process instead
+ *   - There's many things to refactor, some things will look weird as they are
+ *     in an in-between state.
+ */
+
 const pathUserData = app.getPath('userData');
 
 /*
@@ -79,10 +93,6 @@ const API = {
   // },
   player,
   config,
-  db: {
-    Track,
-    Playlist,
-  },
   library: {
     showTrackInFolder: (track: TrackModel) => shell.showItemInFolder(track.path),
   },
@@ -92,7 +102,11 @@ const API = {
   covers: {
     getCoverAsBase64: (track: Track) => ipcRenderer.invoke(channels.COVER_GET, track.path),
   },
-  // To be removed:
+  // To be removed / moved to the Main process
+  db: {
+    Track,
+    Playlist,
+  },
   remote,
   path: {
     parse: path.parse,
