@@ -4,7 +4,7 @@ directories:
   output: './build'
 files:
   - dist/**/*
-  - src/images/**/*
+  - src/shared/assets/**/*
   - '!node_modules/**/*'
 # fileAssociations:
 #   ext:
@@ -27,7 +27,7 @@ mac:
       arch:
         - x64
         - arm64
-  icon: src/images/logos/museeks.icns
+  icon: src/shared/assets/logos/museeks.icns
   artifactName: ${name}-${arch}.${ext}
   darkModeSupport: true
 linux:
