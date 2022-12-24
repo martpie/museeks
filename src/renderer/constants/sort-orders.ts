@@ -11,27 +11,30 @@ const sortOrders = {
     [SortOrder.ASC]: [
       // Default
       [parseArtist, 'year', 'loweredMetas.album', 'disk.no', 'track.no'],
-      null,
+      ['asc'],
     ],
     [SortOrder.DSC]: [[parseArtist, 'year', 'loweredMetas.album', 'disk.no', 'track.no'], ['desc']],
   },
   [SortBy.TITLE]: {
-    [SortOrder.ASC]: [['loweredMetas.title', parseArtist, 'year', 'loweredMetas.album', 'disk.no', 'track.no'], null],
+    [SortOrder.ASC]: [
+      ['loweredMetas.title', parseArtist, 'year', 'loweredMetas.album', 'disk.no', 'track.no'],
+      ['asc'],
+    ],
     [SortOrder.DSC]: [
       ['loweredMetas.title', parseArtist, 'year', 'loweredMetas.album', 'disk.no', 'track.no'],
       ['desc'],
     ],
   },
   [SortBy.DURATION]: {
-    [SortOrder.ASC]: [['duration', parseArtist, 'year', 'loweredMetas.album', 'disk.no', 'track.no'], null],
+    [SortOrder.ASC]: [['duration', parseArtist, 'year', 'loweredMetas.album', 'disk.no', 'track.no'], ['asc']],
     [SortOrder.DSC]: [['duration', parseArtist, 'year', 'loweredMetas.album', 'disk.no', 'track.no'], ['desc']],
   },
   [SortBy.ALBUM]: {
-    [SortOrder.ASC]: [['loweredMetas.album', parseArtist, 'year', 'disk.no', 'track.no'], null],
+    [SortOrder.ASC]: [['loweredMetas.album', parseArtist, 'year', 'disk.no', 'track.no'], ['asc']],
     [SortOrder.DSC]: [['loweredMetas.album', parseArtist, 'year', 'disk.no', 'track.no'], ['desc']],
   },
   [SortBy.GENRE]: {
-    [SortOrder.ASC]: [[parseGenre, parseArtist, 'year', 'loweredMetas.album', 'disk.no', 'track.no'], null],
+    [SortOrder.ASC]: [[parseGenre, parseArtist, 'year', 'loweredMetas.album', 'disk.no', 'track.no'], ['asc']],
     [SortOrder.DSC]: [[parseGenre, parseArtist, 'year', 'loweredMetas.album', 'disk.no', 'track.no'], ['desc']],
   },
 };

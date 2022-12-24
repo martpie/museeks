@@ -1,5 +1,4 @@
-import electron from 'electron';
-import { Menu } from '@electron/remote';
+import type electron from 'electron';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import KeyBinding from 'react-keybinding-component';
 import chunk from 'lodash-es/chunk';
@@ -15,16 +14,15 @@ import * as PlaylistsActions from '../../store/actions/PlaylistsActions';
 import * as PlayerActions from '../../store/actions/PlayerActions';
 import * as QueueActions from '../../store/actions/QueueActions';
 
-import { isLeftClick, isRightClick } from '../../lib/utils-events';
-import { isCtrlKey, isAltKey } from '../../lib/utils-platform';
-import { PlaylistModel, TrackModel, PlayerStatus } from '../../../shared/types/museeks';
+import { isLeftClick, isRightClick, isCtrlKey, isAltKey } from '../../lib/utils-events';
+import { PlaylistModel, TrackModel } from '../../../shared/types/museeks';
 import { RootState } from '../../store/reducers';
 
 import scrollbarStyles from '../CustomScrollbar/CustomScrollbar.module.css';
 import headerStyles from '../Header/Header.module.css';
 import styles from './TracksList.module.css';
 
-const { shell } = electron;
+const { Menu } = window.__museeks.remote;
 
 const CHUNK_LENGTH = 20;
 const ROW_HEIGHT = 30; // FIXME
@@ -37,7 +35,6 @@ const TILE_HEIGHT = ROW_HEIGHT * CHUNK_LENGTH;
 
 interface Props {
   type: string;
-  playerStatus: string;
   tracks: TrackModel[];
   trackPlayingId: string | null;
   playlists: PlaylistModel[];
@@ -47,7 +44,7 @@ interface Props {
 }
 
 const TracksList: React.FC<Props> = (props) => {
-  const { tracks, type, trackPlayingId, reorderable, currentPlaylist, onReorder, playerStatus, playlists } = props;
+  const { tracks, type, trackPlayingId, reorderable, currentPlaylist, onReorder, playlists } = props;
 
   const [tilesScrolled, setTilesScrolled] = useState(0);
   const [selected, setSelected] = useState<string[]>([]);
@@ -449,7 +446,7 @@ const TracksList: React.FC<Props> = (props) => {
         {
           label: 'Show in file manager',
           click: () => {
-            shell.showItemInFolder(track.path);
+            window.__museeks.library.showTrackInFolder(track);
           },
         },
         {
@@ -464,7 +461,7 @@ const TracksList: React.FC<Props> = (props) => {
 
       context.popup({}); // Let it appear
     },
-    [currentPlaylist, playerStatus, playlists, selected, tracks, type, navigate]
+    [currentPlaylist, playlists, selected, tracks, type, navigate]
   );
 
   /**

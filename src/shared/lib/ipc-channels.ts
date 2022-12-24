@@ -28,6 +28,8 @@ const channels = {
   COVER_GET: 'COVER_GET',
 
   LIBRARY_SCAN_TRACKS: 'LIBRARY_SCAN_TRACKS',
+
+  PLAYLISTS_RESOLVE_M3U: 'PLAYLISTS_RESOLVE_M3U',
 };
 
 export default channels;

@@ -26,8 +26,6 @@ const Library: React.FC = () => {
   });
 
   const getLibraryComponent = useMemo(() => {
-    const { playerStatus } = player;
-
     const trackPlayingId =
       player.queue.length > 0 && player.queueCursor !== null ? player.queue[player.queueCursor]._id : null;
 
@@ -74,15 +72,7 @@ const Library: React.FC = () => {
     }
 
     // All good !
-    return (
-      <TracksList
-        type='library'
-        playerStatus={playerStatus}
-        tracks={tracks}
-        trackPlayingId={trackPlayingId}
-        playlists={playlists}
-      />
-    );
+    return <TracksList type='library' tracks={tracks} trackPlayingId={trackPlayingId} playlists={playlists} />;
   }, [library, playlists, player, tracks]);
 
   return <div className={`${appStyles.view} ${styles.viewLibrary}`}>{getLibraryComponent}</div>;

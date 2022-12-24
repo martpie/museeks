@@ -21,8 +21,9 @@ export const filterTracks = (tracks: TrackModel[], search: string): TrackModel[]
 /**
  * Sort an array of tracks (alias to lodash.orderby)
  */
-export const sortTracks = (tracks: TrackModel[], sort: any[]): TrackModel[] => {
-  return orderBy(tracks, ...sort);
+export const sortTracks = (tracks: TrackModel[], sort: any): TrackModel[] => {
+  const [columns, order] = sort;
+  return orderBy(tracks, columns, order);
 };
 
 /**

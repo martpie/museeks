@@ -1,7 +1,8 @@
 import React, { useCallback } from 'react';
-import { shell } from 'electron';
 
 import styles from './ExternalLink.module.css';
+
+const { shell } = window.__museeks;
 
 interface Props {
   children: string;

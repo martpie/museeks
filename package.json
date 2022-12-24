@@ -3,7 +3,7 @@
   "productName": "Museeks",
   "version": "0.13.1",
   "description": "A simple, clean and cross-platform music player.",
-  "main": "dist/main/main.js",
+  "main": "dist/main/entrypoint.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/martpie/museeks"
@@ -34,6 +34,7 @@
     "package:checksums": "bash scripts/checksum.sh"
   },
   "dependencies": {
+    "@bscop/use-click-out": "^1.1.1",
     "@electron/remote": "^2.0.9",
     "@reduxjs/toolkit": "^1.9.1",
     "bluebird": "^3.7.2",
@@ -43,6 +44,7 @@
     "font-awesome": "^4.7.0",
     "globby": "^11.1.0",
     "history": "^5.3.0",
+    "i": "^0.3.7",
     "iconv-lite": "^0.6.3",
     "level-js": "^4.0.2",
     "linvodb3": "^3.26.0",
@@ -63,7 +65,6 @@
     "react-dom": "^18.2.0",
     "react-fontawesome": "^1.7.1",
     "react-keybinding-component": "^1.0.0",
-    "react-onclickout": "^2.0.8",
     "react-rangeslider": "^2.2.0",
     "react-redux": "^8.0.5",
     "react-router": "6.3.0",
@@ -72,7 +73,7 @@
     "redux-thunk": "^2.4.2",
     "semver": "^7.3.8",
     "svg-inline-react": "^3.2.1",
-    "teeny-conf": "^5.0.1"
+    "teeny-conf": "^6.1.0"
   },
   "devDependencies": {
     "@types/bluebird": "^3.5.38",
@@ -89,7 +90,7 @@
     "@typescript-eslint/eslint-plugin": "^5.46.1",
     "@typescript-eslint/parser": "^5.46.1",
     "@vitejs/plugin-react": "^3.0.0",
-    "electron": "18.3.6",
+    "electron": "22.0.0",
     "electron-builder": "^23.6.0",
     "eslint": "^8.30.0",
     "eslint-config-prettier": "^8.5.0",

@@ -16,13 +16,12 @@ import SettingsUI from './views/Settings/SettingsUI';
 import SettingsAudio from './views/Settings/SettingsAudio';
 import SettingsAbout from './views/Settings/SettingsAbout';
 import DetailsView from './views/Details/Details';
-import { config } from './lib/app';
 import { RootState } from './store/reducers';
 import Playlist from './components/Playlists/Playlist';
 
 const Router: React.FC = () => {
   const library = useSelector((state: RootState) => state.library);
-  const conf = config.get() as Config;
+  const conf = window.__museeks.config.get() as Config;
 
   return (
     <HistoryRouter history={history}>

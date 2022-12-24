@@ -4,7 +4,7 @@
 
 import path from 'path';
 import electron from 'electron';
-import teeny from 'teeny-conf';
+import TeenyConf from 'teeny-conf';
 
 import { Config, Repeat, SortBy, SortOrder } from '../../shared/types/museeks';
 import Module from './module';
@@ -13,7 +13,7 @@ const { app } = electron;
 
 class ConfigModule extends Module {
   protected workArea: Electron.Rectangle;
-  protected conf: teeny | undefined;
+  protected conf: TeenyConf<Config> | undefined;
 
   constructor() {
     super();
@@ -22,10 +22,10 @@ class ConfigModule extends Module {
   }
 
   async load(): Promise<void> {
-    const defaultConfig: Partial<Config> = this.getDefaultConfig();
+    const defaultConfig: Config = this.getDefaultConfig();
     const pathUserData = app.getPath('userData');
 
-    this.conf = new teeny(path.join(pathUserData, 'config.json'), defaultConfig);
+    this.conf = new TeenyConf<Config>(path.join(pathUserData, 'config.json'), defaultConfig);
 
     // Check if config update
     let configChanged = false;
@@ -71,44 +71,12 @@ class ConfigModule extends Module {
     return config;
   }
 
-  getConfig(): Config {
+  get config() {
     if (!this.conf) {
       throw new Error('Config not loaded');
     }
 
-    return this.conf.get() as Config; // Maybe possible to type TeenyConf with Generics?
-  }
-
-  get<T extends keyof Config>(key: T): Config[T] {
-    if (!this.conf) {
-      throw new Error('Config not loaded');
-    }
-
-    return this.conf.get(key);
-  }
-
-  set<T extends keyof Config>(key: T, value: Config[T]): void {
-    if (!this.conf) {
-      throw new Error('Config not loaded');
-    }
-
-    return this.conf.set(key, value);
-  }
-
-  save(): void {
-    if (!this.conf) {
-      throw new Error('Config not loaded');
-    }
-
-    return this.conf.save();
-  }
-
-  reload(): void {
-    if (!this.conf) {
-      throw new Error('Config not loaded');
-    }
-
-    this.conf.reload();
+    return this.conf;
   }
 }
 

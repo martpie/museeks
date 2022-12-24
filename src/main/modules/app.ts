@@ -6,16 +6,17 @@
 import os from 'os';
 import { ipcMain, app } from 'electron';
 
+import TeenyConf from 'teeny-conf';
 import logger from '../../shared/lib/logger';
 import channels from '../../shared/lib/ipc-channels';
+import { Config } from '../../shared/types/museeks';
 import ModuleWindow from './module-window';
-import ConfigModule from './config';
 
 class AppModule extends ModuleWindow {
-  protected config: ConfigModule;
+  protected config: TeenyConf<Config>;
   protected forceQuit: boolean;
 
-  constructor(window: Electron.BrowserWindow, config: ConfigModule) {
+  constructor(window: Electron.BrowserWindow, config: TeenyConf<Config>) {
     super(window);
 
     this.config = config;
@@ -27,7 +28,7 @@ class AppModule extends ModuleWindow {
     this.ensureSingleInstance();
 
     // Shows app only once it is loaded (avoid initial white flash)
-    ipcMain.on(channels.APP_READY, () => {
+    ipcMain.once(channels.APP_READY, () => {
       if (this.window) {
         this.window.show();
       }

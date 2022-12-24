@@ -4,7 +4,7 @@ directories:
   output: './build'
 files:
   - dist/**/*
-  - src/images/**/*
+  - src/shared/assets/**/*
   - '!node_modules/**/*'
 # fileAssociations:
 #   ext:
@@ -27,7 +27,7 @@ mac:
       arch:
         - x64
         - arm64
-  icon: src/images/logos/museeks.icns
+  icon: src/shared/assets/logos/museeks.icns
   artifactName: ${name}-${arch}.${ext}
   darkModeSupport: true
 linux:
@@ -36,15 +36,12 @@ linux:
     - target: deb
       arch:
         - x64
-        - ia32
     - target: AppImage
       arch:
         - x64
-        - ia32
     - target: rpm
       arch:
         - x64
-        - ia32
   executableName: museeks
   artifactName: ${name}-${arch}.${ext}
 deb:
@@ -54,11 +51,9 @@ win:
     - target: nsis
       arch:
         - x64
-        - ia32
     - target: portable
       arch:
         - x64
-        - ia32
   icon: src/images/logos/museeks.ico
   artifactName: ${name}-${arch}-setup.${ext}
 portable:

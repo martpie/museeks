@@ -1,9 +1,12 @@
-import path from 'path';
 import * as mmd from 'music-metadata';
 import pickBy from 'lodash-es/pickBy';
 
 import { Track, TrackEditableFields } from '../../shared/types/museeks';
 import logger from '../../shared/lib/logger';
+
+const { path } = window.__museeks;
+
+// TODO: move that to the main process at some point
 
 /**
  * Parse an int to a more readable string
@@ -25,39 +28,6 @@ export const parseDuration = (duration: number | null): string => {
   }
 
   return '00:00';
-};
-
-/**
- * Parse an URI, encoding some characters
- */
-export const parseUri = (uri: string): string => {
-  const root = process.platform === 'win32' ? '' : path.parse(uri).root;
-
-  const location = path
-    .resolve(uri)
-    .split(path.sep)
-    .map((d, i) => (i === 0 ? d : encodeURIComponent(d)))
-    .reduce((a, b) => path.join(a, b));
-
-  return `file://${root}${location}`;
-};
-
-/**
- * Sort an array of string by ASC or DESC, then remove all duplicates
- */
-export const simpleSort = (array: string[], sorting: 'asc' | 'desc'): string[] => {
-  if (sorting === 'asc') {
-    array.sort((a, b) => (a > b ? 1 : -1));
-  } else if (sorting === 'desc') {
-    array.sort((a, b) => (b > a ? -1 : 1));
-  }
-
-  const result: string[] = [];
-  array.forEach((item) => {
-    if (!result.includes(item)) result.push(item);
-  });
-
-  return result;
 };
 
 /**

@@ -4,7 +4,6 @@ import cx from 'classnames';
 import Slider from 'react-rangeslider';
 
 import * as PlayerActions from '../../store/actions/PlayerActions';
-import Player from '../../lib/player';
 
 import controlStyles from '../PlayerControls/PlayerControls.module.css';
 import styles from './VolumeControl.module.css';
@@ -25,7 +24,7 @@ export default class VolumeControl extends React.Component<Record<string, undefi
   constructor(props: Record<string, undefined>) {
     super(props);
 
-    const audio = Player.getAudio();
+    const audio = window.__museeks.player.getAudio();
 
     this.state = {
       showVolume: false,
@@ -62,7 +61,7 @@ export default class VolumeControl extends React.Component<Record<string, undefi
 
   mute(e: React.MouseEvent<HTMLButtonElement>) {
     if (e.currentTarget.classList.contains(controlStyles.control) || e.currentTarget.classList.contains('fa')) {
-      const muted = !Player.isMuted();
+      const muted = !window.__museeks.player.isMuted();
 
       PlayerActions.setMuted(muted);
       this.setState({ muted });

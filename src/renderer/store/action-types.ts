@@ -38,8 +38,6 @@ enum ActionTypes {
 
   TOAST_ADD = 'TOAST_ADD',
   TOAST_REMOVE = 'TOAST_REMOVE',
-
-  NOTIFICATION_NEW = 'NOTIFICATION_NEW',
 }
 
 export default ActionTypes;

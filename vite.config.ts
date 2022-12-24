@@ -13,13 +13,16 @@ const externals = [
   'fs',
   'path',
   // @deprecated (still used by iconv-lite)
-  'stream',
+  // 'stream',
   // @deprecated (still used by linvodb)
   'events',
   // @deprecated (still used by level-up)
   'assert',
 ];
-const otherExternals = ['graceful-fs', 'iconv-lite'];
+const otherExternals = [
+  'graceful-fs',
+  // 'iconv-lite'
+];
 
 export default defineConfig({
   appType: 'spa',
@@ -31,7 +34,7 @@ export default defineConfig({
     react(),
     electronMain([
       {
-        entry: 'src/main/main.ts',
+        entry: 'src/main/entrypoint.ts',
         vite: {
           build: {
             sourcemap: true,
@@ -40,7 +43,7 @@ export default defineConfig({
         },
       },
       {
-        entry: 'src/preload/main.ts',
+        entry: 'src/preload/entrypoint.ts',
         vite: {
           build: {
             sourcemap: true,

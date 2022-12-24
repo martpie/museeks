@@ -14,10 +14,8 @@ import * as LibraryActions from './store/actions/LibraryActions';
 import * as PlayerActions from './store/actions/PlayerActions';
 
 import styles from './App.module.css';
-import { isCtrlKey } from './lib/utils-platform';
-import Player from './lib/player';
+import { isCtrlKey } from './lib/utils-events';
 import DropzoneImport from './components/DropzoneImport/DropzoneImport';
-import { getPlatform } from './lib/utils-xplat';
 
 /*
 |--------------------------------------------------------------------------
@@ -52,12 +50,12 @@ const Museeks: React.FC<Props> = (props) => {
         case 'ArrowLeft':
           e.preventDefault();
           e.stopPropagation();
-          PlayerActions.jumpTo(Player.getCurrentTime() - 10);
+          PlayerActions.jumpTo(window.__museeks.player.getCurrentTime() - 10);
           break;
         case 'ArrowRight':
           e.preventDefault();
           e.stopPropagation();
-          PlayerActions.jumpTo(Player.getCurrentTime() + 10);
+          PlayerActions.jumpTo(window.__museeks.player.getCurrentTime() + 10);
           break;
         default:
           break;
@@ -92,7 +90,7 @@ const Museeks: React.FC<Props> = (props) => {
   });
 
   return (
-    <div className={`${styles.root} os__${getPlatform()}`} ref={drop}>
+    <div className={`${styles.root} os__${window.__museeks.platform}`} ref={drop}>
       <KeyBinding onKey={onKey} preventInputConflict />
       <Header />
       <main className={styles.mainContent}>{props.children}</main>

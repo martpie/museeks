@@ -1,5 +1,4 @@
 import types from '../action-types';
-import { config } from '../../lib/app';
 import { shuffleTracks } from '../../lib/utils-player';
 import { TrackModel, Action, Repeat, PlayerStatus } from '../../../shared/types/museeks';
 
@@ -18,8 +17,8 @@ const initialState: PlayerState = {
   oldQueue: [], // Queue backup (in case of shuffle)
   queueCursor: null, // The cursor of the queue
   queueOrigin: null, // URL of the queue when it was started
-  repeat: config.get('audioRepeat'), // the current repeat state (one, all, none)
-  shuffle: config.get('audioShuffle'), // If shuffle mode is enabled
+  repeat: window.__museeks.config.getx('audioRepeat'), // the current repeat state (one, all, none)
+  shuffle: window.__museeks.config.getx('audioShuffle'), // If shuffle mode is enabled
   playerStatus: PlayerStatus.STOP, // Player status
 };
 

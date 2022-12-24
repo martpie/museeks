@@ -10,7 +10,6 @@ import { persistStore, persistReducer, createTransform } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
 import { PlayerStatus } from '../../shared/types/museeks';
-import player from '../lib/player';
 import rootReducer, { RootState } from './reducers';
 import { PlayerState } from './reducers/player';
 
@@ -50,7 +49,7 @@ export const persistor = persistStore(store, null, () => {
   if (state.player.queue && state.player.queueCursor) {
     const track = state.player.queue[state.player.queueCursor];
 
-    player.setTrack(track);
+    window.__museeks.player.setTrack(track);
   }
 });
 

@@ -6,7 +6,6 @@ import * as Setting from '../../components/Setting/Setting';
 import CheckboxSetting from '../../components/SettingCheckbox/SettingCheckbox';
 import { Config } from '../../../shared/types/museeks';
 import { themes } from '../../../shared/lib/themes';
-import { getPlatform } from '../../lib/utils-xplat';
 
 interface Props {
   config: Config;
@@ -62,7 +61,7 @@ const SettingsUI: React.FC<Props> = (props) => {
           defaultValue={config.sleepBlocker}
           onClick={SettingsActions.toggleSleepBlocker}
         />
-        {getPlatform() !== 'darwin' && (
+        {window.__museeks.platform !== 'darwin' && (
           <CheckboxSetting
             slug='tray'
             title='Minimize to tray on close'
