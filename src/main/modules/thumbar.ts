@@ -96,7 +96,7 @@ class ThumbarModule extends ModuleWindow {
       },
     };
 
-    ipcMain.on(channels.APP_READY, () => {
+    ipcMain.once(channels.APP_READY, () => {
       window.setThumbarButtons([thumbarButtons.prevDisabled, thumbarButtons.play, thumbarButtons.nextDisabled]);
     });
 

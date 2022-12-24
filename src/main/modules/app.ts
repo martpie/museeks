@@ -28,7 +28,7 @@ class AppModule extends ModuleWindow {
     this.ensureSingleInstance();
 
     // Shows app only once it is loaded (avoid initial white flash)
-    ipcMain.on(channels.APP_READY, () => {
+    ipcMain.once(channels.APP_READY, () => {
       if (this.window) {
         this.window.show();
       }

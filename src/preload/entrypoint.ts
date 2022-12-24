@@ -93,6 +93,7 @@ const API = {
   // },
   player,
   config,
+  ready: () => ipcRenderer.send(channels.APP_READY),
   library: {
     showTrackInFolder: (track: TrackModel) => shell.showItemInFolder(track.path),
   },

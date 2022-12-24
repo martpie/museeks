@@ -21,12 +21,10 @@ const init = async (): Promise<void> => {
   }
 
   // Usual tasks
-  await SettingsActions.check();
-  await LibraryActions.refresh();
-  await PlaylistsActions.refresh();
+  await Promise.all([SettingsActions.check(), LibraryActions.refresh(), PlaylistsActions.refresh()]);
 
   // Tell the main process to show the window
-  ipcRenderer.send(channels.APP_READY);
+  window.__museeks.ready();
 
   // Bind player events
   // Audio Events
