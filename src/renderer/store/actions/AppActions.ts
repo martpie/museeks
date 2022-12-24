@@ -7,11 +7,19 @@ import { Theme } from '../../../shared/types/museeks';
 import logger from '../../../shared/lib/logger';
 import * as LibraryActions from './LibraryActions';
 import * as PlaylistsActions from './PlaylistsActions';
-import * as NotificationsActions from './NotificationsActions';
 import * as PlayerActions from './PlayerActions';
 import * as SettingsActions from './SettingsActions';
 
 const init = async (): Promise<void> => {
+  // There's some trouble with React StrictMode: player gets created in preload,
+  // so events below get attached twice as React.render gets called twice.
+  // Maybe the player should not be instantiated in preload?
+  if (window.__museeks.__instantiated) {
+    return;
+  } else {
+    window.__museeks.__instantiated = true;
+  }
+
   // Usual tasks
   await SettingsActions.check();
   await LibraryActions.refresh();
@@ -34,22 +42,12 @@ const init = async (): Promise<void> => {
   // Should be moved to PlayerActions.play at some point, currently here due to
   // how Audio works
   window.__museeks.player.getAudio().addEventListener('play', async () => {
-    ipcRenderer.send(channels.PLAYBACK_PLAY);
-
     const track = window.__museeks.player.getTrack();
 
-    if (!track) return;
+    if (!track) throw new Error('Track is undefined');
 
+    ipcRenderer.send(channels.PLAYBACK_PLAY, track ?? null);
     ipcRenderer.send(channels.PLAYBACK_TRACK_CHANGE, track);
-
-    if (window.__museeks.browserwindow.isFocused()) return;
-
-    const cover = await window.__museeks.covers.getCoverAsBase64(track);
-
-    NotificationsActions.add(track.title, {
-      body: `${track.artist}\n${track.album}`,
-      icon: cover || '',
-    });
   });
 
   window.__museeks.player.getAudio().addEventListener('pause', () => {

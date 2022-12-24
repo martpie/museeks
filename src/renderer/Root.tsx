@@ -3,6 +3,7 @@ import React from 'react';
 import logger from '../shared/lib/logger';
 import * as ViewMessage from './elements/ViewMessage/ViewMessage';
 import ExternalLink from './elements/ExternalLink/ExternalLink';
+import AppActions from './store/actions/AppActions';
 
 type Props = {
   children: React.ReactNode;

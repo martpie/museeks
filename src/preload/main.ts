@@ -69,6 +69,7 @@ const player = new Player({
 // When editing something here, please update museeks.d.ts to extend the
 // window.__museeks global object.
 const API = {
+  __instantiated: false,
   platform: os.platform(),
   version: app.getVersion(),
   browserwindow,

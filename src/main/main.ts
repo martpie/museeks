@@ -17,6 +17,7 @@ import DevtoolsModule from './modules/devtools';
 import WindowPositionModule from './modules/window-position';
 import IPCCoverModule from './modules/ipc-cover';
 import IPCLibraryModule from './modules/ipc-library';
+import IPCNotificationsModule from './modules/ipc-notifications';
 
 import * as ModulesManager from './lib/modules-manager';
 import { checkBounds } from './lib/utils';
@@ -119,6 +120,7 @@ app.on('ready', async () => {
     new WindowPositionModule(mainWindow, configModule.config),
     // Modules used to handle IPC APIs
     new IPCCoverModule(mainWindow),
-    new IPCLibraryModule(mainWindow)
+    new IPCLibraryModule(mainWindow),
+    new IPCNotificationsModule(mainWindow, configModule.config)
   ).catch(logger.error);
 });
