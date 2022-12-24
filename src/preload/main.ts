@@ -83,6 +83,9 @@ const API = {
     Track,
     Playlist,
   },
+  library: {
+    showTrackInFolder: (track: TrackModel) => shell.showItemInFolder(track.path),
+  },
   playlists: {
     resolveM3u: (path: string) => ipcRenderer.invoke(channels.PLAYLISTS_RESOLVE_M3U, path),
   },
@@ -96,7 +99,6 @@ const API = {
     resolve: path.resolve,
   },
   shell: {
-    showItemInFolder: shell.showItemInFolder,
     openExternal: shell.openExternal,
   },
 };

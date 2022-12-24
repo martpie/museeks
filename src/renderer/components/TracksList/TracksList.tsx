@@ -14,8 +14,7 @@ import * as PlaylistsActions from '../../store/actions/PlaylistsActions';
 import * as PlayerActions from '../../store/actions/PlayerActions';
 import * as QueueActions from '../../store/actions/QueueActions';
 
-import { isLeftClick, isRightClick } from '../../lib/utils-events';
-import { isCtrlKey, isAltKey } from '../../lib/utils-events';
+import { isLeftClick, isRightClick, isCtrlKey, isAltKey } from '../../lib/utils-events';
 import { PlaylistModel, TrackModel } from '../../../shared/types/museeks';
 import { RootState } from '../../store/reducers';
 
@@ -23,7 +22,6 @@ import scrollbarStyles from '../CustomScrollbar/CustomScrollbar.module.css';
 import headerStyles from '../Header/Header.module.css';
 import styles from './TracksList.module.css';
 
-const { shell } = window.__museeks;
 const { Menu } = window.__museeks.remote;
 
 const CHUNK_LENGTH = 20;
@@ -448,7 +446,7 @@ const TracksList: React.FC<Props> = (props) => {
         {
           label: 'Show in file manager',
           click: () => {
-            shell.showItemInFolder(track.path);
+            window.__museeks.library.showTrackInFolder(track);
           },
         },
         {
