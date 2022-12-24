@@ -1,6 +1,5 @@
-import { ipcRenderer } from 'electron';
-
 import { debounce } from 'lodash-es';
+import { ipcRenderer } from 'electron';
 import history from '../../lib/history';
 import store from '../store';
 import { PlayerState } from '../reducers/player';
@@ -11,10 +10,12 @@ import SORT_ORDERS from '../../constants/sort-orders';
 import { sortTracks, filterTracks } from '../../lib/utils-library';
 import { shuffleTracks } from '../../lib/utils-player';
 import { TrackModel, PlayerStatus, Repeat } from '../../../shared/types/museeks';
-import channels from '../../../shared/lib/ipc-channels';
 import logger from '../../../shared/lib/logger';
-import * as ToastsActions from './ToastsActions';
+import Player from '../../lib/player';
+import initMediaSession from '../../lib/media-session';
+import channels from '../../../shared/lib/ipc-channels';
 import * as LibraryActions from './LibraryActions';
+import * as ToastsActions from './ToastsActions';
 
 const AUDIO_ERRORS = {
   aborted: 'The video playback was aborted.',
@@ -23,11 +24,74 @@ const AUDIO_ERRORS = {
   unknown: 'An unknown error occurred.',
 };
 
+const { player, config } = window.__museeks;
+
+/**
+ * Bind various player events to actions. Needs unification at some point
+ */
+export const init = (player: Player) => {
+  initMediaSession(player);
+
+  // Bind player events
+  // Audio Events
+  player.getAudio().addEventListener('ended', next);
+  player.getAudio().addEventListener('error', audioError);
+  player.getAudio().addEventListener('timeupdate', async () => {
+    if (player.isThresholdReached()) {
+      const track = player.getTrack();
+      if (track) await LibraryActions.incrementPlayCount(track.path);
+    }
+  });
+
+  // How to unify Player, Main process state, and PlayerActions?
+  player.getAudio().addEventListener('play', async () => {
+    const track = player.getTrack();
+
+    if (!track) throw new Error('Track is undefined');
+
+    ipcRenderer.send(channels.PLAYBACK_PLAY, track ?? null);
+    ipcRenderer.send(channels.PLAYBACK_TRACK_CHANGE, track);
+  });
+
+  player.getAudio().addEventListener('pause', () => {
+    ipcRenderer.send(channels.PLAYBACK_PAUSE);
+  });
+
+  // Listen for main-process events
+  ipcRenderer.on(channels.PLAYBACK_PLAY, () => {
+    if (player.getTrack()) {
+      play();
+    } else {
+      start();
+    }
+  });
+
+  ipcRenderer.on(channels.PLAYBACK_PAUSE, () => {
+    pause();
+  });
+
+  ipcRenderer.on(channels.PLAYBACK_PLAYPAUSE, () => {
+    playPause();
+  });
+
+  ipcRenderer.on(channels.PLAYBACK_PREVIOUS, () => {
+    previous();
+  });
+
+  ipcRenderer.on(channels.PLAYBACK_NEXT, () => {
+    next();
+  });
+
+  ipcRenderer.on(channels.PLAYBACK_STOP, () => {
+    stop();
+  });
+};
+
 /**
  * Play/resume audio
  */
 export const play = async (): Promise<void> => {
-  await window.__museeks.player.play();
+  await player.play();
   store.dispatch({
     type: types.PLAYER_PLAY,
   });
@@ -37,7 +101,7 @@ export const play = async (): Promise<void> => {
  * Pause audio
  */
 export const pause = (): void => {
-  window.__museeks.player.pause();
+  player.pause();
   store.dispatch({
     type: types.PLAYER_PAUSE,
   });
@@ -90,8 +154,8 @@ export const start = async (queue?: TrackModel[], _id?: string): Promise<void> =
   if (queuePosition > -1) {
     const track = newQueue[queuePosition];
 
-    window.__museeks.player.setTrack(track);
-    await window.__museeks.player.play();
+    player.setTrack(track);
+    await player.play();
 
     let queueCursor = queuePosition; // Clean that variable mess later
 
@@ -129,7 +193,7 @@ export const start = async (queue?: TrackModel[], _id?: string): Promise<void> =
  * Toggle play/pause
  */
 export const playPause = async (): Promise<void> => {
-  const { paused } = window.__museeks.player.getAudio();
+  const { paused } = player.getAudio();
   // TODO (y.solovyov | martpie): calling getState is a hack.
   const { queue, playerStatus } = store.getState().player;
 
@@ -146,12 +210,10 @@ export const playPause = async (): Promise<void> => {
  * Stop the player
  */
 export const stop = (): void => {
-  window.__museeks.player.stop();
+  player.stop();
   store.dispatch({
     type: types.PLAYER_STOP,
   });
-
-  ipcRenderer.send(channels.PLAYBACK_STOP);
 };
 
 /**
@@ -176,8 +238,8 @@ export const next = async (): Promise<void> => {
 
     // tslint:disable-next-line strict-type-predicates
     if (track !== undefined) {
-      window.__museeks.player.setTrack(track);
-      await window.__museeks.player.play();
+      player.setTrack(track);
+      await player.play();
       store.dispatch({
         type: types.PLAYER_NEXT,
         payload: {
@@ -195,7 +257,7 @@ export const next = async (): Promise<void> => {
  * treshold
  */
 export const previous = async (): Promise<void> => {
-  const currentTime = window.__museeks.player.getCurrentTime();
+  const currentTime = player.getCurrentTime();
 
   // TODO (y.solovyov | martpie): calling getState is a hack.
   const { queue, queueCursor } = store.getState().player;
@@ -212,8 +274,8 @@ export const previous = async (): Promise<void> => {
 
     // tslint:disable-next-line
     if (newTrack !== undefined) {
-      window.__museeks.player.setTrack(newTrack);
-      await window.__museeks.player.play();
+      player.setTrack(newTrack);
+      await player.play();
 
       store.dispatch({
         type: types.PLAYER_PREVIOUS,
@@ -232,8 +294,8 @@ export const previous = async (): Promise<void> => {
  * Enable/disable shuffle
  */
 export const shuffle = (value: boolean): void => {
-  window.__museeks.config.set('audioShuffle', value);
-  window.__museeks.config.save();
+  config.set('audioShuffle', value);
+  config.save();
 
   store.dispatch({
     type: types.PLAYER_SHUFFLE,
@@ -247,8 +309,8 @@ export const shuffle = (value: boolean): void => {
  * Enable disable repeat
  */
 export const repeat = (value: Repeat): void => {
-  window.__museeks.config.set('audioRepeat', value);
-  window.__museeks.config.save();
+  config.set('audioRepeat', value);
+  config.save();
 
   store.dispatch({
     type: types.PLAYER_REPEAT,
@@ -262,14 +324,14 @@ export const repeat = (value: Repeat): void => {
  * Set volume
  */
 export const setVolume = (volume: number): void => {
-  window.__museeks.player.setVolume(volume);
+  player.setVolume(volume);
 
   saveVolume(volume);
 };
 
 const saveVolume = debounce((volume: number) => {
-  window.__museeks.config.set('audioVolume', volume);
-  window.__museeks.config.save();
+  config.set('audioVolume', volume);
+  config.save();
 
   store.dispatch({
     type: types.REFRESH_CONFIG,
@@ -280,11 +342,11 @@ const saveVolume = debounce((volume: number) => {
  * Mute/unmute the audio
  */
 export const setMuted = (muted = false): void => {
-  if (muted) window.__museeks.player.mute();
-  else window.__museeks.player.unmute();
+  if (muted) player.mute();
+  else player.unmute();
 
-  window.__museeks.config.set('audioMuted', muted);
-  window.__museeks.config.save();
+  config.set('audioMuted', muted);
+  config.save();
 
   store.dispatch({
     type: types.REFRESH_CONFIG,
@@ -297,10 +359,10 @@ export const setMuted = (muted = false): void => {
 export const setPlaybackRate = (value: number): void => {
   if (value >= 0.5 && value <= 5) {
     // if in allowed range
-    window.__museeks.player.setPlaybackRate(value);
+    player.setPlaybackRate(value);
 
-    window.__museeks.config.set('audioPlaybackRate', value);
-    window.__museeks.config.save();
+    config.set('audioPlaybackRate', value);
+    config.save();
 
     store.dispatch({
       type: types.REFRESH_CONFIG,
@@ -314,11 +376,11 @@ export const setPlaybackRate = (value: number): void => {
 export const setOutputDevice = (deviceId = 'default'): void => {
   if (deviceId) {
     try {
-      window.__museeks.player
+      player
         .setOutputDevice(deviceId)
         .then(() => {
-          window.__museeks.config.set('audioOutputDevice', deviceId);
-          window.__museeks.config.save();
+          config.set('audioOutputDevice', deviceId);
+          config.save();
         })
         .catch((err) => {
           throw err;
@@ -336,7 +398,7 @@ export const setOutputDevice = (deviceId = 'default'): void => {
 export const jumpTo = (to: number): void => {
   // TODO (y.solovyov) do we want to set some explicit state?
   // if yes, what should it be? if not, do we need this actions at all?
-  window.__museeks.player.setCurrentTime(to);
+  player.setCurrentTime(to);
   store.dispatch({
     type: types.PLAYER_JUMP_TO,
   });

@@ -1,4 +1,7 @@
+import { ipcRenderer } from 'electron';
+
 import { parseUri } from '../../main/lib/utils-uri';
+import channels from '../../shared/lib/ipc-channels';
 import { Track } from '../../shared/types/museeks';
 
 interface PlayerOptions {
@@ -10,6 +13,11 @@ interface PlayerOptions {
 
 /**
  * Library in charge of playing audio. Currently uses HTMLAudioElement.
+ *
+ * Open questions:
+ *   - Should it emit IPC events itself? Or expose events?
+ *   - Should it hold the concepts of queue/random/etc? (in other words, should
+ *     we merge PlayerActions here?)
  */
 class Player {
   private audio: HTMLAudioElement;
