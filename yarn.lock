@@ -290,6 +290,18 @@
     "@babel/helper-validator-identifier" "^7.19.1"
     to-fast-properties "^2.0.0"
 
+"@bscop/use-click-out@^1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@bscop/use-click-out/-/use-click-out-1.1.1.tgz#3c2ff5446070c8dd7b3e695d3e594ef1b2d64404"
+  integrity sha512-gsy5xl/T4Mil5RQUO0CGEpEl9243UJtdb6dxmRTlFD5FmkphF8yHmpx/jK1SR4nEjHNiFui65lg1bjjTk62gNg==
+  dependencies:
+    "@bscop/use-forward-ref" "^1.0.2"
+
+"@bscop/use-forward-ref@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@bscop/use-forward-ref/-/use-forward-ref-1.0.2.tgz#31263f15316fd80a1a53203e2123a195d4cc9476"
+  integrity sha512-K6xOmmFR88Aem0LIjghCpVwqjdIGwGavNa50ITnv3wpgrhkQXHexvdUX3g9270wUVjH/DgpKMEpTs/J9vYwH+w==
+
 "@csstools/selector-specificity@^2.0.2":
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/@csstools/selector-specificity/-/selector-specificity-2.0.2.tgz#1bfafe4b7ed0f3e4105837e056e0a89b108ebe36"
@@ -3162,6 +3174,11 @@ https-proxy-agent@^5.0.0:
     agent-base "6"
     debug "4"
 
+i@^0.3.7:
+  version "0.3.7"
+  resolved "https://registry.yarnpkg.com/i/-/i-0.3.7.tgz#2a7437a923d59c14b17243dc63a549af24d85799"
+  integrity sha512-FYz4wlXgkQwIPqhzC5TdNMLSE5+GS1IIDJZY/1ZiEPCT2S3COUVZeT5OW4BmW4r5LHLQuOosSwsvnroG9GR59Q==
+
 iconv-corefoundation@^1.1.7:
   version "1.1.7"
   resolved "https://registry.yarnpkg.com/iconv-corefoundation/-/iconv-corefoundation-1.1.7.tgz#31065e6ab2c9272154c8b0821151e2c88f1b002a"
@@ -4855,11 +4872,6 @@ react-keybinding-component@^1.0.0:
   integrity sha512-U6lzAKP8DbZfeKj7xIyQJ97G0dqtEUD7Hk55SgWzFxQuff50wIyaEUlRe1tuMLmxaggPUSscLR5TcTapYKhF/w==
   dependencies:
     prop-types "^15.6.2"
-
-react-onclickout@^2.0.8:
-  version "2.0.8"
-  resolved "https://registry.yarnpkg.com/react-onclickout/-/react-onclickout-2.0.8.tgz#d178b13fb87a481356761b454aa60df7069b2da4"
-  integrity sha1-0XixP7h6SBNWdhtFSqYN9wabLaQ=
 
 react-rangeslider@^2.2.0:
   version "2.2.0"

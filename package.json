@@ -34,6 +34,7 @@
     "package:checksums": "bash scripts/checksum.sh"
   },
   "dependencies": {
+    "@bscop/use-click-out": "^1.1.1",
     "@electron/remote": "^2.0.9",
     "@reduxjs/toolkit": "^1.9.1",
     "bluebird": "^3.7.2",
@@ -43,6 +44,7 @@
     "font-awesome": "^4.7.0",
     "globby": "^11.1.0",
     "history": "^5.3.0",
+    "i": "^0.3.7",
     "iconv-lite": "^0.6.3",
     "level-js": "^4.0.2",
     "linvodb3": "^3.26.0",
@@ -63,7 +65,6 @@
     "react-dom": "^18.2.0",
     "react-fontawesome": "^1.7.1",
     "react-keybinding-component": "^1.0.0",
-    "react-onclickout": "^2.0.8",
     "react-rangeslider": "^2.2.0",
     "react-redux": "^8.0.5",
     "react-router": "6.3.0",

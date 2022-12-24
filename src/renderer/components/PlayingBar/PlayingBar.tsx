@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Icon from 'react-fontawesome';
 import cx from 'classnames';
-import ClickOutHandler from 'react-onclickout';
+import useClickOut from '@bscop/use-click-out';
 
 import Queue from '../Queue/Queue';
 import PlayingBarInfos from '../PlayingBarInfo/PlayingBarInfo';
@@ -17,64 +17,38 @@ interface Props {
   repeat: Repeat;
 }
 
-interface State {
-  queueOpen: boolean;
-}
+const PlayingBar: React.FC<Props> = (props) => {
+  const { queue, queueCursor, repeat, shuffle } = props;
 
-export default class PlayingBar extends React.Component<Props, State> {
-  state = {
-    queueOpen: false,
-  };
+  const [isQueueOpen, setIsQueueOpen] = useState(false);
+  const clickOutRef = useClickOut<HTMLDivElement>(() => {
+    setIsQueueOpen(false);
+  });
 
-  constructor(props: Props) {
-    super(props);
+  const queueContainerClasses = cx(styles.queueContainer, {
+    [styles.isOpen]: isQueueOpen,
+  });
 
-    this.toggleQueue = this.toggleQueue.bind(this);
-    this.closeQueue = this.closeQueue.bind(this);
-  }
+  if (queueCursor === null) return null;
 
-  toggleQueue() {
-    this.setState({
-      queueOpen: !this.state.queueOpen,
-    });
-  }
+  const trackPlaying = queue[queueCursor];
 
-  closeQueue() {
-    if (this.state.queueOpen) {
-      this.setState({
-        queueOpen: false,
-      });
-    }
-  }
-
-  render() {
-    const { queue, queueCursor, repeat, shuffle } = this.props;
-
-    const queueContainerClasses = cx(styles.queueContainer, {
-      [styles.isOpen]: this.state.queueOpen,
-    });
-
-    if (queueCursor === null) return null;
-
-    const trackPlaying = queue[queueCursor];
-
-    return (
-      <div className={styles.playingBar}>
-        <div className={styles.playingBar__cover}>
-          <Cover track={trackPlaying} />
-        </div>
-        <PlayingBarInfos trackPlaying={trackPlaying} shuffle={shuffle} repeat={repeat} />
-        <div className={styles.playingBar__queue}>
-          <ClickOutHandler onClickOut={this.closeQueue}>
-            <button onClick={this.toggleQueue} className={styles.queueToggle}>
-              <Icon name='list' />
-            </button>
-            <div className={queueContainerClasses}>
-              <Queue queue={this.props.queue} queueCursor={this.props.queueCursor} />
-            </div>
-          </ClickOutHandler>
+  return (
+    <div className={styles.playingBar}>
+      <div className={styles.playingBar__cover}>
+        <Cover track={trackPlaying} />
+      </div>
+      <PlayingBarInfos trackPlaying={trackPlaying} shuffle={shuffle} repeat={repeat} />
+      <div className={styles.playingBar__queue} ref={clickOutRef}>
+        <button onClick={() => setIsQueueOpen(!isQueueOpen)} className={styles.queueToggle}>
+          <Icon name='list' />
+        </button>
+        <div className={queueContainerClasses}>
+          <Queue queue={queue} queueCursor={queueCursor} />
         </div>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
+
+export default PlayingBar;
