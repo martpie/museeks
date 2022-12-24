@@ -39,6 +39,7 @@ class IPCNotificationsModule extends ModuleWindow {
       title: track.title,
       body: `${track.artist}\n${track.album}`,
       icon,
+      silent: true,
     });
 
     notification.on('click', () => {
