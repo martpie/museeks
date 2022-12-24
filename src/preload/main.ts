@@ -92,10 +92,8 @@ const API = {
   // To be removed:
   remote,
   path: {
-    sep: path.sep,
     parse: path.parse,
     resolve: path.resolve,
-    join: path.join,
   },
   shell: {
     showItemInFolder: shell.showItemInFolder,
