@@ -178,7 +178,5 @@ jobs:
         with:
           name: binaries-windows
           path: |
-            build/museeks-ia32-setup.exe
             build/museeks-x64-setup.exe
-            build/museeks-ia32-portable.exe
             build/museeks-x64-portable.exe
