@@ -3,7 +3,7 @@
   "productName": "Museeks",
   "version": "0.13.1",
   "description": "A simple, clean and cross-platform music player.",
-  "main": "dist/main/main.js",
+  "main": "dist/main/entrypoint.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/martpie/museeks"

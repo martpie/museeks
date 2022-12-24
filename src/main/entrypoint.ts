@@ -65,7 +65,7 @@ app.on('ready', async () => {
       contextIsolation: false,
       autoplayPolicy: 'no-user-gesture-required',
       webSecurity: process.env.VITE_DEV_SERVER_URL == null, // FIXME
-      preload: path.join(preloadDistPath, 'main.js'),
+      preload: path.join(preloadDistPath, 'entrypoint.js'),
     },
   });
 

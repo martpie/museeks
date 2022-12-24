@@ -34,7 +34,7 @@ export default defineConfig({
     react(),
     electronMain([
       {
-        entry: 'src/main/main.ts',
+        entry: 'src/main/entrypoint.ts',
         vite: {
           build: {
             sourcemap: true,
@@ -43,7 +43,7 @@ export default defineConfig({
         },
       },
       {
-        entry: 'src/preload/main.ts',
+        entry: 'src/preload/entrypoint.ts',
         vite: {
           build: {
             sourcemap: true,
