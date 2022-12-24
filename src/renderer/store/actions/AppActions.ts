@@ -29,7 +29,7 @@ const init = async (): Promise<void> => {
   ]);
 
   // Tell the main process to show the window
-  window.__museeks.ready();
+  window.__museeks.app.ready();
 
   // Support for multiple audio output
   navigator.mediaDevices.addEventListener('devicechange', async () => {
@@ -64,16 +64,6 @@ const init = async (): Promise<void> => {
   window.addEventListener('drop', (e) => e.preventDefault(), false);
 };
 
-const restart = (): void => {
-  ipcRenderer.send(channels.APP_RESTART);
-};
-
-const close = (): void => {
-  ipcRenderer.send(channels.APP_CLOSE);
-};
-
 export default {
-  close,
   init,
-  restart,
 };

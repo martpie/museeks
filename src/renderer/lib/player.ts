@@ -1,7 +1,4 @@
-import { ipcRenderer } from 'electron';
-
 import { parseUri } from '../../main/lib/utils-uri';
-import channels from '../../shared/lib/ipc-channels';
 import { Track } from '../../shared/types/museeks';
 
 interface PlayerOptions {
