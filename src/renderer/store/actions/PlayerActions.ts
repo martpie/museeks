@@ -39,7 +39,7 @@ export const init = (player: Player) => {
   player.getAudio().addEventListener('timeupdate', async () => {
     if (player.isThresholdReached()) {
       const track = player.getTrack();
-      if (track) await LibraryActions.incrementPlayCount(track.path);
+      if (track) await LibraryActions.incrementPlayCount(track._id);
     }
   });
 

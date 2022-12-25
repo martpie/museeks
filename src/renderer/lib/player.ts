@@ -1,5 +1,5 @@
 import { parseUri } from '../../main/lib/utils-uri';
-import { Track } from '../../shared/types/museeks';
+import { Track, TrackModel } from '../../shared/types/museeks';
 
 interface PlayerOptions {
   playbackRate?: number;
@@ -19,7 +19,7 @@ interface PlayerOptions {
 class Player {
   private audio: HTMLAudioElement;
   private durationThresholdReached: boolean;
-  private track: Track | null;
+  private track: TrackModel | null;
   public threshold: number;
 
   constructor(options?: PlayerOptions) {
@@ -99,7 +99,7 @@ class Player {
     return this.track;
   }
 
-  setTrack(track: Track) {
+  setTrack(track: TrackModel) {
     this.track = track;
     this.audio.src = parseUri(track.path);
 

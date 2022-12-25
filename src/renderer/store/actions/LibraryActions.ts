@@ -13,14 +13,14 @@ import logger from '../../../shared/lib/logger';
 import * as PlaylistsActions from './PlaylistsActions';
 import * as ToastsActions from './ToastsActions';
 
-const { path } = window.__museeks;
+const { path, db } = window.__museeks;
 
 /**
  * Load tracks from database
  */
 export const refresh = async (): Promise<void> => {
   try {
-    const tracks = await window.__museeks.db.Track.find().execAsync();
+    const tracks = await db.tracks.getAll();
 
     store.dispatch({
       type: types.LIBRARY_REFRESH,
@@ -64,9 +64,7 @@ const scanPlaylists = async (paths: string[]) => {
         const playlistFiles = await window.__museeks.playlists.resolveM3u(filePath);
         const playlistName = path.parse(filePath).name;
 
-        const existingTracks: TrackModel[] = await window.__museeks.db.Track.findAsync({
-          $or: playlistFiles.map((filePath: string) => ({ path: filePath })),
-        });
+        const existingTracks: TrackModel[] = await db.tracks.findByPath(playlistFiles);
 
         await PlaylistsActions.create(
           playlistName,
@@ -141,13 +139,13 @@ const scanTracks = async (paths: string[]): Promise<TrackModel[]> => {
             filePath = path.resolve(filePath);
 
             // Check if there is an existing record in the DB
-            const existingDoc = await window.__museeks.db.Track.findOneAsync({ path: filePath });
+            const existingDoc = await db.tracks.findOnlyByPath(filePath);
 
             // If there is existing document
             if (!existingDoc) {
               // Get metadata
               const track = await utils.getMetadata(filePath);
-              const insertedDoc: TrackModel = await window.__museeks.db.Track.insertAsync(track);
+              const insertedDoc = await db.tracks.insert(track);
               scannedFiles.push(insertedDoc);
             }
 
@@ -225,7 +223,7 @@ export const remove = async (tracksIds: string[]): Promise<void> => {
   if (result.response === 1) {
     // button possition, here 'remove'
     // Remove tracks from the Track collection
-    window.__museeks.db.Track.removeAsync({ _id: { $in: tracksIds } }, { multi: true });
+    await db.tracks.remove(tracksIds);
 
     store.dispatch({
       type: types.LIBRARY_REMOVE_TRACKS,
@@ -258,8 +256,7 @@ export const reset = async (): Promise<void> => {
         type: types.LIBRARY_REFRESH_START,
       });
 
-      await window.__museeks.db.Track.removeAsync({}, { multi: true });
-      await window.__museeks.db.Playlist.removeAsync({}, { multi: true });
+      await db.reset();
 
       store.dispatch({
         type: types.LIBRARY_RESET,
@@ -279,11 +276,9 @@ export const reset = async (): Promise<void> => {
 /**
  * Update the play count attribute.
  */
-export const incrementPlayCount = async (source: string): Promise<void> => {
-  const query = { src: source }; // HACK Not great, should be done with an _id
-  const update = { $inc: { playcount: 1 } };
+export const incrementPlayCount = async (trackID: string): Promise<void> => {
   try {
-    await window.__museeks.db.Track.updateAsync(query, update);
+    await db.tracks.updateWithRawQuery(trackID, { $inc: { playcount: 1 } });
   } catch (err) {
     logger.warn(err);
   }
@@ -298,9 +293,7 @@ export const incrementPlayCount = async (source: string): Promise<void> => {
  * @param newFields The fields to be updated and their new value
  */
 export const updateTrackMetadata = async (trackId: string, newFields: TrackEditableFields): Promise<void> => {
-  const query = { _id: trackId };
-
-  let track: TrackModel = await window.__museeks.db.Track.findOneAsync(query);
+  let track = await db.tracks.findOnlyByID(trackId);
 
   track = {
     ...track,
@@ -312,7 +305,7 @@ export const updateTrackMetadata = async (trackId: string, newFields: TrackEdita
     throw new Error('No track found while trying to update track metadata');
   }
 
-  await window.__museeks.db.Track.updateAsync(query, track);
+  await db.tracks.update(trackId, track);
 
   await refresh();
 };

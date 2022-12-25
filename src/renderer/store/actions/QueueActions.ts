@@ -46,7 +46,7 @@ export const remove = (index: number): void => {
  * Add tracks at the end of the queue
  */
 export const addAfter = async (tracksIds: string[]): Promise<void> => {
-  const tracks = await window.__museeks.db.Track.findAsync({ _id: { $in: tracksIds } });
+  const tracks = await window.__museeks.db.tracks.findByID(tracksIds);
   store.dispatch({
     type: types.QUEUE_ADD,
     payload: {
@@ -59,7 +59,7 @@ export const addAfter = async (tracksIds: string[]): Promise<void> => {
  * Add tracks at the beginning of the queue
  */
 export const addNext = async (tracksIds: string[]): Promise<void> => {
-  const tracks = await window.__museeks.db.Track.findAsync({ _id: { $in: tracksIds } });
+  const tracks = await window.__museeks.db.tracks.findByID(tracksIds);
   store.dispatch({
     type: types.QUEUE_ADD_NEXT,
     payload: {

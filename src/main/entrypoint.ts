@@ -18,6 +18,7 @@ import WindowPositionModule from './modules/window-position';
 import IPCCoverModule from './modules/ipc-cover';
 import IPCLibraryModule from './modules/ipc-library';
 import IPCNotificationsModule from './modules/ipc-notifications';
+import IPCDatabaseModule from './modules/database';
 
 import * as ModulesManager from './lib/modules-manager';
 import { checkBounds } from './lib/utils';
@@ -43,6 +44,7 @@ app.on('window-all-closed', () => {
 app.on('ready', async () => {
   const configModule = new ConfigModule();
   await ModulesManager.init(configModule);
+  const config = configModule.getConfig();
 
   const bounds = checkBounds(configModule.config.getx('bounds'));
 
@@ -108,7 +110,7 @@ app.on('ready', async () => {
 
   // Let's list the list of modules we will use for Museeks
   ModulesManager.init(
-    new AppModule(mainWindow, configModule.config),
+    new AppModule(mainWindow, config),
     new PowerModule(mainWindow),
     new ApplicationMenuModule(mainWindow),
     new TrayModule(mainWindow),
@@ -116,12 +118,13 @@ app.on('ready', async () => {
     new DockMenuModule(mainWindow),
     new SleepBlockerModule(mainWindow),
     new DialogsModule(mainWindow),
-    new NativeThemeModule(mainWindow, configModule.config),
+    new NativeThemeModule(mainWindow, config),
     new DevtoolsModule(mainWindow),
-    new WindowPositionModule(mainWindow, configModule.config),
+    new WindowPositionModule(mainWindow, config),
     // Modules used to handle IPC APIs
     new IPCCoverModule(mainWindow),
     new IPCLibraryModule(mainWindow),
-    new IPCNotificationsModule(mainWindow, configModule.config)
+    new IPCNotificationsModule(mainWindow, config),
+    new IPCDatabaseModule(mainWindow)
   ).catch(logger.error);
 });

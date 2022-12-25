@@ -1,11 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { useParams } from 'react-router-dom';
-import logger from '../../../shared/lib/logger';
 
 // import Placeholder from '../../shared/assets/placeholder.png';
 // import * as coverUtils from '../../../shared/lib/utils-cover';
-import { TrackEditableFields, TrackModel } from '../../../shared/types/museeks';
+import { TrackEditableFields } from '../../../shared/types/museeks';
 import appStyles from '../../App.module.css';
 import * as Setting from '../../components/Setting/Setting';
 import Button from '../../elements/Button/Button';
@@ -49,22 +48,21 @@ const Details: React.FC = () => {
   );
 
   useEffect(() => {
-    window.__museeks.db.Track.findOne(
-      { _id: trackId },
-      async (err: Error, track: TrackModel) => {
-        if (err !== null) return logger.error(err);
+    async function asyncQuery() {
+      if (!trackId) return;
+      const track = await window.__museeks.db.tracks.findOnlyByID(trackId);
 
-        setFormData({
-          title: track.title ?? '',
-          artist: track.artist,
-          album: track.album ?? '',
-          genre: track.genre,
-        });
+      setFormData({
+        title: track.title ?? '',
+        artist: track.artist,
+        album: track.album ?? '',
+        genre: track.genre,
+      });
 
-        // coverUtils.fetchCover(track.path).then((cover) => setCoverSrc(cover));
-      },
-      []
-    );
+      // coverUtils.fetchCover(track.path).then((cover) => setCoverSrc(cover));
+    }
+
+    asyncQuery();
 
     return () => {
       setFormData(INITIAL_FORM_DATA);

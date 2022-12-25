@@ -8,15 +8,15 @@ import logger from '../../../shared/lib/logger';
 import * as ToastsActions from './ToastsActions';
 import * as PlayerActions from './PlayerActions';
 
-const { remote, path } = window.__museeks;
+const { remote, path, browserwindow, db } = window.__museeks;
 
 /**
  * Start playing playlist (on double click)
  */
 export const play = async (playlistId: string): Promise<void> => {
   try {
-    const playlist: PlaylistModel = await window.__museeks.db.Playlist.findOneAsync({ _id: playlistId });
-    const tracks: TrackModel[] = await window.__museeks.db.Track.findAsync({ _id: { $in: playlist.tracks } });
+    const playlist: PlaylistModel = await db.playlists.findOnlyByID(playlistId);
+    const tracks: TrackModel[] = await db.tracks.findByID(playlist.tracks);
     PlayerActions.start(tracks).catch((err) => logger.warn(err));
   } catch (err) {
     logger.warn(err);
@@ -28,8 +28,8 @@ export const play = async (playlistId: string): Promise<void> => {
  */
 export const load = async (_id: string): Promise<void> => {
   try {
-    const playlist = await window.__museeks.db.Playlist.findOneAsync({ _id });
-    const tracks = await window.__museeks.db.Track.findAsync({ _id: { $in: playlist.tracks } });
+    const playlist = await db.playlists.findOnlyByID(_id);
+    const tracks = await db.tracks.findByID(playlist.tracks);
     store.dispatch({
       type: types.PLAYLISTS_LOAD_ONE,
       payload: {
@@ -46,7 +46,7 @@ export const load = async (_id: string): Promise<void> => {
  */
 export const refresh = async (): Promise<void> => {
   try {
-    const playlists = await window.__museeks.db.Playlist.find({}).sort({ name: 1 }).execAsync();
+    const playlists = await db.playlists.getAll();
     store.dispatch({
       type: types.PLAYLISTS_REFRESH,
       payload: {
@@ -74,7 +74,7 @@ export const create = async (
 
   if (importPath) playlist.importPath = importPath;
 
-  const doc = await window.__museeks.db.Playlist.insertAsync(playlist);
+  const doc = await db.playlists.insert(playlist);
 
   await refresh();
 
@@ -89,7 +89,7 @@ export const create = async (
  */
 export const rename = async (_id: string, name: string): Promise<void> => {
   try {
-    await window.__museeks.db.Playlist.updateAsync({ _id }, { $set: { name } });
+    await db.playlists.updateWithRawQuery(_id, { $set: { name } });
     await refresh();
   } catch (err) {
     logger.warn(err);
@@ -101,7 +101,7 @@ export const rename = async (_id: string, name: string): Promise<void> => {
  */
 export const remove = async (_id: string): Promise<void> => {
   try {
-    await window.__museeks.db.Playlist.removeAsync({ _id });
+    await db.playlists.remove([_id]);
     await refresh();
   } catch (err) {
     logger.warn(err);
@@ -116,9 +116,9 @@ export const addTracks = async (_id: string, tracksIds: string[], isShown?: bool
   if (isShown) return;
 
   try {
-    const playlist = await window.__museeks.db.Playlist.findOneAsync({ _id });
+    const playlist = await db.playlists.findOnlyByID(_id);
     const playlistTracks = playlist.tracks.concat(tracksIds);
-    await window.__museeks.db.Playlist.updateAsync({ _id }, { $set: { tracks: playlistTracks } });
+    await db.playlists.updateWithRawQuery(_id, { $set: { tracks: playlistTracks } });
     await refresh();
     ToastsActions.add('success', `${tracksIds.length} tracks were successfully added to "${playlist.name}"`);
   } catch (err) {
@@ -136,9 +136,9 @@ export const addTracks = async (_id: string, tracksIds: string[], isShown?: bool
  */
 export const removeTracks = async (playlistId: string, tracksIds: string[]): Promise<void> => {
   try {
-    const playlist = await window.__museeks.db.Playlist.findOneAsync({ _id: playlistId });
+    const playlist = await db.playlists.findOnlyByID(playlistId);
     const playlistTracks = playlist.tracks.filter((elem: string) => !tracksIds.includes(elem));
-    await window.__museeks.db.Playlist.updateAsync({ _id: playlistId }, { $set: { tracks: playlistTracks } });
+    await db.playlists.updateWithRawQuery(playlistId, { $set: { tracks: playlistTracks } });
     await load(playlistId);
   } catch (err) {
     logger.warn(err);
@@ -150,7 +150,7 @@ export const removeTracks = async (playlistId: string, tracksIds: string[]): Pro
  */
 export const duplicate = async (playlistId: string): Promise<void> => {
   try {
-    const playlist = await window.__museeks.db.Playlist.findOneAsync({ _id: playlistId });
+    const playlist = await db.playlists.findOnlyByID(playlistId);
     const { tracks } = playlist;
 
     const newPlaylist: Playlist = {
@@ -158,7 +158,7 @@ export const duplicate = async (playlistId: string): Promise<void> => {
       tracks: tracks,
     };
 
-    await window.__museeks.db.Playlist.insertAsync(newPlaylist);
+    await db.playlists.insert(newPlaylist);
     await refresh();
   } catch (err) {
     logger.warn(err);
@@ -179,7 +179,7 @@ export const reorderTracks = async (
   if (tracksIds.includes(targetTrackId)) return;
 
   try {
-    const playlist: Playlist = await window.__museeks.db.Playlist.findOneAsync({ _id: playlistId });
+    const playlist: Playlist = await db.playlists.findOnlyByID(playlistId);
 
     const newTracks = playlist.tracks.filter((id) => !tracksIds.includes(id));
     let targetIndex = newTracks.indexOf(targetTrackId);
@@ -194,7 +194,7 @@ export const reorderTracks = async (
 
     newTracks.splice(targetIndex + 1, 0, ...tracksIds);
 
-    await window.__museeks.db.Playlist.updateAsync({ _id: playlistId }, { $set: { tracks: newTracks } });
+    await db.playlists.updateWithRawQuery(playlistId, { $set: { tracks: newTracks } });
     await load(playlistId);
   } catch (err) {
     logger.warn(err);
@@ -206,9 +206,9 @@ export const reorderTracks = async (
  * TODO: investigate why the export playlist path are relative, and not absolute
  */
 export const exportToM3u = async (playlistId: string): Promise<void> => {
-  const playlist: PlaylistModel = await window.__museeks.db.Playlist.findOneAsync({ _id: playlistId });
-  const tracks: TrackModel[] = await window.__museeks.db.Track.findAsync({ _id: { $in: playlist.tracks } });
-  const { filePath } = await remote.dialog.showSaveDialog(window.__museeks.browserwindow, {
+  const playlist: PlaylistModel = await db.playlists.findOnlyByID(playlistId);
+  const tracks: TrackModel[] = await db.tracks.findByID(playlist.tracks);
+  const { filePath } = await remote.dialog.showSaveDialog(browserwindow, {
     title: 'Export playlist',
     defaultPath: path.resolve(remote.app.getPath('music'), playlist.name),
     filters: [
