@@ -5,11 +5,10 @@ import { Navigate, Outlet } from 'react-router';
 
 import PlaylistsNav from '../../components/PlaylistsNav/PlaylistsNav';
 import * as ViewMessage from '../../elements/ViewMessage/ViewMessage';
-
 import * as PlaylistsActions from '../../store/actions/PlaylistsActions';
 import { RootState } from '../../store/reducers';
-
 import appStyles from '../../App.module.css';
+
 import styles from './Playlists.module.css';
 
 const Playlists: React.FC = () => {

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+
 import { Track } from '../../../shared/types/museeks';
 
 import styles from './Cover.module.css';
@@ -12,7 +13,7 @@ const Cover: React.FC<Props> = (props) => {
 
   useEffect(() => {
     const refreshCover = async () => {
-      const coverPath = await window.__museeks.covers.getCoverAsBase64(props.track);
+      const coverPath = await window.MuseeksAPI.covers.getCoverAsBase64(props.track);
       setCoverPath(coverPath);
     };
 

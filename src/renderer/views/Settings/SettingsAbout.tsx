@@ -3,12 +3,11 @@ import React from 'react';
 import ExternalLink from '../../elements/ExternalLink/ExternalLink';
 import Heart from '../../elements/Heart/Heart';
 import * as Setting from '../../components/Setting/Setting';
-
 import * as SettingsActions from '../../store/actions/SettingsActions';
 import Button from '../../elements/Button/Button';
 
 const SettingsAbout: React.FC = () => {
-  const version = window.__museeks.version;
+  const version = window.MuseeksAPI.version;
 
   return (
     <div className='setting setting-about'>

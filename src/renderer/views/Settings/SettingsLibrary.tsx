@@ -2,7 +2,6 @@ import React, { useCallback } from 'react';
 import { ipcRenderer } from 'electron';
 
 import * as Setting from '../../components/Setting/Setting';
-
 import * as LibraryActions from '../../store/actions/LibraryActions';
 import * as PlayerActions from '../../store/actions/PlayerActions';
 import { LibraryState } from '../../store/reducers/library';

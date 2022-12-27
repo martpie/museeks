@@ -4,7 +4,9 @@
  */
 
 import { dialog, ipcMain } from 'electron';
+
 import channels from '../../shared/lib/ipc-channels';
+
 import ModuleWindow from './module-window';
 
 class DialogsModule extends ModuleWindow {

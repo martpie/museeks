@@ -4,9 +4,11 @@
 
 import { ipcMain, nativeTheme } from 'electron';
 import TeenyConf from 'teeny-conf';
+
 import channels from '../../shared/lib/ipc-channels';
 import { themes } from '../../shared/lib/themes';
 import { Config, Theme } from '../../shared/types/museeks';
+
 import ModuleWindow from './module-window';
 
 class NativeThemeModule extends ModuleWindow {

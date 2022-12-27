@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import logger from '../../../shared/lib/logger';
 
+import logger from '../../../shared/lib/logger';
 import * as Setting from '../Setting/Setting';
 
 interface Props {

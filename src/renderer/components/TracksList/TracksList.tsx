@@ -1,28 +1,26 @@
-import type electron from 'electron';
+import type { MenuItemConstructorOptions } from 'electron';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import KeyBinding from 'react-keybinding-component';
 import chunk from 'lodash-es/chunk';
 import { useSelector } from 'react-redux';
-
 import { useNavigate } from 'react-router';
+
 import TrackRow from '../TrackRow/TrackRow';
 import CustomScrollbar from '../CustomScrollbar/CustomScrollbar';
 import TracksListHeader from '../TracksListHeader/TracksListHeader';
-
 import * as LibraryActions from '../../store/actions/LibraryActions';
 import * as PlaylistsActions from '../../store/actions/PlaylistsActions';
 import * as PlayerActions from '../../store/actions/PlayerActions';
 import * as QueueActions from '../../store/actions/QueueActions';
-
 import { isLeftClick, isRightClick, isCtrlKey, isAltKey } from '../../lib/utils-events';
 import { PlaylistModel, TrackModel } from '../../../shared/types/museeks';
 import { RootState } from '../../store/reducers';
-
 import scrollbarStyles from '../CustomScrollbar/CustomScrollbar.module.css';
 import headerStyles from '../Header/Header.module.css';
+
 import styles from './TracksList.module.css';
 
-const { Menu } = window.__museeks.remote;
+const { Menu } = window.MuseeksAPI.remote;
 
 const CHUNK_LENGTH = 20;
 const ROW_HEIGHT = 30; // FIXME
@@ -315,8 +313,8 @@ const TracksList: React.FC<Props> = (props) => {
         shownPlaylists = playlists.filter((elem) => elem._id !== currentPlaylist);
       }
 
-      const playlistTemplate: electron.MenuItemConstructorOptions[] = [];
-      let addToQueueTemplate: electron.MenuItemConstructorOptions[] = [];
+      const playlistTemplate: MenuItemConstructorOptions[] = [];
+      let addToQueueTemplate: MenuItemConstructorOptions[] = [];
 
       if (shownPlaylists) {
         playlistTemplate.push(
@@ -366,7 +364,7 @@ const TracksList: React.FC<Props> = (props) => {
         },
       ];
 
-      const template: electron.MenuItemConstructorOptions[] = [
+      const template: MenuItemConstructorOptions[] = [
         {
           label: selectedCount > 1 ? `${selectedCount} tracks selected` : `${selectedCount} track selected`,
           enabled: false,
@@ -446,7 +444,7 @@ const TracksList: React.FC<Props> = (props) => {
         {
           label: 'Show in file manager',
           click: () => {
-            window.__museeks.library.showTrackInFolder(track);
+            window.MuseeksAPI.library.showTrackInFolder(track);
           },
         },
         {

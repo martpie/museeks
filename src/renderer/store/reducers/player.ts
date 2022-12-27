@@ -17,8 +17,8 @@ const initialState: PlayerState = {
   oldQueue: [], // Queue backup (in case of shuffle)
   queueCursor: null, // The cursor of the queue
   queueOrigin: null, // URL of the queue when it was started
-  repeat: window.__museeks.config.getx('audioRepeat'), // the current repeat state (one, all, none)
-  shuffle: window.__museeks.config.getx('audioShuffle'), // If shuffle mode is enabled
+  repeat: window.MuseeksAPI.config.getx('audioRepeat'), // the current repeat state (one, all, none)
+  shuffle: window.MuseeksAPI.config.getx('audioShuffle'), // If shuffle mode is enabled
   playerStatus: PlayerStatus.STOP, // Player status
 };
 

@@ -1,5 +1,7 @@
 import orderBy from 'lodash-es/orderBy';
+
 import { TrackModel } from '../../shared/types/museeks';
+
 import * as utils from './utils';
 
 /**

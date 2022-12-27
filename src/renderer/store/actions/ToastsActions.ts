@@ -1,6 +1,5 @@
 import store from '../store';
 import types from '../action-types';
-
 import { ToastType } from '../../../shared/types/museeks';
 
 /**

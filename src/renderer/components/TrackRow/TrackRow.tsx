@@ -4,8 +4,8 @@ import cx from 'classnames';
 import PlayingIndicator from '../PlayingIndicator/PlayingIndicator';
 import { parseDuration } from '../../lib/utils';
 import { TrackModel } from '../../../shared/types/museeks';
-
 import cellStyles from '../TracksListHeader/TracksListHeader.module.css';
+
 import styles from './TrackRow.module.css';
 
 interface Props {

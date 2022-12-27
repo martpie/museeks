@@ -3,6 +3,7 @@
  */
 
 import os from 'os';
+
 import logger from '../../shared/lib/logger';
 
 class Module {

@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import TracksListHeaderCell from '../TracksListHeaderCell/TracksListHeaderCell';
-
 import { SortBy, SortOrder } from '../../../shared/types/museeks';
 import { RootState } from '../../store/reducers';
 import { LibrarySort } from '../../store/reducers/library';

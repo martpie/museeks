@@ -4,7 +4,6 @@ import cx from 'classnames';
 
 import * as PlayerActions from '../../store/actions/PlayerActions';
 import { Repeat } from '../../../shared/types/museeks';
-
 import icons from '../../lib/icons';
 
 import styles from './common.module.css';

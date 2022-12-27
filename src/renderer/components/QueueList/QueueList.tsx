@@ -1,9 +1,7 @@
 import React, { useCallback, useState } from 'react';
 
 import QueueListItem from '../QueueListItem/QueueListItem';
-
 import * as QueueActions from '../../store/actions/QueueActions';
-
 import { getStatus } from '../../lib/utils-library';
 import { TrackModel } from '../../../shared/types/museeks';
 import Button from '../../elements/Button/Button';

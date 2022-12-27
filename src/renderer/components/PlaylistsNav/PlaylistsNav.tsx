@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/no-autofocus */
 
-import type electron from 'electron';
+import type { MenuItemConstructorOptions } from 'electron';
 import React from 'react';
 import Icon from 'react-fontawesome';
 
@@ -10,7 +10,7 @@ import { PlaylistModel } from '../../../shared/types/museeks';
 
 import styles from './PlaylistsNav.module.css';
 
-const { Menu } = window.__museeks.remote;
+const { Menu } = window.MuseeksAPI.remote;
 
 interface Props {
   playlists: PlaylistModel[];
@@ -36,7 +36,7 @@ class PlaylistsNav extends React.Component<Props, State> {
   }
 
   showContextMenu(playlistId: string) {
-    const template: electron.MenuItemConstructorOptions[] = [
+    const template: MenuItemConstructorOptions[] = [
       {
         label: 'Rename',
         click: () => {

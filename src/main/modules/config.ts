@@ -3,17 +3,19 @@
  */
 
 import path from 'path';
+
 import electron from 'electron';
 import TeenyConf from 'teeny-conf';
 
 import { Config, Repeat, SortBy, SortOrder } from '../../shared/types/museeks';
+
 import Module from './module';
 
 const { app } = electron;
 
 class ConfigModule extends Module {
-  protected workArea: Electron.Rectangle;
-  protected conf: TeenyConf<Config> | undefined;
+  private workArea: Electron.Rectangle;
+  private conf: TeenyConf<Config> | undefined;
 
   constructor() {
     super();
@@ -39,6 +41,16 @@ class ConfigModule extends Module {
 
     // save config if changed
     if (configChanged) this.conf.save();
+  }
+
+  getConfig(): TeenyConf<Config> {
+    const config = this.conf;
+
+    if (config === undefined) {
+      throw new Error('Config is not defined, has it been loaded?');
+    }
+
+    return config;
   }
 
   getDefaultConfig(): Config {

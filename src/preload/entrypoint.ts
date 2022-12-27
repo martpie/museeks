@@ -1,15 +1,15 @@
 import os from 'os';
 import path from 'path';
-import remote, { app, getCurrentWindow } from '@electron/remote';
+
+import { Menu, app } from '@electron/remote';
 import { ipcRenderer, shell } from 'electron';
 import TeenyConf from 'teeny-conf';
-import linvodb from 'linvodb3';
-import leveljs from 'level-js';
-import Promise from 'bluebird';
 
-import { Config, TrackModel, PlaylistModel, Track } from '../shared/types/museeks';
+import { Config, Track } from '../shared/types/museeks';
 import channels from '../shared/lib/ipc-channels';
 import Player from '../renderer/lib/player';
+
+import db from './db';
 
 /**
  * Ok, so what is there exactly?
@@ -26,27 +26,6 @@ import Player from '../renderer/lib/player';
  */
 
 const pathUserData = app.getPath('userData');
-
-/*
-|--------------------------------------------------------------------------
-| Database
-|--------------------------------------------------------------------------
-*/
-
-linvodb.defaults.store = { db: leveljs }; // Comment out to use LevelDB instead of level-js
-// Set dbPath - this should be done explicitly and will be the dir where each model's store is saved
-linvodb.dbPath = pathUserData;
-
-const Track: TrackModel = new linvodb('track');
-Track.ensureIndex({ fieldName: 'path', unique: true });
-
-const Playlist: PlaylistModel = new linvodb('playlist');
-Playlist.ensureIndex({ fieldName: 'importPath', unique: true, sparse: true });
-
-Promise.promisifyAll(Object.getPrototypeOf(Track.find()));
-Promise.promisifyAll(Object.getPrototypeOf(Track.findOne()));
-Promise.promisifyAll(Track);
-Promise.promisifyAll(Playlist);
 
 /*
 |--------------------------------------------------------------------------
@@ -69,8 +48,6 @@ Promise.promisifyAll(Playlist);
 |--------------------------------------------------------------------------
 */
 
-const browserwindow = getCurrentWindow();
-
 const config = new TeenyConf<Config>(path.join(pathUserData, 'config.json'), {});
 
 const player = new Player({
@@ -81,16 +58,11 @@ const player = new Player({
 });
 
 // When editing something here, please update museeks.d.ts to extend the
-// window.__museeks global object.
+// window.MuseeksAPI global object.
 const API = {
   __instantiated: false,
   platform: os.platform(),
   version: app.getVersion(),
-  browserwindow,
-  // After moving m3u export to the main process, re-enable me
-  // browserwindow: {
-  //   isFocused: browserwindow.isFocused,
-  // },
   player,
   config,
   app: {
@@ -98,21 +70,21 @@ const API = {
     restart: () => ipcRenderer.send(channels.APP_RESTART),
     clone: () => ipcRenderer.send(channels.APP_CLOSE),
   },
+  db,
   library: {
-    showTrackInFolder: (track: TrackModel) => shell.showItemInFolder(track.path),
+    showTrackInFolder: (track: Track) => shell.showItemInFolder(track.path),
   },
   playlists: {
-    resolveM3u: (path: string) => ipcRenderer.invoke(channels.PLAYLISTS_RESOLVE_M3U, path),
+    resolveM3u: async (path: string): Promise<string[]> =>
+      await ipcRenderer.invoke(channels.PLAYLISTS_RESOLVE_M3U, path),
   },
   covers: {
     getCoverAsBase64: (track: Track) => ipcRenderer.invoke(channels.COVER_GET, track.path),
   },
-  // To be removed / moved to the Main process
-  db: {
-    Track,
-    Playlist,
+  // TODO: all of the things below should be removed
+  remote: {
+    Menu,
   },
-  remote,
   path: {
     parse: path.parse,
     resolve: path.resolve,
@@ -122,6 +94,6 @@ const API = {
   },
 };
 
-window.__museeks = API;
+window.MuseeksAPI = API;
 
 export type MuseeksAPI = typeof API;

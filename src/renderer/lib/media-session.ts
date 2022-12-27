@@ -1,4 +1,5 @@
 import * as PlayerActions from '../store/actions/PlayerActions';
+
 import Player from './player';
 
 /**
@@ -8,7 +9,7 @@ export default function initMediaSession(player: Player) {
   player.getAudio().addEventListener('loadstart', async () => {
     const track = player.getTrack();
     if (track) {
-      const cover = await window.__museeks.covers.getCoverAsBase64(track);
+      const cover = await window.MuseeksAPI.covers.getCoverAsBase64(track);
 
       navigator.mediaSession.metadata = new MediaMetadata({
         title: track.title,
