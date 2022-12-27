@@ -7,7 +7,7 @@ import * as SettingsActions from '../../store/actions/SettingsActions';
 import Button from '../../elements/Button/Button';
 
 const SettingsAbout: React.FC = () => {
-  const version = window.__museeks.version;
+  const version = window.MuseeksAPI.version;
 
   return (
     <div className='setting setting-about'>

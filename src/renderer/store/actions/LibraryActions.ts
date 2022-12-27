@@ -12,7 +12,7 @@ import { getLoweredMeta } from '../../../shared/lib/utils-id3';
 import * as PlaylistsActions from './PlaylistsActions';
 import * as ToastsActions from './ToastsActions';
 
-const { path, db } = window.__museeks;
+const { path, db } = window.MuseeksAPI;
 
 /**
  * Load tracks from database
@@ -60,7 +60,7 @@ const scanPlaylists = async (paths: string[]) => {
   return Promise.all(
     paths.map(async (filePath) => {
       try {
-        const playlistFiles = await window.__museeks.playlists.resolveM3u(filePath);
+        const playlistFiles = await window.MuseeksAPI.playlists.resolveM3u(filePath);
         const playlistName = path.parse(filePath).name;
 
         const existingTracks: TrackModel[] = await db.tracks.findByPath(playlistFiles);

@@ -47,21 +47,21 @@ class PlayingBarInfo extends React.Component<Props, State> {
   }
 
   componentDidMount() {
-    window.__museeks.player.getAudio().addEventListener('timeupdate', this.tick);
+    window.MuseeksAPI.player.getAudio().addEventListener('timeupdate', this.tick);
 
     window.addEventListener('mousemove', this.dragOver);
     window.addEventListener('mouseup', this.dragEnd);
   }
 
   componentWillUnmount() {
-    window.__museeks.player.getAudio().removeEventListener('timeupdate', this.tick);
+    window.MuseeksAPI.player.getAudio().removeEventListener('timeupdate', this.tick);
 
     window.removeEventListener('mousemove', this.dragOver);
     window.removeEventListener('mouseup', this.dragEnd);
   }
 
   tick() {
-    this.setState({ elapsed: window.__museeks.player.getCurrentTime() });
+    this.setState({ elapsed: window.MuseeksAPI.player.getCurrentTime() });
   }
 
   jumpAudioTo(e: React.MouseEvent<HTMLDivElement>) {

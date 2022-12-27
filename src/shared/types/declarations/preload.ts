@@ -5,7 +5,7 @@ import { MuseeksAPI } from '../../../preload/entrypoint';
 
 declare global {
   interface Window {
-    __museeks: MuseeksAPI;
+    MuseeksAPI: MuseeksAPI;
   }
 
   // Once context bridge is enabled:

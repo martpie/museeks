@@ -29,7 +29,7 @@ const initialState: LibraryState = {
     playlist: [],
   },
   search: '',
-  sort: window.__museeks.config.getx('librarySort'),
+  sort: window.MuseeksAPI.config.getx('librarySort'),
   loading: true,
   refreshing: false,
   refresh: {
@@ -71,8 +71,8 @@ export default (state = initialState, action: Action): LibraryState => {
         order: SortOrder.ASC,
       };
 
-      window.__museeks.config.set('librarySort', sort);
-      window.__museeks.config.save();
+      window.MuseeksAPI.config.set('librarySort', sort);
+      window.MuseeksAPI.config.save();
 
       return {
         ...state,
@@ -89,7 +89,7 @@ export default (state = initialState, action: Action): LibraryState => {
 
     // case (types.LIBRARY_ADD_FOLDERS): { // TODO Redux -> move to a thunk
     //   const { folders } = action.payload;
-    //   let musicFolders = window.__museeks.config.get('musicFolders');
+    //   let musicFolders = window.MuseeksAPI.config.get('musicFolders');
 
     //   // Check if we received folders
     //   if (folders !== undefined) {
@@ -100,8 +100,8 @@ export default (state = initialState, action: Action): LibraryState => {
 
     //     musicFolders.sort();
 
-    //     window.__museeks.config.set('musicFolders', musicFolders);
-    //     window.__museeks.config.saveSync();
+    //     window.MuseeksAPI.config.set('musicFolders', musicFolders);
+    //     window.MuseeksAPI.config.saveSync();
     //   }
 
     //   return { ...state };
@@ -109,12 +109,12 @@ export default (state = initialState, action: Action): LibraryState => {
 
     // case (types.LIBRARY_REMOVE_FOLDER): { // TODO Redux -> move to a thunk
     //   if (!state.library.refreshing) {
-    //     const musicFolders = window.__museeks.config.get('musicFolders');
+    //     const musicFolders = window.MuseeksAPI.config.get('musicFolders');
 
     //     musicFolders.splice(action.index, 1);
 
-    //     window.__museeks.config.set('musicFolders', musicFolders);
-    //     window.__museeks.config.saveSync();
+    //     window.MuseeksAPI.config.set('musicFolders', musicFolders);
+    //     window.MuseeksAPI.config.saveSync();
 
     //     return { ...state };
     //   }

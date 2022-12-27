@@ -20,7 +20,7 @@ import headerStyles from '../Header/Header.module.css';
 
 import styles from './TracksList.module.css';
 
-const { Menu } = window.__museeks.remote;
+const { Menu } = window.MuseeksAPI.remote;
 
 const CHUNK_LENGTH = 20;
 const ROW_HEIGHT = 30; // FIXME
@@ -444,7 +444,7 @@ const TracksList: React.FC<Props> = (props) => {
         {
           label: 'Show in file manager',
           click: () => {
-            window.__museeks.library.showTrackInFolder(track);
+            window.MuseeksAPI.library.showTrackInFolder(track);
           },
         },
         {

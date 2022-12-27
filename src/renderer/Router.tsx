@@ -21,7 +21,7 @@ import Playlist from './components/Playlists/Playlist';
 
 const Router: React.FC = () => {
   const library = useSelector((state: RootState) => state.library);
-  const conf = window.__museeks.config.get() as Config;
+  const conf = window.MuseeksAPI.config.get() as Config;
 
   return (
     <HistoryRouter history={history}>

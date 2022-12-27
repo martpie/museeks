@@ -50,7 +50,7 @@ const Details: React.FC = () => {
   useEffect(() => {
     async function asyncQuery() {
       if (!trackId) return;
-      const track = await window.__museeks.db.tracks.findOnlyByID(trackId);
+      const track = await window.MuseeksAPI.db.tracks.findOnlyByID(trackId);
 
       setFormData({
         title: track.title ?? '',

@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 
 import styles from './ExternalLink.module.css';
 
-const { shell } = window.__museeks;
+const { shell } = window.MuseeksAPI;
 
 interface Props {
   children: string;

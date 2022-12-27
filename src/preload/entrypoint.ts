@@ -58,7 +58,7 @@ const player = new Player({
 });
 
 // When editing something here, please update museeks.d.ts to extend the
-// window.__museeks global object.
+// window.MuseeksAPI global object.
 const API = {
   __instantiated: false,
   platform: os.platform(),
@@ -94,6 +94,6 @@ const API = {
   },
 };
 
-window.__museeks = API;
+window.MuseeksAPI = API;
 
 export type MuseeksAPI = typeof API;

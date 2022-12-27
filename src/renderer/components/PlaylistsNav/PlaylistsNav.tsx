@@ -10,7 +10,7 @@ import { PlaylistModel } from '../../../shared/types/museeks';
 
 import styles from './PlaylistsNav.module.css';
 
-const { Menu } = window.__museeks.remote;
+const { Menu } = window.MuseeksAPI.remote;
 
 interface Props {
   playlists: PlaylistModel[];

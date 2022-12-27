@@ -10,7 +10,7 @@ import channels from '../../../shared/lib/ipc-channels';
 import * as ToastsActions from './ToastsActions';
 import * as PlayerActions from './PlayerActions';
 
-const { db } = window.__museeks;
+const { db } = window.MuseeksAPI;
 
 /**
  * Start playing playlist (on double click)

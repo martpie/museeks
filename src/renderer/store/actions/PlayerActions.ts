@@ -24,7 +24,7 @@ const AUDIO_ERRORS = {
   unknown: 'An unknown error occurred.',
 };
 
-const { player, config } = window.__museeks;
+const { player, config } = window.MuseeksAPI;
 
 /**
  * Bind various player events to actions. Needs unification at some point

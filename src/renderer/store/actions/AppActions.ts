@@ -14,10 +14,10 @@ const init = async (): Promise<void> => {
   // There's some trouble with React StrictMode: player gets created in preload,
   // so events below get attached twice as React.render gets called twice.
   // Maybe the player should not be instantiated in preload?
-  if (window.__museeks.__instantiated) {
+  if (window.MuseeksAPI.__instantiated) {
     return;
   } else {
-    window.__museeks.__instantiated = true;
+    window.MuseeksAPI.__instantiated = true;
   }
 
   // Usual tasks
@@ -25,16 +25,16 @@ const init = async (): Promise<void> => {
     SettingsActions.check(),
     LibraryActions.refresh(),
     PlaylistsActions.refresh(),
-    PlayerActions.init(window.__museeks.player),
+    PlayerActions.init(window.MuseeksAPI.player),
   ]);
 
   // Tell the main process to show the window
-  window.__museeks.app.ready();
+  window.MuseeksAPI.app.ready();
 
   // Support for multiple audio output
   navigator.mediaDevices.addEventListener('devicechange', async () => {
     try {
-      await window.__museeks.player.setOutputDevice('default');
+      await window.MuseeksAPI.player.setOutputDevice('default');
     } catch (err) {
       logger.warn(err);
     }

@@ -50,7 +50,7 @@ export const persistor = persistStore(store, null, () => {
   if (state.player.queue && state.player.queueCursor) {
     const track = state.player.queue[state.player.queueCursor];
 
-    window.__museeks.player.setTrack(track);
+    window.MuseeksAPI.player.setTrack(track);
   }
 });
 

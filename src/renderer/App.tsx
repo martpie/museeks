@@ -49,12 +49,12 @@ const Museeks: React.FC<Props> = (props) => {
         case 'ArrowLeft':
           e.preventDefault();
           e.stopPropagation();
-          PlayerActions.jumpTo(window.__museeks.player.getCurrentTime() - 10);
+          PlayerActions.jumpTo(window.MuseeksAPI.player.getCurrentTime() - 10);
           break;
         case 'ArrowRight':
           e.preventDefault();
           e.stopPropagation();
-          PlayerActions.jumpTo(window.__museeks.player.getCurrentTime() + 10);
+          PlayerActions.jumpTo(window.MuseeksAPI.player.getCurrentTime() + 10);
           break;
         default:
           break;
@@ -89,7 +89,7 @@ const Museeks: React.FC<Props> = (props) => {
   });
 
   return (
-    <div className={`${styles.root} os__${window.__museeks.platform}`} ref={drop}>
+    <div className={`${styles.root} os__${window.MuseeksAPI.platform}`} ref={drop}>
       <KeyBinding onKey={onKey} preventInputConflict />
       <Header />
       <main className={styles.mainContent}>{props.children}</main>
