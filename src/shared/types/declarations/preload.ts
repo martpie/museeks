@@ -7,6 +7,9 @@ declare global {
   interface Window {
     __museeks: MuseeksAPI;
   }
+
+  // Once context bridge is enabled:
+  // const MuseeksAPI: MuseeksAPI;
 }
 
 export {};
