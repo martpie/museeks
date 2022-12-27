@@ -1,6 +1,6 @@
 import os from 'os';
 import path from 'path';
-import remote, { app, getCurrentWindow } from '@electron/remote';
+import { Menu, app, getCurrentWindow } from '@electron/remote';
 import { ipcRenderer, shell } from 'electron';
 import TeenyConf from 'teeny-conf';
 
@@ -86,7 +86,9 @@ const API = {
   covers: {
     getCoverAsBase64: (track: Track) => ipcRenderer.invoke(channels.COVER_GET, track.path),
   },
-  remote,
+  remote: {
+    Menu,
+  },
   path: {
     parse: path.parse,
     resolve: path.resolve,
