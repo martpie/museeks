@@ -1,6 +1,6 @@
 import os from 'os';
 import path from 'path';
-import { Menu, app, getCurrentWindow } from '@electron/remote';
+import { Menu, app } from '@electron/remote';
 import { ipcRenderer, shell } from 'electron';
 import TeenyConf from 'teeny-conf';
 
@@ -46,8 +46,6 @@ const pathUserData = app.getPath('userData');
 |--------------------------------------------------------------------------
 */
 
-const browserwindow = getCurrentWindow();
-
 const config = new TeenyConf<Config>(path.join(pathUserData, 'config.json'), {});
 
 const player = new Player({
@@ -63,11 +61,6 @@ const API = {
   __instantiated: false,
   platform: os.platform(),
   version: app.getVersion(),
-  browserwindow,
-  // After moving m3u export to the main process, re-enable me
-  // browserwindow: {
-  //   isFocused: browserwindow.isFocused,
-  // },
   player,
   config,
   app: {
