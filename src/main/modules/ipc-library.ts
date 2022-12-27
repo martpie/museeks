@@ -1,19 +1,19 @@
 import fs from 'fs';
 import path from 'path';
+
 import { BrowserWindow, ipcMain, IpcMainInvokeEvent } from 'electron';
 import globby from 'globby';
 import * as mmd from 'music-metadata';
 import queue from 'queue';
-
 import { pickBy } from 'lodash-es';
-import * as m3u from '../lib/utils-m3u';
 
+import * as m3u from '../lib/utils-m3u';
 import channels from '../../shared/lib/ipc-channels';
 import { SUPPORTED_PLAYLISTS_EXTENSIONS, SUPPORTED_TRACKS_EXTENSIONS } from '../../shared/constants';
-
 import { Track } from '../../shared/types/museeks';
 import logger from '../../shared/lib/logger';
 import { getLoweredMeta } from '../../shared/lib/utils-id3';
+
 import ModuleWindow from './module-window';
 
 interface ScanFile {

@@ -1,12 +1,11 @@
 import { debounce } from 'lodash-es';
 import { ipcRenderer } from 'electron';
+
 import history from '../../lib/history';
 import store from '../store';
 import { PlayerState } from '../reducers/player';
-
 import types from '../action-types';
 import SORT_ORDERS from '../../constants/sort-orders';
-
 import { sortTracks, filterTracks } from '../../lib/utils-library';
 import { shuffleTracks } from '../../lib/utils-player';
 import { TrackModel, PlayerStatus, Repeat } from '../../../shared/types/museeks';
@@ -14,6 +13,7 @@ import logger from '../../../shared/lib/logger';
 import Player from '../../lib/player';
 import initMediaSession from '../../lib/media-session';
 import channels from '../../../shared/lib/ipc-channels';
+
 import * as LibraryActions from './LibraryActions';
 import * as ToastsActions from './ToastsActions';
 

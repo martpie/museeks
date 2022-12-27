@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 
 import TracksList from '../TracksList/TracksList';
 import * as ViewMessage from '../../elements/ViewMessage/ViewMessage';
-
 import * as PlaylistsActions from '../../store/actions/PlaylistsActions';
 import { filterTracks } from '../../lib/utils-library';
 import { RootState } from '../../store/reducers';

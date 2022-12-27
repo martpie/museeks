@@ -1,6 +1,5 @@
 import store from '../store';
 import types from '../action-types';
-
 import { Track } from '../../../shared/types/museeks';
 
 /**

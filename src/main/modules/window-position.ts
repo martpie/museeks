@@ -3,6 +3,7 @@
  */
 
 import TeenyConf from 'teeny-conf';
+
 import { Config } from '../../shared/types/museeks';
 
 import ModuleWindow from './module-window';

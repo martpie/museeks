@@ -3,10 +3,12 @@
  */
 
 import path from 'path';
+
 import electron from 'electron';
 import TeenyConf from 'teeny-conf';
 
 import { Config, Repeat, SortBy, SortOrder } from '../../shared/types/museeks';
+
 import Module from './module';
 
 const { app } = electron;

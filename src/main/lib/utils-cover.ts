@@ -1,5 +1,6 @@
 import path from 'path';
 import fs from 'fs';
+
 import * as mmd from 'music-metadata';
 import globby from 'globby';
 

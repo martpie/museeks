@@ -2,7 +2,6 @@ import React from 'react';
 
 import ButtonShuffle from '../PlayerOptionsButtons/ButtonShuffle';
 import ButtonRepeat from '../PlayerOptionsButtons/ButtonRepeat';
-
 import * as PlayerActions from '../../store/actions/PlayerActions';
 import * as utils from '../../lib/utils';
 import { TrackModel, Repeat } from '../../../shared/types/museeks';

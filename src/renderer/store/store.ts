@@ -10,6 +10,7 @@ import { persistStore, persistReducer, createTransform } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
 import { PlayerStatus } from '../../shared/types/museeks';
+
 import rootReducer, { RootState } from './reducers';
 import { PlayerState } from './reducers/player';
 

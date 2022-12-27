@@ -6,8 +6,8 @@ import { useSelector } from 'react-redux';
 
 import { getStatus } from '../../lib/utils-library';
 import { RootState } from '../../store/reducers';
-
 import ProgressBar from '../ProgressBar/ProgressBar';
+
 import styles from './Footer.module.css';
 
 const Footer: React.FC = () => {

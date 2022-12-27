@@ -1,15 +1,14 @@
 import type electron from 'electron';
 import { ipcRenderer } from 'electron';
-
 import { chunk, flatten } from 'lodash-es';
+
 import store from '../store';
 import types from '../action-types';
-
 import { TrackEditableFields, SortBy, TrackModel, Track } from '../../../shared/types/museeks';
 import channels from '../../../shared/lib/ipc-channels';
-
 import logger from '../../../shared/lib/logger';
 import { getLoweredMeta } from '../../../shared/lib/utils-id3';
+
 import * as PlaylistsActions from './PlaylistsActions';
 import * as ToastsActions from './ToastsActions';
 

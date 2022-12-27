@@ -1,4 +1,5 @@
 import * as PlayerActions from '../store/actions/PlayerActions';
+
 import Player from './player';
 
 /**

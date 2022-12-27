@@ -4,12 +4,14 @@
  */
 
 import os from 'os';
-import { ipcMain, app } from 'electron';
 
+import { ipcMain, app } from 'electron';
 import TeenyConf from 'teeny-conf';
+
 import logger from '../../shared/lib/logger';
 import channels from '../../shared/lib/ipc-channels';
 import { Config } from '../../shared/types/museeks';
+
 import ModuleWindow from './module-window';
 
 class AppModule extends ModuleWindow {

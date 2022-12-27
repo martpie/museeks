@@ -4,8 +4,8 @@ import cx from 'classnames';
 import Slider from 'react-rangeslider';
 
 import * as PlayerActions from '../../store/actions/PlayerActions';
-
 import controlStyles from '../PlayerControls/PlayerControls.module.css';
+
 import styles from './VolumeControl.module.css';
 
 // Volume easing - http://www.dr-lex.be/info-stuff/volumecontrols.html#about

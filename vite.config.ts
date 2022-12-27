@@ -1,5 +1,6 @@
 import { rmSync } from 'fs';
 import path from 'path';
+
 import { defineConfig } from 'vite';
 import electronMain from 'vite-plugin-electron';
 import electronRenderer from 'vite-plugin-electron-renderer';

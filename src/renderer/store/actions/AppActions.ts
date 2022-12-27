@@ -3,8 +3,8 @@ import { ipcRenderer } from 'electron';
 import history from '../../lib/history';
 import channels from '../../../shared/lib/ipc-channels';
 import { Theme } from '../../../shared/types/museeks';
-
 import logger from '../../../shared/lib/logger';
+
 import * as LibraryActions from './LibraryActions';
 import * as PlaylistsActions from './PlaylistsActions';
 import * as PlayerActions from './PlayerActions';

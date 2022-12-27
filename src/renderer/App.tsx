@@ -5,14 +5,13 @@ import { useDrop } from 'react-dnd';
 import { NativeTypes } from 'react-dnd-html5-backend';
 
 import logger from '../shared/lib/logger';
+
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import Toasts from './components/Toasts/Toasts';
-
 import AppActions from './store/actions/AppActions';
 import * as LibraryActions from './store/actions/LibraryActions';
 import * as PlayerActions from './store/actions/PlayerActions';
-
 import styles from './App.module.css';
 import { isCtrlKey } from './lib/utils-events';
 import DropzoneImport from './components/DropzoneImport/DropzoneImport';

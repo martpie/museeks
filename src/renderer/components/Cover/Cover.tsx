@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+
 import { Track } from '../../../shared/types/museeks';
 
 import styles from './Cover.module.css';

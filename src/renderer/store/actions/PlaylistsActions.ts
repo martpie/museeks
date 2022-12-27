@@ -1,10 +1,12 @@
 import { ipcRenderer } from 'electron';
+
 import { Playlist, TrackModel, PlaylistModel } from '../../../shared/types/museeks';
 import history from '../../lib/history';
 import store from '../store';
 import types from '../action-types';
 import logger from '../../../shared/lib/logger';
 import channels from '../../../shared/lib/ipc-channels';
+
 import * as ToastsActions from './ToastsActions';
 import * as PlayerActions from './PlayerActions';
 

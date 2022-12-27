@@ -4,12 +4,14 @@
 
 import os from 'os';
 import path from 'path';
+
 import ps from 'ps-node';
 import { Tray, Menu, app, ipcMain, nativeImage } from 'electron';
 
 import { TrackModel, PlayerStatus } from '../../shared/types/museeks';
 import channels from '../../shared/lib/ipc-channels';
 import logger from '../../shared/lib/logger';
+
 import ModuleWindow from './module-window';
 
 class TrayModule extends ModuleWindow {

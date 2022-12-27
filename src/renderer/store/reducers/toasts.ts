@@ -1,5 +1,4 @@
 import types from '../action-types';
-
 import { Toast, Action } from '../../../shared/types/museeks';
 
 export type ToastsState = Toast[];

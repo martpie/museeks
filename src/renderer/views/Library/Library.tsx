@@ -7,8 +7,8 @@ import TracksList from '../../components/TracksList/TracksList';
 import { filterTracks, sortTracks } from '../../lib/utils-library';
 import SORT_ORDERS from '../../constants/sort-orders';
 import { RootState } from '../../store/reducers';
-
 import appStyles from '../../App.module.css';
+
 import styles from './Library.module.css';
 
 const Library: React.FC = () => {

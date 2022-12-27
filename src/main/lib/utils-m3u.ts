@@ -1,5 +1,6 @@
 import path from 'path';
 import fs from 'fs';
+
 import chardet from 'chardet';
 import iconv from 'iconv-lite';
 

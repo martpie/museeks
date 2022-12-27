@@ -1,8 +1,8 @@
 import { ipcMain } from 'electron';
 
 import channels from '../../shared/lib/ipc-channels';
-
 import { fetchCover } from '../lib/utils-cover';
+
 import ModuleWindow from './module-window';
 
 /**

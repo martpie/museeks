@@ -3,7 +3,6 @@ import React from 'react';
 import ExternalLink from '../../elements/ExternalLink/ExternalLink';
 import Heart from '../../elements/Heart/Heart';
 import * as Setting from '../../components/Setting/Setting';
-
 import * as SettingsActions from '../../store/actions/SettingsActions';
 import Button from '../../elements/Button/Button';
 

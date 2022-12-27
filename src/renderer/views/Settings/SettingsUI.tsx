@@ -2,7 +2,6 @@ import React, { useCallback, ChangeEventHandler } from 'react';
 
 import * as SettingsActions from '../../store/actions/SettingsActions';
 import * as Setting from '../../components/Setting/Setting';
-
 import CheckboxSetting from '../../components/SettingCheckbox/SettingCheckbox';
 import { Config } from '../../../shared/types/museeks';
 import { themes } from '../../../shared/lib/themes';

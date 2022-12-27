@@ -10,6 +10,10 @@ import { Provider } from 'react-redux';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 
+import '../../node_modules/react-rangeslider/lib/index.css';
+import '../../node_modules/font-awesome/css/font-awesome.css';
+import '../../node_modules/normalize.css/normalize.css';
+
 import Root from './Root';
 import Router from './Router';
 import store from './store/store';
@@ -20,9 +24,6 @@ import store from './store/store';
 |--------------------------------------------------------------------------
 */
 
-import '../../node_modules/normalize.css/normalize.css';
-import '../../node_modules/font-awesome/css/font-awesome.css';
-import '../../node_modules/react-rangeslider/lib/index.css';
 import './styles/main.module.css';
 
 /*

@@ -3,23 +3,21 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import KeyBinding from 'react-keybinding-component';
 import chunk from 'lodash-es/chunk';
 import { useSelector } from 'react-redux';
-
 import { useNavigate } from 'react-router';
+
 import TrackRow from '../TrackRow/TrackRow';
 import CustomScrollbar from '../CustomScrollbar/CustomScrollbar';
 import TracksListHeader from '../TracksListHeader/TracksListHeader';
-
 import * as LibraryActions from '../../store/actions/LibraryActions';
 import * as PlaylistsActions from '../../store/actions/PlaylistsActions';
 import * as PlayerActions from '../../store/actions/PlayerActions';
 import * as QueueActions from '../../store/actions/QueueActions';
-
 import { isLeftClick, isRightClick, isCtrlKey, isAltKey } from '../../lib/utils-events';
 import { PlaylistModel, TrackModel } from '../../../shared/types/museeks';
 import { RootState } from '../../store/reducers';
-
 import scrollbarStyles from '../CustomScrollbar/CustomScrollbar.module.css';
 import headerStyles from '../Header/Header.module.css';
+
 import styles from './TracksList.module.css';
 
 const { Menu } = window.__museeks.remote;

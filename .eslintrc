@@ -18,7 +18,12 @@
     "@typescript-eslint/no-unused-vars": "off",
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/explicit-member-accessibility": "off",
-    "import/order": "error",
+    "import/order": [
+      "error",
+      {
+        "newlines-between": "always-and-inside-groups"
+      }
+    ],
     "import/named": "off",
     "import/default": "off",
     "spaced-comment": ["error", "always"],

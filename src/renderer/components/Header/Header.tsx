@@ -4,7 +4,6 @@ import { useSelector } from 'react-redux';
 import PlayingBar from '../PlayingBar/PlayingBar';
 import PlayerControls from '../PlayerControls/PlayerControls';
 import Search from '../Search/Search';
-
 import { RootState } from '../../store/reducers';
 
 import styles from './Header.module.css';
