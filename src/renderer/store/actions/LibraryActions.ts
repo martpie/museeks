@@ -1,15 +1,15 @@
 import type electron from 'electron';
 import { ipcRenderer } from 'electron';
-import queue from 'queue';
 
+import { chunk, flatten } from 'lodash-es';
 import store from '../store';
 import types from '../action-types';
 
-import * as utils from '../../lib/utils';
-import { TrackEditableFields, SortBy, TrackModel } from '../../../shared/types/museeks';
+import { TrackEditableFields, SortBy, TrackModel, Track } from '../../../shared/types/museeks';
 import channels from '../../../shared/lib/ipc-channels';
 
 import logger from '../../../shared/lib/logger';
+import { getLoweredMeta } from '../../../shared/lib/utils-id3';
 import * as PlaylistsActions from './PlaylistsActions';
 import * as ToastsActions from './ToastsActions';
 
@@ -78,91 +78,6 @@ const scanPlaylists = async (paths: string[]) => {
   );
 };
 
-const scan = {
-  processed: 0,
-  total: 0,
-};
-
-const scanTracks = async (paths: string[]): Promise<TrackModel[]> => {
-  return new Promise((resolve, reject) => {
-    if (paths.length === 0) resolve([]);
-
-    try {
-      // Instantiate queue
-      let scannedFiles: TrackModel[] = [];
-
-      // eslint-disable-next-line
-      // @ts-ignore Outdated types
-      // https://github.com/jessetane/queue/pull/15#issuecomment-414091539
-      const scanQueue = queue();
-      scanQueue.concurrency = 32;
-      scanQueue.autostart = true;
-
-      scanQueue.on('end', async () => {
-        scan.processed = 0;
-        scan.total = 0;
-
-        resolve(scannedFiles);
-      });
-
-      scanQueue.on('success', () => {
-        // Every 100 scans, update progress bar
-        if (scan.processed % 100 === 0) {
-          // Progress bar update
-          store.dispatch({
-            type: types.LIBRARY_REFRESH_PROGRESS,
-            payload: {
-              processed: scan.processed,
-              total: scan.total,
-            },
-          });
-
-          // Add tracks to the library view
-          const tracks = [...scannedFiles];
-          scannedFiles = []; // Reset current selection
-          store.dispatch({
-            type: types.LIBRARY_ADD_TRACKS,
-            payload: {
-              tracks,
-            },
-          });
-        }
-      });
-      // End queue instantiation
-
-      scan.total += paths.length;
-
-      paths.forEach((filePath) => {
-        scanQueue.push(async (callback) => {
-          try {
-            // Normalize (back)slashes on Windows
-            filePath = path.resolve(filePath);
-
-            // Check if there is an existing record in the DB
-            const existingDoc = await db.tracks.findOnlyByPath(filePath);
-
-            // If there is existing document
-            if (!existingDoc) {
-              // Get metadata
-              const track = await utils.getMetadata(filePath);
-              const insertedDoc = await db.tracks.insert(track);
-              scannedFiles.push(insertedDoc);
-            }
-
-            scan.processed++;
-          } catch (err) {
-            logger.warn(err);
-          }
-
-          if (callback) callback();
-        });
-      });
-    } catch (err) {
-      reject(err);
-    }
-  });
-};
-
 /**
  * Add tracks to Library
  */
@@ -187,8 +102,46 @@ export const add = async (pathsToScan: string[]): Promise<TrackModel[]> => {
       return [];
     }
 
-    // 5. Scan tracks then scan playlists
-    const importedTracks = await scanTracks(supportedTrackFiles);
+    // 5. Import the music tracks found the directories
+    const tracks: Track[] = await ipcRenderer.invoke(channels.LIBRARY_IMPORT_TRACKS, supportedTrackFiles);
+
+    const batchSize = 100;
+    const chunkedTracks = chunk(tracks, batchSize);
+    let processed = 0;
+
+    const chunkedImportedTracks = await Promise.all(
+      chunkedTracks.map(async (chunk) => {
+        // First, let's see if some of those files are already inserted
+        const insertedChunk = await db.tracks.insertMultiple(chunk);
+
+        processed += batchSize;
+
+        // Progress bar update
+        store.dispatch({
+          type: types.LIBRARY_REFRESH_PROGRESS,
+          payload: {
+            processed,
+            total: tracks.length,
+          },
+        });
+
+        // Add tracks to the library view
+        store.dispatch({
+          type: types.LIBRARY_ADD_TRACKS,
+          payload: {
+            tracks: insertedChunk,
+          },
+        });
+
+        return insertedChunk;
+      })
+    );
+
+    const importedTracks = flatten(chunkedImportedTracks);
+
+    // TODO: do not re-import existing tracks
+
+    // Import playlists found in the directories
     await scanPlaylists(supportedPlaylistsFiles);
 
     await refresh();
@@ -298,7 +251,7 @@ export const updateTrackMetadata = async (trackId: string, newFields: TrackEdita
   track = {
     ...track,
     ...newFields,
-    loweredMetas: utils.getLoweredMeta(newFields),
+    loweredMetas: getLoweredMeta(newFields),
   };
 
   if (!track) {

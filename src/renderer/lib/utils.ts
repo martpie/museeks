@@ -1,13 +1,3 @@
-import * as mmd from 'music-metadata';
-import pickBy from 'lodash-es/pickBy';
-
-import { Track, TrackEditableFields } from '../../shared/types/museeks';
-import logger from '../../shared/lib/logger';
-
-const { path } = window.__museeks;
-
-// TODO: move that to the main process at some point
-
 /**
  * Parse an int to a more readable string
  */
@@ -28,22 +18,6 @@ export const parseDuration = (duration: number | null): string => {
   }
 
   return '00:00';
-};
-
-/**
- * Strip accent from String. From https://jsperf.com/strip-accents
- */
-export const stripAccents = (str: string): string => {
-  const accents = 'ÀÁÂÃÄÅàáâãäåÒÓÔÕÕÖØòóôõöøÈÉÊËèéêëðÇçÐÌÍÎÏìíîïÙÚÛÜùúûüÑñŠšŸÿýŽž';
-  const fixes = 'AAAAAAaaaaaaOOOOOOOooooooEEEEeeeeeCcDIIIIiiiiUUUUuuuuNnSsYyyZz';
-  const split = accents.split('').join('|');
-  const reg = new RegExp(`(${split})`, 'g');
-
-  function replacement(a: string) {
-    return fixes[accents.indexOf(a)] || '';
-  }
-
-  return str.replace(reg, replacement).toLowerCase();
 };
 
 /**
@@ -68,118 +42,23 @@ export const removeUselessFolders = (folders: string[]): string[] => {
   return filteredFolders;
 };
 
-// TODO
-export const getDefaultMetadata = (): Track => ({
-  album: 'Unknown',
-  artist: ['Unknown artist'],
-  disk: {
-    no: 0,
-    of: 0,
-  },
-  duration: 0,
-  genre: [],
-  loweredMetas: {
-    artist: ['unknown artist'],
-    album: 'unknown',
-    title: '',
-    genre: [],
-  },
-  path: '',
-  playCount: 0,
-  title: '',
-  track: {
-    no: 0,
-    of: 0,
-  },
-  year: null,
-});
+// export const getAudioDuration = (trackPath: string): Promise<number> => {
+//   const audio = new Audio();
 
-export const parseMusicMetadata = (data: mmd.IAudioMetadata, trackPath: string): Partial<Track> => {
-  const { common, format } = data;
+//   return new Promise((resolve, reject) => {
+//     audio.addEventListener('loadedmetadata', () => {
+//       resolve(audio.duration);
+//     });
 
-  const metadata = {
-    album: common.album,
-    artist: common.artists || (common.artist && [common.artist]) || (common.albumartist && [common.albumartist]),
-    disk: common.disk,
-    duration: format.duration,
-    genre: common.genre,
-    title: common.title || path.parse(trackPath).base,
-    track: common.track,
-    year: common.year,
-  };
+//     audio.addEventListener('error', (e) => {
+//       // eslint-disable-next-line
+//       // @ts-ignore error event typing is wrong
+//       const message = `Error getting audio duration: (${e.currentTarget.error.code}) ${trackPath}`;
+//       reject(new Error(message));
+//     });
 
-  return pickBy(metadata);
-};
-
-export const getLoweredMeta = (metadata: TrackEditableFields): Track['loweredMetas'] => ({
-  artist: metadata.artist.map((meta) => stripAccents(meta.toLowerCase())),
-  album: stripAccents(metadata.album.toLowerCase()),
-  title: stripAccents(metadata.title.toLowerCase()),
-  genre: metadata.genre.map((meta) => stripAccents(meta.toLowerCase())),
-});
-
-export const getAudioDuration = (trackPath: string): Promise<number> => {
-  const audio = new Audio();
-
-  return new Promise((resolve, reject) => {
-    audio.addEventListener('loadedmetadata', () => {
-      resolve(audio.duration);
-    });
-
-    audio.addEventListener('error', (e) => {
-      // eslint-disable-next-line
-      // @ts-ignore error event typing is wrong
-      const message = `Error getting audio duration: (${e.currentTarget.error.code}) ${trackPath}`;
-      reject(new Error(message));
-    });
-
-    audio.preload = 'metadata';
-    // HACK no idea what other caracters could fuck things up
-    audio.src = encodeURI(trackPath).replace('#', '%23');
-  });
-};
-
-/**
- * Get a file metadata
- */
-export const getMetadata = async (trackPath: string): Promise<Track> => {
-  const defaultMetadata = getDefaultMetadata();
-
-  const basicMetadata: Track = {
-    ...defaultMetadata,
-    path: trackPath,
-  };
-
-  try {
-    const data = await mmd.parseFile(trackPath, {
-      skipCovers: true,
-      duration: true,
-    });
-
-    // Let's try to define something with what we got so far...
-    const parsedData = parseMusicMetadata(data, trackPath);
-
-    const metadata: Track = {
-      ...defaultMetadata,
-      ...parsedData,
-      path: trackPath,
-    };
-
-    metadata.loweredMetas = getLoweredMeta(metadata);
-
-    // Let's try another wat to retrieve a track duration
-    if (metadata.duration < 0.5) {
-      try {
-        metadata.duration = await getAudioDuration(trackPath);
-      } catch (err) {
-        logger.warn(`An error occured while getting ${trackPath} duration: ${err}`);
-      }
-    }
-
-    return metadata;
-  } catch (err) {
-    logger.warn(`An error occured while reading ${trackPath} id3 tags: ${err}`);
-  }
-
-  return basicMetadata;
-};
+//     audio.preload = 'metadata';
+//     // HACK no idea what other caracters could fuck things up
+//     audio.src = encodeURI(trackPath).replace('#', '%23');
+//   });
+// };

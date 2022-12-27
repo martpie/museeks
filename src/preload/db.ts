@@ -49,6 +49,10 @@ const tracks = {
     return Tracks.insertAsync(track);
   },
 
+  insertMultiple(tracks: Track[]): Promise<TrackModel[]> {
+    return Tracks.insertAsync(tracks);
+  },
+
   update(trackID: string, track: Track): Promise<TrackModel> {
     return Tracks.updateAsync({ _id: trackID }, track);
   },

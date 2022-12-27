@@ -19,11 +19,14 @@ const Footer: React.FC = () => {
     const { processed, total } = library.refresh;
 
     if (library.refreshing) {
+      // Sketchy,
+      const isScanning = total === 0;
       const progress = total > 0 ? Math.round((processed / total) * 100) : 100;
+
       return (
         <div className={styles.footer__libraryRefresh}>
           <div className={styles.footer__libraryRefresh__progress}>
-            <ProgressBar progress={progress} animated={total === 0} />
+            {isScanning ? <>scanning tracks...</> : <ProgressBar progress={progress} animated={total === 0} />}
           </div>
           {total > 0 && (
             <div className={styles.footer__libraryRefresh__count}>

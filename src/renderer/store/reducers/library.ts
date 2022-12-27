@@ -1,7 +1,7 @@
 import types from '../action-types';
 
-import * as utils from '../../lib/utils';
 import { Action, TrackModel, SortBy, SortOrder } from '../../../shared/types/museeks';
+import { stripAccents } from '../../../shared/lib/utils-id3';
 
 export interface LibrarySort {
   by: SortBy;
@@ -84,7 +84,7 @@ export default (state = initialState, action: Action): LibraryState => {
     case types.FILTER_SEARCH: {
       return {
         ...state,
-        search: utils.stripAccents(action.payload.search),
+        search: stripAccents(action.payload.search),
       };
     }
 

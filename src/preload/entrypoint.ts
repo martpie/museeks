@@ -86,6 +86,7 @@ const API = {
   covers: {
     getCoverAsBase64: (track: Track) => ipcRenderer.invoke(channels.COVER_GET, track.path),
   },
+  // TODO: all of the things below should be removed
   remote: {
     Menu,
   },
