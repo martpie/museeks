@@ -4,7 +4,7 @@
 
 import os from 'os';
 
-import logger from '../../shared/lib/logger';
+import logger from '~shared/lib/logger';
 
 class Module {
   protected loaded: boolean;

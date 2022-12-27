@@ -2,8 +2,9 @@ import React from 'react';
 import InlineSVG from 'svg-inline-react';
 import cx from 'classnames';
 
+import { Repeat } from '~shared/types/museeks';
+
 import * as PlayerActions from '../../store/actions/PlayerActions';
-import { Repeat } from '../../../shared/types/museeks';
 import icons from '../../lib/icons';
 
 import styles from './common.module.css';

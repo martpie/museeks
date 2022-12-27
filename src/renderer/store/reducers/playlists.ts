@@ -1,5 +1,5 @@
 import types from '../action-types';
-import { PlaylistModel, Action } from '../../../shared/types/museeks';
+import { PlaylistModel, Action } from '~shared/types/museeks';
 
 export interface PlaylistsState {
   list: PlaylistModel[];

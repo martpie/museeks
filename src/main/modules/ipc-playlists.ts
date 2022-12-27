@@ -3,8 +3,8 @@ import path from 'path';
 import { app, dialog, ipcMain } from 'electron';
 import * as m3u from 'm3ujs';
 
-import channels from '../../shared/lib/ipc-channels';
-import logger from '../../shared/lib/logger';
+import channels from '~shared/lib/ipc-channels';
+import logger from '~shared/lib/logger';
 
 import ModuleWindow from './module-window';
 

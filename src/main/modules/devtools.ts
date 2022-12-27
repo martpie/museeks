@@ -5,9 +5,9 @@
 
 import installExtensions, { REDUX_DEVTOOLS, REACT_DEVELOPER_TOOLS } from 'electron-devtools-installer';
 
-import logger from '../../shared/lib/logger';
-
 import ModuleWindow from './module-window';
+
+import logger from '~shared/lib/logger';
 
 class DevtoolsModule extends ModuleWindow {
   async load(): Promise<void> {

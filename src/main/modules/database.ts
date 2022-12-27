@@ -1,7 +1,7 @@
 // import { ipcMain } from 'electron';
 
-// import channels from '../../shared/lib/ipc-channels';
-// import { Track } from '../../shared/types/museeks';
+// import channels from '~shared/lib/ipc-channels';
+// import { Track } from '~shared/types/museeks';
 // import * as db from '../../preload/db';
 import ModuleWindow from './module-window';
 

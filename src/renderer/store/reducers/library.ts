@@ -1,6 +1,6 @@
 import types from '../action-types';
-import { Action, TrackModel, SortBy, SortOrder } from '../../../shared/types/museeks';
-import { stripAccents } from '../../../shared/lib/utils-id3';
+import { Action, TrackModel, SortBy, SortOrder } from '~shared/types/museeks';
+import { stripAccents } from '~shared/lib/utils-id3';
 
 export interface LibrarySort {
   by: SortBy;

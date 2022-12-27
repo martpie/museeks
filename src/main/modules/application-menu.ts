@@ -5,9 +5,9 @@
 
 import { Menu, shell } from 'electron';
 
-import channels from '../../shared/lib/ipc-channels';
-
 import ModuleWindow from './module-window';
+
+import channels from '~shared/lib/ipc-channels';
 
 class ApplicationMenuModule extends ModuleWindow {
   async load(): Promise<void> {

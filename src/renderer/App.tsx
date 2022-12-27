@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router';
 import { useDrop } from 'react-dnd';
 import { NativeTypes } from 'react-dnd-html5-backend';
 
-import logger from '../shared/lib/logger';
+import logger from '~shared/lib/logger';
 
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';

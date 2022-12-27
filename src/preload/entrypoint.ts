@@ -5,11 +5,12 @@ import { Menu, app } from '@electron/remote';
 import { ipcRenderer, shell } from 'electron';
 import TeenyConf from 'teeny-conf';
 
-import { Config, Track } from '../shared/types/museeks';
-import channels from '../shared/lib/ipc-channels';
 import Player from '../renderer/lib/player';
 
 import db from './db';
+
+import { Config, Track } from '~shared/types/museeks';
+import channels from '~shared/lib/ipc-channels';
 
 /**
  * Ok, so what is there exactly?

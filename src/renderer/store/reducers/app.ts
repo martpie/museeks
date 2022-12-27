@@ -1,5 +1,6 @@
 import types from '../action-types';
-import { Action } from '../../../shared/types/museeks';
+
+import { Action } from '~shared/types/museeks';
 
 export type AppState = null;
 

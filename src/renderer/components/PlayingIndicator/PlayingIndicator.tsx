@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import Icon from 'react-fontawesome';
 import { useSelector } from 'react-redux';
 
+import { PlayerStatus } from '~shared/types/museeks';
+
 import * as PlayerActions from '../../store/actions/PlayerActions';
-import { PlayerStatus } from '../../../shared/types/museeks';
 import { RootState } from '../../store/reducers';
 
 import styles from './PlayingIndicator.module.css';

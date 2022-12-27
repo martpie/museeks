@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Routes, Route, unstable_HistoryRouter as HistoryRouter } from 'react-router-dom';
 
-import { Config } from '../shared/types/museeks';
+import { Config } from '~shared/types/museeks';
 
 import history from './lib/history';
 

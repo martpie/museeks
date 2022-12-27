@@ -1,8 +1,9 @@
 import React, { useCallback } from 'react';
 import cx from 'classnames';
 
+import { TrackModel } from '~shared/types/museeks';
+
 import * as QueueActions from '../../store/actions/QueueActions';
-import { TrackModel } from '../../../shared/types/museeks';
 
 import styles from './QueueListItem.module.css';
 

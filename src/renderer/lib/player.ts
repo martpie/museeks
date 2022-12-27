@@ -1,5 +1,5 @@
 import { parseUri } from '../../main/lib/utils-uri';
-import { TrackModel } from '../../shared/types/museeks';
+import { TrackModel } from '~shared/types/museeks';
 
 interface PlayerOptions {
   playbackRate?: number;

@@ -4,7 +4,7 @@ import fs from 'fs';
 import chardet from 'chardet';
 import iconv from 'iconv-lite';
 
-import logger from '../../shared/lib/logger';
+import logger from '~shared/lib/logger';
 
 const isFile = (path: string) => fs.lstatSync(path).isFile();
 

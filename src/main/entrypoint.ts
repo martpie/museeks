@@ -3,8 +3,6 @@ import path from 'path';
 import { app, BrowserWindow } from 'electron';
 import remote from '@electron/remote/main';
 
-import logger from '../shared/lib/logger';
-
 import AppModule from './modules/app';
 import ApplicationMenuModule from './modules/application-menu';
 import TrayModule from './modules/tray';
@@ -24,6 +22,8 @@ import IPCDatabaseModule from './modules/database';
 import IPCPlaylistsModule from './modules/ipc-playlists';
 import * as ModulesManager from './lib/modules-manager';
 import { checkBounds } from './lib/utils';
+
+import logger from '~shared/lib/logger';
 
 const appRoot = path.resolve(__dirname, '..'); // Careful, not future-proof
 const rendererDistPath = path.join(appRoot, 'renderer');

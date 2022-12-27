@@ -4,9 +4,10 @@ import type { MenuItemConstructorOptions } from 'electron';
 import React from 'react';
 import Icon from 'react-fontawesome';
 
+import { PlaylistModel } from '~shared/types/museeks';
+
 import * as PlaylistsActions from '../../store/actions/PlaylistsActions';
 import PlaylistsNavLink from '../PlaylistsNavLink/PlaylistsNavLink';
-import { PlaylistModel } from '../../../shared/types/museeks';
 
 import styles from './PlaylistsNav.module.css';
 

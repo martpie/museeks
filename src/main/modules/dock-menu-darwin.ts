@@ -4,10 +4,10 @@
 
 import { Menu, app, ipcMain } from 'electron';
 
-import channels from '../../shared/lib/ipc-channels';
-import { PlayerStatus, TrackModel } from '../../shared/types/museeks';
-
 import ModuleWindow from './module-window';
+
+import channels from '~shared/lib/ipc-channels';
+import { PlayerStatus, TrackModel } from '~shared/types/museeks';
 
 class DockMenuDarwinModule extends ModuleWindow {
   protected menu: Electron.MenuItemConstructorOptions[];

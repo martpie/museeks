@@ -1,13 +1,15 @@
 import React, { useCallback } from 'react';
 import { ipcRenderer } from 'electron';
 
+import channels from '~shared/lib/ipc-channels';
+
+import logger from '~shared/lib/logger';
+
 import * as Setting from '../../components/Setting/Setting';
 import * as LibraryActions from '../../store/actions/LibraryActions';
 import * as PlayerActions from '../../store/actions/PlayerActions';
 import { LibraryState } from '../../store/reducers/library';
 import Button from '../../elements/Button/Button';
-import channels from '../../../shared/lib/ipc-channels';
-import logger from '../../../shared/lib/logger';
 
 interface Props {
   library: LibraryState;

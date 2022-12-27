@@ -3,6 +3,7 @@ import path from 'path';
 
 import { defineConfig } from 'vite';
 import electronMain from 'vite-plugin-electron';
+import tsconfigPaths from 'vite-tsconfig-paths';
 import electronRenderer from 'vite-plugin-electron-renderer';
 import react from '@vitejs/plugin-react';
 
@@ -22,6 +23,7 @@ export default defineConfig({
   },
   plugins: [
     react(),
+    tsconfigPaths(),
     electronMain([
       {
         entry: 'src/main/entrypoint.ts',

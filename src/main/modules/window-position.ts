@@ -4,9 +4,9 @@
 
 import TeenyConf from 'teeny-conf';
 
-import { Config } from '../../shared/types/museeks';
-
 import ModuleWindow from './module-window';
+
+import { Config } from '~shared/types/museeks';
 
 class WindowPositionModule extends ModuleWindow {
   protected config: TeenyConf<Config>;

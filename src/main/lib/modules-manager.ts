@@ -1,5 +1,6 @@
-import logger from '../../shared/lib/logger';
 import Module from '../modules/module';
+
+import logger from '~shared/lib/logger';
 
 export const init = async (...modules: Module[]): Promise<void> => {
   await Promise.all(

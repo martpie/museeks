@@ -1,11 +1,12 @@
 import { ipcMain, NativeImage, nativeImage, Notification } from 'electron';
 import TeenyConf from 'teeny-conf';
 
-import channels from '../../shared/lib/ipc-channels';
-import { Config, TrackModel } from '../../shared/types/museeks';
 import * as utilsCover from '../lib/utils-cover';
 
 import ModuleWindow from './module-window';
+
+import channels from '~shared/lib/ipc-channels';
+import { Config, TrackModel } from '~shared/types/museeks';
 
 /**
  * Module in charge of displaying native notifications on certain user actions

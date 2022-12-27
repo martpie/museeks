@@ -5,8 +5,7 @@
     "useDefineForClassFields": true,
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "paths": {
-      "@/*": ["src/*"],
-      "styles/*": ["src/assets/styles/*"]
+      "~shared/*": ["src/shared/*"]
     },
     "noUnusedLocals": true,
     "allowJs": false,

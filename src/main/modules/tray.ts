@@ -8,11 +8,11 @@ import path from 'path';
 import ps from 'ps-node';
 import { Tray, Menu, app, ipcMain, nativeImage } from 'electron';
 
-import { TrackModel, PlayerStatus } from '../../shared/types/museeks';
-import channels from '../../shared/lib/ipc-channels';
-import logger from '../../shared/lib/logger';
-
 import ModuleWindow from './module-window';
+
+import { TrackModel, PlayerStatus } from '~shared/types/museeks';
+import channels from '~shared/lib/ipc-channels';
+import logger from '~shared/lib/logger';
 
 class TrayModule extends ModuleWindow {
   protected tray: Electron.Tray | null;
@@ -36,7 +36,7 @@ class TrayModule extends ModuleWindow {
     this.status = PlayerStatus.PAUSE;
 
     // I don't like it, but will do for now
-    const logosPath = path.resolve(path.join(__dirname, '../shared/logos'));
+    const logosPath = path.resolve(path.join(__dirname, '~shared/logos'));
 
     const trayIcons = {
       tray: nativeImage.createFromPath(path.join(logosPath, 'museeks-tray.png')).resize({ width: 24, height: 24 }),
@@ -67,7 +67,7 @@ class TrayModule extends ModuleWindow {
             logger.warn(err);
           } else {
             this.trayIcon = nativeImage.createFromPath(
-              path.join(path.resolve(path.join(__dirname, '../shared/logos')), 'museeks-tray.png')
+              path.join(path.resolve(path.join(__dirname, '~shared/logos')), 'museeks-tray.png')
             );
 
             this.refreshTrayIcon();

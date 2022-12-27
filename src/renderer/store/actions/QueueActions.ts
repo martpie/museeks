@@ -1,6 +1,6 @@
 import store from '../store';
 import types from '../action-types';
-import { Track } from '../../../shared/types/museeks';
+import { Track } from '~shared/types/museeks';
 
 /**
  * Start audio playback from the queue
