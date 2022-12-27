@@ -1,14 +1,14 @@
-import * as m3u from 'm3ujs';
-
+import { ipcRenderer } from 'electron';
 import { Playlist, TrackModel, PlaylistModel } from '../../../shared/types/museeks';
 import history from '../../lib/history';
 import store from '../store';
 import types from '../action-types';
 import logger from '../../../shared/lib/logger';
+import channels from '../../../shared/lib/ipc-channels';
 import * as ToastsActions from './ToastsActions';
 import * as PlayerActions from './PlayerActions';
 
-const { remote, path, browserwindow, db } = window.__museeks;
+const { db } = window.__museeks;
 
 /**
  * Start playing playlist (on double click)
@@ -208,41 +208,10 @@ export const reorderTracks = async (
 export const exportToM3u = async (playlistId: string): Promise<void> => {
   const playlist: PlaylistModel = await db.playlists.findOnlyByID(playlistId);
   const tracks: TrackModel[] = await db.tracks.findByID(playlist.tracks);
-  const { filePath } = await remote.dialog.showSaveDialog(browserwindow, {
-    title: 'Export playlist',
-    defaultPath: path.resolve(remote.app.getPath('music'), playlist.name),
-    filters: [
-      {
-        extensions: ['m3u'],
-        name: playlistId,
-      },
-    ],
-  });
 
-  if (filePath) {
-    try {
-      const playlistExport = new m3u.Playlist(
-        new m3u.TypeEXTM3U((entry) => {
-          if (entry instanceof m3u.Mp3Entry) {
-            return `${entry.artist} - ${entry.album} - ${entry.track} - ${entry.title}`;
-          }
-          return entry.displayName;
-        })
-      );
-
-      tracks.forEach((track) => {
-        try {
-          playlistExport.add(new m3u.Mp3Entry(track.path));
-        } catch (err) {
-          logger.warn(err);
-        }
-      });
-
-      playlistExport.write(filePath);
-      ToastsActions.add('success', `Playlist "${playlist.name}" succesfully exported`);
-    } catch (err) {
-      ToastsActions.add('danger', `An error occured when exporting the playlist "${playlist.name}"`);
-      logger.warn(err);
-    }
-  }
+  ipcRenderer.send(
+    channels.PLAYLIST_EXPORT,
+    playlist.name,
+    tracks.map((track) => track.path)
+  );
 };

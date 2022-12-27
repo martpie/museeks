@@ -19,6 +19,7 @@ import IPCCoverModule from './modules/ipc-cover';
 import IPCLibraryModule from './modules/ipc-library';
 import IPCNotificationsModule from './modules/ipc-notifications';
 import IPCDatabaseModule from './modules/database';
+import IPCPlaylistsModule from './modules/ipc-playlists';
 
 import * as ModulesManager from './lib/modules-manager';
 import { checkBounds } from './lib/utils';
@@ -125,6 +126,7 @@ app.on('ready', async () => {
     new IPCCoverModule(mainWindow),
     new IPCLibraryModule(mainWindow),
     new IPCNotificationsModule(mainWindow, config),
-    new IPCDatabaseModule(mainWindow)
+    new IPCDatabaseModule(mainWindow),
+    new IPCPlaylistsModule(mainWindow)
   ).catch(logger.error);
 });
