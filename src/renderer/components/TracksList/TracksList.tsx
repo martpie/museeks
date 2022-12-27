@@ -1,4 +1,4 @@
-import type electron from 'electron';
+import type { MenuItemConstructorOptions } from 'electron';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import KeyBinding from 'react-keybinding-component';
 import chunk from 'lodash-es/chunk';
@@ -315,8 +315,8 @@ const TracksList: React.FC<Props> = (props) => {
         shownPlaylists = playlists.filter((elem) => elem._id !== currentPlaylist);
       }
 
-      const playlistTemplate: electron.MenuItemConstructorOptions[] = [];
-      let addToQueueTemplate: electron.MenuItemConstructorOptions[] = [];
+      const playlistTemplate: MenuItemConstructorOptions[] = [];
+      let addToQueueTemplate: MenuItemConstructorOptions[] = [];
 
       if (shownPlaylists) {
         playlistTemplate.push(
@@ -366,7 +366,7 @@ const TracksList: React.FC<Props> = (props) => {
         },
       ];
 
-      const template: electron.MenuItemConstructorOptions[] = [
+      const template: MenuItemConstructorOptions[] = [
         {
           label: selectedCount > 1 ? `${selectedCount} tracks selected` : `${selectedCount} track selected`,
           enabled: false,

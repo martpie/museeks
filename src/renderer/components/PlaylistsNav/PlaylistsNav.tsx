@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/no-autofocus */
 
-import type electron from 'electron';
+import type { MenuItemConstructorOptions } from 'electron';
 import React from 'react';
 import Icon from 'react-fontawesome';
 
@@ -36,7 +36,7 @@ class PlaylistsNav extends React.Component<Props, State> {
   }
 
   showContextMenu(playlistId: string) {
-    const template: electron.MenuItemConstructorOptions[] = [
+    const template: MenuItemConstructorOptions[] = [
       {
         label: 'Rename',
         click: () => {
