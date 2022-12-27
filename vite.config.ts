@@ -10,8 +10,8 @@ rmSync(path.join(__dirname, 'dist'), { recursive: true, force: true });
 const minify = process.env.NODE_ENV === 'production';
 
 // TODO: all the modules below should be removed, and their usage transferred to the main process
-const externals = ['electron', 'fs', 'path'];
-const otherExternals = ['graceful-fs'];
+const externals = ['electron'];
+const otherExternals = [];
 
 export default defineConfig({
   appType: 'spa',
