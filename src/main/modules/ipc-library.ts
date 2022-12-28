@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 
 import { BrowserWindow, ipcMain, IpcMainInvokeEvent } from 'electron';
-import globby from 'globby';
+import { globby } from 'globby';
 import * as mmd from 'music-metadata';
 import queue from 'queue';
 import { pickBy } from 'lodash-es';
