@@ -47,6 +47,7 @@
     "--input-bg": "#33393b",
     "--input-color": "#EEEEEE",
     "--button-bg": "#33393b",
+    "--button-border": "rgb(255 255 255 / 0.2)",
     "--button-color": "#EEEEEE"
   }
 }
