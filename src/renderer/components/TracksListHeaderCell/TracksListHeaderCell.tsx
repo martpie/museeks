@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import cx from 'classnames';
 import Icon from 'react-fontawesome';
 
@@ -14,52 +14,39 @@ interface Props {
   icon?: string | null;
 }
 
-class TracksListHeaderCell extends React.Component<Props> {
-  static defaultProps = {
-    className: '',
-    sortBy: null,
-    icon: null,
-  };
+const TracksListHeaderCell: React.FC<Props> = (props) => {
+  const { sortBy, className, title, icon } = props;
 
-  constructor(props: Props) {
-    super(props);
-    this.sort = this.sort.bind(this);
-  }
-
-  sort() {
-    if (this.props.sortBy) {
-      LibraryActions.sort(this.props.sortBy);
-    }
-  }
-
-  render() {
-    const { sortBy, className, title, icon } = this.props;
-
-    const classes = cx(styles.trackCellHeader, className, {
-      [styles.sort]: sortBy,
-    });
-
-    const content = (
-      <React.Fragment>
-        <div className={styles.name}>{title}</div>
-        {icon && (
-          <div className={styles.icon}>
-            <Icon name={icon} />
-          </div>
-        )}
-      </React.Fragment>
-    );
-
+  const sort = useCallback(() => {
     if (sortBy) {
-      return (
-        <button className={classes} onClick={this.sort}>
-          {content}
-        </button>
-      );
+      LibraryActions.sort(sortBy);
     }
+  }, [sortBy]);
 
-    return <div className={classes}>{content}</div>;
+  const classes = cx(styles.trackCellHeader, className, {
+    [styles.sort]: sortBy,
+  });
+
+  const content = (
+    <React.Fragment>
+      <div className={styles.name}>{title}</div>
+      {icon && (
+        <div className={styles.icon}>
+          <Icon name={icon} />
+        </div>
+      )}
+    </React.Fragment>
+  );
+
+  if (sortBy) {
+    return (
+      <button className={classes} onClick={sort}>
+        {content}
+      </button>
+    );
   }
-}
+
+  return <div className={classes}>{content}</div>;
+};
 
 export default TracksListHeaderCell;

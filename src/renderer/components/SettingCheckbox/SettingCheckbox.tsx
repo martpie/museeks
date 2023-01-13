@@ -12,38 +12,24 @@ interface Props {
   description?: string;
 }
 
-export default class CheckboxSetting extends React.PureComponent<Props> {
-  static defaultProps = {
-    description: '',
-  };
+const CheckboxSetting: React.FC<Props> = (props) => {
+  const { slug, title, description } = props;
+  return (
+    <Setting.Section>
+      <div className={styles.checkbox}>
+        <Setting.Label htmlFor={`setting-${slug}`}>
+          <input
+            id={`setting-${slug}`}
+            type='checkbox'
+            onClick={(e) => props.onClick(e.currentTarget.checked)}
+            defaultChecked={props.defaultValue}
+          />
+          <Setting.Title>{title}</Setting.Title>
+          <Setting.Description>{description}</Setting.Description>
+        </Setting.Label>
+      </div>
+    </Setting.Section>
+  );
+};
 
-  constructor(props: Props) {
-    super(props);
-
-    this.onClick = this.onClick.bind(this);
-  }
-
-  onClick(e: React.MouseEvent<HTMLInputElement>) {
-    this.props.onClick(e.currentTarget.checked);
-  }
-
-  render() {
-    const { slug, title, description } = this.props;
-    return (
-      <Setting.Section>
-        <div className={styles.checkbox}>
-          <Setting.Label htmlFor={`setting-${slug}`}>
-            <input
-              id={`setting-${slug}`}
-              type='checkbox'
-              onClick={this.onClick}
-              defaultChecked={this.props.defaultValue}
-            />
-            <Setting.Title>{title}</Setting.Title>
-            <Setting.Description>{description}</Setting.Description>
-          </Setting.Label>
-        </div>
-      </Setting.Section>
-    );
-  }
-}
+export default CheckboxSetting;
