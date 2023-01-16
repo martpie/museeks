@@ -11,25 +11,23 @@ interface Props {
   queueCursor: number | null;
 }
 
-class Queue extends React.PureComponent<Props> {
-  render() {
-    const { queue, queueCursor } = this.props;
-    let content: React.ReactNode;
+const Queue: React.FC<Props> = (props) => {
+  const { queue, queueCursor } = props;
+  let content: React.ReactNode;
 
-    if (queueCursor !== null) {
-      const shownQueue = queue.slice(queueCursor + 1, queueCursor + 21);
+  if (queueCursor !== null) {
+    const shownQueue = queue.slice(queueCursor + 1, queueCursor + 21);
 
-      if (shownQueue.length === 0) {
-        content = <QueueEmpty />;
-      } else {
-        content = <QueueList queue={queue} queueCursor={queueCursor} />;
-      }
-
-      return <div className={`${styles.queue} text-left`}>{content}</div>;
+    if (shownQueue.length === 0) {
+      content = <QueueEmpty />;
+    } else {
+      content = <QueueList queue={queue} queueCursor={queueCursor} />;
     }
 
-    return null;
+    return <div className={`${styles.queue} text-left`}>{content}</div>;
   }
-}
+
+  return null;
+};
 
 export default Queue;
