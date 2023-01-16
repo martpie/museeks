@@ -1,4 +1,3 @@
-import { parseUri } from '../../main/lib/utils-uri';
 import { TrackModel } from '../../shared/types/museeks';
 
 interface PlayerOptions {
@@ -101,7 +100,7 @@ class Player {
 
   setTrack(track: TrackModel) {
     this.track = track;
-    this.audio.src = parseUri(track.path);
+    this.audio.src = window.MuseeksAPI.library.parseUri(track.path);
 
     // When we change song, need to update the thresholdReached indicator.
     this.durationThresholdReached = false;

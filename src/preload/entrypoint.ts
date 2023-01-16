@@ -9,6 +9,8 @@ import { Config, Track } from '../shared/types/museeks';
 import channels from '../shared/lib/ipc-channels';
 import Player from '../renderer/lib/player';
 
+import { parseUri } from '../shared/lib/utils-uri';
+
 import db from './db';
 
 /**
@@ -73,6 +75,7 @@ const API = {
   db,
   library: {
     showTrackInFolder: (track: Track) => shell.showItemInFolder(track.path),
+    parseUri,
   },
   playlists: {
     resolveM3u: async (path: string): Promise<string[]> =>

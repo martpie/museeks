@@ -2,6 +2,8 @@
  * Module in charge of remembering the window position, width and height
  */
 
+import { performance } from 'perf_hooks';
+
 import TeenyConf from 'teeny-conf';
 
 import { Config } from '../../shared/types/museeks';
@@ -24,7 +26,7 @@ class WindowPositionModule extends ModuleWindow {
   }
 
   saveBounds() {
-    const now = window.performance.now();
+    const now = performance.now();
 
     if (now - this.lastSaveBounds < 250 && this.saveBoundsTimeout) {
       clearTimeout(this.saveBoundsTimeout);
