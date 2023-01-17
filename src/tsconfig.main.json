@@ -1,9 +1,0 @@
-{
-  "extends": "../tsconfig.base.json",
-  "compilerOptions": {
-    "lib": ["ESNext"]
-  },
-  "include": ["main", "shared"],
-  // This imports preloads, which will fail as it requires DOM lib
-  "exclude": ["shared/types/declarations/preload.d.ts"]
-}
