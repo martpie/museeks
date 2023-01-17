@@ -43,11 +43,11 @@ class AppModule extends ModuleWindow {
     });
 
     // Prevent the window to be closed, hide it instead (to continue audio playback)
-    this.window.on('close', (e: Event) => {
+    this.window.on('close', (e) => {
       this.close(e);
     });
 
-    ipcMain.on(channels.APP_CLOSE, (e: Event) => {
+    ipcMain.on(channels.APP_CLOSE, (e) => {
       this.close(e);
     });
 
@@ -66,7 +66,7 @@ class AppModule extends ModuleWindow {
     });
   }
 
-  close(e: Event): void {
+  close(e: Electron.Event): void {
     this.config.reload(); // HACKY
     const minimizeToTray = this.config.get('minimizeToTray');
 

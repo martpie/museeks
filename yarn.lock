@@ -837,6 +837,11 @@
   resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.7.5.tgz#5f19d2b85a98e9558036f6a3cacc8819420f05cf"
   integrity sha512-JCB8C6SnDoQf0cNycqd/35A7MjcnK+ZTqE7judS6o7utxUCg6imJg3QK2qzHKszlTjcj2cn+NwMB2i96ubpj7w==
 
+"@types/ps-node@^0.1.1":
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/@types/ps-node/-/ps-node-0.1.1.tgz#fbbb7a0c55bf4e945756c023ccd205576f6177d2"
+  integrity sha512-t/8CsMBQ1ekBIb+Soqxce6w8M7yt0jRoXgsWHkS66VQ9OcMDQeoRLzz+gGpVeBc8pVskOTwRbCqHxDOGFwkgsg==
+
 "@types/react-dom@^18.0.10":
   version "18.0.10"
   resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-18.0.10.tgz#3b66dec56aa0f16a6cc26da9e9ca96c35c0b4352"

@@ -12,7 +12,6 @@ const minify = process.env.NODE_ENV === 'production';
 
 // TODO: all the modules below should be removed, and their usage transferred to the main process
 const externals = ['electron'];
-const otherExternals = [];
 
 export default defineConfig({
   appType: 'spa',
@@ -51,7 +50,7 @@ export default defineConfig({
     electronRenderer({
       nodeIntegration: true,
       optimizeDeps: {
-        include: [...externals, ...otherExternals],
+        include: externals,
       },
     }),
   ],

@@ -13,7 +13,7 @@ import ModuleWindow from './module-window';
 class WindowPositionModule extends ModuleWindow {
   protected config: TeenyConf<Config>;
   protected lastSaveBounds = 0;
-  protected saveBoundsTimeout: number | null = null;
+  protected saveBoundsTimeout: NodeJS.Timeout | null = null;
 
   constructor(window: Electron.BrowserWindow, config: TeenyConf<Config>) {
     super(window);
@@ -34,7 +34,7 @@ class WindowPositionModule extends ModuleWindow {
 
     this.lastSaveBounds = now;
 
-    this.saveBoundsTimeout = window.setTimeout(async () => {
+    this.saveBoundsTimeout = setTimeout(async () => {
       const bounds = this.window.getBounds();
 
       this.config.set('bounds', bounds);

@@ -382,7 +382,7 @@ export const setOutputDevice = (deviceId = 'default'): void => {
           config.set('audioOutputDevice', deviceId);
           config.save();
         })
-        .catch((err) => {
+        .catch((err: Error) => {
           throw err;
         });
     } catch (err) {
