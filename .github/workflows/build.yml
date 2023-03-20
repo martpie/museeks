@@ -105,10 +105,7 @@ jobs:
             build/museeks-linux-x86_64.AppImage
             build/museeks-linux-i686.rpm
             build/museeks-linux-x86_64.rpm
-            build/museeks-linux-i386.tar.gz
-            build/museeks-linux-i686.tar.gz
-            build/museeks-linux-amd64.tar.gz
-            build/museeks-linux-x86_64.tar.gz
+            build/museeks-linux-x64.tar.gz
 
   binaries-macos:
     runs-on: macos-10.15
