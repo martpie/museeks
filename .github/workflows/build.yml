@@ -9,6 +9,7 @@ on:
   pull_request:
     branches:
       - '*'
+  workflow_dispatch:
 
 jobs:
   qa:
@@ -98,12 +99,13 @@ jobs:
         with:
           name: binaries-linux
           path: |
-            build/museeks-i386.deb
-            build/museeks-amd64.deb
-            build/museeks-i386.AppImage
-            build/museeks-x86_64.AppImage
-            build/museeks-i686.rpm
-            build/museeks-x86_64.rpm
+            build/museeks-linux-i386.deb
+            build/museeks-linux-amd64.deb
+            build/museeks-linux-i386.AppImage
+            build/museeks-linux-x86_64.AppImage
+            build/museeks-linux-i686.rpm
+            build/museeks-linux-x86_64.rpm
+            build/museeks-linux-x64.tar.gz
 
   binaries-macos:
     runs-on: macos-10.15
@@ -141,8 +143,8 @@ jobs:
         with:
           name: binaries-macos
           path: |
-            build/museeks-arm64.dmg
-            build/museeks-x64.dmg
+            build/museeks-macos-arm64.dmg
+            build/museeks-macos-x64.dmg
 
   binaries-windows:
     runs-on: windows-2019
@@ -178,5 +180,5 @@ jobs:
         with:
           name: binaries-windows
           path: |
-            build/museeks-x64-setup.exe
-            build/museeks-x64-portable.exe
+            build/museeks-win-x64-setup.exe
+            build/museeks-win-x64-portable.exe
