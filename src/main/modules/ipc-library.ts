@@ -134,7 +134,7 @@ class IPCLibraryModule extends ModuleWindow {
 
         // Add all the items to the queue
         tracksPath.forEach((filePath) => {
-          scanQueue.push(async (callback) => {
+          scanQueue.push(async (callback: () => void | null) => {
             try {
               // Normalize (back)slashes on Windows
               filePath = path.resolve(filePath);
