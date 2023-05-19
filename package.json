@@ -116,10 +116,10 @@
     "stylelint-config-css-modules": "^4.2.0",
     "stylelint-config-standard": "^33.0.0",
     "typescript": "^5.0.4",
-    "typescript-plugin-css-modules": "^4.1.1",
-    "vite": "^4.0.4",
+    "typescript-plugin-css-modules": "^5.0.1",
+    "vite": "^4.3.5",
     "vite-plugin-electron": "^0.11.1",
     "vite-plugin-electron-renderer": "^0.11.4",
-    "vitest": "^0.27.1"
+    "vitest": "^0.31.0"
   }
 }
