@@ -11,7 +11,7 @@ export const parseDuration = (duration: number | null): string => {
     const minutesStringified = minutes < 10 ? `0${minutes}` : minutes;
     const secondsStringified = seconds < 10 ? `0${seconds}` : seconds;
 
-    let result = hoursStringified > 0 ? `${hoursStringified}:` : '';
+    let result = hours > 0 ? `${hoursStringified}:` : '';
     result += `${minutesStringified}:${secondsStringified}`;
 
     return result;
