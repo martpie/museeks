@@ -1,11 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 // import Placeholder from '../../shared/assets/placeholder.png';
 // import * as coverUtils from '../../../shared/lib/utils-cover';
 import { TrackEditableFields } from '../../../shared/types/museeks';
-import appStyles from '../../App.module.css';
+import appStyles from '../Root.module.css';
 import * as Setting from '../../components/Setting/Setting';
 import Button from '../../elements/Button/Button';
 import * as LibraryActions from '../../store/actions/LibraryActions';

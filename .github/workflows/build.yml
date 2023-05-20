@@ -14,15 +14,15 @@ on:
 jobs:
   qa:
     # Let's implement different jobs for Windows and Linux at some point, especially for packaging scripts
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Use Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
-          node-version: 14.x
+          node-version: 20.x
 
       - name: Display Node.js and npm informations
         run: |
@@ -50,7 +50,7 @@ jobs:
       - name: Build application
         run: yarn run build
 
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: application-build
           path: dist/
@@ -59,14 +59,14 @@ jobs:
   # https://docs.github.com/en/free-pro-team@latest/actions/reference/specifications-for-github-hosted-runners
 
   binaries-linux:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     needs: [qa]
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Use Node.js
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
           node-version: 14.x
 
@@ -75,7 +75,7 @@ jobs:
           echo "node version $(node -v) running"
           echo "npm version $(npm -v) running"
 
-      - uses: actions/download-artifact@v2
+      - uses: actions/download-artifact@v3
         with:
           name: application-build
           path: dist/
@@ -95,7 +95,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: binaries-linux
           path: |
@@ -108,14 +108,14 @@ jobs:
             build/museeks-linux-x64.tar.gz
 
   binaries-macos:
-    runs-on: macos-10.15
+    runs-on: macos-latest
     needs: [qa]
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Use Node.js
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
           node-version: 14.x
 
@@ -124,7 +124,7 @@ jobs:
           echo "node version $(node -v) running"
           echo "npm version $(npm -v) running"
 
-      - uses: actions/download-artifact@v2
+      - uses: actions/download-artifact@v3
         with:
           name: application-build
           path: dist/
@@ -139,7 +139,7 @@ jobs:
           CSC_LINK: ${{ secrets.CSC_LINK }}
           CSC_KEY_PASSWORD: ${{ secrets.CSC_KEY_PASSWORD }}
 
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: binaries-macos
           path: |
@@ -147,14 +147,14 @@ jobs:
             build/museeks-macos-x64.dmg
 
   binaries-windows:
-    runs-on: windows-2019
+    runs-on: windows-latest
     needs: [qa]
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Use Node.js
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
           node-version: 14.x
 
@@ -163,7 +163,7 @@ jobs:
           echo "node version $(node -v) running"
           echo "npm version $(npm -v) running"
 
-      - uses: actions/download-artifact@v2
+      - uses: actions/download-artifact@v3
         with:
           name: application-build
           path: dist/
@@ -176,7 +176,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: binaries-windows
           path: |

@@ -116,13 +116,12 @@ class IPCLibraryModule extends ModuleWindow {
         const scannedFiles: Track[] = [];
 
         // eslint-disable-next-line
-        // @ts-ignore Outdated types
         // https://github.com/jessetane/queue/pull/15#issuecomment-414091539
-        const scanQueue = queue();
+        const scanQueue = new queue();
         scanQueue.concurrency = 32;
         scanQueue.autostart = true;
 
-        scanQueue.on('end', async () => {
+        scanQueue.addEventListener('end', () => {
           this.import.processed = 0;
           this.import.total = 0;
 
@@ -134,7 +133,7 @@ class IPCLibraryModule extends ModuleWindow {
 
         // Add all the items to the queue
         tracksPath.forEach((filePath) => {
-          scanQueue.push(async (callback: () => void | null) => {
+          scanQueue.push(async (callback) => {
             try {
               // Normalize (back)slashes on Windows
               filePath = path.resolve(filePath);

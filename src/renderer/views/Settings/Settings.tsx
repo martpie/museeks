@@ -1,9 +1,8 @@
 import React from 'react';
-import { Outlet, useMatch } from 'react-router';
-import { Navigate } from 'react-router-dom';
+import { Outlet, useMatch, Navigate } from 'react-router-dom';
 
 import * as Nav from '../../elements/Nav/Nav';
-import appStyles from '../../App.module.css';
+import appStyles from '../Root.module.css';
 
 import styles from './Settings.module.css';
 

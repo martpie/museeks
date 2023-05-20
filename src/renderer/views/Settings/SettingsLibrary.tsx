@@ -1,19 +1,19 @@
 import React, { useCallback } from 'react';
 import { ipcRenderer } from 'electron';
 
+import { useSelector } from 'react-redux';
+
 import * as Setting from '../../components/Setting/Setting';
 import * as LibraryActions from '../../store/actions/LibraryActions';
 import * as PlayerActions from '../../store/actions/PlayerActions';
-import { LibraryState } from '../../store/reducers/library';
 import Button from '../../elements/Button/Button';
 import channels from '../../../shared/lib/ipc-channels';
 import logger from '../../../shared/lib/logger';
+import { RootState } from '../../store/reducers';
 
-interface Props {
-  library: LibraryState;
-}
+const SettingsLibrary: React.FC = (props) => {
+  const library = useSelector((state: RootState) => state.library);
 
-const SettingsLibrary: React.FC<Props> = (props) => {
   const resetLibrary = useCallback(async () => {
     PlayerActions.stop();
     await LibraryActions.reset();
@@ -40,18 +40,13 @@ const SettingsLibrary: React.FC<Props> = (props) => {
         <Setting.Description>
           This will also scan for <code>.m3u</code> files and create corresponding playlists.
         </Setting.Description>
-        <Button disabled={props.library.refreshing} onClick={openFolderSelector}>
+        <Button disabled={library.refreshing} onClick={openFolderSelector}>
           Add files or folders
         </Button>
       </Setting.Section>
       <Setting.Section>
         <h3>Danger zone</h3>
-        <Button
-          relevancy='danger'
-          title='Fully reset the library'
-          disabled={props.library.refreshing}
-          onClick={resetLibrary}
-        >
+        <Button relevancy='danger' title='Fully reset the library' disabled={library.refreshing} onClick={resetLibrary}>
           Reset library
         </Button>
       </Setting.Section>

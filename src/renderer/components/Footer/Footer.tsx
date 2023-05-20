@@ -1,6 +1,5 @@
 import React, { useCallback } from 'react';
-import { useLocation } from 'react-router';
-import { NavLink } from 'react-router-dom';
+import { useLocation, NavLink } from 'react-router-dom';
 import Icon from 'react-fontawesome';
 import { useSelector } from 'react-redux';
 

@@ -6,12 +6,8 @@ import CheckboxSetting from '../../components/SettingCheckbox/SettingCheckbox';
 import { Config } from '../../../shared/types/museeks';
 import { themes } from '../../../shared/lib/themes';
 
-interface Props {
-  config: Config;
-}
-
-const SettingsUI: React.FC<Props> = (props) => {
-  const { config } = props;
+const SettingsUI: React.FC = (props) => {
+  const config = window.MuseeksAPI.config.get() as Config;
 
   const onThemeChange = useCallback<ChangeEventHandler<HTMLSelectElement>>((e) => {
     SettingsActions.setTheme(e.currentTarget.value);

@@ -1,103 +1,50 @@
-import React, { useCallback, useEffect } from 'react';
-import KeyBinding from 'react-keybinding-component';
-import { useNavigate } from 'react-router';
-import { useDrop } from 'react-dnd';
-import { NativeTypes } from 'react-dnd-html5-backend';
+import React from 'react';
 
 import logger from '../shared/lib/logger';
 
-import Header from './components/Header/Header';
-import Footer from './components/Footer/Footer';
-import Toasts from './components/Toasts/Toasts';
-import AppActions from './store/actions/AppActions';
-import * as LibraryActions from './store/actions/LibraryActions';
-import * as PlayerActions from './store/actions/PlayerActions';
-import styles from './App.module.css';
-import { isCtrlKey } from './lib/utils-events';
-import DropzoneImport from './components/DropzoneImport/DropzoneImport';
-
-/*
-|--------------------------------------------------------------------------
-| The App
-|--------------------------------------------------------------------------
-*/
+import * as ViewMessage from './elements/ViewMessage/ViewMessage';
+import ExternalLink from './elements/ExternalLink/ExternalLink';
 
 type Props = {
   children: React.ReactNode;
 };
 
-const Museeks: React.FC<Props> = (props) => {
-  const navigate = useNavigate();
-
-  // App shortcuts (not using Electron's global shortcuts API to avoid conflicts
-  // with other applications)
-  const onKey = useCallback(
-    async (e: KeyboardEvent) => {
-      switch (e.key) {
-        case ' ':
-          e.preventDefault();
-          e.stopPropagation();
-          PlayerActions.playPause();
-          break;
-        case ',':
-          if (isCtrlKey(e)) {
-            e.preventDefault();
-            e.stopPropagation();
-            navigate('/settings');
-          }
-          break;
-        case 'ArrowLeft':
-          e.preventDefault();
-          e.stopPropagation();
-          PlayerActions.jumpTo(window.MuseeksAPI.player.getCurrentTime() - 10);
-          break;
-        case 'ArrowRight':
-          e.preventDefault();
-          e.stopPropagation();
-          PlayerActions.jumpTo(window.MuseeksAPI.player.getCurrentTime() + 10);
-          break;
-        default:
-          break;
-      }
-    },
-    [navigate]
-  );
-
-  useEffect(() => {
-    AppActions.init();
-  }, []);
-
-  // Drop behavior to add tracks to the library from any string
-  const [{ isOver }, drop] = useDrop(() => {
-    return {
-      accept: [NativeTypes.FILE],
-      drop(item: { files: Array<File> }) {
-        const files = item.files.map((file) => file.path);
-
-        LibraryActions.add(files)
-          .then((_importedTracks) => {
-            // TODO: Import to playlist here
-          })
-          .catch((err) => {
-            logger.warn(err);
-          });
-      },
-      collect: (monitor) => ({
-        isOver: monitor.isOver(),
-      }),
-    };
-  });
-
-  return (
-    <div className={`${styles.root} os__${window.MuseeksAPI.platform}`} ref={drop}>
-      <KeyBinding onKey={onKey} preventInputConflict />
-      <Header />
-      <main className={styles.mainContent}>{props.children}</main>
-      <Footer />
-      <Toasts />
-      <DropzoneImport title='Add music to the library' subtitle='Drop files or folders anywhere' shown={isOver} />
-    </div>
-  );
+type State = {
+  hasError: boolean;
 };
 
-export default Museeks;
+class App extends React.Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  componentDidCatch(err: Error) {
+    // RIP
+    logger.error(`Museeks crashed: ${err}`);
+    this.setState({ hasError: true });
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <ViewMessage.Notice>
+          <p>
+            <span role='img' aria-label='boom'>
+              💥
+            </span>{' '}
+            Something wrong happened
+          </p>
+          <ViewMessage.Sub>
+            If it happens again, please{' '}
+            <ExternalLink href='https://github.com/martpie/museeks/issues'>report an issue</ExternalLink>
+          </ViewMessage.Sub>
+        </ViewMessage.Notice>
+      );
+    }
+
+    return this.props.children;
+  }
+}
+
+export default App;

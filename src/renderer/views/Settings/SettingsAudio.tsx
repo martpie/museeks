@@ -5,11 +5,7 @@ import AudioOutputSelect from '../../components/AudioOutputSelect/AudioOutputSel
 import * as PlayerActions from '../../store/actions/PlayerActions';
 import { Config } from '../../../shared/types/museeks';
 
-interface Props {
-  config: Config;
-}
-
-const SettingsAudio: React.FC<Props> = (props) => {
+const SettingsAudio: React.FC = (props) => {
   const setPlaybackRate = useCallback((e: React.SyntheticEvent<HTMLInputElement>) => {
     PlayerActions.setPlaybackRate(parseFloat(e.currentTarget.value));
   }, []);
@@ -18,7 +14,7 @@ const SettingsAudio: React.FC<Props> = (props) => {
     PlayerActions.setOutputDevice(deviceId);
   }, []);
 
-  const { config } = props;
+  const config = window.MuseeksAPI.config.get() as Config;
 
   return (
     <div className='setting setting-audio'>
