@@ -11,7 +11,7 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { RouterProvider } from 'react-router-dom';
 
-import Root from './Root';
+import App from './App';
 import store from './store/store';
 import router from './views/router';
 
@@ -38,13 +38,13 @@ if (wrap) {
   const root = ReactDOM.createRoot(wrap);
   root.render(
     <React.StrictMode>
-      <Root>
+      <App>
         <Provider store={store}>
           <DndProvider backend={HTML5Backend}>
             <RouterProvider router={router} />
           </DndProvider>
         </Provider>
-      </Root>
+      </App>
     </React.StrictMode>
   );
 }

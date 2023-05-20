@@ -13,7 +13,7 @@ type State = {
   hasError: boolean;
 };
 
-class Root extends React.Component<Props, State> {
+class App extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = { hasError: false };
@@ -47,4 +47,4 @@ class Root extends React.Component<Props, State> {
   }
 }
 
-export default Root;
+export default App;
