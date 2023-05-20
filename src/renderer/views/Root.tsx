@@ -1,20 +1,22 @@
 import React, { useCallback, useEffect } from 'react';
 import KeyBinding from 'react-keybinding-component';
-import { useNavigate } from 'react-router';
+import { Outlet, useNavigate } from 'react-router-dom';
 import { useDrop } from 'react-dnd';
 import { NativeTypes } from 'react-dnd-html5-backend';
 
-import logger from '../shared/lib/logger';
+import logger from '../../shared/lib/logger';
 
-import Header from './components/Header/Header';
-import Footer from './components/Footer/Footer';
-import Toasts from './components/Toasts/Toasts';
-import AppActions from './store/actions/AppActions';
-import * as LibraryActions from './store/actions/LibraryActions';
-import * as PlayerActions from './store/actions/PlayerActions';
-import styles from './App.module.css';
-import { isCtrlKey } from './lib/utils-events';
-import DropzoneImport from './components/DropzoneImport/DropzoneImport';
+import Header from '../components/Header/Header';
+import Footer from '../components/Footer/Footer';
+import Toasts from '../components/Toasts/Toasts';
+import AppActions from '../store/actions/AppActions';
+import * as LibraryActions from '../store/actions/LibraryActions';
+import * as PlayerActions from '../store/actions/PlayerActions';
+
+import { isCtrlKey } from '../lib/utils-events';
+import DropzoneImport from '../components/DropzoneImport/DropzoneImport';
+
+import styles from './Root.module.css';
 
 /*
 |--------------------------------------------------------------------------
@@ -22,11 +24,7 @@ import DropzoneImport from './components/DropzoneImport/DropzoneImport';
 |--------------------------------------------------------------------------
 */
 
-type Props = {
-  children: React.ReactNode;
-};
-
-const Museeks: React.FC<Props> = (props) => {
+const Museeks: React.FC = (props) => {
   const navigate = useNavigate();
 
   // App shortcuts (not using Electron's global shortcuts API to avoid conflicts
@@ -92,7 +90,9 @@ const Museeks: React.FC<Props> = (props) => {
     <div className={`${styles.root} os__${window.MuseeksAPI.platform}`} ref={drop}>
       <KeyBinding onKey={onKey} preventInputConflict />
       <Header />
-      <main className={styles.mainContent}>{props.children}</main>
+      <main className={styles.mainContent}>
+        <Outlet />
+      </main>
       <Footer />
       <Toasts />
       <DropzoneImport title='Add music to the library' subtitle='Drop files or folders anywhere' shown={isOver} />

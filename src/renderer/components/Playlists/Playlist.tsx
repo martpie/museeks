@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { useParams } from 'react-router';
-import { Link } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 
 import TracksList from '../TracksList/TracksList';
 import * as ViewMessage from '../../elements/ViewMessage/ViewMessage';
