@@ -19,7 +19,7 @@ export function Label(props: JSX.IntrinsicElements['label']) {
 
   return (
     <label className={styles.settingLabel} {...restProps}>
-      {props.children}
+      {children}
     </label>
   );
 }

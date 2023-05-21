@@ -1,6 +1,5 @@
 import { useCallback } from 'react';
 import { ipcRenderer } from 'electron';
-
 import { useSelector } from 'react-redux';
 
 import * as Setting from '../../components/Setting/Setting';

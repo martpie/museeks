@@ -42,7 +42,7 @@ export default class NativeThemeModule extends ModuleWindow {
       this.setThemeId(themeId);
     });
 
-    ipcMain.handle(channels.THEME_GET, (_event) => {
+    ipcMain.handle(channels.THEME_GET, () => {
       let themeId = this.getThemeId();
 
       if (themeId === '__system') themeId = this.getSystemThemeId();

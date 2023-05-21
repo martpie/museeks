@@ -5,7 +5,6 @@ import store from '../store';
 import types from '../action-types';
 import logger from '../../../shared/lib/logger';
 import channels from '../../../shared/lib/ipc-channels';
-
 import router from '../../views/router';
 
 import * as ToastsActions from './ToastsActions';

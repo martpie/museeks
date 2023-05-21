@@ -4,8 +4,7 @@
   "extends": [
     "plugin:@typescript-eslint/recommended",
     "plugin:jsx-a11y/recommended",
-    "plugin:import/errors",
-    "plugin:import/warnings",
+    "plugin:import/recommended",
     "plugin:import/typescript",
     "plugin:jsx-a11y/recommended",
     "plugin:react/recommended",
@@ -16,18 +15,13 @@
   "settings": { "react": { "version": "detect" } },
   "env": { "jest": true },
   "rules": {
-    "@typescript-eslint/no-var-requires": "off",
-    "@typescript-eslint/no-unused-vars": "off",
-    "@typescript-eslint/explicit-function-return-type": "off",
-    "@typescript-eslint/explicit-member-accessibility": "off",
     "import/order": [
       "error",
       {
-        "newlines-between": "always-and-inside-groups"
+        "newlines-between": "always",
+        "distinctGroup": true
       }
     ],
-    "import/named": "off",
-    "import/default": "off",
     "spaced-comment": ["error", "always"],
     "no-console": 2
   },

@@ -8,7 +8,6 @@ import TeenyConf from 'teeny-conf';
 import { Config, Track } from '../shared/types/museeks';
 import channels from '../shared/lib/ipc-channels';
 import Player from '../renderer/lib/player';
-
 import { parseUri } from '../shared/lib/utils-uri';
 
 import db from './db';

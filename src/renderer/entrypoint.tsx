@@ -10,25 +10,21 @@ import { Provider } from 'react-redux';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { RouterProvider } from 'react-router-dom';
-
 import { ErrorBoundary } from 'react-error-boundary';
 
+import * as ViewMessage from './elements/ViewMessage/ViewMessage';
+import ExternalLink from './elements/ExternalLink/ExternalLink';
 import store from './store/store';
 import router from './views/router';
-
 /*
 |--------------------------------------------------------------------------
 | Styles
 |--------------------------------------------------------------------------
 */
-
 import '../../node_modules/react-rangeslider/lib/index.css';
 import '../../node_modules/font-awesome/css/font-awesome.css';
 import '../../node_modules/normalize.css/normalize.css';
 import './styles/main.module.css';
-
-import * as ViewMessage from './elements/ViewMessage/ViewMessage';
-import ExternalLink from './elements/ExternalLink/ExternalLink';
 
 /*
 |--------------------------------------------------------------------------

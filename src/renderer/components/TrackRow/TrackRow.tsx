@@ -56,24 +56,21 @@ export default function TrackRow(props: Props) {
     setReorderPosition(dragPosition);
   }, []);
 
-  const onDragLeave = useCallback((_event: React.DragEvent<HTMLDivElement>) => {
+  const onDragLeave = useCallback(() => {
     setReorderOver(false);
     setReorderPosition(null);
   }, []);
 
-  const onDrop = useCallback(
-    (_event: React.DragEvent<HTMLDivElement>) => {
-      const { onDrop } = props;
+  const onDrop = useCallback(() => {
+    const { onDrop } = props;
 
-      if (reorderPosition && onDrop) {
-        onDrop(props.track._id, reorderPosition);
-      }
+    if (reorderPosition && onDrop) {
+      onDrop(props.track._id, reorderPosition);
+    }
 
-      setReorderOver(false);
-      setReorderPosition(null);
-    },
-    [props, reorderPosition]
-  );
+    setReorderOver(false);
+    setReorderPosition(null);
+  }, [props, reorderPosition]);
 
   const trackClasses = cx(styles.track, {
     [styles.selected]: selected,

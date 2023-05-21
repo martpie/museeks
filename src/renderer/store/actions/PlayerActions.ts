@@ -11,7 +11,6 @@ import logger from '../../../shared/lib/logger';
 import Player from '../../lib/player';
 import initMediaSession from '../../lib/media-session';
 import channels from '../../../shared/lib/ipc-channels';
-
 import router from '../../views/router';
 
 import * as LibraryActions from './LibraryActions';

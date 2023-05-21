@@ -3,7 +3,6 @@ import { ipcRenderer } from 'electron';
 import channels from '../../../shared/lib/ipc-channels';
 import { Theme } from '../../../shared/types/museeks';
 import logger from '../../../shared/lib/logger';
-
 import router from '../../views/router';
 
 import * as LibraryActions from './LibraryActions';
