@@ -1,6 +1,7 @@
 import { createHashRouter } from 'react-router-dom';
 
-import Root from './Root';
+import RootView from './Root';
+import ErrorView from './Error';
 import LibraryView from './Library/Library';
 import PlaylistsView from './Playlists/Playlists';
 import PlaylistView from './Playlists/Playlist';
@@ -14,8 +15,8 @@ import DetailsView from './Details/Details';
 const router = createHashRouter([
   {
     path: '/',
-    element: <Root />,
-    // TODO: error state for router
+    element: <RootView />,
+    errorElement: <ErrorView />,
     children: [
       {
         path: 'library',

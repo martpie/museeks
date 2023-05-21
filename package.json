@@ -66,6 +66,7 @@
     "react-dnd": "^16.0.1",
     "react-dnd-html5-backend": "^16.0.1",
     "react-dom": "^18.2.0",
+    "react-error-boundary": "^4.0.4",
     "react-fontawesome": "^1.7.1",
     "react-keybinding-component": "^1.0.0",
     "react-rangeslider": "^2.2.0",
