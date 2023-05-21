@@ -1,9 +1,7 @@
 import { debounce } from 'lodash-es';
 import { ipcRenderer } from 'electron';
 
-import history from '../../lib/history';
 import store from '../store';
-import { PlayerState } from '../reducers/player';
 import types from '../action-types';
 import SORT_ORDERS from '../../constants/sort-orders';
 import { sortTracks, filterTracks } from '../../lib/utils-library';
@@ -13,6 +11,8 @@ import logger from '../../../shared/lib/logger';
 import Player from '../../lib/player';
 import initMediaSession from '../../lib/media-session';
 import channels from '../../../shared/lib/ipc-channels';
+
+import router from '../../views/router';
 
 import * as LibraryActions from './LibraryActions';
 import * as ToastsActions from './ToastsActions';
@@ -121,11 +121,12 @@ export const start = async (queue?: TrackModel[], _id?: string): Promise<void> =
     newQueue = state.player.queue;
   }
 
-  const { pathname } = history.location;
+  // FIXME: code smell
+  const { hash } = window.location;
 
   // If no queue is provided, we create it based on the screen the user is on
   if (!newQueue) {
-    if (pathname.indexOf('/playlists') === 0) {
+    if (hash.startsWith('#/playlists')) {
       newQueue = state.library.tracks.playlist;
     } else {
       // we are either on the library or the settings view
@@ -169,13 +170,7 @@ export const start = async (queue?: TrackModel[], _id?: string): Promise<void> =
 
     // Determine the queue origin in case the user wants to jump to the current
     // track
-    let queueOrigin: PlayerState['queueOrigin'] = null;
-
-    if (pathname.indexOf('/playlists') === 0) {
-      queueOrigin = pathname;
-    } else {
-      queueOrigin = '/library';
-    }
+    const queueOrigin = hash.substring(1); // remove #
 
     store.dispatch({
       type: types.PLAYER_START,
@@ -408,10 +403,12 @@ export const jumpTo = (to: number): void => {
  * Toggle play/pause
  */
 export const jumpToPlayingTrack = async (): Promise<void> => {
-  const queueOrigin = store.getState().player.queueOrigin ?? '/library';
-  history.push(queueOrigin);
+  const queueOrigin = store.getState().player.queueOrigin ?? '#/library';
+  await router.navigate(queueOrigin);
 
-  LibraryActions.highlightPlayingTrack(true);
+  setTimeout(() => {
+    LibraryActions.highlightPlayingTrack(true);
+  }, 0);
 };
 
 /**

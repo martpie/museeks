@@ -1,11 +1,12 @@
 import { ipcRenderer } from 'electron';
 
 import { Playlist, TrackModel, PlaylistModel } from '../../../shared/types/museeks';
-import history from '../../lib/history';
 import store from '../store';
 import types from '../action-types';
 import logger from '../../../shared/lib/logger';
 import channels from '../../../shared/lib/ipc-channels';
+
+import router from '../../views/router';
 
 import * as ToastsActions from './ToastsActions';
 import * as PlayerActions from './PlayerActions';
@@ -80,7 +81,7 @@ export const create = async (
 
   await refresh();
 
-  if (redirect) history.push(`/playlists/${doc._id}`);
+  if (redirect) router.navigate(`/playlists/${doc._id}`);
   else ToastsActions.add('success', `The playlist "${name}" was created`);
 
   return doc._id;
