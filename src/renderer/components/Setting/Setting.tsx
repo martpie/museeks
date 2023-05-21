@@ -28,14 +28,8 @@ export function Title(props: Props) {
   return <span className={styles.settingTitle}>{props.children}</span>;
 }
 
-export function Input(props: Props & JSX.IntrinsicElements['input']) {
-  const { children, ...restProps } = props;
-
-  return (
-    <input className={styles.settingInput} {...restProps}>
-      {props.children}
-    </input>
-  );
+export function Input(props: JSX.IntrinsicElements['input']) {
+  return <input className={styles.settingInput} {...props} />;
 }
 
 export function Error(props: Props) {
