@@ -1,11 +1,9 @@
 import { createHashRouter } from 'react-router-dom';
 
-// import App from './App';
-import Playlist from '../components/Playlists/Playlist';
-
 import Root from './Root';
 import LibraryView from './Library/Library';
 import PlaylistsView from './Playlists/Playlists';
+import PlaylistView from './Playlists/Playlist';
 import SettingsView from './Settings/Settings';
 import SettingsLibrary from './Settings/SettingsLibrary';
 import SettingsUI from './Settings/SettingsUI';
@@ -23,7 +21,7 @@ const router = createHashRouter([
         path: 'library',
         element: <LibraryView />,
       },
-      { path: 'playlists', element: <PlaylistsView />, children: [{ path: ':playlistId', element: <Playlist /> }] },
+      { path: 'playlists', element: <PlaylistsView />, children: [{ path: ':playlistId', element: <PlaylistView /> }] },
       {
         path: 'settings',
         element: <SettingsView />,
