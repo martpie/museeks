@@ -8,7 +8,7 @@ import cellStyles from '../TracksListHeader/TracksListHeader.module.css';
 
 import styles from './TrackRow.module.css';
 
-interface Props {
+type Props = {
   selected: boolean;
   track: TrackModel;
   index: number;
@@ -24,9 +24,9 @@ interface Props {
   onDragOver?: (trackId: string, position: 'above' | 'below') => void;
   onDragEnd?: () => void;
   onDrop?: (targetTrackId: string, position: 'above' | 'below') => void;
-}
+};
 
-const TrackRow: React.FC<Props> = (props) => {
+export default function TrackRow(props: Props) {
   const [reorderOver, setReorderOver] = useState(false);
   const [reorderPosition, setReorderPosition] = useState<'above' | 'below' | null>(null);
 
@@ -56,24 +56,21 @@ const TrackRow: React.FC<Props> = (props) => {
     setReorderPosition(dragPosition);
   }, []);
 
-  const onDragLeave = useCallback((_event: React.DragEvent<HTMLDivElement>) => {
+  const onDragLeave = useCallback(() => {
     setReorderOver(false);
     setReorderPosition(null);
   }, []);
 
-  const onDrop = useCallback(
-    (_event: React.DragEvent<HTMLDivElement>) => {
-      const { onDrop } = props;
+  const onDrop = useCallback(() => {
+    const { onDrop } = props;
 
-      if (reorderPosition && onDrop) {
-        onDrop(props.track._id, reorderPosition);
-      }
+    if (reorderPosition && onDrop) {
+      onDrop(props.track._id, reorderPosition);
+    }
 
-      setReorderOver(false);
-      setReorderPosition(null);
-    },
-    [props, reorderPosition]
-  );
+    setReorderOver(false);
+    setReorderPosition(null);
+  }, [props, reorderPosition]);
 
   const trackClasses = cx(styles.track, {
     [styles.selected]: selected,
@@ -116,6 +113,4 @@ const TrackRow: React.FC<Props> = (props) => {
       <div className={`${styles.cell} ${cellStyles.cellGenre}`}>{track.genre.join(', ')}</div>
     </div>
   );
-};
-
-export default TrackRow;
+}

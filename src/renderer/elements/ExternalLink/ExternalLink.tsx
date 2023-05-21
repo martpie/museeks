@@ -4,12 +4,12 @@ import styles from './ExternalLink.module.css';
 
 const { shell } = window.MuseeksAPI;
 
-interface Props {
+type Props = {
   children: string;
   href: string;
-}
+};
 
-const ExternalLink: React.FC<Props> = (props) => {
+export default function ExternalLink(props: Props) {
   const openLink = useCallback(
     (e: React.SyntheticEvent) => {
       e.preventDefault();
@@ -23,6 +23,4 @@ const ExternalLink: React.FC<Props> = (props) => {
       {props.children}
     </button>
   );
-};
-
-export default ExternalLink;
+}

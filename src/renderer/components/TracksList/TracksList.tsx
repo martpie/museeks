@@ -31,7 +31,7 @@ const TILE_HEIGHT = ROW_HEIGHT * CHUNK_LENGTH;
 // TrackList
 // --------------------------------------------------------------------------
 
-interface Props {
+type Props = {
   type: string;
   tracks: TrackModel[];
   trackPlayingId: string | null;
@@ -39,9 +39,9 @@ interface Props {
   currentPlaylist?: string;
   reorderable?: boolean;
   onReorder?: (playlistId: string, tracksIds: string[], targetTrackId: string, position: 'above' | 'below') => void;
-}
+};
 
-const TracksList: React.FC<Props> = (props) => {
+export default function TracksList(props: Props) {
   const { tracks, type, trackPlayingId, reorderable, currentPlaylist, onReorder, playlists } = props;
 
   const [tilesScrolled, setTilesScrolled] = useState(0);
@@ -541,6 +541,4 @@ const TracksList: React.FC<Props> = (props) => {
       </CustomScrollbar>
     </div>
   );
-};
-
-export default TracksList;
+}

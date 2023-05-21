@@ -1,4 +1,4 @@
-import React, { useCallback, ChangeEventHandler } from 'react';
+import { useCallback, ChangeEventHandler } from 'react';
 
 import * as SettingsActions from '../../store/actions/SettingsActions';
 import * as Setting from '../../components/Setting/Setting';
@@ -6,7 +6,7 @@ import CheckboxSetting from '../../components/SettingCheckbox/SettingCheckbox';
 import { Config } from '../../../shared/types/museeks';
 import { themes } from '../../../shared/lib/themes';
 
-const SettingsUI: React.FC = (props) => {
+export default function SettingsUI() {
   const config = window.MuseeksAPI.config.get() as Config;
 
   const onThemeChange = useCallback<ChangeEventHandler<HTMLSelectElement>>((e) => {
@@ -75,6 +75,4 @@ const SettingsUI: React.FC = (props) => {
       </Setting.Section>
     </div>
   );
-};
-
-export default SettingsUI;
+}

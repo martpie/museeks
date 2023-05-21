@@ -1,12 +1,10 @@
-import React from 'react';
-
 import ExternalLink from '../../elements/ExternalLink/ExternalLink';
 import Heart from '../../elements/Heart/Heart';
 import * as Setting from '../../components/Setting/Setting';
 import * as SettingsActions from '../../store/actions/SettingsActions';
 import Button from '../../elements/Button/Button';
 
-const SettingsAbout: React.FC = () => {
+export default function SettingsAbout() {
   const version = window.MuseeksAPI.version;
 
   return (
@@ -47,8 +45,8 @@ const SettingsAbout: React.FC = () => {
       <Setting.Section>
         <h3>Support me</h3>
         <p>
-          Maintaining Museeks includes some costs. All the work is done on contributors' free time, but I still have
-          recurring costs like domain names and developer certificates.
+          Maintaining Museeks includes some costs. All the work is done on contributors&apos; free time, but I still
+          have recurring costs like domain names and developer certificates.
         </p>
         <p>
           If you appreciate my work, and if you can afford it, you can for example show support by{' '}
@@ -59,6 +57,4 @@ const SettingsAbout: React.FC = () => {
       </Setting.Section>
     </div>
   );
-};
-
-export default SettingsAbout;
+}

@@ -17,7 +17,7 @@ const { createFromPath } = nativeImage;
 
 const iconsDirectory = path.resolve(path.join(__dirname, '../../src/shared/assets/icons/windows'));
 
-class ThumbarModule extends ModuleWindow {
+export default class ThumbarModule extends ModuleWindow {
   constructor(window: Electron.BrowserWindow) {
     super(window);
     this.platforms = ['win32'];
@@ -115,5 +115,3 @@ class ThumbarModule extends ModuleWindow {
     });
   }
 }
-
-export default ThumbarModule;

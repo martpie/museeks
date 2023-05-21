@@ -3,12 +3,12 @@ import React, { useEffect, useState } from 'react';
 import logger from '../../../shared/lib/logger';
 import * as Setting from '../Setting/Setting';
 
-interface Props {
+type Props = {
   defaultValue: string;
   onChange: (deviceId: string) => void;
-}
+};
 
-const AudioOutputSelect: React.FC<Props> = (props) => {
+export default function AudioOutputSelect(props: Props) {
   const [devices, setDevices] = useState<MediaDeviceInfo[] | null>(null);
   const [hasError, setHasError] = useState(false);
 
@@ -63,6 +63,4 @@ const AudioOutputSelect: React.FC<Props> = (props) => {
       })}
     </Setting.Select>
   );
-};
-
-export default AudioOutputSelect;
+}

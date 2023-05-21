@@ -1,4 +1,3 @@
-import React from 'react';
 import { useSelector } from 'react-redux';
 
 import PlayingBar from '../PlayingBar/PlayingBar';
@@ -8,7 +7,7 @@ import { RootState } from '../../store/reducers';
 
 import styles from './Header.module.css';
 
-const Header: React.FC = () => {
+export default function Header() {
   const { playerStatus, queue, queueCursor, shuffle, repeat } = useSelector(({ player }: RootState) => {
     return {
       playerStatus: player.playerStatus,
@@ -32,6 +31,4 @@ const Header: React.FC = () => {
       </div>
     </header>
   );
-};
-
-export default Header;
+}

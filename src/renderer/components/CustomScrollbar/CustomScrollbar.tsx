@@ -1,39 +1,38 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import Scrollbars from 'rc-scrollbars';
 
 import styles from './CustomScrollbar.module.css';
 
-interface Props {
-  children: React.ReactNode;
+type Props = {
+  children: React.ReactElement;
   className: string;
   onScroll: React.UIEventHandler<HTMLElement>;
+};
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function RenderView(props: any) {
+  return <div {...props} className={styles.renderView} />;
 }
 
-const CustomScrollbar: React.FC<Props> = (props) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function TrackVertical(props: any) {
+  return <div {...props} className={styles.verticalTrack} />;
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function ThumbVertical(props: any) {
+  return <div {...props} className={styles.verticalThumb} />;
+}
+
+export default function CustomScrollbar(props: Props) {
   const { onScroll } = props;
 
-  const getRenderView = useCallback((props: any) => {
-    return <div {...props} className={styles.renderView} />;
-  }, []);
-
-  const getTrackVertical = useCallback((props: any) => {
-    return <div {...props} className={styles.verticalTrack} />;
-  }, []);
-
-  const getThumbVertical = useCallback((props: any) => {
-    return <div {...props} className={styles.verticalThumb} />;
-  }, []);
-
   return (
-    // eslint-disable-next-line
-    // @ts-ignore rc-scrollbars typings need to be updated
     <Scrollbars
-      // eslint-disable-next-line
-      // @ts-ignore
       className={props.className}
-      renderView={getRenderView}
-      renderTrackVertical={getTrackVertical}
-      renderThumbVertical={getThumbVertical}
+      renderView={RenderView}
+      renderTrackVertical={TrackVertical}
+      renderThumbVertical={ThumbVertical}
       autoHide
       autoHideTimeout={1000}
       onScroll={onScroll}
@@ -41,6 +40,4 @@ const CustomScrollbar: React.FC<Props> = (props) => {
       {props.children}
     </Scrollbars>
   );
-};
-
-export default CustomScrollbar;
+}

@@ -9,7 +9,7 @@ import logger from '../../shared/lib/logger';
 
 import ModuleWindow from './module-window';
 
-class DevtoolsModule extends ModuleWindow {
+export default class DevtoolsModule extends ModuleWindow {
   async load(): Promise<void> {
     const isProduction = process.env.NODE_ENV === 'production';
 
@@ -24,5 +24,3 @@ class DevtoolsModule extends ModuleWindow {
     }
   }
 }
-
-export default DevtoolsModule;

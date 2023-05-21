@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Icon from 'react-fontawesome';
 import cx from 'classnames';
 import useClickOut from '@bscop/use-click-out';
@@ -10,14 +10,14 @@ import { TrackModel, Repeat } from '../../../shared/types/museeks';
 
 import styles from './PlayingBar.module.css';
 
-interface Props {
+type Props = {
   queue: TrackModel[];
   queueCursor: number | null;
   shuffle: boolean;
   repeat: Repeat;
-}
+};
 
-const PlayingBar: React.FC<Props> = (props) => {
+export default function PlayingBar(props: Props) {
   const { queue, queueCursor, repeat, shuffle } = props;
 
   const [isQueueOpen, setIsQueueOpen] = useState(false);
@@ -49,6 +49,4 @@ const PlayingBar: React.FC<Props> = (props) => {
       </div>
     </div>
   );
-};
-
-export default PlayingBar;
+}

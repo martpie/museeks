@@ -5,7 +5,7 @@ export type AppState = null;
 
 const initialState = null;
 
-export default (state = initialState, action: Action) => {
+export default function appReducer(state = initialState, action: Action) {
   switch (action.type) {
     case types.REFRESH_CONFIG: {
       // Nothing particular here for the moment
@@ -16,4 +16,4 @@ export default (state = initialState, action: Action) => {
       return state;
     }
   }
-};
+}

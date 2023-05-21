@@ -1,4 +1,3 @@
-import React from 'react';
 import { useSelector } from 'react-redux';
 
 import TracksListHeaderCell from '../TracksListHeaderCell/TracksListHeaderCell';
@@ -25,7 +24,7 @@ type Props = {
   enableSort: boolean;
 };
 
-const TracksListHeader: React.FC<Props> = (props) => {
+export default function TracksListHeader(props: Props) {
   const { enableSort } = props;
   const sort = useSelector((state: RootState) => state.library.sort);
 
@@ -64,6 +63,4 @@ const TracksListHeader: React.FC<Props> = (props) => {
       />
     </div>
   );
-};
-
-export default TracksListHeader;
+}

@@ -12,11 +12,11 @@ import styles from './PlaylistsNav.module.css';
 
 const { Menu } = window.MuseeksAPI.remote;
 
-interface Props {
+type Props = {
   playlists: PlaylistModel[];
-}
+};
 
-const PlaylistsNav: React.FC<Props> = (props) => {
+export default function PlaylistsNav(props: Props) {
   const [renamed, setRenamed] = useState<string | null>(null);
 
   const showContextMenu = useCallback((playlistId: string) => {
@@ -150,6 +150,4 @@ const PlaylistsNav: React.FC<Props> = (props) => {
       <div className={styles.playlistsNav__body}>{nav}</div>
     </div>
   );
-};
-
-export default PlaylistsNav;
+}

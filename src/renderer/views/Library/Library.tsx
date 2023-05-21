@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
@@ -11,7 +11,7 @@ import appStyles from '../Root.module.css';
 
 import styles from './Library.module.css';
 
-const Library: React.FC = () => {
+export default function Library() {
   const library = useSelector((state: RootState) => state.library);
   const player = useSelector((state: RootState) => state.player);
   const playlists = useSelector((state: RootState) => state.playlists.list);
@@ -76,6 +76,4 @@ const Library: React.FC = () => {
   }, [library, playlists, player, tracks]);
 
   return <div className={`${appStyles.view} ${styles.viewLibrary}`}>{getLibraryComponent}</div>;
-};
-
-export default Library;
+}

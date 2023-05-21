@@ -11,7 +11,7 @@ const initialState: PlaylistsState = {
   loading: true,
 };
 
-export default (state = initialState, action: Action): PlaylistsState => {
+export default function playlistsReducer(state = initialState, action: Action): PlaylistsState {
   switch (action.type) {
     case types.PLAYLISTS_REFRESH: {
       return {
@@ -28,4 +28,4 @@ export default (state = initialState, action: Action): PlaylistsState => {
       return state;
     }
   }
-};
+}

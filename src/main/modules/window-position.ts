@@ -10,7 +10,7 @@ import { Config } from '../../shared/types/museeks';
 
 import ModuleWindow from './module-window';
 
-class WindowPositionModule extends ModuleWindow {
+export default class WindowPositionModule extends ModuleWindow {
   protected config: TeenyConf<Config>;
   protected lastSaveBounds = 0;
   protected saveBoundsTimeout: NodeJS.Timeout | null = null;
@@ -42,5 +42,3 @@ class WindowPositionModule extends ModuleWindow {
     }, 250);
   }
 }
-
-export default WindowPositionModule;

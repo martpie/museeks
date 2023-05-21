@@ -6,38 +6,40 @@ type Props = {
   children: React.ReactNode;
 };
 
-export const Section: React.FC<Props> = (props) => (
-  <section className={styles.settingSection}>{props.children}</section>
-);
+export function Section(props: Props) {
+  return <section className={styles.settingSection}>{props.children}</section>;
+}
 
-export const Description: React.FC<Props> = (props) => <p className={styles.settingDescription}>{props.children}</p>;
+export function Description(props: Props) {
+  return <p className={styles.settingDescription}>{props.children}</p>;
+}
 
-export const Label: React.FC<JSX.IntrinsicElements['label']> = (props) => {
+export function Label(props: JSX.IntrinsicElements['label']) {
   const { children, ...restProps } = props;
 
   return (
     <label className={styles.settingLabel} {...restProps}>
-      {props.children}
+      {children}
     </label>
   );
-};
+}
 
-export const Title: React.FC<Props> = (props) => <span className={styles.settingTitle}>{props.children}</span>;
+export function Title(props: Props) {
+  return <span className={styles.settingTitle}>{props.children}</span>;
+}
 
-export const Input: React.FC<JSX.IntrinsicElements['input']> = (props) => {
-  const { children, ...restProps } = props;
+export function Input(props: JSX.IntrinsicElements['input']) {
+  return <input className={styles.settingInput} {...props} />;
+}
 
+export function Error(props: Props) {
+  return <p className={styles.settingError}>{props.children}</p>;
+}
+
+export function Select(props: Props & JSX.IntrinsicElements['select']) {
   return (
-    <input className={styles.settingInput} {...restProps}>
+    <select className={styles.settingSelect} {...props}>
       {props.children}
-    </input>
+    </select>
   );
-};
-
-export const Error: React.FC<Props> = (props) => <p className={styles.settingError}>{props.children}</p>;
-
-export const Select: React.FC<JSX.IntrinsicElements['select']> = (props) => (
-  <select className={styles.settingSelect} {...props}>
-    {props.children}
-  </select>
-);
+}

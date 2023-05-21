@@ -20,7 +20,7 @@ const getVolumeIcon = (volume: number, muted: boolean): string => {
   return 'volume-up';
 };
 
-const VolumeControl: React.FC = (props) => {
+export default function VolumeControl() {
   const audio = window.MuseeksAPI.player.getAudio();
 
   const [showVolume, setShowVolume] = useState(false);
@@ -71,6 +71,4 @@ const VolumeControl: React.FC = (props) => {
       </div>
     </div>
   );
-};
-
-export default VolumeControl;
+}

@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Track } from '../../../shared/types/museeks';
 
 import styles from './Cover.module.css';
 
-interface Props {
+type Props = {
   track: Track;
-}
+};
 
-const Cover: React.FC<Props> = (props) => {
+export default function Cover(props: Props) {
   const [coverPath, setCoverPath] = useState<string | null>(null);
 
   useEffect(() => {
@@ -32,6 +32,4 @@ const Cover: React.FC<Props> = (props) => {
       <div className={styles.cover__note}>♪</div>
     </div>
   );
-};
-
-export default Cover;
+}

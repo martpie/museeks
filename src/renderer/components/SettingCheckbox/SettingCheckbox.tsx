@@ -1,18 +1,16 @@
-import React from 'react';
-
 import * as Setting from '../Setting/Setting';
 
 import styles from './SettingCheckbox.module.css';
 
-interface Props {
+type Props = {
   title: string;
   slug: string;
   defaultValue: boolean;
   onClick: (value: boolean) => void;
   description?: string;
-}
+};
 
-const CheckboxSetting: React.FC<Props> = (props) => {
+export default function CheckboxSetting(props: Props) {
   const { slug, title, description } = props;
   return (
     <Setting.Section>
@@ -30,6 +28,4 @@ const CheckboxSetting: React.FC<Props> = (props) => {
       </div>
     </Setting.Section>
   );
-};
-
-export default CheckboxSetting;
+}

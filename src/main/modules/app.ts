@@ -14,7 +14,7 @@ import { Config } from '../../shared/types/museeks';
 
 import ModuleWindow from './module-window';
 
-class AppModule extends ModuleWindow {
+export default class AppModule extends ModuleWindow {
   protected config: TeenyConf<Config>;
   protected forceQuit: boolean;
 
@@ -97,5 +97,3 @@ class AppModule extends ModuleWindow {
     }
   }
 }
-
-export default AppModule;

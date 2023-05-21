@@ -1,9 +1,9 @@
 import { ipcRenderer } from 'electron';
 
-import history from '../../lib/history';
 import channels from '../../../shared/lib/ipc-channels';
 import { Theme } from '../../../shared/types/museeks';
 import logger from '../../../shared/lib/logger';
+import router from '../../views/router';
 
 import * as LibraryActions from './LibraryActions';
 import * as PlaylistsActions from './PlaylistsActions';
@@ -47,11 +47,11 @@ const init = async (): Promise<void> => {
 
   // Shortcuts from the application menu
   ipcRenderer.on(channels.MENU_GO_TO_LIBRARY, () => {
-    history.push('/library');
+    router.navigate('/library');
   });
 
   ipcRenderer.on(channels.MENU_GO_TO_PLAYLISTS, () => {
-    history.push('/playlists');
+    router.navigate('/playlists');
   });
 
   ipcRenderer.on(channels.MENU_JUMP_TO_PLAYING_TRACK, () => {

@@ -7,14 +7,14 @@ import { SortBy } from '../../../shared/types/museeks';
 
 import styles from './TracksListHeaderCell.module.css';
 
-interface Props {
+type Props = {
   title: string;
   className?: string;
   sortBy?: SortBy | null;
   icon?: string | null;
-}
+};
 
-const TracksListHeaderCell: React.FC<Props> = (props) => {
+export default function TracksListHeaderCell(props: Props) {
   const { sortBy, className, title, icon } = props;
 
   const sort = useCallback(() => {
@@ -47,6 +47,4 @@ const TracksListHeaderCell: React.FC<Props> = (props) => {
   }
 
   return <div className={classes}>{content}</div>;
-};
-
-export default TracksListHeaderCell;
+}

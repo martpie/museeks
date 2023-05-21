@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 // T is a generic type for value parameter, our case this will be string
-function useDebounce<T>(value: T, delay: number): T {
+export default function useDebounce<T>(value: T, delay: number): T {
   // State and setters for debounced value
   const [debouncedValue, setDebouncedValue] = useState<T>(value);
 
@@ -24,5 +24,3 @@ function useDebounce<T>(value: T, delay: number): T {
 
   return debouncedValue;
 }
-
-export default useDebounce;

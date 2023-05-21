@@ -13,7 +13,7 @@ import Module from './module';
 
 const { app } = electron;
 
-class ConfigModule extends Module {
+export default class ConfigModule extends Module {
   private workArea: Electron.Rectangle;
   private conf: TeenyConf<Config> | undefined;
 
@@ -91,5 +91,3 @@ class ConfigModule extends Module {
     return this.conf;
   }
 }
-
-export default ConfigModule;

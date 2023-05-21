@@ -6,12 +6,12 @@ import { TrackModel } from '../../../shared/types/museeks';
 
 import styles from './Queue.module.css';
 
-interface Props {
+type Props = {
   queue: TrackModel[];
   queueCursor: number | null;
-}
+};
 
-const Queue: React.FC<Props> = (props) => {
+export default function Queue(props: Props) {
   const { queue, queueCursor } = props;
   let content: React.ReactNode;
 
@@ -28,6 +28,4 @@ const Queue: React.FC<Props> = (props) => {
   }
 
   return null;
-};
-
-export default Queue;
+}

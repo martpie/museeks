@@ -1,17 +1,16 @@
-import React from 'react';
 import cx from 'classnames';
 
 import styles from './Toast.module.css';
 
-interface Props {
+type Props = {
   type: 'danger' | 'info' | 'warning' | 'success';
   content: string;
-}
+};
 
 /**
  * Toast single item
  */
-const ToastItem: React.FC<Props> = (props) => {
+export default function ToastItem(props: Props) {
   const { type, content } = props;
 
   const classes = cx(styles.toast, {
@@ -22,6 +21,4 @@ const ToastItem: React.FC<Props> = (props) => {
   });
 
   return <div className={classes}>{content}</div>;
-};
-
-export default ToastItem;
+}

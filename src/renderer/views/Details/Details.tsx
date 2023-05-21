@@ -20,7 +20,7 @@ const INITIAL_FORM_DATA: TrackEditableFields = {
   genre: [],
 };
 
-const Details: React.FC = () => {
+export default function Details() {
   const { trackId } = useParams<{ trackId: string }>();
   // const [coverSrc, setCoverSrc] = useState<string | null>(null);
   const [formData, setFormData] = useState<TrackEditableFields>(INITIAL_FORM_DATA);
@@ -71,7 +71,7 @@ const Details: React.FC = () => {
   return (
     <div className={`${appStyles.view} ${styles.viewDetails}`}>
       <form className={styles.detailsForm} onSubmit={handleSubmit}>
-        <h2>Edit "{formData.title}"</h2>
+        <h2>Edit &quot;{formData.title}&quot;</h2>
         <Setting.Section>
           <Setting.Label htmlFor='title'>Title</Setting.Label>
           <Setting.Input
@@ -132,10 +132,8 @@ const Details: React.FC = () => {
           </Button>
           <Button type='submit'>Save</Button>
         </div>
-        <p>Clicking "save" will only update the library data, and will not save it to the original file.</p>
+        <p>Clicking &quot;save&quot; will only update the library data, and will not save it to the original file.</p>
       </form>
     </div>
   );
-};
-
-export default Details;
+}

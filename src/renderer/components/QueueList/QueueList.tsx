@@ -13,7 +13,7 @@ type Props = {
   queueCursor: number;
 };
 
-const QueueList: React.FC<Props> = (props) => {
+export default function QueueList(props: Props) {
   const [draggedTrackIndex, setDraggedTrackIndex] = useState<number | null>(null);
   const [draggedOverTrackIndex, setDraggedOverTrackIndex] = useState<number | null>(null);
   const [dragPosition, setDragPosition] = useState<null | 'above' | 'below'>(null);
@@ -104,6 +104,4 @@ const QueueList: React.FC<Props> = (props) => {
       </div>
     </>
   );
-};
-
-export default QueueList;
+}

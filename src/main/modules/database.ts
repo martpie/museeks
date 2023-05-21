@@ -11,7 +11,7 @@ import ModuleWindow from './module-window';
  * TODO: a LOT of code from the UI can be ported here once all the events are
  * created
  */
-class IPCDatabaseModule extends ModuleWindow {
+export default class IPCDatabaseModule extends ModuleWindow {
   async load(): Promise<void> {
     // ipcMain.handle(channels.DB_RESET, () => db.reset);
     // ipcMain.handle(channels.TRACKS_LOAD_ALL, () => db.loadAllTracks);
@@ -21,5 +21,3 @@ class IPCDatabaseModule extends ModuleWindow {
     // ipcMain.handle(channels.TRACKS_INSERT, (_, track: Track) => db.insertTrack(track));
   }
 }
-
-export default IPCDatabaseModule;

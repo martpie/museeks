@@ -1,4 +1,3 @@
-import React from 'react';
 import InlineSVG from 'svg-inline-react';
 import cx from 'classnames';
 
@@ -7,11 +6,11 @@ import * as PlayerActions from '../../store/actions/PlayerActions';
 
 import styles from './common.module.css';
 
-interface Props {
+type Props = {
   shuffle: boolean;
-}
+};
 
-const ButtonShuffle: React.FC<Props> = (props) => {
+export default function ButtonShuffle(props: Props) {
   const buttonClasses = cx(styles.button, {
     [styles.active]: props.shuffle,
   });
@@ -27,6 +26,4 @@ const ButtonShuffle: React.FC<Props> = (props) => {
       <InlineSVG src={icons.SHUFFLE} className={styles.icon} />
     </button>
   );
-};
-
-export default ButtonShuffle;
+}

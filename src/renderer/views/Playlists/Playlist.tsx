@@ -1,14 +1,14 @@
-import React, { useCallback, useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams, Link } from 'react-router-dom';
 
-import TracksList from '../TracksList/TracksList';
+import TracksList from '../../components/TracksList/TracksList';
 import * as ViewMessage from '../../elements/ViewMessage/ViewMessage';
 import * as PlaylistsActions from '../../store/actions/PlaylistsActions';
 import { filterTracks } from '../../lib/utils-library';
 import { RootState } from '../../store/reducers';
 
-const Playlist: React.FC = () => {
+export default function Playlist() {
   const params = useParams();
   const playlistId = params.playlistId;
 
@@ -101,6 +101,4 @@ const Playlist: React.FC = () => {
       currentPlaylist={playlistId}
     />
   );
-};
-
-export default Playlist;
+}

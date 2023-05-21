@@ -9,9 +9,13 @@ type Props = {
 /**
  * Main message of a ViewMessage
  */
-export const Notice: React.FC<Props> = (props) => <div className={styles.fullMessage}>{props.children}</div>;
+export function Notice(props: Props) {
+  return <div className={styles.fullMessage}>{props.children}</div>;
+}
 
 /**
  * Sub-message of a ViewMessage, useful to add more contextual information
  */
-export const Sub: React.FC<Props> = (props) => <div className={styles.subMessage}>{props.children}</div>;
+export function Sub(props: Props) {
+  return <div className={styles.subMessage}>{props.children}</div>;
+}

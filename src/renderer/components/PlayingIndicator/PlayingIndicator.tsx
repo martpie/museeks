@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Icon from 'react-fontawesome';
 import { useSelector } from 'react-redux';
 
@@ -26,7 +26,7 @@ const getIcon = (state: PlayerStatus, hovered: boolean) => {
   return <Icon name='play' fixedWidth />;
 };
 
-const TrackPlayingIndicator: React.FC = () => {
+export default function TrackPlayingIndicator() {
   const [hovered, setHovered] = useState(false);
   const playerStatus = useSelector((state: RootState) => state.player.playerStatus);
 
@@ -43,6 +43,4 @@ const TrackPlayingIndicator: React.FC = () => {
       {icon}
     </button>
   );
-};
-
-export default TrackPlayingIndicator;
+}

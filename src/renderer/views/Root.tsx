@@ -1,18 +1,16 @@
-import React, { useCallback, useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import KeyBinding from 'react-keybinding-component';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { useDrop } from 'react-dnd';
 import { NativeTypes } from 'react-dnd-html5-backend';
 
 import logger from '../../shared/lib/logger';
-
 import Header from '../components/Header/Header';
 import Footer from '../components/Footer/Footer';
 import Toasts from '../components/Toasts/Toasts';
 import AppActions from '../store/actions/AppActions';
 import * as LibraryActions from '../store/actions/LibraryActions';
 import * as PlayerActions from '../store/actions/PlayerActions';
-
 import { isCtrlKey } from '../lib/utils-events';
 import DropzoneImport from '../components/DropzoneImport/DropzoneImport';
 
@@ -24,7 +22,7 @@ import styles from './Root.module.css';
 |--------------------------------------------------------------------------
 */
 
-const Museeks: React.FC = (props) => {
+export default function Museeks() {
   const navigate = useNavigate();
 
   // App shortcuts (not using Electron's global shortcuts API to avoid conflicts
@@ -73,7 +71,7 @@ const Museeks: React.FC = (props) => {
         const files = item.files.map((file) => file.path);
 
         LibraryActions.add(files)
-          .then((_importedTracks) => {
+          .then((/* _importedTracks */) => {
             // TODO: Import to playlist here
           })
           .catch((err) => {
@@ -98,6 +96,4 @@ const Museeks: React.FC = (props) => {
       <DropzoneImport title='Add music to the library' subtitle='Drop files or folders anywhere' shown={isOver} />
     </div>
   );
-};
-
-export default Museeks;
+}

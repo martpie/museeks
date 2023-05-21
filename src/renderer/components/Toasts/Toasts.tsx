@@ -1,28 +1,17 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import ToastItem from '../../elements/Toast/Toast';
-import { Toast } from '../../../shared/types/museeks';
 import { RootState } from '../../store/reducers';
 
 import styles from './Toasts.module.css';
 
-interface InjectedProps {
-  toasts: Toast[];
-}
-
-const Toasts: React.FC<InjectedProps> = (props) => {
+export default function Toasts() {
+  const toasts = useSelector((state: RootState) => state.toasts);
   return (
     <div className={styles.toasts}>
-      {props.toasts.map((toast) => (
+      {toasts.map((toast) => (
         <ToastItem type={toast.type} content={toast.content} key={toast._id} />
       ))}
     </div>
   );
-};
-
-function mapStateToProps(state: RootState) {
-  return { toasts: state.toasts };
 }
-
-export default connect(mapStateToProps)(Toasts);

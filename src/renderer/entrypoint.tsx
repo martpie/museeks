@@ -10,17 +10,17 @@ import { Provider } from 'react-redux';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { RouterProvider } from 'react-router-dom';
+import { ErrorBoundary } from 'react-error-boundary';
 
-import App from './App';
+import * as ViewMessage from './elements/ViewMessage/ViewMessage';
+import ExternalLink from './elements/ExternalLink/ExternalLink';
 import store from './store/store';
 import router from './views/router';
-
 /*
 |--------------------------------------------------------------------------
 | Styles
 |--------------------------------------------------------------------------
 */
-
 import '../../node_modules/react-rangeslider/lib/index.css';
 import '../../node_modules/font-awesome/css/font-awesome.css';
 import '../../node_modules/normalize.css/normalize.css';
@@ -38,13 +38,28 @@ if (wrap) {
   const root = ReactDOM.createRoot(wrap);
   root.render(
     <React.StrictMode>
-      <App>
+      <ErrorBoundary
+        fallback={
+          <ViewMessage.Notice>
+            <p>
+              <span role='img' aria-label='boom'>
+                💥
+              </span>{' '}
+              Something wrong happened
+            </p>
+            <ViewMessage.Sub>
+              If it happens again, please{' '}
+              <ExternalLink href='https://github.com/martpie/museeks/issues'>report an issue</ExternalLink>
+            </ViewMessage.Sub>
+          </ViewMessage.Notice>
+        }
+      >
         <Provider store={store}>
           <DndProvider backend={HTML5Backend}>
             <RouterProvider router={router} />
           </DndProvider>
         </Provider>
-      </App>
+      </ErrorBoundary>
     </React.StrictMode>
   );
 }

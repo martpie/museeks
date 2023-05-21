@@ -7,7 +7,7 @@ import { isCtrlKey } from '../../lib/utils-events';
 
 import styles from './Search.module.css';
 
-const Search: React.FC = () => {
+export default function Search() {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const [search, setSearch] = useState('');
@@ -53,6 +53,4 @@ const Search: React.FC = () => {
       <Keybinding preventInputConflict onKey={onKey} />
     </div>
   );
-};
-
-export default Search;
+}

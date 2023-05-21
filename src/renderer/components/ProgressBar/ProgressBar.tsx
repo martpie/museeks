@@ -1,22 +1,16 @@
-import React from 'react';
 import cx from 'classnames';
 
 import styles from './ProgressBar.module.css';
 
-interface Props {
+type Props = {
   progress?: number;
   animated?: boolean;
-}
-
-const ProgressBar: React.FC<Props> = (props) => (
-  <div className={cx(styles.progress, { [styles.animated]: props.animated })}>
-    <div className={styles.progressBar} style={{ width: `${props.progress}%` }}></div>
-  </div>
-);
-
-ProgressBar.defaultProps = {
-  progress: 100,
-  animated: false,
 };
 
-export default ProgressBar;
+export default function ProgressBar(props: Props) {
+  return (
+    <div className={cx(styles.progress, { [styles.animated]: props.animated })}>
+      <div className={styles.progressBar} style={{ width: `${props.progress}%` }}></div>
+    </div>
+  );
+}

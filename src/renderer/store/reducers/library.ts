@@ -39,7 +39,7 @@ const initialState: LibraryState = {
   highlightPlayingTrack: false,
 };
 
-export default (state = initialState, action: Action): LibraryState => {
+export default function libraryReducer(state = initialState, action: Action): LibraryState {
   switch (action.type) {
     case types.LIBRARY_REFRESH: {
       return {
@@ -201,4 +201,4 @@ export default (state = initialState, action: Action): LibraryState => {
       return state;
     }
   }
-};
+}

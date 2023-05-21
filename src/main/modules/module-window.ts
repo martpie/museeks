@@ -4,7 +4,7 @@
 
 import Module from './module';
 
-class ModuleWindow extends Module {
+export default class ModuleWindow extends Module {
   protected window: Electron.BrowserWindow;
 
   constructor(window: Electron.BrowserWindow) {
@@ -16,5 +16,3 @@ class ModuleWindow extends Module {
     return this.window;
   }
 }
-
-export default ModuleWindow;

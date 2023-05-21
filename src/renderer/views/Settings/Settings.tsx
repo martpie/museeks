@@ -1,4 +1,3 @@
-import React from 'react';
 import { Outlet, useMatch, Navigate } from 'react-router-dom';
 
 import * as Nav from '../../elements/Nav/Nav';
@@ -6,7 +5,7 @@ import appStyles from '../Root.module.css';
 
 import styles from './Settings.module.css';
 
-const Settings: React.FC = () => {
+export default function Settings() {
   const match = useMatch('/settings');
 
   return (
@@ -27,6 +26,4 @@ const Settings: React.FC = () => {
       {match && <Navigate to='/settings/library' />}
     </div>
   );
-};
-
-export default Settings;
+}

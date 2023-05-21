@@ -5,14 +5,14 @@ import * as PlaylistActions from '../../store/actions/PlaylistsActions';
 
 import styles from './PlaylistsNavLink.module.css';
 
-interface Props {
+type Props = {
   children: React.ReactNode;
   className?: string;
   playlistId: string;
   onContextMenu: (playlistId: string) => void;
-}
+};
 
-const PlaylistsNavLink: React.FC<Props> = (props) => {
+export default function PlaylistsNavLink(props: Props) {
   return (
     <NavLink
       className={({ isActive }) => `${props.className} ${styles.playlistLink} ${isActive && 'isActive'}`}
@@ -24,6 +24,4 @@ const PlaylistsNavLink: React.FC<Props> = (props) => {
       {props.children}
     </NavLink>
   );
-};
-
-export default PlaylistsNavLink;
+}

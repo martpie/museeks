@@ -8,13 +8,13 @@ import { TrackModel, Repeat } from '../../../shared/types/museeks';
 
 import styles from './PlayingBarInfo.module.css';
 
-interface Props {
+type Props = {
   trackPlaying: TrackModel;
   shuffle: boolean;
   repeat: Repeat;
-}
+};
 
-const PlayingBarInfo: React.FC<Props> = (props) => {
+export default function PlayingBarInfo(props: Props) {
   const { trackPlaying } = props;
 
   const playingBar = useRef<HTMLDivElement>(null);
@@ -147,6 +147,4 @@ const PlayingBarInfo: React.FC<Props> = (props) => {
       </div>
     </div>
   );
-};
-
-export default PlayingBarInfo;
+}

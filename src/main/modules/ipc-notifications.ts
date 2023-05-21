@@ -10,7 +10,7 @@ import ModuleWindow from './module-window';
 /**
  * Module in charge of displaying native notifications on certain user actions
  */
-class IPCNotificationsModule extends ModuleWindow {
+export default class IPCNotificationsModule extends ModuleWindow {
   protected config: TeenyConf<Config>;
 
   constructor(window: Electron.BrowserWindow, config: TeenyConf<Config>) {
@@ -52,5 +52,3 @@ class IPCNotificationsModule extends ModuleWindow {
     notification.show();
   }
 }
-
-export default IPCNotificationsModule;
