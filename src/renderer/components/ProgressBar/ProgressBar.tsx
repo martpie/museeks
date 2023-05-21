@@ -2,10 +2,10 @@ import cx from 'classnames';
 
 import styles from './ProgressBar.module.css';
 
-interface Props {
+type Props = {
   progress?: number;
   animated?: boolean;
-}
+};
 
 function ProgressBar(props: Props) {
   return (

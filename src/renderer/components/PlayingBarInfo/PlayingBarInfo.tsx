@@ -8,11 +8,11 @@ import { TrackModel, Repeat } from '../../../shared/types/museeks';
 
 import styles from './PlayingBarInfo.module.css';
 
-interface Props {
+type Props = {
   trackPlaying: TrackModel;
   shuffle: boolean;
   repeat: Repeat;
-}
+};
 
 function PlayingBarInfo(props: Props) {
   const { trackPlaying } = props;

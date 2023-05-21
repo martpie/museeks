@@ -3,11 +3,11 @@ import Scrollbars from 'rc-scrollbars';
 
 import styles from './CustomScrollbar.module.css';
 
-interface Props {
+type Props = {
   children: React.ReactElement;
   className: string;
   onScroll: React.UIEventHandler<HTMLElement>;
-}
+};
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function RenderView(props: any) {

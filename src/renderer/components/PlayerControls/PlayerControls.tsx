@@ -6,9 +6,9 @@ import { PlayerStatus } from '../../../shared/types/museeks';
 
 import styles from './PlayerControls.module.css';
 
-interface Props {
+type Props = {
   playerStatus: PlayerStatus;
-}
+};
 
 function PlayerControls(props: Props) {
   return (

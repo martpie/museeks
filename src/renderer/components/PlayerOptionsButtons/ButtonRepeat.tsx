@@ -14,9 +14,9 @@ const svgMap = {
   default: icons.REPEAT,
 };
 
-interface Props {
+type Props = {
   repeat: Repeat;
-}
+};
 
 function ButtonRepeat(props: Props) {
   const svg = svgMap[props.repeat] || svgMap.default;

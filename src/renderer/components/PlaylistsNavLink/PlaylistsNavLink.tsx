@@ -5,12 +5,12 @@ import * as PlaylistActions from '../../store/actions/PlaylistsActions';
 
 import styles from './PlaylistsNavLink.module.css';
 
-interface Props {
+type Props = {
   children: React.ReactNode;
   className?: string;
   playlistId: string;
   onContextMenu: (playlistId: string) => void;
-}
+};
 
 function PlaylistsNavLink(props: Props) {
   return (

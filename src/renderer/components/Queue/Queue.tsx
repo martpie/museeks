@@ -6,10 +6,10 @@ import { TrackModel } from '../../../shared/types/museeks';
 
 import styles from './Queue.module.css';
 
-interface Props {
+type Props = {
   queue: TrackModel[];
   queueCursor: number | null;
-}
+};
 
 function Queue(props: Props) {
   const { queue, queueCursor } = props;

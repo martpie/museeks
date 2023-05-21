@@ -8,7 +8,7 @@ import cellStyles from '../TracksListHeader/TracksListHeader.module.css';
 
 import styles from './TrackRow.module.css';
 
-interface Props {
+type Props = {
   selected: boolean;
   track: TrackModel;
   index: number;
@@ -24,7 +24,7 @@ interface Props {
   onDragOver?: (trackId: string, position: 'above' | 'below') => void;
   onDragEnd?: () => void;
   onDrop?: (targetTrackId: string, position: 'above' | 'below') => void;
-}
+};
 
 function TrackRow(props: Props) {
   const [reorderOver, setReorderOver] = useState(false);

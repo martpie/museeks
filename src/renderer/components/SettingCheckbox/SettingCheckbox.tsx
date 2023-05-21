@@ -2,13 +2,13 @@ import * as Setting from '../Setting/Setting';
 
 import styles from './SettingCheckbox.module.css';
 
-interface Props {
+type Props = {
   title: string;
   slug: string;
   defaultValue: boolean;
   onClick: (value: boolean) => void;
   description?: string;
-}
+};
 
 function CheckboxSetting(props: Props) {
   const { slug, title, description } = props;

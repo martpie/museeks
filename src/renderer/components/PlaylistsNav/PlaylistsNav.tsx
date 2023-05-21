@@ -12,9 +12,9 @@ import styles from './PlaylistsNav.module.css';
 
 const { Menu } = window.MuseeksAPI.remote;
 
-interface Props {
+type Props = {
   playlists: PlaylistModel[];
-}
+};
 
 function PlaylistsNav(props: Props) {
   const [renamed, setRenamed] = useState<string | null>(null);

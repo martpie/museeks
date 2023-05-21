@@ -4,10 +4,10 @@ import styles from './ExternalLink.module.css';
 
 const { shell } = window.MuseeksAPI;
 
-interface Props {
+type Props = {
   children: string;
   href: string;
-}
+};
 
 function ExternalLink(props: Props) {
   const openLink = useCallback(

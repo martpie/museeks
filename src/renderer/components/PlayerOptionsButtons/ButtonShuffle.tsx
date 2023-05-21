@@ -6,9 +6,9 @@ import * as PlayerActions from '../../store/actions/PlayerActions';
 
 import styles from './common.module.css';
 
-interface Props {
+type Props = {
   shuffle: boolean;
-}
+};
 
 function ButtonShuffle(props: Props) {
   const buttonClasses = cx(styles.button, {

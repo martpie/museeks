@@ -10,12 +10,12 @@ import { TrackModel, Repeat } from '../../../shared/types/museeks';
 
 import styles from './PlayingBar.module.css';
 
-interface Props {
+type Props = {
   queue: TrackModel[];
   queueCursor: number | null;
   shuffle: boolean;
   repeat: Repeat;
-}
+};
 
 function PlayingBar(props: Props) {
   const { queue, queueCursor, repeat, shuffle } = props;

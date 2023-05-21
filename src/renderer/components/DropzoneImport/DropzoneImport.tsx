@@ -1,10 +1,10 @@
 import styles from './DropzoneImport.module.css';
 
-interface Props {
+type Props = {
   title: string;
   subtitle: string;
   shown: boolean;
-}
+};
 
 function DropzoneImport(props: Props) {
   return (

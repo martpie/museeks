@@ -2,10 +2,10 @@ import cx from 'classnames';
 
 import styles from './Toast.module.css';
 
-interface Props {
+type Props = {
   type: 'danger' | 'info' | 'warning' | 'success';
   content: string;
-}
+};
 
 /**
  * Toast single item

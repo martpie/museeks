@@ -4,9 +4,9 @@ import { Track } from '../../../shared/types/museeks';
 
 import styles from './Cover.module.css';
 
-interface Props {
+type Props = {
   track: Track;
-}
+};
 
 function Cover(props: Props) {
   const [coverPath, setCoverPath] = useState<string | null>(null);

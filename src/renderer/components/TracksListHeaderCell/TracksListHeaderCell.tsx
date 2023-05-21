@@ -7,12 +7,12 @@ import { SortBy } from '../../../shared/types/museeks';
 
 import styles from './TracksListHeaderCell.module.css';
 
-interface Props {
+type Props = {
   title: string;
   className?: string;
   sortBy?: SortBy | null;
   icon?: string | null;
-}
+};
 
 function TracksListHeaderCell(props: Props) {
   const { sortBy, className, title, icon } = props;

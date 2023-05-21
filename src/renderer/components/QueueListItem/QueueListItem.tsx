@@ -6,7 +6,7 @@ import { TrackModel } from '../../../shared/types/museeks';
 
 import styles from './QueueListItem.module.css';
 
-interface Props {
+type Props = {
   dragged: boolean;
   draggedOver: boolean;
   dragPosition?: null | 'above' | 'below';
@@ -16,7 +16,7 @@ interface Props {
   onDragOver: (e: React.DragEvent<HTMLDivElement>, index: number) => void;
   onDragEnd: React.DragEventHandler;
   queueCursor: number;
-}
+};
 
 function QueueListItem(props: Props) {
   const { track } = props;
