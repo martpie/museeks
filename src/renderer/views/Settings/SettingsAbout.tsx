@@ -45,8 +45,8 @@ export default function SettingsAbout() {
       <Setting.Section>
         <h3>Support me</h3>
         <p>
-          Maintaining Museeks includes some costs. All the work is done on contributors' free time, but I still have
-          recurring costs like domain names and developer certificates.
+          Maintaining Museeks includes some costs. All the work is done on contributors&apos; free time, but I still
+          have recurring costs like domain names and developer certificates.
         </p>
         <p>
           If you appreciate my work, and if you can afford it, you can for example show support by{' '}

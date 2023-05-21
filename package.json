@@ -96,7 +96,7 @@
     "@vitejs/plugin-react": "^4.0.0",
     "electron": "22.0.2",
     "electron-builder": "^23.6.0",
-    "eslint": "^8.40.0",
+    "eslint": "^8.41.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-jsx-a11y": "^6.7.1",

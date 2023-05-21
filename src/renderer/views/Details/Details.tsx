@@ -71,7 +71,7 @@ export default function Details() {
   return (
     <div className={`${appStyles.view} ${styles.viewDetails}`}>
       <form className={styles.detailsForm} onSubmit={handleSubmit}>
-        <h2>Edit "{formData.title}"</h2>
+        <h2>Edit &quot;{formData.title}&quot;</h2>
         <Setting.Section>
           <Setting.Label htmlFor='title'>Title</Setting.Label>
           <Setting.Input
@@ -132,7 +132,7 @@ export default function Details() {
           </Button>
           <Button type='submit'>Save</Button>
         </div>
-        <p>Clicking "save" will only update the library data, and will not save it to the original file.</p>
+        <p>Clicking &quot;save&quot; will only update the library data, and will not save it to the original file.</p>
       </form>
     </div>
   );
