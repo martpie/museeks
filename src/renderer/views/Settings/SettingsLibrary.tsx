@@ -11,7 +11,7 @@ import channels from '../../../shared/lib/ipc-channels';
 import logger from '../../../shared/lib/logger';
 import { RootState } from '../../store/reducers';
 
-function SettingsLibrary() {
+export default function SettingsLibrary() {
   const library = useSelector((state: RootState) => state.library);
 
   const resetLibrary = useCallback(async () => {
@@ -53,5 +53,3 @@ function SettingsLibrary() {
     </div>
   );
 }
-
-export default SettingsLibrary;

@@ -13,7 +13,7 @@ type Props = {
   queueCursor: number;
 };
 
-function QueueList(props: Props) {
+export default function QueueList(props: Props) {
   const [draggedTrackIndex, setDraggedTrackIndex] = useState<number | null>(null);
   const [draggedOverTrackIndex, setDraggedOverTrackIndex] = useState<number | null>(null);
   const [dragPosition, setDragPosition] = useState<null | 'above' | 'below'>(null);
@@ -105,5 +105,3 @@ function QueueList(props: Props) {
     </>
   );
 }
-
-export default QueueList;

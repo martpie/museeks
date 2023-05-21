@@ -7,7 +7,7 @@ type Props = {
   bSize?: 'small';
 };
 
-function Button(props: Props & JSX.IntrinsicElements['button']) {
+export default function Button(props: Props & JSX.IntrinsicElements['button']) {
   const { relevancy, bSize, ...rest } = props;
 
   const classes = cx(styles.button, {
@@ -21,5 +21,3 @@ function Button(props: Props & JSX.IntrinsicElements['button']) {
     </button>
   );
 }
-
-export default Button;

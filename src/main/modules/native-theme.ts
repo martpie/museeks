@@ -11,7 +11,7 @@ import { Config, Theme } from '../../shared/types/museeks';
 
 import ModuleWindow from './module-window';
 
-class NativeThemeModule extends ModuleWindow {
+export default class NativeThemeModule extends ModuleWindow {
   protected config: TeenyConf<Config>;
 
   constructor(window: Electron.BrowserWindow, config: TeenyConf<Config>) {
@@ -88,5 +88,3 @@ class NativeThemeModule extends ModuleWindow {
     return nativeTheme.shouldUseDarkColors ? 'dark' : 'light';
   }
 }
-
-export default NativeThemeModule;

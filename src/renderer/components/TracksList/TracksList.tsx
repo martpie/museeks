@@ -41,7 +41,7 @@ type Props = {
   onReorder?: (playlistId: string, tracksIds: string[], targetTrackId: string, position: 'above' | 'below') => void;
 };
 
-function TracksList(props: Props) {
+export default function TracksList(props: Props) {
   const { tracks, type, trackPlayingId, reorderable, currentPlaylist, onReorder, playlists } = props;
 
   const [tilesScrolled, setTilesScrolled] = useState(0);
@@ -542,5 +542,3 @@ function TracksList(props: Props) {
     </div>
   );
 }
-
-export default TracksList;

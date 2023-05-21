@@ -24,7 +24,7 @@ import styles from './Root.module.css';
 |--------------------------------------------------------------------------
 */
 
-function Museeks() {
+export default function Museeks() {
   const navigate = useNavigate();
 
   // App shortcuts (not using Electron's global shortcuts API to avoid conflicts
@@ -99,5 +99,3 @@ function Museeks() {
     </div>
   );
 }
-
-export default Museeks;

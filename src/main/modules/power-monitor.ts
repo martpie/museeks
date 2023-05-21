@@ -8,7 +8,7 @@ import channels from '../../shared/lib/ipc-channels';
 
 import ModuleWindow from './module-window';
 
-class PowerMonitorModule extends ModuleWindow {
+export default class PowerMonitorModule extends ModuleWindow {
   async load(): Promise<void> {
     const { powerMonitor } = electron;
     const { window } = this;
@@ -18,5 +18,3 @@ class PowerMonitorModule extends ModuleWindow {
     });
   }
 }
-
-export default PowerMonitorModule;

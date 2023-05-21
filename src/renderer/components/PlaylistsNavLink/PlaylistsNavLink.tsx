@@ -12,7 +12,7 @@ type Props = {
   onContextMenu: (playlistId: string) => void;
 };
 
-function PlaylistsNavLink(props: Props) {
+export default function PlaylistsNavLink(props: Props) {
   return (
     <NavLink
       className={({ isActive }) => `${props.className} ${styles.playlistLink} ${isActive && 'isActive'}`}
@@ -25,5 +25,3 @@ function PlaylistsNavLink(props: Props) {
     </NavLink>
   );
 }
-
-export default PlaylistsNavLink;

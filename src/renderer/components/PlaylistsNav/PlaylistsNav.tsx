@@ -16,7 +16,7 @@ type Props = {
   playlists: PlaylistModel[];
 };
 
-function PlaylistsNav(props: Props) {
+export default function PlaylistsNav(props: Props) {
   const [renamed, setRenamed] = useState<string | null>(null);
 
   const showContextMenu = useCallback((playlistId: string) => {
@@ -151,5 +151,3 @@ function PlaylistsNav(props: Props) {
     </div>
   );
 }
-
-export default PlaylistsNav;

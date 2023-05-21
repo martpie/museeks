@@ -14,7 +14,7 @@ import logger from '../../shared/lib/logger';
 
 import ModuleWindow from './module-window';
 
-class TrayModule extends ModuleWindow {
+export default class TrayModule extends ModuleWindow {
   protected tray: Electron.Tray | null;
   protected trayIcon: Electron.NativeImage;
   protected playToggle: Electron.MenuItemConstructorOptions[];
@@ -219,5 +219,3 @@ class TrayModule extends ModuleWindow {
     ];
   }
 }
-
-export default TrayModule;

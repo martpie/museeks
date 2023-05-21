@@ -8,7 +8,7 @@ type Props = {
   onChange: (deviceId: string) => void;
 };
 
-function AudioOutputSelect(props: Props) {
+export default function AudioOutputSelect(props: Props) {
   const [devices, setDevices] = useState<MediaDeviceInfo[] | null>(null);
   const [hasError, setHasError] = useState(false);
 
@@ -64,5 +64,3 @@ function AudioOutputSelect(props: Props) {
     </Setting.Select>
   );
 }
-
-export default AudioOutputSelect;

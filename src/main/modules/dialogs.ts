@@ -9,7 +9,7 @@ import channels from '../../shared/lib/ipc-channels';
 
 import ModuleWindow from './module-window';
 
-class DialogsModule extends ModuleWindow {
+export default class DialogsModule extends ModuleWindow {
   async load(): Promise<void> {
     /**
      * showMessageBox
@@ -30,5 +30,3 @@ class DialogsModule extends ModuleWindow {
     });
   }
 }
-
-export default DialogsModule;

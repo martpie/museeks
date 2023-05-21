@@ -7,12 +7,10 @@ type Props = {
   animated?: boolean;
 };
 
-function ProgressBar(props: Props) {
+export default function ProgressBar(props: Props) {
   return (
     <div className={cx(styles.progress, { [styles.animated]: props.animated })}>
       <div className={styles.progressBar} style={{ width: `${props.progress}%` }}></div>
     </div>
   );
 }
-
-export default ProgressBar;

@@ -14,7 +14,7 @@ type Props = {
   icon?: string | null;
 };
 
-function TracksListHeaderCell(props: Props) {
+export default function TracksListHeaderCell(props: Props) {
   const { sortBy, className, title, icon } = props;
 
   const sort = useCallback(() => {
@@ -48,5 +48,3 @@ function TracksListHeaderCell(props: Props) {
 
   return <div className={classes}>{content}</div>;
 }
-
-export default TracksListHeaderCell;

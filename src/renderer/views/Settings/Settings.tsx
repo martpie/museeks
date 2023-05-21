@@ -5,7 +5,7 @@ import appStyles from '../Root.module.css';
 
 import styles from './Settings.module.css';
 
-function Settings() {
+export default function Settings() {
   const match = useMatch('/settings');
 
   return (
@@ -27,5 +27,3 @@ function Settings() {
     </div>
   );
 }
-
-export default Settings;

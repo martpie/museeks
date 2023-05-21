@@ -24,7 +24,7 @@ type Props = {
   enableSort: boolean;
 };
 
-function TracksListHeader(props: Props) {
+export default function TracksListHeader(props: Props) {
   const { enableSort } = props;
   const sort = useSelector((state: RootState) => state.library.sort);
 
@@ -64,5 +64,3 @@ function TracksListHeader(props: Props) {
     </div>
   );
 }
-
-export default TracksListHeader;

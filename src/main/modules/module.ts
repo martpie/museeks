@@ -6,7 +6,7 @@ import os from 'os';
 
 import logger from '../../shared/lib/logger';
 
-class Module {
+export default class Module {
   protected loaded: boolean;
   protected platforms: NodeJS.Platform[];
 
@@ -35,5 +35,3 @@ class Module {
     // Do whatever you want here :)
   }
 }
-
-export default Module;

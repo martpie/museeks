@@ -9,7 +9,7 @@ import ProgressBar from '../ProgressBar/ProgressBar';
 
 import styles from './Footer.module.css';
 
-function Footer() {
+export default function Footer() {
   const library = useSelector((state: RootState) => state.library);
   useLocation();
   const isPlaylistView = useLocation().pathname.startsWith('/playlists');
@@ -81,5 +81,3 @@ function Footer() {
     </footer>
   );
 }
-
-export default Footer;

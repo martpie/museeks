@@ -10,7 +10,7 @@ type Props = {
   shuffle: boolean;
 };
 
-function ButtonShuffle(props: Props) {
+export default function ButtonShuffle(props: Props) {
   const buttonClasses = cx(styles.button, {
     [styles.active]: props.shuffle,
   });
@@ -27,5 +27,3 @@ function ButtonShuffle(props: Props) {
     </button>
   );
 }
-
-export default ButtonShuffle;

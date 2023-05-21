@@ -8,7 +8,7 @@ import channels from '../../shared/lib/ipc-channels';
 
 import ModuleWindow from './module-window';
 
-class SleepBlocker extends ModuleWindow {
+export default class SleepBlocker extends ModuleWindow {
   protected sleepBlockerId: number;
   protected enabled: boolean;
 
@@ -44,5 +44,3 @@ class SleepBlocker extends ModuleWindow {
     ipcMain.on(channels.PLAYBACK_STOP, this.onStopPlayback);
   }
 }
-
-export default SleepBlocker;

@@ -14,7 +14,7 @@ type Props = {
   repeat: Repeat;
 };
 
-function PlayingBarInfo(props: Props) {
+export default function PlayingBarInfo(props: Props) {
   const { trackPlaying } = props;
 
   const playingBar = useRef<HTMLDivElement>(null);
@@ -148,5 +148,3 @@ function PlayingBarInfo(props: Props) {
     </div>
   );
 }
-
-export default PlayingBarInfo;

@@ -18,7 +18,7 @@ type Props = {
   queueCursor: number;
 };
 
-function QueueListItem(props: Props) {
+export default function QueueListItem(props: Props) {
   const { track } = props;
 
   const onDragStart = useCallback(
@@ -70,5 +70,3 @@ function QueueListItem(props: Props) {
     </div>
   );
 }
-
-export default QueueListItem;

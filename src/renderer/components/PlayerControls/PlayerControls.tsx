@@ -10,7 +10,7 @@ type Props = {
   playerStatus: PlayerStatus;
 };
 
-function PlayerControls(props: Props) {
+export default function PlayerControls(props: Props) {
   return (
     <div className={styles.playerControls}>
       <button type='button' className={styles.control} title='Previous' onClick={PlayerActions.previous}>
@@ -30,5 +30,3 @@ function PlayerControls(props: Props) {
     </div>
   );
 }
-
-export default PlayerControls;

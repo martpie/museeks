@@ -5,7 +5,7 @@ import { RootState } from '../../store/reducers';
 
 import styles from './Toasts.module.css';
 
-function Toasts() {
+export default function Toasts() {
   const toasts = useSelector((state: RootState) => state.toasts);
   return (
     <div className={styles.toasts}>
@@ -15,5 +15,3 @@ function Toasts() {
     </div>
   );
 }
-
-export default Toasts;

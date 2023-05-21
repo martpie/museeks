@@ -26,7 +26,7 @@ const getIcon = (state: PlayerStatus, hovered: boolean) => {
   return <Icon name='play' fixedWidth />;
 };
 
-function TrackPlayingIndicator() {
+export default function TrackPlayingIndicator() {
   const [hovered, setHovered] = useState(false);
   const playerStatus = useSelector((state: RootState) => state.player.playerStatus);
 
@@ -44,5 +44,3 @@ function TrackPlayingIndicator() {
     </button>
   );
 }
-
-export default TrackPlayingIndicator;

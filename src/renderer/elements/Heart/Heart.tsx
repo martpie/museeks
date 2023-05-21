@@ -3,8 +3,6 @@ import styles from './Heart.module.css';
 /**
  * ♥
  */
-function Heart() {
+export default function Heart() {
   return <span className={styles.heart}>♥</span>;
 }
-
-export default Heart;

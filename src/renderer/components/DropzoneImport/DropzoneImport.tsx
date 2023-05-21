@@ -6,7 +6,7 @@ type Props = {
   shown: boolean;
 };
 
-function DropzoneImport(props: Props) {
+export default function DropzoneImport(props: Props) {
   return (
     <div className={`${styles.dropzone} ${props.shown && styles.shown}`}>
       <div className={styles.dropzone__title}>{props.title}</div>
@@ -14,5 +14,3 @@ function DropzoneImport(props: Props) {
     </div>
   );
 }
-
-export default DropzoneImport;

@@ -11,7 +11,7 @@ import appStyles from '../Root.module.css';
 
 import styles from './Library.module.css';
 
-function Library() {
+export default function Library() {
   const library = useSelector((state: RootState) => state.library);
   const player = useSelector((state: RootState) => state.player);
   const playlists = useSelector((state: RootState) => state.playlists.list);
@@ -77,5 +77,3 @@ function Library() {
 
   return <div className={`${appStyles.view} ${styles.viewLibrary}`}>{getLibraryComponent}</div>;
 }
-
-export default Library;

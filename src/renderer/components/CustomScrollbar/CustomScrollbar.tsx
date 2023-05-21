@@ -24,7 +24,7 @@ function ThumbVertical(props: any) {
   return <div {...props} className={styles.verticalThumb} />;
 }
 
-function CustomScrollbar(props: Props) {
+export default function CustomScrollbar(props: Props) {
   const { onScroll } = props;
 
   return (
@@ -41,5 +41,3 @@ function CustomScrollbar(props: Props) {
     </Scrollbars>
   );
 }
-
-export default CustomScrollbar;

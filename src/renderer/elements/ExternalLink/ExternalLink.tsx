@@ -9,7 +9,7 @@ type Props = {
   href: string;
 };
 
-function ExternalLink(props: Props) {
+export default function ExternalLink(props: Props) {
   const openLink = useCallback(
     (e: React.SyntheticEvent) => {
       e.preventDefault();
@@ -24,5 +24,3 @@ function ExternalLink(props: Props) {
     </button>
   );
 }
-
-export default ExternalLink;

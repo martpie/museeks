@@ -5,7 +5,7 @@ import AudioOutputSelect from '../../components/AudioOutputSelect/AudioOutputSel
 import * as PlayerActions from '../../store/actions/PlayerActions';
 import { Config } from '../../../shared/types/museeks';
 
-function SettingsAudio() {
+export default function SettingsAudio() {
   const setPlaybackRate = useCallback((e: React.SyntheticEvent<HTMLInputElement>) => {
     PlayerActions.setPlaybackRate(parseFloat(e.currentTarget.value));
   }, []);
@@ -41,5 +41,3 @@ function SettingsAudio() {
     </div>
   );
 }
-
-export default SettingsAudio;

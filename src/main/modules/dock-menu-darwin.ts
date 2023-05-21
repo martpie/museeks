@@ -9,7 +9,7 @@ import { PlayerStatus, TrackModel } from '../../shared/types/museeks';
 
 import ModuleWindow from './module-window';
 
-class DockMenuDarwinModule extends ModuleWindow {
+export default class DockMenuDarwinModule extends ModuleWindow {
   protected menu: Electron.MenuItemConstructorOptions[];
   protected songDetails: Electron.MenuItemConstructorOptions[];
   protected playToggle: Electron.MenuItemConstructorOptions[];
@@ -112,5 +112,3 @@ class DockMenuDarwinModule extends ModuleWindow {
     ];
   }
 }
-
-export default DockMenuDarwinModule;

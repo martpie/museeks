@@ -10,7 +10,7 @@ type Props = {
   description?: string;
 };
 
-function CheckboxSetting(props: Props) {
+export default function CheckboxSetting(props: Props) {
   const { slug, title, description } = props;
   return (
     <Setting.Section>
@@ -29,5 +29,3 @@ function CheckboxSetting(props: Props) {
     </Setting.Section>
   );
 }
-
-export default CheckboxSetting;

@@ -7,7 +7,7 @@ import { isCtrlKey } from '../../lib/utils-events';
 
 import styles from './Search.module.css';
 
-function Search() {
+export default function Search() {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const [search, setSearch] = useState('');
@@ -54,5 +54,3 @@ function Search() {
     </div>
   );
 }
-
-export default Search;

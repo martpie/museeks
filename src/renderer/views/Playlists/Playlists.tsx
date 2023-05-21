@@ -10,7 +10,7 @@ import appStyles from '../../views/Root.module.css';
 
 import styles from './Playlists.module.css';
 
-function Playlists() {
+export default function Playlists() {
   const { playlistId } = useParams<{ playlistId?: string }>();
   const playlists = useSelector((state: RootState) => state.playlists.list);
   const playlistsLoading = useSelector((state: RootState) => state.playlists.loading);
@@ -73,5 +73,3 @@ function Playlists() {
     </div>
   );
 }
-
-export default Playlists;

@@ -26,7 +26,7 @@ type Props = {
   onDrop?: (targetTrackId: string, position: 'above' | 'below') => void;
 };
 
-function TrackRow(props: Props) {
+export default function TrackRow(props: Props) {
   const [reorderOver, setReorderOver] = useState(false);
   const [reorderPosition, setReorderPosition] = useState<'above' | 'below' | null>(null);
 
@@ -117,5 +117,3 @@ function TrackRow(props: Props) {
     </div>
   );
 }
-
-export default TrackRow;

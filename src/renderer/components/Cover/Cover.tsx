@@ -8,7 +8,7 @@ type Props = {
   track: Track;
 };
 
-function Cover(props: Props) {
+export default function Cover(props: Props) {
   const [coverPath, setCoverPath] = useState<string | null>(null);
 
   useEffect(() => {
@@ -33,5 +33,3 @@ function Cover(props: Props) {
     </div>
   );
 }
-
-export default Cover;

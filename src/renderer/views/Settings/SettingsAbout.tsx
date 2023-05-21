@@ -4,7 +4,7 @@ import * as Setting from '../../components/Setting/Setting';
 import * as SettingsActions from '../../store/actions/SettingsActions';
 import Button from '../../elements/Button/Button';
 
-function SettingsAbout() {
+export default function SettingsAbout() {
   const version = window.MuseeksAPI.version;
 
   return (
@@ -58,5 +58,3 @@ function SettingsAbout() {
     </div>
   );
 }
-
-export default SettingsAbout;

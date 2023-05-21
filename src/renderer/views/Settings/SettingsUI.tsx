@@ -6,7 +6,7 @@ import CheckboxSetting from '../../components/SettingCheckbox/SettingCheckbox';
 import { Config } from '../../../shared/types/museeks';
 import { themes } from '../../../shared/lib/themes';
 
-function SettingsUI() {
+export default function SettingsUI() {
   const config = window.MuseeksAPI.config.get() as Config;
 
   const onThemeChange = useCallback<ChangeEventHandler<HTMLSelectElement>>((e) => {
@@ -76,5 +76,3 @@ function SettingsUI() {
     </div>
   );
 }
-
-export default SettingsUI;

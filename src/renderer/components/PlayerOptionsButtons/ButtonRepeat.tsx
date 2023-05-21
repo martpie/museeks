@@ -18,7 +18,7 @@ type Props = {
   repeat: Repeat;
 };
 
-function ButtonRepeat(props: Props) {
+export default function ButtonRepeat(props: Props) {
   const svg = svgMap[props.repeat] || svgMap.default;
   const buttonClasses = cx(styles.button, {
     [styles.active]: props.repeat === Repeat.ONE || props.repeat === Repeat.ALL,
@@ -50,5 +50,3 @@ function ButtonRepeat(props: Props) {
     </button>
   );
 }
-
-export default ButtonRepeat;

@@ -10,7 +10,7 @@ type Props = {
 /**
  * Toast single item
  */
-function ToastItem(props: Props) {
+export default function ToastItem(props: Props) {
   const { type, content } = props;
 
   const classes = cx(styles.toast, {
@@ -22,5 +22,3 @@ function ToastItem(props: Props) {
 
   return <div className={classes}>{content}</div>;
 }
-
-export default ToastItem;

@@ -8,7 +8,7 @@ import * as PlaylistsActions from '../../store/actions/PlaylistsActions';
 import { filterTracks } from '../../lib/utils-library';
 import { RootState } from '../../store/reducers';
 
-function Playlist() {
+export default function Playlist() {
   const params = useParams();
   const playlistId = params.playlistId;
 
@@ -102,5 +102,3 @@ function Playlist() {
     />
   );
 }
-
-export default Playlist;

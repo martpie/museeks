@@ -11,7 +11,7 @@ type Props = {
   queueCursor: number | null;
 };
 
-function Queue(props: Props) {
+export default function Queue(props: Props) {
   const { queue, queueCursor } = props;
   let content: React.ReactNode;
 
@@ -29,5 +29,3 @@ function Queue(props: Props) {
 
   return null;
 }
-
-export default Queue;

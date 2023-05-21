@@ -22,7 +22,7 @@ const initialState: PlayerState = {
   playerStatus: PlayerStatus.STOP, // Player status
 };
 
-export default (state = initialState, action: Action): PlayerState => {
+export default function playerReducer(state = initialState, action: Action): PlayerState {
   switch (action.type) {
     case types.PLAYER_START: {
       const { queue, queueCursor, queueOrigin, oldQueue } = action.payload;
@@ -204,4 +204,4 @@ export default (state = initialState, action: Action): PlayerState => {
       return state;
     }
   }
-};
+}

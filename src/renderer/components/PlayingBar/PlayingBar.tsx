@@ -17,7 +17,7 @@ type Props = {
   repeat: Repeat;
 };
 
-function PlayingBar(props: Props) {
+export default function PlayingBar(props: Props) {
   const { queue, queueCursor, repeat, shuffle } = props;
 
   const [isQueueOpen, setIsQueueOpen] = useState(false);
@@ -50,5 +50,3 @@ function PlayingBar(props: Props) {
     </div>
   );
 }
-
-export default PlayingBar;

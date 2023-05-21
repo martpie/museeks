@@ -15,7 +15,7 @@ interface PlayerOptions {
  *   - Should it hold the concepts of queue/random/etc? (in other words, should
  *     we merge PlayerActions here?)
  */
-class Player {
+export default class Player {
   private audio: HTMLAudioElement;
   private durationThresholdReached: boolean;
   private track: TrackModel | null;
@@ -126,5 +126,3 @@ class Player {
     return this.durationThresholdReached;
   }
 }
-
-export default Player;

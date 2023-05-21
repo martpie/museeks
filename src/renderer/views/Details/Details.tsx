@@ -20,7 +20,7 @@ const INITIAL_FORM_DATA: TrackEditableFields = {
   genre: [],
 };
 
-function Details() {
+export default function Details() {
   const { trackId } = useParams<{ trackId: string }>();
   // const [coverSrc, setCoverSrc] = useState<string | null>(null);
   const [formData, setFormData] = useState<TrackEditableFields>(INITIAL_FORM_DATA);
@@ -137,5 +137,3 @@ function Details() {
     </div>
   );
 }
-
-export default Details;
