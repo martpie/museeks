@@ -16,7 +16,7 @@ interface Props {
   playlists: PlaylistModel[];
 }
 
-const PlaylistsNav: React.FC<Props> = (props) => {
+function PlaylistsNav(props: Props) {
   const [renamed, setRenamed] = useState<string | null>(null);
 
   const showContextMenu = useCallback((playlistId: string) => {
@@ -150,6 +150,6 @@ const PlaylistsNav: React.FC<Props> = (props) => {
       <div className={styles.playlistsNav__body}>{nav}</div>
     </div>
   );
-};
+}
 
 export default PlaylistsNav;

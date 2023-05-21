@@ -14,7 +14,7 @@ interface Props {
   icon?: string | null;
 }
 
-const TracksListHeaderCell: React.FC<Props> = (props) => {
+function TracksListHeaderCell(props: Props) {
   const { sortBy, className, title, icon } = props;
 
   const sort = useCallback(() => {
@@ -47,6 +47,6 @@ const TracksListHeaderCell: React.FC<Props> = (props) => {
   }
 
   return <div className={classes}>{content}</div>;
-};
+}
 
 export default TracksListHeaderCell;

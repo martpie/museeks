@@ -6,13 +6,15 @@ type Props = {
   children: React.ReactNode;
 };
 
-export const Section: React.FC<Props> = (props) => (
-  <section className={styles.settingSection}>{props.children}</section>
-);
+export function Section(props: Props) {
+  return <section className={styles.settingSection}>{props.children}</section>;
+}
 
-export const Description: React.FC<Props> = (props) => <p className={styles.settingDescription}>{props.children}</p>;
+export function Description(props: Props) {
+  return <p className={styles.settingDescription}>{props.children}</p>;
+}
 
-export const Label: React.FC<JSX.IntrinsicElements['label']> = (props) => {
+export function Label(props: JSX.IntrinsicElements['label']) {
   const { children, ...restProps } = props;
 
   return (
@@ -20,11 +22,13 @@ export const Label: React.FC<JSX.IntrinsicElements['label']> = (props) => {
       {props.children}
     </label>
   );
-};
+}
 
-export const Title: React.FC<Props> = (props) => <span className={styles.settingTitle}>{props.children}</span>;
+export function Title(props: Props) {
+  return <span className={styles.settingTitle}>{props.children}</span>;
+}
 
-export const Input: React.FC<JSX.IntrinsicElements['input']> = (props) => {
+export function Input(props: Props & JSX.IntrinsicElements['input']) {
   const { children, ...restProps } = props;
 
   return (
@@ -32,12 +36,16 @@ export const Input: React.FC<JSX.IntrinsicElements['input']> = (props) => {
       {props.children}
     </input>
   );
-};
+}
 
-export const Error: React.FC<Props> = (props) => <p className={styles.settingError}>{props.children}</p>;
+export function Error(props: Props) {
+  return <p className={styles.settingError}>{props.children}</p>;
+}
 
-export const Select: React.FC<JSX.IntrinsicElements['select']> = (props) => (
-  <select className={styles.settingSelect} {...props}>
-    {props.children}
-  </select>
-);
+export function Select(props: Props & JSX.IntrinsicElements['select']) {
+  return (
+    <select className={styles.settingSelect} {...props}>
+      {props.children}
+    </select>
+  );
+}

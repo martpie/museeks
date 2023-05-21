@@ -1,4 +1,3 @@
-import React from 'react';
 import cx from 'classnames';
 
 import styles from './Button.module.css';
@@ -8,7 +7,7 @@ interface Props {
   bSize?: 'small';
 }
 
-const Button: React.FC<Props & JSX.IntrinsicElements['button']> = (props) => {
+function Button(props: Props & JSX.IntrinsicElements['button']) {
   const { relevancy, bSize, ...rest } = props;
 
   const classes = cx(styles.button, {
@@ -21,6 +20,6 @@ const Button: React.FC<Props & JSX.IntrinsicElements['button']> = (props) => {
       {props.children}
     </button>
   );
-};
+}
 
 export default Button;

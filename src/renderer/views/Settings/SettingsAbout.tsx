@@ -1,12 +1,10 @@
-import React from 'react';
-
 import ExternalLink from '../../elements/ExternalLink/ExternalLink';
 import Heart from '../../elements/Heart/Heart';
 import * as Setting from '../../components/Setting/Setting';
 import * as SettingsActions from '../../store/actions/SettingsActions';
 import Button from '../../elements/Button/Button';
 
-const SettingsAbout: React.FC = () => {
+function SettingsAbout() {
   const version = window.MuseeksAPI.version;
 
   return (
@@ -59,6 +57,6 @@ const SettingsAbout: React.FC = () => {
       </Setting.Section>
     </div>
   );
-};
+}
 
 export default SettingsAbout;

@@ -9,7 +9,7 @@ interface Props {
   href: string;
 }
 
-const ExternalLink: React.FC<Props> = (props) => {
+function ExternalLink(props: Props) {
   const openLink = useCallback(
     (e: React.SyntheticEvent) => {
       e.preventDefault();
@@ -23,6 +23,6 @@ const ExternalLink: React.FC<Props> = (props) => {
       {props.children}
     </button>
   );
-};
+}
 
 export default ExternalLink;

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams, Link } from 'react-router-dom';
 
@@ -8,7 +8,7 @@ import * as PlaylistsActions from '../../store/actions/PlaylistsActions';
 import { filterTracks } from '../../lib/utils-library';
 import { RootState } from '../../store/reducers';
 
-const Playlist: React.FC = () => {
+function Playlist() {
   const params = useParams();
   const playlistId = params.playlistId;
 
@@ -101,6 +101,6 @@ const Playlist: React.FC = () => {
       currentPlaylist={playlistId}
     />
   );
-};
+}
 
 export default Playlist;

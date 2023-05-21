@@ -41,7 +41,7 @@ interface Props {
   onReorder?: (playlistId: string, tracksIds: string[], targetTrackId: string, position: 'above' | 'below') => void;
 }
 
-const TracksList: React.FC<Props> = (props) => {
+function TracksList(props: Props) {
   const { tracks, type, trackPlayingId, reorderable, currentPlaylist, onReorder, playlists } = props;
 
   const [tilesScrolled, setTilesScrolled] = useState(0);
@@ -541,6 +541,6 @@ const TracksList: React.FC<Props> = (props) => {
       </CustomScrollbar>
     </div>
   );
-};
+}
 
 export default TracksList;

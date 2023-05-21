@@ -26,7 +26,7 @@ interface Props {
   onDrop?: (targetTrackId: string, position: 'above' | 'below') => void;
 }
 
-const TrackRow: React.FC<Props> = (props) => {
+function TrackRow(props: Props) {
   const [reorderOver, setReorderOver] = useState(false);
   const [reorderPosition, setReorderPosition] = useState<'above' | 'below' | null>(null);
 
@@ -116,6 +116,6 @@ const TrackRow: React.FC<Props> = (props) => {
       <div className={`${styles.cell} ${cellStyles.cellGenre}`}>{track.genre.join(', ')}</div>
     </div>
   );
-};
+}
 
 export default TrackRow;

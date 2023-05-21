@@ -11,7 +11,7 @@ interface Props {
   queueCursor: number | null;
 }
 
-const Queue: React.FC<Props> = (props) => {
+function Queue(props: Props) {
   const { queue, queueCursor } = props;
   let content: React.ReactNode;
 
@@ -28,6 +28,6 @@ const Queue: React.FC<Props> = (props) => {
   }
 
   return null;
-};
+}
 
 export default Queue;

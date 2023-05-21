@@ -20,7 +20,7 @@ const INITIAL_FORM_DATA: TrackEditableFields = {
   genre: [],
 };
 
-const Details: React.FC = () => {
+function Details() {
   const { trackId } = useParams<{ trackId: string }>();
   // const [coverSrc, setCoverSrc] = useState<string | null>(null);
   const [formData, setFormData] = useState<TrackEditableFields>(INITIAL_FORM_DATA);
@@ -136,6 +136,6 @@ const Details: React.FC = () => {
       </form>
     </div>
   );
-};
+}
 
 export default Details;

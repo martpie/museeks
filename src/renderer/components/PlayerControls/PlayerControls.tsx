@@ -1,4 +1,3 @@
-import React from 'react';
 import Icon from 'react-fontawesome';
 
 import VolumeControl from '../VolumeControl/VolumeControl';
@@ -11,7 +10,7 @@ interface Props {
   playerStatus: PlayerStatus;
 }
 
-const PlayerControls: React.FC<Props> = (props) => {
+function PlayerControls(props: Props) {
   return (
     <div className={styles.playerControls}>
       <button type='button' className={styles.control} title='Previous' onClick={PlayerActions.previous}>
@@ -30,6 +29,6 @@ const PlayerControls: React.FC<Props> = (props) => {
       <VolumeControl />
     </div>
   );
-};
+}
 
 export default PlayerControls;

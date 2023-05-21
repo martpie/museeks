@@ -18,7 +18,7 @@ interface Props {
   queueCursor: number;
 }
 
-const QueueListItem: React.FC<Props> = (props) => {
+function QueueListItem(props: Props) {
   const { track } = props;
 
   const onDragStart = useCallback(
@@ -69,6 +69,6 @@ const QueueListItem: React.FC<Props> = (props) => {
       </button>
     </div>
   );
-};
+}
 
 export default QueueListItem;

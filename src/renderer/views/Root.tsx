@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import KeyBinding from 'react-keybinding-component';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { useDrop } from 'react-dnd';
@@ -24,7 +24,7 @@ import styles from './Root.module.css';
 |--------------------------------------------------------------------------
 */
 
-const Museeks: React.FC = (props) => {
+function Museeks() {
   const navigate = useNavigate();
 
   // App shortcuts (not using Electron's global shortcuts API to avoid conflicts
@@ -98,6 +98,6 @@ const Museeks: React.FC = (props) => {
       <DropzoneImport title='Add music to the library' subtitle='Drop files or folders anywhere' shown={isOver} />
     </div>
   );
-};
+}
 
 export default Museeks;

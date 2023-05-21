@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Icon from 'react-fontawesome';
 import cx from 'classnames';
 import useClickOut from '@bscop/use-click-out';
@@ -17,7 +17,7 @@ interface Props {
   repeat: Repeat;
 }
 
-const PlayingBar: React.FC<Props> = (props) => {
+function PlayingBar(props: Props) {
   const { queue, queueCursor, repeat, shuffle } = props;
 
   const [isQueueOpen, setIsQueueOpen] = useState(false);
@@ -49,6 +49,6 @@ const PlayingBar: React.FC<Props> = (props) => {
       </div>
     </div>
   );
-};
+}
 
 export default PlayingBar;

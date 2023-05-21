@@ -14,7 +14,7 @@ interface Props {
   repeat: Repeat;
 }
 
-const PlayingBarInfo: React.FC<Props> = (props) => {
+function PlayingBarInfo(props: Props) {
   const { trackPlaying } = props;
 
   const playingBar = useRef<HTMLDivElement>(null);
@@ -147,6 +147,6 @@ const PlayingBarInfo: React.FC<Props> = (props) => {
       </div>
     </div>
   );
-};
+}
 
 export default PlayingBarInfo;

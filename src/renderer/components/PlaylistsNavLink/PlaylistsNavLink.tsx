@@ -12,7 +12,7 @@ interface Props {
   onContextMenu: (playlistId: string) => void;
 }
 
-const PlaylistsNavLink: React.FC<Props> = (props) => {
+function PlaylistsNavLink(props: Props) {
   return (
     <NavLink
       className={({ isActive }) => `${props.className} ${styles.playlistLink} ${isActive && 'isActive'}`}
@@ -24,6 +24,6 @@ const PlaylistsNavLink: React.FC<Props> = (props) => {
       {props.children}
     </NavLink>
   );
-};
+}
 
 export default PlaylistsNavLink;

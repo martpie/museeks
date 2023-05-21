@@ -1,4 +1,3 @@
-import React from 'react';
 import InlineSVG from 'svg-inline-react';
 import cx from 'classnames';
 
@@ -19,7 +18,7 @@ interface Props {
   repeat: Repeat;
 }
 
-const ButtonRepeat: React.FC<Props> = (props) => {
+function ButtonRepeat(props: Props) {
   const svg = svgMap[props.repeat] || svgMap.default;
   const buttonClasses = cx(styles.button, {
     [styles.active]: props.repeat === Repeat.ONE || props.repeat === Repeat.ALL,
@@ -50,6 +49,6 @@ const ButtonRepeat: React.FC<Props> = (props) => {
       <InlineSVG src={svg} className={styles.icon} />
     </button>
   );
-};
+}
 
 export default ButtonRepeat;

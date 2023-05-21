@@ -8,7 +8,7 @@ interface Props {
   onChange: (deviceId: string) => void;
 }
 
-const AudioOutputSelect: React.FC<Props> = (props) => {
+function AudioOutputSelect(props: Props) {
   const [devices, setDevices] = useState<MediaDeviceInfo[] | null>(null);
   const [hasError, setHasError] = useState(false);
 
@@ -63,6 +63,6 @@ const AudioOutputSelect: React.FC<Props> = (props) => {
       })}
     </Setting.Select>
   );
-};
+}
 
 export default AudioOutputSelect;

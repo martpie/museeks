@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
 import { useLocation, NavLink } from 'react-router-dom';
 import Icon from 'react-fontawesome';
 import { useSelector } from 'react-redux';
@@ -9,7 +9,7 @@ import ProgressBar from '../ProgressBar/ProgressBar';
 
 import styles from './Footer.module.css';
 
-const Footer: React.FC = () => {
+function Footer() {
   const library = useSelector((state: RootState) => state.library);
   useLocation();
   const isPlaylistView = useLocation().pathname.startsWith('/playlists');
@@ -80,6 +80,6 @@ const Footer: React.FC = () => {
       <div className={styles.footer__status}>{getStatusContent()}</div>
     </footer>
   );
-};
+}
 
 export default Footer;

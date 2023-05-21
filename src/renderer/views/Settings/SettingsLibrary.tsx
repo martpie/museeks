@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
 import { ipcRenderer } from 'electron';
 
 import { useSelector } from 'react-redux';
@@ -11,7 +11,7 @@ import channels from '../../../shared/lib/ipc-channels';
 import logger from '../../../shared/lib/logger';
 import { RootState } from '../../store/reducers';
 
-const SettingsLibrary: React.FC = (props) => {
+function SettingsLibrary() {
   const library = useSelector((state: RootState) => state.library);
 
   const resetLibrary = useCallback(async () => {
@@ -52,6 +52,6 @@ const SettingsLibrary: React.FC = (props) => {
       </Setting.Section>
     </div>
   );
-};
+}
 
 export default SettingsLibrary;
