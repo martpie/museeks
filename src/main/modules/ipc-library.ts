@@ -9,7 +9,6 @@ import { pickBy } from 'lodash-es';
 
 import * as m3u from '../lib/utils-m3u';
 import channels from '../../shared/lib/ipc-channels';
-import { SUPPORTED_PLAYLISTS_EXTENSIONS, SUPPORTED_TRACKS_EXTENSIONS } from '../../shared/constants';
 import { Track } from '../../shared/types/museeks';
 import logger from '../../shared/lib/logger';
 import { getLoweredMeta } from '../../shared/lib/utils-id3';
@@ -20,6 +19,33 @@ interface ScanFile {
   path: string;
   stat: fs.Stats;
 }
+
+/*
+|--------------------------------------------------------------------------
+| supported Formats
+|--------------------------------------------------------------------------
+*/
+
+const SUPPORTED_TRACKS_EXTENSIONS = [
+  // MP3 / MP4
+  '.mp3',
+  '.mp4',
+  '.aac',
+  '.m4a',
+  '.3gp',
+  '.wav',
+  // Opus
+  '.ogg',
+  '.ogv',
+  '.ogm',
+  '.opus',
+  // Flac
+  '.flac',
+  // web media
+  '.webm',
+];
+
+const SUPPORTED_PLAYLISTS_EXTENSIONS = ['.m3u'];
 
 /**
  * Module in charge of renderer <> main processes communication regarding
