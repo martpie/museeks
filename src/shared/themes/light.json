@@ -37,9 +37,6 @@
     "--search-bg": "white",
     "--slider-bg": "#DADADA",
 
-    "--scrollbar-track": "#DDDDDD",
-    "--scrollbar-thumb": "rgba(0, 0, 0, .25)",
-
     "--queue-bg": "white",
     "--queue-header-bg": "rgb(244, 244, 244)",
 

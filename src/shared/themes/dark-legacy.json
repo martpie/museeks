@@ -37,9 +37,6 @@
     "--search-bg": "#23292B",
     "--slider-bg": "#23292B",
 
-    "--scrollbar-track": "#293032",
-    "--scrollbar-thumb": "rgba(255, 255, 255, 0.2)",
-
     "--queue-bg": "#23292B",
     "--queue-header-bg": "#33393b",
 
