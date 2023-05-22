@@ -87,7 +87,7 @@ export default function TrackRow(props: Props) {
       onDoubleClick={() => onDoubleClick(props.track._id)}
       onMouseDown={(e) => onMouseDown(e, track._id, index)}
       onClick={(e) => onClick(e, props.track._id)}
-      onKeyPress={(e) => {
+      onKeyDown={(e) => {
         if (e.key === 'Enter') {
           onClick(e, track._id);
         }
