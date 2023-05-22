@@ -1,12 +1,11 @@
 import type { MenuItemConstructorOptions } from 'electron';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import KeyBinding from 'react-keybinding-component';
-import chunk from 'lodash-es/chunk';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { Virtuoso } from 'react-virtuoso';
 
 import TrackRow from '../TrackRow/TrackRow';
-import CustomScrollbar from '../CustomScrollbar/CustomScrollbar';
 import TracksListHeader from '../TracksListHeader/TracksListHeader';
 import * as LibraryActions from '../../store/actions/LibraryActions';
 import * as PlaylistsActions from '../../store/actions/PlaylistsActions';
@@ -15,17 +14,13 @@ import * as QueueActions from '../../store/actions/QueueActions';
 import { isLeftClick, isRightClick, isCtrlKey, isAltKey } from '../../lib/utils-events';
 import { PlaylistModel, TrackModel } from '../../../shared/types/museeks';
 import { RootState } from '../../store/reducers';
-import scrollbarStyles from '../CustomScrollbar/CustomScrollbar.module.css';
 import headerStyles from '../Header/Header.module.css';
 
 import styles from './TracksList.module.css';
 
 const { Menu } = window.MuseeksAPI.remote;
 
-const CHUNK_LENGTH = 20;
-const ROW_HEIGHT = 30; // FIXME
-const TILES_TO_DISPLAY = 5;
-const TILE_HEIGHT = ROW_HEIGHT * CHUNK_LENGTH;
+const ROW_HEIGHT = 30; // FIXME (make that dynamic or rem?)
 
 // --------------------------------------------------------------------------
 // TrackList
@@ -44,7 +39,6 @@ type Props = {
 export default function TracksList(props: Props) {
   const { tracks, type, trackPlayingId, reorderable, currentPlaylist, onReorder, playlists } = props;
 
-  const [tilesScrolled, setTilesScrolled] = useState(0);
   const [selected, setSelected] = useState<string[]>([]);
   const [reordered, setReordered] = useState<string[] | null>([]);
   const [renderView, setRenderView] = useState<HTMLElement | null>(null);
@@ -71,7 +65,7 @@ export default function TracksList(props: Props) {
 
   // FIXME: find a way to use a real ref for the render view
   useEffect(() => {
-    const element = document.querySelector(`.${scrollbarStyles.renderView}`);
+    const element = document.querySelector(`.${styles.tracksListBody}`);
 
     if (element instanceof HTMLElement) setRenderView(element);
   }, []);
@@ -462,83 +456,36 @@ export default function TracksList(props: Props) {
     [currentPlaylist, playlists, selected, tracks, type, navigate]
   );
 
-  /**
-   * Tracks list virtualization + rendering
-   */
-
-  const onScroll = useCallback(() => {
-    if (renderView) {
-      const nextTilesScrolled = Math.floor(renderView.scrollTop / TILE_HEIGHT);
-
-      if (tilesScrolled !== nextTilesScrolled) {
-        setTilesScrolled(nextTilesScrolled);
-      }
-    }
-  }, [tilesScrolled, renderView]);
-
-  const trackTiles = useMemo(() => {
-    const tracksChunked = chunk(tracks, CHUNK_LENGTH);
-
-    return tracksChunked.splice(tilesScrolled, TILES_TO_DISPLAY).map((tracksChunk, indexChunk) => {
-      const list = tracksChunk.map((track, index) => {
-        const trackRowIndex = (tilesScrolled + indexChunk) * CHUNK_LENGTH + index;
-
-        return (
-          <TrackRow
-            selected={selected.includes(track._id)}
-            track={track}
-            isPlaying={trackPlayingId === track._id}
-            key={`track-${track._id}`}
-            index={trackRowIndex}
-            onMouseDown={selectTrack}
-            onClick={selectTrackClick}
-            onContextMenu={showContextMenu}
-            onDoubleClick={startPlayback}
-            draggable={reorderable}
-            reordered={(reordered && reordered.includes(track._id)) || false}
-            onDragStart={onReorderStart}
-            onDragEnd={onReorderEnd}
-            onDrop={onDrop}
-          />
-        );
-      });
-
-      const translationDistance = tilesScrolled * ROW_HEIGHT * CHUNK_LENGTH + indexChunk * ROW_HEIGHT * CHUNK_LENGTH;
-      const tracksListTileStyles = {
-        transform: `translate3d(0, ${translationDistance}px, 0)`,
-      };
-
-      return (
-        <div className={styles.tile} key={`chunk-${tracksChunk[0]._id}`} style={tracksListTileStyles}>
-          {list}
-        </div>
-      );
-    });
-  }, [
-    reordered,
-    selected,
-    tilesScrolled,
-    reorderable,
-    trackPlayingId,
-    tracks,
-    onDrop,
-    onReorderStart,
-    onReorderEnd,
-    selectTrack,
-    selectTrackClick,
-    showContextMenu,
-    startPlayback,
-  ]);
-
   return (
     <div className={styles.tracksList}>
       <KeyBinding onKey={onKey} preventInputConflict />
       <TracksListHeader enableSort={type === 'library'} />
-      <CustomScrollbar className={styles.tracksListBody} onScroll={onScroll}>
-        <div className={styles.tiles} role='listbox' style={{ height: tracks.length * ROW_HEIGHT }}>
-          {trackTiles}
-        </div>
-      </CustomScrollbar>
+      <Virtuoso
+        fixedItemHeight={ROW_HEIGHT}
+        className={styles.tracksListBody}
+        totalCount={tracks.length}
+        itemContent={(index) => {
+          const track = tracks[index];
+          return (
+            <TrackRow
+              selected={selected.includes(track._id)}
+              track={tracks[index]}
+              isPlaying={trackPlayingId === track._id}
+              key={`track-${track._id}`}
+              index={index}
+              onMouseDown={selectTrack}
+              onClick={selectTrackClick}
+              onContextMenu={showContextMenu}
+              onDoubleClick={startPlayback}
+              draggable={reorderable}
+              reordered={(reordered && reordered.includes(track._id)) || false}
+              onDragStart={onReorderStart}
+              onDragEnd={onReorderEnd}
+              onDrop={onDrop}
+            />
+          );
+        }}
+      />
     </div>
   );
 }

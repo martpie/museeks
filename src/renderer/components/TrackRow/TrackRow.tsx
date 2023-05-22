@@ -73,6 +73,7 @@ export default function TrackRow(props: Props) {
   }, [props, reorderPosition]);
 
   const trackClasses = cx(styles.track, {
+    [styles.trackOdd]: index % 2 === 1,
     [styles.selected]: selected,
     [styles.reordered]: reordered,
     [styles.isReorderedOver]: reorderOver,
