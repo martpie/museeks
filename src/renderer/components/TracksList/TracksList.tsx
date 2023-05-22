@@ -1,9 +1,9 @@
 import type { MenuItemConstructorOptions } from 'electron';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import KeyBinding from 'react-keybinding-component';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { Virtuoso } from 'react-virtuoso';
+import { Virtuoso, VirtuosoHandle } from 'react-virtuoso';
 
 import TrackRow from '../TrackRow/TrackRow';
 import TracksListHeader from '../TracksListHeader/TracksListHeader';
@@ -41,34 +41,28 @@ export default function TracksList(props: Props) {
 
   const [selected, setSelected] = useState<string[]>([]);
   const [reordered, setReordered] = useState<string[] | null>([]);
-  const [renderView, setRenderView] = useState<HTMLElement | null>(null);
+  const virtuosoRef = useRef<VirtuosoHandle>(null);
   const navigate = useNavigate();
 
   const highlight = useSelector<RootState, boolean>((state) => state.library.highlightPlayingTrack);
 
   // Highlight playing track and scroll to it
+  // Super-mega-hacky to use Redux for that
   useEffect(() => {
-    if (highlight === true && trackPlayingId && renderView) {
+    if (highlight === true && trackPlayingId && virtuosoRef.current) {
       setSelected([trackPlayingId]);
 
       const playingTrackIndex = tracks.findIndex((track) => track._id === trackPlayingId);
 
       if (playingTrackIndex >= 0) {
-        const nodeOffsetTop = playingTrackIndex * ROW_HEIGHT;
-
-        renderView.scrollTop = nodeOffsetTop;
+        virtuosoRef.current.scrollToIndex({
+          index: playingTrackIndex,
+        });
       }
 
       LibraryActions.highlightPlayingTrack(false);
     }
-  }, [highlight, trackPlayingId, renderView, tracks]);
-
-  // FIXME: find a way to use a real ref for the render view
-  useEffect(() => {
-    const element = document.querySelector(`.${styles.tracksListBody}`);
-
-    if (element instanceof HTMLElement) setRenderView(element);
-  }, []);
+  }, [highlight, trackPlayingId, tracks]);
 
   /**
    * Helpers
@@ -84,54 +78,49 @@ export default function TracksList(props: Props) {
   /**
    * Keyboard navigations events/helpers
    */
-  const onEnter = useCallback(async (i: number, tracks: TrackModel[]) => {
-    if (i !== -1) PlayerActions.start(tracks, tracks[i]._id);
+  const onEnter = useCallback(async (index: number, tracks: TrackModel[]) => {
+    if (index !== -1) PlayerActions.start(tracks, tracks[index]._id);
   }, []);
 
-  const onControlAll = useCallback(
-    (i: number, tracks: TrackModel[]) => {
-      setSelected(tracks.map((track) => track._id));
-      const nodeOffsetTop = (i - 1) * ROW_HEIGHT;
-
-      if (renderView && renderView.scrollTop > nodeOffsetTop) renderView.scrollTop = nodeOffsetTop;
-    },
-    [renderView]
-  );
+  const onControlAll = useCallback((tracks: TrackModel[]) => {
+    setSelected(tracks.map((track) => track._id));
+  }, []);
 
   const onUp = useCallback(
-    (i: number, tracks: TrackModel[], shiftKeyPressed: boolean) => {
-      if (i - 1 >= 0) {
-        // Issue #489, shift key modifier
-        let newSelected = selected;
+    (index: number, tracks: TrackModel[], shiftKeyPressed: boolean) => {
+      const addedIndex = Math.max(0, index - 1);
 
-        if (shiftKeyPressed) newSelected = [tracks[i - 1]._id, ...selected];
-        else newSelected = [tracks[i - 1]._id];
+      // Add to the selection if shift key is pressed
+      let newSelected = selected;
 
-        setSelected(newSelected);
-        const nodeOffsetTop = (i - 1) * ROW_HEIGHT;
-        if (renderView && renderView.scrollTop > nodeOffsetTop) renderView.scrollTop = nodeOffsetTop;
+      if (shiftKeyPressed) newSelected = [tracks[addedIndex]._id, ...selected];
+      else newSelected = [tracks[addedIndex]._id];
+
+      setSelected(newSelected);
+
+      if (virtuosoRef.current) {
+        virtuosoRef.current.scrollIntoView({ index: addedIndex });
       }
     },
-    [renderView, selected]
+    [selected]
   );
 
   const onDown = useCallback(
-    (i: number, tracks: TrackModel[], shiftKeyPressed: boolean) => {
-      if (i + 1 < tracks.length) {
-        // Issue #489, shift key modifier
-        let newSelected = selected;
-        if (shiftKeyPressed) newSelected.push(tracks[i + 1]._id);
-        else newSelected = [tracks[i + 1]._id];
+    (index: number, tracks: TrackModel[], shiftKeyPressed: boolean) => {
+      const addedIndex = Math.min(tracks.length - 1, index + 1);
 
-        setSelected(newSelected);
-        const nodeOffsetTop = (i + 1) * ROW_HEIGHT;
+      // Add to the selection if shift key is pressed
+      let newSelected = selected;
+      if (shiftKeyPressed) newSelected = [...selected, tracks[addedIndex]._id];
+      else newSelected = [tracks[addedIndex]._id];
 
-        if (renderView && renderView.scrollTop + renderView.offsetHeight <= nodeOffsetTop + ROW_HEIGHT) {
-          renderView.scrollTop = nodeOffsetTop - renderView.offsetHeight + ROW_HEIGHT;
-        }
+      setSelected(newSelected);
+
+      if (virtuosoRef.current) {
+        virtuosoRef.current.scrollIntoView({ index: addedIndex });
       }
     },
-    [renderView, selected]
+    [selected]
   );
 
   const onKey = useCallback(
@@ -141,7 +130,7 @@ export default function TracksList(props: Props) {
       switch (e.code) {
         case 'KeyA':
           if (isCtrlKey(e)) {
-            onControlAll(firstSelectedTrackId, tracks);
+            onControlAll(tracks);
             e.preventDefault();
           }
           break;
@@ -461,6 +450,7 @@ export default function TracksList(props: Props) {
       <KeyBinding onKey={onKey} preventInputConflict />
       <TracksListHeader enableSort={type === 'library'} />
       <Virtuoso
+        ref={virtuosoRef}
         fixedItemHeight={ROW_HEIGHT}
         className={styles.tracksListBody}
         totalCount={tracks.length}
