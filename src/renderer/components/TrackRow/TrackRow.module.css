@@ -13,13 +13,11 @@
   outline: none;
   border-top: solid 1px transparent;
   border-bottom: solid 1px transparent;
+  background-color: var(--tracks-bg-even);
 
-  &:nth-child(odd) {
+  /* Would have been great to use nth-child, but it's complicated with react-virtuoso */
+  &.trackOdd {
     background-color: var(--tracks-bg-odd);
-  }
-
-  &:nth-child(even) {
-    background-color: var(--tracks-bg-even);
   }
 
   &.selected {
