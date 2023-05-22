@@ -37,9 +37,6 @@
     "--search-bg": "hsl(216, 20%, 7%)",
     "--slider-bg": "hsl(216, 20%, 7%)",
 
-    "--scrollbar-track": "hsl(216, 20%, 15%)",
-    "--scrollbar-thumb": "rgba(255, 255, 255, 0.2)",
-
     "--queue-bg": "hsl(216, 20%, 7%)",
     "--queue-header-bg": "hsl(216, 20%, 11%)",
 
