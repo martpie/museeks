@@ -111,7 +111,7 @@ export type TrackEditableFields = Pick<TrackModel, 'title' | 'artist' | 'album' 
  * Various
  */
 export interface Toast {
-  _id: number;
+  id: string;
   content: string;
   type: ToastType;
 }

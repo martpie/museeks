@@ -1,16 +1,14 @@
-import { useSelector } from 'react-redux';
-
 import ToastItem from '../../elements/Toast/Toast';
-import { RootState } from '../../store/reducers';
+import { useToastsStore } from '../../stores/ToastsStore';
 
 import styles from './Toasts.module.css';
 
 export default function Toasts() {
-  const toasts = useSelector((state: RootState) => state.toasts);
+  const toasts = useToastsStore((state) => state.toasts);
   return (
     <div className={styles.toasts}>
       {toasts.map((toast) => (
-        <ToastItem type={toast.type} content={toast.content} key={toast._id} />
+        <ToastItem type={toast.type} content={toast.content} key={toast.id} />
       ))}
     </div>
   );

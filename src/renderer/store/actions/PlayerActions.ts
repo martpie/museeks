@@ -12,9 +12,9 @@ import Player from '../../lib/player';
 import initMediaSession from '../../lib/media-session';
 import channels from '../../../shared/lib/ipc-channels';
 import router from '../../views/router';
+import { useToastsStore } from '../../stores/ToastsStore';
 
 import * as LibraryActions from './LibraryActions';
-import * as ToastsActions from './ToastsActions';
 
 const AUDIO_ERRORS = {
   aborted: 'The video playback was aborted.',
@@ -381,7 +381,7 @@ export const setOutputDevice = (deviceId = 'default'): void => {
         });
     } catch (err) {
       logger.warn(err);
-      ToastsActions.add('danger', 'An error occured when trying to switch to the new output device');
+      useToastsStore.getState().add('danger', 'An error occured when trying to switch to the new output device');
     }
   }
 };
@@ -425,16 +425,16 @@ export const audioError = (e: ErrorEvent): void => {
 
     switch (error.code) {
       case error.MEDIA_ERR_ABORTED:
-        ToastsActions.add('warning', AUDIO_ERRORS.aborted);
+        useToastsStore.getState().add('warning', AUDIO_ERRORS.aborted);
         break;
       case error.MEDIA_ERR_DECODE:
-        ToastsActions.add('danger', AUDIO_ERRORS.corrupt);
+        useToastsStore.getState().add('danger', AUDIO_ERRORS.corrupt);
         break;
       case error.MEDIA_ERR_SRC_NOT_SUPPORTED:
-        ToastsActions.add('danger', AUDIO_ERRORS.notFound);
+        useToastsStore.getState().add('danger', AUDIO_ERRORS.notFound);
         break;
       default:
-        ToastsActions.add('danger', AUDIO_ERRORS.unknown);
+        useToastsStore.getState().add('danger', AUDIO_ERRORS.unknown);
         break;
     }
   }

@@ -6,8 +6,8 @@ import types from '../action-types';
 import logger from '../../../shared/lib/logger';
 import channels from '../../../shared/lib/ipc-channels';
 import router from '../../views/router';
+import { useToastsStore } from '../../stores/ToastsStore';
 
-import * as ToastsActions from './ToastsActions';
 import * as PlayerActions from './PlayerActions';
 
 const { db } = window.MuseeksAPI;
@@ -81,7 +81,7 @@ export const create = async (
   await refresh();
 
   if (redirect) router.navigate(`/playlists/${doc._id}`);
-  else ToastsActions.add('success', `The playlist "${name}" was created`);
+  else useToastsStore.getState().add('success', `The playlist "${name}" was created`);
 
   return doc._id;
 };
@@ -122,13 +122,15 @@ export const addTracks = async (_id: string, tracksIds: string[], isShown?: bool
     const playlistTracks = playlist.tracks.concat(tracksIds);
     await db.playlists.updateWithRawQuery(_id, { $set: { tracks: playlistTracks } });
     await refresh();
-    ToastsActions.add('success', `${tracksIds.length} tracks were successfully added to "${playlist.name}"`);
+    useToastsStore
+      .getState()
+      .add('success', `${tracksIds.length} tracks were successfully added to "${playlist.name}"`);
   } catch (err) {
     logger.warn(err);
     if (err instanceof Error) {
-      ToastsActions.add('danger', err.message);
+      useToastsStore.getState().add('danger', err.message);
     } else {
-      ToastsActions.add('danger', 'An unknown error happened while trying to add tracks.');
+      useToastsStore.getState().add('danger', 'An unknown error happened while trying to add tracks.');
     }
   }
 };

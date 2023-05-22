@@ -34,7 +34,7 @@ const playerStatusTransform = createTransform(
 const persistConfig = {
   key: 'root',
   storage,
-  blacklist: ['toasts', 'playlists', 'library'],
+  blacklist: ['playlists', 'library'],
   version: 1,
   transforms: [playerStatusTransform],
 };
