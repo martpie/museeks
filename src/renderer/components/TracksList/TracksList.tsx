@@ -451,11 +451,11 @@ export default function TracksList(props: Props) {
       <TracksListHeader enableSort={type === 'library'} />
       <Virtuoso
         ref={virtuosoRef}
+        data={tracks}
+        totalCount={tracks.length}
         fixedItemHeight={ROW_HEIGHT}
         className={styles.tracksListBody}
-        totalCount={tracks.length}
-        itemContent={(index) => {
-          const track = tracks[index];
+        itemContent={(index, track) => {
           return (
             <TrackRow
               selected={selected.includes(track._id)}
