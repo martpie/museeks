@@ -8,9 +8,9 @@ import { TrackEditableFields, SortBy, TrackModel, Track } from '../../../shared/
 import channels from '../../../shared/lib/ipc-channels';
 import logger from '../../../shared/lib/logger';
 import { getLoweredMeta } from '../../../shared/lib/utils-id3';
+import { useToastsStore } from '../../stores/ToastsStore';
 
 import * as PlaylistsActions from './PlaylistsActions';
-import * as ToastsActions from './ToastsActions';
 
 const { path, db } = window.MuseeksAPI;
 
@@ -148,7 +148,7 @@ export const add = async (pathsToScan: string[]): Promise<TrackModel[]> => {
 
     return importedTracks;
   } catch (err) {
-    ToastsActions.add('danger', 'An error occured when scanning the library');
+    useToastsStore.getState().add('danger', 'An error occured when scanning the library');
     logger.warn(err);
     return [];
   } finally {

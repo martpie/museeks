@@ -55,6 +55,7 @@
     "m3ujs": "^0.2.1",
     "mime-types": "^2.1.35",
     "music-metadata": "^7.13.4",
+    "nanoid": "^4.0.2",
     "pino": "^8.14.1",
     "pino-pretty": "^10.0.0",
     "postcss-scss": "^4.0.6",
@@ -76,7 +77,8 @@
     "redux-thunk": "^2.4.2",
     "semver": "^7.5.1",
     "svg-inline-react": "^3.2.1",
-    "teeny-conf": "^6.1.0"
+    "teeny-conf": "^6.1.0",
+    "zustand": "^4.3.8"
   },
   "devDependencies": {
     "@types/bluebird": "^3.5.38",

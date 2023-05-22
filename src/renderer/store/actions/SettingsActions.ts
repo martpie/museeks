@@ -6,8 +6,7 @@ import types from '../action-types';
 import channels from '../../../shared/lib/ipc-channels';
 import { Theme } from '../../../shared/types/museeks';
 import logger from '../../../shared/lib/logger';
-
-import * as ToastsActions from './ToastsActions';
+import { useToastsStore } from '../../stores/ToastsStore';
 
 interface UpdateCheckOptions {
   silentFail?: boolean;
@@ -73,10 +72,10 @@ export const checkForUpdate = async (options: UpdateCheckOptions = {}): Promise<
     }
 
     if (message) {
-      ToastsActions.add('success', message);
+      useToastsStore.getState().add('success', message);
     }
   } catch (e) {
-    if (!options.silentFail) ToastsActions.add('danger', 'An error occurred while checking updates.');
+    if (!options.silentFail) useToastsStore.getState().add('danger', 'An error occurred while checking updates.');
   }
 };
 
