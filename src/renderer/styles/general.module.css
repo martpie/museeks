@@ -1,12 +1,3 @@
-::-webkit-scrollbar {
-  width: 5px;
-  background-color: var(--scrollbar-track);
-}
-
-::-webkit-scrollbar-thumb {
-  background-color: var(--scrollbar-thumb);
-}
-
 /* Colors (default theme) */
 :root {
   --main-color: #459ce7;
