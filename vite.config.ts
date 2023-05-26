@@ -48,9 +48,8 @@ export default defineConfig({
       },
     ]),
     electronRenderer({
-      nodeIntegration: true,
-      optimizeDeps: {
-        include: externals,
+      resolve: {
+        electron: () => ({ platform: 'browser' }),
       },
     }),
   ],

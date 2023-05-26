@@ -117,8 +117,8 @@
     "typescript": "^5.0.4",
     "typescript-plugin-css-modules": "^5.0.1",
     "vite": "^4.3.5",
-    "vite-plugin-electron": "^0.11.1",
-    "vite-plugin-electron-renderer": "^0.11.4",
+    "vite-plugin-electron": "0.11.1",
+    "vite-plugin-electron-renderer": "0.14.5",
     "vitest": "^0.31.0"
   }
 }
