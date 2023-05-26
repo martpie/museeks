@@ -461,7 +461,6 @@ export default function TracksList(props: Props) {
               selected={selected.includes(track._id)}
               track={tracks[index]}
               isPlaying={trackPlayingId === track._id}
-              key={`track-${track._id}`}
               index={index}
               onMouseDown={selectTrack}
               onClick={selectTrackClick}
