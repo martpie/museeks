@@ -46,7 +46,9 @@ export default defineConfig({
     ]),
     electronRenderer({
       resolve: {
-        electron: () => ({ platform: 'browser' }),
+        electron: {
+          type: 'cjs',
+        },
       },
     }),
   ],
