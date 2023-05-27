@@ -10,7 +10,7 @@ type ToastsState = {
   remove: (id: string) => void;
 };
 
-export const useToastsStore = create<ToastsState>()(
+const useToastsStore = create<ToastsState>()(
   devtools((set, get) => ({
     toasts: [],
 
@@ -30,3 +30,5 @@ export const useToastsStore = create<ToastsState>()(
     },
   }))
 );
+
+export default useToastsStore;

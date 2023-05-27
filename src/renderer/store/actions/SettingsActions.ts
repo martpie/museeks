@@ -6,7 +6,7 @@ import types from '../action-types';
 import channels from '../../../shared/lib/ipc-channels';
 import { Theme } from '../../../shared/types/museeks';
 import logger from '../../../shared/lib/logger';
-import { useToastsStore } from '../../stores/ToastsStore';
+import useToastsStore from '../../stores/useToastsStore';
 
 interface UpdateCheckOptions {
   silentFail?: boolean;

@@ -6,7 +6,7 @@ import types from '../action-types';
 import logger from '../../../shared/lib/logger';
 import channels from '../../../shared/lib/ipc-channels';
 import router from '../../views/router';
-import { useToastsStore } from '../../stores/ToastsStore';
+import useToastsStore from '../../stores/useToastsStore';
 
 import * as PlayerActions from './PlayerActions';
 

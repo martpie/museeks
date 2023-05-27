@@ -12,7 +12,7 @@ import Player from '../../lib/player';
 import initMediaSession from '../../lib/media-session';
 import channels from '../../../shared/lib/ipc-channels';
 import router from '../../views/router';
-import { useToastsStore } from '../../stores/ToastsStore';
+import useToastsStore from '../../stores/useToastsStore';
 
 import * as LibraryActions from './LibraryActions';
 

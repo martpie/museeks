@@ -8,7 +8,7 @@ import { TrackEditableFields, SortBy, TrackModel, Track } from '../../../shared/
 import channels from '../../../shared/lib/ipc-channels';
 import logger from '../../../shared/lib/logger';
 import { getLoweredMeta } from '../../../shared/lib/utils-id3';
-import { useToastsStore } from '../../stores/ToastsStore';
+import useToastsStore from '../../stores/useToastsStore';
 
 import * as PlaylistsActions from './PlaylistsActions';
 
