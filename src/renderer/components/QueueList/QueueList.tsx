@@ -63,7 +63,7 @@ export default function QueueList(props: Props) {
 
       setQueue(newQueue);
     }
-  }, [dragPosition, draggedOverTrackIndex, draggedTrackIndex, props]);
+  }, [dragPosition, draggedOverTrackIndex, draggedTrackIndex, props, setQueue]);
 
   const dragOver = useCallback((e: React.DragEvent<HTMLDivElement>, index: number) => {
     e.preventDefault();
