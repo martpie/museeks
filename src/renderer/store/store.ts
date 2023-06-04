@@ -6,8 +6,6 @@
 
 import { configureStore, Store } from '@reduxjs/toolkit';
 import { createLogger } from 'redux-logger';
-import { persistStore, persistReducer } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
 
 import rootReducer, { RootState } from './reducers';
 
@@ -15,37 +13,6 @@ const logger = createLogger({
   collapsed: true,
 });
 
-// We do not want to persist player's status as the player should always be
-// stopped/paused when starting the app
-// const playerStatusTransform = createTransform(
-//   (inboundState: PlayerState) => {
-//     return {
-//       ...inboundState,
-//       playerStatus: inboundState.playerStatus === PlayerStatus.PLAY ? PlayerStatus.PAUSE : inboundState.playerStatus,
-//     };
-//   },
-//   null,
-//   { whitelist: ['player'] }
-// );
-
-const persistConfig = {
-  key: 'root',
-  storage,
-  blacklist: ['playlists', 'library'],
-  version: 1,
-};
-
-const persistedReducer = persistReducer(persistConfig, rootReducer);
-
-const store: Store<RootState> = configureStore({ reducer: persistedReducer, middleware: [logger], devTools: true });
-
-export const persistor = persistStore(store, null, () => {
-  // Let's set the player's src and currentTime with the info we have persisted in store
-  // const state = store.getState();
-  // if (state.player.queue && state.player.queueCursor) {
-  //   const track = state.player.queue[state.player.queueCursor];
-  //   window.MuseeksAPI.player.setTrack(track);
-  // }
-});
+const store: Store<RootState> = configureStore({ reducer: rootReducer, middleware: [logger], devTools: true });
 
 export default store;

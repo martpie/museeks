@@ -1,5 +1,7 @@
 import { debounce } from 'lodash-es';
 import { ipcRenderer } from 'electron';
+import { StateCreator } from 'zustand';
+import { persist } from 'zustand/middleware';
 
 import store from '../store/store';
 import { PlayerStatus, Repeat, TrackModel } from '../../shared/types/museeks';
@@ -58,7 +60,7 @@ const AUDIO_ERRORS = {
 
 const { player, config } = window.MuseeksAPI;
 
-const usePlayerStore = createStore<PlayerState>((set, get) => ({
+const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
   instantiated: false,
   queue: [], // Tracks to be played
   oldQueue: [], // Queue backup (in case of shuffle)
@@ -547,6 +549,45 @@ export default usePlayerStore;
 // -----------------------------------------------------------------------------
 // Helpers
 // -----------------------------------------------------------------------------
+
+/**
+ * Special store for player
+ */
+function createPlayerStore<T extends PlayerState>(store: StateCreator<T>) {
+  return createStore(
+    persist(store, {
+      name: 'museeks-player',
+      onRehydrateStorage: () => {
+        return (state, error) => {
+          if (error || state == null) {
+            logger.error('an error happened during player store hydration', error);
+          } else {
+            //  Let's set the player's src and currentTime with the info we have persisted in store
+            const { queue, queueCursor } = state;
+            if (queue && queueCursor) {
+              const track = queue[queueCursor];
+              window.MuseeksAPI.player.setTrack(track);
+            }
+          }
+        };
+      },
+      merge(persistedState, currentState) {
+        return {
+          ...currentState,
+          ...(persistedState as PlayerState),
+          // Instantiated should never be true
+          instantiated: false,
+          // If player status was playing, set it to pause, as it makes no sense
+          // to auto-start playing a song when Museeks starts
+          playerStatus:
+            (persistedState as PlayerState).playerStatus === PlayerStatus.PLAY
+              ? PlayerStatus.PAUSE
+              : (persistedState as PlayerState).playerStatus,
+        };
+      },
+    })
+  );
+}
 
 /**
  * Make sure we don't save audio volume to the file system too often
