@@ -8,12 +8,20 @@ import { filterTracks, sortTracks } from '../../lib/utils-library';
 import SORT_ORDERS from '../../constants/sort-orders';
 import { RootState } from '../../store/reducers';
 import appStyles from '../Root.module.css';
+import usePlayerStore from '../../stores/usePlayerStore';
 
 import styles from './Library.module.css';
 
 export default function Library() {
+  const trackPlayingId = usePlayerStore((state) => {
+    if (state.queue.length > 0 && state.queueCursor !== null) {
+      return state.queue[state.queueCursor]._id;
+    }
+
+    return null;
+  });
+
   const library = useSelector((state: RootState) => state.library);
-  const player = useSelector((state: RootState) => state.player);
   const playlists = useSelector((state: RootState) => state.playlists.list);
   const tracks = useSelector((state: RootState) => {
     const { search, tracks, sort } = state.library;
@@ -26,9 +34,6 @@ export default function Library() {
   });
 
   const getLibraryComponent = useMemo(() => {
-    const trackPlayingId =
-      player.queue.length > 0 && player.queueCursor !== null ? player.queue[player.queueCursor]._id : null;
-
     // Loading library
     if (library.loading) {
       return (
@@ -73,7 +78,7 @@ export default function Library() {
 
     // All good !
     return <TracksList type='library' tracks={tracks} trackPlayingId={trackPlayingId} playlists={playlists} />;
-  }, [library, playlists, player, tracks]);
+  }, [library, playlists, tracks, trackPlayingId]);
 
   return <div className={`${appStyles.view} ${styles.viewLibrary}`}>{getLibraryComponent}</div>;
 }

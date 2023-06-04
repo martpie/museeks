@@ -6,13 +6,10 @@
 
 import { configureStore, Store } from '@reduxjs/toolkit';
 import { createLogger } from 'redux-logger';
-import { persistStore, persistReducer, createTransform } from 'redux-persist';
+import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
-import { PlayerStatus } from '../../shared/types/museeks';
-
 import rootReducer, { RootState } from './reducers';
-import { PlayerState } from './reducers/player';
 
 const logger = createLogger({
   collapsed: true,
@@ -20,23 +17,22 @@ const logger = createLogger({
 
 // We do not want to persist player's status as the player should always be
 // stopped/paused when starting the app
-const playerStatusTransform = createTransform(
-  (inboundState: PlayerState) => {
-    return {
-      ...inboundState,
-      playerStatus: inboundState.playerStatus === PlayerStatus.PLAY ? PlayerStatus.PAUSE : inboundState.playerStatus,
-    };
-  },
-  null,
-  { whitelist: ['player'] }
-);
+// const playerStatusTransform = createTransform(
+//   (inboundState: PlayerState) => {
+//     return {
+//       ...inboundState,
+//       playerStatus: inboundState.playerStatus === PlayerStatus.PLAY ? PlayerStatus.PAUSE : inboundState.playerStatus,
+//     };
+//   },
+//   null,
+//   { whitelist: ['player'] }
+// );
 
 const persistConfig = {
   key: 'root',
   storage,
   blacklist: ['playlists', 'library'],
   version: 1,
-  transforms: [playerStatusTransform],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -45,13 +41,11 @@ const store: Store<RootState> = configureStore({ reducer: persistedReducer, midd
 
 export const persistor = persistStore(store, null, () => {
   // Let's set the player's src and currentTime with the info we have persisted in store
-  const state = store.getState();
-
-  if (state.player.queue && state.player.queueCursor) {
-    const track = state.player.queue[state.player.queueCursor];
-
-    window.MuseeksAPI.player.setTrack(track);
-  }
+  // const state = store.getState();
+  // if (state.player.queue && state.player.queueCursor) {
+  //   const track = state.player.queue[state.player.queueCursor];
+  //   window.MuseeksAPI.player.setTrack(track);
+  // }
 });
 
 export default store;

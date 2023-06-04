@@ -2,17 +2,18 @@ import InlineSVG from 'svg-inline-react';
 import cx from 'classnames';
 
 import icons from '../../lib/icons';
-import * as PlayerActions from '../../store/actions/PlayerActions';
+import usePlayerStore from '../../stores/usePlayerStore';
 
 import styles from './common.module.css';
 
-type Props = {
-  shuffle: boolean;
-};
+export default function ButtonShuffle() {
+  const { shuffle, toggleSuffle } = usePlayerStore((state) => ({
+    shuffle: state.shuffle,
+    toggleSuffle: state.toggleShuffle,
+  }));
 
-export default function ButtonShuffle(props: Props) {
   const buttonClasses = cx(styles.button, {
-    [styles.active]: props.shuffle,
+    [styles.active]: shuffle,
   });
 
   return (
@@ -20,7 +21,7 @@ export default function ButtonShuffle(props: Props) {
       type='button'
       className={buttonClasses}
       onClick={() => {
-        PlayerActions.shuffle(!props.shuffle);
+        toggleSuffle(!shuffle);
       }}
     >
       <InlineSVG src={icons.SHUFFLE} className={styles.icon} />

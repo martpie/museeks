@@ -1,4 +1,4 @@
-import * as PlayerActions from '../store/actions/PlayerActions';
+import usePlayerStore from '../stores/usePlayerStore';
 
 import Player from './player';
 
@@ -29,18 +29,18 @@ export default function initMediaSession(player: Player) {
   });
 
   navigator.mediaSession.setActionHandler('play', async () => {
-    PlayerActions.play();
+    usePlayerStore.getState().play();
   });
 
   navigator.mediaSession.setActionHandler('pause', async () => {
-    PlayerActions.pause();
+    usePlayerStore.getState().pause();
   });
 
   navigator.mediaSession.setActionHandler('previoustrack', async () => {
-    PlayerActions.previous();
+    usePlayerStore.getState().previous();
   });
 
   navigator.mediaSession.setActionHandler('nexttrack', async () => {
-    PlayerActions.next();
+    usePlayerStore.getState().next();
   });
 }

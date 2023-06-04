@@ -2,9 +2,9 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import ButtonShuffle from '../PlayerOptionsButtons/ButtonShuffle';
 import ButtonRepeat from '../PlayerOptionsButtons/ButtonRepeat';
-import * as PlayerActions from '../../store/actions/PlayerActions';
 import * as utils from '../../lib/utils';
 import { TrackModel, Repeat } from '../../../shared/types/museeks';
+import usePlayerStore from '../../stores/usePlayerStore';
 
 import styles from './PlayingBarInfo.module.css';
 
@@ -24,6 +24,8 @@ export default function PlayingBarInfo(props: Props) {
   const [x, setX] = useState<number | null>(null);
   const [dragging, setDragging] = useState(false);
 
+  const jumpTo = usePlayerStore((state) => state.jumpTo);
+
   const tick = useCallback(() => {
     setElapsed(window.MuseeksAPI.player.getCurrentTime());
   }, []);
@@ -37,12 +39,12 @@ export default function PlayingBarInfo(props: Props) {
         const percent =
           ((e.pageX - (playingBar.current.offsetLeft + parent.offsetLeft)) / playingBar.current.offsetWidth) * 100;
 
-        const jumpTo = (percent * trackPlaying.duration) / 100;
+        const to = (percent * trackPlaying.duration) / 100;
 
-        PlayerActions.jumpTo(jumpTo);
+        jumpTo(to);
       }
     },
-    [playingBar, trackPlaying]
+    [playingBar, trackPlaying, jumpTo]
   );
 
   const dragOver = useCallback(
@@ -57,13 +59,13 @@ export default function PlayingBarInfo(props: Props) {
 
           const percent = (offsetX / barWidth) * 100;
 
-          const jumpTo = (percent * trackPlaying.duration) / 100;
+          const to = (percent * trackPlaying.duration) / 100;
 
-          PlayerActions.jumpTo(jumpTo);
+          jumpTo(to);
         }
       }
     },
-    [playingBar, dragging, trackPlaying]
+    [playingBar, dragging, trackPlaying, jumpTo]
   );
 
   const dragEnd = useCallback(() => {
@@ -108,8 +110,8 @@ export default function PlayingBarInfo(props: Props) {
     <div className={styles.playingBar__info}>
       <div className={styles.playingBar__info__metas}>
         <div className={styles.playerOptions}>
-          <ButtonRepeat repeat={props.repeat} />
-          <ButtonShuffle shuffle={props.shuffle} />
+          <ButtonRepeat />
+          <ButtonShuffle />
         </div>
         <div className={styles.metas}>
           <strong>{trackPlaying.title}</strong>

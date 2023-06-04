@@ -1,8 +1,8 @@
-import { create } from 'zustand';
-import { devtools } from 'zustand/middleware';
 import { nanoid } from 'nanoid';
 
 import { Toast, ToastType } from '../../shared/types/museeks';
+
+import { createStore } from './store-helpers';
 
 type ToastsState = {
   toasts: Toast[];
@@ -10,25 +10,23 @@ type ToastsState = {
   remove: (id: string) => void;
 };
 
-const useToastsStore = create<ToastsState>()(
-  devtools((set, get) => ({
-    toasts: [],
+const useToastsStore = createStore<ToastsState>((set, get) => ({
+  toasts: [],
 
-    add: (type, content, duration = 3000) => {
-      const id = nanoid();
-      const toast: Toast = { id, type, content };
+  add: (type, content, duration = 3000) => {
+    const id = nanoid();
+    const toast: Toast = { id, type, content };
 
-      set((state) => ({ toasts: [...state.toasts, toast] }));
+    set((state) => ({ toasts: [...state.toasts, toast] }));
 
-      window.setTimeout(function removeToast() {
-        get().remove(id);
-      }, duration);
-    },
+    window.setTimeout(function removeToast() {
+      get().remove(id);
+    }, duration);
+  },
 
-    remove: (id) => {
-      set((state) => ({ toasts: [...state.toasts].filter((t) => t.id !== id) }));
-    },
-  }))
-);
+  remove: (id) => {
+    set((state) => ({ toasts: [...state.toasts].filter((t) => t.id !== id) }));
+  },
+}));
 
 export default useToastsStore;

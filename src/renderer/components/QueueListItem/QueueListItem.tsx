@@ -1,8 +1,8 @@
 import React, { useCallback } from 'react';
 import cx from 'classnames';
 
-import * as QueueActions from '../../store/actions/QueueActions';
 import { TrackModel } from '../../../shared/types/museeks';
+import usePlayerStore from '../../stores/usePlayerStore';
 
 import styles from './QueueListItem.module.css';
 
@@ -19,6 +19,9 @@ type Props = {
 };
 
 export default function QueueListItem(props: Props) {
+  const removeFromQueue = usePlayerStore((state) => state.removeFromQueue);
+  const startFromQueue = usePlayerStore((state) => state.startFromQueue);
+
   const { track } = props;
 
   const onDragStart = useCallback(
@@ -36,12 +39,12 @@ export default function QueueListItem(props: Props) {
   );
 
   const remove = useCallback(() => {
-    QueueActions.remove(props.index);
-  }, [props.index]);
+    removeFromQueue(props.index);
+  }, [props.index, removeFromQueue]);
 
   const play = useCallback(() => {
-    QueueActions.start(props.queueCursor + props.index + 1);
-  }, [props.index, props.queueCursor]);
+    startFromQueue(props.queueCursor + props.index + 1);
+  }, [props.index, props.queueCursor, startFromQueue]);
 
   const queueContentClasses = cx(styles.queue__item, {
     [styles.isDragged]: props.dragged,
