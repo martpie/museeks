@@ -2,17 +2,21 @@ import React, { useCallback } from 'react';
 
 import * as Setting from '../../components/Setting/Setting';
 import AudioOutputSelect from '../../components/AudioOutputSelect/AudioOutputSelect';
-import * as PlayerActions from '../../store/actions/PlayerActions';
 import { Config } from '../../../shared/types/museeks';
+import usePlayerStore from '../../stores/usePlayerStore';
 
 export default function SettingsAudio() {
-  const setPlaybackRate = useCallback((e: React.SyntheticEvent<HTMLInputElement>) => {
-    PlayerActions.setPlaybackRate(parseFloat(e.currentTarget.value));
-  }, []);
+  const playerState = usePlayerStore((state) => ({
+    setPlaybackRate: state.setPlaybackRate,
+    setOutputDevice: state.setOutputDevice,
+  }));
 
-  const setOutputDevice = useCallback((deviceId: string) => {
-    PlayerActions.setOutputDevice(deviceId);
-  }, []);
+  const setPlaybackRate = useCallback(
+    (e: React.SyntheticEvent<HTMLInputElement>) => {
+      playerState.setPlaybackRate(parseFloat(e.currentTarget.value));
+    },
+    [playerState]
+  );
 
   const config = window.MuseeksAPI.config.get() as Config;
 
@@ -35,7 +39,7 @@ export default function SettingsAudio() {
       </Setting.Section>
       <Setting.Section>
         <Setting.Label htmlFor='setting-playbackrate'>Audio output</Setting.Label>
-        <AudioOutputSelect defaultValue={config.audioOutputDevice} onChange={setOutputDevice} />
+        <AudioOutputSelect defaultValue={config.audioOutputDevice} onChange={playerState.setOutputDevice} />
         <Setting.Description>Advanced: set a custom audio output device.</Setting.Description>
       </Setting.Section>
     </div>

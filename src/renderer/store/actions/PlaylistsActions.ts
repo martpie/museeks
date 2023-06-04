@@ -7,8 +7,7 @@ import logger from '../../../shared/lib/logger';
 import channels from '../../../shared/lib/ipc-channels';
 import router from '../../views/router';
 import useToastsStore from '../../stores/useToastsStore';
-
-import * as PlayerActions from './PlayerActions';
+import usePlayerStore from '../../stores/usePlayerStore';
 
 const { db } = window.MuseeksAPI;
 
@@ -19,7 +18,7 @@ export const play = async (playlistId: string): Promise<void> => {
   try {
     const playlist: PlaylistModel = await db.playlists.findOnlyByID(playlistId);
     const tracks: TrackModel[] = await db.tracks.findByID(playlist.tracks);
-    PlayerActions.start(tracks).catch((err) => logger.warn(err));
+    usePlayerStore.getState().start(tracks).catch(logger.warn);
   } catch (err) {
     logger.warn(err);
   }

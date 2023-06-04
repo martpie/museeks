@@ -1,9 +1,9 @@
 import InlineSVG from 'svg-inline-react';
 import cx from 'classnames';
 
-import * as PlayerActions from '../../store/actions/PlayerActions';
 import { Repeat } from '../../../shared/types/museeks';
 import icons from '../../lib/icons';
+import usePlayerStore from '../../stores/usePlayerStore';
 
 import styles from './common.module.css';
 
@@ -14,20 +14,18 @@ const svgMap = {
   default: icons.REPEAT,
 };
 
-type Props = {
-  repeat: Repeat;
-};
+export default function ButtonRepeat() {
+  const playerState = usePlayerStore((state) => ({ repeat: state.repeat, toggleRepeat: state.toggleRepeat }));
 
-export default function ButtonRepeat(props: Props) {
-  const svg = svgMap[props.repeat] || svgMap.default;
+  const svg = svgMap[playerState.repeat] || svgMap.default;
   const buttonClasses = cx(styles.button, {
-    [styles.active]: props.repeat === Repeat.ONE || props.repeat === Repeat.ALL,
+    [styles.active]: playerState.repeat === Repeat.ONE || playerState.repeat === Repeat.ALL,
   });
 
   const toggleRepeat = () => {
     let repeat = Repeat.NONE;
 
-    switch (props.repeat) {
+    switch (playerState.repeat) {
       case Repeat.NONE:
         repeat = Repeat.ALL;
         break;
@@ -41,7 +39,7 @@ export default function ButtonRepeat(props: Props) {
         break;
     }
 
-    PlayerActions.repeat(repeat);
+    playerState.toggleRepeat(repeat);
   };
 
   return (

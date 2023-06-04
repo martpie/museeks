@@ -13,7 +13,7 @@ interface PlayerOptions {
  * Open questions:
  *   - Should it emit IPC events itself? Or expose events?
  *   - Should it hold the concepts of queue/random/etc? (in other words, should
- *     we merge PlayerActions here?)
+ *     we merge player actions here?)
  */
 export default class Player {
   private audio: HTMLAudioElement;

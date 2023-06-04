@@ -4,10 +4,10 @@ import channels from '../../../shared/lib/ipc-channels';
 import { Theme } from '../../../shared/types/museeks';
 import logger from '../../../shared/lib/logger';
 import router from '../../views/router';
+import usePlayerStore from '../../stores/usePlayerStore';
 
 import * as LibraryActions from './LibraryActions';
 import * as PlaylistsActions from './PlaylistsActions';
-import * as PlayerActions from './PlayerActions';
 import * as SettingsActions from './SettingsActions';
 
 const init = async (): Promise<void> => {
@@ -25,7 +25,7 @@ const init = async (): Promise<void> => {
     SettingsActions.check(),
     LibraryActions.refresh(),
     PlaylistsActions.refresh(),
-    PlayerActions.init(window.MuseeksAPI.player),
+    usePlayerStore.getState().init(window.MuseeksAPI.player),
   ]);
 
   // Tell the main process to show the window
@@ -55,7 +55,7 @@ const init = async (): Promise<void> => {
   });
 
   ipcRenderer.on(channels.MENU_JUMP_TO_PLAYING_TRACK, () => {
-    PlayerActions.jumpToPlayingTrack();
+    usePlayerStore.getState().jumpToPlayingTrack();
   });
 
   // Prevent drop events on the window

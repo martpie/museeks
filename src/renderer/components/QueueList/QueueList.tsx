@@ -1,10 +1,10 @@
 import React, { useCallback, useState } from 'react';
 
 import QueueListItem from '../QueueListItem/QueueListItem';
-import * as QueueActions from '../../store/actions/QueueActions';
 import { getStatus } from '../../lib/utils-library';
 import { TrackModel } from '../../../shared/types/museeks';
 import Button from '../../elements/Button/Button';
+import usePlayerStore from '../../stores/usePlayerStore';
 
 import styles from './QueueList.module.css';
 
@@ -14,6 +14,9 @@ type Props = {
 };
 
 export default function QueueList(props: Props) {
+  const setQueue = usePlayerStore((state) => state.setQueue);
+  const clearQueue = usePlayerStore((state) => state.clearQueue);
+
   const [draggedTrackIndex, setDraggedTrackIndex] = useState<number | null>(null);
   const [draggedOverTrackIndex, setDraggedOverTrackIndex] = useState<number | null>(null);
   const [dragPosition, setDragPosition] = useState<null | 'above' | 'below'>(null);
@@ -58,7 +61,7 @@ export default function QueueList(props: Props) {
       setDraggedOverTrackIndex(null);
       setDragPosition(null);
 
-      QueueActions.setQueue(newQueue);
+      setQueue(newQueue);
     }
   }, [dragPosition, draggedOverTrackIndex, draggedTrackIndex, props]);
 
@@ -82,7 +85,7 @@ export default function QueueList(props: Props) {
     <>
       <div className={styles.queue__header}>
         <div className={styles.queue__header__infos}>{getStatus(incomingQueue)}</div>
-        <Button bSize='small' onClick={QueueActions.clear}>
+        <Button bSize='small' onClick={clearQueue}>
           clear queue
         </Button>
       </div>

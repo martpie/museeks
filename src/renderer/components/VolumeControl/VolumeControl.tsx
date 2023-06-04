@@ -3,8 +3,8 @@ import Icon from 'react-fontawesome';
 import cx from 'classnames';
 import Slider from 'react-rangeslider';
 
-import * as PlayerActions from '../../store/actions/PlayerActions';
 import controlStyles from '../PlayerControls/PlayerControls.module.css';
+import usePlayerStore from '../../stores/usePlayerStore';
 
 import styles from './VolumeControl.module.css';
 
@@ -27,24 +27,32 @@ export default function VolumeControl() {
   const [volume, setVolume] = useState(audio.volume);
   const [muted, setMuted] = useState(audio.muted);
 
+  const playerState = usePlayerStore((state) => ({
+    setVolume: state.setVolume,
+    setMuted: state.setMuted,
+  }));
+
   const setPlayerVolume = useCallback(
     (value: number) => {
       const smoothVolume = smoothifyVolume(value);
 
-      PlayerActions.setVolume(smoothVolume);
+      playerState.setVolume(smoothVolume);
       setVolume(smoothVolume);
     },
-    [setVolume]
+    [setVolume, playerState]
   );
 
-  const mute = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
-    if (e.currentTarget.classList.contains(controlStyles.control) || e.currentTarget.classList.contains('fa')) {
-      const muted = !window.MuseeksAPI.player.isMuted();
+  const mute = useCallback(
+    (e: React.MouseEvent<HTMLButtonElement>) => {
+      if (e.currentTarget.classList.contains(controlStyles.control) || e.currentTarget.classList.contains('fa')) {
+        const muted = !window.MuseeksAPI.player.isMuted();
 
-      PlayerActions.setMuted(muted);
-      setMuted(muted);
-    }
-  }, []);
+        playerState.setMuted(muted);
+        setMuted(muted);
+      }
+    },
+    [playerState]
+  );
 
   const volumeClasses = cx(styles.volumeControl, {
     [styles.visible]: showVolume,

@@ -1337,7 +1337,7 @@ axobject-query@^3.1.1:
   dependencies:
     deep-equal "^2.0.5"
 
-"bagpipe@github:Ivshti/bagpipe#ae11730ef59364b20868287fb3ce0970a87dc8c8":
+bagpipe@Ivshti/bagpipe#ae11730ef59364b20868287fb3ce0970a87dc8c8:
   version "0.3.7"
   resolved "https://codeload.github.com/Ivshti/bagpipe/tar.gz/ae11730ef59364b20868287fb3ce0970a87dc8c8"
   dependencies:
@@ -5864,18 +5864,18 @@ util-deprecate@^1.0.1, util-deprecate@^1.0.2, util-deprecate@~1.0.1:
   resolved "https://registry.yarnpkg.com/util-deprecate/-/util-deprecate-1.0.2.tgz#450d4dc9fa70de732762fbd2d4a28981419a0ccf"
   integrity sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==
 
+util@Ivshti/node-util:
+  version "0.10.3"
+  resolved "https://codeload.github.com/Ivshti/node-util/tar.gz/97b6beed8e0e478cd4184965ac94bf316f94e5f5"
+  dependencies:
+    inherits Ivshti/inherits
+
 util@^0.10.3:
   version "0.10.4"
   resolved "https://registry.yarnpkg.com/util/-/util-0.10.4.tgz#3aa0125bfe668a4672de58857d3ace27ecb76901"
   integrity sha512-0Pm9hTQ3se5ll1XihRic3FDIku70C+iHUdT/W926rSgHV5QgXsYbKZN8MSC3tJtSkhuROzvsQjAaFENRXr+19A==
   dependencies:
     inherits "2.0.3"
-
-"util@github:Ivshti/node-util":
-  version "0.10.3"
-  resolved "https://codeload.github.com/Ivshti/node-util/tar.gz/97b6beed8e0e478cd4184965ac94bf316f94e5f5"
-  dependencies:
-    inherits Ivshti/inherits
 
 v8-compile-cache@^2.3.0:
   version "2.3.0"

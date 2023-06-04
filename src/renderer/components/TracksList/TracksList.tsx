@@ -9,12 +9,11 @@ import TrackRow from '../TrackRow/TrackRow';
 import TracksListHeader from '../TracksListHeader/TracksListHeader';
 import * as LibraryActions from '../../store/actions/LibraryActions';
 import * as PlaylistsActions from '../../store/actions/PlaylistsActions';
-import * as PlayerActions from '../../store/actions/PlayerActions';
-import * as QueueActions from '../../store/actions/QueueActions';
 import { isLeftClick, isRightClick, isCtrlKey, isAltKey } from '../../lib/utils-events';
 import { PlaylistModel, TrackModel } from '../../../shared/types/museeks';
 import { RootState } from '../../store/reducers';
 import headerStyles from '../Header/Header.module.css';
+import usePlayerStore from '../../stores/usePlayerStore';
 
 import styles from './TracksList.module.css';
 
@@ -44,6 +43,11 @@ export default function TracksList(props: Props) {
   const virtuosoRef = useRef<VirtuosoHandle>(null);
   const navigate = useNavigate();
 
+  const { start, addInQueue, addNextInQueue } = usePlayerStore((state) => ({
+    start: state.start,
+    addInQueue: state.addInQueue,
+    addNextInQueue: state.addNextInQueue,
+  }));
   const highlight = useSelector<RootState, boolean>((state) => state.library.highlightPlayingTrack);
 
   // Highlight playing track and scroll to it
@@ -70,17 +74,20 @@ export default function TracksList(props: Props) {
 
   const startPlayback = useCallback(
     async (_id: string) => {
-      PlayerActions.start(tracks, _id);
+      start(tracks, _id);
     },
-    [tracks]
+    [tracks, start]
   );
 
   /**
    * Keyboard navigations events/helpers
    */
-  const onEnter = useCallback(async (index: number, tracks: TrackModel[]) => {
-    if (index !== -1) PlayerActions.start(tracks, tracks[index]._id);
-  }, []);
+  const onEnter = useCallback(
+    async (index: number, tracks: TrackModel[]) => {
+      if (index !== -1) start(tracks, tracks[index]._id);
+    },
+    [start]
+  );
 
   const onControlAll = useCallback((tracks: TrackModel[]) => {
     setSelected(tracks.map((track) => track._id));
@@ -333,13 +340,13 @@ export default function TracksList(props: Props) {
         {
           label: 'Add to queue',
           click: async () => {
-            await QueueActions.addAfter(selected);
+            addInQueue(selected);
           },
         },
         {
           label: 'Play next',
           click: async () => {
-            await QueueActions.addNext(selected);
+            addNextInQueue(selected);
           },
         },
         {

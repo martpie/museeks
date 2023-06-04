@@ -10,9 +10,9 @@ import Footer from '../components/Footer/Footer';
 import Toasts from '../components/Toasts/Toasts';
 import AppActions from '../store/actions/AppActions';
 import * as LibraryActions from '../store/actions/LibraryActions';
-import * as PlayerActions from '../store/actions/PlayerActions';
 import { isCtrlKey } from '../lib/utils-events';
 import DropzoneImport from '../components/DropzoneImport/DropzoneImport';
+import usePlayerStore from '../stores/usePlayerStore';
 
 import styles from './Root.module.css';
 
@@ -33,7 +33,7 @@ export default function Museeks() {
         case ' ':
           e.preventDefault();
           e.stopPropagation();
-          PlayerActions.playPause();
+          usePlayerStore.getState().playPause();
           break;
         case ',':
           if (isCtrlKey(e)) {
@@ -45,12 +45,12 @@ export default function Museeks() {
         case 'ArrowLeft':
           e.preventDefault();
           e.stopPropagation();
-          PlayerActions.jumpTo(window.MuseeksAPI.player.getCurrentTime() - 10);
+          usePlayerStore.getState().jumpTo(window.MuseeksAPI.player.getCurrentTime() - 10);
           break;
         case 'ArrowRight':
           e.preventDefault();
           e.stopPropagation();
-          PlayerActions.jumpTo(window.MuseeksAPI.player.getCurrentTime() + 10);
+          usePlayerStore.getState().jumpTo(window.MuseeksAPI.player.getCurrentTime() + 10);
           break;
         default:
           break;

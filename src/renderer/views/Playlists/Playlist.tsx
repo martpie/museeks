@@ -7,13 +7,22 @@ import * as ViewMessage from '../../elements/ViewMessage/ViewMessage';
 import * as PlaylistsActions from '../../store/actions/PlaylistsActions';
 import { filterTracks } from '../../lib/utils-library';
 import { RootState } from '../../store/reducers';
+import usePlayerStore from '../../stores/usePlayerStore';
 
 export default function Playlist() {
   const params = useParams();
   const playlistId = params.playlistId;
 
-  const { tracks, trackPlayingId, playlists, currentPlaylist, search } = useSelector((state: RootState) => {
-    const { library, player, playlists } = state;
+  const trackPlayingId = usePlayerStore((state) => {
+    if (state.queue.length > 0 && state.queueCursor !== null) {
+      return state.queue[state.queueCursor]._id;
+    }
+
+    return null;
+  });
+
+  const { tracks, playlists, currentPlaylist, search } = useSelector((state: RootState) => {
+    const { library, playlists } = state;
 
     const { search, tracks } = library;
     const filteredTracks = filterTracks(tracks.playlist, search);
@@ -24,9 +33,6 @@ export default function Playlist() {
       playlists: playlists.list,
       currentPlaylist,
       tracks: filteredTracks,
-      playerStatus: player.playerStatus,
-      trackPlayingId:
-        player.queue.length > 0 && player.queueCursor !== null ? player.queue[player.queueCursor]._id : null,
       search: library.search,
     };
   });

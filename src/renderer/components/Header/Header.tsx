@@ -1,20 +1,18 @@
-import { useSelector } from 'react-redux';
-
 import PlayingBar from '../PlayingBar/PlayingBar';
 import PlayerControls from '../PlayerControls/PlayerControls';
 import Search from '../Search/Search';
-import { RootState } from '../../store/reducers';
+import usePlayerStore from '../../stores/usePlayerStore';
 
 import styles from './Header.module.css';
 
 export default function Header() {
-  const { playerStatus, queue, queueCursor, shuffle, repeat } = useSelector(({ player }: RootState) => {
+  const { playerStatus, queue, queueCursor, shuffle, repeat } = usePlayerStore((state) => {
     return {
-      playerStatus: player.playerStatus,
-      repeat: player.repeat,
-      shuffle: player.shuffle,
-      queue: player.queue,
-      queueCursor: player.queueCursor,
+      playerStatus: state.playerStatus,
+      repeat: state.repeat,
+      shuffle: state.shuffle,
+      queue: state.queue,
+      queueCursor: state.queueCursor,
     };
   });
 

@@ -4,19 +4,20 @@ import { useSelector } from 'react-redux';
 
 import * as Setting from '../../components/Setting/Setting';
 import * as LibraryActions from '../../store/actions/LibraryActions';
-import * as PlayerActions from '../../store/actions/PlayerActions';
 import Button from '../../elements/Button/Button';
 import channels from '../../../shared/lib/ipc-channels';
 import logger from '../../../shared/lib/logger';
 import { RootState } from '../../store/reducers';
+import usePlayerStore from '../../stores/usePlayerStore';
 
 export default function SettingsLibrary() {
   const library = useSelector((state: RootState) => state.library);
+  const player = usePlayerStore((state) => ({ stop: state.stop }));
 
   const resetLibrary = useCallback(async () => {
-    PlayerActions.stop();
+    player.stop();
     await LibraryActions.reset();
-  }, []);
+  }, [player]);
 
   const openFolderSelector = useCallback(async () => {
     const options: Electron.OpenDialogOptions = {
