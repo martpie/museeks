@@ -449,7 +449,7 @@ export default function TracksList(props: Props) {
 
       context.popup({}); // Let it appear
     },
-    [currentPlaylist, playlists, selected, tracks, type, navigate]
+    [currentPlaylist, playlists, selected, tracks, type, navigate, addNextInQueue, addInQueue]
   );
 
   return (
