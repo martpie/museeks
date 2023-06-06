@@ -36,8 +36,8 @@ type PlayerState = {
     stop: () => void;
     previous: () => Promise<void>;
     next: () => Promise<void>;
-    toggleShuffle: (value: boolean) => void;
-    toggleRepeat: (value: Repeat) => void;
+    toggleShuffle: (value?: boolean) => void;
+    toggleRepeat: (value?: Repeat) => void;
     setVolume: (volume: number) => void;
     setMuted: (muted: boolean) => void;
     setPlaybackRate: (value: number) => void;
@@ -335,7 +335,9 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
     /**
      * Enable/disable shuffle
      */
-    toggleShuffle: (shuffle: boolean) => {
+    toggleShuffle: (shuffle) => {
+      shuffle = shuffle ?? !get().shuffle;
+
       config.set('audioShuffle', shuffle);
       config.save();
 
@@ -372,13 +374,26 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
     /**
      * Enable disable repeat
      */
-    toggleRepeat: (value: Repeat) => {
-      config.set('audioRepeat', value);
+    toggleRepeat: (repeat) => {
+      // Get to the next repeat type if none is specified
+      if (repeat == undefined) {
+        switch (get().repeat) {
+          case Repeat.NONE:
+            repeat = Repeat.ALL;
+            break;
+          case Repeat.ALL:
+            repeat = Repeat.ONE;
+            break;
+          case Repeat.ONE:
+            repeat = Repeat.NONE;
+            break;
+        }
+      }
+
+      config.set('audioRepeat', repeat);
       config.save();
 
-      set({
-        repeat: value,
-      });
+      set({ repeat });
     },
 
     /**
@@ -584,6 +599,8 @@ function createPlayerStore<T extends PlayerState>(store: StateCreator<T>) {
         return {
           ...currentState,
           ...(persistedState as PlayerState),
+          // API should never be persisted
+          api: currentState.api,
           // Instantiated should never be true
           instantiated: false,
           // If player status was playing, set it to pause, as it makes no sense
