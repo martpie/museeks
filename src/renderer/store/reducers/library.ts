@@ -8,10 +8,7 @@ export interface LibrarySort {
 }
 
 export interface LibraryState {
-  tracks: {
-    library: TrackModel[]; // List of tracks in Library view
-    playlist: TrackModel[]; // List of tracks in Playlist view
-  };
+  tracks: TrackModel[]; // List of tracks in Library view
   search: string;
   sort: LibrarySort;
   loading: boolean;
@@ -24,10 +21,7 @@ export interface LibraryState {
 }
 
 const initialState: LibraryState = {
-  tracks: {
-    library: [],
-    playlist: [],
-  },
+  tracks: [],
   search: '',
   sort: window.MuseeksAPI.config.getx('librarySort'),
   loading: true,
@@ -44,10 +38,7 @@ export default function libraryReducer(state = initialState, action: Action): Li
     case types.LIBRARY_REFRESH: {
       return {
         ...state,
-        tracks: {
-          library: [...action.payload.tracks],
-          playlist: [],
-        },
+        tracks: [...action.payload.tracks],
         loading: false,
       };
     }
@@ -158,28 +149,18 @@ export default function libraryReducer(state = initialState, action: Action): Li
       const { tracksIds } = action.payload;
       const removeTrack = (track: TrackModel) => !tracksIds.includes(track._id);
 
-      const tracks = {
-        library: [...state.tracks.library].filter(removeTrack),
-        playlist: [...state.tracks.playlist].filter(removeTrack),
-      };
-
       return {
         ...state,
-        tracks,
+        tracks: [...state.tracks].filter(removeTrack),
       };
     }
 
     case types.LIBRARY_ADD_TRACKS: {
       const { tracks } = action.payload;
 
-      const libraryTracks: TrackModel[] = [...state.tracks.library, ...tracks];
-
       return {
         ...state,
-        tracks: {
-          playlist: state.tracks.playlist,
-          library: libraryTracks,
-        },
+        tracks: [...state.tracks, ...tracks],
       };
     }
 
@@ -188,13 +169,6 @@ export default function libraryReducer(state = initialState, action: Action): Li
         ...state,
         highlightPlayingTrack: action.payload.highlight,
       };
-    }
-
-    case types.PLAYLISTS_LOAD_ONE: {
-      const newState = { ...state };
-      newState.tracks.playlist = [...action.payload.tracks];
-
-      return newState;
     }
 
     default: {

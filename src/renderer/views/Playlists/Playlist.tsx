@@ -1,6 +1,6 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import { useParams, Link } from 'react-router-dom';
+import { Link, useLoaderData, useParams } from 'react-router-dom';
 
 import TracksList from '../../components/TracksList/TracksList';
 import * as ViewMessage from '../../elements/ViewMessage/ViewMessage';
@@ -8,10 +8,11 @@ import * as PlaylistsActions from '../../store/actions/PlaylistsActions';
 import { filterTracks } from '../../lib/utils-library';
 import { RootState } from '../../store/reducers';
 import usePlayerStore from '../../stores/usePlayerStore';
+import { PlaylistLoaderType } from '../router';
 
 export default function Playlist() {
-  const params = useParams();
-  const playlistId = params.playlistId;
+  const { playlists, playlistTracks } = useLoaderData() as PlaylistLoaderType;
+  const { playlistId } = useParams();
 
   const trackPlayingId = usePlayerStore((state) => {
     if (state.queue.length > 0 && state.queueCursor !== null) {
@@ -21,27 +22,13 @@ export default function Playlist() {
     return null;
   });
 
-  const { tracks, playlists, currentPlaylist, search } = useSelector((state: RootState) => {
-    const { library, playlists } = state;
-
-    const { search, tracks } = library;
-    const filteredTracks = filterTracks(tracks.playlist, search);
-
-    const currentPlaylist = playlists.list.find((p) => p._id === playlistId);
-
+  const { search } = useSelector((state: RootState) => {
     return {
-      playlists: playlists.list,
-      currentPlaylist,
-      tracks: filteredTracks,
-      search: library.search,
+      search: state.library.search,
     };
   });
 
-  useEffect(() => {
-    if (playlistId) {
-      PlaylistsActions.load(playlistId);
-    }
-  }, [playlistId]);
+  const filteredTracks = useMemo(() => filterTracks(playlistTracks, search), [playlistTracks, search]);
 
   const onReorder = useCallback(
     (playlistId: string, tracksIds: string[], targetTrackId: string, position: 'above' | 'below') => {
@@ -50,7 +37,7 @@ export default function Playlist() {
     []
   );
 
-  if (currentPlaylist && currentPlaylist.tracks.length === 0) {
+  if (playlistTracks.length === 0) {
     return (
       <ViewMessage.Notice>
         <p>Empty playlist</p>
@@ -64,7 +51,7 @@ export default function Playlist() {
     );
   }
 
-  if (tracks.length === 0) {
+  if (filteredTracks.length === 0) {
     if (search.length > 0) {
       return (
         <ViewMessage.Notice>
@@ -82,7 +69,7 @@ export default function Playlist() {
   }
 
   // A bit hacky though
-  if (currentPlaylist && currentPlaylist.tracks.length === 0) {
+  if (filteredTracks && filteredTracks.length === 0) {
     return (
       <ViewMessage.Notice>
         <p>Empty playlist</p>
@@ -101,7 +88,7 @@ export default function Playlist() {
       type='playlist'
       reorderable={true}
       onReorder={onReorder}
-      tracks={tracks}
+      tracks={playlistTracks}
       trackPlayingId={trackPlayingId}
       playlists={playlists}
       currentPlaylist={playlistId}

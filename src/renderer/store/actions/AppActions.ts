@@ -7,7 +7,6 @@ import router from '../../views/router';
 import usePlayerStore from '../../stores/usePlayerStore';
 
 import * as LibraryActions from './LibraryActions';
-import * as PlaylistsActions from './PlaylistsActions';
 import * as SettingsActions from './SettingsActions';
 
 const init = async (): Promise<void> => {
@@ -24,7 +23,6 @@ const init = async (): Promise<void> => {
   await Promise.all([
     SettingsActions.check(),
     LibraryActions.refresh(),
-    PlaylistsActions.refresh(),
     usePlayerStore.getState().api.init(window.MuseeksAPI.player),
   ]);
 

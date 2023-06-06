@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { useLocation, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import Icon from 'react-fontawesome';
 import { useSelector } from 'react-redux';
 
@@ -11,8 +11,6 @@ import styles from './Footer.module.css';
 
 export default function Footer() {
   const library = useSelector((state: RootState) => state.library);
-  useLocation();
-  const isPlaylistView = useLocation().pathname.startsWith('/playlists');
 
   const getStatusContent = useCallback(() => {
     const { processed, total } = library.refresh;
@@ -38,8 +36,9 @@ export default function Footer() {
 
     // Else, return the amount of time for the library or the playlist depending
     // of the route
-    return <>{getStatus(isPlaylistView ? library.tracks.playlist : library.tracks.library)}</>;
-  }, [library.refresh, library.refreshing, library.tracks.library, library.tracks.playlist, isPlaylistView]);
+    // TODO: fix playlist view
+    return <>{getStatus(library.tracks)}</>;
+  }, [library.refresh, library.refreshing, library.tracks]);
 
   return (
     <footer className={styles.footer}>
