@@ -11,25 +11,21 @@ type Props = {
 };
 
 export default function PlayerControls(props: Props) {
-  const playerState = usePlayerStore((state) => ({
-    previous: state.previous,
-    next: state.next,
-    playPause: state.playPause,
-  }));
+  const playerAPI = usePlayerStore((state) => state.api);
 
   return (
     <div className={styles.playerControls}>
-      <button type='button' className={styles.control} title='Previous' onClick={playerState.previous}>
+      <button type='button' className={styles.control} title='Previous' onClick={playerAPI.previous}>
         <Icon name='backward' />
       </button>
       <button
         className={`${styles.control} ${styles.play}`}
         title={props.playerStatus === PlayerStatus.PLAY ? 'Pause' : 'Play'}
-        onClick={playerState.playPause}
+        onClick={playerAPI.playPause}
       >
         <Icon name={props.playerStatus === PlayerStatus.PLAY ? 'pause' : 'play'} fixedWidth />
       </button>
-      <button type='button' className={styles.control} title='Next' onClick={playerState.next}>
+      <button type='button' className={styles.control} title='Next' onClick={playerAPI.next}>
         <Icon name='forward' />
       </button>
       <VolumeControl />

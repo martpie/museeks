@@ -14,8 +14,7 @@ type Props = {
 };
 
 export default function QueueList(props: Props) {
-  const setQueue = usePlayerStore((state) => state.setQueue);
-  const clearQueue = usePlayerStore((state) => state.clearQueue);
+  const playerAPI = usePlayerStore((state) => state.api);
 
   const [draggedTrackIndex, setDraggedTrackIndex] = useState<number | null>(null);
   const [draggedOverTrackIndex, setDraggedOverTrackIndex] = useState<number | null>(null);
@@ -61,9 +60,9 @@ export default function QueueList(props: Props) {
       setDraggedOverTrackIndex(null);
       setDragPosition(null);
 
-      setQueue(newQueue);
+      playerAPI.setQueue(newQueue);
     }
-  }, [dragPosition, draggedOverTrackIndex, draggedTrackIndex, props, setQueue]);
+  }, [dragPosition, draggedOverTrackIndex, draggedTrackIndex, props, playerAPI]);
 
   const dragOver = useCallback((e: React.DragEvent<HTMLDivElement>, index: number) => {
     e.preventDefault();
@@ -85,7 +84,7 @@ export default function QueueList(props: Props) {
     <>
       <div className={styles.queue__header}>
         <div className={styles.queue__header__infos}>{getStatus(incomingQueue)}</div>
-        <Button bSize='small' onClick={clearQueue}>
+        <Button bSize='small' onClick={playerAPI.clearQueue}>
           clear queue
         </Button>
       </div>

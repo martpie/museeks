@@ -24,7 +24,7 @@ export default function PlayingBarInfo(props: Props) {
   const [x, setX] = useState<number | null>(null);
   const [dragging, setDragging] = useState(false);
 
-  const jumpTo = usePlayerStore((state) => state.jumpTo);
+  const playerAPI = usePlayerStore((state) => state.api);
 
   const tick = useCallback(() => {
     setElapsed(window.MuseeksAPI.player.getCurrentTime());
@@ -41,10 +41,10 @@ export default function PlayingBarInfo(props: Props) {
 
         const to = (percent * trackPlaying.duration) / 100;
 
-        jumpTo(to);
+        playerAPI.jumpTo(to);
       }
     },
-    [playingBar, trackPlaying, jumpTo]
+    [playingBar, trackPlaying, playerAPI]
   );
 
   const dragOver = useCallback(
@@ -61,11 +61,11 @@ export default function PlayingBarInfo(props: Props) {
 
           const to = (percent * trackPlaying.duration) / 100;
 
-          jumpTo(to);
+          playerAPI.jumpTo(to);
         }
       }
     },
-    [playingBar, dragging, trackPlaying, jumpTo]
+    [playingBar, dragging, trackPlaying, playerAPI]
   );
 
   const dragEnd = useCallback(() => {

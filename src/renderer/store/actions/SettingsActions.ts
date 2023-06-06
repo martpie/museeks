@@ -72,10 +72,10 @@ export const checkForUpdate = async (options: UpdateCheckOptions = {}): Promise<
     }
 
     if (message) {
-      useToastsStore.getState().add('success', message);
+      useToastsStore.getState().api.add('success', message);
     }
   } catch (e) {
-    if (!options.silentFail) useToastsStore.getState().add('danger', 'An error occurred while checking updates.');
+    if (!options.silentFail) useToastsStore.getState().api.add('danger', 'An error occurred while checking updates.');
   }
 };
 

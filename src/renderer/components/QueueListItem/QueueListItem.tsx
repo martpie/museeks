@@ -19,8 +19,7 @@ type Props = {
 };
 
 export default function QueueListItem(props: Props) {
-  const removeFromQueue = usePlayerStore((state) => state.removeFromQueue);
-  const startFromQueue = usePlayerStore((state) => state.startFromQueue);
+  const playerAPI = usePlayerStore((state) => state.api);
 
   const { track } = props;
 
@@ -39,12 +38,12 @@ export default function QueueListItem(props: Props) {
   );
 
   const remove = useCallback(() => {
-    removeFromQueue(props.index);
-  }, [props.index, removeFromQueue]);
+    playerAPI.removeFromQueue(props.index);
+  }, [props.index, playerAPI]);
 
   const play = useCallback(() => {
-    startFromQueue(props.queueCursor + props.index + 1);
-  }, [props.index, props.queueCursor, startFromQueue]);
+    playerAPI.startFromQueue(props.queueCursor + props.index + 1);
+  }, [props.index, props.queueCursor, playerAPI]);
 
   const queueContentClasses = cx(styles.queue__item, {
     [styles.isDragged]: props.dragged,

@@ -12,12 +12,12 @@ import usePlayerStore from '../../stores/usePlayerStore';
 
 export default function SettingsLibrary() {
   const library = useSelector((state: RootState) => state.library);
-  const player = usePlayerStore((state) => ({ stop: state.stop }));
+  const playerAPI = usePlayerStore((state) => state.api);
 
   const resetLibrary = useCallback(async () => {
-    player.stop();
+    playerAPI.stop();
     await LibraryActions.reset();
-  }, [player]);
+  }, [playerAPI]);
 
   const openFolderSelector = useCallback(async () => {
     const options: Electron.OpenDialogOptions = {

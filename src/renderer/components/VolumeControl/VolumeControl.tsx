@@ -27,31 +27,29 @@ export default function VolumeControl() {
   const [volume, setVolume] = useState(audio.volume);
   const [muted, setMuted] = useState(audio.muted);
 
-  const playerState = usePlayerStore((state) => ({
-    setVolume: state.setVolume,
-    setMuted: state.setMuted,
-  }));
+  const playerAPI = usePlayerStore((state) => state.api);
 
   const setPlayerVolume = useCallback(
     (value: number) => {
       const smoothVolume = smoothifyVolume(value);
 
-      playerState.setVolume(smoothVolume);
+      playerAPI.setVolume(smoothVolume);
       setVolume(smoothVolume);
     },
-    [setVolume, playerState]
+    [setVolume, playerAPI]
   );
 
+  // TODO: move to player actions
   const mute = useCallback(
     (e: React.MouseEvent<HTMLButtonElement>) => {
       if (e.currentTarget.classList.contains(controlStyles.control) || e.currentTarget.classList.contains('fa')) {
         const muted = !window.MuseeksAPI.player.isMuted();
 
-        playerState.setMuted(muted);
+        playerAPI.setMuted(muted);
         setMuted(muted);
       }
     },
-    [playerState]
+    [playerAPI]
   );
 
   const volumeClasses = cx(styles.volumeControl, {

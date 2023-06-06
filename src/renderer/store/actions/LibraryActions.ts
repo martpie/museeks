@@ -148,7 +148,7 @@ export const add = async (pathsToScan: string[]): Promise<TrackModel[]> => {
 
     return importedTracks;
   } catch (err) {
-    useToastsStore.getState().add('danger', 'An error occured when scanning the library');
+    useToastsStore.getState().api.add('danger', 'An error occured when scanning the library');
     logger.warn(err);
     return [];
   } finally {
