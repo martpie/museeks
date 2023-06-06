@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { Link, useLoaderData } from 'react-router-dom';
+import { Link, useLoaderData, useRouteLoaderData } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 import * as ViewMessage from '../../elements/ViewMessage/ViewMessage';
@@ -7,7 +7,7 @@ import TracksList from '../../components/TracksList/TracksList';
 import { RootState } from '../../store/reducers';
 import appStyles from '../Root.module.css';
 import usePlayerStore from '../../stores/usePlayerStore';
-import { LibraryLoaderResponse } from '../router';
+import { LibraryLoaderResponse, RootLoaderResponse } from '../router';
 import useFilteredTracks from '../../hooks/useFilteredTracks';
 
 import styles from './Library.module.css';
@@ -22,7 +22,8 @@ export default function Library() {
   });
 
   const library = useSelector((state: RootState) => state.library);
-  const { tracks, playlists } = useLoaderData() as LibraryLoaderResponse;
+  const { playlists } = useLoaderData() as LibraryLoaderResponse;
+  const { tracks } = useRouteLoaderData('root') as RootLoaderResponse;
   const filteredTracks = useFilteredTracks(tracks);
 
   const getLibraryComponent = useMemo(() => {

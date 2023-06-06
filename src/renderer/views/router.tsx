@@ -22,16 +22,21 @@ const router = createHashRouter([
     id: 'root',
     element: <RootView />,
     errorElement: <ErrorView />,
+    loader: async (): Promise<LoaderResponse<RootLoaderResponse>> => {
+      // this can be slow, think about caching it or something, especially when
+      // we revalidate routing
+      const tracks = await db.tracks.getAll();
+      return { tracks };
+    },
     children: [
       {
         path: 'library',
         id: 'library',
         element: <LibraryView />,
         loader: async (): Promise<LoaderResponse<LibraryLoaderResponse>> => {
-          const [tracks, playlists] = await Promise.all([db.tracks.getAll(), db.playlists.getAll()]);
+          const playlists = await db.playlists.getAll();
 
           return {
-            tracks,
             playlists,
           };
         },
@@ -103,8 +108,11 @@ export default router;
  */
 type LoaderResponse<T> = Response | T;
 
-export type LibraryLoaderResponse = {
+export type RootLoaderResponse = {
   tracks: TrackModel[];
+};
+
+export type LibraryLoaderResponse = {
   playlists: PlaylistModel[];
 };
 
