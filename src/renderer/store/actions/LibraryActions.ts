@@ -16,24 +16,6 @@ import * as PlaylistsActions from './PlaylistsActions';
 const { path, db } = window.MuseeksAPI;
 
 /**
- * Load tracks from database
- */
-export const refresh = async (): Promise<void> => {
-  try {
-    const tracks = await db.tracks.getAll();
-
-    store.dispatch({
-      type: types.LIBRARY_REFRESH,
-      payload: {
-        tracks,
-      },
-    });
-  } catch (err) {
-    logger.warn(err);
-  }
-};
-
-/**
  * Filter tracks by search
  */
 export const search = (value: string): void => {
@@ -125,14 +107,6 @@ export const add = async (pathsToScan: string[]): Promise<TrackModel[]> => {
           },
         });
 
-        // Add tracks to the library view
-        store.dispatch({
-          type: types.LIBRARY_ADD_TRACKS,
-          payload: {
-            tracks: insertedChunk,
-          },
-        });
-
         return insertedChunk;
       })
     );
@@ -144,7 +118,6 @@ export const add = async (pathsToScan: string[]): Promise<TrackModel[]> => {
     // Import playlists found in the directories
     await scanPlaylists(supportedPlaylistsFiles);
 
-    await refresh();
     router.revalidate();
 
     return importedTracks;
@@ -178,12 +151,7 @@ export const remove = async (tracksIds: string[]): Promise<void> => {
     // Remove tracks from the Track collection
     await db.tracks.remove(tracksIds);
 
-    store.dispatch({
-      type: types.LIBRARY_REMOVE_TRACKS,
-      payload: {
-        tracksIds,
-      },
-    });
+    router.revalidate();
     // That would be great to remove those ids from all the playlists, but it's not easy
     // and should not cause strange behaviors, all PR for that would be really appreciated
     // TODO: see if it's possible to remove the Ids from the selected state of TracksList as it "could" lead to strange behaviors
@@ -219,7 +187,7 @@ export const reset = async (): Promise<void> => {
         type: types.LIBRARY_REFRESH_END,
       });
 
-      await refresh();
+      router.revalidate();
     }
   } catch (err) {
     logger.error(err);
@@ -260,7 +228,7 @@ export const updateTrackMetadata = async (trackId: string, newFields: TrackEdita
 
   await db.tracks.update(trackId, track);
 
-  await refresh();
+  router.revalidate();
 };
 
 /**

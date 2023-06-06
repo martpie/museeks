@@ -3,7 +3,6 @@ import { NavLink } from 'react-router-dom';
 import Icon from 'react-fontawesome';
 import { useSelector } from 'react-redux';
 
-import { getStatus } from '../../lib/utils-library';
 import { RootState } from '../../store/reducers';
 import ProgressBar from '../ProgressBar/ProgressBar';
 
@@ -37,8 +36,9 @@ export default function Footer() {
     // Else, return the amount of time for the library or the playlist depending
     // of the route
     // TODO: fix playlist view
-    return <>{getStatus(library.tracks)}</>;
-  }, [library.refresh, library.refreshing, library.tracks]);
+    return null;
+    // return <>{getStatus(library.tracks)}</>;
+  }, [library.refresh, library.refreshing]);
 
   return (
     <footer className={styles.footer}>

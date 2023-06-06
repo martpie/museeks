@@ -1,5 +1,5 @@
 import types from '../action-types';
-import { Action, TrackModel, SortBy, SortOrder } from '../../../shared/types/museeks';
+import { Action, SortBy, SortOrder } from '../../../shared/types/museeks';
 import { stripAccents } from '../../../shared/lib/utils-id3';
 
 export interface LibrarySort {
@@ -8,10 +8,8 @@ export interface LibrarySort {
 }
 
 export interface LibraryState {
-  tracks: TrackModel[]; // List of tracks in Library view
   search: string;
   sort: LibrarySort;
-  loading: boolean;
   refreshing: boolean;
   refresh: {
     processed: number;
@@ -21,10 +19,8 @@ export interface LibraryState {
 }
 
 const initialState: LibraryState = {
-  tracks: [],
   search: '',
   sort: window.MuseeksAPI.config.getx('librarySort'),
-  loading: true,
   refreshing: false,
   refresh: {
     processed: 0,
@@ -35,14 +31,6 @@ const initialState: LibraryState = {
 
 export default function libraryReducer(state = initialState, action: Action): LibraryState {
   switch (action.type) {
-    case types.LIBRARY_REFRESH: {
-      return {
-        ...state,
-        tracks: [...action.payload.tracks],
-        loading: false,
-      };
-    }
-
     case types.LIBRARY_SORT: {
       const { sortBy } = action.payload;
       const prevSort = state.sort;
@@ -142,25 +130,6 @@ export default function libraryReducer(state = initialState, action: Action): Li
           processed: action.payload.processed,
           total: action.payload.total,
         },
-      };
-    }
-
-    case types.LIBRARY_REMOVE_TRACKS: {
-      const { tracksIds } = action.payload;
-      const removeTrack = (track: TrackModel) => !tracksIds.includes(track._id);
-
-      return {
-        ...state,
-        tracks: [...state.tracks].filter(removeTrack),
-      };
-    }
-
-    case types.LIBRARY_ADD_TRACKS: {
-      const { tracks } = action.payload;
-
-      return {
-        ...state,
-        tracks: [...state.tracks, ...tracks],
       };
     }
 

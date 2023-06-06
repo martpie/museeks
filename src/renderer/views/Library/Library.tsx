@@ -1,14 +1,14 @@
 import { useMemo } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLoaderData } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 import * as ViewMessage from '../../elements/ViewMessage/ViewMessage';
 import TracksList from '../../components/TracksList/TracksList';
-import { filterTracks, sortTracks } from '../../lib/utils-library';
-import SORT_ORDERS from '../../constants/sort-orders';
 import { RootState } from '../../store/reducers';
 import appStyles from '../Root.module.css';
 import usePlayerStore from '../../stores/usePlayerStore';
+import { LibraryLoaderResponse } from '../router';
+import useFilteredTracks from '../../hooks/useFilteredTracks';
 
 import styles from './Library.module.css';
 
@@ -22,30 +22,12 @@ export default function Library() {
   });
 
   const library = useSelector((state: RootState) => state.library);
-  // FIXME: use loader data instead
-  // const playlists = useSelector((state: RootState) => state.playlists.list);
-  const tracks = useSelector((state: RootState) => {
-    const { search, tracks, sort } = state.library;
-
-    // Filter and sort TracksList
-    // sorting being a costly operation, do it after filtering
-    const filteredTracks = sortTracks(filterTracks(tracks, search), SORT_ORDERS[sort.by][sort.order]);
-
-    return filteredTracks;
-  });
+  const { tracks, playlists } = useLoaderData() as LibraryLoaderResponse;
+  const filteredTracks = useFilteredTracks(tracks);
 
   const getLibraryComponent = useMemo(() => {
-    // Loading library
-    if (library.loading) {
-      return (
-        <ViewMessage.Notice>
-          <p>Loading library...</p>
-        </ViewMessage.Notice>
-      );
-    }
-
     // Empty library
-    if (tracks.length === 0 && library.search === '') {
+    if (filteredTracks.length === 0 && library.search === '') {
       if (library.refreshing) {
         return (
           <ViewMessage.Notice>
@@ -69,7 +51,7 @@ export default function Library() {
     }
 
     // Empty search
-    if (tracks.length === 0) {
+    if (filteredTracks.length === 0) {
       return (
         <ViewMessage.Notice>
           <p>Your search returned no results</p>
@@ -78,8 +60,8 @@ export default function Library() {
     }
 
     // All good !
-    return <TracksList type='library' tracks={tracks} trackPlayingId={trackPlayingId} playlists={[] /** FIXME */} />;
-  }, [library, tracks, trackPlayingId]);
+    return <TracksList type='library' tracks={filteredTracks} trackPlayingId={trackPlayingId} playlists={playlists} />;
+  }, [library, filteredTracks, playlists, trackPlayingId]);
 
   return <div className={`${appStyles.view} ${styles.viewLibrary}`}>{getLibraryComponent}</div>;
 }

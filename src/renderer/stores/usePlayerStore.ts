@@ -1,25 +1,17 @@
 import { debounce } from 'lodash-es';
-import { ipcRenderer } from 'electron';
 import { StateCreator } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-import store from '../store/store';
 import { PlayerStatus, Repeat, TrackModel } from '../../shared/types/museeks';
-import initMediaSession from '../lib/media-session';
-import channels from '../../shared/lib/ipc-channels';
 import * as LibraryActions from '../store/actions/LibraryActions';
-import { filterTracks, sortTracks } from '../lib/utils-library';
 import { shuffleTracks } from '../lib/utils-player';
 import logger from '../../shared/lib/logger';
 import router from '../views/router';
-import SORT_ORDERS from '../constants/sort-orders';
-import Player from '../lib/player';
 
 import { createStore } from './store-helpers';
 import useToastsStore from './useToastsStore';
 
 type PlayerState = {
-  instantiated: boolean;
   queue: TrackModel[];
   oldQueue: TrackModel[];
   queueCursor: number | null;
@@ -28,8 +20,7 @@ type PlayerState = {
   shuffle: boolean;
   playerStatus: PlayerStatus;
   api: {
-    init: (player: Player) => void;
-    start: (queue?: TrackModel[], _id?: string) => Promise<void>;
+    start: (queue: TrackModel[], _id?: string) => Promise<void>;
     play: () => Promise<void>;
     pause: () => void;
     playPause: () => Promise<void>;
@@ -53,17 +44,9 @@ type PlayerState = {
   };
 };
 
-const AUDIO_ERRORS = {
-  aborted: 'The video playback was aborted.',
-  corrupt: 'The audio playback was aborted due to a corruption problem.',
-  notFound: 'The track file could not be found. It may be due to a file move or an unmounted partition.',
-  unknown: 'An unknown error occurred.',
-};
-
 const { player, config } = window.MuseeksAPI;
 
 const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
-  instantiated: false,
   queue: [], // Tracks to be played
   oldQueue: [], // Queue backup (in case of shuffle)
   queueCursor: null, // The cursor of the queue
@@ -74,108 +57,19 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
 
   api: {
     /**
-     * Bind various player events to actions. Needs unification at some point
-     */
-    init: (player: Player) => {
-      if (get().instantiated) {
-        throw new Error('Player store is already instantiated');
-      }
-
-      initMediaSession(player);
-
-      // Bind player events
-      // Audio Events
-      player.getAudio().addEventListener('ended', get().api.next);
-      player.getAudio().addEventListener('error', handleAudioError);
-      player.getAudio().addEventListener('timeupdate', async () => {
-        if (player.isThresholdReached()) {
-          const track = player.getTrack();
-          if (track) await LibraryActions.incrementPlayCount(track._id);
-        }
-      });
-
-      // How to unify Player, Main process state, and player actions?
-      player.getAudio().addEventListener('play', async () => {
-        const track = player.getTrack();
-
-        if (!track) throw new Error('Track is undefined');
-
-        ipcRenderer.send(channels.PLAYBACK_PLAY, track ?? null);
-        ipcRenderer.send(channels.PLAYBACK_TRACK_CHANGE, track);
-      });
-
-      player.getAudio().addEventListener('pause', () => {
-        ipcRenderer.send(channels.PLAYBACK_PAUSE);
-      });
-
-      const playerAPI = get().api;
-
-      // Listen for main-process events
-      ipcRenderer.on(channels.PLAYBACK_PLAY, () => {
-        if (player.getTrack()) {
-          playerAPI.play();
-        } else {
-          playerAPI.start();
-        }
-      });
-
-      ipcRenderer.on(channels.PLAYBACK_PAUSE, () => {
-        playerAPI.pause();
-      });
-
-      ipcRenderer.on(channels.PLAYBACK_PLAYPAUSE, () => {
-        playerAPI.playPause();
-      });
-
-      ipcRenderer.on(channels.PLAYBACK_PREVIOUS, () => {
-        playerAPI.previous();
-      });
-
-      ipcRenderer.on(channels.PLAYBACK_NEXT, () => {
-        playerAPI.next();
-      });
-
-      ipcRenderer.on(channels.PLAYBACK_STOP, () => {
-        playerAPI.stop();
-      });
-
-      set({ instantiated: true });
-    },
-
-    /**
      * Start playing audio (queue instantiation, shuffle and everything...)
      * TODO: this function ~could probably~ needs to be refactored ~a bit~
      */
-    start: async (queue?: TrackModel[], _id?: string): Promise<void> => {
+    start: async (queue: TrackModel[], _id?: string): Promise<void> => {
+      if (queue.length === 0) return;
+
       const state = get();
 
-      let newQueue = queue ? [...queue] : null;
+      let newQueue = [...queue];
 
       // Check if there's already a queue planned
       if (newQueue === null && state.queue !== null) {
         newQueue = state.queue;
-      }
-
-      // FIXME: code smells
-      const { hash } = window.location;
-      const { library } = store.getState();
-
-      // If no queue is provided, we create it based on the screen the user is on
-      if (!newQueue) {
-        if (hash.startsWith('#/playlists')) {
-          // FIXME
-          // newQueue = library.tracks.playlist;
-          newQueue = [];
-        } else {
-          // we are either on the library or the settings view
-          // so let's play the whole library
-          // Because the tracks in the store are not ordered, let's filter
-          // and sort everything
-          const { sort, search } = library;
-          newQueue = library.tracks;
-
-          newQueue = sortTracks(filterTracks(newQueue, search), SORT_ORDERS[sort.by][sort.order]);
-        }
       }
 
       const shuffle = state.shuffle;
@@ -207,6 +101,7 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
 
         // Determine the queue origin in case the user wants to jump to the current
         // track
+        const { hash } = window.location;
         const queueOrigin = hash.substring(1); // remove #
 
         set({
@@ -239,17 +134,18 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
 
     /**
      * Toggle play/pause
+     * FIXME: how to start when player is stopped?
      */
     playPause: async () => {
       const playerAPI = get().api;
+      const { queue /* , playerStatus */ } = get();
       const { paused } = player.getAudio();
-      // TODO (y.solovyov | martpie): calling getState is a hack.
-      const { queue, playerStatus } = get();
 
-      if (playerStatus === PlayerStatus.STOP) {
-        await playerAPI.start();
-      } else if (paused && queue.length > 0) {
-        await playerAPI.play();
+      // if (playerStatus === PlayerStatus.STOP) {
+      //   playerAPI.start(tracks);
+      // } else
+      if (paused && queue.length > 0) {
+        playerAPI.play();
       } else {
         playerAPI.pause();
       }
@@ -624,34 +520,3 @@ const saveVolume = debounce((volume: number) => {
   config.set('audioVolume', volume);
   config.save();
 }, 500);
-
-/**
- * Handle audio errors
- */
-function handleAudioError(e: ErrorEvent) {
-  usePlayerStore.getState().api.stop();
-
-  const element = e.target as HTMLAudioElement;
-
-  if (element) {
-    const { error } = element;
-    const toastsAPI = useToastsStore.getState().api;
-
-    if (!error) return;
-
-    switch (error.code) {
-      case error.MEDIA_ERR_ABORTED:
-        toastsAPI.add('warning', AUDIO_ERRORS.aborted);
-        break;
-      case error.MEDIA_ERR_DECODE:
-        toastsAPI.add('danger', AUDIO_ERRORS.corrupt);
-        break;
-      case error.MEDIA_ERR_SRC_NOT_SUPPORTED:
-        toastsAPI.add('danger', AUDIO_ERRORS.notFound);
-        break;
-      default:
-        toastsAPI.add('danger', AUDIO_ERRORS.unknown);
-        break;
-    }
-  }
-}
