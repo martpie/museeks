@@ -60,7 +60,6 @@ const init = async (): Promise<void> => {
 
   // Prevent drop events on the window
   window.addEventListener('dragover', (e) => e.preventDefault(), false);
-
   window.addEventListener('drop', (e) => e.preventDefault(), false);
 };
 

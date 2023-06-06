@@ -19,7 +19,7 @@ export default function ButtonShuffle() {
       type='button'
       className={buttonClasses}
       onClick={() => {
-        playerAPI.toggleShuffle(!shuffle);
+        playerAPI.toggleShuffle();
       }}
     >
       <InlineSVG src={icons.SHUFFLE} className={styles.icon} />

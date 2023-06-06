@@ -23,29 +23,8 @@ export default function ButtonRepeat() {
     [styles.active]: repeat === Repeat.ONE || repeat === Repeat.ALL,
   });
 
-  const toggleRepeat = () => {
-    // Move that to player actions
-    let newRepeat = Repeat.NONE;
-
-    switch (repeat) {
-      case Repeat.NONE:
-        newRepeat = Repeat.ALL;
-        break;
-      case Repeat.ALL:
-        newRepeat = Repeat.ONE;
-        break;
-      case Repeat.ONE:
-        newRepeat = Repeat.NONE;
-        break;
-      default:
-        break;
-    }
-
-    playerAPI.toggleRepeat(newRepeat);
-  };
-
   return (
-    <button className={buttonClasses} onClick={toggleRepeat}>
+    <button className={buttonClasses} onClick={() => playerAPI.toggleRepeat()}>
       <InlineSVG src={svg} className={styles.icon} />
     </button>
   );
