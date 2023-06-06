@@ -2,7 +2,7 @@ import { useRouteLoaderData } from 'react-router';
 import { useMemo } from 'react';
 
 import { TrackModel } from '../../shared/types/museeks';
-import { LibraryLoaderResponse, PlaylistLoaderResponse } from '../views/router';
+import { PlaylistLoaderResponse, RootLoaderResponse } from '../views/router';
 
 import useFilteredTracks from './useFilteredTracks';
 
@@ -13,8 +13,8 @@ type Maybe<T> = T | undefined;
  */
 export default function useCurrentViewTracks(): TrackModel[] {
   // TODO: how to support Settings page? Should we?
-  const libraryData = useRouteLoaderData('library') as Maybe<LibraryLoaderResponse>;
-  const filteredLibraryTracks = useFilteredTracks((libraryData && libraryData.tracks) ?? []);
+  const rootData = useRouteLoaderData('root') as Maybe<RootLoaderResponse>;
+  const filteredLibraryTracks = useFilteredTracks((rootData && rootData.tracks) ?? []);
   const playlistData = useRouteLoaderData('playlist-details') as Maybe<PlaylistLoaderResponse>;
 
   const tracks = useMemo(() => {
@@ -22,12 +22,12 @@ export default function useCurrentViewTracks(): TrackModel[] {
       return playlistData.playlistTracks;
     }
 
-    if (libraryData) {
+    if (rootData) {
       return filteredLibraryTracks;
     }
 
     return [];
-  }, [filteredLibraryTracks, libraryData, playlistData]);
+  }, [filteredLibraryTracks, rootData, playlistData]);
 
   return tracks;
 }
