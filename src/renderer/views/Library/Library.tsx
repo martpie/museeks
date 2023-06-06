@@ -22,13 +22,14 @@ export default function Library() {
   });
 
   const library = useSelector((state: RootState) => state.library);
-  const playlists = useSelector((state: RootState) => state.playlists.list);
+  // FIXME: use loader data instead
+  // const playlists = useSelector((state: RootState) => state.playlists.list);
   const tracks = useSelector((state: RootState) => {
     const { search, tracks, sort } = state.library;
 
     // Filter and sort TracksList
     // sorting being a costly operation, do it after filtering
-    const filteredTracks = sortTracks(filterTracks(tracks.library, search), SORT_ORDERS[sort.by][sort.order]);
+    const filteredTracks = sortTracks(filterTracks(tracks, search), SORT_ORDERS[sort.by][sort.order]);
 
     return filteredTracks;
   });
@@ -77,8 +78,8 @@ export default function Library() {
     }
 
     // All good !
-    return <TracksList type='library' tracks={tracks} trackPlayingId={trackPlayingId} playlists={playlists} />;
-  }, [library, playlists, tracks, trackPlayingId]);
+    return <TracksList type='library' tracks={tracks} trackPlayingId={trackPlayingId} playlists={[] /** FIXME */} />;
+  }, [library, tracks, trackPlayingId]);
 
   return <div className={`${appStyles.view} ${styles.viewLibrary}`}>{getLibraryComponent}</div>;
 }

@@ -9,6 +9,7 @@ import channels from '../../../shared/lib/ipc-channels';
 import logger from '../../../shared/lib/logger';
 import { getLoweredMeta } from '../../../shared/lib/utils-id3';
 import useToastsStore from '../../stores/useToastsStore';
+import router from '../../views/router';
 
 import * as PlaylistsActions from './PlaylistsActions';
 
@@ -144,7 +145,7 @@ export const add = async (pathsToScan: string[]): Promise<TrackModel[]> => {
     await scanPlaylists(supportedPlaylistsFiles);
 
     await refresh();
-    await PlaylistsActions.refresh();
+    router.revalidate();
 
     return importedTracks;
   } catch (err) {

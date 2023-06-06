@@ -163,14 +163,16 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
       // If no queue is provided, we create it based on the screen the user is on
       if (!newQueue) {
         if (hash.startsWith('#/playlists')) {
-          newQueue = library.tracks.playlist;
+          // FIXME
+          // newQueue = library.tracks.playlist;
+          newQueue = [];
         } else {
           // we are either on the library or the settings view
           // so let's play the whole library
           // Because the tracks in the store are not ordered, let's filter
           // and sort everything
           const { sort, search } = library;
-          newQueue = library.tracks.library;
+          newQueue = library.tracks;
 
           newQueue = sortTracks(filterTracks(newQueue, search), SORT_ORDERS[sort.by][sort.order]);
         }
