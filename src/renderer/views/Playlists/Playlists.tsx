@@ -5,12 +5,12 @@ import PlaylistsNav from '../../components/PlaylistsNav/PlaylistsNav';
 import * as ViewMessage from '../../elements/ViewMessage/ViewMessage';
 import * as PlaylistsActions from '../../store/actions/PlaylistsActions';
 import appStyles from '../../views/Root.module.css';
-import { PlaylistsLoaderType } from '../router';
+import { PlaylistsLoaderResponse } from '../router';
 
 import styles from './Playlists.module.css';
 
 export default function Playlists() {
-  const { playlists } = useLoaderData() as PlaylistsLoaderType;
+  const { playlists } = useLoaderData() as PlaylistsLoaderResponse;
 
   const createPlaylist = useCallback(async () => {
     await PlaylistsActions.create('New playlist', [], false, true);

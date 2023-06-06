@@ -8,10 +8,10 @@ import * as PlaylistsActions from '../../store/actions/PlaylistsActions';
 import { filterTracks } from '../../lib/utils-library';
 import { RootState } from '../../store/reducers';
 import usePlayerStore from '../../stores/usePlayerStore';
-import { PlaylistLoaderType } from '../router';
+import { PlaylistLoaderResponse } from '../router';
 
 export default function Playlist() {
-  const { playlists, playlistTracks } = useLoaderData() as PlaylistLoaderType;
+  const { playlists, playlistTracks } = useLoaderData() as PlaylistLoaderResponse;
   const { playlistId } = useParams();
 
   const trackPlayingId = usePlayerStore((state) => {
@@ -51,19 +51,10 @@ export default function Playlist() {
     );
   }
 
-  if (filteredTracks.length === 0) {
-    if (search.length > 0) {
-      return (
-        <ViewMessage.Notice>
-          <p>Your search returned no results</p>
-        </ViewMessage.Notice>
-      );
-    }
-
-    // VERY sketchy
+  if (filteredTracks.length === 0 && search.length > 0) {
     return (
       <ViewMessage.Notice>
-        <p>Loading playlist...</p>
+        <p>Your search returned no results</p>
       </ViewMessage.Notice>
     );
   }

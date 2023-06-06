@@ -19,17 +19,28 @@ const { db } = window.MuseeksAPI;
 const router = createHashRouter([
   {
     path: '/',
+    id: 'root',
     element: <RootView />,
     errorElement: <ErrorView />,
     children: [
       {
         path: 'library',
+        id: 'library',
         element: <LibraryView />,
+        loader: async (): Promise<LoaderResponse<LibraryLoaderResponse>> => {
+          const [tracks, playlists] = await Promise.all([db.tracks.getAll(), db.playlists.getAll()]);
+
+          return {
+            tracks,
+            playlists,
+          };
+        },
       },
       {
         path: 'playlists',
+        id: 'playlists',
         element: <PlaylistsView />,
-        loader: async ({ params }): Promise<LoaderResponse<PlaylistsLoaderType>> => {
+        loader: async ({ params }): Promise<LoaderResponse<PlaylistsLoaderResponse>> => {
           const playlists = await db.playlists.getAll();
           const [firstPlaylist] = playlists;
           const { playlistId } = params;
@@ -50,8 +61,9 @@ const router = createHashRouter([
         children: [
           {
             path: ':playlistId',
+            id: 'playlist-details',
             element: <PlaylistView />,
-            loader: async ({ params }): Promise<LoaderResponse<PlaylistLoaderType>> => {
+            loader: async ({ params }): Promise<LoaderResponse<PlaylistLoaderResponse>> => {
               if (typeof params.playlistId !== 'string') {
                 throw new Error('Playlist ID is not defined');
               }
@@ -91,11 +103,16 @@ export default router;
  */
 type LoaderResponse<T> = Response | T;
 
-export type PlaylistsLoaderType = {
+export type LibraryLoaderResponse = {
+  tracks: TrackModel[];
   playlists: PlaylistModel[];
 };
 
-export type PlaylistLoaderType = {
+export type PlaylistsLoaderResponse = {
+  playlists: PlaylistModel[];
+};
+
+export type PlaylistLoaderResponse = {
   playlistTracks: TrackModel[];
   playlists: PlaylistModel[];
 };
