@@ -15,31 +15,33 @@ const svgMap = {
 };
 
 export default function ButtonRepeat() {
-  const playerState = usePlayerStore((state) => ({ repeat: state.repeat, toggleRepeat: state.toggleRepeat }));
+  const repeat = usePlayerStore((state) => state.repeat);
+  const playerAPI = usePlayerStore((state) => state.api);
 
-  const svg = svgMap[playerState.repeat] || svgMap.default;
+  const svg = svgMap[repeat] || svgMap.default;
   const buttonClasses = cx(styles.button, {
-    [styles.active]: playerState.repeat === Repeat.ONE || playerState.repeat === Repeat.ALL,
+    [styles.active]: repeat === Repeat.ONE || repeat === Repeat.ALL,
   });
 
   const toggleRepeat = () => {
-    let repeat = Repeat.NONE;
+    // Move that to player actions
+    let newRepeat = Repeat.NONE;
 
-    switch (playerState.repeat) {
+    switch (repeat) {
       case Repeat.NONE:
-        repeat = Repeat.ALL;
+        newRepeat = Repeat.ALL;
         break;
       case Repeat.ALL:
-        repeat = Repeat.ONE;
+        newRepeat = Repeat.ONE;
         break;
       case Repeat.ONE:
-        repeat = Repeat.NONE;
+        newRepeat = Repeat.NONE;
         break;
       default:
         break;
     }
 
-    playerState.toggleRepeat(repeat);
+    playerAPI.toggleRepeat(newRepeat);
   };
 
   return (

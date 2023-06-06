@@ -43,11 +43,7 @@ export default function TracksList(props: Props) {
   const virtuosoRef = useRef<VirtuosoHandle>(null);
   const navigate = useNavigate();
 
-  const { start, addInQueue, addNextInQueue } = usePlayerStore((state) => ({
-    start: state.start,
-    addInQueue: state.addInQueue,
-    addNextInQueue: state.addNextInQueue,
-  }));
+  const playerAPI = usePlayerStore((state) => state.api);
   const highlight = useSelector<RootState, boolean>((state) => state.library.highlightPlayingTrack);
 
   // Highlight playing track and scroll to it
@@ -74,9 +70,9 @@ export default function TracksList(props: Props) {
 
   const startPlayback = useCallback(
     async (_id: string) => {
-      start(tracks, _id);
+      playerAPI.start(tracks, _id);
     },
-    [tracks, start]
+    [tracks, playerAPI]
   );
 
   /**
@@ -84,9 +80,9 @@ export default function TracksList(props: Props) {
    */
   const onEnter = useCallback(
     async (index: number, tracks: TrackModel[]) => {
-      if (index !== -1) start(tracks, tracks[index]._id);
+      if (index !== -1) playerAPI.start(tracks, tracks[index]._id);
     },
-    [start]
+    [playerAPI]
   );
 
   const onControlAll = useCallback((tracks: TrackModel[]) => {
@@ -340,13 +336,13 @@ export default function TracksList(props: Props) {
         {
           label: 'Add to queue',
           click: async () => {
-            addInQueue(selected);
+            playerAPI.addInQueue(selected);
           },
         },
         {
           label: 'Play next',
           click: async () => {
-            addNextInQueue(selected);
+            playerAPI.addNextInQueue(selected);
           },
         },
         {
@@ -449,7 +445,7 @@ export default function TracksList(props: Props) {
 
       context.popup({}); // Let it appear
     },
-    [currentPlaylist, playlists, selected, tracks, type, navigate, addNextInQueue, addInQueue]
+    [currentPlaylist, playlists, selected, tracks, type, navigate, playerAPI]
   );
 
   return (

@@ -18,7 +18,7 @@ export const play = async (playlistId: string): Promise<void> => {
   try {
     const playlist: PlaylistModel = await db.playlists.findOnlyByID(playlistId);
     const tracks: TrackModel[] = await db.tracks.findByID(playlist.tracks);
-    usePlayerStore.getState().start(tracks).catch(logger.warn);
+    usePlayerStore.getState().api.start(tracks).catch(logger.warn);
   } catch (err) {
     logger.warn(err);
   }
@@ -80,7 +80,7 @@ export const create = async (
   await refresh();
 
   if (redirect) router.navigate(`/playlists/${doc._id}`);
-  else useToastsStore.getState().add('success', `The playlist "${name}" was created`);
+  else useToastsStore.getState().api.add('success', `The playlist "${name}" was created`);
 
   return doc._id;
 };
@@ -116,20 +116,20 @@ export const addTracks = async (_id: string, tracksIds: string[], isShown?: bool
   // isShown should never be true, letting it here anyway to remember of a design issue
   if (isShown) return;
 
+  const toastsAPI = useToastsStore.getState().api;
+
   try {
     const playlist = await db.playlists.findOnlyByID(_id);
     const playlistTracks = playlist.tracks.concat(tracksIds);
     await db.playlists.updateWithRawQuery(_id, { $set: { tracks: playlistTracks } });
     await refresh();
-    useToastsStore
-      .getState()
-      .add('success', `${tracksIds.length} tracks were successfully added to "${playlist.name}"`);
+    toastsAPI.add('success', `${tracksIds.length} tracks were successfully added to "${playlist.name}"`);
   } catch (err) {
     logger.warn(err);
     if (err instanceof Error) {
-      useToastsStore.getState().add('danger', err.message);
+      toastsAPI.add('danger', err.message);
     } else {
-      useToastsStore.getState().add('danger', 'An unknown error happened while trying to add tracks.');
+      toastsAPI.add('danger', 'An unknown error happened while trying to add tracks.');
     }
   }
 };

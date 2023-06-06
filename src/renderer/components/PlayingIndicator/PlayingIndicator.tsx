@@ -27,14 +27,14 @@ const getIcon = (state: PlayerStatus, hovered: boolean) => {
 export default function TrackPlayingIndicator() {
   const [hovered, setHovered] = useState(false);
   const playerStatus = usePlayerStore((state) => state.playerStatus);
-  const playPause = usePlayerStore((state) => state.playPause);
+  const playerAPI = usePlayerStore((state) => state.api);
 
   const icon = getIcon(playerStatus, hovered);
 
   return (
     <button
       className={`${styles.playingIndicator} reset`}
-      onClick={playPause}
+      onClick={playerAPI.playPause}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       tabIndex={0}

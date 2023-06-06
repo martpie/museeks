@@ -24,6 +24,7 @@ import styles from './Root.module.css';
 
 export default function Museeks() {
   const navigate = useNavigate();
+  const playerAPI = usePlayerStore((state) => state.api);
 
   // App shortcuts (not using Electron's global shortcuts API to avoid conflicts
   // with other applications)
@@ -33,7 +34,7 @@ export default function Museeks() {
         case ' ':
           e.preventDefault();
           e.stopPropagation();
-          usePlayerStore.getState().playPause();
+          playerAPI.playPause();
           break;
         case ',':
           if (isCtrlKey(e)) {
@@ -45,18 +46,18 @@ export default function Museeks() {
         case 'ArrowLeft':
           e.preventDefault();
           e.stopPropagation();
-          usePlayerStore.getState().jumpTo(window.MuseeksAPI.player.getCurrentTime() - 10);
+          playerAPI.jumpTo(window.MuseeksAPI.player.getCurrentTime() - 10);
           break;
         case 'ArrowRight':
           e.preventDefault();
           e.stopPropagation();
-          usePlayerStore.getState().jumpTo(window.MuseeksAPI.player.getCurrentTime() + 10);
+          playerAPI.jumpTo(window.MuseeksAPI.player.getCurrentTime() + 10);
           break;
         default:
           break;
       }
     },
-    [navigate]
+    [navigate, playerAPI]
   );
 
   useEffect(() => {

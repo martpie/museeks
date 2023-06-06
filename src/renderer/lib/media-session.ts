@@ -28,19 +28,21 @@ export default function initMediaSession(player: Player) {
     navigator.mediaSession.playbackState = 'paused';
   });
 
+  const playerAPI = usePlayerStore.getState().api;
+
   navigator.mediaSession.setActionHandler('play', async () => {
-    usePlayerStore.getState().play();
+    playerAPI.play();
   });
 
   navigator.mediaSession.setActionHandler('pause', async () => {
-    usePlayerStore.getState().pause();
+    playerAPI.pause();
   });
 
   navigator.mediaSession.setActionHandler('previoustrack', async () => {
-    usePlayerStore.getState().previous();
+    playerAPI.previous();
   });
 
   navigator.mediaSession.setActionHandler('nexttrack', async () => {
-    usePlayerStore.getState().next();
+    playerAPI.next();
   });
 }

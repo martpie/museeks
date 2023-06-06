@@ -6,16 +6,13 @@ import { Config } from '../../../shared/types/museeks';
 import usePlayerStore from '../../stores/usePlayerStore';
 
 export default function SettingsAudio() {
-  const playerState = usePlayerStore((state) => ({
-    setPlaybackRate: state.setPlaybackRate,
-    setOutputDevice: state.setOutputDevice,
-  }));
+  const playerAPI = usePlayerStore((state) => state.api);
 
   const setPlaybackRate = useCallback(
     (e: React.SyntheticEvent<HTMLInputElement>) => {
-      playerState.setPlaybackRate(parseFloat(e.currentTarget.value));
+      playerAPI.setPlaybackRate(parseFloat(e.currentTarget.value));
     },
-    [playerState]
+    [playerAPI]
   );
 
   const config = window.MuseeksAPI.config.get() as Config;
@@ -26,7 +23,7 @@ export default function SettingsAudio() {
         <Setting.Label htmlFor='setting-playbackrate'>Playback rate</Setting.Label>
         <Setting.Input
           id='setting-playbackrate'
-          defaultValue={`${config.audioPlaybackRate}`}
+          defaultValue={config.audioPlaybackRate}
           onChange={setPlaybackRate}
           type='number'
           min='0.5'
@@ -39,7 +36,7 @@ export default function SettingsAudio() {
       </Setting.Section>
       <Setting.Section>
         <Setting.Label htmlFor='setting-playbackrate'>Audio output</Setting.Label>
-        <AudioOutputSelect defaultValue={config.audioOutputDevice} onChange={playerState.setOutputDevice} />
+        <AudioOutputSelect defaultValue={config.audioOutputDevice} onChange={playerAPI.setOutputDevice} />
         <Setting.Description>Advanced: set a custom audio output device.</Setting.Description>
       </Setting.Section>
     </div>

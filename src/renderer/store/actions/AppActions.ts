@@ -25,7 +25,7 @@ const init = async (): Promise<void> => {
     SettingsActions.check(),
     LibraryActions.refresh(),
     PlaylistsActions.refresh(),
-    usePlayerStore.getState().init(window.MuseeksAPI.player),
+    usePlayerStore.getState().api.init(window.MuseeksAPI.player),
   ]);
 
   // Tell the main process to show the window
@@ -55,7 +55,7 @@ const init = async (): Promise<void> => {
   });
 
   ipcRenderer.on(channels.MENU_JUMP_TO_PLAYING_TRACK, () => {
-    usePlayerStore.getState().jumpToPlayingTrack();
+    usePlayerStore.getState().api.jumpToPlayingTrack();
   });
 
   // Prevent drop events on the window
