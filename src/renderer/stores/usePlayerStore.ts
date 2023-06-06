@@ -60,7 +60,7 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
      * Start playing audio (queue instantiation, shuffle and everything...)
      * TODO: this function ~could probably~ needs to be refactored ~a bit~
      */
-    start: async (queue: TrackModel[], _id?: string): Promise<void> => {
+    start: async (queue, _id): Promise<void> => {
       if (queue.length === 0) return;
 
       const state = get();
@@ -297,7 +297,7 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
     /**
      * Set volume
      */
-    setVolume: (volume: number) => {
+    setVolume: (volume) => {
       player.setVolume(volume);
       saveVolume(volume);
     },
@@ -316,7 +316,7 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
     /**
      * Set audio's playback rate
      */
-    setPlaybackRate: (value: number) => {
+    setPlaybackRate: (value) => {
       if (value >= 0.5 && value <= 5) {
         // if in allowed range
         player.setPlaybackRate(value);
@@ -353,7 +353,7 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
     /**
      * Jump to a time in the track
      */
-    jumpTo: (to: number) => {
+    jumpTo: (to) => {
       player.setCurrentTime(to);
     },
 
@@ -372,7 +372,7 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
     /**
      * Start audio playback from the queue
      */
-    startFromQueue: async (index: number) => {
+    startFromQueue: async (index) => {
       const { queue } = get();
       const track = queue[index];
 
@@ -405,7 +405,7 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
     /**
      * Remove track from queue
      */
-    removeFromQueue: (index: number) => {
+    removeFromQueue: (index) => {
       const { queueCursor } = get();
       const queue = [...get().queue];
 
@@ -421,7 +421,7 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
     /**
      * Add tracks at the end of the queue
      */
-    addInQueue: async (tracksIds: string[]) => {
+    addInQueue: async (tracksIds) => {
       const { queue, queueCursor } = get();
       const tracks = await window.MuseeksAPI.db.tracks.findByID(tracksIds);
       const newQueue = [...queue, ...tracks];
@@ -436,7 +436,7 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
     /**
      * Add tracks at the beginning of the queue
      */
-    addNextInQueue: async (tracksIds: string[]) => {
+    addNextInQueue: async (tracksIds) => {
       const tracks = await window.MuseeksAPI.db.tracks.findByID(tracksIds);
 
       const { queueCursor } = get();
