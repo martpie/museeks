@@ -3,7 +3,7 @@ import { Outlet, useLoaderData } from 'react-router-dom';
 
 import PlaylistsNav from '../../components/PlaylistsNav/PlaylistsNav';
 import * as ViewMessage from '../../elements/ViewMessage/ViewMessage';
-import * as PlaylistsActions from '../../stores/PlaylistsActions';
+import PlaylistsAPI from '../../stores/PlaylistsAPI';
 import appStyles from '../../views/Root.module.css';
 import { PlaylistsLoaderResponse } from '../router';
 
@@ -13,7 +13,7 @@ export default function Playlists() {
   const { playlists } = useLoaderData() as PlaylistsLoaderResponse;
 
   const createPlaylist = useCallback(async () => {
-    await PlaylistsActions.create('New playlist', [], false, true);
+    await PlaylistsAPI.create('New playlist', [], false, true);
   }, []);
 
   let playlistContent;

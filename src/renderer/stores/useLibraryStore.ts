@@ -6,8 +6,8 @@ import logger from '../../shared/lib/logger';
 import router from '../views/router';
 import channels from '../../shared/lib/ipc-channels';
 import { getLoweredMeta, stripAccents } from '../../shared/lib/utils-id3';
-import * as PlaylistsActions from '../stores/PlaylistsActions';
 
+import PlaylistsAPI from './PlaylistsAPI';
 import { createStore } from './store-helpers';
 import useToastsStore from './useToastsStore';
 import usePlayerStore from './usePlayerStore';
@@ -96,7 +96,7 @@ const useLibraryStore = createStore<LibraryState>((set, get) => ({
 
             const existingTracks: TrackModel[] = await db.tracks.findByPath(playlistFiles);
 
-            await PlaylistsActions.create(
+            await PlaylistsAPI.create(
               playlistName,
               existingTracks.map((track) => track._id),
               filePath

@@ -6,7 +6,7 @@ import { Virtuoso, VirtuosoHandle } from 'react-virtuoso';
 
 import TrackRow from '../TrackRow/TrackRow';
 import TracksListHeader from '../TracksListHeader/TracksListHeader';
-import * as PlaylistsActions from '../../stores/PlaylistsActions';
+import PlaylistsAPI from '../../stores/PlaylistsAPI';
 import { isLeftClick, isRightClick, isCtrlKey, isAltKey } from '../../lib/utils-events';
 import { PlaylistModel, TrackModel } from '../../../shared/types/museeks';
 import headerStyles from '../Header/Header.module.css';
@@ -305,7 +305,7 @@ export default function TracksList(props: Props) {
           {
             label: 'Create new playlist...',
             click: async () => {
-              await PlaylistsActions.create('New playlist', selected);
+              await PlaylistsAPI.create('New playlist', selected);
             },
           },
           {
@@ -323,7 +323,7 @@ export default function TracksList(props: Props) {
             playlistTemplate.push({
               label: playlist.name,
               click: async () => {
-                await PlaylistsActions.addTracks(playlist._id, selected);
+                await PlaylistsAPI.addTracks(playlist._id, selected);
               },
             });
           });
@@ -406,7 +406,7 @@ export default function TracksList(props: Props) {
           {
             label: 'Remove from playlist',
             click: async () => {
-              await PlaylistsActions.removeTracks(currentPlaylist, selected);
+              await PlaylistsAPI.removeTracks(currentPlaylist, selected);
             },
           }
         );

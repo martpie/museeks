@@ -4,7 +4,7 @@ import channels from '../../shared/lib/ipc-channels';
 import { Theme } from '../../shared/types/museeks';
 import logger from '../../shared/lib/logger';
 
-import * as SettingsActions from './SettingsActions';
+import SettingsAPI from './SettingsAPI';
 
 const init = async (): Promise<void> => {
   // There's some trouble with React StrictMode: player gets created in preload,
@@ -16,7 +16,7 @@ const init = async (): Promise<void> => {
     window.MuseeksAPI.__instantiated = true;
   }
 
-  await SettingsActions.check();
+  await SettingsAPI.check();
 
   // Tell the main process to show the window
   window.MuseeksAPI.app.ready();
@@ -32,7 +32,7 @@ const init = async (): Promise<void> => {
 
   // Auto-update theme if set to system and the native theme changes
   ipcRenderer.on(channels.THEME_APPLY, (_event, theme: Theme) => {
-    SettingsActions.applyThemeToUI(theme);
+    SettingsAPI.applyThemeToUI(theme);
   });
 
   // Prevent drop events on the window
@@ -40,6 +40,9 @@ const init = async (): Promise<void> => {
   window.addEventListener('drop', (e) => e.preventDefault(), false);
 };
 
-export default {
+// Should we use something else to harmonize between zustand and non-store APIs?
+const AppAPI = {
   init,
 };
+
+export default AppAPI;

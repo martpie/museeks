@@ -1,7 +1,7 @@
 import ExternalLink from '../../elements/ExternalLink/ExternalLink';
 import Heart from '../../elements/Heart/Heart';
 import * as Setting from '../../components/Setting/Setting';
-import * as SettingsActions from '../../stores/SettingsActions';
+import SettingsAPI from '../../stores/SettingsAPI';
 import Button from '../../elements/Button/Button';
 
 export default function SettingsAbout() {
@@ -20,7 +20,7 @@ export default function SettingsAbout() {
         </p>
         <Button
           onClick={async () => {
-            await SettingsActions.checkForUpdate();
+            await SettingsAPI.checkForUpdate();
           }}
         >
           Check for update
