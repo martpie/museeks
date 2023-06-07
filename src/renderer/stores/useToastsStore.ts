@@ -34,3 +34,7 @@ const useToastsStore = createStore<ToastsState>((set, get) => ({
 }));
 
 export default useToastsStore;
+
+export function useToastsAPI() {
+  return useToastsStore((state) => state.api);
+}

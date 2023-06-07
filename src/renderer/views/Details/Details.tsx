@@ -7,7 +7,7 @@ import { TrackEditableFields } from '../../../shared/types/museeks';
 import appStyles from '../Root.module.css';
 import * as Setting from '../../components/Setting/Setting';
 import Button from '../../elements/Button/Button';
-import useLibraryStore from '../../stores/useLibraryStore';
+import { useLibraryAPI } from '../../stores/useLibraryStore';
 
 import styles from './Details.module.css';
 
@@ -24,6 +24,7 @@ export default function Details() {
   const { trackId } = useParams<{ trackId: string }>();
   // const [coverSrc, setCoverSrc] = useState<string | null>(null);
   const [formData, setFormData] = useState<TrackEditableFields>(INITIAL_FORM_DATA);
+  const libraryAPI = useLibraryAPI();
 
   const navigate = useNavigate();
 
@@ -32,10 +33,10 @@ export default function Details() {
       if (!trackId) return;
 
       e.preventDefault();
-      await useLibraryStore.getState().api.updateTrackMetadata(trackId, formData);
+      await libraryAPI.updateTrackMetadata(trackId, formData);
       navigate(-1);
     },
-    [trackId, formData, navigate]
+    [trackId, formData, navigate, libraryAPI]
   );
 
   const handleCancel = useCallback(

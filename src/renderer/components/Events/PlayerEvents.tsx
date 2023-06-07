@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 
-import usePlayerStore from '../../stores/usePlayerStore';
-import useToastsStore from '../../stores/useToastsStore';
-import useLibraryStore from '../../stores/useLibraryStore';
+import { usePlayerAPI } from '../../stores/usePlayerStore';
+import { useToastsAPI } from '../../stores/useToastsStore';
+import { useLibraryAPI } from '../../stores/useLibraryStore';
 
 const { player } = window.MuseeksAPI;
 
@@ -17,9 +17,9 @@ const AUDIO_ERRORS = {
  * Handle app-level IPC Events init and cleanup
  */
 function PlayerEvents() {
-  const playerAPI = usePlayerStore.getState().api;
-  const libraryAPI = useLibraryStore.getState().api;
-  const toastsAPI = useToastsStore.getState().api;
+  const playerAPI = usePlayerAPI();
+  const libraryAPI = useLibraryAPI();
+  const toastsAPI = useToastsAPI();
 
   // // If no queue is provided, we create it based on the screen the user is on
   // if (!newQueue) {

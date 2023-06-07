@@ -2,7 +2,7 @@ import { ipcRenderer } from 'electron';
 import { useEffect } from 'react';
 
 import channels from '../../../shared/lib/ipc-channels';
-import usePlayerStore from '../../stores/usePlayerStore';
+import { usePlayerAPI } from '../../stores/usePlayerStore';
 import useCurrentViewTracks from '../../hooks/useCurrentViewTracks';
 
 const { player } = window.MuseeksAPI;
@@ -11,7 +11,7 @@ const { player } = window.MuseeksAPI;
  * Handle app-level IPC Events init and cleanup
  */
 function IPCPlayerEvents() {
-  const playerAPI = usePlayerStore.getState().api;
+  const playerAPI = usePlayerAPI();
   const tracks = useCurrentViewTracks();
 
   useEffect(() => {
