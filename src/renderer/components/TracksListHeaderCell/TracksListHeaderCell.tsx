@@ -2,8 +2,8 @@ import React, { useCallback } from 'react';
 import cx from 'classnames';
 import Icon from 'react-fontawesome';
 
-import * as LibraryActions from '../../store/actions/LibraryActions';
 import { SortBy } from '../../../shared/types/museeks';
+import useLibraryStore from '../../stores/useLibraryStore';
 
 import styles from './TracksListHeaderCell.module.css';
 
@@ -16,12 +16,13 @@ type Props = {
 
 export default function TracksListHeaderCell(props: Props) {
   const { sortBy, className, title, icon } = props;
+  const libraryAPI = useLibraryStore((state) => state.api);
 
   const sort = useCallback(() => {
     if (sortBy) {
-      LibraryActions.sort(sortBy);
+      libraryAPI.sort(sortBy);
     }
-  }, [sortBy]);
+  }, [libraryAPI, sortBy]);
 
   const classes = cx(styles.trackCellHeader, className, {
     [styles.sort]: sortBy,

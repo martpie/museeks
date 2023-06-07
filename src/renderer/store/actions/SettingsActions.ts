@@ -1,8 +1,6 @@
 import { ipcRenderer } from 'electron';
 import * as semver from 'semver';
 
-import store from '../store';
-import types from '../action-types';
 import channels from '../../../shared/lib/ipc-channels';
 import { Theme } from '../../../shared/types/museeks';
 import logger from '../../../shared/lib/logger';
@@ -100,10 +98,6 @@ export const toggleSleepBlocker = (value: boolean): void => {
   window.MuseeksAPI.config.save();
 
   ipcRenderer.send('settings:toggleSleepBlocker', value);
-
-  store.dispatch({
-    type: types.REFRESH_CONFIG,
-  });
 };
 
 /**
@@ -112,10 +106,6 @@ export const toggleSleepBlocker = (value: boolean): void => {
 export const setDefaultView = (value: string): void => {
   window.MuseeksAPI.config.set('defaultView', value);
   window.MuseeksAPI.config.save();
-
-  store.dispatch({
-    type: types.REFRESH_CONFIG,
-  });
 };
 
 /**
@@ -124,10 +114,6 @@ export const setDefaultView = (value: string): void => {
 export const toggleAutoUpdateChecker = (value: boolean): void => {
   window.MuseeksAPI.config.set('autoUpdateChecker', value);
   window.MuseeksAPI.config.save();
-
-  store.dispatch({
-    type: types.REFRESH_CONFIG,
-  });
 };
 
 /**
@@ -136,10 +122,6 @@ export const toggleAutoUpdateChecker = (value: boolean): void => {
 export const toggleMinimizeToTray = (value: boolean): void => {
   window.MuseeksAPI.config.set('minimizeToTray', value);
   window.MuseeksAPI.config.save();
-
-  store.dispatch({
-    type: types.REFRESH_CONFIG,
-  });
 };
 
 /**
@@ -148,8 +130,4 @@ export const toggleMinimizeToTray = (value: boolean): void => {
 export const toggleDisplayNotifications = (value: boolean): void => {
   window.MuseeksAPI.config.set('displayNotifications', value);
   window.MuseeksAPI.config.save();
-
-  store.dispatch({
-    type: types.REFRESH_CONFIG,
-  });
 };

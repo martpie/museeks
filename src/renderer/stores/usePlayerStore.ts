@@ -3,13 +3,13 @@ import { StateCreator } from 'zustand';
 import { persist } from 'zustand/middleware';
 
 import { PlayerStatus, Repeat, TrackModel } from '../../shared/types/museeks';
-import * as LibraryActions from '../store/actions/LibraryActions';
 import { shuffleTracks } from '../lib/utils-player';
 import logger from '../../shared/lib/logger';
 import router from '../views/router';
 
 import { createStore } from './store-helpers';
 import useToastsStore from './useToastsStore';
+import useLibraryStore from './useLibraryStore';
 
 type PlayerState = {
   queue: TrackModel[];
@@ -365,7 +365,7 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
       await router.navigate(queueOrigin);
 
       setTimeout(() => {
-        LibraryActions.highlightPlayingTrack(true);
+        useLibraryStore.getState().api.highlightPlayingTrack(true);
       }, 0);
     },
 

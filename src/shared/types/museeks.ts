@@ -27,15 +27,6 @@ export enum SortOrder {
 }
 
 /**
- * Redux
- */
-export interface Action {
-  // TODO action specific types
-  type: string;
-  payload?: any;
-}
-
-/**
  * Untyped libs / helpers
  */
 export type LinvoSchema<Schema> = {
@@ -117,6 +108,11 @@ export interface Toast {
 }
 
 export type ToastType = 'success' | 'danger' | 'warning';
+
+export interface LibrarySort {
+  by: SortBy;
+  order: SortOrder;
+}
 
 /**
  * Config

@@ -1,14 +1,13 @@
 import { useCallback, useMemo } from 'react';
-import { useSelector } from 'react-redux';
 import { Link, useLoaderData, useParams } from 'react-router-dom';
 
 import TracksList from '../../components/TracksList/TracksList';
 import * as ViewMessage from '../../elements/ViewMessage/ViewMessage';
 import * as PlaylistsActions from '../../store/actions/PlaylistsActions';
 import { filterTracks } from '../../lib/utils-library';
-import { RootState } from '../../store/reducers';
 import usePlayerStore from '../../stores/usePlayerStore';
 import { PlaylistLoaderResponse } from '../router';
+import useLibraryStore from '../../stores/useLibraryStore';
 
 export default function Playlist() {
   const { playlists, playlistTracks } = useLoaderData() as PlaylistLoaderResponse;
@@ -22,12 +21,7 @@ export default function Playlist() {
     return null;
   });
 
-  const { search } = useSelector((state: RootState) => {
-    return {
-      search: state.library.search,
-    };
-  });
-
+  const search = useLibraryStore((state) => state.search);
   const filteredTracks = useMemo(() => filterTracks(playlistTracks, search), [playlistTracks, search]);
 
   const onReorder = useCallback(

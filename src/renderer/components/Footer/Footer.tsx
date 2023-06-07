@@ -1,21 +1,20 @@
 import { useCallback } from 'react';
 import { NavLink } from 'react-router-dom';
 import Icon from 'react-fontawesome';
-import { useSelector } from 'react-redux';
 
-import { RootState } from '../../store/reducers';
 import ProgressBar from '../ProgressBar/ProgressBar';
+import useLibraryStore from '../../stores/useLibraryStore';
 
 import styles from './Footer.module.css';
 
 export default function Footer() {
-  const library = useSelector((state: RootState) => state.library);
+  const { refresh, refreshing } = useLibraryStore();
 
   const getStatusContent = useCallback(() => {
-    const { processed, total } = library.refresh;
+    const { processed, total } = refresh;
 
-    if (library.refreshing) {
-      // Sketchy,
+    if (refreshing) {
+      // Sketchy
       const isScanning = total === 0;
       const progress = total > 0 ? Math.round((processed / total) * 100) : 100;
 
@@ -38,7 +37,7 @@ export default function Footer() {
     // TODO: fix playlist view
     return null;
     // return <>{getStatus(library.tracks)}</>;
-  }, [library.refresh, library.refreshing]);
+  }, [refresh, refreshing]);
 
   return (
     <footer className={styles.footer}>

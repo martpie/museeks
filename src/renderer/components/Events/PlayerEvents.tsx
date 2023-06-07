@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 
-import * as LibraryActions from '../../store/actions/LibraryActions';
 import usePlayerStore from '../../stores/usePlayerStore';
 import useToastsStore from '../../stores/useToastsStore';
+import useLibraryStore from '../../stores/useLibraryStore';
 
 const { player } = window.MuseeksAPI;
 
@@ -18,6 +18,7 @@ const AUDIO_ERRORS = {
  */
 function PlayerEvents() {
   const playerAPI = usePlayerStore.getState().api;
+  const libraryAPI = useLibraryStore.getState().api;
   const toastsAPI = useToastsStore.getState().api;
 
   // // If no queue is provided, we create it based on the screen the user is on
@@ -68,7 +69,7 @@ function PlayerEvents() {
     function incrementPlayCount() {
       if (player.isThresholdReached()) {
         const track = player.getTrack();
-        if (track) LibraryActions.incrementPlayCount(track._id);
+        if (track) libraryAPI.incrementPlayCount(track._id);
       }
     }
     // Bind player events
