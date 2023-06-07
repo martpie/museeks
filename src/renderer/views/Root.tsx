@@ -13,7 +13,7 @@ import MediaSessionEvents from '../components/Events/MediaSessionEvents';
 import IPCPlayerEvents from '../components/Events/IPCPlayerEvents';
 import PlayerEvents from '../components/Events/PlayerEvents';
 import IPCNavigationEvents from '../components/Events/IPCNavigationEvents';
-import useLibraryStore from '../stores/useLibraryStore';
+import { useLibraryAPI } from '../stores/useLibraryStore';
 import GlobalKeyBindings from '../components/Events/GlobalKeyBindings';
 
 import styles from './Root.module.css';
@@ -29,6 +29,8 @@ export default function Museeks() {
     AppActions.init();
   }, []);
 
+  const libraryAPI = useLibraryAPI();
+
   // Drop behavior to add tracks to the library from any string
   const [{ isOver }, drop] = useDrop(() => {
     return {
@@ -36,9 +38,8 @@ export default function Museeks() {
       drop(item: { files: Array<File> }) {
         const files = item.files.map((file) => file.path);
 
-        useLibraryStore
-          .getState()
-          .api.add(files)
+        libraryAPI
+          .add(files)
           .then((/* _importedTracks */) => {
             // TODO: Import to playlist here
           })

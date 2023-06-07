@@ -3,10 +3,10 @@ import React, { useCallback } from 'react';
 import * as Setting from '../../components/Setting/Setting';
 import AudioOutputSelect from '../../components/AudioOutputSelect/AudioOutputSelect';
 import { Config } from '../../../shared/types/museeks';
-import usePlayerStore from '../../stores/usePlayerStore';
+import { usePlayerAPI } from '../../stores/usePlayerStore';
 
 export default function SettingsAudio() {
-  const playerAPI = usePlayerStore((state) => state.api);
+  const playerAPI = usePlayerAPI();
 
   const setPlaybackRate = useCallback(
     (e: React.SyntheticEvent<HTMLInputElement>) => {

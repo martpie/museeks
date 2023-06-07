@@ -5,10 +5,10 @@ import * as Setting from '../../components/Setting/Setting';
 import Button from '../../elements/Button/Button';
 import channels from '../../../shared/lib/ipc-channels';
 import logger from '../../../shared/lib/logger';
-import useLibraryStore from '../../stores/useLibraryStore';
+import useLibraryStore, { useLibraryAPI } from '../../stores/useLibraryStore';
 
 export default function SettingsLibrary() {
-  const libraryAPI = useLibraryStore((state) => state.api);
+  const libraryAPI = useLibraryAPI();
   const isLibraryRefreshing = useLibraryStore((state) => state.refreshing);
 
   const openFolderSelector = useCallback(async () => {

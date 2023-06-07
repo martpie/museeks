@@ -4,7 +4,7 @@ import ButtonShuffle from '../PlayerOptionsButtons/ButtonShuffle';
 import ButtonRepeat from '../PlayerOptionsButtons/ButtonRepeat';
 import * as utils from '../../lib/utils';
 import { TrackModel, Repeat } from '../../../shared/types/museeks';
-import usePlayerStore from '../../stores/usePlayerStore';
+import { usePlayerAPI } from '../../stores/usePlayerStore';
 
 import styles from './PlayingBarInfo.module.css';
 
@@ -24,7 +24,7 @@ export default function PlayingBarInfo(props: Props) {
   const [x, setX] = useState<number | null>(null);
   const [dragging, setDragging] = useState(false);
 
-  const playerAPI = usePlayerStore((state) => state.api);
+  const playerAPI = usePlayerAPI();
 
   const tick = useCallback(() => {
     setElapsed(window.MuseeksAPI.player.getCurrentTime());

@@ -4,7 +4,7 @@ import QueueListItem from '../QueueListItem/QueueListItem';
 import { getStatus } from '../../lib/utils-library';
 import { TrackModel } from '../../../shared/types/museeks';
 import Button from '../../elements/Button/Button';
-import usePlayerStore from '../../stores/usePlayerStore';
+import { usePlayerAPI } from '../../stores/usePlayerStore';
 
 import styles from './QueueList.module.css';
 
@@ -14,7 +14,7 @@ type Props = {
 };
 
 export default function QueueList(props: Props) {
-  const playerAPI = usePlayerStore((state) => state.api);
+  const playerAPI = usePlayerAPI();
 
   const [draggedTrackIndex, setDraggedTrackIndex] = useState<number | null>(null);
   const [draggedOverTrackIndex, setDraggedOverTrackIndex] = useState<number | null>(null);

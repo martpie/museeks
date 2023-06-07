@@ -3,7 +3,7 @@ import cx from 'classnames';
 import Icon from 'react-fontawesome';
 
 import { SortBy } from '../../../shared/types/museeks';
-import useLibraryStore from '../../stores/useLibraryStore';
+import { useLibraryAPI } from '../../stores/useLibraryStore';
 
 import styles from './TracksListHeaderCell.module.css';
 
@@ -16,7 +16,7 @@ type Props = {
 
 export default function TracksListHeaderCell(props: Props) {
   const { sortBy, className, title, icon } = props;
-  const libraryAPI = useLibraryStore((state) => state.api);
+  const libraryAPI = useLibraryAPI();
 
   const sort = useCallback(() => {
     if (sortBy) {
