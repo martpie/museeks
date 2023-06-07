@@ -1,14 +1,13 @@
 import { useMemo } from 'react';
 import { Link, useLoaderData, useRouteLoaderData } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 
 import * as ViewMessage from '../../elements/ViewMessage/ViewMessage';
 import TracksList from '../../components/TracksList/TracksList';
-import { RootState } from '../../store/reducers';
 import appStyles from '../Root.module.css';
 import usePlayerStore from '../../stores/usePlayerStore';
 import { LibraryLoaderResponse, RootLoaderResponse } from '../router';
 import useFilteredTracks from '../../hooks/useFilteredTracks';
+import useLibraryStore from '../../stores/useLibraryStore';
 
 import styles from './Library.module.css';
 
@@ -21,15 +20,19 @@ export default function Library() {
     return null;
   });
 
-  const library = useSelector((state: RootState) => state.library);
+  const { search, refreshing } = useLibraryStore((state) => ({
+    search: state.search,
+    refreshing: state.refreshing,
+  }));
+
   const { playlists } = useLoaderData() as LibraryLoaderResponse;
   const { tracks } = useRouteLoaderData('root') as RootLoaderResponse;
   const filteredTracks = useFilteredTracks(tracks);
 
   const getLibraryComponent = useMemo(() => {
     // Empty library
-    if (filteredTracks.length === 0 && library.search === '') {
-      if (library.refreshing) {
+    if (filteredTracks.length === 0 && search === '') {
+      if (refreshing) {
         return (
           <ViewMessage.Notice>
             <p>Your library is being scanned =)</p>
@@ -62,7 +65,7 @@ export default function Library() {
 
     // All good !
     return <TracksList type='library' tracks={filteredTracks} trackPlayingId={trackPlayingId} playlists={playlists} />;
-  }, [library, filteredTracks, playlists, trackPlayingId]);
+  }, [search, refreshing, filteredTracks, playlists, trackPlayingId]);
 
   return <div className={`${appStyles.view} ${styles.viewLibrary}`}>{getLibraryComponent}</div>;
 }

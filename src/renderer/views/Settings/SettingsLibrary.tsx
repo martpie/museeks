@@ -1,23 +1,15 @@
 import { useCallback } from 'react';
 import { ipcRenderer } from 'electron';
-import { useSelector } from 'react-redux';
 
 import * as Setting from '../../components/Setting/Setting';
-import * as LibraryActions from '../../store/actions/LibraryActions';
 import Button from '../../elements/Button/Button';
 import channels from '../../../shared/lib/ipc-channels';
 import logger from '../../../shared/lib/logger';
-import { RootState } from '../../store/reducers';
-import usePlayerStore from '../../stores/usePlayerStore';
+import useLibraryStore from '../../stores/useLibraryStore';
 
 export default function SettingsLibrary() {
-  const library = useSelector((state: RootState) => state.library);
-  const playerAPI = usePlayerStore((state) => state.api);
-
-  const resetLibrary = useCallback(async () => {
-    playerAPI.stop();
-    await LibraryActions.reset();
-  }, [playerAPI]);
+  const libraryAPI = useLibraryStore((state) => state.api);
+  const isLibraryRefreshing = useLibraryStore((state) => state.refreshing);
 
   const openFolderSelector = useCallback(async () => {
     const options: Electron.OpenDialogOptions = {
@@ -27,11 +19,11 @@ export default function SettingsLibrary() {
     const result = await ipcRenderer.invoke(channels.DIALOG_OPEN, options);
 
     if (result.filePaths) {
-      LibraryActions.add(result.filePaths).catch((err) => {
+      libraryAPI.add(result.filePaths).catch((err) => {
         logger.warn(err);
       });
     }
-  }, []);
+  }, [libraryAPI]);
 
   return (
     <div className='setting settings-musicfolder'>
@@ -40,13 +32,18 @@ export default function SettingsLibrary() {
         <Setting.Description>
           This will also scan for <code>.m3u</code> files and create corresponding playlists.
         </Setting.Description>
-        <Button disabled={library.refreshing} onClick={openFolderSelector}>
+        <Button disabled={isLibraryRefreshing} onClick={openFolderSelector}>
           Add files or folders
         </Button>
       </Setting.Section>
       <Setting.Section>
         <h3>Danger zone</h3>
-        <Button relevancy='danger' title='Fully reset the library' disabled={library.refreshing} onClick={resetLibrary}>
+        <Button
+          relevancy='danger'
+          title='Fully reset the library'
+          disabled={isLibraryRefreshing}
+          onClick={libraryAPI.reset}
+        >
           Reset library
         </Button>
       </Setting.Section>

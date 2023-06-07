@@ -6,7 +6,6 @@
 
 import React from 'react';
 import * as ReactDOM from 'react-dom/client';
-import { Provider } from 'react-redux';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { RouterProvider } from 'react-router-dom';
@@ -14,7 +13,6 @@ import { ErrorBoundary } from 'react-error-boundary';
 
 import * as ViewMessage from './elements/ViewMessage/ViewMessage';
 import ExternalLink from './elements/ExternalLink/ExternalLink';
-import store from './store/store';
 import router from './views/router';
 /*
 |--------------------------------------------------------------------------
@@ -54,11 +52,9 @@ if (wrap) {
           </ViewMessage.Notice>
         }
       >
-        <Provider store={store}>
-          <DndProvider backend={HTML5Backend}>
-            <RouterProvider router={router} />
-          </DndProvider>
-        </Provider>
+        <DndProvider backend={HTML5Backend}>
+          <RouterProvider router={router} />
+        </DndProvider>
       </ErrorBoundary>
     </React.StrictMode>
   );

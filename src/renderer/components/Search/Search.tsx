@@ -1,13 +1,14 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Keybinding from 'react-keybinding-component';
 
-import * as LibraryActions from '../../store/actions/LibraryActions';
 import useDebounce from '../../hooks/useDebounce';
 import { isCtrlKey } from '../../lib/utils-events';
+import useLibraryStore from '../../stores/useLibraryStore';
 
 import styles from './Search.module.css';
 
 export default function Search() {
+  const libraryAPI = useLibraryStore((state) => state.api);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const [search, setSearch] = useState('');
@@ -20,11 +21,11 @@ export default function Search() {
 
   useEffect(() => {
     if (search === '') {
-      LibraryActions.search(search);
+      libraryAPI.search(search);
     } else {
-      LibraryActions.search(debouncedSearch);
+      libraryAPI.search(debouncedSearch);
     }
-  }, [debouncedSearch, search]);
+  }, [libraryAPI, debouncedSearch, search]);
 
   // ctrl/cmf+f shortcut
   const onKey = (e: KeyboardEvent) => {

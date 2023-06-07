@@ -1,9 +1,6 @@
-import { useSelector } from 'react-redux';
-
 import TracksListHeaderCell from '../TracksListHeaderCell/TracksListHeaderCell';
-import { SortBy, SortOrder } from '../../../shared/types/museeks';
-import { RootState } from '../../store/reducers';
-import { LibrarySort } from '../../store/reducers/library';
+import { LibrarySort, SortBy, SortOrder } from '../../../shared/types/museeks';
+import useLibraryStore from '../../stores/useLibraryStore';
 
 import styles from './TracksListHeader.module.css';
 
@@ -26,7 +23,7 @@ type Props = {
 
 export default function TracksListHeader(props: Props) {
   const { enableSort } = props;
-  const sort = useSelector((state: RootState) => state.library.sort);
+  const sort = useLibraryStore((state) => state.sort);
 
   return (
     <div className={styles.tracksListHeader}>

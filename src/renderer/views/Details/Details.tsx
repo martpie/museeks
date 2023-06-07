@@ -7,7 +7,7 @@ import { TrackEditableFields } from '../../../shared/types/museeks';
 import appStyles from '../Root.module.css';
 import * as Setting from '../../components/Setting/Setting';
 import Button from '../../elements/Button/Button';
-import * as LibraryActions from '../../store/actions/LibraryActions';
+import useLibraryStore from '../../stores/useLibraryStore';
 
 import styles from './Details.module.css';
 
@@ -32,7 +32,7 @@ export default function Details() {
       if (!trackId) return;
 
       e.preventDefault();
-      await LibraryActions.updateTrackMetadata(trackId, formData);
+      await useLibraryStore.getState().api.updateTrackMetadata(trackId, formData);
       navigate(-1);
     },
     [trackId, formData, navigate]

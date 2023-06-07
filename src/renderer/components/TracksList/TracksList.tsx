@@ -1,19 +1,17 @@
 import type { MenuItemConstructorOptions } from 'electron';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import KeyBinding from 'react-keybinding-component';
-import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Virtuoso, VirtuosoHandle } from 'react-virtuoso';
 
 import TrackRow from '../TrackRow/TrackRow';
 import TracksListHeader from '../TracksListHeader/TracksListHeader';
-import * as LibraryActions from '../../store/actions/LibraryActions';
 import * as PlaylistsActions from '../../store/actions/PlaylistsActions';
 import { isLeftClick, isRightClick, isCtrlKey, isAltKey } from '../../lib/utils-events';
 import { PlaylistModel, TrackModel } from '../../../shared/types/museeks';
-import { RootState } from '../../store/reducers';
 import headerStyles from '../Header/Header.module.css';
 import usePlayerStore from '../../stores/usePlayerStore';
+import useLibraryStore from '../../stores/useLibraryStore';
 
 import styles from './TracksList.module.css';
 
@@ -44,7 +42,8 @@ export default function TracksList(props: Props) {
   const navigate = useNavigate();
 
   const playerAPI = usePlayerStore((state) => state.api);
-  const highlight = useSelector<RootState, boolean>((state) => state.library.highlightPlayingTrack);
+  const libraryAPI = useLibraryStore((state) => state.api);
+  const highlight = useLibraryStore((state) => state.highlightPlayingTrack);
 
   // Highlight playing track and scroll to it
   // Super-mega-hacky to use Redux for that
@@ -60,14 +59,13 @@ export default function TracksList(props: Props) {
         });
       }
 
-      LibraryActions.highlightPlayingTrack(false);
+      libraryAPI.highlightPlayingTrack(false);
     }
-  }, [highlight, trackPlayingId, tracks]);
+  }, [highlight, trackPlayingId, tracks, libraryAPI]);
 
   /**
    * Helpers
    */
-
   const startPlayback = useCallback(
     async (_id: string) => {
       playerAPI.start(tracks, _id);
@@ -436,7 +434,7 @@ export default function TracksList(props: Props) {
         {
           label: 'Remove from library',
           click: () => {
-            LibraryActions.remove(selected);
+            libraryAPI.remove(selected);
           },
         }
       );

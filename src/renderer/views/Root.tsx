@@ -9,7 +9,6 @@ import Header from '../components/Header/Header';
 import Footer from '../components/Footer/Footer';
 import Toasts from '../components/Toasts/Toasts';
 import AppActions from '../store/actions/AppActions';
-import * as LibraryActions from '../store/actions/LibraryActions';
 import { isCtrlKey } from '../lib/utils-events';
 import DropzoneImport from '../components/DropzoneImport/DropzoneImport';
 import usePlayerStore from '../stores/usePlayerStore';
@@ -17,6 +16,7 @@ import MediaSessionEvents from '../components/Events/MediaSessionEvents';
 import IPCPlayerEvents from '../components/Events/IPCPlayerEvents';
 import PlayerEvents from '../components/Events/PlayerEvents';
 import IPCNavigationEvents from '../components/Events/IPCNavigationEvents';
+import useLibraryStore from '../stores/useLibraryStore';
 
 import styles from './Root.module.css';
 
@@ -75,7 +75,9 @@ export default function Museeks() {
       drop(item: { files: Array<File> }) {
         const files = item.files.map((file) => file.path);
 
-        LibraryActions.add(files)
+        useLibraryStore
+          .getState()
+          .api.add(files)
           .then((/* _importedTracks */) => {
             // TODO: Import to playlist here
           })
