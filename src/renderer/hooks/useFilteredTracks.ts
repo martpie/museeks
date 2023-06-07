@@ -6,7 +6,8 @@ import SORT_ORDERS from '../constants/sort-orders';
 import useLibraryStore from '../stores/useLibraryStore';
 
 export default function useFilteredTracks(tracks: TrackModel[]): TrackModel[] {
-  const { search, sort } = useLibraryStore((state) => ({ search: state.search, sort: state.sort }));
+  const search = useLibraryStore((state) => state.search);
+  const sort = useLibraryStore((state) => state.sort);
 
   // Filter and sort TracksList
   // sorting being a costly operation, do it after filtering

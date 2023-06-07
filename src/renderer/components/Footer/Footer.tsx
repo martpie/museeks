@@ -8,7 +8,8 @@ import useLibraryStore from '../../stores/useLibraryStore';
 import styles from './Footer.module.css';
 
 export default function Footer() {
-  const { refresh, refreshing } = useLibraryStore();
+  const refresh = useLibraryStore((state) => state.refresh);
+  const refreshing = useLibraryStore((state) => state.refreshing);
 
   const getStatusContent = useCallback(() => {
     const { processed, total } = refresh;

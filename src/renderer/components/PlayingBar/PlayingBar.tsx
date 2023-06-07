@@ -6,19 +6,15 @@ import useClickOut from '@bscop/use-click-out';
 import Queue from '../Queue/Queue';
 import PlayingBarInfos from '../PlayingBarInfo/PlayingBarInfo';
 import Cover from '../Cover/Cover';
-import { TrackModel, Repeat } from '../../../shared/types/museeks';
+import usePlayerStore from '../../stores/usePlayerStore';
 
 import styles from './PlayingBar.module.css';
 
-type Props = {
-  queue: TrackModel[];
-  queueCursor: number | null;
-  shuffle: boolean;
-  repeat: Repeat;
-};
-
-export default function PlayingBar(props: Props) {
-  const { queue, queueCursor, repeat, shuffle } = props;
+export default function PlayingBar() {
+  const repeat = usePlayerStore((state) => state.repeat);
+  const shuffle = usePlayerStore((state) => state.shuffle);
+  const queue = usePlayerStore((state) => state.queue);
+  const queueCursor = usePlayerStore((state) => state.queueCursor);
 
   const [isQueueOpen, setIsQueueOpen] = useState(false);
   const clickOutRef = useClickOut<HTMLDivElement>(() => {

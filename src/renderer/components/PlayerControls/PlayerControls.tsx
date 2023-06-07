@@ -6,12 +6,9 @@ import usePlayerStore from '../../stores/usePlayerStore';
 
 import styles from './PlayerControls.module.css';
 
-type Props = {
-  playerStatus: PlayerStatus;
-};
-
-export default function PlayerControls(props: Props) {
+export default function PlayerControls() {
   const playerAPI = usePlayerStore((state) => state.api);
+  const playerStatus = usePlayerStore((state) => state.playerStatus);
 
   return (
     <div className={styles.playerControls}>
@@ -20,10 +17,10 @@ export default function PlayerControls(props: Props) {
       </button>
       <button
         className={`${styles.control} ${styles.play}`}
-        title={props.playerStatus === PlayerStatus.PLAY ? 'Pause' : 'Play'}
+        title={playerStatus === PlayerStatus.PLAY ? 'Pause' : 'Play'}
         onClick={playerAPI.playPause}
       >
-        <Icon name={props.playerStatus === PlayerStatus.PLAY ? 'pause' : 'play'} fixedWidth />
+        <Icon name={playerStatus === PlayerStatus.PLAY ? 'pause' : 'play'} fixedWidth />
       </button>
       <button type='button' className={styles.control} title='Next' onClick={playerAPI.next}>
         <Icon name='forward' />

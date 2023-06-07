@@ -20,10 +20,8 @@ export default function Library() {
     return null;
   });
 
-  const { search, refreshing } = useLibraryStore((state) => ({
-    search: state.search,
-    refreshing: state.refreshing,
-  }));
+  const refreshing = useLibraryStore((state) => state.refreshing);
+  const search = useLibraryStore((state) => state.search);
 
   const { playlists } = useLoaderData() as LibraryLoaderResponse;
   const { tracks } = useRouteLoaderData('root') as RootLoaderResponse;
