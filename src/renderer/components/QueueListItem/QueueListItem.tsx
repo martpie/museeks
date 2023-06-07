@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import cx from 'classnames';
 
 import { TrackModel } from '../../../shared/types/museeks';
-import usePlayerStore from '../../stores/usePlayerStore';
+import { usePlayerAPI } from '../../stores/usePlayerStore';
 
 import styles from './QueueListItem.module.css';
 
@@ -19,7 +19,7 @@ type Props = {
 };
 
 export default function QueueListItem(props: Props) {
-  const playerAPI = usePlayerStore((state) => state.api);
+  const playerAPI = usePlayerAPI();
 
   const { track } = props;
 

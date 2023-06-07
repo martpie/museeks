@@ -3,7 +3,7 @@ import cx from 'classnames';
 
 import { Repeat } from '../../../shared/types/museeks';
 import icons from '../../lib/icons';
-import usePlayerStore from '../../stores/usePlayerStore';
+import usePlayerStore, { usePlayerAPI } from '../../stores/usePlayerStore';
 
 import styles from './common.module.css';
 
@@ -16,7 +16,7 @@ const svgMap = {
 
 export default function ButtonRepeat() {
   const repeat = usePlayerStore((state) => state.repeat);
-  const playerAPI = usePlayerStore((state) => state.api);
+  const playerAPI = usePlayerAPI();
 
   const svg = svgMap[repeat] || svgMap.default;
   const buttonClasses = cx(styles.button, {

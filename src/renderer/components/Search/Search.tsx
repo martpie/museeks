@@ -3,12 +3,12 @@ import Keybinding from 'react-keybinding-component';
 
 import useDebounce from '../../hooks/useDebounce';
 import { isCtrlKey } from '../../lib/utils-events';
-import useLibraryStore from '../../stores/useLibraryStore';
+import { useLibraryAPI } from '../../stores/useLibraryStore';
 
 import styles from './Search.module.css';
 
 export default function Search() {
-  const libraryAPI = useLibraryStore((state) => state.api);
+  const libraryAPI = useLibraryAPI();
   const inputRef = useRef<HTMLInputElement>(null);
 
   const [search, setSearch] = useState('');

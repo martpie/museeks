@@ -4,7 +4,7 @@ import cx from 'classnames';
 import Slider from 'react-rangeslider';
 
 import controlStyles from '../PlayerControls/PlayerControls.module.css';
-import usePlayerStore from '../../stores/usePlayerStore';
+import { usePlayerAPI } from '../../stores/usePlayerStore';
 
 import styles from './VolumeControl.module.css';
 
@@ -27,7 +27,7 @@ export default function VolumeControl() {
   const [volume, setVolume] = useState(audio.volume);
   const [muted, setMuted] = useState(audio.muted);
 
-  const playerAPI = usePlayerStore((state) => state.api);
+  const playerAPI = usePlayerAPI();
 
   const setPlayerVolume = useCallback(
     (value: number) => {

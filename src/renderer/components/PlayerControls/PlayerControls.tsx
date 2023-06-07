@@ -2,12 +2,12 @@ import Icon from 'react-fontawesome';
 
 import VolumeControl from '../VolumeControl/VolumeControl';
 import { PlayerStatus } from '../../../shared/types/museeks';
-import usePlayerStore from '../../stores/usePlayerStore';
+import usePlayerStore, { usePlayerAPI } from '../../stores/usePlayerStore';
 
 import styles from './PlayerControls.module.css';
 
 export default function PlayerControls() {
-  const playerAPI = usePlayerStore((state) => state.api);
+  const playerAPI = usePlayerAPI();
   const playerStatus = usePlayerStore((state) => state.playerStatus);
 
   return (

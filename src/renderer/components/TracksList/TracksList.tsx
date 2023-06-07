@@ -10,8 +10,8 @@ import * as PlaylistsActions from '../../store/actions/PlaylistsActions';
 import { isLeftClick, isRightClick, isCtrlKey, isAltKey } from '../../lib/utils-events';
 import { PlaylistModel, TrackModel } from '../../../shared/types/museeks';
 import headerStyles from '../Header/Header.module.css';
-import usePlayerStore from '../../stores/usePlayerStore';
-import useLibraryStore from '../../stores/useLibraryStore';
+import { usePlayerAPI } from '../../stores/usePlayerStore';
+import useLibraryStore, { useLibraryAPI } from '../../stores/useLibraryStore';
 
 import styles from './TracksList.module.css';
 
@@ -41,8 +41,8 @@ export default function TracksList(props: Props) {
   const virtuosoRef = useRef<VirtuosoHandle>(null);
   const navigate = useNavigate();
 
-  const playerAPI = usePlayerStore((state) => state.api);
-  const libraryAPI = useLibraryStore((state) => state.api);
+  const playerAPI = usePlayerAPI();
+  const libraryAPI = useLibraryAPI();
   const highlight = useLibraryStore((state) => state.highlightPlayingTrack);
 
   // Highlight playing track and scroll to it

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Icon from 'react-fontawesome';
 
 import { PlayerStatus } from '../../../shared/types/museeks';
-import usePlayerStore from '../../stores/usePlayerStore';
+import usePlayerStore, { usePlayerAPI } from '../../stores/usePlayerStore';
 
 import styles from './PlayingIndicator.module.css';
 
@@ -27,7 +27,7 @@ const getIcon = (state: PlayerStatus, hovered: boolean) => {
 export default function TrackPlayingIndicator() {
   const [hovered, setHovered] = useState(false);
   const playerStatus = usePlayerStore((state) => state.playerStatus);
-  const playerAPI = usePlayerStore((state) => state.api);
+  const playerAPI = usePlayerAPI();
 
   const icon = getIcon(playerStatus, hovered);
 
