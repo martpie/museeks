@@ -3,7 +3,6 @@ import { createHashRouter, redirect } from 'react-router-dom';
 import { PlaylistModel, TrackModel } from '../../shared/types/museeks';
 
 import RootView from './Root';
-import ErrorView from './Error';
 import LibraryView from './Library/Library';
 import PlaylistsView from './Playlists/Playlists';
 import PlaylistView from './Playlists/Playlist';
@@ -21,7 +20,6 @@ const router = createHashRouter([
     path: '/',
     id: 'root',
     element: <RootView />,
-    errorElement: <ErrorView />,
     loader: async (): Promise<LoaderResponse<RootLoaderResponse>> => {
       // this can be slow, think about caching it or something, especially when
       // we revalidate routing
