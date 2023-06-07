@@ -3,7 +3,7 @@ import { Outlet, useLoaderData } from 'react-router-dom';
 
 import PlaylistsNav from '../../components/PlaylistsNav/PlaylistsNav';
 import * as ViewMessage from '../../elements/ViewMessage/ViewMessage';
-import * as PlaylistsActions from '../../store/actions/PlaylistsActions';
+import * as PlaylistsActions from '../../stores/PlaylistsActions';
 import appStyles from '../../views/Root.module.css';
 import { PlaylistsLoaderResponse } from '../router';
 

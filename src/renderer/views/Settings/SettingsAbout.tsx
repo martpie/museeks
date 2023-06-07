@@ -1,7 +1,7 @@
 import ExternalLink from '../../elements/ExternalLink/ExternalLink';
 import Heart from '../../elements/Heart/Heart';
 import * as Setting from '../../components/Setting/Setting';
-import * as SettingsActions from '../../store/actions/SettingsActions';
+import * as SettingsActions from '../../stores/SettingsActions';
 import Button from '../../elements/Button/Button';
 
 export default function SettingsAbout() {

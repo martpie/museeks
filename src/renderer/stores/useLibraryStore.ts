@@ -6,7 +6,7 @@ import logger from '../../shared/lib/logger';
 import router from '../views/router';
 import channels from '../../shared/lib/ipc-channels';
 import { getLoweredMeta, stripAccents } from '../../shared/lib/utils-id3';
-import * as PlaylistsActions from '../store/actions/PlaylistsActions';
+import * as PlaylistsActions from '../stores/PlaylistsActions';
 
 import { createStore } from './store-helpers';
 import useToastsStore from './useToastsStore';

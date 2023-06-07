@@ -1,10 +1,10 @@
 import { ipcRenderer } from 'electron';
 import * as semver from 'semver';
 
-import channels from '../../../shared/lib/ipc-channels';
-import { Theme } from '../../../shared/types/museeks';
-import logger from '../../../shared/lib/logger';
-import useToastsStore from '../../stores/useToastsStore';
+import channels from '../../shared/lib/ipc-channels';
+import { Theme } from '../../shared/types/museeks';
+import logger from '../../shared/lib/logger';
+import useToastsStore from '../stores/useToastsStore';
 
 interface UpdateCheckOptions {
   silentFail?: boolean;

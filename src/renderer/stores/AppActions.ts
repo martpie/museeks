@@ -1,8 +1,8 @@
 import { ipcRenderer } from 'electron';
 
-import channels from '../../../shared/lib/ipc-channels';
-import { Theme } from '../../../shared/types/museeks';
-import logger from '../../../shared/lib/logger';
+import channels from '../../shared/lib/ipc-channels';
+import { Theme } from '../../shared/types/museeks';
+import logger from '../../shared/lib/logger';
 
 import * as SettingsActions from './SettingsActions';
 

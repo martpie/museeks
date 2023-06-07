@@ -1,11 +1,11 @@
 import { ipcRenderer } from 'electron';
 
-import { Playlist, TrackModel, PlaylistModel } from '../../../shared/types/museeks';
-import logger from '../../../shared/lib/logger';
-import channels from '../../../shared/lib/ipc-channels';
-import router from '../../views/router';
-import useToastsStore from '../../stores/useToastsStore';
-import usePlayerStore from '../../stores/usePlayerStore';
+import { Playlist, TrackModel, PlaylistModel } from '../../shared/types/museeks';
+import logger from '../../shared/lib/logger';
+import channels from '../../shared/lib/ipc-channels';
+import router from '../views/router';
+import useToastsStore from '../stores/useToastsStore';
+import usePlayerStore from '../stores/usePlayerStore';
 
 const { db } = window.MuseeksAPI;
 
