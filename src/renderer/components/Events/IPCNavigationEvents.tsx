@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ipcRenderer } from 'electron';
 
-import usePlayerStore from '../../stores/usePlayerStore';
+import { usePlayerAPI } from '../../stores/usePlayerStore';
 import channels from '../../../shared/lib/ipc-channels';
 
 /**
@@ -10,7 +10,7 @@ import channels from '../../../shared/lib/ipc-channels';
  */
 function IPCNavigationEvents() {
   const navigate = useNavigate();
-  const playerAPI = usePlayerStore.getState().api;
+  const playerAPI = usePlayerAPI();
 
   useEffect(() => {
     function goToLibrary() {

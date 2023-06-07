@@ -468,6 +468,10 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
 
 export default usePlayerStore;
 
+export function usePlayerAPI() {
+  return usePlayerStore((state) => state.api);
+}
+
 // -----------------------------------------------------------------------------
 // Helpers
 // -----------------------------------------------------------------------------

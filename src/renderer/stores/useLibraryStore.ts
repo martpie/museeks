@@ -315,3 +315,7 @@ const useLibraryStore = createStore<LibraryState>((set, get) => ({
 }));
 
 export default useLibraryStore;
+
+export function useLibraryAPI() {
+  return useLibraryStore((state) => state.api);
+}

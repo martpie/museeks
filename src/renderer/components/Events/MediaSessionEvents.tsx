@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-import usePlayerStore from '../../stores/usePlayerStore';
+import { usePlayerAPI } from '../../stores/usePlayerStore';
 
 const { player } = window.MuseeksAPI;
 
@@ -8,7 +8,7 @@ const { player } = window.MuseeksAPI;
  * Integration for MediaSession (mpris, macOS player controls etc)...
  */
 function MediaSessionEvents() {
-  const playerAPI = usePlayerStore.getState().api;
+  const playerAPI = usePlayerAPI();
 
   useEffect(() => {
     player.getAudio().addEventListener('loadstart', syncArtwork);
