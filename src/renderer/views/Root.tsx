@@ -1,6 +1,5 @@
-import { useCallback, useEffect } from 'react';
-import KeyBinding from 'react-keybinding-component';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import { Outlet } from 'react-router-dom';
 import { useDrop } from 'react-dnd';
 import { NativeTypes } from 'react-dnd-html5-backend';
 
@@ -9,14 +8,13 @@ import Header from '../components/Header/Header';
 import Footer from '../components/Footer/Footer';
 import Toasts from '../components/Toasts/Toasts';
 import AppActions from '../store/actions/AppActions';
-import { isCtrlKey } from '../lib/utils-events';
 import DropzoneImport from '../components/DropzoneImport/DropzoneImport';
-import usePlayerStore from '../stores/usePlayerStore';
 import MediaSessionEvents from '../components/Events/MediaSessionEvents';
 import IPCPlayerEvents from '../components/Events/IPCPlayerEvents';
 import PlayerEvents from '../components/Events/PlayerEvents';
 import IPCNavigationEvents from '../components/Events/IPCNavigationEvents';
 import useLibraryStore from '../stores/useLibraryStore';
+import GlobalKeyBindings from '../components/Events/GlobalKeyBindings';
 
 import styles from './Root.module.css';
 
@@ -27,43 +25,6 @@ import styles from './Root.module.css';
 */
 
 export default function Museeks() {
-  const navigate = useNavigate();
-  const playerAPI = usePlayerStore((state) => state.api);
-
-  // App shortcuts (not using Electron's global shortcuts API to avoid conflicts
-  // with other applications)
-  const onKey = useCallback(
-    async (e: KeyboardEvent) => {
-      switch (e.key) {
-        case ' ':
-          e.preventDefault();
-          e.stopPropagation();
-          playerAPI.playPause();
-          break;
-        case ',':
-          if (isCtrlKey(e)) {
-            e.preventDefault();
-            e.stopPropagation();
-            navigate('/settings');
-          }
-          break;
-        case 'ArrowLeft':
-          e.preventDefault();
-          e.stopPropagation();
-          playerAPI.jumpTo(window.MuseeksAPI.player.getCurrentTime() - 10);
-          break;
-        case 'ArrowRight':
-          e.preventDefault();
-          e.stopPropagation();
-          playerAPI.jumpTo(window.MuseeksAPI.player.getCurrentTime() + 10);
-          break;
-        default:
-          break;
-      }
-    },
-    [navigate, playerAPI]
-  );
-
   useEffect(() => {
     AppActions.init();
   }, []);
@@ -98,7 +59,7 @@ export default function Museeks() {
       <IPCPlayerEvents />
       <PlayerEvents />
       <MediaSessionEvents />
-      <KeyBinding onKey={onKey} preventInputConflict />
+      <GlobalKeyBindings />
       {/** The actual app */}
       <Header />
       <main className={styles.mainContent}>
