@@ -1,6 +1,6 @@
 import { useCallback, ChangeEventHandler } from 'react';
 
-import * as SettingsActions from '../../store/actions/SettingsActions';
+import * as SettingsActions from '../../stores/SettingsActions';
 import * as Setting from '../../components/Setting/Setting';
 import CheckboxSetting from '../../components/SettingCheckbox/SettingCheckbox';
 import { Config } from '../../../shared/types/museeks';

@@ -6,7 +6,7 @@ import { Virtuoso, VirtuosoHandle } from 'react-virtuoso';
 
 import TrackRow from '../TrackRow/TrackRow';
 import TracksListHeader from '../TracksListHeader/TracksListHeader';
-import * as PlaylistsActions from '../../store/actions/PlaylistsActions';
+import * as PlaylistsActions from '../../stores/PlaylistsActions';
 import { isLeftClick, isRightClick, isCtrlKey, isAltKey } from '../../lib/utils-events';
 import { PlaylistModel, TrackModel } from '../../../shared/types/museeks';
 import headerStyles from '../Header/Header.module.css';

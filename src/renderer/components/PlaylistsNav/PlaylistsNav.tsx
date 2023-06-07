@@ -4,7 +4,7 @@ import type { MenuItemConstructorOptions } from 'electron';
 import React, { useCallback, useState } from 'react';
 import Icon from 'react-fontawesome';
 
-import * as PlaylistsActions from '../../store/actions/PlaylistsActions';
+import * as PlaylistsActions from '../../stores/PlaylistsActions';
 import PlaylistsNavLink from '../PlaylistsNavLink/PlaylistsNavLink';
 import { PlaylistModel } from '../../../shared/types/museeks';
 

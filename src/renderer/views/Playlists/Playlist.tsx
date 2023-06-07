@@ -3,7 +3,7 @@ import { Link, useLoaderData, useParams } from 'react-router-dom';
 
 import TracksList from '../../components/TracksList/TracksList';
 import * as ViewMessage from '../../elements/ViewMessage/ViewMessage';
-import * as PlaylistsActions from '../../store/actions/PlaylistsActions';
+import * as PlaylistsActions from '../../stores/PlaylistsActions';
 import { filterTracks } from '../../lib/utils-library';
 import usePlayerStore from '../../stores/usePlayerStore';
 import { PlaylistLoaderResponse } from '../router';
