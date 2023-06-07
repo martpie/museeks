@@ -4,26 +4,27 @@ import * as semver from 'semver';
 import channels from '../../shared/lib/ipc-channels';
 import { Theme } from '../../shared/types/museeks';
 import logger from '../../shared/lib/logger';
-import useToastsStore from '../stores/useToastsStore';
+
+import useToastsStore from './useToastsStore';
 
 interface UpdateCheckOptions {
   silentFail?: boolean;
 }
 
-export const getTheme = async (): Promise<string> => {
+const getTheme = async (): Promise<string> => {
   const themeId = await ipcRenderer.invoke(channels.THEME_GET_ID);
 
   return themeId;
 };
 
-export const setTheme = async (themeId: string): Promise<void> => {
+const setTheme = async (themeId: string): Promise<void> => {
   await ipcRenderer.invoke(channels.THEME_SET_ID, themeId);
 };
 
 /**
  * Apply theme colors to  the BrowserWindow
  */
-export const applyThemeToUI = async (theme: Theme): Promise<void> => {
+const applyThemeToUI = async (theme: Theme): Promise<void> => {
   // TODO think about variables validity?
   const root = document.documentElement;
 
@@ -32,7 +33,7 @@ export const applyThemeToUI = async (theme: Theme): Promise<void> => {
   });
 };
 
-export const checkTheme = async (): Promise<void> => {
+const checkTheme = async (): Promise<void> => {
   const theme = await ipcRenderer.invoke(channels.THEME_GET);
 
   applyThemeToUI(theme);
@@ -41,7 +42,7 @@ export const checkTheme = async (): Promise<void> => {
 /**
  * Check and enable sleep blocker if needed
  */
-export const checkSleepBlocker = (): void => {
+const checkSleepBlocker = (): void => {
   if (window.MuseeksAPI.config.get('sleepBlocker')) {
     ipcRenderer.send('settings:toggleSleepBlocker', true);
   }
@@ -50,7 +51,7 @@ export const checkSleepBlocker = (): void => {
 /**
  * Check if a new release is available
  */
-export const checkForUpdate = async (options: UpdateCheckOptions = {}): Promise<void> => {
+const checkForUpdate = async (options: UpdateCheckOptions = {}): Promise<void> => {
   const currentVersion = window.MuseeksAPI.version;
 
   try {
@@ -80,7 +81,7 @@ export const checkForUpdate = async (options: UpdateCheckOptions = {}): Promise<
 /**
  * Init all settings
  */
-export const check = async (): Promise<void> => {
+const check = async (): Promise<void> => {
   await checkTheme();
   checkSleepBlocker();
   if (window.MuseeksAPI.config.get('autoUpdateChecker')) {
@@ -93,7 +94,7 @@ export const check = async (): Promise<void> => {
 /**
  * Toggle sleep blocker
  */
-export const toggleSleepBlocker = (value: boolean): void => {
+const toggleSleepBlocker = (value: boolean): void => {
   window.MuseeksAPI.config.set('sleepBlocker', value);
   window.MuseeksAPI.config.save();
 
@@ -103,7 +104,7 @@ export const toggleSleepBlocker = (value: boolean): void => {
 /**
  * Set the default view of the app
  */
-export const setDefaultView = (value: string): void => {
+const setDefaultView = (value: string): void => {
   window.MuseeksAPI.config.set('defaultView', value);
   window.MuseeksAPI.config.save();
 };
@@ -111,7 +112,7 @@ export const setDefaultView = (value: string): void => {
 /**
  * Toggle update check on startup
  */
-export const toggleAutoUpdateChecker = (value: boolean): void => {
+const toggleAutoUpdateChecker = (value: boolean): void => {
   window.MuseeksAPI.config.set('autoUpdateChecker', value);
   window.MuseeksAPI.config.save();
 };
@@ -119,7 +120,7 @@ export const toggleAutoUpdateChecker = (value: boolean): void => {
 /**
  * Toggle minimize-to-tray
  */
-export const toggleMinimizeToTray = (value: boolean): void => {
+const toggleMinimizeToTray = (value: boolean): void => {
   window.MuseeksAPI.config.set('minimizeToTray', value);
   window.MuseeksAPI.config.save();
 };
@@ -127,7 +128,25 @@ export const toggleMinimizeToTray = (value: boolean): void => {
 /**
  * Toggle native notifications display
  */
-export const toggleDisplayNotifications = (value: boolean): void => {
+const toggleDisplayNotifications = (value: boolean): void => {
   window.MuseeksAPI.config.set('displayNotifications', value);
   window.MuseeksAPI.config.save();
 };
+
+// Should we use something else to harmonize between zustand and non-store APIs?
+const SettingsAPI = {
+  getTheme,
+  setTheme,
+  applyThemeToUI,
+  check,
+  checkTheme,
+  checkSleepBlocker,
+  checkForUpdate,
+  toggleSleepBlocker,
+  setDefaultView,
+  toggleAutoUpdateChecker,
+  toggleMinimizeToTray,
+  toggleDisplayNotifications,
+};
+
+export default SettingsAPI;

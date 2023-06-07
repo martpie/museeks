@@ -4,7 +4,7 @@ import type { MenuItemConstructorOptions } from 'electron';
 import React, { useCallback, useState } from 'react';
 import Icon from 'react-fontawesome';
 
-import * as PlaylistsActions from '../../stores/PlaylistsActions';
+import PlaylistsAPI from '../../stores/PlaylistsAPI';
 import PlaylistsNavLink from '../PlaylistsNavLink/PlaylistsNavLink';
 import { PlaylistModel } from '../../../shared/types/museeks';
 
@@ -30,7 +30,7 @@ export default function PlaylistsNav(props: Props) {
       {
         label: 'Delete',
         click: async () => {
-          await PlaylistsActions.remove(playlistId);
+          await PlaylistsAPI.remove(playlistId);
         },
       },
       {
@@ -39,7 +39,7 @@ export default function PlaylistsNav(props: Props) {
       {
         label: 'Duplicate',
         click: async () => {
-          await PlaylistsActions.duplicate(playlistId);
+          await PlaylistsAPI.duplicate(playlistId);
         },
       },
       {
@@ -48,7 +48,7 @@ export default function PlaylistsNav(props: Props) {
       {
         label: 'Export',
         click: async () => {
-          await PlaylistsActions.exportToM3u(playlistId);
+          await PlaylistsAPI.exportToM3u(playlistId);
         },
       },
     ];
@@ -60,11 +60,11 @@ export default function PlaylistsNav(props: Props) {
 
   const createPlaylist = useCallback(async () => {
     // Todo 'new playlist 1', 'new playlist 2' ...
-    await PlaylistsActions.create('New playlist', [], false, true);
+    await PlaylistsAPI.create('New playlist', [], false, true);
   }, []);
 
   const rename = useCallback(async (_id: string, name: string) => {
-    await PlaylistsActions.rename(_id, name);
+    await PlaylistsAPI.rename(_id, name);
   }, []);
 
   const keyDown = useCallback(

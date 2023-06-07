@@ -7,7 +7,7 @@ import logger from '../../shared/lib/logger';
 import Header from '../components/Header/Header';
 import Footer from '../components/Footer/Footer';
 import Toasts from '../components/Toasts/Toasts';
-import AppActions from '../stores/AppActions';
+import AppActions from '../stores/AppAPI';
 import DropzoneImport from '../components/DropzoneImport/DropzoneImport';
 import MediaSessionEvents from '../components/Events/MediaSessionEvents';
 import IPCPlayerEvents from '../components/Events/IPCPlayerEvents';

@@ -4,15 +4,16 @@ import { Playlist, TrackModel, PlaylistModel } from '../../shared/types/museeks'
 import logger from '../../shared/lib/logger';
 import channels from '../../shared/lib/ipc-channels';
 import router from '../views/router';
-import useToastsStore from '../stores/useToastsStore';
-import usePlayerStore from '../stores/usePlayerStore';
+
+import useToastsStore from './useToastsStore';
+import usePlayerStore from './usePlayerStore';
 
 const { db } = window.MuseeksAPI;
 
 /**
  * Start playing playlist (on double click)
  */
-export const play = async (playlistId: string): Promise<void> => {
+const play = async (playlistId: string): Promise<void> => {
   try {
     const playlist: PlaylistModel = await db.playlists.findOnlyByID(playlistId);
     const tracks: TrackModel[] = await db.tracks.findByID(playlist.tracks);
@@ -25,7 +26,7 @@ export const play = async (playlistId: string): Promise<void> => {
 /**
  * Create a new playlist
  */
-export const create = async (
+const create = async (
   name: string,
   tracks: string[] = [],
   importPath: string | false = false,
@@ -49,7 +50,7 @@ export const create = async (
 /**
  * Rename a playlist
  */
-export const rename = async (_id: string, name: string): Promise<void> => {
+const rename = async (_id: string, name: string): Promise<void> => {
   try {
     await db.playlists.updateWithRawQuery(_id, { $set: { name } });
     router.revalidate();
@@ -61,7 +62,7 @@ export const rename = async (_id: string, name: string): Promise<void> => {
 /**
  * Delete a playlist
  */
-export const remove = async (_id: string): Promise<void> => {
+const remove = async (_id: string): Promise<void> => {
   try {
     await db.playlists.remove([_id]);
     router.revalidate();
@@ -73,7 +74,7 @@ export const remove = async (_id: string): Promise<void> => {
 /**
  * Add tracks to a playlist
  */
-export const addTracks = async (_id: string, tracksIds: string[], isShown?: boolean): Promise<void> => {
+const addTracks = async (_id: string, tracksIds: string[], isShown?: boolean): Promise<void> => {
   // isShown should never be true, letting it here anyway to remember of a design issue
   if (isShown) return;
 
@@ -98,7 +99,7 @@ export const addTracks = async (_id: string, tracksIds: string[], isShown?: bool
 /**
  * Remove tracks from a playlist
  */
-export const removeTracks = async (playlistId: string, tracksIds: string[]): Promise<void> => {
+const removeTracks = async (playlistId: string, tracksIds: string[]): Promise<void> => {
   try {
     const playlist = await db.playlists.findOnlyByID(playlistId);
     const playlistTracks = playlist.tracks.filter((elem: string) => !tracksIds.includes(elem));
@@ -112,7 +113,7 @@ export const removeTracks = async (playlistId: string, tracksIds: string[]): Pro
 /**
  * Duplicate a playlist
  */
-export const duplicate = async (playlistId: string): Promise<void> => {
+const duplicate = async (playlistId: string): Promise<void> => {
   try {
     const playlist = await db.playlists.findOnlyByID(playlistId);
     const { tracks } = playlist;
@@ -134,7 +135,7 @@ export const duplicate = async (playlistId: string): Promise<void> => {
  * TODO: currently only supports one track at a time, at a point you should be
  * able to re-order a selection of tracks
  */
-export const reorderTracks = async (
+const reorderTracks = async (
   playlistId: string,
   tracksIds: string[],
   targetTrackId: string,
@@ -166,10 +167,10 @@ export const reorderTracks = async (
 };
 
 /**
- * Export a playlist to a .m3u file
- * TODO: investigate why the export playlist path are relative, and not absolute
+ * a playlist to a .m3u file
+ * TODO: investigate why the playlist path are relative, and not absolute
  */
-export const exportToM3u = async (playlistId: string): Promise<void> => {
+const exportToM3u = async (playlistId: string): Promise<void> => {
   const playlist: PlaylistModel = await db.playlists.findOnlyByID(playlistId);
   const tracks: TrackModel[] = await db.tracks.findByID(playlist.tracks);
 
@@ -179,3 +180,18 @@ export const exportToM3u = async (playlistId: string): Promise<void> => {
     tracks.map((track) => track.path)
   );
 };
+
+// Should we use something else to harmonize between zustand and non-store APIs?
+const PlaylistsAPI = {
+  play,
+  create,
+  rename,
+  remove,
+  addTracks,
+  reorderTracks,
+  removeTracks,
+  duplicate,
+  exportToM3u,
+};
+
+export default PlaylistsAPI;

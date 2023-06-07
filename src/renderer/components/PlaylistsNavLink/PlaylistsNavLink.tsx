@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
-import * as PlaylistActions from '../../stores/PlaylistsActions';
+import PlaylistsAPI from '../../stores/PlaylistsAPI';
 
 import styles from './PlaylistsNavLink.module.css';
 
@@ -19,7 +19,7 @@ export default function PlaylistsNavLink(props: Props) {
       to={`/playlists/${props.playlistId}`}
       onContextMenu={() => props.onContextMenu(props.playlistId)}
       draggable={false}
-      onDoubleClick={() => PlaylistActions.play(props.playlistId)}
+      onDoubleClick={() => PlaylistsAPI.play(props.playlistId)}
     >
       {props.children}
     </NavLink>

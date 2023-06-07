@@ -3,7 +3,7 @@ import { Link, useLoaderData, useParams } from 'react-router-dom';
 
 import TracksList from '../../components/TracksList/TracksList';
 import * as ViewMessage from '../../elements/ViewMessage/ViewMessage';
-import * as PlaylistsActions from '../../stores/PlaylistsActions';
+import PlaylistsAPI from '../../stores/PlaylistsAPI';
 import { filterTracks } from '../../lib/utils-library';
 import usePlayerStore from '../../stores/usePlayerStore';
 import { PlaylistLoaderResponse } from '../router';
@@ -26,7 +26,7 @@ export default function Playlist() {
 
   const onReorder = useCallback(
     (playlistId: string, tracksIds: string[], targetTrackId: string, position: 'above' | 'below') => {
-      PlaylistsActions.reorderTracks(playlistId, tracksIds, targetTrackId, position);
+      PlaylistsAPI.reorderTracks(playlistId, tracksIds, targetTrackId, position);
     },
     []
   );
