@@ -34,10 +34,17 @@ export default function PlayingBar() {
       <div className={styles.playingBar__cover}>
         <Cover track={trackPlaying} />
       </div>
-      <PlayingBarInfos trackPlaying={trackPlaying} shuffle={shuffle} repeat={repeat} />
+      <PlayingBarInfos
+        trackPlaying={trackPlaying}
+        shuffle={shuffle}
+        repeat={repeat}
+      />
       <div className={styles.playingBar__queue} ref={clickOutRef}>
-        <button onClick={() => setIsQueueOpen(!isQueueOpen)} className={styles.queueToggle}>
-          <Icon name='list' />
+        <button
+          onClick={() => setIsQueueOpen(!isQueueOpen)}
+          className={styles.queueToggle}
+        >
+          <Icon name="list" />
         </button>
         <div className={queueContainerClasses}>
           <Queue queue={queue} queueCursor={queueCursor} />

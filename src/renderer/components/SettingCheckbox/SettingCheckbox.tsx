@@ -18,7 +18,7 @@ export default function CheckboxSetting(props: Props) {
         <Setting.Label htmlFor={`setting-${slug}`}>
           <input
             id={`setting-${slug}`}
-            type='checkbox'
+            type="checkbox"
             onClick={(e) => props.onClick(e.currentTarget.checked)}
             defaultChecked={props.defaultValue}
           />

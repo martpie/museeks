@@ -26,11 +26,12 @@ export default function SettingsLibrary() {
   }, [libraryAPI]);
 
   return (
-    <div className='setting settings-musicfolder'>
+    <div className="setting settings-musicfolder">
       <Setting.Section>
         <h3 style={{ marginTop: 0 }}>Import music</h3>
         <Setting.Description>
-          This will also scan for <code>.m3u</code> files and create corresponding playlists.
+          This will also scan for <code>.m3u</code> files and create
+          corresponding playlists.
         </Setting.Description>
         <Button disabled={isLibraryRefreshing} onClick={openFolderSelector}>
           Add files or folders
@@ -39,8 +40,8 @@ export default function SettingsLibrary() {
       <Setting.Section>
         <h3>Danger zone</h3>
         <Button
-          relevancy='danger'
-          title='Fully reset the library'
+          relevancy="danger"
+          title="Fully reset the library"
           disabled={isLibraryRefreshing}
           onClick={libraryAPI.reset}
         >

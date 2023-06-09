@@ -1,6 +1,10 @@
 import { ipcRenderer } from 'electron';
 
-import { Playlist, TrackModel, PlaylistModel } from '../../shared/types/museeks';
+import {
+  Playlist,
+  TrackModel,
+  PlaylistModel,
+} from '../../shared/types/museeks';
 import logger from '../../shared/lib/logger';
 import channels from '../../shared/lib/ipc-channels';
 import router from '../views/router';
@@ -30,7 +34,7 @@ const create = async (
   name: string,
   tracks: string[] = [],
   importPath: string | false = false,
-  redirect = false
+  redirect = false,
 ): Promise<string> => {
   const playlist: Playlist = {
     name,
@@ -42,7 +46,10 @@ const create = async (
   const doc = await db.playlists.insert(playlist);
 
   if (redirect) router.navigate(`/playlists/${doc._id}`);
-  else useToastsStore.getState().api.add('success', `The playlist "${name}" was created`);
+  else
+    useToastsStore
+      .getState()
+      .api.add('success', `The playlist "${name}" was created`);
 
   return doc._id;
 };
@@ -74,7 +81,11 @@ const remove = async (_id: string): Promise<void> => {
 /**
  * Add tracks to a playlist
  */
-const addTracks = async (_id: string, tracksIds: string[], isShown?: boolean): Promise<void> => {
+const addTracks = async (
+  _id: string,
+  tracksIds: string[],
+  isShown?: boolean,
+): Promise<void> => {
   // isShown should never be true, letting it here anyway to remember of a design issue
   if (isShown) return;
 
@@ -83,15 +94,23 @@ const addTracks = async (_id: string, tracksIds: string[], isShown?: boolean): P
   try {
     const playlist = await db.playlists.findOnlyByID(_id);
     const playlistTracks = playlist.tracks.concat(tracksIds);
-    await db.playlists.updateWithRawQuery(_id, { $set: { tracks: playlistTracks } });
+    await db.playlists.updateWithRawQuery(_id, {
+      $set: { tracks: playlistTracks },
+    });
     router.revalidate();
-    toastsAPI.add('success', `${tracksIds.length} tracks were successfully added to "${playlist.name}"`);
+    toastsAPI.add(
+      'success',
+      `${tracksIds.length} tracks were successfully added to "${playlist.name}"`,
+    );
   } catch (err) {
     logger.warn(err);
     if (err instanceof Error) {
       toastsAPI.add('danger', err.message);
     } else {
-      toastsAPI.add('danger', 'An unknown error happened while trying to add tracks.');
+      toastsAPI.add(
+        'danger',
+        'An unknown error happened while trying to add tracks.',
+      );
     }
   }
 };
@@ -99,11 +118,18 @@ const addTracks = async (_id: string, tracksIds: string[], isShown?: boolean): P
 /**
  * Remove tracks from a playlist
  */
-const removeTracks = async (playlistId: string, tracksIds: string[]): Promise<void> => {
+const removeTracks = async (
+  playlistId: string,
+  tracksIds: string[],
+): Promise<void> => {
   try {
     const playlist = await db.playlists.findOnlyByID(playlistId);
-    const playlistTracks = playlist.tracks.filter((elem: string) => !tracksIds.includes(elem));
-    await db.playlists.updateWithRawQuery(playlistId, { $set: { tracks: playlistTracks } });
+    const playlistTracks = playlist.tracks.filter(
+      (elem: string) => !tracksIds.includes(elem),
+    );
+    await db.playlists.updateWithRawQuery(playlistId, {
+      $set: { tracks: playlistTracks },
+    });
     router.revalidate();
   } catch (err) {
     logger.warn(err);
@@ -139,7 +165,7 @@ const reorderTracks = async (
   playlistId: string,
   tracksIds: string[],
   targetTrackId: string,
-  position: 'above' | 'below'
+  position: 'above' | 'below',
 ): Promise<void> => {
   if (tracksIds.includes(targetTrackId)) return;
 
@@ -150,7 +176,9 @@ const reorderTracks = async (
     let targetIndex = newTracks.indexOf(targetTrackId);
 
     if (targetIndex === -1) {
-      throw new Error(`Could not find targetTrackId in the playlist "${playlist.name}"`);
+      throw new Error(
+        `Could not find targetTrackId in the playlist "${playlist.name}"`,
+      );
     }
 
     if (position === 'above') {
@@ -159,7 +187,9 @@ const reorderTracks = async (
 
     newTracks.splice(targetIndex + 1, 0, ...tracksIds);
 
-    await db.playlists.updateWithRawQuery(playlistId, { $set: { tracks: newTracks } });
+    await db.playlists.updateWithRawQuery(playlistId, {
+      $set: { tracks: newTracks },
+    });
     router.revalidate();
   } catch (err) {
     logger.warn(err);
@@ -177,7 +207,7 @@ const exportToM3u = async (playlistId: string): Promise<void> => {
   ipcRenderer.send(
     channels.PLAYLIST_EXPORT,
     playlist.name,
-    tracks.map((track) => track.path)
+    tracks.map((track) => track.path),
   );
 };
 

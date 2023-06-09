@@ -15,7 +15,9 @@ type Props = {
 export default function PlaylistsNavLink(props: Props) {
   return (
     <NavLink
-      className={({ isActive }) => `${props.className} ${styles.playlistLink} ${isActive && 'isActive'}`}
+      className={({ isActive }) =>
+        `${props.className} ${styles.playlistLink} ${isActive && 'isActive'}`
+      }
       to={`/playlists/${props.playlistId}`}
       onContextMenu={() => props.onContextMenu(props.playlistId)}
       draggable={false}

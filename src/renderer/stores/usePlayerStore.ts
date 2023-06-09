@@ -80,7 +80,9 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
       // Typically, if we are in the playlists generic view without any view selected
       if (newQueue.length === 0) return;
 
-      const queuePosition = newQueue.findIndex((track) => track._id === trackId);
+      const queuePosition = newQueue.findIndex(
+        (track) => track._id === trackId,
+      );
 
       // If a track exists
       if (queuePosition > -1) {
@@ -257,7 +259,9 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
           });
         } else {
           // Unshuffle the queue by restoring the initial queue
-          const currentTrackIndex = oldQueue.findIndex((track) => trackPlayingId === track._id);
+          const currentTrackIndex = oldQueue.findIndex(
+            (track) => trackPlayingId === track._id,
+          );
 
           // Roll back to the old but update queueCursor
           set({
@@ -345,7 +349,10 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
           logger.warn(err);
           useToastsStore
             .getState()
-            .api.add('danger', 'An error occured when trying to switch to the new output device');
+            .api.add(
+              'danger',
+              'An error occured when trying to switch to the new output device',
+            );
         }
       }
     },
@@ -486,7 +493,10 @@ function createPlayerStore<T extends PlayerState>(store: StateCreator<T>) {
       onRehydrateStorage: () => {
         return (state, error) => {
           if (error || state == null) {
-            logger.error('an error happened during player store hydration', error);
+            logger.error(
+              'an error happened during player store hydration',
+              error,
+            );
           } else {
             //  Let's set the player's src and currentTime with the info we have persisted in store
             const { queue, queueCursor } = state;
@@ -513,7 +523,7 @@ function createPlayerStore<T extends PlayerState>(store: StateCreator<T>) {
               : (persistedState as PlayerState).playerStatus,
         };
       },
-    })
+    }),
   );
 }
 

@@ -27,7 +27,10 @@ export default class ConfigModule extends Module {
     const defaultConfig: Config = this.getDefaultConfig();
     const pathUserData = app.getPath('userData');
 
-    this.conf = new TeenyConf<Config>(path.join(pathUserData, 'config.json'), defaultConfig);
+    this.conf = new TeenyConf<Config>(
+      path.join(pathUserData, 'config.json'),
+      defaultConfig,
+    );
 
     // Check if config update
     let configChanged = false;

@@ -128,6 +128,6 @@ app.on('ready', async () => {
     new IPCLibraryModule(mainWindow),
     new IPCNotificationsModule(mainWindow, config),
     new IPCDatabaseModule(mainWindow),
-    new IPCPlaylistsModule(mainWindow)
+    new IPCPlaylistsModule(mainWindow),
   ).catch(logger.error);
 });

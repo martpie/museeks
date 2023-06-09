@@ -5,7 +5,9 @@ import { ConfigBounds } from '../../shared/types/museeks';
 const DEFAULT_WIDTH = 900;
 const DEFAULT_HEIGHT = 550;
 
-export const checkBounds = function (bounds: ConfigBounds | undefined): ConfigBounds {
+export const checkBounds = function (
+  bounds: ConfigBounds | undefined,
+): ConfigBounds {
   if (bounds === undefined) {
     bounds = {
       x: 0,

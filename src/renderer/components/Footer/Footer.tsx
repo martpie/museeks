@@ -22,7 +22,11 @@ export default function Footer() {
       return (
         <div className={styles.footer__libraryRefresh}>
           <div className={styles.footer__libraryRefresh__progress}>
-            {isScanning ? <>scanning tracks...</> : <ProgressBar progress={progress} animated={total === 0} />}
+            {isScanning ? (
+              <>scanning tracks...</>
+            ) : (
+              <ProgressBar progress={progress} animated={total === 0} />
+            )}
           </div>
           {total > 0 && (
             <div className={styles.footer__libraryRefresh__count}>
@@ -45,34 +49,40 @@ export default function Footer() {
       <div className={styles.footer__navigation}>
         <div className={styles.footer__navigation__linkgroup}>
           <NavLink
-            to='/library'
+            to="/library"
             className={({ isActive }) =>
-              `${styles.footer__navigation__link} ${isActive && styles.footer__navigation__linkIsActive}`
+              `${styles.footer__navigation__link} ${
+                isActive && styles.footer__navigation__linkIsActive
+              }`
             }
-            title='Library'
+            title="Library"
             draggable={false}
           >
-            <Icon name='align-justify' fixedWidth />
+            <Icon name="align-justify" fixedWidth />
           </NavLink>
           <NavLink
-            to='/playlists'
+            to="/playlists"
             className={({ isActive }) =>
-              `${styles.footer__navigation__link} ${isActive && styles.footer__navigation__linkIsActive}`
+              `${styles.footer__navigation__link} ${
+                isActive && styles.footer__navigation__linkIsActive
+              }`
             }
-            title='Playlists'
+            title="Playlists"
             draggable={false}
           >
-            <Icon name='star' fixedWidth />
+            <Icon name="star" fixedWidth />
           </NavLink>
           <NavLink
-            to='/settings'
+            to="/settings"
             className={({ isActive }) =>
-              `${styles.footer__navigation__link} ${isActive && styles.footer__navigation__linkIsActive}`
+              `${styles.footer__navigation__link} ${
+                isActive && styles.footer__navigation__linkIsActive
+              }`
             }
-            title='Settings'
+            title="Settings"
             draggable={false}
           >
-            <Icon name='gear' fixedWidth />
+            <Icon name="gear" fixedWidth />
           </NavLink>
         </div>
       </div>

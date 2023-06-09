@@ -67,7 +67,10 @@ class IPCLibraryModule extends ModuleWindow {
   }
 
   async load(): Promise<void> {
-    ipcMain.handle(channels.LIBRARY_IMPORT_TRACKS, this.importTracks.bind(this));
+    ipcMain.handle(
+      channels.LIBRARY_IMPORT_TRACKS,
+      this.importTracks.bind(this),
+    );
     ipcMain.handle(channels.LIBRARY_SCAN_TRACKS, this.scanTracks.bind(this));
     ipcMain.handle(channels.PLAYLISTS_RESOLVE_M3U, this.resolveM3u.bind(this));
   }
@@ -80,12 +83,17 @@ class IPCLibraryModule extends ModuleWindow {
    * Scan the file system and return all music files and playlists that may be
    * safely imported to Museeks.
    */
-  private async scanTracks(_e: IpcMainInvokeEvent, pathsToScan: string[]): Promise<[string[], string[]]> {
+  private async scanTracks(
+    _e: IpcMainInvokeEvent,
+    pathsToScan: string[],
+  ): Promise<[string[], string[]]> {
     // 1. Get the stats for all the files/paths
-    const statsPromises: Promise<ScanFile>[] = pathsToScan.map(async (folderPath) => ({
-      path: folderPath,
-      stat: await fs.promises.stat(folderPath),
-    }));
+    const statsPromises: Promise<ScanFile>[] = pathsToScan.map(
+      async (folderPath) => ({
+        path: folderPath,
+        stat: await fs.promises.stat(folderPath),
+      }),
+    );
 
     const paths = await Promise.all(statsPromises);
 
@@ -95,13 +103,16 @@ class IPCLibraryModule extends ModuleWindow {
 
     paths.forEach((elem) => {
       if (elem.stat.isFile()) files.push(elem.path);
-      if (elem.stat.isDirectory() || elem.stat.isSymbolicLink()) folders.push(elem.path);
+      if (elem.stat.isDirectory() || elem.stat.isSymbolicLink())
+        folders.push(elem.path);
     });
 
     // 3. Scan all the directories with globby
     const globbies = folders.map((folder) => {
       // Normalize slashes and escape regex special characters
-      const pattern = `${folder.replace(/\\/g, '/').replace(/([$^*+?()\[\]])/g, '\\$1')}/**/*.*`;
+      const pattern = `${folder
+        .replace(/\\/g, '/')
+        .replace(/([$^*+?()\[\]])/g, '\\$1')}/**/*.*`;
 
       return globby(pattern, { followSymbolicLinks: true });
     });
@@ -110,7 +121,9 @@ class IPCLibraryModule extends ModuleWindow {
     // Scan folders and add files to library
 
     // 4. Merge all path arrays together and filter them with the extensions we support
-    const allFiles = subDirectoriesFiles.reduce((acc, array) => acc.concat(array), [] as string[]).concat(files); // Add the initial files
+    const allFiles = subDirectoriesFiles
+      .reduce((acc, array) => acc.concat(array), [] as string[])
+      .concat(files); // Add the initial files
 
     const supportedTrackFiles = allFiles.filter((filePath) => {
       const extension = path.extname(filePath).toLowerCase();
@@ -125,7 +138,10 @@ class IPCLibraryModule extends ModuleWindow {
     return [supportedTrackFiles, supportedPlaylistsFiles];
   }
 
-  private async resolveM3u(_e: IpcMainInvokeEvent, path: string): Promise<string[]> {
+  private async resolveM3u(
+    _e: IpcMainInvokeEvent,
+    path: string,
+  ): Promise<string[]> {
     return m3u.parse(path);
   }
 
@@ -133,7 +149,10 @@ class IPCLibraryModule extends ModuleWindow {
    * Now: returns the id3 tags of all the given tracks path
    * Tomorrow: do DB insertion here
    */
-  async importTracks(_e: IpcMainInvokeEvent, tracksPath: string[]): Promise<Track[]> {
+  async importTracks(
+    _e: IpcMainInvokeEvent,
+    tracksPath: string[],
+  ): Promise<Track[]> {
     return new Promise((resolve, reject) => {
       if (tracksPath.length === 0) return;
 
@@ -220,12 +239,18 @@ class IPCLibraryModule extends ModuleWindow {
     };
   }
 
-  private parseMusicMetadata(data: mmd.IAudioMetadata, trackPath: string): Partial<Track> {
+  private parseMusicMetadata(
+    data: mmd.IAudioMetadata,
+    trackPath: string,
+  ): Partial<Track> {
     const { common, format } = data;
 
     const metadata = {
       album: common.album,
-      artist: common.artists || (common.artist && [common.artist]) || (common.albumartist && [common.albumartist]),
+      artist:
+        common.artists ||
+        (common.artist && [common.artist]) ||
+        (common.albumartist && [common.albumartist]),
       disk: common.disk,
       duration: format.duration,
       genre: common.genre,
@@ -276,7 +301,9 @@ class IPCLibraryModule extends ModuleWindow {
 
       return metadata;
     } catch (err) {
-      logger.warn(`An error occured while reading ${trackPath} id3 tags: ${err}`);
+      logger.warn(
+        `An error occured while reading ${trackPath} id3 tags: ${err}`,
+      );
     }
 
     return basicMetadata;

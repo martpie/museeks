@@ -3,7 +3,10 @@
  * experience
  */
 
-import installExtensions, { REDUX_DEVTOOLS, REACT_DEVELOPER_TOOLS } from 'electron-devtools-installer';
+import installExtensions, {
+  REDUX_DEVTOOLS,
+  REACT_DEVELOPER_TOOLS,
+} from 'electron-devtools-installer';
 
 import logger from '../../shared/lib/logger';
 

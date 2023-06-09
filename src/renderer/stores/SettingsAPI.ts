@@ -51,16 +51,22 @@ const checkSleepBlocker = (): void => {
 /**
  * Check if a new release is available
  */
-const checkForUpdate = async (options: UpdateCheckOptions = {}): Promise<void> => {
+const checkForUpdate = async (
+  options: UpdateCheckOptions = {},
+): Promise<void> => {
   const currentVersion = window.MuseeksAPI.version;
 
   try {
-    const response = await fetch('https://api.github.com/repos/martpie/museeks/releases');
+    const response = await fetch(
+      'https://api.github.com/repos/martpie/museeks/releases',
+    );
     const releases = await response.json();
 
     // TODO Github API types?
     const newRelease = releases.find(
-      (release: any) => semver.valid(release.tag_name) !== null && semver.gt(release.tag_name, currentVersion)
+      (release: any) =>
+        semver.valid(release.tag_name) !== null &&
+        semver.gt(release.tag_name, currentVersion),
     );
 
     let message;
@@ -74,7 +80,10 @@ const checkForUpdate = async (options: UpdateCheckOptions = {}): Promise<void> =
       useToastsStore.getState().api.add('success', message);
     }
   } catch (e) {
-    if (!options.silentFail) useToastsStore.getState().api.add('danger', 'An error occurred while checking updates.');
+    if (!options.silentFail)
+      useToastsStore
+        .getState()
+        .api.add('danger', 'An error occurred while checking updates.');
   }
 };
 

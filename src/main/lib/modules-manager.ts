@@ -6,9 +6,11 @@ export const init = async (...modules: Module[]): Promise<void> => {
     modules.map((module) =>
       module.init().catch((err) => {
         throw err;
-      })
-    )
+      }),
+    ),
   ).catch((err) => {
-    logger.error(`An error occured when loading ${module.constructor.name} could not be loaded:\n${err}`);
+    logger.error(
+      `An error occured when loading ${module.constructor.name} could not be loaded:\n${err}`,
+    );
   });
 };

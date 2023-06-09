@@ -35,7 +35,10 @@ export const parse = (filePath: string): string[] => {
       }
 
       // If relative Path
-      if (fs.existsSync(path.resolve(baseDir, line)) && isFile(path.resolve(baseDir, line))) {
+      if (
+        fs.existsSync(path.resolve(baseDir, line)) &&
+        isFile(path.resolve(baseDir, line))
+      ) {
         acc.push(path.resolve(baseDir, line));
         return acc;
       }

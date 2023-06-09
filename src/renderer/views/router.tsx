@@ -43,7 +43,9 @@ const router = createHashRouter([
         path: 'playlists',
         id: 'playlists',
         element: <PlaylistsView />,
-        loader: async ({ params }): Promise<LoaderResponse<PlaylistsLoaderResponse>> => {
+        loader: async ({
+          params,
+        }): Promise<LoaderResponse<PlaylistsLoaderResponse>> => {
           const playlists = await db.playlists.getAll();
           const [firstPlaylist] = playlists;
           const { playlistId } = params;
@@ -52,7 +54,8 @@ const router = createHashRouter([
             // If landing page, redirect to the first playlist
             playlistId === undefined ||
             // If playlist ID does not exist, redirect to the first playlist
-            (playlistId !== undefined && !playlists.map((playlist) => playlist._id).includes(playlistId))
+            (playlistId !== undefined &&
+              !playlists.map((playlist) => playlist._id).includes(playlistId))
           ) {
             if (firstPlaylist !== undefined) {
               return redirect(`/playlists/${firstPlaylist._id}`);
@@ -66,12 +69,16 @@ const router = createHashRouter([
             path: ':playlistId',
             id: 'playlist-details',
             element: <PlaylistView />,
-            loader: async ({ params }): Promise<LoaderResponse<PlaylistLoaderResponse>> => {
+            loader: async ({
+              params,
+            }): Promise<LoaderResponse<PlaylistLoaderResponse>> => {
               if (typeof params.playlistId !== 'string') {
                 throw new Error('Playlist ID is not defined');
               }
 
-              const playlist = await db.playlists.findOnlyByID(params.playlistId);
+              const playlist = await db.playlists.findOnlyByID(
+                params.playlistId,
+              );
               return {
                 // TODO: can we re-use parent's data?
                 playlists: await db.playlists.getAll(),

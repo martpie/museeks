@@ -25,7 +25,10 @@ export default class IPCNotificationsModule extends ModuleWindow {
   }
 
   private async sendPlaybackNotification(track: TrackModel): Promise<void> {
-    if (this.window.isFocused() || this.config.getx('displayNotifications') === false) {
+    if (
+      this.window.isFocused() ||
+      this.config.getx('displayNotifications') === false
+    ) {
       return;
     }
 

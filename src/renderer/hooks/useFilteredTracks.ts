@@ -12,8 +12,12 @@ export default function useFilteredTracks(tracks: TrackModel[]): TrackModel[] {
   // Filter and sort TracksList
   // sorting being a costly operation, do it after filtering
   const filteredTracks = useMemo(
-    () => sortTracks(filterTracks(tracks, search), SORT_ORDERS[sort.by][sort.order]),
-    [tracks, search, sort]
+    () =>
+      sortTracks(
+        filterTracks(tracks, search),
+        SORT_ORDERS[sort.by][sort.order],
+      ),
+    [tracks, search, sort],
   );
 
   return filteredTracks;

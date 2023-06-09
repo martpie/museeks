@@ -38,9 +38,12 @@ export default class NativeThemeModule extends ModuleWindow {
      * Handle themeSource update and returns the theme variables for a given
      * themeId
      */
-    ipcMain.handle(channels.THEME_SET_ID, (_event, themeId: Config['theme']) => {
-      this.setThemeId(themeId);
-    });
+    ipcMain.handle(
+      channels.THEME_SET_ID,
+      (_event, themeId: Config['theme']) => {
+        this.setThemeId(themeId);
+      },
+    );
 
     ipcMain.handle(channels.THEME_GET, () => {
       let themeId = this.getThemeId();

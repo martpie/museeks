@@ -37,14 +37,16 @@ export default function PlayingBarInfo(props: Props) {
       if (playingBar.current) {
         const parent = playingBar.current.offsetParent as HTMLDivElement;
         const percent =
-          ((e.pageX - (playingBar.current.offsetLeft + parent.offsetLeft)) / playingBar.current.offsetWidth) * 100;
+          ((e.pageX - (playingBar.current.offsetLeft + parent.offsetLeft)) /
+            playingBar.current.offsetWidth) *
+          100;
 
         const to = (percent * trackPlaying.duration) / 100;
 
         playerAPI.jumpTo(to);
       }
     },
-    [playingBar, trackPlaying, playerAPI]
+    [playingBar, trackPlaying, playerAPI],
   );
 
   const dragOver = useCallback(
@@ -55,7 +57,10 @@ export default function PlayingBarInfo(props: Props) {
           const playingBarRect = playingBar.current.getBoundingClientRect();
 
           const barWidth = playingBar.current.offsetWidth;
-          const offsetX = Math.min(Math.max(0, e.pageX - playingBarRect.left), barWidth);
+          const offsetX = Math.min(
+            Math.max(0, e.pageX - playingBarRect.left),
+            barWidth,
+          );
 
           const percent = (offsetX / barWidth) * 100;
 
@@ -65,7 +70,7 @@ export default function PlayingBarInfo(props: Props) {
         }
       }
     },
-    [playingBar, dragging, trackPlaying, playerAPI]
+    [playingBar, dragging, trackPlaying, playerAPI],
   );
 
   const dragEnd = useCallback(() => {
@@ -84,7 +89,7 @@ export default function PlayingBarInfo(props: Props) {
       setDuration(time);
       setX(percent);
     },
-    [trackPlaying]
+    [trackPlaying],
   );
 
   const hideTooltip = useCallback(() => {
@@ -99,7 +104,9 @@ export default function PlayingBarInfo(props: Props) {
     window.addEventListener('mouseup', dragEnd);
 
     return () => {
-      window.MuseeksAPI.player.getAudio().removeEventListener('timeupdate', tick);
+      window.MuseeksAPI.player
+        .getAudio()
+        .removeEventListener('timeupdate', tick);
 
       window.removeEventListener('mousemove', dragOver);
       window.removeEventListener('mouseup', dragEnd);
@@ -122,16 +129,21 @@ export default function PlayingBarInfo(props: Props) {
         </div>
 
         <div className={styles.duration}>
-          {utils.parseDuration(elapsed)} / {utils.parseDuration(trackPlaying.duration)}
+          {utils.parseDuration(elapsed)} /{' '}
+          {utils.parseDuration(trackPlaying.duration)}
         </div>
       </div>
       <div className={styles.playingBar__info__progress} ref={playingBar}>
-        <div className={styles.progressTooltip} hidden={duration === null} style={{ left: `${x}%` }}>
+        <div
+          className={styles.progressTooltip}
+          hidden={duration === null}
+          style={{ left: `${x}%` }}
+        >
           {utils.parseDuration(duration)}
         </div>
         <div
           className={styles.progress}
-          role='progressbar'
+          role="progressbar"
           tabIndex={0}
           onMouseDown={jumpAudioTo}
           onMouseMove={showTooltip}
@@ -141,7 +153,11 @@ export default function PlayingBarInfo(props: Props) {
             className={styles.progressBar}
             style={
               elapsed / trackPlaying.duration <= 1
-                ? { transform: `scale3d(${elapsed / trackPlaying.duration}, 1, 1)` }
+                ? {
+                    transform: `scale3d(${
+                      elapsed / trackPlaying.duration
+                    }, 1, 1)`,
+                  }
                 : { display: 'none' }
             }
           />

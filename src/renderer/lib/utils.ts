@@ -25,19 +25,27 @@ export const parseDuration = (duration: number | null): string => {
  */
 export const removeUselessFolders = (folders: string[]): string[] => {
   // Remove duplicates
-  let filteredFolders = folders.filter((elem, index) => folders.indexOf(elem) === index);
+  let filteredFolders = folders.filter(
+    (elem, index) => folders.indexOf(elem) === index,
+  );
 
   const foldersToBeRemoved: string[] = [];
 
   filteredFolders.forEach((folder, i) => {
     filteredFolders.forEach((subfolder, j) => {
-      if (subfolder.includes(folder) && i !== j && !foldersToBeRemoved.includes(folder)) {
+      if (
+        subfolder.includes(folder) &&
+        i !== j &&
+        !foldersToBeRemoved.includes(folder)
+      ) {
         foldersToBeRemoved.push(subfolder);
       }
     });
   });
 
-  filteredFolders = filteredFolders.filter((elem) => !foldersToBeRemoved.includes(elem));
+  filteredFolders = filteredFolders.filter(
+    (elem) => !foldersToBeRemoved.includes(elem),
+  );
 
   return filteredFolders;
 };

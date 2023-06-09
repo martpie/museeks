@@ -15,11 +15,11 @@ export default function ExternalLink(props: Props) {
       e.preventDefault();
       shell.openExternal(props.href);
     },
-    [props.href]
+    [props.href],
   );
 
   return (
-    <button className={styles.externalLink} role='link' onClick={openLink}>
+    <button className={styles.externalLink} role="link" onClick={openLink}>
       {props.children}
     </button>
   );

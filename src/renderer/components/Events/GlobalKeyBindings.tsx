@@ -43,7 +43,7 @@ function GlobalKeyBindings() {
           break;
       }
     },
-    [navigate, playerAPI]
+    [navigate, playerAPI],
   );
 
   return <Keybinding onKey={onKey} preventInputConflict />;

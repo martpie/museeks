@@ -10,8 +10,11 @@ import ModuleWindow from './module-window';
  */
 export default class IPCCoverModule extends ModuleWindow {
   async load(): Promise<void> {
-    ipcMain.handle(channels.COVER_GET, (_e, path: string): Promise<string | null> => {
-      return fetchCover(path, false, true);
-    });
+    ipcMain.handle(
+      channels.COVER_GET,
+      (_e, path: string): Promise<string | null> => {
+        return fetchCover(path, false, true);
+      },
+    );
   }
 }

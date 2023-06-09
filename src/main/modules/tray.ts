@@ -39,9 +39,15 @@ export default class TrayModule extends ModuleWindow {
     const logosPath = path.resolve(path.join(__dirname, '../shared/logos'));
 
     const trayIcons = {
-      tray: nativeImage.createFromPath(path.join(logosPath, 'museeks-tray.png')).resize({ width: 24, height: 24 }),
-      'tray-win32': nativeImage.createFromPath(path.join(logosPath, 'museeks-tray.ico')),
-      'tray-darwin-dark': nativeImage.createFromPath(path.join(logosPath, 'museeks-tray-dark.png')),
+      tray: nativeImage
+        .createFromPath(path.join(logosPath, 'museeks-tray.png'))
+        .resize({ width: 24, height: 24 }),
+      'tray-win32': nativeImage.createFromPath(
+        path.join(logosPath, 'museeks-tray.ico'),
+      ),
+      'tray-darwin-dark': nativeImage.createFromPath(
+        path.join(logosPath, 'museeks-tray-dark.png'),
+      ),
     };
 
     // Make it "lightable" on macOS
@@ -51,7 +57,8 @@ export default class TrayModule extends ModuleWindow {
     this.trayIcon = trayIcons.tray;
 
     if (os.platform() === 'win32') this.trayIcon = trayIcons['tray-win32'];
-    else if (os.platform() === 'darwin') this.trayIcon = trayIcons['tray-darwin-dark'];
+    else if (os.platform() === 'darwin')
+      this.trayIcon = trayIcons['tray-darwin-dark'];
   }
 
   async load(): Promise<void> {
@@ -67,12 +74,15 @@ export default class TrayModule extends ModuleWindow {
             logger.warn(err);
           } else {
             this.trayIcon = nativeImage.createFromPath(
-              path.join(path.resolve(path.join(__dirname, '../shared/logos')), 'museeks-tray.png')
+              path.join(
+                path.resolve(path.join(__dirname, '../shared/logos')),
+                'museeks-tray.png',
+              ),
             );
 
             this.refreshTrayIcon();
           }
-        }
+        },
       );
     }
 
@@ -152,11 +162,14 @@ export default class TrayModule extends ModuleWindow {
       this.setContextMenu(PlayerStatus.PAUSE);
     });
 
-    ipcMain.on(channels.PLAYBACK_TRACK_CHANGE, (_e: Event, track: TrackModel) => {
-      this.status = PlayerStatus.PLAY;
-      this.updateTrayMetadata(track);
-      this.setContextMenu(PlayerStatus.PLAY);
-    });
+    ipcMain.on(
+      channels.PLAYBACK_TRACK_CHANGE,
+      (_e: Event, track: TrackModel) => {
+        this.status = PlayerStatus.PLAY;
+        this.updateTrayMetadata(track);
+        this.setContextMenu(PlayerStatus.PLAY);
+      },
+    );
   }
 
   create(): void {

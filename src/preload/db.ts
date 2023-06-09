@@ -3,7 +3,12 @@ import linvodb from 'linvodb3';
 import leveljs from 'level-js';
 import Bluebird from 'bluebird';
 
-import { Playlist, PlaylistModel, Track, TrackModel } from '../shared/types/museeks';
+import {
+  Playlist,
+  PlaylistModel,
+  Track,
+  TrackModel,
+} from '../shared/types/museeks';
 
 /**
  * This will ultimately move to the main process. Here for legacy purpose until
@@ -104,7 +109,10 @@ const playlists = {
   },
 
   remove(playlistIDs: string[]): Promise<void> {
-    return Playlists.removeAsync({ _id: { $in: playlistIDs } }, { multi: true });
+    return Playlists.removeAsync(
+      { _id: { $in: playlistIDs } },
+      { multi: true },
+    );
   },
 
   findByID(playlistIDs: string[]): Promise<PlaylistModel[]> {

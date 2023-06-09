@@ -10,7 +10,8 @@ import { PlaylistLoaderResponse } from '../router';
 import useLibraryStore from '../../stores/useLibraryStore';
 
 export default function Playlist() {
-  const { playlists, playlistTracks } = useLoaderData() as PlaylistLoaderResponse;
+  const { playlists, playlistTracks } =
+    useLoaderData() as PlaylistLoaderResponse;
   const { playlistId } = useParams();
 
   const trackPlayingId = usePlayerStore((state) => {
@@ -22,13 +23,26 @@ export default function Playlist() {
   });
 
   const search = useLibraryStore((state) => state.search);
-  const filteredTracks = useMemo(() => filterTracks(playlistTracks, search), [playlistTracks, search]);
+  const filteredTracks = useMemo(
+    () => filterTracks(playlistTracks, search),
+    [playlistTracks, search],
+  );
 
   const onReorder = useCallback(
-    (playlistId: string, tracksIds: string[], targetTrackId: string, position: 'above' | 'below') => {
-      PlaylistsAPI.reorderTracks(playlistId, tracksIds, targetTrackId, position);
+    (
+      playlistId: string,
+      tracksIds: string[],
+      targetTrackId: string,
+      position: 'above' | 'below',
+    ) => {
+      PlaylistsAPI.reorderTracks(
+        playlistId,
+        tracksIds,
+        targetTrackId,
+        position,
+      );
     },
-    []
+    [],
   );
 
   if (playlistTracks.length === 0) {
@@ -37,7 +51,7 @@ export default function Playlist() {
         <p>Empty playlist</p>
         <ViewMessage.Sub>
           You can add tracks from the{' '}
-          <Link to='/library' draggable={false}>
+          <Link to="/library" draggable={false}>
             library view
           </Link>
         </ViewMessage.Sub>
@@ -60,7 +74,7 @@ export default function Playlist() {
         <p>Empty playlist</p>
         <ViewMessage.Sub>
           You can add tracks from the{' '}
-          <Link to='/library' draggable={false}>
+          <Link to="/library" draggable={false}>
             library view
           </Link>
         </ViewMessage.Sub>
@@ -70,7 +84,7 @@ export default function Playlist() {
 
   return (
     <TracksList
-      type='playlist'
+      type="playlist"
       reorderable={true}
       onReorder={onReorder}
       tracks={playlistTracks}

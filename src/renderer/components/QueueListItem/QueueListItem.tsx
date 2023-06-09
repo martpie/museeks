@@ -27,14 +27,14 @@ export default function QueueListItem(props: Props) {
     (e: React.DragEvent<HTMLDivElement>) => {
       props.onDragStart(e, props.index);
     },
-    [props]
+    [props],
   );
 
   const onDragOver = useCallback(
     (e: React.DragEvent<HTMLDivElement>) => {
       props.onDragOver(e, props.index);
     },
-    [props]
+    [props],
   );
 
   const remove = useCallback(() => {

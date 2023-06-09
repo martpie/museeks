@@ -12,32 +12,42 @@ export default function SettingsAudio() {
     (e: React.SyntheticEvent<HTMLInputElement>) => {
       playerAPI.setPlaybackRate(parseFloat(e.currentTarget.value));
     },
-    [playerAPI]
+    [playerAPI],
   );
 
   const config = window.MuseeksAPI.config.get() as Config;
 
   return (
-    <div className='setting setting-audio'>
+    <div className="setting setting-audio">
       <Setting.Section>
-        <Setting.Label htmlFor='setting-playbackrate'>Playback rate</Setting.Label>
+        <Setting.Label htmlFor="setting-playbackrate">
+          Playback rate
+        </Setting.Label>
         <Setting.Input
-          id='setting-playbackrate'
+          id="setting-playbackrate"
           defaultValue={config.audioPlaybackRate}
           onChange={setPlaybackRate}
-          type='number'
-          min='0.5'
-          max='5'
-          step='0.1'
+          type="number"
+          min="0.5"
+          max="5"
+          step="0.1"
         />
         <Setting.Description>
-          Increase the playback rate: a value of 2 will play your music at a 2x speed
+          Increase the playback rate: a value of 2 will play your music at a 2x
+          speed
         </Setting.Description>
       </Setting.Section>
       <Setting.Section>
-        <Setting.Label htmlFor='setting-playbackrate'>Audio output</Setting.Label>
-        <AudioOutputSelect defaultValue={config.audioOutputDevice} onChange={playerAPI.setOutputDevice} />
-        <Setting.Description>Advanced: set a custom audio output device.</Setting.Description>
+        <Setting.Label htmlFor="setting-playbackrate">
+          Audio output
+        </Setting.Label>
+        <AudioOutputSelect
+          defaultValue={config.audioOutputDevice}
+          onChange={playerAPI.setOutputDevice}
+        />
+        <Setting.Description>
+          Advanced: set a custom audio output device.
+        </Setting.Description>
       </Setting.Section>
     </div>
   );

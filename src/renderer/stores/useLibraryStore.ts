@@ -1,7 +1,14 @@
 import { chunk, flatten } from 'lodash-es';
 import { MessageBoxReturnValue, ipcRenderer } from 'electron';
 
-import { LibrarySort, SortBy, SortOrder, Track, TrackEditableFields, TrackModel } from '../../shared/types/museeks';
+import {
+  LibrarySort,
+  SortBy,
+  SortOrder,
+  Track,
+  TrackEditableFields,
+  TrackModel,
+} from '../../shared/types/museeks';
 import logger from '../../shared/lib/logger';
 import router from '../views/router';
 import channels from '../../shared/lib/ipc-channels';
@@ -31,7 +38,10 @@ type LibraryState = {
     remove: (tracksIds: string[]) => Promise<void>;
     reset: () => Promise<void>;
     incrementPlayCount: (trackID: string) => Promise<void>;
-    updateTrackMetadata: (trackId: string, newFields: TrackEditableFields) => Promise<void>;
+    updateTrackMetadata: (
+      trackId: string,
+      newFields: TrackEditableFields,
+    ) => Promise<void>;
     highlightPlayingTrack: (highlight: boolean) => void;
   };
 };
@@ -66,7 +76,8 @@ const useLibraryStore = createStore<LibraryState>((set, get) => ({
       if (sortBy === prevSort.by) {
         sort = {
           ...prevSort,
-          order: prevSort.order === SortOrder.ASC ? SortOrder.DSC : SortOrder.ASC,
+          order:
+            prevSort.order === SortOrder.ASC ? SortOrder.DSC : SortOrder.ASC,
         };
       }
       // If it's different, then we assume the user needs ASC order by default
@@ -91,20 +102,24 @@ const useLibraryStore = createStore<LibraryState>((set, get) => ({
       await Promise.all(
         paths.map(async (filePath) => {
           try {
-            const playlistFiles = await window.MuseeksAPI.playlists.resolveM3u(filePath);
+            const playlistFiles = await window.MuseeksAPI.playlists.resolveM3u(
+              filePath,
+            );
             const playlistName = path.parse(filePath).name;
 
-            const existingTracks: TrackModel[] = await db.tracks.findByPath(playlistFiles);
+            const existingTracks: TrackModel[] = await db.tracks.findByPath(
+              playlistFiles,
+            );
 
             await PlaylistsAPI.create(
               playlistName,
               existingTracks.map((track) => track._id),
-              filePath
+              filePath,
             );
           } catch (err) {
             logger.warn(err);
           }
-        })
+        }),
       );
     },
 
@@ -117,12 +132,13 @@ const useLibraryStore = createStore<LibraryState>((set, get) => ({
       try {
         // Get all valid track paths
         // TODO move this whole function to main process
-        const [supportedTrackFiles, supportedPlaylistsFiles] = await ipcRenderer.invoke(
-          channels.LIBRARY_SCAN_TRACKS,
-          pathsToScan
-        );
+        const [supportedTrackFiles, supportedPlaylistsFiles] =
+          await ipcRenderer.invoke(channels.LIBRARY_SCAN_TRACKS, pathsToScan);
 
-        if (supportedTrackFiles.length === 0 && supportedPlaylistsFiles.length === 0) {
+        if (
+          supportedTrackFiles.length === 0 &&
+          supportedPlaylistsFiles.length === 0
+        ) {
           set({
             refreshing: false,
             refresh: { processed: 0, total: 0 },
@@ -131,7 +147,10 @@ const useLibraryStore = createStore<LibraryState>((set, get) => ({
         }
 
         // 5. Import the music tracks found the directories
-        const tracks: Track[] = await ipcRenderer.invoke(channels.LIBRARY_IMPORT_TRACKS, supportedTrackFiles);
+        const tracks: Track[] = await ipcRenderer.invoke(
+          channels.LIBRARY_IMPORT_TRACKS,
+          supportedTrackFiles,
+        );
 
         const batchSize = 100;
         const chunkedTracks = chunk(tracks, batchSize);
@@ -153,7 +172,7 @@ const useLibraryStore = createStore<LibraryState>((set, get) => ({
             });
 
             return insertedChunk;
-          })
+          }),
         );
 
         const importedTracks = flatten(chunkedImportedTracks);
@@ -167,7 +186,9 @@ const useLibraryStore = createStore<LibraryState>((set, get) => ({
 
         return importedTracks;
       } catch (err) {
-        useToastsStore.getState().api.add('danger', 'An error occured when scanning the library');
+        useToastsStore
+          .getState()
+          .api.add('danger', 'An error occured when scanning the library');
         logger.warn(err);
         return [];
       } finally {
@@ -190,7 +211,10 @@ const useLibraryStore = createStore<LibraryState>((set, get) => ({
         type: 'warning',
       };
 
-      const result: MessageBoxReturnValue = await ipcRenderer.invoke(channels.DIALOG_MESSAGE_BOX, options);
+      const result: MessageBoxReturnValue = await ipcRenderer.invoke(
+        channels.DIALOG_MESSAGE_BOX,
+        options,
+      );
 
       if (result.response === 1) {
         // button possition, here 'remove'
@@ -213,11 +237,15 @@ const useLibraryStore = createStore<LibraryState>((set, get) => ({
         const options: Electron.MessageBoxOptions = {
           buttons: ['Cancel', 'Reset'],
           title: 'Reset library?',
-          message: 'Are you sure you want to reset your library? All your tracks and playlists will be cleared.',
+          message:
+            'Are you sure you want to reset your library? All your tracks and playlists will be cleared.',
           type: 'warning',
         };
 
-        const result = await ipcRenderer.invoke(channels.DIALOG_MESSAGE_BOX, options);
+        const result = await ipcRenderer.invoke(
+          channels.DIALOG_MESSAGE_BOX,
+          options,
+        );
 
         if (result.response === 1) {
           set({ refreshing: true });
@@ -250,7 +278,10 @@ const useLibraryStore = createStore<LibraryState>((set, get) => ({
      * @param trackId The ID of the track to update
      * @param newFields The fields to be updated and their new value
      */
-    updateTrackMetadata: async (trackId: string, newFields: TrackEditableFields): Promise<void> => {
+    updateTrackMetadata: async (
+      trackId: string,
+      newFields: TrackEditableFields,
+    ): Promise<void> => {
       let track = await db.tracks.findOnlyByID(trackId);
 
       track = {

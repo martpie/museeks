@@ -27,7 +27,9 @@ describe('themes', () => {
     const [firstTheme] = themes;
 
     themes.forEach((theme) => {
-      expect(Object.keys(theme.variables)).toStrictEqual(Object.keys(firstTheme.variables));
+      expect(Object.keys(theme.variables)).toStrictEqual(
+        Object.keys(firstTheme.variables),
+      );
     });
   });
 });

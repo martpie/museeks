@@ -92,7 +92,9 @@ export default class AppModule extends ModuleWindow {
     });
 
     if (!gotTheLock) {
-      logger.info('Another instance of Museeks is already running, quitting...');
+      logger.info(
+        'Another instance of Museeks is already running, quitting...',
+      );
       app.quit();
     }
   }

@@ -13,7 +13,9 @@ export default function Cover(props: Props) {
 
   useEffect(() => {
     const refreshCover = async () => {
-      const coverPath = await window.MuseeksAPI.covers.getCoverAsBase64(props.track);
+      const coverPath = await window.MuseeksAPI.covers.getCoverAsBase64(
+        props.track,
+      );
       setCoverPath(coverPath);
     };
 
@@ -21,7 +23,9 @@ export default function Cover(props: Props) {
   }, [props.track]);
 
   if (coverPath) {
-    const encodedCoverPath = encodeURI(coverPath).replace(/'/g, "\\'").replace(/"/g, '\\"');
+    const encodedCoverPath = encodeURI(coverPath)
+      .replace(/'/g, "\\'")
+      .replace(/"/g, '\\"');
     const inlineStyles = { backgroundImage: `url('${encodedCoverPath}')` };
 
     return <div className={styles.cover} style={inlineStyles} />;

@@ -49,7 +49,10 @@ const pathUserData = app.getPath('userData');
 |--------------------------------------------------------------------------
 */
 
-const config = new TeenyConf<Config>(path.join(pathUserData, 'config.json'), {});
+const config = new TeenyConf<Config>(
+  path.join(pathUserData, 'config.json'),
+  {},
+);
 
 const player = new Player({
   volume: config.get('audioVolume'),
@@ -81,7 +84,8 @@ const API = {
       await ipcRenderer.invoke(channels.PLAYLISTS_RESOLVE_M3U, path),
   },
   covers: {
-    getCoverAsBase64: (track: Track) => ipcRenderer.invoke(channels.COVER_GET, track.path),
+    getCoverAsBase64: (track: Track) =>
+      ipcRenderer.invoke(channels.COVER_GET, track.path),
   },
   // TODO: all of the things below should be removed
   remote: {

@@ -12,18 +12,31 @@ export default function PlayerControls() {
 
   return (
     <div className={styles.playerControls}>
-      <button type='button' className={styles.control} title='Previous' onClick={playerAPI.previous}>
-        <Icon name='backward' />
+      <button
+        type="button"
+        className={styles.control}
+        title="Previous"
+        onClick={playerAPI.previous}
+      >
+        <Icon name="backward" />
       </button>
       <button
         className={`${styles.control} ${styles.play}`}
         title={playerStatus === PlayerStatus.PLAY ? 'Pause' : 'Play'}
         onClick={playerAPI.playPause}
       >
-        <Icon name={playerStatus === PlayerStatus.PLAY ? 'pause' : 'play'} fixedWidth />
+        <Icon
+          name={playerStatus === PlayerStatus.PLAY ? 'pause' : 'play'}
+          fixedWidth
+        />
       </button>
-      <button type='button' className={styles.control} title='Next' onClick={playerAPI.next}>
-        <Icon name='forward' />
+      <button
+        type="button"
+        className={styles.control}
+        title="Next"
+        onClick={playerAPI.next}
+      >
+        <Icon name="forward" />
       </button>
       <VolumeControl />
     </div>

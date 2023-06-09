@@ -15,7 +15,9 @@ import ModuleWindow from './module-window';
 
 const { createFromPath } = nativeImage;
 
-const iconsDirectory = path.resolve(path.join(__dirname, '../../src/shared/assets/icons/windows'));
+const iconsDirectory = path.resolve(
+  path.join(__dirname, '../../src/shared/assets/icons/windows'),
+);
 
 export default class ThumbarModule extends ModuleWindow {
   constructor(window: Electron.BrowserWindow) {
@@ -30,11 +32,17 @@ export default class ThumbarModule extends ModuleWindow {
       play: createFromPath(path.join(iconsDirectory, 'play.ico')),
       // playDisabled: createFromPath(path.join(iconsDirectory, 'play-disabled.ico')),
       pause: createFromPath(path.join(iconsDirectory, 'pause.ico')),
-      pauseDisabled: createFromPath(path.join(iconsDirectory, 'pause-disabled.ico')),
+      pauseDisabled: createFromPath(
+        path.join(iconsDirectory, 'pause-disabled.ico'),
+      ),
       prev: createFromPath(path.join(iconsDirectory, 'backward.ico')),
-      prevDisabled: createFromPath(path.join(iconsDirectory, 'backward-disabled.ico')),
+      prevDisabled: createFromPath(
+        path.join(iconsDirectory, 'backward-disabled.ico'),
+      ),
       next: createFromPath(path.join(iconsDirectory, 'forward.ico')),
-      nextDisabled: createFromPath(path.join(iconsDirectory, 'forward-disabled.ico')),
+      nextDisabled: createFromPath(
+        path.join(iconsDirectory, 'forward-disabled.ico'),
+      ),
     };
 
     const thumbarButtons = {
@@ -99,19 +107,35 @@ export default class ThumbarModule extends ModuleWindow {
     };
 
     ipcMain.once(channels.APP_READY, () => {
-      window.setThumbarButtons([thumbarButtons.prevDisabled, thumbarButtons.play, thumbarButtons.nextDisabled]);
+      window.setThumbarButtons([
+        thumbarButtons.prevDisabled,
+        thumbarButtons.play,
+        thumbarButtons.nextDisabled,
+      ]);
     });
 
     ipcMain.on(channels.PLAYBACK_PLAY, () => {
-      window.setThumbarButtons([thumbarButtons.prev, thumbarButtons.pause, thumbarButtons.next]);
+      window.setThumbarButtons([
+        thumbarButtons.prev,
+        thumbarButtons.pause,
+        thumbarButtons.next,
+      ]);
     });
 
     ipcMain.on(channels.PLAYBACK_PAUSE, () => {
-      window.setThumbarButtons([thumbarButtons.prev, thumbarButtons.play, thumbarButtons.next]);
+      window.setThumbarButtons([
+        thumbarButtons.prev,
+        thumbarButtons.play,
+        thumbarButtons.next,
+      ]);
     });
 
     ipcMain.on(channels.PLAYBACK_STOP, () => {
-      window.setThumbarButtons([thumbarButtons.prevDisabled, thumbarButtons.play, thumbarButtons.nextDisabled]);
+      window.setThumbarButtons([
+        thumbarButtons.prevDisabled,
+        thumbarButtons.play,
+        thumbarButtons.nextDisabled,
+      ]);
     });
   }
 }

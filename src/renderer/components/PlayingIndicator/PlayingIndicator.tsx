@@ -9,7 +9,7 @@ import styles from './PlayingIndicator.module.css';
 const getIcon = (state: PlayerStatus, hovered: boolean) => {
   if (state === PlayerStatus.PLAY) {
     if (hovered) {
-      return <Icon name='pause' fixedWidth />;
+      return <Icon name="pause" fixedWidth />;
     }
 
     return (
@@ -21,7 +21,7 @@ const getIcon = (state: PlayerStatus, hovered: boolean) => {
     );
   }
 
-  return <Icon name='play' fixedWidth />;
+  return <Icon name="play" fixedWidth />;
 };
 
 export default function TrackPlayingIndicator() {

@@ -9,7 +9,8 @@ const { player } = window.MuseeksAPI;
 const AUDIO_ERRORS = {
   aborted: 'The video playback was aborted.',
   corrupt: 'The audio playback was aborted due to a corruption problem.',
-  notFound: 'The track file could not be found. It may be due to a file move or an unmounted partition.',
+  notFound:
+    'The track file could not be found. It may be due to a file move or an unmounted partition.',
   unknown: 'An unknown error occurred.',
 };
 

@@ -6,13 +6,17 @@ export const isRightClick = (e: React.MouseEvent): boolean => e.button === 2;
  * - the control key was pressed on a non-mac platform
  * - the cmd key is pressed on macOS
  */
-export const isCtrlKey = (e: React.KeyboardEvent | React.MouseEvent | KeyboardEvent): boolean => {
+export const isCtrlKey = (
+  e: React.KeyboardEvent | React.MouseEvent | KeyboardEvent,
+): boolean => {
   const isMacOS = window.MuseeksAPI.platform === 'darwin';
 
   return (isMacOS && e.metaKey) || (!isMacOS && e.ctrlKey);
 };
 
-export const isAltKey = (e: React.KeyboardEvent | React.MouseEvent | KeyboardEvent): boolean => {
+export const isAltKey = (
+  e: React.KeyboardEvent | React.MouseEvent | KeyboardEvent,
+): boolean => {
   const isMacOS = window.MuseeksAPI.platform === 'darwin';
 
   return (isMacOS && e.ctrlKey) || (!isMacOS && e.metaKey);

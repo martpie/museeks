@@ -14,8 +14,12 @@ type Maybe<T> = T | undefined;
 export default function useCurrentViewTracks(): TrackModel[] {
   // TODO: how to support Settings page? Should we?
   const rootData = useRouteLoaderData('root') as Maybe<RootLoaderResponse>;
-  const filteredLibraryTracks = useFilteredTracks((rootData && rootData.tracks) ?? []);
-  const playlistData = useRouteLoaderData('playlist-details') as Maybe<PlaylistLoaderResponse>;
+  const filteredLibraryTracks = useFilteredTracks(
+    (rootData && rootData.tracks) ?? [],
+  );
+  const playlistData = useRouteLoaderData(
+    'playlist-details',
+  ) as Maybe<PlaylistLoaderResponse>;
 
   const tracks = useMemo(() => {
     if (playlistData) {

@@ -46,7 +46,8 @@ export default class Player {
   }
 
   async play() {
-    if (!this.audio.src) throw new Error('Trying to play a track but not audio.src is defined');
+    if (!this.audio.src)
+      throw new Error('Trying to play a track but not audio.src is defined');
 
     await this.audio.play();
   }
@@ -119,7 +120,10 @@ export default class Player {
   }
 
   isThresholdReached() {
-    if (!this.durationThresholdReached && this.audio.currentTime >= this.audio.duration * this.threshold) {
+    if (
+      !this.durationThresholdReached &&
+      this.audio.currentTime >= this.audio.duration * this.threshold
+    ) {
       this.durationThresholdReached = true;
     }
 

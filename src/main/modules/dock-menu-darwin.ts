@@ -78,10 +78,13 @@ export default class DockMenuDarwinModule extends ModuleWindow {
       this.setDockMenu(PlayerStatus.PAUSE);
     });
 
-    ipcMain.on(channels.PLAYBACK_TRACK_CHANGE, (_e: Event, track: TrackModel) => {
-      this.updateTrayMetadata(track);
-      this.setDockMenu(PlayerStatus.PLAY);
-    });
+    ipcMain.on(
+      channels.PLAYBACK_TRACK_CHANGE,
+      (_e: Event, track: TrackModel) => {
+        this.updateTrayMetadata(track);
+        this.setDockMenu(PlayerStatus.PLAY);
+      },
+    );
 
     this.setDockMenu(PlayerStatus.PAUSE);
   }

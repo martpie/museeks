@@ -16,7 +16,7 @@ export default function ButtonShuffle() {
 
   return (
     <button
-      type='button'
+      type="button"
       className={buttonClasses}
       onClick={() => {
         playerAPI.toggleShuffle();

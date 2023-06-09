@@ -90,7 +90,7 @@ export default function PlaylistsNav(props: Props) {
         }
       }
     },
-    [rename, renamed]
+    [rename, renamed],
   );
 
   const blur = useCallback(
@@ -101,7 +101,7 @@ export default function PlaylistsNav(props: Props) {
 
       setRenamed(null);
     },
-    [rename, renamed]
+    [rename, renamed],
   );
 
   const focus = useCallback((e: React.FocusEvent<HTMLInputElement>) => {
@@ -118,7 +118,7 @@ export default function PlaylistsNav(props: Props) {
       navItemContent = (
         <input
           className={styles.item__input}
-          type='text'
+          type="text"
           defaultValue={elem.name}
           onKeyDown={keyDown}
           onBlur={blur}
@@ -128,7 +128,11 @@ export default function PlaylistsNav(props: Props) {
       );
     } else {
       navItemContent = (
-        <PlaylistsNavLink className={styles.item__link} playlistId={elem._id} onContextMenu={showContextMenu}>
+        <PlaylistsNavLink
+          className={styles.item__link}
+          playlistId={elem._id}
+          onContextMenu={showContextMenu}
+        >
           {elem.name}
         </PlaylistsNavLink>
       );
@@ -142,8 +146,12 @@ export default function PlaylistsNav(props: Props) {
       <div className={styles.playlistsNav__header}>
         <h4 className={styles.playlistsNav__title}>Playlists</h4>
         <div className={styles.actions}>
-          <button className={styles.action} onClick={createPlaylist} title='New playlist'>
-            <Icon name='plus' />
+          <button
+            className={styles.action}
+            onClick={createPlaylist}
+            title="New playlist"
+          >
+            <Icon name="plus" />
           </button>
         </div>
       </div>

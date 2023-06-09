@@ -44,7 +44,7 @@ export default function Library() {
           <p>Too bad, there is no music in your library =(</p>
           <ViewMessage.Sub>
             <span>you can always just drop files and folders anywhere or</span>{' '}
-            <Link to='/settings/library' draggable={false}>
+            <Link to="/settings/library" draggable={false}>
               add your music here
             </Link>
           </ViewMessage.Sub>
@@ -62,8 +62,19 @@ export default function Library() {
     }
 
     // All good !
-    return <TracksList type='library' tracks={filteredTracks} trackPlayingId={trackPlayingId} playlists={playlists} />;
+    return (
+      <TracksList
+        type="library"
+        tracks={filteredTracks}
+        trackPlayingId={trackPlayingId}
+        playlists={playlists}
+      />
+    );
   }, [search, refreshing, filteredTracks, playlists, trackPlayingId]);
 
-  return <div className={`${appStyles.view} ${styles.viewLibrary}`}>{getLibraryComponent}</div>;
+  return (
+    <div className={`${appStyles.view} ${styles.viewLibrary}`}>
+      {getLibraryComponent}
+    </div>
+  );
 }

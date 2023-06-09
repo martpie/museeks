@@ -40,14 +40,16 @@ if (wrap) {
         fallback={
           <ViewMessage.Notice>
             <p>
-              <span role='img' aria-label='boom'>
+              <span role="img" aria-label="boom">
                 💥
               </span>{' '}
               Something wrong happened
             </p>
             <ViewMessage.Sub>
               If it happens again, please{' '}
-              <ExternalLink href='https://github.com/martpie/museeks/issues'>report an issue</ExternalLink>
+              <ExternalLink href="https://github.com/martpie/museeks/issues">
+                report an issue
+              </ExternalLink>
             </ViewMessage.Sub>
           </ViewMessage.Notice>
         }
@@ -56,6 +58,6 @@ if (wrap) {
           <RouterProvider router={router} />
         </DndProvider>
       </ErrorBoundary>
-    </React.StrictMode>
+    </React.StrictMode>,
   );
 }

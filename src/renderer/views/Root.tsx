@@ -54,7 +54,10 @@ export default function Museeks() {
   });
 
   return (
-    <div className={`${styles.root} os__${window.MuseeksAPI.platform}`} ref={drop}>
+    <div
+      className={`${styles.root} os__${window.MuseeksAPI.platform}`}
+      ref={drop}
+    >
       {/** Bunch of global event handlers */}
       <IPCNavigationEvents />
       <IPCPlayerEvents />
@@ -68,7 +71,11 @@ export default function Museeks() {
       </main>
       <Footer />
       <Toasts />
-      <DropzoneImport title='Add music to the library' subtitle='Drop files or folders anywhere' shown={isOver} />
+      <DropzoneImport
+        title="Add music to the library"
+        subtitle="Drop files or folders anywhere"
+        shown={isOver}
+      />
     </div>
   );
 }

@@ -17,7 +17,8 @@ export default class Module {
 
   // To not be overriden
   async init(): Promise<void> {
-    if (this.loaded) throw new TypeError(`Module ${this.constructor.name} is already loaded`);
+    if (this.loaded)
+      throw new TypeError(`Module ${this.constructor.name} is already loaded`);
 
     if (this.platforms.includes(os.platform())) {
       await this.load().catch((err) => {
@@ -25,13 +26,19 @@ export default class Module {
       });
       this.loaded = true;
     } else {
-      logger.info(`Skipping load of ${this.constructor.name} (supported platform: ${this.platforms.join(', ')})`);
+      logger.info(
+        `Skipping load of ${
+          this.constructor.name
+        } (supported platform: ${this.platforms.join(', ')})`,
+      );
     }
   }
 
   // Can (now) be an asynchronous method
   async load(): Promise<void> {
-    throw new TypeError(`Module ${this.constructor.name} should have a load() method`);
+    throw new TypeError(
+      `Module ${this.constructor.name} should have a load() method`,
+    );
     // Do whatever you want here :)
   }
 }

@@ -7,7 +7,12 @@ import { Virtuoso, VirtuosoHandle } from 'react-virtuoso';
 import TrackRow from '../TrackRow/TrackRow';
 import TracksListHeader from '../TracksListHeader/TracksListHeader';
 import PlaylistsAPI from '../../stores/PlaylistsAPI';
-import { isLeftClick, isRightClick, isCtrlKey, isAltKey } from '../../lib/utils-events';
+import {
+  isLeftClick,
+  isRightClick,
+  isCtrlKey,
+  isAltKey,
+} from '../../lib/utils-events';
 import { PlaylistModel, TrackModel } from '../../../shared/types/museeks';
 import headerStyles from '../Header/Header.module.css';
 import { usePlayerAPI } from '../../stores/usePlayerStore';
@@ -30,11 +35,24 @@ type Props = {
   playlists: PlaylistModel[];
   currentPlaylist?: string;
   reorderable?: boolean;
-  onReorder?: (playlistId: string, tracksIds: string[], targetTrackId: string, position: 'above' | 'below') => void;
+  onReorder?: (
+    playlistId: string,
+    tracksIds: string[],
+    targetTrackId: string,
+    position: 'above' | 'below',
+  ) => void;
 };
 
 export default function TracksList(props: Props) {
-  const { tracks, type, trackPlayingId, reorderable, currentPlaylist, onReorder, playlists } = props;
+  const {
+    tracks,
+    type,
+    trackPlayingId,
+    reorderable,
+    currentPlaylist,
+    onReorder,
+    playlists,
+  } = props;
 
   const [selected, setSelected] = useState<string[]>([]);
   const [reordered, setReordered] = useState<string[] | null>([]);
@@ -51,7 +69,9 @@ export default function TracksList(props: Props) {
     if (highlight === true && trackPlayingId && virtuosoRef.current) {
       setSelected([trackPlayingId]);
 
-      const playingTrackIndex = tracks.findIndex((track) => track._id === trackPlayingId);
+      const playingTrackIndex = tracks.findIndex(
+        (track) => track._id === trackPlayingId,
+      );
 
       if (playingTrackIndex >= 0) {
         virtuosoRef.current.scrollToIndex({
@@ -70,7 +90,7 @@ export default function TracksList(props: Props) {
     async (_id: string) => {
       playerAPI.start(tracks, _id);
     },
-    [tracks, playerAPI]
+    [tracks, playerAPI],
   );
 
   /**
@@ -80,7 +100,7 @@ export default function TracksList(props: Props) {
     async (index: number, tracks: TrackModel[]) => {
       if (index !== -1) playerAPI.start(tracks, tracks[index]._id);
     },
-    [playerAPI]
+    [playerAPI],
   );
 
   const onControlAll = useCallback((tracks: TrackModel[]) => {
@@ -103,7 +123,7 @@ export default function TracksList(props: Props) {
         virtuosoRef.current.scrollIntoView({ index: addedIndex });
       }
     },
-    [selected]
+    [selected],
   );
 
   const onDown = useCallback(
@@ -121,12 +141,14 @@ export default function TracksList(props: Props) {
         virtuosoRef.current.scrollIntoView({ index: addedIndex });
       }
     },
-    [selected]
+    [selected],
   );
 
   const onKey = useCallback(
     async (e: KeyboardEvent) => {
-      let firstSelectedTrackId = tracks.findIndex((track) => selected.includes(track._id));
+      let firstSelectedTrackId = tracks.findIndex((track) =>
+        selected.includes(track._id),
+      );
 
       switch (e.code) {
         case 'KeyA':
@@ -143,7 +165,9 @@ export default function TracksList(props: Props) {
 
         case 'ArrowDown':
           // This effectively becomes lastSelectedTrackID
-          firstSelectedTrackId = tracks.findIndex((track) => selected[selected.length - 1] === track._id);
+          firstSelectedTrackId = tracks.findIndex(
+            (track) => selected[selected.length - 1] === track._id,
+          );
           e.preventDefault();
           onDown(firstSelectedTrackId, tracks, e.shiftKey);
           break;
@@ -157,7 +181,7 @@ export default function TracksList(props: Props) {
           break;
       }
     },
-    [onControlAll, onDown, onUp, onEnter, selected, tracks]
+    [onControlAll, onDown, onUp, onEnter, selected, tracks],
   );
 
   /**
@@ -172,13 +196,16 @@ export default function TracksList(props: Props) {
         onReorder(currentPlaylist, reordered, targetTrackId, position);
       }
     },
-    [currentPlaylist, onReorder, reordered]
+    [currentPlaylist, onReorder, reordered],
   );
 
   /**
    * Tracks selection
    */
-  const isSelectableTrack = useCallback((id: string) => !selected.includes(id), [selected]);
+  const isSelectableTrack = useCallback(
+    (id: string) => !selected.includes(id),
+    [selected],
+  );
 
   const sortSelected = useCallback(
     (a: string, b: string): number => {
@@ -186,7 +213,7 @@ export default function TracksList(props: Props) {
 
       return allTracksIds.indexOf(a) - allTracksIds.indexOf(b);
     },
-    [tracks]
+    [tracks],
   );
 
   const toggleSelectionById = useCallback(
@@ -204,7 +231,7 @@ export default function TracksList(props: Props) {
       newSelected = newSelected.sort(sortSelected);
       setSelected(newSelected);
     },
-    [selected, sortSelected]
+    [selected, sortSelected],
   );
 
   const multiSelect = useCallback(
@@ -242,18 +269,26 @@ export default function TracksList(props: Props) {
 
       setSelected(newSelected.sort(sortSelected));
     },
-    [selected, sortSelected, tracks]
+    [selected, sortSelected, tracks],
   );
 
   const selectTrack = useCallback(
     (event: React.MouseEvent, trackId: string, index: number) => {
       // To allow selection drag-and-drop, we need to prevent track selection
       // when selection a track that is already selected
-      if (selected.includes(trackId) && !event.metaKey && !event.ctrlKey && !event.shiftKey) {
+      if (
+        selected.includes(trackId) &&
+        !event.metaKey &&
+        !event.ctrlKey &&
+        !event.shiftKey
+      ) {
         return;
       }
 
-      if (isLeftClick(event) || (isRightClick(event) && isSelectableTrack(trackId))) {
+      if (
+        isLeftClick(event) ||
+        (isRightClick(event) && isSelectableTrack(trackId))
+      ) {
         if (isCtrlKey(event)) {
           toggleSelectionById(trackId);
         } else if (event.shiftKey) {
@@ -271,16 +306,21 @@ export default function TracksList(props: Props) {
         }
       }
     },
-    [selected, multiSelect, toggleSelectionById, isSelectableTrack]
+    [selected, multiSelect, toggleSelectionById, isSelectableTrack],
   );
 
   const selectTrackClick = useCallback(
     (event: React.MouseEvent | React.KeyboardEvent, trackId: string) => {
-      if (!event.metaKey && !event.ctrlKey && !event.shiftKey && selected.includes(trackId)) {
+      if (
+        !event.metaKey &&
+        !event.ctrlKey &&
+        !event.shiftKey &&
+        selected.includes(trackId)
+      ) {
         setSelected([trackId]);
       }
     },
-    [selected]
+    [selected],
   );
 
   /**
@@ -294,7 +334,9 @@ export default function TracksList(props: Props) {
 
       // Hide current playlist if needed
       if (type === 'playlist') {
-        shownPlaylists = playlists.filter((elem) => elem._id !== currentPlaylist);
+        shownPlaylists = playlists.filter(
+          (elem) => elem._id !== currentPlaylist,
+        );
       }
 
       const playlistTemplate: MenuItemConstructorOptions[] = [];
@@ -310,7 +352,7 @@ export default function TracksList(props: Props) {
           },
           {
             type: 'separator',
-          }
+          },
         );
 
         if (shownPlaylists.length === 0) {
@@ -350,7 +392,10 @@ export default function TracksList(props: Props) {
 
       const template: MenuItemConstructorOptions[] = [
         {
-          label: selectedCount > 1 ? `${selectedCount} tracks selected` : `${selectedCount} track selected`,
+          label:
+            selectedCount > 1
+              ? `${selectedCount} tracks selected`
+              : `${selectedCount} track selected`,
           enabled: false,
         },
         {
@@ -372,7 +417,7 @@ export default function TracksList(props: Props) {
           click: () => {
             // HACK
             const searchInput: HTMLInputElement | null = document.querySelector(
-              `input[type="text"].${headerStyles.header__search__input}`
+              `input[type="text"].${headerStyles.header__search__input}`,
             );
 
             if (searchInput) {
@@ -388,7 +433,7 @@ export default function TracksList(props: Props) {
         click: () => {
           // HACK
           const searchInput: HTMLInputElement | null = document.querySelector(
-            `input[type="text"].${headerStyles.header__search__input}`
+            `input[type="text"].${headerStyles.header__search__input}`,
           );
 
           if (searchInput) {
@@ -408,7 +453,7 @@ export default function TracksList(props: Props) {
             click: async () => {
               await PlaylistsAPI.removeTracks(currentPlaylist, selected);
             },
-          }
+          },
         );
       }
 
@@ -436,14 +481,23 @@ export default function TracksList(props: Props) {
           click: () => {
             libraryAPI.remove(selected);
           },
-        }
+        },
       );
 
       const context = Menu.buildFromTemplate(template);
 
       context.popup({}); // Let it appear
     },
-    [currentPlaylist, playlists, selected, tracks, type, navigate, playerAPI, libraryAPI]
+    [
+      currentPlaylist,
+      playlists,
+      selected,
+      tracks,
+      type,
+      navigate,
+      playerAPI,
+      libraryAPI,
+    ],
   );
 
   return (

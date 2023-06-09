@@ -15,9 +15,12 @@ export default function Search() {
   const debouncedSearch = useDebounce(search, 250);
 
   const onClear = useCallback(() => setSearch(''), []);
-  const onChange = useCallback<React.ChangeEventHandler<HTMLInputElement>>((event) => {
-    setSearch(event.currentTarget.value);
-  }, []);
+  const onChange = useCallback<React.ChangeEventHandler<HTMLInputElement>>(
+    (event) => {
+      setSearch(event.currentTarget.value);
+    },
+    [],
+  );
 
   useEffect(() => {
     if (search === '') {
@@ -39,9 +42,9 @@ export default function Search() {
   return (
     <div className={styles.search__container}>
       <input
-        type='text'
+        type="text"
         className={styles.search__input}
-        placeholder='search...'
+        placeholder="search..."
         value={search}
         onChange={onChange}
         ref={inputRef}

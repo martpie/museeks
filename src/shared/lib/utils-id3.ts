@@ -4,8 +4,10 @@ import { Track, TrackEditableFields } from '../types/museeks';
  * Strip accent from String. From https://jsperf.com/strip-accents
  */
 export const stripAccents = (str: string): string => {
-  const accents = 'ÀÁÂÃÄÅàáâãäåÒÓÔÕÕÖØòóôõöøÈÉÊËèéêëðÇçÐÌÍÎÏìíîïÙÚÛÜùúûüÑñŠšŸÿýŽž';
-  const fixes = 'AAAAAAaaaaaaOOOOOOOooooooEEEEeeeeeCcDIIIIiiiiUUUUuuuuNnSsYyyZz';
+  const accents =
+    'ÀÁÂÃÄÅàáâãäåÒÓÔÕÕÖØòóôõöøÈÉÊËèéêëðÇçÐÌÍÎÏìíîïÙÚÛÜùúûüÑñŠšŸÿýŽž';
+  const fixes =
+    'AAAAAAaaaaaaOOOOOOOooooooEEEEeeeeeCcDIIIIiiiiUUUUuuuuNnSsYyyZz';
   const split = accents.split('').join('|');
   const reg = new RegExp(`(${split})`, 'g');
 
@@ -19,7 +21,9 @@ export const stripAccents = (str: string): string => {
 /**
  * Take a track a returns its lowered metadata (used for search)
  */
-export const getLoweredMeta = (metadata: TrackEditableFields): Track['loweredMetas'] => ({
+export const getLoweredMeta = (
+  metadata: TrackEditableFields,
+): Track['loweredMetas'] => ({
   artist: metadata.artist.map((meta) => stripAccents(meta.toLowerCase())),
   album: stripAccents(metadata.album.toLowerCase()),
   title: stripAccents(metadata.title.toLowerCase()),

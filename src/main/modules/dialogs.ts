@@ -14,19 +14,25 @@ export default class DialogsModule extends ModuleWindow {
     /**
      * showMessageBox
      */
-    ipcMain.handle(channels.DIALOG_MESSAGE_BOX, async (_event, options: Electron.MessageBoxOptions) => {
-      const result = await dialog.showMessageBox(this.window, options);
+    ipcMain.handle(
+      channels.DIALOG_MESSAGE_BOX,
+      async (_event, options: Electron.MessageBoxOptions) => {
+        const result = await dialog.showMessageBox(this.window, options);
 
-      return result;
-    });
+        return result;
+      },
+    );
 
     /**
      * showOpenDialog
      */
-    ipcMain.handle(channels.DIALOG_OPEN, async (_event, options: Electron.OpenDialogOptions) => {
-      const result = await dialog.showOpenDialog(options);
+    ipcMain.handle(
+      channels.DIALOG_OPEN,
+      async (_event, options: Electron.OpenDialogOptions) => {
+        const result = await dialog.showOpenDialog(options);
 
-      return result;
-    });
+        return result;
+      },
+    );
   }
 }

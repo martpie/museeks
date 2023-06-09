@@ -23,7 +23,8 @@ const INITIAL_FORM_DATA: TrackEditableFields = {
 export default function Details() {
   const { trackId } = useParams<{ trackId: string }>();
   // const [coverSrc, setCoverSrc] = useState<string | null>(null);
-  const [formData, setFormData] = useState<TrackEditableFields>(INITIAL_FORM_DATA);
+  const [formData, setFormData] =
+    useState<TrackEditableFields>(INITIAL_FORM_DATA);
   const libraryAPI = useLibraryAPI();
 
   const navigate = useNavigate();
@@ -36,7 +37,7 @@ export default function Details() {
       await libraryAPI.updateTrackMetadata(trackId, formData);
       navigate(-1);
     },
-    [trackId, formData, navigate, libraryAPI]
+    [trackId, formData, navigate, libraryAPI],
   );
 
   const handleCancel = useCallback(
@@ -44,7 +45,7 @@ export default function Details() {
       e.preventDefault();
       navigate(-1);
     },
-    [navigate]
+    [navigate],
   );
 
   useEffect(() => {
@@ -74,36 +75,41 @@ export default function Details() {
       <form className={styles.detailsForm} onSubmit={handleSubmit}>
         <h2>Edit &quot;{formData.title}&quot;</h2>
         <Setting.Section>
-          <Setting.Label htmlFor='title'>Title</Setting.Label>
+          <Setting.Label htmlFor="title">Title</Setting.Label>
           <Setting.Input
-            id='title'
-            name='title'
-            type='text'
+            id="title"
+            name="title"
+            type="text"
             value={formData.title}
             onChange={(e) => {
               setFormData({ ...formData, title: e.currentTarget.value });
             }}
           />
-          <Setting.Description>You can add multiple artists with commas</Setting.Description>
+          <Setting.Description>
+            You can add multiple artists with commas
+          </Setting.Description>
         </Setting.Section>
         <Setting.Section>
-          <Setting.Label htmlFor='artist'>Artist</Setting.Label>
+          <Setting.Label htmlFor="artist">Artist</Setting.Label>
           <Setting.Input
-            id='artist'
-            name='artist'
-            type='text'
+            id="artist"
+            name="artist"
+            type="text"
             value={formData.artist.join(DELIMITER)}
             onChange={(e) => {
-              setFormData({ ...formData, artist: e.currentTarget.value.split(DELIMITER) });
+              setFormData({
+                ...formData,
+                artist: e.currentTarget.value.split(DELIMITER),
+              });
             }}
           />
         </Setting.Section>
         <Setting.Section>
-          <Setting.Label htmlFor='album'>Album</Setting.Label>
+          <Setting.Label htmlFor="album">Album</Setting.Label>
           <Setting.Input
-            id='album'
-            name='album'
-            type='text'
+            id="album"
+            name="album"
+            type="text"
             value={formData.album}
             onChange={(e) => {
               setFormData({ ...formData, album: e.currentTarget.value });
@@ -111,29 +117,37 @@ export default function Details() {
           />
         </Setting.Section>
         <Setting.Section>
-          <Setting.Label htmlFor='genre'>Genre</Setting.Label>
+          <Setting.Label htmlFor="genre">Genre</Setting.Label>
           <Setting.Input
-            id='genre'
-            name='genre'
-            type='text'
+            id="genre"
+            name="genre"
+            type="text"
             value={formData.genre.join(DELIMITER)}
             onChange={(e) => {
-              setFormData({ ...formData, genre: e.currentTarget.value.split(DELIMITER) });
+              setFormData({
+                ...formData,
+                genre: e.currentTarget.value.split(DELIMITER),
+              });
             }}
           />
-          <Setting.Description>You can add multiple genre with commas</Setting.Description>
+          <Setting.Description>
+            You can add multiple genre with commas
+          </Setting.Description>
         </Setting.Section>
         {/* <div className={styles.detailsCover}>
           {coverSrc === null && <img src={Placeholder} alt='Cover' width='150' height='150' />}
           {coverSrc !== null && <img src={coverSrc} alt='Cover' width='150' height='150' />}
         </div> */}
         <div className={styles.detailsActions}>
-          <Button type='button' onClick={handleCancel}>
+          <Button type="button" onClick={handleCancel}>
             Cancel
           </Button>
-          <Button type='submit'>Save</Button>
+          <Button type="submit">Save</Button>
         </div>
-        <p>Clicking &quot;save&quot; will only update the library data, and will not save it to the original file.</p>
+        <p>
+          Clicking &quot;save&quot; will only update the library data, and will
+          not save it to the original file.
+        </p>
       </form>
     </div>
   );

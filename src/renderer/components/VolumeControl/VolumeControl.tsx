@@ -12,7 +12,8 @@ import styles from './VolumeControl.module.css';
 const SMOOTHING_FACTOR = 2.5;
 
 const smoothifyVolume = (value: number): number => value ** SMOOTHING_FACTOR;
-const unsmoothifyVolume = (value: number): number => value ** (1 / SMOOTHING_FACTOR);
+const unsmoothifyVolume = (value: number): number =>
+  value ** (1 / SMOOTHING_FACTOR);
 
 const getVolumeIcon = (volume: number, muted: boolean): string => {
   if (muted || volume === 0) return 'volume-off';
@@ -36,20 +37,23 @@ export default function VolumeControl() {
       playerAPI.setVolume(smoothVolume);
       setVolume(smoothVolume);
     },
-    [setVolume, playerAPI]
+    [setVolume, playerAPI],
   );
 
   // TODO: move to player actions
   const mute = useCallback(
     (e: React.MouseEvent<HTMLButtonElement>) => {
-      if (e.currentTarget.classList.contains(controlStyles.control) || e.currentTarget.classList.contains('fa')) {
+      if (
+        e.currentTarget.classList.contains(controlStyles.control) ||
+        e.currentTarget.classList.contains('fa')
+      ) {
         const muted = !window.MuseeksAPI.player.isMuted();
 
         playerAPI.setMuted(muted);
         setMuted(muted);
       }
     },
-    [playerAPI]
+    [playerAPI],
   );
 
   const volumeClasses = cx(styles.volumeControl, {
@@ -62,7 +66,12 @@ export default function VolumeControl() {
       onMouseEnter={() => setShowVolume(true)}
       onMouseLeave={() => setShowVolume(false)}
     >
-      <button type='button' className={controlStyles.control} title='Volume' onClick={mute}>
+      <button
+        type="button"
+        className={controlStyles.control}
+        title="Volume"
+        onClick={mute}
+      >
         <Icon name={getVolumeIcon(unsmoothifyVolume(volume), muted)} />
       </button>
       <div className={volumeClasses}>

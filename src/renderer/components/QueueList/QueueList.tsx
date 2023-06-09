@@ -16,9 +16,15 @@ type Props = {
 export default function QueueList(props: Props) {
   const playerAPI = usePlayerAPI();
 
-  const [draggedTrackIndex, setDraggedTrackIndex] = useState<number | null>(null);
-  const [draggedOverTrackIndex, setDraggedOverTrackIndex] = useState<number | null>(null);
-  const [dragPosition, setDragPosition] = useState<null | 'above' | 'below'>(null);
+  const [draggedTrackIndex, setDraggedTrackIndex] = useState<number | null>(
+    null,
+  );
+  const [draggedOverTrackIndex, setDraggedOverTrackIndex] = useState<
+    number | null
+  >(null);
+  const [dragPosition, setDragPosition] = useState<null | 'above' | 'below'>(
+    null,
+  );
 
   const dragStart = useCallback(
     (e: React.DragEvent<HTMLDivElement>, index: number) => {
@@ -28,7 +34,7 @@ export default function QueueList(props: Props) {
 
       setDraggedTrackIndex(index);
     },
-    [props.queue]
+    [props.queue],
   );
 
   const dragEnd = useCallback(() => {
@@ -42,11 +48,15 @@ export default function QueueList(props: Props) {
     if (draggedIndex !== null && draggedOverIndex !== null) {
       const offsetPosition = dragPosition === 'below' ? 1 : 0;
       const offsetHigherIndex =
-        draggedOverIndex < draggedIndex || (draggedOverIndex === draggedIndex && dragPosition === 'above') ? 1 : 0;
+        draggedOverIndex < draggedIndex ||
+        (draggedOverIndex === draggedIndex && dragPosition === 'above')
+          ? 1
+          : 0;
 
       // Real position in queue
       const draggedQueueIndex = draggedIndex + queueCursor + 1;
-      const draggedOverQueueIndex = draggedOverIndex + queueCursor + offsetPosition + offsetHigherIndex;
+      const draggedOverQueueIndex =
+        draggedOverIndex + queueCursor + offsetPosition + offsetHigherIndex;
 
       const newQueue = [...queue];
 
@@ -62,17 +72,27 @@ export default function QueueList(props: Props) {
 
       playerAPI.setQueue(newQueue);
     }
-  }, [dragPosition, draggedOverTrackIndex, draggedTrackIndex, props, playerAPI]);
+  }, [
+    dragPosition,
+    draggedOverTrackIndex,
+    draggedTrackIndex,
+    props,
+    playerAPI,
+  ]);
 
-  const dragOver = useCallback((e: React.DragEvent<HTMLDivElement>, index: number) => {
-    e.preventDefault();
+  const dragOver = useCallback(
+    (e: React.DragEvent<HTMLDivElement>, index: number) => {
+      e.preventDefault();
 
-    const relativePosition = e.nativeEvent.offsetY / e.currentTarget.offsetHeight;
-    const dragPosition = relativePosition < 0.5 ? 'above' : 'below';
+      const relativePosition =
+        e.nativeEvent.offsetY / e.currentTarget.offsetHeight;
+      const dragPosition = relativePosition < 0.5 ? 'above' : 'below';
 
-    setDraggedOverTrackIndex(index);
-    setDragPosition(dragPosition);
-  }, []);
+      setDraggedOverTrackIndex(index);
+      setDragPosition(dragPosition);
+    },
+    [],
+  );
 
   const { queue, queueCursor } = props;
 
@@ -83,8 +103,10 @@ export default function QueueList(props: Props) {
   return (
     <>
       <div className={styles.queue__header}>
-        <div className={styles.queue__header__infos}>{getStatus(incomingQueue)}</div>
-        <Button bSize='small' onClick={playerAPI.clearQueue}>
+        <div className={styles.queue__header__infos}>
+          {getStatus(incomingQueue)}
+        </div>
+        <Button bSize="small" onClick={playerAPI.clearQueue}>
           clear queue
         </Button>
       </div>
