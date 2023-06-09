@@ -443,7 +443,7 @@ export default function TracksList(props: Props) {
 
       context.popup({}); // Let it appear
     },
-    [currentPlaylist, playlists, selected, tracks, type, navigate, playerAPI]
+    [currentPlaylist, playlists, selected, tracks, type, navigate, playerAPI, libraryAPI]
   );
 
   return (
