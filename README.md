@@ -60,7 +60,12 @@ Please consider that **`master` is unstable**.
 - `git clone git@github.com:martpie/museeks.git`
 - `cd museeks`
 - `yarn install --frozen-lockfile`
-- `yarn build` or `yarn dev`
+- for dev mode: 
+    - `yarn dev`
+    - `yarn museeks:debug` (in another terminal)
+- for prod mode:
+    - `yarn build`
+    - `yarn museeks`
 
 ### Package binaries (advanced)
 
