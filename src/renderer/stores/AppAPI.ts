@@ -1,10 +1,10 @@
-import { ipcRenderer } from 'electron';
-
 import channels from '../../shared/lib/ipc-channels';
 import { Theme } from '../../shared/types/museeks';
 import logger from '../../shared/lib/logger';
 
 import SettingsAPI from './SettingsAPI';
+
+const { ipcRenderer } = window.ElectronAPI;
 
 const init = async (): Promise<void> => {
   // There's some trouble with React StrictMode: player gets created in preload,

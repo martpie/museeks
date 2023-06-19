@@ -15,8 +15,9 @@
   },
   "scripts": {
     "postinstall": "electron-builder install-app-deps",
-    "build": "vite build",
-    "dev": "vite",
+    "build": "electron-vite build",
+    "dev": "electron-vite dev --watch",
+    "start": "electron-vite preview",
     "museeks": "electron .",
     "museeks:debug": "electron . --enable-logging --devtools",
     "test:typings": "yarn run test:typings:root && yarn run test:typings:main && yarn run test:typings:preload && yarn run test:typings:renderer",
@@ -50,7 +51,7 @@
     "iconv-lite": "^0.6.3",
     "level-js": "^4.0.2",
     "linvodb3": "^3.26.0",
-    "lodash-es": "^4.17.21",
+    "lodash": "^4.17.21",
     "m3ujs": "^0.2.1",
     "mime-types": "^2.1.35",
     "music-metadata": "^7.13.4",
@@ -92,6 +93,7 @@
     "@vitejs/plugin-react": "^4.0.0",
     "electron": "24.4.0",
     "electron-builder": "^23.6.0",
+    "electron-vite": "^1.0.23",
     "eslint": "^8.41.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-import": "^2.27.5",
@@ -112,8 +114,6 @@
     "typescript": "^5.0.4",
     "typescript-plugin-css-modules": "^5.0.1",
     "vite": "^4.3.5",
-    "vite-plugin-electron": "0.11.1",
-    "vite-plugin-electron-renderer": "0.14.5",
     "vitest": "^0.31.0"
   }
 }

@@ -5,7 +5,7 @@ import { BrowserWindow, ipcMain, IpcMainInvokeEvent } from 'electron';
 import { globby } from 'globby';
 import * as mmd from 'music-metadata';
 import queue from 'queue';
-import { pickBy } from 'lodash-es';
+import pickBy from 'lodash/pickBy';
 
 import * as m3u from '../lib/utils-m3u';
 import channels from '../../shared/lib/ipc-channels';

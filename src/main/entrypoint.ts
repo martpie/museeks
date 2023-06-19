@@ -101,8 +101,8 @@ app.on('ready', async () => {
 
   let url: string;
 
-  if (process.env.VITE_DEV_SERVER_URL) {
-    url = `${process.env.VITE_DEV_SERVER_URL}${viewSuffix}`;
+  if (!app.isPackaged && process.env['ELECTRON_RENDERER_URL']) {
+    url = `${process.env['ELECTRON_RENDERER_URL']}${viewSuffix}`;
   } else {
     url = `file://${rendererDistPath}/index.html${viewSuffix}`;
   }

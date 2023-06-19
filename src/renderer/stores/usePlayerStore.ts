@@ -1,4 +1,4 @@
-import { debounce } from 'lodash-es';
+import debounce from 'lodash/debounce';
 import { StateCreator } from 'zustand';
 import { persist } from 'zustand/middleware';
 

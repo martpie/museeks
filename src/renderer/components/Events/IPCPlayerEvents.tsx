@@ -1,4 +1,3 @@
-import { ipcRenderer } from 'electron';
 import { useEffect } from 'react';
 
 import channels from '../../../shared/lib/ipc-channels';
@@ -6,6 +5,7 @@ import { usePlayerAPI } from '../../stores/usePlayerStore';
 import useCurrentViewTracks from '../../hooks/useCurrentViewTracks';
 
 const { player } = window.MuseeksAPI;
+const { ipcRenderer } = window.ElectronAPI;
 
 /**
  * Handle app-level IPC Events init and cleanup

@@ -102,6 +102,7 @@ export default class Player {
   setTrack(track: TrackModel) {
     this.track = track;
     this.audio.src = window.MuseeksAPI.library.parseUri(track.path);
+    console.log(this.audio.src);
 
     // When we change song, need to update the thresholdReached indicator.
     this.durationThresholdReached = false;
