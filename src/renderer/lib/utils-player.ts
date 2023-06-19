@@ -26,5 +26,5 @@ export const shuffleTracks = (
 
   shuffledTracks.unshift(currentTrack);
 
-  return shuffledTracks;
+  return [...shuffledTracks];
 };

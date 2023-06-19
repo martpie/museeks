@@ -107,7 +107,7 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
         const queueOrigin = hash.substring(1); // remove #
 
         set({
-          queue,
+          queue: newQueue,
           queueCursor,
           queueOrigin,
           oldQueue,

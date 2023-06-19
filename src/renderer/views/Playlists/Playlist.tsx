@@ -5,22 +5,15 @@ import TracksList from '../../components/TracksList/TracksList';
 import * as ViewMessage from '../../elements/ViewMessage/ViewMessage';
 import PlaylistsAPI from '../../stores/PlaylistsAPI';
 import { filterTracks } from '../../lib/utils-library';
-import usePlayerStore from '../../stores/usePlayerStore';
 import { PlaylistLoaderResponse } from '../router';
 import useLibraryStore from '../../stores/useLibraryStore';
+import useTrackPlayingID from '../../hooks/useTrackPlayingID';
 
 export default function Playlist() {
   const { playlists, playlistTracks } =
     useLoaderData() as PlaylistLoaderResponse;
   const { playlistId } = useParams();
-
-  const trackPlayingId = usePlayerStore((state) => {
-    if (state.queue.length > 0 && state.queueCursor !== null) {
-      return state.queue[state.queueCursor]._id;
-    }
-
-    return null;
-  });
+  const trackPlayingId = useTrackPlayingID();
 
   const search = useLibraryStore((state) => state.search);
   const filteredTracks = useMemo(
