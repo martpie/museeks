@@ -508,9 +508,15 @@ function createPlayerStore<T extends PlayerState>(store: StateCreator<T>) {
         };
       },
       merge(persistedState, currentState) {
+        if (persistedState == null) {
+          persistedState = {
+            palyerStatus: PlayerStatus.STOP 
+          }
+        };
+
         return {
           ...currentState,
-          ...(persistedState as PlayerState),
+          ...(persistedState as Partial<PlayerState>),
           // API should never be persisted
           api: currentState.api,
           // Instantiated should never be true
