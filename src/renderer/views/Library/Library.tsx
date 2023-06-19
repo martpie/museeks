@@ -4,22 +4,15 @@ import { Link, useLoaderData, useRouteLoaderData } from 'react-router-dom';
 import * as ViewMessage from '../../elements/ViewMessage/ViewMessage';
 import TracksList from '../../components/TracksList/TracksList';
 import appStyles from '../Root.module.css';
-import usePlayerStore from '../../stores/usePlayerStore';
 import { LibraryLoaderResponse, RootLoaderResponse } from '../router';
 import useFilteredTracks from '../../hooks/useFilteredTracks';
 import useLibraryStore from '../../stores/useLibraryStore';
+import useTrackPlayingID from '../../hooks/useTrackPlayingID';
 
 import styles from './Library.module.css';
 
 export default function Library() {
-  const trackPlayingId = usePlayerStore((state) => {
-    if (state.queue.length > 0 && state.queueCursor !== null) {
-      return state.queue[state.queueCursor]._id;
-    }
-
-    return null;
-  });
-
+  const trackPlayingId = useTrackPlayingID();
   const refreshing = useLibraryStore((state) => state.refreshing);
   const search = useLibraryStore((state) => state.search);
 
