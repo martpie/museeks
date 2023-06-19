@@ -1,7 +1,7 @@
 // eslint-disable-next-line spaced-comment
 /// <reference types="vite/client" />
 
-import type { MuseeksAPI } from '../../../preload/entrypoint';
+import type { MuseeksAPI } from '../../../preload/entrypoint.preload';
 
 declare global {
   interface Window {

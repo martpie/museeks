@@ -3,7 +3,7 @@
   "productName": "Museeks",
   "version": "0.13.1",
   "description": "A simple, clean and cross-platform music player.",
-  "main": "dist/main/entrypoint.js",
+  "main": ".vite/entrypoint.main.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/martpie/museeks"
@@ -14,11 +14,10 @@
     "url": "https://github.com/martpie/museeks/issues"
   },
   "scripts": {
-    "postinstall": "electron-builder install-app-deps",
-    "build": "vite build",
-    "dev": "vite",
-    "museeks": "electron .",
-    "museeks:debug": "electron . --enable-logging --devtools",
+    "start": "electron-forge start",
+    "package": "electron-forge package",
+    "make": "electron-forge make",
+    "publish": "electron-forge publish",
     "test:typings": "yarn run test:typings:root && yarn run test:typings:main && yarn run test:typings:preload && yarn run test:typings:renderer",
     "test:typings:root": "tsc --noEmit --project ./tsconfig.json",
     "test:typings:main": "tsc --noEmit --project src/main/tsconfig.json",
@@ -30,11 +29,6 @@
     "test:formatting": "prettier --check \"./**/*.{ts,tsx,js}\"",
     "test:formatting:fix": "prettier --write \"./**/*.{ts,tsx,js}\"",
     "test:css": "stylelint \"src/**/*.css\"",
-    "package:lmw": "electron-builder -lmw && yarn run package:checksums",
-    "package:lw": "electron-builder -lw",
-    "package:l": "electron-builder -l",
-    "package:w": "electron-builder -w",
-    "package:m": "electron-builder -m",
     "package:checksums": "bash scripts/checksum.sh"
   },
   "dependencies": {
@@ -77,6 +71,13 @@
     "zustand": "^4.3.8"
   },
   "devDependencies": {
+    "@electron-forge/cli": "^6.2.1",
+    "@electron-forge/maker-deb": "^6.2.1",
+    "@electron-forge/maker-dmg": "^6.2.1",
+    "@electron-forge/maker-rpm": "^6.2.1",
+    "@electron-forge/maker-squirrel": "^6.2.1",
+    "@electron-forge/maker-zip": "^6.2.1",
+    "@electron-forge/plugin-vite": "^6.2.1",
     "@types/bluebird": "^3.5.38",
     "@types/electron-devtools-installer": "^2.2.2",
     "@types/lodash-es": "^4.17.7",
@@ -90,8 +91,7 @@
     "@typescript-eslint/eslint-plugin": "^5.59.2",
     "@typescript-eslint/parser": "^5.59.2",
     "@vitejs/plugin-react": "^4.0.0",
-    "electron": "24.4.0",
-    "electron-builder": "^23.6.0",
+    "electron": "25.1.1",
     "eslint": "^8.41.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-import": "^2.27.5",
@@ -111,9 +111,6 @@
     "stylelint-config-standard": "^33.0.0",
     "typescript": "^5.0.4",
     "typescript-plugin-css-modules": "^5.0.1",
-    "vite": "^4.3.5",
-    "vite-plugin-electron": "0.11.1",
-    "vite-plugin-electron-renderer": "0.14.5",
-    "vitest": "^0.31.0"
+    "vitest": "^0.32.2"
   }
 }

@@ -87,6 +87,9 @@ const API = {
     getCoverAsBase64: (track: Track) =>
       ipcRenderer.invoke(channels.COVER_GET, track.path),
   },
+  // Vite does not support gracefully import Electron with imports, so we
+  // have this dirty hack
+  electron: require('electron'),
   // TODO: all of the things below should be removed
   remote: {
     Menu,

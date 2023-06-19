@@ -14,6 +14,7 @@ import { ErrorBoundary } from 'react-error-boundary';
 import * as ViewMessage from './elements/ViewMessage/ViewMessage';
 import ExternalLink from './elements/ExternalLink/ExternalLink';
 import router from './views/router';
+
 /*
 |--------------------------------------------------------------------------
 | Styles

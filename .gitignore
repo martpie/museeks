@@ -57,11 +57,10 @@ typings/
 # dotenv environment variables file
 .env
 
-dist/main/*
-dist/renderer/*
-dist/preload/*
+.vite
 cache/
 build/
+out/
 
 .DS_Store
 .vscode

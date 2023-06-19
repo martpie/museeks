@@ -1,9 +1,10 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ipcRenderer } from 'electron';
 
 import { usePlayerAPI } from '../../stores/usePlayerStore';
 import channels from '../../../shared/lib/ipc-channels';
+
+const { ipcRenderer } = window.MuseeksAPI.electron;
 
 /**
  * Handle app-level IPC Navigation events

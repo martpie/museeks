@@ -1,5 +1,5 @@
 import { chunk, flatten } from 'lodash-es';
-import { MessageBoxReturnValue, ipcRenderer } from 'electron';
+import type { MessageBoxReturnValue } from 'electron';
 
 import {
   LibrarySort,
@@ -20,6 +20,7 @@ import useToastsStore from './useToastsStore';
 import usePlayerStore from './usePlayerStore';
 
 const { path, db } = window.MuseeksAPI;
+const { ipcRenderer } = window.MuseeksAPI.electron;
 
 type LibraryState = {
   search: string;

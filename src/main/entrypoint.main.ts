@@ -1,3 +1,6 @@
+declare const MAIN_WINDOW_VITE_DEV_SERVER_URL: string;
+declare const MAIN_WINDOW_VITE_NAME: string;
+
 import path from 'path';
 
 import { app, BrowserWindow } from 'electron';
@@ -25,9 +28,13 @@ import IPCPlaylistsModule from './modules/ipc-playlists';
 import * as ModulesManager from './lib/modules-manager';
 import { checkBounds } from './lib/utils';
 
-const appRoot = path.resolve(__dirname, '..'); // Careful, not future-proof
-const rendererDistPath = path.join(appRoot, 'renderer');
-const preloadDistPath = path.join(appRoot, 'preload');
+const appRoot = path.resolve(__dirname); // Careful, not future-proof
+// file://${rendererDistPath}/index.html
+const rendererPath = path.join(
+  appRoot,
+  `renderer/${MAIN_WINDOW_VITE_NAME}/index.html`,
+);
+const preloadPath = path.join(appRoot, 'entrypoint.preload.js');
 
 // @deprecated Remove all usage of remote in the app
 remote.initialize();
@@ -43,7 +50,7 @@ app.on('window-all-closed', () => {
 
 // This method will be called when Electron has finished its
 // initialization and ready to create browser windows.
-app.on('ready', async () => {
+app.on('ready', async function createWindow() {
   const configModule = new ConfigModule();
   await ModulesManager.init(configModule);
   const config = configModule.getConfig();
@@ -70,7 +77,7 @@ app.on('ready', async () => {
       allowRunningInsecureContent: false,
       autoplayPolicy: 'no-user-gesture-required',
       webSecurity: process.env.VITE_DEV_SERVER_URL == null, // FIXME
-      preload: path.join(preloadDistPath, 'entrypoint.js'),
+      preload: preloadPath,
     },
   });
 
@@ -101,10 +108,10 @@ app.on('ready', async () => {
 
   let url: string;
 
-  if (process.env.VITE_DEV_SERVER_URL) {
-    url = `${process.env.VITE_DEV_SERVER_URL}${viewSuffix}`;
+  if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {
+    url = `${MAIN_WINDOW_VITE_DEV_SERVER_URL}${viewSuffix}`;
   } else {
-    url = `file://${rendererDistPath}/index.html${viewSuffix}`;
+    url = `${rendererPath}${viewSuffix}`;
   }
 
   logger.info(`Loading file ${url}`);
