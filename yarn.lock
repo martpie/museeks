@@ -5481,10 +5481,10 @@ tar@^6.1.11:
     mkdirp "^1.0.3"
     yallist "^4.0.0"
 
-teeny-conf@^6.1.0:
-  version "6.1.0"
-  resolved "https://registry.yarnpkg.com/teeny-conf/-/teeny-conf-6.1.0.tgz#9f18bd52b5c246f76b856451f58fe49b54ee9bb0"
-  integrity sha512-fT8Bw4DOW43QdL8jCnbeZps0mEuaRvOhb/OSzEkPyTskd7nWF/cKQ69YnJ06zkUaCN9iSJFhXiqH2mLYS4pZdw==
+teeny-conf@^6.2.2:
+  version "6.2.2"
+  resolved "https://registry.yarnpkg.com/teeny-conf/-/teeny-conf-6.2.2.tgz#63ec79245eb70fb5732624cd0c8e83fce75e192b"
+  integrity sha512-NqxDb119II3IfGMwbd+WDSywBmq57XG5AOtqFODmOFqMH18wUc5xQjleXFb20+JAFPd2hq+9gzraGdFiFtN+aA==
   dependencies:
     "@types/rimraf" "^3.0.2"
     lodash.clonedeep "^4.5.0"
