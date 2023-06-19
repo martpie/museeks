@@ -1,4 +1,10 @@
-import { ipcMain, NativeImage, nativeImage, Notification } from 'electron';
+import {
+  ipcMain,
+  IpcMainEvent,
+  NativeImage,
+  nativeImage,
+  Notification,
+} from 'electron';
 import TeenyConf from 'teeny-conf';
 
 import channels from '../../shared/lib/ipc-channels';
@@ -19,9 +25,12 @@ export default class IPCNotificationsModule extends ModuleWindow {
   }
 
   async load(): Promise<void> {
-    ipcMain.on(channels.PLAYBACK_PLAY, (_e: Event, track: TrackModel) => {
-      this.sendPlaybackNotification(track);
-    });
+    ipcMain.on(
+      channels.PLAYBACK_PLAY,
+      (_e: IpcMainEvent, track: TrackModel) => {
+        this.sendPlaybackNotification(track);
+      },
+    );
   }
 
   private async sendPlaybackNotification(track: TrackModel): Promise<void> {

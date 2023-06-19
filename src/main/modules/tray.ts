@@ -6,7 +6,7 @@ import os from 'os';
 import path from 'path';
 
 import ps from 'ps-node';
-import { Tray, Menu, app, ipcMain, nativeImage } from 'electron';
+import { Tray, Menu, app, ipcMain, nativeImage, IpcMainEvent } from 'electron';
 
 import { TrackModel, PlayerStatus } from '../../shared/types/museeks';
 import channels from '../../shared/lib/ipc-channels';
@@ -164,7 +164,7 @@ export default class TrayModule extends ModuleWindow {
 
     ipcMain.on(
       channels.PLAYBACK_TRACK_CHANGE,
-      (_e: Event, track: TrackModel) => {
+      (_e: IpcMainEvent, track: TrackModel) => {
         this.status = PlayerStatus.PLAY;
         this.updateTrayMetadata(track);
         this.setContextMenu(PlayerStatus.PLAY);

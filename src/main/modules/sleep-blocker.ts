@@ -2,7 +2,7 @@
  * Module in charge of preventing the computer to go to sleep
  */
 
-import { powerSaveBlocker, ipcMain } from 'electron';
+import { powerSaveBlocker, ipcMain, IpcMainEvent } from 'electron';
 
 import channels from '../../shared/lib/ipc-channels';
 
@@ -33,7 +33,7 @@ export default class SleepBlocker extends ModuleWindow {
     }
   };
 
-  toggleSleepBlocker = (_event: Event, value: boolean): void => {
+  toggleSleepBlocker = (_event: IpcMainEvent, value: boolean): void => {
     this.enabled = value;
   };
 
