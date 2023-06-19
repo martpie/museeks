@@ -69,7 +69,7 @@ app.on('ready', async () => {
       contextIsolation: false,
       allowRunningInsecureContent: false,
       autoplayPolicy: 'no-user-gesture-required',
-      webSecurity: process.env.VITE_DEV_SERVER_URL == null, // FIXME
+      webSecurity: process.env.ELECTRON_RENDERER_URL == null, // Cannot load local resources without that
       preload: path.join(preloadDistPath, 'entrypoint.js'),
     },
   });
