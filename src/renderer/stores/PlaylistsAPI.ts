@@ -1,5 +1,3 @@
-import { ipcRenderer } from 'electron';
-
 import {
   Playlist,
   TrackModel,
@@ -13,6 +11,7 @@ import useToastsStore from './useToastsStore';
 import usePlayerStore from './usePlayerStore';
 
 const { db } = window.MuseeksAPI;
+const { ipcRenderer } = window.ElectronAPI;
 
 /**
  * Start playing playlist (on double click)

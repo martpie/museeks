@@ -44,7 +44,7 @@
   resolved "https://registry.yarnpkg.com/@babel/compat-data/-/compat-data-7.22.5.tgz#b1f6c86a02d85d2dd3368a2b67c09add8cd0c255"
   integrity sha512-4Jc/YuIaYqKnDDz892kPIledykKg12Aw1PYX5i/TY28anJtacvM1Rrr8wbieB9GfEJwlzqT0hUEao0CxEebiDA==
 
-"@babel/core@^7.21.3":
+"@babel/core@^7.21.3", "@babel/core@^7.22.1":
   version "7.22.5"
   resolved "https://registry.yarnpkg.com/@babel/core/-/core-7.22.5.tgz#d67d9747ecf26ee7ecd3ebae1ee22225fe902a89"
   integrity sha512-SBuTAjg91A3eKOvD+bPEz3LlhHZRNu1nFOVts9lzDJTXshHTjII0BAtDS3Y2DAkdZdDKWVZGVwkDfc4Clxn1dg==
@@ -215,6 +215,11 @@
   resolved "https://registry.yarnpkg.com/@babel/helper-plugin-utils/-/helper-plugin-utils-7.21.5.tgz#345f2377d05a720a4e5ecfa39cbf4474a4daed56"
   integrity sha512-0WDaIlXKOX/3KfBK/dwP1oQGiPh6rjMkT7HIRv7i5RR2VUMwrx5ZL0dwBkKx7+SW1zwNdgjHd34IMk5ZjTeHVg==
 
+"@babel/helper-plugin-utils@^7.22.5":
+  version "7.22.5"
+  resolved "https://registry.yarnpkg.com/@babel/helper-plugin-utils/-/helper-plugin-utils-7.22.5.tgz#dd7ee3735e8a313b9f7b05a773d892e88e6d7295"
+  integrity sha512-uLls06UVKgFG9QD4OeFYLEGteMIAa5kpTPcFL28yuCIIzsf6ZyKZMllKVOCZFhiZ5ptnwX4mtKdWCBE/uT4amg==
+
 "@babel/helper-simple-access@^7.21.5":
   version "7.21.5"
   resolved "https://registry.yarnpkg.com/@babel/helper-simple-access/-/helper-simple-access-7.21.5.tgz#d697a7971a5c39eac32c7e63c0921c06c8a249ee"
@@ -318,6 +323,13 @@
   version "7.22.5"
   resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.22.5.tgz#721fd042f3ce1896238cf1b341c77eb7dee7dbea"
   integrity sha512-DFZMC9LJUG9PLOclRC32G63UXwzqS2koQC8dkx+PLdmt1xSePYpbT/NbsrJy8Q/muXz7o/h/d4A7Fuyixm559Q==
+
+"@babel/plugin-transform-arrow-functions@^7.21.5":
+  version "7.22.5"
+  resolved "https://registry.yarnpkg.com/@babel/plugin-transform-arrow-functions/-/plugin-transform-arrow-functions-7.22.5.tgz#e5ba566d0c58a5b2ba2a8b795450641950b71958"
+  integrity sha512-26lTNXoVRdAnsaDXPpvCNUq+OVWEVC6bx7Vvz9rC53F2bagUWW4u4ii2+h8Fejfh7RYqPxn+libeFBBck9muEw==
+  dependencies:
+    "@babel/helper-plugin-utils" "^7.22.5"
 
 "@babel/plugin-transform-react-jsx-self@^7.21.0":
   version "7.21.0"
@@ -2356,6 +2368,18 @@ electron-to-chromium@^1.4.284:
   resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.408.tgz#73e657a24bd0b7481d68c943dded0d097b0d0a52"
   integrity sha512-vjeaj0u/UYnzA/CIdGXzzcxRLCqRwREYc9YfaWInjIEr7/XPttZ6ShpyqapchEy0S2r6LpLjDBTnNj7ZxnxJKg==
 
+electron-vite@^1.0.23:
+  version "1.0.23"
+  resolved "https://registry.yarnpkg.com/electron-vite/-/electron-vite-1.0.23.tgz#c68f1f05c9bace1195c06162cc931c94f5f43d41"
+  integrity sha512-L4df40Lqq16ltsXXeGtD/Xa3PkK8UJG6eY0WtMiNdSNmsFNV7gaE4WzjbMCqFeg9bv09Pkhh9o3amUbvHAAmdg==
+  dependencies:
+    "@babel/core" "^7.22.1"
+    "@babel/plugin-transform-arrow-functions" "^7.21.5"
+    cac "^6.7.14"
+    esbuild "^0.17.19"
+    magic-string "^0.30.0"
+    picocolors "^1.0.0"
+
 electron@24.4.0:
   version "24.4.0"
   resolved "https://registry.yarnpkg.com/electron/-/electron-24.4.0.tgz#48d05561dab6a5835ec1a3a96852797f69824eea"
@@ -2497,7 +2521,7 @@ es6-error@^4.1.1:
   resolved "https://registry.yarnpkg.com/es6-error/-/es6-error-4.1.1.tgz#9e3af407459deed47e9a91f9b885a84eb05c561d"
   integrity sha512-Um/+FxMr9CISWh0bi5Zv0iOD+4cFh5qLeks1qhAopKVAJw3drgKbKySikp7wGhDL0HPeaja0P5ULZrxLkniUVg==
 
-esbuild@^0.17.14, esbuild@^0.17.16, esbuild@^0.17.5:
+esbuild@^0.17.14, esbuild@^0.17.16, esbuild@^0.17.19, esbuild@^0.17.5:
   version "0.17.19"
   resolved "https://registry.yarnpkg.com/esbuild/-/esbuild-0.17.19.tgz#087a727e98299f0462a3d0bcdd9cd7ff100bd955"
   integrity sha512-XQ0jAPFkK/u3LcVRcvVHQcTIqD6E2H1fvZMA5dQPSOWb3suUbWbfbRf94pjc0bNzRYLfIrDRQXr7X+LHIm5oHw==
@@ -3987,11 +4011,6 @@ locate-path@^6.0.0:
   integrity sha512-iPZK6eYjbxRu3uB4/WZ3EsEIMJFMqAoopl3R+zuq0UjcAm/MO6KCweDgPfP3elTztoKP3KtnVHxTn2NHBSDVUw==
   dependencies:
     p-locate "^5.0.0"
-
-lodash-es@^4.17.21:
-  version "4.17.21"
-  resolved "https://registry.yarnpkg.com/lodash-es/-/lodash-es-4.17.21.tgz#43e626c46e6591b7750beb2b50117390c609e3ee"
-  integrity sha512-mKnC+QJ9pWVzv+C4/U3rRsHapFfHvQFoFB92e52xeyGMcX6/OlIl78je1u8vePzYZSkkogMPJ2yjxxsb89cxyw==
 
 lodash.camelcase@^4.3.0:
   version "4.3.0"
@@ -6248,16 +6267,6 @@ vite-node@0.31.1:
     pathe "^1.1.0"
     picocolors "^1.0.0"
     vite "^3.0.0 || ^4.0.0"
-
-vite-plugin-electron-renderer@0.14.5:
-  version "0.14.5"
-  resolved "https://registry.yarnpkg.com/vite-plugin-electron-renderer/-/vite-plugin-electron-renderer-0.14.5.tgz#2ac36f31773cb23a09353fabb6fb788bdad94f50"
-  integrity sha512-EQ7ORuPp8vFPCqfuGnVo7d36fXS0IFH4/RUlKb1drseix3TQEPcgwEuFADdXBxRgqMp70njz/1m0kdf5lEsm8w==
-
-vite-plugin-electron@0.11.1:
-  version "0.11.1"
-  resolved "https://registry.yarnpkg.com/vite-plugin-electron/-/vite-plugin-electron-0.11.1.tgz#1a909c42e13c391e0700e03a0ed5192b67d2bf9a"
-  integrity sha512-pi9Wy4KCGjKIRvp7/5VUOT8BYEAJdZrpy3gI+GhGc5vYs2V9yPxLOtfCqNfSTYqH3uM6hYY6MyifFVku3Wg+2A==
 
 "vite@^3.0.0 || ^4.0.0", vite@^4.3.5:
   version "4.3.9"

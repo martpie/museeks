@@ -1,4 +1,4 @@
-import orderBy from 'lodash-es/orderBy';
+import orderBy from 'lodash/orderBy';
 
 import { TrackModel } from '../../shared/types/museeks';
 

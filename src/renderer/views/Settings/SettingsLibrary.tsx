@@ -1,11 +1,12 @@
 import { useCallback } from 'react';
-import { ipcRenderer } from 'electron';
 
 import * as Setting from '../../components/Setting/Setting';
 import Button from '../../elements/Button/Button';
 import channels from '../../../shared/lib/ipc-channels';
 import logger from '../../../shared/lib/logger';
 import useLibraryStore, { useLibraryAPI } from '../../stores/useLibraryStore';
+
+const { ipcRenderer } = window.ElectronAPI;
 
 export default function SettingsLibrary() {
   const libraryAPI = useLibraryAPI();

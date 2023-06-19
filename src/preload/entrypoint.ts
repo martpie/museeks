@@ -49,6 +49,12 @@ const pathUserData = app.getPath('userData');
 |--------------------------------------------------------------------------
 */
 
+const ElectronAPI = {
+  ipcRenderer,
+};
+
+window.ElectronAPI = ElectronAPI;
+
 const config = new TeenyConf<Config>(
   path.join(pathUserData, 'config.json'),
   {},
@@ -63,7 +69,7 @@ const player = new Player({
 
 // When editing something here, please update museeks.d.ts to extend the
 // window.MuseeksAPI global object.
-const API = {
+const MuseeksAPI = {
   __instantiated: false,
   platform: os.platform(),
   version: app.getVersion(),
@@ -100,6 +106,7 @@ const API = {
   },
 };
 
-window.MuseeksAPI = API;
+window.MuseeksAPI = MuseeksAPI;
 
-export type MuseeksAPI = typeof API;
+export type MuseeksAPI = typeof MuseeksAPI;
+export type ElectronAPI = typeof ElectronAPI;

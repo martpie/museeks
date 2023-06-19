@@ -1,4 +1,3 @@
-import { ipcRenderer } from 'electron';
 import * as semver from 'semver';
 
 import channels from '../../shared/lib/ipc-channels';
@@ -6,6 +5,8 @@ import { Theme } from '../../shared/types/museeks';
 import logger from '../../shared/lib/logger';
 
 import useToastsStore from './useToastsStore';
+
+const { ipcRenderer } = window.ElectronAPI;
 
 interface UpdateCheckOptions {
   silentFail?: boolean;
