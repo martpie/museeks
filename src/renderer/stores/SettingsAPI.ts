@@ -128,14 +128,6 @@ const toggleAutoUpdateChecker = (value: boolean): void => {
 };
 
 /**
- * Toggle minimize-to-tray
- */
-const toggleMinimizeToTray = (value: boolean): void => {
-  window.MuseeksAPI.config.set('minimizeToTray', value);
-  window.MuseeksAPI.config.save();
-};
-
-/**
  * Toggle native notifications display
  */
 const toggleDisplayNotifications = (value: boolean): void => {
@@ -155,7 +147,6 @@ const SettingsAPI = {
   toggleSleepBlocker,
   setDefaultView,
   toggleAutoUpdateChecker,
-  toggleMinimizeToTray,
   toggleDisplayNotifications,
 };
 
