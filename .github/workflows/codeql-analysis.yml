@@ -5,9 +5,12 @@ on:
     branches: [master]
   pull_request:
     branches: [master]
+  schedule:
+    - cron: '32 1 * * 4'
 
 jobs:
   analyze:
+    name: analyze
     runs-on: ubuntu-latest
     permissions:
       actions: read
