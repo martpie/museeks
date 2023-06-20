@@ -2,7 +2,7 @@
  * Example of Module, other modules should extent this class
  */
 
-import Module from './module';
+import Module from './BaseModule';
 
 export default class ModuleWindow extends Module {
   protected window: Electron.BrowserWindow;

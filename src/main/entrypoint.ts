@@ -5,22 +5,21 @@ import remote from '@electron/remote/main';
 
 import logger from '../shared/lib/logger';
 
-import AppModule from './modules/app';
-import ApplicationMenuModule from './modules/application-menu';
-import ConfigModule from './modules/config';
-import PowerModule from './modules/power-monitor';
-import ThumbarModule from './modules/thumbar';
-import DockMenuModule from './modules/dock-menu-darwin';
-import SleepBlockerModule from './modules/sleep-blocker';
-import DialogsModule from './modules/dialogs';
-import NativeThemeModule from './modules/native-theme';
-import DevtoolsModule from './modules/devtools';
-import WindowPositionModule from './modules/window-position';
-import IPCCoverModule from './modules/ipc-cover';
-import IPCLibraryModule from './modules/ipc-library';
-import IPCNotificationsModule from './modules/ipc-notifications';
-import IPCDatabaseModule from './modules/database';
-import IPCPlaylistsModule from './modules/ipc-playlists';
+import AppModule from './modules/AppModule';
+import ApplicationMenuModule from './modules/ApplicationMenuModule';
+import ConfigModule from './modules/ConfigModule';
+import PowerModule from './modules/PowerMonitorModule';
+import ThumbarModule from './modules/ThumbarModule';
+import DockMenuModule from './modules/DockMenuDarwinModule';
+import SleepBlockerModule from './modules/SleepBlockerModule';
+import DialogsModule from './modules/DialogsModule';
+import NativeThemeModule from './modules/NativeThemeModule';
+import DevtoolsModule from './modules/DevtoolsModule';
+import WindowPositionModule from './modules/WindowPositionModule';
+import IPCCoverModule from './modules/IPCCoverModule';
+import IPCLibraryModule from './modules/IPCLibraryModule';
+import IPCNotificationsModule from './modules/IPCNotificationsModule';
+import IPCPlaylistsModule from './modules/IPCPlaylistsModule';
 import * as ModulesManager from './lib/modules-manager';
 import { checkBounds } from './lib/utils';
 
@@ -120,7 +119,6 @@ app.whenReady().then(async () => {
     new IPCCoverModule(mainWindow),
     new IPCLibraryModule(mainWindow),
     new IPCNotificationsModule(mainWindow, config),
-    new IPCDatabaseModule(mainWindow),
     new IPCPlaylistsModule(mainWindow),
   ).catch(logger.error);
 });

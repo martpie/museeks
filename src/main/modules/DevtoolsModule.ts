@@ -10,7 +10,7 @@ import installExtensions, {
 
 import logger from '../../shared/lib/logger';
 
-import ModuleWindow from './module-window';
+import ModuleWindow from './BaseWindowModule';
 
 export default class DevtoolsModule extends ModuleWindow {
   async load(): Promise<void> {

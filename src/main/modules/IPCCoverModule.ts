@@ -3,7 +3,7 @@ import { ipcMain } from 'electron';
 import channels from '../../shared/lib/ipc-channels';
 import { fetchCover } from '../lib/utils-cover';
 
-import ModuleWindow from './module-window';
+import ModuleWindow from './BaseWindowModule';
 
 /**
  * Module in charge of returning the cover data for a given track

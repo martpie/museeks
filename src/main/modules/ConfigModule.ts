@@ -9,7 +9,7 @@ import TeenyConf from 'teeny-conf';
 
 import { Config, Repeat, SortBy, SortOrder } from '../../shared/types/museeks';
 
-import Module from './module';
+import Module from './BaseModule';
 
 const { app } = electron;
 

@@ -5,7 +5,7 @@ import channels from '../../shared/lib/ipc-channels';
 import { Config, TrackModel } from '../../shared/types/museeks';
 import * as utilsCover from '../lib/utils-cover';
 
-import ModuleWindow from './module-window';
+import ModuleWindow from './BaseWindowModule';
 
 /**
  * Module in charge of displaying native notifications on certain user actions

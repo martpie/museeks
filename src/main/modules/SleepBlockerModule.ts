@@ -6,7 +6,7 @@ import { powerSaveBlocker, ipcMain } from 'electron';
 
 import channels from '../../shared/lib/ipc-channels';
 
-import ModuleWindow from './module-window';
+import ModuleWindow from './BaseWindowModule';
 
 export default class SleepBlocker extends ModuleWindow {
   protected sleepBlockerId: number;

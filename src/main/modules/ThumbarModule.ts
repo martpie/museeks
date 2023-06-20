@@ -11,7 +11,7 @@ import { nativeImage, ipcMain } from 'electron';
 
 import channels from '../../shared/lib/ipc-channels';
 
-import ModuleWindow from './module-window';
+import ModuleWindow from './BaseWindowModule';
 
 const { createFromPath } = nativeImage;
 

@@ -13,7 +13,7 @@ import { Track } from '../../shared/types/museeks';
 import logger from '../../shared/lib/logger';
 import { getLoweredMeta } from '../../shared/lib/utils-id3';
 
-import ModuleWindow from './module-window';
+import ModuleWindow from './BaseWindowModule';
 
 interface ScanFile {
   path: string;

@@ -6,7 +6,7 @@ import * as m3u from 'm3ujs';
 import channels from '../../shared/lib/ipc-channels';
 import logger from '../../shared/lib/logger';
 
-import ModuleWindow from './module-window';
+import ModuleWindow from './BaseWindowModule';
 
 /**
  * Module in charge of returning the cover data for a given track
