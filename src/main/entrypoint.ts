@@ -34,9 +34,14 @@ remote.initialize();
 // be closed automatically when the javascript object is GCed.
 let mainWindow: Electron.BrowserWindow | null = null;
 
+// Quit when all windows are closed
+app.on('window-all-closed', () => {
+  app.quit();
+});
+
 // This method will be called when Electron has finished its
 // initialization and ready to create browser windows.
-app.whenReady().then(async () => {
+app.on('ready', async () => {
   const configModule = new ConfigModule();
   await ModulesManager.init(configModule);
   const config = configModule.getConfig();

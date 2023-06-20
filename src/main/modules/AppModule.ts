@@ -41,13 +41,14 @@ export default class AppModule extends ModuleWindow {
       app.exit(0);
     });
 
-    // Quit when all windows are closed
-    app.on('window-all-closed', () => {
-      if (process.platform !== 'darwin') app.quit();
+    // Prevent the window to be closed, hide it instead (to continue audio playback)
+    this.window.on('close', (e) => {
+      this.close(e);
     });
 
-    // Prevent the window to be closed, hide it instead (to continue audio playback)
-    this.window.on('close', this.close);
+    ipcMain.on(channels.APP_CLOSE, (e) => {
+      this.close(e);
+    });
 
     // Click on the dock icon to show the app again on macOS
     app.on('activate', () => {
@@ -57,7 +58,7 @@ export default class AppModule extends ModuleWindow {
       }
     });
 
-    // Small hack to check on MacOS if the dock close action has been clicked or cmd+Q
+    // Small hack to check on MacOS if the dock close action has been clicked
     // https://stackoverflow.com/questions/35008347/electron-close-w-x-vs-right-click-dock-and-quit#35782702
     app.on('before-quit', () => {
       this.forceQuit = true;
@@ -67,6 +68,7 @@ export default class AppModule extends ModuleWindow {
   close(e: Electron.Event): void {
     if (this.forceQuit || os.platform() !== 'darwin') {
       app.quit();
+      this.window.destroy();
     } else {
       e.preventDefault();
       this.window.hide();
