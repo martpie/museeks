@@ -78,7 +78,6 @@ const MuseeksAPI = {
   app: {
     ready: () => ipcRenderer.send(channels.APP_READY),
     restart: () => ipcRenderer.send(channels.APP_RESTART),
-    clone: () => ipcRenderer.send(channels.APP_CLOSE),
   },
   db,
   library: {
