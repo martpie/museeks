@@ -19,9 +19,9 @@ import router from './views/router';
 | Styles
 |--------------------------------------------------------------------------
 */
-import '../../node_modules/react-rangeslider/lib/index.css';
-import '../../node_modules/font-awesome/css/font-awesome.css';
-import '../../node_modules/normalize.css/normalize.css';
+import 'react-rangeslider/lib/index.css';
+import 'font-awesome/css/font-awesome.css';
+import 'normalize.css/normalize.css';
 import './styles/main.module.css';
 
 /*
