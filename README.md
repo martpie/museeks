@@ -26,7 +26,6 @@ You will not find tons of features, as its goals is not to compete with more com
 - 🤓 Dark theme
 - 🚤 Playback speed control
 - 😴 Sleep mode blocker
-- 🔊 Minimize to tray
 - 🔄 `.m3u` import/export
 
 Want more? Open a new issue or 👍 an existing one so we can talk about it.
@@ -60,12 +59,12 @@ Please consider that **`master` is unstable**.
 - `git clone git@github.com:martpie/museeks.git`
 - `cd museeks`
 - `yarn install --frozen-lockfile`
-- for dev mode: 
-    - `yarn dev`
-    - `yarn museeks:debug` (in another terminal)
+- for dev mode:
+  - `yarn dev`
+  - `yarn museeks:debug` (in another terminal)
 - for prod mode:
-    - `yarn build`
-    - `yarn museeks`
+  - `yarn build`
+  - `yarn museeks`
 
 ### Package binaries (advanced)
 

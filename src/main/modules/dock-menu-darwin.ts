@@ -81,7 +81,7 @@ export default class DockMenuDarwinModule extends ModuleWindow {
     ipcMain.on(
       channels.PLAYBACK_TRACK_CHANGE,
       (_e: Event, track: TrackModel) => {
-        this.updateTrayMetadata(track);
+        this.updateDockMenu(track);
         this.setDockMenu(PlayerStatus.PLAY);
       },
     );
@@ -95,7 +95,7 @@ export default class DockMenuDarwinModule extends ModuleWindow {
     app.dock.setMenu(Menu.buildFromTemplate(menuTemplate));
   }
 
-  updateTrayMetadata(metadata: TrackModel): void {
+  updateDockMenu(metadata: TrackModel): void {
     this.songDetails = [
       {
         label: `${metadata.title}`,

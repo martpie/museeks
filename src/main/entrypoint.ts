@@ -7,7 +7,6 @@ import logger from '../shared/lib/logger';
 
 import AppModule from './modules/app';
 import ApplicationMenuModule from './modules/application-menu';
-import TrayModule from './modules/tray';
 import ConfigModule from './modules/config';
 import PowerModule from './modules/power-monitor';
 import ThumbarModule from './modules/thumbar';
@@ -115,7 +114,6 @@ app.on('ready', async () => {
     new AppModule(mainWindow, config),
     new PowerModule(mainWindow),
     new ApplicationMenuModule(mainWindow),
-    new TrayModule(mainWindow),
     new ThumbarModule(mainWindow),
     new DockMenuModule(mainWindow),
     new SleepBlockerModule(mainWindow),
