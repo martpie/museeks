@@ -11,6 +11,10 @@ on:
       - '*'
   workflow_dispatch:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
   qa:
     # Let's implement different jobs for Windows and Linux at some point, especially for packaging scripts
