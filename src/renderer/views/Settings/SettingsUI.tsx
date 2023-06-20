@@ -75,15 +75,6 @@ export default function SettingsUI() {
           defaultValue={config.sleepBlocker}
           onClick={SettingsAPI.toggleSleepBlocker}
         />
-        {window.MuseeksAPI.platform !== 'darwin' && (
-          <CheckboxSetting
-            slug="tray"
-            title="Minimize to tray on close"
-            description='Prevent the app from shutting down when clicking the "close" window button'
-            defaultValue={config.minimizeToTray}
-            onClick={SettingsAPI.toggleMinimizeToTray}
-          />
-        )}
         <CheckboxSetting
           slug="update"
           title="Auto update checker"

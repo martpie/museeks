@@ -73,7 +73,6 @@ export default class ConfigModule extends Module {
       // musicFolders: [],
       sleepBlocker: false,
       autoUpdateChecker: true,
-      minimizeToTray: false,
       displayNotifications: true,
       bounds: {
         width: 1000,

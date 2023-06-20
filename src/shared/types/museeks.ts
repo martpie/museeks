@@ -147,7 +147,6 @@ export interface Config {
   // musicFolders: string[],
   sleepBlocker: boolean;
   autoUpdateChecker: boolean;
-  minimizeToTray: boolean;
   displayNotifications: boolean;
   bounds: ConfigBounds;
 }

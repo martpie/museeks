@@ -510,9 +510,9 @@ function createPlayerStore<T extends PlayerState>(store: StateCreator<T>) {
       merge(persistedState, currentState) {
         if (persistedState == null) {
           persistedState = {
-            palyerStatus: PlayerStatus.STOP 
-          }
-        };
+            palyerStatus: PlayerStatus.STOP,
+          };
+        }
 
         return {
           ...currentState,

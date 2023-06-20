@@ -1,6 +1,5 @@
 /**
  * Module in charge of handling the different window behavior based on platforms
- * and tray options
  */
 
 import os from 'os';
@@ -67,15 +66,11 @@ export default class AppModule extends ModuleWindow {
   }
 
   close(e: Electron.Event): void {
-    this.config.reload(); // HACKY
-    const minimizeToTray = this.config.get('minimizeToTray');
-
-    if (this.forceQuit || (!minimizeToTray && os.platform() !== 'darwin')) {
+    if (this.forceQuit || os.platform() !== 'darwin') {
       app.quit();
       this.window.destroy();
     } else {
       e.preventDefault();
-      // Should we minimize on Linux in case of the Tray not being displayed?
       this.window.hide();
     }
   }
