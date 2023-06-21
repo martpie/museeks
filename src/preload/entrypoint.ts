@@ -2,7 +2,7 @@ import os from 'os';
 import path from 'path';
 
 import { Menu, app } from '@electron/remote';
-import { ipcRenderer, shell } from 'electron';
+import { contextBridge, ipcRenderer, shell } from 'electron';
 import TeenyConf from 'teeny-conf';
 
 import { Config, Track } from '../shared/types/museeks';
@@ -49,11 +49,10 @@ const pathUserData = app.getPath('userData');
 |--------------------------------------------------------------------------
 */
 
+// TODO: Move all ipcRenderer calls to preload
 const ElectronAPI = {
   ipcRenderer,
 };
-
-window.ElectronAPI = ElectronAPI;
 
 const config = new TeenyConf<Config>(
   path.join(pathUserData, 'config.json'),
@@ -106,7 +105,8 @@ const MuseeksAPI = {
   },
 };
 
-window.MuseeksAPI = MuseeksAPI;
+contextBridge.exposeInMainWorld('MuseeksAPI', MuseeksAPI);
+contextBridge.exposeInMainWorld('ElectronAPI', ElectronAPI);
 
 export type MuseeksAPI = typeof MuseeksAPI;
 export type ElectronAPI = typeof ElectronAPI;

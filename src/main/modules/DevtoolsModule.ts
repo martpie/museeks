@@ -14,6 +14,7 @@ import ModuleWindow from './BaseWindowModule';
 
 export default class DevtoolsModule extends ModuleWindow {
   async load(): Promise<void> {
+    return;
     const isProduction = process.env.NODE_ENV === 'production';
 
     // Let's install some extensions so it's easier for us to debug things
