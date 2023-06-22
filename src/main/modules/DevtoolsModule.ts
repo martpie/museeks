@@ -6,7 +6,7 @@
 import installExtensions, {
   REDUX_DEVTOOLS,
   REACT_DEVELOPER_TOOLS,
-} from 'electron-devtools-installer';
+} from 'electron-devtools-assembler';
 
 import logger from '../../shared/lib/logger';
 
@@ -19,7 +19,11 @@ export default class DevtoolsModule extends ModuleWindow {
     // Let's install some extensions so it's easier for us to debug things
     if (!isProduction) {
       try {
-        await installExtensions([REDUX_DEVTOOLS, REACT_DEVELOPER_TOOLS]);
+        await installExtensions([REDUX_DEVTOOLS, REACT_DEVELOPER_TOOLS], {
+          loadExtensionOptions: {
+            allowFileAccess: true,
+          },
+        });
         logger.info('Added devtools extensions');
       } catch (err) {
         logger.warn('An error occurred while trying to add extensions:\n', err);
