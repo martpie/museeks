@@ -44,7 +44,6 @@
     "bluebird": "^3.7.2",
     "chardet": "^1.5.1",
     "classnames": "^2.3.2",
-    "electron-devtools-installer": "^3.2.0",
     "font-awesome": "^4.7.0",
     "globby": "^13.1.4",
     "iconv-lite": "^0.6.3",
@@ -76,7 +75,6 @@
   },
   "devDependencies": {
     "@types/bluebird": "^3.5.38",
-    "@types/electron-devtools-installer": "^2.2.2",
     "@types/lodash": "^4.14.195",
     "@types/mime-types": "^2.1.1",
     "@types/react": "^18.2.6",
@@ -89,6 +87,7 @@
     "@vitejs/plugin-react": "^4.0.0",
     "electron": "24.4.0",
     "electron-builder": "^23.6.0",
+    "electron-devtools-assembler": "^1.2.0",
     "electron-vite": "^1.0.23",
     "eslint": "^8.41.0",
     "eslint-config-prettier": "^8.8.0",
