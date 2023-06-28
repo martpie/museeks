@@ -18,8 +18,8 @@ export default class WindowPositionModule extends ModuleWindow {
   }
 
   async load(): Promise<void> {
-    this.window.on('resize', debounce(this.saveBounds, 250));
-    this.window.on('move', debounce(this.saveBounds, 250));
+    this.window.on('resize', debounce(this.saveBounds, 250).bind(this));
+    this.window.on('move', debounce(this.saveBounds, 250).bind(this));
   }
 
   saveBounds() {
