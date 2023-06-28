@@ -2,7 +2,7 @@ import os from 'os';
 import path from 'path';
 
 import { Menu, app } from '@electron/remote';
-import { ipcRenderer, shell } from 'electron';
+import { contextBridge, ipcRenderer, shell } from 'electron';
 
 import { Config, Track } from '../shared/types/museeks';
 import channels from '../shared/lib/ipc-channels';
@@ -118,8 +118,8 @@ const MuseeksAPI = {
   },
 };
 
-window.ElectronAPI = ElectronAPI;
-window.MuseeksAPI = MuseeksAPI;
+contextBridge.exposeInMainWorld('ElectronAPI', ElectronAPI);
+contextBridge.exposeInMainWorld('MuseeksAPI', MuseeksAPI);
 
 export type ElectronAPI = typeof ElectronAPI;
 export type MuseeksAPI = typeof MuseeksAPI;
