@@ -10,7 +10,7 @@ import { PlaylistModel } from '../../../shared/types/museeks';
 
 import styles from './PlaylistsNav.module.css';
 
-const { Menu } = window.MuseeksAPI.remote;
+const { menu } = window.ElectronAPI;
 
 type Props = {
   playlists: PlaylistModel[];
@@ -53,9 +53,7 @@ export default function PlaylistsNav(props: Props) {
       },
     ];
 
-    const context = Menu.buildFromTemplate(template);
-
-    context.popup({}); // Let it appear
+    menu.showContextMenu(template);
   }, []);
 
   const createPlaylist = useCallback(async () => {
