@@ -73,10 +73,10 @@ const ElectronAPI = {
 window.ElectronAPI = ElectronAPI;
 
 const player = new Player({
-  // volume: config.get('audioVolume'),
-  // playbackRate: config.get('audioPlaybackRate'),
-  // audioOutputDevice: config.get('audioOutputDevice'),
-  // muted: config.get('audioMuted'),
+  volume: config.__initialConfig['audioVolume'],
+  playbackRate: config.__initialConfig['audioPlaybackRate'],
+  audioOutputDevice: config.__initialConfig['audioOutputDevice'],
+  muted: config.__initialConfig['audioMuted'],
 });
 
 // When editing something here, please update museeks.d.ts to extend the
