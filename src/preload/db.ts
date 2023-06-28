@@ -46,43 +46,43 @@ async function reset(): Promise<void> {
  * -------------------------------------------------------------------------- */
 
 const tracks = {
-  getAll(): Promise<TrackModel[]> {
+  async getAll(): Promise<TrackModel[]> {
     return Tracks.find().execAsync();
   },
 
-  insert(track: Track): Promise<TrackModel> {
+  async insert(track: Track): Promise<TrackModel> {
     return Tracks.insertAsync(track);
   },
 
-  insertMultiple(tracks: Track[]): Promise<TrackModel[]> {
+  async insertMultiple(tracks: Track[]): Promise<TrackModel[]> {
     return Tracks.insertAsync(tracks);
   },
 
-  update(trackID: string, track: Track): Promise<TrackModel> {
+  async update(trackID: string, track: Track): Promise<TrackModel> {
     return Tracks.updateAsync({ _id: trackID }, track);
   },
 
-  updateWithRawQuery(trackID: string, query: any): Promise<TrackModel> {
+  async updateWithRawQuery(trackID: string, query: any): Promise<TrackModel> {
     return Tracks.updateAsync({ _id: trackID }, query);
   },
 
-  remove(trackIDs: string[]): Promise<void> {
+  async remove(trackIDs: string[]): Promise<void> {
     return Tracks.removeAsync({ _id: { $in: trackIDs } }, { multi: true });
   },
 
-  findByID(trackIDs: string[]): Promise<TrackModel[]> {
+  async findByID(trackIDs: string[]): Promise<TrackModel[]> {
     return Tracks.findAsync({ _id: { $in: trackIDs } });
   },
 
-  findOnlyByID(trackID: string): Promise<TrackModel> {
+  async findOnlyByID(trackID: string): Promise<TrackModel> {
     return Tracks.findOneAsync({ _id: trackID });
   },
 
-  findByPath(paths: string[]): Promise<TrackModel[]> {
+  async findByPath(paths: string[]): Promise<TrackModel[]> {
     return Tracks.findOne({ _id: { $in: paths } });
   },
 
-  findOnlyByPath(path: string): Promise<TrackModel> {
+  async findOnlyByPath(path: string): Promise<TrackModel> {
     return Tracks.findOneAsync({ path });
   },
 };
@@ -92,34 +92,37 @@ const tracks = {
  * -------------------------------------------------------------------------- */
 
 const playlists = {
-  getAll(): Promise<PlaylistModel[]> {
+  async getAll(): Promise<PlaylistModel[]> {
     return Playlists.find({}).sort({ name: 1 }).execAsync();
   },
 
-  insert(track: Playlist): Promise<PlaylistModel> {
+  async insert(track: Playlist): Promise<PlaylistModel> {
     return Playlists.insertAsync(track);
   },
 
-  update(playlistID: string, track: Track): Promise<PlaylistModel> {
+  async update(playlistID: string, track: Track): Promise<PlaylistModel> {
     return Playlists.updateAsync({ _id: playlistID }, track);
   },
 
-  updateWithRawQuery(playlistID: string, query: any): Promise<PlaylistModel> {
+  async updateWithRawQuery(
+    playlistID: string,
+    query: any,
+  ): Promise<PlaylistModel> {
     return Playlists.updateAsync({ _id: playlistID }, query);
   },
 
-  remove(playlistIDs: string[]): Promise<void> {
+  async remove(playlistIDs: string[]): Promise<void> {
     return Playlists.removeAsync(
       { _id: { $in: playlistIDs } },
       { multi: true },
     );
   },
 
-  findByID(playlistIDs: string[]): Promise<PlaylistModel[]> {
+  async findByID(playlistIDs: string[]): Promise<PlaylistModel[]> {
     return Playlists.findAsync({ _id: { $in: playlistIDs } });
   },
 
-  findOnlyByID(playlistID: string): Promise<PlaylistModel> {
+  async findOnlyByID(playlistID: string): Promise<PlaylistModel> {
     return Playlists.findOneAsync({ _id: playlistID });
   },
 };
