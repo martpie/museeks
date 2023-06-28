@@ -6,6 +6,7 @@ import { PlayerStatus, Repeat, TrackModel } from '../../shared/types/museeks';
 import { shuffleTracks } from '../lib/utils-player';
 import logger from '../../shared/lib/logger';
 import router from '../views/router';
+import player from '../lib/player';
 
 import { createStore } from './store-helpers';
 import useToastsStore from './useToastsStore';
@@ -44,7 +45,7 @@ type PlayerState = {
   };
 };
 
-const { player, config } = window.MuseeksAPI;
+const { config } = window.MuseeksAPI;
 
 const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
   queue: [], // Tracks to be played
@@ -371,8 +372,8 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
       const { queue } = get();
       const track = queue[index];
 
-      window.MuseeksAPI.player.setTrack(track);
-      await window.MuseeksAPI.player.play();
+      player.setTrack(track);
+      await player.play();
 
       set({
         queue,
@@ -490,7 +491,7 @@ function createPlayerStore<T extends PlayerState>(store: StateCreator<T>) {
             const { queue, queueCursor } = state;
             if (queue && queueCursor) {
               const track = queue[queueCursor];
-              window.MuseeksAPI.player.setTrack(track);
+              player.setTrack(track);
             }
           }
         };

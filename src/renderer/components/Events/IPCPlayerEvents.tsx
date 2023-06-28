@@ -3,8 +3,8 @@ import { useEffect } from 'react';
 import channels from '../../../shared/lib/ipc-channels';
 import { usePlayerAPI } from '../../stores/usePlayerStore';
 import useCurrentViewTracks from '../../hooks/useCurrentViewTracks';
+import player from '../../lib/player';
 
-const { player } = window.MuseeksAPI;
 const { ipcRenderer } = window.ElectronAPI;
 
 /**

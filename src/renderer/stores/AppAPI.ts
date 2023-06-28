@@ -1,6 +1,7 @@
 import channels from '../../shared/lib/ipc-channels';
 import { Theme } from '../../shared/types/museeks';
 import logger from '../../shared/lib/logger';
+import player from '../lib/player';
 
 import SettingsAPI from './SettingsAPI';
 
@@ -24,7 +25,7 @@ const init = async (): Promise<void> => {
   // Support for multiple audio output
   navigator.mediaDevices.addEventListener('devicechange', async () => {
     try {
-      await window.MuseeksAPI.player.setOutputDevice('default');
+      await player.setOutputDevice('default');
     } catch (err) {
       logger.warn(err);
     }
