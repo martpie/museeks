@@ -51,8 +51,8 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
   oldQueue: [], // Queue backup (in case of shuffle)
   queueCursor: null, // The cursor of the queue
   queueOrigin: null, // URL of the queue when it was started
-  repeat: window.MuseeksAPI.config.getx('audioRepeat'), // the current repeat state (one, all, none)
-  shuffle: window.MuseeksAPI.config.getx('audioShuffle'), // If shuffle mode is enabled
+  repeat: config.__initialConfig['audioRepeat'], // the current repeat state (one, all, none)
+  shuffle: config.__initialConfig['audioShuffle'], // If shuffle mode is enabled
   playerStatus: PlayerStatus.STOP, // Player status
 
   api: {
@@ -235,11 +235,10 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
     /**
      * Enable/disable shuffle
      */
-    toggleShuffle: (shuffle) => {
+    toggleShuffle: async (shuffle) => {
       shuffle = shuffle ?? !get().shuffle;
 
-      config.set('audioShuffle', shuffle);
-      config.save();
+      await config.set('audioShuffle', shuffle);
 
       const { queue, queueCursor, oldQueue } = get();
 
@@ -276,7 +275,7 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
     /**
      * Enable disable repeat
      */
-    toggleRepeat: (repeat) => {
+    toggleRepeat: async (repeat) => {
       // Get to the next repeat type if none is specified
       if (repeat == undefined) {
         switch (get().repeat) {
@@ -292,9 +291,7 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
         }
       }
 
-      config.set('audioRepeat', repeat);
-      config.save();
-
+      await config.set('audioRepeat', repeat);
       set({ repeat });
     },
 
@@ -309,42 +306,33 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
     /**
      * Mute/unmute the audio
      */
-    setMuted: (muted = false) => {
+    setMuted: async (muted = false) => {
       if (muted) player.mute();
       else player.unmute();
 
-      config.set('audioMuted', muted);
-      config.save();
+      await config.set('audioMuted', muted);
     },
 
     /**
      * Set audio's playback rate
      */
-    setPlaybackRate: (value) => {
+    setPlaybackRate: async (value) => {
       if (value >= 0.5 && value <= 5) {
         // if in allowed range
         player.setPlaybackRate(value);
 
-        config.set('audioPlaybackRate', value);
-        config.save();
+        await config.set('audioPlaybackRate', value);
       }
     },
 
     /**
      * Set audio's output device
      */
-    setOutputDevice: (deviceId = 'default') => {
+    setOutputDevice: async (deviceId = 'default') => {
       if (deviceId) {
         try {
-          player
-            .setOutputDevice(deviceId)
-            .then(() => {
-              config.set('audioOutputDevice', deviceId);
-              config.save();
-            })
-            .catch((err: Error) => {
-              throw err;
-            });
+          await player.setOutputDevice(deviceId);
+          await config.set('audioOutputDevice', deviceId);
         } catch (err) {
           logger.warn(err);
           useToastsStore
@@ -536,7 +524,6 @@ function createPlayerStore<T extends PlayerState>(store: StateCreator<T>) {
 /**
  * Make sure we don't save audio volume to the file system too often
  */
-const saveVolume = debounce((volume: number) => {
-  config.set('audioVolume', volume);
-  config.save();
+const saveVolume = debounce(async (volume: number) => {
+  await config.set('audioVolume', volume);
 }, 500);

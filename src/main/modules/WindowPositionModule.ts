@@ -2,7 +2,7 @@
  * Module in charge of remembering the window position, width and height
  */
 
-import TeenyConf from 'teeny-conf';
+import type Store from 'electron-store';
 import debounce from 'lodash/debounce';
 
 import { Config } from '../../shared/types/museeks';
@@ -10,9 +10,9 @@ import { Config } from '../../shared/types/museeks';
 import ModuleWindow from './BaseWindowModule';
 
 export default class WindowPositionModule extends ModuleWindow {
-  protected config: TeenyConf<Config>;
+  protected config: Store<Config>;
 
-  constructor(window: Electron.BrowserWindow, config: TeenyConf<Config>) {
+  constructor(window: Electron.BrowserWindow, config: Store<Config>) {
     super(window);
     this.config = config;
   }
@@ -24,8 +24,6 @@ export default class WindowPositionModule extends ModuleWindow {
 
   saveBounds() {
     const bounds = this.window.getBounds();
-
     this.config.set('bounds', bounds);
-    this.config.save();
   }
 }

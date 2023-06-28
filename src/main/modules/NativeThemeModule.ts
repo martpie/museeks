@@ -2,8 +2,8 @@
  * Module in charge of telling the renderer process which native theme is used
  */
 
+import type Store from 'electron-store';
 import { ipcMain, nativeTheme } from 'electron';
-import TeenyConf from 'teeny-conf';
 
 import channels from '../../shared/lib/ipc-channels';
 import { themes } from '../../shared/lib/themes';
@@ -12,9 +12,9 @@ import { Config, Theme } from '../../shared/types/museeks';
 import ModuleWindow from './BaseWindowModule';
 
 export default class NativeThemeModule extends ModuleWindow {
-  protected config: TeenyConf<Config>;
+  protected config: Store<Config>;
 
-  constructor(window: Electron.BrowserWindow, config: TeenyConf<Config>) {
+  constructor(window: Electron.BrowserWindow, config: Store<Config>) {
     super(window);
 
     this.config = config;
@@ -64,7 +64,6 @@ export default class NativeThemeModule extends ModuleWindow {
 
   setThemeId(themeId: Config['theme']): void {
     this.config.set('theme', themeId);
-    this.config.save();
 
     if (themeId === '__system') {
       nativeTheme.themeSource = 'system';

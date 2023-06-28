@@ -7,6 +7,7 @@ import logger from '../../shared/lib/logger';
 import useToastsStore from './useToastsStore';
 
 const { ipcRenderer } = window.ElectronAPI;
+const { config } = window.MuseeksAPI;
 
 interface UpdateCheckOptions {
   silentFail?: boolean;
@@ -43,8 +44,8 @@ const checkTheme = async (): Promise<void> => {
 /**
  * Check and enable sleep blocker if needed
  */
-const checkSleepBlocker = (): void => {
-  if (window.MuseeksAPI.config.get('sleepBlocker')) {
+const checkSleepBlocker = async (): Promise<void> => {
+  if (await config.get('sleepBlocker')) {
     ipcRenderer.send('settings:toggleSleepBlocker', true);
   }
 };
@@ -94,7 +95,7 @@ const checkForUpdate = async (
 const check = async (): Promise<void> => {
   await checkTheme();
   checkSleepBlocker();
-  if (window.MuseeksAPI.config.get('autoUpdateChecker')) {
+  if (await config.get('autoUpdateChecker')) {
     checkForUpdate({ silentFail: true }).catch((err) => {
       logger.error(err);
     });
@@ -104,9 +105,8 @@ const check = async (): Promise<void> => {
 /**
  * Toggle sleep blocker
  */
-const toggleSleepBlocker = (value: boolean): void => {
-  window.MuseeksAPI.config.set('sleepBlocker', value);
-  window.MuseeksAPI.config.save();
+const toggleSleepBlocker = async (value: boolean): Promise<void> => {
+  await config.set('sleepBlocker', value);
 
   ipcRenderer.send('settings:toggleSleepBlocker', value);
 };
@@ -114,25 +114,22 @@ const toggleSleepBlocker = (value: boolean): void => {
 /**
  * Set the default view of the app
  */
-const setDefaultView = (value: string): void => {
-  window.MuseeksAPI.config.set('defaultView', value);
-  window.MuseeksAPI.config.save();
+const setDefaultView = async (value: string): Promise<void> => {
+  await config.set('defaultView', value);
 };
 
 /**
  * Toggle update check on startup
  */
-const toggleAutoUpdateChecker = (value: boolean): void => {
-  window.MuseeksAPI.config.set('autoUpdateChecker', value);
-  window.MuseeksAPI.config.save();
+const toggleAutoUpdateChecker = async (value: boolean): Promise<void> => {
+  await config.set('autoUpdateChecker', value);
 };
 
 /**
  * Toggle native notifications display
  */
-const toggleDisplayNotifications = (value: boolean): void => {
-  window.MuseeksAPI.config.set('displayNotifications', value);
-  window.MuseeksAPI.config.save();
+const toggleDisplayNotifications = async (value: boolean): Promise<void> => {
+  await config.set('displayNotifications', value);
 };
 
 // Should we use something else to harmonize between zustand and non-store APIs?

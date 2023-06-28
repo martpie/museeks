@@ -2,52 +2,61 @@
  * Essential module for creating/loading the app config
  */
 
-import path from 'path';
-
-import electron from 'electron';
-import TeenyConf from 'teeny-conf';
+import electron, { app, ipcMain } from 'electron';
+import Store from 'electron-store';
 
 import { Config, Repeat, SortBy, SortOrder } from '../../shared/types/museeks';
+import channels from '../../shared/lib/ipc-channels';
+import logger from '../../shared/lib/logger';
 
 import Module from './BaseModule';
 
-const { app } = electron;
-
 export default class ConfigModule extends Module {
   private workArea: Electron.Rectangle;
-  private conf: TeenyConf<Config> | undefined;
+  private config: Store<Config>;
 
   constructor() {
     super();
 
+    logger.info(`Using "${app.getPath('userData')}" as config path`);
+
     this.workArea = electron.screen.getPrimaryDisplay().workArea;
+    this.config = new Store<Config>({
+      name: 'config',
+      defaults: this.getDefaultConfig(),
+    });
   }
 
   async load(): Promise<void> {
-    const defaultConfig: Config = this.getDefaultConfig();
-    const pathUserData = app.getPath('userData');
-
-    this.conf = new TeenyConf<Config>(
-      path.join(pathUserData, 'config.json'),
-      defaultConfig,
-    );
-
-    // Check if config update
-    let configChanged = false;
-
-    (Object.keys(defaultConfig) as (keyof Config)[]).forEach((key) => {
-      if (this.conf && this.conf.get(key) === undefined) {
-        this.conf.set(key, defaultConfig[key]);
-        configChanged = true;
-      }
+    ipcMain.on(channels.CONFIG_GET_ALL, (event) => {
+      event.returnValue = this.config.store;
     });
 
-    // save config if changed
-    if (configChanged) this.conf.save();
+    ipcMain.handle(channels.CONFIG_GET_ALL, (): Config => this.config.store);
+
+    ipcMain.handle(
+      channels.CONFIG_GET,
+      <T extends keyof Config>(_e: Electron.Event, key: T): Config[T] => {
+        logger.debug('Config get', key);
+        return this.config.get(key);
+      },
+    );
+
+    ipcMain.handle(
+      channels.CONFIG_SET,
+      <T extends keyof Config>(
+        _e: Electron.Event,
+        key: T,
+        value: Config[T],
+      ): void => {
+        logger.debug('Config set', key, value);
+        this.config.set(key, value);
+      },
+    );
   }
 
-  getConfig(): TeenyConf<Config> {
-    const config = this.conf;
+  getConfig(): Store<Config> {
+    const config = this.config;
 
     if (config === undefined) {
       throw new Error('Config is not defined, has it been loaded?');
@@ -83,13 +92,5 @@ export default class ConfigModule extends Module {
     };
 
     return config;
-  }
-
-  get config() {
-    if (!this.conf) {
-      throw new Error('Config not loaded');
-    }
-
-    return this.conf;
   }
 }

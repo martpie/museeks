@@ -20,7 +20,7 @@ import { createStore } from './store-helpers';
 import useToastsStore from './useToastsStore';
 import usePlayerStore from './usePlayerStore';
 
-const { path, db } = window.MuseeksAPI;
+const { path, db, config } = window.MuseeksAPI;
 const { ipcRenderer } = window.ElectronAPI;
 
 type LibraryState = {
@@ -50,7 +50,7 @@ type LibraryState = {
 
 const useLibraryStore = createStore<LibraryState>((set, get) => ({
   search: '',
-  sort: window.MuseeksAPI.config.getx('librarySort'),
+  sort: config.__initialConfig['librarySort'],
   refreshing: false,
   refresh: {
     processed: 0,
@@ -69,7 +69,7 @@ const useLibraryStore = createStore<LibraryState>((set, get) => ({
     /**
      * Filter tracks by sort query
      */
-    sort: (sortBy): void => {
+    sort: async (sortBy): Promise<void> => {
       const prevSort = get().sort;
 
       let sort: LibrarySort | null = null;
@@ -90,8 +90,7 @@ const useLibraryStore = createStore<LibraryState>((set, get) => ({
         };
       }
 
-      window.MuseeksAPI.config.set('librarySort', sort);
-      window.MuseeksAPI.config.save();
+      await config.set('librarySort', sort);
 
       set({ sort });
     },
@@ -324,8 +323,7 @@ const useLibraryStore = createStore<LibraryState>((set, get) => ({
 
   //     musicFolders.sort();
 
-  //     window.MuseeksAPI.config.set('musicFolders', musicFolders);
-  //     window.MuseeksAPI.config.saveSync();
+  //     config.set('musicFolders', musicFolders);
   //   }
 
   //   return { ...state };
@@ -337,8 +335,7 @@ const useLibraryStore = createStore<LibraryState>((set, get) => ({
 
   //     musicFolders.splice(action.index, 1);
 
-  //     window.MuseeksAPI.config.set('musicFolders', musicFolders);
-  //     window.MuseeksAPI.config.saveSync();
+  //     config.set('musicFolders', musicFolders);
 
   //     return { ...state };
   //   }

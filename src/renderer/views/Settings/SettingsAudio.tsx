@@ -1,11 +1,13 @@
 import React, { useCallback } from 'react';
+import { useRouteLoaderData } from 'react-router-dom';
 
 import * as Setting from '../../components/Setting/Setting';
 import AudioOutputSelect from '../../components/AudioOutputSelect/AudioOutputSelect';
-import { Config } from '../../../shared/types/museeks';
 import { usePlayerAPI } from '../../stores/usePlayerStore';
+import { SettingsLoaderResponse } from '../router';
 
 export default function SettingsAudio() {
+  const { config } = useRouteLoaderData('settings') as SettingsLoaderResponse;
   const playerAPI = usePlayerAPI();
 
   const setPlaybackRate = useCallback(
@@ -14,8 +16,6 @@ export default function SettingsAudio() {
     },
     [playerAPI],
   );
-
-  const config = window.MuseeksAPI.config.get() as Config;
 
   return (
     <div className="setting setting-audio">

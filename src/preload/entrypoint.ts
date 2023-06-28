@@ -3,7 +3,6 @@ import path from 'path';
 
 import { Menu, app } from '@electron/remote';
 import { ipcRenderer, shell } from 'electron';
-import TeenyConf from 'teeny-conf';
 
 import { Config, Track } from '../shared/types/museeks';
 import channels from '../shared/lib/ipc-channels';
@@ -26,8 +25,6 @@ import db from './db';
  *     in an in-between state.
  */
 
-const pathUserData = app.getPath('userData');
-
 /*
 |--------------------------------------------------------------------------
 | File association - make it work one day
@@ -43,6 +40,26 @@ const pathUserData = app.getPath('userData');
 
 /*
 |--------------------------------------------------------------------------
+| Config API: the config lives in the main process and we communicate with
+| it via IPC
+|--------------------------------------------------------------------------
+*/
+
+const config = {
+  __initialConfig: ipcRenderer.sendSync(channels.CONFIG_GET_ALL),
+  getAll(): Promise<Config> {
+    return ipcRenderer.invoke(channels.CONFIG_GET_ALL);
+  },
+  get<T extends keyof Config>(key: T): Promise<Config[T]> {
+    return ipcRenderer.invoke(channels.CONFIG_GET, key);
+  },
+  set<T extends keyof Config>(key: T, value: Config[T]): Promise<void> {
+    return ipcRenderer.invoke(channels.CONFIG_SET, key, value);
+  },
+};
+
+/*
+|--------------------------------------------------------------------------
 | Window object extension
 | TODO: some of these should go to the main process and be converted to use
 | contextBridge.exposeToMainWorld + sandboxed renderer
@@ -55,16 +72,11 @@ const ElectronAPI = {
 
 window.ElectronAPI = ElectronAPI;
 
-const config = new TeenyConf<Config>(
-  path.join(pathUserData, 'config.json'),
-  {},
-);
-
 const player = new Player({
-  volume: config.get('audioVolume'),
-  playbackRate: config.get('audioPlaybackRate'),
-  audioOutputDevice: config.get('audioOutputDevice'),
-  muted: config.get('audioMuted'),
+  // volume: config.get('audioVolume'),
+  // playbackRate: config.get('audioPlaybackRate'),
+  // audioOutputDevice: config.get('audioOutputDevice'),
+  // muted: config.get('audioMuted'),
 });
 
 // When editing something here, please update museeks.d.ts to extend the

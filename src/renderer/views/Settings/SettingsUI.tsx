@@ -1,13 +1,14 @@
 import { useCallback, ChangeEventHandler } from 'react';
+import { useRouteLoaderData } from 'react-router-dom';
 
 import SettingsAPI from '../../stores/SettingsAPI';
 import * as Setting from '../../components/Setting/Setting';
 import CheckboxSetting from '../../components/SettingCheckbox/SettingCheckbox';
-import { Config } from '../../../shared/types/museeks';
 import { themes } from '../../../shared/lib/themes';
+import { SettingsLoaderResponse } from '../router';
 
 export default function SettingsUI() {
-  const config = window.MuseeksAPI.config.get() as Config;
+  const { config } = useRouteLoaderData('settings') as SettingsLoaderResponse;
 
   const onThemeChange = useCallback<ChangeEventHandler<HTMLSelectElement>>(
     (e) => {
