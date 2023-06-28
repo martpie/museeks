@@ -37,7 +37,9 @@ export default defineConfig({
     plugins: [react()],
     appType: 'spa',
     build: {
+      minify,
       sourcemap: true,
+      emptyOutDir: true,
       outDir: 'dist/renderer',
     },
   },
