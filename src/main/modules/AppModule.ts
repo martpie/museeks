@@ -4,8 +4,8 @@
 
 import os from 'os';
 
+import type Store from 'electron-store';
 import { ipcMain, app } from 'electron';
-import TeenyConf from 'teeny-conf';
 
 import logger from '../../shared/lib/logger';
 import channels from '../../shared/lib/ipc-channels';
@@ -14,10 +14,10 @@ import { Config } from '../../shared/types/museeks';
 import ModuleWindow from './BaseWindowModule';
 
 export default class AppModule extends ModuleWindow {
-  protected config: TeenyConf<Config>;
+  protected config: Store<Config>;
   protected forceQuit: boolean;
 
-  constructor(window: Electron.BrowserWindow, config: TeenyConf<Config>) {
+  constructor(window: Electron.BrowserWindow, config: Store<Config>) {
     super(window);
 
     this.config = config;

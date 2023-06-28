@@ -1,6 +1,6 @@
 import { createHashRouter, redirect } from 'react-router-dom';
 
-import { PlaylistModel, TrackModel } from '../../shared/types/museeks';
+import { Config, PlaylistModel, TrackModel } from '../../shared/types/museeks';
 
 import RootView from './Root';
 import LibraryView from './Library/Library';
@@ -90,7 +90,15 @@ const router = createHashRouter([
       },
       {
         path: 'settings',
+        id: 'settings',
         element: <SettingsView />,
+        loader: async (): Promise<LoaderResponse<SettingsLoaderResponse>> => {
+          const config = await window.MuseeksAPI.config.getAll();
+
+          return {
+            config,
+          };
+        },
         children: [
           { path: 'library', element: <SettingsLibrary /> },
           { path: 'interface', element: <SettingsUI /> },
@@ -128,4 +136,8 @@ export type PlaylistsLoaderResponse = {
 export type PlaylistLoaderResponse = {
   playlistTracks: TrackModel[];
   playlists: PlaylistModel[];
+};
+
+export type SettingsLoaderResponse = {
+  config: Config;
 };

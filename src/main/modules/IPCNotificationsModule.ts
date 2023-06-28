@@ -1,5 +1,5 @@
+import type Store from 'electron-store';
 import { ipcMain, NativeImage, nativeImage, Notification } from 'electron';
-import TeenyConf from 'teeny-conf';
 
 import channels from '../../shared/lib/ipc-channels';
 import { Config, TrackModel } from '../../shared/types/museeks';
@@ -11,9 +11,9 @@ import ModuleWindow from './BaseWindowModule';
  * Module in charge of displaying native notifications on certain user actions
  */
 export default class IPCNotificationsModule extends ModuleWindow {
-  protected config: TeenyConf<Config>;
+  protected config: Store<Config>;
 
-  constructor(window: Electron.BrowserWindow, config: TeenyConf<Config>) {
+  constructor(window: Electron.BrowserWindow, config: Store<Config>) {
     super(window);
     this.config = config;
   }
@@ -27,7 +27,7 @@ export default class IPCNotificationsModule extends ModuleWindow {
   private async sendPlaybackNotification(track: TrackModel): Promise<void> {
     if (
       this.window.isFocused() ||
-      this.config.getx('displayNotifications') === false
+      this.config.get('displayNotifications') === false
     ) {
       return;
     }
