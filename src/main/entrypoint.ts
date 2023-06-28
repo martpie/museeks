@@ -62,8 +62,9 @@ app.on('ready', async () => {
     titleBarStyle: 'hiddenInset', // MacOS polished window
     show: false,
     webPreferences: {
+      // sandbox cannot be removed before we remove all those usage from preload:
+      // https://www.electronjs.org/docs/latest/tutorial/sandbox#preload-scripts
       sandbox: false,
-      contextIsolation: false,
       allowRunningInsecureContent: false,
       autoplayPolicy: 'no-user-gesture-required',
       webSecurity: process.env.ELECTRON_RENDERER_URL == null, // Cannot load local resources without that
