@@ -8,15 +8,6 @@ import SettingsAPI from './SettingsAPI';
 const { ipcRenderer } = window.ElectronAPI;
 
 const init = async (): Promise<void> => {
-  // There's some trouble with React StrictMode: player gets created in preload,
-  // so events below get attached twice as React.render gets called twice.
-  // Maybe the player should not be instantiated in preload?
-  if (window.MuseeksAPI.__instantiated) {
-    return;
-  } else {
-    window.MuseeksAPI.__instantiated = true;
-  }
-
   await SettingsAPI.check();
 
   // Tell the main process to show the window

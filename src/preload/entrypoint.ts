@@ -66,7 +66,16 @@ const config = {
 */
 
 const ElectronAPI = {
-  ipcRenderer, // FIXME unsafe
+  ipcRenderer: {
+    // FIXME unsafe
+    // All these usage should probably go to the main process, or we should
+    // expose explicit APIs for what those usages are trying to solve
+    on: ipcRenderer.on,
+    off: ipcRenderer.off,
+    send: ipcRenderer.send,
+    sendSync: ipcRenderer.sendSync,
+    invoke: ipcRenderer.invoke,
+  },
   menu: {
     showContextMenu: (template: Electron.MenuItemConstructorOptions[]) => {
       const context = Menu.buildFromTemplate(template);
@@ -78,7 +87,6 @@ const ElectronAPI = {
 // When editing something here, please update museeks.d.ts to extend the
 // window.MuseeksAPI global object.
 const MuseeksAPI = {
-  __instantiated: false,
   platform: os.platform(),
   version: app.getVersion(),
   config,
