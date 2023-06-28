@@ -63,7 +63,6 @@ app.on('ready', async () => {
     show: false,
     webPreferences: {
       sandbox: false,
-      nodeIntegration: true,
       contextIsolation: false,
       allowRunningInsecureContent: false,
       autoplayPolicy: 'no-user-gesture-required',
