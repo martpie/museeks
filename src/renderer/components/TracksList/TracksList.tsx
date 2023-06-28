@@ -20,7 +20,7 @@ import useLibraryStore, { useLibraryAPI } from '../../stores/useLibraryStore';
 
 import styles from './TracksList.module.css';
 
-const { Menu } = window.MuseeksAPI.remote;
+const { menu } = window.ElectronAPI;
 
 const ROW_HEIGHT = 30; // FIXME (make that dynamic or rem?)
 
@@ -484,9 +484,7 @@ export default function TracksList(props: Props) {
         },
       );
 
-      const context = Menu.buildFromTemplate(template);
-
-      context.popup({}); // Let it appear
+      menu.showContextMenu(template);
     },
     [
       currentPlaylist,

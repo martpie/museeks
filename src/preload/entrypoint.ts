@@ -67,6 +67,12 @@ const config = {
 
 const ElectronAPI = {
   ipcRenderer, // FIXME unsafe
+  menu: {
+    showContextMenu: (template: Electron.MenuItemConstructorOptions[]) => {
+      const context = Menu.buildFromTemplate(template);
+      context.popup({});
+    },
+  },
 };
 
 // When editing something here, please update museeks.d.ts to extend the
@@ -95,9 +101,6 @@ const MuseeksAPI = {
       ipcRenderer.invoke(channels.COVER_GET, track.path),
   },
   // TODO: all of the things below should be removed
-  remote: {
-    Menu,
-  },
   path: {
     parse: path.parse,
     resolve: path.resolve,
