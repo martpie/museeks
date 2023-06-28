@@ -105,7 +105,7 @@ app.on('ready', async () => {
     url = `file://${rendererDistPath}/index.html${viewSuffix}`;
   }
 
-  logger.info(`Loading file ${url}`);
+  logger.info(`Loading main window with "${url}"`);
   mainWindow.loadURL(url);
 
   // Let's list the list of modules we will use for Museeks

@@ -25,6 +25,7 @@ export default class Module {
         throw err;
       });
       this.loaded = true;
+      logger.info(`Loaded ${this.constructor.name}`);
     } else {
       logger.info(
         `Skipping load of ${
