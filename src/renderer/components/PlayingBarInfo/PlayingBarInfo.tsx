@@ -5,6 +5,7 @@ import ButtonRepeat from '../PlayerOptionsButtons/ButtonRepeat';
 import * as utils from '../../lib/utils';
 import { TrackModel, Repeat } from '../../../shared/types/museeks';
 import { usePlayerAPI } from '../../stores/usePlayerStore';
+import player from '../../lib/player';
 
 import styles from './PlayingBarInfo.module.css';
 
@@ -27,7 +28,7 @@ export default function PlayingBarInfo(props: Props) {
   const playerAPI = usePlayerAPI();
 
   const tick = useCallback(() => {
-    setElapsed(window.MuseeksAPI.player.getCurrentTime());
+    setElapsed(player.getCurrentTime());
   }, []);
 
   const jumpAudioTo = useCallback(
@@ -98,15 +99,13 @@ export default function PlayingBarInfo(props: Props) {
   }, []);
 
   useEffect(() => {
-    window.MuseeksAPI.player.getAudio().addEventListener('timeupdate', tick);
+    player.getAudio().addEventListener('timeupdate', tick);
 
     window.addEventListener('mousemove', dragOver);
     window.addEventListener('mouseup', dragEnd);
 
     return () => {
-      window.MuseeksAPI.player
-        .getAudio()
-        .removeEventListener('timeupdate', tick);
+      player.getAudio().removeEventListener('timeupdate', tick);
 
       window.removeEventListener('mousemove', dragOver);
       window.removeEventListener('mouseup', dragEnd);

@@ -6,7 +6,6 @@ import { ipcRenderer, shell } from 'electron';
 
 import { Config, Track } from '../shared/types/museeks';
 import channels from '../shared/lib/ipc-channels';
-import Player from '../renderer/lib/player';
 import { parseUri } from '../shared/lib/utils-uri';
 
 import db from './db';
@@ -67,17 +66,8 @@ const config = {
 */
 
 const ElectronAPI = {
-  ipcRenderer,
+  ipcRenderer, // FIXME unsafe
 };
-
-window.ElectronAPI = ElectronAPI;
-
-const player = new Player({
-  volume: config.__initialConfig['audioVolume'],
-  playbackRate: config.__initialConfig['audioPlaybackRate'],
-  audioOutputDevice: config.__initialConfig['audioOutputDevice'],
-  muted: config.__initialConfig['audioMuted'],
-});
 
 // When editing something here, please update museeks.d.ts to extend the
 // window.MuseeksAPI global object.
@@ -85,7 +75,6 @@ const MuseeksAPI = {
   __instantiated: false,
   platform: os.platform(),
   version: app.getVersion(),
-  player,
   config,
   app: {
     ready: () => ipcRenderer.send(channels.APP_READY),
@@ -118,7 +107,8 @@ const MuseeksAPI = {
   },
 };
 
+window.ElectronAPI = ElectronAPI;
 window.MuseeksAPI = MuseeksAPI;
 
-export type MuseeksAPI = typeof MuseeksAPI;
 export type ElectronAPI = typeof ElectronAPI;
+export type MuseeksAPI = typeof MuseeksAPI;

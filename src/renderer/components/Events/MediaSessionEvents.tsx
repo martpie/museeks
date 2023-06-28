@@ -1,8 +1,7 @@
 import { useEffect } from 'react';
 
 import { usePlayerAPI } from '../../stores/usePlayerStore';
-
-const { player } = window.MuseeksAPI;
+import player from '../../lib/player';
 
 /**
  * Integration for MediaSession (mpris, macOS player controls etc)...

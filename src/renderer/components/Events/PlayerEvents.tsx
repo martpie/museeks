@@ -3,8 +3,7 @@ import { useEffect } from 'react';
 import { usePlayerAPI } from '../../stores/usePlayerStore';
 import { useToastsAPI } from '../../stores/useToastsStore';
 import { useLibraryAPI } from '../../stores/useLibraryStore';
-
-const { player } = window.MuseeksAPI;
+import player from '../../lib/player';
 
 const AUDIO_ERRORS = {
   aborted: 'The video playback was aborted.',

@@ -5,6 +5,7 @@ import Slider from 'react-rangeslider';
 
 import controlStyles from '../PlayerControls/PlayerControls.module.css';
 import { usePlayerAPI } from '../../stores/usePlayerStore';
+import player from '../../lib/player';
 
 import styles from './VolumeControl.module.css';
 
@@ -22,7 +23,7 @@ const getVolumeIcon = (volume: number, muted: boolean): string => {
 };
 
 export default function VolumeControl() {
-  const audio = window.MuseeksAPI.player.getAudio();
+  const audio = player.getAudio();
 
   const [showVolume, setShowVolume] = useState(false);
   const [volume, setVolume] = useState(audio.volume);
@@ -47,7 +48,7 @@ export default function VolumeControl() {
         e.currentTarget.classList.contains(controlStyles.control) ||
         e.currentTarget.classList.contains('fa')
       ) {
-        const muted = !window.MuseeksAPI.player.isMuted();
+        const muted = !player.isMuted();
 
         playerAPI.setMuted(muted);
         setMuted(muted);

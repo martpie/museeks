@@ -15,7 +15,7 @@ interface PlayerOptions {
  *   - Should it hold the concepts of queue/random/etc? (in other words, should
  *     we merge player actions here?)
  */
-export default class Player {
+class Player {
   private audio: HTMLAudioElement;
   private durationThresholdReached: boolean;
   private track: TrackModel | null;
@@ -130,3 +130,16 @@ export default class Player {
     return this.durationThresholdReached;
   }
 }
+
+/**
+ * Export a singleton by default, for the sake of simplicity (and we only need
+ * one anyway)
+ */
+const { config } = window.MuseeksAPI;
+
+export default new Player({
+  volume: config.__initialConfig['audioVolume'],
+  playbackRate: config.__initialConfig['audioPlaybackRate'],
+  audioOutputDevice: config.__initialConfig['audioOutputDevice'],
+  muted: config.__initialConfig['audioMuted'],
+});
