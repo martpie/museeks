@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import * as AspectRatio from '@radix-ui/react-aspect-ratio';
 
 import { Track } from '../../../shared/types/museeks';
 
@@ -26,14 +27,24 @@ export default function Cover(props: Props) {
     const encodedCoverPath = encodeURI(coverPath)
       .replace(/'/g, "\\'")
       .replace(/"/g, '\\"');
-    const inlineStyles = { backgroundImage: `url('${encodedCoverPath}')` };
 
-    return <div className={styles.cover} style={inlineStyles} />;
+    return (
+      <AspectRatio.Root ratio={1}>
+        <img
+          src={encodedCoverPath}
+          alt="Album cover"
+          className={styles.cover}
+        />
+      </AspectRatio.Root>
+    );
   }
 
   return (
-    <div className={`${styles.cover} isEmpty`}>
-      <div className={styles.cover__note}>♪</div>
-    </div>
+    <AspectRatio.Root ratio={1}>
+      <div className={`${styles.cover} ${styles.empty}`}>
+        {/** billion dollar problem: convert emoji to text, good luck 🎵 */}
+        <div className={styles.cover__note}>♪</div>
+      </div>
+    </AspectRatio.Root>
   );
 }

@@ -17,7 +17,7 @@
   color: var(--header-color);
   padding: 0 10px;
   display: flex;
-  align-items: center;
+  align-items: stretch;
   justify-content: space-between;
   height: 50px;
   flex: 0 0 auto;
@@ -27,7 +27,6 @@
 }
 
 .header__mainControls {
-  width: 220px;
   flex: 0 0 auto;
   display: flex;
   align-items: center;
@@ -36,7 +35,7 @@
 
 .header__search {
   -webkit-app-region: no-drag;
-  width: 220px;
+  margin-left: 12px;
   flex: 0 0 auto;
   display: flex;
   justify-content: flex-end;

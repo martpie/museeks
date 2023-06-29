@@ -40,6 +40,7 @@
   },
   "dependencies": {
     "@electron/remote": "^2.0.10",
+    "@radix-ui/react-aspect-ratio": "^1.0.3",
     "@radix-ui/react-popover": "^1.0.6",
     "@radix-ui/react-slider": "^1.1.2",
     "chardet": "^1.6.0",

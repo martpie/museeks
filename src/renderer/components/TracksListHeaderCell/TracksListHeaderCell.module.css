@@ -1,5 +1,5 @@
 .trackCellHeader {
-  font-weight: 700;
+  font-weight: var(--bold);
   appearance: none;
   border: 0;
   background: transparent;
