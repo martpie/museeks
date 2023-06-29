@@ -1,7 +1,5 @@
-import { useState } from 'react';
 import Icon from 'react-fontawesome';
-import cx from 'classnames';
-import useClickOut from '@bscop/use-click-out';
+import * as Popover from '@radix-ui/react-popover';
 
 import Queue from '../Queue/Queue';
 import PlayingBarInfos from '../PlayingBarInfo/PlayingBarInfo';
@@ -15,15 +13,6 @@ export default function PlayingBar() {
   const shuffle = usePlayerStore((state) => state.shuffle);
   const queue = usePlayerStore((state) => state.queue);
   const queueCursor = usePlayerStore((state) => state.queueCursor);
-
-  const [isQueueOpen, setIsQueueOpen] = useState(false);
-  const clickOutRef = useClickOut<HTMLDivElement>(() => {
-    setIsQueueOpen(false);
-  });
-
-  const queueContainerClasses = cx(styles.queueContainer, {
-    [styles.isOpen]: isQueueOpen,
-  });
 
   if (queueCursor === null) return null;
 
@@ -39,16 +28,26 @@ export default function PlayingBar() {
         shuffle={shuffle}
         repeat={repeat}
       />
-      <div className={styles.playingBar__queue} ref={clickOutRef}>
-        <button
-          onClick={() => setIsQueueOpen(!isQueueOpen)}
-          className={styles.queueToggle}
-        >
-          <Icon name="list" />
-        </button>
-        <div className={queueContainerClasses}>
-          <Queue queue={queue} queueCursor={queueCursor} />
-        </div>
+      <div className={styles.playingBar__queue}>
+        <Popover.Root>
+          <Popover.Trigger asChild>
+            <button className={styles.queueToggle}>
+              <Icon name="list" />
+            </button>
+          </Popover.Trigger>
+          <Popover.Portal>
+            <Popover.Content
+              side="bottom"
+              sideOffset={8}
+              align="end"
+              alignOffset={-10}
+              avoidCollisions={false}
+              className={styles.queueContainer}
+            >
+              <Queue queue={queue} queueCursor={queueCursor} />
+            </Popover.Content>
+          </Popover.Portal>
+        </Popover.Root>
       </div>
     </div>
   );
