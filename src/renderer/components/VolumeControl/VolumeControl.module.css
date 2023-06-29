@@ -3,15 +3,59 @@
 }
 
 .volumeControl {
+  -webkit-app-region: nodrag;
   background-color: var(--header-bg);
   position: absolute;
   z-index: 10;
-  top: -4px;
-  left: -110px;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 100%;
   display: none;
   padding: 10px 12px;
 
   &.visible {
     display: block;
   }
+}
+
+.sliderRoot {
+  --slider-height: 12px;
+
+  position: relative;
+  display: flex;
+  align-items: center;
+  user-select: none;
+  touch-action: none;
+  width: 90px;
+  height: var(--slider-height);
+  border-radius: var(--border-radius);
+}
+
+.sliderTrack {
+  background-color: var(--slider-bg);
+  position: relative;
+  flex-grow: 1;
+  border-radius: 9999px;
+  height: 4px;
+}
+
+.sliderRange {
+  position: absolute;
+  height: 100%;
+  background-color: var(--main-color);
+  border-radius: var(--border-radius);
+}
+
+.sliderThumb {
+  display: block;
+  width: var(--slider-height);
+  height: var(--slider-height);
+  background-color: white;
+  box-shadow: 0 0 0 1px var(--border-color);
+  border-radius: 50%;
+}
+
+.sliderThumb:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--main-color);
 }
