@@ -1,11 +1,12 @@
 import React, { useCallback, useState } from 'react';
 import Icon from 'react-fontawesome';
 import cx from 'classnames';
-import Slider from 'react-rangeslider';
+import * as Slider from '@radix-ui/react-slider';
 
 import controlStyles from '../PlayerControls/PlayerControls.module.css';
 import { usePlayerAPI } from '../../stores/usePlayerStore';
 import player from '../../lib/player';
+import { stopPropagation } from '../../lib/utils-events';
 
 import styles from './VolumeControl.module.css';
 
@@ -32,7 +33,8 @@ export default function VolumeControl() {
   const playerAPI = usePlayerAPI();
 
   const setPlayerVolume = useCallback(
-    (value: number) => {
+    (values: number[]) => {
+      const [value] = values;
       const smoothVolume = smoothifyVolume(value);
 
       playerAPI.setVolume(smoothVolume);
@@ -76,14 +78,20 @@ export default function VolumeControl() {
         <Icon name={getVolumeIcon(unsmoothifyVolume(volume), muted)} />
       </button>
       <div className={volumeClasses}>
-        <Slider
+        <Slider.Root
+          className={styles.sliderRoot}
+          value={[unsmoothifyVolume(volume)]}
+          onKeyDown={stopPropagation}
+          onValueChange={setPlayerVolume}
           min={0}
           max={1}
           step={0.01}
-          tooltip={false}
-          value={unsmoothifyVolume(volume)}
-          onChange={setPlayerVolume}
-        />
+        >
+          <Slider.Track className={styles.sliderTrack}>
+            <Slider.Range className={styles.sliderRange} />
+          </Slider.Track>
+          <Slider.Thumb className={styles.sliderThumb} aria-label="Volume" />
+        </Slider.Root>
       </div>
     </div>
   );
