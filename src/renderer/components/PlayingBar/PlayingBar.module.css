@@ -32,9 +32,8 @@
   z-index: 1000;
   text-align: left;
   right: 0;
-  top: 26px;
 
-  &.isOpen {
+  &[data-state='open'] {
     display: block;
   }
 }
