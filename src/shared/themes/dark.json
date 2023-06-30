@@ -3,6 +3,7 @@
   "name": "Dark",
   "themeSource": "dark",
   "variables": {
+    "--color-scheme": "dark",
     "--text": "#efefef",
     "--background": "hsl(216, 20%, 7%)",
     "--faded": "rgba(0, 0, 0, 0.8)",

@@ -17,6 +17,7 @@ html {
   user-select: none;
   height: 100%;
   overflow: hidden;
+  color-scheme: var(--color-scheme);
 }
 
 body {

@@ -3,6 +3,7 @@
   "name": "Dark (legacy)",
   "themeSource": "dark",
   "variables": {
+    "--color-scheme": "dark",
     "--text": "#EEEEEE",
     "--background": "#23292B",
     "--faded": "rgba(0, 0, 0, 0.8)",

@@ -3,6 +3,7 @@
   "name": "Light",
   "themeSource": "light",
   "variables": {
+    "--color-scheme": "light",
     "--text": "#333333",
     "--background": "white",
     "--faded": "rgba(255, 255, 255, 0.9)",
