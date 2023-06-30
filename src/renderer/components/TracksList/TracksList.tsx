@@ -494,10 +494,10 @@ export default function TracksList(props: Props) {
         itemContent={(index, track) => {
           return (
             <TrackRow
-              selected={selected.includes(track._id)}
-              track={tracks[index]}
-              isPlaying={trackPlayingId === track._id}
+              track={track}
               index={index}
+              selected={selected.includes(track._id)}
+              isPlaying={trackPlayingId === track._id}
               onMouseDown={selectTrack}
               onClick={selectTrackClick}
               onContextMenu={showContextMenu}

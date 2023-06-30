@@ -7,13 +7,13 @@ import PlaylistsAPI from '../../stores/PlaylistsAPI';
 import { filterTracks } from '../../lib/utils-library';
 import { PlaylistLoaderResponse } from '../router';
 import useLibraryStore from '../../stores/useLibraryStore';
-import useTrackPlayingID from '../../hooks/useTrackPlayingID';
+import usePlayingTrackID from '../../hooks/usePlayingTrackID';
 
 export default function Playlist() {
   const { playlists, playlistTracks } =
     useLoaderData() as PlaylistLoaderResponse;
   const { playlistId } = useParams();
-  const trackPlayingId = useTrackPlayingID();
+  const trackPlayingId = usePlayingTrackID();
 
   const search = useLibraryStore((state) => state.search);
   const filteredTracks = useMemo(

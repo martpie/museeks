@@ -7,12 +7,12 @@ import appStyles from '../Root.module.css';
 import { LibraryLoaderResponse, RootLoaderResponse } from '../router';
 import useFilteredTracks from '../../hooks/useFilteredTracks';
 import useLibraryStore from '../../stores/useLibraryStore';
-import useTrackPlayingID from '../../hooks/useTrackPlayingID';
+import usePlayingTrackID from '../../hooks/usePlayingTrackID';
 
 import styles from './Library.module.css';
 
 export default function Library() {
-  const trackPlayingId = useTrackPlayingID();
+  const trackPlayingId = usePlayingTrackID();
   const refreshing = useLibraryStore((state) => state.refreshing);
   const search = useLibraryStore((state) => state.search);
 
