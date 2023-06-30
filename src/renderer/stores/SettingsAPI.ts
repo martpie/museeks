@@ -21,6 +21,7 @@ const getTheme = async (): Promise<string> => {
 
 const setTheme = async (themeId: string): Promise<void> => {
   await ipcRenderer.invoke(channels.THEME_SET_ID, themeId);
+  await checkTheme();
 };
 
 /**
@@ -36,8 +37,7 @@ const applyThemeToUI = async (theme: Theme): Promise<void> => {
 };
 
 const checkTheme = async (): Promise<void> => {
-  const theme = await ipcRenderer.invoke(channels.THEME_GET);
-
+  const theme: Theme = await ipcRenderer.invoke(channels.THEME_GET);
   applyThemeToUI(theme);
 };
 
