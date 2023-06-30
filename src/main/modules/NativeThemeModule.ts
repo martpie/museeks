@@ -70,7 +70,7 @@ export default class NativeThemeModule extends ModuleWindow {
     if (themeId === '__system') {
       themeId = this.getSystemThemeId();
     }
-    
+
     const theme = themes.find((theme) => theme._id === themeId);
 
     if (!theme) throw new RangeError(`No theme found with ID ${themeId}`);
