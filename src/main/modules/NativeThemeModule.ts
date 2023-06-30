@@ -16,8 +16,10 @@ export default class NativeThemeModule extends ModuleWindow {
 
   constructor(window: Electron.BrowserWindow, config: Store<Config>) {
     super(window);
-
     this.config = config;
+
+    const theme = this.getTheme();
+    nativeTheme.themeSource = theme.themeSource;
   }
 
   async load(): Promise<void> {
@@ -60,6 +62,20 @@ export default class NativeThemeModule extends ModuleWindow {
 
   getThemeId(): Config['theme'] {
     return this.config.get('theme') ?? '__system';
+  }
+
+  getTheme(): Theme {
+    let themeId = this.getThemeId();
+
+    if (themeId === '__system') {
+      themeId = this.getSystemThemeId();
+    }
+    
+    const theme = themes.find((theme) => theme._id === themeId);
+
+    if (!theme) throw new RangeError(`No theme found with ID ${themeId}`);
+
+    return theme;
   }
 
   setThemeId(themeId: Config['theme']): void {
