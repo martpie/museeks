@@ -115,6 +115,7 @@ const MuseeksAPI = {
   },
   shell: {
     openExternal: shell.openExternal,
+    openUserDataDirectory: () => shell.openPath(app.getPath('userData')),
   },
 };
 
