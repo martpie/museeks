@@ -1,6 +1,14 @@
-import { createHashRouter, redirect } from 'react-router-dom';
+import {
+  createHashRouter,
+  isRouteErrorResponse,
+  redirect,
+  useRouteError,
+} from 'react-router-dom';
 
+import * as ViewMessage from '../elements/ViewMessage/ViewMessage';
+import ExternalLink from '../elements/ExternalLink/ExternalLink';
 import { Config, PlaylistModel, TrackModel } from '../../shared/types/museeks';
+import logger from '../../shared/lib/logger';
 
 import RootView from './Root';
 import LibraryView from './Library/Library';
@@ -20,6 +28,7 @@ const router = createHashRouter([
     path: '/',
     id: 'root',
     element: <RootView />,
+    ErrorBoundary: GlobalErrorBoundary,
     loader: async (): Promise<LoaderResponse<RootLoaderResponse>> => {
       // this can be slow, think about caching it or something, especially when
       // we revalidate routing
@@ -115,6 +124,45 @@ const router = createHashRouter([
 ]);
 
 export default router;
+
+/**
+ * Components helpers
+ */
+
+function GlobalErrorBoundary() {
+  const error = useRouteError();
+  logger.error(error);
+
+  let errorMessage: string;
+
+  if (isRouteErrorResponse(error)) {
+    // error is type `ErrorResponse`
+    errorMessage = error.error?.message || error.statusText;
+  } else if (error instanceof Error) {
+    errorMessage = error.message;
+  } else if (typeof error === 'string') {
+    errorMessage = error;
+  } else {
+    errorMessage = 'Unknown error';
+  }
+
+  return (
+    <ViewMessage.Notice>
+      <p>
+        <span role="img" aria-label="boom">
+          💥
+        </span>{' '}
+        Something wrong happened: {errorMessage}
+      </p>
+      <ViewMessage.Sub>
+        If it happens again, please{' '}
+        <ExternalLink href="https://github.com/martpie/museeks/issues">
+          report an issue
+        </ExternalLink>
+      </ViewMessage.Sub>
+    </ViewMessage.Notice>
+  );
+}
 
 /**
  * Loader Types, to manually type useLoaderData()
