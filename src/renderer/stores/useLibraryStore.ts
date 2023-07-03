@@ -1,5 +1,4 @@
 import chunk from 'lodash/chunk';
-import flatten from 'lodash/flatten';
 import type { MessageBoxReturnValue } from 'electron';
 
 import {
@@ -36,10 +35,10 @@ type LibraryState = {
     search: (value: string) => void;
     sort: (sortBy: SortBy) => void;
     scanPlaylists: (paths: string[]) => Promise<void>;
-    add: (pathsToScan: string[]) => Promise<TrackModel[]>;
+    add: (pathsToScan: string[]) => Promise<void>;
     remove: (tracksIds: string[]) => Promise<void>;
     reset: () => Promise<void>;
-    incrementPlayCount: (trackID: string) => Promise<void>;
+    incrementPlayCount: (track: TrackModel) => Promise<void>;
     updateTrackMetadata: (
       trackId: string,
       newFields: TrackEditableFields,
@@ -127,7 +126,7 @@ const useLibraryStore = createStore<LibraryState>((set, get) => ({
     /**
      * Add tracks to Library
      */
-    add: async (pathsToScan): Promise<TrackModel[]> => {
+    add: async (pathsToScan): Promise<void> => {
       set({ refreshing: true });
 
       try {
@@ -144,7 +143,7 @@ const useLibraryStore = createStore<LibraryState>((set, get) => ({
             refreshing: false,
             refresh: { processed: 0, total: 0 },
           });
-          return [];
+          return;
         }
 
         // 5. Import the music tracks found the directories
@@ -157,7 +156,7 @@ const useLibraryStore = createStore<LibraryState>((set, get) => ({
         const chunkedTracks = chunk(tracks, batchSize);
         let processed = 0;
 
-        const chunkedImportedTracks = await Promise.all(
+        await Promise.allSettled(
           chunkedTracks.map(async (chunk) => {
             // First, let's see if some of those files are already inserted
             const insertedChunk = await db.tracks.insertMultiple(chunk);
@@ -176,22 +175,19 @@ const useLibraryStore = createStore<LibraryState>((set, get) => ({
           }),
         );
 
-        const importedTracks = flatten(chunkedImportedTracks);
-
         // TODO: do not re-import existing tracks
 
         // Import playlists found in the directories
         await get().api.scanPlaylists(supportedPlaylistsFiles);
 
         router.revalidate();
-
-        return importedTracks;
+        return;
       } catch (err) {
         useToastsStore
           .getState()
           .api.add('danger', 'An error occured when scanning the library');
         logger.warn(err);
-        return [];
+        return;
       } finally {
         set({
           refreshing: false,
@@ -263,9 +259,9 @@ const useLibraryStore = createStore<LibraryState>((set, get) => ({
     /**
      * Update the play count attribute.
      */
-    incrementPlayCount: async (trackID: string): Promise<void> => {
+    incrementPlayCount: async (track: TrackModel): Promise<void> => {
       try {
-        await db.tracks.updateWithRawQuery(trackID, { $inc: { playcount: 1 } });
+        await db.tracks.incrementPlayCount(track);
       } catch (err) {
         logger.warn(err);
       }
@@ -295,7 +291,7 @@ const useLibraryStore = createStore<LibraryState>((set, get) => ({
         throw new Error('No track found while trying to update track metadata');
       }
 
-      await db.tracks.update(trackId, track);
+      await db.tracks.update(track);
 
       router.revalidate();
     },

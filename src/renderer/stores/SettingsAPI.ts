@@ -62,7 +62,7 @@ const checkForUpdate = async (
     const response = await fetch(
       'https://api.github.com/repos/martpie/museeks/releases',
     );
-    const releases = await response.json();
+    const releases: any = await response.json();
 
     // TODO Github API types?
     const newRelease = releases.find(
