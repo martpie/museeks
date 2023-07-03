@@ -27,33 +27,6 @@ export enum SortOrder {
 }
 
 /**
- * Untyped libs / helpers
- */
-export type LinvoSchema<Schema> = {
-  _id: string;
-  find: any;
-  findOne: any;
-  insert: any;
-  copy: any; // TODO better types?
-  remove: any;
-  save: any;
-  serialize: any;
-  update: any;
-  ensureIndex: any;
-  // bluebird-injected
-  findAsync: any;
-  findOneAsync: any;
-  insertAsync: any;
-  copyAsync: any;
-  removeAsync: any;
-  saveAsync: any;
-  serializeAsync: any;
-  updateAsync: any;
-} & {
-  [Property in keyof Schema]: Schema[Property];
-};
-
-/**
  * App models
  */
 export interface Track {
@@ -90,8 +63,13 @@ export interface Playlist {
 /**
  * Database schemes
  */
-export type TrackModel = LinvoSchema<Track>;
-export type PlaylistModel = LinvoSchema<Playlist>;
+export type TrackModel = PouchDB.Core.ExistingDocument<
+  Track & PouchDB.Core.AllDocsMeta
+>;
+
+export type PlaylistModel = PouchDB.Core.ExistingDocument<
+  Playlist & PouchDB.Core.AllDocsMeta
+>;
 
 /**
  * Editable track fields (via right-click -> edit track)

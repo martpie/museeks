@@ -1,6 +1,7 @@
 import os from 'os';
 import path from 'path';
 
+import '@total-typescript/ts-reset';
 import { Menu, app } from '@electron/remote';
 import { contextBridge, ipcRenderer, shell } from 'electron';
 

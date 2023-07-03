@@ -34,23 +34,33 @@ const create = async (
   tracks: string[] = [],
   importPath: string | false = false,
   redirect = false,
-): Promise<string> => {
-  const playlist: Playlist = {
-    name,
-    tracks,
-  };
+): Promise<string | null> => {
+  try {
+    const playlist: Playlist = {
+      name,
+      tracks,
+    };
 
-  if (importPath) playlist.importPath = importPath;
+    if (importPath) playlist.importPath = importPath;
 
-  const doc = await db.playlists.insert(playlist);
+    const doc = await db.playlists.insert(playlist);
+    router.revalidate();
 
-  if (redirect) router.navigate(`/playlists/${doc._id}`);
-  else
+    if (redirect) router.navigate(`/playlists/${doc.id}`);
+    else
+      useToastsStore
+        .getState()
+        .api.add('success', `The playlist "${name}" was created`);
+
+    return doc.id;
+  } catch (err) {
+    logger.error(err);
     useToastsStore
       .getState()
-      .api.add('success', `The playlist "${name}" was created`);
+      .api.add('danger', `The playlist coult not be created.`);
 
-  return doc._id;
+    return null;
+  }
 };
 
 /**
@@ -58,7 +68,7 @@ const create = async (
  */
 const rename = async (_id: string, name: string): Promise<void> => {
   try {
-    await db.playlists.updateWithRawQuery(_id, { $set: { name } });
+    await db.playlists.rename(_id, name);
     router.revalidate();
   } catch (err) {
     logger.warn(err);
@@ -70,7 +80,7 @@ const rename = async (_id: string, name: string): Promise<void> => {
  */
 const remove = async (_id: string): Promise<void> => {
   try {
-    await db.playlists.remove([_id]);
+    await db.playlists.remove(_id);
     router.revalidate();
   } catch (err) {
     logger.warn(err);
@@ -93,9 +103,7 @@ const addTracks = async (
   try {
     const playlist = await db.playlists.findOnlyByID(_id);
     const playlistTracks = playlist.tracks.concat(tracksIds);
-    await db.playlists.updateWithRawQuery(_id, {
-      $set: { tracks: playlistTracks },
-    });
+    await db.playlists.setTracks(_id, playlistTracks);
     router.revalidate();
     toastsAPI.add(
       'success',
@@ -126,9 +134,7 @@ const removeTracks = async (
     const playlistTracks = playlist.tracks.filter(
       (elem: string) => !tracksIds.includes(elem),
     );
-    await db.playlists.updateWithRawQuery(playlistId, {
-      $set: { tracks: playlistTracks },
-    });
+    await db.playlists.setTracks(playlistId, playlistTracks);
     router.revalidate();
   } catch (err) {
     logger.warn(err);
@@ -186,9 +192,7 @@ const reorderTracks = async (
 
     newTracks.splice(targetIndex + 1, 0, ...tracksIds);
 
-    await db.playlists.updateWithRawQuery(playlistId, {
-      $set: { tracks: newTracks },
-    });
+    await db.playlists.setTracks(playlistId, newTracks);
     router.revalidate();
   } catch (err) {
     logger.warn(err);

@@ -69,7 +69,7 @@ function PlayerEvents() {
     function incrementPlayCount() {
       if (player.isThresholdReached()) {
         const track = player.getTrack();
-        if (track) libraryAPI.incrementPlayCount(track._id);
+        if (track) libraryAPI.incrementPlayCount(track);
       }
     }
     // Bind player events
