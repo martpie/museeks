@@ -1,6 +1,6 @@
 import type { MenuItemConstructorOptions } from 'electron';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import KeyBinding from 'react-keybinding-component';
+import Keybinding from 'react-keybinding-component';
 import { useNavigate } from 'react-router-dom';
 import { Virtuoso, VirtuosoHandle } from 'react-virtuoso';
 
@@ -500,7 +500,7 @@ export default function TracksList(props: Props) {
 
   return (
     <div className={styles.tracksList}>
-      <KeyBinding onKey={onKey} preventInputConflict />
+      <Keybinding onKey={onKey} preventInputConflict />
       <TracksListHeader enableSort={type === 'library'} />
       <Virtuoso
         ref={virtuosoRef}

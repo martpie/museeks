@@ -5101,7 +5101,7 @@ progress@^2.0.3:
   resolved "https://registry.yarnpkg.com/progress/-/progress-2.0.3.tgz#7e8cf8d8f5b8f239c1bc68beb4eb78567d572ef8"
   integrity sha512-7PiHtLll5LdnKIMw100I+8xJXR5gW2QwWYkT6iJva0bXitZKa/XMrSbdmg3r2Xnaidz9Qumd0VPaMrZlF9V9sA==
 
-prop-types@^15.5.0, prop-types@^15.5.6, prop-types@^15.6.2, prop-types@^15.8.1:
+prop-types@^15.5.0, prop-types@^15.5.6, prop-types@^15.8.1:
   version "15.8.1"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.8.1.tgz#67d87bf1a694f48435cf332c24af10214a3140b5"
   integrity sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==
@@ -5206,12 +5206,10 @@ react-is@^17.0.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-17.0.2.tgz#e691d4a8e9c789365655539ab372762b0efb54f0"
   integrity sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==
 
-react-keybinding-component@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/react-keybinding-component/-/react-keybinding-component-1.0.0.tgz#ac8d4cc905467ff1dbb8c5a71b95636704a70e50"
-  integrity sha512-U6lzAKP8DbZfeKj7xIyQJ97G0dqtEUD7Hk55SgWzFxQuff50wIyaEUlRe1tuMLmxaggPUSscLR5TcTapYKhF/w==
-  dependencies:
-    prop-types "^15.6.2"
+react-keybinding-component@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/react-keybinding-component/-/react-keybinding-component-2.0.2.tgz#b6a60f4e8c968f990760e78c446bb407eb87c128"
+  integrity sha512-DAVl+xwkgl+xb76kfSeKaAbHQB4V98pM/2e9ZndVjACaCF9Q/RLpFQe5EAxNxWcMQ4WD/ivziiObGVqYGQGhxg==
 
 react-refresh@^0.14.0:
   version "0.14.0"
