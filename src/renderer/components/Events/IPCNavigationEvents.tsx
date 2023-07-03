@@ -36,7 +36,7 @@ function IPCNavigationEvents() {
       ipcRenderer.on(channels.MENU_GO_TO_PLAYLISTS, goToPlaylists);
       ipcRenderer.on(channels.MENU_JUMP_TO_PLAYING_TRACK, goToPlayingTrack);
     };
-  });
+  }, [navigate, playerAPI]);
 
   return null;
 }

@@ -33,7 +33,7 @@ function MediaSessionEvents() {
       navigator.mediaSession.setActionHandler('previoustrack', null);
       navigator.mediaSession.setActionHandler('nexttrack', null);
     };
-  });
+  }, [playerAPI]);
 
   return null;
 }
