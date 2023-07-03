@@ -57,7 +57,7 @@ function IPCPlayerEvents() {
       player.getAudio().removeEventListener('play', onPlay);
       player.getAudio().removeEventListener('pause', onPause);
     };
-  });
+  }, [playerAPI, tracks]);
 
   return null;
 }

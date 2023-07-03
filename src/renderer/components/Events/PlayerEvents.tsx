@@ -83,7 +83,7 @@ function PlayerEvents() {
       player.getAudio().removeEventListener('error', handleAudioError);
       player.getAudio().removeEventListener('timeupdate', incrementPlayCount);
     };
-  });
+  }, [libraryAPI, toastsAPI, playerAPI]);
 
   return null;
 }
