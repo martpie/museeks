@@ -2,7 +2,7 @@
  * Module in charge of the dock menu on macOS
  */
 
-import { Menu, app, ipcMain } from 'electron';
+import { IpcMainEvent, Menu, app, ipcMain } from 'electron';
 
 import channels from '../../shared/lib/ipc-channels';
 import { PlayerStatus, TrackModel } from '../../shared/types/museeks';
@@ -80,7 +80,7 @@ export default class DockMenuDarwinModule extends ModuleWindow {
 
     ipcMain.on(
       channels.PLAYBACK_TRACK_CHANGE,
-      (_e: Event, track: TrackModel) => {
+      (_e: IpcMainEvent, track: TrackModel) => {
         this.updateDockMenu(track);
         this.setDockMenu(PlayerStatus.PLAY);
       },
