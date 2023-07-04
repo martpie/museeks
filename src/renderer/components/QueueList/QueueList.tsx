@@ -8,6 +8,8 @@ import { usePlayerAPI } from '../../stores/usePlayerStore';
 
 import styles from './QueueList.module.css';
 
+const INITIAL_QUEUE_SIZE = 20;
+
 type Props = {
   queue: TrackModel[];
   queueCursor: number;
@@ -95,9 +97,11 @@ export default function QueueList(props: Props) {
   );
 
   const { queue, queueCursor } = props;
+  const [queueSize, setQueueSize] = useState(INITIAL_QUEUE_SIZE);
 
   // Get the 20 next tracks displayed
-  const shownQueue = queue.slice(queueCursor + 1, queueCursor + 21);
+  const shownQueue = queue.slice(queueCursor + 1, queueCursor + 1 + queueSize);
+  const hiddenQueue = queue.slice(queueCursor + 1 + queueSize);
   const incomingQueue = queue.slice(queueCursor + 1);
 
   return (
@@ -125,6 +129,18 @@ export default function QueueList(props: Props) {
             onDragEnd={dragEnd}
           />
         ))}
+        {hiddenQueue.length > 0 && (
+          <Button
+            block
+            onClick={() =>
+              setQueueSize(
+                Math.min(queueSize + INITIAL_QUEUE_SIZE, incomingQueue.length),
+              )
+            }
+          >
+            See more
+          </Button>
+        )}
       </div>
     </>
   );
