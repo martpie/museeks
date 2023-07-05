@@ -415,15 +415,7 @@ export default function TracksList(props: Props) {
         template.push({
           label: `Search for "${artist}" `,
           click: () => {
-            // HACK
-            const searchInput: HTMLInputElement | null = document.querySelector(
-              `input[type="text"].${headerStyles.header__search__input}`,
-            );
-
-            if (searchInput) {
-              searchInput.value = track.artist[0];
-              searchInput.dispatchEvent(new Event('input', { bubbles: true }));
-            }
+            libraryAPI.search(track.artist[0]);
           },
         });
       }
@@ -431,15 +423,7 @@ export default function TracksList(props: Props) {
       template.push({
         label: `Search for "${track.album}"`,
         click: () => {
-          // HACK
-          const searchInput: HTMLInputElement | null = document.querySelector(
-            `input[type="text"].${headerStyles.header__search__input}`,
-          );
-
-          if (searchInput) {
-            searchInput.value = track.album;
-            searchInput.dispatchEvent(new Event('input', { bubbles: true }));
-          }
+          libraryAPI.search(track.album);
         },
       });
 
