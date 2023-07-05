@@ -19,7 +19,7 @@
     "dev": "electron-vite dev --watch",
     "start": "electron-vite preview",
     "museeks": "electron .",
-    "museeks:debug": "electron . --enable-logging --devtools",
+    "museeks:debug": "electron . --enable-logging --devtools --trace-warnings",
     "test:typings": "yarn run test:typings:root && yarn run test:typings:main && yarn run test:typings:preload && yarn run test:typings:renderer",
     "test:typings:root": "tsc --noEmit --project ./tsconfig.json",
     "test:typings:main": "tsc --noEmit --project src/main/tsconfig.json",

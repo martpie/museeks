@@ -9,6 +9,13 @@ export function stopPropagation(e: React.SyntheticEvent) {
 }
 
 /**
+ * Prevent the default behavior of an event
+ */
+export function preventNativeDefault(e: Event) {
+  e.preventDefault();
+}
+
+/**
  * Returns true if
  * - the control key was pressed on a non-mac platform
  * - the cmd key is pressed on macOS

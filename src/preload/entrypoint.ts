@@ -3,7 +3,7 @@ import path from 'path';
 
 import '@total-typescript/ts-reset';
 import { Menu, app } from '@electron/remote';
-import { contextBridge, ipcRenderer, shell } from 'electron';
+import { IpcRendererEvent, contextBridge, ipcRenderer, shell } from 'electron';
 
 import { Config, Track } from '../shared/types/museeks';
 import channels from '../shared/lib/ipc-channels';
@@ -71,11 +71,29 @@ const ElectronAPI = {
     // FIXME unsafe
     // All these usage should probably go to the main process, or we should
     // expose explicit APIs for what those usages are trying to solve
-    on: (channel: string, listener: () => void) => {
-      ipcRenderer.on(channel, listener);
+    on: (
+      channel: string,
+      listener: (event: IpcRendererEvent, value: any) => void,
+    ) => {
+      const listenerCount = ipcRenderer.listenerCount(channel);
+      if (listenerCount === 0) {
+        ipcRenderer.on(channel, listener);
+      } else {
+        // eslint-disable-next-line no-console
+        console.warn(
+          `Event "${channel}" already has ${listenerCount} listeners, aborting.`,
+        );
+      }
     },
-    off: (channel: string, listener: () => void) => {
-      ipcRenderer.off(channel, listener);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    off: (
+      channel: string,
+      _listener: (event: IpcRendererEvent, value: any) => void,
+    ) => {
+      // Because we function cannot be passed between preload / renderer,
+      // ipcRenderer.off does not work. Until we fix the FIXME unsafe above
+      ipcRenderer.removeAllListeners(channel);
+      // ipcRenderer.off(channel, listener);
     },
     send: ipcRenderer.send,
     sendSync: ipcRenderer.sendSync,
