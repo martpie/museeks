@@ -10,11 +10,12 @@ import Toasts from '../components/Toasts/Toasts';
 import AppActions from '../stores/AppAPI';
 import DropzoneImport from '../components/DropzoneImport/DropzoneImport';
 import MediaSessionEvents from '../components/Events/MediaSessionEvents';
-import IPCPlayerEvents from '../components/Events/IPCPlayerEvents';
+import AppEvents from '../components/Events/AppEvents';
 import PlayerEvents from '../components/Events/PlayerEvents';
+import IPCPlayerEvents from '../components/Events/IPCPlayerEvents';
 import IPCNavigationEvents from '../components/Events/IPCNavigationEvents';
-import { useLibraryAPI } from '../stores/useLibraryStore';
 import GlobalKeyBindings from '../components/Events/GlobalKeyBindings';
+import { useLibraryAPI } from '../stores/useLibraryStore';
 
 import styles from './Root.module.css';
 
@@ -61,6 +62,7 @@ export default function Museeks() {
       {/** Bunch of global event handlers */}
       <IPCNavigationEvents />
       <IPCPlayerEvents />
+      <AppEvents />
       <PlayerEvents />
       <MediaSessionEvents />
       <GlobalKeyBindings />

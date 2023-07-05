@@ -32,9 +32,9 @@ function IPCNavigationEvents() {
     ipcRenderer.on(channels.MENU_JUMP_TO_PLAYING_TRACK, goToPlayingTrack);
 
     return function cleanup() {
-      ipcRenderer.on(channels.MENU_GO_TO_LIBRARY, goToLibrary);
-      ipcRenderer.on(channels.MENU_GO_TO_PLAYLISTS, goToPlaylists);
-      ipcRenderer.on(channels.MENU_JUMP_TO_PLAYING_TRACK, goToPlayingTrack);
+      ipcRenderer.off(channels.MENU_GO_TO_LIBRARY, goToLibrary);
+      ipcRenderer.off(channels.MENU_GO_TO_PLAYLISTS, goToPlaylists);
+      ipcRenderer.off(channels.MENU_JUMP_TO_PLAYING_TRACK, goToPlayingTrack);
     };
   }, [navigate, playerAPI]);
 

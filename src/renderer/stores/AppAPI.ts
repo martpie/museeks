@@ -1,35 +1,10 @@
-import channels from '../../shared/lib/ipc-channels';
-import { Theme } from '../../shared/types/museeks';
-import logger from '../../shared/lib/logger';
-import player from '../lib/player';
-
 import SettingsAPI from './SettingsAPI';
-
-const { ipcRenderer } = window.ElectronAPI;
 
 const init = async (): Promise<void> => {
   await SettingsAPI.check();
 
   // Tell the main process to show the window
   window.MuseeksAPI.app.ready();
-
-  // Support for multiple audio output
-  navigator.mediaDevices.addEventListener('devicechange', async () => {
-    try {
-      await player.setOutputDevice('default');
-    } catch (err) {
-      logger.warn(err);
-    }
-  });
-
-  // Auto-update theme if set to system and the native theme changes
-  ipcRenderer.on(channels.THEME_APPLY, (_event, theme: Theme) => {
-    SettingsAPI.applyThemeToUI(theme);
-  });
-
-  // Prevent drop events on the window
-  window.addEventListener('dragover', (e) => e.preventDefault(), false);
-  window.addEventListener('drop', (e) => e.preventDefault(), false);
 };
 
 // Should we use something else to harmonize between zustand and non-store APIs?
