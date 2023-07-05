@@ -14,7 +14,6 @@ import {
   isAltKey,
 } from '../../lib/utils-events';
 import { PlaylistModel, TrackModel } from '../../../shared/types/museeks';
-import headerStyles from '../Header/Header.module.css';
 import { usePlayerAPI } from '../../stores/usePlayerStore';
 import useLibraryStore, { useLibraryAPI } from '../../stores/useLibraryStore';
 
