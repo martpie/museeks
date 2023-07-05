@@ -5,22 +5,22 @@
   "variables": {
     "--color-scheme": "dark",
     "--text": "#efefef",
-    "--background": "hsl(216, 10%, 8%)",
+    "--background": "hsl(216, 0%, 9.5%)",
     "--faded": "rgba(0, 0, 0, 0.8)",
 
     "--border-color": "#0a0a0a",
     "--border-radius": "2px",
 
     "--header-color": "#efefef",
-    "--header-bg": "hsl(216, 10%, 11%)",
+    "--header-bg": "hsl(216, 0%, 13%)",
 
-    "--footer-bg": "hsl(216, 10%, 11%)",
-    "--footer-nav-bg-color-active": "hsl(216, 10%, 8%)",
+    "--footer-bg": "hsl(216, 0%, 13%)",
+    "--footer-nav-bg-color-active": "hsl(216, 0%, 9.5%)",
 
-    "--tracks-bg-even": "hsl(216, 10%, 8%)",
-    "--tracks-bg-odd": "hsl(216, 10%, 10%)",
+    "--tracks-bg-even": "hsl(216, 0%, 9.5%)",
+    "--tracks-bg-odd": "hsl(216, 0%, 13%)",
 
-    "--tracks-header-bg": "hsl(216, 10%, 8%)",
+    "--tracks-header-bg": "hsl(216, 0%, 9.5%)",
     "--tracks-header-color": "#efefef",
 
     "--success-color": "#5CB85C",
@@ -28,23 +28,23 @@
     "--warning-color": "#F0AD4E",
     "--danger-color": "#de4343",
 
-    "--toasts-bg": "hsl(216, 10%, 8%)",
+    "--toasts-bg": "hsl(216, 0%, 9.5%)",
 
-    "--progress-bg": "hsl(216, 10%, 8%)",
+    "--progress-bg": "hsl(216, 0%, 9.5%)",
 
-    "--sidebar-bg": "hsl(216, 10%, 11%)",
-    "--sidebar-item-active-bg": "hsl(216, 10%, 8%)",
+    "--sidebar-bg": "hsl(216, 0%, 13%)",
+    "--sidebar-item-active-bg": "hsl(216, 0%, 9.5%)",
 
-    "--search-bg": "hsl(216, 10%, 8%)",
-    "--slider-bg": "hsl(216, 10%, 8%)",
+    "--search-bg": "hsl(216, 0%, 9.5%)",
+    "--slider-bg": "hsl(216, 0%, 9.5%)",
 
-    "--queue-bg": "hsl(216, 10%, 8%)",
-    "--queue-header-bg": "hsl(216, 10%, 11%)",
+    "--queue-bg": "hsl(216, 0%, 9.5%)",
+    "--queue-header-bg": "hsl(216, 0%, 13%)",
 
-    "--checkbox-bg": "hsl(216, 10%, 17%)",
-    "--input-bg": "hsl(216, 10%, 15%)",
+    "--checkbox-bg": "hsl(216, 0%, 17%)",
+    "--input-bg": "hsl(216, 0%, 15%)",
     "--input-color": "#efefef",
-    "--button-bg": "hsl(216, 10%, 20%)",
+    "--button-bg": "hsl(216, 0%, 20%)",
     "--button-border": "rgb(255 255 255 / 0.2)",
     "--button-color": "#efefef"
   }
