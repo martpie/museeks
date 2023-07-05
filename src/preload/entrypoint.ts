@@ -71,8 +71,12 @@ const ElectronAPI = {
     // FIXME unsafe
     // All these usage should probably go to the main process, or we should
     // expose explicit APIs for what those usages are trying to solve
-    on: ipcRenderer.on,
-    off: ipcRenderer.off,
+    on: (channel: string, listener: () => void) => {
+      ipcRenderer.on(channel, listener);
+    },
+    off: (channel: string, listener: () => void) => {
+      ipcRenderer.off(channel, listener);
+    },
     send: ipcRenderer.send,
     sendSync: ipcRenderer.sendSync,
     invoke: ipcRenderer.invoke,
