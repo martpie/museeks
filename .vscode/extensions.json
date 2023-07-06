@@ -1,0 +1,9 @@
+{
+  "recommendations": [
+      "dbaeumer.vscode-eslint",
+      "csstools.postcss",
+      "esbenp.prettier-vscode",
+      "stylelint.vscode-stylelint",
+      "ZixuanChen.vitest-explorer"
+  ]
+}
