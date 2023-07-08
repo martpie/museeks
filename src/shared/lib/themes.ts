@@ -1,11 +1,13 @@
 import { Theme } from '../types/museeks';
 // IMPROVE ME: scan the directory for all json files instead
-import lightTheme from '../themes/light.json';
-import darkTheme from '../themes/dark.json';
-import darkLegacyTheme from '../themes/dark-legacy.json';
+import fs from 'fs';
 
-export const themes = [
-  lightTheme as Theme,
-  darkTheme as Theme,
-  darkLegacyTheme as Theme,
-];
+const themes : Array<Theme> = [];
+fs.readdirSync('./src/shared/themes').forEach(name => {
+  const theme = require('../../src/shared/themes/' + name);
+  themes.push(theme as Theme);
+})
+
+export {
+    themes
+}

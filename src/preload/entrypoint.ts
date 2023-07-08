@@ -10,6 +10,7 @@ import channels from '../shared/lib/ipc-channels';
 import { parseUri } from '../shared/lib/utils-uri';
 
 import db from './db';
+import { themes } from '../../src/shared/lib/themes';
 
 /**
  * Ok, so what is there exactly?
@@ -131,6 +132,7 @@ const MuseeksAPI = {
     getCoverAsBase64: (track: Track) =>
       ipcRenderer.invoke(channels.COVER_GET, track.path),
   },
+  themes,
   // TODO: all of the things below should be removed
   path: {
     parse: path.parse,
