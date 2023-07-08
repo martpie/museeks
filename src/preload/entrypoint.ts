@@ -8,9 +8,9 @@ import { IpcRendererEvent, contextBridge, ipcRenderer, shell } from 'electron';
 import { Config, Track } from '../shared/types/museeks';
 import channels from '../shared/lib/ipc-channels';
 import { parseUri } from '../shared/lib/utils-uri';
+import { themes } from '../../src/shared/lib/themes';
 
 import db from './db';
-import { themes } from '../../src/shared/lib/themes';
 
 /**
  * Ok, so what is there exactly?
