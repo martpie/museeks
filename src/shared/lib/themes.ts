@@ -1,5 +1,4 @@
 import { Theme } from '../types/museeks';
-// IMPROVE ME: scan the directory for all json files instead
 import fs from 'fs';
 
 const themes : Array<Theme> = [];
