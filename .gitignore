@@ -62,6 +62,7 @@ dist/renderer/*
 dist/preload/*
 cache/
 build/
+.vscode
+!.vscode/extensions.json
 
 .DS_Store
-.vscode

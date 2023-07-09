@@ -4,6 +4,7 @@
   padding: 6px 8px;
   border-radius: var(--border-radius);
   border: solid 1px var(--button-border);
+  cursor: pointer;
 }
 
 .danger {
