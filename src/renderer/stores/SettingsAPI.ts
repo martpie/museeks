@@ -62,10 +62,12 @@ const checkForUpdate = async (
     const response = await fetch(
       'https://api.github.com/repos/martpie/museeks/releases',
     );
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const releases: any = await response.json();
 
     // TODO Github API types?
     const newRelease = releases.find(
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (release: any) =>
         semver.valid(release.tag_name) !== null &&
         semver.gt(release.tag_name, currentVersion),

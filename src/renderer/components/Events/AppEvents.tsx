@@ -20,8 +20,8 @@ function AppEvents() {
     window.addEventListener('drop', preventNativeDefault, false);
 
     // Auto-update theme if set to system and the native theme changes
-    function updateTheme(_event: IpcRendererEvent, theme: Theme) {
-      SettingsAPI.applyThemeToUI(theme);
+    function updateTheme(_event: IpcRendererEvent, theme: unknown) {
+      SettingsAPI.applyThemeToUI(theme as Theme);
     }
 
     ipcRenderer.on(channels.THEME_APPLY, updateTheme);

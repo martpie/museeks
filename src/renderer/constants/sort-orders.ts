@@ -1,12 +1,19 @@
-import { Track, SortOrder, SortBy } from '../../shared/types/museeks';
+import { Track, SortOrder, SortBy, Path } from '../../shared/types/museeks';
 
 // For perforances reasons, otherwise _.orderBy will perform weird check
 // the is far more resource/time impactful
 const parseArtist = (t: Track): string => t.loweredMetas.artist[0].toString();
 const parseGenre = (t: Track): string => t.loweredMetas.genre.toString();
 
+type TrackKeys = Path<Track>;
+type IterateeFunction = (track: Track) => string;
+export type SortTuple = [
+  Array<TrackKeys | IterateeFunction>,
+  Array<'asc' | 'desc'>,
+];
+
 // Declarations
-const sortOrders = {
+const sortOrders: Record<SortBy, Record<SortOrder, SortTuple>> = {
   [SortBy.ARTIST]: {
     [SortOrder.ASC]: [
       // Default

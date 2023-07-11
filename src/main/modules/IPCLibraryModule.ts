@@ -112,6 +112,8 @@ class IPCLibraryModule extends ModuleWindow {
       // Normalize slashes and escape regex special characters
       const pattern = `${folder
         .replace(/\\/g, '/')
+        // I'm not sure about this eslint-ignore
+        // eslint-disable-next-line no-useless-escape
         .replace(/([$^*+?()\[\]])/g, '\\$1')}/**/*.*`;
 
       return globby(pattern, { followSymbolicLinks: true });
