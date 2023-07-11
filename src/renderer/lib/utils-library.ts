@@ -1,6 +1,7 @@
 import orderBy from 'lodash/orderBy';
 
 import { TrackModel } from '../../shared/types/museeks';
+import { SortTuple } from '../constants/sort-orders';
 
 import * as utils from './utils';
 
@@ -26,9 +27,12 @@ export const filterTracks = (
 /**
  * Sort an array of tracks (alias to lodash.orderby)
  */
-export const sortTracks = (tracks: TrackModel[], sort: any): TrackModel[] => {
+export const sortTracks = (
+  tracks: TrackModel[],
+  sort: SortTuple,
+): TrackModel[] => {
   const [columns, order] = sort;
-  return orderBy(tracks, columns, order);
+  return orderBy<TrackModel>(tracks, columns, order);
 };
 
 /**

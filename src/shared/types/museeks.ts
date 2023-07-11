@@ -139,3 +139,19 @@ export interface Theme {
   themeSource: Electron.NativeTheme['themeSource'];
   variables: Record<string, string>;
 }
+
+/**
+ * Helpers
+ */
+
+type StringableKey<T> = T extends readonly unknown[]
+  ? number extends T['length']
+    ? number
+    : `${number}`
+  : string | number;
+
+export type Path<T> = T extends object
+  ? {
+      [P in keyof T & StringableKey<T>]: `${P}` | `${P}.${Path<T[P]>}`;
+    }[keyof T & StringableKey<T>]
+  : never;

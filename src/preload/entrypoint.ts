@@ -73,7 +73,7 @@ const ElectronAPI = {
     // expose explicit APIs for what those usages are trying to solve
     on: (
       channel: string,
-      listener: (event: IpcRendererEvent, value: any) => void,
+      listener: (event: IpcRendererEvent, value: unknown) => void,
     ) => {
       const listenerCount = ipcRenderer.listenerCount(channel);
       if (listenerCount === 0) {
@@ -88,7 +88,8 @@ const ElectronAPI = {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     off: (
       channel: string,
-      _listener: (event: IpcRendererEvent, value: any) => void,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      _listener: (event: IpcRendererEvent, value: unknown) => void,
     ) => {
       // Because we function cannot be passed between preload / renderer,
       // ipcRenderer.off does not work. Until we fix the FIXME unsafe above
