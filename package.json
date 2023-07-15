@@ -27,7 +27,7 @@
     "test:typings:renderer": "tsc --noEmit --project src/renderer/tsconfig.json",
     "test:unit": "vitest run",
     "test:lint": "eslint src",
-    "test:lint:fix": "eslint src",
+    "test:lint:fix": "eslint src --fix",
     "test:formatting": "prettier --check \"./**/*.{ts,tsx,js}\"",
     "test:formatting:fix": "prettier --write \"./**/*.{ts,tsx,js}\"",
     "test:css": "stylelint \"src/**/*.css\"",
