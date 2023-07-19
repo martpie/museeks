@@ -14,7 +14,7 @@ A simple, clean and cross-platform music player. ([museeks.io](http://museeks.io
 
 Museeks aims to be a simple and easy to use music player with a clean UI.
 
-You will not find tons of features, as its goals is not to compete with more complete and more famous music players. Here is a little preview though:
+You will not find tons of features, as it goal is not to compete with more complete and more famous music players. Here is a little preview though:
 
 - 💻 Cross-platform music player (Linux, macOS and Windows)
 - 🎧 Supported formats: mp3, mp4, m4a/aac, flac, wav, ogg, 3gpp
@@ -38,27 +38,26 @@ Want more? Open a new issue or 👍 an existing one so we can talk about it.
 
 ### Classic
 
-Builds and installers can be found [on this page](https://github.com/martpie/museeks/releases).
+Binaries can be found [on this page](https://github.com/martpie/museeks/releases).
 
 ### Build (advanced)
 
 Museeks is built upon:
 
 - [Node.js](https://nodejs.org/en/)
-- [Electron](https://github.com/atom/electron/) (formerly atom-shell)
-- [React.js](https://facebook.github.io/react/) as UI library and [Flux](https://facebook.github.io/flux/) with [Redux](http://redux.js.org/) as data-flow pattern
+- [Electron](https://github.com/electron/electron/)
+- [React.js](https://react.dev)
 
 Requirements:
 
-- `node` > 16
-- `npm` > 6
+- `node` > 18
 - `yarn` 1
 
 Please consider that **`master` is unstable**.
 
 - `git clone git@github.com:martpie/museeks.git`
 - `cd museeks`
-- `yarn install --frozen-lockfile`
+- `yarn`
 - for dev mode:
   - `yarn dev`
   - `yarn museeks:debug` (in another terminal)
@@ -69,7 +68,7 @@ Please consider that **`master` is unstable**.
 ### Package binaries (advanced)
 
 - `rm -rf node_modules dist build`
-- `yarn install --frozen-lockfile`
+- `yarn`
 - `yarn build`
 - to test the production build:
   - `yarn museeks` or `yarn museeks:debug`
