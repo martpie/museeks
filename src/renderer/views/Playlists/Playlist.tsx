@@ -1,15 +1,23 @@
 import { useCallback, useMemo } from 'react';
-import { Link, useLoaderData, useParams } from 'react-router-dom';
+import {
+  Link,
+  LoaderFunctionArgs,
+  useLoaderData,
+  useParams,
+} from 'react-router-dom';
 
 import TracksList from '../../components/TracksList/TracksList';
 import * as ViewMessage from '../../elements/ViewMessage/ViewMessage';
 import PlaylistsAPI from '../../stores/PlaylistsAPI';
 import { filterTracks } from '../../lib/utils-library';
-import { PlaylistLoaderResponse } from '../router';
+import { LoaderResponse } from '../router';
 import useLibraryStore from '../../stores/useLibraryStore';
 import useTrackPlayingID from '../../hooks/useTrackPlayingID';
+import { PlaylistModel, TrackModel } from '../../../shared/types/museeks';
 
-export default function Playlist() {
+const { db } = window.MuseeksAPI;
+
+export default function PlaylistView() {
   const { playlists, playlistTracks } =
     useLoaderData() as PlaylistLoaderResponse;
   const { playlistId } = useParams();
@@ -87,3 +95,23 @@ export default function Playlist() {
     />
   );
 }
+
+export type PlaylistLoaderResponse = {
+  playlistTracks: TrackModel[];
+  playlists: PlaylistModel[];
+};
+
+PlaylistView.loader = async ({
+  params,
+}: LoaderFunctionArgs): Promise<LoaderResponse<PlaylistLoaderResponse>> => {
+  if (typeof params.playlistId !== 'string') {
+    throw new Error('Playlist ID is not defined');
+  }
+
+  const playlist = await db.playlists.findOnlyByID(params.playlistId);
+  return {
+    // TODO: can we re-use parent's data?
+    playlists: await db.playlists.getAll(),
+    playlistTracks: await db.tracks.findByID(playlist.tracks),
+  };
+};

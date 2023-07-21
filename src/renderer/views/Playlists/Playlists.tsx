@@ -1,15 +1,23 @@
 import { useCallback } from 'react';
-import { Outlet, useLoaderData } from 'react-router-dom';
+import {
+  LoaderFunctionArgs,
+  Outlet,
+  redirect,
+  useLoaderData,
+} from 'react-router-dom';
 
 import PlaylistsNav from '../../components/PlaylistsNav/PlaylistsNav';
 import * as ViewMessage from '../../elements/ViewMessage/ViewMessage';
 import PlaylistsAPI from '../../stores/PlaylistsAPI';
 import appStyles from '../../views/Root.module.css';
-import { PlaylistsLoaderResponse } from '../router';
+import { LoaderResponse } from '../router';
+import { PlaylistModel } from '../../../shared/types/museeks';
 
 import styles from './Playlists.module.css';
 
-export default function Playlists() {
+const { db } = window.MuseeksAPI;
+
+export default function PlaylistsView() {
   const { playlists } = useLoaderData() as PlaylistsLoaderResponse;
 
   const createPlaylist = useCallback(async () => {
@@ -40,3 +48,29 @@ export default function Playlists() {
     </div>
   );
 }
+
+export type PlaylistsLoaderResponse = {
+  playlists: PlaylistModel[];
+};
+
+PlaylistsView.loader = async ({
+  params,
+}: LoaderFunctionArgs): Promise<LoaderResponse<PlaylistsLoaderResponse>> => {
+  const playlists = await db.playlists.getAll();
+  const [firstPlaylist] = playlists;
+  const { playlistId } = params;
+
+  if (
+    // If landing page, redirect to the first playlist
+    playlistId === undefined ||
+    // If playlist ID does not exist, redirect to the first playlist
+    (playlistId !== undefined &&
+      !playlists.map((playlist) => playlist._id).includes(playlistId))
+  ) {
+    if (firstPlaylist !== undefined) {
+      return redirect(`/playlists/${firstPlaylist._id}`);
+    }
+  }
+
+  return { playlists };
+};

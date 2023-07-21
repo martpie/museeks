@@ -1,13 +1,11 @@
 import {
   createHashRouter,
   isRouteErrorResponse,
-  redirect,
   useRouteError,
 } from 'react-router-dom';
 
 import * as ViewMessage from '../elements/ViewMessage/ViewMessage';
 import ExternalLink from '../elements/ExternalLink/ExternalLink';
-import { Config, PlaylistModel, TrackModel } from '../../shared/types/museeks';
 import logger from '../../shared/lib/logger';
 
 import RootView from './Root';
@@ -21,79 +19,31 @@ import SettingsAudio from './Settings/SettingsAudio';
 import SettingsAbout from './Settings/SettingsAbout';
 import DetailsView from './Details/Details';
 
-const { db } = window.MuseeksAPI;
-
 const router = createHashRouter([
   {
     path: '/',
     id: 'root',
     element: <RootView />,
+    loader: RootView.loader,
     ErrorBoundary: GlobalErrorBoundary,
-    loader: async (): Promise<LoaderResponse<RootLoaderResponse>> => {
-      // this can be slow, think about caching it or something, especially when
-      // we revalidate routing
-      const tracks = await db.tracks.getAll();
-      return { tracks };
-    },
     children: [
       {
         path: 'library',
         id: 'library',
         element: <LibraryView />,
-        loader: async (): Promise<LoaderResponse<LibraryLoaderResponse>> => {
-          const playlists = await db.playlists.getAll();
-
-          return {
-            playlists,
-          };
-        },
+        loader: LibraryView.loader,
       },
       {
         path: 'playlists',
         id: 'playlists',
         element: <PlaylistsView />,
-        loader: async ({
-          params,
-        }): Promise<LoaderResponse<PlaylistsLoaderResponse>> => {
-          const playlists = await db.playlists.getAll();
-          const [firstPlaylist] = playlists;
-          const { playlistId } = params;
-
-          if (
-            // If landing page, redirect to the first playlist
-            playlistId === undefined ||
-            // If playlist ID does not exist, redirect to the first playlist
-            (playlistId !== undefined &&
-              !playlists.map((playlist) => playlist._id).includes(playlistId))
-          ) {
-            if (firstPlaylist !== undefined) {
-              return redirect(`/playlists/${firstPlaylist._id}`);
-            }
-          }
-
-          return { playlists };
-        },
+        loader: PlaylistsView.loader,
         children: [
           {
             path: ':playlistId',
             id: 'playlist-details',
             element: <PlaylistView />,
-            loader: async ({
-              params,
-            }): Promise<LoaderResponse<PlaylistLoaderResponse>> => {
-              if (typeof params.playlistId !== 'string') {
-                throw new Error('Playlist ID is not defined');
-              }
-
-              const playlist = await db.playlists.findOnlyByID(
-                params.playlistId,
-              );
-              return {
-                // TODO: can we re-use parent's data?
-                playlists: await db.playlists.getAll(),
-                playlistTracks: await db.tracks.findByID(playlist.tracks),
-              };
-            },
+            loader: PlaylistView.loader,
           },
         ],
       },
@@ -101,13 +51,7 @@ const router = createHashRouter([
         path: 'settings',
         id: 'settings',
         element: <SettingsView />,
-        loader: async (): Promise<LoaderResponse<SettingsLoaderResponse>> => {
-          const config = await window.MuseeksAPI.config.getAll();
-
-          return {
-            config,
-          };
-        },
+        loader: SettingsView.loader,
         children: [
           { path: 'library', element: <SettingsLibrary /> },
           { path: 'interface', element: <SettingsUI /> },
@@ -118,6 +62,7 @@ const router = createHashRouter([
       {
         path: 'details/:trackId',
         element: <DetailsView />,
+        // TODO: convert DetailsView to loaders
       },
     ],
   },
@@ -167,25 +112,4 @@ function GlobalErrorBoundary() {
 /**
  * Loader Types, to manually type useLoaderData()
  */
-type LoaderResponse<T> = Response | T;
-
-export type RootLoaderResponse = {
-  tracks: TrackModel[];
-};
-
-export type LibraryLoaderResponse = {
-  playlists: PlaylistModel[];
-};
-
-export type PlaylistsLoaderResponse = {
-  playlists: PlaylistModel[];
-};
-
-export type PlaylistLoaderResponse = {
-  playlistTracks: TrackModel[];
-  playlists: PlaylistModel[];
-};
-
-export type SettingsLoaderResponse = {
-  config: Config;
-};
+export type LoaderResponse<T> = Response | T;
