@@ -8,7 +8,7 @@
     "--background": "hsl(216, 0%, 9.5%)",
     "--faded": "rgba(0, 0, 0, 0.8)",
 
-    "--border-color": "#0a0a0a",
+    "--border-color": "hsl(216deg 0% 20%)",
     "--border-radius": "2px",
 
     "--header-color": "#efefef",
