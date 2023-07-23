@@ -2,10 +2,12 @@ import { Outlet, useMatch, Navigate } from 'react-router-dom';
 
 import * as Nav from '../../elements/Nav/Nav';
 import appStyles from '../Root.module.css';
+import { LoaderResponse } from '../router';
+import { Config } from '../../../shared/types/museeks';
 
 import styles from './Settings.module.css';
 
-export default function Settings() {
+export default function SettingsView() {
   const match = useMatch('/settings');
 
   return (
@@ -27,3 +29,17 @@ export default function Settings() {
     </div>
   );
 }
+
+export type SettingsLoaderResponse = {
+  config: Config;
+};
+
+SettingsView.loader = async (): Promise<
+  LoaderResponse<SettingsLoaderResponse>
+> => {
+  const config = await window.MuseeksAPI.config.getAll();
+
+  return {
+    config,
+  };
+};

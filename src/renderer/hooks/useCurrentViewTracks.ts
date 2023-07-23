@@ -2,7 +2,8 @@ import { useRouteLoaderData } from 'react-router-dom';
 import { useMemo } from 'react';
 
 import { TrackModel } from '../../shared/types/museeks';
-import { PlaylistLoaderResponse, RootLoaderResponse } from '../views/router';
+import { RootLoaderResponse } from '../views/Root';
+import { PlaylistLoaderResponse } from '../views/Playlists/Playlist';
 
 import useFilteredTracks from './useFilteredTracks';
 

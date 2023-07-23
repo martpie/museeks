@@ -5,7 +5,8 @@ import SettingsAPI from '../../stores/SettingsAPI';
 import * as Setting from '../../components/Setting/Setting';
 import CheckboxSetting from '../../components/SettingCheckbox/SettingCheckbox';
 import { themes } from '../../../shared/lib/themes';
-import { SettingsLoaderResponse } from '../router';
+
+import { SettingsLoaderResponse } from './Settings';
 
 export default function SettingsUI() {
   const { config } = useRouteLoaderData('settings') as SettingsLoaderResponse;
