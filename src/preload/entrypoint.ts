@@ -8,6 +8,7 @@ import { IpcRendererEvent, contextBridge, ipcRenderer, shell } from 'electron';
 import { Config, Track } from '../shared/types/museeks';
 import channels from '../shared/lib/ipc-channels';
 import { parseUri } from '../shared/lib/utils-uri';
+import { themes } from '../../src/shared/lib/themes';
 
 import db from './db';
 
@@ -132,6 +133,7 @@ const MuseeksAPI = {
     getCoverAsBase64: (track: Track) =>
       ipcRenderer.invoke(channels.COVER_GET, track.path),
   },
+  themes,
   // TODO: all of the things below should be removed
   path: {
     parse: path.parse,

@@ -1,11 +1,15 @@
-import { Theme } from '../types/museeks';
-// IMPROVE ME: scan the directory for all json files instead
-import lightTheme from '../themes/light.json';
-import darkTheme from '../themes/dark.json';
-import darkLegacyTheme from '../themes/dark-legacy.json';
+import fs from 'fs';
+import path from 'path';
 
-export const themes = [
-  lightTheme as Theme,
-  darkTheme as Theme,
-  darkLegacyTheme as Theme,
-];
+import { Theme } from '../types/museeks';
+
+const themes: Array<Theme> = [];
+fs.readdirSync('./src/shared/themes').forEach((name) => {
+  if (name.split('.').pop() == 'json') {
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const theme = require(path.resolve(`src/shared/themes/${name}`));
+    themes.push(theme as Theme);
+  }
+});
+
+export { themes };
