@@ -2,7 +2,7 @@ import type { MenuItemConstructorOptions } from 'electron';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Keybinding from 'react-keybinding-component';
 import { useNavigate } from 'react-router-dom';
-import { Virtuoso, VirtuosoHandle } from 'react-virtuoso';
+import { useVirtualizer } from '@tanstack/react-virtual';
 
 import TrackRow from '../TrackRow/TrackRow';
 import TracksListHeader from '../TracksListHeader/TracksListHeader';
@@ -55,8 +55,19 @@ export default function TracksList(props: Props) {
 
   const [selected, setSelected] = useState<string[]>([]);
   const [reordered, setReordered] = useState<string[] | null>([]);
-  const virtuosoRef = useRef<VirtuosoHandle>(null);
   const navigate = useNavigate();
+
+  // The scrollable element for your list
+  const scrollableRef = useRef<HTMLDivElement>(null);
+
+  // The virtualizer
+  const virtualizer = useVirtualizer({
+    count: tracks.length,
+    overscan: 10,
+    getScrollElement: () => scrollableRef.current,
+    estimateSize: () => ROW_HEIGHT,
+    getItemKey: (index) => tracks[index]._id,
+  });
 
   const playerAPI = usePlayerAPI();
   const libraryAPI = useLibraryAPI();
@@ -65,7 +76,7 @@ export default function TracksList(props: Props) {
   // Highlight playing track and scroll to it
   // Super-mega-hacky to use Redux for that
   useEffect(() => {
-    if (highlight === true && trackPlayingId && virtuosoRef.current) {
+    if (highlight === true && trackPlayingId) {
       setSelected([trackPlayingId]);
 
       const playingTrackIndex = tracks.findIndex(
@@ -73,14 +84,12 @@ export default function TracksList(props: Props) {
       );
 
       if (playingTrackIndex >= 0) {
-        virtuosoRef.current.scrollToIndex({
-          index: playingTrackIndex,
-        });
+        virtualizer.scrollToIndex(playingTrackIndex, { behavior: 'smooth' });
       }
 
       libraryAPI.highlightPlayingTrack(false);
     }
-  }, [highlight, trackPlayingId, tracks, libraryAPI]);
+  }, [highlight, trackPlayingId, tracks, libraryAPI, virtualizer]);
 
   /**
    * Helpers
@@ -117,12 +126,9 @@ export default function TracksList(props: Props) {
       else newSelected = [tracks[addedIndex]._id];
 
       setSelected(newSelected);
-
-      if (virtuosoRef.current) {
-        virtuosoRef.current.scrollIntoView({ index: addedIndex });
-      }
+      virtualizer.scrollToIndex(addedIndex);
     },
-    [selected],
+    [selected, virtualizer],
   );
 
   const onDown = useCallback(
@@ -135,12 +141,9 @@ export default function TracksList(props: Props) {
       else newSelected = [tracks[addedIndex]._id];
 
       setSelected(newSelected);
-
-      if (virtuosoRef.current) {
-        virtuosoRef.current.scrollIntoView({ index: addedIndex });
-      }
+      virtualizer.scrollToIndex(addedIndex);
     },
-    [selected],
+    [selected, virtualizer],
   );
 
   const onKey = useCallback(
@@ -485,32 +488,51 @@ export default function TracksList(props: Props) {
     <div className={styles.tracksList}>
       <Keybinding onKey={onKey} preventInputConflict />
       <TracksListHeader enableSort={type === 'library'} />
-      <Virtuoso
-        ref={virtuosoRef}
-        data={tracks}
-        totalCount={tracks.length}
-        fixedItemHeight={ROW_HEIGHT}
-        className={styles.tracksListBody}
-        itemContent={(index, track) => {
-          return (
-            <TrackRow
-              selected={selected.includes(track._id)}
-              track={tracks[index]}
-              isPlaying={trackPlayingId === track._id}
-              index={index}
-              onMouseDown={selectTrack}
-              onClick={selectTrackClick}
-              onContextMenu={showContextMenu}
-              onDoubleClick={startPlayback}
-              draggable={reorderable}
-              reordered={(reordered && reordered.includes(track._id)) || false}
-              onDragStart={onReorderStart}
-              onDragEnd={onReorderEnd}
-              onDrop={onDrop}
-            />
-          );
-        }}
-      />
+      {/* Scrollable element */}
+      <div ref={scrollableRef} className={styles.tracksListScroller}>
+        {/* The large inner element to hold all of the items */}
+        <div
+          className={styles.tracksListRows}
+          style={{
+            height: `${virtualizer.getTotalSize()}px`,
+            width: '100%',
+            position: 'relative',
+          }}
+        >
+          {/* Only the visible items in the virtualizer, manually positioned to be in view */}
+          {virtualizer.getVirtualItems().map((virtualItem) => {
+            const track = tracks[virtualItem.index];
+            return (
+              <TrackRow
+                key={virtualItem.key}
+                selected={selected.includes(track._id)}
+                track={track}
+                isPlaying={trackPlayingId === track._id}
+                index={virtualItem.index}
+                onMouseDown={selectTrack}
+                onClick={selectTrackClick}
+                onContextMenu={showContextMenu}
+                onDoubleClick={startPlayback}
+                draggable={reorderable}
+                reordered={
+                  (reordered && reordered.includes(track._id)) || false
+                }
+                onDragStart={onReorderStart}
+                onDragEnd={onReorderEnd}
+                onDrop={onDrop}
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  width: '100%',
+                  height: `${virtualItem.size}px`,
+                  transform: `translateY(${virtualItem.start}px)`,
+                }}
+              />
+            );
+          })}
+        </div>
+      </div>
     </div>
   );
 }

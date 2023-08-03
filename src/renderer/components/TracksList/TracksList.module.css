@@ -3,12 +3,18 @@
   display: flex;
   flex-direction: column;
   flex: 1 1 auto;
+  height: 100%;
   user-select: none;
 }
 
-.tracksListBody {
+.tracksListScroller {
   overflow: auto;
   flex: 1 1 auto;
+}
+
+.tracksListRows {
+  width: 100%;
+  position: relative;
 }
 
 .tiles {

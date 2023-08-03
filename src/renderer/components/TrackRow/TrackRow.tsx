@@ -31,6 +31,7 @@ type Props = {
   onDragOver?: (trackId: string, position: 'above' | 'below') => void;
   onDragEnd?: () => void;
   onDrop?: (targetTrackId: string, position: 'above' | 'below') => void;
+  style?: React.CSSProperties;
 };
 
 export default function TrackRow(props: Props) {
@@ -122,6 +123,7 @@ export default function TrackRow(props: Props) {
       onDragLeave={(draggable && onDragLeave) || undefined}
       onDrop={(draggable && onDrop) || undefined}
       onDragEnd={(draggable && props.onDragEnd) || undefined}
+      style={props.style}
       {...(props.isPlaying ? { 'data-is-playing': true } : {})}
     >
       <div className={`${styles.cell} ${cellStyles.cellTrackPlaying}`}>
