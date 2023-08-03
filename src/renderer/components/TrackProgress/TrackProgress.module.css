@@ -1,11 +1,13 @@
 .trackRoot {
+  --progress-height: 6px;
+
   -webkit-app-region: no-drag;
   position: relative;
   display: flex;
   align-items: center;
   user-select: none;
   touch-action: none;
-  height: 5px;
+  height: var(--progress-height);
 
   /* the track progress is too close to the metadata, but using margin would
    * push the whole section up */
