@@ -1,7 +1,7 @@
 import * as semver from 'semver';
 
 import channels from '../../shared/lib/ipc-channels';
-import { Theme } from '../../shared/types/museeks';
+import { Config, Theme } from '../../shared/types/museeks';
 import logger from '../../shared/lib/logger';
 
 import useToastsStore from './useToastsStore';
@@ -39,6 +39,12 @@ const applyThemeToUI = async (theme: Theme): Promise<void> => {
 const checkTheme = async (): Promise<void> => {
   const theme: Theme = await ipcRenderer.invoke(channels.THEME_GET);
   applyThemeToUI(theme);
+};
+
+const setTracksDensity = async (
+  density: Config['tracksDensity'],
+): Promise<void> => {
+  await window.MuseeksAPI.config.set('tracksDensity', density);
 };
 
 /**
@@ -139,6 +145,7 @@ const SettingsAPI = {
   getTheme,
   setTheme,
   applyThemeToUI,
+  setTracksDensity,
   check,
   checkTheme,
   checkSleepBlocker,

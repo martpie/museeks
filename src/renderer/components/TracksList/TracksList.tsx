@@ -13,7 +13,11 @@ import {
   isCtrlKey,
   isAltKey,
 } from '../../lib/utils-events';
-import { PlaylistModel, TrackModel } from '../../../shared/types/museeks';
+import {
+  Config,
+  PlaylistModel,
+  TrackModel,
+} from '../../../shared/types/museeks';
 import { usePlayerAPI } from '../../stores/usePlayerStore';
 import useLibraryStore, { useLibraryAPI } from '../../stores/useLibraryStore';
 
@@ -21,7 +25,8 @@ import styles from './TracksList.module.css';
 
 const { menu } = window.ElectronAPI;
 
-const ROW_HEIGHT = 30; // FIXME (make that dynamic or rem?)
+const ROW_HEIGHT = 30;
+const ROW_HEIGHT_COMPACT = 24;
 
 // --------------------------------------------------------------------------
 // TrackList
@@ -30,6 +35,7 @@ const ROW_HEIGHT = 30; // FIXME (make that dynamic or rem?)
 type Props = {
   type: string;
   tracks: TrackModel[];
+  tracksDensity: Config['tracksDensity'];
   trackPlayingId: string | null;
   playlists: PlaylistModel[];
   currentPlaylist?: string;
@@ -46,6 +52,7 @@ export default function TracksList(props: Props) {
   const {
     tracks,
     type,
+    tracksDensity,
     trackPlayingId,
     reorderable,
     currentPlaylist,
@@ -57,15 +64,21 @@ export default function TracksList(props: Props) {
   const [reordered, setReordered] = useState<string[] | null>([]);
   const navigate = useNavigate();
 
-  // The scrollable element for your list
+  // Scrollable element for the virtual list + virtualizer
   const scrollableRef = useRef<HTMLDivElement>(null);
-
-  // The virtualizer
   const virtualizer = useVirtualizer({
     count: tracks.length,
     overscan: 10,
     getScrollElement: () => scrollableRef.current,
-    estimateSize: () => ROW_HEIGHT,
+    estimateSize: () => {
+      switch (tracksDensity) {
+        case 'compact':
+          return ROW_HEIGHT_COMPACT;
+        case 'normal':
+        default:
+          return ROW_HEIGHT;
+      }
+    },
     getItemKey: (index) => tracks[index]._id,
   });
 

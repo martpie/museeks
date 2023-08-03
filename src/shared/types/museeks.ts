@@ -117,6 +117,7 @@ export interface Config {
   audioMuted: boolean;
   audioShuffle: boolean;
   audioRepeat: Repeat;
+  tracksDensity: 'normal' | 'compact';
   defaultView: string;
   librarySort: {
     by: SortBy;
