@@ -1,5 +1,6 @@
 .volumeControlContainer {
   position: relative;
+  width: 35px;
 }
 
 .volumeControl {
