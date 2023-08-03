@@ -1,7 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
-import ButtonShuffle from '../PlayerOptionsButtons/ButtonShuffle';
-import ButtonRepeat from '../PlayerOptionsButtons/ButtonRepeat';
 import * as utils from '../../lib/utils';
 import { TrackModel, Repeat } from '../../../shared/types/museeks';
 import { usePlayerAPI } from '../../stores/usePlayerStore';
@@ -115,20 +113,19 @@ export default function PlayingBarInfo(props: Props) {
   return (
     <div className={styles.playingBar__info}>
       <div className={styles.playingBar__info__metas}>
-        <div className={styles.playerOptions}>
-          <ButtonRepeat />
-          <ButtonShuffle />
-        </div>
+        <div className={styles.duration}>{utils.parseDuration(elapsed)}</div>
         <div className={styles.metas}>
-          <strong>{trackPlaying.title}</strong>
-          &nbsp;by&nbsp;
-          <strong>{trackPlaying.artist.join(', ')}</strong>
-          &nbsp;on&nbsp;
-          <strong>{trackPlaying.album}</strong>
+          <div className={`${styles.metadata} ${styles.metadataTitle}`}>
+            <strong>{trackPlaying.title}</strong>
+          </div>
+          <div className={styles.metadata}>
+            {trackPlaying.artist.join(', ')}
+            &nbsp;—&nbsp;
+            {trackPlaying.album}
+          </div>
         </div>
 
         <div className={styles.duration}>
-          {utils.parseDuration(elapsed)} /{' '}
           {utils.parseDuration(trackPlaying.duration)}
         </div>
       </div>

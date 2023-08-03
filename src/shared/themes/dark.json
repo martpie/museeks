@@ -6,7 +6,7 @@
     "--color-scheme": "dark",
     "--text": "#efefef",
     "--background": "hsl(216, 0%, 9.5%)",
-    "--faded": "rgba(0, 0, 0, 0.8)",
+    "--faded-bg": "rgba(0, 0, 0, 0.8)",
 
     "--border-color": "hsl(216deg 0% 20%)",
     "--border-radius": "2px",

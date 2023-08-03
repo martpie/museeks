@@ -1,23 +1,19 @@
 .playingBar {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   text-align: center;
+  height: 100%;
 }
 
 .playingBar__cover {
-  width: 60px;
-  flex: 0 0 auto;
-}
-
-.playingBar__queue {
-  -webkit-app-region: no-drag;
-  width: 60px;
-  flex: 0 0 auto;
-  position: relative;
+  flex-shrink: 0;
+  width: 49px;
+  overflow: hidden;
 }
 
 .queueToggle {
+  line-height: 22px;
+  margin-left: 12px;
   color: inherit;
   border: 0;
   background: transparent;
@@ -36,4 +32,11 @@
   &[data-state='open'] {
     display: block;
   }
+}
+
+.playerOptions {
+  -webkit-app-region: no-drag;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
 }

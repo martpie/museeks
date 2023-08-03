@@ -6,7 +6,7 @@
     "--color-scheme": "dark",
     "--text": "#EEEEEE",
     "--background": "#23292B",
-    "--faded": "rgba(0, 0, 0, 0.8)",
+    "--faded-bg": "rgba(0, 0, 0, 0.8)",
 
     "--border-color": "#1F1F1F",
     "--border-radius": "2px",
