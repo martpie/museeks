@@ -1,5 +1,5 @@
 import { useCallback, ChangeEventHandler } from 'react';
-import { useRouteLoaderData } from 'react-router-dom';
+import { useLoaderData } from 'react-router-dom';
 
 import SettingsAPI from '../../stores/SettingsAPI';
 import * as Setting from '../../components/Setting/Setting';
@@ -9,7 +9,7 @@ import { themes } from '../../../shared/lib/themes';
 import { SettingsLoaderResponse } from './Settings';
 
 export default function SettingsUI() {
-  const { config } = useRouteLoaderData('settings') as SettingsLoaderResponse;
+  const { config } = useLoaderData() as SettingsLoaderResponse;
 
   const onThemeChange = useCallback<ChangeEventHandler<HTMLSelectElement>>(
     (e) => {
