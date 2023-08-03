@@ -16,16 +16,14 @@ import IPCPlayerEvents from '../components/Events/IPCPlayerEvents';
 import IPCNavigationEvents from '../components/Events/IPCNavigationEvents';
 import GlobalKeyBindings from '../components/Events/GlobalKeyBindings';
 import { useLibraryAPI } from '../stores/useLibraryStore';
+import { TrackModel } from '../../shared/types/museeks';
 
 import styles from './Root.module.css';
+import { LoaderResponse } from './router';
 
-/*
-|--------------------------------------------------------------------------
-| The App
-|--------------------------------------------------------------------------
-*/
+const { db } = window.MuseeksAPI;
 
-export default function Museeks() {
+export default function RootView() {
   useEffect(() => {
     AppActions.init();
   }, []);
@@ -81,3 +79,14 @@ export default function Museeks() {
     </div>
   );
 }
+
+export type RootLoaderResponse = {
+  tracks: TrackModel[];
+};
+
+RootView.loader = async (): Promise<LoaderResponse<RootLoaderResponse>> => {
+  // this can be slow, think about caching it or something, especially when
+  // we revalidate routing
+  const tracks = await db.tracks.getAll();
+  return { tracks };
+};
