@@ -8,19 +8,19 @@ import { LoaderResponse } from '../router';
 import useFilteredTracks from '../../hooks/useFilteredTracks';
 import useLibraryStore from '../../stores/useLibraryStore';
 import usePlayingTrackID from '../../hooks/usePlayingTrackID';
-import { PlaylistModel } from '../../../shared/types/museeks';
+import { Config, PlaylistModel } from '../../../shared/types/museeks';
 import { RootLoaderResponse } from '../Root';
 
 import styles from './Library.module.css';
 
-const { db } = window.MuseeksAPI;
+const { db, config } = window.MuseeksAPI;
 
 export default function Library() {
   const trackPlayingId = usePlayingTrackID();
   const refreshing = useLibraryStore((state) => state.refreshing);
   const search = useLibraryStore((state) => state.search);
 
-  const { playlists } = useLoaderData() as LibraryLoaderResponse;
+  const { playlists, tracksDensity } = useLoaderData() as LibraryLoaderResponse;
   const { tracks } = useRouteLoaderData('root') as RootLoaderResponse;
   const filteredTracks = useFilteredTracks(tracks);
 
@@ -63,11 +63,19 @@ export default function Library() {
       <TracksList
         type="library"
         tracks={filteredTracks}
+        tracksDensity={tracksDensity}
         trackPlayingId={trackPlayingId}
         playlists={playlists}
       />
     );
-  }, [search, refreshing, filteredTracks, playlists, trackPlayingId]);
+  }, [
+    search,
+    refreshing,
+    filteredTracks,
+    playlists,
+    trackPlayingId,
+    tracksDensity,
+  ]);
 
   return (
     <div className={`${appStyles.view} ${styles.viewLibrary}`}>
@@ -78,12 +86,12 @@ export default function Library() {
 
 export type LibraryLoaderResponse = {
   playlists: PlaylistModel[];
+  tracksDensity: Config['tracksDensity'];
 };
 
 Library.loader = async (): Promise<LoaderResponse<LibraryLoaderResponse>> => {
-  const playlists = await db.playlists.getAll();
-
   return {
-    playlists,
+    playlists: await db.playlists.getAll(),
+    tracksDensity: await config.get('tracksDensity'),
   };
 };
