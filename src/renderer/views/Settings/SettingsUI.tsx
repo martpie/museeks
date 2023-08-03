@@ -5,6 +5,7 @@ import SettingsAPI from '../../stores/SettingsAPI';
 import * as Setting from '../../components/Setting/Setting';
 import CheckboxSetting from '../../components/SettingCheckbox/SettingCheckbox';
 import { themes } from '../../../shared/lib/themes';
+import { Config } from '../../../shared/types/museeks';
 
 import { SettingsLoaderResponse } from './Settings';
 
@@ -17,6 +18,14 @@ export default function SettingsUI() {
     },
     [],
   );
+
+  const onTracksDensityChange = useCallback<
+    ChangeEventHandler<HTMLSelectElement>
+  >((e) => {
+    SettingsAPI.setTracksDensity(
+      e.currentTarget.value as Config['tracksDensity'],
+    );
+  }, []);
 
   const onDefaultViewChange = useCallback<
     ChangeEventHandler<HTMLSelectElement>
@@ -44,6 +53,22 @@ export default function SettingsUI() {
         </Setting.Select>
         <Setting.Description>
           Change the appearance of the interface
+        </Setting.Description>
+      </Setting.Section>
+      <Setting.Section>
+        <Setting.Label htmlFor="setting-tracksDensity">
+          Tracks density
+        </Setting.Label>
+        <Setting.Select
+          defaultValue={config.tracksDensity}
+          onChange={onTracksDensityChange}
+          id="setting-tracksDensity"
+        >
+          <option value="normal">Normal (default)</option>
+          <option value="compact">Compact</option>
+        </Setting.Select>
+        <Setting.Description>
+          Change the default view when starting the application
         </Setting.Description>
       </Setting.Section>
       <Setting.Section>

@@ -24,6 +24,11 @@ export default class ConfigModule extends Module {
     this.config = new Store<Config>({
       name: 'config',
       defaults: this.getDefaultConfig(),
+      migrations: {
+        '0.14.0': (store) => {
+          store.set('tracksDensity', 'normal');
+        },
+      },
     });
   }
 
@@ -74,6 +79,7 @@ export default class ConfigModule extends Module {
       audioMuted: false,
       audioShuffle: false,
       audioRepeat: Repeat.NONE,
+      tracksDensity: 'normal',
       defaultView: 'library',
       librarySort: {
         by: SortBy.ARTIST,

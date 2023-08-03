@@ -13,12 +13,16 @@ import { filterTracks } from '../../lib/utils-library';
 import { LoaderResponse } from '../router';
 import useLibraryStore from '../../stores/useLibraryStore';
 import usePlayingTrackID from '../../hooks/usePlayingTrackID';
-import { PlaylistModel, TrackModel } from '../../../shared/types/museeks';
+import {
+  Config,
+  PlaylistModel,
+  TrackModel,
+} from '../../../shared/types/museeks';
 
-const { db } = window.MuseeksAPI;
+const { db, config } = window.MuseeksAPI;
 
 export default function PlaylistView() {
-  const { playlists, playlistTracks } =
+  const { playlists, playlistTracks, tracksDensity } =
     useLoaderData() as PlaylistLoaderResponse;
   const { playlistId } = useParams();
   const trackPlayingId = usePlayingTrackID();
@@ -89,6 +93,7 @@ export default function PlaylistView() {
       reorderable={true}
       onReorder={onReorder}
       tracks={playlistTracks}
+      tracksDensity={tracksDensity}
       trackPlayingId={trackPlayingId}
       playlists={playlists}
       currentPlaylist={playlistId}
@@ -99,6 +104,7 @@ export default function PlaylistView() {
 export type PlaylistLoaderResponse = {
   playlistTracks: TrackModel[];
   playlists: PlaylistModel[];
+  tracksDensity: Config['tracksDensity'];
 };
 
 PlaylistView.loader = async ({
@@ -109,9 +115,11 @@ PlaylistView.loader = async ({
   }
 
   const playlist = await db.playlists.findOnlyByID(params.playlistId);
+
   return {
     // TODO: can we re-use parent's data?
     playlists: await db.playlists.getAll(),
     playlistTracks: await db.tracks.findByID(playlist.tracks),
+    tracksDensity: await config.get('tracksDensity'),
   };
 };
