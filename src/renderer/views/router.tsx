@@ -51,12 +51,27 @@ const router = createHashRouter([
         path: 'settings',
         id: 'settings',
         element: <SettingsView />,
-        loader: SettingsView.loader,
         children: [
-          { path: 'library', element: <SettingsLibrary /> },
-          { path: 'interface', element: <SettingsUI /> },
-          { path: 'audio', element: <SettingsAudio /> },
-          { path: 'about', element: <SettingsAbout /> },
+          {
+            path: 'library',
+            element: <SettingsLibrary />,
+            loader: SettingsView.loader,
+          },
+          {
+            path: 'interface',
+            element: <SettingsUI />,
+            loader: SettingsView.loader,
+          },
+          {
+            path: 'audio',
+            element: <SettingsAudio />,
+            loader: SettingsView.loader,
+          },
+          {
+            path: 'about',
+            element: <SettingsAbout />,
+            loader: SettingsView.loader,
+          },
         ],
       },
       {

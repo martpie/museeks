@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { useRouteLoaderData } from 'react-router-dom';
+import { useLoaderData } from 'react-router-dom';
 
 import * as Setting from '../../components/Setting/Setting';
 import AudioOutputSelect from '../../components/AudioOutputSelect/AudioOutputSelect';
@@ -8,7 +8,7 @@ import { usePlayerAPI } from '../../stores/usePlayerStore';
 import { SettingsLoaderResponse } from './Settings';
 
 export default function SettingsAudio() {
-  const { config } = useRouteLoaderData('settings') as SettingsLoaderResponse;
+  const { config } = useLoaderData() as SettingsLoaderResponse;
   const playerAPI = usePlayerAPI();
 
   const setPlaybackRate = useCallback(
