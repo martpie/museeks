@@ -10,7 +10,7 @@ import pickBy from 'lodash/pickBy';
 import * as m3u from '../lib/utils-m3u';
 import channels from '../../shared/lib/ipc-channels';
 import { Track } from '../../shared/types/museeks';
-import logger from '../../shared/lib/logger';
+import logger, { loggerExtras } from '../../shared/lib/logger';
 import { getLoweredMeta } from '../../shared/lib/utils-id3';
 
 import ModuleWindow from './BaseWindowModule';
@@ -71,7 +71,7 @@ class IPCLibraryModule extends ModuleWindow {
       channels.LIBRARY_IMPORT_TRACKS,
       this.importTracks.bind(this),
     );
-    ipcMain.handle(channels.LIBRARY_SCAN_TRACKS, this.scanTracks.bind(this));
+    ipcMain.handle(channels.LIBRARY_LOOKUP, this.libraryLookup.bind(this));
     ipcMain.handle(channels.PLAYLISTS_RESOLVE_M3U, this.resolveM3u.bind(this));
   }
 
@@ -83,19 +83,15 @@ class IPCLibraryModule extends ModuleWindow {
    * Scan the file system and return all music files and playlists that may be
    * safely imported to Museeks.
    */
-  private async scanTracks(
+  private async libraryLookup(
     _e: IpcMainInvokeEvent,
     pathsToScan: string[],
   ): Promise<[string[], string[]]> {
-    // 1. Get the stats for all the files/paths
-    const statsPromises: Promise<ScanFile>[] = pathsToScan.map(
-      async (folderPath) => ({
-        path: folderPath,
-        stat: await fs.promises.stat(folderPath),
-      }),
-    );
+    logger.info('Starting tracks lookup', pathsToScan);
+    loggerExtras.time('Library lookup');
 
-    const paths = await Promise.all(statsPromises);
+    // 1. Get the stats for all the files/paths
+    const paths = await Promise.all(pathsToScan.map(this.getStats));
 
     // 2. Split directories and files
     const files: string[] = [];
@@ -137,6 +133,8 @@ class IPCLibraryModule extends ModuleWindow {
       return SUPPORTED_PLAYLISTS_EXTENSIONS.includes(extension);
     });
 
+    loggerExtras.timeEnd('Library lookup');
+
     return [supportedTrackFiles, supportedPlaylistsFiles];
   }
 
@@ -155,6 +153,9 @@ class IPCLibraryModule extends ModuleWindow {
     _e: IpcMainInvokeEvent,
     tracksPath: string[],
   ): Promise<Track[]> {
+    logger.info(`Starting import of ${tracksPath.length} tracks`);
+    loggerExtras.time('Tracks scan');
+
     return new Promise((resolve, reject) => {
       if (tracksPath.length === 0) return;
 
@@ -162,16 +163,15 @@ class IPCLibraryModule extends ModuleWindow {
         // Instantiate queue
         const scannedFiles: Track[] = [];
 
-        // eslint-disable-next-line
-        // https://github.com/jessetane/queue/pull/15#issuecomment-414091539
         const scanQueue = new queue();
         scanQueue.concurrency = 32;
-        scanQueue.autostart = true;
+        scanQueue.autostart = false;
 
         scanQueue.addEventListener('end', () => {
           this.import.processed = 0;
           this.import.total = 0;
 
+          loggerExtras.timeEnd('Tracks scan');
           resolve(scannedFiles);
         });
         // End queue instantiation
@@ -179,7 +179,7 @@ class IPCLibraryModule extends ModuleWindow {
         this.import.total += tracksPath.length;
 
         // Add all the items to the queue
-        tracksPath.forEach((filePath) => {
+        tracksPath.forEach((filePath, index) => {
           scanQueue.push(async (callback) => {
             try {
               // Normalize (back)slashes on Windows
@@ -199,11 +199,17 @@ class IPCLibraryModule extends ModuleWindow {
               this.import.processed++;
             } catch (err) {
               logger.warn(err);
+            } finally {
+              if (index % 50 == 0) {
+                logger.debug(`Finished scanning ${index} tracks`);
+              }
             }
 
             if (callback) callback();
           });
         });
+
+        scanQueue.start();
       } catch (err) {
         reject(err);
       }
@@ -309,6 +315,16 @@ class IPCLibraryModule extends ModuleWindow {
     }
 
     return basicMetadata;
+  }
+
+  /**
+   * Get stats of a file while keeping the path itself
+   */
+  private async getStats(folderPath: string): Promise<ScanFile> {
+    return {
+      path: folderPath,
+      stat: await fs.promises.stat(folderPath),
+    };
   }
 }
 

@@ -4,6 +4,8 @@ import fs from 'fs';
 import * as mmd from 'music-metadata';
 import { globby } from 'globby';
 
+import logger from '../../shared/lib/logger';
+
 const SUPPORTED_COVER_EXTENSIONS = ['.png', '.jpg', '.jpeg', '.bmp', '.gif'];
 const SUPPORTED_COVER_NAMES = ['album', 'albumart', 'folder', 'cover', 'front'];
 
@@ -78,7 +80,9 @@ export const getFileAsBase64 = async (
   try {
     const content = fs.readFileSync(filePath, { encoding: 'base64' });
     return parseBase64(path.extname(filePath).substr(1), content);
-  } catch {
+  } catch (err) {
+    logger.warn('Could not get cover as base64:');
+    logger.warn(err);
     return null;
   }
 };

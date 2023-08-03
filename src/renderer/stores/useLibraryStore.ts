@@ -133,7 +133,7 @@ const useLibraryStore = createStore<LibraryState>((set, get) => ({
         // Get all valid track paths
         // TODO move this whole function to main process
         const [supportedTrackFiles, supportedPlaylistsFiles] =
-          await ipcRenderer.invoke(channels.LIBRARY_SCAN_TRACKS, pathsToScan);
+          await ipcRenderer.invoke(channels.LIBRARY_LOOKUP, pathsToScan);
 
         if (
           supportedTrackFiles.length === 0 &&
