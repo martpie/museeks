@@ -2,8 +2,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 16px;
-  width: 16px;
+  height: 20px;
+  width: 20px;
 }
 
 .button {
@@ -11,7 +11,7 @@
   border: 0;
   color: inherit;
   background: transparent;
-  font-size: 18px;
+  font-size: 20px;
 
   &.active {
     .icon > svg {
@@ -21,7 +21,7 @@
 
   .icon > svg {
     fill: currentcolor;
-    width: 16px;
+    width: 18px;
     height: auto;
   }
 }

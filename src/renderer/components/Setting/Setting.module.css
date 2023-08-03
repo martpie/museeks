@@ -35,6 +35,7 @@
 
   &:focus {
     outline: none;
+    border-color: var(--main-color);
   }
 }
 

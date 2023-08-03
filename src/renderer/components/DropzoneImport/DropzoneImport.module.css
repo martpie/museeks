@@ -2,7 +2,7 @@
   position: fixed;
   inset: 0;
   pointer-events: none;
-  background: var(--faded);
+  background: var(--faded-bg);
   z-index: 1000;
   display: flex;
   flex-direction: column;

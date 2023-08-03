@@ -1,6 +1,8 @@
 .search__container {
   position: relative;
   width: 180px;
+  display: flex;
+  align-items: center;
 }
 
 .search__input {

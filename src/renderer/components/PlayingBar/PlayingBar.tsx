@@ -5,6 +5,8 @@ import Queue from '../Queue/Queue';
 import PlayingBarInfos from '../PlayingBarInfo/PlayingBarInfo';
 import Cover from '../Cover/Cover';
 import usePlayerStore from '../../stores/usePlayerStore';
+import ButtonRepeat from '../PlayerOptionsButtons/ButtonRepeat';
+import ButtonShuffle from '../PlayerOptionsButtons/ButtonShuffle';
 
 import styles from './PlayingBar.module.css';
 
@@ -28,7 +30,9 @@ export default function PlayingBar() {
         shuffle={shuffle}
         repeat={repeat}
       />
-      <div className={styles.playingBar__queue}>
+      <div className={styles.playerOptions}>
+        <ButtonRepeat />
+        <ButtonShuffle />
         <Popover.Root>
           <Popover.Trigger asChild>
             <button className={styles.queueToggle}>
@@ -38,7 +42,7 @@ export default function PlayingBar() {
           <Popover.Portal>
             <Popover.Content
               side="bottom"
-              sideOffset={8}
+              sideOffset={6}
               align="end"
               alignOffset={-10}
               avoidCollisions={false}

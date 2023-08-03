@@ -12,12 +12,12 @@
 }
 
 .header {
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: solid 1px var(--border-color);
   background-color: var(--header-bg);
   color: var(--header-color);
   padding: 0 10px;
   display: flex;
-  align-items: center;
+  align-items: stretch;
   justify-content: space-between;
   height: 50px;
   flex: 0 0 auto;
@@ -27,7 +27,6 @@
 }
 
 .header__mainControls {
-  width: 220px;
   flex: 0 0 auto;
   display: flex;
   align-items: center;
@@ -36,7 +35,7 @@
 
 .header__search {
   -webkit-app-region: no-drag;
-  width: 220px;
+  margin-left: 12px;
   flex: 0 0 auto;
   display: flex;
   justify-content: flex-end;
@@ -57,4 +56,13 @@
   flex: 1 1 auto;
   min-width: 0;
   max-width: 600px;
+}
+
+.header__trackProgress {
+  -webkit-app-region: no-drag;
+  z-index: 1000;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  left: 0;
 }

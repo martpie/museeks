@@ -5,6 +5,10 @@
   border-radius: var(--border-radius);
   border: solid 1px var(--button-border);
   cursor: pointer;
+
+  &:active {
+    opacity: 0.5;
+  }
 }
 
 .danger {

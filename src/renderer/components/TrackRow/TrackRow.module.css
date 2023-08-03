@@ -1,5 +1,6 @@
 .cell {
-  padding: 2px 4px;
+  padding-right: 2px;
+  padding-left: 2px;
   cursor: default;
   white-space: nowrap;
   overflow: hidden;
@@ -14,6 +15,7 @@
   border-top: solid 1px transparent;
   border-bottom: solid 1px transparent;
   background-color: var(--tracks-bg-even);
+  align-items: center;
 
   /* Would have been great to use nth-child, but it's complicated with react-virtuoso */
   &.trackOdd {
