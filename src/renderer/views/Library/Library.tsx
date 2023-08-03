@@ -4,12 +4,16 @@ import { Link, useLoaderData, useRouteLoaderData } from 'react-router-dom';
 import * as ViewMessage from '../../elements/ViewMessage/ViewMessage';
 import TracksList from '../../components/TracksList/TracksList';
 import appStyles from '../Root.module.css';
-import { LibraryLoaderResponse, RootLoaderResponse } from '../router';
+import { LoaderResponse } from '../router';
 import useFilteredTracks from '../../hooks/useFilteredTracks';
 import useLibraryStore from '../../stores/useLibraryStore';
 import useTrackPlayingID from '../../hooks/useTrackPlayingID';
+import { PlaylistModel } from '../../../shared/types/museeks';
+import { RootLoaderResponse } from '../Root';
 
 import styles from './Library.module.css';
+
+const { db } = window.MuseeksAPI;
 
 export default function Library() {
   const trackPlayingId = useTrackPlayingID();
@@ -71,3 +75,15 @@ export default function Library() {
     </div>
   );
 }
+
+export type LibraryLoaderResponse = {
+  playlists: PlaylistModel[];
+};
+
+Library.loader = async (): Promise<LoaderResponse<LibraryLoaderResponse>> => {
+  const playlists = await db.playlists.getAll();
+
+  return {
+    playlists,
+  };
+};
