@@ -3,7 +3,7 @@
 }
 
 .volumeControl {
-  -webkit-app-region: nodrag;
+  -webkit-app-region: no-drag;
   background-color: var(--header-bg);
   position: absolute;
   z-index: 10;

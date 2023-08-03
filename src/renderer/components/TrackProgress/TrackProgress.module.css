@@ -1,0 +1,66 @@
+.trackRoot {
+  -webkit-app-region: no-drag;
+  position: relative;
+  display: flex;
+  align-items: center;
+  user-select: none;
+  touch-action: none;
+  height: 5px;
+
+  /* the track progress is too close to the metadata, but using margin would
+   * push the whole section up */
+  transform: translateY(3px);
+}
+
+.trackProgress {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-color: var(--progress-bg);
+  box-shadow: inset 0 0 0 1px var(--border-color);
+}
+
+.trackRange {
+  position: absolute;
+  height: 100%;
+  background-color: var(--main-color);
+  box-shadow: inset 0 0 0 1px rgba(0 0 0 / 0.2);
+}
+
+.progressTooltip {
+  position: absolute;
+  background-color: var(--background);
+  border: 1px solid var(--border-color);
+  font-size: 10px;
+  padding: 2px 5px;
+  bottom: 10px;
+  z-index: 1;
+  transform: translateX(-11px);
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-color: transparent;
+    border-bottom: 0;
+  }
+
+  /* Stroke */
+  &::before {
+    top: 16px;
+    left: 5px;
+    border-top-color: var(--border-color);
+    border-width: 6px;
+  }
+
+  /* Fill */
+  &::after {
+    top: 15px;
+    left: 6px;
+    border-top-color: var(--background);
+    border-width: 5px;
+  }
+}
