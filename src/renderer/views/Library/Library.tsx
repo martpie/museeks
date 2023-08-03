@@ -7,7 +7,7 @@ import appStyles from '../Root.module.css';
 import { LoaderResponse } from '../router';
 import useFilteredTracks from '../../hooks/useFilteredTracks';
 import useLibraryStore from '../../stores/useLibraryStore';
-import useTrackPlayingID from '../../hooks/useTrackPlayingID';
+import usePlayingTrackID from '../../hooks/usePlayingTrackID';
 import { PlaylistModel } from '../../../shared/types/museeks';
 import { RootLoaderResponse } from '../Root';
 
@@ -16,7 +16,7 @@ import styles from './Library.module.css';
 const { db } = window.MuseeksAPI;
 
 export default function Library() {
-  const trackPlayingId = useTrackPlayingID();
+  const trackPlayingId = usePlayingTrackID();
   const refreshing = useLibraryStore((state) => state.refreshing);
   const search = useLibraryStore((state) => state.search);
 

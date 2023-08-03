@@ -12,7 +12,7 @@ import PlaylistsAPI from '../../stores/PlaylistsAPI';
 import { filterTracks } from '../../lib/utils-library';
 import { LoaderResponse } from '../router';
 import useLibraryStore from '../../stores/useLibraryStore';
-import useTrackPlayingID from '../../hooks/useTrackPlayingID';
+import usePlayingTrackID from '../../hooks/usePlayingTrackID';
 import { PlaylistModel, TrackModel } from '../../../shared/types/museeks';
 
 const { db } = window.MuseeksAPI;
@@ -21,7 +21,7 @@ export default function PlaylistView() {
   const { playlists, playlistTracks } =
     useLoaderData() as PlaylistLoaderResponse;
   const { playlistId } = useParams();
-  const trackPlayingId = useTrackPlayingID();
+  const trackPlayingId = usePlayingTrackID();
 
   const search = useLibraryStore((state) => state.search);
   const filteredTracks = useMemo(
