@@ -4,7 +4,7 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  padding: 0 6px;
+  padding: 0 4px;
 }
 
 .playingBar__info__metas {
@@ -38,66 +38,4 @@
   padding: 0 2px;
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
-}
-
-.playingBar__info__progress {
-  position: relative;
-}
-
-.progressTooltip {
-  position: absolute;
-  background-color: var(--background);
-  border: 1px solid var(--border-color);
-  font-size: 10px;
-  padding: 2px 5px;
-  bottom: 10px;
-  z-index: 1;
-  transform: translateX(-11px);
-
-  &::before,
-  &::after {
-    content: '';
-    position: absolute;
-    width: 0;
-    height: 0;
-    border-style: solid;
-    border-color: transparent;
-    border-bottom: 0;
-  }
-
-  /* Stroke */
-  &::before {
-    top: 16px;
-    left: 5px;
-    border-top-color: var(--border-color);
-    border-width: 6px;
-  }
-
-  /* Fill */
-  &::after {
-    top: 16px;
-    left: 6px;
-    border-top-color: var(--background);
-    border-width: 5px;
-  }
-}
-
-.progress {
-  -webkit-app-region: no-drag;
-  background-color: var(--progress-bg);
-  outline: none;
-  height: 5px;
-  margin-bottom: 0;
-  margin-top: 3px;
-  cursor: pointer;
-
-  .progressBar {
-    background-color: var(--main-color);
-    pointer-events: none;
-    transition: none;
-    transform-origin: left;
-    will-change: transform;
-    width: 100%;
-    height: 100%;
-  }
 }
