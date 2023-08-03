@@ -1,43 +1,44 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import React, { useCallback, useState } from 'react';
+import {
+  LoaderFunctionArgs,
+  useLoaderData,
+  useNavigate,
+} from 'react-router-dom';
 
 // import Placeholder from '../../shared/assets/placeholder.png';
 // import * as coverUtils from '../../../shared/lib/utils-cover';
-import { TrackEditableFields } from '../../../shared/types/museeks';
+import { TrackEditableFields, TrackModel } from '../../../shared/types/museeks';
 import appStyles from '../Root.module.css';
 import * as Setting from '../../components/Setting/Setting';
 import Button from '../../elements/Button/Button';
 import { useLibraryAPI } from '../../stores/useLibraryStore';
+import { LoaderResponse } from '../router';
 
 import styles from './Details.module.css';
 
 // We assume no artist or genre has a comma in its name (fingers crossed)
 const DELIMITER = ',';
-const INITIAL_FORM_DATA: TrackEditableFields = {
-  title: '',
-  artist: [],
-  album: '',
-  genre: [],
-};
 
 export default function Details() {
-  const { trackId } = useParams<{ trackId: string }>();
-  // const [coverSrc, setCoverSrc] = useState<string | null>(null);
-  const [formData, setFormData] =
-    useState<TrackEditableFields>(INITIAL_FORM_DATA);
-  const libraryAPI = useLibraryAPI();
+  const { track } = useLoaderData() as DetailsLoaderResponse;
 
+  const [formData, setFormData] = useState<TrackEditableFields>({
+    title: track.title ?? '',
+    artist: track.artist,
+    album: track.album ?? '',
+    genre: track.genre,
+  });
+
+  const libraryAPI = useLibraryAPI();
   const navigate = useNavigate();
 
   const handleSubmit = useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {
-      if (!trackId) return;
-
       e.preventDefault();
-      await libraryAPI.updateTrackMetadata(trackId, formData);
+      await libraryAPI.updateTrackMetadata(track._id, formData);
       navigate(-1);
     },
-    [trackId, formData, navigate, libraryAPI],
+    [track, formData, navigate, libraryAPI],
   );
 
   const handleCancel = useCallback(
@@ -47,28 +48,6 @@ export default function Details() {
     },
     [navigate],
   );
-
-  useEffect(() => {
-    async function asyncQuery() {
-      if (!trackId) return;
-      const track = await window.MuseeksAPI.db.tracks.findOnlyByID(trackId);
-
-      setFormData({
-        title: track.title ?? '',
-        artist: track.artist,
-        album: track.album ?? '',
-        genre: track.genre,
-      });
-
-      // coverUtils.fetchCover(track.path).then((cover) => setCoverSrc(cover));
-    }
-
-    asyncQuery();
-
-    return () => {
-      setFormData(INITIAL_FORM_DATA);
-    };
-  }, [trackId]);
 
   return (
     <div className={`${appStyles.view} ${styles.viewDetails}`}>
@@ -152,3 +131,21 @@ export default function Details() {
     </div>
   );
 }
+
+export type DetailsLoaderResponse = {
+  track: TrackModel;
+};
+
+Details.loader = async ({
+  params,
+}: LoaderFunctionArgs): Promise<LoaderResponse<DetailsLoaderResponse>> => {
+  const { trackId } = params;
+
+  if (trackId == null) {
+    throw new Error(`Track ID should not be null`);
+  }
+
+  const track = await window.MuseeksAPI.db.tracks.findOnlyByID(trackId);
+
+  return { track };
+};

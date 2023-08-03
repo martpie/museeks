@@ -62,7 +62,7 @@ const router = createHashRouter([
       {
         path: 'details/:trackId',
         element: <DetailsView />,
-        // TODO: convert DetailsView to loaders
+        loader: DetailsView.loader,
       },
     ],
   },
