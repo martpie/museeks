@@ -1,6 +1,9 @@
 .cell {
-  padding-right: 2px;
-  padding-left: 2px;
+  /* Explicitely not a padding to mimic the cell headers + we may use it when
+     we will want to resize columns */
+  border-left: solid 1px transparent;
+  padding-right: 4px;
+  padding-left: 4px;
   cursor: default;
   white-space: nowrap;
   overflow: hidden;
