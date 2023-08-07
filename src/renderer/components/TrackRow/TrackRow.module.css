@@ -17,8 +17,7 @@
   background-color: var(--tracks-bg-even);
   align-items: center;
 
-  /* Would have been great to use nth-child, but it's complicated with react-virtuoso */
-  &.trackOdd {
+  &:nth-child(even) {
     background-color: var(--tracks-bg-odd);
   }
 
@@ -27,20 +26,8 @@
     color: white;
 
     & + .selected {
-      /* FIXME */
       border-top-color: rgba(255 255 255 / 0.2);
     }
-
-    /* // put that elsewhere someday
-    .playingIndicator {
-
-      .animation {
-
-        .bar {
-          background-color: #EEE;
-        }
-      }
-    } */
   }
 
   &.reordered {
