@@ -9,10 +9,12 @@
     "--faded-bg": "rgba(255, 255, 255, 0.9)",
 
     "--border-color": "#D2D2D2",
+    "--border-color-softer": "#E2E2E2",
     "--border-radius": "2px",
 
     "--header-color": "#555555",
     "--header-bg": "rgb(244, 244, 244)",
+    "--header-bg-softer": "rgb(250, 250, 250)",
 
     "--footer-bg": "#F4F4F4",
     "--footer-nav-bg-color-active": "#E6E6E6",

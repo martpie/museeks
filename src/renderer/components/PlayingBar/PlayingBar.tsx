@@ -1,24 +1,21 @@
-import Icon from 'react-fontawesome';
-import * as Popover from '@radix-ui/react-popover';
-
-import Queue from '../Queue/Queue';
 import PlayingBarInfos from '../PlayingBarInfo/PlayingBarInfo';
 import Cover from '../Cover/Cover';
 import usePlayerStore from '../../stores/usePlayerStore';
 import ButtonRepeat from '../PlayerOptionsButtons/ButtonRepeat';
 import ButtonShuffle from '../PlayerOptionsButtons/ButtonShuffle';
+import usePlayingTrack from '../../hooks/usePlayingTrack';
 
 import styles from './PlayingBar.module.css';
 
 export default function PlayingBar() {
   const repeat = usePlayerStore((state) => state.repeat);
   const shuffle = usePlayerStore((state) => state.shuffle);
-  const queue = usePlayerStore((state) => state.queue);
-  const queueCursor = usePlayerStore((state) => state.queueCursor);
 
-  if (queueCursor === null) return null;
+  const trackPlaying = usePlayingTrack();
 
-  const trackPlaying = queue[queueCursor];
+  if (trackPlaying === null) {
+    return null;
+  }
 
   return (
     <div className={styles.playingBar}>
@@ -33,25 +30,6 @@ export default function PlayingBar() {
       <div className={styles.playerOptions}>
         <ButtonRepeat />
         <ButtonShuffle />
-        <Popover.Root>
-          <Popover.Trigger asChild>
-            <button className={styles.queueToggle}>
-              <Icon name="list" />
-            </button>
-          </Popover.Trigger>
-          <Popover.Portal>
-            <Popover.Content
-              side="bottom"
-              sideOffset={6}
-              align="end"
-              alignOffset={-10}
-              avoidCollisions={false}
-              className={styles.queueContainer}
-            >
-              <Queue queue={queue} queueCursor={queueCursor} />
-            </Popover.Content>
-          </Popover.Portal>
-        </Popover.Root>
       </div>
     </div>
   );
