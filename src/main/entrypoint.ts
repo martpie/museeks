@@ -27,6 +27,9 @@ const appRoot = path.resolve(__dirname, '..'); // Careful, not future-proof
 const rendererDistPath = path.join(appRoot, 'renderer');
 const preloadDistPath = path.join(appRoot, 'preload');
 
+// Add a couple of features we need that are not enabled by default on Chromium
+app.commandLine.appendSwitch('enable-features', 'OverlayScrollbar');
+
 // @deprecated Remove all usage of remote in the app
 remote.initialize();
 

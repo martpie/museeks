@@ -8,7 +8,7 @@
 }
 
 .tracksListScroller {
-  overflow: auto;
+  overflow-y: overlay;
   flex: 1 1 auto;
 }
 
