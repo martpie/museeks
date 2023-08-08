@@ -30,6 +30,21 @@ export default class ConfigModule extends Module {
         },
       },
     });
+
+    // A few manual migrations, electron-store migratons don't seem to play well
+    // new setting
+    if (this.config.get('tracksDensity') == undefined) {
+      logger.info('Config: setting "tracksDensity" option');
+      this.config.set('tracksDensity', 'normal');
+    }
+
+    logger.child;
+
+    // dark-legacy is gone
+    if (this.config.get('theme') === 'dark-legacy') {
+      logger.info('Config: disabling dark-legacy theme');
+      this.config.set('theme', 'dark');
+    }
   }
 
   async load(): Promise<void> {
