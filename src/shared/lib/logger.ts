@@ -1,6 +1,7 @@
 import pino from 'pino';
 
 const logger = pino({
+  name: 'museeks',
   transport: {
     target: 'pino-pretty',
     options: {
