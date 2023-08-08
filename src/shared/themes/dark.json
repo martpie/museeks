@@ -9,10 +9,12 @@
     "--faded-bg": "rgba(0, 0, 0, 0.8)",
 
     "--border-color": "hsl(216deg 0% 20%)",
+    "--border-color-softer": "hsl(216deg 0% 24%)",
     "--border-radius": "2px",
 
     "--header-color": "#efefef",
     "--header-bg": "hsl(216, 0%, 13%)",
+    "--header-bg-softer": "hsl(216deg 0% 16%)",
 
     "--footer-bg": "hsl(216, 0%, 13%)",
     "--footer-nav-bg-color-active": "hsl(216, 0%, 9.5%)",
@@ -30,7 +32,7 @@
 
     "--toasts-bg": "hsl(216, 0%, 9.5%)",
 
-    "--progress-bg": "hsl(216, 0%, 9.5%)",
+    "--progress-bg": "hsl(216, 0%, 8%)",
 
     "--sidebar-bg": "hsl(216, 0%, 13%)",
     "--sidebar-item-active-bg": "hsl(216, 0%, 9.5%)",

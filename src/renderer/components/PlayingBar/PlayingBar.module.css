@@ -3,35 +3,17 @@
   align-items: center;
   text-align: center;
   height: 100%;
+  background: var(--header-bg-softer);
+  border: solid 1px var(--border-color-softer);
+  border-width: 0 1px;
 }
 
 .playingBar__cover {
   flex-shrink: 0;
-  width: 48px;
+  width: 50px;
   overflow: hidden;
-}
-
-.queueToggle {
-  line-height: 22px;
-  margin-left: 12px;
-  color: inherit;
-  border: 0;
-  background: transparent;
-  font-size: 14px;
-  box-shadow: none;
-}
-
-.queueContainer {
-  -webkit-app-region: no-drag;
-  display: none;
-  position: absolute;
-  z-index: 1000;
-  text-align: left;
-  right: 0;
-
-  &[data-state='open'] {
-    display: block;
-  }
+  box-sizing: content-box;
+  border-right: solid 1px var(--border-color-softer);
 }
 
 .playerOptions {
@@ -39,4 +21,5 @@
   flex-shrink: 0;
   display: flex;
   align-items: center;
+  flex-direction: column;
 }

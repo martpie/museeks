@@ -41,28 +41,37 @@
   justify-content: flex-end;
 }
 
-.header__search__input {
-  display: block;
-  font-size: inherit;
-  width: 100%;
-  padding: 6px 12px;
-  background-color: var(--search-bg);
-  border: 1px solid var(--border-color);
-  color: var(--text);
-  border-radius: var(--border-radius);
-}
-
 .header__playingBar {
   flex: 1 1 auto;
   min-width: 0;
   max-width: 600px;
 }
 
-.header__trackProgress {
+.header__queue {
+  display: flex;
+  align-items: center;
+}
+
+.queueToggle {
+  line-height: 22px;
+  margin-left: 12px;
+  color: inherit;
+  border: 0;
+  background: transparent;
+  font-size: 14px;
+  box-shadow: none;
   -webkit-app-region: no-drag;
-  z-index: 1000;
+}
+
+.queueContainer {
+  -webkit-app-region: no-drag;
+  display: none;
   position: absolute;
-  bottom: 0;
+  z-index: 1000;
+  text-align: left;
   right: 0;
-  left: 0;
+
+  &[data-state='open'] {
+    display: block;
+  }
 }
