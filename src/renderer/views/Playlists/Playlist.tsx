@@ -10,20 +10,15 @@ import TracksList from '../../components/TracksList/TracksList';
 import * as ViewMessage from '../../elements/ViewMessage/ViewMessage';
 import PlaylistsAPI from '../../stores/PlaylistsAPI';
 import { filterTracks } from '../../lib/utils-library';
-import { LoaderResponse } from '../router';
+import { LoaderData } from '../router';
 import useLibraryStore from '../../stores/useLibraryStore';
 import usePlayingTrackID from '../../hooks/usePlayingTrackID';
-import {
-  Config,
-  PlaylistModel,
-  TrackModel,
-} from '../../../shared/types/museeks';
 
 const { db, config } = window.MuseeksAPI;
 
 export default function PlaylistView() {
   const { playlists, playlistTracks, tracksDensity } =
-    useLoaderData() as PlaylistLoaderResponse;
+    useLoaderData() as PlaylistLoaderData;
   const { playlistId } = useParams();
   const trackPlayingId = usePlayingTrackID();
 
@@ -101,15 +96,9 @@ export default function PlaylistView() {
   );
 }
 
-export type PlaylistLoaderResponse = {
-  playlistTracks: TrackModel[];
-  playlists: PlaylistModel[];
-  tracksDensity: Config['tracksDensity'];
-};
+export type PlaylistLoaderData = LoaderData<typeof PlaylistView.loader>;
 
-PlaylistView.loader = async ({
-  params,
-}: LoaderFunctionArgs): Promise<LoaderResponse<PlaylistLoaderResponse>> => {
+PlaylistView.loader = async ({ params }: LoaderFunctionArgs) => {
   if (typeof params.playlistId !== 'string') {
     throw new Error('Playlist ID is not defined');
   }

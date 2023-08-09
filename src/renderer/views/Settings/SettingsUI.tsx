@@ -7,10 +7,10 @@ import CheckboxSetting from '../../components/SettingCheckbox/SettingCheckbox';
 import { themes } from '../../../shared/lib/themes';
 import { Config } from '../../../shared/types/museeks';
 
-import { SettingsLoaderResponse } from './Settings';
+import { SettingsLoaderData } from './Settings';
 
 export default function SettingsUI() {
-  const { config } = useLoaderData() as SettingsLoaderResponse;
+  const { config } = useLoaderData() as SettingsLoaderData;
 
   const onThemeChange = useCallback<ChangeEventHandler<HTMLSelectElement>>(
     (e) => {

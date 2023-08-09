@@ -1,4 +1,5 @@
 import {
+  LoaderFunctionArgs,
   createHashRouter,
   isRouteErrorResponse,
   useRouteError,
@@ -127,4 +128,8 @@ function GlobalErrorBoundary() {
 /**
  * Loader Types, to manually type useLoaderData()
  */
-export type LoaderResponse<T> = Response | T;
+export type LoaderData<T> = T extends (
+  args: LoaderFunctionArgs,
+) => Promise<infer U>
+  ? Exclude<U, Response>
+  : never;

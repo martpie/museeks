@@ -19,7 +19,7 @@ import { useLibraryAPI } from '../stores/useLibraryStore';
 import { TrackModel } from '../../shared/types/museeks';
 
 import styles from './Root.module.css';
-import { LoaderResponse } from './router';
+import { LoaderData } from './router';
 
 const { db } = window.MuseeksAPI;
 
@@ -80,11 +80,11 @@ export default function RootView() {
   );
 }
 
-export type RootLoaderResponse = {
+export type RootLoaderData = {
   tracks: TrackModel[];
 };
 
-RootView.loader = async (): Promise<LoaderResponse<RootLoaderResponse>> => {
+RootView.loader = async (): Promise<LoaderData<RootLoaderData>> => {
   // this can be slow, think about caching it or something, especially when
   // we revalidate routing
   const tracks = await db.tracks.getAll();

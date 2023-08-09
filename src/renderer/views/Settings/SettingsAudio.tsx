@@ -5,10 +5,10 @@ import * as Setting from '../../components/Setting/Setting';
 import AudioOutputSelect from '../../components/AudioOutputSelect/AudioOutputSelect';
 import { usePlayerAPI } from '../../stores/usePlayerStore';
 
-import { SettingsLoaderResponse } from './Settings';
+import { SettingsLoaderData } from './Settings';
 
 export default function SettingsAudio() {
-  const { config } = useLoaderData() as SettingsLoaderResponse;
+  const { config } = useLoaderData() as SettingsLoaderData;
   const playerAPI = usePlayerAPI();
 
   const setPlaybackRate = useCallback(

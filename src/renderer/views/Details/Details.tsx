@@ -7,12 +7,12 @@ import {
 
 // import Placeholder from '../../shared/assets/placeholder.png';
 // import * as coverUtils from '../../../shared/lib/utils-cover';
-import { TrackEditableFields, TrackModel } from '../../../shared/types/museeks';
+import { TrackEditableFields } from '../../../shared/types/museeks';
 import appStyles from '../Root.module.css';
 import * as Setting from '../../components/Setting/Setting';
 import Button from '../../elements/Button/Button';
 import { useLibraryAPI } from '../../stores/useLibraryStore';
-import { LoaderResponse } from '../router';
+import { LoaderData } from '../router';
 
 import styles from './Details.module.css';
 
@@ -20,7 +20,7 @@ import styles from './Details.module.css';
 const DELIMITER = ',';
 
 export default function Details() {
-  const { track } = useLoaderData() as DetailsLoaderResponse;
+  const { track } = useLoaderData() as DetailsLoaderData;
 
   const [formData, setFormData] = useState<TrackEditableFields>({
     title: track.title ?? '',
@@ -132,13 +132,9 @@ export default function Details() {
   );
 }
 
-export type DetailsLoaderResponse = {
-  track: TrackModel;
-};
+export type DetailsLoaderData = LoaderData<typeof Details.loader>;
 
-Details.loader = async ({
-  params,
-}: LoaderFunctionArgs): Promise<LoaderResponse<DetailsLoaderResponse>> => {
+Details.loader = async ({ params }: LoaderFunctionArgs) => {
   const { trackId } = params;
 
   if (trackId == null) {
