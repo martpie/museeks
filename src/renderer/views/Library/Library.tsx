@@ -4,12 +4,11 @@ import { Link, useLoaderData, useRouteLoaderData } from 'react-router-dom';
 import * as ViewMessage from '../../elements/ViewMessage/ViewMessage';
 import TracksList from '../../components/TracksList/TracksList';
 import appStyles from '../Root.module.css';
-import { LoaderResponse } from '../router';
 import useFilteredTracks from '../../hooks/useFilteredTracks';
 import useLibraryStore from '../../stores/useLibraryStore';
 import usePlayingTrackID from '../../hooks/usePlayingTrackID';
-import { Config, PlaylistModel } from '../../../shared/types/museeks';
-import { RootLoaderResponse } from '../Root';
+import { RootLoaderData } from '../Root';
+import { LoaderData } from '../router';
 
 import styles from './Library.module.css';
 
@@ -20,8 +19,8 @@ export default function Library() {
   const refreshing = useLibraryStore((state) => state.refreshing);
   const search = useLibraryStore((state) => state.search);
 
-  const { playlists, tracksDensity } = useLoaderData() as LibraryLoaderResponse;
-  const { tracks } = useRouteLoaderData('root') as RootLoaderResponse;
+  const { playlists, tracksDensity } = useLoaderData() as LibraryLoaderData;
+  const { tracks } = useRouteLoaderData('root') as RootLoaderData;
   const filteredTracks = useFilteredTracks(tracks);
 
   const getLibraryComponent = useMemo(() => {
@@ -84,12 +83,9 @@ export default function Library() {
   );
 }
 
-export type LibraryLoaderResponse = {
-  playlists: PlaylistModel[];
-  tracksDensity: Config['tracksDensity'];
-};
+export type LibraryLoaderData = LoaderData<typeof Library.loader>;
 
-Library.loader = async (): Promise<LoaderResponse<LibraryLoaderResponse>> => {
+Library.loader = async () => {
   return {
     playlists: await db.playlists.getAll(),
     tracksDensity: await config.get('tracksDensity'),

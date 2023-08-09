@@ -10,15 +10,14 @@ import PlaylistsNav from '../../components/PlaylistsNav/PlaylistsNav';
 import * as ViewMessage from '../../elements/ViewMessage/ViewMessage';
 import PlaylistsAPI from '../../stores/PlaylistsAPI';
 import appStyles from '../../views/Root.module.css';
-import { LoaderResponse } from '../router';
-import { PlaylistModel } from '../../../shared/types/museeks';
+import { LoaderData } from '../router';
 
 import styles from './Playlists.module.css';
 
 const { db } = window.MuseeksAPI;
 
 export default function PlaylistsView() {
-  const { playlists } = useLoaderData() as PlaylistsLoaderResponse;
+  const { playlists } = useLoaderData() as PlaylistsLoaderData;
 
   const createPlaylist = useCallback(async () => {
     await PlaylistsAPI.create('New playlist', [], false, true);
@@ -49,13 +48,9 @@ export default function PlaylistsView() {
   );
 }
 
-export type PlaylistsLoaderResponse = {
-  playlists: PlaylistModel[];
-};
+export type PlaylistsLoaderData = LoaderData<typeof PlaylistsView.loader>;
 
-PlaylistsView.loader = async ({
-  params,
-}: LoaderFunctionArgs): Promise<LoaderResponse<PlaylistsLoaderResponse>> => {
+PlaylistsView.loader = async ({ params }: LoaderFunctionArgs) => {
   const playlists = await db.playlists.getAll();
   const [firstPlaylist] = playlists;
   const { playlistId } = params;
