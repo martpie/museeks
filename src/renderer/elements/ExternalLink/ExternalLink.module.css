@@ -8,6 +8,7 @@
   display: inline;
   line-height: inherit;
   font-size: inherit;
+  font-weight: 600;
 }
 
 .externalLink:hover {
