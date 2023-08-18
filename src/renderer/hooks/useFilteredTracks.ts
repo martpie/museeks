@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo } from 'preact/hooks';
 
 import { TrackModel } from '../../shared/types/museeks';
 import { filterTracks, sortTracks } from '../lib/utils-library';

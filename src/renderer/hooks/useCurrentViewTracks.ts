@@ -1,5 +1,5 @@
 import { useRouteLoaderData } from 'react-router-dom';
-import { useMemo } from 'react';
+import { useMemo } from 'preact/hooks';
 
 import { TrackModel } from '../../shared/types/museeks';
 import { RootLoaderData } from '../views/Root';

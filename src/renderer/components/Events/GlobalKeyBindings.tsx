@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback } from 'preact/hooks';
 import Keybinding from 'react-keybinding-component';
 import { useNavigate } from 'react-router-dom';
 

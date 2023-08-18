@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback } from 'preact/hooks';
 
 import * as Setting from '../../components/Setting/Setting';
 import Button from '../../elements/Button/Button';

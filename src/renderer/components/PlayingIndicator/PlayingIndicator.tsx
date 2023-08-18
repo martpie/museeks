@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from 'preact/hooks';
 import Icon from 'react-fontawesome';
 
 import { PlayerStatus } from '../../../shared/types/museeks';

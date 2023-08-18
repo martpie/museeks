@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import { useCallback } from 'preact/hooks';
 import cx from 'classnames';
 import Icon from 'react-fontawesome';
 
@@ -29,14 +29,14 @@ export default function TracksListHeaderCell(props: Props) {
   });
 
   const content = (
-    <React.Fragment>
+    <>
       <div className={styles.name}>{title}</div>
       {icon && (
         <div className={styles.icon}>
           <Icon name={icon} />
         </div>
       )}
-    </React.Fragment>
+    </>
   );
 
   if (sortBy) {

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'preact/hooks';
 
 import logger from '../../../shared/lib/logger';
 import * as Setting from '../Setting/Setting';

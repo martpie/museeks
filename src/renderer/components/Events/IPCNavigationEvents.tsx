@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect } from 'preact/hooks';
 import { useNavigate } from 'react-router-dom';
 
 import { usePlayerAPI } from '../../stores/usePlayerStore';

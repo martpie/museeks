@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect } from 'preact/hooks';
 
 import { usePlayerAPI } from '../../stores/usePlayerStore';
 import { useToastsAPI } from '../../stores/useToastsStore';

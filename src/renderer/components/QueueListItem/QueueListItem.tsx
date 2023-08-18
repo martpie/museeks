@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import { useCallback } from 'preact/hooks';
 import cx from 'classnames';
 
 import { TrackModel } from '../../../shared/types/museeks';

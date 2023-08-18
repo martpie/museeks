@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'preact/hooks';
 import * as AspectRatio from '@radix-ui/react-aspect-ratio';
 
 import { Track } from '../../../shared/types/museeks';

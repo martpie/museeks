@@ -58,11 +58,11 @@
     "pino-pretty": "^10.1.0",
     "pouchdb": "^8.0.1",
     "pouchdb-find": "^8.0.1",
+    "preact": "^10.17.0",
+    "preact-compat": "^3.19.0",
     "queue": "^7.0.0",
-    "react": "^18.2.0",
     "react-dnd": "^16.0.1",
     "react-dnd-html5-backend": "^16.0.1",
-    "react-dom": "^18.2.0",
     "react-fontawesome": "^1.7.1",
     "react-keybinding-component": "^2.0.2",
     "react-router-dom": "6.14.2",
@@ -71,6 +71,7 @@
     "zustand": "^4.3.9"
   },
   "devDependencies": {
+    "@preact/preset-vite": "^2.5.0",
     "@total-typescript/ts-reset": "^0.4.2",
     "@types/lodash": "^4.14.195",
     "@types/pouchdb": "^6.4.0",

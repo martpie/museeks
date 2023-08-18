@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from 'react';
+import { useCallback, useRef } from 'preact/hooks';
 import Keybinding from 'react-keybinding-component';
 
 import { isCtrlKey } from '../../lib/utils-events';

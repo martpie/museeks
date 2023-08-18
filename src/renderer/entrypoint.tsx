@@ -4,8 +4,7 @@
 |--------------------------------------------------------------------------
 */
 
-import React from 'react';
-import * as ReactDOM from 'react-dom/client';
+import { render } from 'preact';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { RouterProvider } from 'react-router-dom';
@@ -29,12 +28,10 @@ import './styles/main.module.css';
 const wrap = document.getElementById('wrap');
 
 if (wrap) {
-  const root = ReactDOM.createRoot(wrap);
-  root.render(
-    <React.StrictMode>
-      <DndProvider backend={HTML5Backend}>
-        <RouterProvider router={router} />
-      </DndProvider>
-    </React.StrictMode>,
+  render(
+    <DndProvider backend={HTML5Backend}>
+      <RouterProvider router={router} />
+    </DndProvider>,
+    wrap,
   );
 }

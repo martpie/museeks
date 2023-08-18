@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback } from 'preact/hooks';
 import { useLoaderData } from 'react-router-dom';
 
 import * as Setting from '../../components/Setting/Setting';
