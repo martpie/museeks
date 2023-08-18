@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useState } from 'preact/hooks';
 import * as Slider from '@radix-ui/react-slider';
 
 import { usePlayerAPI } from '../../stores/usePlayerStore';

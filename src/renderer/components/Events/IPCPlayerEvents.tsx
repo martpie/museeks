@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect } from 'preact/hooks';
 
 import channels from '../../../shared/lib/ipc-channels';
 import { usePlayerAPI } from '../../stores/usePlayerStore';

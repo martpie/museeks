@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo } from 'preact/hooks';
 import { Link, useLoaderData, useRouteLoaderData } from 'react-router-dom';
 
 import * as ViewMessage from '../../elements/ViewMessage/ViewMessage';

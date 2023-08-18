@@ -1,5 +1,5 @@
 import { defineConfig, externalizeDepsPlugin } from 'electron-vite';
-import react from '@vitejs/plugin-react';
+import preact from '@preact/preset-vite';
 
 const externals = ['fs', 'electron', 'globby', 'queue', 'music-metadata'];
 const minify = process.env.NODE_ENV === 'production';
@@ -34,7 +34,7 @@ export default defineConfig({
     },
   },
   renderer: {
-    plugins: [react()],
+    plugins: [preact()],
     appType: 'spa',
     build: {
       minify,

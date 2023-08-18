@@ -1,4 +1,4 @@
-import { useCallback, ChangeEventHandler } from 'react';
+import { useCallback, ChangeEventHandler } from 'preact/hooks';
 import { useLoaderData } from 'react-router-dom';
 
 import SettingsAPI from '../../stores/SettingsAPI';

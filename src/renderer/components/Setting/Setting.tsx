@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'preact/hooks';
 
 import styles from './Setting.module.css';
 
