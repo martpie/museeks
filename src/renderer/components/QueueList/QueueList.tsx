@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import { useCallback, useState } from 'preact/hooks';
 
 import QueueListItem from '../QueueListItem/QueueListItem';
 import { getStatus } from '../../lib/utils-library';

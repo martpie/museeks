@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect } from 'preact/hooks';
 import { Outlet } from 'react-router-dom';
 import { useDrop } from 'react-dnd';
 import { NativeTypes } from 'react-dnd-html5-backend';

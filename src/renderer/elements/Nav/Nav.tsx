@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'preact/hooks';
 import { NavLink } from 'react-router-dom';
 import cx from 'classnames';
 

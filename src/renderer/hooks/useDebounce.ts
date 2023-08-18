@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'preact/hooks';
 
 // T is a generic type for value parameter, our case this will be string
 export default function useDebounce<T>(value: T, delay: number): T {

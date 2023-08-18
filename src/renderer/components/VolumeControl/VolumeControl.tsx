@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import { useCallback, useState } from 'preact/hooks';
 import Icon from 'react-fontawesome';
 import cx from 'classnames';
 import * as Slider from '@radix-ui/react-slider';
