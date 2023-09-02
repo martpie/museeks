@@ -102,14 +102,12 @@ const useLibraryStore = createStore<LibraryState>((set, get) => ({
       await Promise.all(
         paths.map(async (filePath) => {
           try {
-            const playlistFiles = await window.MuseeksAPI.playlists.resolveM3u(
-              filePath,
-            );
+            const playlistFiles =
+              await window.MuseeksAPI.playlists.resolveM3u(filePath);
             const playlistName = path.parse(filePath).name;
 
-            const existingTracks: TrackModel[] = await db.tracks.findByPath(
-              playlistFiles,
-            );
+            const existingTracks: TrackModel[] =
+              await db.tracks.findByPath(playlistFiles);
 
             await PlaylistsAPI.create(
               playlistName,
