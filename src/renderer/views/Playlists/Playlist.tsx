@@ -19,8 +19,8 @@ const { db, config } = window.MuseeksAPI;
 export default function PlaylistView() {
   const { playlists, playlistTracks, tracksDensity } =
     useLoaderData() as PlaylistLoaderData;
-  const { playlistId } = useParams();
-  const trackPlayingId = usePlayingTrackID();
+  const { playlistID } = useParams();
+  const trackPlayingID = usePlayingTrackID();
 
   const search = useLibraryStore((state) => state.search);
   const filteredTracks = useMemo(
@@ -30,15 +30,15 @@ export default function PlaylistView() {
 
   const onReorder = useCallback(
     (
-      playlistId: string,
-      tracksIds: string[],
-      targetTrackId: string,
+      playlistID: string,
+      tracksIDs: string[],
+      targetTrackID: string,
       position: 'above' | 'below',
     ) => {
       PlaylistsAPI.reorderTracks(
-        playlistId,
-        tracksIds,
-        targetTrackId,
+        playlistID,
+        tracksIDs,
+        targetTrackID,
         position,
       );
     },
@@ -89,9 +89,9 @@ export default function PlaylistView() {
       onReorder={onReorder}
       tracks={playlistTracks}
       tracksDensity={tracksDensity}
-      trackPlayingId={trackPlayingId}
+      trackPlayingID={trackPlayingID}
       playlists={playlists}
-      currentPlaylist={playlistId}
+      currentPlaylist={playlistID}
     />
   );
 }
@@ -99,11 +99,11 @@ export default function PlaylistView() {
 export type PlaylistLoaderData = LoaderData<typeof PlaylistView.loader>;
 
 PlaylistView.loader = async ({ params }: LoaderFunctionArgs) => {
-  if (typeof params.playlistId !== 'string') {
+  if (typeof params.playlistID !== 'string') {
     throw new Error('Playlist ID is not defined');
   }
 
-  const playlist = await db.playlists.findOnlyByID(params.playlistId);
+  const playlist = await db.playlists.findOnlyByID(params.playlistID);
 
   return {
     // TODO: can we re-use parent's data?

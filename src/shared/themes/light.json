@@ -46,7 +46,7 @@
     "--checkbox-bg": "#F4F4F4",
     "--input-bg": "#F4F4F4",
     "--input-color": "#333333",
-    "--button-bg": "#E4E4E4",
+    "--button-bg": "#f3f3f3",
     "--button-border": "rgb(0 0 0 / 0.2)",
     "--button-color": "#333333"
   }

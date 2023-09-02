@@ -35,14 +35,14 @@ const isValidFilename = (pathname: path.ParsedPath): boolean => {
  */
 export const fetchCover = async (
   trackPath: string,
-  ignoreId3 = false,
+  ignoreID3 = false,
   base64 = false,
 ): Promise<string | null> => {
   if (!trackPath) {
     return null;
   }
 
-  if (!ignoreId3) {
+  if (!ignoreID3) {
     const data = await mmd.parseFile(trackPath);
     const picture = data.common.picture && data.common.picture[0];
 

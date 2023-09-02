@@ -41,7 +41,7 @@ const router = createHashRouter([
         loader: PlaylistsView.loader,
         children: [
           {
-            path: ':playlistId',
+            path: ':playlistID',
             id: 'playlist-details',
             element: <PlaylistView />,
             loader: PlaylistView.loader,
@@ -76,7 +76,7 @@ const router = createHashRouter([
         ],
       },
       {
-        path: 'details/:trackId',
+        path: 'details/:trackID',
         element: <DetailsView />,
         loader: DetailsView.loader,
       },
