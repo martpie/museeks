@@ -14,13 +14,13 @@ interface UpdateCheckOptions {
 }
 
 const getTheme = async (): Promise<string> => {
-  const themeId = await ipcRenderer.invoke(channels.THEME_GET_ID);
+  const themeID = await ipcRenderer.invoke(channels.THEME_GET_ID);
 
-  return themeId;
+  return themeID;
 };
 
-const setTheme = async (themeId: string): Promise<void> => {
-  await ipcRenderer.invoke(channels.THEME_SET_ID, themeId);
+const setTheme = async (themeID: string): Promise<void> => {
+  await ipcRenderer.invoke(channels.THEME_SET_ID, themeID);
   await checkTheme();
 };
 

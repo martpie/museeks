@@ -53,14 +53,14 @@ export type PlaylistsLoaderData = LoaderData<typeof PlaylistsView.loader>;
 PlaylistsView.loader = async ({ params }: LoaderFunctionArgs) => {
   const playlists = await db.playlists.getAll();
   const [firstPlaylist] = playlists;
-  const { playlistId } = params;
+  const { playlistID } = params;
 
   if (
     // If landing page, redirect to the first playlist
-    playlistId === undefined ||
+    playlistID === undefined ||
     // If playlist ID does not exist, redirect to the first playlist
-    (playlistId !== undefined &&
-      !playlists.map((playlist) => playlist._id).includes(playlistId))
+    (playlistID !== undefined &&
+      !playlists.map((playlist) => playlist._id).includes(playlistID))
   ) {
     if (firstPlaylist !== undefined) {
       return redirect(`/playlists/${firstPlaylist._id}`);

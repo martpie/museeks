@@ -9,27 +9,27 @@ import channels from '../../shared/lib/ipc-channels';
 import ModuleWindow from './BaseWindowModule';
 
 export default class SleepBlocker extends ModuleWindow {
-  protected sleepBlockerId: number;
+  protected sleepBlockerID: number;
   protected enabled: boolean;
 
   constructor(window: Electron.BrowserWindow) {
     super(window);
 
     this.enabled = false;
-    this.sleepBlockerId = 0;
+    this.sleepBlockerID = 0;
     this.platforms = ['win32', 'darwin', 'linux'];
   }
 
   onStartPlayback = (): void => {
-    if (this.enabled && !powerSaveBlocker.isStarted(this.sleepBlockerId)) {
+    if (this.enabled && !powerSaveBlocker.isStarted(this.sleepBlockerID)) {
       // or 'prevent-display-sleep'
-      this.sleepBlockerId = powerSaveBlocker.start('prevent-app-suspension');
+      this.sleepBlockerID = powerSaveBlocker.start('prevent-app-suspension');
     }
   };
 
   onStopPlayback = (): void => {
-    if (powerSaveBlocker.isStarted(this.sleepBlockerId)) {
-      powerSaveBlocker.stop(this.sleepBlockerId);
+    if (powerSaveBlocker.isStarted(this.sleepBlockerID)) {
+      powerSaveBlocker.stop(this.sleepBlockerID);
     }
   };
 

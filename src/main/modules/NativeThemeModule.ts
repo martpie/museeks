@@ -27,82 +27,82 @@ export default class NativeThemeModule extends ModuleWindow {
      * Update the UI when someone changes the global theme settings
      */
     nativeTheme.on('updated', () => {
-      if (this.getThemeId() === '__system') {
-        this.applyTheme(this.getSystemThemeId());
+      if (this.getThemeID() === '__system') {
+        this.applyTheme(this.getSystemThemeID());
       }
 
       // Otherwise, we don't care
     });
 
-    ipcMain.handle(channels.THEME_GET_ID, () => this.getThemeId());
+    ipcMain.handle(channels.THEME_GET_ID, () => this.getThemeID());
 
     /**
      * Handle themeSource update and returns the theme variables for a given
-     * themeId
+     * themeID
      */
     ipcMain.handle(
       channels.THEME_SET_ID,
-      (_event, themeId: Config['theme']) => {
-        this.setThemeId(themeId);
+      (_event, themeID: Config['theme']) => {
+        this.setThemeID(themeID);
       },
     );
 
     ipcMain.handle(channels.THEME_GET, () => {
-      let themeId = this.getThemeId();
+      let themeID = this.getThemeID();
 
-      if (themeId === '__system') themeId = this.getSystemThemeId();
+      if (themeID === '__system') themeID = this.getSystemThemeID();
 
-      const theme = themes.find((theme) => theme._id === themeId);
+      const theme = themes.find((theme) => theme._id === themeID);
 
-      if (!theme) throw new RangeError(`No theme found with ID ${themeId}`);
+      if (!theme) throw new RangeError(`No theme found with ID ${themeID}`);
 
       return theme;
     });
   }
 
-  getThemeId(): Config['theme'] {
+  getThemeID(): Config['theme'] {
     return this.config.get('theme') ?? '__system';
   }
 
   getTheme(): Theme {
-    let themeId = this.getThemeId();
+    let themeID = this.getThemeID();
 
-    if (themeId === '__system') {
-      themeId = this.getSystemThemeId();
+    if (themeID === '__system') {
+      themeID = this.getSystemThemeID();
     }
 
-    const theme = themes.find((theme) => theme._id === themeId);
+    const theme = themes.find((theme) => theme._id === themeID);
 
-    if (!theme) throw new RangeError(`No theme found with ID ${themeId}`);
+    if (!theme) throw new RangeError(`No theme found with ID ${themeID}`);
 
     return theme;
   }
 
-  setThemeId(themeId: Config['theme']): void {
-    this.config.set('theme', themeId);
+  setThemeID(themeID: Config['theme']): void {
+    this.config.set('theme', themeID);
 
-    if (themeId === '__system') {
+    if (themeID === '__system') {
       nativeTheme.themeSource = 'system';
-      this.applyTheme(this.getSystemThemeId());
+      this.applyTheme(this.getSystemThemeID());
     } else {
-      const theme = themes.find((theme) => theme._id === themeId);
+      const theme = themes.find((theme) => theme._id === themeID);
 
-      if (!theme) throw new RangeError(`No theme found with ID ${themeId}`);
+      if (!theme) throw new RangeError(`No theme found with ID ${themeID}`);
 
       nativeTheme.themeSource = theme.themeSource;
       this.applyTheme(theme._id);
     }
   }
 
-  applyTheme(themeId: Theme['_id']): void {
-    const theme = themes.find((theme) => theme._id === themeId);
+  applyTheme(themeID: Theme['_id']): void {
+    const theme = themes.find((theme) => theme._id === themeID);
 
-    if (!theme) throw new RangeError(`No theme found with ID ${themeId}`);
+    if (!theme) throw new RangeError(`No theme found with ID ${themeID}`);
 
     this.window.webContents.send(channels.THEME_APPLY, theme);
   }
 
-  getSystemThemeId(): Theme['_id'] {
+  getSystemThemeID(): Theme['_id'] {
     return nativeTheme.shouldUseDarkColors ? 'dark' : 'light';
   }
 }

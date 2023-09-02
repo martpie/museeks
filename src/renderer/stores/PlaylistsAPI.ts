@@ -16,9 +16,9 @@ const { ipcRenderer } = window.ElectronAPI;
 /**
  * Start playing playlist (on double click)
  */
-const play = async (playlistId: string): Promise<void> => {
+const play = async (playlistID: string): Promise<void> => {
   try {
-    const playlist: PlaylistModel = await db.playlists.findOnlyByID(playlistId);
+    const playlist: PlaylistModel = await db.playlists.findOnlyByID(playlistID);
     const tracks: TrackModel[] = await db.tracks.findByID(playlist.tracks);
     usePlayerStore.getState().api.start(tracks).catch(logger.warn);
   } catch (err) {
@@ -66,9 +66,9 @@ const create = async (
 /**
  * Rename a playlist
  */
-const rename = async (_id: string, name: string): Promise<void> => {
+const rename = async (playlistID: string, name: string): Promise<void> => {
   try {
-    await db.playlists.rename(_id, name);
+    await db.playlists.rename(playlistID, name);
     router.revalidate();
   } catch (err) {
     logger.warn(err);
@@ -78,9 +78,10 @@ const rename = async (_id: string, name: string): Promise<void> => {
 /**
  * Delete a playlist
  */
-const remove = async (_id: string): Promise<void> => {
+const remove = async (playlistID: string): Promise<void> => {
   try {
-    await db.playlists.remove(_id);
+    await db.playlists.remove(playlistID);
+    // FIX these when there is no more playlists
     router.revalidate();
   } catch (err) {
     logger.warn(err);
@@ -91,8 +92,8 @@ const remove = async (_id: string): Promise<void> => {
  * Add tracks to a playlist
  */
 const addTracks = async (
-  _id: string,
-  tracksIds: string[],
+  playlistID: string,
+  tracksIDs: string[],
   isShown?: boolean,
 ): Promise<void> => {
   // isShown should never be true, letting it here anyway to remember of a design issue
@@ -101,13 +102,13 @@ const addTracks = async (
   const toastsAPI = useToastsStore.getState().api;
 
   try {
-    const playlist = await db.playlists.findOnlyByID(_id);
-    const playlistTracks = playlist.tracks.concat(tracksIds);
-    await db.playlists.setTracks(_id, playlistTracks);
+    const playlist = await db.playlists.findOnlyByID(playlistID);
+    const playlistTracks = playlist.tracks.concat(tracksIDs);
+    await db.playlists.setTracks(playlistID, playlistTracks);
     router.revalidate();
     toastsAPI.add(
       'success',
-      `${tracksIds.length} tracks were successfully added to "${playlist.name}"`,
+      `${tracksIDs.length} tracks were successfully added to "${playlist.name}"`,
     );
   } catch (err) {
     logger.warn(err);
@@ -126,15 +127,15 @@ const addTracks = async (
  * Remove tracks from a playlist
  */
 const removeTracks = async (
-  playlistId: string,
-  tracksIds: string[],
+  playlistID: string,
+  tracksIDs: string[],
 ): Promise<void> => {
   try {
-    const playlist = await db.playlists.findOnlyByID(playlistId);
+    const playlist = await db.playlists.findOnlyByID(playlistID);
     const playlistTracks = playlist.tracks.filter(
-      (elem: string) => !tracksIds.includes(elem),
+      (elem: string) => !tracksIDs.includes(elem),
     );
-    await db.playlists.setTracks(playlistId, playlistTracks);
+    await db.playlists.setTracks(playlistID, playlistTracks);
     router.revalidate();
   } catch (err) {
     logger.warn(err);
@@ -144,9 +145,9 @@ const removeTracks = async (
 /**
  * Duplicate a playlist
  */
-const duplicate = async (playlistId: string): Promise<void> => {
+const duplicate = async (playlistID: string): Promise<void> => {
   try {
-    const playlist = await db.playlists.findOnlyByID(playlistId);
+    const playlist = await db.playlists.findOnlyByID(playlistID);
     const { tracks } = playlist;
 
     const newPlaylist: Playlist = {
@@ -167,22 +168,22 @@ const duplicate = async (playlistId: string): Promise<void> => {
  * able to re-order a selection of tracks
  */
 const reorderTracks = async (
-  playlistId: string,
-  tracksIds: string[],
-  targetTrackId: string,
+  playlistID: string,
+  tracksIDs: string[],
+  targetTrackID: string,
   position: 'above' | 'below',
 ): Promise<void> => {
-  if (tracksIds.includes(targetTrackId)) return;
+  if (tracksIDs.includes(targetTrackID)) return;
 
   try {
-    const playlist: Playlist = await db.playlists.findOnlyByID(playlistId);
+    const playlist: Playlist = await db.playlists.findOnlyByID(playlistID);
 
-    const newTracks = playlist.tracks.filter((id) => !tracksIds.includes(id));
-    let targetIndex = newTracks.indexOf(targetTrackId);
+    const newTracks = playlist.tracks.filter((id) => !tracksIDs.includes(id));
+    let targetIndex = newTracks.indexOf(targetTrackID);
 
     if (targetIndex === -1) {
       throw new Error(
-        `Could not find targetTrackId in the playlist "${playlist.name}"`,
+        `Could not find targetTrackID in the playlist "${playlist.name}"`,
       );
     }
 
@@ -190,9 +191,9 @@ const reorderTracks = async (
       targetIndex -= 1;
     }
 
-    newTracks.splice(targetIndex + 1, 0, ...tracksIds);
+    newTracks.splice(targetIndex + 1, 0, ...tracksIDs);
 
-    await db.playlists.setTracks(playlistId, newTracks);
+    await db.playlists.setTracks(playlistID, newTracks);
     router.revalidate();
   } catch (err) {
     logger.warn(err);
@@ -203,8 +204,8 @@ const reorderTracks = async (
  * a playlist to a .m3u file
  * TODO: investigate why the playlist path are relative, and not absolute
  */
-const exportToM3u = async (playlistId: string): Promise<void> => {
-  const playlist: PlaylistModel = await db.playlists.findOnlyByID(playlistId);
+const exportToM3u = async (playlistID: string): Promise<void> => {
+  const playlist: PlaylistModel = await db.playlists.findOnlyByID(playlistID);
   const tracks: TrackModel[] = await db.tracks.findByID(playlist.tracks);
 
   ipcRenderer.send(
