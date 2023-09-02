@@ -15,7 +15,7 @@ import styles from './Library.module.css';
 const { db, config } = window.MuseeksAPI;
 
 export default function Library() {
-  const trackPlayingId = usePlayingTrackID();
+  const trackPlayingID = usePlayingTrackID();
   const refreshing = useLibraryStore((state) => state.refreshing);
   const search = useLibraryStore((state) => state.search);
 
@@ -63,7 +63,7 @@ export default function Library() {
         type="library"
         tracks={filteredTracks}
         tracksDensity={tracksDensity}
-        trackPlayingId={trackPlayingId}
+        trackPlayingID={trackPlayingID}
         playlists={playlists}
       />
     );
@@ -72,7 +72,7 @@ export default function Library() {
     refreshing,
     filteredTracks,
     playlists,
-    trackPlayingId,
+    trackPlayingID,
     tracksDensity,
   ]);
 

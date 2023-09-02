@@ -36,11 +36,11 @@ type LibraryState = {
     sort: (sortBy: SortBy) => void;
     scanPlaylists: (paths: string[]) => Promise<void>;
     add: (pathsToScan: string[]) => Promise<void>;
-    remove: (tracksIds: string[]) => Promise<void>;
+    remove: (tracksIDs: string[]) => Promise<void>;
     reset: () => Promise<void>;
     incrementPlayCount: (track: TrackModel) => Promise<void>;
     updateTrackMetadata: (
-      trackId: string,
+      trackID: string,
       newFields: TrackEditableFields,
     ) => Promise<void>;
     highlightPlayingTrack: (highlight: boolean) => void;
@@ -197,12 +197,12 @@ const useLibraryStore = createStore<LibraryState>((set, get) => ({
     /**
      * remove tracks from library
      */
-    remove: async (tracksIds) => {
+    remove: async (tracksIDs) => {
       // not calling await on it as it calls the synchonous message box
       const options: Electron.MessageBoxOptions = {
         buttons: ['Cancel', 'Remove'],
         title: 'Remove tracks from library?',
-        message: `Are you sure you want to remove ${tracksIds.length} element(s) from your library?`,
+        message: `Are you sure you want to remove ${tracksIDs.length} element(s) from your library?`,
         type: 'warning',
       };
 
@@ -214,12 +214,12 @@ const useLibraryStore = createStore<LibraryState>((set, get) => ({
       if (result.response === 1) {
         // button possition, here 'remove'
         // Remove tracks from the Track collection
-        await db.tracks.remove(tracksIds);
+        await db.tracks.remove(tracksIDs);
 
         router.revalidate();
         // That would be great to remove those ids from all the playlists, but it's not easy
         // and should not cause strange behaviors, all PR for that would be really appreciated
-        // TODO: see if it's possible to remove the Ids from the selected state of TracksList as it "could" lead to strange behaviors
+        // TODO: see if it's possible to remove the IDs from the selected state of TracksList as it "could" lead to strange behaviors
       }
     },
 
@@ -270,14 +270,14 @@ const useLibraryStore = createStore<LibraryState>((set, get) => ({
      * IMPROVE ME: add support for writing metadata (hint: node-id3 does not work
      * well).
      *
-     * @param trackId The ID of the track to update
+     * @param trackID The ID of the track to update
      * @param newFields The fields to be updated and their new value
      */
     updateTrackMetadata: async (
-      trackId: string,
+      trackID: string,
       newFields: TrackEditableFields,
     ): Promise<void> => {
-      let track = await db.tracks.findOnlyByID(trackId);
+      let track = await db.tracks.findOnlyByID(trackID);
 
       track = {
         ...track,

@@ -33,14 +33,14 @@ type PlayerState = {
     setVolume: (volume: number) => void;
     setMuted: (muted: boolean) => void;
     setPlaybackRate: (value: number) => void;
-    setOutputDevice: (deviceId: string) => void;
+    setOutputDevice: (deviceID: string) => void;
     jumpTo: (to: number) => void;
     jumpToPlayingTrack: () => Promise<void>;
     startFromQueue: (index: number) => Promise<void>;
     clearQueue: () => void;
     removeFromQueue: (index: number) => void;
-    addInQueue: (tracksIds: string[]) => Promise<void>;
-    addNextInQueue: (tracksIds: string[]) => Promise<void>;
+    addInQueue: (tracksIDs: string[]) => Promise<void>;
+    addNextInQueue: (tracksIDs: string[]) => Promise<void>;
     setQueue: (tracks: TrackModel[]) => void;
   };
 };
@@ -76,13 +76,13 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
       const shuffle = state.shuffle;
 
       const oldQueue = [...newQueue];
-      const trackId = _id || newQueue[0]._id;
+      const trackID = _id || newQueue[0]._id;
 
       // Typically, if we are in the playlists generic view without any view selected
       if (newQueue.length === 0) return;
 
       const queuePosition = newQueue.findIndex(
-        (track) => track._id === trackId,
+        (track) => track._id === trackID,
       );
 
       // If a track exists
@@ -244,7 +244,7 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
       const { queue, queueCursor, oldQueue } = get();
 
       if (queueCursor !== null) {
-        const trackPlayingId = queue[queueCursor]._id;
+        const trackPlayingID = queue[queueCursor]._id;
 
         // If we need to shuffle everything
         if (shuffle) {
@@ -260,7 +260,7 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
         } else {
           // Unshuffle the queue by restoring the initial queue
           const currentTrackIndex = oldQueue.findIndex(
-            (track) => trackPlayingId === track._id,
+            (track) => trackPlayingID === track._id,
           );
 
           // Roll back to the old but update queueCursor
@@ -329,11 +329,11 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
     /**
      * Set audio's output device
      */
-    setOutputDevice: async (deviceId = 'default') => {
-      if (deviceId) {
+    setOutputDevice: async (deviceID = 'default') => {
+      if (deviceID) {
         try {
-          await player.setOutputDevice(deviceId);
-          await config.set('audioOutputDevice', deviceId);
+          await player.setOutputDevice(deviceID);
+          await config.set('audioOutputDevice', deviceID);
         } catch (err) {
           logger.warn(err);
           useToastsStore
@@ -417,9 +417,9 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
     /**
      * Add tracks at the end of the queue
      */
-    addInQueue: async (tracksIds) => {
+    addInQueue: async (tracksIDs) => {
       const { queue, queueCursor } = get();
-      const tracks = await window.MuseeksAPI.db.tracks.findByID(tracksIds);
+      const tracks = await window.MuseeksAPI.db.tracks.findByID(tracksIDs);
       const newQueue = [...queue, ...tracks];
 
       set({
@@ -432,8 +432,8 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
     /**
      * Add tracks at the beginning of the queue
      */
-    addNextInQueue: async (tracksIds) => {
-      const tracks = await window.MuseeksAPI.db.tracks.findByID(tracksIds);
+    addNextInQueue: async (tracksIDs) => {
+      const tracks = await window.MuseeksAPI.db.tracks.findByID(tracksIDs);
 
       const { queueCursor } = get();
       const queue = [...get().queue];

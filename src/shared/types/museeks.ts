@@ -108,12 +108,12 @@ export interface ConfigBounds {
 
 // https://github.com/microsoft/TypeScript/issues/29729#issuecomment-460346421
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-type AnyThemeId = string & { whatever?: any };
+type AnyThemeID = string & { whatever?: any };
 // TODO: how to automate this? Maybe losen types to "string"
-type ThemeIds = 'dark' | 'light' | AnyThemeId;
+type ThemeIDs = 'dark' | 'light' | AnyThemeID;
 
 export interface Config {
-  theme: ThemeIds | '__system';
+  theme: ThemeIDs | '__system';
   audioVolume: number;
   audioPlaybackRate: number;
   audioOutputDevice: string;
@@ -138,7 +138,7 @@ export interface Config {
  */
 
 export interface Theme {
-  _id: ThemeIds;
+  _id: ThemeIDs;
   name: string;
   themeSource: Electron.NativeTheme['themeSource'];
   variables: Record<string, string>;
