@@ -3,7 +3,7 @@ import { useMemo } from 'react';
 
 import { TrackModel } from '../../shared/types/museeks';
 import { RootLoaderData } from '../views/Root';
-import { PlaylistLoaderData } from '../views/Playlists/Playlist';
+import { PlaylistLoaderData } from '../views/ViewPlaylistDetails';
 
 import useFilteredTracks from './useFilteredTracks';
 

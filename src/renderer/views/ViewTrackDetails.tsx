@@ -5,21 +5,21 @@ import {
   useNavigate,
 } from 'react-router-dom';
 
-// import Placeholder from '../../shared/assets/placeholder.png';
-// import * as coverUtils from '../../../shared/lib/utils-cover';
-import { TrackEditableFields } from '../../../shared/types/museeks';
-import appStyles from '../Root.module.css';
-import * as Setting from '../../components/Setting/Setting';
-import Button from '../../elements/Button/Button';
-import { useLibraryAPI } from '../../stores/useLibraryStore';
-import { LoaderData } from '../router';
+// import Placeholder from '../shared/assets/placeholder.png';
+// import * as coverUtils from '../../shared/lib/utils-cover';
+import { TrackEditableFields } from '../../shared/types/museeks';
+import * as Setting from '../components/Setting/Setting';
+import Button from '../elements/Button/Button';
+import { useLibraryAPI } from '../stores/useLibraryStore';
 
-import styles from './Details.module.css';
+import { LoaderData } from './router';
+import appStyles from './Root.module.css';
+import styles from './ViewTrackDetails.module.css';
 
 // We assume no artist or genre has a comma in its name (fingers crossed)
 const DELIMITER = ',';
 
-export default function Details() {
+export default function ViewTrackDetails() {
   const { track } = useLoaderData() as DetailsLoaderData;
 
   const [formData, setFormData] = useState<TrackEditableFields>({
@@ -132,9 +132,9 @@ export default function Details() {
   );
 }
 
-export type DetailsLoaderData = LoaderData<typeof Details.loader>;
+export type DetailsLoaderData = LoaderData<typeof ViewTrackDetails.loader>;
 
-Details.loader = async ({ params }: LoaderFunctionArgs) => {
+ViewTrackDetails.loader = async ({ params }: LoaderFunctionArgs) => {
   const { trackID } = params;
 
   if (trackID == null) {

@@ -1,10 +1,10 @@
-import ExternalLink from '../../elements/ExternalLink/ExternalLink';
-import Heart from '../../elements/Heart/Heart';
-import * as Setting from '../../components/Setting/Setting';
-import SettingsAPI from '../../stores/SettingsAPI';
-import Button from '../../elements/Button/Button';
+import ExternalLink from '../elements/ExternalLink/ExternalLink';
+import Heart from '../elements/Heart/Heart';
+import * as Setting from '../components/Setting/Setting';
+import SettingsAPI from '../stores/SettingsAPI';
+import Button from '../elements/Button/Button';
 
-export default function SettingsAbout() {
+export default function ViewSettingsAbout() {
   const version = window.MuseeksAPI.version;
 
   return (
