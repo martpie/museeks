@@ -1,13 +1,13 @@
 import React, { useCallback } from 'react';
 import { useLoaderData } from 'react-router-dom';
 
-import * as Setting from '../../components/Setting/Setting';
-import AudioOutputSelect from '../../components/AudioOutputSelect/AudioOutputSelect';
-import { usePlayerAPI } from '../../stores/usePlayerStore';
+import * as Setting from '../components/Setting/Setting';
+import AudioOutputSelect from '../components/AudioOutputSelect/AudioOutputSelect';
+import { usePlayerAPI } from '../stores/usePlayerStore';
 
-import { SettingsLoaderData } from './Settings';
+import { SettingsLoaderData } from './ViewSettings';
 
-export default function SettingsAudio() {
+export default function ViewSettingsAudio() {
   const { config } = useLoaderData() as SettingsLoaderData;
   const playerAPI = usePlayerAPI();
 

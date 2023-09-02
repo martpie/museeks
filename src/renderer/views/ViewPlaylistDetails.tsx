@@ -6,17 +6,18 @@ import {
   useParams,
 } from 'react-router-dom';
 
-import TracksList from '../../components/TracksList/TracksList';
-import * as ViewMessage from '../../elements/ViewMessage/ViewMessage';
-import PlaylistsAPI from '../../stores/PlaylistsAPI';
-import { filterTracks } from '../../lib/utils-library';
-import { LoaderData } from '../router';
-import useLibraryStore from '../../stores/useLibraryStore';
-import usePlayingTrackID from '../../hooks/usePlayingTrackID';
+import TracksList from '../components/TracksList/TracksList';
+import * as ViewMessage from '../elements/ViewMessage/ViewMessage';
+import PlaylistsAPI from '../stores/PlaylistsAPI';
+import { filterTracks } from '../lib/utils-library';
+import useLibraryStore from '../stores/useLibraryStore';
+import usePlayingTrackID from '../hooks/usePlayingTrackID';
+
+import { LoaderData } from './router';
 
 const { db, config } = window.MuseeksAPI;
 
-export default function PlaylistView() {
+export default function ViewPlaylistDetails() {
   const { playlists, playlistTracks, tracksDensity } =
     useLoaderData() as PlaylistLoaderData;
   const { playlistID } = useParams();
@@ -96,9 +97,9 @@ export default function PlaylistView() {
   );
 }
 
-export type PlaylistLoaderData = LoaderData<typeof PlaylistView.loader>;
+export type PlaylistLoaderData = LoaderData<typeof ViewPlaylistDetails.loader>;
 
-PlaylistView.loader = async ({ params }: LoaderFunctionArgs) => {
+ViewPlaylistDetails.loader = async ({ params }: LoaderFunctionArgs) => {
   if (typeof params.playlistID !== 'string') {
     throw new Error('Playlist ID is not defined');
   }

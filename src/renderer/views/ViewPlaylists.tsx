@@ -6,17 +6,17 @@ import {
   useLoaderData,
 } from 'react-router-dom';
 
-import PlaylistsNav from '../../components/PlaylistsNav/PlaylistsNav';
-import * as ViewMessage from '../../elements/ViewMessage/ViewMessage';
-import PlaylistsAPI from '../../stores/PlaylistsAPI';
-import appStyles from '../../views/Root.module.css';
-import { LoaderData } from '../router';
+import PlaylistsNav from '../components/PlaylistsNav/PlaylistsNav';
+import * as ViewMessage from '../elements/ViewMessage/ViewMessage';
+import PlaylistsAPI from '../stores/PlaylistsAPI';
 
-import styles from './Playlists.module.css';
+import { LoaderData } from './router';
+import appStyles from './Root.module.css';
+import styles from './ViewPlaylists.module.css';
 
 const { db } = window.MuseeksAPI;
 
-export default function PlaylistsView() {
+export default function ViewPlaylists() {
   const { playlists } = useLoaderData() as PlaylistsLoaderData;
 
   const createPlaylist = useCallback(async () => {
@@ -48,9 +48,9 @@ export default function PlaylistsView() {
   );
 }
 
-export type PlaylistsLoaderData = LoaderData<typeof PlaylistsView.loader>;
+export type PlaylistsLoaderData = LoaderData<typeof ViewPlaylists.loader>;
 
-PlaylistsView.loader = async ({ params }: LoaderFunctionArgs) => {
+ViewPlaylists.loader = async ({ params }: LoaderFunctionArgs) => {
   const playlists = await db.playlists.getAll();
   const [firstPlaylist] = playlists;
   const { playlistID } = params;

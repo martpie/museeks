@@ -10,15 +10,15 @@ import ExternalLink from '../elements/ExternalLink/ExternalLink';
 import logger from '../../shared/lib/logger';
 
 import RootView from './Root';
-import LibraryView from './Library/Library';
-import PlaylistsView from './Playlists/Playlists';
-import PlaylistView from './Playlists/Playlist';
-import SettingsView from './Settings/Settings';
-import SettingsLibrary from './Settings/SettingsLibrary';
-import SettingsUI from './Settings/SettingsUI';
-import SettingsAudio from './Settings/SettingsAudio';
-import SettingsAbout from './Settings/SettingsAbout';
-import DetailsView from './Details/Details';
+import LibraryView from './ViewLibrary';
+import PlaylistsView from './ViewPlaylists';
+import PlaylistView from './ViewPlaylistDetails';
+import SettingsView from './ViewSettings';
+import SettingsLibrary from './ViewSettingsLibrary';
+import SettingsUI from './ViewSettingsUI';
+import SettingsAudio from './ViewSettingsAudio';
+import SettingsAbout from './ViewSettingsAbout';
+import DetailsView from './ViewTrackDetails';
 
 const router = createHashRouter([
   {
