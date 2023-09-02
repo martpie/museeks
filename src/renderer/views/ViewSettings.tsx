@@ -1,12 +1,12 @@
 import { Outlet, useMatch, Navigate } from 'react-router-dom';
 
-import * as Nav from '../../elements/Nav/Nav';
-import appStyles from '../Root.module.css';
-import { LoaderData } from '../router';
+import * as Nav from '../elements/Nav/Nav';
 
-import styles from './Settings.module.css';
+import { LoaderData } from './router';
+import appStyles from './Root.module.css';
+import styles from './ViewSettings.module.css';
 
-export default function SettingsView() {
+export default function ViewSettingsView() {
   const match = useMatch('/settings');
 
   return (
@@ -29,9 +29,9 @@ export default function SettingsView() {
   );
 }
 
-export type SettingsLoaderData = LoaderData<typeof SettingsView.loader>;
+export type SettingsLoaderData = LoaderData<typeof ViewSettingsView.loader>;
 
-SettingsView.loader = async () => {
+ViewSettingsView.loader = async () => {
   const config = await window.MuseeksAPI.config.getAll();
 
   return {

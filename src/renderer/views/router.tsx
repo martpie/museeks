@@ -10,15 +10,15 @@ import ExternalLink from '../elements/ExternalLink/ExternalLink';
 import logger from '../../shared/lib/logger';
 
 import RootView from './Root';
-import LibraryView from './Library/Library';
-import PlaylistsView from './Playlists/Playlists';
-import PlaylistView from './Playlists/Playlist';
-import SettingsView from './Settings/Settings';
-import SettingsLibrary from './Settings/SettingsLibrary';
-import SettingsUI from './Settings/SettingsUI';
-import SettingsAudio from './Settings/SettingsAudio';
-import SettingsAbout from './Settings/SettingsAbout';
-import DetailsView from './Details/Details';
+import ViewLibrary from './ViewLibrary';
+import ViewPlaylists from './ViewPlaylists';
+import ViewPlaylistDetails from './ViewPlaylistDetails';
+import ViewSettings from './ViewSettings';
+import ViewSettingsLibrary from './ViewSettingsLibrary';
+import ViewSettingsUI from './ViewSettingsUI';
+import ViewSettingsAudio from './ViewSettingsAudio';
+import ViewSettingsAbout from './ViewSettingsAbout';
+import ViewTrackDetails from './ViewTrackDetails';
 
 const router = createHashRouter([
   {
@@ -31,54 +31,54 @@ const router = createHashRouter([
       {
         path: 'library',
         id: 'library',
-        element: <LibraryView />,
-        loader: LibraryView.loader,
+        element: <ViewLibrary />,
+        loader: ViewLibrary.loader,
       },
       {
         path: 'playlists',
         id: 'playlists',
-        element: <PlaylistsView />,
-        loader: PlaylistsView.loader,
+        element: <ViewPlaylists />,
+        loader: ViewPlaylists.loader,
         children: [
           {
             path: ':playlistID',
             id: 'playlist-details',
-            element: <PlaylistView />,
-            loader: PlaylistView.loader,
+            element: <ViewPlaylistDetails />,
+            loader: ViewPlaylistDetails.loader,
           },
         ],
       },
       {
         path: 'settings',
         id: 'settings',
-        element: <SettingsView />,
+        element: <ViewSettings />,
         children: [
           {
             path: 'library',
-            element: <SettingsLibrary />,
-            loader: SettingsView.loader,
+            element: <ViewSettingsLibrary />,
+            loader: ViewSettings.loader,
           },
           {
             path: 'interface',
-            element: <SettingsUI />,
-            loader: SettingsView.loader,
+            element: <ViewSettingsUI />,
+            loader: ViewSettings.loader,
           },
           {
             path: 'audio',
-            element: <SettingsAudio />,
-            loader: SettingsView.loader,
+            element: <ViewSettingsAudio />,
+            loader: ViewSettings.loader,
           },
           {
             path: 'about',
-            element: <SettingsAbout />,
-            loader: SettingsView.loader,
+            element: <ViewSettingsAbout />,
+            loader: ViewSettings.loader,
           },
         ],
       },
       {
         path: 'details/:trackID',
-        element: <DetailsView />,
-        loader: DetailsView.loader,
+        element: <ViewTrackDetails />,
+        loader: ViewTrackDetails.loader,
       },
     ],
   },
