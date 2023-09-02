@@ -1,20 +1,20 @@
 import { useMemo } from 'react';
 import { Link, useLoaderData, useRouteLoaderData } from 'react-router-dom';
 
-import * as ViewMessage from '../../elements/ViewMessage/ViewMessage';
-import TracksList from '../../components/TracksList/TracksList';
-import appStyles from '../Root.module.css';
-import useFilteredTracks from '../../hooks/useFilteredTracks';
-import useLibraryStore from '../../stores/useLibraryStore';
-import usePlayingTrackID from '../../hooks/usePlayingTrackID';
-import { RootLoaderData } from '../Root';
-import { LoaderData } from '../router';
+import * as ViewMessage from '../elements/ViewMessage/ViewMessage';
+import TracksList from '../components/TracksList/TracksList';
+import useLibraryStore from '../stores/useLibraryStore';
+import usePlayingTrackID from '../hooks/usePlayingTrackID';
+import useFilteredTracks from '../hooks/useFilteredTracks';
 
-import styles from './Library.module.css';
+import { RootLoaderData } from './Root';
+import { LoaderData } from './router';
+import appStyles from './Root.module.css';
+import styles from './ViewLibrary.module.css';
 
 const { db, config } = window.MuseeksAPI;
 
-export default function Library() {
+export default function ViewLibrary() {
   const trackPlayingID = usePlayingTrackID();
   const refreshing = useLibraryStore((state) => state.refreshing);
   const search = useLibraryStore((state) => state.search);
@@ -83,9 +83,9 @@ export default function Library() {
   );
 }
 
-export type LibraryLoaderData = LoaderData<typeof Library.loader>;
+export type LibraryLoaderData = LoaderData<typeof ViewLibrary.loader>;
 
-Library.loader = async () => {
+ViewLibrary.loader = async () => {
   return {
     playlists: await db.playlists.getAll(),
     tracksDensity: await config.get('tracksDensity'),

@@ -1,15 +1,15 @@
 import { useCallback, ChangeEventHandler } from 'react';
 import { useLoaderData } from 'react-router-dom';
 
-import SettingsAPI from '../../stores/SettingsAPI';
-import * as Setting from '../../components/Setting/Setting';
-import CheckboxSetting from '../../components/SettingCheckbox/SettingCheckbox';
-import { themes } from '../../../shared/lib/themes';
-import { Config } from '../../../shared/types/museeks';
+import SettingsAPI from '../stores/SettingsAPI';
+import * as Setting from '../components/Setting/Setting';
+import CheckboxSetting from '../components/SettingCheckbox/SettingCheckbox';
+import { themes } from '../../shared/lib/themes';
+import { Config } from '../../shared/types/museeks';
 
-import { SettingsLoaderData } from './Settings';
+import { SettingsLoaderData } from './ViewSettings';
 
-export default function SettingsUI() {
+export default function ViewSettingsUI() {
   const { config } = useLoaderData() as SettingsLoaderData;
 
   const onThemeChange = useCallback<ChangeEventHandler<HTMLSelectElement>>(

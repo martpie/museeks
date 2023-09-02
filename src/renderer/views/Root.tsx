@@ -22,7 +22,7 @@ import { LoaderData } from './router';
 
 const { db } = window.MuseeksAPI;
 
-export default function RootView() {
+export default function ViewRoot() {
   useEffect(() => {
     AppActions.init();
   }, []);
@@ -79,9 +79,9 @@ export default function RootView() {
   );
 }
 
-export type RootLoaderData = LoaderData<typeof RootView.loader>;
+export type RootLoaderData = LoaderData<typeof ViewRoot.loader>;
 
-RootView.loader = async () => {
+ViewRoot.loader = async () => {
   // this can be slow, think about caching it or something, especially when
   // we revalidate routing
   const tracks = await db.tracks.getAll();
