@@ -13,24 +13,24 @@ type Props = {
   track: TrackModel;
   index: number;
   isPlaying: boolean;
-  onDoubleClick: (trackId: string) => void;
+  onDoubleClick: (trackID: string) => void;
   onMouseDown: (
     event: React.MouseEvent,
-    trackId: string,
+    trackID: string,
     index: number,
   ) => void;
   onContextMenu: (event: React.MouseEvent, index: number) => void;
   onClick: (
     event: React.MouseEvent | React.KeyboardEvent,
-    trackId: string,
+    trackID: string,
   ) => void;
 
   draggable?: boolean;
   reordered?: boolean;
   onDragStart?: () => void;
-  onDragOver?: (trackId: string, position: 'above' | 'below') => void;
+  onDragOver?: (trackID: string, position: 'above' | 'below') => void;
   onDragEnd?: () => void;
-  onDrop?: (targetTrackId: string, position: 'above' | 'below') => void;
+  onDrop?: (targetTrackID: string, position: 'above' | 'below') => void;
   style?: React.CSSProperties;
 };
 

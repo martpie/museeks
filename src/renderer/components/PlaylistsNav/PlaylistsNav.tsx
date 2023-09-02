@@ -19,18 +19,18 @@ type Props = {
 export default function PlaylistsNav(props: Props) {
   const [renamed, setRenamed] = useState<string | null>(null);
 
-  const showContextMenu = useCallback((playlistId: string) => {
+  const showContextMenu = useCallback((playlistID: string) => {
     const template: MenuItemConstructorOptions[] = [
       {
         label: 'Rename',
         click: () => {
-          setRenamed(playlistId);
+          setRenamed(playlistID);
         },
       },
       {
         label: 'Delete',
         click: async () => {
-          await PlaylistsAPI.remove(playlistId);
+          await PlaylistsAPI.remove(playlistID);
         },
       },
       {
@@ -39,7 +39,7 @@ export default function PlaylistsNav(props: Props) {
       {
         label: 'Duplicate',
         click: async () => {
-          await PlaylistsAPI.duplicate(playlistId);
+          await PlaylistsAPI.duplicate(playlistID);
         },
       },
       {
@@ -48,7 +48,7 @@ export default function PlaylistsNav(props: Props) {
       {
         label: 'Export',
         click: async () => {
-          await PlaylistsAPI.exportToM3u(playlistId);
+          await PlaylistsAPI.exportToM3u(playlistID);
         },
       },
     ];
@@ -61,8 +61,8 @@ export default function PlaylistsNav(props: Props) {
     await PlaylistsAPI.create('New playlist', [], false, true);
   }, []);
 
-  const rename = useCallback(async (_id: string, name: string) => {
-    await PlaylistsAPI.rename(_id, name);
+  const rename = useCallback(async (playlistID: string, name: string) => {
+    await PlaylistsAPI.rename(playlistID, name);
   }, []);
 
   const keyDown = useCallback(
@@ -128,7 +128,7 @@ export default function PlaylistsNav(props: Props) {
       navItemContent = (
         <PlaylistsNavLink
           className={styles.item__link}
-          playlistId={elem._id}
+          playlistID={elem._id}
           onContextMenu={showContextMenu}
         >
           {elem.name}

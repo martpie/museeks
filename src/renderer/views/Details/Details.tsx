@@ -135,13 +135,13 @@ export default function Details() {
 export type DetailsLoaderData = LoaderData<typeof Details.loader>;
 
 Details.loader = async ({ params }: LoaderFunctionArgs) => {
-  const { trackId } = params;
+  const { trackID } = params;
 
-  if (trackId == null) {
+  if (trackID == null) {
     throw new Error(`Track ID should not be null`);
   }
 
-  const track = await window.MuseeksAPI.db.tracks.findOnlyByID(trackId);
+  const track = await window.MuseeksAPI.db.tracks.findOnlyByID(trackID);
 
   return { track };
 };

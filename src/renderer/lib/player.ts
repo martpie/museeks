@@ -89,10 +89,10 @@ class Player {
     this.audio.defaultPlaybackRate = playbackRate;
   }
 
-  async setOutputDevice(deviceId: string) {
+  async setOutputDevice(deviceID: string) {
     // eslint-disable-next-line
     // @ts-ignore
-    await this.audio.setSinkId(deviceId);
+    await this.audio.setSinkId(deviceID);
   }
 
   getTrack() {

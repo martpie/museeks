@@ -5,7 +5,7 @@ import * as Setting from '../Setting/Setting';
 
 type Props = {
   defaultValue: string;
-  onChange: (deviceId: string) => void;
+  onChange: (deviceID: string) => void;
 };
 
 export default function AudioOutputSelect(props: Props) {
