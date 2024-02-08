@@ -1,5 +1,4 @@
-/* eslint-env node */
-module.exports = {
+export default {
   syntax: 'postcss-scss',
   plugins: {
     'postcss-import': {},
