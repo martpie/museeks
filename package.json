@@ -82,10 +82,10 @@
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "@typescript-eslint/parser": "^6.21.0",
     "@vitejs/plugin-react": "^4.2.1",
-    "electron": "27.3.2",
+    "electron": "28.2.2",
     "electron-builder": "^24.12.0",
     "electron-devtools-assembler": "^1.2.0",
-    "electron-vite": "^1.0.29",
+    "electron-vite": "^2.0.0",
     "eslint": "^8.56.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-import": "^2.29.1",
@@ -106,7 +106,7 @@
     "stylelint-config-standard": "^34.0.0",
     "typescript": "^5.3.3",
     "typescript-plugin-css-modules": "^5.0.2",
-    "vite": "^4.5.2",
+    "vite": "^5.1.0",
     "vitest": "^1.2.2"
   }
 }
