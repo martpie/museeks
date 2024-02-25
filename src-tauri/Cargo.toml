@@ -1,0 +1,42 @@
+# https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[package]
+name = "museeks"
+version = "0.20.0"
+description = "A simple, clean and cross-platform music player"
+authors = ["Pierre de la Martinière <pierre.de.la.martiniere@gmail.com>"]
+license = "MIT"
+repository = "https://github.com/martpie/museeks"
+edition = "2021"
+
+[build-dependencies]
+tauri-build = { version = "2.0.0-beta.4", features = ["codegen"] }
+
+[dependencies]
+tauri = { version = "2.0.0-beta.5", features = ["protocol-asset"] }
+tauri-plugin-dialog = "2.0.0-beta.1"
+tauri-plugin-os = "2.0.0-beta.1"
+tauri-plugin-log = {version = "2.0.0-beta.1", features = ["colored"] }
+tauri-plugin-shell = "2.0.0-beta.1"
+# tauri-plugin-window-state = "2.0.0-beta.1"
+serde_json = "1.0.114"
+serde = { version = "1.0.197", features = ["derive"] }
+log = "0.4.20"
+lofty = "0.18.2"
+walkdir = "2.4.0"
+futures = "0.3.30"
+tokio = { version = "1.36.0", features = ["full"] }
+bonsaidb = { version = "0.5.0", features = ["local", "async"] }
+ts-rs = "7.1.1"
+home-config = { version = "0.6.0", features = ["toml"] }
+dirs = "5.0.1"
+rayon = "1.8.1"
+base64 = "0.21.7"
+nosleep = "0.2.1"
+anyhow = "1.0.80"
+thiserror = "1.0.57"
+
+[features]
+# this feature is used for production builds or when `devPath` points to the filesystem
+# DO NOT REMOVE!!
+custom-protocol = ["tauri/custom-protocol"]

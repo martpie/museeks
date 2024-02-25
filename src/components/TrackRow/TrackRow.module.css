@@ -1,0 +1,59 @@
+.cell {
+  /* Explicitely not a padding to mimic the cell headers + we may use it when
+     we will want to resize columns */
+  border-left: solid 1px transparent;
+  padding-right: 4px;
+  padding-left: 4px;
+  cursor: default;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 24px;
+}
+
+.track {
+  position: relative;
+  display: flex;
+  outline: none;
+  border-top: solid 1px transparent;
+  border-bottom: solid 1px transparent;
+  background-color: var(--tracks-bg-even);
+  align-items: center;
+
+  &.even {
+    background-color: var(--tracks-bg-odd);
+  }
+
+  &.selected {
+    background-color: var(--main-color);
+    color: white;
+
+    & + .selected {
+      border-top-color: rgba(255 255 255 / 0.2);
+    }
+  }
+
+  &.reordered {
+    opacity: 0.5;
+  }
+
+  &.isReorderedOver {
+    &::after {
+      pointer-events: none;
+      position: absolute;
+      z-index: 1;
+      display: block;
+      width: 100%;
+      content: "";
+      border-bottom: solid 2px var(--main-color);
+    }
+
+    &.isAbove::after {
+      top: -1px;
+    }
+
+    &.isBelow::after {
+      bottom: -1px;
+    }
+  }
+}
