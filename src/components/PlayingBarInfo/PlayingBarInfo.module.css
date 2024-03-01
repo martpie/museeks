@@ -1,0 +1,44 @@
+.playingBar__info {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 0 4px;
+  padding-left: 8px;
+}
+
+.playingBar__info__metas {
+  gap: 4px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.metas {
+  flex: 1 1 auto;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  vertical-align: middle;
+  text-align: center;
+}
+
+.metadataTitle {
+  margin-bottom: 2px;
+}
+
+.metadata {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.duration {
+  flex: 0 0 auto;
+  font-size: 0.875rem;
+  padding: 0 2px;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  opacity: 0.7;
+}

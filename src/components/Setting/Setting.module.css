@@ -1,0 +1,50 @@
+.settingSection {
+  padding-bottom: 10px;
+}
+
+.settingTitle {
+  display: inline-block;
+  font-weight: bold;
+  margin-top: 4px;
+  margin-left: 6px;
+}
+
+.settingDescription {
+  font-weight: normal;
+  margin-top: 5px;
+  margin-bottom: 4px;
+}
+
+.settingLabel {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+.settingSelect,
+.settingInput {
+  appearance: none;
+  display: block;
+  background: var(--input-bg);
+  color: var(--input-color);
+  border: solid 1px var(--border-color);
+  border-radius: var(--border-radius);
+  padding: 8px 12px;
+  width: 100%;
+  font-size: 1rem;
+  line-height: 1;
+
+  &:focus {
+    outline: none;
+    border-color: var(--main-color);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+.settingError {
+  color: red;
+}
