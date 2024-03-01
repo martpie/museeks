@@ -1,0 +1,34 @@
+.search__container {
+  position: relative;
+  width: 180px;
+  display: flex;
+  align-items: center;
+}
+
+.search__input {
+  display: block;
+  font-size: inherit;
+  width: 100%;
+  padding: 6px 12px;
+  background-color: var(--search-bg);
+  border: 1px solid var(--border-color);
+  color: var(--text);
+  border-radius: var(--border-radius);
+  line-height: 16px;
+}
+
+.search__clear {
+  position: absolute;
+  right: 4px;
+  font-size: 15px;
+  color: var(--text);
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  padding: 0;
+  height: 21px;
+  aspect-ratio: 1/1;
+  line-height: 100%;
+  text-align: center;
+  font-family: Arial, sans-serif; /* best font family to center it vertically */
+}
