@@ -1,0 +1,47 @@
+{
+  "productName": "Museeks",
+  "version": "0.20.0",
+  "identifier": "io.museeks.app",
+  "build": {
+    "beforeDevCommand": "yarn dev",
+    "devUrl": "http://localhost:1420",
+    "beforeBuildCommand": "yarn build",
+    "frontendDist": "../dist"
+  },
+  "app": {
+    "windows": [
+      {
+        "label": "main",
+        "title": "Museeks",
+        "visible": false,
+        "hiddenTitle": true,
+        "titleBarStyle": "Overlay",
+        "width": 900,
+        "minWidth": 900,
+        "height": 550,
+        "minHeight": 550,
+        "fullscreen": false,
+        "resizable": true,
+        "fileDropEnabled": false
+      }
+    ],
+    "security": {
+      "assetProtocol": {
+        "enable": true,
+        "scope": ["**/*"]
+      },
+      "csp": "default-src 'none'; img-src 'self' data:; media-src 'self' asset: https://asset.localhost http://asset.localhost; child-src 'self'; object-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; connect-src ipc: http://ipc.localhost 'self' https://api.github.com; font-src 'self' data:"
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ]
+  }
+}
