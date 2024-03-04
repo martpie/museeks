@@ -1,0 +1,66 @@
+/* Colors (default theme) */
+:root {
+  --main-color: #459ce7;
+  --main-color-darker: #3a73a4;
+  --main-color-lighter: #63aff0;
+  --link-color: #459ce7;
+  --link-color-hover: #52afff;
+  --bold: 600;
+}
+
+*,
+::before,
+::after {
+  box-sizing: border-box;
+}
+
+/* Global styles */
+html {
+  font-size: 12px;
+  user-select: none;
+  height: 100%;
+  overflow: hidden;
+  color-scheme: var(--color-scheme);
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+  color: var(--text);
+  font-size: 12px;
+  user-select: none;
+  height: 100%;
+  overflow: hidden;
+}
+
+button {
+  outline: none;
+}
+
+a {
+  color: var(--link-color);
+
+  &:hover,
+  &:focus,
+  &:active {
+    color: var(--link-color-hover);
+  }
+}
+
+input {
+  outline: none;
+}
+
+p {
+  line-height: 1.3;
+}
+
+strong {
+  font-weight: var(--bold);
+}
+
+/* App wrapper */
+:global #root {
+  height: 100vh;
+}
