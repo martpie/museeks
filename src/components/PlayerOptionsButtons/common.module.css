@@ -1,0 +1,27 @@
+.icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 20px;
+  width: 20px;
+}
+
+.button {
+  border: 0;
+  color: inherit;
+  background: transparent;
+  font-size: 20px;
+  padding: 0 8px;
+
+  &.active {
+    .icon > svg {
+      fill: var(--main-color);
+    }
+  }
+
+  .icon > svg {
+    fill: currentcolor;
+    width: 18px;
+    height: auto;
+  }
+}
