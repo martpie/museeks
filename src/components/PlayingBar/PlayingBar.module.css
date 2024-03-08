@@ -1,0 +1,27 @@
+.playingBar {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  height: 100%;
+  background: var(--header-bg-softer);
+  border: solid 1px var(--border-color-softer);
+  border-width: 0 1px;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.playingBar__cover {
+  flex-shrink: 0;
+  width: 50px;
+  overflow: hidden;
+  box-sizing: content-box;
+  border-right: solid 1px var(--border-color-softer);
+  font-size: 28px;
+}
+
+.playerOptions {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
