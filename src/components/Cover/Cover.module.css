@@ -1,0 +1,26 @@
+.cover {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: content-box;
+  background-color: var(--header-bg-softer);
+}
+
+.empty {
+  border: solid 1px var(--border-color);
+  box-sizing: border-box;
+}
+
+.no_border {
+  border-width: 0;
+}
+
+.cover__note {
+  font-family: monospace; /* the sexy one */
+  font-size: 1em;
+  line-height: 1em;
+}
