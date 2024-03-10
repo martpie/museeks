@@ -1,0 +1,32 @@
+.toast {
+  border: solid 1px;
+  border-left-width: 5px;
+  background-color: var(--toasts-bg);
+  border-top-color: var(--border-color);
+  border-right-color: var(--border-color);
+  border-bottom-color: var(--border-color);
+  border-radius: var(--border-radius);
+  color: var(--text);
+  box-shadow: 0 5px 3px -5px rgba(0 0 0 0.5);
+  padding: 15px;
+
+  & + .toast {
+    margin-top: 5px;
+  }
+}
+
+.toastSuccess {
+  border-left-color: var(--success-color);
+}
+
+.toastInfo {
+  border-left-color: var(--info-color);
+}
+
+.toastWarning {
+  border-left-color: var(--warning-color);
+}
+
+.toastDanger {
+  border-left-color: var(--danger-color);
+}
