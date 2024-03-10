@@ -1,0 +1,45 @@
+.playerControls {
+  display: flex;
+  align-items: center;
+  position: relative;
+
+  .control {
+    display: flex;
+    border: 0;
+    background: transparent;
+    font-size: 16px;
+    padding: 0 10px;
+    color: inherit;
+    cursor: pointer;
+    transition: transform 0.1s ease-in-out;
+
+    &.play {
+      font-size: 20px;
+      padding: 0 5px;
+    }
+
+    &.volume {
+      padding: 0;
+      width: 34px;
+      position: relative;
+    }
+
+    i {
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  .control:hover {
+    transform: scale(1.2);
+  }
+
+  .control:active {
+    transform: scale(1);
+  }
+}
+
+.playerOptions {
+  display: flex;
+  flex-direction: column;
+}

@@ -1,9 +1,0 @@
-{
-  "extends": "../../tsconfig.base.json",
-  "compilerOptions": {
-    "lib": ["ESNext", "DOM", "DOM.Iterable"],
-    "jsx": "react-jsx",
-    "plugins": [{ "name": "typescript-plugin-css-modules" }]
-  },
-  "include": ["../renderer", "../shared"]
-}
