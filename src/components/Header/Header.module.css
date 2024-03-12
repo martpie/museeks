@@ -1,0 +1,70 @@
+:global(.os__macos) .header__mainControls {
+  padding-left: 60px; /* let some space for titleBarStyle */
+}
+
+/* The native frame may be light, so we need to increase the contrast between
+   the frame and the header */
+:global(.os__windows),
+:global(.os__linux) {
+  .header {
+    border-top: 1px solid var(--border-color);
+  }
+}
+
+.header {
+  border-bottom: solid 1px var(--border-color);
+  background-color: var(--header-bg);
+  box-sizing: content-box;
+  color: var(--header-color);
+  padding: 0 10px;
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  height: 50px;
+  flex: 0 0 auto;
+}
+
+.header__mainControls {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  padding-right: 10px;
+  min-width: 200px;
+}
+
+.header__search {
+  margin-left: 12px;
+  flex: 0 0 auto;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.header__playingBar {
+  flex: 1 1 auto;
+  min-width: 0;
+  max-width: 600px;
+  display: flex;
+}
+
+.queueToggle {
+  line-height: 22px;
+  margin-left: 12px;
+  color: inherit;
+  border: 0;
+  background: transparent;
+  font-size: 14px;
+  box-shadow: none;
+  flex-shrink: 0;
+}
+
+.queueContainer {
+  display: none;
+  position: absolute;
+  z-index: 1000;
+  text-align: left;
+  right: 0;
+
+  &[data-state='open'] {
+    display: block;
+  }
+}
