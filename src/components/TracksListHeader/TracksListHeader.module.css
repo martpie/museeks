@@ -1,0 +1,29 @@
+.tracksListHeader {
+  border-bottom: 1px solid var(--border-color);
+  color: var(--tracks-header-color);
+  background-color: var(--tracks-header-bg);
+  display: flex;
+  width: 100%;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.cellTrackPlaying {
+  width: 30px;
+  text-align: center;
+}
+
+.cellTrack {
+  flex: 1;
+}
+
+.cellDuration {
+  width: 7%;
+}
+
+.cellArtist,
+.cellAlbum,
+.cellGenre {
+  width: 20%;
+}
