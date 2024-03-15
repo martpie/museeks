@@ -1,9 +1,10 @@
 {
   "recommendations": [
       "dbaeumer.vscode-eslint",
-      "csstools.postcss",
+      "vunguyentuan.vscode-postcss",
       "esbenp.prettier-vscode",
       "stylelint.vscode-stylelint",
-      "ZixuanChen.vitest-explorer"
+      "tauri-apps.tauri-vscode",
+      "rust-lang.rust-analyzer"
   ]
 }
