@@ -1,0 +1,13 @@
+.progress {
+  --progress-height: 6px;
+
+  flex: 1;
+  display: block;
+  height: var(--progress-height);
+  background-color: var(--progress-bg);
+}
+
+.progressBar {
+  height: var(--progress-height);
+  background-color: var(--main-color);
+}
