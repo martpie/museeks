@@ -19,6 +19,18 @@ async fn main() {
     let db = plugins::database::setup().await.ok().unwrap();
 
     tauri::Builder::default()
+        // Logging must be setup first, otherwise the logs won't be captured
+        // while setting up the other plugins.
+        .plugin(
+            tauri_plugin_log::Builder::default()
+                .targets([
+                    Target::new(TargetKind::Stdout),
+                    Target::new(TargetKind::Webview),
+                ])
+                .level(LevelFilter::Info)
+                .with_colors(ColoredLevelConfig::default())
+                .build(),
+        )
         // Custom integrations
         .plugin(plugins::app_menu::init())
         .plugin(plugins::config::init())
@@ -39,16 +51,6 @@ async fn main() {
             show_window(&window);
         }))
         .plugin(tauri_plugin_window_state::Builder::default().build())
-        .plugin(
-            tauri_plugin_log::Builder::default()
-                .targets([
-                    Target::new(TargetKind::Stdout),
-                    Target::new(TargetKind::Webview),
-                ])
-                .level(LevelFilter::Info)
-                .with_colors(ColoredLevelConfig::default())
-                .build(),
-        )
         // TODO: tauri-plugin-theme to update the native theme at runtime
         .setup(|_app| {
             // :]
