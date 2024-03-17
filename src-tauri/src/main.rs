@@ -32,6 +32,7 @@ async fn main() {
                 .build(),
         )
         // Custom integrations
+        .plugin(plugins::app_close::init())
         .plugin(plugins::app_menu::init())
         .plugin(plugins::config::init())
         .plugin(plugins::cover::init())
@@ -40,7 +41,6 @@ async fn main() {
         .plugin(plugins::default_view::init())
         .plugin(plugins::shell_extension::init())
         .plugin(plugins::sleepblocker::init())
-        .plugin(plugins::macos::init())
         // Tauri integrations with the Operating System
         .plugin(tauri_plugin_dialog::init())
         .plugin(tauri_plugin_os::init())

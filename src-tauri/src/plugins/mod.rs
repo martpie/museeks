@@ -9,6 +9,7 @@ pub mod debug;
 /**
  * Core features
  */
+pub mod app_close;
 pub mod app_menu;
 pub mod cover;
 pub mod shell_extension;
@@ -24,8 +25,3 @@ pub mod database;
  */
 pub mod default_view;
 pub mod sleepblocker;
-
-/**
- * OS-specific plugins
- */
-pub mod macos;
