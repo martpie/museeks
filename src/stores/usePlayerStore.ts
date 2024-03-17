@@ -62,7 +62,7 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
      * Start playing audio (queue instantiation, shuffle and everything...)
      * TODO: this function ~could probably~ needs to be refactored ~a bit~
      */
-    start: async (queue, _id): Promise<void> => {
+    start: async (tracks, _id): Promise<void> => {
       // TODO: implement start with no queue
       //   // If no queue is provided, we create it based on the screen the user is on
       // if (!queue) {
@@ -84,32 +84,32 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
       //   }
       // }
 
-      if (queue.length === 0) return;
+      if (tracks.length === 0) return;
 
       const state = get();
 
-      let newQueue = [...queue];
+      // on macOS, localStorage is quite limited, so we limit the max number of items
+      // in the queue
+      let queue = tracks.slice(0, 2000);
 
       // Check if there's already a queue planned
-      if (newQueue === null && state.queue !== null) {
-        newQueue = state.queue;
+      if (queue === null && state.queue !== null) {
+        queue = state.queue;
       }
 
       const shuffle = state.shuffle;
 
-      const oldQueue = [...newQueue];
-      const trackID = _id || newQueue[0]._id;
+      const oldQueue = [...queue];
+      const trackID = _id || queue[0]._id;
 
       // Typically, if we are in the playlists generic view without any view selected
-      if (newQueue.length === 0) return;
+      if (queue.length === 0) return;
 
-      const queuePosition = newQueue.findIndex(
-        (track) => track._id === trackID,
-      );
+      const queuePosition = queue.findIndex((track) => track._id === trackID);
 
       // If a track exists
       if (queuePosition > -1) {
-        const track = newQueue[queuePosition];
+        const track = queue[queuePosition];
 
         player.setTrack(track);
         await player.play().catch(logAndNotifyError);
@@ -119,7 +119,7 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
         // Check if we have to shuffle the queue
         if (shuffle) {
           // Shuffle the tracks
-          newQueue = shuffleTracks(newQueue, queueCursor);
+          queue = shuffleTracks(queue, queueCursor);
           // Let's set the cursor to 0
           queueCursor = 0;
         }
@@ -130,7 +130,7 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
         const queueOrigin = hash.substring(1); // remove #
 
         set({
-          queue: newQueue,
+          queue,
           queueCursor,
           queueOrigin,
           oldQueue,
