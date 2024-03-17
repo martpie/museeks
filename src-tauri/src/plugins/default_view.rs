@@ -22,7 +22,7 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
             if window.label().eq("main") {
                 let config_manager = window.state::<ConfigManager>();
                 let mut url = window.url();
-                let default_view = config_manager.get().default_view;
+                let default_view = config_manager.read().default_view;
 
                 let fragment = match default_view {
                     DefaultView::Library => "/library",

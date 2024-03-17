@@ -1,3 +1,4 @@
+use anyhow::anyhow;
 use bonsaidb::core::connection::{AsyncCollection, AsyncConnection, AsyncStorageConnection};
 use bonsaidb::core::document::OwnedDocument;
 use bonsaidb::core::schema::{Collection, SerializedCollection};
@@ -20,7 +21,7 @@ use uuid::Uuid;
 
 use crate::libs::error::{AnyResult, MuseeksError};
 use crate::libs::events::IPCEvent;
-use crate::libs::utils::{get_app_storage_dir, scan_dirs, TimeLogger};
+use crate::libs::utils::{app_data_dir, scan_dirs, TimeLogger};
 
 const INSERTION_BATCH: usize = 200;
 
@@ -538,8 +539,8 @@ async fn reset(db: State<'_, DB>) -> AnyResult<()> {
  * Doc: https://github.com/khonsulabs/bonsaidb/blob/main/examples/basic-local/examples/basic-local-multidb.rs
  */
 pub async fn setup() -> AnyResult<DB> {
-    let conf_path = get_app_storage_dir();
-    let storage_configuration = StorageConfiguration::new(conf_path.join("main.bonsaidb"))
+    let app_data_path = app_data_dir().ok_or_else(|| anyhow!("no app data directory"))?;
+    let storage_configuration = StorageConfiguration::new(app_data_path.join("main.bonsaidb"))
         .with_schema::<Track>()?
         .with_schema::<Playlist>()?;
 

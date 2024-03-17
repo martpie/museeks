@@ -1,15 +1,16 @@
-/**
- * Module in charge of persisting and returning the config to/from the filesystem
- */
-use home_config::HomeConfig;
-use log::info;
-use serde::{Deserialize, Serialize};
+//! Module in charge of persisting and returning the config to/from the filesystem
+
 use std::{path::PathBuf, sync::RwLock};
+
+use anyhow::{anyhow, Context};
+use serde::{Deserialize, Serialize};
 use tauri::plugin::{Builder, TauriPlugin};
 use tauri::{Manager, Runtime, State};
 use ts_rs::TS;
 
-use crate::libs::utils::get_app_storage_dir;
+use crate::libs::utils::app_config_dir;
+
+const FILE_NAME: &str = "config.toml";
 
 #[derive(Serialize, Deserialize, Debug, Clone, TS)]
 #[ts(export, export_to = "../src/generated/typings/Repeat.ts")]
@@ -89,46 +90,71 @@ impl Config {
 
 #[derive(Debug)]
 pub struct ConfigManager {
-    manager: HomeConfig,
-    pub data: RwLock<Config>,
+    pub config: RwLock<Config>,
 }
 
 impl ConfigManager {
-    pub fn get(&self) -> Config {
-        self.data.read().unwrap().clone()
+    pub fn read(&self) -> Config {
+        self.config.read().unwrap().clone()
     }
 
     pub fn update(&self, config: Config) {
-        let mut writer = self.data.write().unwrap();
+        // Prevent concurrent changes while writing to the file.
+        let mut writer = self.config.write().unwrap();
+        if let Err(err) = save_config_to_file(&config) {
+            log::error!("Failed to save config: {err}");
+            return;
+        }
+        // Only update the config after successfully writing to the file.
         *writer = config;
-        std::mem::drop(writer);
-        self.save();
     }
 
     pub fn set_sleepblocker(&self, sleepblocker: bool) {
-        let mut writer = self.data.write().unwrap();
-        writer.sleepblocker = sleepblocker;
-        std::mem::drop(writer);
-        self.save();
+        // TODO: Avoid race conditions and cloning? Probably not necessary.
+        let config = Config {
+            sleepblocker,
+            ..self.config.read().unwrap().clone()
+        };
+        self.update(config);
     }
 
     pub fn set_default_view(&self, default_view: DefaultView) {
-        let mut writer = self.data.write().unwrap();
-        writer.default_view = default_view;
-        std::mem::drop(writer);
-        self.save();
+        // TODO: Avoid race conditions and cloning? Probably not necessary.
+        let config = Config {
+            default_view,
+            ..self.config.read().unwrap().clone()
+        };
+        self.update(config);
     }
+}
 
-    fn save(&self) {
-        let config = self.data.read().unwrap();
-        self.manager.save_toml(config.clone()).unwrap();
-        info!("Config updated");
-    }
+fn config_file_path() -> anyhow::Result<PathBuf> {
+    app_config_dir()
+        .map(|dir| dir.join(FILE_NAME))
+        .ok_or_else(|| anyhow!("no app config directory"))
+}
+
+fn load_config_from_file() -> anyhow::Result<Config> {
+    let file_path = config_file_path()?;
+    let contents =
+        std::fs::read_to_string(&file_path).with_context(|| file_path.display().to_string())?;
+    toml::from_str::<Config>(&contents).map_err(Into::into)
+}
+
+fn save_config_to_file(config: &Config) -> anyhow::Result<()> {
+    let file_path = config_file_path()?;
+    let contents = toml::to_string_pretty(config)?;
+    std::fs::write(&file_path, contents).with_context(|| file_path.display().to_string())?;
+    log::info!(
+        "Config saved to file: {file_path}",
+        file_path = file_path.display()
+    );
+    Ok(())
 }
 
 #[tauri::command]
 pub fn get_config(config_manager: State<ConfigManager>) -> Config {
-    config_manager.get()
+    config_manager.read()
 }
 
 #[tauri::command]
@@ -137,25 +163,23 @@ pub fn set_config(config_manager: State<ConfigManager>, config: Config) {
 }
 
 pub fn init<R: Runtime>() -> TauriPlugin<R> {
-    let conf_path = get_app_storage_dir();
-    let manager = HomeConfig::with_file(conf_path.join("config.toml"));
-    let existing_config = manager.toml::<Config>();
+    let existing_config = load_config_from_file();
 
     let config = match existing_config {
         Ok(config) => ConfigManager {
-            manager,
-            data: RwLock::new(config),
+            config: RwLock::new(config),
         },
         Err(_) => {
             // The config does not exist, so let's instantiate it with defaults
             // Potential issue: if the config is extended, the defaults will be
             // reloaded
             let default_config = Config::default();
-            manager.save_toml(&default_config).unwrap();
+            if let Err(err) = save_config_to_file(&default_config) {
+                log::warn!("Failed to save default config: {err}");
+            }
 
             ConfigManager {
-                manager,
-                data: RwLock::new(default_config),
+                config: RwLock::new(default_config),
             }
         }
     };
@@ -168,7 +192,7 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
             window.__MUSEEKS_INITIAL_CONFIG = {};
             window.__MUSEEKS_PLATFORM = {:?};
         "#,
-        serde_json::to_string(&config.get()).unwrap(),
+        serde_json::to_string(&config.read()).unwrap(),
         tauri_plugin_os::type_().to_string()
     );
 

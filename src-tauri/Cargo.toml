@@ -27,7 +27,7 @@ base64 = "0.22.0"
 bonsaidb = { version = "0.5.0", features = ["local", "async"] }
 dirs = "5.0.1"
 futures = "0.3.30"
-home-config = { version = "0.6.0", features = ["toml"] }
+directories = "5.0.1"
 log = "0.4.21"
 lofty = "0.18.2"
 memoize = "0.4.2"
@@ -38,6 +38,7 @@ serde = { version = "1.0.197", features = ["derive"] }
 strum = { version = "0.26.2", features = ["derive"] }
 thiserror = "1.0.58"
 tokio = { version = "1.36.0", features = ["macros"] }
+toml = { version = "0.8.11", default-features = false, features = ["parse"] }
 ts-rs = "7.1.1"
 uuid = { version = "1.7.0", features = ["v3", "v4", "fast-rng"] }
 walkdir = "2.5.0"

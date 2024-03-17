@@ -1,8 +1,14 @@
+use directories::ProjectDirs;
 /**
  * Small utility to display time metrics with a log message
  */
 use log::info;
-use std::{ffi::OsStr, path::PathBuf, time::Instant};
+use std::{
+    ffi::OsStr,
+    fs,
+    path::{Path, PathBuf},
+    time::Instant,
+};
 use tauri::{Runtime, WebviewWindow};
 use walkdir::WalkDir;
 
@@ -28,12 +34,54 @@ impl TimeLogger {
     }
 }
 
-/**
- * Get the app configuration/storage directory
- */
-pub fn get_app_storage_dir() -> PathBuf {
-    let path = dirs::home_dir().expect("Get home dir");
-    path.join(".museeks")
+#[must_use]
+const fn app_name() -> &'static str {
+    // Must match the value of "identifier" in tauri.config.json!
+    "io.museeks.app"
+}
+
+#[must_use]
+fn app_dirs() -> Option<ProjectDirs> {
+    ProjectDirs::from("", "", app_name())
+}
+
+fn init_app_dir(app_dir: &Path) {
+    if let Err(err) = fs::create_dir_all(app_dir) {
+        log::error!(
+            "Failed to create app directory '{dir}': {err}",
+            dir = app_dir.display(),
+        );
+    }
+}
+
+#[must_use]
+fn init_config_dir(app_dirs: &ProjectDirs) -> &Path {
+    let app_config_dir = app_dirs.config_local_dir();
+    init_app_dir(app_config_dir);
+    app_config_dir
+}
+
+#[must_use]
+fn init_data_dir(app_dirs: &ProjectDirs) -> &Path {
+    let app_data_dir = app_dirs.data_local_dir();
+    init_app_dir(app_data_dir);
+    app_data_dir
+}
+
+#[must_use]
+pub fn app_config_dir() -> Option<PathBuf> {
+    app_dirs()
+        .as_ref()
+        .map(init_config_dir)
+        .map(Path::to_path_buf)
+}
+
+#[must_use]
+pub fn app_data_dir() -> Option<PathBuf> {
+    app_dirs()
+        .as_ref()
+        .map(init_data_dir)
+        .map(Path::to_path_buf)
 }
 
 /**
