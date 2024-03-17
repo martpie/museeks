@@ -15,9 +15,6 @@ use tauri_plugin_log::{Target, TargetKind};
  */
 #[tokio::main]
 async fn main() {
-    // Is there any way to instantiate that in the plugin directly?
-    let db = plugins::database::setup().await.ok().unwrap();
-
     tauri::Builder::default()
         // Logging must be setup first, otherwise the logs won't be captured
         // while setting up the other plugins.
@@ -36,7 +33,7 @@ async fn main() {
         .plugin(plugins::app_menu::init())
         .plugin(plugins::config::init())
         .plugin(plugins::cover::init())
-        .plugin(plugins::database::init(db))
+        .plugin(plugins::database::init())
         .plugin(plugins::debug::init())
         .plugin(plugins::default_view::init())
         .plugin(plugins::shell_extension::init())

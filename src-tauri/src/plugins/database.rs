@@ -14,13 +14,13 @@ use std::path::PathBuf;
 use std::sync::atomic::{AtomicUsize, Ordering};
 use std::sync::Arc;
 use tauri::plugin::{Builder, TauriPlugin};
-use tauri::{Manager, Runtime, State};
+use tauri::{AppHandle, Manager, Runtime, State};
 use ts_rs::TS;
 use uuid::Uuid;
 
 use crate::libs::error::{AnyResult, MuseeksError};
 use crate::libs::events::IPCEvent;
-use crate::libs::utils::{get_app_storage_dir, scan_dirs, TimeLogger};
+use crate::libs::utils::{scan_dirs, TimeLogger};
 
 const INSERTION_BATCH: usize = 200;
 
@@ -537,9 +537,12 @@ async fn reset(db: State<'_, DB>) -> AnyResult<()> {
  * Database setup
  * Doc: https://github.com/khonsulabs/bonsaidb/blob/main/examples/basic-local/examples/basic-local-multidb.rs
  */
-pub async fn setup() -> AnyResult<DB> {
-    let conf_path = get_app_storage_dir();
-    let storage_configuration = StorageConfiguration::new(conf_path.join("main.bonsaidb"))
+async fn setup<R: Runtime>(app_handle: &AppHandle<R>) -> AnyResult<DB> {
+    let storage_path = app_handle
+        .path()
+        .app_local_data_dir()
+        .map_err(anyhow::Error::from)?;
+    let storage_configuration = StorageConfiguration::new(storage_path.join("main.bonsaidb"))
         .with_schema::<Track>()?
         .with_schema::<Playlist>()?;
 
@@ -556,7 +559,7 @@ pub async fn setup() -> AnyResult<DB> {
 /**
  * Database plugin, exposing commands and state
  */
-pub fn init<R: Runtime>(db: DB) -> TauriPlugin<R> {
+pub fn init<R: Runtime>() -> TauriPlugin<R> {
     Builder::<R>::new("database")
         .invoke_handler(tauri::generate_handler![
             get_all_tracks,
@@ -573,8 +576,18 @@ pub fn init<R: Runtime>(db: DB) -> TauriPlugin<R> {
             reset,
             import_tracks_to_library,
         ])
-        .setup(|app_handle, _api| {
-            app_handle.manage(db);
+        .setup(move |app_handle, _api| {
+            let app_handle = app_handle.clone();
+            tauri::async_runtime::spawn(async move {
+                let db = match setup(&app_handle).await {
+                    Ok(db) => db,
+                    Err(err) => {
+                        error!("Failed to setup database: {:?}", err);
+                        return;
+                    }
+                };
+                app_handle.manage(db);
+            });
             Ok(())
         })
         .build()
