@@ -29,14 +29,6 @@ impl TimeLogger {
 }
 
 /**
- * Get the app configuration/storage directory
- */
-pub fn get_app_storage_dir() -> PathBuf {
-    let path = dirs::home_dir().expect("Get home dir");
-    path.join(".museeks")
-}
-
-/**
  * Check if a directory or a file is visible or not
  */
 fn is_dir_visible(entry: &walkdir::DirEntry) -> bool {

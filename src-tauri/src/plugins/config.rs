@@ -9,8 +9,6 @@ use tauri::plugin::{Builder, TauriPlugin};
 use tauri::{Manager, Runtime, State};
 use ts_rs::TS;
 
-use crate::libs::utils::get_app_storage_dir;
-
 #[derive(Serialize, Deserialize, Debug, Clone, TS)]
 #[ts(export, export_to = "../src/generated/typings/Repeat.ts")]
 pub enum Repeat {
@@ -134,6 +132,15 @@ pub fn get_config(config_manager: State<ConfigManager>) -> Config {
 #[tauri::command]
 pub fn set_config(config_manager: State<ConfigManager>, config: Config) {
     config_manager.update(config);
+}
+
+/**
+ * Get the app configuration/storage directory
+ */
+// TODO: Replace with PathResolver::app_config_dir().
+fn get_app_storage_dir() -> PathBuf {
+    let path = dirs::home_dir().expect("Get home dir");
+    path.join(".museeks")
 }
 
 pub fn init<R: Runtime>() -> TauriPlugin<R> {
