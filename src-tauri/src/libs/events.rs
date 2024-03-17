@@ -1,8 +1,7 @@
 use serde::{Deserialize, Serialize};
-use strum_macros::{AsRefStr, Display};
 use ts_rs::TS;
 
-#[derive(Serialize, Deserialize, Debug, Clone, TS, Display, AsRefStr)]
+#[derive(Serialize, Deserialize, Debug, Clone, TS, strum::Display, strum::AsRefStr)]
 #[ts(export, export_to = "../src/generated/typings/IPCEvent.ts")]
 pub enum IPCEvent<'a> {
     // Playback-related events
