@@ -9,6 +9,8 @@ use tauri::plugin::{Builder, TauriPlugin};
 use tauri::{Manager, Runtime, State};
 use ts_rs::TS;
 
+use super::theme::SYSTEM_THEME_ID;
+
 #[derive(Serialize, Deserialize, Debug, Clone, TS)]
 #[ts(export, export_to = "../src/generated/typings/Repeat.ts")]
 pub enum Repeat {
@@ -65,7 +67,7 @@ pub struct Config {
 impl Config {
     pub fn default() -> Self {
         Config {
-            theme: "__system".to_owned(),
+            theme: SYSTEM_THEME_ID.to_owned(),
             audio_volume: 1.0,
             audio_playback_rate: 1.0,
             audio_output_device: "default".to_owned(),

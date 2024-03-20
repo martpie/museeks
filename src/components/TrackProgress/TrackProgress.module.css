@@ -1,5 +1,6 @@
 .trackRoot {
-  --progress-height: 7px;
+  --progress-height: 5px;
+  --progress-border-width: 1px;
 
   position: relative;
   display: flex;
@@ -19,14 +20,15 @@
   width: 100%;
   height: 100%;
   background-color: var(--header-bg);
-  border: solid 1px var(--border-color);
+  border: solid var(--progress-border-width) var(--border-color);
 }
 
 .trackRange {
   position: absolute;
-  height: 100%;
+  top: -1px;
+  bottom: -1px;
   background-color: var(--main-color);
-  box-shadow: inset 0 0 0 1px rgba(0 0 0 / 0.2);
+  box-shadow: inset 0 0 0 1px rgba(0 0 0 / 0.3);
 }
 
 .progressTooltip {
