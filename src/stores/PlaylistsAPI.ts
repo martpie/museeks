@@ -1,5 +1,4 @@
 import { Playlist, Track } from '../generated/typings';
-import logger from '../lib/logger';
 import channels from '../lib/ipc-channels';
 import router from '../views/router';
 import library from '../lib/library';
@@ -16,7 +15,7 @@ const play = async (playlistID: string): Promise<void> => {
   try {
     const playlist = await library.getPlaylist(playlistID);
     const tracks = await library.getTracks(playlist.tracks);
-    usePlayerStore.getState().api.start(tracks).catch(logger.warn);
+    usePlayerStore.getState().api.start(tracks);
   } catch (err) {
     logAndNotifyError(err);
   }

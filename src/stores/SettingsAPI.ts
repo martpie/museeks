@@ -7,6 +7,7 @@ import { Config, DefaultView } from '../generated/typings';
 import { Theme } from '../types/museeks';
 import { themes } from '../lib/themes';
 import config from '../lib/config';
+import { logAndNotifyError } from '../lib/utils';
 
 import useToastsStore from './useToastsStore';
 
@@ -102,10 +103,12 @@ const checkForUpdate = async (
       useToastsStore.getState().api.add('success', message);
     }
   } catch (e) {
-    if (!options.silentFail)
-      useToastsStore
-        .getState()
-        .api.add('danger', 'An error occurred while checking updates.');
+    logAndNotifyError(
+      e,
+      'An error occurred while checking updates.',
+      true,
+      options.silentFail,
+    );
   }
 };
 

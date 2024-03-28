@@ -8,7 +8,7 @@ import React from 'react';
 import * as ReactDOM from 'react-dom/client';
 import { RouterProvider } from 'react-router-dom';
 import { QueryClientProvider } from '@tanstack/react-query';
-import { attachConsole } from '@tauri-apps/plugin-log';
+import * as logger from '@tauri-apps/plugin-log';
 
 import router from './views/router';
 import { queryClient } from './lib/query';
@@ -28,7 +28,7 @@ import './styles/main.module.css';
 |--------------------------------------------------------------------------
 */
 
-attachConsole();
+logger.attachConsole();
 
 const wrap = document.getElementById('wrap');
 

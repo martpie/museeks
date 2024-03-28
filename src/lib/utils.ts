@@ -1,4 +1,4 @@
-import { error } from '@tauri-apps/plugin-log';
+import * as logger from '@tauri-apps/plugin-log';
 
 import useToastsStore from '../stores/useToastsStore';
 
@@ -28,7 +28,12 @@ export const parseDuration = (duration: number | null): string => {
  * Friendly logging for caught errors
  * https://kentcdodds.com/blog/get-a-catch-block-error-message-with-typescript
  */
-export const logAndNotifyError = (err: unknown, pre?: string): void => {
+export const logAndNotifyError = (
+  err: unknown,
+  pre?: string,
+  isWarning = false,
+  silent = false,
+): void => {
   let message;
   if (err instanceof Error) message = err.message;
   else message = String(err);
@@ -37,6 +42,13 @@ export const logAndNotifyError = (err: unknown, pre?: string): void => {
     message = `${pre}: ${message}`;
   }
 
-  error(message);
-  useToastsStore.getState().api.add('danger', message);
+  if (isWarning) {
+    logger.warn(message);
+  } else {
+    logger.error(message);
+  }
+
+  if (silent === false) {
+    useToastsStore.getState().api.add('danger', message);
+  }
 };

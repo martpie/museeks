@@ -4,10 +4,10 @@ import {
   isRouteErrorResponse,
   useRouteError,
 } from 'react-router-dom';
+import * as logger from '@tauri-apps/plugin-log';
 
 import * as ViewMessage from '../elements/ViewMessage/ViewMessage';
 import ExternalLink from '../elements/ExternalLink/ExternalLink';
-import logger from '../lib/logger';
 
 import RootView from './Root';
 import ViewLibrary from './ViewLibrary';
@@ -92,8 +92,6 @@ export default router;
 
 function GlobalErrorBoundary() {
   const error = useRouteError();
-  logger.error(error);
-
   let errorMessage: string;
 
   if (isRouteErrorResponse(error)) {
@@ -105,6 +103,8 @@ function GlobalErrorBoundary() {
   } else {
     errorMessage = 'Unknown error';
   }
+
+  logger.error(errorMessage);
 
   return (
     <ViewMessage.Notice>

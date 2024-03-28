@@ -4,7 +4,6 @@ import { persist } from 'zustand/middleware';
 
 import { PlayerStatus } from '../types/museeks';
 import { shuffleTracks } from '../lib/utils-player';
-import logger from '../lib/logger';
 import router from '../views/router';
 import player from '../lib/player';
 import { Track, Repeat } from '../generated/typings';
@@ -500,9 +499,9 @@ function createPlayerStore<T extends PlayerState>(store: StateCreator<T>) {
       onRehydrateStorage: () => {
         return (state, error) => {
           if (error || state == null) {
-            logger.error(
-              'an error happened during player store hydration',
+            logAndNotifyError(
               error,
+              'an error happened during player store hydration',
             );
           } else {
             //  Let's set the player's src and currentTime with the info we have persisted in store
