@@ -322,9 +322,26 @@ async fn import_tracks_to_library<R: Runtime>(
         info!("  - {:?}", path)
     }
 
-    let paths = scan_dirs(&import_paths, &SUPPORTED_TRACKS_EXTENSIONS);
-    let task_count = paths.len();
+    // Scan all directories for valid files to be scanned and imported
+    let mut paths = scan_dirs(&import_paths, &SUPPORTED_TRACKS_EXTENSIONS);
+    let scanned_paths_count = paths.len();
 
+    // Remove files that are already in the DB (speedup scan + prevent duplicate errors)
+    let existing_paths = db
+        .get_all_tracks()
+        .await?
+        .iter()
+        .map(move |track| track.path.to_owned())
+        .collect::<HashSet<_>>();
+
+    paths.retain(|path| !existing_paths.contains(path));
+
+    info!(
+        "{} tracks already imported (they will be skipped)",
+        scanned_paths_count - paths.len()
+    );
+
+    // Setup progress tracking for the UI
     let progress = Arc::new(AtomicUsize::new(1));
     let total = Arc::new(AtomicUsize::new(paths.len()));
 
@@ -339,7 +356,7 @@ async fn import_tracks_to_library<R: Runtime>(
         .unwrap();
 
     // Let's get all tracks ID3
-    info!("Importing ID3 tags from {} files", task_count);
+    info!("Importing ID3 tags from {} files", paths.len());
     let scan_logger = TimeLogger::new("Scanned all id3 tags".into());
 
     let tracks = &paths
@@ -366,7 +383,6 @@ async fn import_tracks_to_library<R: Runtime>(
                 Ok(tagged_file) => {
                     let tag = tagged_file.primary_tag()?;
 
-                    // TODO: make sure we don't save tracks that are already in DB
                     // IMPROVE ME: Is there a more idiomatic way of doing the following?
                     let mut artists: Vec<String> = tag
                         .get_strings(&ItemKey::TrackArtist)
