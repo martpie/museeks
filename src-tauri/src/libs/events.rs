@@ -4,8 +4,9 @@ use ts_rs::TS;
 #[derive(Serialize, Deserialize, Debug, Clone, TS, strum::Display, strum::AsRefStr)]
 #[ts(export, export_to = "../src/generated/typings/IPCEvent.ts")]
 pub enum IPCEvent<'a> {
+    Unknown(&'a str),
     // Playback-related events
-    PlaybackPlay(&'a str),
+    PlaybackPlay,
     PlaybackPause,
     PlaybackStop,
     PlaybackPlayPause,

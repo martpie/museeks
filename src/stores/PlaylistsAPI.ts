@@ -1,5 +1,4 @@
-import { Playlist, Track } from '../generated/typings';
-import channels from '../lib/ipc-channels';
+import { Playlist } from '../generated/typings';
 import router from '../views/router';
 import library from '../lib/library';
 import { logAndNotifyError } from '../lib/utils';
@@ -165,21 +164,6 @@ const reorderTracks = async (
   }
 };
 
-/**
- * a playlist to a .m3u file
- * TODO: investigate why the playlist path are relative, and not absolute
- */
-const exportToM3u = async (playlistID: string): Promise<void> => {
-  const playlist: Playlist = await library.getPlaylist(playlistID);
-  const tracks: Track[] = await library.getTracks(playlist.tracks);
-
-  ipcRenderer.send(
-    channels.PLAYLIST_EXPORT,
-    playlist.name,
-    tracks.map((track) => track.path),
-  );
-};
-
 // Should we use something else to harmonize between zustand and non-store APIs?
 const PlaylistsAPI = {
   play,
@@ -190,7 +174,6 @@ const PlaylistsAPI = {
   reorderTracks,
   removeTracks,
   duplicate,
-  exportToM3u,
 };
 
 export default PlaylistsAPI;

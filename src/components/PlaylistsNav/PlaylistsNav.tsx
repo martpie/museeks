@@ -8,6 +8,7 @@ import PlaylistsAPI from '../../stores/PlaylistsAPI';
 import PlaylistsNavLink from '../PlaylistsNavLink/PlaylistsNavLink';
 import { Playlist } from '../../generated/typings';
 import { logAndNotifyError } from '../../lib/utils';
+import library from '../../lib/library';
 
 import styles from './PlaylistsNav.module.css';
 
@@ -46,7 +47,7 @@ export default function PlaylistsNav(props: Props) {
         MenuItem.new({
           text: 'Export',
           action: async () => {
-            await PlaylistsAPI.exportToM3u(playlistID);
+            await library.exportPlaylist(playlistID);
           },
         }),
       ]);

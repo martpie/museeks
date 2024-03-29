@@ -8,7 +8,7 @@ import { /** useEffect,*/ useState } from 'react';
 import styles from './DropzoneImport.module.css';
 
 export default function DropzoneImport() {
-  const [isShown, setIsShown] = useState(false);
+  const [isShown, _setIsShown] = useState(false);
 
   // const unlisten = await getCurrent().onFileDropEvent((event) => {
   //   if (event.payload.type === 'hover') {
