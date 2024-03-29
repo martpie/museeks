@@ -9,6 +9,9 @@ use thiserror::Error;
 #[derive(Debug, Error)]
 pub enum MuseeksError {
     #[error(transparent)]
+    Tauri(#[from] tauri::Error),
+
+    #[error(transparent)]
     Lofty(#[from] lofty::LoftyError),
 
     #[error(transparent)]
