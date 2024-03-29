@@ -10,10 +10,8 @@ import DropzoneImport from '../components/DropzoneImport/DropzoneImport';
 import MediaSessionEvents from '../components/Events/MediaSessionEvents';
 import AppEvents from '../components/Events/AppEvents';
 import PlayerEvents from '../components/Events/PlayerEvents';
-// import IPCPlayerEvents from "../components/Events/IPCPlayerEvents";
-// import IPCNavigationEvents from "../components/Events/IPCNavigationEvents";
+import IPCPlayerEvents from '../components/Events/IPCPlayerEvents';
 import GlobalKeyBindings from '../components/Events/GlobalKeyBindings';
-// import { useLibraryAPI } from "../stores/useLibraryStore";
 import SettingsAPI from '../stores/SettingsAPI';
 import IPCNavigationEvents from '../components/Events/IPCNavigationEvents';
 import LibraryEvents from '../components/Events/LibraryEvents';
@@ -34,9 +32,8 @@ export default function ViewRoot() {
   return (
     <div className={`${styles.root} os__${window.__MUSEEKS_PLATFORM}`}>
       {/** Bunch of global event handlers */}
-      {/** TODO: */}
       <IPCNavigationEvents />
-      {/* <IPCPlayerEvents />*/}
+      <IPCPlayerEvents />
       <AppEvents />
       <LibraryEvents />
       <PlayerEvents />

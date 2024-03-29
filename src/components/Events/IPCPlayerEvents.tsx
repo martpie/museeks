@@ -1,53 +1,53 @@
 import { useEffect } from 'react';
+import { getCurrent } from '@tauri-apps/api/webviewWindow';
 
-import channels from '../../lib/ipc-channels';
 import { usePlayerAPI } from '../../stores/usePlayerStore';
 import player from '../../lib/player';
+import { IPCEvent } from '../../generated/typings';
 
 /**
- * Handle app-level IPC Events init and cleanup
+ * Handle back-end events attempting to control the player
+ * IMPROVE ME: this should probably be refactored in some ways, the player should
+ * send Tauri events, and there should only be listeners here.
  */
 function IPCPlayerEvents() {
   const playerAPI = usePlayerAPI();
 
   useEffect(() => {
-    function play() {
-      playerAPI.play();
-    }
+    const { listen, emit } = getCurrent();
 
-    function onPlay() {
+    function emitPlayToBackEnd() {
       const track = player.getTrack();
 
       if (!track) throw new Error('Track is undefined');
 
-      ipcRenderer.send(channels.PLAYBACK_PLAY, track ?? null);
-      ipcRenderer.send(channels.PLAYBACK_TRACK_CHANGE, track);
+      emit('PlaybackPlay' satisfies IPCEvent, track ?? null);
+      emit('PlaybackTrackChange' satisfies IPCEvent, track);
     }
 
-    function onPause() {
-      ipcRenderer.send(channels.PLAYBACK_PAUSE);
+    function emitPauseToBackend() {
+      emit('PlaybackPause' satisfies IPCEvent);
     }
 
-    ipcRenderer.on(channels.PLAYBACK_PLAY, play);
-    ipcRenderer.on(channels.PLAYBACK_PAUSE, playerAPI.pause);
-    ipcRenderer.on(channels.PLAYBACK_PLAYPAUSE, playerAPI.playPause);
-    ipcRenderer.on(channels.PLAYBACK_PREVIOUS, playerAPI.previous);
-    ipcRenderer.on(channels.PLAYBACK_NEXT, playerAPI.next);
-    ipcRenderer.on(channels.PLAYBACK_STOP, playerAPI.stop);
+    const unlisteners = [
+      listen('PlaybackPlay' satisfies IPCEvent, playerAPI.play),
+      listen('PlaybackPause' satisfies IPCEvent, playerAPI.pause),
+      listen('PlaybackPlayPause' satisfies IPCEvent, playerAPI.playPause),
+      listen('PlaybackPrevious' satisfies IPCEvent, playerAPI.previous),
+      listen('PlaybackNext' satisfies IPCEvent, playerAPI.next),
+      listen('PlaybackStop' satisfies IPCEvent, playerAPI.stop),
+    ];
 
-    player.getAudio().addEventListener('play', onPlay);
-    player.getAudio().addEventListener('pause', onPause);
+    player.getAudio().addEventListener('play', emitPlayToBackEnd);
+    player.getAudio().addEventListener('pause', emitPauseToBackend);
 
     return function cleanup() {
-      ipcRenderer.off(channels.PLAYBACK_PLAY, play);
-      ipcRenderer.off(channels.PLAYBACK_PAUSE, playerAPI.pause);
-      ipcRenderer.off(channels.PLAYBACK_PLAYPAUSE, playerAPI.playPause);
-      ipcRenderer.off(channels.PLAYBACK_PREVIOUS, playerAPI.previous);
-      ipcRenderer.off(channels.PLAYBACK_NEXT, playerAPI.next);
-      ipcRenderer.off(channels.PLAYBACK_STOP, playerAPI.stop);
+      Promise.all(unlisteners).then((values) => {
+        values.forEach((u) => u());
+      });
 
-      player.getAudio().removeEventListener('play', onPlay);
-      player.getAudio().removeEventListener('pause', onPause);
+      player.getAudio().removeEventListener('play', emitPlayToBackEnd);
+      player.getAudio().removeEventListener('pause', emitPauseToBackend);
     };
   }, [playerAPI]);
 

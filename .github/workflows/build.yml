@@ -18,6 +18,7 @@ concurrency:
 jobs:
   qa:
     # For QA (lint, test, etc), Linux is enough
+    # https://github.com/tauri-apps/tauri-action/issues/745#issuecomment-2024998604
     runs-on: ubuntu-22.04
 
     steps:
@@ -33,7 +34,7 @@ jobs:
       - name: install dependencies (ubuntu only)
         run: |
           sudo apt-get update
-          sudo apt-get install -y libgtk-3-dev libwebkit2gtk-4.0-dev libappindicator3-dev librsvg2-dev patchelf
+          sudo apt-get install -y libgtk-3-dev libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile
@@ -53,7 +54,10 @@ jobs:
       - name: 'Test: unit'
         run: 'yarn run test:unit'
 
-      - name: 'Test: typings'
+      - name: 'Test: Rust + Code Generation'
+        run: 'cargo test --manifest-path src-tauri/Cargo.toml'
+
+      - name: 'Test: Types'
         run: 'yarn run test:typings'
 
       - name: Build application
@@ -68,6 +72,8 @@ jobs:
   # https://docs.github.com/en/free-pro-team@latest/actions/reference/specifications-for-github-hosted-runners
 
   binaries:
+    needs: qa
+
     permissions:
       contents: write
     strategy:

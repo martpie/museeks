@@ -36,6 +36,7 @@ module.exports = {
       },
     ],
     // We let TypeScript and Vite handle that
+    '@typescript-eslint/no-unused-vars': 'off',
     'import/no-unresolved': 'off',
     'spaced-comment': ['error', 'always'],
     'no-console': 2,

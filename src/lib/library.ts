@@ -3,7 +3,7 @@ import { convertFileSrc, invoke } from '@tauri-apps/api/core';
 import type { Playlist, Track } from '../generated/typings';
 
 /**
- * Library Bridge for the UI to communicate with the backend
+ * Bridge for the UI to communicate with the backend and manipulate the Database
  */
 const library = {
   // ---------------------------------------------------------------------------
@@ -20,8 +20,8 @@ const library = {
     });
   },
 
-  async updateTrack(track: Track) {
-    // TODO:
+  // TODO:
+  async updateTrack(_track: Track) {
     throw new Error('Not implemented');
   },
 
@@ -75,6 +75,11 @@ const library = {
     });
   },
 
+  // TODO: m3u export
+  async exportPlaylist(_playlistID: string): Promise<void> {
+    throw new Error('not implemented');
+  },
+
   async deletePlaylist(id: string): Promise<void> {
     return invoke('plugin:database|delete_playlist', {
       id,
@@ -99,8 +104,6 @@ const library = {
 
     return cover.startsWith('data:') ? cover : convertFileSrc(cover);
   },
-
-  // removeTracks
 };
 
 export default library;
