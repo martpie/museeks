@@ -36,8 +36,6 @@ pub const SUPPORTED_TRACKS_EXTENSIONS: [&str; 12] = [
 /** ----------------------------------------------------------------------------
  * Databases
  * exposes databases for tracks and playlists
- * TODO:
- *   - Export all needed structs to a single file: ts-rs#59
  * -------------------------------------------------------------------------- */
 pub struct DB {
     pub tracks: AsyncDatabase,
@@ -99,11 +97,12 @@ impl DB {
      *
      * Doc: https://github.com/khonsulabs/bonsaidb/blob/main/examples/basic-local/examples/basic-local-multidb.rs
      */
-    pub async fn insert_track(&self, tracks: &Vec<Track>) -> AnyResult<()> {
+    pub async fn insert_tracks(&self, tracks: &Vec<Track>) -> AnyResult<()> {
         // BonsaiDB does not work well (as of today) with a lot of very small
-        // insertions, so let's insert tracks by batch instead then
-        // TODO: if a batch fails (because for example a duplicate path), the whole
-        // transaction should not
+        // insertions, so let's insert tracks by batch instead.
+        // If a batch fails (because for example a duplicate path), the whole transaction
+        // will fail. This should not happen except something is really wrong (hash collision,
+        // no disk space, etc).
         let batches: Vec<Vec<Track>> = tracks.chunks(INSERTION_BATCH).map(|x| x.to_vec()).collect();
 
         info!("Splitting tracks in {} batche(s)", batches.len());
@@ -120,10 +119,6 @@ impl DB {
 
             match result {
                 Ok(_) => (),
-                // TODO:
-                // Err(bonsaidb::core::Error::DocumentConflict(_err, _)) => {
-                //     info!("Track already in library: '{:?}'", &track.path);
-                // }
                 Err(err) => {
                     error!("Failed to insert tracks: {:?}", err);
                 }
@@ -322,9 +317,26 @@ async fn import_tracks_to_library<R: Runtime>(
         info!("  - {:?}", path)
     }
 
-    let paths = scan_dirs(&import_paths, &SUPPORTED_TRACKS_EXTENSIONS);
-    let task_count = paths.len();
+    // Scan all directories for valid files to be scanned and imported
+    let mut paths = scan_dirs(&import_paths, &SUPPORTED_TRACKS_EXTENSIONS);
+    let scanned_paths_count = paths.len();
 
+    // Remove files that are already in the DB (speedup scan + prevent duplicate errors)
+    let existing_paths = db
+        .get_all_tracks()
+        .await?
+        .iter()
+        .map(move |track| track.path.to_owned())
+        .collect::<HashSet<_>>();
+
+    paths.retain(|path| !existing_paths.contains(path));
+
+    info!(
+        "{} tracks already imported (they will be skipped)",
+        scanned_paths_count - paths.len()
+    );
+
+    // Setup progress tracking for the UI
     let progress = Arc::new(AtomicUsize::new(1));
     let total = Arc::new(AtomicUsize::new(paths.len()));
 
@@ -339,7 +351,7 @@ async fn import_tracks_to_library<R: Runtime>(
         .unwrap();
 
     // Let's get all tracks ID3
-    info!("Importing ID3 tags from {} files", task_count);
+    info!("Importing ID3 tags from {} files", paths.len());
     let scan_logger = TimeLogger::new("Scanned all id3 tags".into());
 
     let tracks = &paths
@@ -366,7 +378,6 @@ async fn import_tracks_to_library<R: Runtime>(
                 Ok(tagged_file) => {
                     let tag = tagged_file.primary_tag()?;
 
-                    // TODO: make sure we don't save tracks that are already in DB
                     // IMPROVE ME: Is there a more idiomatic way of doing the following?
                     let mut artists: Vec<String> = tag
                         .get_strings(&ItemKey::TrackArtist)
@@ -430,7 +441,7 @@ async fn import_tracks_to_library<R: Runtime>(
     let db_insert_logger: TimeLogger = TimeLogger::new("Inserted tracks".into());
 
     // Insert all tracks in the DB
-    let result = db.insert_track(tracks).await;
+    let result = db.insert_tracks(tracks).await;
 
     if result.is_err() {
         warn!("Something went wrong when inserting tracks");
