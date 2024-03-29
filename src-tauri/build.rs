@@ -7,6 +7,10 @@ fn main() {
         tauri_build::Attributes::new()
             .codegen(tauri_build::CodegenContext::new())
             .plugin(
+                "app-menu",
+                tauri_build::InlinedPlugin::new().commands(&["toggle"]),
+            )
+            .plugin(
                 "config",
                 tauri_build::InlinedPlugin::new().commands(&["get_config", "set_config"]),
             )

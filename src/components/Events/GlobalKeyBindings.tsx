@@ -1,6 +1,7 @@
 import { useCallback } from 'react';
 import Keybinding from 'react-keybinding-component';
 import { useNavigate } from 'react-router-dom';
+import { invoke } from '@tauri-apps/api/core';
 
 import { usePlayerAPI } from '../../stores/usePlayerStore';
 import { isCtrlKey } from '../../lib/utils-events';
@@ -39,6 +40,9 @@ function GlobalKeyBindings() {
           e.preventDefault();
           e.stopPropagation();
           playerAPI.jumpTo(player.getCurrentTime() + 10);
+          break;
+        case 'Alt':
+          await invoke('plugin:app-menu|toggle');
           break;
         default:
           break;

@@ -6,11 +6,34 @@ use tauri::{
     Manager, Runtime,
 };
 
+use crate::libs::error::AnyResult;
 use crate::libs::events::IPCEvent;
+
+#[tauri::command]
+pub async fn toggle<R: Runtime>(window: tauri::Window<R>) -> AnyResult<()> {
+    // On macOS, the menu is global, and thus does not need to be toggled
+    #[cfg(not(target_os = "macos"))]
+    {
+        match window.is_menu_visible() {
+            Ok(true) => {
+                window.hide_menu()?;
+            }
+            Ok(false) => {
+                window.show_menu()?;
+            }
+            _ => (),
+        }
+    }
+
+    #[cfg(target_os = "macos")]
+    drop(window); // Suppress warning about unused variable.
+
+    Ok(())
+}
 
 pub fn init<R: Runtime>() -> TauriPlugin<R> {
     Builder::new("app-menu")
-        .invoke_handler(tauri::generate_handler![/*popup, toggle*/])
+        .invoke_handler(tauri::generate_handler![toggle])
         .on_window_ready(|window| {
             let app_handle = window.app_handle();
 
@@ -158,7 +181,6 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
                 window.hide_menu().unwrap();
             }
 
-            // TODO: hide/show menu with Alt on Linux + Windows
             // TODO: support menu events
             // https://github.com/tauri-apps/tauri/issues/9060
             // window.on_menu_event(|_app_handle, event| {
