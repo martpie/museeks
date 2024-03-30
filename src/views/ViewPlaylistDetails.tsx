@@ -14,7 +14,7 @@ import { filterTracks } from '../lib/utils-library';
 import useLibraryStore from '../stores/useLibraryStore';
 import usePlayingTrackID from '../hooks/usePlayingTrackID';
 import config from '../lib/config';
-import library from '../lib/library';
+import database from '../lib/database';
 
 import { LoaderData } from './router';
 
@@ -106,10 +106,10 @@ ViewPlaylistDetails.loader = async ({ params }: LoaderFunctionArgs) => {
   }
 
   try {
-    const playlist = await library.getPlaylist(params.playlistID);
+    const playlist = await database.getPlaylist(params.playlistID);
     return {
-      playlists: await library.getAllPlaylists(),
-      playlistTracks: await library.getTracks(playlist.tracks),
+      playlists: await database.getAllPlaylists(),
+      playlistTracks: await database.getTracks(playlist.tracks),
       tracksDensity: await config.get('track_view_density'),
     };
   } catch (err) {

@@ -1,11 +1,11 @@
-import { convertFileSrc, invoke } from '@tauri-apps/api/core';
+import { invoke } from '@tauri-apps/api/core';
 
 import type { Playlist, Track } from '../generated/typings';
 
 /**
  * Bridge for the UI to communicate with the backend and manipulate the Database
  */
-const library = {
+const database = {
   // ---------------------------------------------------------------------------
   // Playlists read/write actions
   // ---------------------------------------------------------------------------
@@ -87,23 +87,11 @@ const library = {
   },
 
   // ---------------------------------------------------------------------------
-  // Misc.
+  // Common
   // ---------------------------------------------------------------------------
   async reset(): Promise<string | null> {
     return invoke('plugin:database|reset');
   },
-
-  async getCover(path: string): Promise<string | null> {
-    const cover = await invoke<string | null>('plugin:cover|get_cover', {
-      path,
-    });
-
-    if (cover === null) {
-      return null;
-    }
-
-    return cover.startsWith('data:') ? cover : convertFileSrc(cover);
-  },
 };
 
-export default library;
+export default database;

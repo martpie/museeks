@@ -9,7 +9,7 @@ import {
 import PlaylistsNav from '../components/PlaylistsNav/PlaylistsNav';
 import * as ViewMessage from '../elements/ViewMessage/ViewMessage';
 import PlaylistsAPI from '../stores/PlaylistsAPI';
-import library from '../lib/library';
+import database from '../lib/database';
 
 import { LoaderData } from './router';
 import appStyles from './Root.module.css';
@@ -50,7 +50,7 @@ export default function ViewPlaylists() {
 export type PlaylistsLoaderData = LoaderData<typeof ViewPlaylists.loader>;
 
 ViewPlaylists.loader = async ({ params }: LoaderFunctionArgs) => {
-  const playlists = await library.getAllPlaylists();
+  const playlists = await database.getAllPlaylists();
   const [firstPlaylist] = playlists;
   const { playlistID } = params;
 

@@ -1,6 +1,6 @@
 import { Playlist } from '../generated/typings';
 import router from '../views/router';
-import library from '../lib/library';
+import database from '../lib/database';
 import { logAndNotifyError } from '../lib/utils';
 import { invalidate } from '../lib/query';
 
@@ -12,8 +12,8 @@ import usePlayerStore from './usePlayerStore';
  */
 const play = async (playlistID: string): Promise<void> => {
   try {
-    const playlist = await library.getPlaylist(playlistID);
-    const tracks = await library.getTracks(playlist.tracks);
+    const playlist = await database.getPlaylist(playlistID);
+    const tracks = await database.getTracks(playlist.tracks);
     usePlayerStore.getState().api.start(tracks);
   } catch (err) {
     logAndNotifyError(err);
@@ -29,7 +29,7 @@ const create = async (
   redirect = false,
 ) => {
   try {
-    const playlist = await library.createPlaylist(name, trackIDs);
+    const playlist = await database.createPlaylist(name, trackIDs);
     invalidate();
 
     if (redirect) router.navigate(`/playlists/${playlist._id}`);
@@ -47,7 +47,7 @@ const create = async (
  */
 const rename = async (playlistID: string, name: string): Promise<void> => {
   try {
-    await library.renamePlaylist(playlistID, name);
+    await database.renamePlaylist(playlistID, name);
     invalidate();
   } catch (err) {
     logAndNotifyError(err);
@@ -59,7 +59,7 @@ const rename = async (playlistID: string, name: string): Promise<void> => {
  */
 const remove = async (playlistID: string): Promise<void> => {
   try {
-    await library.deletePlaylist(playlistID);
+    await database.deletePlaylist(playlistID);
     // FIX these when there is no more playlists
     invalidate();
   } catch (err) {
@@ -81,9 +81,9 @@ const addTracks = async (
   const toastsAPI = useToastsStore.getState().api;
 
   try {
-    const playlist = await library.getPlaylist(playlistID);
+    const playlist = await database.getPlaylist(playlistID);
     const playlistTracks = playlist.tracks.concat(tracksIDs);
-    await library.setPlaylistTracks(playlistID, playlistTracks);
+    await database.setPlaylistTracks(playlistID, playlistTracks);
     invalidate();
     toastsAPI.add(
       'success',
@@ -102,11 +102,11 @@ const removeTracks = async (
   tracksIDs: string[],
 ): Promise<void> => {
   try {
-    const playlist = await library.getPlaylist(playlistID);
+    const playlist = await database.getPlaylist(playlistID);
     const playlistTracks = playlist.tracks.filter(
       (elem: string) => !tracksIDs.includes(elem),
     );
-    await library.setPlaylistTracks(playlistID, playlistTracks);
+    await database.setPlaylistTracks(playlistID, playlistTracks);
     invalidate();
   } catch (err) {
     logAndNotifyError(err);
@@ -118,8 +118,8 @@ const removeTracks = async (
  */
 const duplicate = async (playlistID: string): Promise<void> => {
   try {
-    const playlist = await library.getPlaylist(playlistID);
-    await library.createPlaylist(`Copy of ${playlist.name}`, playlist.tracks);
+    const playlist = await database.getPlaylist(playlistID);
+    await database.createPlaylist(`Copy of ${playlist.name}`, playlist.tracks);
     invalidate();
   } catch (err) {
     logAndNotifyError(err);
@@ -140,7 +140,7 @@ const reorderTracks = async (
   if (tracksIDs.includes(targetTrackID)) return;
 
   try {
-    const playlist: Playlist = await library.getPlaylist(playlistID);
+    const playlist: Playlist = await database.getPlaylist(playlistID);
 
     const newTracks = playlist.tracks.filter((id) => !tracksIDs.includes(id));
     let targetIndex = newTracks.indexOf(targetTrackID);
@@ -157,7 +157,7 @@ const reorderTracks = async (
 
     newTracks.splice(targetIndex + 1, 0, ...tracksIDs);
 
-    await library.setPlaylistTracks(playlistID, newTracks);
+    await database.setPlaylistTracks(playlistID, newTracks);
     invalidate();
   } catch (err) {
     logAndNotifyError(err);

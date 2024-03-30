@@ -8,7 +8,7 @@ import {
 import * as Setting from '../components/Setting/Setting';
 import Button from '../elements/Button/Button';
 import { useLibraryAPI } from '../stores/useLibraryStore';
-import library from '../lib/library';
+import database from '../lib/database';
 import { Track } from '../generated/typings';
 
 import { LoaderData } from './router';
@@ -142,7 +142,7 @@ ViewTrackDetails.loader = async ({ params }: LoaderFunctionArgs) => {
     throw new Error(`Track ID should not be null`);
   }
 
-  const [track] = await library.getTracks([trackID]);
+  const [track] = await database.getTracks([trackID]);
 
   if (track == null) {
     throw new Error('Track not found');

@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 
 import { usePlayerAPI } from '../../stores/usePlayerStore';
 import player from '../../lib/player';
-import library from '../../lib/library';
+import { getCover } from '../../lib/cover';
 
 /**
  * Integration for MediaSession (mpris, macOS player controls etc)...
@@ -53,7 +53,7 @@ async function syncArtwork() {
   const track = player.getTrack();
 
   if (track) {
-    const cover = await library.getCover(track.path);
+    const cover = await getCover(track.path);
 
     navigator.mediaSession.metadata = new MediaMetadata({
       title: track.title,
