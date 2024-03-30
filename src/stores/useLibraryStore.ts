@@ -2,7 +2,7 @@ import { ask, open } from '@tauri-apps/plugin-dialog';
 
 import { SortBy, SortOrder, Track } from '../generated/typings';
 import config from '../lib/config';
-import library from '../lib/library';
+import database from '../lib/database';
 import { logAndNotifyError } from '../lib/utils';
 import { invalidate } from '../lib/query';
 
@@ -94,7 +94,7 @@ const useLibraryStore = createStore<LibraryState>((set, get) => ({
         }
 
         set({ refreshing: true });
-        await library.importTracks(result);
+        await database.importTracks(result);
         // TODO: re-implement progress
         invalidate();
         return;
@@ -134,7 +134,7 @@ const useLibraryStore = createStore<LibraryState>((set, get) => ({
       if (confirmed) {
         // button possition, here 'remove'
         // Remove tracks from the Track collection
-        await library.removeTracks(tracksIDs);
+        await database.removeTracks(tracksIDs);
 
         invalidate();
         // That would be great to remove those ids from all the playlists, but it's not easy
@@ -160,7 +160,7 @@ const useLibraryStore = createStore<LibraryState>((set, get) => ({
         );
 
         if (confirmed) {
-          await library.reset();
+          await database.reset();
           useToastsStore.getState().api.add('success', 'Library was reset');
           invalidate();
         }
@@ -182,7 +182,7 @@ const useLibraryStore = createStore<LibraryState>((set, get) => ({
       newFields: Pick<Track, 'title' | 'artists' | 'album' | 'genres'>,
     ): Promise<void> => {
       try {
-        let [track] = await library.getTracks([trackID]);
+        let [track] = await database.getTracks([trackID]);
 
         if (!track) {
           throw new Error(
@@ -195,7 +195,7 @@ const useLibraryStore = createStore<LibraryState>((set, get) => ({
           ...newFields,
         };
 
-        await library.updateTrack(track);
+        await database.updateTrack(track);
 
         invalidate();
       } catch (err) {

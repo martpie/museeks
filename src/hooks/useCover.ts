@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { Track } from '../generated/typings';
-import library from '../lib/library';
+import { getCover } from '../lib/cover';
 
 /**
  * Given a track, get its associated cover as an Image src
@@ -11,7 +11,7 @@ export default function useCover(track: Track): string | null {
 
   useEffect(() => {
     const refreshCover = async () => {
-      const cover = await library.getCover(track.path);
+      const cover = await getCover(track.path);
       setCoverPath(cover);
     };
 

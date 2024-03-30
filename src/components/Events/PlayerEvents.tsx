@@ -8,7 +8,7 @@ import { useLibraryAPI } from '../../stores/useLibraryStore';
 import player from '../../lib/player';
 import config from '../../lib/config';
 import { logAndNotifyError } from '../../lib/utils';
-import library from '../../lib/library';
+import { getCover } from '../../lib/cover';
 
 const AUDIO_ERRORS = {
   aborted: 'The video playback was aborted.',
@@ -67,7 +67,7 @@ function PlayerEvents() {
       }
 
       // FIXME: cover is not working as intended
-      const cover = await library.getCover(track.path);
+      const cover = await getCover(track.path);
 
       sendNotification({
         title: track.title,

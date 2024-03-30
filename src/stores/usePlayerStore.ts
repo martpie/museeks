@@ -8,7 +8,7 @@ import router from '../views/router';
 import player from '../lib/player';
 import { Track, Repeat } from '../generated/typings';
 import config from '../lib/config';
-import library from '../lib/library';
+import database from '../lib/database';
 import { logAndNotifyError } from '../lib/utils';
 
 import { createStore } from './store-helpers';
@@ -436,7 +436,7 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
      */
     addInQueue: async (tracksIDs) => {
       const { queue, queueCursor } = get();
-      const tracks = await library.getTracks(tracksIDs);
+      const tracks = await database.getTracks(tracksIDs);
       const newQueue = [...queue, ...tracks];
 
       set({
@@ -450,7 +450,7 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
      * Add tracks at the beginning of the queue
      */
     addNextInQueue: async (tracksIDs) => {
-      const tracks = await library.getTracks(tracksIDs);
+      const tracks = await database.getTracks(tracksIDs);
 
       const { queueCursor } = get();
       const queue = [...get().queue];

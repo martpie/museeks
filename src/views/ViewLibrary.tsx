@@ -8,7 +8,7 @@ import useLibraryStore from '../stores/useLibraryStore';
 import usePlayingTrackID from '../hooks/usePlayingTrackID';
 import useFilteredTracks from '../hooks/useFilteredTracks';
 import config from '../lib/config';
-import library from '../lib/library';
+import database from '../lib/database';
 
 import { LoaderData } from './router';
 import appStyles from './Root.module.css';
@@ -26,7 +26,7 @@ export default function ViewLibrary() {
   // Using stale-while-revalidate libraries help us (fake-)loading this page faster
   const { data: tracks, isLoading } = useQuery({
     queryKey: ['tracks'],
-    queryFn: library.getAllTracks,
+    queryFn: database.getAllTracks,
     refetchOnWindowFocus: false,
     refetchOnReconnect: false,
   });
@@ -108,7 +108,7 @@ export type LibraryLoaderData = LoaderData<typeof ViewLibrary.loader>;
 
 ViewLibrary.loader = async () => {
   return {
-    playlists: await library.getAllPlaylists(),
+    playlists: await database.getAllPlaylists(),
     tracksDensity: (await config.get('track_view_density')) as
       | 'compact'
       | 'normal',
