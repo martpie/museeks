@@ -1,5 +1,6 @@
 use log::info;
 use tauri::plugin::{Builder, TauriPlugin};
+use tauri::webview::PageLoadEvent;
 use tauri::{Manager, Runtime, State};
 
 use crate::libs::error::AnyResult;
@@ -18,10 +19,10 @@ pub fn set(config_manager: State<ConfigManager>, default_view: DefaultView) -> A
 pub fn init<R: Runtime>() -> TauriPlugin<R> {
     Builder::<R>::new("default-view")
         .invoke_handler(tauri::generate_handler![set])
-        .on_webview_ready(|mut window| {
-            if window.label().eq("main") {
-                let config_manager = window.state::<ConfigManager>();
-                let mut url = window.url();
+        .on_page_load(|webview, payload| {
+            if webview.label().eq("main") && payload.event() == PageLoadEvent::Finished {
+                let config_manager = webview.state::<ConfigManager>();
+                let mut url = payload.url().clone();
                 let default_view = config_manager.get().default_view;
 
                 let fragment = match default_view {
@@ -31,7 +32,14 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
 
                 info!("Navigating to '{}'", fragment);
                 url.set_fragment(Some(fragment));
-                window.navigate(url);
+
+                // For some reasons, it does not seem possible to navigate directly
+                // from the webview argument, as we cannot make it &mut
+                webview
+                    .app_handle()
+                    .get_webview_window("main")
+                    .unwrap()
+                    .navigate(url)
             }
         })
         .build()
