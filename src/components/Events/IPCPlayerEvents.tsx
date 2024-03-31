@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { getCurrent } from '@tauri-apps/api/webviewWindow';
+import { listen, emit } from '@tauri-apps/api/event';
 
 import { usePlayerAPI } from '../../stores/usePlayerStore';
 import player from '../../lib/player';
@@ -14,8 +14,6 @@ function IPCPlayerEvents() {
   const playerAPI = usePlayerAPI();
 
   useEffect(() => {
-    const { listen, emit } = getCurrent();
-
     function emitPlayToBackEnd() {
       const track = player.getTrack();
 
