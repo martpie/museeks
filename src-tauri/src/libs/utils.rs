@@ -29,7 +29,8 @@ impl TimeLogger {
 }
 
 /**
- * Check if a directory or a file is visible or not
+ * Check if a directory or a file is visible or not, by checking if it start
+ * with a dot
  */
 fn is_dir_visible(entry: &walkdir::DirEntry) -> bool {
     entry

@@ -55,6 +55,28 @@ impl DB {
     }
 
     /**
+     * We leverage UUID v3 on tracks paths to easily retrieve tracks by path.
+     * This is not great and ideally we should use a DB view instead. One day.
+     */
+    fn get_track_id_for_path(&self, path: &PathBuf) -> Option<String> {
+        match std::fs::canonicalize(path) {
+            Ok(canonicalized_path) => {
+                return Some(
+                    Uuid::new_v3(
+                        &Uuid::NAMESPACE_OID,
+                        canonicalized_path.to_string_lossy().as_bytes(),
+                    )
+                    .to_string(),
+                );
+            }
+            Err(err) => {
+                error!(r#"ID could not be generated for path {:?}: {}"#, path, err);
+                return None;
+            }
+        };
+    }
+
+    /**
      * Get all the tracks (and their content) from the database
      */
     pub async fn get_all_tracks(&self) -> AnyResult<Vec<Track>> {
@@ -68,8 +90,8 @@ impl DB {
     /**
      * Get tracks (and their content) given a set of document IDs
      */
-    pub async fn get_tracks(&self, track_ids: Vec<String>) -> AnyResult<Vec<Track>> {
-        let docs = self.tracks_collection().get_multiple(&track_ids).await?;
+    pub async fn get_tracks(&self, track_ids: &Vec<String>) -> AnyResult<Vec<Track>> {
+        let docs = self.tracks_collection().get_multiple(track_ids).await?;
 
         match self.decode_docs::<Track>(docs) {
             Ok(mut tracks) => {
@@ -107,8 +129,6 @@ impl DB {
         // will fail. This should not happen except something is really wrong (hash collision,
         // no disk space, etc).
         let batches: Vec<Vec<Track>> = tracks.chunks(INSERTION_BATCH).map(|x| x.to_vec()).collect();
-
-        info!("Splitting tracks in {} batche(s)", batches.len());
 
         for batch in batches {
             let mut tx = Transaction::new();
@@ -321,8 +341,8 @@ async fn import_tracks_to_library<R: Runtime>(
     }
 
     // Scan all directories for valid files to be scanned and imported
-    let mut paths = scan_dirs(&import_paths, &SUPPORTED_TRACKS_EXTENSIONS);
-    let scanned_paths_count = paths.len();
+    let mut track_paths = scan_dirs(&import_paths, &SUPPORTED_TRACKS_EXTENSIONS);
+    let scanned_paths_count = track_paths.len();
 
     // Remove files that are already in the DB (speedup scan + prevent duplicate errors)
     let existing_paths = db
@@ -332,32 +352,32 @@ async fn import_tracks_to_library<R: Runtime>(
         .map(move |track| track.path.to_owned())
         .collect::<HashSet<_>>();
 
-    paths.retain(|path| !existing_paths.contains(path));
+    track_paths.retain(|path| !existing_paths.contains(path));
 
     info!(
         "{} tracks already imported (they will be skipped)",
-        scanned_paths_count - paths.len()
+        scanned_paths_count - track_paths.len()
     );
 
     // Setup progress tracking for the UI
     let progress = Arc::new(AtomicUsize::new(1));
-    let total = Arc::new(AtomicUsize::new(paths.len()));
+    let total = Arc::new(AtomicUsize::new(track_paths.len()));
 
     webview_window
         .emit(
             IPCEvent::LibraryScanProgress.as_ref(),
             Progress {
                 current: 0,
-                total: paths.len(),
+                total: track_paths.len(),
             },
         )
         .unwrap();
 
     // Let's get all tracks ID3
-    info!("Importing ID3 tags from {} files", paths.len());
+    info!("Importing ID3 tags from {} files", track_paths.len());
     let scan_logger = TimeLogger::new("Scanned all id3 tags".into());
 
-    let tracks = &paths
+    let tracks = &track_paths
         .par_iter()
         .map(|path| -> Option<Track> {
             // let counter = processed.clone();
@@ -398,9 +418,12 @@ async fn import_tracks_to_library<R: Runtime>(
                         artists = vec!["Unknown Artist".into()];
                     }
 
+                    let Some(id) = db.get_track_id_for_path(path) else {
+                        return None;
+                    };
+
                     Some(Track {
-                        _id: Uuid::new_v3(&Uuid::NAMESPACE_OID, path.to_string_lossy().as_bytes())
-                            .to_string(),
+                        _id: id,
                         title: tag
                             .get_string(&ItemKey::TrackTitle)
                             .unwrap_or("Unknown")
@@ -438,12 +461,14 @@ async fn import_tracks_to_library<R: Runtime>(
         .collect::<Vec<Track>>();
 
     info!("{} tracks successfully scanned", tracks.len());
-    info!("{} tracks failed to be scanned", paths.len() - tracks.len());
+    info!(
+        "{} tracks failed to be scanned",
+        track_paths.len() - tracks.len()
+    );
     scan_logger.complete();
 
-    let db_insert_logger: TimeLogger = TimeLogger::new("Inserted tracks".into());
-
     // Insert all tracks in the DB
+    let db_insert_logger: TimeLogger = TimeLogger::new("Inserted tracks".into());
     let result = db.insert_tracks(tracks).await;
 
     if result.is_err() {
@@ -452,8 +477,64 @@ async fn import_tracks_to_library<R: Runtime>(
 
     db_insert_logger.complete();
 
-    let tracks = db.get_all_tracks().await.unwrap();
+    // Now that all tracks are inserted, let's scan for playlists, and import them
+    let playlist_paths = scan_dirs(&import_paths, &SUPPORTED_PLAYLISTS_EXTENSIONS);
 
+    info!("Found {} playlist(s) to import", playlist_paths.len());
+
+    for playlist_path in playlist_paths {
+        let mut reader = m3u::Reader::open(&playlist_path).unwrap();
+        let playlist_dir_path = playlist_path.parent().unwrap();
+
+        let track_paths: Vec<PathBuf> = reader
+            .entries()
+            .filter_map(|entry| {
+                let Ok(entry) = entry else {
+                    return None;
+                };
+
+                match entry {
+                    m3u::Entry::Path(path) => Some(playlist_dir_path.join(path)),
+                    _ => return None, // We don't support (yet?) URLs in playlists
+                }
+            })
+            .collect();
+
+        // Ok, this is sketchy. To avoid having to create a TrackByPath DB View,
+        // let's guess the ID of the track with UUID::v3
+        let track_ids = track_paths
+            .iter()
+            .flat_map(|path| db.get_track_id_for_path(path))
+            .collect::<Vec<String>>();
+
+        let playlist_name = playlist_path
+            .file_stem()
+            .unwrap()
+            .to_str()
+            .unwrap_or("unknown playlist")
+            .to_owned();
+
+        let tracks = db.get_tracks(&track_ids).await?;
+
+        if tracks.len() != track_ids.len() {
+            warn!(
+                "Playlist track mismatch ({} from playlist, {} from library)",
+                track_paths.len(),
+                tracks.len()
+            );
+        }
+
+        info!(
+            r#"Creating playlist "{}" ({} tracks)"#,
+            &playlist_name,
+            &track_ids.len()
+        );
+
+        db.create_playlist(playlist_name, track_ids).await?;
+    }
+
+    // All good :]
+    let tracks = db.get_all_tracks().await?;
     Ok(tracks)
 }
 
@@ -464,8 +545,9 @@ async fn get_all_tracks(db: State<'_, DB>) -> AnyResult<Vec<Track>> {
 
 #[tauri::command]
 async fn get_tracks(db: State<'_, DB>, ids: Vec<String>) -> AnyResult<Vec<Track>> {
-    db.get_tracks(ids).await
+    db.get_tracks(&ids).await
 }
+
 #[tauri::command]
 async fn remove_tracks(db: State<'_, DB>, ids: Vec<String>) -> AnyResult<()> {
     db.remove_tracks(ids).await
@@ -518,7 +600,7 @@ async fn export_playlist<R: Runtime>(
         return Ok(());
     };
 
-    let tracks = db.get_tracks(playlist.tracks).await?;
+    let tracks = db.get_tracks(&playlist.tracks).await?;
 
     window
         .dialog()
