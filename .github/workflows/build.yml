@@ -40,7 +40,7 @@ jobs:
         run: yarn install --frozen-lockfile
 
       - name: 'Test: Rust (+ Generate Types)'
-        run: cargo test --manifest-path src-tauri/Cargo.toml
+        run: yarn run gen
 
       - name: 'Test: formatting'
         run: 'yarn run test:formatting'
@@ -60,7 +60,9 @@ jobs:
       - name: Build application
         run: yarn run build
 
-      - uses: numtide/clean-git-action@v1
+      # Check one of the command above did not generate any unexpected artifacts
+      # (like types generation)
+      - uses: CatChen/check-git-status-action@v1
 
   # Documentation on environments:
   # https://docs.github.com/en/free-pro-team@latest/actions/reference/specifications-for-github-hosted-runners
