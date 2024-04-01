@@ -30,6 +30,7 @@ fn main() {
                     "create_playlist",
                     "rename_playlist",
                     "set_playlist_tracks",
+                    "export_playlist",
                     "delete_playlist",
                     "reset",
                 ]),

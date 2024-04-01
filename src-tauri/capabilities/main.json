@@ -36,6 +36,7 @@
     "database:allow-create-playlist",
     "database:allow-rename-playlist",
     "database:allow-set-playlist-tracks",
+    "database:allow-export-playlist",
     "database:allow-delete-playlist",
     "database:allow-reset",
     "default-view:allow-set",
