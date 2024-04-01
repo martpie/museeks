@@ -113,8 +113,7 @@ ViewPlaylistDetails.loader = async ({ params }: LoaderFunctionArgs) => {
       tracksDensity: await config.get('track_view_density'),
     };
   } catch (err) {
-    // https://github.com/tauri-apps/tauri/issues/691
-    if (err === '"Playlist not found"') {
+    if (err === 'Playlist not found') {
       return redirect('/playlists');
     }
 
