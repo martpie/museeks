@@ -39,7 +39,7 @@ jobs:
       - name: Install dependencies
         run: yarn install --frozen-lockfile
 
-      - name: Generate types
+      - name: 'Test: Rust (+ Generate Types)'
         run: cargo test --manifest-path src-tauri/Cargo.toml
 
       - name: 'Test: formatting'
@@ -54,14 +54,13 @@ jobs:
       - name: 'Test: unit'
         run: 'yarn run test:unit'
 
-      - name: 'Test: Rust + Code Generation'
-        run: 'cargo test --manifest-path src-tauri/Cargo.toml'
-
       - name: 'Test: Types'
         run: 'yarn run test:typings'
 
       - name: Build application
         run: yarn run build
+
+      - uses: numtide/clean-git-action@v1
 
   # Documentation on environments:
   # https://docs.github.com/en/free-pro-team@latest/actions/reference/specifications-for-github-hosted-runners
