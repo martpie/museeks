@@ -177,7 +177,7 @@ dependencies = [
  "serde",
  "serde_repr",
  "tokio",
- "url",
+ "url 2.5.0",
  "zbus",
 ]
 
@@ -1820,7 +1820,7 @@ version = "1.2.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "e13624c2627564efccf4934284bdd98cbaa14e79b0b5a141218e507b3a823456"
 dependencies = [
- "percent-encoding",
+ "percent-encoding 2.3.1",
 ]
 
 [[package]]
@@ -2559,6 +2559,17 @@ checksum = "b9e0384b61958566e926dc50660321d12159025e767c18e043daf26b70104c39"
 
 [[package]]
 name = "idna"
+version = "0.1.5"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "38f09e0f0b1fb55fdee1f17470ad800da77af5186a1a76c026b679358b7e844e"
+dependencies = [
+ "matches",
+ "unicode-bidi",
+ "unicode-normalization",
+]
+
+[[package]]
+name = "idna"
 version = "0.5.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "634d9b1461af396cad843f47fdba5597a4f9e6ddd4bfb6ff5d85028c25cb12f6"
@@ -2949,6 +2960,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "m3u"
+version = "1.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "ca48bebf6a7397a81aa8b9dcc8a7cfcbacab3e15a28f49d2aabaa9e3c06def4d"
+dependencies = [
+ "url 1.7.2",
+]
+
+[[package]]
 name = "mac"
 version = "0.1.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -3143,8 +3163,10 @@ dependencies = [
  "home-config",
  "lofty",
  "log",
+ "m3u",
  "memoize",
  "nosleep",
+ "pathdiff",
  "rayon",
  "serde",
  "serde_json",
@@ -3584,6 +3606,12 @@ checksum = "88b39c9bfcfc231068454382784bb460aae594343fb030d46e9f50a645418412"
 dependencies = [
  "base64ct",
 ]
+
+[[package]]
+name = "percent-encoding"
+version = "1.0.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "31010dd2e1ac33d5b46a5b413495239882813e0369f8ed8a5e266f173602f831"
 
 [[package]]
 name = "percent-encoding"
@@ -4215,7 +4243,7 @@ dependencies = [
  "log",
  "mime",
  "once_cell",
- "percent-encoding",
+ "percent-encoding 2.3.1",
  "pin-project-lite",
  "serde",
  "serde_json",
@@ -4225,7 +4253,7 @@ dependencies = [
  "tokio",
  "tokio-util",
  "tower-service",
- "url",
+ "url 2.5.0",
  "wasm-bindgen",
  "wasm-bindgen-futures",
  "wasm-streams",
@@ -4378,7 +4406,7 @@ dependencies = [
  "schemars_derive",
  "serde",
  "serde_json",
- "url",
+ "url 2.5.0",
 ]
 
 [[package]]
@@ -5013,7 +5041,7 @@ dependencies = [
  "scopeguard",
  "tao-macros",
  "unicode-segmentation",
- "url",
+ "url 2.5.0",
  "windows 0.52.0",
  "windows-implement",
  "windows-version",
@@ -5068,7 +5096,7 @@ dependencies = [
  "mime",
  "muda",
  "objc",
- "percent-encoding",
+ "percent-encoding 2.3.1",
  "raw-window-handle 0.6.0",
  "reqwest",
  "serde",
@@ -5085,7 +5113,7 @@ dependencies = [
  "thiserror",
  "tokio",
  "tray-icon",
- "url",
+ "url 2.5.0",
  "urlpattern",
  "webkit2gtk",
  "webview2-com",
@@ -5139,7 +5167,7 @@ dependencies = [
  "tauri-utils",
  "thiserror",
  "time",
- "url",
+ "url 2.5.0",
  "uuid",
  "walkdir",
 ]
@@ -5208,7 +5236,7 @@ dependencies = [
  "tauri",
  "tauri-plugin",
  "thiserror",
- "url",
+ "url 2.5.0",
  "uuid",
 ]
 
@@ -5250,7 +5278,7 @@ dependencies = [
  "tauri-winrt-notification",
  "thiserror",
  "time",
- "url",
+ "url 2.5.0",
  "zbus",
 ]
 
@@ -5337,7 +5365,7 @@ dependencies = [
  "serde_json",
  "tauri-utils",
  "thiserror",
- "url",
+ "url 2.5.0",
  "windows 0.52.0",
 ]
 
@@ -5352,13 +5380,13 @@ dependencies = [
  "http",
  "jni",
  "log",
- "percent-encoding",
+ "percent-encoding 2.3.1",
  "raw-window-handle 0.6.0",
  "softbuffer",
  "tao",
  "tauri-runtime",
  "tauri-utils",
- "url",
+ "url 2.5.0",
  "webkit2gtk",
  "webview2-com",
  "windows 0.52.0",
@@ -5395,7 +5423,7 @@ dependencies = [
  "swift-rs",
  "thiserror",
  "toml 0.8.2",
- "url",
+ "url 2.5.0",
  "urlpattern",
  "walkdir",
 ]
@@ -5916,13 +5944,24 @@ checksum = "d4c87d22b6e3f4a18d4d40ef354e97c90fcb14dd91d7dc0aa9d8a1172ebf7202"
 
 [[package]]
 name = "url"
+version = "1.7.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "dd4e7c0d531266369519a4aa4f399d748bd37043b00bde1e4ff1f60a120b355a"
+dependencies = [
+ "idna 0.1.5",
+ "matches",
+ "percent-encoding 1.0.1",
+]
+
+[[package]]
+name = "url"
 version = "2.5.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "31e6302e3bb753d46e83516cae55ae196fc0c309407cf11ab35cc51a4c2a4633"
 dependencies = [
  "form_urlencoded",
- "idna",
- "percent-encoding",
+ "idna 0.5.0",
+ "percent-encoding 2.3.1",
  "serde",
 ]
 
@@ -5936,7 +5975,7 @@ dependencies = [
  "regex",
  "serde",
  "unic-ucd-ident",
- "url",
+ "url 2.5.0",
 ]
 
 [[package]]
@@ -6709,7 +6748,7 @@ dependencies = [
  "objc",
  "objc_id",
  "once_cell",
- "percent-encoding",
+ "percent-encoding 2.3.1",
  "raw-window-handle 0.6.0",
  "serde",
  "serde_json",
@@ -6902,7 +6941,7 @@ dependencies = [
  "enumflags2",
  "serde",
  "static_assertions",
- "url",
+ "url 2.5.0",
  "zvariant_derive",
 ]
 

@@ -15,6 +15,7 @@ use std::sync::atomic::{AtomicUsize, Ordering};
 use std::sync::Arc;
 use tauri::plugin::{Builder, TauriPlugin};
 use tauri::{AppHandle, Manager, Runtime, State};
+use tauri_plugin_dialog::DialogExt;
 use ts_rs::TS;
 use uuid::Uuid;
 
@@ -31,11 +32,13 @@ pub const SUPPORTED_TRACKS_EXTENSIONS: [&str; 12] = [
     "webm", /* Web media */
 ];
 
-// pub const SUPPORTED_PLAYLISTS_EXTENSIONS: [&str; 1] = [".m3u"];
+pub const SUPPORTED_PLAYLISTS_EXTENSIONS: [&str; 1] = ["m3u"];
 
 /** ----------------------------------------------------------------------------
  * Databases
  * exposes databases for tracks and playlists
+ *
+ * TODO: probably split between tracks and playlists, this file is getting out of hand
  * -------------------------------------------------------------------------- */
 pub struct DB {
     pub tracks: AsyncDatabase,
@@ -506,6 +509,48 @@ async fn set_playlist_tracks(
 }
 
 #[tauri::command]
+async fn export_playlist<R: Runtime>(
+    window: tauri::Window<R>,
+    db: State<'_, DB>,
+    id: String,
+) -> AnyResult<()> {
+    let Some(playlist) = db.get_playlist(id).await? else {
+        return Ok(());
+    };
+
+    let tracks = db.get_tracks(playlist.tracks).await?;
+
+    window
+        .dialog()
+        .file()
+        .add_filter("playlist", &SUPPORTED_PLAYLISTS_EXTENSIONS)
+        .save_file(move |maybe_playlist_path| {
+            let Some(playlist_path) = maybe_playlist_path else {
+                return;
+            };
+
+            let playlist_dir_path = playlist_path.parent().unwrap();
+
+            let playlist = tracks
+                .iter()
+                .map(|track| {
+                    let relative_path =
+                        pathdiff::diff_paths(&track.path, &playlist_dir_path).unwrap();
+                    return m3u::path_entry(relative_path);
+                })
+                .collect::<Vec<m3u::Entry>>();
+
+            let mut file = std::fs::File::create(playlist_path).unwrap();
+            let mut writer = m3u::Writer::new(&mut file);
+            for entry in &playlist {
+                writer.write_entry(entry).unwrap();
+            }
+        });
+
+    Ok(())
+}
+
+#[tauri::command]
 async fn delete_playlist(db: State<'_, DB>, id: String) -> AnyResult<()> {
     db.delete_playlist(id).await
 }
@@ -583,6 +628,7 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
             create_playlist,
             rename_playlist,
             set_playlist_tracks,
+            export_playlist,
             delete_playlist,
             reset,
             import_tracks_to_library,

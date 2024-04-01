@@ -75,9 +75,10 @@ const database = {
     });
   },
 
-  // TODO: m3u export
-  async exportPlaylist(_playlistID: string): Promise<void> {
-    throw new Error('not implemented');
+  async exportPlaylist(id: string): Promise<void> {
+    return invoke('plugin:database|export_playlist', {
+      id,
+    });
   },
 
   async deletePlaylist(id: string): Promise<void> {
