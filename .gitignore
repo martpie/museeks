@@ -24,6 +24,4 @@ dist-ssr
 *.sw?
 
 # Generated files
-src/generated/typings/*
-!src/generated/typings/index.ts
 src-tauri/gen

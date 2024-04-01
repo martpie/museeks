@@ -119,7 +119,7 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
                 .item(
                     &MenuItemBuilder::new("Go to settings")
                         .id(MenuId::new(IPCEvent::GoToSettings.as_ref()))
-                        .accelerator("CmdOrCtrl+P")
+                        .accelerator("CmdOrCtrl+,")
                         .build(app_handle)
                         .unwrap(),
                 )

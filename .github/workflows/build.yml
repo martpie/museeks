@@ -39,8 +39,8 @@ jobs:
       - name: Install dependencies
         run: yarn install --frozen-lockfile
 
-      - name: Generate types
-        run: cargo test --manifest-path src-tauri/Cargo.toml
+      - name: 'Test: Rust (+ Generate Types)'
+        run: yarn run gen
 
       - name: 'Test: formatting'
         run: 'yarn run test:formatting'
@@ -54,14 +54,15 @@ jobs:
       - name: 'Test: unit'
         run: 'yarn run test:unit'
 
-      - name: 'Test: Rust + Code Generation'
-        run: 'cargo test --manifest-path src-tauri/Cargo.toml'
-
       - name: 'Test: Types'
         run: 'yarn run test:typings'
 
       - name: Build application
         run: yarn run build
+
+      # Check one of the command above did not generate any unexpected artifacts
+      # (like types generation)
+      - uses: CatChen/check-git-status-action@v1
 
   # Documentation on environments:
   # https://docs.github.com/en/free-pro-team@latest/actions/reference/specifications-for-github-hosted-runners

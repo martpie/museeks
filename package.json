@@ -18,6 +18,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "tauri": "tauri",
+    "gen": "bash scripts/gen.sh",
     "test:typings": "tsc --noEmit --project ./tsconfig.json",
     "test:unit": "vitest run",
     "test:lint": "eslint src",
