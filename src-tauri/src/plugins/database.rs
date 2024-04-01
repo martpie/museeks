@@ -82,7 +82,7 @@ impl DB {
     pub async fn get_all_tracks(&self) -> AnyResult<Vec<Track>> {
         let timer = TimeLogger::new("Retrieved and decoded tracks".into());
         let docs = self.tracks_collection().all().await?;
-        let tracks = self.decode_docs::<Track>(docs);
+        let tracks = self.decode_docs::<Track>(&docs);
         timer.complete();
         tracks
     }
@@ -93,7 +93,7 @@ impl DB {
     pub async fn get_tracks(&self, track_ids: &Vec<String>) -> AnyResult<Vec<Track>> {
         let docs = self.tracks_collection().get_multiple(track_ids).await?;
 
-        match self.decode_docs::<Track>(docs) {
+        match self.decode_docs::<Track>(&docs) {
             Ok(mut tracks) => {
                 // document may not ordered the way we want, so let's ensure they map to track_ids
                 tracks.sort_by_key(|track| track_ids.iter().position(|id| id == &track._id));
@@ -104,8 +104,8 @@ impl DB {
     }
 
     /** Delete multiple tracks by ID */
-    pub async fn remove_tracks(&self, ids: Vec<String>) -> AnyResult<()> {
-        let tracks = self.tracks_collection().get_multiple(&ids).await?;
+    pub async fn remove_tracks(&self, ids: &Vec<String>) -> AnyResult<()> {
+        let tracks = self.tracks_collection().get_multiple(ids).await?;
 
         let mut tx = Transaction::new();
         for track in tracks {
@@ -155,17 +155,17 @@ impl DB {
     pub async fn get_all_playlists(&self) -> AnyResult<Vec<Playlist>> {
         let timer = TimeLogger::new("Retrieved and decoded playlists".into());
         let docs = self.playlists_collection().all().await?;
-        let playlists = self.decode_docs::<Playlist>(docs);
+        let playlists = self.decode_docs::<Playlist>(&docs);
         timer.complete();
         playlists
     }
 
     /** Get a single playlist by ID */
-    pub async fn get_playlist(&self, playlist_id: String) -> AnyResult<Option<Playlist>> {
+    pub async fn get_playlist(&self, playlist_id: &String) -> AnyResult<Option<Playlist>> {
         let maybe_doc = self.playlists_collection().get(&playlist_id).await?;
 
         match maybe_doc {
-            Some(doc) => Ok(Some(self.decode_doc::<Playlist>(doc)?)),
+            Some(doc) => Ok(Some(self.decode_doc::<Playlist>(&doc)?)),
             None => Ok(None),
         }
     }
@@ -189,11 +189,11 @@ impl DB {
     /** Set the tracks of a playlist given its ID and tracks IDs */
     pub async fn set_playlist_tracks(
         &self,
-        id: String,
+        id: &String,
         tracks: Vec<String>,
     ) -> AnyResult<Playlist> {
-        if let Some(document) = self.playlists_collection().get(&id).await? {
-            let mut playlist = self.decode_doc::<Playlist>(document)?;
+        if let Some(document) = self.playlists_collection().get(id).await? {
+            let mut playlist = self.decode_doc::<Playlist>(&document)?;
 
             // Insert new tracks + make sure we remove duplicates (the UI does
             // not play well with those).
@@ -215,9 +215,9 @@ impl DB {
     }
 
     /** Update a playlist name by ID */
-    pub async fn rename_playlist(&self, id: String, name: String) -> AnyResult<Playlist> {
+    pub async fn rename_playlist(&self, id: &String, name: String) -> AnyResult<Playlist> {
         if let Some(document) = self.playlists_collection().get(&id).await? {
-            let mut playlist = self.decode_doc::<Playlist>(document)?;
+            let mut playlist = self.decode_doc::<Playlist>(&document)?;
             playlist.name = name;
 
             match playlist.overwrite_into_async(&id, &self.playlists).await {
@@ -232,7 +232,7 @@ impl DB {
     }
 
     /** Delete a playlist by ID */
-    pub async fn delete_playlist(&self, id: String) -> AnyResult<()> {
+    pub async fn delete_playlist(&self, id: &String) -> AnyResult<()> {
         if let Some(document) = self.playlists_collection().get(&id).await? {
             Ok(self.playlists_collection().delete(&document).await?)
         } else {
@@ -245,12 +245,12 @@ impl DB {
      */
     fn decode_docs<T: SerializedCollection>(
         &self,
-        docs: Vec<OwnedDocument>,
+        docs: &Vec<OwnedDocument>,
     ) -> AnyResult<Vec<<T as SerializedCollection>::Contents>> {
         let mut entries = vec![];
 
         for doc in docs {
-            let deserialized = T::document_contents(&doc)?;
+            let deserialized = T::document_contents(doc)?;
             entries.push(deserialized);
         }
 
@@ -259,9 +259,9 @@ impl DB {
 
     fn decode_doc<T: SerializedCollection>(
         &self,
-        doc: OwnedDocument,
+        doc: &OwnedDocument,
     ) -> AnyResult<<T as SerializedCollection>::Contents> {
-        Ok(T::document_contents(&doc)?)
+        Ok(T::document_contents(doc)?)
     }
 }
 
@@ -550,7 +550,7 @@ async fn get_tracks(db: State<'_, DB>, ids: Vec<String>) -> AnyResult<Vec<Track>
 
 #[tauri::command]
 async fn remove_tracks(db: State<'_, DB>, ids: Vec<String>) -> AnyResult<()> {
-    db.remove_tracks(ids).await
+    db.remove_tracks(&ids).await
 }
 
 #[tauri::command]
@@ -560,7 +560,7 @@ async fn get_all_playlists(db: State<'_, DB>) -> AnyResult<Vec<Playlist>> {
 
 #[tauri::command]
 async fn get_playlist(db: State<'_, DB>, id: String) -> AnyResult<Playlist> {
-    match db.get_playlist(id).await {
+    match db.get_playlist(&id).await {
         Ok(Some(playlist)) => Ok(playlist),
         Ok(None) => Err(MuseeksError::PlaylistNotFound),
         Err(err) => Err(err),
@@ -578,7 +578,7 @@ async fn create_playlist(
 
 #[tauri::command]
 async fn rename_playlist(db: State<'_, DB>, id: String, name: String) -> AnyResult<Playlist> {
-    db.rename_playlist(id, name).await
+    db.rename_playlist(&id, name).await
 }
 
 #[tauri::command]
@@ -587,7 +587,7 @@ async fn set_playlist_tracks(
     id: String,
     tracks: Vec<String>,
 ) -> AnyResult<Playlist> {
-    db.set_playlist_tracks(id, tracks).await
+    db.set_playlist_tracks(&id, tracks).await
 }
 
 #[tauri::command]
@@ -596,7 +596,7 @@ async fn export_playlist<R: Runtime>(
     db: State<'_, DB>,
     id: String,
 ) -> AnyResult<()> {
-    let Some(playlist) = db.get_playlist(id).await? else {
+    let Some(playlist) = db.get_playlist(&id).await? else {
         return Ok(());
     };
 
@@ -634,7 +634,7 @@ async fn export_playlist<R: Runtime>(
 
 #[tauri::command]
 async fn delete_playlist(db: State<'_, DB>, id: String) -> AnyResult<()> {
-    db.delete_playlist(id).await
+    db.delete_playlist(&id).await
 }
 
 #[tauri::command]
