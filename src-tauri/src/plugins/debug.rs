@@ -8,6 +8,9 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
             {
                 window.open_devtools();
             }
+
+            #[cfg(not(dev))]
+            drop(window);
         })
         .build()
 }
