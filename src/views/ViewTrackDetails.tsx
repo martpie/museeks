@@ -55,8 +55,9 @@ export default function ViewTrackDetails() {
       <form className={styles.detailsForm} onSubmit={handleSubmit}>
         <h2>Edit &quot;{formData.title}&quot;</h2>
         <Setting.Section>
-          <Setting.Label htmlFor="title">Title</Setting.Label>
           <Setting.Input
+            label="Title"
+            description="You can add multiple artists with commas"
             id="title"
             name="title"
             type="text"
@@ -65,13 +66,10 @@ export default function ViewTrackDetails() {
               setFormData({ ...formData, title: e.currentTarget.value });
             }}
           />
-          <Setting.Description>
-            You can add multiple artists with commas
-          </Setting.Description>
         </Setting.Section>
         <Setting.Section>
-          <Setting.Label htmlFor="artist">Artist</Setting.Label>
           <Setting.Input
+            label="Artist"
             id="artist"
             name="artist"
             type="text"
@@ -85,8 +83,8 @@ export default function ViewTrackDetails() {
           />
         </Setting.Section>
         <Setting.Section>
-          <Setting.Label htmlFor="album">Album</Setting.Label>
           <Setting.Input
+            label="Album"
             id="album"
             name="album"
             type="text"
@@ -97,9 +95,10 @@ export default function ViewTrackDetails() {
           />
         </Setting.Section>
         <Setting.Section>
-          <Setting.Label htmlFor="genre">Genre</Setting.Label>
           <Setting.Input
+            label="Genre"
             id="genre"
+            description="You can add multiple genre with commas"
             name="genre"
             type="text"
             value={formData.genres.join(DELIMITER)}
@@ -110,9 +109,6 @@ export default function ViewTrackDetails() {
               });
             }}
           />
-          <Setting.Description>
-            You can add multiple genre with commas
-          </Setting.Description>
         </Setting.Section>
         {/* <div className={styles.detailsCover}>
           {coverSrc === null && <img src={Placeholder} alt='Cover' width='150' height='150' />}
