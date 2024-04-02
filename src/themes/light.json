@@ -5,10 +5,11 @@
   "variables": {
     "--color-scheme": "light",
     "--text": "#333333",
+    "--text-muted": "#555555",
     "--background": "white",
     "--faded-bg": "rgba(255, 255, 255, 0.9)",
 
-    "--border-color": "#D2D2D2",
+    "--border-color": "#D9D9D9",
     "--border-color-softer": "#E2E2E2",
     "--border-radius": "2px",
 
@@ -47,7 +48,7 @@
     "--input-bg": "#F4F4F4",
     "--input-color": "#333333",
     "--button-bg": "#f3f3f3",
-    "--button-border": "rgb(0 0 0 / 0.2)",
+    "--button-border": "rgb(0 0 0 / 0.1)",
     "--button-color": "#333333"
   }
 }
