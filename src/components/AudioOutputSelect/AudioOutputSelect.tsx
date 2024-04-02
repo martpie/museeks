@@ -6,9 +6,12 @@ import { logAndNotifyError } from '../../lib/utils';
 type Props = {
   defaultValue: string;
   onChange: (deviceID: string) => void;
-};
+} & Setting.InputProps;
 
 export default function AudioOutputSelect(props: Props) {
+  const { label, description, id } = props;
+  const selectProps = { label, description, id };
+
   const [devices, setDevices] = useState<MediaDeviceInfo[] | null>(null);
   const [hasError, setHasError] = useState(false);
 
@@ -45,7 +48,7 @@ export default function AudioOutputSelect(props: Props) {
 
   if (!devices) {
     return (
-      <Setting.Select disabled key="selectDisabled">
+      <Setting.Select {...selectProps} disabled key="selectDisabled">
         <option>loading devices...</option>
       </Setting.Select>
     );
@@ -53,14 +56,23 @@ export default function AudioOutputSelect(props: Props) {
 
   if (hasError) {
     return (
-      <Setting.Select disabled key="selectDisabled">
+      <Setting.Select {...selectProps} disabled key="selectDisabled">
         <option>Could not get audio output devices</option>
+      </Setting.Select>
+    );
+  }
+
+  if (devices.length === 0) {
+    return (
+      <Setting.Select {...selectProps} disabled key="selectDisabled">
+        <option>no audio output devices found</option>
       </Setting.Select>
     );
   }
 
   return (
     <Setting.Select
+      {...selectProps}
       key="devicesOk" // avoid default value problems
       defaultValue={props.defaultValue}
       onChange={setAudioOutputDevice}

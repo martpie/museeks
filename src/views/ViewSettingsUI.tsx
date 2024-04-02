@@ -36,11 +36,12 @@ export default function ViewSettingsUI() {
   return (
     <div className="setting setting-interface">
       <Setting.Section>
-        <Setting.Label htmlFor="setting-theme">Theme</Setting.Label>
         <Setting.Select
+          label="Theme"
+          description="Change the appearance of the interface"
+          id="setting-theme"
           defaultValue={config.theme}
           onChange={onThemeChange}
-          id="setting-theme"
           disabled // Issue in Tauri where we cannot easily detect system-wide preferences
         >
           <option value="__system">System (default)</option>
@@ -52,41 +53,30 @@ export default function ViewSettingsUI() {
             );
           })}
         </Setting.Select>
-        <Setting.Description>
-          Change the appearance of the interface
-        </Setting.Description>
       </Setting.Section>
       <Setting.Section>
-        <Setting.Label htmlFor="setting-tracksDensity">
-          Tracks density
-        </Setting.Label>
         <Setting.Select
+          label="Tracks density"
+          description="Change the default view when starting the application"
+          id="setting-tracks-density"
           defaultValue={config.track_view_density}
           onChange={onTracksDensityChange}
-          id="setting-tracksDensity"
         >
           <option value="normal">Normal (default)</option>
           <option value="compact">Compact</option>
         </Setting.Select>
-        <Setting.Description>
-          Change the default view when starting the application
-        </Setting.Description>
       </Setting.Section>
       <Setting.Section>
-        <Setting.Label htmlFor="setting-default-view">
-          Default view
-        </Setting.Label>
         <Setting.Select
+          label="Default view"
           defaultValue={config.theme}
-          onChange={onDefaultViewChange}
+          description="Change the default view when starting the application"
           id="setting-default-view"
+          onChange={onDefaultViewChange}
         >
           <option value="Library">Library (default)</option>
           <option value="Playlists">Playlists</option>
         </Setting.Select>
-        <Setting.Description>
-          Change the default view when starting the application
-        </Setting.Description>
       </Setting.Section>
       <Setting.Section>
         <CheckboxSetting
@@ -96,18 +86,14 @@ export default function ViewSettingsUI() {
           defaultValue={config.notifications}
           onClick={SettingsAPI.toggleDisplayNotifications}
         />
+      </Setting.Section>
+      <Setting.Section>
         <CheckboxSetting
           slug="sleepmode"
           title="Sleep mode blocker"
           description="Prevent the computer from going into sleep mode when playing"
           defaultValue={config.sleepblocker}
           onClick={SettingsAPI.toggleSleepBlocker}
-        />
-        <CheckboxSetting
-          slug="update"
-          title="Automatically check for updates"
-          defaultValue={config.auto_update_checker}
-          onClick={SettingsAPI.toggleAutoUpdateChecker}
         />
       </Setting.Section>
     </div>

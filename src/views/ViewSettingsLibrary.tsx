@@ -1,5 +1,6 @@
 import * as Setting from '../components/Setting/Setting';
 import Button from '../elements/Button/Button';
+import Flexbox from '../elements/Flexbox/Flexbox';
 import useLibraryStore, { useLibraryAPI } from '../stores/useLibraryStore';
 
 export default function ViewSettingsLibrary() {
@@ -9,25 +10,31 @@ export default function ViewSettingsLibrary() {
   return (
     <div className="setting settings-musicfolder">
       <Setting.Section>
-        <h3 style={{ marginTop: 0 }}>Import music</h3>
+        <Setting.Title>Import music</Setting.Title>
         <Setting.Description>
-          This will also scan for <code>.m3u</code> files and create
-          corresponding playlists.
+          playlists from <code>.m3u</code> files will also be created.
         </Setting.Description>
-        <Button disabled={isLibraryRefreshing} onClick={libraryAPI.add}>
-          Add files or folders
-        </Button>
+        <Flexbox>
+          <Button disabled={isLibraryRefreshing} onClick={libraryAPI.add}>
+            Add files or folders
+          </Button>
+        </Flexbox>
       </Setting.Section>
       <Setting.Section>
-        <h3>Danger zone</h3>
-        <Button
-          relevancy="danger"
-          title="Fully reset the library"
-          disabled={isLibraryRefreshing}
-          onClick={libraryAPI.reset}
-        >
-          Reset library
-        </Button>
+        <Setting.Title>Danger zone</Setting.Title>
+        <Setting.Description>
+          Delete all tracks and playlists from Museeks.
+        </Setting.Description>
+        <Flexbox>
+          <Button
+            relevancy="danger"
+            title="Fully reset the library"
+            disabled={isLibraryRefreshing}
+            onClick={libraryAPI.reset}
+          >
+            Reset library
+          </Button>
+        </Flexbox>
       </Setting.Section>
     </div>
   );

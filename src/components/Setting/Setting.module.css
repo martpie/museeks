@@ -1,22 +1,24 @@
 .settingSection {
-  padding-bottom: 10px;
+  padding-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
 .settingTitle {
-  display: inline-block;
-  font-weight: bold;
-  margin-top: 4px;
-  margin-left: 6px;
+  display: block;
+  margin: 0;
 }
 
 .settingDescription {
   font-weight: normal;
   margin-top: 5px;
   margin-bottom: 4px;
+  color: var(--text-muted);
 }
 
 .settingLabel {
-  display: block;
+  display: inline-block;
   margin-bottom: 8px;
   font-weight: bold;
 }

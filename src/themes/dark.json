@@ -5,6 +5,7 @@
   "variables": {
     "--color-scheme": "dark",
     "--text": "#efefef",
+    "--text-muted": "#bfbfbf",
     "--background": "hsl(216, 0%, 9.5%)",
     "--faded-bg": "rgba(0, 0, 0, 0.8)",
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import cx from 'classnames';
 
 import styles from './Setting.module.css';
 
@@ -14,32 +15,61 @@ export function Description(props: Props) {
   return <p className={styles.settingDescription}>{props.children}</p>;
 }
 
-export function Label(props: JSX.IntrinsicElements['label']) {
-  const { children, ...restProps } = props;
+export function Label(
+  props: JSX.IntrinsicElements['label'] & {
+    noMargin?: boolean;
+  },
+) {
+  const { children, noMargin, ...restProps } = props;
+
+  const classNames = cx(styles.settingLabel, {
+    noMargin,
+  });
 
   return (
-    <label className={styles.settingLabel} {...restProps}>
+    <label className={classNames} {...restProps}>
       {children}
     </label>
   );
 }
 
 export function Title(props: Props) {
-  return <span className={styles.settingTitle}>{props.children}</span>;
+  return <h3 className={styles.settingTitle}>{props.children}</h3>;
 }
 
-export function Input(props: JSX.IntrinsicElements['input']) {
-  return <input className={styles.settingInput} {...props} />;
+export type InputProps = {
+  label: string;
+  description?: string;
+  id: string;
+};
+
+export function Input(props: JSX.IntrinsicElements['input'] & InputProps) {
+  const { label, description, id, ...otherProps } = props;
+  return (
+    <div>
+      <Label htmlFor={id}>{label}</Label>
+      <input id={id} className={styles.settingInput} {...otherProps} />
+      {description != null && <Description>{description}</Description>}
+    </div>
+  );
 }
 
 export function Error(props: Props) {
   return <p className={styles.settingError}>{props.children}</p>;
 }
 
-export function Select(props: Props & JSX.IntrinsicElements['select']) {
+export function Select(
+  props: Props & JSX.IntrinsicElements['select'] & InputProps,
+) {
+  const { label, description, id, ...otherProps } = props;
+
   return (
-    <select className={styles.settingSelect} {...props}>
-      {props.children}
-    </select>
+    <div>
+      <Label htmlFor={id}>{label}</Label>
+      <select className={styles.settingSelect} {...otherProps}>
+        {props.children}
+      </select>
+      {description != null && <Description>{description}</Description>}
+    </div>
   );
 }
