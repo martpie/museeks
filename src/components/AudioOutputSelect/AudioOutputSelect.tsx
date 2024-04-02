@@ -24,13 +24,11 @@ export default function AudioOutputSelect(props: Props) {
         //   audio: true,
         //   video: false,
         // });
-        // console.log('media', test);
         const devices = await navigator.mediaDevices.enumerateDevices();
-        // console.log('all devices', devices);
         const audioDevices = devices.filter(
-          (device) => device.kind === 'audiooutput',
+          (device) => device.kind === 'audiooutput' && device.deviceId !== '',
         );
-        // console.log('audioDevices', audioDevices);
+
         setDevices(audioDevices);
       } catch (err) {
         setDevices([]);
