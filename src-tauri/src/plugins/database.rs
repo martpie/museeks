@@ -23,6 +23,8 @@ use crate::libs::error::{AnyResult, MuseeksError};
 use crate::libs::events::IPCEvent;
 use crate::libs::utils::{scan_dirs, TimeLogger};
 
+use super::config::get_storage_dir;
+
 const INSERTION_BATCH: usize = 200;
 
 pub const SUPPORTED_TRACKS_EXTENSIONS: [&str; 12] = [
@@ -675,11 +677,8 @@ async fn reset(db: State<'_, DB>) -> AnyResult<()> {
  * Database setup
  * Doc: https://github.com/khonsulabs/bonsaidb/blob/main/examples/basic-local/examples/basic-local-multidb.rs
  */
-async fn setup<R: Runtime>(app_handle: &AppHandle<R>) -> AnyResult<DB> {
-    let storage_path = app_handle
-        .path()
-        .app_local_data_dir()
-        .map_err(anyhow::Error::from)?;
+async fn setup() -> AnyResult<DB> {
+    let storage_path = get_storage_dir();
     let storage_configuration = StorageConfiguration::new(storage_path.join("main.bonsaidb"))
         .with_schema::<Track>()?
         .with_schema::<Playlist>()?;
@@ -718,7 +717,7 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
         .setup(move |app_handle, _api| {
             let app_handle = app_handle.clone();
             tauri::async_runtime::spawn(async move {
-                let db = match setup(&app_handle).await {
+                let db = match setup().await {
                     Ok(db) => db,
                     Err(err) => {
                         error!("Failed to setup database: {:?}", err);

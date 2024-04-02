@@ -124,6 +124,16 @@ impl ConfigManager {
     }
 }
 
+/**
+ * Get the app configuration/storage directory
+ */
+#[tauri::command]
+pub fn get_storage_dir() -> PathBuf {
+    // TODO: Replace with PathResolver::app_config_dir() + app identifier, somehow
+    let path = dirs::config_dir().expect("Get config dir");
+    path.join("Museeks")
+}
+
 #[tauri::command]
 pub fn get_config(config_manager: State<ConfigManager>) -> Config {
     config_manager.get()
@@ -134,17 +144,8 @@ pub fn set_config(config_manager: State<ConfigManager>, config: Config) {
     config_manager.update(config);
 }
 
-/**
- * Get the app configuration/storage directory
- */
-// TODO: Replace with PathResolver::app_config_dir().
-fn get_app_storage_dir() -> PathBuf {
-    let path = dirs::home_dir().expect("Get home dir");
-    path.join(".museeks")
-}
-
 pub fn init<R: Runtime>() -> TauriPlugin<R> {
-    let conf_path = get_app_storage_dir();
+    let conf_path = get_storage_dir();
     let manager = HomeConfig::with_file(conf_path.join("config.toml"));
     let existing_config = manager.toml::<Config>();
 
@@ -180,7 +181,11 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
     );
 
     Builder::<R>::new("config")
-        .invoke_handler(tauri::generate_handler![get_config, set_config,])
+        .invoke_handler(tauri::generate_handler![
+            get_storage_dir,
+            get_config,
+            set_config,
+        ])
         .js_init_script(initial_config_script)
         .setup(|app_handle, _api| {
             app_handle.manage(config);

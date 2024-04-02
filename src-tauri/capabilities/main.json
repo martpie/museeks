@@ -24,6 +24,7 @@
     "notification:default",
     "window:allow-show",
     "app-menu:allow-toggle",
+    "config:allow-get-storage-dir",
     "config:allow-set-config",
     "config:allow-get-config",
     "cover:allow-get-cover",

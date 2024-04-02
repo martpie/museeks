@@ -12,7 +12,7 @@ import CheckboxSetting from '../components/SettingCheckbox/SettingCheckbox';
 import { SettingsLoaderData } from './ViewSettings';
 
 export default function ViewSettingsAbout() {
-  const { config, version, tauriVersion, appConfigDir, appLocalDataDir } =
+  const { config, version, tauriVersion, appStorageDir } =
     useLoaderData() as SettingsLoaderData;
 
   return (
@@ -73,11 +73,8 @@ export default function ViewSettingsAbout() {
         <Setting.Title>Internals</Setting.Title>
         <Setting.Description>Tauri {tauriVersion}</Setting.Description>
         <Flexbox gap={4}>
-          <ExternalButton href={appConfigDir}>
-            Open config directory
-          </ExternalButton>
-          <ExternalButton href={appLocalDataDir}>
-            Open local data directory
+          <ExternalButton href={appStorageDir}>
+            Open storage directory
           </ExternalButton>
         </Flexbox>
       </Setting.Section>

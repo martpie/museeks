@@ -9,7 +9,11 @@ fn main() {
             )
             .plugin(
                 "config",
-                tauri_build::InlinedPlugin::new().commands(&["get_config", "set_config"]),
+                tauri_build::InlinedPlugin::new().commands(&[
+                    "get_storage_dir",
+                    "get_config",
+                    "set_config",
+                ]),
             )
             .plugin(
                 "cover",
