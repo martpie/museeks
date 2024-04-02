@@ -61,7 +61,7 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
      * Start playing audio (queue instantiation, shuffle and everything...)
      * TODO: this function ~could probably~ needs to be refactored ~a bit~
      */
-    start: async (tracks, _id): Promise<void> => {
+    start: async (queue, _id): Promise<void> => {
       // TODO: implement start with no queue
       //   // If no queue is provided, we create it based on the screen the user is on
       // if (!queue) {
@@ -83,13 +83,9 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
       //   }
       // }
 
-      if (tracks.length === 0) return;
+      if (queue.length === 0) return;
 
       const state = get();
-
-      // on macOS, localStorage is quite limited, so we limit the max number of items
-      // in the queue
-      let queue = tracks.slice(0, 2000);
 
       // Check if there's already a queue planned
       if (queue === null && state.queue !== null) {
@@ -496,6 +492,35 @@ function createPlayerStore<T extends PlayerState>(store: StateCreator<T>) {
   return createStore(
     persist(store, {
       name: 'museeks-player',
+      partialize: (state) => {
+        // on macOS, localStorage is quite limited, so we limit the max number of items
+        // in the queue by slicing the queue around the currently playing track
+        // Should oldQueue be tackled in some ways?
+        const queue = state.queue;
+        const queueCursor = state.queueCursor ?? 0;
+        const queueStorageLimit = 1000;
+
+        if (queue.length < queueStorageLimit) {
+          return state;
+        }
+
+        const trackID = queue[queueCursor]._id;
+
+        const persistedQueue = queue.slice(
+          Math.max(0, queueCursor - queueStorageLimit / 2),
+          Math.min(queue.length, queueCursor + queueStorageLimit / 2),
+        );
+
+        const persistedCursor = persistedQueue.findIndex(
+          (track) => track._id === trackID,
+        );
+
+        return {
+          ...state,
+          queue: persistedQueue,
+          queueCursor: persistedCursor,
+        };
+      },
       onRehydrateStorage: () => {
         return (state, error) => {
           if (error || state == null) {
