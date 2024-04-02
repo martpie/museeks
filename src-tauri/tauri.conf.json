@@ -1,7 +1,7 @@
 {
   "productName": "Museeks",
   "version": "0.20.0",
-  "identifier": "io.museeks.app",
+  "identifier": "Museeks",
   "build": {
     "beforeDevCommand": "yarn dev",
     "devUrl": "http://localhost:1420",
