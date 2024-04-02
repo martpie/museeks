@@ -81,6 +81,15 @@ const checkForUpdate = async (
     const response = await fetch(
       'https://api.github.com/repos/martpie/museeks/releases',
     );
+
+    if (!response.ok) {
+      if (options.silentFail) {
+        return;
+      }
+
+      throw new Error('Impossible to retrieve releases information.');
+    }
+
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const releases: any = await response.json();
 
