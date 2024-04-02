@@ -1,7 +1,4 @@
 fn main() {
-    // Set the export path for ts-rs
-    std::env::set_var("TS_RS_EXPORT_DIR", "../bindings2");
-
     // Build the app
     tauri_build::try_build(
         tauri_build::Attributes::new()
