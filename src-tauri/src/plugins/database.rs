@@ -14,7 +14,7 @@ use std::path::PathBuf;
 use std::sync::atomic::{AtomicUsize, Ordering};
 use std::sync::Arc;
 use tauri::plugin::{Builder, TauriPlugin};
-use tauri::{AppHandle, Manager, Runtime, State};
+use tauri::{Manager, Runtime, State};
 use tauri_plugin_dialog::DialogExt;
 use ts_rs::TS;
 use uuid::Uuid;
