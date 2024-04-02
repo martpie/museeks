@@ -20,7 +20,12 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
     Builder::<R>::new("default-view")
         .invoke_handler(tauri::generate_handler![set])
         .on_page_load(|webview, payload| {
-            if webview.label().eq("main") && payload.event() == PageLoadEvent::Finished {
+            let url = payload.url().clone();
+
+            if webview.label().eq("main")
+                && payload.event() == PageLoadEvent::Finished
+                && url.fragment() == None
+            {
                 let config_manager = webview.state::<ConfigManager>();
                 let mut url = payload.url().clone();
                 let default_view = config_manager.get().default_view;
