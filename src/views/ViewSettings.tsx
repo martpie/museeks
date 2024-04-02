@@ -1,5 +1,6 @@
 import { Outlet, useMatch, Navigate } from 'react-router-dom';
 import { getTauriVersion, getVersion } from '@tauri-apps/api/app';
+import { appConfigDir, appLocalDataDir } from '@tauri-apps/api/path';
 
 import * as Nav from '../elements/Nav/Nav';
 import config from '../lib/config';
@@ -38,5 +39,7 @@ ViewSettingsView.loader = async () => {
     config: await config.getAll(),
     version: await getVersion(),
     tauriVersion: await getTauriVersion(),
+    appConfigDir: await appConfigDir(),
+    appLocalDataDir: await appLocalDataDir(),
   };
 };
