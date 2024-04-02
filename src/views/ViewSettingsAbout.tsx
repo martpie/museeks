@@ -5,11 +5,14 @@ import Heart from '../elements/Heart/Heart';
 import * as Setting from '../components/Setting/Setting';
 import SettingsAPI from '../stores/SettingsAPI';
 import Button from '../elements/Button/Button';
+import ExternalButton from '../elements/ExternalButton/ExternalButton';
+import Flexbox from '../elements/Flexbox/Flexbox';
 
 import { SettingsLoaderData } from './ViewSettings';
 
 export default function ViewSettingsAbout() {
-  const { version, tauriVersion } = useLoaderData() as SettingsLoaderData;
+  const { version, tauriVersion, appConfigDir, appLocalDataDir } =
+    useLoaderData() as SettingsLoaderData;
 
   return (
     <div className="setting setting-about">
@@ -33,7 +36,6 @@ export default function ViewSettingsAbout() {
         >
           Check for update
         </Button>
-        <p>Tauri {tauriVersion}</p>
       </Setting.Section>
       <Setting.Section>
         <h3>Contributors</h3>
@@ -50,14 +52,25 @@ export default function ViewSettingsAbout() {
       <Setting.Section>
         <h3>Report issue / Ask for a feature</h3>
         <p>
-          Although Museeks is mostly stable, a few bugs may still occur. Please,
-          do not hesitate to report them or to ask for features you would like
-          to see, using the{' '}
+          Bugs happens. Please, do not hesitate to report them or to ask for
+          features you would like to see, using the{' '}
           <ExternalLink href="http://github.com/martpie/Museeks/issues">
             issue tracker
           </ExternalLink>
           .
         </p>
+      </Setting.Section>
+      <Setting.Section>
+        <h3>Internals</h3>
+        <p>Tauri {tauriVersion}</p>
+        <Flexbox gap={4}>
+          <ExternalButton href={appConfigDir}>
+            Open config directory
+          </ExternalButton>
+          <ExternalButton href={appLocalDataDir}>
+            Open local data directory
+          </ExternalButton>
+        </Flexbox>
       </Setting.Section>
     </div>
   );
