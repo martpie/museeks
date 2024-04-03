@@ -28,6 +28,7 @@ bonsaidb = { version = "0.5.0", features = ["local", "async"] }
 dirs = "5.0.1"
 futures = "0.3.30"
 home-config = { version = "0.6.0", features = ["toml"] }
+itertools = "0.12.1"
 log = "0.4.21"
 lofty = "0.18.2"
 memoize = "0.4.2"

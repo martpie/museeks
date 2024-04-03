@@ -538,7 +538,7 @@ dependencies = [
  "circulate",
  "derive-where",
  "futures",
- "itertools",
+ "itertools 0.11.0",
  "num-traits",
  "ordered-varint",
  "pot",
@@ -585,7 +585,7 @@ dependencies = [
  "flume 0.11.0",
  "fs2",
  "futures",
- "itertools",
+ "itertools 0.11.0",
  "log",
  "nebari",
  "p256",
@@ -2683,6 +2683,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "itertools"
+version = "0.12.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "ba291022dbbd398a455acf126c1e341954079855bc60dfdda641363bd6922569"
+dependencies = [
+ "either",
+]
+
+[[package]]
 name = "itoa"
 version = "0.4.8"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -3161,6 +3170,7 @@ dependencies = [
  "dirs 5.0.1",
  "futures",
  "home-config",
+ "itertools 0.12.1",
  "lofty",
  "log",
  "m3u",

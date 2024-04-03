@@ -142,7 +142,10 @@ const reorderTracks = async (
   try {
     const playlist: Playlist = await database.getPlaylist(playlistID);
 
+    // Remove the current track
     const newTracks = playlist.tracks.filter((id) => !tracksIDs.includes(id));
+
+    // Find where to insert the selected tracks
     let targetIndex = newTracks.indexOf(targetTrackID);
 
     if (targetIndex === -1) {
@@ -157,6 +160,7 @@ const reorderTracks = async (
 
     newTracks.splice(targetIndex + 1, 0, ...tracksIDs);
 
+    // Save and reload the playlist
     await database.setPlaylistTracks(playlistID, newTracks);
     invalidate();
   } catch (err) {

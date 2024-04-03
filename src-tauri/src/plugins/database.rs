@@ -5,6 +5,7 @@ use bonsaidb::core::transaction::{Operation, Transaction};
 use bonsaidb::local::config::{Builder as BonsaiBuilder, StorageConfiguration};
 use bonsaidb::local::AsyncDatabase;
 use bonsaidb::local::AsyncStorage;
+use itertools::Itertools;
 use lofty::{Accessor, AudioFile, ItemKey, TaggedFileExt};
 use log::{error, info, warn};
 use rayon::prelude::*;
@@ -197,13 +198,8 @@ impl DB {
         if let Some(document) = self.playlists_collection().get(id).await? {
             let mut playlist = self.decode_doc::<Playlist>(&document)?;
 
-            // Insert new tracks + make sure we remove duplicates (the UI does
-            // not play well with those).
-            playlist.tracks = tracks
-                .into_iter()
-                .collect::<HashSet<_>>()
-                .into_iter()
-                .collect::<Vec<_>>();
+            // Make sure we remove duplicates (the UI does not play well with those yet).
+            playlist.tracks = tracks.into_iter().unique().collect_vec();
 
             match playlist.overwrite_into_async(&id, &self.playlists).await {
                 Ok(doc) => Ok(doc.contents),
