@@ -22,7 +22,7 @@
         "minWidth": 900,
         "fullscreen": false,
         "resizable": true,
-        "dragDropEnabled": false
+        "fileDropEnabled": false
       }
     ],
     "security": {
