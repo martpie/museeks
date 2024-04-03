@@ -45,15 +45,16 @@
       display: block;
       width: 100%;
       content: '';
-      border-bottom: solid 2px var(--main-color);
+      height: 2px;
+      background-color: var(--main-color);
     }
 
     &.isAbove::after {
-      top: -1px;
+      top: -2px;
     }
 
     &.isBelow::after {
-      bottom: -1px;
+      bottom: -2px;
     }
   }
 }

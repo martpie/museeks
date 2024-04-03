@@ -547,11 +547,14 @@ export default function TracksList(props: Props) {
                 onDrop={onDrop}
                 style={{
                   position: 'absolute',
-                  top: 0,
                   left: 0,
                   width: '100%',
                   height: `${virtualItem.size}px`,
-                  transform: `translateY(${virtualItem.start}px)`,
+                  // Intentionally not translateY, as it would create another paint
+                  // layer where every row would cover elements from the previous one.
+                  // This would typically prevent the drop effect to be properly displayed
+                  // when reordering a playlist
+                  top: `${virtualItem.start}px`,
                 }}
               />
             );
