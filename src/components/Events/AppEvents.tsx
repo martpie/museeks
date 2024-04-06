@@ -1,10 +1,12 @@
 import { useEffect } from 'react';
+import { listen } from '@tauri-apps/api/event';
 
 import player from '../../lib/player';
 import { isDev, preventNativeDefault } from '../../lib/utils-events';
-// import SettingsAPI from '../../stores/SettingsAPI';
-// import type { Theme } from '../../types/museeks';
 import { logAndNotifyError } from '../../lib/utils';
+import { IPCEvent } from '../../generated/typings';
+import SettingsAPI from '../../stores/SettingsAPI';
+import { themes } from '../../lib/themes';
 
 /**
  * Handle app-level IPC Events init and cleanup
@@ -22,11 +24,12 @@ function AppEvents() {
 
     // TODO: fix that https://github.com/tauri-apps/tauri/issues/5279
     // Auto-update theme if set to system and the native theme changes
-    // function updateTheme(_event: IpcRendererEvent, theme: unknown) {
-    //   SettingsAPI.applyThemeToUI(theme as Theme);
-    // }
-
-    // ipcRenderer.on(channels.THEME_APPLY, updateTheme);
+    const applyThemeListener = listen<'dark' | 'light'>(
+      'ThemeUpdate' satisfies IPCEvent,
+      ({ payload }) => {
+        SettingsAPI.applyThemeToUI(themes[payload]);
+      },
+    );
 
     // Support for multiple audio output
     async function updateOutputDevice() {
@@ -47,7 +50,7 @@ function AppEvents() {
         window.removeEventListener('contextmenu', preventNativeDefault);
       }
 
-      // ipcRenderer.off(channels.THEME_APPLY, updateTheme);
+      applyThemeListener.then((u) => u());
 
       navigator.mediaDevices.removeEventListener(
         'devicechange',

@@ -13,11 +13,12 @@ pub enum IPCEvent<'a> {
     PlaybackPrevious,
     PlaybackNext,
     PlaybackTrackChange,
-    // Scan-related events
-    LibraryScanProgress,
     // Menu-related events
     GoToLibrary,
     GoToPlaylists,
     GoToSettings,
     JumpToPlayingTrack,
+    // Misc
+    LibraryScanProgress,
+    ThemeUpdate,
 }

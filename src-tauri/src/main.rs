@@ -38,6 +38,7 @@ async fn main() {
         .plugin(plugins::default_view::init())
         .plugin(plugins::shell_extension::init())
         .plugin(plugins::sleepblocker::init())
+        .plugin(plugins::theme::init())
         // Tauri integrations with the Operating System
         .plugin(tauri_plugin_dialog::init())
         .plugin(tauri_plugin_os::init())
