@@ -13,22 +13,22 @@
     }
   },
   "formatter": {
-    "enabled": false,
+    "enabled": true,
     "indentStyle": "space"
   },
   "javascript": {
     "formatter": {
-      "quoteStyle": "single",
-      "jsxQuoteStyle": "single"
+      "quoteStyle": "single"
     }
   },
   "files": {
     "ignore": [
       "node_modules",
       "dist",
-      ".vscode",
       "src/generated/typings/*.ts",
-      "!src/generated/typings/index.ts"
+      "!src/generated/typings/index.ts",
+      "src-tauri/target/**/*",
+      "src-tauri/gen/**/*"
     ]
   }
 }

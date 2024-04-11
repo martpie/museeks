@@ -126,7 +126,7 @@ export default function PlaylistsNav(props: Props) {
           onKeyDown={keyDown}
           onBlur={blur}
           onFocus={focus}
-          ref={ref => ref?.focus()}
+          ref={(ref) => ref?.focus()}
         />
       );
     } else {

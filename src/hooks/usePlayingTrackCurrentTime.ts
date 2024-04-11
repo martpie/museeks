@@ -11,7 +11,7 @@ export default function usePlayingTrackCurrentTime(): number {
   useEffect(() => {
     function tick() {
       setCurrentTime(player.getCurrentTime());
-    };
+    }
 
     player.getAudio().addEventListener('timeupdate', tick);
 

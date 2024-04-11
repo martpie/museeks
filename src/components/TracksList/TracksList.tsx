@@ -270,7 +270,7 @@ export default function TracksList(props: Props) {
         base = max;
       } else {
         base = min;
-    }
+      }
 
       const newSelected = [];
 

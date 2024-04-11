@@ -14,9 +14,7 @@ export default function ViewSettingsAudio() {
 
   const setPlaybackRate = useCallback(
     (e: React.SyntheticEvent<HTMLInputElement>) => {
-      playerAPI.setPlaybackRate(
-        Number.parseFloat(e.currentTarget.value)
-      );
+      playerAPI.setPlaybackRate(Number.parseFloat(e.currentTarget.value));
     },
     [playerAPI],
   );

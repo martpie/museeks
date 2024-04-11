@@ -542,9 +542,9 @@ function createPlayerStore<T extends PlayerState>(store: StateCreator<T>) {
         };
       },
       merge(persistedState, currentState) {
-        const stateToPersist = persistedState ?? {
+        const stateToPersist = (persistedState ?? {
           playerStatus: PlayerStatus.STOP,
-        } satisfies  Partial<PlayerState>;
+        }) satisfies Partial<PlayerState>;
 
         return {
           ...currentState,
