@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import {
-  LoaderFunctionArgs,
+  type LoaderFunctionArgs,
   Outlet,
   redirect,
   useLoaderData,
@@ -8,12 +8,12 @@ import {
 
 import PlaylistsNav from '../components/PlaylistsNav/PlaylistsNav';
 import * as ViewMessage from '../elements/ViewMessage/ViewMessage';
-import PlaylistsAPI from '../stores/PlaylistsAPI';
 import database from '../lib/database';
+import PlaylistsAPI from '../stores/PlaylistsAPI';
 
-import { LoaderData } from './router';
 import appStyles from './Root.module.css';
 import styles from './ViewPlaylists.module.css';
+import type { LoaderData } from './router';
 
 export default function ViewPlaylists() {
   const { playlists } = useLoaderData() as PlaylistsLoaderData;

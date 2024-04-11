@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import type React from 'react';
+import { useEffect, useState } from 'react';
 
-import * as Setting from '../Setting/Setting';
 import { logAndNotifyError } from '../../lib/utils';
+import * as Setting from '../Setting/Setting';
 
 type Props = {
   defaultValue: string;

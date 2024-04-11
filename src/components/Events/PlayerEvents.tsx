@@ -1,14 +1,14 @@
-import { useEffect } from 'react';
-import { sendNotification } from '@tauri-apps/plugin-notification';
 import { getCurrent } from '@tauri-apps/api/window';
+import { sendNotification } from '@tauri-apps/plugin-notification';
+import { useEffect } from 'react';
 
+import config from '../../lib/config';
+import { getCover } from '../../lib/cover';
+import player from '../../lib/player';
+import { logAndNotifyError } from '../../lib/utils';
+import { useLibraryAPI } from '../../stores/useLibraryStore';
 import { usePlayerAPI } from '../../stores/usePlayerStore';
 import { useToastsAPI } from '../../stores/useToastsStore';
-import { useLibraryAPI } from '../../stores/useLibraryStore';
-import player from '../../lib/player';
-import config from '../../lib/config';
-import { logAndNotifyError } from '../../lib/utils';
-import { getCover } from '../../lib/cover';
 
 const AUDIO_ERRORS = {
   aborted: 'The video playback was aborted.',

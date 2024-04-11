@@ -1,28 +1,29 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import Keybinding from 'react-keybinding-component';
 import { useVirtualizer } from '@tanstack/react-virtual';
+import { invoke } from '@tauri-apps/api/core';
 import {
   Menu,
   MenuItem,
   PredefinedMenuItem,
   Submenu,
 } from '@tauri-apps/api/menu';
-import { invoke } from '@tauri-apps/api/core';
+import type React from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import Keybinding from 'react-keybinding-component';
 import { useNavigate } from 'react-router-dom';
 
-import TrackRow from '../TrackRow/TrackRow';
-import TracksListHeader from '../TracksListHeader/TracksListHeader';
+import type { Config, Playlist, Track } from '../../generated/typings';
+import { logAndNotifyError } from '../../lib/utils';
 import {
+  isAltKey,
+  isCtrlKey,
   isLeftClick,
   isRightClick,
-  isCtrlKey,
-  isAltKey,
 } from '../../lib/utils-events';
-import { usePlayerAPI } from '../../stores/usePlayerStore';
-import useLibraryStore, { useLibraryAPI } from '../../stores/useLibraryStore';
-import { Config, Playlist, Track } from '../../generated/typings';
-import { logAndNotifyError } from '../../lib/utils';
 import PlaylistsAPI from '../../stores/PlaylistsAPI';
+import useLibraryStore, { useLibraryAPI } from '../../stores/useLibraryStore';
+import { usePlayerAPI } from '../../stores/usePlayerStore';
+import TrackRow from '../TrackRow/TrackRow';
+import TracksListHeader from '../TracksListHeader/TracksListHeader';
 
 import styles from './TracksList.module.css';
 

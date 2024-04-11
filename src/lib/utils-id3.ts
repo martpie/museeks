@@ -1,5 +1,5 @@
-import { Track } from '../generated/typings';
-import { TrackSearchableFields } from '../types/museeks';
+import type { Track } from '../generated/typings';
+import type { TrackSearchableFields } from '../types/museeks';
 
 const ACCENTS =
   'ÀÁÂÃÄÅàáâãäåÒÓÔÕÕÖØòóôõöøÈÉÊËèéêëðÇçÐÌÍÎÏìíîïÙÚÛÜùúûüÑñŠšŸÿýŽž';

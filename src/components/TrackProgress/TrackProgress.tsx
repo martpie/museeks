@@ -1,10 +1,10 @@
-import { useCallback, useState } from 'react';
 import * as Slider from '@radix-ui/react-slider';
+import { useCallback, useState } from 'react';
 
-import { usePlayerAPI } from '../../stores/usePlayerStore';
-import { Track } from '../../generated/typings';
+import type { Track } from '../../generated/typings';
 import usePlayingTrackCurrentTime from '../../hooks/usePlayingTrackCurrentTime';
 import { parseDuration } from '../../lib/utils';
+import { usePlayerAPI } from '../../stores/usePlayerStore';
 
 import styles from './TrackProgress.module.css';
 

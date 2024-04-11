@@ -1,8 +1,9 @@
-import React, { useMemo } from 'react';
+import type React from 'react';
+import { useMemo } from 'react';
 
+import type { Track } from '../../generated/typings';
 import QueueEmpty from '../QueueEmpty/QueueEmpty';
 import QueueList from '../QueueList/QueueList';
-import { Track } from '../../generated/typings';
 
 import styles from './Queue.module.css';
 

@@ -1,9 +1,9 @@
-import { Theme as ThemeID } from '@tauri-apps/api/window';
+import type { Theme as ThemeID } from '@tauri-apps/api/window';
 
-// IMPROVE ME: scan the directory for all json files instead
-import { Theme } from '../types/museeks';
-import lightTheme from '../themes/light.json';
 import darkTheme from '../themes/dark.json';
+import lightTheme from '../themes/light.json';
+// IMPROVE ME: scan the directory for all json files instead
+import type { Theme } from '../types/museeks';
 
 export const themes: Record<ThemeID, Theme> = {
   light: lightTheme as Theme,

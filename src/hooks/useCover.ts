@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { Track } from '../generated/typings';
+import type { Track } from '../generated/typings';
 import { getCover } from '../lib/cover';
 
 /**

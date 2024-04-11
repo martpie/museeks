@@ -1,8 +1,8 @@
-import { useEffect } from 'react';
 import { listen } from '@tauri-apps/api/event';
+import { useEffect } from 'react';
 
+import type { IPCEvent, Progress } from '../../generated/typings';
 import { useLibraryAPI } from '../../stores/useLibraryStore';
-import { IPCEvent, Progress } from '../../generated/typings';
 
 /**
  * Handle Library-related app events, like refreshing and progress status

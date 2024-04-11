@@ -1,6 +1,6 @@
 import { convertFileSrc } from '@tauri-apps/api/core';
 
-import { Track } from '../generated/typings';
+import type { Track } from '../generated/typings';
 
 import config from './config';
 import { logAndNotifyError } from './utils';

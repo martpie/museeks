@@ -1,19 +1,20 @@
-import React, { useCallback, useState } from 'react';
+import type React from 'react';
+import { useCallback, useState } from 'react';
 import {
-  LoaderFunctionArgs,
+  type LoaderFunctionArgs,
   useLoaderData,
   useNavigate,
 } from 'react-router-dom';
 
 import * as Setting from '../components/Setting/Setting';
 import Button from '../elements/Button/Button';
-import { useLibraryAPI } from '../stores/useLibraryStore';
+import type { Track } from '../generated/typings';
 import database from '../lib/database';
-import { Track } from '../generated/typings';
+import { useLibraryAPI } from '../stores/useLibraryStore';
 
-import { LoaderData } from './router';
 import appStyles from './Root.module.css';
 import styles from './ViewTrackDetails.module.css';
+import type { LoaderData } from './router';
 
 // We assume no artist or genre has a comma in its name (fingers crossed)
 const DELIMITER = ',';

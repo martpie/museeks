@@ -1,8 +1,8 @@
 import orderBy from 'lodash/orderBy';
 
-import { Track } from '../generated/typings';
+import type { Track } from '../generated/typings';
 
-import { SortTuple } from './sort-orders';
+import type { SortTuple } from './sort-orders';
 import * as utils from './utils';
 import { stripAccents } from './utils-id3';
 

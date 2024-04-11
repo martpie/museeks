@@ -1,4 +1,4 @@
-import { Track } from '../generated/typings';
+import type { Track } from '../generated/typings';
 
 /**
  * Shuffle an array with a Player behavior in mind:

@@ -1,9 +1,9 @@
-import InlineSVG from 'svg-inline-react';
 import cx from 'classnames';
+import InlineSVG from 'svg-inline-react';
 
+import type { Repeat } from '../../generated/typings';
 import icons from '../../lib/icons';
 import usePlayerStore, { usePlayerAPI } from '../../stores/usePlayerStore';
-import { Repeat } from '../../generated/typings';
 
 import styles from './common.module.css';
 

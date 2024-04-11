@@ -1,15 +1,15 @@
 import { useLoaderData } from 'react-router-dom';
 
-import ExternalLink from '../elements/ExternalLink/ExternalLink';
-import Heart from '../elements/Heart/Heart';
 import * as Setting from '../components/Setting/Setting';
-import SettingsAPI from '../stores/SettingsAPI';
+import CheckboxSetting from '../components/SettingCheckbox/SettingCheckbox';
 import Button from '../elements/Button/Button';
 import ExternalButton from '../elements/ExternalButton/ExternalButton';
+import ExternalLink from '../elements/ExternalLink/ExternalLink';
 import Flexbox from '../elements/Flexbox/Flexbox';
-import CheckboxSetting from '../components/SettingCheckbox/SettingCheckbox';
+import Heart from '../elements/Heart/Heart';
+import SettingsAPI from '../stores/SettingsAPI';
 
-import { SettingsLoaderData } from './ViewSettings';
+import type { SettingsLoaderData } from './ViewSettings';
 
 export default function ViewSettingsAbout() {
   const { config, version, tauriVersion, appStorageDir } =

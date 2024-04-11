@@ -1,18 +1,18 @@
+import { useQuery } from '@tanstack/react-query';
 import { useMemo } from 'react';
 import { Link, useLoaderData } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
 
-import * as ViewMessage from '../elements/ViewMessage/ViewMessage';
 import TracksList from '../components/TracksList/TracksList';
-import useLibraryStore from '../stores/useLibraryStore';
-import usePlayingTrackID from '../hooks/usePlayingTrackID';
+import * as ViewMessage from '../elements/ViewMessage/ViewMessage';
 import useFilteredTracks from '../hooks/useFilteredTracks';
+import usePlayingTrackID from '../hooks/usePlayingTrackID';
 import config from '../lib/config';
 import database from '../lib/database';
+import useLibraryStore from '../stores/useLibraryStore';
 
-import { LoaderData } from './router';
 import appStyles from './Root.module.css';
 import styles from './ViewLibrary.module.css';
+import type { LoaderData } from './router';
 
 export default function ViewLibrary() {
   const trackPlayingID = usePlayingTrackID();

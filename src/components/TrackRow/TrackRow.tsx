@@ -1,10 +1,11 @@
-import React, { useCallback, useState } from 'react';
 import cx from 'classnames';
+import type React from 'react';
+import { useCallback, useState } from 'react';
 
-import PlayingIndicator from '../PlayingIndicator/PlayingIndicator';
+import type { Track } from '../../generated/typings';
 import { parseDuration } from '../../lib/utils';
+import PlayingIndicator from '../PlayingIndicator/PlayingIndicator';
 import cellStyles from '../TracksListHeader/TracksListHeader.module.css';
-import { Track } from '../../generated/typings';
 
 import styles from './TrackRow.module.css';
 

@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
 
 import player from '../../lib/player';
-import { isDev, preventNativeDefault } from '../../lib/utils-events';
 // import SettingsAPI from '../../stores/SettingsAPI';
 // import type { Theme } from '../../types/museeks';
 import { logAndNotifyError } from '../../lib/utils';
+import { isDev, preventNativeDefault } from '../../lib/utils-events';
 
 /**
  * Handle app-level IPC Events init and cleanup

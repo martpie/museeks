@@ -1,5 +1,5 @@
-import InlineSVG from 'svg-inline-react';
 import cx from 'classnames';
+import InlineSVG from 'svg-inline-react';
 
 import icons from '../../lib/icons';
 import usePlayerStore, { usePlayerAPI } from '../../stores/usePlayerStore';

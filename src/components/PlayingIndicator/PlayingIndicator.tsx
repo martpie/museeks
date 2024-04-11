@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import Icon from 'react-fontawesome';
 
-import { PlayerStatus } from '../../types/museeks';
 import usePlayerStore, { usePlayerAPI } from '../../stores/usePlayerStore';
+import { PlayerStatus } from '../../types/museeks';
 
 import styles from './PlayingIndicator.module.css';
 

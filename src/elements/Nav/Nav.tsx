@@ -1,6 +1,6 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
 import cx from 'classnames';
+import type React from 'react';
+import { NavLink } from 'react-router-dom';
 
 import styles from './Nav.module.css';
 

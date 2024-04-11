@@ -1,13 +1,13 @@
-import * as semver from 'semver';
 import { getVersion } from '@tauri-apps/api/app';
-import { getCurrent } from '@tauri-apps/api/window';
 import { invoke } from '@tauri-apps/api/core';
+import { getCurrent } from '@tauri-apps/api/window';
+import * as semver from 'semver';
 
-import { Config, DefaultView } from '../generated/typings';
-import { Theme } from '../types/museeks';
-import { themes } from '../lib/themes';
+import type { Config, DefaultView } from '../generated/typings';
 import config from '../lib/config';
+import { themes } from '../lib/themes';
 import { logAndNotifyError } from '../lib/utils';
+import type { Theme } from '../types/museeks';
 
 import useToastsStore from './useToastsStore';
 

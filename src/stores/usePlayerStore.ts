@@ -1,15 +1,15 @@
 import debounce from 'lodash/debounce';
-import { StateCreator } from 'zustand';
+import type { StateCreator } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-import { PlayerStatus } from '../types/museeks';
-import { shuffleTracks } from '../lib/utils-player';
-import router from '../views/router';
-import player from '../lib/player';
-import { Track, Repeat } from '../generated/typings';
+import type { Repeat, Track } from '../generated/typings';
 import config from '../lib/config';
 import database from '../lib/database';
+import player from '../lib/player';
 import { logAndNotifyError } from '../lib/utils';
+import { shuffleTracks } from '../lib/utils-player';
+import { PlayerStatus } from '../types/museeks';
+import router from '../views/router';
 
 import { createStore } from './store-helpers';
 import useLibraryStore from './useLibraryStore';

@@ -1,13 +1,13 @@
-import { useCallback, ChangeEventHandler } from 'react';
+import { type ChangeEventHandler, useCallback } from 'react';
 import { useLoaderData } from 'react-router-dom';
 
-import SettingsAPI from '../stores/SettingsAPI';
 import * as Setting from '../components/Setting/Setting';
 import CheckboxSetting from '../components/SettingCheckbox/SettingCheckbox';
+import type { Config, DefaultView } from '../generated/typings';
 import { themes } from '../lib/themes';
-import { Config, DefaultView } from '../generated/typings';
+import SettingsAPI from '../stores/SettingsAPI';
 
-import { SettingsLoaderData } from './ViewSettings';
+import type { SettingsLoaderData } from './ViewSettings';
 
 export default function ViewSettingsUI() {
   const { config } = useLoaderData() as SettingsLoaderData;

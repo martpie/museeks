@@ -1,7 +1,8 @@
-import React, { useCallback } from 'react';
 import cx from 'classnames';
+import type React from 'react';
+import { useCallback } from 'react';
 
-import { Track } from '../../generated/typings';
+import type { Track } from '../../generated/typings';
 import { usePlayerAPI } from '../../stores/usePlayerStore';
 import Cover from '../Cover/Cover';
 

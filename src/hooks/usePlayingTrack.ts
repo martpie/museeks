@@ -1,4 +1,4 @@
-import { Track } from '../generated/typings';
+import type { Track } from '../generated/typings';
 import usePlayerStore from '../stores/usePlayerStore';
 
 export default function usePlayingTrack(): Track | null {

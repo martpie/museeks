@@ -4,14 +4,14 @@
 |--------------------------------------------------------------------------
 */
 
+import { QueryClientProvider } from '@tanstack/react-query';
+import * as logger from '@tauri-apps/plugin-log';
 import React from 'react';
 import * as ReactDOM from 'react-dom/client';
 import { RouterProvider } from 'react-router-dom';
-import { QueryClientProvider } from '@tanstack/react-query';
-import * as logger from '@tauri-apps/plugin-log';
 
-import router from './views/router';
 import { queryClient } from './lib/query';
+import router from './views/router';
 
 /*
 |--------------------------------------------------------------------------

@@ -22,9 +22,7 @@
     "test:typings": "tsc --noEmit --project ./tsconfig.json",
     "test:unit": "vitest run",
     "test:lint": "biome ci .",
-    "test:lint:fix": "biome ci . --fix",
-    "test:formatting": "prettier --check \"./**/*.{ts,tsx,js}\"",
-    "test:formatting:fix": "prettier --write \"./**/*.{ts,tsx,js}\"",
+    "test:lint:fix": "biome check --apply .",
     "test:css": "stylelint \"src/**/*.css\"",
     "package:checksums": "bash scripts/checksum.sh"
   },

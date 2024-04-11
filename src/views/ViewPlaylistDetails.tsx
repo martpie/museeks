@@ -1,7 +1,7 @@
 import { useCallback, useMemo } from 'react';
 import {
   Link,
-  LoaderFunctionArgs,
+  type LoaderFunctionArgs,
   redirect,
   useLoaderData,
   useParams,
@@ -9,14 +9,14 @@ import {
 
 import TracksList from '../components/TracksList/TracksList';
 import * as ViewMessage from '../elements/ViewMessage/ViewMessage';
-import PlaylistsAPI from '../stores/PlaylistsAPI';
-import { filterTracks } from '../lib/utils-library';
-import useLibraryStore from '../stores/useLibraryStore';
 import usePlayingTrackID from '../hooks/usePlayingTrackID';
 import config from '../lib/config';
 import database from '../lib/database';
+import { filterTracks } from '../lib/utils-library';
+import PlaylistsAPI from '../stores/PlaylistsAPI';
+import useLibraryStore from '../stores/useLibraryStore';
 
-import { LoaderData } from './router';
+import type { LoaderData } from './router';
 
 export default function ViewPlaylistDetails() {
   const { playlists, playlistTracks, tracksDensity } =

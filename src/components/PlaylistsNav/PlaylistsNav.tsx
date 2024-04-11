@@ -1,14 +1,15 @@
 /* eslint-disable jsx-a11y/no-autofocus */
 
-import React, { useCallback, useState } from 'react';
-import Icon from 'react-fontawesome';
 import { Menu, MenuItem, PredefinedMenuItem } from '@tauri-apps/api/menu';
+import type React from 'react';
+import { useCallback, useState } from 'react';
+import Icon from 'react-fontawesome';
 
+import type { Playlist } from '../../generated/typings';
+import database from '../../lib/database';
+import { logAndNotifyError } from '../../lib/utils';
 import PlaylistsAPI from '../../stores/PlaylistsAPI';
 import PlaylistsNavLink from '../PlaylistsNavLink/PlaylistsNavLink';
-import { Playlist } from '../../generated/typings';
-import { logAndNotifyError } from '../../lib/utils';
-import database from '../../lib/database';
 
 import styles from './PlaylistsNav.module.css';
 
