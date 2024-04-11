@@ -1,5 +1,3 @@
-/* eslint-disable jsx-a11y/no-autofocus */
-
 import { Menu, MenuItem, PredefinedMenuItem } from '@tauri-apps/api/menu';
 import type React from 'react';
 import { useCallback, useState } from 'react';

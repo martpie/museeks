@@ -1,4 +1,3 @@
-// eslint-disable-next-line spaced-comment
 /// <reference types="vite/client" />
 
 import type { OsType } from '@tauri-apps/plugin-os';
