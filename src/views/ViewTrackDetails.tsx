@@ -135,7 +135,7 @@ ViewTrackDetails.loader = async ({ params }: LoaderFunctionArgs) => {
   const { trackID } = params;
 
   if (trackID == null) {
-    throw new Error(`Track ID should not be null`);
+    throw new Error("Track ID should not be null");
   }
 
   const [track] = await database.getTracks([trackID]);

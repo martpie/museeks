@@ -33,6 +33,7 @@ export default function TrackPlayingIndicator() {
 
   return (
     <button
+      type="button"
       className={`${styles.playingIndicator} reset`}
       onClick={playerAPI.playPause}
       onMouseEnter={() => setHovered(true)}

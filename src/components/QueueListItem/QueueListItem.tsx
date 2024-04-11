@@ -70,7 +70,11 @@ export default function QueueListItem(props: Props) {
           <span>{track.artists[0]}</span> - <span>{track.album}</span>
         </div>
       </div>
-      <button className={styles.queue__item__remove} onClick={remove}>
+      <button
+        type="button"
+        className={styles.queue__item__remove}
+        onClick={remove}
+      >
         &times;
       </button>
     </div>

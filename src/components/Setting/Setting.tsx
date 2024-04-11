@@ -54,7 +54,7 @@ export function Input(props: JSX.IntrinsicElements['input'] & InputProps) {
   );
 }
 
-export function Error(props: Props) {
+export function ErrorMessage(props: Props) {
   return <p className={styles.settingError}>{props.children}</p>;
 }
 

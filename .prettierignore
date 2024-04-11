@@ -1,7 +1,0 @@
-node_modules
-dist
-.vscode
-build
-
-src/generated/typings/*.ts
-!src/generated/typings/index.ts

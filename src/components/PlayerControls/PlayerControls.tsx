@@ -22,6 +22,7 @@ export default function PlayerControls() {
         <Icon name="backward" />
       </button>
       <button
+        type="button"
         className={`${styles.control} ${styles.play}`}
         title={playerStatus === PlayerStatus.PLAY ? 'Pause' : 'Play'}
         onClick={playerAPI.playPause}

@@ -125,7 +125,7 @@ export default function PlaylistsNav(props: Props) {
           onKeyDown={keyDown}
           onBlur={blur}
           onFocus={focus}
-          autoFocus
+          ref={ref => ref?.focus()}
         />
       );
     } else {
@@ -149,6 +149,7 @@ export default function PlaylistsNav(props: Props) {
         <h4 className={styles.playlistsNav__title}>Playlists</h4>
         <div className={styles.actions}>
           <button
+            type="button"
             className={styles.action}
             onClick={createPlaylist}
             title="New playlist"

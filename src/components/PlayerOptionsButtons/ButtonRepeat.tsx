@@ -11,8 +11,6 @@ function getIcon(repeat: Repeat) {
   switch (repeat) {
     case 'One':
       return icons.REPEAT_ONE;
-    case 'None':
-    case 'All':
     default:
       return icons.REPEAT;
   }
@@ -29,6 +27,7 @@ export default function ButtonRepeat() {
 
   return (
     <button
+      type="button"
       className={buttonClasses}
       onClick={() => playerAPI.toggleRepeat()}
       data-museeks-action

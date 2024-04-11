@@ -15,7 +15,7 @@ class ConfigManager {
    * Should only be used when starting the app.
    */
   getInitial<T extends keyof Config>(key: T): Config[T] {
-    if (window.__MUSEEKS_INITIAL_CONFIG == undefined) {
+    if (window.__MUSEEKS_INITIAL_CONFIG === undefined) {
       throw new Error('Config has not been injected from the back-end');
     }
 

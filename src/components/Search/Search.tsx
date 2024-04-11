@@ -48,6 +48,7 @@ export default function Search() {
       />
       {search.length > 0 && (
         <button
+          type="button"
           className={styles.search__clear}
           onClick={onClear}
           data-museeks-action

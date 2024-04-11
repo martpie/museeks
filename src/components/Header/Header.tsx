@@ -26,7 +26,11 @@ export default function Header() {
             <PlayingBar trackPlaying={trackPlaying} />
             <Popover.Root>
               <Popover.Trigger asChild>
-                <button className={styles.queueToggle} data-tauri-drag-region>
+                <button
+                  type="button"
+                  className={styles.queueToggle}
+                  data-tauri-drag-region
+                >
                   <Icon name="list" data-museeks-action />
                 </button>
               </Popover.Trigger>

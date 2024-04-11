@@ -29,7 +29,12 @@ export default function ViewPlaylists() {
       <ViewMessage.Notice>
         <p>You haven{"'"}t created any playlist yet</p>
         <ViewMessage.Sub>
-          <button onClick={createPlaylist} className="reset" tabIndex={0}>
+          <button
+            type="button"
+            onClick={createPlaylist}
+            className="reset"
+            tabIndex={0}
+          >
             create one now
           </button>
         </ViewMessage.Sub>

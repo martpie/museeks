@@ -76,7 +76,6 @@ export default function TracksList(props: Props) {
       switch (tracksDensity) {
         case 'compact':
           return ROW_HEIGHT_COMPACT;
-        case 'normal':
         default:
           return ROW_HEIGHT;
       }
@@ -270,7 +269,7 @@ export default function TracksList(props: Props) {
         base = max;
       } else {
         base = min;
-      }
+    }
 
       const newSelected = [];
 
@@ -539,9 +538,7 @@ export default function TracksList(props: Props) {
                 onContextMenu={showContextMenu}
                 onDoubleClick={startPlayback}
                 draggable={reorderable}
-                reordered={
-                  (reordered && reordered.includes(track._id)) || false
-                }
+                reordered={reordered?.includes(track._id) || false}
                 onDragStart={onReorderStart}
                 onDragEnd={onReorderEnd}
                 onDrop={onDrop}

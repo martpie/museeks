@@ -16,5 +16,3 @@ declare global {
     __MUSEEKS_INITIAL_CONFIG: Config;
   }
 }
-
-export {};

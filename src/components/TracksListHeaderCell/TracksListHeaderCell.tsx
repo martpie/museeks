@@ -41,7 +41,7 @@ export default function TracksListHeaderCell(props: Props) {
 
   if (sortBy) {
     return (
-      <button className={classes} onClick={sort}>
+      <button type="button" className={classes} onClick={sort}>
         {content}
       </button>
     );
