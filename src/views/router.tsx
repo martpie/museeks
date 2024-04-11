@@ -1,23 +1,23 @@
+import * as logger from '@tauri-apps/plugin-log';
 import {
-  LoaderFunctionArgs,
+  type LoaderFunctionArgs,
   createHashRouter,
   isRouteErrorResponse,
   useRouteError,
 } from 'react-router-dom';
-import * as logger from '@tauri-apps/plugin-log';
 
-import * as ViewMessage from '../elements/ViewMessage/ViewMessage';
 import ExternalLink from '../elements/ExternalLink/ExternalLink';
+import * as ViewMessage from '../elements/ViewMessage/ViewMessage';
 
 import RootView from './Root';
 import ViewLibrary from './ViewLibrary';
-import ViewPlaylists from './ViewPlaylists';
 import ViewPlaylistDetails from './ViewPlaylistDetails';
+import ViewPlaylists from './ViewPlaylists';
 import ViewSettings from './ViewSettings';
+import ViewSettingsAbout from './ViewSettingsAbout';
+import ViewSettingsAudio from './ViewSettingsAudio';
 import ViewSettingsLibrary from './ViewSettingsLibrary';
 import ViewSettingsUI from './ViewSettingsUI';
-import ViewSettingsAudio from './ViewSettingsAudio';
-import ViewSettingsAbout from './ViewSettingsAbout';
 // import ViewTrackDetails from "./ViewTrackDetails";
 
 const router = createHashRouter([

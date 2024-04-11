@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 
-import { usePlayerAPI } from '../../stores/usePlayerStore';
-import player from '../../lib/player';
 import { getCover } from '../../lib/cover';
+import player from '../../lib/player';
+import { usePlayerAPI } from '../../stores/usePlayerStore';
 
 /**
  * Integration for MediaSession (mpris, macOS player controls etc)...

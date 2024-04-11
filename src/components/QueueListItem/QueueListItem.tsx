@@ -1,7 +1,8 @@
-import React, { useCallback } from 'react';
 import cx from 'classnames';
+import type React from 'react';
+import { useCallback } from 'react';
 
-import { Track } from '../../generated/typings';
+import type { Track } from '../../generated/typings';
 import { usePlayerAPI } from '../../stores/usePlayerStore';
 import Cover from '../Cover/Cover';
 
@@ -70,7 +71,11 @@ export default function QueueListItem(props: Props) {
           <span>{track.artists[0]}</span> - <span>{track.album}</span>
         </div>
       </div>
-      <button className={styles.queue__item__remove} onClick={remove}>
+      <button
+        type="button"
+        className={styles.queue__item__remove}
+        onClick={remove}
+      >
         &times;
       </button>
     </div>

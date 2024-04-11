@@ -1,9 +1,9 @@
 import { useCallback } from 'react';
-import { NavLink } from 'react-router-dom';
 import Icon from 'react-fontawesome';
+import { NavLink } from 'react-router-dom';
 
-import ProgressBar from '../ProgressBar/ProgressBar';
 import useLibraryStore from '../../stores/useLibraryStore';
+import ProgressBar from '../ProgressBar/ProgressBar';
 
 import styles from './Footer.module.css';
 

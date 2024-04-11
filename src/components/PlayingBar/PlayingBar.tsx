@@ -1,9 +1,9 @@
-import PlayingBarInfos from '../PlayingBarInfo/PlayingBarInfo';
-import Cover from '../Cover/Cover';
+import type { Track } from '../../generated/typings';
 import usePlayerStore from '../../stores/usePlayerStore';
+import Cover from '../Cover/Cover';
 import ButtonRepeat from '../PlayerOptionsButtons/ButtonRepeat';
 import ButtonShuffle from '../PlayerOptionsButtons/ButtonShuffle';
-import { Track } from '../../generated/typings';
+import PlayingBarInfos from '../PlayingBarInfo/PlayingBarInfo';
 
 import styles from './PlayingBar.module.css';
 

@@ -1,14 +1,13 @@
-import { useEffect } from 'react';
-import { sendNotification } from '@tauri-apps/plugin-notification';
 import { getCurrent } from '@tauri-apps/api/window';
+import { sendNotification } from '@tauri-apps/plugin-notification';
+import { useEffect } from 'react';
 
+import config from '../../lib/config';
+import { getCover } from '../../lib/cover';
+import player from '../../lib/player';
+import { logAndNotifyError } from '../../lib/utils';
 import { usePlayerAPI } from '../../stores/usePlayerStore';
 import { useToastsAPI } from '../../stores/useToastsStore';
-import { useLibraryAPI } from '../../stores/useLibraryStore';
-import player from '../../lib/player';
-import config from '../../lib/config';
-import { logAndNotifyError } from '../../lib/utils';
-import { getCover } from '../../lib/cover';
 
 const AUDIO_ERRORS = {
   aborted: 'The video playback was aborted.',
@@ -23,7 +22,6 @@ const AUDIO_ERRORS = {
  */
 function PlayerEvents() {
   const playerAPI = usePlayerAPI();
-  const libraryAPI = useLibraryAPI();
   const toastsAPI = useToastsAPI();
 
   useEffect(() => {
@@ -90,7 +88,7 @@ function PlayerEvents() {
       player.getAudio().removeEventListener('ended', playerAPI.next);
       player.getAudio().removeEventListener('error', handleAudioError);
     };
-  }, [libraryAPI, toastsAPI, playerAPI]);
+  }, [toastsAPI, playerAPI]);
 
   return null;
 }

@@ -1,8 +1,8 @@
-import React, { useCallback } from 'react';
 import cx from 'classnames';
+import React, { useCallback } from 'react';
 import Icon from 'react-fontawesome';
 
-import { SortBy } from '../../generated/typings';
+import type { SortBy } from '../../generated/typings';
 import { useLibraryAPI } from '../../stores/useLibraryStore';
 
 import styles from './TracksListHeaderCell.module.css';
@@ -41,7 +41,7 @@ export default function TracksListHeaderCell(props: Props) {
 
   if (sortBy) {
     return (
-      <button className={classes} onClick={sort}>
+      <button type="button" className={classes} onClick={sort}>
         {content}
       </button>
     );

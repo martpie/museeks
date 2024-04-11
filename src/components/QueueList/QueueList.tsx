@@ -1,10 +1,11 @@
-import React, { useCallback, useState } from 'react';
+import type React from 'react';
+import { useCallback, useState } from 'react';
 
-import QueueListItem from '../QueueListItem/QueueListItem';
-import { getStatus } from '../../lib/utils-library';
 import Button from '../../elements/Button/Button';
+import type { Track } from '../../generated/typings';
+import { getStatus } from '../../lib/utils-library';
 import { usePlayerAPI } from '../../stores/usePlayerStore';
-import { Track } from '../../generated/typings';
+import QueueListItem from '../QueueListItem/QueueListItem';
 
 import styles from './QueueList.module.css';
 

@@ -1,0 +1,35 @@
+{
+  "$schema": "https://biomejs.dev/schemas/1.6.4/schema.json",
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true,
+      "complexity": {
+        "noForEach": "off"
+      },
+      "suspicious": {
+        "noImplicitAnyLet": "off"
+      }
+    }
+  },
+  "formatter": {
+    "enabled": true,
+    "indentStyle": "space",
+    "lineEnding": "lf"
+  },
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "single"
+    }
+  },
+  "files": {
+    "ignore": [
+      "node_modules",
+      "dist",
+      "src/generated/typings/*.ts",
+      "!src/generated/typings/index.ts",
+      "src-tauri/target/**/*",
+      "src-tauri/gen/**/*"
+    ]
+  }
+}

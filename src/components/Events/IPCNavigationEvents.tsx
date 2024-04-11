@@ -1,6 +1,6 @@
+import { getCurrent } from '@tauri-apps/api/window';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getCurrent } from '@tauri-apps/api/window';
 
 import { usePlayerAPI } from '../../stores/usePlayerStore';
 

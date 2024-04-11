@@ -1,10 +1,10 @@
 import { ask, open } from '@tauri-apps/plugin-dialog';
 
-import { SortBy, SortOrder, Track } from '../generated/typings';
+import type { SortBy, SortOrder, Track } from '../generated/typings';
 import config from '../lib/config';
 import database from '../lib/database';
-import { logAndNotifyError } from '../lib/utils';
 import { invalidate } from '../lib/query';
+import { logAndNotifyError } from '../lib/utils';
 
 import { createStore } from './store-helpers';
 import usePlayerStore from './usePlayerStore';

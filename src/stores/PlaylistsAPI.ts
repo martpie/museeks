@@ -1,11 +1,11 @@
-import { Playlist } from '../generated/typings';
-import router from '../views/router';
+import type { Playlist } from '../generated/typings';
 import database from '../lib/database';
-import { logAndNotifyError } from '../lib/utils';
 import { invalidate } from '../lib/query';
+import { logAndNotifyError } from '../lib/utils';
+import router from '../views/router';
 
-import useToastsStore from './useToastsStore';
 import usePlayerStore from './usePlayerStore';
+import useToastsStore from './useToastsStore';
 
 /**
  * Start playing playlist (on double click)

@@ -1,6 +1,6 @@
 import { convertFileSrc } from '@tauri-apps/api/core';
 
-import { Track } from '../generated/typings';
+import type { Track } from '../generated/typings';
 
 import config from './config';
 import { logAndNotifyError } from './utils';
@@ -37,7 +37,6 @@ class Player {
     this.track = null;
 
     this.audio.defaultPlaybackRate = mergedOptions.playbackRate;
-    // eslint-disable-next-line
     // @ts-ignore
     // TODO:
     // this.audio.setSinkId(mergedOptions.audioOutputDevice);
@@ -92,7 +91,6 @@ class Player {
 
   async setOutputDevice(deviceID: string) {
     try {
-      // eslint-disable-next-line
       // @ts-ignore
       await this.audio.setSinkId(deviceID);
     } catch (err) {

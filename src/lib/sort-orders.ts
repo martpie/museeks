@@ -1,5 +1,5 @@
-import { SortOrder, SortBy, Track } from '../generated/typings';
-import { Path } from '../types/museeks';
+import type { SortBy, SortOrder, Track } from '../generated/typings';
+import type { Path } from '../types/museeks';
 
 import { stripAccents } from './utils-id3';
 

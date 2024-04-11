@@ -1,9 +1,8 @@
-// eslint-disable-next-line spaced-comment
 /// <reference types="vite/client" />
 
-import { OsType } from '@tauri-apps/plugin-os';
+import type { OsType } from '@tauri-apps/plugin-os';
 
-import { Config } from '../../generated/typings';
+import type { Config } from '../../generated/typings';
 
 declare global {
   /**
@@ -16,5 +15,3 @@ declare global {
     __MUSEEKS_INITIAL_CONFIG: Config;
   }
 }
-
-export {};

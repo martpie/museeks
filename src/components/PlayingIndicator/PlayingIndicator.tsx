@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import Icon from 'react-fontawesome';
 
-import { PlayerStatus } from '../../types/museeks';
 import usePlayerStore, { usePlayerAPI } from '../../stores/usePlayerStore';
+import { PlayerStatus } from '../../types/museeks';
 
 import styles from './PlayingIndicator.module.css';
 
@@ -33,6 +33,7 @@ export default function TrackPlayingIndicator() {
 
   return (
     <button
+      type="button"
       className={`${styles.playingIndicator} reset`}
       onClick={playerAPI.playPause}
       onMouseEnter={() => setHovered(true)}

@@ -1,11 +1,11 @@
+import { invoke } from '@tauri-apps/api/core';
 import { useCallback } from 'react';
 import Keybinding from 'react-keybinding-component';
 import { useNavigate } from 'react-router-dom';
-import { invoke } from '@tauri-apps/api/core';
 
-import { usePlayerAPI } from '../../stores/usePlayerStore';
-import { isCtrlKey } from '../../lib/utils-events';
 import player from '../../lib/player';
+import { isCtrlKey } from '../../lib/utils-events';
+import { usePlayerAPI } from '../../stores/usePlayerStore';
 
 /**
  * Handle app-level IPC Navigation events

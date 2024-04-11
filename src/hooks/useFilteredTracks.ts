@@ -1,10 +1,10 @@
 import { useMemo } from 'react';
 
-import { filterTracks, sortTracks } from '../lib/utils-library';
+import type { Track } from '../generated/typings';
 import SORT_ORDERS from '../lib/sort-orders';
-import useLibraryStore from '../stores/useLibraryStore';
-import { Track } from '../generated/typings';
 import { stripAccents } from '../lib/utils-id3';
+import { filterTracks, sortTracks } from '../lib/utils-library';
+import useLibraryStore from '../stores/useLibraryStore';
 
 export default function useFilteredTracks(tracks: Track[]): Track[] {
   const search = useLibraryStore((state) => stripAccents(state.search));

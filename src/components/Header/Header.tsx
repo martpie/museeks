@@ -1,12 +1,12 @@
-import Icon from 'react-fontawesome';
 import * as Popover from '@radix-ui/react-popover';
+import Icon from 'react-fontawesome';
 
-import Queue from '../Queue/Queue';
-import PlayingBar from '../PlayingBar/PlayingBar';
-import PlayerControls from '../PlayerControls/PlayerControls';
-import Search from '../Search/Search';
-import usePlayerStore from '../../stores/usePlayerStore';
 import usePlayingTrack from '../../hooks/usePlayingTrack';
+import usePlayerStore from '../../stores/usePlayerStore';
+import PlayerControls from '../PlayerControls/PlayerControls';
+import PlayingBar from '../PlayingBar/PlayingBar';
+import Queue from '../Queue/Queue';
+import Search from '../Search/Search';
 
 import styles from './Header.module.css';
 
@@ -26,7 +26,11 @@ export default function Header() {
             <PlayingBar trackPlaying={trackPlaying} />
             <Popover.Root>
               <Popover.Trigger asChild>
-                <button className={styles.queueToggle} data-tauri-drag-region>
+                <button
+                  type="button"
+                  className={styles.queueToggle}
+                  data-tauri-drag-region
+                >
                   <Icon name="list" data-museeks-action />
                 </button>
               </Popover.Trigger>

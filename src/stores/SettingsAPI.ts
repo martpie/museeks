@@ -1,13 +1,13 @@
-import * as semver from 'semver';
 import { getVersion } from '@tauri-apps/api/app';
-import { getCurrent } from '@tauri-apps/api/window';
 import { invoke } from '@tauri-apps/api/core';
+import { getCurrent } from '@tauri-apps/api/window';
+import * as semver from 'semver';
 
-import { Config, DefaultView } from '../generated/typings';
-import { Theme } from '../types/museeks';
-import { themes } from '../lib/themes';
+import type { Config, DefaultView } from '../generated/typings';
 import config from '../lib/config';
+import { themes } from '../lib/themes';
 import { logAndNotifyError } from '../lib/utils';
+import type { Theme } from '../types/museeks';
 
 import useToastsStore from './useToastsStore';
 
@@ -90,18 +90,18 @@ const checkForUpdate = async (
       throw new Error('Impossible to retrieve releases information.');
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // biome-ignore lint/suspicious/noExplicitAny: ok for now
     const releases: any = await response.json();
 
     // TODO Github API types?
     const newRelease = releases.find(
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      // biome-ignore lint/suspicious/noExplicitAny: ok for now
       (release: any) =>
         semver.valid(release.tag_name) !== null &&
         semver.gt(release.tag_name, currentVersion),
     );
 
-    let message;
+    let message: string | undefined;
     if (newRelease) {
       message = `Museeks ${newRelease.tag_name} is available, check http://museeks.io!`;
     } else if (!options.silentFail) {
@@ -136,7 +136,7 @@ const check = async (): Promise<void> => {
  * Toggle sleep blocker
  */
 const toggleSleepBlocker = async (value: boolean): Promise<void> => {
-  if (value == true) {
+  if (value === true) {
     invoke('plugin:sleepblocker|enable');
   } else {
     invoke('plugin:sleepblocker|disable');

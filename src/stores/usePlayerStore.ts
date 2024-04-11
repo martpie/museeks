@@ -1,15 +1,15 @@
 import debounce from 'lodash/debounce';
-import { StateCreator } from 'zustand';
+import type { StateCreator } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-import { PlayerStatus } from '../types/museeks';
-import { shuffleTracks } from '../lib/utils-player';
-import router from '../views/router';
-import player from '../lib/player';
-import { Track, Repeat } from '../generated/typings';
+import type { Repeat, Track } from '../generated/typings';
 import config from '../lib/config';
 import database from '../lib/database';
+import player from '../lib/player';
 import { logAndNotifyError } from '../lib/utils';
+import { shuffleTracks } from '../lib/utils-player';
+import { PlayerStatus } from '../types/museeks';
+import router from '../views/router';
 
 import { createStore } from './store-helpers';
 import useLibraryStore from './useLibraryStore';
@@ -61,7 +61,7 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
      * Start playing audio (queue instantiation, shuffle and everything...)
      * TODO: this function ~could probably~ needs to be refactored ~a bit~
      */
-    start: async (queue, _id): Promise<void> => {
+    start: async (tracks, _id): Promise<void> => {
       // TODO: implement start with no queue
       //   // If no queue is provided, we create it based on the screen the user is on
       // if (!queue) {
@@ -82,6 +82,8 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
       //     );
       //   }
       // }
+
+      let queue = tracks;
 
       if (queue.length === 0) return;
 
@@ -256,9 +258,8 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
      * Enable/disable shuffle
      */
     toggleShuffle: async (shuffle) => {
-      shuffle = shuffle ?? !get().shuffle;
-
-      await config.set('audio_shuffle', shuffle);
+      const nextShuffleState: boolean = shuffle ?? !get().shuffle;
+      await config.set('audio_shuffle', nextShuffleState);
 
       const { queue, queueCursor, oldQueue } = get();
 
@@ -266,7 +267,7 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
         const trackPlayingID = queue[queueCursor]._id;
 
         // If we need to shuffle everything
-        if (shuffle) {
+        if (nextShuffleState) {
           // Let's shuffle that
           const newQueue = shuffleTracks([...queue], queueCursor);
 
@@ -296,23 +297,25 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
      * Enable disable repeat
      */
     toggleRepeat: async (repeat) => {
+      let nextRepeatState: Repeat = 'None';
+
       // Get to the next repeat type if none is specified
-      if (repeat == undefined) {
+      if (repeat === undefined) {
         switch (get().repeat) {
           case 'None':
-            repeat = 'All';
+            nextRepeatState = 'All';
             break;
           case 'All':
-            repeat = 'One';
+            nextRepeatState = 'One';
             break;
           case 'One':
-            repeat = 'None';
+            nextRepeatState = 'None';
             break;
         }
       }
 
-      await config.set('audio_repeat', repeat);
-      set({ repeat });
+      await config.set('audio_repeat', nextRepeatState);
+      set({ repeat: nextRepeatState });
     },
 
     /**
@@ -539,15 +542,13 @@ function createPlayerStore<T extends PlayerState>(store: StateCreator<T>) {
         };
       },
       merge(persistedState, currentState) {
-        if (persistedState == null) {
-          persistedState = {
-            palyerStatus: PlayerStatus.STOP,
-          };
-        }
+        const stateToPersist = (persistedState ?? {
+          playerStatus: PlayerStatus.STOP,
+        }) satisfies Partial<PlayerState>;
 
         return {
           ...currentState,
-          ...(persistedState as Partial<PlayerState>),
+          ...stateToPersist,
           // API should never be persisted
           api: currentState.api,
           // If player status was playing, set it to pause, as it makes no sense

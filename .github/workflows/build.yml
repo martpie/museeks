@@ -42,10 +42,7 @@ jobs:
       - name: 'Test: Rust (+ Generate Types)'
         run: yarn run gen
 
-      - name: 'Test: formatting'
-        run: 'yarn run test:formatting'
-
-      - name: 'Test: TS/JS linting'
+      - name: 'Test: TS/JS linting & formatting'
         run: 'yarn run test:lint'
 
       - name: 'Test: CSS linting'

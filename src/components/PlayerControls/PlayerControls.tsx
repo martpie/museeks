@@ -1,8 +1,8 @@
 import Icon from 'react-fontawesome';
 
-import VolumeControl from '../VolumeControl/VolumeControl';
-import { PlayerStatus } from '../../types/museeks';
 import usePlayerStore, { usePlayerAPI } from '../../stores/usePlayerStore';
+import { PlayerStatus } from '../../types/museeks';
+import VolumeControl from '../VolumeControl/VolumeControl';
 
 import styles from './PlayerControls.module.css';
 
@@ -22,6 +22,7 @@ export default function PlayerControls() {
         <Icon name="backward" />
       </button>
       <button
+        type="button"
         className={`${styles.control} ${styles.play}`}
         title={playerStatus === PlayerStatus.PLAY ? 'Pause' : 'Play'}
         onClick={playerAPI.playPause}

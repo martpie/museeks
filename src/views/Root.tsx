@@ -1,23 +1,23 @@
-// import { useEffect } from "react";
-import { Outlet } from 'react-router-dom';
 import { getCurrent } from '@tauri-apps/api/window';
 import { Suspense, useEffect } from 'react';
+// import { useEffect } from "react";
+import { Outlet } from 'react-router-dom';
 
-import Header from '../components/Header/Header';
-import Footer from '../components/Footer/Footer';
-import Toasts from '../components/Toasts/Toasts';
 import DropzoneImport from '../components/DropzoneImport/DropzoneImport';
-import MediaSessionEvents from '../components/Events/MediaSessionEvents';
 import AppEvents from '../components/Events/AppEvents';
-import PlayerEvents from '../components/Events/PlayerEvents';
-import IPCPlayerEvents from '../components/Events/IPCPlayerEvents';
 import GlobalKeyBindings from '../components/Events/GlobalKeyBindings';
-import SettingsAPI from '../stores/SettingsAPI';
 import IPCNavigationEvents from '../components/Events/IPCNavigationEvents';
+import IPCPlayerEvents from '../components/Events/IPCPlayerEvents';
 import LibraryEvents from '../components/Events/LibraryEvents';
+import MediaSessionEvents from '../components/Events/MediaSessionEvents';
+import PlayerEvents from '../components/Events/PlayerEvents';
+import Footer from '../components/Footer/Footer';
+import Header from '../components/Header/Header';
+import Toasts from '../components/Toasts/Toasts';
+import SettingsAPI from '../stores/SettingsAPI';
 
 import styles from './Root.module.css';
-import { LoaderData } from './router';
+import type { LoaderData } from './router';
 
 export default function ViewRoot() {
   useEffect(() => {

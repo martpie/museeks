@@ -1,9 +1,9 @@
+import { emit, listen } from '@tauri-apps/api/event';
 import { useEffect } from 'react';
-import { listen, emit } from '@tauri-apps/api/event';
 
-import { usePlayerAPI } from '../../stores/usePlayerStore';
+import type { IPCEvent } from '../../generated/typings';
 import player from '../../lib/player';
-import { IPCEvent } from '../../generated/typings';
+import { usePlayerAPI } from '../../stores/usePlayerStore';
 
 /**
  * Handle back-end events attempting to control the player

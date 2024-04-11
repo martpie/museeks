@@ -1,14 +1,13 @@
-/* eslint-disable jsx-a11y/no-autofocus */
-
-import React, { useCallback, useState } from 'react';
-import Icon from 'react-fontawesome';
 import { Menu, MenuItem, PredefinedMenuItem } from '@tauri-apps/api/menu';
+import type React from 'react';
+import { useCallback, useState } from 'react';
+import Icon from 'react-fontawesome';
 
+import type { Playlist } from '../../generated/typings';
+import database from '../../lib/database';
+import { logAndNotifyError } from '../../lib/utils';
 import PlaylistsAPI from '../../stores/PlaylistsAPI';
 import PlaylistsNavLink from '../PlaylistsNavLink/PlaylistsNavLink';
-import { Playlist } from '../../generated/typings';
-import { logAndNotifyError } from '../../lib/utils';
-import database from '../../lib/database';
 
 import styles from './PlaylistsNav.module.css';
 
@@ -125,7 +124,7 @@ export default function PlaylistsNav(props: Props) {
           onKeyDown={keyDown}
           onBlur={blur}
           onFocus={focus}
-          autoFocus
+          ref={(ref) => ref?.focus()}
         />
       );
     } else {
@@ -149,6 +148,7 @@ export default function PlaylistsNav(props: Props) {
         <h4 className={styles.playlistsNav__title}>Playlists</h4>
         <div className={styles.actions}>
           <button
+            type="button"
             className={styles.action}
             onClick={createPlaylist}
             title="New playlist"

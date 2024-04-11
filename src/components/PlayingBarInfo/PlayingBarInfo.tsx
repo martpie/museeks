@@ -1,7 +1,7 @@
+import type { Repeat, Track } from '../../generated/typings';
+import usePlayingTrackCurrentTime from '../../hooks/usePlayingTrackCurrentTime';
 import * as utils from '../../lib/utils';
 import TrackProgress from '../TrackProgress/TrackProgress';
-import usePlayingTrackCurrentTime from '../../hooks/usePlayingTrackCurrentTime';
-import { Track, Repeat } from '../../generated/typings';
 
 import styles from './PlayingBarInfo.module.css';
 

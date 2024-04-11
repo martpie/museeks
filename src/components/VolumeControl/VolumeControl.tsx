@@ -1,12 +1,13 @@
-import React, { useCallback, useState } from 'react';
-import Icon from 'react-fontawesome';
-import cx from 'classnames';
 import * as Slider from '@radix-ui/react-slider';
+import cx from 'classnames';
+import type React from 'react';
+import { useCallback, useState } from 'react';
+import Icon from 'react-fontawesome';
 
-import controlStyles from '../PlayerControls/PlayerControls.module.css';
-import { usePlayerAPI } from '../../stores/usePlayerStore';
 import player from '../../lib/player';
 import { stopPropagation } from '../../lib/utils-events';
+import { usePlayerAPI } from '../../stores/usePlayerStore';
+import controlStyles from '../PlayerControls/PlayerControls.module.css';
 
 import styles from './VolumeControl.module.css';
 
@@ -40,7 +41,7 @@ export default function VolumeControl() {
       playerAPI.setVolume(smoothVolume);
       setVolume(smoothVolume);
     },
-    [setVolume, playerAPI],
+    [playerAPI],
   );
 
   // TODO: move to player actions

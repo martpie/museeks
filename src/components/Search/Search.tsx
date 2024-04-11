@@ -1,4 +1,5 @@
-import React, { useCallback, useRef } from 'react';
+import type React from 'react';
+import { useCallback, useRef } from 'react';
 import Keybinding from 'react-keybinding-component';
 
 import { isCtrlKey } from '../../lib/utils-events';
@@ -48,6 +49,7 @@ export default function Search() {
       />
       {search.length > 0 && (
         <button
+          type="button"
           className={styles.search__clear}
           onClick={onClear}
           data-museeks-action

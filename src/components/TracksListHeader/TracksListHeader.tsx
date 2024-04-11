@@ -1,6 +1,6 @@
-import TracksListHeaderCell from '../TracksListHeaderCell/TracksListHeaderCell';
-import { SortBy, SortOrder } from '../../generated/typings';
+import type { SortBy, SortOrder } from '../../generated/typings';
 import useLibraryStore from '../../stores/useLibraryStore';
+import TracksListHeaderCell from '../TracksListHeaderCell/TracksListHeaderCell';
 
 import styles from './TracksListHeader.module.css';
 

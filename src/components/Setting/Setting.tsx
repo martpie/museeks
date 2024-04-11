@@ -1,5 +1,5 @@
-import React from 'react';
 import cx from 'classnames';
+import type React from 'react';
 
 import styles from './Setting.module.css';
 
@@ -54,7 +54,7 @@ export function Input(props: JSX.IntrinsicElements['input'] & InputProps) {
   );
 }
 
-export function Error(props: Props) {
+export function ErrorMessage(props: Props) {
   return <p className={styles.settingError}>{props.children}</p>;
 }
 
