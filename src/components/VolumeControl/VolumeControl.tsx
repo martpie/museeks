@@ -41,7 +41,7 @@ export default function VolumeControl() {
       playerAPI.setVolume(smoothVolume);
       setVolume(smoothVolume);
     },
-    [setVolume, playerAPI],
+    [playerAPI],
   );
 
   // TODO: move to player actions

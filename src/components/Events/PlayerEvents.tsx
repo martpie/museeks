@@ -6,7 +6,6 @@ import config from '../../lib/config';
 import { getCover } from '../../lib/cover';
 import player from '../../lib/player';
 import { logAndNotifyError } from '../../lib/utils';
-import { useLibraryAPI } from '../../stores/useLibraryStore';
 import { usePlayerAPI } from '../../stores/usePlayerStore';
 import { useToastsAPI } from '../../stores/useToastsStore';
 
@@ -23,7 +22,6 @@ const AUDIO_ERRORS = {
  */
 function PlayerEvents() {
   const playerAPI = usePlayerAPI();
-  const libraryAPI = useLibraryAPI();
   const toastsAPI = useToastsAPI();
 
   useEffect(() => {
@@ -90,7 +88,7 @@ function PlayerEvents() {
       player.getAudio().removeEventListener('ended', playerAPI.next);
       player.getAudio().removeEventListener('error', handleAudioError);
     };
-  }, [libraryAPI, toastsAPI, playerAPI]);
+  }, [toastsAPI, playerAPI]);
 
   return null;
 }

@@ -4,9 +4,6 @@
     "enabled": true,
     "rules": {
       "recommended": true,
-      "correctness": {
-        "useExhaustiveDependencies": "off"
-      },
       "complexity": {
         "noForEach": "off"
       },
