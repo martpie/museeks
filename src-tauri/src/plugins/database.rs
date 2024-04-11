@@ -158,9 +158,13 @@ impl DB {
     pub async fn get_all_playlists(&self) -> AnyResult<Vec<Playlist>> {
         let timer = TimeLogger::new("Retrieved and decoded playlists".into());
         let docs = self.playlists_collection().all().await?;
-        let playlists = self.decode_docs::<Playlist>(&docs);
+        let mut playlists = self.decode_docs::<Playlist>(&docs)?;
+
+        // Ensure the playlists are sorted alphabetically (case-insensitive) for better UX
+        playlists.sort_by(|a, b| a.name.to_lowercase().cmp(&b.name.to_lowercase()));
+
         timer.complete();
-        playlists
+        Ok(playlists)
     }
 
     /** Get a single playlist by ID */
