@@ -32,9 +32,9 @@
     "@radix-ui/react-popover": "^1.0.7",
     "@radix-ui/react-progress": "^1.0.3",
     "@radix-ui/react-slider": "^1.1.2",
-    "@tanstack/react-query": "^5.28.9",
-    "@tanstack/react-virtual": "3.2.0",
-    "@tauri-apps/api": "^2.0.0-beta.6",
+    "@tanstack/react-query": "^5.29.2",
+    "@tanstack/react-virtual": "3.3.0",
+    "@tauri-apps/api": "^2.0.0-beta.8",
     "@tauri-apps/plugin-dialog": "^2.0.0-beta.2",
     "@tauri-apps/plugin-log": "^2.0.0-beta.2",
     "@tauri-apps/plugin-notification": "^2.0.0-beta.2",
@@ -43,7 +43,7 @@
     "classnames": "^2.5.1",
     "font-awesome": "^4.7.0",
     "lodash": "^4.17.21",
-    "nanoid": "^5.0.6",
+    "nanoid": "^5.0.7",
     "normalize.css": "^8.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -55,11 +55,11 @@
     "zustand": "^4.5.2"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.6.4",
-    "@tauri-apps/cli": "^2.0.0-beta.9",
+    "@biomejs/biome": "1.7.0",
+    "@tauri-apps/cli": "^2.0.0-beta.13",
     "@types/lodash": "^4.17.0",
-    "@types/react": "^18.2.73",
-    "@types/react-dom": "^18.2.23",
+    "@types/react": "^18.2.79",
+    "@types/react-dom": "^18.2.25",
     "@types/semver": "^7.5.8",
     "@vitejs/plugin-react": "^4.2.1",
     "autoprefixer": "^10.4.19",
@@ -72,10 +72,10 @@
     "stylelint": "^16.3.1",
     "stylelint-config-css-modules": "^4.4.0",
     "stylelint-config-standard": "^36.0.0",
-    "typescript": "^5.4.3",
+    "typescript": "^5.4.5",
     "typescript-plugin-css-modules": "^5.1.0",
-    "vite": "^5.2.7",
+    "vite": "^5.2.8",
     "vite-plugin-react-svg": "^0.2.0",
-    "vitest": "^1.4.0"
+    "vitest": "^1.5.0"
   }
 }
