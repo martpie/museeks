@@ -51,7 +51,6 @@
     "react-keybinding-component": "^2.0.2",
     "react-router-dom": "6.22.3",
     "semver": "^7.6.0",
-    "svg-inline-react": "^3.2.1",
     "zustand": "^4.5.2"
   },
   "devDependencies": {
@@ -75,7 +74,7 @@
     "typescript": "^5.4.5",
     "typescript-plugin-css-modules": "^5.1.0",
     "vite": "^5.2.8",
-    "vite-plugin-react-svg": "^0.2.0",
+    "vite-plugin-svgr": "^4.2.0",
     "vitest": "^1.5.0"
   }
 }

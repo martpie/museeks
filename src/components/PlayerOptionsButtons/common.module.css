@@ -2,8 +2,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 20px;
-  width: 20px;
+  height: 18px;
+  width: 18px;
+  fill: currentcolor;
 }
 
 .button {
@@ -14,14 +15,8 @@
   padding: 0 8px;
 
   &.active {
-    .icon > svg {
+    .icon {
       fill: var(--main-color);
     }
-  }
-
-  .icon > svg {
-    fill: currentcolor;
-    width: 18px;
-    height: auto;
   }
 }

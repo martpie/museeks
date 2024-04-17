@@ -1,5 +1,4 @@
 import cx from 'classnames';
-import InlineSVG from 'svg-inline-react';
 
 import icons from '../../lib/icons';
 import usePlayerStore, { usePlayerAPI } from '../../stores/usePlayerStore';
@@ -23,7 +22,7 @@ export default function ButtonShuffle() {
       }}
       data-museeks-action
     >
-      <InlineSVG src={icons.SHUFFLE} className={styles.icon} />
+      <icons.SHUFFLE className={styles.icon} />
     </button>
   );
 }

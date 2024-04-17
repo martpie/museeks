@@ -1,5 +1,4 @@
 import cx from 'classnames';
-import InlineSVG from 'svg-inline-react';
 
 import type { Repeat } from '../../generated/typings';
 import icons from '../../lib/icons';
@@ -20,7 +19,7 @@ export default function ButtonRepeat() {
   const repeat = usePlayerStore((state) => state.repeat);
   const playerAPI = usePlayerAPI();
 
-  const svg = getIcon(repeat);
+  const Svg = getIcon(repeat);
   const buttonClasses = cx(styles.button, {
     [styles.active]: repeat === 'One' || repeat === 'All',
   });
@@ -32,7 +31,7 @@ export default function ButtonRepeat() {
       onClick={() => playerAPI.toggleRepeat()}
       data-museeks-action
     >
-      <InlineSVG src={svg} className={styles.icon} />
+      <Svg className={styles.icon} />
     </button>
   );
 }

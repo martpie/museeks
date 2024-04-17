@@ -1,11 +1,11 @@
-import NEXT from '../assets/icons/player-next.svg?raw';
-import PAUSE from '../assets/icons/player-pause.svg?raw';
-import PLAY from '../assets/icons/player-play.svg?raw';
-import PREVIOUS from '../assets/icons/player-previous.svg?raw';
-import QUEUE from '../assets/icons/player-queue.svg?raw';
-import REPEAT_ONE from '../assets/icons/player-repeat-one.svg?raw';
-import REPEAT from '../assets/icons/player-repeat.svg?raw';
-import SHUFFLE from '../assets/icons/player-shuffle.svg?raw';
+import NEXT from '../assets/icons/player-next.svg?react';
+import PAUSE from '../assets/icons/player-pause.svg?react';
+import PLAY from '../assets/icons/player-play.svg?react';
+import PREVIOUS from '../assets/icons/player-previous.svg?react';
+import QUEUE from '../assets/icons/player-queue.svg?react';
+import REPEAT_ONE from '../assets/icons/player-repeat-one.svg?react';
+import REPEAT from '../assets/icons/player-repeat.svg?react';
+import SHUFFLE from '../assets/icons/player-shuffle.svg?react';
 
 const icons = {
   NEXT,
