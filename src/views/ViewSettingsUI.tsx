@@ -42,7 +42,7 @@ export default function ViewSettingsUI() {
           id="setting-theme"
           defaultValue={config.theme}
           onChange={onThemeChange}
-          disabled // Issue in Tauri where we cannot easily detect system-wide preferences
+          // disabled // Issue in Tauri where we cannot easily detect system-wide preferences
         >
           <option value="__system">System (default)</option>
           {Object.values(themes).map((theme) => {

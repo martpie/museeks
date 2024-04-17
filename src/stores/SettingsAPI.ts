@@ -41,6 +41,10 @@ const checkTheme = async (): Promise<void> => {
   const themeID = (await getCurrent().theme()) ?? 'light';
   const theme = themes[themeID];
 
+  await invoke('plugin:theme|set_window_theme', {
+    dark: themeID === 'dark',
+  });
+
   if (theme == null) {
     throw new Error(`Theme ${themeID} not found`);
   }

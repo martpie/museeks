@@ -47,6 +47,10 @@ fn main() {
             .plugin(
                 "sleepblocker",
                 tauri_build::InlinedPlugin::new().commands(&["enable", "disable"]),
+            )
+            .plugin(
+                "theme",
+                tauri_build::InlinedPlugin::new().commands(&["set_window_theme"]),
             ),
     )
     .expect("Failed to run tauri-build");
