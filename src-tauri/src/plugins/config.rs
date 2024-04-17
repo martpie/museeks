@@ -119,7 +119,7 @@ impl ConfigManager {
 
     fn save(&self) {
         let config = self.data.read().unwrap();
-        self.manager.save_toml(config.clone()).unwrap();
+        self.manager.save_toml(&config.clone()).unwrap();
         info!("Config updated");
     }
 }
@@ -136,7 +136,9 @@ pub fn get_storage_dir() -> PathBuf {
 
 #[tauri::command]
 pub fn get_config(config_manager: State<ConfigManager>) -> Config {
-    config_manager.get()
+    let conf = config_manager.get();
+    info!("requetsed config {:?}", conf);
+    conf
 }
 
 #[tauri::command]

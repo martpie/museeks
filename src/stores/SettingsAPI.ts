@@ -16,6 +16,7 @@ interface UpdateCheckOptions {
 }
 
 const setTheme = async (themeID: string): Promise<void> => {
+  console.log('setTheme', themeID);
   await config.set('theme', themeID); // TODO: own plugin?
   await checkTheme();
 };
@@ -38,11 +39,13 @@ const checkTheme = async (): Promise<void> => {
   // that is used when a window is created with no assigned theme.
   // So we are bypassing the user choice for now.
   // const themeID: string = await config.get("theme");
-  const themeID = (await getCurrent().theme()) ?? 'light';
+  // const themeID = (await getCurrent().theme()) ?? 'light';
+  const themeID = await config.get('theme');
+  console.log('check', themeID);
   const theme = themes[themeID];
 
   await invoke('plugin:theme|set_window_theme', {
-    dark: themeID === 'dark',
+    theme: themeID,
   });
 
   if (theme == null) {
