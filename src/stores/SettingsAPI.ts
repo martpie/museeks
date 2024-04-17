@@ -9,6 +9,7 @@ import { themes } from '../lib/themes';
 import { logAndNotifyError } from '../lib/utils';
 import type { Theme } from '../types/museeks';
 
+import router from '../views/router';
 import useToastsStore from './useToastsStore';
 
 interface UpdateCheckOptions {
@@ -52,6 +53,7 @@ const setTracksDensity = async (
   density: Config['track_view_density'],
 ): Promise<void> => {
   await config.set('track_view_density', density);
+  router.revalidate();
 };
 
 /**
@@ -137,10 +139,11 @@ const check = async (): Promise<void> => {
  */
 const toggleSleepBlocker = async (value: boolean): Promise<void> => {
   if (value === true) {
-    invoke('plugin:sleepblocker|enable');
+    await invoke('plugin:sleepblocker|enable');
   } else {
-    invoke('plugin:sleepblocker|disable');
+    await invoke('plugin:sleepblocker|disable');
   }
+  router.revalidate();
 };
 
 /**
@@ -150,6 +153,7 @@ const setDefaultView = async (defaultView: DefaultView): Promise<void> => {
   await invoke('plugin:default-view|set', {
     defaultView,
   });
+  router.revalidate();
 };
 
 /**
@@ -157,6 +161,7 @@ const setDefaultView = async (defaultView: DefaultView): Promise<void> => {
  */
 const toggleAutoUpdateChecker = async (value: boolean): Promise<void> => {
   await config.set('auto_update_checker', value);
+  router.revalidate();
 };
 
 /**
@@ -164,6 +169,7 @@ const toggleAutoUpdateChecker = async (value: boolean): Promise<void> => {
  */
 const toggleDisplayNotifications = async (value: boolean): Promise<void> => {
   await config.set('notifications', value);
+  router.revalidate();
 };
 
 // Should we use something else to harmonize between zustand and non-store APIs?

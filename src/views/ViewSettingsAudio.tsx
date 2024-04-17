@@ -27,7 +27,7 @@ export default function ViewSettingsAudio() {
           description="Increase the playback rate: a value of 2 will play your music at a 2x
           speed"
           id="setting-playbackrate"
-          defaultValue={config.audio_playback_rate}
+          value={config.audio_playback_rate ?? ''}
           onChange={setPlaybackRate}
           type="number"
           min="0.5"
@@ -40,7 +40,7 @@ export default function ViewSettingsAudio() {
           label="Audio output"
           description="Advanced: set a custom audio output device."
           id="setting-playbackrate"
-          defaultValue={config.audio_output_device}
+          value={config.audio_output_device}
           onChange={playerAPI.setOutputDevice}
         />
       </Setting.Section>

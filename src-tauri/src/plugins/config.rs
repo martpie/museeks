@@ -46,7 +46,7 @@ pub enum DefaultView {
 pub struct Config {
     pub theme: String,
     pub audio_volume: f32,
-    pub audio_playback_rate: f32,
+    pub audio_playback_rate: Option<f32>,
     pub audio_output_device: String,
     pub audio_muted: bool,
     pub audio_shuffle: bool,
@@ -67,7 +67,7 @@ impl Config {
         Config {
             theme: "__system".to_owned(),
             audio_volume: 1.0,
-            audio_playback_rate: 1.0,
+            audio_playback_rate: Some(1.0),
             audio_output_device: "default".to_owned(),
             audio_muted: false,
             audio_shuffle: false,

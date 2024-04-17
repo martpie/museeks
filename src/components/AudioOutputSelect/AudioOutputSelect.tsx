@@ -5,7 +5,7 @@ import { logAndNotifyError } from '../../lib/utils';
 import * as Setting from '../Setting/Setting';
 
 type Props = {
-  defaultValue: string;
+  value: string;
   onChange: (deviceID: string) => void;
 } & Setting.InputProps;
 
@@ -73,7 +73,7 @@ export default function AudioOutputSelect(props: Props) {
     <Setting.Select
       {...selectProps}
       key="devicesOk" // avoid default value problems
-      defaultValue={props.defaultValue}
+      value={props.value}
       onChange={setAudioOutputDevice}
     >
       {devices.map((device) => {

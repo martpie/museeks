@@ -239,7 +239,6 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
 
         const newTrack = queue[newQueueCursor];
 
-        // tslint:disable-next-line
         if (newTrack !== undefined) {
           player.setTrack(newTrack);
           await player.play();
@@ -334,18 +333,22 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
       else player.unmute();
 
       await config.set('audio_muted', muted);
+      router.revalidate();
     },
 
     /**
      * Set audio's playback rate
      */
     setPlaybackRate: async (value) => {
-      if (value >= 0.5 && value <= 5) {
-        // if in allowed range
-        player.setPlaybackRate(value);
-
+      // if in allowed range
+      if (!Number.isNaN(value) && value >= 0.5 && value <= 5) {
         await config.set('audio_playback_rate', value);
+        player.setPlaybackRate(value);
+      } else {
+        await config.set('audio_playback_rate', null);
+        player.setPlaybackRate(1.0);
       }
+      router.revalidate();
     },
 
     /**
@@ -356,6 +359,7 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
         try {
           await player.setOutputDevice(deviceID);
           await config.set('audio_output_device', deviceID);
+          router.revalidate();
         } catch (err) {
           logAndNotifyError(err);
         }
@@ -568,4 +572,5 @@ function createPlayerStore<T extends PlayerState>(store: StateCreator<T>) {
  */
 const saveVolume = debounce(async (volume: number) => {
   await config.set('audio_volume', volume);
+  router.revalidate();
 }, 500);

@@ -33,8 +33,8 @@ export default function ViewSettingsAbout() {
         <CheckboxSetting
           slug="update"
           title="Automatically check for updates"
-          defaultValue={config.auto_update_checker}
-          onClick={SettingsAPI.toggleAutoUpdateChecker}
+          value={config.auto_update_checker}
+          onChange={SettingsAPI.toggleAutoUpdateChecker}
         />
         <div>
           <Button

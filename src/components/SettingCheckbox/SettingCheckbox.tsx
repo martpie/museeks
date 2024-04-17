@@ -5,8 +5,8 @@ import styles from './SettingCheckbox.module.css';
 type Props = {
   title: string;
   slug: string;
-  defaultValue: boolean;
-  onClick: (value: boolean) => void;
+  value: boolean;
+  onChange: (value: boolean) => void;
   description?: string;
 };
 
@@ -17,8 +17,8 @@ export default function CheckboxSetting(props: Props) {
       <input
         id={`setting-${slug}`}
         type="checkbox"
-        onClick={(e) => props.onClick(e.currentTarget.checked)}
-        defaultChecked={props.defaultValue}
+        onChange={(e) => props.onChange(e.currentTarget.checked)}
+        checked={props.value}
       />
       <Setting.Label htmlFor={slug} noMargin>
         {title}

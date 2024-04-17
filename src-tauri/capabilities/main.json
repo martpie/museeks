@@ -42,6 +42,7 @@
     "database:allow-reset",
     "default-view:allow-set",
     "shell-extension:allow-show-item-in-folder",
+    "sleepblocker:allow-enable",
     "sleepblocker:allow-disable"
   ],
   "platforms": ["linux", "macOS", "windows"]

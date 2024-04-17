@@ -127,7 +127,7 @@ class Player {
 
 export default new Player({
   volume: config.getInitial('audio_volume'),
-  playbackRate: config.getInitial('audio_playback_rate'),
+  playbackRate: config.getInitial('audio_playback_rate') ?? 1,
   audioOutputDevice: config.getInitial('audio_output_device'),
   muted: config.getInitial('audio_muted'),
 });
