@@ -2,7 +2,10 @@ use std::path::PathBuf;
 use std::str::FromStr;
 
 use base64::prelude::*;
-use lofty::{MimeType, PictureType, TaggedFileExt};
+use lofty::{
+    file::TaggedFileExt as _,
+    picture::{MimeType, PictureType},
+};
 use tauri::plugin::{Builder, TauriPlugin};
 use tauri::Runtime;
 
