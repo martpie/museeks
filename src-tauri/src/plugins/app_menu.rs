@@ -104,21 +104,21 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
                 .separator()
                 .item(
                     &MenuItemBuilder::new("Go to library")
-                        .id(MenuId::new(IPCEvent::GoToLibrary.as_ref()))
+                        .id(MenuId::new("go_to_library"))
                         .accelerator("CmdOrCtrl+L")
                         .build(app_handle)
                         .unwrap(),
                 )
                 .item(
                     &MenuItemBuilder::new("Go to playlists")
-                        .id(MenuId::new(IPCEvent::GoToPlaylists.as_ref()))
+                        .id(MenuId::new("go_to_playlists"))
                         .accelerator("CmdOrCtrl+P")
                         .build(app_handle)
                         .unwrap(),
                 )
                 .item(
                     &MenuItemBuilder::new("Go to settings")
-                        .id(MenuId::new(IPCEvent::GoToSettings.as_ref()))
+                        .id(MenuId::new("go_to_settings"))
                         .accelerator("CmdOrCtrl+,")
                         .build(app_handle)
                         .unwrap(),
@@ -181,15 +181,21 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
                 window.hide_menu().unwrap();
             }
 
-            // TODO: support menu events
-            // https://github.com/tauri-apps/tauri/issues/9060
-            // window.on_menu_event(|_app_handle, event| {
-            //     // let main_webview = app_handle.get_webview_window("main").unwrap();
-
-            //     info!("event {:?}", event.id());
-            //     // TODO:
-            //     // main_webview.emit();
-            // });
+            window.on_menu_event(|win, event| match event.id.as_ref() {
+                "jump_to_playing_track" => {
+                    win.emit(IPCEvent::JumpToPlayingTrack.as_ref(), ()).unwrap();
+                }
+                "go_to_library" => {
+                    win.emit(IPCEvent::GoToLibrary.as_ref(), ()).unwrap();
+                }
+                "go_to_playlists" => {
+                    win.emit(IPCEvent::GoToPlaylists.as_ref(), ()).unwrap();
+                }
+                "go_to_settings" => {
+                    win.emit(IPCEvent::GoToSettings.as_ref(), ()).unwrap();
+                }
+                _ => {}
+            });
         })
         .build()
 }

@@ -1,17 +1,14 @@
 import { invoke } from '@tauri-apps/api/core';
 import { useCallback } from 'react';
 import Keybinding from 'react-keybinding-component';
-import { useNavigate } from 'react-router-dom';
 
 import player from '../../lib/player';
-import { isCtrlKey } from '../../lib/utils-events';
 import { usePlayerAPI } from '../../stores/usePlayerStore';
 
 /**
  * Handle app-level IPC Navigation events
  */
 function GlobalKeyBindings() {
-  const navigate = useNavigate();
   const playerAPI = usePlayerAPI();
 
   // App shortcuts (not using global shortcuts API to avoid conflicts
@@ -23,13 +20,6 @@ function GlobalKeyBindings() {
           e.preventDefault();
           e.stopPropagation();
           playerAPI.playPause();
-          break;
-        case ',':
-          if (isCtrlKey(e)) {
-            e.preventDefault();
-            e.stopPropagation();
-            navigate('/settings');
-          }
           break;
         case 'ArrowLeft':
           e.preventDefault();
@@ -48,7 +38,7 @@ function GlobalKeyBindings() {
           break;
       }
     },
-    [navigate, playerAPI],
+    [playerAPI],
   );
 
   return <Keybinding onKey={onKey} preventInputConflict />;

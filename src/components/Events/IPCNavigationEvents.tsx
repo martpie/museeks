@@ -17,31 +17,29 @@ function IPCNavigationEvents() {
     }
 
     function goToPlaylists() {
-      navigate('/library');
+      navigate('/playlists');
+    }
+
+    function goToSettings() {
+      navigate('/settings');
     }
 
     function goToPlayingTrack() {
       playerAPI.jumpToPlayingTrack();
     }
 
-    // Shortcuts from the application menu
-    const unlistenGoToLibrary = getCurrent().listen(
-      'MENU_GO_TO_LIBRARY',
-      goToLibrary,
-    );
-    const unlistenGoToPlaylists = getCurrent().listen(
-      'MENU_GO_TO_PLAYLISTS',
-      goToPlaylists,
-    );
-    const unlistenGoToPlayingTrack = getCurrent().listen(
-      'MENU_JUMP_TO_PLAYING_TRACK',
-      goToPlayingTrack,
-    );
+    const unlisteners = [
+      // Shortcuts from the application menu
+      getCurrent().listen('GoToLibrary', goToLibrary),
+      getCurrent().listen('GoToPlaylists', goToPlaylists),
+      getCurrent().listen('GoToSettings', goToSettings),
+      getCurrent().listen('JumpToPlayingTrack', goToPlayingTrack),
+    ];
 
     return function cleanup() {
-      unlistenGoToLibrary.then((u) => u());
-      unlistenGoToPlaylists.then((u) => u());
-      unlistenGoToPlayingTrack.then((u) => u());
+      Promise.all(unlisteners).then((unlisteners) => {
+        unlisteners.forEach((u) => u());
+      });
     };
   }, [navigate, playerAPI]);
 

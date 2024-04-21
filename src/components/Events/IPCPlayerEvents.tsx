@@ -40,8 +40,8 @@ function IPCPlayerEvents() {
     player.getAudio().addEventListener('pause', emitPauseToBackend);
 
     return function cleanup() {
-      Promise.all(unlisteners).then((values) => {
-        values.forEach((u) => u());
+      Promise.all(unlisteners).then((unlisteners) => {
+        unlisteners.forEach((u) => u());
       });
 
       player.getAudio().removeEventListener('play', emitPlayToBackEnd);
