@@ -31,7 +31,7 @@ futures = "0.3.30"
 home-config = { version = "0.6.0", features = ["toml"] }
 itertools = "0.12.1"
 log = "0.4.21"
-lofty = "0.18.2"
+lofty = "0.19.0"
 memoize = "0.4.2"
 nosleep = "0.2.1"
 pathdiff = "0.2.1"

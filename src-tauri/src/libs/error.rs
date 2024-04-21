@@ -1,4 +1,5 @@
 use anyhow::Result;
+use lofty::error::LoftyError;
 use serde::{ser::Serializer, Serialize};
 use thiserror::Error;
 
@@ -15,7 +16,7 @@ pub enum MuseeksError {
     Tauri(#[from] tauri::Error),
 
     #[error(transparent)]
-    Lofty(#[from] lofty::LoftyError),
+    Lofty(#[from] LoftyError),
 
     #[error(transparent)]
     Database(#[from] bonsaidb::core::Error),
