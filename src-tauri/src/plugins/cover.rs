@@ -1,9 +1,9 @@
 use std::path::PathBuf;
 use std::str::FromStr;
 
-use base64::prelude::*;
+use base64::prelude::{Engine as _, BASE64_STANDARD};
+use lofty::file::TaggedFileExt;
 use lofty::picture::{MimeType, PictureType};
-use lofty::prelude::*;
 use tauri::plugin::{Builder, TauriPlugin};
 use tauri::Runtime;
 
