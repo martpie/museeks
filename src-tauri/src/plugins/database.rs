@@ -6,10 +6,8 @@ use bonsaidb::local::config::{Builder as BonsaiBuilder, StorageConfiguration};
 use bonsaidb::local::AsyncDatabase;
 use bonsaidb::local::AsyncStorage;
 use itertools::Itertools;
-use lofty::{
-    file::{AudioFile, TaggedFileExt as _},
-    tag::{Accessor as _, ItemKey},
-};
+use lofty::prelude::*;
+use lofty::tag::ItemKey;
 use log::{error, info, warn};
 use rayon::prelude::*;
 use serde::{Deserialize, Serialize};
