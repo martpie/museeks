@@ -69,7 +69,7 @@ export default function ViewSettingsUI() {
       <Setting.Section>
         <Setting.Select
           label="Default view"
-          value={config.theme}
+          value={config.default_view}
           description="Change the default view when starting the application"
           id="setting-default-view"
           onChange={onDefaultViewChange}
