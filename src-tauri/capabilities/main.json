@@ -19,6 +19,7 @@
     "app:allow-tauri-version",
     "log:allow-log",
     "webview:deny-print",
+    "webview:allow-set-webview-zoom",
     "menu:allow-new",
     "menu:allow-popup",
     "notification:default",

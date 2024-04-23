@@ -5,6 +5,7 @@ use tauri::{
     plugin::{Builder, TauriPlugin},
     Manager, Runtime,
 };
+use tauri_plugin_shell::ShellExt;
 
 use crate::libs::error::AnyResult;
 use crate::libs::events::IPCEvent;
@@ -92,7 +93,6 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
             // -----------------------------------------------------------------
             // View sub-menu
             // -----------------------------------------------------------------
-            // TODO: create events listeners and shortcuts
             let view_menu = SubmenuBuilder::new(app_handle, "View")
                 .item(
                     &MenuItemBuilder::new("Jump to playing track")
@@ -123,6 +123,7 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
                         .build(app_handle)
                         .unwrap(),
                 )
+                .separator()
                 .build()
                 .unwrap();
 
@@ -131,8 +132,9 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
             // -----------------------------------------------------------------
             let window_menu: tauri::menu::Submenu<R> = SubmenuBuilder::new(app_handle, "Window")
                 .item(
-                    &MenuItemBuilder::new("-")
-                        .enabled(false)
+                    &MenuItemBuilder::new("Minimize")
+                        .id("minimize")
+                        .accelerator("CmdOrCtrl+M")
                         .build(app_handle)
                         .unwrap(),
                 )
@@ -144,8 +146,8 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
             // -----------------------------------------------------------------
             let help_menu = SubmenuBuilder::new(app_handle, "Help")
                 .item(
-                    &MenuItemBuilder::new("-")
-                        .enabled(false)
+                    &MenuItemBuilder::new("Report an issue")
+                        .id("report_an_issue")
                         .build(app_handle)
                         .unwrap(),
                 )
@@ -193,6 +195,14 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
                 }
                 "go_to_settings" => {
                     win.emit(IPCEvent::GoToSettings.as_ref(), ()).unwrap();
+                }
+                "minimize" => {
+                    win.minimize().unwrap();
+                }
+                "report_an_issue" => {
+                    win.shell()
+                        .open("https://github.com/martpie/museeks/issues", None)
+                        .unwrap();
                 }
                 _ => {}
             });
