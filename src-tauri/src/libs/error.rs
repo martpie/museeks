@@ -27,8 +27,9 @@ pub enum MuseeksError {
     #[error(transparent)]
     NoSleep(#[from] nosleep::Error),
 
-    // #[error(transparent)]
-    // NoSleepPoison(#[from] PoisonError<std::any::Any>),
+    #[error("An error occurred while manipulating the config: {0}")]
+    Config(String),
+
     #[error(transparent)]
     Unknown(#[from] anyhow::Error),
 

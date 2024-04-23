@@ -15,7 +15,7 @@ pub fn enable(
     config_manager: State<ConfigManager>,
     nosleep: State<NoSleepInstance>,
 ) -> AnyResult<()> {
-    config_manager.set_sleepblocker(true);
+    config_manager.set_sleepblocker(true)?;
 
     nosleep
         .0
@@ -32,7 +32,7 @@ pub fn disable(
     config_manager: State<ConfigManager>,
     nosleep: State<NoSleepInstance>,
 ) -> AnyResult<()> {
-    config_manager.set_sleepblocker(false);
+    config_manager.set_sleepblocker(false)?;
 
     nosleep
         .0

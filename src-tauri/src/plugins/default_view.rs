@@ -9,8 +9,7 @@ use crate::plugins::config::{ConfigManager, DefaultView};
 #[tauri::command]
 pub fn set(config_manager: State<ConfigManager>, default_view: DefaultView) -> AnyResult<()> {
     info!("Default view set to '{:?}'", default_view);
-    config_manager.set_default_view(default_view);
-    Ok(())
+    config_manager.set_default_view(default_view)
 }
 
 /**
@@ -28,7 +27,8 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
             {
                 let config_manager = webview.state::<ConfigManager>();
                 let mut url = payload.url().clone();
-                let default_view = config_manager.get().default_view;
+                let config = config_manager.get().unwrap();
+                let default_view = config.default_view;
 
                 let fragment = match default_view {
                     DefaultView::Library => "/library",

@@ -4,10 +4,13 @@
 use home_config::HomeConfig;
 use log::info;
 use serde::{Deserialize, Serialize};
+use std::fmt::Display;
 use std::{path::PathBuf, sync::RwLock};
 use tauri::plugin::{Builder, TauriPlugin};
 use tauri::{Manager, Runtime, State};
 use ts_rs::TS;
+
+use crate::libs::error::{AnyResult, MuseeksError};
 
 #[derive(Serialize, Deserialize, Debug, Clone, TS)]
 #[ts(export, export_to = "../src/generated/typings/Repeat.ts")]
@@ -91,36 +94,42 @@ pub struct ConfigManager {
     pub data: RwLock<Config>,
 }
 
+fn config_err<T: Display>(err: T) -> MuseeksError {
+    MuseeksError::Config(format!("{}", err))
+}
+
 impl ConfigManager {
-    pub fn get(&self) -> Config {
-        self.data.read().unwrap().clone()
+    pub fn get(&self) -> AnyResult<Config> {
+        let lock = self.data.read().map_err(config_err)?;
+        Ok(lock.clone())
     }
 
-    pub fn update(&self, config: Config) {
-        let mut writer = self.data.write().unwrap();
+    pub fn update(&self, config: Config) -> AnyResult<()> {
+        let mut writer = self.data.write().map_err(config_err)?;
         *writer = config;
         std::mem::drop(writer);
-        self.save();
+        self.save()
     }
 
-    pub fn set_sleepblocker(&self, sleepblocker: bool) {
-        let mut writer = self.data.write().unwrap();
+    pub fn set_sleepblocker(&self, sleepblocker: bool) -> AnyResult<()> {
+        let mut writer = self.data.write().map_err(config_err)?;
         writer.sleepblocker = sleepblocker;
         std::mem::drop(writer);
-        self.save();
+        self.save()
     }
 
-    pub fn set_default_view(&self, default_view: DefaultView) {
-        let mut writer = self.data.write().unwrap();
+    pub fn set_default_view(&self, default_view: DefaultView) -> AnyResult<()> {
+        let mut writer = self.data.write().map_err(config_err)?;
         writer.default_view = default_view;
         std::mem::drop(writer);
-        self.save();
+        self.save()
     }
 
-    fn save(&self) {
-        let config = self.data.read().unwrap();
+    fn save(&self) -> AnyResult<()> {
+        let config = self.data.read().map_err(config_err)?;
         self.manager.save_toml(config.clone()).unwrap();
         info!("Config updated");
+        Ok(())
     }
 }
 
@@ -135,13 +144,13 @@ pub fn get_storage_dir() -> PathBuf {
 }
 
 #[tauri::command]
-pub fn get_config(config_manager: State<ConfigManager>) -> Config {
+pub fn get_config(config_manager: State<ConfigManager>) -> AnyResult<Config> {
     config_manager.get()
 }
 
 #[tauri::command]
-pub fn set_config(config_manager: State<ConfigManager>, config: Config) {
-    config_manager.update(config);
+pub fn set_config(config_manager: State<ConfigManager>, config: Config) -> AnyResult<()> {
+    config_manager.update(config)
 }
 
 pub fn init<R: Runtime>() -> TauriPlugin<R> {
@@ -176,7 +185,7 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
             window.__MUSEEKS_INITIAL_CONFIG = {};
             window.__MUSEEKS_PLATFORM = {:?};
         "#,
-        serde_json::to_string(&config.get()).unwrap(),
+        serde_json::to_string(&config.get().unwrap()).unwrap(),
         tauri_plugin_os::type_().to_string()
     );
 
