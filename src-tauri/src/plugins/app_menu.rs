@@ -124,6 +124,21 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
                         .unwrap(),
                 )
                 .separator()
+                .item(
+                    &MenuItemBuilder::new("Reload")
+                        .id(MenuId::new("reload"))
+                        .accelerator("CmdOrCtrl+R")
+                        .build(app_handle)
+                        .unwrap(),
+                )
+                .item(
+                    &MenuItemBuilder::new("Toggle Developer Tools")
+                        .id(MenuId::new("toggle_devtools"))
+                        .accelerator("CmdOrCtrl+Alt+I")
+                        .build(app_handle)
+                        .unwrap(),
+                )
+                .separator()
                 .build()
                 .unwrap();
 
@@ -195,6 +210,17 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
                 }
                 "go_to_settings" => {
                     win.emit(IPCEvent::GoToSettings.as_ref(), ()).unwrap();
+                }
+                "reload" => {
+                    let mut webview = win.get_webview_window("main").unwrap();
+                    webview.navigate(webview.url().clone());
+                }
+                "toggle_devtools" => {
+                    let webview = win.get_webview_window("main").unwrap();
+                    match webview.is_devtools_open() {
+                        true => webview.close_devtools(),
+                        false => webview.open_devtools(),
+                    }
                 }
                 "minimize" => {
                     win.minimize().unwrap();

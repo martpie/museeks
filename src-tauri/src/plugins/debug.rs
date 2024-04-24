@@ -3,14 +3,14 @@ use tauri::Runtime;
 
 pub fn init<R: Runtime>() -> TauriPlugin<R> {
     Builder::<R>::new("debug")
-        .on_webview_ready(|window| {
+        .on_webview_ready(|webview| {
             #[cfg(dev)]
             {
-                window.open_devtools();
+                webview.open_devtools();
             }
 
             #[cfg(not(dev))]
-            drop(window);
+            drop(webview);
         })
         .build()
 }
