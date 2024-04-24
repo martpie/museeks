@@ -18,7 +18,8 @@ const AUDIO_ERRORS = {
 };
 
 /**
- * Handle app-level IPC Events init and cleanup
+ * Handle some of the logic regarding the player. Technically, it should not be there,
+ * but part of the Player library, but cleaning up events in case of hot-reload is tough
  */
 function PlayerEvents() {
   const playerAPI = usePlayerAPI();
@@ -64,7 +65,6 @@ function PlayerEvents() {
         return;
       }
 
-      // FIXME: cover is not working as intended
       const cover = await getCover(track.path);
 
       sendNotification({
