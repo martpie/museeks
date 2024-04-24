@@ -3,10 +3,10 @@ import type React from 'react';
 import { useCallback, useState } from 'react';
 
 import type { Track } from '../../generated/typings';
-import { parseDuration } from '../../lib/utils';
 import PlayingIndicator from '../PlayingIndicator/PlayingIndicator';
 import cellStyles from '../TracksListHeader/TracksListHeader.module.css';
 
+import useFormattedDuration from '../../hooks/useFormattedDuration';
 import styles from './TrackRow.module.css';
 
 type Props = {
@@ -52,6 +52,8 @@ export default function TrackRow(props: Props) {
     onContextMenu,
     onDoubleClick,
   } = props;
+
+  const duration = useFormattedDuration(track.duration);
 
   // TODO: migrate to react-dnd
   const onDragStart = useCallback(
@@ -134,7 +136,7 @@ export default function TrackRow(props: Props) {
         {track.title}
       </div>
       <div className={`${styles.cell} ${cellStyles.cellDuration}`}>
-        {parseDuration(track.duration)}
+        {duration}
       </div>
       <div className={`${styles.cell} ${cellStyles.cellArtist}`}>
         {track.artists.join(', ')}

@@ -2,8 +2,8 @@ import orderBy from 'lodash/orderBy';
 
 import type { Track } from '../generated/typings';
 
+import { parseDuration } from '../hooks/useFormattedDuration';
 import type { SortTuple } from './sort-orders';
-import * as utils from './utils';
 import { stripAccents } from './utils-id3';
 
 /**
@@ -35,7 +35,7 @@ export const sortTracks = (tracks: Track[], sort: SortTuple): Track[] => {
  * Format a list of tracks to a nice status
  */
 export const getStatus = (tracks: Track[]): string => {
-  const status = utils.parseDuration(
+  const status = parseDuration(
     tracks.map((d) => d.duration).reduce((a, b) => a + b, 0),
   );
   return `${tracks.length} tracks, ${status}`;

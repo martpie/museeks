@@ -3,9 +3,9 @@ import { useCallback, useState } from 'react';
 
 import type { Track } from '../../generated/typings';
 import usePlayingTrackCurrentTime from '../../hooks/usePlayingTrackCurrentTime';
-import { parseDuration } from '../../lib/utils';
 import { usePlayerAPI } from '../../stores/usePlayerStore';
 
+import useFormattedDuration from '../../hooks/useFormattedDuration';
 import styles from './TrackProgress.module.css';
 
 type Props = {
@@ -52,6 +52,8 @@ export default function TrackProgress(props: Props) {
     setTooltipX(null);
   }, []);
 
+  const tooltipContent = useFormattedDuration(tooltipTargetTime);
+
   return (
     <Slider.Root
       min={0}
@@ -72,7 +74,7 @@ export default function TrackProgress(props: Props) {
             display: tooltipX == null ? 'none' : 'block',
           }}
         >
-          {parseDuration(tooltipTargetTime)}
+          {tooltipContent}
         </div>
       </Slider.Track>
       <Slider.Thumb />
