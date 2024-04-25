@@ -11,7 +11,7 @@ use lofty::tag::{Accessor, ItemKey};
 use log::{error, info, warn};
 use rayon::iter::{IntoParallelRefIterator, ParallelIterator};
 use serde::{Deserialize, Serialize};
-use std::collections::HashSet;
+use std::collections::{HashMap, HashSet};
 use std::path::PathBuf;
 use std::sync::atomic::{AtomicUsize, Ordering};
 use std::sync::Arc;
@@ -100,7 +100,12 @@ impl DB {
         match self.decode_docs::<Track>(&docs) {
             Ok(mut tracks) => {
                 // document may not ordered the way we want, so let's ensure they map to track_ids
-                tracks.sort_by_key(|track| track_ids.iter().position(|id| id == &track._id));
+                let track_id_positions: HashMap<&String, usize> = track_ids
+                    .iter()
+                    .enumerate()
+                    .map(|(i, id)| (id, i))
+                    .collect();
+                tracks.sort_by_key(|track| track_id_positions.get(&track._id));
                 Ok(tracks)
             }
             Err(err) => Err(err),
