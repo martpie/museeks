@@ -1,4 +1,4 @@
-import { invoke } from '@tauri-apps/api/core';
+import { open } from '@tauri-apps/plugin-shell';
 import { useCallback } from 'react';
 
 import Button from '../Button/Button';
@@ -12,11 +12,7 @@ export default function ExternalButton(props: Props) {
   const openLink = useCallback(
     (e: React.SyntheticEvent) => {
       e.preventDefault();
-      // TODO: replace this with @tauri-apps/plugin-shell's open when it's fixed
-      // https://github.com/tauri-apps/tauri/issues/9349
-      invoke('plugin:shell-extension|show_item_in_folder', {
-        path: props.href,
-      });
+      open(props.href);
     },
     [props.href],
   );
