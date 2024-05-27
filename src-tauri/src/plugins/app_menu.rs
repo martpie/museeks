@@ -213,7 +213,7 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
                 }
                 "reload" => {
                     let mut webview = win.get_webview_window("main").unwrap();
-                    webview.navigate(webview.url().clone());
+                    webview.navigate(webview.url().expect("webview should havea a URL"));
                 }
                 "toggle_devtools" => {
                     let webview = win.get_webview_window("main").unwrap();
