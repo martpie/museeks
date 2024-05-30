@@ -10,17 +10,17 @@ repository = "https://github.com/martpie/museeks"
 edition = "2021"
 
 [build-dependencies]
-tauri-build = { version = "2.0.0-beta.16", features = ["codegen"] }
+tauri-build = { version = "2.0.0-beta.17", features = ["codegen"] }
 
 [dependencies]
-tauri = { version = "2.0.0-beta.20", features = ["protocol-asset", "image-png", "devtools"] }
-tauri-plugin-dialog = "2.0.0-beta.7"
-tauri-plugin-notification = "2.0.0-beta.5"
-tauri-plugin-os = "2.0.0-beta.4"
-tauri-plugin-log = {version = "2.0.0-beta.4", features = ["colored"] }
-tauri-plugin-shell = "2.0.0-beta.5"
-tauri-plugin-single-instance = "2.0.0-beta.7"
-tauri-plugin-window-state = "2.0.0-beta.7"
+tauri = { version = "2.0.0-beta.22", features = ["protocol-asset", "image-png", "devtools"] }
+tauri-plugin-dialog = "2.0.0-beta.8"
+tauri-plugin-notification = "2.0.0-beta.6"
+tauri-plugin-os = "2.0.0-beta.5"
+tauri-plugin-log = {version = "2.0.0-beta.5", features = ["colored"] }
+tauri-plugin-shell = "2.0.0-beta.6"
+tauri-plugin-single-instance = "2.0.0-beta.8"
+tauri-plugin-window-state = "2.0.0-beta.8"
 
 # non-Tauri dependencies
 anyhow = "1.0.86"
