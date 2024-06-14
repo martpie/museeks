@@ -6,7 +6,7 @@
 A simple, clean and cross-platform music player. ([museeks.io](http://museeks.io))
 
 > **Note**
-> Museeks is on its way to a big rewrite with some major UI changes, please help shape the future of the music player [in the discussions section](https://github.com/martpie/museeks/discussions)! :]
+> Museeks is on its way to a big rewrite with some major UI and Back-End changes, please help shape the future of the music player [in the discussions section](https://github.com/martpie/museeks/discussions)! :]
 
 ![Screenshot](screenshot.png)
 
@@ -42,40 +42,32 @@ Binaries can be found [on this page](https://github.com/martpie/museeks/releases
 
 ### Build (advanced)
 
+> **Warning**
+> Those instructions, are for the still work-in-progress Tauri version of Museeks. If you wish to see how to build it for Electron (`<=0.20`), please see the [previous version of the README](https://github.com/martpie/museeks/blob/277203176555331f88462d4ba2cf88d07d436ddc/README.md#build-advanced).
+
 Museeks is built upon:
 
-- [Node.js](https://nodejs.org/en/)
-- [Electron](https://github.com/electron/electron/)
-- [React.js](https://react.dev)
+- Back-end: [Tauri v2](https://v2.tauri.app/) / Rust 🦀 
+- UI: [React.js](https://react.dev)
 
 Requirements:
 
-- `node` > 18
-- `yarn` 1
+- See [Tauri requirements](https://v2.tauri.app/start/prerequisites/) for `rust` and Node.js
+- [`yarn`](https://yarnpkg.com/getting-started/install)
 
 Please consider that **`master` is unstable**.
 
 - `git clone git@github.com:martpie/museeks.git`
 - `cd museeks`
 - `yarn`
-- for dev mode:
-  - `yarn dev`
-  - `yarn museeks:debug` (in another terminal)
-- for prod mode:
-  - `yarn build`
-  - `yarn museeks`
+- `yarn tauri dev`
 
 ### Package binaries (advanced)
 
-- `rm -rf node_modules dist build`
 - `yarn`
-- `yarn build`
-- to test the production build:
-  - `yarn museeks` or `yarn museeks:debug`
-- to test packaging `yarn package:lmw`, or:
-  - `yarn package:l` (linux-only)
-  - `yarn package:m` (mac-only)
-  - `yarn package:w` (windows-only)
+- `yarn tauri build`
+
+Tauri does not support x-platform binaries, so the command will only generate binaries for your current platform (macOS, Linux or Windows).
 
 ## Troubleshooting
 
@@ -83,13 +75,14 @@ Museeks is currently in development. This implies some things can break after an
 
 If you encounter freezes or crashes when using the app, you can reset Museeks by following these steps:
 
-- Go to the Museeks folder directory
-  - Windows: `%AppData%\museeks`
-  - OSX: `~/Library/Application Support/museeks`
-  - Linux: `~/.config/museeks/` or `$XDG_CONFIG_HOME/museeks`
-- Delete:
-  - `IndexedDB` folder
-  - `config.json` file
+- Go to Settings -> Open Storage Directory
+- Alternatively, go to the Museeks folder directory
+  - Windows: `%AppData%\Museeks`
+  - OSX: `~/Library/Application Support/Museeks`
+  - Linux: `~/.config/museeks/` or `$XDG_CONFIG_HOME/Museeks`
+- Delete everything, but mainly:
+  - `main.bonsaidb` folder
+  - `config.toml` file
 - Restart Museeks
 
 If you still get problems after that, please open an issue :)
