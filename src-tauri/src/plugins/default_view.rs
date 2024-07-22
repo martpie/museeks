@@ -45,6 +45,7 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
                     .get_webview_window("main")
                     .unwrap()
                     .navigate(url)
+                    .expect("Something went wrong when trying to open the default view");
             }
         })
         .build()

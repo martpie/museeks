@@ -1,4 +1,4 @@
-import { getCurrent } from '@tauri-apps/api/window';
+import { getCurrentWindow } from '@tauri-apps/api/window';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -30,10 +30,10 @@ function IPCNavigationEvents() {
 
     const unlisteners = [
       // Shortcuts from the application menu
-      getCurrent().listen('GoToLibrary', goToLibrary),
-      getCurrent().listen('GoToPlaylists', goToPlaylists),
-      getCurrent().listen('GoToSettings', goToSettings),
-      getCurrent().listen('JumpToPlayingTrack', goToPlayingTrack),
+      getCurrentWindow().listen('GoToLibrary', goToLibrary),
+      getCurrentWindow().listen('GoToPlaylists', goToPlaylists),
+      getCurrentWindow().listen('GoToSettings', goToSettings),
+      getCurrentWindow().listen('JumpToPlayingTrack', goToPlayingTrack),
     ];
 
     return function cleanup() {

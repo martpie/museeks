@@ -1,4 +1,4 @@
-import { getCurrent } from '@tauri-apps/api/window';
+import { getCurrentWindow } from '@tauri-apps/api/window';
 import { sendNotification } from '@tauri-apps/plugin-notification';
 import { useEffect } from 'react';
 
@@ -56,10 +56,12 @@ function PlayerEvents() {
     async function notifyTrackChange() {
       const track = player.getTrack();
       const isEnabled = await config.get('notifications');
-      const isMinimized = await getCurrent()
+      const isMinimized = await getCurrentWindow()
         .isMinimized()
         .catch(logAndNotifyError);
-      const isFocused = await getCurrent().isFocused().catch(logAndNotifyError);
+      const isFocused = await getCurrentWindow()
+        .isFocused()
+        .catch(logAndNotifyError);
 
       if (track == null || !isEnabled || isFocused || !isMinimized) {
         return;

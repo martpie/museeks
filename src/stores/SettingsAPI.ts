@@ -1,6 +1,6 @@
 import { getVersion } from '@tauri-apps/api/app';
 import { invoke } from '@tauri-apps/api/core';
-import { getCurrent } from '@tauri-apps/api/window';
+import { getCurrentWindow } from '@tauri-apps/api/window';
 import * as semver from 'semver';
 
 import type { Config, DefaultView } from '../generated/typings';
@@ -39,7 +39,7 @@ const checkTheme = async (): Promise<void> => {
   // that is used when a window is created with no assigned theme.
   // So we are bypassing the user choice for now.
   // const themeID: string = await config.get("theme");
-  const themeID = (await getCurrent().theme()) ?? 'light';
+  const themeID = (await getCurrentWindow().theme()) ?? 'light';
   const theme = themes[themeID];
 
   if (theme == null) {
