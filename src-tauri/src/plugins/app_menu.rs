@@ -1,5 +1,6 @@
 use std::path::PathBuf;
 use tauri::image::Image;
+use tauri::Emitter;
 use tauri::{
     menu::{AboutMetadataBuilder, MenuBuilder, MenuId, MenuItemBuilder, SubmenuBuilder},
     plugin::{Builder, TauriPlugin},
@@ -213,7 +214,9 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
                 }
                 "reload" => {
                     let mut webview = win.get_webview_window("main").unwrap();
-                    webview.navigate(webview.url().expect("webview should havea a URL"));
+                    webview
+                        .navigate(webview.url().expect("webview should havea a URL"))
+                        .unwrap();
                 }
                 "toggle_devtools" => {
                     let webview = win.get_webview_window("main").unwrap();

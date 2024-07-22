@@ -1,6 +1,5 @@
-import { getCurrent } from '@tauri-apps/api/window';
+import { getCurrentWindow } from '@tauri-apps/api/window';
 import { Suspense, useEffect } from 'react';
-// import { useEffect } from "react";
 import { Outlet } from 'react-router-dom';
 
 import DropzoneImport from '../components/DropzoneImport/DropzoneImport';
@@ -23,7 +22,7 @@ export default function ViewRoot() {
   useEffect(() => {
     SettingsAPI.check()
       // Show the app once everything is loaded
-      .then(() => getCurrent())
+      .then(() => getCurrentWindow())
       .then((window) => {
         window.show();
       });
