@@ -41,7 +41,7 @@ serde = { version = "1.0.203", features = ["derive"] }
 strum = { version = "0.26.2", features = ["derive"] }
 thiserror = "1.0.63"
 tokio = { version = "1.38.1", features = ["macros"] }
-ts-rs = { git = "https://github.com/Aleph-Alpha/ts-rs.git", branch = "export_same_file" }
+ts-rs = { git = "https://github.com/Aleph-Alpha/ts-rs.git", rev = "5cbc740" }
 uuid = { version = "1.8.0", features = ["v3", "v4", "fast-rng"] }
 walkdir = "2.5.0"
 m3u = "1.0.0"

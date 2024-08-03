@@ -5718,7 +5718,7 @@ dependencies = [
 [[package]]
 name = "ts-rs"
 version = "9.0.1"
-source = "git+https://github.com/Aleph-Alpha/ts-rs.git?branch=export_same_file#5c889c961d728d67dde59d3c31c4bf598da78f8a"
+source = "git+https://github.com/Aleph-Alpha/ts-rs.git?rev=5cbc740#5cbc7405d8454595dfe446b8c99c3f1e436b3569"
 dependencies = [
  "lazy_static",
  "thiserror",
@@ -5728,7 +5728,7 @@ dependencies = [
 [[package]]
 name = "ts-rs-macros"
 version = "9.0.1"
-source = "git+https://github.com/Aleph-Alpha/ts-rs.git?branch=export_same_file#5c889c961d728d67dde59d3c31c4bf598da78f8a"
+source = "git+https://github.com/Aleph-Alpha/ts-rs.git?rev=5cbc740#5cbc7405d8454595dfe446b8c99c3f1e436b3569"
 dependencies = [
  "proc-macro2",
  "quote",
