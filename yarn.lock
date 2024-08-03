@@ -913,111 +913,111 @@
   resolved "https://registry.yarnpkg.com/@tanstack/virtual-core/-/virtual-core-3.8.3.tgz#9db61ab2a96e43d9e035b1cfd82eeede6d52f171"
   integrity sha512-vd2A2TnM5lbnWZnHi9B+L2gPtkSeOtJOAw358JqokIH1+v2J7vUAzFVPwB/wrye12RFOurffXu33plm4uQ+JBQ==
 
-"@tauri-apps/api@2.0.0-beta.15", "@tauri-apps/api@^2.0.0-beta.15":
-  version "2.0.0-beta.15"
-  resolved "https://registry.yarnpkg.com/@tauri-apps/api/-/api-2.0.0-beta.15.tgz#41d5fbeaccf3926b6f9f3f9fb5137ba2e272e5c1"
-  integrity sha512-H9w6iISmR+NvH4XuyCZB4zDN10tf9RFt6i/9JHEjaRhAowdAaJ+oiXq/3kedizNClHMtbTQ5j0oqDVPkZDAI8g==
+"@tauri-apps/api@2.0.0-rc.0", "@tauri-apps/api@^2.0.0-rc.0":
+  version "2.0.0-rc.0"
+  resolved "https://registry.yarnpkg.com/@tauri-apps/api/-/api-2.0.0-rc.0.tgz#902b4e9803ecdcc0a3913d7c09df26d651f3dfd1"
+  integrity sha512-v454Qs3REHc3Za59U+/eSmBsdmF+3NE5+76+lFDaitVqN4ZglDHENDaMARYKGJVZuxiSkzyqG0SeG7lLQjVkPA==
 
-"@tauri-apps/cli-darwin-arm64@2.0.0-beta.22":
-  version "2.0.0-beta.22"
-  resolved "https://registry.yarnpkg.com/@tauri-apps/cli-darwin-arm64/-/cli-darwin-arm64-2.0.0-beta.22.tgz#5e41c880a4b324bf5c1345fec7259c6b99be2caf"
-  integrity sha512-Ofhythvg1Ks2IM87WUYNtgFzm21aU1Zn+8QP81lJy9Y7ZGMxP8FYfqeHz6GIWKI+CYf6I77HA8LHkT9pyE5PYg==
+"@tauri-apps/cli-darwin-arm64@2.0.0-rc.1":
+  version "2.0.0-rc.1"
+  resolved "https://registry.yarnpkg.com/@tauri-apps/cli-darwin-arm64/-/cli-darwin-arm64-2.0.0-rc.1.tgz#06bf72501329085dc309e2d9a7b3d3969f91283c"
+  integrity sha512-dJxyAi4P9fOkklBZXuwUVnHgdM/20fgM4zYdfejQfju5+q9GUqnMbrrIUqlJbQGf8EnrIdSWnieO8wU8GOwT0g==
 
-"@tauri-apps/cli-darwin-x64@2.0.0-beta.22":
-  version "2.0.0-beta.22"
-  resolved "https://registry.yarnpkg.com/@tauri-apps/cli-darwin-x64/-/cli-darwin-x64-2.0.0-beta.22.tgz#029fc107abaa9ede26f5fa3f0949fbf8eaf3667c"
-  integrity sha512-/lWIixo7WgmMUqcxlPT7Ojlkl6qbVlNDwUZ+9DtTpoWnaaBxv/YpSe1k62vDWEC7l0apFY+Fz7cRONN2wglFyQ==
+"@tauri-apps/cli-darwin-x64@2.0.0-rc.1":
+  version "2.0.0-rc.1"
+  resolved "https://registry.yarnpkg.com/@tauri-apps/cli-darwin-x64/-/cli-darwin-x64-2.0.0-rc.1.tgz#d36ffd5f10e5d38e4707db612c9d84d2fbef4361"
+  integrity sha512-dwrqLzNIFk8a1Vf2YI8axHm7uvLfo4M4TSWCw2ZkgeSGWWK6Y6CYVZbBEjOEGIOf+GFAa9rVOSZRuMwpiufNng==
 
-"@tauri-apps/cli-linux-arm-gnueabihf@2.0.0-beta.22":
-  version "2.0.0-beta.22"
-  resolved "https://registry.yarnpkg.com/@tauri-apps/cli-linux-arm-gnueabihf/-/cli-linux-arm-gnueabihf-2.0.0-beta.22.tgz#5913e0a3c062e22974f0351f5e10c9fd4f66d33c"
-  integrity sha512-9nJCSStoxu4BKaKVJhu/uBJ8IsIofwAdsX0TWFxqo0obaZbeQSEpPhVsCy+uk3u/28dF+qyUtMCYawO2Uljnag==
+"@tauri-apps/cli-linux-arm-gnueabihf@2.0.0-rc.1":
+  version "2.0.0-rc.1"
+  resolved "https://registry.yarnpkg.com/@tauri-apps/cli-linux-arm-gnueabihf/-/cli-linux-arm-gnueabihf-2.0.0-rc.1.tgz#9a042233beeaa1d470433f57ce57a1e333768d76"
+  integrity sha512-jvMF4UNc3Jr/xHnw+4NNsWfk8WrcFrQVImAtKlCev9QepqfBmDh+FgXTvfysoBCSxEBS626TvYms3OhI0LOO4A==
 
-"@tauri-apps/cli-linux-arm64-gnu@2.0.0-beta.22":
-  version "2.0.0-beta.22"
-  resolved "https://registry.yarnpkg.com/@tauri-apps/cli-linux-arm64-gnu/-/cli-linux-arm64-gnu-2.0.0-beta.22.tgz#86c2107e12c2f2b1289d74a29ebe810df7bb22aa"
-  integrity sha512-TF9q9zHFBx9LaG2fJJC+BcpIokOmX1UIniBapndvx3dJmdDiK4F6w2QYKDkrBQVzDzcIducmdo2zNBv17O9tFQ==
+"@tauri-apps/cli-linux-arm64-gnu@2.0.0-rc.1":
+  version "2.0.0-rc.1"
+  resolved "https://registry.yarnpkg.com/@tauri-apps/cli-linux-arm64-gnu/-/cli-linux-arm64-gnu-2.0.0-rc.1.tgz#e2a4b83d0b50770b4af3f7cd4fc16c8eb3bd1bdc"
+  integrity sha512-TGmadGW8BjTq864AYrv/u+vTnAodnOuzv1VCUOV23O8st35GZG6V47jwNsSjQjhrcO1XzmJiRAtrcVKuTZ/xUA==
 
-"@tauri-apps/cli-linux-arm64-musl@2.0.0-beta.22":
-  version "2.0.0-beta.22"
-  resolved "https://registry.yarnpkg.com/@tauri-apps/cli-linux-arm64-musl/-/cli-linux-arm64-musl-2.0.0-beta.22.tgz#8a87be68e3ffc9115052bc8d015a9515c7870969"
-  integrity sha512-ak/RdmaV7sATQmNOxlpHVlbKlrdquH7WH8nOv82X+iK+1HgAOGGqLqBUMzzhkGqo9SHQ9zJ6A2yOo7Z6TJXMmQ==
+"@tauri-apps/cli-linux-arm64-musl@2.0.0-rc.1":
+  version "2.0.0-rc.1"
+  resolved "https://registry.yarnpkg.com/@tauri-apps/cli-linux-arm64-musl/-/cli-linux-arm64-musl-2.0.0-rc.1.tgz#3e3112d5ca33e00428234c9c32832b24d68f4b7a"
+  integrity sha512-+SJsRTW0PvvD7awEn+tIPJ3s12s6RpKXdOib2mztoKocasrGRfz+EFZuXc42Iwk3xROsrQkiw2UAmcNLkW5NwA==
 
-"@tauri-apps/cli-linux-x64-gnu@2.0.0-beta.22":
-  version "2.0.0-beta.22"
-  resolved "https://registry.yarnpkg.com/@tauri-apps/cli-linux-x64-gnu/-/cli-linux-x64-gnu-2.0.0-beta.22.tgz#108aaa4a939de0ea7567974c627b8061b88be091"
-  integrity sha512-9t+jQeMqBdXz51ikTh1PQFG/gs9PBzXmtMcIzUxE0juvH/ynjw0Vf+yZbNmwqVS9g7cj8XiBXoc6/N41SZE2cA==
+"@tauri-apps/cli-linux-x64-gnu@2.0.0-rc.1":
+  version "2.0.0-rc.1"
+  resolved "https://registry.yarnpkg.com/@tauri-apps/cli-linux-x64-gnu/-/cli-linux-x64-gnu-2.0.0-rc.1.tgz#412e8dfa200d497f9783dafc7f08b08aee5ef192"
+  integrity sha512-vjPrj2btS97IOp6cU42IrkI49SQZDSg8TPqwOwFqyQeAotCT1i0F38pLZWe1gLyPUowO8XdaaBdwYg6IRDKcZg==
 
-"@tauri-apps/cli-linux-x64-musl@2.0.0-beta.22":
-  version "2.0.0-beta.22"
-  resolved "https://registry.yarnpkg.com/@tauri-apps/cli-linux-x64-musl/-/cli-linux-x64-musl-2.0.0-beta.22.tgz#2ea7740c86dc2fc83ed5dfd3f887b0ab76545be4"
-  integrity sha512-PemcztfHG3HAuuo7HcnhfDrtN9NT7kueyNg8ipxJNPMa+s4K7kfieViyEiMW5pTr2F5WG/UuBSNcuwY+DVCcPA==
+"@tauri-apps/cli-linux-x64-musl@2.0.0-rc.1":
+  version "2.0.0-rc.1"
+  resolved "https://registry.yarnpkg.com/@tauri-apps/cli-linux-x64-musl/-/cli-linux-x64-musl-2.0.0-rc.1.tgz#dbd6c4f43212af95070c540e0c2638c6571d1599"
+  integrity sha512-MrE68/u6rMrkM1uM/DR1MNnMXiYebhSPGqqxshJ12SmFdk3yQ/Z73Wzvk8xv78eOExh4lTtEXI22YwaBCf9AEg==
 
-"@tauri-apps/cli-win32-arm64-msvc@2.0.0-beta.22":
-  version "2.0.0-beta.22"
-  resolved "https://registry.yarnpkg.com/@tauri-apps/cli-win32-arm64-msvc/-/cli-win32-arm64-msvc-2.0.0-beta.22.tgz#c378ff68b99aa1afa17a583e4e7a0b16339282b7"
-  integrity sha512-EgKoG/jGEtTzhOp7ISjMdQsfd8IOG/5yZhO9Z4L/u7oB9mprKAJohYs24+ZxJtq2bOz4f/ZIysZ19nbkpxUzrg==
+"@tauri-apps/cli-win32-arm64-msvc@2.0.0-rc.1":
+  version "2.0.0-rc.1"
+  resolved "https://registry.yarnpkg.com/@tauri-apps/cli-win32-arm64-msvc/-/cli-win32-arm64-msvc-2.0.0-rc.1.tgz#b6c1700b905ff3c6a7daaaa4a48397e8b9a9be0b"
+  integrity sha512-SLulbiUjg8BGf/zX+U1PGjB+JpsN2nLRGuW07BYwSDW3s3mp2aagLuOwaTaOPBrDzfIMRYq8KT54A4jfRjEZlg==
 
-"@tauri-apps/cli-win32-ia32-msvc@2.0.0-beta.22":
-  version "2.0.0-beta.22"
-  resolved "https://registry.yarnpkg.com/@tauri-apps/cli-win32-ia32-msvc/-/cli-win32-ia32-msvc-2.0.0-beta.22.tgz#88a81f2c6dbf62ea18252a542d45eb4190b4ed6e"
-  integrity sha512-67OrM2m4FB3KujPbjd/i+9lqcLDO3/ixqL1GMc3BoHhcjF+7QY08OxqWeitdsP/8ihnMIIdir2xEjNUKc6Zelw==
+"@tauri-apps/cli-win32-ia32-msvc@2.0.0-rc.1":
+  version "2.0.0-rc.1"
+  resolved "https://registry.yarnpkg.com/@tauri-apps/cli-win32-ia32-msvc/-/cli-win32-ia32-msvc-2.0.0-rc.1.tgz#5f09e9a8730472211390b6e3ddbf495b1ae9598b"
+  integrity sha512-rz85riTjcWdZlgTku6HcBx625Otdc0/NwDjRXgdXakL1ybw7E+G5YlLZNcQX25u17RKUAWX/2/VZ1pSz945Ovw==
 
-"@tauri-apps/cli-win32-x64-msvc@2.0.0-beta.22":
-  version "2.0.0-beta.22"
-  resolved "https://registry.yarnpkg.com/@tauri-apps/cli-win32-x64-msvc/-/cli-win32-x64-msvc-2.0.0-beta.22.tgz#eb156270431382b64f8d95f0e86a72a6311a3b6f"
-  integrity sha512-BsO5xMUxliTZTImXnOC73sKT2U9VUeqR8AtklSObBcAg5LaZKpYOdF2pZzU6rIMAZwzROTAT1hYsr4r/nx2UZg==
+"@tauri-apps/cli-win32-x64-msvc@2.0.0-rc.1":
+  version "2.0.0-rc.1"
+  resolved "https://registry.yarnpkg.com/@tauri-apps/cli-win32-x64-msvc/-/cli-win32-x64-msvc-2.0.0-rc.1.tgz#603472a3ff6c545c657591f21e2475553a7bca77"
+  integrity sha512-aRO70dDbn4w3CbALMG+b7g460xmbSTuUiGmRh0r/MNVeoZk/YbqluBUyhXdWGxJb8OVubw/4RlczKYcPmJceMw==
 
-"@tauri-apps/cli@^2.0.0-beta.22":
-  version "2.0.0-beta.22"
-  resolved "https://registry.yarnpkg.com/@tauri-apps/cli/-/cli-2.0.0-beta.22.tgz#a8c58568db903271b767ecec689bdf7632fbc8cf"
-  integrity sha512-OAuiDdSRKxNmr/dseQKKMoZZxIhQ6aAxmXJctGYJxCnkd62tQ8xeq87roVXGNS5Qkuv7WpySAyR0ntiMjvNLUA==
+"@tauri-apps/cli@^2.0.0-rc.0":
+  version "2.0.0-rc.1"
+  resolved "https://registry.yarnpkg.com/@tauri-apps/cli/-/cli-2.0.0-rc.1.tgz#ed99e1afb1637aa739fbc1a5abf3e3708150ad89"
+  integrity sha512-9AzVrUMdb6EZ/Lwtdqt03XqqG6d/3gTJPOw2E9zmCHprJWEwqEp4JIVHYYfrqkkZyKclD3m5ggXwfYwclcYLdw==
   optionalDependencies:
-    "@tauri-apps/cli-darwin-arm64" "2.0.0-beta.22"
-    "@tauri-apps/cli-darwin-x64" "2.0.0-beta.22"
-    "@tauri-apps/cli-linux-arm-gnueabihf" "2.0.0-beta.22"
-    "@tauri-apps/cli-linux-arm64-gnu" "2.0.0-beta.22"
-    "@tauri-apps/cli-linux-arm64-musl" "2.0.0-beta.22"
-    "@tauri-apps/cli-linux-x64-gnu" "2.0.0-beta.22"
-    "@tauri-apps/cli-linux-x64-musl" "2.0.0-beta.22"
-    "@tauri-apps/cli-win32-arm64-msvc" "2.0.0-beta.22"
-    "@tauri-apps/cli-win32-ia32-msvc" "2.0.0-beta.22"
-    "@tauri-apps/cli-win32-x64-msvc" "2.0.0-beta.22"
+    "@tauri-apps/cli-darwin-arm64" "2.0.0-rc.1"
+    "@tauri-apps/cli-darwin-x64" "2.0.0-rc.1"
+    "@tauri-apps/cli-linux-arm-gnueabihf" "2.0.0-rc.1"
+    "@tauri-apps/cli-linux-arm64-gnu" "2.0.0-rc.1"
+    "@tauri-apps/cli-linux-arm64-musl" "2.0.0-rc.1"
+    "@tauri-apps/cli-linux-x64-gnu" "2.0.0-rc.1"
+    "@tauri-apps/cli-linux-x64-musl" "2.0.0-rc.1"
+    "@tauri-apps/cli-win32-arm64-msvc" "2.0.0-rc.1"
+    "@tauri-apps/cli-win32-ia32-msvc" "2.0.0-rc.1"
+    "@tauri-apps/cli-win32-x64-msvc" "2.0.0-rc.1"
 
-"@tauri-apps/plugin-dialog@2.0.0-beta.7":
-  version "2.0.0-beta.7"
-  resolved "https://registry.yarnpkg.com/@tauri-apps/plugin-dialog/-/plugin-dialog-2.0.0-beta.7.tgz#84fee36b6e8ba031ff20f1572dde05c65df15422"
-  integrity sha512-myywwpsKbquDDzl5zaOmmLLv5O8EJ/GgHDAoVSPwO97R4iWzkDvj3HFF91tNh7i25Tu/bP6jYPAdZA1NCRxxtg==
+"@tauri-apps/plugin-dialog@2.0.0-rc.0":
+  version "2.0.0-rc.0"
+  resolved "https://registry.yarnpkg.com/@tauri-apps/plugin-dialog/-/plugin-dialog-2.0.0-rc.0.tgz#8149b6d2ef0a199c9239171d1966c4f87e8fd5dd"
+  integrity sha512-DPOXYe8SQ6Radk/67EOdaomlxL7oF99JO/ZUaPp1IBEs3Wro7lhlz63CfdKIBfKIZTLJLzP1R7/EiPL/GTA3Bg==
   dependencies:
-    "@tauri-apps/api" "2.0.0-beta.15"
+    "@tauri-apps/api" "^2.0.0-rc.0"
 
-"@tauri-apps/plugin-log@2.0.0-beta.8":
-  version "2.0.0-beta.8"
-  resolved "https://registry.yarnpkg.com/@tauri-apps/plugin-log/-/plugin-log-2.0.0-beta.8.tgz#758aae6621f072824cfa31a39d48d705e619b8da"
-  integrity sha512-l214keCBJqj8jNb5MkaS44oF+1xen5miaKxNH3SIGE4uyFIweDGmbwxqIxRhtb18gxy/mu/ykDmEuKc5+8uzfQ==
+"@tauri-apps/plugin-log@2.0.0-rc.0":
+  version "2.0.0-rc.0"
+  resolved "https://registry.yarnpkg.com/@tauri-apps/plugin-log/-/plugin-log-2.0.0-rc.0.tgz#2939245c94758c9b9a4a35c8e023147610cf4021"
+  integrity sha512-ztKfzUcq03dtr08vBu+xcwIEPusP6mCpuLAt6kpXEwG+HvYsC8e1/KFFokn3xvfwD+oBJ3UTL1h4kdM30GAqGw==
   dependencies:
-    "@tauri-apps/api" "2.0.0-beta.15"
+    "@tauri-apps/api" "^2.0.0-rc.0"
 
-"@tauri-apps/plugin-notification@2.0.0-beta.7":
-  version "2.0.0-beta.7"
-  resolved "https://registry.yarnpkg.com/@tauri-apps/plugin-notification/-/plugin-notification-2.0.0-beta.7.tgz#817a7c4e4ac337a37dfd3e74ffa39f09602c58e4"
-  integrity sha512-8uvbs0b2ByPw0VaBNolSvVEZKIOxarIBB2GZJERjhYcxJDpKcDzaTxPngPa5v98JrNSO62YdJBWXT5yABIpNMw==
+"@tauri-apps/plugin-notification@2.0.0-rc.0":
+  version "2.0.0-rc.0"
+  resolved "https://registry.yarnpkg.com/@tauri-apps/plugin-notification/-/plugin-notification-2.0.0-rc.0.tgz#f0cdb831793ace942bf24bbf357802de17d171d8"
+  integrity sha512-0qsT/kvxQ6Ky4g6eQ4SUiHXzM4szTVc6thjz9vnGPYaApLoZrCJ9GdG+vEqeB+cT2dvE+wmxUFETh3ZXYVw8UA==
   dependencies:
-    "@tauri-apps/api" "2.0.0-beta.15"
+    "@tauri-apps/api" "^2.0.0-rc.0"
 
-"@tauri-apps/plugin-os@2.0.0-beta.7":
-  version "2.0.0-beta.7"
-  resolved "https://registry.yarnpkg.com/@tauri-apps/plugin-os/-/plugin-os-2.0.0-beta.7.tgz#1f8ae67e1ff65fd7273a90eb1e5a677e2f435486"
-  integrity sha512-CHo09ecxUU0NFkAqctXeQzdaXw02EXulqcaZnbjrBfRJ2ulmGq7zaUCsHihfcqWcdnmNwmP9Wh/gyznMc1JF9Q==
+"@tauri-apps/plugin-os@2.0.0-rc.0":
+  version "2.0.0-rc.0"
+  resolved "https://registry.yarnpkg.com/@tauri-apps/plugin-os/-/plugin-os-2.0.0-rc.0.tgz#b35046964a5aa3272848fa7ed7f2fbc5c8eaa157"
+  integrity sha512-OWAl8mooKnGykSD4iog8WRqcnOSx0gGmTJBlEExHdFeIuOHg0Ezvd+WiVLhT9LBg7go3ibNWRWpe/ZG7YEp4Vw==
   dependencies:
-    "@tauri-apps/api" "2.0.0-beta.15"
+    "@tauri-apps/api" "^2.0.0-rc.0"
 
-"@tauri-apps/plugin-shell@2.0.0-beta.8":
-  version "2.0.0-beta.8"
-  resolved "https://registry.yarnpkg.com/@tauri-apps/plugin-shell/-/plugin-shell-2.0.0-beta.8.tgz#19dd2d4015b64d15d0266d949f836a41f3643b32"
-  integrity sha512-rFXI6MvsCdSGbuKbDu/NaOePREb9YTVTdeugHdvvljnKWW3dvmThBb2h/8Hxj+Z7Cd8MUoRxPeJWUZbPbJ2Imw==
+"@tauri-apps/plugin-shell@2.0.0-rc.0":
+  version "2.0.0-rc.0"
+  resolved "https://registry.yarnpkg.com/@tauri-apps/plugin-shell/-/plugin-shell-2.0.0-rc.0.tgz#41645da666375930f95ee2155fb9dd5a02874952"
+  integrity sha512-bhUcQcrqZoK8H1DFXapr5r1Z75oh6Kd5Tltz97XpZFLREEqp+KhN2Fvyh8r/fKAyenYsTYUIsDsyGdjdueuF9g==
   dependencies:
-    "@tauri-apps/api" "2.0.0-beta.15"
+    "@tauri-apps/api" "^2.0.0-rc.0"
 
 "@types/babel__core@^7.20.5":
   version "7.20.5"
