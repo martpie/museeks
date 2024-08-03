@@ -13,7 +13,7 @@ use ts_rs::TS;
 use crate::libs::error::{AnyResult, MuseeksError};
 
 #[derive(Serialize, Deserialize, Debug, Clone, TS)]
-#[ts(export, export_to = "../src/generated/typings/Repeat.ts")]
+#[ts(export, export_to = "../../src/generated/typings/index.ts")]
 pub enum Repeat {
     All,
     One,
@@ -21,7 +21,7 @@ pub enum Repeat {
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone, TS)]
-#[ts(export, export_to = "../src/generated/typings/SortBy.ts")]
+#[ts(export, export_to = "../../src/generated/typings/index.ts")]
 pub enum SortBy {
     Artist,
     Album,
@@ -31,21 +31,21 @@ pub enum SortBy {
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone, TS)]
-#[ts(export, export_to = "../src/generated/typings/SortOrder.ts")]
+#[ts(export, export_to = "../../src/generated/typings/index.ts")]
 pub enum SortOrder {
     Asc,
     Dsc,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone, TS)]
-#[ts(export, export_to = "../src/generated/typings/DefaultView.ts")]
+#[ts(export, export_to = "../../src/generated/typings/index.ts")]
 pub enum DefaultView {
     Library,
     Playlists,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone, TS)]
-#[ts(export, export_to = "../src/generated/typings/Config.ts")]
+#[ts(export, export_to = "../../src/generated/typings/index.ts")]
 pub struct Config {
     pub theme: String,
     pub audio_volume: f32,
