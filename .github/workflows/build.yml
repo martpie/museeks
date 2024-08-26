@@ -60,7 +60,11 @@ jobs:
       # (like types generation)
       - name: Check if git is dirty
         run: |
-          if [[ -n $(git status --porcelain) ]]; then exit 1; fi
+          if [[ -n $(git status --porcelain) ]];
+          then
+            echo "git is dirty, make sure you ran the gen script"
+            exit 1;
+          fi
 
   # Documentation on environments:
   # https://docs.github.com/en/free-pro-team@latest/actions/reference/specifications-for-github-hosted-runners
