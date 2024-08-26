@@ -58,9 +58,9 @@ jobs:
 
       # Check one of the command above did not generate any unexpected artifacts
       # (like types generation)
-      - uses: infotroph/tree-is-clean@v1
-        with:
-          check_untracked: true
+      - name: Check if git is dirty
+        run: |
+          if [[ -n $(git status --porcelain) ]]; then exit 1; fi
 
   # Documentation on environments:
   # https://docs.github.com/en/free-pro-team@latest/actions/reference/specifications-for-github-hosted-runners
