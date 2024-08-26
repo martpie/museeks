@@ -8,8 +8,6 @@ export type IPCEvent = { "Unknown": string } | "PlaybackPlay" | "PlaybackPause" 
 
 export type NumberOf = { no: number | null, of: number | null, };
 
-
-
 /** ----------------------------------------------------------------------------
  * Playlist
  * represent a playlist, that has a name and a list of tracks
