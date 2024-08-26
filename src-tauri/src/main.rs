@@ -9,6 +9,7 @@ use log::LevelFilter;
 use tauri::Manager;
 use tauri_plugin_log::fern::colors::ColoredLevelConfig;
 use tauri_plugin_log::{Target, TargetKind};
+use tauri_plugin_window_state::StateFlags;
 
 /**
  * The beast
@@ -47,7 +48,13 @@ async fn main() {
             let window = app_handle.get_webview_window("main").unwrap();
             show_window(&window);
         }))
-        .plugin(tauri_plugin_window_state::Builder::default().build())
+        .plugin(
+            tauri_plugin_window_state::Builder::default()
+                .with_state_flags(
+                    StateFlags::all() & !StateFlags::VISIBLE, // Museeks manages its visible state by itself
+                )
+                .build(),
+        )
         // TODO: tauri-plugin-theme to update the native theme at runtime
         .setup(|_app| {
             // :]
