@@ -52,7 +52,7 @@ Museeks is built upon:
 
 Requirements:
 
-- See [Tauri requirements](https://v2.tauri.app/start/prerequisites/) for `rust` and Node.js
+- See [Tauri requirements](https://v2.tauri.app/start/prerequisites/) for `rust`
 - [`bun`](https://bun.sh)
 
 Please consider that **`master` is unstable**.

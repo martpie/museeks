@@ -20,7 +20,7 @@
     "tauri": "tauri",
     "gen": "bash scripts/gen.sh",
     "test:typings": "tsc --noEmit --project ./tsconfig.json",
-    "test:unit": "vitest run",
+    "test:unit": "bun test",
     "test:lint": "biome ci .",
     "test:lint:fix": "biome check --apply .",
     "test:css": "stylelint \"src/**/*.css\"",
