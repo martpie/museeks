@@ -280,7 +280,7 @@ impl DB {
  * -------------------------------------------------------------------------- */
 #[derive(Debug, Clone, Serialize, Deserialize, Collection, TS)]
 #[collection(name="tracks", primary_key = String)]
-#[ts(export, export_to = "../src/generated/typings/Track.ts")]
+#[ts(export, export_to = "../../src/generated/typings/index.ts")]
 pub struct Track {
     #[natural_id]
     pub _id: String,
@@ -296,7 +296,7 @@ pub struct Track {
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, TS)]
-#[ts(export, export_to = "../src/generated/typings/NumberOf.ts")]
+#[ts(export, export_to = "../../src/generated/typings/index.ts")]
 pub struct NumberOf {
     pub no: Option<u32>,
     pub of: Option<u32>,
@@ -309,7 +309,7 @@ pub struct NumberOf {
 
 #[derive(Debug, Clone, Serialize, Deserialize, Collection, TS)]
 #[collection(name = "playlists", primary_key = String)]
-#[ts(export, export_to = "../src/generated/typings/Playlist.ts")]
+#[ts(export, export_to = "../../src/generated/typings/index.ts")]
 pub struct Playlist {
     #[natural_id]
     pub _id: String,
@@ -322,7 +322,7 @@ pub struct Playlist {
  * Scan progress
  */
 #[derive(Debug, Clone, Serialize, Deserialize, TS)]
-#[ts(export, export_to = "../src/generated/typings/Progress.ts")]
+#[ts(export, export_to = "../../src/generated/typings/index.ts")]
 pub struct Progress {
     current: usize,
     total: usize,
