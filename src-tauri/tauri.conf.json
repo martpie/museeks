@@ -3,9 +3,9 @@
   "version": "0.20.0",
   "identifier": "Museeks",
   "build": {
-    "beforeDevCommand": "bun dev",
+    "beforeDevCommand": "bun run dev",
     "devUrl": "http://localhost:1420",
-    "beforeBuildCommand": "bun build",
+    "beforeBuildCommand": "bun run build",
     "frontendDist": "../dist"
   },
   "app": {
