@@ -47,7 +47,7 @@ Binaries can be found [on this page](https://github.com/martpie/museeks/releases
 
 Museeks is built upon:
 
-- Back-end: [Tauri v2](https://v2.tauri.app/) / Rust 🦀 
+- Back-end: [Tauri v2](https://v2.tauri.app/) / Rust 🦀
 - UI: [React.js](https://react.dev)
 
 Requirements:
