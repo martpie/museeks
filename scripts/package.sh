@@ -11,11 +11,10 @@ rm -rf ./build
 
 # Make sure we have the latest build
 rm -rf ./node_modules
-yarn install --frozen-lockfile
-yarn build
+bun install
 
 # Package the whole application
-yarn package:lmw
+bun tauri build
 
 # Generate checksums
-yarn package:checksums
+bun package:checksums

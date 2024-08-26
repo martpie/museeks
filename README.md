@@ -53,19 +53,19 @@ Museeks is built upon:
 Requirements:
 
 - See [Tauri requirements](https://v2.tauri.app/start/prerequisites/) for `rust` and Node.js
-- [`yarn`](https://yarnpkg.com/getting-started/install)
+- [`bun`](https://bun.sh)
 
 Please consider that **`master` is unstable**.
 
 - `git clone git@github.com:martpie/museeks.git`
 - `cd museeks`
-- `yarn`
-- `yarn tauri dev`
+- `bun install`
+- `bun tauri dev`
 
 ### Package binaries (advanced)
 
-- `yarn`
-- `yarn tauri build`
+- `bun install`
+- `bun tauri build`
 
 Tauri does not support x-platform binaries, so the command will only generate binaries for your current platform (macOS, Linux or Windows).
 
@@ -95,8 +95,7 @@ If you want to report a bug, first, thanks a lot, that helps us a lot. Please op
 
 - Fork and clone
 - Master may be unstable, checkout to a tag to have a stable state of the app
-- `yarn install --frozen-lockfile && yarn run dev` then run in a separate terminal `yarn run museeks:debug`
-- `yarn run dev` will launch electron and compile the app. Hot reload will work out of the box.
+- `bun install && bun tauri dev` will launch Tauri and compile the app. Hot reload will work out of the box.
 
 Please respect a few rules:
 

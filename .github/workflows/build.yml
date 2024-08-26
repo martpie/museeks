@@ -37,25 +37,25 @@ jobs:
           sudo apt-get install -y libgtk-3-dev libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: bun install
 
       - name: 'Test: Rust (+ Generate Types)'
-        run: yarn run gen
+        run: bun gen
 
       - name: 'Test: TS/JS linting & formatting'
-        run: 'yarn run test:lint'
+        run: 'bun test:lint'
 
       - name: 'Test: CSS linting'
-        run: 'yarn run test:css'
+        run: 'bun test:css'
 
       - name: 'Test: unit'
-        run: 'yarn run test:unit'
+        run: 'bun test:unit'
 
       - name: 'Test: Types'
-        run: 'yarn run test:typings'
+        run: 'bun test:typings'
 
       - name: Build application
-        run: yarn run build
+        run: bun build
 
       # Check one of the command above did not generate any unexpected artifacts
       # (like types generation)
@@ -93,7 +93,7 @@ jobs:
           sudo apt-get install -y libgtk-3-dev libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf
 
       - name: Install frontend dependencies
-        run: yarn install --frozen-lockfile
+        run: bun install
 
       - uses: tauri-apps/tauri-action@v0
         env:
