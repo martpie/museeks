@@ -26,9 +26,7 @@
     "test:css": "stylelint \"src/**/*.css\"",
     "package:checksums": "bash scripts/checksum.sh"
   },
-  "browserslist": [
-    "defaults"
-  ],
+  "browserslist": ["defaults"],
   "dependencies": {
     "@radix-ui/react-aspect-ratio": "^1.1.0",
     "@radix-ui/react-popover": "^1.1.1",
