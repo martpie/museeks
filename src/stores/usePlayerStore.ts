@@ -550,18 +550,23 @@ function createPlayerStore<T extends PlayerState>(store: StateCreator<T>) {
           playerStatus: PlayerStatus.STOP,
         }) satisfies Partial<PlayerState>;
 
-        return {
+        const mergedState = {
           ...currentState,
           ...stateToPersist,
           // API should never be persisted
           api: currentState.api,
+        };
+
+        if (persistedState != null) {
           // If player status was playing, set it to pause, as it makes no sense
           // to auto-start playing a song when Museeks starts
-          playerStatus:
+          mergedState.playerStatus =
             (persistedState as PlayerState).playerStatus === PlayerStatus.PLAY
               ? PlayerStatus.PAUSE
-              : (persistedState as PlayerState).playerStatus,
-        };
+              : (persistedState as PlayerState).playerStatus;
+        }
+
+        return mergedState;
       },
     }),
   );
