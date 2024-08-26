@@ -63,6 +63,7 @@ jobs:
           if [[ -n $(git status --porcelain) ]];
           then
             echo "git is dirty, make sure you ran the gen script"
+            git status --porcelain
             exit 1;
           fi
 
