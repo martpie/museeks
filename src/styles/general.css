@@ -61,22 +61,35 @@ strong {
 }
 
 /* App wrapper */
-:global #wrap {
+#wrap {
   height: 100vh;
 }
 
-/**
- * Generic class that can be used on call-to-actions to show the interactibility
- * of an element
- */
-:global [data-museeks-action] {
+/* Generic class that can be used on call-to-actions to show the interactibility of an element */
+[data-museeks-action] {
   transition: transform 0.1s ease-in-out;
 }
 
-:global [data-museeks-action]:hover {
+[data-museeks-action]:hover {
   transform: scale(1.2);
 }
 
-:global [data-museeks-action]:active {
+[data-museeks-action]:active {
   transform: scale(1);
+}
+
+/* Various CSS utils to reset styles */
+.noPadding {
+  padding: 0;
+}
+
+.noMargin {
+  margin: 0;
+}
+
+.reset {
+  border: 0;
+  background-color: inherit;
+  border-radius: 0;
+  color: inherit;
 }

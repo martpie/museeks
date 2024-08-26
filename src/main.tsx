@@ -20,7 +20,7 @@ import router from './views/router';
 */
 import 'font-awesome/css/font-awesome.css';
 import 'normalize.css/normalize.css';
-import './styles/main.module.css';
+import './styles/general.css';
 
 /*
 |--------------------------------------------------------------------------
