@@ -11,12 +11,18 @@ export default function useFilteredTracks(tracks: Track[]): Track[] {
   const sortOrder = useLibraryStore((state) => state.sortOrder);
 
   // Filter and sort TracksList
-  // sorting being a costly operation, do it after filtering
-  const filteredTracks = useMemo(
-    () =>
-      sortTracks(filterTracks(tracks, search), SORT_ORDERS[sortBy], sortOrder),
-    [tracks, search, sortBy, sortOrder],
+  // sorting being a costly operation, do it after filtering, but we still cache
+  // search results.
+
+  const searchedTracks = useMemo(
+    () => filterTracks(tracks, search),
+    [tracks, search],
   );
 
-  return filteredTracks;
+  const sortedTracks = useMemo(
+    () => sortTracks(searchedTracks, SORT_ORDERS[sortBy], sortOrder),
+    [searchedTracks, sortBy, sortOrder],
+  );
+
+  return sortedTracks;
 }
