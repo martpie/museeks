@@ -1,10 +1,10 @@
 import type { SortBy, SortOrder, Track } from '../generated/typings';
 import type { Path } from '../types/museeks';
 
-import { stripAccents } from './utils-id3';
+import { stripAccents } from './utils-library';
 
-// For perforances reasons, otherwise _.orderBy will perform weird check
-// the is far more resource/time impactful
+// For perforances reasons, otherwise _.orderBy will perform weird checks
+// that are far more resource/time impactful
 const getArtist = (t: Track): string =>
   stripAccents(t.artists.toString().toLowerCase());
 const getGenre = (t: Track): string =>

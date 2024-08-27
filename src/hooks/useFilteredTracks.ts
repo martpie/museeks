@@ -2,8 +2,7 @@ import { useMemo } from 'react';
 
 import type { Track } from '../generated/typings';
 import SORT_ORDERS from '../lib/sort-orders';
-import { stripAccents } from '../lib/utils-id3';
-import { filterTracks, sortTracks } from '../lib/utils-library';
+import { filterTracks, sortTracks, stripAccents } from '../lib/utils-library';
 import useLibraryStore from '../stores/useLibraryStore';
 
 export default function useFilteredTracks(tracks: Track[]): Track[] {

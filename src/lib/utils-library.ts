@@ -4,7 +4,6 @@ import type { Track } from '../generated/typings';
 
 import { parseDuration } from '../hooks/useFormattedDuration';
 import type { SortTuple } from './sort-orders';
-import { stripAccents } from './utils-id3';
 
 /**
  * Filter an array of tracks by string
@@ -38,5 +37,25 @@ export const getStatus = (tracks: Track[]): string => {
   const status = parseDuration(
     tracks.map((d) => d.duration).reduce((a, b) => a + b, 0),
   );
-  return `${tracks.length} tracks, ${status}`;
+  return `${tracks.length} track${tracks.length !== 1 ? 's' : ''}, ${status}`;
 };
+
+/**
+ * Strip accent from a string and lowercase them. From https://jsperf.com/strip-accents
+ * Eventually, replace this by node-diacriticatics or something, but should be good enough for now
+ */
+export const stripAccents = (str: string): string => {
+  const split = ACCENTS.split('').join('|');
+  const reg = new RegExp(`(${split})`, 'g');
+
+  function replacement(a: string) {
+    return ACCENT_REPLACEMENTS[ACCENTS.indexOf(a)] || '';
+  }
+
+  return str.replace(reg, replacement).toLowerCase();
+};
+
+const ACCENTS =
+  'ÀÁÂÃÄÅĄĀàáâãäåąāÒÓÔÕÕÖØòóôõöøÈÉÊËĘĒèéêëðęēÇĆČçćčÐÌÍÎÏĪìíîïīÙÚÛÜŪùúûüūÑŅñņŠŚšśŸÿýŽŹŻžźżŁĻłļŃŅńņàáãảạăằắẳẵặâầấẩẫậèéẻẽẹêềếểễệđùúủũụưừứửữựòóỏõọôồốổỗộơờớởỡợìíỉĩịäëïîüûñçýỳỹỵỷğışĞİŞĢģĶķ';
+const ACCENT_REPLACEMENTS =
+  'AAAAAAAAaaaaaaaaOOOOOOOooooooEEEEEEeeeeeeeCCCcccDIIIIIiiiiiUUUUUuuuuuNNnnSSssYyyZZZzzzLLllNNnnaaaaaaaaaaaaaaaaaeeeeeeeeeeeduuuuuuuuuuuoooooooooooooooooiiiiiaeiiuuncyyyyygisGISGgKk';
