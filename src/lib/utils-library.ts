@@ -1,9 +1,9 @@
 import orderBy from 'lodash/orderBy';
 
-import type { Track } from '../generated/typings';
+import type { SortOrder, Track } from '../generated/typings';
 
 import { parseDuration } from '../hooks/useFormattedDuration';
-import type { SortTuple } from './sort-orders';
+import type { SortConfig } from './sort-orders';
 
 /**
  * Filter an array of tracks by string
@@ -25,9 +25,14 @@ export const filterTracks = (tracks: Track[], search: string): Track[] => {
 /**
  * Sort an array of tracks (alias to lodash.orderby)
  */
-export const sortTracks = (tracks: Track[], sort: SortTuple): Track[] => {
-  const [columns, order] = sort;
-  return orderBy<Track>(tracks, columns, order);
+export const sortTracks = (
+  tracks: Track[],
+  sortBy: SortConfig,
+  sortOrder: SortOrder,
+): Track[] => {
+  // The first column is sorted either asc or desc, but the rest is always asc
+  const firstOrder = sortOrder === 'Asc' ? 'asc' : 'desc';
+  return orderBy<Track>(tracks, sortBy, [firstOrder]);
 };
 
 /**

@@ -14,7 +14,7 @@ export default function useFilteredTracks(tracks: Track[]): Track[] {
   // sorting being a costly operation, do it after filtering
   const filteredTracks = useMemo(
     () =>
-      sortTracks(filterTracks(tracks, search), SORT_ORDERS[sortBy][sortOrder]),
+      sortTracks(filterTracks(tracks, search), SORT_ORDERS[sortBy], sortOrder),
     [tracks, search, sortBy, sortOrder],
   );
 
