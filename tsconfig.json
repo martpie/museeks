@@ -21,7 +21,10 @@
     "noFallthroughCasesInSwitch": true,
 
     /* Experimental */
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+
+    /* Plugins */
+    "plugins": [{ "name": "typescript-plugin-css-modules" }]
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]
