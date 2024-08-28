@@ -47,20 +47,30 @@ export const getStatus = (tracks: Track[]): string => {
 
 /**
  * Strip accent from a string and lowercase them. From https://jsperf.com/strip-accents
- * Eventually, replace this by node-diacriticatics or something, but should be good enough for now
+ * Intentionally not idiomatic, it needs to be *fast*.
  */
 export const stripAccents = (str: string): string => {
-  const split = ACCENTS.split('').join('|');
-  const reg = new RegExp(`(${split})`, 'g');
+  let newStr = '';
 
-  function replacement(a: string) {
-    return ACCENT_REPLACEMENTS[ACCENTS.indexOf(a)] || '';
+  for (let i = 0; i < str.length; i++) {
+    if (ACCENT_MAP.has(str[i])) {
+      newStr += ACCENT_MAP.get(str[i]);
+    } else {
+      newStr += str[i];
+    }
   }
 
-  return str.replace(reg, replacement).toLowerCase();
+  return newStr.toLowerCase();
 };
 
 const ACCENTS =
   'ÀÁÂÃÄÅĄĀàáâãäåąāÒÓÔÕÕÖØòóôõöøÈÉÊËĘĒèéêëðęēÇĆČçćčÐÌÍÎÏĪìíîïīÙÚÛÜŪùúûüūÑŅñņŠŚšśŸÿýŽŹŻžźżŁĻłļŃŅńņàáãảạăằắẳẵặâầấẩẫậèéẻẽẹêềếểễệđùúủũụưừứửữựòóỏõọôồốổỗộơờớởỡợìíỉĩịäëïîüûñçýỳỹỵỷğışĞİŞĢģĶķ';
+
 const ACCENT_REPLACEMENTS =
   'AAAAAAAAaaaaaaaaOOOOOOOooooooEEEEEEeeeeeeeCCCcccDIIIIIiiiiiUUUUUuuuuuNNnnSSssYyyZZZzzzLLllNNnnaaaaaaaaaaaaaaaaaeeeeeeeeeeeduuuuuuuuuuuoooooooooooooooooiiiiiaeiiuuncyyyyygisGISGgKk';
+
+const ACCENT_MAP = new Map();
+
+for (let i = 0; i < ACCENTS.length; i++) {
+  ACCENT_MAP.set(ACCENTS[i], ACCENT_REPLACEMENTS[i]);
+}
