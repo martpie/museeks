@@ -199,11 +199,15 @@ impl DB {
     }
 
     /** Create a playlist given a name and a set of track IDs */
-    pub async fn create_playlist(&self, name: String, tracks: Vec<String>) -> AnyResult<Playlist> {
+    pub async fn create_playlist(
+        &self,
+        name: String,
+        tracks_ids: Vec<String>,
+    ) -> AnyResult<Playlist> {
         let playlist = Playlist {
             _id: uuid::Uuid::new_v4().to_string(),
             name,
-            tracks,
+            tracks: tracks_ids,
             import_path: None,
         };
 
@@ -596,12 +600,8 @@ async fn get_playlist(db: State<'_, DB>, id: String) -> AnyResult<Playlist> {
 }
 
 #[tauri::command]
-async fn create_playlist(
-    db: State<'_, DB>,
-    name: String,
-    tracks: Vec<String>,
-) -> AnyResult<Playlist> {
-    db.create_playlist(name, tracks).await
+async fn create_playlist(db: State<'_, DB>, name: String, ids: Vec<String>) -> AnyResult<Playlist> {
+    db.create_playlist(name, ids).await
 }
 
 #[tauri::command]

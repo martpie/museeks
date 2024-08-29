@@ -87,8 +87,8 @@ function PlayerEvents() {
 
     return function cleanup() {
       player.getAudio().removeEventListener('play', notifyTrackChange);
-      player.getAudio().removeEventListener('ended', playerAPI.next);
       player.getAudio().removeEventListener('error', handleAudioError);
+      player.getAudio().removeEventListener('ended', playerAPI.next);
     };
   }, [toastsAPI, playerAPI]);
 

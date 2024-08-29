@@ -52,13 +52,10 @@ const database = {
     });
   },
 
-  async createPlaylist(
-    name: string,
-    tracksPath: Array<string>,
-  ): Promise<Playlist> {
+  async createPlaylist(name: string, ids: Array<string>): Promise<Playlist> {
     return invoke('plugin:database|create_playlist', {
       name,
-      tracksPath,
+      ids,
     });
   },
 

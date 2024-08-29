@@ -16,7 +16,7 @@ const useToastsStore = createStore<ToastsState>((set, get) => ({
   toasts: [],
 
   api: {
-    add: (type, content, duration = 3000) => {
+    add: (type, content, duration = 5000) => {
       const id = nanoid();
       const toast: Toast = { _id: id, type, content };
 
