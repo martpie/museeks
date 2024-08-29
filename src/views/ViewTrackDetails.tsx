@@ -12,6 +12,7 @@ import type { Track } from '../generated/typings';
 import database from '../lib/database';
 import { useLibraryAPI } from '../stores/useLibraryStore';
 
+import Separator from '../elements/Separator/Separator';
 import appStyles from './Root.module.css';
 import styles from './ViewTrackDetails.module.css';
 import type { LoaderData } from './router';
@@ -111,16 +112,13 @@ export default function ViewTrackDetails() {
             }}
           />
         </Setting.Section>
-        {/* <div className={styles.detailsCover}>
-          {coverSrc === null && <img src={Placeholder} alt='Cover' width='150' height='150' />}
-          {coverSrc !== null && <img src={coverSrc} alt='Cover' width='150' height='150' />}
-        </div> */}
         <div className={styles.detailsActions}>
           <Button type="button" onClick={handleCancel}>
             Cancel
           </Button>
           <Button type="submit">Save</Button>
         </div>
+        <Separator />
         <p>
           Clicking &quot;save&quot; will only update the library data, and will
           not save it to the original file.

@@ -23,9 +23,7 @@ export default function ViewRoot() {
     SettingsAPI.check()
       // Show the app once everything is loaded
       .then(() => getCurrentWindow())
-      .then((window) => {
-        window.show();
-      });
+      .then((window) => window.show());
   }, []);
 
   return (

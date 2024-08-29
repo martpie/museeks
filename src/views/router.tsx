@@ -18,6 +18,7 @@ import ViewSettingsAbout from './ViewSettingsAbout';
 import ViewSettingsAudio from './ViewSettingsAudio';
 import ViewSettingsLibrary from './ViewSettingsLibrary';
 import ViewSettingsUI from './ViewSettingsUI';
+import ViewTrackDetails from './ViewTrackDetails';
 // import ViewTrackDetails from "./ViewTrackDetails";
 
 const router = createHashRouter([
@@ -75,11 +76,11 @@ const router = createHashRouter([
           },
         ],
       },
-      // {
-      //   path: "details/:trackID",
-      //   element: <ViewTrackDetails />,
-      //   loader: ViewTrackDetails.loader,
-      // },
+      {
+        path: 'details/:trackID',
+        element: <ViewTrackDetails />,
+        loader: ViewTrackDetails.loader,
+      },
     ],
   },
 ]);

@@ -28,6 +28,7 @@
     "database:allow-import-tracks-to-library",
     "database:allow-get-all-tracks",
     "database:allow-get-tracks",
+    "database:allow-update-track",
     "database:allow-remove-tracks",
     "database:allow-get-all-playlists",
     "database:allow-get-playlist",

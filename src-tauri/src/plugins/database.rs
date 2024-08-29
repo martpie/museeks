@@ -113,6 +113,20 @@ impl DB {
         }
     }
 
+    /**
+     * Get tracks (and their content) given a set of document IDs
+     */
+    pub async fn update_track(&self, track: Track) -> AnyResult<Track> {
+        let track_id = &track._id.clone();
+
+        match track.overwrite_into_async(&track_id, &self.tracks).await {
+            Ok(doc) => Ok(doc.contents),
+            Err(_) => Err(MuseeksError::Library {
+                message: "Failed to update track".into(),
+            }),
+        }
+    }
+
     /** Delete multiple tracks by ID */
     pub async fn remove_tracks(&self, ids: &Vec<String>) -> AnyResult<()> {
         let tracks = self.tracks_collection().get_multiple(ids).await?;
@@ -558,6 +572,11 @@ async fn get_tracks(db: State<'_, DB>, ids: Vec<String>) -> AnyResult<Vec<Track>
 }
 
 #[tauri::command]
+async fn update_track(db: State<'_, DB>, track: Track) -> AnyResult<Track> {
+    db.update_track(track).await
+}
+
+#[tauri::command]
 async fn remove_tracks(db: State<'_, DB>, ids: Vec<String>) -> AnyResult<()> {
     db.remove_tracks(&ids).await
 }
@@ -710,6 +729,7 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
             get_tracks,
             remove_tracks,
             get_tracks,
+            update_track,
             get_all_playlists,
             get_playlist,
             get_playlist,

@@ -20,9 +20,10 @@ const database = {
     });
   },
 
-  // TODO:
-  async updateTrack(_track: Track) {
-    throw new Error('Not implemented');
+  async updateTrack(track: Track): Promise<Track> {
+    return invoke('plugin:database|update_track', {
+      track,
+    });
   },
 
   async removeTracks(trackIDs: Array<string>): Promise<Array<Track>> {
@@ -51,10 +52,13 @@ const database = {
     });
   },
 
-  async createPlaylist(name: string, tracks: Array<string>): Promise<Playlist> {
+  async createPlaylist(
+    name: string,
+    tracksPath: Array<string>,
+  ): Promise<Playlist> {
     return invoke('plugin:database|create_playlist', {
       name,
-      tracks,
+      tracksPath,
     });
   },
 
