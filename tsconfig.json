@@ -16,9 +16,13 @@
 
     /* Linting */
     "strict": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitOverride": true,
+    "noImplicitReturns": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true,
+    "noUncheckedIndexedAccess": false /* would be cool, but it does not play well with CSS modules */,
+    "noPropertyAccessFromIndexSignature": false /* bad */,
 
     /* Experimental */
     "experimentalDecorators": true,
