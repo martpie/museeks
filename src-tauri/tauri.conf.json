@@ -9,23 +9,7 @@
     "frontendDist": "../dist"
   },
   "app": {
-    "windows": [
-      {
-        "label": "main",
-        "title": "Museeks",
-        "visible": false,
-        "hiddenTitle": true,
-        "titleBarStyle": "Overlay",
-        "height": 550,
-        "minHeight": 550,
-        "width": 900,
-        "minWidth": 900,
-        "fullscreen": false,
-        "resizable": true,
-        "dragDropEnabled": false,
-        "zoomHotkeysEnabled": true
-      }
-    ],
+    "windows": [],
     "security": {
       "assetProtocol": {
         "enable": true,

@@ -3,7 +3,7 @@
  */
 use log::info;
 use std::{ffi::OsStr, path::PathBuf, time::Instant};
-use tauri::{Runtime, WebviewWindow};
+use tauri::{Runtime, Theme, WebviewWindow};
 use walkdir::WalkDir;
 
 /**
@@ -104,4 +104,15 @@ pub fn show_window<R: Runtime>(window: &WebviewWindow<R>) {
     window.maximize().unwrap();
     window.show().unwrap();
     window.set_focus().unwrap();
+}
+
+/**
+ * Return the right window theme based on a theme name
+ */
+pub fn get_window_theme(theme_name: &str) -> Option<Theme> {
+    match theme_name {
+        "light" => Some(Theme::Light),
+        "dark" => Some(Theme::Dark),
+        _ => Some(Theme::Light),
+    }
 }

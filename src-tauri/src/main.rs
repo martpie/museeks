@@ -4,9 +4,10 @@
 mod libs;
 mod plugins;
 
-use libs::utils::show_window;
+use libs::utils::{get_window_theme, show_window};
 use log::LevelFilter;
-use tauri::Manager;
+use plugins::config::ConfigManager;
+use tauri::{Manager, TitleBarStyle, WebviewUrl, WebviewWindowBuilder};
 use tauri_plugin_log::fern::colors::ColoredLevelConfig;
 use tauri_plugin_log::{Target, TargetKind};
 use tauri_plugin_window_state::StateFlags;
@@ -56,8 +57,25 @@ async fn main() {
                 .build(),
         )
         // TODO: tauri-plugin-theme to update the native theme at runtime
-        .setup(|_app| {
-            // :]
+        .setup(|app| {
+            let config_manager = app.state::<ConfigManager>();
+            let conf = config_manager.get()?;
+
+            // We intentionally create the window ourselves to set the window theme to the right value
+            WebviewWindowBuilder::new(app, "main", WebviewUrl::App("index.html".into()))
+                .title("Museeks")
+                .visible(false)
+                .theme(get_window_theme(&conf.theme))
+                .hidden_title(true)
+                .title_bar_style(TitleBarStyle::Overlay)
+                .inner_size(900.0, 550.0)
+                .min_inner_size(900.0, 550.0)
+                .fullscreen(false)
+                .resizable(true)
+                .disable_drag_drop_handler() // TODO: Windows drag-n-drop on windows does not work :| https://github.com/tauri-apps/wry/issues/904
+                .zoom_hotkeys_enabled(true)
+                .build()?;
+
             Ok(())
         })
         .run(tauri::generate_context!())

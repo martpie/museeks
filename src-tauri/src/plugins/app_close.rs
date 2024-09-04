@@ -24,7 +24,7 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
                     _ => {}
                 });
             }
-            // TODO: Implement the same for Windows and Linux if needed.
+
             #[cfg(not(target_os = "macos"))]
             drop(win); // Suppress warning about unused variable.
         })
