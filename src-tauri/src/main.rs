@@ -7,7 +7,7 @@ mod plugins;
 use libs::utils::{get_window_theme, show_window};
 use log::LevelFilter;
 use plugins::config::ConfigManager;
-use tauri::{Manager, TitleBarStyle, WebviewUrl, WebviewWindowBuilder};
+use tauri::{Manager, WebviewUrl, WebviewWindowBuilder};
 use tauri_plugin_log::fern::colors::ColoredLevelConfig;
 use tauri_plugin_log::{Target, TargetKind};
 use tauri_plugin_window_state::StateFlags;
@@ -62,20 +62,26 @@ async fn main() {
             let conf = config_manager.get()?;
 
             // We intentionally create the window ourselves to set the window theme to the right value
-            WebviewWindowBuilder::new(app, "main", WebviewUrl::App("index.html".into()))
-                .title("Museeks")
-                .visible(false)
-                .theme(get_window_theme(&conf.theme))
-                .hidden_title(true)
-                .title_bar_style(TitleBarStyle::Overlay)
-                .inner_size(900.0, 550.0)
-                .min_inner_size(900.0, 550.0)
-                .fullscreen(false)
-                .resizable(true)
-                .disable_drag_drop_handler() // TODO: Windows drag-n-drop on windows does not work :| https://github.com/tauri-apps/wry/issues/904
-                .zoom_hotkeys_enabled(true)
-                .build()?;
+            let window_builder =
+                WebviewWindowBuilder::new(app, "main", WebviewUrl::App("index.html".into()))
+                    .title("Museeks")
+                    .visible(false)
+                    .theme(get_window_theme(&conf.theme))
+                    .inner_size(900.0, 550.0)
+                    .min_inner_size(900.0, 550.0)
+                    .fullscreen(false)
+                    .resizable(true)
+                    .disable_drag_drop_handler() // TODO: Windows drag-n-drop on windows does not work :| https://github.com/tauri-apps/wry/issues/904
+                    .zoom_hotkeys_enabled(true);
 
+            #[cfg(target_os = "macos")]
+            {
+                window_builder = window_builder
+                    .hidden_title(true)
+                    .title_bar_style(tauri::TitleBarStyle::Overlay);
+            }
+
+            window_builder.build()?;
             Ok(())
         })
         .run(tauri::generate_context!())
