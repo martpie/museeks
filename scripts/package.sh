@@ -11,7 +11,7 @@ rm -rf ./build
 
 # Make sure we have the latest build
 rm -rf ./node_modules
-bun install
+bun install --frozen-lockfile
 
 # Package the whole application
 bun tauri build
