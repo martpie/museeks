@@ -64,6 +64,14 @@ export default function VolumeControl() {
     [styles.visible]: showVolume,
   });
 
+  const controlClasses = cx(controlStyles.control, {
+    [controlStyles.faded]: muted,
+  });
+
+  const sliderClasses = cx(styles.sliderRoot, {
+    [controlStyles.faded]: muted,
+  });
+
   return (
     <div
       className={styles.volumeControlContainer}
@@ -72,7 +80,7 @@ export default function VolumeControl() {
     >
       <button
         type="button"
-        className={controlStyles.control}
+        className={controlClasses}
         title="Volume"
         onClick={mute}
         data-museeks-action
@@ -81,7 +89,7 @@ export default function VolumeControl() {
       </button>
       <div className={volumeClasses}>
         <Slider.Root
-          className={styles.sliderRoot}
+          className={sliderClasses}
           value={[unsmoothifyVolume(volume)]}
           onKeyDown={stopPropagation}
           onValueChange={setPlayerVolume}
