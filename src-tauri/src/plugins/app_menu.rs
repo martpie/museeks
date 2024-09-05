@@ -139,7 +139,6 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
                         .build(app_handle)
                         .unwrap(),
                 )
-                .separator()
                 .build()
                 .unwrap();
 
