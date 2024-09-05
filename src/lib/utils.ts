@@ -6,12 +6,12 @@ import useToastsStore from '../stores/useToastsStore';
  * Friendly logging for caught errors
  * https://kentcdodds.com/blog/get-a-catch-block-error-message-with-typescript
  */
-export const logAndNotifyError = (
+export function logAndNotifyError(
   err: unknown,
   pre?: string,
   isWarning = false,
   silent = false,
-): void => {
+): void {
   let message;
   if (err instanceof Error) message = err.message;
   else message = String(err);
@@ -29,4 +29,4 @@ export const logAndNotifyError = (
   if (silent === false) {
     useToastsStore.getState().api.add('danger', message);
   }
-};
+}

@@ -16,15 +16,15 @@ interface UpdateCheckOptions {
   silentFail?: boolean;
 }
 
-const setTheme = async (themeID: string): Promise<void> => {
+async function setTheme(themeID: string): Promise<void> {
   await config.set('theme', themeID); // TODO: own plugin?
   await checkTheme();
-};
+}
 
 /**
  * Apply theme colors to  the BrowserWindow
  */
-const applyThemeToUI = async (theme: Theme): Promise<void> => {
+async function applyThemeToUI(theme: Theme): Promise<void> {
   // TODO think about variables validity?
   // TODO: update the window theme dynamically
 
@@ -32,9 +32,9 @@ const applyThemeToUI = async (theme: Theme): Promise<void> => {
   Object.entries(theme.variables).forEach(([property, value]) => {
     root.style.setProperty(property, value);
   });
-};
+}
 
-const checkTheme = async (): Promise<void> => {
+async function checkTheme(): Promise<void> {
   // TODO: Tauri offers no API to query the system system preference,getCurrent().theme()
   // that is used when a window is created with no assigned theme.
   // So we are bypassing the user choice for now.
@@ -47,30 +47,28 @@ const checkTheme = async (): Promise<void> => {
   }
 
   applyThemeToUI(theme);
-};
+}
 
-const setTracksDensity = async (
+async function setTracksDensity(
   density: Config['track_view_density'],
-): Promise<void> => {
+): Promise<void> {
   await config.set('track_view_density', density);
   router.revalidate();
-};
+}
 
 /**
  * Check and enable sleep blocker if needed
  */
-const checkSleepBlocker = async (): Promise<void> => {
+async function checkSleepBlocker(): Promise<void> {
   if (await config.get('sleepblocker')) {
     invoke('plugin:sleepblocker|enable');
   }
-};
+}
 
 /**
  * Check if a new release is available
  */
-const checkForUpdate = async (
-  options: UpdateCheckOptions = {},
-): Promise<void> => {
+async function checkForUpdate(options: UpdateCheckOptions = {}): Promise<void> {
   const shouldCheck = await config.get('auto_update_checker');
 
   if (!shouldCheck) {
@@ -121,56 +119,56 @@ const checkForUpdate = async (
       options.silentFail,
     );
   }
-};
+}
 
 /**
  * Init all settings
  */
-const check = async (): Promise<void> => {
+async function check(): Promise<void> {
   await Promise.allSettled([
     checkTheme(),
     checkSleepBlocker(),
     checkForUpdate({ silentFail: true }),
   ]);
-};
+}
 
 /**
  * Toggle sleep blocker
  */
-const toggleSleepBlocker = async (value: boolean): Promise<void> => {
+async function toggleSleepBlocker(value: boolean): Promise<void> {
   if (value === true) {
     await invoke('plugin:sleepblocker|enable');
   } else {
     await invoke('plugin:sleepblocker|disable');
   }
   router.revalidate();
-};
+}
 
 /**
  * Set the default view of the app
  */
-const setDefaultView = async (defaultView: DefaultView): Promise<void> => {
+async function setDefaultView(defaultView: DefaultView): Promise<void> {
   await invoke('plugin:default-view|set', {
     defaultView,
   });
   router.revalidate();
-};
+}
 
 /**
  * Toggle update check on startup
  */
-const toggleAutoUpdateChecker = async (value: boolean): Promise<void> => {
+async function toggleAutoUpdateChecker(value: boolean): Promise<void> {
   await config.set('auto_update_checker', value);
   router.revalidate();
-};
+}
 
 /**
  * Toggle native notifications display
  */
-const toggleDisplayNotifications = async (value: boolean): Promise<void> => {
+async function toggleDisplayNotifications(value: boolean): Promise<void> {
   await config.set('notifications', value);
   router.revalidate();
-};
+}
 
 // Should we use something else to harmonize between zustand and non-store APIs?
 const SettingsAPI = {

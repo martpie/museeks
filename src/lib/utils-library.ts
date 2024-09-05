@@ -8,7 +8,7 @@ import type { SortConfig } from './sort-orders';
 /**
  * Filter an array of tracks by string
  */
-export const filterTracks = (tracks: Track[], search: string): Track[] => {
+export function filterTracks(tracks: Track[], search: string): Track[] {
   // Avoid performing useless searches
   if (search.length === 0) return tracks;
 
@@ -20,36 +20,36 @@ export const filterTracks = (tracks: Track[], search: string): Track[] => {
       stripAccents(track.genres.toString().toLowerCase()).includes(search) ||
       stripAccents(track.title.toLowerCase()).includes(search),
   );
-};
+}
 
 /**
  * Sort an array of tracks (alias to lodash.orderby)
  */
-export const sortTracks = (
+export function sortTracks(
   tracks: Track[],
   sortBy: SortConfig,
   sortOrder: SortOrder,
-): Track[] => {
+): Track[] {
   // The first column is sorted either asc or desc, but the rest is always asc
   const firstOrder = sortOrder === 'Asc' ? 'asc' : 'desc';
   return orderBy<Track>(tracks, sortBy, [firstOrder]);
-};
+}
 
 /**
  * Format a list of tracks to a nice status
  */
-export const getStatus = (tracks: Track[]): string => {
+export function getStatus(tracks: Track[]): string {
   const status = parseDuration(
     tracks.map((d) => d.duration).reduce((a, b) => a + b, 0),
   );
   return `${tracks.length} track${tracks.length !== 1 ? 's' : ''}, ${status}`;
-};
+}
 
 /**
  * Strip accent from a string and lowercase them. From https://jsperf.com/strip-accents
  * Intentionally not idiomatic, it needs to be *fast*.
  */
-export const stripAccents = (str: string): string => {
+export function stripAccents(str: string): string {
   let newStr = '';
 
   for (let i = 0; i < str.length; i++) {
@@ -61,7 +61,7 @@ export const stripAccents = (str: string): string => {
   }
 
   return newStr.toLowerCase();
-};
+}
 
 const ACCENTS =
   'ÀÁÂÃÄÅĄĀàáâãäåąāÒÓÔÕÕÖØòóôõöøÈÉÊËĘĒèéêëðęēÇĆČçćčÐÌÍÎÏĪìíîïīÙÚÛÜŪùúûüūÑŅñņŠŚšśŸÿýŽŹŻžźżŁĻłļŃŅńņàáãảạăằắẳẵặâầấẩẫậèéẻẽẹêềếểễệđùúủũụưừứửữựòóỏõọôồốổỗộơờớởỡợìíỉĩịäëïîüûñçýỳỹỵỷğışĞİŞĢģĶķ';

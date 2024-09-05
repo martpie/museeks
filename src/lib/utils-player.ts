@@ -4,7 +4,7 @@ import type { Track } from '../generated/typings';
  * Shuffle an array with a Player behavior in mind:
  * the currently-playing track should remain the same,
  */
-export const shuffleTracks = (tracks: Track[], index: number): Track[] => {
+export function shuffleTracks(tracks: Track[], index: number): Track[] {
   const shuffledTracks = [...tracks];
   const currentTrack = shuffledTracks.splice(index, 1)[0];
 
@@ -24,4 +24,4 @@ export const shuffleTracks = (tracks: Track[], index: number): Track[] => {
   shuffledTracks.unshift(currentTrack);
 
   return [...shuffledTracks];
-};
+}
