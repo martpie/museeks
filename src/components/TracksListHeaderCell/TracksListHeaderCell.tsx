@@ -39,13 +39,14 @@ export default function TracksListHeaderCell(props: Props) {
     </React.Fragment>
   );
 
-  if (sortBy) {
-    return (
-      <button type="button" className={classes} onClick={sort}>
-        {content}
-      </button>
-    );
-  }
-
-  return <div className={classes}>{content}</div>;
+  return (
+    <button
+      type="button"
+      className={classes}
+      disabled={sortBy === null}
+      onClick={sort}
+    >
+      {content}
+    </button>
+  );
 }
