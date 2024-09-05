@@ -75,13 +75,14 @@ async fn main() {
                     .zoom_hotkeys_enabled(true);
 
             #[cfg(target_os = "macos")]
-            {
-                window_builder = window_builder
-                    .hidden_title(true)
-                    .title_bar_style(tauri::TitleBarStyle::Overlay);
-            }
+            window_builder
+                .hidden_title(true)
+                .title_bar_style(tauri::TitleBarStyle::Overlay)
+                .build()?;
 
+            #[cfg(not(target_os = "macos"))]
             window_builder.build()?;
+
             Ok(())
         })
         .run(tauri::generate_context!())
