@@ -1,0 +1,22 @@
+.libraryFolders {
+  list-style: none;
+  padding: 4px 8px;
+  margin: 0;
+  font-family: monospace;
+  border: solid 1px var(--border-color);
+  overflow-x: auto;
+  white-space: pre;
+  width: 150%;
+  /* overflow-x: auto;
+  white-space: nowrap; */
+  /* overflow: hidden; */
+  /* white-space: pre; */
+}
+
+.libraryFoldersRemove {
+  color: red;
+  border: none;
+  background: transparent;
+  appearance: none;
+  font-size: 16px;
+}
