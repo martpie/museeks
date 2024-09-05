@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from 'react';
+import { useCallback } from 'react';
 import {
   Link,
   type LoaderFunctionArgs,
@@ -12,10 +12,10 @@ import * as ViewMessage from '../elements/ViewMessage/ViewMessage';
 import usePlayingTrackID from '../hooks/usePlayingTrackID';
 import config from '../lib/config';
 import database from '../lib/database';
-import { filterTracks } from '../lib/utils-library';
 import PlaylistsAPI from '../stores/PlaylistsAPI';
 import useLibraryStore from '../stores/useLibraryStore';
 
+import useFilteredTracks from '../hooks/useFilteredTracks';
 import type { LoaderData } from './router';
 
 export default function ViewPlaylistDetails() {
@@ -25,10 +25,7 @@ export default function ViewPlaylistDetails() {
   const trackPlayingID = usePlayingTrackID();
 
   const search = useLibraryStore((state) => state.search);
-  const filteredTracks = useMemo(
-    () => filterTracks(playlistTracks, search),
-    [playlistTracks, search],
-  );
+  const filteredTracks = useFilteredTracks(playlistTracks);
 
   const onReorder = useCallback(
     (
@@ -89,7 +86,7 @@ export default function ViewPlaylistDetails() {
       type="playlist"
       reorderable={true}
       onReorder={onReorder}
-      tracks={playlistTracks}
+      tracks={filteredTracks}
       tracksDensity={tracksDensity}
       trackPlayingID={trackPlayingID}
       playlists={playlists}

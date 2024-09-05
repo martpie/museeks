@@ -1,28 +1,46 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 
 import type { Track } from '../generated/typings';
 import SORT_ORDERS from '../lib/sort-orders';
 import { filterTracks, sortTracks, stripAccents } from '../lib/utils-library';
-import useLibraryStore from '../stores/useLibraryStore';
+import useLibraryStore, { useLibraryAPI } from '../stores/useLibraryStore';
 
-export default function useFilteredTracks(tracks: Track[]): Track[] {
+/**
+ * Filter and Sort a list of tracks depending on the user preferences and search
+ * IMPORTANT: can only be used ONCE per view, as it has side effects
+ */
+export default function useFilteredTracks(
+  tracks: Track[],
+  enableSort = true,
+): Track[] {
   const search = useLibraryStore((state) => stripAccents(state.search));
   const sortBy = useLibraryStore((state) => state.sortBy);
   const sortOrder = useLibraryStore((state) => state.sortOrder);
+  const libraryAPI = useLibraryAPI();
 
-  // Filter and sort TracksList
-  // sorting being a costly operation, do it after filtering, but we still cache
-  // search results.
+  const filteredTracks = useMemo(() => {
+    let searchedTracks = filterTracks(tracks, search);
 
-  const searchedTracks = useMemo(
-    () => filterTracks(tracks, search),
-    [tracks, search],
-  );
+    if (enableSort) {
+      // sorting being a costly operation, do it after filtering, ignore it if not needed
+      searchedTracks = sortTracks(
+        searchedTracks,
+        SORT_ORDERS[sortBy],
+        sortOrder,
+      );
+    }
 
-  const sortedTracks = useMemo(
-    () => sortTracks(searchedTracks, SORT_ORDERS[sortBy], sortOrder),
-    [searchedTracks, sortBy, sortOrder],
-  );
+    return searchedTracks;
+  }, [tracks, search, sortBy, sortOrder, enableSort]);
 
-  return sortedTracks;
+  // Update the footer status based on the displayed tracks
+  useEffect(() => {
+    libraryAPI.setTracksStatus(filteredTracks);
+
+    return () => {
+      libraryAPI.setTracksStatus(null);
+    };
+  }, [filteredTracks, libraryAPI.setTracksStatus]);
+
+  return filteredTracks;
 }

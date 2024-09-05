@@ -10,6 +10,7 @@ import styles from './Footer.module.css';
 export default function Footer() {
   const refresh = useLibraryStore((state) => state.refresh);
   const refreshing = useLibraryStore((state) => state.refreshing);
+  const status = useLibraryStore((state) => state.tracksStatus);
 
   const getStatusContent = useCallback(() => {
     const { current, total } = refresh;
@@ -37,12 +38,8 @@ export default function Footer() {
       );
     }
 
-    // Else, return the amount of time for the library or the playlist depending
-    // of the route
-    // TODO: fix playlist view
-    return null;
-    // return <>{getStatus(library.tracks)}</>;
-  }, [refresh, refreshing]);
+    return status;
+  }, [refresh, refreshing, status]);
 
   return (
     <footer className={styles.footer}>

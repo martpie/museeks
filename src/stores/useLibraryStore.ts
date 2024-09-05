@@ -6,6 +6,7 @@ import database from '../lib/database';
 import { invalidate } from '../lib/query';
 import { logAndNotifyError } from '../lib/utils';
 
+import { getStatus } from '../lib/utils-library';
 import { createStore } from './store-helpers';
 import usePlayerStore from './usePlayerStore';
 import useToastsStore from './useToastsStore';
@@ -20,6 +21,7 @@ type LibraryState = {
     total: number;
   };
   highlightPlayingTrack: boolean;
+  tracksStatus: string;
   api: {
     search: (value: string) => void;
     sort: (sortBy: SortBy) => void;
@@ -32,6 +34,7 @@ type LibraryState = {
       fields: Pick<Track, 'title' | 'artists' | 'album' | 'genres'>,
     ) => Promise<void>;
     highlightPlayingTrack: (highlight: boolean) => void;
+    setTracksStatus: (status: Array<Track> | null) => void;
   };
 };
 
@@ -45,6 +48,7 @@ const useLibraryStore = createStore<LibraryState>((set, get) => ({
     total: 0,
   },
   highlightPlayingTrack: false, // hacky, fixme
+  tracksStatus: '',
 
   api: {
     /**
@@ -212,6 +216,12 @@ const useLibraryStore = createStore<LibraryState>((set, get) => ({
      */
     highlightPlayingTrack: (highlight: boolean): void => {
       set({ highlightPlayingTrack: highlight });
+    },
+
+    setTracksStatus: (tracks: Array<Track> | null): void => {
+      set({
+        tracksStatus: tracks !== null ? getStatus(tracks) : '',
+      });
     },
   },
 
