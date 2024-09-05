@@ -25,7 +25,7 @@ export default function ViewPlaylistDetails() {
   const trackPlayingID = usePlayingTrackID();
 
   const search = useLibraryStore((state) => state.search);
-  const filteredTracks = useFilteredTracks(playlistTracks);
+  const filteredTracks = useFilteredTracks(playlistTracks, false);
 
   const onReorder = useCallback(
     (
