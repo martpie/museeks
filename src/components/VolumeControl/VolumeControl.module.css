@@ -10,16 +10,19 @@
   top: 50%;
   transform: translateY(-50%);
   right: 100%;
-  display: none;
   padding: 10px 12px;
+  opacity: 0;
+  pointer-events: none;
+  transition: all .1s ease-in-out;
 
   &.visible {
-    display: block;
+    opacity: 1;
+    pointer-events: all;
   }
 }
 
 .sliderRoot {
-  --slider-height: 12px;
+  --slider-height: 10px;
 
   position: relative;
   display: flex;
