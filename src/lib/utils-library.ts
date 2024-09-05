@@ -2,6 +2,7 @@ import orderBy from 'lodash/orderBy';
 
 import type { SortOrder, Track } from '../generated/typings';
 
+import uniq from 'lodash/uniq';
 import { parseDuration } from '../hooks/useFormattedDuration';
 import type { SortConfig } from './sort-orders';
 
@@ -74,3 +75,18 @@ const ACCENT_MAP = new Map();
 for (let i = 0; i < ACCENTS.length; i++) {
   ACCENT_MAP.set(ACCENTS[i], ACCENT_REPLACEMENTS[i]);
 }
+
+/**
+ * Given multiple paths as string, remove duplicates or child paths in case on parent exist in the array
+ */
+export const removeRedundantFolders = (paths: Array<string>): Array<string> => {
+  return uniq(
+    paths.filter((path) => {
+      const isDuplicate = paths.some((otherPath) => {
+        return path.startsWith(otherPath) && path !== otherPath;
+      });
+
+      return !isDuplicate;
+    }),
+  );
+};

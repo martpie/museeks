@@ -49,7 +49,7 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
             let icon = Image::from_path(icon_path).unwrap();
 
             let about_metadata = AboutMetadataBuilder::new()
-                .version(version) // TODO: Automate all that?
+                .version(version)
                 .authors(Some(vec![package_info.authors.to_string()]))
                 .license("MIT".into())
                 .website("https://museeks.io".into())

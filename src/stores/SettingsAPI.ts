@@ -15,11 +15,11 @@ interface UpdateCheckOptions {
   silentFail?: boolean;
 }
 
-async function setTheme(themeID: string): Promise<void> {
+const setTheme = async (themeID: string): Promise<void> => {
   await config.set('theme', themeID);
   await applyThemeToUI(themeID);
   invalidate();
-}
+};
 
 /**
  * Apply theme colors to  the BrowserWindow

@@ -1,5 +1,4 @@
 // Stolen and adapted from https://github.com/tauri-apps/plugins-workspace/issues/999
-// TODO: make sure it works on Windows and Linux
 
 use std::process::Command;
 

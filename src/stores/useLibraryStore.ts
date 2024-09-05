@@ -6,7 +6,7 @@ import database from '../lib/database';
 import { invalidate } from '../lib/query';
 import { logAndNotifyError } from '../lib/utils';
 
-import { getStatus } from '../lib/utils-library';
+import { getStatus, removeRedundantFolders } from '../lib/utils-library';
 import { createStore } from './store-helpers';
 import usePlayerStore from './usePlayerStore';
 import useToastsStore from './useToastsStore';
@@ -26,6 +26,9 @@ type LibraryState = {
     search: (value: string) => void;
     sort: (sortBy: SortBy) => void;
     add: () => Promise<void>;
+    addLibraryFolder: () => Promise<void>;
+    removeLibraryFolder: (path: string) => Promise<void>;
+    refresh: () => Promise<void>;
     remove: (tracksIDs: string[]) => Promise<void>;
     reset: () => Promise<void>;
     setRefresh: (processed: number, total: number) => void;
@@ -110,6 +113,56 @@ const useLibraryStore = createStore<LibraryState>((set, get) => ({
           refresh: { current: 0, total: 0 },
         });
       }
+    },
+
+    refresh: async (): Promise<void> => {
+      try {
+        set({ refreshing: true });
+
+        const libraryFolders = await config.get('library_folders');
+        await database.importTracks(libraryFolders);
+
+        invalidate();
+      } catch (err) {
+        logAndNotifyError(err);
+      } finally {
+        set({
+          refreshing: false,
+          refresh: { current: 0, total: 0 },
+        });
+      }
+    },
+
+    addLibraryFolder: async (): Promise<void> => {
+      try {
+        const path = await open({
+          directory: true,
+        });
+
+        if (path == null) {
+          return;
+        }
+
+        const musicFolders = await config.get('library_folders');
+        const newFolders = removeRedundantFolders([
+          ...musicFolders,
+          path,
+        ]).sort();
+        await config.set('library_folders', newFolders);
+
+        invalidate();
+      } catch (err) {
+        logAndNotifyError(err);
+      }
+    },
+
+    removeLibraryFolder: async (path: string): Promise<void> => {
+      const musicFolders = await config.get('library_folders');
+      const index = musicFolders.indexOf(path);
+      musicFolders.splice(index, 1);
+      await config.set('library_folders', musicFolders);
+
+      invalidate();
     },
 
     setRefresh: (current: number, total: number) => {
@@ -218,46 +271,15 @@ const useLibraryStore = createStore<LibraryState>((set, get) => ({
       set({ highlightPlayingTrack: highlight });
     },
 
+    /**
+     * Manually set the footer content based on a list of tracks
+     */
     setTracksStatus: (tracks: Array<Track> | null): void => {
       set({
         tracksStatus: tracks !== null ? getStatus(tracks) : '',
       });
     },
   },
-
-  // Old code used to manage folders to be scanned, to be re-enabled one day
-  // case (types.LIBRARY_ADD_FOLDERS): { // TODO Redux -> move to a thunk
-  //   const { folders } = action.payload;
-  //   let musicFolders = window.MuseeksAPI.config.get('musicFolders');
-
-  //   // Check if we received folders
-  //   if (folders !== undefined) {
-  //     musicFolders = musicFolders.concat(folders);
-
-  //     // Remove duplicates, useless children, ect...
-  //     musicFolders = utils.removeUselessFolders(musicFolders);
-
-  //     musicFolders.sort();
-
-  //     config.set('musicFolders', musicFolders);
-  //   }
-
-  //   return { ...state };
-  // }
-
-  // case (types.LIBRARY_REMOVE_FOLDER): { // TODO Redux -> move to a thunk
-  //   if (!state.library.refreshing) {
-  //     const musicFolders = window.MuseeksAPI.config.get('musicFolders');
-
-  //     musicFolders.splice(action.index, 1);
-
-  //     config.set('musicFolders', musicFolders);
-
-  //     return { ...state };
-  //   }
-
-  //   return state;
-  // }
 }));
 
 export default useLibraryStore;
