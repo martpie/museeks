@@ -22,7 +22,7 @@
     "test:typings": "tsc --noEmit --project ./tsconfig.json",
     "test:unit": "bun test",
     "test:lint": "biome ci .",
-    "test:lint:fix": "biome check --apply .",
+    "test:lint:fix": "biome check --write .",
     "test:css": "stylelint \"src/**/*.css\"",
     "package:checksums": "bash scripts/checksum.sh"
   },

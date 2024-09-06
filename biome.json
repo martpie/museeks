@@ -22,6 +22,18 @@
       "quoteStyle": "single"
     }
   },
+  "css": {
+    "parser": {
+      "cssModules": true,
+      "allowWrongLineComments": true
+    },
+    "formatter": {
+      "enabled": true
+    },
+    "linter": {
+      "enabled": true
+    }
+  },
   "files": {
     "ignore": [
       "node_modules",
