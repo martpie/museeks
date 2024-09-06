@@ -60,6 +60,7 @@
     "@types/lodash": "^4.17.7",
     "@types/react": "^18.3.4",
     "@types/react-dom": "^18.3.0",
+    "@types/react-fontawesome": "^1.6.8",
     "@types/semver": "^7.5.8",
     "@vitejs/plugin-react": "^4.3.1",
     "autoprefixer": "^10.4.20",

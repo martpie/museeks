@@ -6,6 +6,7 @@ type Props = {
   gap?: 4 | 8 | 16;
   children: React.ReactNode;
   direction?: 'vertical' | 'horizontal';
+  align?: 'center';
 };
 
 export default function Flexbox(props: Props) {
@@ -14,7 +15,13 @@ export default function Flexbox(props: Props) {
   });
 
   return (
-    <div className={classNames} style={{ gap: props.gap ?? 0 }}>
+    <div
+      className={classNames}
+      style={{
+        gap: props.gap ?? 0,
+        alignItems: props.align,
+      }}
+    >
       {props.children}
     </div>
   );

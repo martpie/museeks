@@ -6,7 +6,7 @@ import {
   useLoaderData,
 } from 'react-router-dom';
 
-import PlaylistsNav from '../components/PlaylistsNav/PlaylistsNav';
+import SideNav from '../components/SideNav/SideNav';
 import * as ViewMessage from '../elements/ViewMessage/ViewMessage';
 import database from '../lib/database';
 import PlaylistsAPI from '../stores/PlaylistsAPI';
@@ -46,7 +46,7 @@ export default function ViewPlaylists() {
 
   return (
     <div className={`${appStyles.view} ${styles.viewPlaylists}`}>
-      <PlaylistsNav playlists={playlists} />
+      <SideNav title="Playlists" playlists={playlists} />
       <div className={styles.playlist}>{playlistContent}</div>
     </div>
   );

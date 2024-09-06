@@ -1,0 +1,7 @@
+.buttonIcon  {
+  background: transparent;
+  border: none;
+  color: var(--text);
+  aspect-ratio: 1 / 1;
+  text-align: center;
+}

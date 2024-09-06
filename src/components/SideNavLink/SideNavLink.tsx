@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 
 import PlaylistsAPI from '../../stores/PlaylistsAPI';
 
-import styles from './PlaylistsNavLink.module.css';
+import styles from './SideNavLink.module.css';
 
 type Props = {
   children: React.ReactNode;
@@ -12,7 +12,7 @@ type Props = {
   onContextMenu: (e: React.MouseEvent, playlistID: string) => void;
 };
 
-export default function PlaylistsNavLink(props: Props) {
+export default function SideNavLink(props: Props) {
   return (
     <NavLink
       className={({ isActive }) =>
