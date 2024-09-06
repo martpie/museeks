@@ -20,7 +20,7 @@ import type { LoaderData } from './router';
 
 export default function ViewRoot() {
   useEffect(() => {
-    SettingsAPI.check()
+    SettingsAPI.checkAllSettings()
       // Show the app once everything is loaded
       .then(() => getCurrentWindow())
       .then((window) => window.show());

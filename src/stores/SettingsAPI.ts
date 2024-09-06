@@ -119,7 +119,7 @@ async function checkForUpdate(options: UpdateCheckOptions = {}): Promise<void> {
 /**
  * Init all settings
  */
-async function check(): Promise<void> {
+async function checkAllSettings(): Promise<void> {
   await Promise.allSettled([
     checkTheme(),
     checkSleepBlocker(),
@@ -170,7 +170,8 @@ const SettingsAPI = {
   setTheme,
   applyThemeToUI,
   setTracksDensity,
-  check,
+  checkAllSettings,
+  checkForUpdate,
   toggleSleepBlocker,
   setDefaultView,
   toggleAutoUpdateChecker,
