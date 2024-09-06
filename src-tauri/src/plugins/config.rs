@@ -68,7 +68,7 @@ pub struct Config {
 impl Config {
     pub fn default() -> Self {
         Config {
-            theme: "light".to_owned(),
+            theme: "light".to_owned(), // should be "__system" once we can guess global theme preference
             audio_volume: 1.0,
             audio_playback_rate: Some(1.0),
             audio_output_device: "default".to_owned(),

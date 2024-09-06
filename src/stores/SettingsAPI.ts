@@ -1,14 +1,13 @@
 import { getVersion } from '@tauri-apps/api/app';
 import { invoke } from '@tauri-apps/api/core';
-import { getCurrentWindow } from '@tauri-apps/api/window';
 import * as semver from 'semver';
 
 import type { Config, DefaultView } from '../generated/typings';
 import config from '../lib/config';
-import { themes } from '../lib/themes';
+import { getTheme } from '../lib/themes';
 import { logAndNotifyError } from '../lib/utils';
-import type { Theme } from '../types/museeks';
 
+import { invalidate } from '../lib/query';
 import router from '../views/router';
 import useToastsStore from './useToastsStore';
 
@@ -17,17 +16,19 @@ interface UpdateCheckOptions {
 }
 
 async function setTheme(themeID: string): Promise<void> {
-  await config.set('theme', themeID); // TODO: own plugin?
-  await checkTheme();
+  await config.set('theme', themeID);
+  await applyThemeToUI(themeID);
+  invalidate();
 }
 
 /**
  * Apply theme colors to  the BrowserWindow
  */
-async function applyThemeToUI(theme: Theme): Promise<void> {
+async function applyThemeToUI(themeID: string): Promise<void> {
+  const theme = getTheme(themeID);
+
   // TODO think about variables validity?
   // TODO: update the window theme dynamically
-
   const root = document.documentElement;
   Object.entries(theme.variables).forEach(([property, value]) => {
     root.style.setProperty(property, value);
@@ -39,14 +40,8 @@ async function checkTheme(): Promise<void> {
   // that is used when a window is created with no assigned theme.
   // So we are bypassing the user choice for now.
   // const themeID: string = await config.get("theme");
-  const themeID = (await getCurrentWindow().theme()) ?? 'light';
-  const theme = themes[themeID];
-
-  if (theme == null) {
-    throw new Error(`Theme ${themeID} not found`);
-  }
-
-  applyThemeToUI(theme);
+  const themeID = await config.get('theme');
+  applyThemeToUI(themeID);
 }
 
 async function setTracksDensity(
@@ -176,9 +171,6 @@ const SettingsAPI = {
   applyThemeToUI,
   setTracksDensity,
   check,
-  checkTheme,
-  checkSleepBlocker,
-  checkForUpdate,
   toggleSleepBlocker,
   setDefaultView,
   toggleAutoUpdateChecker,
