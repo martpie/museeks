@@ -27,7 +27,7 @@
   background: transparent;
   padding: 0;
   height: 21px;
-  aspect-ratio: 1/1;
+  aspect-ratio: 1 / 1;
   line-height: 100%;
   text-align: center;
   font-family: Arial, sans-serif; /* best font family to center it vertically */

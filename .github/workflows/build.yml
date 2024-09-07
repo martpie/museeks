@@ -44,9 +44,6 @@ jobs:
       - name: 'Test: TS/JS linting & formatting'
         run: 'bun run test:lint'
 
-      - name: 'Test: CSS linting'
-        run: 'bun run test:css'
-
       - name: 'Test: unit'
         run: 'bun run test:unit'
 

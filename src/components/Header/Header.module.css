@@ -64,7 +64,7 @@
   text-align: left;
   right: 0;
 
-  &[data-state='open'] {
+  &[data-state="open"] {
     display: block;
   }
 }

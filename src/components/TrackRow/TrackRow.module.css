@@ -44,7 +44,7 @@
       z-index: 1;
       display: block;
       width: 100%;
-      content: '';
+      content: "";
       height: 2px;
       background-color: var(--main-color);
     }

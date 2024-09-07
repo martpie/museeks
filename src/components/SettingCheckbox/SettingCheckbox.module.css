@@ -22,7 +22,6 @@
 
       &::after {
         content: "\f00c";
-        /* stylelint-disable-next-line */
         font-family: FontAwesome;
         font-size: 10px;
         color: white;

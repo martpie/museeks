@@ -22,7 +22,7 @@
       z-index: 1;
       display: block;
       width: 100%;
-      content: '';
+      content: "";
       border-bottom: solid 3px var(--main-color);
     }
 

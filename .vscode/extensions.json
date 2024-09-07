@@ -2,7 +2,6 @@
   "recommendations": [
     "biomejs.biome",
     "vunguyentuan.vscode-postcss",
-    "stylelint.vscode-stylelint",
     "tauri-apps.tauri-vscode",
     "rust-lang.rust-analyzer"
   ]
