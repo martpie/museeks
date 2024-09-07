@@ -12,6 +12,7 @@ pub enum IPCEvent<'a> {
     PlaybackPlayPause,
     PlaybackPrevious,
     PlaybackNext,
+    PlaybackStart,
     // Scan-related events
     LibraryScanProgress,
     // Menu-related events

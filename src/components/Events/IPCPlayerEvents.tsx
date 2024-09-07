@@ -1,7 +1,7 @@
 import { listen } from '@tauri-apps/api/event';
 import { useEffect } from 'react';
 
-import type { IPCEvent } from '../../generated/typings';
+import type { IPCEvent, Track } from '../../generated/typings';
 import { usePlayerAPI } from '../../stores/usePlayerStore';
 
 /**
@@ -18,6 +18,10 @@ function IPCPlayerEvents() {
       listen('PlaybackPrevious' satisfies IPCEvent, playerAPI.previous),
       listen('PlaybackNext' satisfies IPCEvent, playerAPI.next),
       listen('PlaybackStop' satisfies IPCEvent, playerAPI.stop),
+      listen(
+        'PlaybackStart' satisfies IPCEvent,
+        ({ payload }: { payload: Track[] }) => playerAPI.start(payload),
+      ),
     ];
 
     return function cleanup() {

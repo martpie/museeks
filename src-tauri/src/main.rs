@@ -4,6 +4,7 @@
 mod libs;
 mod plugins;
 
+use libs::file_associations::setup_file_associations;
 use libs::utils::{get_theme_from_name, show_window};
 use log::LevelFilter;
 use plugins::config::ConfigManager;
@@ -58,6 +59,9 @@ async fn main() {
         )
         // TODO: tauri-plugin-theme to update the native theme at runtime
         .setup(|app| {
+            #[cfg(not(target_os = "macos"))]
+            setup_file_associations(app);
+
             let config_manager = app.state::<ConfigManager>();
             let conf = config_manager.get()?;
 
@@ -85,6 +89,15 @@ async fn main() {
 
             Ok(())
         })
-        .run(tauri::generate_context!())
-        .expect("error while running tauri application");
+        .build(tauri::generate_context!())
+        .expect("error while running tauri application")
+        .run(|app, event| {
+            #[cfg(target_os = "macos")]
+            setup_file_associations(app, event);
+
+            #[cfg(not(target_os = "macos"))]
+            {
+                drop(app);
+            }
+        });
 }
