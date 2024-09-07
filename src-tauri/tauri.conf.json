@@ -28,6 +28,48 @@
       "icons/icon.icns",
       "icons/icon.ico"
     ],
-    "resources": ["icons/icon.png"]
+    "resources": ["icons/icon.png"],
+    "fileAssociations": [
+      {
+        "ext": ["aac"],
+        "mimeType": "audio/aac",
+        "role": "Viewer"
+      },
+      {
+        "ext": ["mp3"],
+        "mimeType": "audio/mpeg",
+        "role": "Viewer"
+      },
+      {
+        "ext": ["m4a"],
+        "mimeType": "audio/mp4",
+        "role": "Viewer"
+      },
+      {
+        "ext": ["3gp"],
+        "mimeType": "audio/3gp",
+        "role": "Viewer"
+      },
+      {
+        "ext": ["ogg", "opus"],
+        "mimeType": "audio/ogg",
+        "role": "Viewer"
+      },
+      {
+        "ext": ["flac"],
+        "mimeType": "audio/flac",
+        "role": "Viewer"
+      },
+      {
+        "ext": ["wav"],
+        "mimeType": "audio/wav",
+        "role": "Viewer"
+      },
+      {
+        "ext": ["weba"],
+        "mimeType": "audio/weba",
+        "role": "Viewer"
+      }
+    ]
   }
 }

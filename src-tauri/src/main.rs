@@ -4,6 +4,7 @@
 mod libs;
 mod plugins;
 
+use libs::file_associations::setup_file_associations;
 use libs::utils::{get_theme_from_name, show_window};
 use log::LevelFilter;
 use plugins::config::ConfigManager;
@@ -56,7 +57,6 @@ async fn main() {
                 )
                 .build(),
         )
-        // TODO: tauri-plugin-theme to update the native theme at runtime
         .setup(|app| {
             let config_manager = app.state::<ConfigManager>();
             let conf = config_manager.get()?;
@@ -83,8 +83,22 @@ async fn main() {
             #[cfg(not(target_os = "macos"))]
             window_builder.build()?;
 
+            // FIXME: File association for non-macOS is not working well:
+            // - Does not work with single instance when the app is already open
+            // - Issues with C:\... URLs parsing with rust-url
+            // - The main window is created, but the UI may not be ready yet to receive the event requesting a playback
+            #[cfg(not(target_os = "macos"))]
+            setup_file_associations(app);
+
             Ok(())
         })
-        .run(tauri::generate_context!())
-        .expect("error while running tauri application");
+        .build(tauri::generate_context!())
+        .expect("error while running tauri application")
+        .run(
+            #[allow(unused_variables)]
+            |app, event| {
+                #[cfg(target_os = "macos")]
+                setup_file_associations(app, event);
+            },
+        );
 }

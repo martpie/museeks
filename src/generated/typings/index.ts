@@ -4,7 +4,7 @@ export type Config = { theme: string, audio_volume: number, audio_playback_rate:
 
 export type DefaultView = "Library" | "Playlists";
 
-export type IPCEvent = { "Unknown": string } | "PlaybackPlay" | "PlaybackPause" | "PlaybackStop" | "PlaybackPlayPause" | "PlaybackPrevious" | "PlaybackNext" | "LibraryScanProgress" | "GoToLibrary" | "GoToPlaylists" | "GoToSettings" | "JumpToPlayingTrack";
+export type IPCEvent = { "Unknown": string } | "PlaybackPlay" | "PlaybackPause" | "PlaybackStop" | "PlaybackPlayPause" | "PlaybackPrevious" | "PlaybackNext" | "PlaybackStart" | "LibraryScanProgress" | "GoToLibrary" | "GoToPlaylists" | "GoToSettings" | "JumpToPlayingTrack";
 
 export type NumberOf = { no: number | null, of: number | null, };
 
@@ -27,8 +27,8 @@ export type SortBy = "Artist" | "Album" | "Title" | "Duration" | "Genre";
 
 export type SortOrder = "Asc" | "Dsc";
 
-/** ----------------------------------------------------------------------------
+/**
  * Track
  * represent a single track, id and path should be unique
- * -------------------------------------------------------------------------- */
+ */
 export type Track = { _id: string, title: string, album: string, artists: Array<string>, genres: Array<string>, year: number | null, duration: number, track: NumberOf, disk: NumberOf, path: string, };
