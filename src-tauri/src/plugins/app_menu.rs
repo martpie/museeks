@@ -40,7 +40,7 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
             let app_handle = window.app_handle();
 
             // -----------------------------------------------------------------
-            // Museeks sub-menu
+            // X-menu
             // -----------------------------------------------------------------
             let package_info = app_handle.package_info();
             let version = package_info.version.to_string().into();
@@ -56,18 +56,6 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
                 .website_label("museeks.io".into())
                 .icon(Some(icon))
                 .build();
-
-            let museeks_menu = SubmenuBuilder::new(app_handle, "Museeks")
-                .about(Some(about_metadata))
-                .separator()
-                .services()
-                .hide()
-                .hide_others()
-                .show_all()
-                .separator()
-                .quit()
-                .build()
-                .unwrap();
 
             // -----------------------------------------------------------------
             // File sub-menu
@@ -159,7 +147,21 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
             // -----------------------------------------------------------------
             // Help sub-menu
             // -----------------------------------------------------------------
-            let help_menu = SubmenuBuilder::new(app_handle, "Help")
+            let help_menu_builder = {
+                let builder = SubmenuBuilder::new(app_handle, "Help");
+
+                #[cfg(not(target_os = "macos"))]
+                {
+                    builder.about(Some(about_metadata))
+                }
+
+                #[cfg(target_os = "macos")]
+                {
+                    builder
+                }
+            };
+
+            let help_menu = help_menu_builder
                 .item(
                     &MenuItemBuilder::new("Report an issue")
                         .id("report_an_issue")
@@ -172,15 +174,34 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
             // -----------------------------------------------------------------
             // Assembled menu + listeners
             // -----------------------------------------------------------------
-            let menu = MenuBuilder::new(app_handle)
-                .items(&[
-                    &museeks_menu,
-                    &file_menu,
-                    &edit_menu,
-                    &view_menu,
-                    &window_menu,
-                    &help_menu,
-                ])
+            let menu_builder = {
+                let builder = MenuBuilder::new(app_handle);
+
+                #[cfg(target_os = "macos")]
+                {
+                    let museeks_menu = SubmenuBuilder::new(app_handle, "Museeks")
+                        .about(Some(about_metadata))
+                        .separator()
+                        .services()
+                        .hide()
+                        .hide_others()
+                        .show_all()
+                        .separator()
+                        .quit()
+                        .build()
+                        .unwrap();
+
+                    builder.items(&[&museeks_menu])
+                }
+
+                #[cfg(not(target_os = "macos"))]
+                {
+                    builder
+                }
+            };
+
+            let menu = menu_builder
+                .items(&[&file_menu, &edit_menu, &view_menu, &window_menu, &help_menu])
                 .build()
                 .unwrap();
 
