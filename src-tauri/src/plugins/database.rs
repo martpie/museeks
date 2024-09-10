@@ -18,7 +18,7 @@ use std::sync::Arc;
 use tauri::plugin::{Builder, TauriPlugin};
 use tauri::Emitter;
 use tauri::{Manager, Runtime, State};
-use tauri_plugin_dialog::DialogExt;
+use tauri_plugin_dialog::{DialogExt, FilePath};
 use ts_rs::TS;
 use uuid::Uuid;
 
@@ -635,8 +635,10 @@ async fn export_playlist<R: Runtime>(
         .file()
         .add_filter("playlist", &SUPPORTED_PLAYLISTS_EXTENSIONS)
         .save_file(move |maybe_playlist_path| {
-            let Some(playlist_path) = maybe_playlist_path else {
-                return;
+            let playlist_path = match maybe_playlist_path {
+                // We don't support FilePath::Url
+                Some(FilePath::Path(path)) => path,
+                _ => return,
             };
 
             let playlist_dir_path = playlist_path.parent().unwrap();
