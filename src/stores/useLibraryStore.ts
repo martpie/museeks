@@ -218,6 +218,7 @@ const useLibraryStore = createStore<LibraryState>((set, get) => ({
 
         if (confirmed) {
           await database.reset();
+          await config.set('library_folders', []);
           useToastsStore.getState().api.add('success', 'Library was reset');
           invalidate();
         }
