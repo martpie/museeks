@@ -5,6 +5,8 @@ import Flexbox from '../elements/Flexbox/Flexbox';
 import useLibraryStore, { useLibraryAPI } from '../stores/useLibraryStore';
 import type { SettingsLoaderData } from './ViewSettings';
 
+import CheckboxSetting from '../components/SettingCheckbox/SettingCheckbox';
+import SettingsAPI from '../stores/SettingsAPI';
 import styles from './ViewSettingsLibrary.module.css';
 
 export default function ViewSettingsLibrary() {
@@ -18,7 +20,7 @@ export default function ViewSettingsLibrary() {
         <Setting.Title>Files</Setting.Title>
         {config.library_folders.length === 0 && (
           <Setting.Description>
-            There are no folders in your library
+            There are no folders in your library.
           </Setting.Description>
         )}
         {config.library_folders.length > 0 && (
@@ -56,6 +58,14 @@ export default function ViewSettingsLibrary() {
         <Setting.Description>
           <code>.m3u</code> files will also be imported as playlists.
         </Setting.Description>
+      </Setting.Section>
+      <Setting.Section>
+        <CheckboxSetting
+          slug="library-autorefresh"
+          title="Automatically refresh library on startup"
+          value={config.library_autorefresh}
+          onChange={SettingsAPI.toggleLibraryAutorefresh}
+        />
       </Setting.Section>
       <Setting.Section>
         <Setting.Title>Danger zone</Setting.Title>

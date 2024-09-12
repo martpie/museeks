@@ -1,4 +1,3 @@
-import { getCurrentWindow } from '@tauri-apps/api/window';
 import { Suspense, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 
@@ -20,10 +19,7 @@ import type { LoaderData } from './router';
 
 export default function ViewRoot() {
   useEffect(() => {
-    SettingsAPI.checkAllSettings()
-      // Show the app once everything is loaded
-      .then(() => getCurrentWindow())
-      .then((window) => window.show());
+    SettingsAPI.init();
   }, []);
 
   return (

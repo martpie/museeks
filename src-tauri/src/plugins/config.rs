@@ -57,7 +57,8 @@ pub struct Config {
     pub default_view: DefaultView,
     pub library_sort_by: SortBy,
     pub library_sort_order: SortOrder,
-    pub library_folders: Vec<PathBuf>, // Not used yet
+    pub library_folders: Vec<PathBuf>,
+    pub library_autorefresh: bool,
     pub sleepblocker: bool,
     pub auto_update_checker: bool,
     pub minimize_to_tray: bool,
@@ -79,6 +80,7 @@ impl Config {
             library_sort_by: SortBy::Artist,
             library_sort_order: SortOrder::Asc,
             library_folders: vec![],
+            library_autorefresh: false,
             sleepblocker: false,
             auto_update_checker: true,
             minimize_to_tray: false,
