@@ -14,12 +14,14 @@ export type NumberOf = { no: number | null, of: number | null, };
  * -------------------------------------------------------------------------- */
 export type Playlist = { _id: string, name: string, tracks: Array<string>, import_path: string | null, };
 
+export type Repeat = "All" | "One" | "None";
+
 /**
  * Scan progress
  */
-export type Progress = { current: number, total: number, };
+export type ScanProgress = { current: number, total: number, };
 
-export type Repeat = "All" | "One" | "None";
+export type ScanResult = { track_count: number, track_failures: number, playlist_count: number, playlist_failures: number, };
 
 export type SortBy = "Artist" | "Album" | "Title" | "Duration" | "Genre";
 

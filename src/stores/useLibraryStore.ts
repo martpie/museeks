@@ -120,7 +120,27 @@ const useLibraryStore = createStore<LibraryState>((set, get) => ({
         set({ refreshing: true });
 
         const libraryFolders = await config.get('library_folders');
-        await database.importTracks(libraryFolders);
+        const scanResult = await database.importTracks(libraryFolders);
+
+        if (scanResult.track_count > 0) {
+          useToastsStore
+            .getState()
+            .api.add(
+              'success',
+              `${scanResult.track_count} track(s) were added to the library.`,
+              5000,
+            );
+        }
+
+        if (scanResult.playlist_count > 0) {
+          useToastsStore
+            .getState()
+            .api.add(
+              'success',
+              `${scanResult.playlist_count} playlist(s) were added to the library.`,
+              5000,
+            );
+        }
 
         invalidate();
       } catch (err) {

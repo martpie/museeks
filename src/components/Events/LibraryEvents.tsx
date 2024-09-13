@@ -1,7 +1,7 @@
 import { listen } from '@tauri-apps/api/event';
 import { useEffect } from 'react';
 
-import type { IPCEvent, Progress } from '../../generated/typings';
+import type { IPCEvent, ScanProgress } from '../../generated/typings';
 import { useLibraryAPI } from '../../stores/useLibraryStore';
 
 /**
@@ -11,7 +11,7 @@ function LibraryEvents() {
   const { setRefresh } = useLibraryAPI();
 
   useEffect(() => {
-    const promise = listen<Progress>(
+    const promise = listen<ScanProgress>(
       'LibraryScanProgress' satisfies IPCEvent,
       ({ payload }) => {
         setRefresh(payload.current, payload.total);
