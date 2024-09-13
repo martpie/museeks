@@ -12,10 +12,17 @@ import { invalidate } from '../lib/query';
 import useLibraryStore from './useLibraryStore';
 import useToastsStore from './useToastsStore';
 
+// Manual prevention of a useEffect being called twice (to avoid refreshing the
+// library twice on startup in dev mode).
+let did_init = false;
+
 /**
  * Init all settings, then show the app
  */
 async function init(): Promise<void> {
+  if (did_init) return;
+
+  did_init = true;
   // This is non-blocking
   checkForLibraryRefresh().catch(logAndNotifyError);
 

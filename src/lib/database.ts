@@ -1,6 +1,6 @@
 import { invoke } from '@tauri-apps/api/core';
 
-import type { Playlist, Track } from '../generated/typings';
+import type { Playlist, ScanResult, Track } from '../generated/typings';
 
 /**
  * Bridge for the UI to communicate with the backend and manipulate the Database
@@ -32,7 +32,7 @@ const database = {
     });
   },
 
-  async importTracks(importPaths: Array<string>): Promise<void> {
+  async importTracks(importPaths: Array<string>): Promise<ScanResult> {
     return invoke('plugin:database|import_tracks_to_library', {
       importPaths,
     });
