@@ -74,3 +74,10 @@ const ACCENT_MAP = new Map();
 for (let i = 0; i < ACCENTS.length; i++) {
   ACCENT_MAP.set(ACCENTS[i], ACCENT_REPLACEMENTS[i]);
 }
+
+/**
+ * Formats the track's duration from seconds to hh:mm:ss
+ */
+export function formatDuration(seconds: number) {
+  return new Date(seconds * 1000).toISOString().substring(11, 19);
+}
