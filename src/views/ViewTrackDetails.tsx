@@ -76,7 +76,6 @@ export default function ViewTrackDetails() {
         <Setting.Section>
           <Setting.Input
             label="Title"
-            description="You can add multiple artists with commas"
             id="title"
             name="title"
             type="text"
@@ -89,6 +88,7 @@ export default function ViewTrackDetails() {
         <Setting.Section>
           <Setting.Input
             label="Artist"
+            description="You can add multiple artists with commas"
             id="artist"
             name="artist"
             type="text"
