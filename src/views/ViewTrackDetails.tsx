@@ -139,7 +139,7 @@ export default function ViewTrackDetails() {
             step="1"
             value={formData.year}
             onChange={(e) => {
-              setFormData({ ...formData, album: e.currentTarget.value });
+              setFormData({ ...formData, year: Number(e.currentTarget.value) });
             }}
           />
         </Setting.Section>
@@ -153,7 +153,10 @@ export default function ViewTrackDetails() {
             disabled={true}
             value={formatDuration(formData.duration)}
             onChange={(e) => {
-              setFormData({ ...formData, album: e.currentTarget.value });
+              setFormData({
+                ...formData,
+                duration: Number(e.currentTarget.value),
+              });
             }}
           />
         </Setting.Section>
@@ -167,7 +170,13 @@ export default function ViewTrackDetails() {
             step="1"
             value={Number(formData.track.no)}
             onChange={(e) => {
-              setFormData({ ...formData, album: e.currentTarget.value });
+              setFormData({
+                ...formData,
+                track: {
+                  no: Number(e.currentTarget.value),
+                  of: formData.track.of,
+                },
+              });
             }}
           />
         </Setting.Section>
@@ -181,7 +190,13 @@ export default function ViewTrackDetails() {
             step="1"
             value={Number(formData.disk.no)}
             onChange={(e) => {
-              setFormData({ ...formData, album: e.currentTarget.value });
+              setFormData({
+                ...formData,
+                disk: {
+                  no: Number(e.currentTarget.value),
+                  of: formData.disk.of,
+                },
+              });
             }}
           />
         </Setting.Section>
@@ -195,7 +210,7 @@ export default function ViewTrackDetails() {
             //readOnly={true}
             disabled={true}
             onChange={(e) => {
-              setFormData({ ...formData, album: e.currentTarget.value });
+              setFormData({ ...formData, path: e.currentTarget.value });
             }}
           />
         </Setting.Section>
