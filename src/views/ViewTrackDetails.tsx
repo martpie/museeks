@@ -15,7 +15,6 @@ import { useLibraryAPI } from '../stores/useLibraryStore';
 import Flexbox from '../elements/Flexbox/Flexbox';
 import Separator from '../elements/Separator/Separator';
 import useInvalidate from '../hooks/useInvalidate';
-import { formatDuration } from '../lib/utils-library';
 import type { LoaderData } from '../types/museeks';
 import appStyles from './Root.module.css';
 import styles from './ViewTrackDetails.module.css';
@@ -141,7 +140,7 @@ export default function ViewTrackDetails() {
             type="number"
             min="1900"
             step="1"
-            value={formData.year}
+            value={Number(formData.year)}
             onChange={(e) => {
               setFormData({ ...formData, year: Number(e.currentTarget.value) });
             }}
@@ -154,8 +153,8 @@ export default function ViewTrackDetails() {
             name="duration"
             type="text"
             pattern="([01]?[0-9]{1}|2[0-3]{1}):[0-5]{1}[0-9]{1}"
-            readOnly={true}
-            value={formatDuration(formData.duration)}
+            disabled={true}
+            value={formData.duration}
             onChange={(e) => {
               setFormData({
                 ...formData,
