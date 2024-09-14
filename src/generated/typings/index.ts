@@ -29,4 +29,4 @@ export type SortOrder = "Asc" | "Dsc";
  * Track
  * represent a single track, id and path should be unique
  * -------------------------------------------------------------------------- */
-export type Track = { _id: string, title: string, album: string, artists: Array<string>, genres: Array<string>, year: number | null, duration: number, track: NumberOf, disk: NumberOf, path: string, };
+export type Track = { _id: string, title: string, album: string, artists: Array<string>, genres: Array<string>, year: number, duration: number, track: NumberOf, disk: NumberOf, path: string, };
