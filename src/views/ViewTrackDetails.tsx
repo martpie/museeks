@@ -16,6 +16,7 @@ import Separator from '../elements/Separator/Separator';
 import appStyles from './Root.module.css';
 import styles from './ViewTrackDetails.module.css';
 import type { LoaderData } from './router';
+import { formatDuration } from '../lib/utils-library';
 
 // We assume no artist or genre has a comma in its name (fingers crossed)
 const DELIMITER = ',';
@@ -24,12 +25,28 @@ export default function ViewTrackDetails() {
   const { track } = useLoaderData() as DetailsLoaderData;
 
   const [formData, setFormData] = useState<
-    Pick<Track, 'title' | 'artists' | 'album' | 'genres'>
+    Pick<
+      Track,
+      | 'title'
+      | 'artists'
+      | 'album'
+      | 'genres'
+      | 'year'
+      | 'duration'
+      | 'track'
+      | 'disk'
+      | 'path'
+    >
   >({
     title: track.title ?? '',
     artists: track.artists,
     album: track.album ?? '',
     genres: track.genres,
+    year: track.year,
+    duration: track.duration,
+    track: track.track ?? { no: 0, of: 0 },
+    disk: track.disk ?? { no: 0, of: 0 },
+    path: track.path,
   });
 
   const libraryAPI = useLibraryAPI();
@@ -109,6 +126,76 @@ export default function ViewTrackDetails() {
                 ...formData,
                 genres: e.currentTarget.value.split(DELIMITER),
               });
+            }}
+          />
+        </Setting.Section>
+        <Setting.Section>
+          <Setting.Input
+            label="Year"
+            id="year"
+            name="year"
+            type="number"
+            min="1900"
+            step="1"
+            value={formData.year}
+            onChange={(e) => {
+              setFormData({ ...formData, album: e.currentTarget.value });
+            }}
+          />
+        </Setting.Section>
+        <Setting.Section>
+          <Setting.Input
+            label="Duration"
+            id="duration"
+            name="duration"
+            type="text"
+            pattern="([01]?[0-9]{1}|2[0-3]{1}):[0-5]{1}[0-9]{1}"
+            disabled={true}
+            value={formatDuration(formData.duration)}
+            onChange={(e) => {
+              setFormData({ ...formData, album: e.currentTarget.value });
+            }}
+          />
+        </Setting.Section>
+        <Setting.Section>
+          <Setting.Input
+            label="Track"
+            id="track"
+            name="track"
+            type="number"
+            min="0"
+            step="1"
+            value={Number(formData.track.no)}
+            onChange={(e) => {
+              setFormData({ ...formData, album: e.currentTarget.value });
+            }}
+          />
+        </Setting.Section>
+        <Setting.Section>
+          <Setting.Input
+            label="Disk"
+            id="disk"
+            name="disk"
+            type="number"
+            min="0"
+            step="1"
+            value={Number(formData.disk.no)}
+            onChange={(e) => {
+              setFormData({ ...formData, album: e.currentTarget.value });
+            }}
+          />
+        </Setting.Section>
+        <Setting.Section>
+          <Setting.Input
+            label="Path"
+            id="path"
+            name="path"
+            type="text"
+            value={formData.path}
+            //readOnly={true}
+            disabled={true}
+            onChange={(e) => {
+              setFormData({ ...formData, album: e.currentTarget.value });
             }}
           />
         </Setting.Section>
