@@ -17,6 +17,7 @@ import appStyles from './Root.module.css';
 import styles from './ViewTrackDetails.module.css';
 import type { LoaderData } from './router';
 import { formatDuration } from '../lib/utils-library';
+import Flexbox from '../elements/Flexbox/Flexbox';
 
 // We assume no artist or genre has a comma in its name (fingers crossed)
 const DELIMITER = ',';
@@ -161,44 +162,84 @@ export default function ViewTrackDetails() {
           />
         </Setting.Section>
         <Setting.Section>
-          <Setting.Input
-            label="Track"
-            id="track"
-            name="track"
-            type="number"
-            min="0"
-            step="1"
-            value={Number(formData.track.no)}
-            onChange={(e) => {
-              setFormData({
-                ...formData,
-                track: {
-                  no: Number(e.currentTarget.value),
-                  of: formData.track.of,
-                },
-              });
-            }}
-          />
+          <Flexbox direction="horizontal" gap={16}>
+            <Setting.Input
+              label="Track Nº"
+              id="track"
+              name="track"
+              type="number"
+              min="0"
+              step="1"
+              value={Number(formData.track.no)}
+              onChange={(e) => {
+                setFormData({
+                  ...formData,
+                  track: {
+                    no: Number(e.currentTarget.value),
+                    of: formData.track.of,
+                  },
+                });
+              }}
+            />
+            <Setting.Input
+              label="Of"
+              id="trackOf"
+              name="trackOf"
+              type="number"
+              min="0"
+              step="1"
+              value={Number(formData.track.of)}
+              onChange={(e) => {
+                setFormData({
+                  ...formData,
+                  track: {
+                    no: formData.track.no,
+                    of: Number(e.currentTarget.value),
+                  },
+                });
+              }}
+            />
+          </Flexbox>
         </Setting.Section>
         <Setting.Section>
-          <Setting.Input
-            label="Disk"
-            id="disk"
-            name="disk"
-            type="number"
-            min="0"
-            step="1"
-            value={Number(formData.disk.no)}
-            onChange={(e) => {
-              setFormData({
-                ...formData,
-                disk: {
-                  no: Number(e.currentTarget.value),
-                  of: formData.disk.of,
-                },
-              });
-            }}
-          />
+          <Flexbox direction="horizontal" gap={16}>
+            <Setting.Input
+              label="Disk Nº"
+              id="disk"
+              name="disk"
+              type="number"
+              min="0"
+              step="1"
+              value={Number(formData.disk.no)}
+              onChange={(e) => {
+                setFormData({
+                  ...formData,
+                  disk: {
+                    no: Number(e.currentTarget.value),
+                    of: formData.disk.of,
+                  },
+                });
+              }}
+            />
+            <Setting.Input
+              label="Of"
+              id="diskOf"
+              name="diskOf"
+              type="number"
+              min="0"
+              step="1"
+              value={Number(formData.disk.of)}
+              onChange={(e) => {
+                setFormData({
+                  ...formData,
+                  disk: {
+                    no: formData.disk.no,
+                    of: Number(e.currentTarget.value),
+                  },
+                });
+              }}
+            />
+          </Flexbox>
         </Setting.Section>
         <Setting.Section>
           <Setting.Input
