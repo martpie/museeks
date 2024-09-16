@@ -117,6 +117,7 @@ export default function TrackRow(props: Props) {
         }
       }}
       onContextMenu={(e) => onContextMenu(e, index)}
+      // biome-ignore lint/a11y/useSemanticElements: Accessibility over semantics
       role="option"
       aria-selected={selected}
       tabIndex={-1} // we do not want trackrows to be focusable by the keyboard

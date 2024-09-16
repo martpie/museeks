@@ -18,16 +18,17 @@ export function Description(props: Props) {
 export function Label(
   props: JSX.IntrinsicElements['label'] & {
     noMargin?: boolean;
+    htmlFor: string;
   },
 ) {
-  const { children, noMargin, ...restProps } = props;
+  const { children, noMargin, htmlFor, ...restProps } = props;
 
   const classNames = cx(styles.settingLabel, {
     noMargin,
   });
 
   return (
-    <label className={classNames} {...restProps}>
+    <label className={classNames} htmlFor={htmlFor} {...restProps}>
       {children}
     </label>
   );
