@@ -19,7 +19,6 @@ import ViewSettingsAudio from './ViewSettingsAudio';
 import ViewSettingsLibrary from './ViewSettingsLibrary';
 import ViewSettingsUI from './ViewSettingsUI';
 import ViewTrackDetails from './ViewTrackDetails';
-// import ViewTrackDetails from "./ViewTrackDetails";
 
 const router = createHashRouter([
   {
@@ -110,6 +109,7 @@ function GlobalErrorBoundary() {
   return (
     <ViewMessage.Notice>
       <p>
+        {/* biome-ignore lint/a11y/useSemanticElements: no <img> for emojis */}
         <span role="img" aria-label="boom">
           💥
         </span>{' '}

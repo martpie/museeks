@@ -24,14 +24,7 @@
   },
   "css": {
     "parser": {
-      "cssModules": true,
-      "allowWrongLineComments": true
-    },
-    "formatter": {
-      "enabled": true
-    },
-    "linter": {
-      "enabled": true
+      "cssModules": true
     }
   },
   "files": {
