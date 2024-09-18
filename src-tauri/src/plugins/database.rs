@@ -1,15 +1,11 @@
-use bonsaidb::core::connection::{AsyncCollection, AsyncConnection, AsyncStorageConnection};
-use bonsaidb::core::document::OwnedDocument;
-use bonsaidb::core::schema::{Collection, SerializedCollection};
-use bonsaidb::core::transaction::{Operation, Transaction};
-use bonsaidb::local::config::{Builder as BonsaiBuilder, StorageConfiguration};
-use bonsaidb::local::AsyncDatabase;
-use bonsaidb::local::AsyncStorage;
 use itertools::Itertools;
 use lofty::file::{AudioFile, TaggedFileExt};
 use lofty::tag::{Accessor, ItemKey};
 use log::{error, info, warn};
+use polodb_core::bson::doc;
+use polodb_core::{ClientCursor, Collection, CollectionT, Database};
 use rayon::iter::{IntoParallelRefIterator, ParallelIterator};
+use serde::de::DeserializeOwned;
 use serde::{Deserialize, Serialize};
 use std::collections::{HashMap, HashSet};
 use std::path::PathBuf;
@@ -46,19 +42,12 @@ pub const SUPPORTED_PLAYLISTS_EXTENSIONS: [&str; 1] = ["m3u"];
  * TODO: probably split between tracks and playlists, this file is getting out of hand
  * -------------------------------------------------------------------------- */
 pub struct DB {
-    pub tracks: AsyncDatabase,
-    pub playlists: AsyncDatabase,
+    pub db: Database,
+    pub tracks: Collection<Track>,
+    pub playlists: Collection<Playlist>,
 }
 
 impl DB {
-    fn tracks_collection(&self) -> AsyncCollection<'_, AsyncDatabase, Track> {
-        self.tracks.collection::<Track>()
-    }
-
-    fn playlists_collection(&self) -> AsyncCollection<'_, AsyncDatabase, Playlist> {
-        self.playlists.collection::<Playlist>()
-    }
-
     /**
      * We leverage UUID v3 on tracks paths to easily retrieve tracks by path.
      * This is not great and ideally we should use a DB view instead. One day.
@@ -86,8 +75,8 @@ impl DB {
      */
     pub async fn get_all_tracks(&self) -> AnyResult<Vec<Track>> {
         let timer = TimeLogger::new("Retrieved and decoded tracks".into());
-        let docs = self.tracks_collection().all().await?;
-        let tracks = self.decode_docs::<Track>(&docs);
+        let docs = self.tracks.find(doc! {}).run()?;
+        let tracks = self.decode_docs(docs);
         timer.complete();
         tracks
     }
@@ -96,9 +85,15 @@ impl DB {
      * Get tracks (and their content) given a set of document IDs
      */
     pub async fn get_tracks(&self, track_ids: &Vec<String>) -> AnyResult<Vec<Track>> {
-        let docs = self.tracks_collection().get_multiple(track_ids).await?;
+        let docs = self
+            .tracks
+            .find(doc! {
+                "_id" : { "$in": track_ids }
+            })
+            .run()?;
 
-        match self.decode_docs::<Track>(&docs) {
+        match self.decode_docs::<Track>(docs) {
+            // TODO: double check
             Ok(mut tracks) => {
                 // document may not ordered the way we want, so let's ensure they map to track_ids
                 let track_id_positions: HashMap<&String, usize> = track_ids
@@ -116,11 +111,16 @@ impl DB {
     /**
      * Get tracks (and their content) given a set of document IDs
      */
-    pub async fn update_track(&self, track: Track) -> AnyResult<Track> {
+    pub async fn update_track(&self, track: Track) -> AnyResult<()> {
         let track_id = &track._id.clone();
 
-        match track.overwrite_into_async(&track_id, &self.tracks).await {
-            Ok(doc) => Ok(doc.contents),
+        match self.tracks.update_one(
+            doc! {
+                "_id": track_id
+            },
+            doc! {}, // TODO
+        ) {
+            Ok(_) => Ok(()),
             Err(_) => Err(MuseeksError::Library {
                 message: "Failed to update track".into(),
             }),
@@ -129,13 +129,13 @@ impl DB {
 
     /** Delete multiple tracks by ID */
     pub async fn remove_tracks(&self, ids: &Vec<String>) -> AnyResult<()> {
-        let tracks = self.tracks_collection().get_multiple(ids).await?;
+        // let tracks = self.tracks.find(_id ).await?;
 
-        let mut tx = Transaction::new();
-        for track in tracks {
-            tx.push(Operation::delete(Track::collection_name(), track.header));
-        }
-        tx.apply_async(&self.tracks).await?;
+        // let mut tx = Transaction::new();
+        // for track in tracks {
+        //     tx.push(Operation::delete(Track::collection_name(), track.header));
+        // }
+        // tx.apply_async(&self.tracks).await?;
 
         Ok(())
     }
@@ -155,16 +155,12 @@ impl DB {
         let batches: Vec<Vec<Track>> = tracks.chunks(INSERTION_BATCH).map(|x| x.to_vec()).collect();
 
         for batch in batches {
-            let mut tx = Transaction::new();
+            let tx = self.db.start_transaction()?;
 
-            for track in batch {
-                tx.push(Operation::push_serialized::<Track>(&track)?);
-            }
+            self.tracks.insert_many(batch)?;
 
             // Let's goooo
-            let result = tx.apply_async(&self.tracks).await;
-
-            match result {
+            match tx.commit() {
                 Ok(_) => (),
                 Err(err) => {
                     error!("Failed to insert tracks: {:?}", err);
@@ -178,8 +174,8 @@ impl DB {
     /** Get all the playlists (and their content) from the database */
     pub async fn get_all_playlists(&self) -> AnyResult<Vec<Playlist>> {
         let timer = TimeLogger::new("Retrieved and decoded playlists".into());
-        let docs = self.playlists_collection().all().await?;
-        let mut playlists = self.decode_docs::<Playlist>(&docs)?;
+        let docs = self.playlists.find(doc! {}).run()?;
+        let mut playlists = self.decode_docs::<Playlist>(docs)?;
 
         // Ensure the playlists are sorted alphabetically (case-insensitive) for better UX
         playlists.sort_by(|a, b| a.name.to_lowercase().cmp(&b.name.to_lowercase()));
@@ -190,12 +186,11 @@ impl DB {
 
     /** Get a single playlist by ID */
     pub async fn get_playlist(&self, playlist_id: &String) -> AnyResult<Option<Playlist>> {
-        let maybe_doc = self.playlists_collection().get(&playlist_id).await?;
+        let doc = self.playlists.find_one(doc! {
+            "_id": &playlist_id
+        })?;
 
-        match maybe_doc {
-            Some(doc) => Ok(Some(self.decode_doc::<Playlist>(&doc)?)),
-            None => Ok(None),
-        }
+        Ok(doc)
     }
 
     /** Create a playlist given a name and a set of track IDs */
@@ -211,84 +206,84 @@ impl DB {
             import_path: None,
         };
 
-        self.playlists_collection()
-            .insert(&playlist._id, &playlist)
-            .await?;
+        // TODO
+        self.playlists.insert_one(&playlist)?;
 
         Ok(playlist)
     }
 
     /** Set the tracks of a playlist given its ID and tracks IDs */
-    pub async fn set_playlist_tracks(
-        &self,
-        id: &String,
-        tracks: Vec<String>,
-    ) -> AnyResult<Playlist> {
-        if let Some(document) = self.playlists_collection().get(id).await? {
-            let mut playlist = self.decode_doc::<Playlist>(&document)?;
+    pub async fn set_playlist_tracks(&self, id: &String, tracks: Vec<String>) -> AnyResult<()> {
+        // TODO
+        Ok(())
+        // if let Some(document) = self.playlists_collection().get(id).await? {
+        //     let mut playlist = self.decode_doc::<Playlist>(&document)?;
 
-            // Make sure we remove duplicates (the UI does not play well with those yet).
-            playlist.tracks = tracks.into_iter().unique().collect_vec();
+        //     // Make sure we remove duplicates (the UI does not play well with those yet).
+        //     playlist.tracks = tracks.into_iter().unique().collect_vec();
 
-            match playlist.overwrite_into_async(&id, &self.playlists).await {
-                Ok(doc) => Ok(doc.contents),
-                Err(_) => Err(MuseeksError::Library {
-                    message: "Failed to set playlist tracks".into(),
-                }),
-            }
-        } else {
-            Err(MuseeksError::PlaylistNotFound)
-        }
+        //     match playlist.overwrite_into_async(&id, &self.playlists).await {
+        //         Ok(doc) => Ok(doc.contents),
+        //         Err(_) => Err(MuseeksError::Library {
+        //             message: "Failed to set playlist tracks".into(),
+        //         }),
+        //     }
+        // } else {
+        //     Err(MuseeksError::PlaylistNotFound)
+        // }
     }
 
     /** Update a playlist name by ID */
-    pub async fn rename_playlist(&self, id: &String, name: String) -> AnyResult<Playlist> {
-        if let Some(document) = self.playlists_collection().get(&id).await? {
-            let mut playlist = self.decode_doc::<Playlist>(&document)?;
-            playlist.name = name;
+    pub async fn rename_playlist(&self, id: &String, name: String) -> AnyResult<()> {
+        // TODO
+        Ok(())
+        // if let Some(document) = self.playlists_collection().get(&id).await? {
+        //     let mut playlist = self.decode_doc::<Playlist>(&document)?;
+        //     playlist.name = name;
 
-            match playlist.overwrite_into_async(&id, &self.playlists).await {
-                Ok(doc) => Ok(doc.contents),
-                Err(_) => Err(MuseeksError::Library {
-                    message: "Failed to rename playlist".into(),
-                }),
-            }
-        } else {
-            Err(MuseeksError::PlaylistNotFound)
-        }
+        //     match playlist.overwrite_into_async(&id, &self.playlists).await {
+        //         Ok(doc) => Ok(doc.contents),
+        //         Err(_) => Err(MuseeksError::Library {
+        //             message: "Failed to rename playlist".into(),
+        //         }),
+        //     }
+        // } else {
+        //     Err(MuseeksError::PlaylistNotFound)
+        // }
     }
 
     /** Delete a playlist by ID */
     pub async fn delete_playlist(&self, id: &String) -> AnyResult<()> {
-        if let Some(document) = self.playlists_collection().get(&id).await? {
-            Ok(self.playlists_collection().delete(&document).await?)
-        } else {
-            Err(MuseeksError::PlaylistNotFound)
-        }
+        // TODO
+        Ok(())
+        // if let Some(document) = self.playlists_collection().get(&id).await? {
+        //     Ok(self.playlists_collection().delete(&document).await?)
+        // } else {
+        //     Err(MuseeksError::PlaylistNotFound)
+        // }
     }
 
     /**
      * Decode the content for a given set of document (track, playlist, etc)
      */
-    fn decode_docs<T: SerializedCollection>(
-        &self,
-        docs: &Vec<OwnedDocument>,
-    ) -> AnyResult<Vec<<T as SerializedCollection>::Contents>> {
+    fn decode_docs<T>(&self, docs: ClientCursor<T>) -> AnyResult<Vec<T>>
+    where
+        T: core::fmt::Debug
+            + Clone
+            + Serialize
+            + DeserializeOwned
+            + Send
+            + Sync
+            + std::marker::Unpin
+            + 'static,
+    {
         let mut entries = vec![];
 
         for doc in docs {
-            let deserialized = T::document_contents(doc)?;
-            entries.push(deserialized);
+            entries.push(doc?);
         }
 
         Ok(entries)
-    }
-
-    fn decode_doc<T: SerializedCollection>(
-        &self,
-        doc: &OwnedDocument,
-    ) -> AnyResult<<T as SerializedCollection>::Contents> {
-        Ok(T::document_contents(doc)?)
     }
 }
 
@@ -296,11 +291,9 @@ impl DB {
  * Track
  * represent a single track, id and path should be unique
  * -------------------------------------------------------------------------- */
-#[derive(Debug, Clone, Serialize, Deserialize, Collection, TS)]
-#[collection(name="tracks", primary_key = String)]
+#[derive(Debug, Clone, Serialize, Deserialize, TS)]
 #[ts(export, export_to = "../../src/generated/typings/index.ts")]
 pub struct Track {
-    #[natural_id]
     pub _id: String,
     pub title: String,
     pub album: String,
@@ -325,11 +318,9 @@ pub struct NumberOf {
  * represent a playlist, that has a name and a list of tracks
  * -------------------------------------------------------------------------- */
 
-#[derive(Debug, Clone, Serialize, Deserialize, Collection, TS)]
-#[collection(name = "playlists", primary_key = String)]
+#[derive(Debug, Clone, Serialize, Deserialize, TS)]
 #[ts(export, export_to = "../../src/generated/typings/index.ts")]
 pub struct Playlist {
-    #[natural_id]
     pub _id: String,
     pub name: String,
     pub tracks: Vec<String>, // vector of IDs
@@ -599,7 +590,7 @@ async fn get_tracks(db: State<'_, DB>, ids: Vec<String>) -> AnyResult<Vec<Track>
 }
 
 #[tauri::command]
-async fn update_track(db: State<'_, DB>, track: Track) -> AnyResult<Track> {
+async fn update_track(db: State<'_, DB>, track: Track) -> AnyResult<()> {
     db.update_track(track).await
 }
 
@@ -628,16 +619,12 @@ async fn create_playlist(db: State<'_, DB>, name: String, ids: Vec<String>) -> A
 }
 
 #[tauri::command]
-async fn rename_playlist(db: State<'_, DB>, id: String, name: String) -> AnyResult<Playlist> {
+async fn rename_playlist(db: State<'_, DB>, id: String, name: String) -> AnyResult<()> {
     db.rename_playlist(&id, name).await
 }
 
 #[tauri::command]
-async fn set_playlist_tracks(
-    db: State<'_, DB>,
-    id: String,
-    tracks: Vec<String>,
-) -> AnyResult<Playlist> {
+async fn set_playlist_tracks(db: State<'_, DB>, id: String, tracks: Vec<String>) -> AnyResult<()> {
     db.set_playlist_tracks(&id, tracks).await
 }
 
@@ -693,33 +680,34 @@ async fn delete_playlist(db: State<'_, DB>, id: String) -> AnyResult<()> {
 #[tauri::command]
 async fn reset(db: State<'_, DB>) -> AnyResult<()> {
     info!("Resetting DB...");
-    let timer = TimeLogger::new("Reset DB".into());
+    // TODO
+    // let timer = TimeLogger::new("Reset DB".into());
 
-    let tracks = db.tracks_collection().all().await?;
-    let playlists = db.playlists_collection().all().await?;
+    // let tracks = db.tracks_collection().all().await?;
+    // let playlists = db.playlists_collection().all().await?;
 
-    // We create a transaction to delete tracks much faster
-    let mut tx = Transaction::new();
+    // // We create a transaction to delete tracks much faster
+    // let mut tx = Transaction::new();
 
-    for track in tracks {
-        tx.push(Operation::delete(Track::collection_name(), track.header));
-    }
+    // for track in tracks {
+    //     tx.push(Operation::delete(Track::collection_name(), track.header));
+    // }
 
-    tx.apply_async(&db.tracks).await?;
+    // tx.apply_async(&db.tracks).await?;
 
-    // Now let's delete playlists
-    tx = Transaction::new();
+    // // Now let's delete playlists
+    // tx = Transaction::new();
 
-    for playlist in playlists {
-        tx.push(Operation::delete(
-            Playlist::collection_name(),
-            playlist.header,
-        ));
-    }
+    // for playlist in playlists {
+    //     tx.push(Operation::delete(
+    //         Playlist::collection_name(),
+    //         playlist.header,
+    //     ));
+    // }
 
-    tx.apply_async(&db.playlists).await?;
+    // tx.apply_async(&db.playlists).await?;
 
-    timer.complete();
+    // timer.complete();
 
     Ok(())
 }
@@ -729,19 +717,19 @@ async fn reset(db: State<'_, DB>) -> AnyResult<()> {
  * Doc: https://github.com/khonsulabs/bonsaidb/blob/main/examples/basic-local/examples/basic-local-multidb.rs
  */
 async fn setup() -> AnyResult<DB> {
-    let storage_path = get_storage_dir();
-    let storage_configuration = StorageConfiguration::new(storage_path.join("main.bonsaidb"))
-        .with_schema::<Track>()?
-        .with_schema::<Playlist>()?;
+    // TODO here
+    let storage_path = get_storage_dir().join("museeks_polo.db");
 
-    let storage = AsyncStorage::open(storage_configuration).await?;
+    let db = Database::open_path(storage_path).unwrap();
 
-    let tracks = storage.create_database::<Track>("tracks", true).await?;
-    let playlists = storage
-        .create_database::<Playlist>("playlists", true)
-        .await?;
+    let tracks = db.collection::<Track>("tracks");
+    let playlists = db.collection::<Playlist>("playlists");
 
-    Ok(DB { tracks, playlists })
+    Ok(DB {
+        db,
+        tracks,
+        playlists,
+    })
 }
 
 /**

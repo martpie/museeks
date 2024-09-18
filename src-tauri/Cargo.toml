@@ -13,11 +13,15 @@ edition = "2021"
 tauri-build = { version = "2.0.0-rc.11", features = ["codegen"] }
 
 [dependencies]
-tauri = { version = "2.0.0-rc.14", features = ["protocol-asset", "image-png", "devtools"] }
+tauri = { version = "2.0.0-rc.14", features = [
+    "protocol-asset",
+    "image-png",
+    "devtools",
+] }
 tauri-plugin-dialog = "2.0.0-rc.7"
 tauri-plugin-notification = "2.0.0-rc.5"
 tauri-plugin-os = "2.0.0-rc.1"
-tauri-plugin-log = {version = "2.0.0-rc.2", features = ["colored"] }
+tauri-plugin-log = { version = "2.0.0-rc.2", features = ["colored"] }
 tauri-plugin-shell = "2.0.0-rc.3"
 tauri-plugin-single-instance = "2.0.0-rc.4"
 tauri-plugin-window-state = "2.0.0-rc.5"
@@ -35,6 +39,7 @@ lofty = "0.21.0"
 memoize = "0.4.2"
 nosleep = "0.2.1"
 pathdiff = "0.2.1"
+polodb_core = "5.1.1"
 rayon = "1.10.0"
 serde = { version = "1.0.209", features = ["derive"] }
 serde_json = "1.0.127"
