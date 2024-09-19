@@ -1,3 +1,4 @@
+import debounce from 'lodash/debounce';
 import { useEffect } from 'react';
 import { useLocation, useNavigation } from 'react-router-dom';
 
@@ -6,9 +7,12 @@ function getScrollPosition(key: string) {
   return Number(pos) || 0;
 }
 
-function setScrollPosition(key: string, pos: number) {
+const setScrollPosition = debounce(function setScrollPosition(
+  key: string,
+  pos: number,
+) {
   window.sessionStorage.setItem(key, pos.toString());
-}
+}, 100);
 
 /**
  * Given a ref to a scrolling container element, keep track of its scroll
@@ -22,22 +26,23 @@ function setScrollPosition(key: string, pos: number) {
 export function useScrollRestoration(container: React.RefObject<HTMLElement>) {
   const key = `scroll-position-${useLocation().pathname}`;
   const { state } = useNavigation();
+  const target = container.current;
 
   useEffect(() => {
     function onScroll() {
-      setScrollPosition(key, container.current?.scrollTop ?? 0);
+      setScrollPosition(key, target?.scrollTop ?? 0);
     }
 
-    container.current?.addEventListener('scroll', onScroll);
+    target?.addEventListener('scroll', onScroll);
 
     return () => {
-      container.current?.removeEventListener('scroll', onScroll);
+      target?.removeEventListener('scroll', onScroll);
     };
-  });
+  }, [target, key]);
 
   useEffect(() => {
     if (state === 'idle') {
-      container.current?.scrollTo(0, getScrollPosition(key));
+      target?.scrollTo(0, getScrollPosition(key));
     }
-  }, [key, state, container]);
+  }, [key, state, target]);
 }

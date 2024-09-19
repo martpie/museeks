@@ -174,7 +174,6 @@ async function toggleLibraryAutorefresh(value: boolean): Promise<void> {
 async function checkForLibraryRefresh(): Promise<void> {
   const autorefreshEnabled = await config.getInitial('library_autorefresh');
 
-  console.log('autorefresh', autorefreshEnabled);
   if (autorefreshEnabled) {
     useLibraryStore.getState().api.refresh();
   }
