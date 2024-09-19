@@ -53,7 +53,7 @@
     "zustand": "^4.5.5"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.9.1",
+    "@biomejs/biome": "1.9.2",
     "@tauri-apps/cli": "2.0.0-rc.12",
     "@types/bun": "^1.1.9",
     "@types/lodash": "^4.17.7",

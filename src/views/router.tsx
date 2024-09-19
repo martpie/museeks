@@ -1,14 +1,6 @@
-import * as logger from '@tauri-apps/plugin-log';
-import {
-  type LoaderFunctionArgs,
-  createHashRouter,
-  isRouteErrorResponse,
-  useRouteError,
-} from 'react-router-dom';
+import { type LoaderFunctionArgs, createHashRouter } from 'react-router-dom';
 
-import ExternalLink from '../elements/ExternalLink/ExternalLink';
-import * as ViewMessage from '../elements/ViewMessage/ViewMessage';
-
+import GlobalErrorBoundary from '../components/GlobalErrorBoundary/GlobalErrorBoundary';
 import RootView from './Root';
 import ViewLibrary from './ViewLibrary';
 import ViewPlaylistDetails from './ViewPlaylistDetails';
@@ -85,45 +77,6 @@ const router = createHashRouter([
 ]);
 
 export default router;
-
-/**
- * Components helpers
- */
-
-function GlobalErrorBoundary() {
-  const error = useRouteError();
-  let errorMessage: string;
-
-  if (isRouteErrorResponse(error)) {
-    errorMessage = error.statusText;
-  } else if (error instanceof Error) {
-    errorMessage = error.message;
-  } else if (typeof error === 'string') {
-    errorMessage = error;
-  } else {
-    errorMessage = 'Unknown error';
-  }
-
-  logger.error(errorMessage);
-
-  return (
-    <ViewMessage.Notice>
-      <p>
-        {/* biome-ignore lint/a11y/useSemanticElements: no <img> for emojis */}
-        <span role="img" aria-label="boom">
-          💥
-        </span>{' '}
-        Something wrong happened: {errorMessage}
-      </p>
-      <ViewMessage.Sub>
-        If it happens again, please{' '}
-        <ExternalLink href="https://github.com/martpie/museeks/issues">
-          report an issue
-        </ExternalLink>
-      </ViewMessage.Sub>
-    </ViewMessage.Notice>
-  );
-}
 
 /**
  * Loader Types, to manually type useLoaderData()

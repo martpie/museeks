@@ -6,11 +6,7 @@
   border: solid 1px var(--border-color);
   overflow-x: auto;
   white-space: pre;
-  width: 150%;
-  /* overflow-x: auto;
-  white-space: nowrap; */
-  /* overflow: hidden; */
-  /* white-space: pre; */
+  width: 120%;
 }
 
 .libraryFoldersRemove {
