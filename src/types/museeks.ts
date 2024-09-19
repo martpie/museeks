@@ -1,5 +1,3 @@
-import type { Track } from '../generated/typings';
-
 /**
  * Player related stuff
  */
@@ -8,19 +6,6 @@ export enum PlayerStatus {
   PAUSE = 'pause',
   STOP = 'stop',
 }
-
-/**
- * Editable track fields (via right-click -> edit track)
- */
-export type TrackEditableFields = Pick<
-  Track,
-  'title' | 'artists' | 'album' | 'genres'
->;
-
-export type TrackSearchableFields = Pick<
-  Track,
-  'title' | 'artists' | 'album' | 'genres'
->;
 
 /**
  * Various
