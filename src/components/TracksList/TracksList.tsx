@@ -25,6 +25,7 @@ import { usePlayerAPI } from '../../stores/usePlayerStore';
 import TrackRow from '../TrackRow/TrackRow';
 import TracksListHeader from '../TracksListHeader/TracksListHeader';
 
+import { useScrollRestoration } from '../../hooks/useScrollRestoration';
 import styles from './TracksList.module.css';
 
 const ROW_HEIGHT = 30;
@@ -87,6 +88,7 @@ export default function TracksList(props: Props) {
   const playerAPI = usePlayerAPI();
   const libraryAPI = useLibraryAPI();
   const highlight = useLibraryStore((state) => state.highlightPlayingTrack);
+  useScrollRestoration(scrollableRef);
 
   // Highlight playing track and scroll to it
   // Super-mega-hacky to use Redux for that
