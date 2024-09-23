@@ -2,7 +2,7 @@ import { getTauriVersion, getVersion } from '@tauri-apps/api/app';
 import { invoke } from '@tauri-apps/api/core';
 import { Navigate, Outlet, useMatch } from 'react-router-dom';
 
-import * as Nav from '../elements/Nav/Nav';
+import * as SettingNav from '../elements/SettingsNav/SettingsNav';
 import config from '../lib/config';
 
 import appStyles from './Root.module.css';
@@ -15,12 +15,12 @@ export default function ViewSettingsView() {
   return (
     <div className={`${appStyles.view} ${styles.viewSettings}`}>
       <div className={styles.settings__nav}>
-        <Nav.Wrap vertical>
-          <Nav.Link to="/settings/library">Library</Nav.Link>
-          <Nav.Link to="/settings/audio">Audio</Nav.Link>
-          <Nav.Link to="/settings/interface">Interface</Nav.Link>
-          <Nav.Link to="/settings/about">About</Nav.Link>
-        </Nav.Wrap>
+        <SettingNav.Wrap vertical>
+          <SettingNav.Link to="/settings/library">Library</SettingNav.Link>
+          <SettingNav.Link to="/settings/audio">Audio</SettingNav.Link>
+          <SettingNav.Link to="/settings/interface">Interface</SettingNav.Link>
+          <SettingNav.Link to="/settings/about">About</SettingNav.Link>
+        </SettingNav.Wrap>
       </div>
 
       <div className={styles.settings__content}>
