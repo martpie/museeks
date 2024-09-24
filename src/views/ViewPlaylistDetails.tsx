@@ -16,6 +16,7 @@ import PlaylistsAPI from '../stores/PlaylistsAPI';
 import useLibraryStore from '../stores/useLibraryStore';
 
 import useFilteredTracks from '../hooks/useFilteredTracks';
+import useInvalidate from '../hooks/useInvalidate';
 import type { LoaderData } from './router';
 
 export default function ViewPlaylistDetails() {
@@ -24,24 +25,27 @@ export default function ViewPlaylistDetails() {
   const { playlistID } = useParams();
   const trackPlayingID = usePlayingTrackID();
 
+  const invalidate = useInvalidate();
+
   const search = useLibraryStore((state) => state.search);
   const filteredTracks = useFilteredTracks(playlistTracks, false);
 
   const onReorder = useCallback(
-    (
+    async (
       playlistID: string,
       tracksIDs: string[],
       targetTrackID: string,
       position: 'above' | 'below',
     ) => {
-      PlaylistsAPI.reorderTracks(
+      await PlaylistsAPI.reorderTracks(
         playlistID,
         tracksIDs,
         targetTrackID,
         position,
       );
+      invalidate();
     },
-    [],
+    [invalidate],
   );
 
   if (playlistTracks.length === 0) {

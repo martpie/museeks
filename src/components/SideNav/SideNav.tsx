@@ -9,6 +9,7 @@ import PlaylistsAPI from '../../stores/PlaylistsAPI';
 
 import ButtonIcon from '../../elements/ButtonIcon/ButtonIcon';
 import Flexbox from '../../elements/Flexbox/Flexbox';
+import useInvalidate from '../../hooks/useInvalidate';
 import SideNavLink from '../SideNavLink/SideNavLink';
 import styles from './SideNav.module.css';
 
@@ -19,6 +20,8 @@ type Props = {
 
 // TODO: finish making this component playlist agnostic
 export default function SideNav(props: Props) {
+  const invalidate = useInvalidate();
+
   const [renamed, setRenamed] = useState<string | null>(null);
 
   const showContextMenu = useCallback(
@@ -36,6 +39,7 @@ export default function SideNav(props: Props) {
           text: 'Delete',
           action: async () => {
             await PlaylistsAPI.remove(playlistID);
+            invalidate();
           },
         }),
         PredefinedMenuItem.new({ item: 'Separator' }),
@@ -43,6 +47,7 @@ export default function SideNav(props: Props) {
           text: 'Duplicate',
           action: async () => {
             await PlaylistsAPI.duplicate(playlistID);
+            invalidate();
           },
         }),
         PredefinedMenuItem.new({ item: 'Separator' }),
@@ -60,17 +65,22 @@ export default function SideNav(props: Props) {
 
       await menu.popup().catch(logAndNotifyError);
     },
-    [],
+    [invalidate],
   );
 
   const createPlaylist = useCallback(async () => {
     // TODO: 'new playlist 1', 'new playlist 2' ...
     await PlaylistsAPI.create('New playlist', [], false);
-  }, []);
+    invalidate();
+  }, [invalidate]);
 
-  const onRename = useCallback(async (playlistID: string, name: string) => {
-    await PlaylistsAPI.rename(playlistID, name);
-  }, []);
+  const onRename = useCallback(
+    async (playlistID: string, name: string) => {
+      await PlaylistsAPI.rename(playlistID, name);
+      invalidate();
+    },
+    [invalidate],
+  );
 
   const keyDown = useCallback(
     async (e: React.KeyboardEvent<HTMLInputElement>) => {

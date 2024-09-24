@@ -6,6 +6,7 @@ import useLibraryStore, { useLibraryAPI } from '../stores/useLibraryStore';
 import type { SettingsLoaderData } from './ViewSettings';
 
 import CheckboxSetting from '../components/SettingCheckbox/SettingCheckbox';
+import useInvalidate, { useInvalidateCallback } from '../hooks/useInvalidate';
 import SettingsAPI from '../stores/SettingsAPI';
 import styles from './ViewSettingsLibrary.module.css';
 
@@ -13,6 +14,7 @@ export default function ViewSettingsLibrary() {
   const libraryAPI = useLibraryAPI();
   const isLibraryRefreshing = useLibraryStore((state) => state.refreshing);
   const { config } = useLoaderData() as SettingsLoaderData;
+  const invalidate = useInvalidate();
 
   return (
     <div className="setting settings-musicfolder">
@@ -33,7 +35,9 @@ export default function ViewSettingsLibrary() {
                       type="button"
                       className={styles.libraryFoldersRemove}
                       data-museeks-action
-                      onClick={() => libraryAPI.removeLibraryFolder(folder)}
+                      onClick={() =>
+                        libraryAPI.removeLibraryFolder(folder).then(invalidate)
+                      }
                     >
                       &times;
                     </button>
@@ -47,11 +51,14 @@ export default function ViewSettingsLibrary() {
         <Flexbox gap={4}>
           <Button
             disabled={isLibraryRefreshing}
-            onClick={libraryAPI.addLibraryFolder}
+            onClick={useInvalidateCallback(libraryAPI.addLibraryFolder)}
           >
             Add folder
           </Button>
-          <Button disabled={isLibraryRefreshing} onClick={libraryAPI.refresh}>
+          <Button
+            disabled={isLibraryRefreshing}
+            onClick={useInvalidateCallback(libraryAPI.refresh)}
+          >
             Refresh library
           </Button>
         </Flexbox>
@@ -62,9 +69,9 @@ export default function ViewSettingsLibrary() {
       <Setting.Section>
         <CheckboxSetting
           slug="library-autorefresh"
-          title="Automatically refresh library on startup"
+          title="Automatically refresh library on startup2"
           value={config.library_autorefresh}
-          onChange={SettingsAPI.toggleLibraryAutorefresh}
+          onChange={useInvalidateCallback(SettingsAPI.toggleLibraryAutorefresh)}
         />
       </Setting.Section>
       <Setting.Section>
@@ -77,7 +84,7 @@ export default function ViewSettingsLibrary() {
             relevancy="danger"
             title="Fully reset the library"
             disabled={isLibraryRefreshing}
-            onClick={libraryAPI.reset}
+            onClick={useInvalidateCallback(libraryAPI.reset)}
           >
             Reset library
           </Button>
