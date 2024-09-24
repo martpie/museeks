@@ -8,7 +8,6 @@ import { getTheme } from '../lib/themes';
 import { logAndNotifyError } from '../lib/utils';
 
 import { getCurrentWindow } from '@tauri-apps/api/window';
-import { invalidate } from '../lib/query';
 import useLibraryStore from './useLibraryStore';
 import useToastsStore from './useToastsStore';
 
@@ -41,7 +40,6 @@ async function init(): Promise<void> {
 const setTheme = async (themeID: string): Promise<void> => {
   await config.set('theme', themeID);
   await applyThemeToUI(themeID);
-  invalidate();
 };
 
 /**
@@ -71,7 +69,6 @@ async function setTracksDensity(
   density: Config['track_view_density'],
 ): Promise<void> {
   await config.set('track_view_density', density);
-  invalidate();
 }
 
 /**
@@ -150,7 +147,6 @@ async function toggleSleepBlocker(value: boolean): Promise<void> {
   } else {
     await invoke('plugin:sleepblocker|disable');
   }
-  invalidate();
 }
 
 /**
@@ -160,7 +156,6 @@ async function setDefaultView(defaultView: DefaultView): Promise<void> {
   await invoke('plugin:default-view|set', {
     defaultView,
   });
-  invalidate();
 }
 
 /**
@@ -168,7 +163,6 @@ async function setDefaultView(defaultView: DefaultView): Promise<void> {
  */
 async function toggleLibraryAutorefresh(value: boolean): Promise<void> {
   await config.set('library_autorefresh', value);
-  invalidate();
 }
 
 async function checkForLibraryRefresh(): Promise<void> {
@@ -184,7 +178,6 @@ async function checkForLibraryRefresh(): Promise<void> {
  */
 async function toggleAutoUpdateChecker(value: boolean): Promise<void> {
   await config.set('auto_update_checker', value);
-  invalidate();
 }
 
 /**
@@ -192,7 +185,6 @@ async function toggleAutoUpdateChecker(value: boolean): Promise<void> {
  */
 async function toggleDisplayNotifications(value: boolean): Promise<void> {
   await config.set('notifications', value);
-  invalidate();
 }
 
 // Should we use something else to harmonize between zustand and non-store APIs?

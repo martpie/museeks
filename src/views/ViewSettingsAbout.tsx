@@ -9,11 +9,14 @@ import Flexbox from '../elements/Flexbox/Flexbox';
 import Heart from '../elements/Heart/Heart';
 import SettingsAPI from '../stores/SettingsAPI';
 
+import useInvalidate, { useInvalidateCallback } from '../hooks/useInvalidate';
 import type { SettingsLoaderData } from './ViewSettings';
 
 export default function ViewSettingsAbout() {
   const { config, version, tauriVersion, appStorageDir } =
     useLoaderData() as SettingsLoaderData;
+
+  const invalidate = useInvalidate();
 
   return (
     <div className="setting setting-about">
@@ -34,12 +37,12 @@ export default function ViewSettingsAbout() {
           slug="update"
           title="Automatically check for updates"
           value={config.auto_update_checker}
-          onChange={SettingsAPI.toggleAutoUpdateChecker}
+          onChange={useInvalidateCallback(SettingsAPI.toggleAutoUpdateChecker)}
         />
         <div>
           <Button
-            onClick={async () => {
-              await SettingsAPI.checkForUpdate();
+            onClick={() => {
+              SettingsAPI.checkForUpdate().then(invalidate);
             }}
           >
             Check for update

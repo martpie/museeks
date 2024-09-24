@@ -1,6 +1,5 @@
 import type { Playlist } from '../generated/typings';
 import database from '../lib/database';
-import { invalidate } from '../lib/query';
 import { logAndNotifyError } from '../lib/utils';
 import router from '../views/router';
 
@@ -26,7 +25,6 @@ async function play(playlistID: string): Promise<void> {
 async function create(name: string, trackIDs: string[] = [], redirect = false) {
   try {
     const playlist = await database.createPlaylist(name, trackIDs);
-    invalidate();
 
     if (redirect) router.navigate(`/playlists/${playlist._id}`);
     else
@@ -44,7 +42,6 @@ async function create(name: string, trackIDs: string[] = [], redirect = false) {
 async function rename(playlistID: string, name: string): Promise<void> {
   try {
     await database.renamePlaylist(playlistID, name);
-    invalidate();
   } catch (err) {
     logAndNotifyError(err);
   }
@@ -56,8 +53,6 @@ async function rename(playlistID: string, name: string): Promise<void> {
 async function remove(playlistID: string): Promise<void> {
   try {
     await database.deletePlaylist(playlistID);
-    // FIX these when there is no more playlists
-    invalidate();
   } catch (err) {
     logAndNotifyError(err);
   }
@@ -80,7 +75,6 @@ async function addTracks(
     const playlist = await database.getPlaylist(playlistID);
     const playlistTracks = playlist.tracks.concat(tracksIDs);
     await database.setPlaylistTracks(playlistID, playlistTracks);
-    invalidate();
     toastsAPI.add(
       'success',
       `${tracksIDs.length} tracks were successfully added to "${playlist.name}"`,
@@ -103,7 +97,6 @@ async function removeTracks(
       (elem: string) => !tracksIDs.includes(elem),
     );
     await database.setPlaylistTracks(playlistID, playlistTracks);
-    invalidate();
   } catch (err) {
     logAndNotifyError(err);
   }
@@ -116,7 +109,6 @@ async function duplicate(playlistID: string): Promise<void> {
   try {
     const playlist = await database.getPlaylist(playlistID);
     await database.createPlaylist(`Copy of ${playlist.name}`, playlist.tracks);
-    invalidate();
   } catch (err) {
     logAndNotifyError(err);
   }
@@ -158,7 +150,6 @@ async function reorderTracks(
 
     // Save and reload the playlist
     await database.setPlaylistTracks(playlistID, newTracks);
-    invalidate();
   } catch (err) {
     logAndNotifyError(err);
   }

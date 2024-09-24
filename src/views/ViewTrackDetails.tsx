@@ -13,6 +13,7 @@ import database from '../lib/database';
 import { useLibraryAPI } from '../stores/useLibraryStore';
 
 import Separator from '../elements/Separator/Separator';
+import useInvalidate from '../hooks/useInvalidate';
 import appStyles from './Root.module.css';
 import styles from './ViewTrackDetails.module.css';
 import type { LoaderData } from './router';
@@ -22,6 +23,7 @@ const DELIMITER = ',';
 
 export default function ViewTrackDetails() {
   const { track } = useLoaderData() as DetailsLoaderData;
+  const invalidate = useInvalidate();
 
   const [formData, setFormData] = useState<
     Pick<Track, 'title' | 'artists' | 'album' | 'genres'>
@@ -39,9 +41,10 @@ export default function ViewTrackDetails() {
     async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       await libraryAPI.updateTrackMetadata(track._id, formData);
+      invalidate();
       navigate(-1);
     },
-    [track, formData, navigate, libraryAPI],
+    [track, formData, navigate, libraryAPI, invalidate],
   );
 
   const handleCancel = useCallback(

@@ -3,7 +3,6 @@ import { ask, open } from '@tauri-apps/plugin-dialog';
 import type { SortBy, SortOrder, Track } from '../generated/typings';
 import config from '../lib/config';
 import database from '../lib/database';
-import { invalidate } from '../lib/query';
 import { logAndNotifyError } from '../lib/utils';
 
 import { getStatus, removeRedundantFolders } from '../lib/utils-library';
@@ -102,9 +101,6 @@ const useLibraryStore = createStore<LibraryState>((set, get) => ({
 
         set({ refreshing: true });
         await database.importTracks(result);
-        // TODO: re-implement progress
-        invalidate();
-        return;
       } catch (err) {
         logAndNotifyError(err);
       } finally {
@@ -141,8 +137,6 @@ const useLibraryStore = createStore<LibraryState>((set, get) => ({
               5000,
             );
         }
-
-        invalidate();
       } catch (err) {
         logAndNotifyError(err);
       } finally {
@@ -169,8 +163,6 @@ const useLibraryStore = createStore<LibraryState>((set, get) => ({
           path,
         ]).sort();
         await config.set('library_folders', newFolders);
-
-        invalidate();
       } catch (err) {
         logAndNotifyError(err);
       }
@@ -181,8 +173,6 @@ const useLibraryStore = createStore<LibraryState>((set, get) => ({
       const index = musicFolders.indexOf(path);
       musicFolders.splice(index, 1);
       await config.set('library_folders', musicFolders);
-
-      invalidate();
     },
 
     setRefresh: (current: number, total: number) => {
@@ -213,7 +203,6 @@ const useLibraryStore = createStore<LibraryState>((set, get) => ({
         // Remove tracks from the Track collection
         await database.removeTracks(tracksIDs);
 
-        invalidate();
         // That would be great to remove those ids from all the playlists, but it's not easy
         // and should not cause strange behaviors, all PR for that would be really appreciated
         // TODO: see if it's possible to remove the IDs from the selected state of TracksList as it "could" lead to strange behaviors
@@ -240,7 +229,6 @@ const useLibraryStore = createStore<LibraryState>((set, get) => ({
           await database.reset();
           await config.set('library_folders', []);
           useToastsStore.getState().api.add('success', 'Library was reset');
-          invalidate();
         }
       } catch (err) {
         logAndNotifyError(err);
@@ -274,8 +262,6 @@ const useLibraryStore = createStore<LibraryState>((set, get) => ({
         };
 
         await database.updateTrack(track);
-
-        invalidate();
       } catch (err) {
         logAndNotifyError(
           err,
