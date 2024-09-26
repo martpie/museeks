@@ -490,8 +490,8 @@ export default function TracksList(props: Props) {
           }),
           MenuItem.new({
             text: 'Remove from library',
-            action: () => {
-              libraryAPI.remove(selected);
+            action: async () => {
+              await libraryAPI.remove(selected);
               invalidate();
             },
           }),

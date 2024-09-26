@@ -8,13 +8,13 @@ import database from '../lib/database';
 import player from '../lib/player';
 import { logAndNotifyError } from '../lib/utils';
 import { shuffleTracks } from '../lib/utils-player';
-import { PlayerStatus } from '../types/museeks';
+import { type API, PlayerStatus } from '../types/museeks';
 import router from '../views/router';
 
 import { createStore } from './store-helpers';
 import useLibraryStore from './useLibraryStore';
 
-type PlayerState = {
+type PlayerState = API<{
   queue: Track[];
   oldQueue: Track[];
   queueCursor: number | null;
@@ -45,7 +45,7 @@ type PlayerState = {
     addNextInQueue: (tracksIDs: string[]) => Promise<void>;
     setQueue: (tracks: Track[]) => void;
   };
-};
+}>;
 
 const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
   queue: [], // Tracks to be played
@@ -61,7 +61,7 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
      * Start playing audio (queue instantiation, shuffle and everything...)
      * TODO: this function ~could probably~ needs to be refactored ~a bit~
      */
-    start: async (tracks, _id): Promise<void> => {
+    start: async (tracks, _id) => {
       // TODO: implement start with no queue
       //   // If no queue is provided, we create it based on the screen the user is on
       // if (!queue) {
@@ -150,7 +150,7 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
     /**
      * Pause audio
      */
-    pause: (): void => {
+    pause: () => {
       player.pause();
 
       set({ playerStatus: PlayerStatus.PAUSE });
@@ -178,7 +178,7 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
     /**
      * Stop the player
      */
-    stop: (): void => {
+    stop: () => {
       player.stop();
 
       set({
@@ -474,7 +474,7 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
     /**
      * Set the queue
      */
-    setQueue: (tracks: Track[]) => {
+    setQueue: (tracks) => {
       set({
         queue: tracks,
       });
