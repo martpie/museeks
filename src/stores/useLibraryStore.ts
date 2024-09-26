@@ -5,6 +5,8 @@ import config from '../lib/config';
 import database from '../lib/database';
 import { logAndNotifyError } from '../lib/utils';
 
+import type { StateCreator } from 'zustand';
+import { persist } from 'zustand/middleware';
 import { getStatus, removeRedundantFolders } from '../lib/utils-library';
 import type { API } from '../types/museeks';
 import { createStore } from './store-helpers';
@@ -41,7 +43,7 @@ type LibraryState = API<{
   };
 }>;
 
-const useLibraryStore = createStore<LibraryState>((set, get) => ({
+const useLibraryStore = createLibraryStore<LibraryState>((set, get) => ({
   search: '',
   sortBy: config.getInitial('library_sort_by'),
   sortOrder: config.getInitial('library_sort_order'),
@@ -291,4 +293,40 @@ export default useLibraryStore;
 
 export function useLibraryAPI() {
   return useLibraryStore((state) => state.api);
+}
+
+// -----------------------------------------------------------------------------
+// Helpers
+// -----------------------------------------------------------------------------
+
+/**
+ * Special store for player
+ */
+function createLibraryStore<T extends LibraryState>(store: StateCreator<T>) {
+  return createStore(
+    persist(store, {
+      name: 'museeks-library',
+      merge(persistedState, currentState) {
+        const mergedState = {
+          ...currentState,
+          // API should never be persisted
+          api: currentState.api,
+        };
+
+        if (persistedState != null && typeof persistedState === 'object') {
+          if ('refreshing' in persistedState) {
+            persistedState.refreshing = false;
+          }
+          if ('refresh' in persistedState) {
+            persistedState.refresh = {
+              current: 0,
+              total: 0,
+            };
+          }
+        }
+
+        return mergedState;
+      },
+    }),
+  );
 }
