@@ -6,11 +6,12 @@ import database from '../lib/database';
 import { logAndNotifyError } from '../lib/utils';
 
 import { getStatus, removeRedundantFolders } from '../lib/utils-library';
+import type { API } from '../types/museeks';
 import { createStore } from './store-helpers';
 import usePlayerStore from './usePlayerStore';
 import useToastsStore from './useToastsStore';
 
-type LibraryState = {
+type LibraryState = API<{
   search: string;
   sortBy: SortBy;
   sortOrder: SortOrder;
@@ -38,7 +39,7 @@ type LibraryState = {
     highlightPlayingTrack: (highlight: boolean) => void;
     setTracksStatus: (status: Array<Track> | null) => void;
   };
-};
+}>;
 
 const useLibraryStore = createStore<LibraryState>((set, get) => ({
   search: '',
@@ -56,14 +57,14 @@ const useLibraryStore = createStore<LibraryState>((set, get) => ({
     /**
      * Filter tracks by search
      */
-    search: (search): void => {
+    search: async (search) => {
       set({ search });
     },
 
     /**
      * Filter tracks by sort query
      */
-    sort: async (sortBy): Promise<void> => {
+    sort: async (sortBy) => {
       const prevSortBy = get().sortBy;
       const prevSortOrder = get().sortOrder;
 
@@ -88,7 +89,7 @@ const useLibraryStore = createStore<LibraryState>((set, get) => ({
     /**
      * Add tracks to Library
      */
-    add: async (): Promise<void> => {
+    add: async () => {
       try {
         const result = await open({
           multiple: true,
@@ -111,7 +112,7 @@ const useLibraryStore = createStore<LibraryState>((set, get) => ({
       }
     },
 
-    refresh: async (): Promise<void> => {
+    refresh: async () => {
       try {
         set({ refreshing: true });
 
@@ -147,7 +148,7 @@ const useLibraryStore = createStore<LibraryState>((set, get) => ({
       }
     },
 
-    addLibraryFolder: async (): Promise<void> => {
+    addLibraryFolder: async () => {
       try {
         const path = await open({
           directory: true,
@@ -168,14 +169,14 @@ const useLibraryStore = createStore<LibraryState>((set, get) => ({
       }
     },
 
-    removeLibraryFolder: async (path: string): Promise<void> => {
+    removeLibraryFolder: async (path) => {
       const musicFolders = await config.get('library_folders');
       const index = musicFolders.indexOf(path);
       musicFolders.splice(index, 1);
       await config.set('library_folders', musicFolders);
     },
 
-    setRefresh: (current: number, total: number) => {
+    setRefresh: async (current, total) => {
       set({
         refresh: {
           current,
@@ -212,7 +213,7 @@ const useLibraryStore = createStore<LibraryState>((set, get) => ({
     /**
      * Reset the library
      */
-    reset: async (): Promise<void> => {
+    reset: async () => {
       usePlayerStore.getState().api.stop();
       try {
         const confirmed = await ask(
@@ -243,10 +244,7 @@ const useLibraryStore = createStore<LibraryState>((set, get) => ({
      * @param trackID The ID of the track to update
      * @param newFields The fields to be updated and their new value
      */
-    updateTrackMetadata: async (
-      trackID: string,
-      newFields: Pick<Track, 'title' | 'artists' | 'album' | 'genres'>,
-    ): Promise<void> => {
+    updateTrackMetadata: async (trackID, newFields) => {
       try {
         let [track] = await database.getTracks([trackID]);
 
@@ -274,14 +272,14 @@ const useLibraryStore = createStore<LibraryState>((set, get) => ({
      * Set highlight trigger for a track
      * FIXME: very hacky, and not great, should be done another way
      */
-    highlightPlayingTrack: (highlight: boolean): void => {
+    highlightPlayingTrack: async (highlight) => {
       set({ highlightPlayingTrack: highlight });
     },
 
     /**
      * Manually set the footer content based on a list of tracks
      */
-    setTracksStatus: (tracks: Array<Track> | null): void => {
+    setTracksStatus: async (tracks) => {
       set({
         tracksStatus: tracks !== null ? getStatus(tracks) : '',
       });

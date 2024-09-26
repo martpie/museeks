@@ -21,7 +21,6 @@ export type ToastType = 'success' | 'danger' | 'warning';
 /**
  * Themes
  */
-
 export interface Theme {
   _id: string;
   name: string;
@@ -30,9 +29,16 @@ export interface Theme {
 }
 
 /**
- * Helpers
+ * APIs Helpers
  */
+export type API<
+  // biome-ignore lint/suspicious/noExplicitAny: loose type enforcement by design
+  T extends { api: Record<string, (...args: any[]) => Promise<any> | any> },
+> = T;
 
+/**
+ * Misc Helpers
+ */
 type StringableKey<T> = T extends readonly unknown[]
   ? number extends T['length']
     ? number

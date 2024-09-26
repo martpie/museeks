@@ -1,16 +1,16 @@
 import { nanoid } from 'nanoid';
 
-import type { Toast, ToastType } from '../types/museeks';
+import type { API, Toast, ToastType } from '../types/museeks';
 
 import { createStore } from './store-helpers';
 
-type ToastsState = {
+type ToastsState = API<{
   toasts: Toast[];
   api: {
     add: (type: ToastType, content: string, duration?: number) => void;
     remove: (id: string) => void;
   };
-};
+}>;
 
 const useToastsStore = createStore<ToastsState>((set, get) => ({
   toasts: [],
