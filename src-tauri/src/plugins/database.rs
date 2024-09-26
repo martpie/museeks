@@ -203,12 +203,13 @@ impl DB {
         &self,
         name: String,
         tracks_ids: Vec<String>,
+        import_path: Option<PathBuf>,
     ) -> AnyResult<Playlist> {
         let playlist = Playlist {
             _id: uuid::Uuid::new_v4().to_string(),
             name,
             tracks: tracks_ids,
-            import_path: None,
+            import_path,
         };
 
         self.playlists_collection()
@@ -332,8 +333,8 @@ pub struct Playlist {
     #[natural_id]
     pub _id: String,
     pub name: String,
-    pub tracks: Vec<String>, // vector of IDs
-    pub import_path: Option<PathBuf>,
+    pub tracks: Vec<String>,          // vector of IDs
+    pub import_path: Option<PathBuf>, // the path of the file on disk (not set for playlists created in app)
 }
 
 /**
@@ -518,10 +519,22 @@ async fn import_tracks_to_library<R: Runtime>(
     db_insert_logger.complete();
 
     // Now that all tracks are inserted, let's scan for playlists, and import them
-    let playlist_paths = scan_dirs(&import_paths, &SUPPORTED_PLAYLISTS_EXTENSIONS);
+    let mut playlist_paths = scan_dirs(&import_paths, &SUPPORTED_PLAYLISTS_EXTENSIONS);
+
+    // Ignore playlists that are already in the DB (speedup scan + prevent duplicate errors)
+    let existing_playlists_paths = db
+        .get_all_playlists()
+        .await?
+        .iter()
+        .map(move |playlist| playlist.import_path.to_owned())
+        .flatten()
+        .collect::<HashSet<_>>();
+
+    playlist_paths.retain(|path| !existing_playlists_paths.contains(path));
 
     info!("Found {} playlist(s) to import", playlist_paths.len());
 
+    // Start scanning the content of the playlists and adding them to the DB
     for playlist_path in playlist_paths {
         match {
             let mut reader = m3u::Reader::open(&playlist_path).unwrap();
@@ -571,7 +584,8 @@ async fn import_tracks_to_library<R: Runtime>(
                 &track_ids.len()
             );
 
-            db.create_playlist(playlist_name, track_ids).await?;
+            db.create_playlist(playlist_name, track_ids, Some(playlist_path))
+                .await?;
             Ok::<(), MuseeksError>(())
         } {
             Ok(_) => {
@@ -623,8 +637,13 @@ async fn get_playlist(db: State<'_, DB>, id: String) -> AnyResult<Playlist> {
 }
 
 #[tauri::command]
-async fn create_playlist(db: State<'_, DB>, name: String, ids: Vec<String>) -> AnyResult<Playlist> {
-    db.create_playlist(name, ids).await
+async fn create_playlist(
+    db: State<'_, DB>,
+    name: String,
+    ids: Vec<String>,
+    import_path: Option<PathBuf>,
+) -> AnyResult<Playlist> {
+    db.create_playlist(name, ids, import_path).await
 }
 
 #[tauri::command]

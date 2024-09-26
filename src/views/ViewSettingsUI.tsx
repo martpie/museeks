@@ -83,7 +83,7 @@ export default function ViewSettingsUI() {
         <CheckboxSetting
           slug="sleepmode"
           title="Sleep mode blocker"
-          description="Prevent the computer from going into sleep mode when playing2"
+          description="Prevent the computer from going into sleep mode when playing"
           value={config.sleepblocker}
           onChange={useInvalidateCallback(SettingsAPI.toggleSleepBlocker)}
         />

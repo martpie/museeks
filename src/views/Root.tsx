@@ -14,13 +14,18 @@ import Header from '../components/Header/Header';
 import Toasts from '../components/Toasts/Toasts';
 import SettingsAPI from '../stores/SettingsAPI';
 
+import useInvalidate from '../hooks/useInvalidate';
 import styles from './Root.module.css';
 import type { LoaderData } from './router';
 
 export default function ViewRoot() {
+  const invalidate = useInvalidate();
+
   useEffect(() => {
-    SettingsAPI.init();
-  }, []);
+    SettingsAPI.init(invalidate)
+      // If the app imported tracks, we need to refresh route data
+      .then(); // infinite loop!
+  }, [invalidate]);
 
   return (
     <div className={`${styles.root} os__${window.__MUSEEKS_PLATFORM}`}>

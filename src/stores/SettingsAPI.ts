@@ -13,18 +13,17 @@ import useToastsStore from './useToastsStore';
 
 // Manual prevention of a useEffect being called twice (to avoid refreshing the
 // library twice on startup in dev mode).
+// Also, we useInvalidate, SettingsAPI.init would infinitely loop. It means
+// something is fishy and need to be fixed "somewhere".
 let did_init = false;
 
 /**
  * Init all settings, then show the app
  */
-async function init(): Promise<void> {
+async function init(then: () => void): Promise<void> {
   if (did_init) return;
 
   did_init = true;
-  // This is non-blocking
-  checkForLibraryRefresh().catch(logAndNotifyError);
-
   // Blocking (the window should not be shown until it's done)
   await Promise.allSettled([
     checkTheme(),
@@ -35,6 +34,10 @@ async function init(): Promise<void> {
   // Show the app once everything is loaded
   const currentWindow = await getCurrentWindow();
   await currentWindow.show();
+
+  // Non-blocking, this can we done later
+  await checkForLibraryRefresh().catch(logAndNotifyError);
+  then();
 }
 
 const setTheme = async (themeID: string): Promise<void> => {
