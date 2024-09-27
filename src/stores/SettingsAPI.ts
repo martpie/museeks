@@ -27,13 +27,11 @@ async function init(then: () => void): Promise<void> {
   // Blocking (the window should not be shown until it's done)
   await Promise.allSettled([
     checkTheme(),
-    checkSleepBlocker(),
     checkForUpdate({ silentFail: true }),
   ]);
 
   // Show the app once everything is loaded
-  const currentWindow = await getCurrentWindow();
-  await currentWindow.show();
+  await getCurrentWindow().show();
 
   // Non-blocking, this can we done later
   await checkForLibraryRefresh().catch(logAndNotifyError);
@@ -72,15 +70,6 @@ async function setTracksDensity(
   density: Config['track_view_density'],
 ): Promise<void> {
   await config.set('track_view_density', density);
-}
-
-/**
- * Check and enable sleep blocker if needed
- */
-async function checkSleepBlocker(): Promise<void> {
-  if (await config.get('sleepblocker')) {
-    invoke('plugin:sleepblocker|enable');
-  }
 }
 
 /**
@@ -169,7 +158,7 @@ async function toggleLibraryAutorefresh(value: boolean): Promise<void> {
 }
 
 async function checkForLibraryRefresh(): Promise<void> {
-  const autorefreshEnabled = await config.getInitial('library_autorefresh');
+  const autorefreshEnabled = config.getInitial('library_autorefresh');
 
   if (autorefreshEnabled) {
     useLibraryStore.getState().api.refresh();
