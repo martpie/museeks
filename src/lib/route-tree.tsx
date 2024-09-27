@@ -1,18 +1,16 @@
-import { type LoaderFunctionArgs, createHashRouter } from 'react-router-dom';
-
 import GlobalErrorBoundary from '../components/GlobalErrorBoundary/GlobalErrorBoundary';
-import RootView from './Root';
-import ViewLibrary from './ViewLibrary';
-import ViewPlaylistDetails from './ViewPlaylistDetails';
-import ViewPlaylists from './ViewPlaylists';
-import ViewSettings from './ViewSettings';
-import ViewSettingsAbout from './ViewSettingsAbout';
-import ViewSettingsAudio from './ViewSettingsAudio';
-import ViewSettingsLibrary from './ViewSettingsLibrary';
-import ViewSettingsUI from './ViewSettingsUI';
-import ViewTrackDetails from './ViewTrackDetails';
+import RootView from '../views/Root';
+import ViewLibrary from '../views/ViewLibrary';
+import ViewPlaylistDetails from '../views/ViewPlaylistDetails';
+import ViewPlaylists from '../views/ViewPlaylists';
+import ViewSettings from '../views/ViewSettings';
+import ViewSettingsAbout from '../views/ViewSettingsAbout';
+import ViewSettingsAudio from '../views/ViewSettingsAudio';
+import ViewSettingsLibrary from '../views/ViewSettingsLibrary';
+import ViewSettingsUI from '../views/ViewSettingsUI';
+import ViewTrackDetails from '../views/ViewTrackDetails';
 
-const router = createHashRouter([
+const routeTree = [
   {
     path: '/',
     id: 'root',
@@ -74,15 +72,6 @@ const router = createHashRouter([
       },
     ],
   },
-]);
+];
 
-export default router;
-
-/**
- * Loader Types, to manually type useLoaderData()
- */
-export type LoaderData<T> = T extends (
-  args: LoaderFunctionArgs,
-) => Promise<infer U>
-  ? Exclude<U, Response>
-  : never;
+export default routeTree;

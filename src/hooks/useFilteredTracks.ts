@@ -1,8 +1,12 @@
 import { useEffect, useMemo } from 'react';
 
 import type { Track } from '../generated/typings';
-import SORT_ORDERS from '../lib/sort-orders';
-import { filterTracks, sortTracks, stripAccents } from '../lib/utils-library';
+import {
+  filterTracks,
+  getSortOrder,
+  sortTracks,
+  stripAccents,
+} from '../lib/utils-library';
 import useLibraryStore, { useLibraryAPI } from '../stores/useLibraryStore';
 
 /**
@@ -25,7 +29,7 @@ export default function useFilteredTracks(
       // sorting being a costly operation, do it after filtering, ignore it if not needed
       searchedTracks = sortTracks(
         searchedTracks,
-        SORT_ORDERS[sortBy],
+        getSortOrder(sortBy),
         sortOrder,
       );
     }

@@ -12,19 +12,17 @@ import PlayerEvents from '../components/Events/PlayerEvents';
 import Footer from '../components/Footer/Footer';
 import Header from '../components/Header/Header';
 import Toasts from '../components/Toasts/Toasts';
-import SettingsAPI from '../stores/SettingsAPI';
-
 import useInvalidate from '../hooks/useInvalidate';
+import SettingsAPI from '../stores/SettingsAPI';
+import type { LoaderData } from '../types/museeks';
 import styles from './Root.module.css';
-import type { LoaderData } from './router';
 
 export default function ViewRoot() {
   const invalidate = useInvalidate();
 
   useEffect(() => {
-    SettingsAPI.init(invalidate)
-      // If the app imported tracks, we need to refresh route data
-      .then(); // infinite loop!
+    // If the app imported tracks, we need to refresh route data, but it seems invalidate is not super stable
+    SettingsAPI.init(invalidate);
   }, [invalidate]);
 
   return (

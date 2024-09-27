@@ -7,6 +7,7 @@ import database from '../../lib/database';
 import { logAndNotifyError } from '../../lib/utils';
 import PlaylistsAPI from '../../stores/PlaylistsAPI';
 
+import { useNavigate } from 'react-router-dom';
 import ButtonIcon from '../../elements/ButtonIcon/ButtonIcon';
 import Flexbox from '../../elements/Flexbox/Flexbox';
 import useInvalidate from '../../hooks/useInvalidate';
@@ -21,6 +22,7 @@ type Props = {
 // TODO: finish making this component playlist agnostic
 export default function SideNav(props: Props) {
   const invalidate = useInvalidate();
+  const navigate = useNavigate();
 
   const [renamed, setRenamed] = useState<string | null>(null);
 
@@ -70,9 +72,13 @@ export default function SideNav(props: Props) {
 
   const createPlaylist = useCallback(async () => {
     // TODO: 'new playlist 1', 'new playlist 2' ...
-    await PlaylistsAPI.create('New playlist', [], false);
-    invalidate();
-  }, [invalidate]);
+    const playlist = await PlaylistsAPI.create('New playlist', [], false);
+
+    if (playlist) {
+      invalidate();
+      navigate(`/playlists/${playlist._id}`);
+    }
+  }, [navigate, invalidate]);
 
   const onRename = useCallback(
     async (playlistID: string, name: string) => {

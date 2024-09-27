@@ -9,10 +9,8 @@ import player from '../lib/player';
 import { logAndNotifyError } from '../lib/utils';
 import { shuffleTracks } from '../lib/utils-player';
 import { type API, PlayerStatus } from '../types/museeks';
-import router from '../views/router';
 
 import { createStore } from './store-helpers';
-import useLibraryStore from './useLibraryStore';
 
 type PlayerState = API<{
   queue: Track[];
@@ -37,7 +35,6 @@ type PlayerState = API<{
     setPlaybackRate: (value: number) => Promise<void>;
     setOutputDevice: (deviceID: string) => Promise<void>;
     jumpTo: (to: number) => void;
-    jumpToPlayingTrack: () => Promise<void>;
     startFromQueue: (index: number) => Promise<void>;
     clearQueue: () => void;
     removeFromQueue: (index: number) => void;
@@ -333,7 +330,6 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
       else player.unmute();
 
       await config.set('audio_muted', muted);
-      router.revalidate();
     },
 
     /**
@@ -348,7 +344,6 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
         await config.set('audio_playback_rate', null);
         player.setPlaybackRate(1.0);
       }
-      router.revalidate();
     },
 
     /**
@@ -359,7 +354,6 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
         try {
           await player.setOutputDevice(deviceID);
           await config.set('audio_output_device', deviceID);
-          router.revalidate();
         } catch (err) {
           logAndNotifyError(err);
         }
@@ -371,18 +365,6 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
      */
     jumpTo: (to) => {
       player.setCurrentTime(to);
-    },
-
-    /**
-     * Toggle play/pause
-     */
-    jumpToPlayingTrack: async () => {
-      const queueOrigin = get().queueOrigin ?? '#/library';
-      await router.navigate(queueOrigin);
-
-      setTimeout(() => {
-        useLibraryStore.getState().api.highlightPlayingTrack(true);
-      }, 0);
     },
 
     /**
@@ -577,5 +559,4 @@ function createPlayerStore<T extends PlayerState>(store: StateCreator<T>) {
  */
 const saveVolume = debounce(async (volume: number) => {
   await config.set('audio_volume', volume);
-  router.revalidate();
 }, 500);

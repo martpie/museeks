@@ -1,7 +1,6 @@
 import type { Playlist } from '../generated/typings';
 import database from '../lib/database';
 import { logAndNotifyError } from '../lib/utils';
-import router from '../views/router';
 
 import usePlayerStore from './usePlayerStore';
 import useToastsStore from './useToastsStore';
@@ -22,18 +21,26 @@ async function play(playlistID: string): Promise<void> {
 /**
  * Create a new playlist
  */
-async function create(name: string, trackIDs: string[] = [], redirect = false) {
+async function create(
+  name: string,
+  trackIDs: string[] = [],
+  silent = false,
+): Promise<Playlist | null> {
   try {
     const playlist = await database.createPlaylist(name, trackIDs);
 
-    if (redirect) router.navigate(`/playlists/${playlist._id}`);
-    else
+    if (!silent) {
       useToastsStore
         .getState()
         .api.add('success', `The playlist "${name}" was created`);
+    }
+
+    return playlist;
   } catch (err) {
     logAndNotifyError(err);
   }
+
+  return null;
 }
 
 /**

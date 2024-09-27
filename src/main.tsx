@@ -13,7 +13,7 @@ import * as ReactDOM from 'react-dom/client';
 import { RouterProvider } from 'react-router-dom';
 
 import queryClient from './lib/query-client';
-import router from './views/router';
+import router from './lib/router';
 
 /*
 |--------------------------------------------------------------------------
