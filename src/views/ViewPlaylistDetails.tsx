@@ -17,7 +17,7 @@ import useLibraryStore from '../stores/useLibraryStore';
 
 import useFilteredTracks from '../hooks/useFilteredTracks';
 import useInvalidate from '../hooks/useInvalidate';
-import type { LoaderData } from './router';
+import type { LoaderData } from '../types/museeks';
 
 export default function ViewPlaylistDetails() {
   const { playlists, playlistTracks, tracksDensity } =

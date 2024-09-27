@@ -50,6 +50,9 @@ jobs:
       - name: 'Test: Types'
         run: 'bun run test:typings'
 
+      - name: 'Test: Circular Dependencies'
+        run: 'bun run madge --circular --extensions ts --extensions tsx .'
+
       - name: Build application
         run: bun run build
 

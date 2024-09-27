@@ -12,9 +12,9 @@ import database from '../lib/database';
 import PlaylistsAPI from '../stores/PlaylistsAPI';
 
 import useInvalidate from '../hooks/useInvalidate';
+import type { LoaderData } from '../types/museeks';
 import appStyles from './Root.module.css';
 import styles from './ViewPlaylists.module.css';
-import type { LoaderData } from './router';
 
 export default function ViewPlaylists() {
   const { playlists } = useLoaderData() as PlaylistsLoaderData;

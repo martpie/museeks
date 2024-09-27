@@ -4,10 +4,10 @@ import { Navigate, Outlet, useMatch } from 'react-router-dom';
 
 import * as SettingNav from '../elements/SettingsNav/SettingsNav';
 import config from '../lib/config';
+import type { LoaderData } from '../types/museeks';
 
 import appStyles from './Root.module.css';
 import styles from './ViewSettings.module.css';
-import type { LoaderData } from './router';
 
 export default function ViewSettingsView() {
   const match = useMatch('/settings');
