@@ -62,6 +62,7 @@
     "@types/react-fontawesome": "^1.6.8",
     "@types/semver": "^7.5.8",
     "@vitejs/plugin-react": "^4.3.1",
+    "@welldone-software/why-did-you-render": "^8.0.3",
     "autoprefixer": "^10.4.20",
     "postcss": "^8.4.47",
     "postcss-import": "^16.1.0",
