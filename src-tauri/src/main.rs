@@ -4,10 +4,9 @@
 mod libs;
 mod plugins;
 
-use libs::utils::show_window;
+use libs::utils::{get_theme_from_name, show_window};
 use log::LevelFilter;
 use plugins::config::ConfigManager;
-use plugins::theme::get_tauri_theme_from_theme;
 use tauri::{Manager, WebviewUrl, WebviewWindowBuilder};
 use tauri_plugin_log::fern::colors::ColoredLevelConfig;
 use tauri_plugin_log::{Target, TargetKind};
@@ -41,7 +40,6 @@ async fn main() {
         .plugin(plugins::default_view::init())
         .plugin(plugins::shell_extension::init())
         .plugin(plugins::sleepblocker::init())
-        .plugin(plugins::theme::init())
         // Tauri integrations with the Operating System
         .plugin(tauri_plugin_dialog::init())
         .plugin(tauri_plugin_os::init())
@@ -68,7 +66,7 @@ async fn main() {
                 WebviewWindowBuilder::new(app, "main", WebviewUrl::App("index.html".into()))
                     .title("Museeks")
                     .visible(false)
-                    .theme(get_tauri_theme_from_theme(&conf.theme))
+                    .theme(get_theme_from_name(&conf.theme))
                     .inner_size(900.0, 550.0)
                     .min_inner_size(900.0, 550.0)
                     .fullscreen(false)

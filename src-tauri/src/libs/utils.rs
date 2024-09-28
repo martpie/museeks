@@ -3,8 +3,10 @@
  */
 use log::info;
 use std::{ffi::OsStr, path::PathBuf, time::Instant};
-use tauri::{Runtime, WebviewWindow};
+use tauri::{Runtime, Theme, WebviewWindow};
 use walkdir::WalkDir;
+
+use crate::plugins::config::SYSTEM_THEME;
 
 /**
  * Small helper to compute the execution time of some code
@@ -104,4 +106,17 @@ pub fn show_window<R: Runtime>(window: &WebviewWindow<R>) {
     window.maximize().unwrap();
     window.show().unwrap();
     window.set_focus().unwrap();
+}
+
+/**
+ * Give an arbitrary string (usually the theme value from the config), returns
+ * a Tauri theme
+ */
+pub fn get_theme_from_name(theme_name: &str) -> Option<Theme> {
+    match theme_name {
+        "light" => Some(Theme::Light),
+        "dark" => Some(Theme::Dark),
+        SYSTEM_THEME => None,
+        _ => None, // ? :]
+    }
 }
