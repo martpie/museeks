@@ -1,10 +1,14 @@
 import { useEffect } from 'react';
 
+import { getCurrentWindow } from '@tauri-apps/api/window';
 import player from '../../lib/player';
-// import SettingsAPI from '../../stores/SettingsAPI';
-// import type { Theme } from '../../types/museeks';
 import { logAndNotifyError } from '../../lib/utils';
 import { isDev, preventNativeDefault } from '../../lib/utils-events';
+import SettingsAPI from '../../stores/SettingsAPI';
+
+function onSystemThemeChange({ payload }: { payload: string }) {
+  SettingsAPI.applyThemeToUI(payload);
+}
 
 /**
  * Handle app-level IPC Events init and cleanup
@@ -25,8 +29,10 @@ function AppEvents() {
     // function updateTheme(_event: IpcRendererEvent, theme: unknown) {
     //   SettingsAPI.applyThemeToUI(theme as Theme);
     // }
-
-    // ipcRenderer.on(channels.THEME_APPLY, updateTheme);
+    const unlistenSystemThemeChange = getCurrentWindow().listen(
+      'tauri://theme-changed',
+      onSystemThemeChange,
+    );
 
     // Support for multiple audio output
     async function updateOutputDevice() {
@@ -47,7 +53,7 @@ function AppEvents() {
         window.removeEventListener('contextmenu', preventNativeDefault);
       }
 
-      // ipcRenderer.off(channels.THEME_APPLY, updateTheme);
+      unlistenSystemThemeChange.then((u) => u());
 
       navigator.mediaDevices.removeEventListener(
         'devicechange',

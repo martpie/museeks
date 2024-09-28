@@ -11,6 +11,7 @@ use tauri::{Manager, Runtime, State};
 use ts_rs::TS;
 
 use crate::libs::error::{AnyResult, MuseeksError};
+use crate::plugins::theme::SYSTEM_THEME;
 
 #[derive(Serialize, Deserialize, Debug, Clone, TS)]
 #[ts(export, export_to = "../../src/generated/typings/index.ts")]
@@ -69,7 +70,7 @@ pub struct Config {
 impl Config {
     pub fn default() -> Self {
         Config {
-            theme: "light".to_owned(), // should be "__system" once we can guess global theme preference
+            theme: SYSTEM_THEME.to_owned(),
             audio_volume: 1.0,
             audio_playback_rate: Some(1.0),
             audio_output_device: "default".to_owned(),
@@ -123,6 +124,13 @@ impl ConfigManager {
     pub fn set_default_view(&self, default_view: DefaultView) -> AnyResult<()> {
         let mut writer = self.data.write().map_err(config_err)?;
         writer.default_view = default_view;
+        std::mem::drop(writer);
+        self.save()
+    }
+
+    pub fn set_theme(&self, theme: String) -> AnyResult<()> {
+        let mut writer = self.data.write().map_err(config_err)?;
+        writer.theme = theme;
         std::mem::drop(writer);
         self.save()
     }
