@@ -39,9 +39,24 @@ async function init(then: () => void): Promise<void> {
 }
 
 const setTheme = async (themeID: string): Promise<void> => {
-  const theme: string = await invoke('plugin:theme|set_theme', {
-    theme: themeID,
-  });
+  await config.set('theme', themeID);
+
+  switch (themeID) {
+    case '__system': {
+      await getCurrentWindow().setTheme(null);
+      break;
+    }
+    case 'light': {
+      await getCurrentWindow().setTheme('light');
+      break;
+    }
+    case 'dark': {
+      await getCurrentWindow().setTheme('dark');
+      break;
+    }
+  }
+
+  const theme = (await getCurrentWindow().theme()) ?? 'light';
 
   await applyThemeToUI(theme);
 };
@@ -61,12 +76,8 @@ async function applyThemeToUI(themeID: string): Promise<void> {
 }
 
 async function checkTheme(): Promise<void> {
-  // TODO: Tauri offers no API to query the system system preference,getCurrent().theme()
-  // that is used when a window is created with no assigned theme.
-  // So we are bypassing the user choice for now.
-  // const themeID: string = await config.get("theme");
-  const themeID = await config.get('theme');
-  applyThemeToUI(themeID);
+  const theme = (await getCurrentWindow().theme()) ?? 'light';
+  applyThemeToUI(theme);
 }
 
 async function setTracksDensity(
