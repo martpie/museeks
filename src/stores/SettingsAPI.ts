@@ -39,8 +39,11 @@ async function init(then: () => void): Promise<void> {
 }
 
 const setTheme = async (themeID: string): Promise<void> => {
-  await config.set('theme', themeID);
-  await applyThemeToUI(themeID);
+  const theme: string = await invoke('plugin:theme|set_theme', {
+    theme: themeID,
+  });
+
+  await applyThemeToUI(theme);
 };
 
 /**

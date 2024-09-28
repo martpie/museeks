@@ -25,8 +25,7 @@ export default function ViewSettingsUI() {
             SettingsAPI.setTheme(e.currentTarget.value).then(invalidate)
           }
         >
-          {/* broken we can get the global theme preference :( */}
-          {/* <option value="__system">System (default)</option> */}
+          <option value="__system">System (default)</option>
           {Object.values(themes).map((theme) => {
             return (
               <option key={theme._id} value={theme._id}>
