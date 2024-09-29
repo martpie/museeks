@@ -26,6 +26,9 @@ async fn main() {
                 .targets([
                     Target::new(TargetKind::Stdout),
                     Target::new(TargetKind::Webview),
+                    Target::new(TargetKind::LogDir {
+                        file_name: Some("museeks".into()),
+                    }),
                 ])
                 .level(LevelFilter::Info)
                 .with_colors(ColoredLevelConfig::default())
@@ -59,9 +62,6 @@ async fn main() {
         )
         // TODO: tauri-plugin-theme to update the native theme at runtime
         .setup(|app| {
-            #[cfg(not(target_os = "macos"))]
-            setup_file_associations(app);
-
             let config_manager = app.state::<ConfigManager>();
             let conf = config_manager.get()?;
 
@@ -76,7 +76,11 @@ async fn main() {
                     .fullscreen(false)
                     .resizable(true)
                     .disable_drag_drop_handler() // TODO: Windows drag-n-drop on windows does not work :| https://github.com/tauri-apps/wry/issues/904
-                    .zoom_hotkeys_enabled(true);
+                    .zoom_hotkeys_enabled(true)
+                    .on_page_load(|_, _ | {
+                        #[cfg(not(target_os = "macos"))]
+                        setup_file_associations(app);
+                    });
 
             #[cfg(target_os = "macos")]
             window_builder
@@ -87,17 +91,21 @@ async fn main() {
             #[cfg(not(target_os = "macos"))]
             window_builder.build()?;
 
+            window_builder
+
+            #[cfg(not(target_os = "macos"))]
+            setup_file_associations(app);
+
+
             Ok(())
         })
         .build(tauri::generate_context!())
         .expect("error while running tauri application")
-        .run(|app, event| {
-            #[cfg(target_os = "macos")]
-            setup_file_associations(app, event);
-
-            #[cfg(not(target_os = "macos"))]
-            {
-                drop(app);
-            }
-        });
+        .run(
+            #[allow(unused_variables)]
+            |app, event| {
+                #[cfg(target_os = "macos")]
+                setup_file_associations(app, event);
+            },
+        );
 }

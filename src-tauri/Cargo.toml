@@ -43,6 +43,7 @@ strum = { version = "0.26.2", features = ["derive"] }
 thiserror = "1.0.64"
 tokio = { version = "1.39.3", features = ["macros"] }
 ts-rs = "10.0.0"
+url = "2.5.2"
 uuid = { version = "1.8.0", features = ["v3", "v4", "fast-rng"] }
 walkdir = "2.5.0"
 

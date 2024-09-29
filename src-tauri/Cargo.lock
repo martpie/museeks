@@ -3016,6 +3016,7 @@ dependencies = [
  "thiserror",
  "tokio",
  "ts-rs",
+ "url 2.5.2",
  "uuid",
  "walkdir",
 ]

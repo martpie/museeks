@@ -1,3 +1,4 @@
+use log::info;
 use rayon::iter::{IntoParallelRefIterator, ParallelIterator};
 use std::path::PathBuf;
 use tauri::{AppHandle, Emitter, Manager};
@@ -20,19 +21,41 @@ pub fn setup_file_associations(app: &tauri::App) {
     // or arguments (`--`) if your app supports them.
     // files may aslo be passed as `file://path/to/file`
     for maybe_file in std::env::args().skip(1) {
+        info!("TADATA {}", maybe_file);
         // skip flags like -f or --flag
         if maybe_file.starts_with("-") {
+            info!("startwith -");
             continue;
         }
 
         // handle `file://` path urls and skip other urls
-        if let Ok(url) = tauri::Url::parse(&maybe_file) {
-            if let Ok(path) = url.to_file_path() {
-                files.push(path);
-            }
-        } else {
-            files.push(PathBuf::from(maybe_file))
-        }
+        // if let Ok(mut url) = url::Url::parse(&maybe_file) {
+        //     info!("prased URL {}", url);
+
+        //     match url.set_scheme("file") {
+        //         Ok(()) => info!("added file as scheme"),
+        //         Err(err) => info!("failed"),
+        //     }
+
+        //     match url.to_file_path() {
+        //         Ok(path) => {
+        //             info!("to file path URL {:#?}", path);
+        //             files.push(path);
+        //         }
+        //         Err(err) => {
+        //             info!("FAILED {:#?}", err);
+        //         }
+        //     }
+        // } else {
+        info!("? {}", maybe_file);
+        files.push(PathBuf::from(maybe_file))
+        // }
+    }
+
+    info!("Hello??? {:#?}", files);
+
+    if files.len() == 0 {
+        return;
     }
 
     handle_file_associations(app.handle().clone(), files);
@@ -59,6 +82,8 @@ pub fn setup_file_associations(app: &AppHandle, event: tauri::RunEvent) {
  * For playlists files, not implemented.
  */
 fn handle_file_associations(app_handle: AppHandle, mut files: Vec<PathBuf>) {
+    info!("Handling file(s) opening: {:#?}", files);
+
     files = files
         .into_iter()
         .filter(|path| is_file_valid(path, &SUPPORTED_TRACKS_EXTENSIONS))
@@ -83,6 +108,11 @@ fn handle_file_associations(app_handle: AppHandle, mut files: Vec<PathBuf>) {
     if window.is_none() {
         return;
     }
+
+    info!(
+        "Sending a queue of {} track(s) to be played to the UI",
+        queue.len()
+    );
 
     match window
         .unwrap()
