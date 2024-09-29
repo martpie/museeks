@@ -76,11 +76,7 @@ async fn main() {
                     .fullscreen(false)
                     .resizable(true)
                     .disable_drag_drop_handler() // TODO: Windows drag-n-drop on windows does not work :| https://github.com/tauri-apps/wry/issues/904
-                    .zoom_hotkeys_enabled(true)
-                    .on_page_load(|_, _ | {
-                        #[cfg(not(target_os = "macos"))]
-                        setup_file_associations(app);
-                    });
+                    .zoom_hotkeys_enabled(true);
 
             #[cfg(target_os = "macos")]
             window_builder
@@ -89,13 +85,12 @@ async fn main() {
                 .build()?;
 
             #[cfg(not(target_os = "macos"))]
-            window_builder.build()?;
+            {
+                let window = window_builder.build()?;
+                window.on_window_event(f);
+            }
 
-            window_builder
-
-            #[cfg(not(target_os = "macos"))]
             setup_file_associations(app);
-
 
             Ok(())
         })

@@ -79,7 +79,6 @@ pub fn scan_dir(path: &PathBuf, allowed_extensions: &[&str]) -> Vec<PathBuf> {
  * Ensure a window is shown and visible
  */
 pub fn show_window<R: Runtime>(window: &WebviewWindow<R>) {
-    window.maximize().unwrap();
     window.show().unwrap();
     window.set_focus().unwrap();
 }
