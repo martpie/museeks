@@ -1,3 +1,5 @@
+import './lib/wdyr';
+
 /*
 |--------------------------------------------------------------------------
 | React and Router
@@ -10,8 +12,8 @@ import React from 'react';
 import * as ReactDOM from 'react-dom/client';
 import { RouterProvider } from 'react-router-dom';
 
-import { queryClient } from './lib/query';
-import router from './views/router';
+import queryClient from './lib/query-client';
+import router from './lib/router';
 
 /*
 |--------------------------------------------------------------------------

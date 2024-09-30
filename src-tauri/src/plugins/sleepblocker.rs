@@ -23,7 +23,7 @@ pub fn enable(
         .unwrap() // TODO, use ?
         .start(NoSleepType::PreventUserIdleSystemSleep)?;
 
-    info!("Enabled sleepblocker");
+    info!("Sleepblocker enabled");
     Ok(())
 }
 
@@ -40,7 +40,7 @@ pub fn disable(
         .unwrap() // TODO, use ?
         .stop()?;
 
-    info!("Disabled sleepblocker");
+    info!("Sleepblocker enabled");
     Ok(())
 }
 
@@ -51,7 +51,17 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
     Builder::<R>::new("sleepblocker")
         .invoke_handler(tauri::generate_handler![enable, disable])
         .setup(|app_handle, _api| {
+            // Add NoSleep to the app state
             app_handle.manage(NoSleepInstance(Mutex::new(NoSleep::new().unwrap())));
+
+            // Enable it right away
+            let config_manager = app_handle.state::<ConfigManager>();
+            let nosleep = app_handle.state::<NoSleepInstance>();
+
+            if config_manager.get()?.sleepblocker == true {
+                enable(config_manager, nosleep)?;
+            }
+
             Ok(())
         })
         .build()

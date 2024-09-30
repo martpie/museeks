@@ -8,13 +8,11 @@ import database from '../lib/database';
 import player from '../lib/player';
 import { logAndNotifyError } from '../lib/utils';
 import { shuffleTracks } from '../lib/utils-player';
-import { PlayerStatus } from '../types/museeks';
-import router from '../views/router';
+import { type API, PlayerStatus } from '../types/museeks';
 
 import { createStore } from './store-helpers';
-import useLibraryStore from './useLibraryStore';
 
-type PlayerState = {
+type PlayerState = API<{
   queue: Track[];
   oldQueue: Track[];
   queueCursor: number | null;
@@ -34,10 +32,9 @@ type PlayerState = {
     toggleRepeat: (value?: Repeat) => void;
     setVolume: (volume: number) => void;
     setMuted: (muted: boolean) => void;
-    setPlaybackRate: (value: number) => void;
-    setOutputDevice: (deviceID: string) => void;
+    setPlaybackRate: (value: number) => Promise<void>;
+    setOutputDevice: (deviceID: string) => Promise<void>;
     jumpTo: (to: number) => void;
-    jumpToPlayingTrack: () => Promise<void>;
     startFromQueue: (index: number) => Promise<void>;
     clearQueue: () => void;
     removeFromQueue: (index: number) => void;
@@ -45,7 +42,7 @@ type PlayerState = {
     addNextInQueue: (tracksIDs: string[]) => Promise<void>;
     setQueue: (tracks: Track[]) => void;
   };
-};
+}>;
 
 const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
   queue: [], // Tracks to be played
@@ -61,7 +58,7 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
      * Start playing audio (queue instantiation, shuffle and everything...)
      * TODO: this function ~could probably~ needs to be refactored ~a bit~
      */
-    start: async (tracks, _id): Promise<void> => {
+    start: async (tracks, _id) => {
       // TODO: implement start with no queue
       //   // If no queue is provided, we create it based on the screen the user is on
       // if (!queue) {
@@ -150,7 +147,7 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
     /**
      * Pause audio
      */
-    pause: (): void => {
+    pause: () => {
       player.pause();
 
       set({ playerStatus: PlayerStatus.PAUSE });
@@ -178,7 +175,7 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
     /**
      * Stop the player
      */
-    stop: (): void => {
+    stop: () => {
       player.stop();
 
       set({
@@ -333,7 +330,6 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
       else player.unmute();
 
       await config.set('audio_muted', muted);
-      router.revalidate();
     },
 
     /**
@@ -348,7 +344,6 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
         await config.set('audio_playback_rate', null);
         player.setPlaybackRate(1.0);
       }
-      router.revalidate();
     },
 
     /**
@@ -359,7 +354,6 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
         try {
           await player.setOutputDevice(deviceID);
           await config.set('audio_output_device', deviceID);
-          router.revalidate();
         } catch (err) {
           logAndNotifyError(err);
         }
@@ -371,18 +365,6 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
      */
     jumpTo: (to) => {
       player.setCurrentTime(to);
-    },
-
-    /**
-     * Toggle play/pause
-     */
-    jumpToPlayingTrack: async () => {
-      const queueOrigin = get().queueOrigin ?? '#/library';
-      await router.navigate(queueOrigin);
-
-      setTimeout(() => {
-        useLibraryStore.getState().api.highlightPlayingTrack(true);
-      }, 0);
     },
 
     /**
@@ -474,7 +456,7 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
     /**
      * Set the queue
      */
-    setQueue: (tracks: Track[]) => {
+    setQueue: (tracks) => {
       set({
         queue: tracks,
       });
@@ -577,5 +559,4 @@ function createPlayerStore<T extends PlayerState>(store: StateCreator<T>) {
  */
 const saveVolume = debounce(async (volume: number) => {
   await config.set('audio_volume', volume);
-  router.revalidate();
 }, 500);

@@ -1,4 +1,3 @@
-import { type ChangeEventHandler, useCallback } from 'react';
 import { useLoaderData } from 'react-router-dom';
 
 import * as Setting from '../components/Setting/Setting';
@@ -7,31 +6,12 @@ import type { Config, DefaultView } from '../generated/typings';
 import { themes } from '../lib/themes';
 import SettingsAPI from '../stores/SettingsAPI';
 
+import useInvalidate, { useInvalidateCallback } from '../hooks/useInvalidate';
 import type { SettingsLoaderData } from './ViewSettings';
 
 export default function ViewSettingsUI() {
   const { config } = useLoaderData() as SettingsLoaderData;
-
-  const onThemeChange = useCallback<ChangeEventHandler<HTMLSelectElement>>(
-    (e) => {
-      SettingsAPI.setTheme(e.currentTarget.value);
-    },
-    [],
-  );
-
-  const onTracksDensityChange = useCallback<
-    ChangeEventHandler<HTMLSelectElement>
-  >((e) => {
-    SettingsAPI.setTracksDensity(
-      e.currentTarget.value as Config['track_view_density'],
-    );
-  }, []);
-
-  const onDefaultViewChange = useCallback<
-    ChangeEventHandler<HTMLSelectElement>
-  >((e) => {
-    SettingsAPI.setDefaultView(e.currentTarget.value as DefaultView);
-  }, []);
+  const invalidate = useInvalidate();
 
   return (
     <div className="setting setting-interface">
@@ -41,10 +21,11 @@ export default function ViewSettingsUI() {
           description="Change the appearance of the interface"
           id="setting-theme"
           value={config.theme}
-          onChange={onThemeChange}
+          onChange={(e) =>
+            SettingsAPI.setTheme(e.currentTarget.value).then(invalidate)
+          }
         >
-          {/* broken we can get the global theme preference :( */}
-          {/* <option value="__system">System (default)</option> */}
+          <option value="__system">System (default)</option>
           {Object.values(themes).map((theme) => {
             return (
               <option key={theme._id} value={theme._id}>
@@ -60,7 +41,11 @@ export default function ViewSettingsUI() {
           description="Change the default view when starting the application"
           id="setting-tracks-density"
           value={config.track_view_density}
-          onChange={onTracksDensityChange}
+          onChange={(e) =>
+            SettingsAPI.setTracksDensity(
+              e.currentTarget.value as Config['track_view_density'],
+            ).then(invalidate)
+          }
         >
           <option value="normal">Normal (default)</option>
           <option value="compact">Compact</option>
@@ -72,7 +57,11 @@ export default function ViewSettingsUI() {
           value={config.default_view}
           description="Change the default view when starting the application"
           id="setting-default-view"
-          onChange={onDefaultViewChange}
+          onChange={(e) =>
+            SettingsAPI.setDefaultView(
+              e.currentTarget.value as DefaultView,
+            ).then(invalidate)
+          }
         >
           <option value="Library">Library (default)</option>
           <option value="Playlists">Playlists</option>
@@ -84,7 +73,9 @@ export default function ViewSettingsUI() {
           title="Display Notifications"
           description="Send notifications when the playing track changes"
           value={config.notifications}
-          onChange={SettingsAPI.toggleDisplayNotifications}
+          onChange={useInvalidateCallback(
+            SettingsAPI.toggleDisplayNotifications,
+          )}
         />
       </Setting.Section>
       <Setting.Section>
@@ -93,7 +84,7 @@ export default function ViewSettingsUI() {
           title="Sleep mode blocker"
           description="Prevent the computer from going into sleep mode when playing"
           value={config.sleepblocker}
-          onChange={SettingsAPI.toggleSleepBlocker}
+          onChange={useInvalidateCallback(SettingsAPI.toggleSleepBlocker)}
         />
       </Setting.Section>
     </div>

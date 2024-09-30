@@ -2,14 +2,17 @@ import { getCurrentWindow } from '@tauri-apps/api/window';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { usePlayerAPI } from '../../stores/usePlayerStore';
+import useLibraryStore from '../../stores/useLibraryStore';
+import usePlayerStore from '../../stores/usePlayerStore';
 
 /**
  * Handle app-level IPC Navigation events
  */
 function IPCNavigationEvents() {
   const navigate = useNavigate();
-  const playerAPI = usePlayerAPI();
+  const queueOrigin = usePlayerStore(
+    (state) => state.queueOrigin ?? '#/library',
+  );
 
   useEffect(() => {
     function goToLibrary() {
@@ -25,7 +28,11 @@ function IPCNavigationEvents() {
     }
 
     function goToPlayingTrack() {
-      playerAPI.jumpToPlayingTrack();
+      navigate(queueOrigin);
+
+      setTimeout(() => {
+        useLibraryStore.getState().api.highlightPlayingTrack(true);
+      }, 0);
     }
 
     const unlisteners = [
@@ -41,7 +48,7 @@ function IPCNavigationEvents() {
         unlisteners.forEach((u) => u());
       });
     };
-  }, [navigate, playerAPI]);
+  }, [navigate, queueOrigin]);
 
   return null;
 }

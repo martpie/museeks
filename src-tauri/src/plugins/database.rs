@@ -6,8 +6,6 @@ use bonsaidb::local::config::{Builder as BonsaiBuilder, StorageConfiguration};
 use bonsaidb::local::AsyncDatabase;
 use bonsaidb::local::AsyncStorage;
 use itertools::Itertools;
-use lofty::file::{AudioFile, TaggedFileExt};
-use lofty::tag::{Accessor, ItemKey};
 use log::{error, info, warn};
 use rayon::iter::{IntoParallelRefIterator, ParallelIterator};
 use serde::{Deserialize, Serialize};
@@ -20,21 +18,22 @@ use tauri::Emitter;
 use tauri::{Manager, Runtime, State};
 use tauri_plugin_dialog::{DialogExt, FilePath};
 use ts_rs::TS;
-use uuid::Uuid;
 
 use crate::libs::error::{AnyResult, MuseeksError};
 use crate::libs::events::IPCEvent;
+use crate::libs::track::{get_track_from_file, get_track_id_for_path, Track};
 use crate::libs::utils::{scan_dirs, TimeLogger};
 
 use super::config::get_storage_dir;
 
 const INSERTION_BATCH: usize = 200;
 
-pub const SUPPORTED_TRACKS_EXTENSIONS: [&str; 12] = [
-    "mp3", "mp4", "aac", "m4a", "3gp", "wav", /* mp3 / mp4 */
-    "ogg", "ogv", "ogm", "opus", /* Opus */
+// KEEP THAT IN SYNC with Tauri's file associations in tauri.conf.json
+pub const SUPPORTED_TRACKS_EXTENSIONS: [&str; 9] = [
+    "mp3", "aac", "m4a", "3gp", "wav", /* mp3 / mp4 */
+    "ogg", "opus", /* Opus */
     "flac", /* Flac */
-    "webm", /* Web media */
+    "weba", /* Web media */
 ];
 
 pub const SUPPORTED_PLAYLISTS_EXTENSIONS: [&str; 1] = ["m3u"];
@@ -57,28 +56,6 @@ impl DB {
 
     fn playlists_collection(&self) -> AsyncCollection<'_, AsyncDatabase, Playlist> {
         self.playlists.collection::<Playlist>()
-    }
-
-    /**
-     * We leverage UUID v3 on tracks paths to easily retrieve tracks by path.
-     * This is not great and ideally we should use a DB view instead. One day.
-     */
-    fn get_track_id_for_path(&self, path: &PathBuf) -> Option<String> {
-        match std::fs::canonicalize(path) {
-            Ok(canonicalized_path) => {
-                return Some(
-                    Uuid::new_v3(
-                        &Uuid::NAMESPACE_OID,
-                        canonicalized_path.to_string_lossy().as_bytes(),
-                    )
-                    .to_string(),
-                );
-            }
-            Err(err) => {
-                error!(r#"ID could not be generated for path {:?}: {}"#, path, err);
-                return None;
-            }
-        };
     }
 
     /**
@@ -203,12 +180,13 @@ impl DB {
         &self,
         name: String,
         tracks_ids: Vec<String>,
+        import_path: Option<PathBuf>,
     ) -> AnyResult<Playlist> {
         let playlist = Playlist {
             _id: uuid::Uuid::new_v4().to_string(),
             name,
             tracks: tracks_ids,
-            import_path: None,
+            import_path,
         };
 
         self.playlists_collection()
@@ -293,34 +271,6 @@ impl DB {
 }
 
 /** ----------------------------------------------------------------------------
- * Track
- * represent a single track, id and path should be unique
- * -------------------------------------------------------------------------- */
-#[derive(Debug, Clone, Serialize, Deserialize, Collection, TS)]
-#[collection(name="tracks", primary_key = String)]
-#[ts(export, export_to = "../../src/generated/typings/index.ts")]
-pub struct Track {
-    #[natural_id]
-    pub _id: String,
-    pub title: String,
-    pub album: String,
-    pub artists: Vec<String>,
-    pub genres: Vec<String>,
-    pub year: Option<u32>,
-    pub duration: u32,
-    pub track: NumberOf,
-    pub disk: NumberOf,
-    pub path: PathBuf,
-}
-
-#[derive(Debug, Clone, Serialize, Deserialize, TS)]
-#[ts(export, export_to = "../../src/generated/typings/index.ts")]
-pub struct NumberOf {
-    pub no: Option<u32>,
-    pub of: Option<u32>,
-}
-
-/** ----------------------------------------------------------------------------
  * Playlist
  * represent a playlist, that has a name and a list of tracks
  * -------------------------------------------------------------------------- */
@@ -332,8 +282,8 @@ pub struct Playlist {
     #[natural_id]
     pub _id: String,
     pub name: String,
-    pub tracks: Vec<String>, // vector of IDs
-    pub import_path: Option<PathBuf>,
+    pub tracks: Vec<String>,          // vector of IDs
+    pub import_path: Option<PathBuf>, // the path of the file on disk (not set for playlists created in app)
 }
 
 /**
@@ -341,9 +291,18 @@ pub struct Playlist {
  */
 #[derive(Debug, Clone, Serialize, Deserialize, TS)]
 #[ts(export, export_to = "../../src/generated/typings/index.ts")]
-pub struct Progress {
+pub struct ScanProgress {
     current: usize,
     total: usize,
+}
+
+#[derive(Default, Debug, Clone, Serialize, Deserialize, TS)]
+#[ts(export, export_to = "../../src/generated/typings/index.ts")]
+pub struct ScanResult {
+    track_count: usize,
+    track_failures: usize,
+    playlist_count: usize,
+    playlist_failures: usize,
 }
 
 /** ----------------------------------------------------------------------------
@@ -351,21 +310,23 @@ pub struct Progress {
  * -------------------------------------------------------------------------- */
 
 /**
- * Popup a directory picker dialog, scan the selected folders, extract all
- * ID3 tags from it, and update the DB accordingly.
+ * Scan the selected folders, extract all ID3 tags from it, and update the DB
+ * accordingly.
  */
 #[tauri::command]
 async fn import_tracks_to_library<R: Runtime>(
     window: tauri::Window<R>,
     db: State<'_, DB>,
     import_paths: Vec<PathBuf>,
-) -> AnyResult<Vec<Track>> {
+) -> AnyResult<ScanResult> {
     let webview_window = window.get_webview_window("main").unwrap();
 
     info!("Importing paths to library:");
     for path in &import_paths {
         info!("  - {:?}", path)
     }
+
+    let mut scan_result = ScanResult::default();
 
     // Scan all directories for valid files to be scanned and imported
     let mut track_paths = scan_dirs(&import_paths, &SUPPORTED_TRACKS_EXTENSIONS);
@@ -393,7 +354,7 @@ async fn import_tracks_to_library<R: Runtime>(
     webview_window
         .emit(
             IPCEvent::LibraryScanProgress.as_ref(),
-            Progress {
+            ScanProgress {
                 current: 0,
                 total: track_paths.len(),
             },
@@ -416,7 +377,7 @@ async fn import_tracks_to_library<R: Runtime>(
                 webview_window
                     .emit(
                         IPCEvent::LibraryScanProgress.as_ref(),
-                        Progress {
+                        ScanProgress {
                             current: p_current,
                             total: p_total,
                         },
@@ -424,77 +385,21 @@ async fn import_tracks_to_library<R: Runtime>(
                     .unwrap();
             }
 
-            match lofty::read_from_path(&path) {
-                Ok(tagged_file) => {
-                    let tag = tagged_file.primary_tag()?;
-
-                    // IMPROVE ME: Is there a more idiomatic way of doing the following?
-                    let mut artists: Vec<String> = tag
-                        .get_strings(&ItemKey::TrackArtist)
-                        .map(ToString::to_string)
-                        .collect();
-
-                    if artists.is_empty() {
-                        artists = tag
-                            .get_strings(&ItemKey::AlbumArtist)
-                            .map(ToString::to_string)
-                            .collect();
-                    }
-
-                    if artists.is_empty() {
-                        artists = vec!["Unknown Artist".into()];
-                    }
-
-                    let Some(id) = db.get_track_id_for_path(path) else {
-                        return None;
-                    };
-
-                    Some(Track {
-                        _id: id,
-                        title: tag
-                            .get_string(&ItemKey::TrackTitle)
-                            .unwrap_or("Unknown")
-                            .to_string(),
-                        album: tag
-                            .get_string(&ItemKey::AlbumTitle)
-                            .unwrap_or("Unknown")
-                            .to_string(),
-                        artists,
-                        genres: tag
-                            .get_strings(&ItemKey::Genre)
-                            .map(ToString::to_string)
-                            .collect(),
-                        year: tag.year(),
-                        duration: u32::try_from(tagged_file.properties().duration().as_secs())
-                            .unwrap_or(0),
-                        track: NumberOf {
-                            no: tag.track(),
-                            of: tag.track_total(),
-                        },
-                        disk: NumberOf {
-                            no: tag.disk(),
-                            of: tag.disk_total(),
-                        },
-                        path: path.to_owned(),
-                    })
-                }
-                Err(err) => {
-                    warn!("Failed to get ID3 tags: \"{}\". File {:?}", err, path);
-                    None
-                }
-            }
+            get_track_from_file(path)
         })
         .flatten()
         .collect::<Vec<Track>>();
 
+    let track_failures = track_paths.len() - tracks.len();
+    scan_result.track_count = tracks.len();
+    scan_result.track_failures = track_failures;
     info!("{} tracks successfully scanned", tracks.len());
-    info!(
-        "{} tracks failed to be scanned",
-        track_paths.len() - tracks.len()
-    );
+    info!("{} tracks failed to be scanned", track_failures);
+
     scan_logger.complete();
 
-    // Insert all tracks in the DB
+    // Insert all tracks in the DB, we'are kind of assuming it cannot fail (regarding scan progress information), but
+    // it technically could.
     let db_insert_logger: TimeLogger = TimeLogger::new("Inserted tracks".into());
     let result = db.insert_tracks(tracks).await;
 
@@ -505,64 +410,87 @@ async fn import_tracks_to_library<R: Runtime>(
     db_insert_logger.complete();
 
     // Now that all tracks are inserted, let's scan for playlists, and import them
-    let playlist_paths = scan_dirs(&import_paths, &SUPPORTED_PLAYLISTS_EXTENSIONS);
+    let mut playlist_paths = scan_dirs(&import_paths, &SUPPORTED_PLAYLISTS_EXTENSIONS);
+
+    // Ignore playlists that are already in the DB (speedup scan + prevent duplicate errors)
+    let existing_playlists_paths = db
+        .get_all_playlists()
+        .await?
+        .iter()
+        .map(move |playlist| playlist.import_path.to_owned())
+        .flatten()
+        .collect::<HashSet<_>>();
+
+    playlist_paths.retain(|path| !existing_playlists_paths.contains(path));
 
     info!("Found {} playlist(s) to import", playlist_paths.len());
 
+    // Start scanning the content of the playlists and adding them to the DB
     for playlist_path in playlist_paths {
-        let mut reader = m3u::Reader::open(&playlist_path).unwrap();
-        let playlist_dir_path = playlist_path.parent().unwrap();
+        match {
+            let mut reader = m3u::Reader::open(&playlist_path).unwrap();
+            let playlist_dir_path = playlist_path.parent().unwrap();
 
-        let track_paths: Vec<PathBuf> = reader
-            .entries()
-            .filter_map(|entry| {
-                let Ok(entry) = entry else {
-                    return None;
-                };
+            let track_paths: Vec<PathBuf> = reader
+                .entries()
+                .filter_map(|entry| {
+                    let Ok(entry) = entry else {
+                        return None;
+                    };
 
-                match entry {
-                    m3u::Entry::Path(path) => Some(playlist_dir_path.join(path)),
-                    _ => return None, // We don't support (yet?) URLs in playlists
-                }
-            })
-            .collect();
+                    match entry {
+                        m3u::Entry::Path(path) => Some(playlist_dir_path.join(path)),
+                        _ => return None, // We don't support (yet?) URLs in playlists
+                    }
+                })
+                .collect();
 
-        // Ok, this is sketchy. To avoid having to create a TrackByPath DB View,
-        // let's guess the ID of the track with UUID::v3
-        let track_ids = track_paths
-            .iter()
-            .flat_map(|path| db.get_track_id_for_path(path))
-            .collect::<Vec<String>>();
+            // Ok, this is sketchy. To avoid having to create a TrackByPath DB View,
+            // let's guess the ID of the track with UUID::v3
+            let track_ids = track_paths
+                .iter()
+                .flat_map(|path| get_track_id_for_path(path))
+                .collect::<Vec<String>>();
 
-        let playlist_name = playlist_path
-            .file_stem()
-            .unwrap()
-            .to_str()
-            .unwrap_or("unknown playlist")
-            .to_owned();
+            let playlist_name = playlist_path
+                .file_stem()
+                .unwrap()
+                .to_str()
+                .unwrap_or("unknown playlist")
+                .to_owned();
 
-        let tracks = db.get_tracks(&track_ids).await?;
+            let tracks = db.get_tracks(&track_ids).await?;
 
-        if tracks.len() != track_ids.len() {
-            warn!(
-                "Playlist track mismatch ({} from playlist, {} from library)",
-                track_paths.len(),
-                tracks.len()
+            if tracks.len() != track_ids.len() {
+                warn!(
+                    "Playlist track mismatch ({} from playlist, {} from library)",
+                    track_paths.len(),
+                    tracks.len()
+                );
+            }
+
+            info!(
+                r#"Creating playlist "{}" ({} tracks)"#,
+                &playlist_name,
+                &track_ids.len()
             );
+
+            db.create_playlist(playlist_name, track_ids, Some(playlist_path))
+                .await?;
+            Ok::<(), MuseeksError>(())
+        } {
+            Ok(_) => {
+                scan_result.playlist_count += 1;
+            }
+            Err(err) => {
+                warn!("Failed to import playlist: {}", err);
+                scan_result.playlist_failures += 1;
+            }
         }
-
-        info!(
-            r#"Creating playlist "{}" ({} tracks)"#,
-            &playlist_name,
-            &track_ids.len()
-        );
-
-        db.create_playlist(playlist_name, track_ids).await?;
     }
 
     // All good :]
-    let tracks = db.get_all_tracks().await?;
-    Ok(tracks)
+    Ok(scan_result)
 }
 
 #[tauri::command]
@@ -600,8 +528,13 @@ async fn get_playlist(db: State<'_, DB>, id: String) -> AnyResult<Playlist> {
 }
 
 #[tauri::command]
-async fn create_playlist(db: State<'_, DB>, name: String, ids: Vec<String>) -> AnyResult<Playlist> {
-    db.create_playlist(name, ids).await
+async fn create_playlist(
+    db: State<'_, DB>,
+    name: String,
+    ids: Vec<String>,
+    import_path: Option<PathBuf>,
+) -> AnyResult<Playlist> {
+    db.create_playlist(name, ids, import_path).await
 }
 
 #[tauri::command]

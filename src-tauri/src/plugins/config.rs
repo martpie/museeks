@@ -57,7 +57,8 @@ pub struct Config {
     pub default_view: DefaultView,
     pub library_sort_by: SortBy,
     pub library_sort_order: SortOrder,
-    pub library_folders: Vec<PathBuf>, // Not used yet
+    pub library_folders: Vec<PathBuf>,
+    pub library_autorefresh: bool,
     pub sleepblocker: bool,
     pub auto_update_checker: bool,
     pub minimize_to_tray: bool,
@@ -65,10 +66,12 @@ pub struct Config {
     pub track_view_density: String,
 }
 
+pub const SYSTEM_THEME: &str = "__system";
+
 impl Config {
     pub fn default() -> Self {
         Config {
-            theme: "light".to_owned(), // should be "__system" once we can guess global theme preference
+            theme: SYSTEM_THEME.to_owned(),
             audio_volume: 1.0,
             audio_playback_rate: Some(1.0),
             audio_output_device: "default".to_owned(),
@@ -79,6 +82,7 @@ impl Config {
             library_sort_by: SortBy::Artist,
             library_sort_order: SortOrder::Asc,
             library_folders: vec![],
+            library_autorefresh: false,
             sleepblocker: false,
             auto_update_checker: true,
             minimize_to_tray: false,

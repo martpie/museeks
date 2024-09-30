@@ -1,7 +1,11 @@
 import { describe, expect, test } from 'bun:test';
 
 import type { Track } from '../../generated/typings';
-import { getStatus, stripAccents } from '../utils-library';
+import {
+  getStatus,
+  removeRedundantFolders,
+  stripAccents,
+} from '../utils-library';
 
 const TEST_TRACKS_ALBUM: Array<Track> = [
   {
@@ -82,5 +86,34 @@ describe('stripAccents', () => {
     ).toStrictEqual(
       'abcdaaaaaaaaaaaaaaaaoooooooooooooeeeeeeeeeeeeeccccccdiiiiiiiiiiuuuuuuuuuunnnnssssyyyzzzzzzllllnnnnaaaaaaaaaaaaaaaaaeeeeeeeeeeeduuuuuuuuuuuoooooooooooooooooiiiiiaeiiuuncyyyyygisgisggkk',
     );
+  });
+});
+
+describe('removeRedundantFolders', () => {
+  test('should return the same array if there are no duplicates or subpaths', () => {
+    expect(
+      removeRedundantFolders(['/users/me/music', '/users/me/videos']),
+    ).toStrictEqual(['/users/me/music', '/users/me/videos']);
+  });
+
+  test('should remove duplicate entries', () => {
+    expect(
+      removeRedundantFolders([
+        '/users/me/music',
+        '/users/me/videos',
+        '/users/me/music',
+      ]),
+    ).toStrictEqual(['/users/me/music', '/users/me/videos']);
+  });
+
+  test('should remove subpaths', () => {
+    expect(
+      removeRedundantFolders([
+        '/tmp/data/music',
+        '/users/me/music',
+        '/users/me/music/archive',
+        '/tmp/data',
+      ]),
+    ).toStrictEqual(['/users/me/music', '/tmp/data']);
   });
 });

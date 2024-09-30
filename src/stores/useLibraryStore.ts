@@ -3,15 +3,17 @@ import { ask, open } from '@tauri-apps/plugin-dialog';
 import type { SortBy, SortOrder, Track } from '../generated/typings';
 import config from '../lib/config';
 import database from '../lib/database';
-import { invalidate } from '../lib/query';
 import { logAndNotifyError } from '../lib/utils';
 
-import { getStatus } from '../lib/utils-library';
+import type { StateCreator } from 'zustand';
+import { persist } from 'zustand/middleware';
+import { getStatus, removeRedundantFolders } from '../lib/utils-library';
+import type { API } from '../types/museeks';
 import { createStore } from './store-helpers';
 import usePlayerStore from './usePlayerStore';
 import useToastsStore from './useToastsStore';
 
-type LibraryState = {
+type LibraryState = API<{
   search: string;
   sortBy: SortBy;
   sortOrder: SortOrder;
@@ -26,6 +28,9 @@ type LibraryState = {
     search: (value: string) => void;
     sort: (sortBy: SortBy) => void;
     add: () => Promise<void>;
+    addLibraryFolder: () => Promise<void>;
+    removeLibraryFolder: (path: string) => Promise<void>;
+    refresh: () => Promise<void>;
     remove: (tracksIDs: string[]) => Promise<void>;
     reset: () => Promise<void>;
     setRefresh: (processed: number, total: number) => void;
@@ -36,9 +41,9 @@ type LibraryState = {
     highlightPlayingTrack: (highlight: boolean) => void;
     setTracksStatus: (status: Array<Track> | null) => void;
   };
-};
+}>;
 
-const useLibraryStore = createStore<LibraryState>((set, get) => ({
+const useLibraryStore = createLibraryStore<LibraryState>((set, get) => ({
   search: '',
   sortBy: config.getInitial('library_sort_by'),
   sortOrder: config.getInitial('library_sort_order'),
@@ -54,14 +59,14 @@ const useLibraryStore = createStore<LibraryState>((set, get) => ({
     /**
      * Filter tracks by search
      */
-    search: (search): void => {
+    search: async (search) => {
       set({ search });
     },
 
     /**
      * Filter tracks by sort query
      */
-    sort: async (sortBy): Promise<void> => {
+    sort: async (sortBy) => {
       const prevSortBy = get().sortBy;
       const prevSortOrder = get().sortOrder;
 
@@ -86,7 +91,7 @@ const useLibraryStore = createStore<LibraryState>((set, get) => ({
     /**
      * Add tracks to Library
      */
-    add: async (): Promise<void> => {
+    add: async () => {
       try {
         const result = await open({
           multiple: true,
@@ -99,9 +104,6 @@ const useLibraryStore = createStore<LibraryState>((set, get) => ({
 
         set({ refreshing: true });
         await database.importTracks(result);
-        // TODO: re-implement progress
-        invalidate();
-        return;
       } catch (err) {
         logAndNotifyError(err);
       } finally {
@@ -112,7 +114,71 @@ const useLibraryStore = createStore<LibraryState>((set, get) => ({
       }
     },
 
-    setRefresh: (current: number, total: number) => {
+    refresh: async () => {
+      try {
+        set({ refreshing: true });
+
+        const libraryFolders = await config.get('library_folders');
+        const scanResult = await database.importTracks(libraryFolders);
+
+        if (scanResult.track_count > 0) {
+          useToastsStore
+            .getState()
+            .api.add(
+              'success',
+              `${scanResult.track_count} track(s) were added to the library.`,
+              5000,
+            );
+        }
+
+        if (scanResult.playlist_count > 0) {
+          useToastsStore
+            .getState()
+            .api.add(
+              'success',
+              `${scanResult.playlist_count} playlist(s) were added to the library.`,
+              5000,
+            );
+        }
+      } catch (err) {
+        logAndNotifyError(err);
+      } finally {
+        set({
+          refreshing: false,
+          refresh: { current: 0, total: 0 },
+        });
+      }
+    },
+
+    addLibraryFolder: async () => {
+      try {
+        const path = await open({
+          directory: true,
+        });
+
+        if (path == null) {
+          return;
+        }
+
+        const musicFolders = await config.get('library_folders');
+        const newFolders = removeRedundantFolders([
+          ...musicFolders,
+          path,
+        ]).sort();
+        await config.set('library_folders', newFolders);
+      } catch (err) {
+        logAndNotifyError(err);
+      }
+    },
+
+    removeLibraryFolder: async (path) => {
+      const musicFolders = await config.get('library_folders');
+      const index = musicFolders.indexOf(path);
+      musicFolders.splice(index, 1);
+      await config.set('library_folders', musicFolders);
+    },
+
+    setRefresh: async (current, total) => {
       set({
         refresh: {
           current,
@@ -140,7 +206,6 @@ const useLibraryStore = createStore<LibraryState>((set, get) => ({
         // Remove tracks from the Track collection
         await database.removeTracks(tracksIDs);
 
-        invalidate();
         // That would be great to remove those ids from all the playlists, but it's not easy
         // and should not cause strange behaviors, all PR for that would be really appreciated
         // TODO: see if it's possible to remove the IDs from the selected state of TracksList as it "could" lead to strange behaviors
@@ -150,7 +215,7 @@ const useLibraryStore = createStore<LibraryState>((set, get) => ({
     /**
      * Reset the library
      */
-    reset: async (): Promise<void> => {
+    reset: async () => {
       usePlayerStore.getState().api.stop();
       try {
         const confirmed = await ask(
@@ -165,8 +230,8 @@ const useLibraryStore = createStore<LibraryState>((set, get) => ({
 
         if (confirmed) {
           await database.reset();
+          await config.set('library_folders', []);
           useToastsStore.getState().api.add('success', 'Library was reset');
-          invalidate();
         }
       } catch (err) {
         logAndNotifyError(err);
@@ -181,10 +246,7 @@ const useLibraryStore = createStore<LibraryState>((set, get) => ({
      * @param trackID The ID of the track to update
      * @param newFields The fields to be updated and their new value
      */
-    updateTrackMetadata: async (
-      trackID: string,
-      newFields: Pick<Track, 'title' | 'artists' | 'album' | 'genres'>,
-    ): Promise<void> => {
+    updateTrackMetadata: async (trackID, newFields) => {
       try {
         let [track] = await database.getTracks([trackID]);
 
@@ -200,8 +262,6 @@ const useLibraryStore = createStore<LibraryState>((set, get) => ({
         };
 
         await database.updateTrack(track);
-
-        invalidate();
       } catch (err) {
         logAndNotifyError(
           err,
@@ -214,54 +274,59 @@ const useLibraryStore = createStore<LibraryState>((set, get) => ({
      * Set highlight trigger for a track
      * FIXME: very hacky, and not great, should be done another way
      */
-    highlightPlayingTrack: (highlight: boolean): void => {
+    highlightPlayingTrack: async (highlight) => {
       set({ highlightPlayingTrack: highlight });
     },
 
-    setTracksStatus: (tracks: Array<Track> | null): void => {
+    /**
+     * Manually set the footer content based on a list of tracks
+     */
+    setTracksStatus: async (tracks) => {
       set({
         tracksStatus: tracks !== null ? getStatus(tracks) : '',
       });
     },
   },
-
-  // Old code used to manage folders to be scanned, to be re-enabled one day
-  // case (types.LIBRARY_ADD_FOLDERS): { // TODO Redux -> move to a thunk
-  //   const { folders } = action.payload;
-  //   let musicFolders = window.MuseeksAPI.config.get('musicFolders');
-
-  //   // Check if we received folders
-  //   if (folders !== undefined) {
-  //     musicFolders = musicFolders.concat(folders);
-
-  //     // Remove duplicates, useless children, ect...
-  //     musicFolders = utils.removeUselessFolders(musicFolders);
-
-  //     musicFolders.sort();
-
-  //     config.set('musicFolders', musicFolders);
-  //   }
-
-  //   return { ...state };
-  // }
-
-  // case (types.LIBRARY_REMOVE_FOLDER): { // TODO Redux -> move to a thunk
-  //   if (!state.library.refreshing) {
-  //     const musicFolders = window.MuseeksAPI.config.get('musicFolders');
-
-  //     musicFolders.splice(action.index, 1);
-
-  //     config.set('musicFolders', musicFolders);
-
-  //     return { ...state };
-  //   }
-
-  //   return state;
-  // }
 }));
 
 export default useLibraryStore;
 
 export function useLibraryAPI() {
   return useLibraryStore((state) => state.api);
+}
+
+// -----------------------------------------------------------------------------
+// Helpers
+// -----------------------------------------------------------------------------
+
+/**
+ * Special store for player
+ */
+function createLibraryStore<T extends LibraryState>(store: StateCreator<T>) {
+  return createStore(
+    persist(store, {
+      name: 'museeks-library',
+      merge(persistedState, currentState) {
+        const mergedState = {
+          ...currentState,
+          // API should never be persisted
+          api: currentState.api,
+        };
+
+        if (persistedState != null && typeof persistedState === 'object') {
+          if ('refreshing' in persistedState) {
+            persistedState.refreshing = false;
+          }
+          if ('refresh' in persistedState) {
+            persistedState.refresh = {
+              current: 0,
+              total: 0,
+            };
+          }
+        }
+
+        return mergedState;
+      },
+    }),
+  );
 }

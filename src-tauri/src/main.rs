@@ -4,7 +4,8 @@
 mod libs;
 mod plugins;
 
-use libs::utils::{get_window_theme, show_window};
+use libs::file_associations::setup_file_associations;
+use libs::utils::get_theme_from_name;
 use log::LevelFilter;
 use plugins::config::ConfigManager;
 use tauri::{Manager, WebviewUrl, WebviewWindowBuilder};
@@ -46,8 +47,9 @@ async fn main() {
         .plugin(tauri_plugin_notification::init())
         .plugin(tauri_plugin_shell::init())
         .plugin(tauri_plugin_single_instance::init(|app_handle, _, _| {
+            // Focus on the already running app in case the app is opened again
             let window = app_handle.get_webview_window("main").unwrap();
-            show_window(&window);
+            window.set_focus().unwrap();
         }))
         .plugin(
             tauri_plugin_window_state::Builder::default()
@@ -56,7 +58,6 @@ async fn main() {
                 )
                 .build(),
         )
-        // TODO: tauri-plugin-theme to update the native theme at runtime
         .setup(|app| {
             let config_manager = app.state::<ConfigManager>();
             let conf = config_manager.get()?;
@@ -66,7 +67,7 @@ async fn main() {
                 WebviewWindowBuilder::new(app, "main", WebviewUrl::App("index.html".into()))
                     .title("Museeks")
                     .visible(false)
-                    .theme(get_window_theme(&conf.theme))
+                    .theme(get_theme_from_name(&conf.theme))
                     .inner_size(900.0, 550.0)
                     .min_inner_size(900.0, 550.0)
                     .fullscreen(false)
@@ -83,8 +84,22 @@ async fn main() {
             #[cfg(not(target_os = "macos"))]
             window_builder.build()?;
 
+            // FIXME: File association for non-macOS is not working well:
+            // - Does not work with single instance when the app is already open
+            // - Issues with C:\... URLs parsing with rust-url
+            // - The main window is created, but the UI may not be ready yet to receive the event requesting a playback
+            #[cfg(not(target_os = "macos"))]
+            setup_file_associations(app);
+
             Ok(())
         })
-        .run(tauri::generate_context!())
-        .expect("error while running tauri application");
+        .build(tauri::generate_context!())
+        .expect("error while running tauri application")
+        .run(
+            #[allow(unused_variables)]
+            |app, event| {
+                #[cfg(target_os = "macos")]
+                setup_file_associations(app, event);
+            },
+        );
 }

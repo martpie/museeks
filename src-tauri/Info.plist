@@ -6,5 +6,18 @@
 	<string>Request camera access for WebRTC</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Request microphone access for WebRTC</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<!-- app's bundle identifier -->
+			<string>Museeks</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<!-- register the museeks:// schemes -->
+				<string>museeks</string>
+			</array>
+		</dict>
+	</array>
 </dict>
 </plist>

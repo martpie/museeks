@@ -10,20 +10,20 @@ repository = "https://github.com/martpie/museeks"
 edition = "2021"
 
 [build-dependencies]
-tauri-build = { version = "2.0.0-rc.9", features = ["codegen"] }
+tauri-build = { version = "2.0.0-rc.13", features = ["codegen"] }
 
 [dependencies]
-tauri = { version = "2.0.0-rc.10", features = ["protocol-asset", "image-png", "devtools"] }
-tauri-plugin-dialog = "2.0.0-rc.5"
-tauri-plugin-notification = "2.0.0-rc.3"
+tauri = { version = "2.0.0-rc.16", features = ["protocol-asset", "image-png", "devtools"] }
+tauri-plugin-dialog = "2.0.0-rc.7"
+tauri-plugin-notification = "2.0.0-rc.5"
 tauri-plugin-os = "2.0.0-rc.1"
 tauri-plugin-log = {version = "2.0.0-rc.2", features = ["colored"] }
 tauri-plugin-shell = "2.0.0-rc.3"
-tauri-plugin-single-instance = "2.0.0-rc.1"
-tauri-plugin-window-state = "2.0.0-rc.3"
+tauri-plugin-single-instance = "2.0.0-rc.4"
+tauri-plugin-window-state = "2.0.0-rc.5"
 
 # non-Tauri dependencies
-anyhow = "1.0.86"
+anyhow = "1.0.89"
 base64 = "0.22.1"
 bonsaidb = { version = "0.5.0", features = ["local", "async"] }
 dirs = "5.0.1"
@@ -32,6 +32,7 @@ home-config = { version = "0.6.0", features = ["toml"] }
 itertools = "0.13.0"
 log = "0.4.21"
 lofty = "0.21.0"
+m3u = "1.0.0"
 memoize = "0.4.2"
 nosleep = "0.2.1"
 pathdiff = "0.2.1"
@@ -39,12 +40,11 @@ rayon = "1.10.0"
 serde = { version = "1.0.209", features = ["derive"] }
 serde_json = "1.0.127"
 strum = { version = "0.26.2", features = ["derive"] }
-thiserror = "1.0.63"
+thiserror = "1.0.64"
 tokio = { version = "1.39.3", features = ["macros"] }
-ts-rs = { git = "https://github.com/Aleph-Alpha/ts-rs.git", rev = "5cbc740" }
+ts-rs = "10.0.0"
 uuid = { version = "1.8.0", features = ["v3", "v4", "fast-rng"] }
 walkdir = "2.5.0"
-m3u = "1.0.0"
 
 [target.'cfg(target_os = "linux")'.dependencies]
 dbus = "0.9.7"

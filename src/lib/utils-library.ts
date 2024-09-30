@@ -1,9 +1,9 @@
 import orderBy from 'lodash/orderBy';
+import uniq from 'lodash/uniq';
 
-import type { SortOrder, Track } from '../generated/typings';
-
+import type { SortBy, SortOrder, Track } from '../generated/typings';
 import { parseDuration } from '../hooks/useFormattedDuration';
-import type { SortConfig } from './sort-orders';
+import type { Path } from '../types/museeks';
 
 /**
  * Filter an array of tracks by string
@@ -76,6 +76,52 @@ for (let i = 0; i < ACCENTS.length; i++) {
 }
 
 /**
+ * Given multiple paths as string, remove duplicates or child paths in case on parent exist in the array
+ */
+export const removeRedundantFolders = (paths: Array<string>): Array<string> => {
+  return uniq(
+    paths.filter((path) => {
+      const isDuplicate = paths.some((otherPath) => {
+        return path.startsWith(otherPath) && path !== otherPath;
+      });
+
+      return !isDuplicate;
+    }),
+  );
+};
+
+/** ----------------------------------------------------------------------------
+ * Sort utilities
+ * -------------------------------------------------------------------------- */
+
+// For perforances reasons, otherwise _.orderBy will perform weird checks
+// that are far more resource/time impactful
+const ARTIST = (t: Track): string =>
+  stripAccents(t.artists.toString().toLowerCase());
+const GENRE = (t: Track): string =>
+  stripAccents(t.genres.toString().toLowerCase());
+const ALBUM = (t: Track): string => stripAccents(t.album.toLowerCase());
+const TITLE = (t: Track): string => stripAccents(t.title.toLowerCase());
+
+type TrackKeys = Path<Track>;
+type IterateeFunction = (track: Track) => string;
+
+export type SortConfig = Array<TrackKeys | IterateeFunction>;
+
+// Declarations
+const SORT_ORDERS: Record<SortBy, SortConfig> = {
+  Artist: [ARTIST, 'year', ALBUM, 'disk.no', 'track.no'],
+  Title: [TITLE, ARTIST, 'year', ALBUM, 'disk.no', 'track.no'],
+  Duration: ['duration', ARTIST, 'year', ALBUM, 'disk.no', 'track.no'],
+  Album: [ALBUM, ARTIST, 'year', 'disk.no', 'track.no'],
+  Genre: [GENRE, ARTIST, 'year', ALBUM, 'disk.no', 'track.no'],
+};
+
+export function getSortOrder(sortBy: SortBy): SortConfig {
+  return SORT_ORDERS[sortBy];
+}
+
+ /**
  * Formats the track's duration from seconds to hh:mm:ss
  */
 export function formatDuration(seconds: number) {

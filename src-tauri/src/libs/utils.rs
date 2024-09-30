@@ -3,8 +3,10 @@
  */
 use log::info;
 use std::{ffi::OsStr, path::PathBuf, time::Instant};
-use tauri::{Runtime, Theme, WebviewWindow};
+use tauri::Theme;
 use walkdir::WalkDir;
+
+use crate::plugins::config::SYSTEM_THEME;
 
 /**
  * Small helper to compute the execution time of some code
@@ -41,37 +43,11 @@ fn is_dir_visible(entry: &walkdir::DirEntry) -> bool {
 }
 
 /**
- * Take an entry and filter out:
- *   - directories
- *   - non-allowed extensions
+ * Take an entry and filter out non-allowed extensions
  */
-fn is_entry_valid(
-    result: std::result::Result<walkdir::DirEntry, walkdir::Error>,
-    allowed_extensions: &[&str],
-) -> Option<PathBuf> {
-    // If the user does not have access to the file
-    if result.is_err() {
-        return None;
-    }
-
-    let entry = result.unwrap();
-    let file_type = entry.file_type();
-
-    let extension = entry
-        .path()
-        .extension()
-        .and_then(OsStr::to_str)
-        .unwrap_or("");
-
-    let is_file = file_type.is_file();
-    let has_valid_extension = allowed_extensions.contains(&extension);
-
-    if is_file && has_valid_extension {
-        // Only return the file path, that's what we're interested in
-        return Some(entry.into_path());
-    }
-
-    return None;
+pub fn is_file_valid(path: &PathBuf, allowed_extensions: &[&str]) -> bool {
+    let extension = path.extension().and_then(OsStr::to_str).unwrap_or("");
+    allowed_extensions.contains(&extension)
 }
 
 /**
@@ -92,27 +68,22 @@ pub fn scan_dir(path: &PathBuf, allowed_extensions: &[&str]) -> Vec<PathBuf> {
     WalkDir::new(path)
         .follow_links(true)
         .into_iter()
-        .filter_entry(|entry| is_dir_visible(entry))
-        .filter_map(|entry| is_entry_valid(entry, allowed_extensions))
+        .filter_entry(|entry| is_dir_visible(entry) && entry.file_type().is_file())
+        .filter_map(Result::ok)
+        .map(|entry| entry.into_path())
+        .filter(|path| is_file_valid(path, allowed_extensions))
         .collect()
 }
 
 /**
- * Ensure a window is shown and visible
+ * Give an arbitrary string (usually the theme value from the config), returns
+ * a Tauri theme
  */
-pub fn show_window<R: Runtime>(window: &WebviewWindow<R>) {
-    window.maximize().unwrap();
-    window.show().unwrap();
-    window.set_focus().unwrap();
-}
-
-/**
- * Return the right window theme based on a theme name
- */
-pub fn get_window_theme(theme_name: &str) -> Option<Theme> {
+pub fn get_theme_from_name(theme_name: &str) -> Option<Theme> {
     match theme_name {
         "light" => Some(Theme::Light),
         "dark" => Some(Theme::Dark),
-        _ => Some(Theme::Light),
+        SYSTEM_THEME => None,
+        _ => None, // ? :]
     }
 }

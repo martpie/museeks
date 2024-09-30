@@ -25,6 +25,8 @@ import { usePlayerAPI } from '../../stores/usePlayerStore';
 import TrackRow from '../TrackRow/TrackRow';
 import TracksListHeader from '../TracksListHeader/TracksListHeader';
 
+import useInvalidate from '../../hooks/useInvalidate';
+import { useScrollRestoration } from '../../hooks/useScrollRestoration';
 import styles from './TracksList.module.css';
 
 const ROW_HEIGHT = 30;
@@ -64,7 +66,9 @@ export default function TracksList(props: Props) {
 
   const [selected, setSelected] = useState<string[]>([]);
   const [reordered, setReordered] = useState<string[] | null>([]);
+
   const navigate = useNavigate();
+  const invalidate = useInvalidate();
 
   // Scrollable element for the virtual list + virtualizer
   const scrollableRef = useRef<HTMLDivElement>(null);
@@ -87,6 +91,7 @@ export default function TracksList(props: Props) {
   const playerAPI = usePlayerAPI();
   const libraryAPI = useLibraryAPI();
   const highlight = useLibraryStore((state) => state.highlightPlayingTrack);
+  useScrollRestoration(scrollableRef);
 
   // Highlight playing track and scroll to it
   // Super-mega-hacky to use Redux for that
@@ -364,6 +369,7 @@ export default function TracksList(props: Props) {
           text: 'Create new playlist...',
           async action() {
             await PlaylistsAPI.create('New playlist', selected);
+            invalidate();
           },
         }),
         PredefinedMenuItem.new({
@@ -457,6 +463,7 @@ export default function TracksList(props: Props) {
               text: 'Remove from playlist',
               async action() {
                 await PlaylistsAPI.removeTracks(currentPlaylist, selected);
+                invalidate();
               },
             }),
           ])),
@@ -483,8 +490,9 @@ export default function TracksList(props: Props) {
           }),
           MenuItem.new({
             text: 'Remove from library',
-            action: () => {
-              libraryAPI.remove(selected);
+            action: async () => {
+              await libraryAPI.remove(selected);
+              invalidate();
             },
           }),
         ])),
@@ -505,6 +513,7 @@ export default function TracksList(props: Props) {
       navigate,
       playerAPI,
       libraryAPI,
+      invalidate,
     ],
   );
 

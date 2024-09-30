@@ -1,4 +1,4 @@
-import type { Track } from '../generated/typings';
+import type { LoaderFunctionArgs } from 'react-router-dom';
 
 /**
  * Player related stuff
@@ -8,19 +8,6 @@ export enum PlayerStatus {
   PAUSE = 'pause',
   STOP = 'stop',
 }
-
-/**
- * Editable track fields (via right-click -> edit track)
- */
-export type TrackEditableFields = Pick<
-  Track,
-  'title' | 'artists' | 'album' | 'genres'
->;
-
-export type TrackSearchableFields = Pick<
-  Track,
-  'title' | 'artists' | 'album' | 'genres'
->;
 
 /**
  * Various
@@ -36,7 +23,6 @@ export type ToastType = 'success' | 'danger' | 'warning';
 /**
  * Themes
  */
-
 export interface Theme {
   _id: string;
   name: string;
@@ -45,9 +31,16 @@ export interface Theme {
 }
 
 /**
- * Helpers
+ * APIs Helpers
  */
+export type API<
+  // biome-ignore lint/suspicious/noExplicitAny: loose type enforcement by design
+  T extends { api: Record<string, (...args: any[]) => Promise<any> | any> },
+> = T;
 
+/**
+ * Misc Helpers
+ */
 type StringableKey<T> = T extends readonly unknown[]
   ? number extends T['length']
     ? number
@@ -58,4 +51,13 @@ export type Path<T> = T extends object
   ? {
       [P in keyof T & StringableKey<T>]: `${P}` | `${P}.${Path<T[P]>}`;
     }[keyof T & StringableKey<T>]
+  : never;
+
+/**
+ * Loader Types, to manually type useLoaderData()
+ */
+export type LoaderData<T> = T extends (
+  args: LoaderFunctionArgs,
+) => Promise<infer U>
+  ? Exclude<U, Response>
   : never;

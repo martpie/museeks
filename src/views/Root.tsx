@@ -1,4 +1,3 @@
-import { getCurrentWindow } from '@tauri-apps/api/window';
 import { Suspense, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 
@@ -13,18 +12,18 @@ import PlayerEvents from '../components/Events/PlayerEvents';
 import Footer from '../components/Footer/Footer';
 import Header from '../components/Header/Header';
 import Toasts from '../components/Toasts/Toasts';
+import useInvalidate from '../hooks/useInvalidate';
 import SettingsAPI from '../stores/SettingsAPI';
-
+import type { LoaderData } from '../types/museeks';
 import styles from './Root.module.css';
-import type { LoaderData } from './router';
 
 export default function ViewRoot() {
+  const invalidate = useInvalidate();
+
   useEffect(() => {
-    SettingsAPI.checkAllSettings()
-      // Show the app once everything is loaded
-      .then(() => getCurrentWindow())
-      .then((window) => window.show());
-  }, []);
+    // If the app imported tracks, we need to refresh route data, but it seems invalidate is not super stable
+    SettingsAPI.init(invalidate);
+  }, [invalidate]);
 
   return (
     <div className={`${styles.root} os__${window.__MUSEEKS_PLATFORM}`}>

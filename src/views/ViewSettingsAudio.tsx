@@ -1,23 +1,16 @@
-import type React from 'react';
-import { useCallback } from 'react';
 import { useLoaderData } from 'react-router-dom';
 
 import AudioOutputSelect from '../components/AudioOutputSelect/AudioOutputSelect';
 import * as Setting from '../components/Setting/Setting';
 import { usePlayerAPI } from '../stores/usePlayerStore';
 
+import useInvalidate, { useInvalidateCallback } from '../hooks/useInvalidate';
 import type { SettingsLoaderData } from './ViewSettings';
 
 export default function ViewSettingsAudio() {
   const { config } = useLoaderData() as SettingsLoaderData;
   const playerAPI = usePlayerAPI();
-
-  const setPlaybackRate = useCallback(
-    (e: React.SyntheticEvent<HTMLInputElement>) => {
-      playerAPI.setPlaybackRate(Number.parseFloat(e.currentTarget.value));
-    },
-    [playerAPI],
-  );
+  const invalidate = useInvalidate();
 
   return (
     <div className="setting setting-audio">
@@ -28,7 +21,11 @@ export default function ViewSettingsAudio() {
           speed"
           id="setting-playbackrate"
           value={config.audio_playback_rate ?? ''}
-          onChange={setPlaybackRate}
+          onChange={(e) =>
+            playerAPI
+              .setPlaybackRate(Number.parseFloat(e.currentTarget.value))
+              .then(invalidate)
+          }
           type="number"
           min="0.5"
           max="5"
@@ -41,7 +38,7 @@ export default function ViewSettingsAudio() {
           description="Advanced: set a custom audio output device."
           id="setting-playbackrate"
           value={config.audio_output_device}
-          onChange={playerAPI.setOutputDevice}
+          onChange={useInvalidateCallback(playerAPI.setOutputDevice)}
         />
       </Setting.Section>
     </div>
