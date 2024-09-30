@@ -143,7 +143,7 @@ export default function ViewTrackDetails() {
             id="year"
             name="year"
             type="number"
-            min="1900"
+            min="0"
             step="1"
             value={Number(formData.year)}
             onChange={(e) => {
