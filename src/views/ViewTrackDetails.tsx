@@ -151,7 +151,7 @@ export default function ViewTrackDetails() {
             name="duration"
             type="text"
             pattern="([01]?[0-9]{1}|2[0-3]{1}):[0-5]{1}[0-9]{1}"
-            disabled={true}
+            readOnly={true}
             value={formatDuration(formData.duration)}
             onChange={(e) => {
               setFormData({
@@ -248,8 +248,7 @@ export default function ViewTrackDetails() {
             name="path"
             type="text"
             value={formData.path}
-            //readOnly={true}
-            disabled={true}
+            readOnly={true}
             onChange={(e) => {
               setFormData({ ...formData, path: e.currentTarget.value });
             }}
