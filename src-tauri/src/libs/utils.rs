@@ -3,7 +3,7 @@
  */
 use log::info;
 use std::{ffi::OsStr, path::PathBuf, time::Instant};
-use tauri::{Runtime, Theme, WebviewWindow};
+use tauri::Theme;
 use walkdir::WalkDir;
 
 use crate::plugins::config::SYSTEM_THEME;
@@ -73,15 +73,6 @@ pub fn scan_dir(path: &PathBuf, allowed_extensions: &[&str]) -> Vec<PathBuf> {
         .map(|entry| entry.into_path())
         .filter(|path| is_file_valid(path, allowed_extensions))
         .collect()
-}
-
-/**
- * Ensure a window is shown and visible
- */
-pub fn show_window<R: Runtime>(window: &WebviewWindow<R>) {
-    window.maximize().unwrap();
-    window.show().unwrap();
-    window.set_focus().unwrap();
 }
 
 /**
