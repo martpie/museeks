@@ -5,7 +5,7 @@ mod libs;
 mod plugins;
 
 use libs::file_associations::setup_file_associations;
-use libs::utils::{get_theme_from_name, show_window};
+use libs::utils::get_theme_from_name;
 use log::LevelFilter;
 use plugins::config::ConfigManager;
 use tauri::{Manager, WebviewUrl, WebviewWindowBuilder};
@@ -47,8 +47,9 @@ async fn main() {
         .plugin(tauri_plugin_notification::init())
         .plugin(tauri_plugin_shell::init())
         .plugin(tauri_plugin_single_instance::init(|app_handle, _, _| {
+            // Focus on the already running app in case the app is opened again
             let window = app_handle.get_webview_window("main").unwrap();
-            show_window(&window);
+            window.set_focus().unwrap();
         }))
         .plugin(
             tauri_plugin_window_state::Builder::default()
