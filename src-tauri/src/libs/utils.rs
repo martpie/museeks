@@ -68,7 +68,7 @@ pub fn scan_dir(path: &PathBuf, allowed_extensions: &[&str]) -> Vec<PathBuf> {
     WalkDir::new(path)
         .follow_links(true)
         .into_iter()
-        .filter_entry(|entry| is_dir_visible(entry) && entry.file_type().is_file())
+        .filter_entry(is_dir_visible)
         .filter_map(Result::ok)
         .map(|entry| entry.into_path())
         .filter(|path| is_file_valid(path, allowed_extensions))
