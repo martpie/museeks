@@ -342,6 +342,7 @@ async fn import_tracks_to_library<R: Runtime>(
 
     track_paths.retain(|path| !existing_paths.contains(path));
 
+    info!("Found {} files to import", track_paths.len());
     info!(
         "{} tracks already imported (they will be skipped)",
         scanned_paths_count - track_paths.len()
