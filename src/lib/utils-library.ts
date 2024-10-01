@@ -121,8 +121,8 @@ export function getSortOrder(sortBy: SortBy): SortConfig {
   return SORT_ORDERS[sortBy];
 }
 
- /**
- * Formats the track's duration from seconds to hh:mm:ss
+/**
+ *  Formats the track's duration from seconds to hh:mm:ss
  */
 export function formatDuration(seconds: number) {
   return new Date(seconds * 1000).toISOString().substring(11, 19);
