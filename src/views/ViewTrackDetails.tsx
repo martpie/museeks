@@ -47,7 +47,7 @@ export default function ViewTrackDetails() {
     artists: track.artists,
     album: track.album ?? '',
     genres: track.genres,
-    year: track.year,
+    year: track.year ?? 0,
     duration: track.duration,
     track_no: track.track_no ?? null,
     track_of: track.track_of ?? null,
