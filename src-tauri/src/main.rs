@@ -6,8 +6,8 @@ mod plugins;
 
 use libs::file_associations::setup_file_associations;
 use libs::utils::get_theme_from_name;
-use log::LevelFilter;
-use plugins::config::ConfigManager;
+use log::{info, LevelFilter};
+use plugins::config::{get_storage_dir, ConfigManager};
 use tauri::{Manager, WebviewUrl, WebviewWindowBuilder};
 use tauri_plugin_log::fern::colors::ColoredLevelConfig;
 use tauri_plugin_log::{Target, TargetKind};
@@ -26,6 +26,10 @@ async fn main() {
                 .targets([
                     Target::new(TargetKind::Stdout),
                     Target::new(TargetKind::Webview),
+                    Target::new(TargetKind::Folder {
+                        path: get_storage_dir(),
+                        file_name: Some("museeks".into()),
+                    }),
                 ])
                 .level(LevelFilter::Info)
                 .with_colors(ColoredLevelConfig::default())
@@ -84,6 +88,8 @@ async fn main() {
             #[cfg(not(target_os = "macos"))]
             window_builder.build()?;
 
+            info!("Main window built");
+
             // FIXME: File association for non-macOS is not working well:
             // - Does not work with single instance when the app is already open
             // - Issues with C:\... URLs parsing with rust-url
@@ -97,9 +103,9 @@ async fn main() {
         .expect("error while running tauri application")
         .run(
             #[allow(unused_variables)]
-            |app, event| {
+            |app_handle, event| {
                 #[cfg(target_os = "macos")]
-                setup_file_associations(app, event);
+                setup_file_associations(app_handle, event);
             },
         );
 }

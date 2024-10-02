@@ -15,6 +15,7 @@ import Toasts from '../components/Toasts/Toasts';
 import useInvalidate from '../hooks/useInvalidate';
 import SettingsAPI from '../stores/SettingsAPI';
 import type { LoaderData } from '../types/museeks';
+
 import styles from './Root.module.css';
 
 export default function ViewRoot() {
