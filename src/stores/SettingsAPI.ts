@@ -1,5 +1,7 @@
 import { getVersion } from '@tauri-apps/api/app';
 import { invoke } from '@tauri-apps/api/core';
+import { getCurrentWindow } from '@tauri-apps/api/window';
+import { info } from '@tauri-apps/plugin-log';
 import * as semver from 'semver';
 
 import type { Config, DefaultView } from '../generated/typings';
@@ -7,7 +9,6 @@ import config from '../lib/config';
 import { getTheme } from '../lib/themes';
 import { logAndNotifyError } from '../lib/utils';
 
-import { getCurrentWindow } from '@tauri-apps/api/window';
 import useLibraryStore from './useLibraryStore';
 import useToastsStore from './useToastsStore';
 
@@ -32,6 +33,7 @@ async function init(then: () => void): Promise<void> {
 
   // Show the app once everything is loaded
   await getCurrentWindow().show();
+  info('UI is ready!');
 
   // Non-blocking, this can we done later
   await checkForLibraryRefresh().catch(logAndNotifyError);
