@@ -26,7 +26,6 @@ export default function GlobalErrorBoundary() {
   return (
     <ViewMessage.Notice>
       <p>
-        {/* biome-ignore lint/a11y/useSemanticElements: no <img> for emojis */}
         <span role="img" aria-label="boom">
           💥
         </span>{' '}
