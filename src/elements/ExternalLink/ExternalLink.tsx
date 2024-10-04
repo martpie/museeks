@@ -19,12 +19,7 @@ export default function ExternalLink(props: Props) {
   );
 
   return (
-    <button
-      type="button"
-      className={styles.externalLink}
-      role="link"
-      onClick={openLink}
-    >
+    <button type="button" className={styles.externalLink} onClick={openLink}>
       {props.children}
     </button>
   );

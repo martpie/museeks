@@ -17,9 +17,5 @@ export default function ExternalButton(props: Props) {
     [props.href],
   );
 
-  return (
-    <Button role="link" onClick={openLink}>
-      {props.children}
-    </Button>
-  );
+  return <Button onClick={openLink}>{props.children}</Button>;
 }
