@@ -37,9 +37,14 @@ class Player {
     this.track = null;
 
     this.audio.defaultPlaybackRate = mergedOptions.playbackRate;
-    // @ts-ignore
-    // TODO:
-    // this.audio.setSinkId(mergedOptions.audioOutputDevice);
+
+    // FIXME: this will not do anything unless we recall getUserMedia()
+    if ('setSinkId' in this.audio) {
+      // eslint-disable-next-line
+      // @ts-ignore
+      this.audio.setSinkId(mergedOptions.audioOutputDevice);
+    }
+
     this.audio.playbackRate = mergedOptions.playbackRate;
     this.audio.volume = mergedOptions.volume;
     this.audio.muted = mergedOptions.muted;
