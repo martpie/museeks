@@ -110,11 +110,11 @@ export type SortConfig = Array<TrackKeys | IterateeFunction>;
 
 // Declarations
 const SORT_ORDERS: Record<SortBy, SortConfig> = {
-  Artist: [ARTIST, 'year', ALBUM, 'disk.no', 'track.no'],
-  Title: [TITLE, ARTIST, 'year', ALBUM, 'disk.no', 'track.no'],
-  Duration: ['duration', ARTIST, 'year', ALBUM, 'disk.no', 'track.no'],
-  Album: [ALBUM, ARTIST, 'year', 'disk.no', 'track.no'],
-  Genre: [GENRE, ARTIST, 'year', ALBUM, 'disk.no', 'track.no'],
+  Artist: [ARTIST, ALBUM, 'disk.no', 'track.no'],
+  Title: [TITLE, ARTIST, ALBUM, 'disk.no', 'track.no'],
+  Duration: ['duration', ARTIST, ALBUM, 'disk.no', 'track.no'],
+  Album: [ALBUM, ARTIST, 'disk.no', 'track.no'],
+  Genre: [GENRE, ARTIST, ALBUM, 'disk.no', 'track.no'],
 };
 
 export function getSortOrder(sortBy: SortBy): SortConfig {
