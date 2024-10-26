@@ -50,7 +50,7 @@
     "react-keybinding-component": "^2.2.0",
     "react-router-dom": "6.27.0",
     "semver": "^7.6.3",
-    "zustand": "^4.5.5"
+    "zustand": "^5.0.0"
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
