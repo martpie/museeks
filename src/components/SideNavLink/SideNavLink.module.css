@@ -1,6 +1,46 @@
-.playlistLink {
-  &:hover,
+.sideNavLink {
+  display: block;
+  width: 100%;
+  line-height: 1;
+  font-size: 1rem;
+  color: inherit;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  cursor: pointer;
+  padding: 8px 12px;
+  text-decoration: none;
+  border-style: solid;
+  border-color: transparent;
+  border-width: 1px 0;
+
+  &:hover {
+    background-color: var(--sidebar-item-active-bg);
+    color: var(--text);
+    text-decoration: none;
+  }
+
   &:focus {
     text-decoration: none;
   }
+
+  &:global(.isActive) {
+    outline: none;
+    z-index: 10;
+    border-style: solid;
+    border-color: var(--border-color);
+    border-width: 1px 0;
+    background-color: var(--sidebar-item-active-bg);
+    color: var(--main-color);
+  }
+}
+
+.sideNavLinkInput {
+  appearance: none;
+  display: block;
+  padding: 0;
+  border: none;
+  background: transparent;
+  font-size: 1rem;
+  line-height: 1;
 }
