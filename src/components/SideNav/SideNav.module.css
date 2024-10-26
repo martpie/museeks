@@ -9,60 +9,21 @@
   position: relative;
 }
 
-.sideNav__actions {
+.sideNavActions {
   align-items: stretch;
 }
 
-.sideNav__title {
+.sideNavTitle {
   margin: 10px 12px;
-  font-size: 11px;
+  font-size: .875rem;
   font-weight: bold;
+  color: var(--text-muted);
   flex: 1;
 }
 
-.sideNav__body {
+.sideNavItems {
   flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
   overflow: auto;
-}
-
-.item__link {
-  font-size: 1rem;
-  display: block;
-  color: inherit;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
-  cursor: pointer;
-  padding: 8px 12px;
-  text-decoration: none;
-  border-style: solid;
-  border-color: transparent;
-  border-width: 1px 0;
-
-  &:hover {
-    background-color: var(--sidebar-item-active-bg);
-    color: var(--text);
-  }
-
-  &:global(.isActive) {
-    z-index: 10;
-    border-style: solid;
-    border-color: var(--border-color);
-    border-width: 1px 0;
-    background-color: var(--sidebar-item-active-bg);
-    color: var(--main-color);
-  }
-}
-
-.item__input {
-  font-size: 1rem;
-  display: block;
-  width: 100%;
-  background-color: var(--sidebar-item-active-bg);
-  color: var(--main-color);
-  padding: 8px 12px;
-  outline: none;
-  border-style: solid;
-  border-color: var(--border-color);
-  border-width: 1px 0;
 }
