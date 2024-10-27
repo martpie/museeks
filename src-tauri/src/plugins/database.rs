@@ -21,6 +21,7 @@ use ts_rs::TS;
 
 use crate::libs::error::{AnyResult, MuseeksError};
 use crate::libs::events::IPCEvent;
+use crate::libs::playlist::Playlist;
 use crate::libs::track::{get_track_from_file, get_track_id_for_path, Track};
 use crate::libs::utils::{scan_dirs, TimeLogger};
 
@@ -268,22 +269,6 @@ impl DB {
     ) -> AnyResult<<T as SerializedCollection>::Contents> {
         Ok(T::document_contents(doc)?)
     }
-}
-
-/** ----------------------------------------------------------------------------
- * Playlist
- * represent a playlist, that has a name and a list of tracks
- * -------------------------------------------------------------------------- */
-
-#[derive(Debug, Clone, Serialize, Deserialize, Collection, TS)]
-#[collection(name = "playlists", primary_key = String)]
-#[ts(export, export_to = "../../src/generated/typings/index.ts")]
-pub struct Playlist {
-    #[natural_id]
-    pub _id: String,
-    pub name: String,
-    pub tracks: Vec<String>,          // vector of IDs
-    pub import_path: Option<PathBuf>, // the path of the file on disk (not set for playlists created in app)
 }
 
 /**
