@@ -6,8 +6,6 @@ export type DefaultView = "Library" | "Playlists";
 
 export type IPCEvent = { "Unknown": string } | "PlaybackPlay" | "PlaybackPause" | "PlaybackStop" | "PlaybackPlayPause" | "PlaybackPrevious" | "PlaybackNext" | "PlaybackStart" | "LibraryScanProgress" | "GoToLibrary" | "GoToPlaylists" | "GoToSettings" | "JumpToPlayingTrack";
 
-export type NumberOf = { no: number | null, of: number | null, };
-
 /** ----------------------------------------------------------------------------
  * Playlist
  * represent a playlist, that has a name and a list of tracks
@@ -30,5 +28,5 @@ export type SortOrder = "Asc" | "Dsc";
 /**
  * Track
  * represent a single track, id and path should be unique
-*/
-export type Track = { _id: string, title: string, album: string, artists: Array<string>, genres: Array<string>, year: number, duration: number, track: NumberOf, disk: NumberOf, path: string, };
+ */
+export type Track = { _id: string, path: string, title: string, album: string, artists: Array<string>, genres: Array<string>, year: number | null, duration: number, track_no: number | null, track_of: number | null, disk_no: number | null, disk_of: number | null, };
