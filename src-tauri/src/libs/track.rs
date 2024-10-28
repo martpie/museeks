@@ -18,22 +18,17 @@ use uuid::Uuid;
 pub struct Track {
     #[natural_id]
     pub _id: String,
+    pub path: PathBuf, // must be unique
     pub title: String,
     pub album: String,
     pub artists: Vec<String>,
     pub genres: Vec<String>,
     pub year: Option<u32>,
     pub duration: u32,
-    pub track: NumberOf,
-    pub disk: NumberOf,
-    pub path: PathBuf,
-}
-
-#[derive(Debug, Clone, Serialize, Deserialize, TS)]
-#[ts(export, export_to = "../../src/generated/typings/index.ts")]
-pub struct NumberOf {
-    pub no: Option<u32>,
-    pub of: Option<u32>,
+    pub track_no: Option<u32>,
+    pub track_of: Option<u32>,
+    pub disk_no: Option<u32>,
+    pub disk_of: Option<u32>,
 }
 
 /**
@@ -68,6 +63,7 @@ pub fn get_track_from_file(path: &PathBuf) -> Option<Track> {
 
             Some(Track {
                 _id: id,
+                path: path.to_owned(),
                 title: tag
                     .get_string(&ItemKey::TrackTitle)
                     .unwrap_or("Unknown")
@@ -83,15 +79,10 @@ pub fn get_track_from_file(path: &PathBuf) -> Option<Track> {
                     .collect(),
                 year: tag.year(),
                 duration: u32::try_from(tagged_file.properties().duration().as_secs()).unwrap_or(0),
-                track: NumberOf {
-                    no: tag.track(),
-                    of: tag.track_total(),
-                },
-                disk: NumberOf {
-                    no: tag.disk(),
-                    of: tag.disk_total(),
-                },
-                path: path.to_owned(),
+                track_no: tag.track(),
+                track_of: tag.track_total(),
+                disk_no: tag.disk(),
+                disk_of: tag.disk_total(),
             })
         }
         Err(err) => {
