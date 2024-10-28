@@ -16,8 +16,7 @@ use tauri_plugin_window_state::StateFlags;
 /**
  * The beast
  */
-#[tokio::main]
-async fn main() {
+fn main() {
     tauri::Builder::default()
         // Logging must be setup first, otherwise the logs won't be captured
         // while setting up the other plugins.
