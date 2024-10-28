@@ -18,6 +18,7 @@ use uuid::Uuid;
 pub struct Track {
     #[natural_id]
     pub _id: String,
+    pub path: PathBuf, // must be unique
     pub title: String,
     pub album: String,
     pub artists: Vec<String>,
@@ -28,7 +29,6 @@ pub struct Track {
     pub track_of: Option<u32>,
     pub disk_no: Option<u32>,
     pub disk_of: Option<u32>,
-    pub path: PathBuf,
 }
 
 /**
@@ -63,6 +63,7 @@ pub fn get_track_from_file(path: &PathBuf) -> Option<Track> {
 
             Some(Track {
                 _id: id,
+                path: path.to_owned(),
                 title: tag
                     .get_string(&ItemKey::TrackTitle)
                     .unwrap_or("Unknown")
@@ -82,7 +83,6 @@ pub fn get_track_from_file(path: &PathBuf) -> Option<Track> {
                 track_of: tag.track_total(),
                 disk_no: tag.disk(),
                 disk_of: tag.disk_total(),
-                path: path.to_owned(),
             })
         }
         Err(err) => {

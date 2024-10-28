@@ -10,6 +10,7 @@ import {
 const TEST_TRACKS_ALBUM: Array<Track> = [
   {
     _id: '0_1',
+    path: '/tmp/unknown.mp3',
     album: 'Album',
     artists: ['Artist'],
     track_no: 2,
@@ -18,12 +19,12 @@ const TEST_TRACKS_ALBUM: Array<Track> = [
     disk_of: null,
     duration: 42,
     genres: ['pop', 'rock'],
-    path: '/tmp/unknown.mp3',
     title: 'Song 1',
     year: 2000,
   },
   {
     _id: '0_2',
+    path: '/tmp/unknown_2.mp3',
     album: 'Album',
     artists: ['Artist'],
     track_no: 1,
@@ -32,7 +33,6 @@ const TEST_TRACKS_ALBUM: Array<Track> = [
     disk_of: null,
     duration: 60,
     genres: ['pop', 'rock'],
-    path: '/tmp/unknown_2.mp3',
     title: 'Song 2',
     year: 2000,
   },
@@ -41,6 +41,7 @@ const TEST_TRACKS_ALBUM: Array<Track> = [
 const TEST_TRACKS_PODCAST: Array<Track> = [
   {
     _id: '1_1',
+    path: '/tmp/unknown_2.mp3',
     album: 'Another',
     artists: ['Another Artist'],
     track_no: 1,
@@ -49,7 +50,6 @@ const TEST_TRACKS_PODCAST: Array<Track> = [
     disk_of: null,
     duration: 3600,
     genres: ['podcast'],
-    path: '/tmp/unknown_2.mp3',
     title: 'Song 2',
     year: 2000,
   },
