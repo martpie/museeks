@@ -2996,7 +2996,6 @@ dependencies = [
  "tauri-plugin-single-instance",
  "tauri-plugin-window-state",
  "thiserror",
- "tokio",
  "ts-rs",
  "uuid",
  "walkdir",
