@@ -16,9 +16,9 @@ use uuid::Uuid;
 #[ormlite(table = "tracks")]
 #[ts(export, export_to = "../../src/generated/typings/index.ts")]
 pub struct Track {
-    #[ormlite(primary_key)]
-    pub id: String,
-    pub path: String, // must be unique, ideally, a PathBuf
+    #[natural_id]
+    pub _id: String,
+    pub path: PathBuf, // must be unique
     pub title: String,
     pub album: String,
     #[ormlite(json)]
@@ -64,8 +64,8 @@ pub fn get_track_from_file(path: &PathBuf) -> Option<Track> {
             };
 
             Some(Track {
-                id,
-                path: path.to_string_lossy().into_owned(),
+                _id: id,
+                path: path.to_owned(),
                 title: tag
                     .get_string(&ItemKey::TrackTitle)
                     .unwrap_or("Unknown")

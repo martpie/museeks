@@ -9,7 +9,7 @@ import {
 
 const TEST_TRACKS_ALBUM: Array<Track> = [
   {
-    id: '0_1',
+    _id: '0_1',
     path: '/tmp/unknown.mp3',
     album: 'Album',
     artists: ['Artist'],
@@ -23,7 +23,7 @@ const TEST_TRACKS_ALBUM: Array<Track> = [
     year: 2000,
   },
   {
-    id: '0_2',
+    _id: '0_2',
     path: '/tmp/unknown_2.mp3',
     album: 'Album',
     artists: ['Artist'],
@@ -40,7 +40,7 @@ const TEST_TRACKS_ALBUM: Array<Track> = [
 
 const TEST_TRACKS_PODCAST: Array<Track> = [
   {
-    id: '1_1',
+    _id: '1_1',
     path: '/tmp/unknown_2.mp3',
     album: 'Another',
     artists: ['Another Artist'],
