@@ -15,6 +15,7 @@ import { useLibraryAPI } from '../stores/useLibraryStore';
 import Flexbox from '../elements/Flexbox/Flexbox';
 import Separator from '../elements/Separator/Separator';
 import useInvalidate from '../hooks/useInvalidate';
+import useFormattedDuration from '../hooks/useFormattedDuration';
 import type { LoaderData } from '../types/museeks';
 import appStyles from './Root.module.css';
 import styles from './ViewTrackDetails.module.css';
@@ -35,8 +36,10 @@ export default function ViewTrackDetails() {
       | 'genres'
       | 'year'
       | 'duration'
-      | 'track'
-      | 'disk'
+      | 'track_no'
+      | 'track_of'
+      | 'disk_no'
+      | 'disk_of'
       | 'path'
     >
   >({
@@ -46,8 +49,10 @@ export default function ViewTrackDetails() {
     genres: track.genres,
     year: track.year,
     duration: track.duration,
-    track: track.track ?? { no: 0, of: 0 },
-    disk: track.disk ?? { no: 0, of: 0 },
+    track_no: track.track_no ?? null,
+    track_of: track.track_of ?? null,
+    disk_no: track.disk_no ?? null,
+    disk_of: track.disk_of ?? null,
     path: track.path,
   });
 
@@ -154,7 +159,7 @@ export default function ViewTrackDetails() {
             type="text"
             pattern="([01]?[0-9]{1}|2[0-3]{1}):[0-5]{1}[0-9]{1}"
             disabled={true}
-            value={formData.duration}
+            value={useFormattedDuration(formData.duration)}
             onChange={(e) => {
               setFormData({
                 ...formData,
@@ -172,14 +177,11 @@ export default function ViewTrackDetails() {
               type="number"
               min="0"
               step="1"
-              value={Number(formData.track.no)}
+              value={Number(formData.track_no)}
               onChange={(e) => {
                 setFormData({
                   ...formData,
-                  track: {
-                    no: Number(e.currentTarget.value),
-                    of: formData.track.of,
-                  },
+                  track_no: Number(e.currentTarget.value),
                 });
               }}
             />
@@ -190,14 +192,11 @@ export default function ViewTrackDetails() {
               type="number"
               min="0"
               step="1"
-              value={Number(formData.track.of)}
+              value={Number(formData.track_of)}
               onChange={(e) => {
                 setFormData({
                   ...formData,
-                  track: {
-                    no: formData.track.no,
-                    of: Number(e.currentTarget.value),
-                  },
+                  track_of: Number(e.currentTarget.value),
                 });
               }}
             />
@@ -212,14 +211,11 @@ export default function ViewTrackDetails() {
               type="number"
               min="0"
               step="1"
-              value={Number(formData.disk.no)}
+              value={Number(formData.disk_no)}
               onChange={(e) => {
                 setFormData({
                   ...formData,
-                  disk: {
-                    no: Number(e.currentTarget.value),
-                    of: formData.disk.of,
-                  },
+                  disk_no: Number(e.currentTarget.value),
                 });
               }}
             />
@@ -230,14 +226,11 @@ export default function ViewTrackDetails() {
               type="number"
               min="0"
               step="1"
-              value={Number(formData.disk.of)}
+              value={Number(formData.disk_of)}
               onChange={(e) => {
                 setFormData({
                   ...formData,
-                  disk: {
-                    no: formData.disk.no,
-                    of: Number(e.currentTarget.value),
-                  },
+                disk_of: Number(e.currentTarget.value),
                 });
               }}
             />
