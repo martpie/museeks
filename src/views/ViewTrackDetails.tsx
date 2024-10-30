@@ -14,8 +14,8 @@ import { useLibraryAPI } from '../stores/useLibraryStore';
 
 import Flexbox from '../elements/Flexbox/Flexbox';
 import Separator from '../elements/Separator/Separator';
-import useInvalidate from '../hooks/useInvalidate';
 import useFormattedDuration from '../hooks/useFormattedDuration';
+import useInvalidate from '../hooks/useInvalidate';
 import type { LoaderData } from '../types/museeks';
 import appStyles from './Root.module.css';
 import styles from './ViewTrackDetails.module.css';
@@ -230,7 +230,7 @@ export default function ViewTrackDetails() {
               onChange={(e) => {
                 setFormData({
                   ...formData,
-                disk_of: Number(e.currentTarget.value),
+                  disk_of: Number(e.currentTarget.value),
                 });
               }}
             />
