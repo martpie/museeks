@@ -14,7 +14,7 @@ import { useLibraryAPI } from '../stores/useLibraryStore';
 
 import Flexbox from '../elements/Flexbox/Flexbox';
 import Separator from '../elements/Separator/Separator';
-import useFormattedDuration from '../hooks/useFormattedDuration';
+import { parseDuration } from '../hooks/useFormattedDuration';
 import useInvalidate from '../hooks/useInvalidate';
 import type { LoaderData } from '../types/museeks';
 import appStyles from './Root.module.css';
@@ -159,7 +159,7 @@ export default function ViewTrackDetails() {
             type="text"
             pattern="([01]?[0-9]{1}|2[0-3]{1}):[0-5]{1}[0-9]{1}"
             disabled={true}
-            value={useFormattedDuration(formData.duration)}
+            value={parseDuration(formData.duration)}
             onChange={(e) => {
               setFormData({
                 ...formData,
