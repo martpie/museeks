@@ -25,6 +25,12 @@ pub enum MuseeksError {
     LocalDatabase(#[from] bonsaidb::local::Error),
 
     #[error(transparent)]
+    ORMLite(#[from] ormlite::Error),
+
+    #[error(transparent)]
+    ORMLiteSqlx(#[from] ormlite::SqlxError),
+
+    #[error(transparent)]
     NoSleep(#[from] nosleep::Error),
 
     #[error("An error occurred while manipulating the config: {0}")]
@@ -36,9 +42,6 @@ pub enum MuseeksError {
     /**
      * Custom errors
      */
-    #[error("{message}")]
-    Library { message: String },
-
     #[error("Playlist not found")]
     PlaylistNotFound,
 }

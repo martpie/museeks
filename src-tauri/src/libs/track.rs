@@ -1,9 +1,9 @@
 use std::path::PathBuf;
 
-use bonsaidb::core::schema::Collection;
 use lofty::file::{AudioFile, TaggedFileExt};
 use lofty::tag::{Accessor, ItemKey};
 use log::{error, warn};
+use ormlite::model::Model;
 use serde::{Deserialize, Serialize};
 use ts_rs::TS;
 use uuid::Uuid;
@@ -12,16 +12,17 @@ use uuid::Uuid;
  * Track
  * represent a single track, id and path should be unique
  */
-#[derive(Debug, Clone, Serialize, Deserialize, Collection, TS)]
-#[collection(name="tracks", primary_key = String)]
+#[derive(Debug, Clone, Serialize, Deserialize, Model, TS)]
+#[ormlite(insert = "InsertTrack")]
 #[ts(export, export_to = "../../src/generated/typings/index.ts")]
 pub struct Track {
-    #[natural_id]
-    pub _id: String,
-    pub path: PathBuf, // must be unique
+    pub id: String,
+    pub path: String, // must be unique, ideally, a PathBuf
     pub title: String,
     pub album: String,
+    #[ormlite(json)]
     pub artists: Vec<String>,
+    #[ormlite(json)]
     pub genres: Vec<String>,
     pub year: Option<u32>,
     pub duration: u32,
@@ -35,7 +36,7 @@ pub struct Track {
  * Generate a Track struct from a Path, or nothing if it is not a valid audio
  * file
  */
-pub fn get_track_from_file(path: &PathBuf) -> Option<Track> {
+pub fn get_track_from_file(path: &PathBuf) -> Option<InsertTrack> {
     match lofty::read_from_path(&path) {
         Ok(tagged_file) => {
             let tag = tagged_file.primary_tag()?;
@@ -57,13 +58,8 @@ pub fn get_track_from_file(path: &PathBuf) -> Option<Track> {
                 artists = vec!["Unknown Artist".into()];
             }
 
-            let Some(id) = get_track_id_for_path(path) else {
-                return None;
-            };
-
-            Some(Track {
-                _id: id,
-                path: path.to_owned(),
+            Some(InsertTrack {
+                path: path.to_string_lossy().into_owned(),
                 title: tag
                     .get_string(&ItemKey::TrackTitle)
                     .unwrap_or("Unknown")
@@ -90,6 +86,27 @@ pub fn get_track_from_file(path: &PathBuf) -> Option<Track> {
             None
         }
     }
+}
+
+/**
+ * Generate a fake ID for inserted track, typically used when manipulating tracks
+ * that may never be stored in the database.
+ */
+pub fn get_track_from_insert_track(insert_track: InsertTrack) -> Track {
+    return Track {
+        id: get_track_id_for_path(&PathBuf::from(&insert_track.path)).unwrap(),
+        path: insert_track.path,
+        title: insert_track.title,
+        album: insert_track.album,
+        artists: insert_track.artists,
+        genres: insert_track.genres,
+        year: insert_track.year,
+        duration: insert_track.duration,
+        track_no: insert_track.track_no,
+        track_of: insert_track.track_of,
+        disk_no: insert_track.disk_no,
+        disk_of: insert_track.disk_of,
+    };
 }
 
 /**
