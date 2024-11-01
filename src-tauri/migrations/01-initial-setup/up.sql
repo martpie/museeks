@@ -1,5 +1,5 @@
 -- Track table
-CREATE TABLE track (
+CREATE TABLE IF NOT EXISTS track (
     _id TEXT PRIMARY KEY NOT NULL,
     path TEXT NOT NULL UNIQUE, -- Path as a string and unique
     title TEXT NOT NULL,
@@ -18,7 +18,7 @@ CREATE TABLE track (
 CREATE INDEX index_track_path ON Track (path);
 
 -- Playlist table
-CREATE TABLE playlist (
+CREATE TABLE IF NOT EXISTS playlist (
     _id TEXT PRIMARY KEY NOT NULL,
     name TEXT NOT NULL,
     tracks JSON NOT NULL DEFAULT '[]', -- Array of track IDs

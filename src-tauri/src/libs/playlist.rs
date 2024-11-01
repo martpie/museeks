@@ -8,7 +8,7 @@ use ts_rs::TS;
  * -------------------------------------------------------------------------- */
 
 #[derive(Debug, Clone, Serialize, Deserialize, Model, TS)]
-#[ormlite(insert = "InsertPlaylist")]
+// #[ormlite(insert = "InsertPlaylist")]
 #[ts(export, export_to = "../../src/generated/typings/index.ts")]
 pub struct Playlist {
     #[ormlite(primary_key)]

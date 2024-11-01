@@ -1,7 +1,7 @@
 use log::{error, info, warn};
 use ormlite::model::ModelBuilder;
 use ormlite::sqlite::SqliteConnection;
-use ormlite::{Connection, Insert, Model};
+use ormlite::{Connection, Model};
 use rayon::iter::{IntoParallelRefIterator, ParallelIterator};
 use serde::{Deserialize, Serialize};
 use std::collections::{HashMap, HashSet};
@@ -17,13 +17,11 @@ use ts_rs::TS;
 
 use crate::libs::error::{AnyResult, MuseeksError};
 use crate::libs::events::IPCEvent;
-use crate::libs::playlist::{InsertPlaylist, Playlist};
-use crate::libs::track::{get_track_from_file, get_track_id_for_path, InsertTrack, Track};
+use crate::libs::playlist::Playlist;
+use crate::libs::track::{get_track_from_file, get_track_id_for_path, Track};
 use crate::libs::utils::{scan_dirs, TimeLogger};
 
 use super::config::get_storage_dir;
-
-const INSERTION_BATCH: usize = 200;
 
 // KEEP THAT IN SYNC with Tauri's file associations in tauri.conf.json
 pub const SUPPORTED_TRACKS_EXTENSIONS: [&str; 9] = [
@@ -114,7 +112,7 @@ impl DB {
      *
      * Doc: https://github.com/khonsulabs/bonsaidb/blob/main/examples/basic-local/examples/basic-local-multidb.rs
      */
-    pub async fn insert_tracks(&mut self, tracks: Vec<InsertTrack>) -> AnyResult<()> {
+    pub async fn insert_tracks(&mut self, tracks: Vec<Track>) -> AnyResult<()> {
         // BonsaiDB does not work well (as of today) with a lot of very small
         // insertions, so let's insert tracks by batch instead.
         // If a batch fails (because for example a duplicate path), the whole transaction
@@ -185,13 +183,14 @@ impl DB {
             None => None,
         };
 
-        let insert_playlist = InsertPlaylist {
+        let playlist = Playlist {
+            id: uuid::Uuid::new_v4().to_string(),
             name,
             tracks: tracks_ids,
             import_path: playlist_path,
         };
 
-        let playlist = insert_playlist.insert(&mut self.connection).await?;
+        let playlist = playlist.insert(&mut self.connection).await?;
 
         Ok(playlist)
     }
@@ -329,7 +328,7 @@ async fn import_tracks_to_library<R: Runtime>(
 
     let tracks = track_paths
         .par_iter()
-        .map(|path| -> Option<InsertTrack> {
+        .map(|path| -> Option<Track> {
             // let counter = processed.clone();
             let p_current = progress.clone().fetch_add(1, Ordering::SeqCst);
             let p_total = total.clone().load(Ordering::SeqCst);
@@ -350,7 +349,7 @@ async fn import_tracks_to_library<R: Runtime>(
             get_track_from_file(path)
         })
         .flatten()
-        .collect::<Vec<InsertTrack>>();
+        .collect::<Vec<Track>>();
 
     let track_failures = track_paths.len() - tracks.len();
     scan_result.track_count = tracks.len();
@@ -366,7 +365,10 @@ async fn import_tracks_to_library<R: Runtime>(
     let result = db.insert_tracks(tracks).await;
 
     if result.is_err() {
-        warn!("Something went wrong when inserting tracks");
+        error!(
+            "Something went wrong when inserting tracks: {}",
+            result.err().unwrap()
+        );
     }
 
     db_insert_logger.complete();
@@ -625,14 +627,46 @@ async fn setup() -> AnyResult<DB> {
     std::fs::OpenOptions::new()
         .write(true)
         .create_new(true)
-        .open(&database_path)?;
+        .open(&database_path)
+        .ok(); // TODO: if files already exists, ok, otherwise, return error
 
     let mut sqlite_database_path = "sqlite:".to_owned();
     sqlite_database_path.push_str(database_path.to_str().expect("Failed to get database path"));
 
     info!("Opening connection to database: {:?}", sqlite_database_path);
 
-    let connection = SqliteConnection::connect(&sqlite_database_path).await?;
+    let mut connection = SqliteConnection::connect(&sqlite_database_path).await?;
+
+    // TODO: move that to SQL files, or derive that from the struct itself
+    ormlite::query(
+        "CREATE TABLE IF NOT EXISTS track (
+            id TEXT PRIMARY KEY NOT NULL,
+            path TEXT NOT NULL UNIQUE, -- Path as a string and unique
+            title TEXT NOT NULL,
+            album TEXT NOT NULL,
+            artists JSON NOT NULL, -- Array of strings
+            genres JSON NOT NULL, -- Array of strings
+            year INTEGER,
+            duration INTEGER NOT NULL,
+            track_no INTEGER,
+            track_of INTEGER,
+            disk_no INTEGER,
+            disk_of INTEGER
+        );",
+    )
+    .execute(&mut connection)
+    .await?;
+
+    ormlite::query(
+        "CREATE TABLE IF NOT EXISTS playlist (
+            id TEXT PRIMARY KEY NOT NULL,
+            name TEXT NOT NULL,
+            tracks JSON NOT NULL DEFAULT '[]', -- Array of track IDs
+            import_path TEXT UNIQUE -- Path of the playlist file, unique if it exists
+        );",
+    )
+    .execute(&mut connection)
+    .await?;
 
     // Run the migrations for the DB
     // let migrations: Migrations<'_> = Migrations::from_directory(&MIGRATIONS_DIR).unwrap();

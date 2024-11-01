@@ -4,7 +4,7 @@ use std::path::PathBuf;
 use tauri::{AppHandle, Emitter, Manager};
 use tauri_plugin_dialog::{DialogExt, MessageDialogKind};
 
-use crate::libs::track::{get_track_from_file, get_track_from_insert_track};
+use crate::libs::track::get_track_from_file;
 use crate::libs::utils::is_file_valid;
 use crate::plugins::database::SUPPORTED_TRACKS_EXTENSIONS;
 
@@ -83,7 +83,6 @@ fn handle_file_associations(app_handle: AppHandle, mut files: Vec<PathBuf>) {
         .par_iter()
         .map(|path| get_track_from_file(&path))
         .flatten()
-        .map(get_track_from_insert_track)
         .collect::<Vec<_>>();
 
     let window = app_handle.get_webview_window("main");
