@@ -32,6 +32,7 @@ base64 = "0.22.1"
 bonsaidb = { version = "0.5.0", features = ["local", "async"] }
 dirs = "5.0.1"
 futures = "0.3.31"
+geekorm = { version = "0.6.10", features = ["new", "helpers", "rusqlite"] }
 home-config = { version = "0.6.0", features = ["toml"] }
 itertools = "0.13.0"
 log = "0.4.21"
@@ -39,17 +40,18 @@ lofty = "0.21.0"
 m3u = "1.0.0"
 memoize = "0.4.2"
 nosleep = "0.2.1"
-ormlite = { version = "0.22.2", features = ["default-sqlite"] }
-ormlite-cli = { version = "0.22.2" }
 pathdiff = "0.2.2"
 rayon = "1.10.0"
+rusqlite = { version = "0.32.1", features = ["bundled"] }
 serde = { version = "1.0.211", features = ["derive"] }
 serde_json = "1.0.132"
 strum = { version = "0.26.2", features = ["derive"] }
 tokio = { version = "1.41.0", features = ["macros"] }
+tokio-rusqlite = "0.6.0"
 thiserror = "1.0.64"
 ts-rs = {version = "10.0.0", features = ["serde-compat", "serde-json-impl"] }
 uuid = { version = "1.11.0", features = ["v3", "v4", "fast-rng"] }
 walkdir = "2.5.0"
+
 [target.'cfg(target_os = "linux")'.dependencies]
 dbus = "0.9.7"

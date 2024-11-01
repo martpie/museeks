@@ -25,10 +25,10 @@ pub enum MuseeksError {
     LocalDatabase(#[from] bonsaidb::local::Error),
 
     #[error(transparent)]
-    ORMLite(#[from] ormlite::Error),
+    Rusqlite(#[from] rusqlite::Error),
 
     #[error(transparent)]
-    ORMLiteSqlx(#[from] ormlite::SqlxError),
+    GeekOrm(#[from] geekorm::Error),
 
     #[error(transparent)]
     NoSleep(#[from] nosleep::Error),

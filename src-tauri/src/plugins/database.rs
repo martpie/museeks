@@ -1,24 +1,23 @@
+use geekorm::GeekConnector;
 use log::{error, info, warn};
-use ormlite::model::ModelBuilder;
-use ormlite::sqlite::SqliteConnection;
-use ormlite::{Connection, Insert, Model};
 use rayon::iter::{IntoParallelRefIterator, ParallelIterator};
 use serde::{Deserialize, Serialize};
 use std::collections::{HashMap, HashSet};
 use std::path::PathBuf;
 use std::sync::atomic::{AtomicUsize, Ordering};
-use std::sync::Arc;
+use std::sync::{Arc, Mutex};
 use tauri::plugin::{Builder, TauriPlugin};
 use tauri::Emitter;
 use tauri::{Manager, Runtime, State};
 use tauri_plugin_dialog::{DialogExt, FilePath};
-use tokio::sync::{Mutex, MutexGuard};
 use ts_rs::TS;
+
+use tokio_rusqlite::Connection;
 
 use crate::libs::error::{AnyResult, MuseeksError};
 use crate::libs::events::IPCEvent;
-use crate::libs::playlist::{InsertPlaylist, Playlist};
-use crate::libs::track::{get_track_from_file, get_track_id_for_path, InsertTrack, Track};
+use crate::libs::playlist::Playlist;
+use crate::libs::track::{get_track_from_file, get_track_id_for_path, Track};
 use crate::libs::utils::{scan_dirs, TimeLogger};
 
 use super::config::get_storage_dir;
@@ -42,27 +41,17 @@ pub const SUPPORTED_PLAYLISTS_EXTENSIONS: [&str; 1] = ["m3u"];
  * TODO: probably split between tracks and playlists, this file is getting out of hand
  * -------------------------------------------------------------------------- */
 
-// Connection is mutable, so we must wrap the state in a mutex to make sure there
-// are no concurrency issues
-pub struct DBState(Mutex<DB>);
-
-impl DBState {
-    async fn get_lock(&self) -> MutexGuard<'_, DB> {
-        self.0.lock().await
-    }
-}
-
-pub struct DB {
-    pub connection: SqliteConnection,
+pub struct DB<'a> {
+    pub connection: Connection,
 }
 
 impl DB {
     /**
      * Get all the tracks (and their content) from the database
      */
-    pub async fn get_all_tracks(&mut self) -> AnyResult<Vec<Track>> {
+    pub async fn get_all_tracks(&self) -> AnyResult<Vec<Track>> {
         let timer = TimeLogger::new("Retrieved and decoded tracks".into());
-        let tracks = Track::select().fetch_all(&mut self.connection).await?;
+        let tracks = Track::fetch_all(&self.connection).await?;
         timer.complete();
         Ok(tracks)
     }
@@ -70,12 +59,11 @@ impl DB {
     /**
      * Get tracks (and their content) given a set of document IDs
      */
-    pub async fn get_tracks(&mut self, track_ids: &Vec<String>) -> AnyResult<Vec<Track>> {
-        let mut tracks = Track::select()
-            .where_("id IN (?)") // TODO: make sure that works
-            .bind(track_ids.join(", "))
-            .fetch_all(&mut self.connection)
-            .await?;
+    pub async fn get_tracks(&self, track_ids: &Vec<String>) -> AnyResult<Vec<Track>> {
+        // TODO
+        // let query = Track::query_select().where_like().build()?;
+        // let mut tracks = Track::query(&self.connection, query).await?;
+        let mut tracks: Vec<Track> = vec![];
 
         // document may not ordered the way we want, so let's ensure they map to track_ids
         let track_id_positions: HashMap<&String, usize> = track_ids
@@ -91,18 +79,18 @@ impl DB {
     /**
      * Get tracks (and their content) given a set of document IDs
      */
-    pub async fn update_track(&mut self, track: Track) -> AnyResult<Track> {
-        let updated_track = track.update_all_fields(&mut self.connection).await?;
-        Ok(updated_track)
+    pub async fn update_track(&self, track: &mut Track) -> AnyResult<()> {
+        track.update(&self.connection).await?;
+        Ok(())
     }
 
     /** Delete multiple tracks by ID */
-    pub async fn remove_tracks(&mut self, track_ids: &Vec<String>) -> AnyResult<()> {
+    pub async fn remove_tracks(&self, track_ids: &Vec<String>) -> AnyResult<()> {
         // TODO: batch that, use DELETE statement instead
         let tracks = self.get_tracks(track_ids).await?;
 
         for track in tracks {
-            track.delete(&mut self.connection).await?
+            track.delete(&self.connection).await?
         }
 
         Ok(())
@@ -114,7 +102,7 @@ impl DB {
      *
      * Doc: https://github.com/khonsulabs/bonsaidb/blob/main/examples/basic-local/examples/basic-local-multidb.rs
      */
-    pub async fn insert_tracks(&mut self, tracks: Vec<InsertTrack>) -> AnyResult<()> {
+    pub async fn insert_tracks(&self, tracks: &mut Vec<Track>) -> AnyResult<()> {
         // BonsaiDB does not work well (as of today) with a lot of very small
         // insertions, so let's insert tracks by batch instead.
         // If a batch fails (because for example a duplicate path), the whole transaction
@@ -142,19 +130,16 @@ impl DB {
 
         for track in tracks {
             // TODO: batch this
-            track.insert(&mut self.connection).await?;
+            track.save(&self.connection).await?;
         }
 
         Ok(())
     }
 
     /** Get all the playlists (and their content) from the database */
-    pub async fn get_all_playlists(&mut self) -> AnyResult<Vec<Playlist>> {
+    pub async fn get_all_playlists(&self) -> AnyResult<Vec<Playlist>> {
         let timer = TimeLogger::new("Retrieved and decoded playlists".into());
-        let mut playlists = Playlist::select()
-            .order_asc("name")
-            .fetch_all(&mut self.connection)
-            .await?;
+        let mut playlists = Playlist::fetch_all(&self.connection).await?;
 
         // Ensure the playlists are sorted alphabetically (case-insensitive) for better UX
         playlists.sort_by(|a, b| a.name.to_lowercase().cmp(&b.name.to_lowercase()));
@@ -164,18 +149,15 @@ impl DB {
     }
 
     /** Get a single playlist by ID */
-    pub async fn get_playlist(&mut self, playlist_id: &String) -> AnyResult<Option<Playlist>> {
-        let playlist = Playlist::select()
-            .where_bind("id = ?", playlist_id)
-            .fetch_one(&mut self.connection)
-            .await?;
+    pub async fn get_playlist(&self, playlist_id: &String) -> AnyResult<Option<Playlist>> {
+        let mut playlists = Playlist::fetch_by_id(&self.connection, playlist_id).await?;
 
-        Ok(Some(playlist))
+        Ok(self.get_first(&mut playlists))
     }
 
     /** Create a playlist given a name and a set of track IDs */
     pub async fn create_playlist(
-        &mut self,
+        &self,
         name: String,
         tracks_ids: Vec<String>,
         import_path: Option<PathBuf>,
@@ -185,63 +167,82 @@ impl DB {
             None => None,
         };
 
-        let insert_playlist = InsertPlaylist {
+        let mut playlist = Playlist {
+            id: uuid::Uuid::new_v4().to_string(),
             name,
             tracks: tracks_ids,
             import_path: playlist_path,
         };
 
-        let playlist = insert_playlist.insert(&mut self.connection).await?;
+        playlist.save(&self.connection).await?;
 
         Ok(playlist)
     }
 
     /** Set the tracks of a playlist given its ID and tracks IDs */
     pub async fn set_playlist_tracks(
-        &mut self,
+        &self,
         id: &String,
         tracks: Vec<String>,
     ) -> AnyResult<Playlist> {
-        let playlist = Playlist::select()
-            .where_bind("id = ?", id)
-            .fetch_one(&mut self.connection)
-            .await?;
+        let mut playlists = Playlist::fetch_by_id(&self.connection, id).await?;
+        let maybe_playlist = self.get_first(&mut playlists);
 
-        let updated_playlist = playlist
-            .update_partial()
-            .tracks(tracks)
-            .update(&mut self.connection)
-            .await?;
+        match maybe_playlist {
+            Some(mut playlist) => {
+                playlist.tracks = tracks;
+                playlist.update(&self.connection).await?;
 
-        Ok(updated_playlist)
+                Ok(playlist)
+            }
+            _ => Err(MuseeksError::PlaylistNotFound),
+        }
     }
 
     /** Update a playlist name by ID */
-    pub async fn rename_playlist(&mut self, id: &String, name: String) -> AnyResult<Playlist> {
-        let playlist = Playlist::select()
-            .where_bind("id = ?", id)
-            .fetch_one(&mut self.connection)
-            .await?;
+    pub async fn rename_playlist(&self, id: &String, name: String) -> AnyResult<Playlist> {
+        let mut playlists = Playlist::fetch_by_id(&self.connection, id).await?;
+        let maybe_playlist = self.get_first(&mut playlists);
 
-        let updated_playlist = playlist
-            .update_partial()
-            .name(name)
-            .update(&mut self.connection)
-            .await?;
+        match maybe_playlist {
+            Some(mut playlist) => {
+                playlist.name = name;
+                playlist.update(&self.connection).await?;
 
-        Ok(updated_playlist)
+                Ok(playlist)
+            }
+            _ => Err(MuseeksError::PlaylistNotFound),
+        }
     }
 
     /** Delete a playlist by ID */
-    pub async fn delete_playlist(&mut self, id: &String) -> AnyResult<()> {
-        let playlist = Playlist::select()
-            .where_bind("id = ?", id)
-            .fetch_one(&mut self.connection)
-            .await?;
+    pub async fn delete_playlist(&self, id: &String) -> AnyResult<()> {
+        let mut playlists = Playlist::fetch_by_id(&self.connection, id).await?;
+        let maybe_playlist = self.get_first(&mut playlists);
 
-        playlist.delete(&mut self.connection).await?;
+        match maybe_playlist {
+            Some(playlist) => {
+                playlist.delete(&self.connection).await?;
 
-        Ok(())
+                Ok(())
+            }
+            _ => Err(MuseeksError::PlaylistNotFound),
+        }
+    }
+
+    /**
+     * Helpers
+     */
+
+    /** Get the first item of a vec, consuming it */
+    fn get_first<T>(&self, list: &mut Vec<T>) -> Option<T> {
+        if list.is_empty() {
+            return None;
+        }
+
+        let item = list.remove(0);
+
+        Some(item)
     }
 }
 
@@ -275,10 +276,10 @@ pub struct ScanResult {
 #[tauri::command]
 async fn import_tracks_to_library<R: Runtime>(
     window: tauri::Window<R>,
-    db_state: State<'_, DBState>,
+    db_state: State<'_, std::sync::RwLock<DB>>,
     import_paths: Vec<PathBuf>,
 ) -> AnyResult<ScanResult> {
-    let mut db = db_state.get_lock().await;
+    let db = db_state.lock().await;
 
     let webview_window = window.get_webview_window("main").unwrap();
 
@@ -327,9 +328,9 @@ async fn import_tracks_to_library<R: Runtime>(
     info!("Importing ID3 tags from {} files", track_paths.len());
     let scan_logger = TimeLogger::new("Scanned all id3 tags".into());
 
-    let tracks = track_paths
+    let mut tracks = track_paths
         .par_iter()
-        .map(|path| -> Option<InsertTrack> {
+        .map(|path| -> Option<Track> {
             // let counter = processed.clone();
             let p_current = progress.clone().fetch_add(1, Ordering::SeqCst);
             let p_total = total.clone().load(Ordering::SeqCst);
@@ -350,7 +351,7 @@ async fn import_tracks_to_library<R: Runtime>(
             get_track_from_file(path)
         })
         .flatten()
-        .collect::<Vec<InsertTrack>>();
+        .collect::<Vec<Track>>();
 
     let track_failures = track_paths.len() - tracks.len();
     scan_result.track_count = tracks.len();
@@ -363,7 +364,7 @@ async fn import_tracks_to_library<R: Runtime>(
     // Insert all tracks in the DB, we'are kind of assuming it cannot fail (regarding scan progress information), but
     // it technically could.
     let db_insert_logger: TimeLogger = TimeLogger::new("Inserted tracks".into());
-    let result = db.insert_tracks(tracks).await;
+    let result = db.insert_tracks(&mut tracks).await;
 
     if result.is_err() {
         warn!("Something went wrong when inserting tracks");
@@ -457,8 +458,9 @@ async fn import_tracks_to_library<R: Runtime>(
 }
 
 #[tauri::command]
-async fn get_all_tracks(db_state: State<'_, DBState>) -> AnyResult<Vec<Track>> {
-    db_state.get_lock().await.get_all_tracks().await
+async fn get_all_tracks(db_state: State<'_, Mutex<Connection>>) -> AnyResult<Vec<Track>> {
+    return Ok(vec![]);
+    // db_state.lock().await.get_all_tracks().await
 }
 
 #[tauri::command]
@@ -532,7 +534,7 @@ async fn export_playlist<R: Runtime>(
     db_state: State<'_, DBState>,
     id: String,
 ) -> AnyResult<()> {
-    let mut db = db_state.get_lock().await;
+    let db = db_state.get_lock().await;
 
     let Some(playlist) = db.get_playlist(&id).await? else {
         return Ok(());
@@ -621,18 +623,18 @@ async fn reset(_db_state: State<'_, DBState>) -> AnyResult<()> {
 async fn setup() -> AnyResult<DB> {
     let database_path = get_storage_dir().join("museeks.db");
 
-    // sqlx needs at least an empty file to work with
-    std::fs::OpenOptions::new()
-        .write(true)
-        .create_new(true)
-        .open(&database_path)?;
+    // // sqlx needs at least an empty file to work with
+    // std::fs::OpenOptions::new()
+    //     .write(true)
+    //     .create_new(true)
+    //     .open(&database_path)?;
 
-    let mut sqlite_database_path = "sqlite:".to_owned();
-    sqlite_database_path.push_str(database_path.to_str().expect("Failed to get database path"));
+    info!("Opening connection to database: {:?}", database_path);
 
-    info!("Opening connection to database: {:?}", sqlite_database_path);
+    let connection = Connection::open(&database_path)?;
 
-    let connection = SqliteConnection::connect(&sqlite_database_path).await?;
+    Track::create_table(&connection).await?;
+    Playlist::create_table(&connection).await?;
 
     // Run the migrations for the DB
     // let migrations: Migrations<'_> = Migrations::from_directory(&MIGRATIONS_DIR).unwrap();
