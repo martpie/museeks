@@ -1,7 +1,7 @@
 use log::{error, info, warn};
 use ormlite::model::ModelBuilder;
 use ormlite::sqlite::SqliteConnection;
-use ormlite::{Connection, Model};
+use ormlite::{Connection, Model, TableMeta};
 use rayon::iter::{IntoParallelRefIterator, ParallelIterator};
 use serde::{Deserialize, Serialize};
 use std::collections::{HashMap, HashSet};
@@ -69,11 +69,18 @@ impl DB {
      * Get tracks (and their content) given a set of document IDs
      */
     pub async fn get_tracks(&mut self, track_ids: &Vec<String>) -> AnyResult<Vec<Track>> {
-        let mut tracks = Track::select()
-            .where_("id IN (?)") // TODO: make sure that works
-            .bind(track_ids.join(", "))
-            .fetch_all(&mut self.connection)
-            .await?;
+        // TODO: Can this be improved somehow?
+        // Improve me once https://github.com/launchbadge/sqlx/issues/875 is fixed
+        let placeholders = track_ids.iter().map(|_| "?").collect::<Vec<_>>().join(", ");
+        let where_statement = format!("id IN ({})", placeholders);
+
+        let mut query_builder = Track::select().dangerous_where(&where_statement);
+
+        for id in track_ids {
+            query_builder = query_builder.bind(id);
+        }
+
+        let mut tracks: Vec<Track> = query_builder.fetch_all(&mut self.connection).await?;
 
         // document may not ordered the way we want, so let's ensure they map to track_ids
         let track_id_positions: HashMap<&String, usize> = track_ids
@@ -561,13 +568,18 @@ async fn reset(db_state: State<'_, DBState>) -> AnyResult<()> {
 
     let mut db = db_state.get_lock().await;
 
-    ormlite::query("DELETE FROM tracks;")
+    let delete_tracks_query = format!("DELETE FROM {};", Track::table_name());
+    let delete_playlists_query = format!("DELETE FROM {};", Playlist::table_name());
+
+    ormlite::query(&delete_tracks_query)
         .execute(&mut db.connection)
         .await?;
-    ormlite::query("DELETE FROM playlists;")
+    ormlite::query(&delete_playlists_query)
         .execute(&mut db.connection)
         .await?;
-    ormlite::query("VACUUM").execute(&mut db.connection).await?;
+    ormlite::query("VACUUM;")
+        .execute(&mut db.connection)
+        .await?;
 
     timer.complete();
 
@@ -595,7 +607,7 @@ async fn setup() -> AnyResult<DB> {
 
     let mut connection = SqliteConnection::connect(&sqlite_database_path).await?;
 
-    // TODO: move that to SQL files, or derive that from the struct itself
+    // TODO: move that to SQL files, or derive that from the struct itself, probably need to create a PR for ormlite-cli
     ormlite::query(
         "CREATE TABLE IF NOT EXISTS tracks (
             id TEXT PRIMARY KEY NOT NULL,
