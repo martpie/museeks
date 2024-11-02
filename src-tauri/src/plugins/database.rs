@@ -655,7 +655,6 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
             get_all_tracks,
             get_tracks,
             remove_tracks,
-            get_tracks,
             update_track,
             get_all_playlists,
             get_playlist,
