@@ -19,12 +19,6 @@ pub enum MuseeksError {
     Lofty(#[from] LoftyError),
 
     #[error(transparent)]
-    Database(#[from] bonsaidb::core::Error),
-
-    #[error(transparent)]
-    LocalDatabase(#[from] bonsaidb::local::Error),
-
-    #[error(transparent)]
     ORMLite(#[from] ormlite::Error),
 
     #[error(transparent)]

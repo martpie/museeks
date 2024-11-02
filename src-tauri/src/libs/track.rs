@@ -13,7 +13,7 @@ use uuid::Uuid;
  * represent a single track, id and path should be unique
  */
 #[derive(Debug, Clone, Serialize, Deserialize, Model, TS)]
-// #[ormlite(insert = "InsertTrack")]
+#[ormlite(table = "tracks")]
 #[ts(export, export_to = "../../src/generated/typings/index.ts")]
 pub struct Track {
     #[ormlite(primary_key)]
@@ -59,8 +59,12 @@ pub fn get_track_from_file(path: &PathBuf) -> Option<Track> {
                 artists = vec!["Unknown Artist".into()];
             }
 
+            let Some(id) = get_track_id_for_path(path) else {
+                return None;
+            };
+
             Some(Track {
-                id: get_track_id_for_path(&PathBuf::from(&path)).unwrap(),
+                id,
                 path: path.to_string_lossy().into_owned(),
                 title: tag
                     .get_string(&ItemKey::TrackTitle)
@@ -89,27 +93,6 @@ pub fn get_track_from_file(path: &PathBuf) -> Option<Track> {
         }
     }
 }
-
-/**
- * Generate a fake ID for inserted track, typically used when manipulating tracks
- * that may never be stored in the database.
- */
-// pub fn get_track_from_insert_track(insert_track: Track) -> Track {
-//     return Track {
-//         id: get_track_id_for_path(&PathBuf::from(&insert_track.path)).unwrap(),
-//         path: insert_track.path,
-//         title: insert_track.title,
-//         album: insert_track.album,
-//         artists: insert_track.artists,
-//         genres: insert_track.genres,
-//         year: insert_track.year,
-//         duration: insert_track.duration,
-//         track_no: insert_track.track_no,
-//         track_of: insert_track.track_of,
-//         disk_no: insert_track.disk_no,
-//         disk_of: insert_track.disk_of,
-//     };
-// }
 
 /**
  * Generate an ID for a track based on its location.

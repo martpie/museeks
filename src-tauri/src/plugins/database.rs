@@ -113,33 +113,8 @@ impl DB {
      * Doc: https://github.com/khonsulabs/bonsaidb/blob/main/examples/basic-local/examples/basic-local-multidb.rs
      */
     pub async fn insert_tracks(&mut self, tracks: Vec<Track>) -> AnyResult<()> {
-        // BonsaiDB does not work well (as of today) with a lot of very small
-        // insertions, so let's insert tracks by batch instead.
-        // If a batch fails (because for example a duplicate path), the whole transaction
-        // will fail. This should not happen except something is really wrong (hash collision,
-        // no disk space, etc).
-        // let batches: Vec<Vec<Track>> = tracks.chunks(INSERTION_BATCH).map(|x| x.to_vec()).collect();
-
-        // for batch in batches {
-        //     let mut tx = Transaction::new();
-
-        //     for track in batch {
-        //         tx.push(Operation::push_serialized::<Track>(&track)?);
-        //     }
-
-        //     // Let's goooo
-        //     let result = tx.apply_async(&self.tracks).await;
-
-        //     match result {
-        //         Ok(_) => (),
-        //         Err(err) => {
-        //             error!("Failed to insert tracks: {:?}", err);
-        //         }
-        //     }
-        // }
-
+        // Weirdly, this is fast enough with SQLite, no need to create transactions
         for track in tracks {
-            // TODO: batch this
             track.insert(&mut self.connection).await?;
         }
 
@@ -580,41 +555,24 @@ async fn delete_playlist(db_state: State<'_, DBState>, id: String) -> AnyResult<
 }
 
 #[tauri::command]
-async fn reset(_db_state: State<'_, DBState>) -> AnyResult<()> {
+async fn reset(db_state: State<'_, DBState>) -> AnyResult<()> {
     info!("Resetting DB...");
     let timer = TimeLogger::new("Reset DB".into());
 
-    // TODO
-    // let tracks = db.tracks_collection().all().await?;
-    // let playlists = db.playlists_collection().all().await?;
+    let mut db = db_state.get_lock().await;
 
-    // // We create a transaction to delete tracks much faster
-    // let mut tx = Transaction::new();
-
-    // for track in tracks {
-    //     tx.push(Operation::delete(Track::collection_name(), track.header));
-    // }
-
-    // tx.apply_async(&db.tracks).await?;
-
-    // // Now let's delete playlists
-    // tx = Transaction::new();
-
-    // for playlist in playlists {
-    //     tx.push(Operation::delete(
-    //         Playlist::collection_name(),
-    //         playlist.header,
-    //     ));
-    // }
-
-    // tx.apply_async(&db.playlists).await?;
+    ormlite::query("DELETE FROM tracks;")
+        .execute(&mut db.connection)
+        .await?;
+    ormlite::query("DELETE FROM playlists;")
+        .execute(&mut db.connection)
+        .await?;
+    ormlite::query("VACUUM").execute(&mut db.connection).await?;
 
     timer.complete();
 
     Ok(())
 }
-
-// static MIGRATIONS_DIR: Dir = include_dir!("$CARGO_MANIFEST_DIR/migrations");
 
 /**
  * Database setup
@@ -639,7 +597,7 @@ async fn setup() -> AnyResult<DB> {
 
     // TODO: move that to SQL files, or derive that from the struct itself
     ormlite::query(
-        "CREATE TABLE IF NOT EXISTS track (
+        "CREATE TABLE IF NOT EXISTS tracks (
             id TEXT PRIMARY KEY NOT NULL,
             path TEXT NOT NULL UNIQUE, -- Path as a string and unique
             title TEXT NOT NULL,
@@ -658,7 +616,7 @@ async fn setup() -> AnyResult<DB> {
     .await?;
 
     ormlite::query(
-        "CREATE TABLE IF NOT EXISTS playlist (
+        "CREATE TABLE IF NOT EXISTS playlists (
             id TEXT PRIMARY KEY NOT NULL,
             name TEXT NOT NULL,
             tracks JSON NOT NULL DEFAULT '[]', -- Array of track IDs
