@@ -627,6 +627,11 @@ async fn setup() -> AnyResult<DB> {
     .execute(&mut connection)
     .await?;
 
+    // Index for the path column in Track
+    ormlite::query("CREATE INDEX IF NOT EXISTS index_track_path ON tracks (path);")
+        .execute(&mut connection)
+        .await?;
+
     ormlite::query(
         "CREATE TABLE IF NOT EXISTS playlists (
             id TEXT PRIMARY KEY NOT NULL,
@@ -637,10 +642,6 @@ async fn setup() -> AnyResult<DB> {
     )
     .execute(&mut connection)
     .await?;
-
-    // Run the migrations for the DB
-    // let migrations: Migrations<'_> = Migrations::from_directory(&MIGRATIONS_DIR).unwrap();
-    // migrations.to_version(&mut connection, 1)?; // CHANGE THAT AFTER ADDING A MIGRATION
 
     Ok(DB { connection })
 }
