@@ -40,7 +40,7 @@ export default function ViewTrackDetails() {
   const handleSubmit = useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
-      await libraryAPI.updateTrackMetadata(track._id, formData);
+      await libraryAPI.updateTrackMetadata(track.id, formData);
       invalidate();
       navigate(-1);
     },

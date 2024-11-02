@@ -31,7 +31,7 @@ export default function QueueList(props: Props) {
 
   const dragStart = useCallback(
     (e: React.DragEvent<HTMLDivElement>, index: number) => {
-      e.dataTransfer.setData('text/html', props.queue[index]._id);
+      e.dataTransfer.setData('text/html', props.queue[index].id);
       e.dataTransfer.dropEffect = 'move';
       e.dataTransfer.effectAllowed = 'move';
 
@@ -118,7 +118,7 @@ export default function QueueList(props: Props) {
       <div className={styles.queue__content}>
         {shownQueue.map((track, index) => (
           <QueueListItem
-            key={`track-${track._id}-${index}`}
+            key={`track-${track.id}-${index}`}
             index={index}
             track={track}
             queueCursor={props.queueCursor}

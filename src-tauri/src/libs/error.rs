@@ -19,10 +19,10 @@ pub enum MuseeksError {
     Lofty(#[from] LoftyError),
 
     #[error(transparent)]
-    Database(#[from] bonsaidb::core::Error),
+    ORMLite(#[from] ormlite::Error),
 
     #[error(transparent)]
-    LocalDatabase(#[from] bonsaidb::local::Error),
+    ORMLiteSqlx(#[from] ormlite::SqlxError),
 
     #[error(transparent)]
     NoSleep(#[from] nosleep::Error),
@@ -36,9 +36,6 @@ pub enum MuseeksError {
     /**
      * Custom errors
      */
-    #[error("{message}")]
-    Library { message: String },
-
     #[error("Playlist not found")]
     PlaylistNotFound,
 }
