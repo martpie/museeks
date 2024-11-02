@@ -94,12 +94,12 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
       const shuffle = state.shuffle;
 
       const oldQueue = [...queue];
-      const trackID = _id || queue[0]._id;
+      const trackID = _id || queue[0].id;
 
       // Typically, if we are in the playlists generic view without any view selected
       if (queue.length === 0) return;
 
-      const queuePosition = queue.findIndex((track) => track._id === trackID);
+      const queuePosition = queue.findIndex((track) => track.id === trackID);
 
       // If a track exists
       if (queuePosition > -1) {
@@ -260,7 +260,7 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
       const { queue, queueCursor, oldQueue } = get();
 
       if (queueCursor !== null) {
-        const trackPlayingID = queue[queueCursor]._id;
+        const trackPlayingID = queue[queueCursor].id;
 
         // If we need to shuffle everything
         if (nextShuffleState) {
@@ -276,7 +276,7 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
         } else {
           // Unshuffle the queue by restoring the initial queue
           const currentTrackIndex = oldQueue.findIndex(
-            (track) => trackPlayingID === track._id,
+            (track) => trackPlayingID === track.id,
           );
 
           // Roll back to the old but update queueCursor
@@ -493,7 +493,7 @@ function createPlayerStore<T extends PlayerState>(store: StateCreator<T>) {
           return state;
         }
 
-        const trackID = queue[queueCursor]._id;
+        const trackID = queue[queueCursor].id;
 
         const persistedQueue = queue.slice(
           Math.max(0, queueCursor - queueStorageLimit / 2),
@@ -501,7 +501,7 @@ function createPlayerStore<T extends PlayerState>(store: StateCreator<T>) {
         );
 
         const persistedCursor = persistedQueue.findIndex(
-          (track) => track._id === trackID,
+          (track) => track.id === trackID,
         );
 
         return {

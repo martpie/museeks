@@ -1,9 +1,9 @@
 use std::path::PathBuf;
 
-use bonsaidb::core::schema::Collection;
 use lofty::file::{AudioFile, TaggedFileExt};
 use lofty::tag::{Accessor, ItemKey};
 use log::{error, warn};
+use ormlite::model::Model;
 use serde::{Deserialize, Serialize};
 use ts_rs::TS;
 use uuid::Uuid;
@@ -12,16 +12,18 @@ use uuid::Uuid;
  * Track
  * represent a single track, id and path should be unique
  */
-#[derive(Debug, Clone, Serialize, Deserialize, Collection, TS)]
-#[collection(name="tracks", primary_key = String)]
+#[derive(Debug, Clone, Serialize, Deserialize, Model, TS)]
+#[ormlite(table = "tracks")]
 #[ts(export, export_to = "../../src/generated/typings/index.ts")]
 pub struct Track {
-    #[natural_id]
-    pub _id: String,
-    pub path: PathBuf, // must be unique
+    #[ormlite(primary_key)]
+    pub id: String,
+    pub path: String, // must be unique, ideally, a PathBuf
     pub title: String,
     pub album: String,
+    #[ormlite(json)]
     pub artists: Vec<String>,
+    #[ormlite(json)]
     pub genres: Vec<String>,
     pub year: Option<u32>,
     pub duration: u32,
@@ -62,8 +64,8 @@ pub fn get_track_from_file(path: &PathBuf) -> Option<Track> {
             };
 
             Some(Track {
-                _id: id,
-                path: path.to_owned(),
+                id,
+                path: path.to_string_lossy().into_owned(),
                 title: tag
                     .get_string(&ItemKey::TrackTitle)
                     .unwrap_or("Unknown")

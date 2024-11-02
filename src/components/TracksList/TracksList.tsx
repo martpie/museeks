@@ -85,7 +85,7 @@ export default function TracksList(props: Props) {
           return ROW_HEIGHT;
       }
     },
-    getItemKey: (index) => tracks[index]._id,
+    getItemKey: (index) => tracks[index].id,
   });
 
   const playerAPI = usePlayerAPI();
@@ -100,7 +100,7 @@ export default function TracksList(props: Props) {
       setSelected([trackPlayingID]);
 
       const playingTrackIndex = tracks.findIndex(
-        (track) => track._id === trackPlayingID,
+        (track) => track.id === trackPlayingID,
       );
 
       if (playingTrackIndex >= 0) {
@@ -126,13 +126,13 @@ export default function TracksList(props: Props) {
    */
   const onEnter = useCallback(
     async (index: number, tracks: Track[]) => {
-      if (index !== -1) playerAPI.start(tracks, tracks[index]._id);
+      if (index !== -1) playerAPI.start(tracks, tracks[index].id);
     },
     [playerAPI],
   );
 
   const onControlAll = useCallback((tracks: Track[]) => {
-    setSelected(tracks.map((track) => track._id));
+    setSelected(tracks.map((track) => track.id));
   }, []);
 
   const onUp = useCallback(
@@ -142,8 +142,8 @@ export default function TracksList(props: Props) {
       // Add to the selection if shift key is pressed
       let newSelected = selected;
 
-      if (shiftKeyPressed) newSelected = [tracks[addedIndex]._id, ...selected];
-      else newSelected = [tracks[addedIndex]._id];
+      if (shiftKeyPressed) newSelected = [tracks[addedIndex].id, ...selected];
+      else newSelected = [tracks[addedIndex].id];
 
       setSelected(newSelected);
       virtualizer.scrollToIndex(addedIndex);
@@ -157,8 +157,8 @@ export default function TracksList(props: Props) {
 
       // Add to the selection if shift key is pressed
       let newSelected = selected;
-      if (shiftKeyPressed) newSelected = [...selected, tracks[addedIndex]._id];
-      else newSelected = [tracks[addedIndex]._id];
+      if (shiftKeyPressed) newSelected = [...selected, tracks[addedIndex].id];
+      else newSelected = [tracks[addedIndex].id];
 
       setSelected(newSelected);
       virtualizer.scrollToIndex(addedIndex);
@@ -169,7 +169,7 @@ export default function TracksList(props: Props) {
   const onKey = useCallback(
     async (e: KeyboardEvent) => {
       let firstSelectedTrackID = tracks.findIndex((track) =>
-        selected.includes(track._id),
+        selected.includes(track.id),
       );
 
       switch (e.code) {
@@ -188,7 +188,7 @@ export default function TracksList(props: Props) {
         case 'ArrowDown':
           // This effectively becomes lastSelectedTrackID
           firstSelectedTrackID = tracks.findIndex(
-            (track) => selected[selected.length - 1] === track._id,
+            (track) => selected[selected.length - 1] === track.id,
           );
           e.preventDefault();
           onDown(firstSelectedTrackID, tracks, e.shiftKey);
@@ -231,7 +231,7 @@ export default function TracksList(props: Props) {
 
   const sortSelected = useCallback(
     (a: string, b: string): number => {
-      const allTracksIDs = tracks.map((track) => track._id);
+      const allTracksIDs = tracks.map((track) => track.id);
 
       return allTracksIDs.indexOf(a) - allTracksIDs.indexOf(b);
     },
@@ -262,7 +262,7 @@ export default function TracksList(props: Props) {
 
       // Prefer destructuring
       for (let i = 0; i < tracks.length; i++) {
-        if (selected.includes(tracks[i]._id)) {
+        if (selected.includes(tracks[i].id)) {
           selectedInt.push(i);
         }
       }
@@ -281,11 +281,11 @@ export default function TracksList(props: Props) {
 
       if (index < min) {
         for (let i = 0; i <= Math.abs(index - base); i++) {
-          newSelected.push(tracks[base - i]._id);
+          newSelected.push(tracks[base - i].id);
         }
       } else if (index > max) {
         for (let i = 0; i <= Math.abs(index - base); i++) {
-          newSelected.push(tracks[base + i]._id);
+          newSelected.push(tracks[base + i].id);
         }
       }
 
@@ -359,7 +359,7 @@ export default function TracksList(props: Props) {
       // Hide current playlist if one the given playlist view
       if (type === 'playlist') {
         shownPlaylists = playlists.filter(
-          (elem) => elem._id !== currentPlaylist,
+          (elem) => elem.id !== currentPlaylist,
         );
       }
 
@@ -388,7 +388,7 @@ export default function TracksList(props: Props) {
               MenuItem.new({
                 text: playlist.name,
                 async action() {
-                  await PlaylistsAPI.addTracks(playlist._id, selected);
+                  await PlaylistsAPI.addTracks(playlist.id, selected);
                 },
               }),
             ),
@@ -476,7 +476,7 @@ export default function TracksList(props: Props) {
           MenuItem.new({
             text: 'Edit track',
             action: () => {
-              navigate(`/details/${track._id}`);
+              navigate(`/details/${track.id}`);
             },
           }),
           PredefinedMenuItem.new({ item: 'Separator' }),
@@ -539,16 +539,16 @@ export default function TracksList(props: Props) {
             return (
               <TrackRow
                 key={virtualItem.key}
-                selected={selected.includes(track._id)}
+                selected={selected.includes(track.id)}
                 track={track}
-                isPlaying={trackPlayingID === track._id}
+                isPlaying={trackPlayingID === track.id}
                 index={virtualItem.index}
                 onMouseDown={selectTrack}
                 onClick={selectTrackClick}
                 onContextMenu={showContextMenu}
                 onDoubleClick={startPlayback}
                 draggable={reorderable}
-                reordered={reordered?.includes(track._id) || false}
+                reordered={reordered?.includes(track.id) || false}
                 onDragStart={onReorderStart}
                 onDragEnd={onReorderEnd}
                 onDrop={onDrop}

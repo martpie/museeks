@@ -34,7 +34,7 @@ export default function ViewPlaylists() {
 
     if (playlist) {
       invalidate();
-      navigate(`/playlists/${playlist._id}`);
+      navigate(`/playlists/${playlist.id}`);
     }
   }, [navigate, invalidate]);
 
@@ -54,7 +54,7 @@ export default function ViewPlaylists() {
         {
           text: 'Delete',
           action: async () => {
-            await PlaylistsAPI.remove(playlist._id);
+            await PlaylistsAPI.remove(playlist.id);
             invalidate();
           },
         },
@@ -62,7 +62,7 @@ export default function ViewPlaylists() {
         {
           text: 'Duplicate',
           action: async () => {
-            await PlaylistsAPI.duplicate(playlist._id);
+            await PlaylistsAPI.duplicate(playlist.id);
             invalidate();
           },
         },
@@ -70,17 +70,17 @@ export default function ViewPlaylists() {
         {
           text: 'Export',
           action: async () => {
-            await database.exportPlaylist(playlist._id);
+            await database.exportPlaylist(playlist.id);
           },
         },
       ];
 
       return (
         <SideNavLink
-          key={playlist._id}
+          key={playlist.id}
           label={playlist.name}
-          id={playlist._id}
-          href={`/playlists/${playlist._id}`}
+          id={playlist.id}
+          href={`/playlists/${playlist.id}`}
           onRename={renamePlaylist}
           contextMenuItems={contextMenuItems}
         />
@@ -142,10 +142,10 @@ ViewPlaylists.loader = async ({ params }: LoaderFunctionArgs) => {
     playlistID === undefined ||
     // If playlist ID does not exist, redirect to the first playlist
     (playlistID !== undefined &&
-      !playlists.map((playlist) => playlist._id).includes(playlistID))
+      !playlists.map((playlist) => playlist.id).includes(playlistID))
   ) {
     if (firstPlaylist !== undefined) {
-      return redirect(`/playlists/${firstPlaylist._id}`);
+      return redirect(`/playlists/${firstPlaylist.id}`);
     }
   }
 

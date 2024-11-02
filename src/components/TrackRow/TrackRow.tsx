@@ -59,7 +59,7 @@ export default function TrackRow(props: Props) {
   const onDragStart = useCallback(
     (event: React.DragEvent<HTMLDivElement>) => {
       if (props.onDragStart) {
-        event.dataTransfer.setData('text/plain', props.track._id);
+        event.dataTransfer.setData('text/plain', props.track.id);
         event.dataTransfer.dropEffect = 'move';
         event.dataTransfer.effectAllowed = 'move';
 
@@ -89,7 +89,7 @@ export default function TrackRow(props: Props) {
     const { onDrop } = props;
 
     if (reorderPosition && onDrop) {
-      onDrop(props.track._id, reorderPosition);
+      onDrop(props.track.id, reorderPosition);
     }
 
     setReorderOver(false);
@@ -108,12 +108,12 @@ export default function TrackRow(props: Props) {
   return (
     <div
       className={trackClasses}
-      onDoubleClick={() => onDoubleClick(props.track._id)}
-      onMouseDown={(e) => onMouseDown(e, track._id, index)}
-      onClick={(e) => onClick(e, props.track._id)}
+      onDoubleClick={() => onDoubleClick(props.track.id)}
+      onMouseDown={(e) => onMouseDown(e, track.id, index)}
+      onClick={(e) => onClick(e, props.track.id)}
       onKeyDown={(e) => {
         if (e.key === 'Enter') {
-          onClick(e, track._id);
+          onClick(e, track.id);
         }
       }}
       onContextMenu={(e) => onContextMenu(e, index)}
