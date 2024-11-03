@@ -1,0 +1,12 @@
+.focus {
+  display: none;
+  position: absolute;
+  outline-color: var(--main-color);
+  outline-width: 2px;
+  outline-style: solid;
+  z-index: 1;
+}
+
+.visible {
+  display: block;
+}

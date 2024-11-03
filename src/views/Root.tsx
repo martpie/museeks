@@ -9,6 +9,7 @@ import IPCPlayerEvents from '../components/Events/IPCPlayerEvents';
 import LibraryEvents from '../components/Events/LibraryEvents';
 import MediaSessionEvents from '../components/Events/MediaSessionEvents';
 import PlayerEvents from '../components/Events/PlayerEvents';
+import Focus from '../components/Focus/Focus';
 import Footer from '../components/Footer/Footer';
 import Header from '../components/Header/Header';
 import Toasts from '../components/Toasts/Toasts';
@@ -42,6 +43,7 @@ export default function ViewRoot() {
         <Outlet />
       </main>
       <Footer />
+      <Focus />
       <Toasts />
       <Suspense fallback={null}>
         <DropzoneImport />
