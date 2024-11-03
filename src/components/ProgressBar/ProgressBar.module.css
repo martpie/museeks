@@ -10,4 +10,5 @@
 .progressBar {
   height: var(--progress-height);
   background-color: var(--main-color);
+  transition: width .2s ease-in-out;
 }
