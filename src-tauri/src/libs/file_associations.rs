@@ -4,9 +4,9 @@ use std::path::PathBuf;
 use tauri::{AppHandle, Emitter, Manager};
 use tauri_plugin_dialog::{DialogExt, MessageDialogKind};
 
+use crate::libs::database::SUPPORTED_TRACKS_EXTENSIONS;
 use crate::libs::track::get_track_from_file;
 use crate::libs::utils::is_file_valid;
-use crate::plugins::database::SUPPORTED_TRACKS_EXTENSIONS;
 
 use super::events::IPCEvent;
 

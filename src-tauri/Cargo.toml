@@ -38,7 +38,6 @@ m3u = "1.0.0"
 memoize = "0.4.2"
 nosleep = "0.2.1"
 ormlite = { version = "0.22.2", features = ["default-sqlite"] }
-ormlite-cli = { version = "0.22.2" }
 pathdiff = "0.2.2"
 rayon = "1.10.0"
 serde = { version = "1.0.211", features = ["derive"] }
