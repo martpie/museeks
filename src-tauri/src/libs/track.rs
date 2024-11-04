@@ -12,7 +12,7 @@ use uuid::Uuid;
  * Track
  * represent a single track, id and path should be unique
  */
-#[derive(Debug, Clone, Serialize, Deserialize, Model, TS)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, Model, TS)]
 #[ormlite(table = "tracks")]
 #[ts(export, export_to = "../../src/generated/typings/index.ts")]
 pub struct Track {
