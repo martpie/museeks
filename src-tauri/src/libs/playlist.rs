@@ -7,7 +7,7 @@ use ts_rs::TS;
  * represent a playlist, that has a name and a list of tracks
  * -------------------------------------------------------------------------- */
 
-#[derive(Debug, Clone, Serialize, Deserialize, Model, TS)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, Model, TS)]
 #[ormlite(table = "playlists")]
 #[ts(export, export_to = "../../src/generated/typings/index.ts")]
 pub struct Playlist {

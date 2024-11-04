@@ -4,6 +4,15 @@ pub mod events;
 pub mod file_associations;
 pub mod utils;
 
-// DB Structs
+/**
+ * Structs
+ */
 pub mod playlist;
 pub mod track;
+
+/**
+ * Tests
+ */
+#[cfg(test)]
+#[path = "./tests/database_tests.rs"]
+mod database_tests;
