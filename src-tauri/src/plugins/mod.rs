@@ -18,7 +18,7 @@ pub mod shell_extension;
  * Stores
  */
 pub mod config;
-pub mod database;
+pub mod db;
 
 /**
  * Settings-related plugins

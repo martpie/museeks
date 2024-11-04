@@ -39,7 +39,7 @@ fn main() {
         .plugin(plugins::app_menu::init())
         .plugin(plugins::config::init())
         .plugin(plugins::cover::init())
-        .plugin(plugins::database::init())
+        .plugin(plugins::db::init())
         .plugin(plugins::debug::init())
         .plugin(plugins::default_view::init())
         .plugin(plugins::shell_extension::init())
