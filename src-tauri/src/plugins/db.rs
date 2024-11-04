@@ -1,5 +1,5 @@
 use log::{error, info, warn};
-use ormlite::sqlite::SqliteConnection;
+use ormlite::sqlite::{SqliteConnectOptions, SqliteConnection};
 use ormlite::{Connection, TableMeta};
 use rayon::iter::{IntoParallelRefIterator, ParallelIterator};
 use serde::{Deserialize, Serialize};
@@ -40,19 +40,15 @@ impl DBState {
 async fn setup() -> AnyResult<DB> {
     let database_path = get_storage_dir().join("museeks.db");
 
-    // sqlx needs at least an empty file to work with
-    std::fs::OpenOptions::new()
-        .write(true)
-        .create_new(true)
-        .open(&database_path)
-        .ok(); // TODO: if files already exists, ok, otherwise, return error
+    info!("Opening connection to database: {:?}", database_path);
 
-    let mut sqlite_database_path = "sqlite:".to_owned();
-    sqlite_database_path.push_str(database_path.to_str().expect("Failed to get database path"));
+    let options = SqliteConnectOptions::new()
+        .filename(&database_path)
+        .create_if_missing(true)
+        .optimize_on_close(true, None)
+        .auto_vacuum(ormlite::sqlite::SqliteAutoVacuum::Incremental);
 
-    info!("Opening connection to database: {:?}", sqlite_database_path);
-
-    let connection = SqliteConnection::connect(&sqlite_database_path).await?;
+    let connection = SqliteConnection::connect_with(&options).await?;
 
     Ok(DB { connection })
 }
