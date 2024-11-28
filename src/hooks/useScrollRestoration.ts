@@ -1,5 +1,5 @@
 import debounce from 'lodash/debounce';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation, useNavigation } from 'react-router-dom';
 
 function getScrollPosition(key: string) {
@@ -24,6 +24,7 @@ const setScrollPosition = debounce(function setScrollPosition(
  * Except we want to use location.pathname, and not location.key
  */
 export function useScrollRestoration(container: React.RefObject<HTMLElement>) {
+  const [init, setInit] = useState(false); // React strick mode is a nightmare
   const key = `scroll-position-${useLocation().pathname}`;
   const { state } = useNavigation();
   const target = container.current;
@@ -41,8 +42,9 @@ export function useScrollRestoration(container: React.RefObject<HTMLElement>) {
   }, [target, key]);
 
   useEffect(() => {
-    if (state === 'idle') {
+    if (state === 'idle' && !init) {
+      setInit(true);
       target?.scrollTo(0, getScrollPosition(key));
     }
-  }, [key, state, target]);
+  }, [key, state, target, init]);
 }

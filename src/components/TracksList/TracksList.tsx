@@ -9,7 +9,7 @@ import {
 import type React from 'react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import Keybinding from 'react-keybinding-component';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import type { Config, Playlist, Track } from '../../generated/typings';
 import { logAndNotifyError } from '../../lib/utils';
@@ -20,7 +20,7 @@ import {
   isRightClick,
 } from '../../lib/utils-events';
 import PlaylistsAPI from '../../stores/PlaylistsAPI';
-import useLibraryStore, { useLibraryAPI } from '../../stores/useLibraryStore';
+import { useLibraryAPI } from '../../stores/useLibraryStore';
 import { usePlayerAPI } from '../../stores/usePlayerStore';
 import TrackRow from '../TrackRow/TrackRow';
 import TracksListHeader from '../TracksListHeader/TracksListHeader';
@@ -69,6 +69,9 @@ export default function TracksList(props: Props) {
 
   const navigate = useNavigate();
   const invalidate = useInvalidate();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const shouldJumpToPlayingTrack =
+    searchParams.get('jump_to_playing_track') === 'true';
 
   // Scrollable element for the virtual list + virtualizer
   const scrollableRef = useRef<HTMLDivElement>(null);
@@ -90,13 +93,12 @@ export default function TracksList(props: Props) {
 
   const playerAPI = usePlayerAPI();
   const libraryAPI = useLibraryAPI();
-  const highlight = useLibraryStore((state) => state.highlightPlayingTrack);
   useScrollRestoration(scrollableRef);
 
   // Highlight playing track and scroll to it
-  // Super-mega-hacky to use Redux for that
   useEffect(() => {
-    if (highlight === true && trackPlayingID) {
+    if (shouldJumpToPlayingTrack && trackPlayingID) {
+      setSearchParams(undefined);
       setSelected([trackPlayingID]);
 
       const playingTrackIndex = tracks.findIndex(
@@ -104,12 +106,19 @@ export default function TracksList(props: Props) {
       );
 
       if (playingTrackIndex >= 0) {
-        virtualizer.scrollToIndex(playingTrackIndex, { behavior: 'smooth' });
+        setTimeout(() => {
+          // avoid conflict with scroll restoration
+          virtualizer.scrollToIndex(playingTrackIndex, { behavior: 'smooth' });
+        }, 0);
       }
-
-      libraryAPI.highlightPlayingTrack(false);
     }
-  }, [highlight, trackPlayingID, tracks, libraryAPI, virtualizer]);
+  }, [
+    shouldJumpToPlayingTrack,
+    setSearchParams,
+    trackPlayingID,
+    tracks,
+    virtualizer.scrollToIndex,
+  ]);
 
   /**
    * Helpers
