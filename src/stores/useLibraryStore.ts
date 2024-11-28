@@ -22,7 +22,6 @@ type LibraryState = API<{
     current: number;
     total: number;
   };
-  highlightPlayingTrack: boolean;
   tracksStatus: string;
   api: {
     search: (value: string) => void;
@@ -38,7 +37,6 @@ type LibraryState = API<{
       trackID: string,
       fields: Pick<Track, 'title' | 'artists' | 'album' | 'genres'>,
     ) => Promise<void>;
-    highlightPlayingTrack: (highlight: boolean) => void;
     setTracksStatus: (status: Array<Track> | null) => void;
   };
 }>;
@@ -52,7 +50,6 @@ const useLibraryStore = createLibraryStore<LibraryState>((set, get) => ({
     current: 0,
     total: 0,
   },
-  highlightPlayingTrack: false, // hacky, fixme
   tracksStatus: '',
 
   api: {
@@ -268,14 +265,6 @@ const useLibraryStore = createLibraryStore<LibraryState>((set, get) => ({
           'Something wrong happened when updating the track',
         );
       }
-    },
-
-    /**
-     * Set highlight trigger for a track
-     * FIXME: very hacky, and not great, should be done another way
-     */
-    highlightPlayingTrack: async (highlight) => {
-      set({ highlightPlayingTrack: highlight });
     },
 
     /**

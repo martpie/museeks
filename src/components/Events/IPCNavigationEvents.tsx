@@ -1,8 +1,7 @@
 import { getCurrentWindow } from '@tauri-apps/api/window';
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { createSearchParams, useNavigate } from 'react-router-dom';
 
-import useLibraryStore from '../../stores/useLibraryStore';
 import usePlayerStore from '../../stores/usePlayerStore';
 
 /**
@@ -11,7 +10,7 @@ import usePlayerStore from '../../stores/usePlayerStore';
 function IPCNavigationEvents() {
   const navigate = useNavigate();
   const queueOrigin = usePlayerStore(
-    (state) => state.queueOrigin ?? '#/library',
+    (state) => state.queueOrigin ?? '/library',
   );
 
   useEffect(() => {
@@ -28,11 +27,15 @@ function IPCNavigationEvents() {
     }
 
     function goToPlayingTrack() {
-      navigate(queueOrigin);
-
-      setTimeout(() => {
-        useLibraryStore.getState().api.highlightPlayingTrack(true);
-      }, 0);
+      navigate(
+        {
+          pathname: queueOrigin,
+          search: createSearchParams({
+            jump_to_playing_track: 'true',
+          }).toString(),
+        },
+        { replace: true },
+      );
     }
 
     const unlisteners = [
