@@ -59,7 +59,7 @@ export default function ViewLibrary() {
         <ViewMessage.Notice>
           <p>There is no music in your library :(</p>
           <ViewMessage.Sub>
-            <span>you can always just drop files and folders anywhere or</span>{' '}
+            <span>you can</span>{' '}
             <Link to="/settings/library" draggable={false}>
               add your music here
             </Link>
