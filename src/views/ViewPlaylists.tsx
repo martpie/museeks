@@ -5,6 +5,7 @@ import {
   redirect,
   useLoaderData,
   useNavigate,
+  useParams,
 } from 'react-router-dom';
 
 import SideNav from '../components/SideNav/SideNav';
@@ -20,6 +21,7 @@ import type {
 import SideNavLink from '../components/SideNavLink/SideNavLink';
 import useInvalidate from '../hooks/useInvalidate';
 import type { LoaderData } from '../types/museeks';
+
 import appStyles from './Root.module.css';
 import styles from './ViewPlaylists.module.css';
 
@@ -27,6 +29,7 @@ export default function ViewPlaylists() {
   const { playlists } = useLoaderData() as PlaylistsLoaderData;
   const invalidate = useInvalidate();
   const navigate = useNavigate();
+  const params = useParams();
 
   const createPlaylist = useCallback(async () => {
     // TODO: 'new playlist 1', 'new playlist 2' ...
@@ -55,6 +58,12 @@ export default function ViewPlaylists() {
           text: 'Delete',
           action: async () => {
             await PlaylistsAPI.remove(playlist.id);
+
+            // Redirect to /playlists if we are deleting the current playlist
+            if (params.playlistID === playlist.id) {
+              navigate('/playlists');
+            }
+
             invalidate();
           },
         },
@@ -86,7 +95,7 @@ export default function ViewPlaylists() {
         />
       );
     });
-  }, [playlists, renamePlaylist, invalidate]);
+  }, [playlists, renamePlaylist, invalidate, navigate, params.playlistID]);
 
   // Empty and List states
   let playlistContent;
