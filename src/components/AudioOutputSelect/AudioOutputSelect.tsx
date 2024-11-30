@@ -19,12 +19,12 @@ export default function AudioOutputSelect(props: Props) {
   useEffect(() => {
     const refreshDevices = async () => {
       try {
-        // Webkit sucks, we need to request permissions for inputs, when we only
-        // need outputs
-        // const test = await navigator.mediaDevices.getUserMedia({
-        //   audio: true,
-        //   video: false,
-        // });
+        // This will display a popup to users asking them to give microphone access,
+        // which is lame because we only need outputs.
+        // Does not work on macOS/linux for now.
+        await navigator.mediaDevices.getUserMedia({
+          audio: true,
+        });
         const devices = await navigator.mediaDevices.enumerateDevices();
         const audioDevices = devices.filter(
           (device) => device.kind === 'audiooutput' && device.deviceId !== '',
