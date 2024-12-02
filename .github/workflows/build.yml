@@ -30,6 +30,11 @@ jobs:
 
       - uses: actions-rust-lang/setup-rust-toolchain@v1
 
+      - name: Rust cache
+        uses: swatinem/rust-cache@v2
+        with:
+          workspaces: './src-tauri -> target'
+
       - name: Install dependencies (ubuntu only)
         run: |
           sudo apt-get update
@@ -78,6 +83,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        # - include
         platform: [macos-latest, ubuntu-24.04, windows-latest]
 
     runs-on: ${{ matrix.platform }}
@@ -90,6 +96,11 @@ jobs:
 
       - name: Install Rust stable
         uses: dtolnay/rust-toolchain@stable
+
+      - name: Rust cache
+        uses: swatinem/rust-cache@v2
+        with:
+          workspaces: './src-tauri -> target'
 
       - name: Install native dependencies (ubuntu only)
         if: matrix.platform == 'ubuntu-24.04'
