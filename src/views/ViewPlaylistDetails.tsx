@@ -108,8 +108,6 @@ ViewPlaylistDetails.loader = async ({ params }: LoaderFunctionArgs) => {
 
   try {
     const playlist = await database.getPlaylist(params.playlistID);
-    console.log(playlist);
-    console.log(await database.getTracks(playlist.tracks));
     return {
       playlists: await database.getAllPlaylists(),
       playlistTracks: await database.getTracks(playlist.tracks),
