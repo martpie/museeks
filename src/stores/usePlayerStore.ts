@@ -105,7 +105,7 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
       if (queuePosition > -1) {
         const track = queue[queuePosition];
 
-        player.setTrack(track);
+        await player.setTrack(track);
         await player.play().catch(logAndNotifyError);
 
         let queueCursor = queuePosition; // Clean that variable mess later
@@ -205,7 +205,7 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
         const track = queue[newQueueCursor];
 
         if (track !== undefined) {
-          player.setTrack(track);
+          await player.setTrack(track);
           await player.play();
           set({
             playerStatus: PlayerStatus.PLAY,
@@ -237,7 +237,7 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
         const newTrack = queue[newQueueCursor];
 
         if (newTrack !== undefined) {
-          player.setTrack(newTrack);
+          await player.setTrack(newTrack);
           await player.play();
 
           set({
@@ -374,7 +374,7 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
       const { queue } = get();
       const track = queue[index];
 
-      player.setTrack(track);
+      await player.setTrack(track);
       await player.play();
 
       set({
@@ -511,7 +511,7 @@ function createPlayerStore<T extends PlayerState>(store: StateCreator<T>) {
         };
       },
       onRehydrateStorage: () => {
-        return (state, error) => {
+        return async (state, error) => {
           if (error || state == null) {
             logAndNotifyError(
               error,
@@ -522,7 +522,7 @@ function createPlayerStore<T extends PlayerState>(store: StateCreator<T>) {
             const { queue, queueCursor } = state;
             if (queue && queueCursor) {
               const track = queue[queueCursor];
-              player.setTrack(track);
+              await player.setTrack(track);
             }
           }
         };

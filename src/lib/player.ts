@@ -102,8 +102,18 @@ class Player {
     return this.track;
   }
 
-  setTrack(track: Track) {
+  async setTrack(track: Track) {
     this.track = track;
+
+    // Cursed Linux: https://github.com/tauri-apps/tauri/issues/3725#issuecomment-2325248116
+    if (window.__MUSEEKS_PLATFORM === 'linux') {
+      const blobUrl = URL.createObjectURL(
+        await fetch(convertFileSrc(track.path)).then((res) => res.blob()),
+      );
+      this.audio.src = blobUrl;
+      return;
+    }
+
     this.audio.src = convertFileSrc(track.path);
   }
 
