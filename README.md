@@ -5,20 +5,17 @@
 
 A simple, clean and cross-platform music player. ([museeks.io](http://museeks.io))
 
-> **Note**
-> Museeks is on its way to a big rewrite with some major UI and Back-End changes, please help shape the future of the music player [in the discussions section](https://github.com/martpie/museeks/discussions)! :]
-
 ![Screenshot](screenshot.png)
 
 ## Features
 
-Museeks aims to be a simple and easy to use music player with a clean UI.
+Museeks aims to be a simple and easy to use music player with a clean UI. You will not find tons of features, as it goal is not to compete with more complete and more famous music players.
 
-You will not find tons of features, as it goal is not to compete with more complete and more famous music players. Here is a little preview though:
+Here is a little preview though:
 
 - 💻 Cross-platform music player (Linux, macOS and Windows)
 - 🎧 Supported formats: mp3, mp4, m4a/aac, flac, wav, ogg, 3gpp
-- ✨ Clean and polished
+- 🔄 Library auto-refresh
 - 🌟 Playlists
 - 🎼 Queue management
 - ➰ Shuffle, loop
@@ -26,7 +23,7 @@ You will not find tons of features, as it goal is not to compete with more compl
 - 🤓 Dark theme
 - 🚤 Playback speed control
 - 😴 Sleep mode blocker
-- 🔄 `.m3u` import/export
+- 📥 `.m3u` import/export
 
 Want more? Open a new issue or 👍 an existing one so we can talk about it.
 
@@ -80,9 +77,7 @@ If you encounter freezes or crashes when using the app, you can reset Museeks by
   - Windows: `%AppData%\Museeks`
   - OSX: `~/Library/Application Support/Museeks`
   - Linux: `~/.config/museeks/` or `$XDG_CONFIG_HOME/Museeks`
-- Delete everything, but mainly:
-  - `main.bonsaidb` folder
-  - `config.toml` file
+- Delete everything there
 - Restart Museeks
 
 If you still get problems after that, please open an issue :)
