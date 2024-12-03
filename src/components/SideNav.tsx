@@ -6,7 +6,7 @@ import styles from './SideNav.module.css';
 type Props = {
   children: React.ReactNode;
   title: string;
-  actions: React.ReactNode;
+  actions?: React.ReactNode;
 };
 
 export default function SideNav(props: Props) {

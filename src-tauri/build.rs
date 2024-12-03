@@ -27,6 +27,7 @@ fn main() {
                     "remove_tracks",
                     "get_tracks",
                     "update_track",
+                    "get_artists",
                     "get_all_playlists",
                     "get_playlist",
                     "create_playlist",

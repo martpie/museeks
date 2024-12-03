@@ -291,6 +291,11 @@ async fn remove_tracks(db_state: State<'_, DBState>, ids: Vec<String>) -> AnyRes
 }
 
 #[tauri::command]
+async fn get_artists(db_state: State<'_, DBState>) -> AnyResult<Vec<String>> {
+    db_state.get_lock().await.get_artists().await
+}
+
+#[tauri::command]
 async fn get_all_playlists(db_state: State<'_, DBState>) -> AnyResult<Vec<Playlist>> {
     db_state.get_lock().await.get_all_playlists().await
 }
@@ -426,6 +431,7 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
             get_tracks,
             remove_tracks,
             update_track,
+            get_artists,
             get_all_playlists,
             get_playlist,
             get_playlist,
