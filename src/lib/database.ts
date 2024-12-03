@@ -7,7 +7,7 @@ import type { Playlist, ScanResult, Track } from '../generated/typings';
  */
 const database = {
   // ---------------------------------------------------------------------------
-  // Playlists read/write actions
+  // Library read/write actions
   // ---------------------------------------------------------------------------
 
   async getAllTracks(): Promise<Array<Track>> {
@@ -36,6 +36,10 @@ const database = {
     return invoke('plugin:database|import_tracks_to_library', {
       importPaths,
     });
+  },
+
+  async getAllArtists(): Promise<Array<string>> {
+    return invoke('plugin:database|get_artists');
   },
 
   // ---------------------------------------------------------------------------
