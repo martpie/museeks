@@ -64,8 +64,8 @@ export default function TracksList(props: Props) {
     playlists,
   } = props;
 
-  const [selected, setSelected] = useState<string[]>([]);
-  const [reordered, setReordered] = useState<string[] | null>([]);
+  const [selectedTracks, setSelectedTracks] = useState<string[]>([]);
+  const [reorderedTracks, setReorderedTracks] = useState<string[] | null>([]);
 
   const navigate = useNavigate();
   const invalidate = useInvalidate();
@@ -99,7 +99,7 @@ export default function TracksList(props: Props) {
   useEffect(() => {
     if (shouldJumpToPlayingTrack && trackPlayingID) {
       setSearchParams(undefined);
-      setSelected([trackPlayingID]);
+      setSelectedTracks([trackPlayingID]);
 
       const playingTrackIndex = tracks.findIndex(
         (track) => track.id === trackPlayingID,
@@ -141,7 +141,7 @@ export default function TracksList(props: Props) {
   );
 
   const onControlAll = useCallback((tracks: Track[]) => {
-    setSelected(tracks.map((track) => track.id));
+    setSelectedTracks(tracks.map((track) => track.id));
   }, []);
 
   const onUp = useCallback(
@@ -149,15 +149,16 @@ export default function TracksList(props: Props) {
       const addedIndex = Math.max(0, index - 1);
 
       // Add to the selection if shift key is pressed
-      let newSelected = selected;
+      let newSelected = selectedTracks;
 
-      if (shiftKeyPressed) newSelected = [tracks[addedIndex].id, ...selected];
+      if (shiftKeyPressed)
+        newSelected = [tracks[addedIndex].id, ...selectedTracks];
       else newSelected = [tracks[addedIndex].id];
 
-      setSelected(newSelected);
+      setSelectedTracks(newSelected);
       virtualizer.scrollToIndex(addedIndex);
     },
-    [selected, virtualizer],
+    [selectedTracks, virtualizer],
   );
 
   const onDown = useCallback(
@@ -165,20 +166,21 @@ export default function TracksList(props: Props) {
       const addedIndex = Math.min(tracks.length - 1, index + 1);
 
       // Add to the selection if shift key is pressed
-      let newSelected = selected;
-      if (shiftKeyPressed) newSelected = [...selected, tracks[addedIndex].id];
+      let newSelected = selectedTracks;
+      if (shiftKeyPressed)
+        newSelected = [...selectedTracks, tracks[addedIndex].id];
       else newSelected = [tracks[addedIndex].id];
 
-      setSelected(newSelected);
+      setSelectedTracks(newSelected);
       virtualizer.scrollToIndex(addedIndex);
     },
-    [selected, virtualizer],
+    [selectedTracks, virtualizer],
   );
 
   const onKey = useCallback(
     async (e: KeyboardEvent) => {
       let firstSelectedTrackID = tracks.findIndex((track) =>
-        selected.includes(track.id),
+        selectedTracks.includes(track.id),
       );
 
       switch (e.code) {
@@ -197,7 +199,7 @@ export default function TracksList(props: Props) {
         case 'ArrowDown':
           // This effectively becomes lastSelectedTrackID
           firstSelectedTrackID = tracks.findIndex(
-            (track) => selected[selected.length - 1] === track.id,
+            (track) => selectedTracks[selectedTracks.length - 1] === track.id,
           );
           e.preventDefault();
           onDown(firstSelectedTrackID, tracks, e.shiftKey);
@@ -212,30 +214,33 @@ export default function TracksList(props: Props) {
           break;
       }
     },
-    [onControlAll, onDown, onUp, onEnter, selected, tracks],
+    [onControlAll, onDown, onUp, onEnter, selectedTracks, tracks],
   );
 
   /**
    * Playlists re-order events handlers
    */
-  const onReorderStart = useCallback(() => setReordered(selected), [selected]);
-  const onReorderEnd = useCallback(() => setReordered(null), []);
+  const onReorderStart = useCallback(
+    () => setReorderedTracks(selectedTracks),
+    [selectedTracks],
+  );
+  const onReorderEnd = useCallback(() => setReorderedTracks(null), []);
 
   const onDrop = useCallback(
     async (targetTrackID: string, position: 'above' | 'below') => {
-      if (onReorder && currentPlaylist && reordered) {
-        onReorder(currentPlaylist, reordered, targetTrackID, position);
+      if (onReorder && currentPlaylist && reorderedTracks) {
+        onReorder(currentPlaylist, reorderedTracks, targetTrackID, position);
       }
     },
-    [currentPlaylist, onReorder, reordered],
+    [currentPlaylist, onReorder, reorderedTracks],
   );
 
   /**
    * Tracks selection
    */
   const isSelectableTrack = useCallback(
-    (id: string) => !selected.includes(id),
-    [selected],
+    (id: string) => !selectedTracks.includes(id),
+    [selectedTracks],
   );
 
   const sortSelected = useCallback(
@@ -249,7 +254,7 @@ export default function TracksList(props: Props) {
 
   const toggleSelectionByID = useCallback(
     (id: string) => {
-      let newSelected = [...selected];
+      let newSelected = [...selectedTracks];
 
       if (newSelected.includes(id)) {
         // remove track
@@ -260,9 +265,9 @@ export default function TracksList(props: Props) {
       }
 
       newSelected = newSelected.sort(sortSelected);
-      setSelected(newSelected);
+      setSelectedTracks(newSelected);
     },
-    [selected, sortSelected],
+    [selectedTracks, sortSelected],
   );
 
   const multiSelect = useCallback(
@@ -271,7 +276,7 @@ export default function TracksList(props: Props) {
 
       // Prefer destructuring
       for (let i = 0; i < tracks.length; i++) {
-        if (selected.includes(tracks[i].id)) {
+        if (selectedTracks.includes(tracks[i].id)) {
           selectedInt.push(i);
         }
       }
@@ -298,9 +303,9 @@ export default function TracksList(props: Props) {
         }
       }
 
-      setSelected(newSelected.sort(sortSelected));
+      setSelectedTracks(newSelected.sort(sortSelected));
     },
-    [selected, sortSelected, tracks],
+    [selectedTracks, sortSelected, tracks],
   );
 
   const selectTrack = useCallback(
@@ -308,7 +313,7 @@ export default function TracksList(props: Props) {
       // To allow selection drag-and-drop, we need to prevent track selection
       // when selection a track that is already selected
       if (
-        selected.includes(trackID) &&
+        selectedTracks.includes(trackID) &&
         !event.metaKey &&
         !event.ctrlKey &&
         !event.shiftKey
@@ -323,21 +328,21 @@ export default function TracksList(props: Props) {
         if (isCtrlKey(event)) {
           toggleSelectionByID(trackID);
         } else if (event.shiftKey) {
-          if (selected.length === 0) {
+          if (selectedTracks.length === 0) {
             const newSelected = [trackID];
-            setSelected(newSelected);
+            setSelectedTracks(newSelected);
           } else {
             multiSelect(index);
           }
         } else {
           if (!isAltKey(event)) {
             const newSelected = [trackID];
-            setSelected(newSelected);
+            setSelectedTracks(newSelected);
           }
         }
       }
     },
-    [selected, multiSelect, toggleSelectionByID, isSelectableTrack],
+    [selectedTracks, multiSelect, toggleSelectionByID, isSelectableTrack],
   );
 
   const selectTrackClick = useCallback(
@@ -346,12 +351,12 @@ export default function TracksList(props: Props) {
         !event.metaKey &&
         !event.ctrlKey &&
         !event.shiftKey &&
-        selected.includes(trackID)
+        selectedTracks.includes(trackID)
       ) {
-        setSelected([trackID]);
+        setSelectedTracks([trackID]);
       }
     },
-    [selected],
+    [selectedTracks],
   );
 
   /**
@@ -361,7 +366,7 @@ export default function TracksList(props: Props) {
     async (e: React.MouseEvent, index: number) => {
       e.preventDefault();
 
-      const selectedCount = selected.length;
+      const selectedCount = selectedTracks.length;
       const track = tracks[index];
       let shownPlaylists = playlists;
 
@@ -377,7 +382,7 @@ export default function TracksList(props: Props) {
         MenuItem.new({
           text: 'Create new playlist...',
           async action() {
-            await PlaylistsAPI.create('New playlist', selected);
+            await PlaylistsAPI.create('New playlist', selectedTracks);
             invalidate();
           },
         }),
@@ -397,7 +402,7 @@ export default function TracksList(props: Props) {
               MenuItem.new({
                 text: playlist.name,
                 async action() {
-                  await PlaylistsAPI.addTracks(playlist.id, selected);
+                  await PlaylistsAPI.addTracks(playlist.id, selectedTracks);
                 },
               }),
             ),
@@ -420,13 +425,13 @@ export default function TracksList(props: Props) {
         MenuItem.new({
           text: 'Add to queue',
           action() {
-            playerAPI.addInQueue(selected);
+            playerAPI.addInQueue(selectedTracks);
           },
         }),
         MenuItem.new({
           text: 'Play next',
           action() {
-            playerAPI.addNextInQueue(selected);
+            playerAPI.addNextInQueue(selectedTracks);
           },
         }),
         PredefinedMenuItem.new({
@@ -471,7 +476,10 @@ export default function TracksList(props: Props) {
             MenuItem.new({
               text: 'Remove from playlist',
               async action() {
-                await PlaylistsAPI.removeTracks(currentPlaylist, selected);
+                await PlaylistsAPI.removeTracks(
+                  currentPlaylist,
+                  selectedTracks,
+                );
                 invalidate();
               },
             }),
@@ -500,7 +508,7 @@ export default function TracksList(props: Props) {
           MenuItem.new({
             text: 'Remove from library',
             action: async () => {
-              await libraryAPI.remove(selected);
+              await libraryAPI.remove(selectedTracks);
               invalidate();
             },
           }),
@@ -516,7 +524,7 @@ export default function TracksList(props: Props) {
     [
       currentPlaylist,
       playlists,
-      selected,
+      selectedTracks,
       tracks,
       type,
       navigate,
@@ -548,7 +556,7 @@ export default function TracksList(props: Props) {
             return (
               <TrackRow
                 key={virtualItem.key}
-                selected={selected.includes(track.id)}
+                selected={selectedTracks.includes(track.id)}
                 track={track}
                 isPlaying={trackPlayingID === track.id}
                 index={virtualItem.index}
@@ -557,7 +565,7 @@ export default function TracksList(props: Props) {
                 onContextMenu={showContextMenu}
                 onDoubleClick={startPlayback}
                 draggable={reorderable}
-                reordered={reordered?.includes(track.id) || false}
+                reordered={reorderedTracks?.includes(track.id) || false}
                 onDragStart={onReorderStart}
                 onDragEnd={onReorderEnd}
                 onDrop={onDrop}
