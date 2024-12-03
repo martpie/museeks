@@ -33,13 +33,13 @@ export default function ViewPlaylistDetails() {
   const onReorder = useCallback(
     async (
       playlistID: string,
-      tracksIDs: string[],
+      tracksIDs: Set<string>,
       targetTrackID: string,
       position: 'above' | 'below',
     ) => {
       await PlaylistsAPI.reorderTracks(
         playlistID,
-        tracksIDs,
+        Array.from(tracksIDs),
         targetTrackID,
         position,
       );
