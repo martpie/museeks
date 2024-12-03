@@ -1,6 +1,7 @@
+use log::info;
 use ormlite::model::ModelBuilder;
 use ormlite::sqlite::SqliteConnection;
-use ormlite::Model;
+use ormlite::{Model, TableMeta};
 use std::collections::HashMap;
 use std::path::PathBuf;
 
@@ -143,6 +144,33 @@ impl DB {
         }
 
         Ok(())
+    }
+
+    /**
+     * Insert a new track in the DB, will fail in case there is a duplicate unique
+     * key (like track.path)
+     *
+     * Doc: https://github.com/khonsulabs/bonsaidb/blob/main/examples/basic-local/examples/basic-local-multidb.rs
+     */
+    pub async fn get_artists(&mut self) -> AnyResult<Vec<String>> {
+        let query = format!(
+            "SELECT DISTINCT JSON_EXTRACT({}, '$[0]') FROM {};",
+            "artists",
+            Track::table_name()
+        );
+        info!("query for all artists: {}", query);
+
+        let mut result: Vec<String> = ormlite::query_as(&query)
+            .fetch_all(&mut self.connection)
+            .await?
+            .into_iter()
+            .map(|row: (String,)| row.0)
+            .collect();
+
+        // sort them alphabetically
+        result.sort_by(|a, b| a.to_lowercase().cmp(&b.to_lowercase()));
+
+        Ok(result)
     }
 
     /** Get all the playlists (and their content) from the database */

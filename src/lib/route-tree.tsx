@@ -1,5 +1,7 @@
 import GlobalErrorBoundary from '../components/GlobalErrorBoundary';
 import RootView from '../views/Root';
+import ViewArtistDetails from '../views/ViewArtistDetails';
+import ViewArtists from '../views/ViewArtists';
 import ViewLibrary from '../views/ViewLibrary';
 import ViewPlaylistDetails from '../views/ViewPlaylistDetails';
 import ViewPlaylists from '../views/ViewPlaylists';
@@ -35,6 +37,20 @@ const routeTree = [
             id: 'playlist-details',
             element: <ViewPlaylistDetails />,
             loader: ViewPlaylistDetails.loader,
+          },
+        ],
+      },
+      {
+        path: 'artists',
+        id: 'artists',
+        element: <ViewArtists />,
+        loader: ViewArtists.loader,
+        children: [
+          {
+            path: ':artist',
+            id: 'artist-details',
+            element: <ViewArtistDetails />,
+            loader: ViewArtistDetails.loader,
           },
         ],
       },
