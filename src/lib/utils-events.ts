@@ -1,5 +1,10 @@
-export const isLeftClick = (e: React.MouseEvent): boolean => e.button === 0;
-export const isRightClick = (e: React.MouseEvent): boolean => e.button === 2;
+export function isLeftClick(e: React.MouseEvent): boolean {
+  return e.button === 0;
+}
+
+export function isRightClick(e: React.MouseEvent): boolean {
+  return e.button === 2;
+}
 
 /**
  * Stop the propagation of an event
