@@ -1,12 +1,11 @@
 import { useLoaderData } from 'react-router-dom';
 
-import * as Setting from '../components/Setting/Setting';
-import CheckboxSetting from '../components/SettingCheckbox/SettingCheckbox';
+import * as Setting from '../components/Setting';
+import CheckboxSetting from '../components/SettingCheckbox';
 import type { Config, DefaultView } from '../generated/typings';
+import useInvalidate, { useInvalidateCallback } from '../hooks/useInvalidate';
 import { themes } from '../lib/themes';
 import SettingsAPI from '../stores/SettingsAPI';
-
-import useInvalidate, { useInvalidateCallback } from '../hooks/useInvalidate';
 import type { SettingsLoaderData } from './ViewSettings';
 
 export default function ViewSettingsUI() {

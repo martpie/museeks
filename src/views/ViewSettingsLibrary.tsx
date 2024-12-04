@@ -1,13 +1,13 @@
 import { useLoaderData } from 'react-router-dom';
-import * as Setting from '../components/Setting/Setting';
-import Button from '../elements/Button/Button';
-import Flexbox from '../elements/Flexbox/Flexbox';
-import useLibraryStore, { useLibraryAPI } from '../stores/useLibraryStore';
-import type { SettingsLoaderData } from './ViewSettings';
 
-import CheckboxSetting from '../components/SettingCheckbox/SettingCheckbox';
+import * as Setting from '../components/Setting';
+import CheckboxSetting from '../components/SettingCheckbox';
+import Button from '../elements/Button';
+import Flexbox from '../elements/Flexbox';
 import useInvalidate, { useInvalidateCallback } from '../hooks/useInvalidate';
 import SettingsAPI from '../stores/SettingsAPI';
+import useLibraryStore, { useLibraryAPI } from '../stores/useLibraryStore';
+import type { SettingsLoaderData } from './ViewSettings';
 import styles from './ViewSettingsLibrary.module.css';
 
 export default function ViewSettingsLibrary() {

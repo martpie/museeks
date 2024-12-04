@@ -1,4 +1,4 @@
-import GlobalErrorBoundary from '../components/GlobalErrorBoundary/GlobalErrorBoundary';
+import GlobalErrorBoundary from '../components/GlobalErrorBoundary';
 import RootView from '../views/Root';
 import ViewLibrary from '../views/ViewLibrary';
 import ViewPlaylistDetails from '../views/ViewPlaylistDetails';

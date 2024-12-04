@@ -2,15 +2,14 @@ import { useQuery } from '@tanstack/react-query';
 import { useMemo } from 'react';
 import { Link, useLoaderData } from 'react-router-dom';
 
-import TracksList from '../components/TracksList/TracksList';
-import * as ViewMessage from '../elements/ViewMessage/ViewMessage';
+import TracksList from '../components/TracksList';
+import View from '../elements/View';
+import * as ViewMessage from '../elements/ViewMessage';
 import useFilteredTracks from '../hooks/useFilteredTracks';
 import usePlayingTrackID from '../hooks/usePlayingTrackID';
 import config from '../lib/config';
 import database from '../lib/database';
 import useLibraryStore from '../stores/useLibraryStore';
-
-import View from '../components/View/View';
 import type { LoaderData } from '../types/museeks';
 
 export default function ViewLibrary() {

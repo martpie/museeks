@@ -12,15 +12,14 @@ import {
   useParams,
 } from 'react-router-dom';
 
-import SideNav from '../components/SideNav/SideNav';
-import ButtonIcon from '../elements/ButtonIcon/ButtonIcon';
-import * as ViewMessage from '../elements/ViewMessage/ViewMessage';
+import SideNav from '../components/SideNav';
+import SideNavLink from '../components/SideNavLink';
+import ButtonIcon from '../elements/ButtonIcon';
+import View from '../elements/View';
+import * as ViewMessage from '../elements/ViewMessage';
+import useInvalidate from '../hooks/useInvalidate';
 import database from '../lib/database';
 import PlaylistsAPI from '../stores/PlaylistsAPI';
-
-import SideNavLink from '../components/SideNavLink/SideNavLink';
-import View from '../components/View/View';
-import useInvalidate from '../hooks/useInvalidate';
 import type { LoaderData } from '../types/museeks';
 
 export default function ViewPlaylists() {
