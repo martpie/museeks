@@ -31,7 +31,7 @@
   color: var(--input-color);
   border: solid 1px var(--border-color);
   border-radius: var(--border-radius);
-  padding: 8px 12px;
+  padding: 8px;
   width: 100%;
   font-size: 1rem;
   line-height: 1;
