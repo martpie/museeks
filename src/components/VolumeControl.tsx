@@ -4,11 +4,11 @@ import type React from 'react';
 import { useCallback, useState } from 'react';
 import Icon from 'react-fontawesome';
 
-import controlStyles from '../PlayerControls/PlayerControls.module.css';
 import player from '../lib/player';
 import { stopPropagation } from '../lib/utils-events';
 import { usePlayerAPI } from '../stores/usePlayerStore';
 
+import controlStyles from './PlayerControls.module.css';
 import styles from './VolumeControl.module.css';
 
 // Volume easing - http://www.dr-lex.be/info-stuff/volumecontrols.html#about
