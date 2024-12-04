@@ -133,17 +133,6 @@ export default function ViewTrackDetails() {
           />
         </Setting.Section>
         <Setting.Section>
-          <Setting.Input
-            label="Duration"
-            id="duration"
-            name="duration"
-            type="text"
-            pattern="([01]?[0-9]{1}|2[0-3]{1}):[0-5]{1}[0-9]{1}"
-            disabled
-            value={parseDuration(track.duration)}
-          />
-        </Setting.Section>
-        <Setting.Section>
           <Flexbox direction="horizontal" gap={16}>
             <Setting.Input
               label="Track Nº"
@@ -152,11 +141,11 @@ export default function ViewTrackDetails() {
               type="number"
               min="0"
               step="1"
-              value={Number(formData.track_no)}
+              value={formData.track_no ?? ''}
               onChange={(e) => {
                 setFormData({
                   ...formData,
-                  track_no: Number(e.currentTarget.value),
+                  track_no: parseNullableNumber(e.currentTarget.value),
                 });
               }}
             />
@@ -167,11 +156,11 @@ export default function ViewTrackDetails() {
               type="number"
               min="0"
               step="1"
-              value={Number(formData.track_of)}
+              value={formData.track_of ?? ''}
               onChange={(e) => {
                 setFormData({
                   ...formData,
-                  track_of: Number(e.currentTarget.value),
+                  track_of: parseNullableNumber(e.currentTarget.value),
                 });
               }}
             />
@@ -186,11 +175,11 @@ export default function ViewTrackDetails() {
               type="number"
               min="0"
               step="1"
-              value={Number(formData.disk_no)}
+              value={formData.disk_no ?? ''}
               onChange={(e) => {
                 setFormData({
                   ...formData,
-                  disk_no: Number(e.currentTarget.value),
+                  disk_no: parseNullableNumber(e.currentTarget.value),
                 });
               }}
             />
@@ -201,15 +190,26 @@ export default function ViewTrackDetails() {
               type="number"
               min="0"
               step="1"
-              value={Number(formData.disk_of)}
+              value={formData.disk_of ?? ''}
               onChange={(e) => {
                 setFormData({
                   ...formData,
-                  disk_of: Number(e.currentTarget.value),
+                  disk_of: parseNullableNumber(e.currentTarget.value),
                 });
               }}
             />
           </Flexbox>
+        </Setting.Section>
+        <Setting.Section>
+          <Setting.Input
+            label="Duration"
+            id="duration"
+            name="duration"
+            type="text"
+            pattern="([01]?[0-9]{1}|2[0-3]{1}):[0-5]{1}[0-9]{1}"
+            disabled
+            value={parseDuration(track.duration)}
+          />
         </Setting.Section>
         <Setting.Section>
           <Setting.Input
@@ -254,3 +254,11 @@ ViewTrackDetails.loader = async ({ params }: LoaderFunctionArgs) => {
 
   return { track };
 };
+
+function parseNullableNumber(str: string): number | null {
+  if (str === '' || str === '0') {
+    return null;
+  }
+
+  return Number(str);
+}
