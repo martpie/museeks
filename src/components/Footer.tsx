@@ -21,8 +21,8 @@ export default function Footer() {
       const progress = total > 0 ? Math.round((current / total) * 100) : 100;
 
       return (
-        <div className={styles.footer__libraryRefresh}>
-          <div className={styles.footer__libraryRefresh__progress}>
+        <div className={styles.footerLibraryRefresh}>
+          <div className={styles.footerLibraryRefreshProgress}>
             {isScanning ? (
               <>scanning tracks...</>
             ) : (
@@ -30,7 +30,7 @@ export default function Footer() {
             )}
           </div>
           {total > 0 && (
-            <div className={styles.footer__libraryRefresh__count}>
+            <div className={styles.footerLibraryRefreshCount}>
               {current} / {total}
             </div>
           )}
@@ -43,13 +43,13 @@ export default function Footer() {
 
   return (
     <footer className={styles.footer}>
-      <div className={styles.footer__navigation}>
-        <div className={styles.footer__navigation__linkgroup}>
+      <div className={styles.footerNavigation}>
+        <div className={styles.footerNavigationLinkgroup}>
           <NavLink
             to="/library"
             className={({ isActive }) =>
-              `${styles.footer__navigation__link} ${
-                isActive && styles.footer__navigation__linkIsActive
+              `${styles.footerNavigationLink} ${
+                isActive && styles.footerNavigationLinkIsActive
               }`
             }
             title="Library"
@@ -60,8 +60,8 @@ export default function Footer() {
           <NavLink
             to="/playlists"
             className={({ isActive }) =>
-              `${styles.footer__navigation__link} ${
-                isActive && styles.footer__navigation__linkIsActive
+              `${styles.footerNavigationLink} ${
+                isActive && styles.footerNavigationLinkIsActive
               }`
             }
             title="Playlists"
@@ -72,8 +72,8 @@ export default function Footer() {
           <NavLink
             to="/settings"
             className={({ isActive }) =>
-              `${styles.footer__navigation__link} ${
-                isActive && styles.footer__navigation__linkIsActive
+              `${styles.footerNavigationLink} ${
+                isActive && styles.footerNavigationLinkIsActive
               }`
             }
             title="Settings"
@@ -83,7 +83,7 @@ export default function Footer() {
           </NavLink>
         </div>
       </div>
-      <div className={styles.footer__status}>{getStatusContent()}</div>
+      <div className={styles.footerStatus}>{getStatusContent()}</div>
     </footer>
   );
 }

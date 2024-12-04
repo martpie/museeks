@@ -1,17 +1,17 @@
-.queue__header {
+.queueHeader {
   padding: 5px 10px;
   background-color: var(--queue-header-bg);
   border-bottom: solid 1px var(--border-color);
 }
 
-.queue__header__infos {
+.queueHeaderInfos {
   float: right;
   font-size: 11px;
   padding-top: 1px;
   padding-bottom: 1px;
 }
 
-.queue__content {
+.queueContent {
   max-height: 250px;
   overflow: auto;
 }

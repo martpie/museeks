@@ -15,11 +15,11 @@
   box-sizing: border-box;
 }
 
-.no_border {
+.noBorder {
   border-width: 0;
 }
 
-.cover__note {
+.note {
   font-family: monospace; /* the sexy one */
   font-size: 1em;
   line-height: 1em;

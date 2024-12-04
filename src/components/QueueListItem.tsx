@@ -47,7 +47,7 @@ export default function QueueListItem(props: Props) {
     playerAPI.startFromQueue(props.queueCursor + props.index + 1);
   }, [props.index, props.queueCursor, playerAPI]);
 
-  const queueContentClasses = cx(styles.queue__item, {
+  const queueContentClasses = cx(styles.queueItem, {
     [styles.isDragged]: props.dragged,
     [styles.isDraggedOver]: props.draggedOver,
     [styles.isAbove]: props.draggedOver && props.dragPosition === 'above',
@@ -62,20 +62,16 @@ export default function QueueListItem(props: Props) {
       onDragOver={onDragOver}
       onDragEnd={props.onDragEnd}
     >
-      <div className={styles.queue__item__cover}>
+      <div className={styles.queueItemCover}>
         <Cover track={track} />
       </div>
-      <div className={styles.queue__item__info} onDoubleClick={play}>
-        <div className={styles.queue__item__info__title}>{track.title}</div>
-        <div className={styles.queue__item__info__otherInfos}>
+      <div className={styles.queueItemInfo} onDoubleClick={play}>
+        <div className={styles.queueItemInfoTitle}>{track.title}</div>
+        <div className={styles.queueItemInfoOtherInfos}>
           <span>{track.artists[0]}</span> - <span>{track.album}</span>
         </div>
       </div>
-      <button
-        type="button"
-        className={styles.queue__item__remove}
-        onClick={remove}
-      >
+      <button type="button" className={styles.queueItemRemove} onClick={remove}>
         &times;
       </button>
     </div>

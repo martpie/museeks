@@ -20,8 +20,8 @@ export default function PlayingBarInfo(props: Props) {
   );
 
   return (
-    <div className={styles.playingBar__info} data-tauri-drag-region>
-      <div className={styles.playingBar__info__metas}>
+    <div className={styles.playingBarInfo} data-tauri-drag-region>
+      <div className={styles.playingBarInfoMetas}>
         <div className={styles.duration}>{formattedProgress}</div>
 
         <div className={styles.metas}>

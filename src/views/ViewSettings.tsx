@@ -14,7 +14,7 @@ export default function ViewSettingsView() {
 
   return (
     <View hasPadding layout="centered">
-      <div className={styles.settings__nav}>
+      <div className={styles.settingsNav}>
         <SettingNav.Wrap vertical>
           <SettingNav.Link to="/settings/library">Library</SettingNav.Link>
           <SettingNav.Link to="/settings/audio">Audio</SettingNav.Link>
@@ -23,7 +23,7 @@ export default function ViewSettingsView() {
         </SettingNav.Wrap>
       </div>
 
-      <div className={styles.settings__content}>
+      <div className={styles.settingsContent}>
         <Outlet />
       </div>
 

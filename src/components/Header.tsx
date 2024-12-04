@@ -17,10 +17,10 @@ export default function Header() {
 
   return (
     <header className={styles.header} data-tauri-drag-region>
-      <div className={styles.header__mainControls} data-tauri-drag-region>
+      <div className={styles.headerMainControls} data-tauri-drag-region>
         <PlayerControls />
       </div>
-      <div className={styles.header__playingBar} data-tauri-drag-region>
+      <div className={styles.headerPlayingBar} data-tauri-drag-region>
         {trackPlaying != null && (
           <>
             <PlayingBar trackPlaying={trackPlaying} />
@@ -50,7 +50,7 @@ export default function Header() {
           </>
         )}
       </div>
-      <div className={styles.header__search} data-tauri-drag-region>
+      <div className={styles.headerSearch} data-tauri-drag-region>
         <Search />
       </div>
     </header>

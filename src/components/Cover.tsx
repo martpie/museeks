@@ -23,14 +23,14 @@ export default function Cover(props: Props) {
   }
 
   const classes = cx(styles.cover, styles.empty, {
-    [styles.no_border]: props.noBorder,
+    [styles.noBorder]: props.noBorder,
   });
 
   return (
     <AspectRatio.Root ratio={1}>
       <div className={classes}>
         {/** billion dollar problem: convert emoji to text, good luck 🎵 */}
-        <div className={styles.cover__note}>♪</div>
+        <div className={styles.note}>♪</div>
       </div>
     </AspectRatio.Root>
   );
