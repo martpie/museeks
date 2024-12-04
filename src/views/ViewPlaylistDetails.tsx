@@ -7,16 +7,15 @@ import {
   useParams,
 } from 'react-router-dom';
 
-import TracksList from '../components/TracksList/TracksList';
-import * as ViewMessage from '../elements/ViewMessage/ViewMessage';
+import TracksList from '../components/TracksList';
+import * as ViewMessage from '../elements/ViewMessage';
+import useFilteredTracks from '../hooks/useFilteredTracks';
+import useInvalidate from '../hooks/useInvalidate';
 import usePlayingTrackID from '../hooks/usePlayingTrackID';
 import config from '../lib/config';
 import database from '../lib/database';
 import PlaylistsAPI from '../stores/PlaylistsAPI';
 import useLibraryStore from '../stores/useLibraryStore';
-
-import useFilteredTracks from '../hooks/useFilteredTracks';
-import useInvalidate from '../hooks/useInvalidate';
 import type { LoaderData } from '../types/museeks';
 
 export default function ViewPlaylistDetails() {

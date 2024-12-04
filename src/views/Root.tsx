@@ -1,17 +1,17 @@
 import { Suspense, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 
-import DropzoneImport from '../components/DropzoneImport/DropzoneImport';
-import AppEvents from '../components/Events/AppEvents';
-import GlobalKeyBindings from '../components/Events/GlobalKeyBindings';
-import IPCNavigationEvents from '../components/Events/IPCNavigationEvents';
-import IPCPlayerEvents from '../components/Events/IPCPlayerEvents';
-import LibraryEvents from '../components/Events/LibraryEvents';
-import MediaSessionEvents from '../components/Events/MediaSessionEvents';
-import PlayerEvents from '../components/Events/PlayerEvents';
-import Footer from '../components/Footer/Footer';
-import Header from '../components/Header/Header';
-import Toasts from '../components/Toasts/Toasts';
+import AppEvents from '../components/AppEvents';
+import DropzoneImport from '../components/DropzoneImport';
+import Footer from '../components/Footer';
+import GlobalKeyBindings from '../components/GlobalKeyBindings';
+import Header from '../components/Header';
+import IPCNavigationEvents from '../components/IPCNavigationEvents';
+import IPCPlayerEvents from '../components/IPCPlayerEvents';
+import LibraryEvents from '../components/LibraryEvents';
+import MediaSessionEvents from '../components/MediaSessionEvents';
+import PlayerEvents from '../components/PlayerEvents';
+import Toasts from '../components/Toasts';
 import useInvalidate from '../hooks/useInvalidate';
 import SettingsAPI from '../stores/SettingsAPI';
 import type { LoaderData } from '../types/museeks';

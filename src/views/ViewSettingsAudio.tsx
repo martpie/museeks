@@ -1,7 +1,7 @@
 import { useLoaderData } from 'react-router-dom';
 
-import AudioOutputSelect from '../components/AudioOutputSelect/AudioOutputSelect';
-import * as Setting from '../components/Setting/Setting';
+import AudioOutputSelect from '../components/AudioOutputSelect';
+import * as Setting from '../components/Setting';
 import { usePlayerAPI } from '../stores/usePlayerStore';
 
 import useInvalidate, { useInvalidateCallback } from '../hooks/useInvalidate';

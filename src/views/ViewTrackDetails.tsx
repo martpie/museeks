@@ -6,15 +6,14 @@ import {
   useNavigate,
 } from 'react-router-dom';
 
-import * as Setting from '../components/Setting/Setting';
-import Button from '../elements/Button/Button';
+import * as Setting from '../components/Setting';
+import Button from '../elements/Button';
+import Separator from '../elements/Separator';
+import View from '../elements/View';
 import type { Track } from '../generated/typings';
+import useInvalidate from '../hooks/useInvalidate';
 import database from '../lib/database';
 import { useLibraryAPI } from '../stores/useLibraryStore';
-
-import View from '../components/View/View';
-import Separator from '../elements/Separator/Separator';
-import useInvalidate from '../hooks/useInvalidate';
 import type { LoaderData } from '../types/museeks';
 import styles from './ViewTrackDetails.module.css';
 
