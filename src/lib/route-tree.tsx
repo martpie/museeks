@@ -1,3 +1,4 @@
+import type { RouteObject } from 'react-router-dom';
 import GlobalErrorBoundary from '../components/GlobalErrorBoundary';
 import RootView from '../views/Root';
 import ViewArtistDetails from '../views/ViewArtistDetails';
@@ -12,7 +13,7 @@ import ViewSettingsLibrary from '../views/ViewSettingsLibrary';
 import ViewSettingsUI from '../views/ViewSettingsUI';
 import ViewTrackDetails from '../views/ViewTrackDetails';
 
-const routeTree = [
+const routeTree: RouteObject[] = [
   {
     path: '/',
     id: 'root',
@@ -51,6 +52,7 @@ const routeTree = [
             id: 'artist-details',
             element: <ViewArtistDetails />,
             loader: ViewArtistDetails.loader,
+            caseSensitive: true,
           },
         ],
       },
