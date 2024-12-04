@@ -27,9 +27,13 @@
     /* Experimental */
     "experimentalDecorators": true,
 
+    /* Custom Paths */
+    // "paths": {
+    //   "*": ["./src/elements/*", "./src/components/*"]
+    // },
+
     /* Plugins */
     "plugins": [{ "name": "typescript-plugin-css-modules" }]
   },
-  "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
