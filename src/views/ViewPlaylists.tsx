@@ -1,3 +1,7 @@
+import type {
+  MenuItemOptions,
+  PredefinedMenuItemOptions,
+} from '@tauri-apps/api/menu';
 import { useCallback, useMemo } from 'react';
 import {
   type LoaderFunctionArgs,
@@ -14,16 +18,10 @@ import * as ViewMessage from '../elements/ViewMessage/ViewMessage';
 import database from '../lib/database';
 import PlaylistsAPI from '../stores/PlaylistsAPI';
 
-import type {
-  MenuItemOptions,
-  PredefinedMenuItemOptions,
-} from '@tauri-apps/api/menu';
 import SideNavLink from '../components/SideNavLink/SideNavLink';
+import View from '../components/View/View';
 import useInvalidate from '../hooks/useInvalidate';
 import type { LoaderData } from '../types/museeks';
-
-import appStyles from './Root.module.css';
-import styles from './ViewPlaylists.module.css';
 
 export default function ViewPlaylists() {
   const { playlists } = useLoaderData() as PlaylistsLoaderData;
@@ -121,21 +119,24 @@ export default function ViewPlaylists() {
   }
 
   return (
-    <div className={`${appStyles.view} ${styles.viewPlaylists}`}>
-      <SideNav
-        title="Playlists"
-        actions={
-          <ButtonIcon
-            icon="plus"
-            onClick={createPlaylist}
-            title="New Playlist"
-          />
-        }
-      >
-        {sideNavItems}
-      </SideNav>
-      <div className={styles.playlist}>{playlistContent}</div>
-    </div>
+    <View
+      sideNav={
+        <SideNav
+          title="Playlists"
+          actions={
+            <ButtonIcon
+              icon="plus"
+              onClick={createPlaylist}
+              title="New Playlist"
+            />
+          }
+        >
+          {sideNavItems}
+        </SideNav>
+      }
+    >
+      {playlistContent}
+    </View>
   );
 }
 

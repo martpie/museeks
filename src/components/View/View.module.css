@@ -1,0 +1,27 @@
+.view {
+  height: 100%;
+  max-height: 100%;
+  background-color: var(--background);
+  flex: 1 1 auto;
+  overflow: auto;
+  position: relative;
+}
+
+.centered {
+  display: flex;
+  justify-content: center;
+  scrollbar-gutter: stable;
+}
+
+.hasPadding {
+  padding: 40px;
+}
+
+.viewWithSideNav {
+  display: flex;
+  overflow: hidden;
+}
+
+.viewContent {
+  flex: 1;
+}

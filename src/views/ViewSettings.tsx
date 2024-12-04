@@ -2,18 +2,18 @@ import { getTauriVersion, getVersion } from '@tauri-apps/api/app';
 import { invoke } from '@tauri-apps/api/core';
 import { Navigate, Outlet, useMatch } from 'react-router-dom';
 
+import View from '../components/View/View';
 import * as SettingNav from '../elements/SettingsNav/SettingsNav';
 import config from '../lib/config';
 import type { LoaderData } from '../types/museeks';
 
-import appStyles from './Root.module.css';
 import styles from './ViewSettings.module.css';
 
 export default function ViewSettingsView() {
   const match = useMatch('/settings');
 
   return (
-    <div className={`${appStyles.view} ${styles.viewSettings}`}>
+    <View hasPadding layout="centered">
       <div className={styles.settings__nav}>
         <SettingNav.Wrap vertical>
           <SettingNav.Link to="/settings/library">Library</SettingNav.Link>
@@ -28,7 +28,7 @@ export default function ViewSettingsView() {
       </div>
 
       {match && <Navigate to="/settings/library" />}
-    </div>
+    </View>
   );
 }
 
