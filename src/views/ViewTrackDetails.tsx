@@ -204,9 +204,7 @@ export default function ViewTrackDetails() {
           <Setting.Input
             label="Duration"
             id="duration"
-            name="duration"
             type="text"
-            pattern="([01]?[0-9]{1}|2[0-3]{1}):[0-5]{1}[0-9]{1}"
             disabled
             value={parseDuration(track.duration)}
           />
@@ -215,10 +213,9 @@ export default function ViewTrackDetails() {
           <Setting.Input
             label="Path"
             id="path"
-            name="path"
             type="text"
-            value={track.path}
             disabled
+            value={track.path}
           />
         </Setting.Section>
         <div className={styles.detailsActions}>
