@@ -1,4 +1,4 @@
-import debounce from 'lodash/debounce';
+import debounce from 'lodash-es/debounce';
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigation } from 'react-router-dom';
 

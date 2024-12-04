@@ -1,5 +1,5 @@
-import orderBy from 'lodash/orderBy';
-import uniq from 'lodash/uniq';
+import orderBy from 'lodash-es/orderBy';
+import uniq from 'lodash-es/uniq';
 
 import type { SortBy, SortOrder, Track } from '../generated/typings';
 import { parseDuration } from '../hooks/useFormattedDuration';
