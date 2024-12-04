@@ -1,4 +1,4 @@
-.playingBar__info {
+.playingBarInfo {
   flex: 1 1 auto;
   min-width: 0;
   display: flex;
@@ -8,7 +8,7 @@
   padding-left: 8px;
 }
 
-.playingBar__info__metas {
+.playingBarInfoMetas {
   gap: 4px;
   display: flex;
   align-items: flex-end;

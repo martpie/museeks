@@ -1,10 +1,10 @@
-.settings__nav {
+.settingsNav {
   padding: 0 30px;
   width: 150px;
   margin-left: -150px;
 }
 
-.settings__content {
+.settingsContent {
   padding: 10px 15px;
   width: 400px;
   max-width: calc(100% - 170px);

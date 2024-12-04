@@ -17,11 +17,7 @@
   opacity: 1;
 }
 
-.dropzone__title {
+.dropzoneTitle {
   font-size: 1.4rem;
   margin-bottom: 8px;
-}
-
-.dropzone__subtitle {
-  /* nothing here for now */
 }

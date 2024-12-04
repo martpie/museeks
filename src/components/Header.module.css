@@ -1,4 +1,4 @@
-:global(.os__macos) .header__mainControls {
+:global(.os__macos) .headerMainControls {
   padding-left: 60px; /* let some space for titleBarStyle */
 }
 
@@ -23,7 +23,7 @@
   flex: 0 0 auto;
 }
 
-.header__mainControls {
+.headerMainControls {
   flex: 0 0 auto;
   display: flex;
   align-items: center;
@@ -31,14 +31,14 @@
   min-width: 200px;
 }
 
-.header__search {
+.headerSearch {
   margin-left: 12px;
   flex: 0 0 auto;
   display: flex;
   justify-content: flex-end;
 }
 
-.header__playingBar {
+.headerPlayingBar {
   flex: 1 1 auto;
   min-width: 0;
   max-width: 600px;

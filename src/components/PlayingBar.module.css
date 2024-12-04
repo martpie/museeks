@@ -10,7 +10,7 @@
   min-width: 0;
 }
 
-.playingBar__cover {
+.playingBarCover {
   flex-shrink: 0;
   width: 50px;
   overflow: hidden;

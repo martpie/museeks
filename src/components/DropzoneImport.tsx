@@ -57,10 +57,8 @@ export default function DropzoneImport() {
   //   });
   return (
     <div className={classes}>
-      <div className={styles.dropzone__title}>Add music to the library</div>
-      <div className={styles.dropzone__subtitle}>
-        Drop files or folders anywhere
-      </div>
+      <div className={styles.dropzoneTitle}>Add music to the library</div>
+      <span>Drop files or folders anywhere</span>
     </div>
   );
 }

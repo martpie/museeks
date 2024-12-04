@@ -107,15 +107,15 @@ export default function QueueList(props: Props) {
 
   return (
     <>
-      <div className={styles.queue__header}>
-        <div className={styles.queue__header__infos}>
+      <div className={styles.queueHeader}>
+        <div className={styles.queueHeaderInfos}>
           {getStatus(incomingQueue)}
         </div>
         <Button bSize="small" onClick={playerAPI.clearQueue}>
           clear queue
         </Button>
       </div>
-      <div className={styles.queue__content}>
+      <div className={styles.queueContent}>
         {shownQueue.map((track, index) => (
           <QueueListItem
             key={`track-${track.id}-${index}`}

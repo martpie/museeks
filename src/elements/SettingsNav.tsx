@@ -33,7 +33,7 @@ export function Link(props: LinkProps) {
     <NavLink
       to={props.to}
       className={({ isActive }) =>
-        `${styles.nav__link} ${isActive && styles.nav__linkActive}`
+        `${styles.navLink} ${isActive && styles.navLinkActive}`
       }
       draggable={false}
     >

@@ -35,10 +35,10 @@ export default function Search() {
   };
 
   return (
-    <div className={styles.search__container}>
+    <div className={styles.searchContainer}>
       <input
         type="text"
-        className={styles.search__input}
+        className={styles.searchInput}
         placeholder="search..."
         value={search}
         onChange={onChange}
@@ -50,7 +50,7 @@ export default function Search() {
       {search.length > 0 && (
         <button
           type="button"
-          className={styles.search__clear}
+          className={styles.searchClear}
           onClick={onClear}
           data-museeks-action
         >

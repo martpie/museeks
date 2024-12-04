@@ -1,11 +1,11 @@
-.search__container {
+.searchContainer {
   position: relative;
   max-width: 180px;
   display: flex;
   align-items: center;
 }
 
-.search__input {
+.searchInput {
   display: block;
   font-size: inherit;
   width: 100%;
@@ -17,7 +17,7 @@
   line-height: 16px;
 }
 
-.search__clear {
+.searchClear {
   position: absolute;
   right: 4px;
   font-size: 15px;

@@ -6,7 +6,7 @@
   }
 }
 
-.nav__link {
+.navLink {
   display: inline-block;
   padding: 15px;
   color: var(--text);
@@ -20,7 +20,7 @@
     text-decoration: none;
   }
 
-  &.nav__linkActive {
+  &.navLinkActive {
     color: var(--main-color);
   }
 }
