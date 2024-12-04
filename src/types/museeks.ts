@@ -1,5 +1,7 @@
 import type { LoaderFunctionArgs } from 'react-router-dom';
 
+import type { Track } from '../generated/typings';
+
 /**
  * Player related stuff
  */
@@ -61,3 +63,20 @@ export type LoaderData<T> = T extends (
 ) => Promise<infer U>
   ? Exclude<U, Response>
   : never;
+
+/**
+ * Fields allowed to be mutated when editing a track
+ */
+export type TrackMutation = Pick<
+  Track,
+  | 'title'
+  | 'artists'
+  | 'album'
+  | 'genres'
+  | 'year'
+  | 'duration'
+  | 'track_no'
+  | 'track_of'
+  | 'disk_no'
+  | 'disk_of'
+>;

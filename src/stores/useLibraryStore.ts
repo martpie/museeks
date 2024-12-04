@@ -8,7 +8,7 @@ import { logAndNotifyError } from '../lib/utils';
 import type { StateCreator } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { getStatus, removeRedundantFolders } from '../lib/utils-library';
-import type { API } from '../types/museeks';
+import type { API, TrackMutation } from '../types/museeks';
 import { createStore } from './store-helpers';
 import usePlayerStore from './usePlayerStore';
 import useToastsStore from './useToastsStore';
@@ -35,7 +35,7 @@ type LibraryState = API<{
     setRefresh: (processed: number, total: number) => void;
     updateTrackMetadata: (
       trackID: string,
-      fields: Pick<Track, 'title' | 'artists' | 'album' | 'genres'>,
+      fields: TrackMutation,
     ) => Promise<void>;
     setTracksStatus: (status: Array<Track> | null) => void;
   };

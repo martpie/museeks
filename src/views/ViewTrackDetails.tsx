@@ -11,12 +11,11 @@ import Button from '../elements/Button';
 import Flexbox from '../elements/Flexbox';
 import Separator from '../elements/Separator';
 import View from '../elements/View';
-import type { Track } from '../generated/typings';
 import { parseDuration } from '../hooks/useFormattedDuration';
 import useInvalidate from '../hooks/useInvalidate';
 import database from '../lib/database';
 import { useLibraryAPI } from '../stores/useLibraryStore';
-import type { LoaderData } from '../types/museeks';
+import type { LoaderData, TrackMutation } from '../types/museeks';
 import styles from './ViewTrackDetails.module.css';
 
 // We assume no artist or genre has a comma in its name (fingers crossed)
@@ -26,33 +25,16 @@ export default function ViewTrackDetails() {
   const { track } = useLoaderData() as DetailsLoaderData;
   const invalidate = useInvalidate();
 
-  const [formData, setFormData] = useState<
-    Pick<
-      Track,
-      | 'title'
-      | 'artists'
-      | 'album'
-      | 'genres'
-      | 'year'
-      | 'duration'
-      | 'track_no'
-      | 'track_of'
-      | 'disk_no'
-      | 'disk_of'
-      | 'path'
-    >
-  >({
+  const [formData, setFormData] = useState<TrackMutation>({
     title: track.title ?? '',
     artists: track.artists,
     album: track.album ?? '',
     genres: track.genres,
     year: track.year,
-    duration: track.duration,
     track_no: track.track_no ?? null,
     track_of: track.track_of ?? null,
     disk_no: track.disk_no ?? null,
     disk_of: track.disk_of ?? null,
-    path: track.path,
   });
 
   const libraryAPI = useLibraryAPI();
@@ -124,7 +106,7 @@ export default function ViewTrackDetails() {
           <Setting.Input
             label="Genre"
             id="genre"
-            description="You can add multiple genre with commas"
+            description="You can add multiple genres with commas"
             name="genre"
             type="text"
             value={formData.genres.join(DELIMITER)}
@@ -157,14 +139,8 @@ export default function ViewTrackDetails() {
             name="duration"
             type="text"
             pattern="([01]?[0-9]{1}|2[0-3]{1}):[0-5]{1}[0-9]{1}"
-            disabled={true}
-            value={parseDuration(formData.duration)}
-            onChange={(e) => {
-              setFormData({
-                ...formData,
-                duration: Number(e.currentTarget.value),
-              });
-            }}
+            disabled
+            value={parseDuration(track.duration)}
           />
         </Setting.Section>
         <Setting.Section>
@@ -241,11 +217,8 @@ export default function ViewTrackDetails() {
             id="path"
             name="path"
             type="text"
-            value={formData.path}
-            readOnly={true}
-            onChange={(e) => {
-              setFormData({ ...formData, path: e.currentTarget.value });
-            }}
+            value={track.path}
+            disabled
           />
         </Setting.Section>
         <div className={styles.detailsActions}>
@@ -256,7 +229,7 @@ export default function ViewTrackDetails() {
         </div>
         <Separator />
         <p>
-          Clicking &quot;save&quot; will only update the library data, and will
+          Clicking &quot;save&quot; will only update the library data, but will
           not save it to the original file.
         </p>
       </form>
