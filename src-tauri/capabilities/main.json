@@ -35,6 +35,7 @@
     "database:allow-update-track",
     "database:allow-remove-tracks",
     "database:allow-get-artists",
+    "database:allow-get-artist-tracks",
     "database:allow-get-all-playlists",
     "database:allow-get-playlist",
     "database:allow-create-playlist",

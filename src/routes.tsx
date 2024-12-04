@@ -40,6 +40,7 @@ const routeTree: RouteObject[] = [
             id: 'artist-details',
             element: <ViewArtistDetails />,
             loader: ViewArtistDetails.loader,
+            caseSensitive: true,
           },
         ],
       },
