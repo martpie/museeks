@@ -10,9 +10,8 @@ import config from '../lib/config';
 import database from '../lib/database';
 import useLibraryStore from '../stores/useLibraryStore';
 
+import View from '../components/View/View';
 import type { LoaderData } from '../types/museeks';
-import appStyles from './Root.module.css';
-import styles from './ViewLibrary.module.css';
 
 export default function ViewLibrary() {
   const trackPlayingID = usePlayingTrackID();
@@ -99,11 +98,7 @@ export default function ViewLibrary() {
     isLoading,
   ]);
 
-  return (
-    <div className={`${appStyles.view} ${styles.viewLibrary}`}>
-      {getLibraryComponent}
-    </div>
-  );
+  return <View>{getLibraryComponent}</View>;
 }
 
 export type LibraryLoaderData = LoaderData<typeof ViewLibrary.loader>;

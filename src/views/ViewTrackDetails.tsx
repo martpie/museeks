@@ -12,10 +12,10 @@ import type { Track } from '../generated/typings';
 import database from '../lib/database';
 import { useLibraryAPI } from '../stores/useLibraryStore';
 
+import View from '../components/View/View';
 import Separator from '../elements/Separator/Separator';
 import useInvalidate from '../hooks/useInvalidate';
 import type { LoaderData } from '../types/museeks';
-import appStyles from './Root.module.css';
 import styles from './ViewTrackDetails.module.css';
 
 // We assume no artist or genre has a comma in its name (fingers crossed)
@@ -56,7 +56,7 @@ export default function ViewTrackDetails() {
   );
 
   return (
-    <div className={`${appStyles.view} ${styles.viewDetails}`}>
+    <View hasPadding layout="centered">
       <form className={styles.detailsForm} onSubmit={handleSubmit}>
         <h2>Edit &quot;{formData.title}&quot;</h2>
         <Setting.Section>
@@ -127,7 +127,7 @@ export default function ViewTrackDetails() {
           not save it to the original file.
         </p>
       </form>
-    </div>
+    </View>
   );
 }
 

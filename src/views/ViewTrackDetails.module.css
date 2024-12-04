@@ -1,11 +1,4 @@
-.viewDetails {
-  /* nothing */
-}
-
 .detailsForm {
-  width: 400px;
-  padding: 10px 15px;
-  margin: auto;
   display: flex;
   flex-direction: column;
 }
