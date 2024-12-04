@@ -74,7 +74,6 @@ export type TrackMutation = Pick<
   | 'album'
   | 'genres'
   | 'year'
-  | 'duration'
   | 'track_no'
   | 'track_of'
   | 'disk_no'
