@@ -28,7 +28,7 @@ export default function ViewPlaylistDetails() {
   const invalidate = useInvalidate();
 
   const search = useLibraryStore((state) => state.search);
-  const filteredTracks = useFilteredTracks(playlistTracks, false);
+  const filteredTracks = useFilteredTracks(playlistTracks);
 
   const onReorder = useCallback(
     async (

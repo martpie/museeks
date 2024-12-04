@@ -1,6 +1,6 @@
 import { useEffect, useMemo } from 'react';
 
-import type { Track } from '../generated/typings';
+import type { SortBy, SortOrder, Track } from '../generated/typings';
 import {
   filterTracks,
   getSortOrder,
@@ -15,17 +15,16 @@ import useLibraryStore, { useLibraryAPI } from '../stores/useLibraryStore';
  */
 export default function useFilteredTracks(
   tracks: Track[],
-  enableSort = true,
+  sortBy?: SortBy,
+  sortOrder?: SortOrder,
 ): Track[] {
   const search = useLibraryStore((state) => stripAccents(state.search));
-  const sortBy = useLibraryStore((state) => state.sortBy);
-  const sortOrder = useLibraryStore((state) => state.sortOrder);
   const libraryAPI = useLibraryAPI();
 
   const filteredTracks = useMemo(() => {
     let searchedTracks = filterTracks(tracks, search);
 
-    if (enableSort) {
+    if (sortBy && sortOrder) {
       // sorting being a costly operation, do it after filtering, ignore it if not needed
       searchedTracks = sortTracks(
         searchedTracks,
@@ -35,7 +34,7 @@ export default function useFilteredTracks(
     }
 
     return searchedTracks;
-  }, [tracks, search, sortBy, sortOrder, enableSort]);
+  }, [tracks, search, sortBy, sortOrder]);
 
   // Update the footer status based on the displayed tracks
   useEffect(() => {

@@ -18,6 +18,8 @@ export default function ViewLibrary() {
   const trackPlayingID = usePlayingTrackID();
   const refreshing = useLibraryStore((state) => state.refreshing);
   const search = useLibraryStore((state) => state.search);
+  const sortBy = useLibraryStore((state) => state.sortBy);
+  const sortOrder = useLibraryStore((state) => state.sortOrder);
 
   const { playlists, tracksDensity } = useLoaderData() as LibraryLoaderData;
 
@@ -31,7 +33,7 @@ export default function ViewLibrary() {
     refetchOnReconnect: false,
   });
 
-  const filteredTracks = useFilteredTracks(tracks ?? []);
+  const filteredTracks = useFilteredTracks(tracks ?? [], sortBy, sortOrder);
 
   const getLibraryComponent = useMemo(() => {
     // Refreshing library
