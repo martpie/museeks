@@ -2,12 +2,11 @@ import cx from 'classnames';
 import type React from 'react';
 import { useCallback, useState } from 'react';
 
-import cellStyles from '../TracksListHeader/TracksListHeader.module.css';
 import type { Track } from '../generated/typings';
-import PlayingIndicator from './PlayingIndicator';
-
 import useFormattedDuration from '../hooks/useFormattedDuration';
+import PlayingIndicator from './PlayingIndicator';
 import styles from './TrackRow.module.css';
+import cellStyles from './TracksListHeader.module.css';
 
 type Props = {
   selected: boolean;
