@@ -8,9 +8,11 @@ import {
 
 import * as Setting from '../components/Setting';
 import Button from '../elements/Button';
+import Flexbox from '../elements/Flexbox';
 import Separator from '../elements/Separator';
 import View from '../elements/View';
 import type { Track } from '../generated/typings';
+import { parseDuration } from '../hooks/useFormattedDuration';
 import useInvalidate from '../hooks/useInvalidate';
 import database from '../lib/database';
 import { useLibraryAPI } from '../stores/useLibraryStore';
@@ -25,12 +27,32 @@ export default function ViewTrackDetails() {
   const invalidate = useInvalidate();
 
   const [formData, setFormData] = useState<
-    Pick<Track, 'title' | 'artists' | 'album' | 'genres'>
+    Pick<
+      Track,
+      | 'title'
+      | 'artists'
+      | 'album'
+      | 'genres'
+      | 'year'
+      | 'duration'
+      | 'track_no'
+      | 'track_of'
+      | 'disk_no'
+      | 'disk_of'
+      | 'path'
+    >
   >({
     title: track.title ?? '',
     artists: track.artists,
     album: track.album ?? '',
     genres: track.genres,
+    year: track.year,
+    duration: track.duration,
+    track_no: track.track_no ?? null,
+    track_of: track.track_of ?? null,
+    disk_no: track.disk_no ?? null,
+    disk_of: track.disk_of ?? null,
+    path: track.path,
   });
 
   const libraryAPI = useLibraryAPI();
@@ -61,7 +83,6 @@ export default function ViewTrackDetails() {
         <Setting.Section>
           <Setting.Input
             label="Title"
-            description="You can add multiple artists with commas"
             id="title"
             name="title"
             type="text"
@@ -74,6 +95,7 @@ export default function ViewTrackDetails() {
         <Setting.Section>
           <Setting.Input
             label="Artist"
+            description="You can add multiple artists with commas"
             id="artist"
             name="artist"
             type="text"
@@ -111,6 +133,118 @@ export default function ViewTrackDetails() {
                 ...formData,
                 genres: e.currentTarget.value.split(DELIMITER),
               });
+            }}
+          />
+        </Setting.Section>
+        <Setting.Section>
+          <Setting.Input
+            label="Year"
+            id="year"
+            name="year"
+            type="number"
+            min="0"
+            step="1"
+            value={Number(formData.year)}
+            onChange={(e) => {
+              setFormData({ ...formData, year: Number(e.currentTarget.value) });
+            }}
+          />
+        </Setting.Section>
+        <Setting.Section>
+          <Setting.Input
+            label="Duration"
+            id="duration"
+            name="duration"
+            type="text"
+            pattern="([01]?[0-9]{1}|2[0-3]{1}):[0-5]{1}[0-9]{1}"
+            disabled={true}
+            value={parseDuration(formData.duration)}
+            onChange={(e) => {
+              setFormData({
+                ...formData,
+                duration: Number(e.currentTarget.value),
+              });
+            }}
+          />
+        </Setting.Section>
+        <Setting.Section>
+          <Flexbox direction="horizontal" gap={16}>
+            <Setting.Input
+              label="Track Nº"
+              id="track"
+              name="track"
+              type="number"
+              min="0"
+              step="1"
+              value={Number(formData.track_no)}
+              onChange={(e) => {
+                setFormData({
+                  ...formData,
+                  track_no: Number(e.currentTarget.value),
+                });
+              }}
+            />
+            <Setting.Input
+              label="Of"
+              id="trackOf"
+              name="trackOf"
+              type="number"
+              min="0"
+              step="1"
+              value={Number(formData.track_of)}
+              onChange={(e) => {
+                setFormData({
+                  ...formData,
+                  track_of: Number(e.currentTarget.value),
+                });
+              }}
+            />
+          </Flexbox>
+        </Setting.Section>
+        <Setting.Section>
+          <Flexbox direction="horizontal" gap={16}>
+            <Setting.Input
+              label="Disk Nº"
+              id="disk"
+              name="disk"
+              type="number"
+              min="0"
+              step="1"
+              value={Number(formData.disk_no)}
+              onChange={(e) => {
+                setFormData({
+                  ...formData,
+                  disk_no: Number(e.currentTarget.value),
+                });
+              }}
+            />
+            <Setting.Input
+              label="Of"
+              id="diskOf"
+              name="diskOf"
+              type="number"
+              min="0"
+              step="1"
+              value={Number(formData.disk_of)}
+              onChange={(e) => {
+                setFormData({
+                  ...formData,
+                  disk_of: Number(e.currentTarget.value),
+                });
+              }}
+            />
+          </Flexbox>
+        </Setting.Section>
+        <Setting.Section>
+          <Setting.Input
+            label="Path"
+            id="path"
+            name="path"
+            type="text"
+            value={formData.path}
+            readOnly={true}
+            onChange={(e) => {
+              setFormData({ ...formData, path: e.currentTarget.value });
             }}
           />
         </Setting.Section>
