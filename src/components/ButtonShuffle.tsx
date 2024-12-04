@@ -3,7 +3,7 @@ import cx from 'classnames';
 import icons from '../lib/icons';
 import usePlayerStore, { usePlayerAPI } from '../stores/usePlayerStore';
 
-import styles from './common.module.css';
+import styles from './ButtonShuffleRepeat.module.css';
 
 export default function ButtonShuffle() {
   const shuffle = usePlayerStore((state) => state.shuffle);
