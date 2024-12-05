@@ -1,6 +1,6 @@
 import debounce from 'lodash-es/debounce';
 import { useEffect, useState } from 'react';
-import { useLocation, useNavigation } from 'react-router-dom';
+import { useLocation, useNavigation } from 'react-router';
 
 function getScrollPosition(key: string) {
   const pos = window.sessionStorage.getItem(key);

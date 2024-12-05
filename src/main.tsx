@@ -10,7 +10,7 @@ import { QueryClientProvider } from '@tanstack/react-query';
 import * as logger from '@tauri-apps/plugin-log';
 import React from 'react';
 import * as ReactDOM from 'react-dom/client';
-import { RouterProvider } from 'react-router-dom';
+import { RouterProvider } from 'react-router';
 
 import queryClient from './lib/query-client';
 import router from './lib/router';
@@ -39,7 +39,7 @@ if (wrap) {
   root.render(
     <React.StrictMode>
       <QueryClientProvider client={queryClient}>
-        <RouterProvider router={router} future={{ v7_startTransition: true }} />
+        <RouterProvider router={router} />
       </QueryClientProvider>
     </React.StrictMode>,
   );

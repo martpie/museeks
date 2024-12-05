@@ -1,4 +1,4 @@
-import { useLoaderData } from 'react-router-dom';
+import { useLoaderData } from 'react-router';
 
 import AudioOutputSelect from '../components/AudioOutputSelect';
 import * as Setting from '../components/Setting';

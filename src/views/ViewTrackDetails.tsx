@@ -4,7 +4,7 @@ import {
   type LoaderFunctionArgs,
   useLoaderData,
   useNavigate,
-} from 'react-router-dom';
+} from 'react-router';
 
 import * as Setting from '../components/Setting';
 import Button from '../elements/Button';

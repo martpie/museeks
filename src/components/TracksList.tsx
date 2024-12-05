@@ -9,7 +9,7 @@ import {
 import type React from 'react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import Keybinding from 'react-keybinding-component';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router';
 
 import type { Config, Playlist, Track } from '../generated/typings';
 import { logAndNotifyError } from '../lib/utils';
