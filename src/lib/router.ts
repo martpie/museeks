@@ -7,6 +7,7 @@ const router = createHashRouter(routeTree, {
     v7_normalizeFormMethod: true,
     v7_fetcherPersist: true,
     v7_skipActionErrorRevalidation: true,
+    v7_relativeSplatPath: true,
   },
 });
 
