@@ -58,7 +58,7 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
             let config_manager = app_handle.state::<ConfigManager>();
             let nosleep = app_handle.state::<NoSleepInstance>();
 
-            if config_manager.get()?.sleepblocker == true {
+            if config_manager.get()?.sleepblocker {
                 enable(config_manager, nosleep)?;
             }
 

@@ -177,10 +177,8 @@ impl DB {
         tracks_ids: Vec<String>,
         import_path: Option<PathBuf>,
     ) -> AnyResult<Playlist> {
-        let playlist_path: Option<String> = match import_path {
-            Some(path) => Some(path.to_str().unwrap().to_string()),
-            None => None,
-        };
+        let playlist_path: Option<String> =
+            import_path.map(|path| path.to_str().unwrap().to_string());
 
         let playlist = Playlist {
             id: uuid::Uuid::new_v4().to_string(),

@@ -39,19 +39,19 @@ fn get_cover_from_id3(path: String) -> Option<String> {
         _ => return None,
     };
 
-    let cover_base64 = BASE64_STANDARD.encode(&cover.data());
+    let cover_base64 = BASE64_STANDARD.encode(cover.data());
     Some(format!("data:{};base64,{}", format, cover_base64))
 }
 
 #[memoize::memoize]
-fn get_cover_from_filesystem<'a>(path: String) -> Option<String> {
+fn get_cover_from_filesystem(path: String) -> Option<String> {
     let dir_path = PathBuf::from_str(&path)
         .unwrap()
         .parent()
         .unwrap()
         .to_path_buf();
 
-    match scan_dir(&dir_path, &SUPPORTED_COVER_EXTENSIONS)
+    scan_dir(&dir_path, &SUPPORTED_COVER_EXTENSIONS)
         .iter()
         .find(|file| {
             let file_stem = file
@@ -62,13 +62,8 @@ fn get_cover_from_filesystem<'a>(path: String) -> Option<String> {
                 .to_lowercase();
 
             SUPPORTED_COVER_NAMES.contains(&file_stem.as_str())
-        }) {
-        // Ideally, the file URL would be converted to asset.localhost
-        // here, but I could not find the equivalent on convertFileSrc
-        // for the back-end;
-        Some(path) => Some(path.to_str().unwrap().into()),
-        None => None,
-    }
+        })
+        .map(|path| path.to_str().unwrap().into())
 }
 
 #[tauri::command]

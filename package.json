@@ -23,7 +23,8 @@
     "test:unit": "bun test",
     "test:lint": "biome ci .",
     "test:lint:fix": "biome check --write .",
-    "package:checksums": "bash scripts/checksum.sh"
+    "package:checksums": "bash scripts/checksum.sh",
+    "clippy": "cargo clippy --manifest-path src-tauri/Cargo.toml"
   },
   "browserslist": ["defaults"],
   "dependencies": {

@@ -2,7 +2,8 @@
  * Small utility to display time metrics with a log message
  */
 use log::info;
-use std::{ffi::OsStr, path::PathBuf, time::Instant};
+use std::path::{Path, PathBuf};
+use std::{ffi::OsStr, time::Instant};
 use tauri::Theme;
 use walkdir::WalkDir;
 
@@ -45,7 +46,7 @@ fn is_dir_visible(entry: &walkdir::DirEntry) -> bool {
 /**
  * Take an entry and filter out non-allowed extensions
  */
-pub fn is_file_valid(path: &PathBuf, allowed_extensions: &[&str]) -> bool {
+pub fn is_file_valid(path: &Path, allowed_extensions: &[&str]) -> bool {
     let extension = path.extension().and_then(OsStr::to_str).unwrap_or("");
     allowed_extensions.contains(&extension)
 }
@@ -53,11 +54,10 @@ pub fn is_file_valid(path: &PathBuf, allowed_extensions: &[&str]) -> bool {
 /**
  * Scan multiple directories and filter files by extension
  */
-pub fn scan_dirs(paths: &Vec<PathBuf>, allowed_extensions: &[&str]) -> Vec<PathBuf> {
+pub fn scan_dirs(paths: &[PathBuf], allowed_extensions: &[&str]) -> Vec<PathBuf> {
     paths
         .iter()
-        .map(|path| scan_dir(path, allowed_extensions))
-        .flatten()
+        .flat_map(|path| scan_dir(path, allowed_extensions))
         .collect()
 }
 

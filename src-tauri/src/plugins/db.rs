@@ -191,8 +191,7 @@ async fn import_tracks_to_library<R: Runtime>(
         .get_all_playlists()
         .await?
         .iter()
-        .map(move |playlist| playlist.import_path.to_owned())
-        .flatten()
+        .filter_map(move |playlist| playlist.import_path.to_owned())
         .map(PathBuf::from)
         .collect::<HashSet<_>>();
 
@@ -202,7 +201,7 @@ async fn import_tracks_to_library<R: Runtime>(
 
     // Start scanning the content of the playlists and adding them to the DB
     for playlist_path in playlist_paths {
-        match {
+        let res = {
             let mut reader = m3u::Reader::open(&playlist_path).unwrap();
             let playlist_dir_path = playlist_path.parent().unwrap();
 
@@ -215,7 +214,7 @@ async fn import_tracks_to_library<R: Runtime>(
 
                     match entry {
                         m3u::Entry::Path(path) => Some(playlist_dir_path.join(path)),
-                        _ => return None, // We don't support (yet?) URLs in playlists
+                        _ => None, // We don't support (yet?) URLs in playlists
                     }
                 })
                 .collect();
@@ -224,7 +223,7 @@ async fn import_tracks_to_library<R: Runtime>(
             // let's guess the ID of the track with UUID::v3
             let track_ids = track_paths
                 .iter()
-                .flat_map(|path| get_track_id_for_path(path))
+                .flat_map(get_track_id_for_path)
                 .collect::<Vec<String>>();
 
             let playlist_name = playlist_path
@@ -253,7 +252,9 @@ async fn import_tracks_to_library<R: Runtime>(
             db.create_playlist(playlist_name, track_ids, Some(playlist_path))
                 .await?;
             Ok::<(), MuseeksError>(())
-        } {
+        };
+
+        match res {
             Ok(_) => {
                 scan_result.playlist_count += 1;
             }
@@ -369,8 +370,8 @@ async fn export_playlist<R: Runtime>(
                 .iter()
                 .map(|track| {
                     let relative_path =
-                        pathdiff::diff_paths(&track.path, &playlist_dir_path).unwrap();
-                    return m3u::path_entry(relative_path);
+                        pathdiff::diff_paths(&track.path, playlist_dir_path).unwrap();
+                    m3u::path_entry(relative_path)
                 })
                 .collect::<Vec<m3u::Entry>>();
 
@@ -450,7 +451,7 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
                     .await
                     .expect("Could not create DB tables");
 
-                app_handle.manage(DBState { 0: Mutex::new(db) });
+                app_handle.manage(DBState(Mutex::new(db)));
             });
             Ok(())
         })

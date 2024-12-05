@@ -66,10 +66,7 @@ fn handle_file_associations(app_handle: AppHandle, mut files: Vec<PathBuf>) {
         info!("  - {:?}", file)
     }
 
-    files = files
-        .into_iter()
-        .filter(|path| is_file_valid(path, &SUPPORTED_TRACKS_EXTENSIONS))
-        .collect();
+    files.retain(|path| is_file_valid(path, &SUPPORTED_TRACKS_EXTENSIONS));
 
     // This is for the `asset:` protocol to work, ensuring access to the files
     let asset_protocol_scope = app_handle.asset_protocol_scope();
@@ -81,7 +78,7 @@ fn handle_file_associations(app_handle: AppHandle, mut files: Vec<PathBuf>) {
     // Build a list of tracks, without importing them to the library
     let queue = files
         .par_iter()
-        .map(|path| get_track_from_file(&path))
+        .map(get_track_from_file)
         .flatten()
         .collect::<Vec<_>>();
 

@@ -38,7 +38,7 @@ pub struct Track {
  * file
  */
 pub fn get_track_from_file(path: &PathBuf) -> Option<Track> {
-    match lofty::read_from_path(&path) {
+    match lofty::read_from_path(path) {
         Ok(tagged_file) => {
             let tag = tagged_file.primary_tag()?;
 
@@ -59,9 +59,7 @@ pub fn get_track_from_file(path: &PathBuf) -> Option<Track> {
                 artists = vec!["Unknown Artist".into()];
             }
 
-            let Some(id) = get_track_id_for_path(path) else {
-                return None;
-            };
+            let id = get_track_id_for_path(path)?;
 
             Some(Track {
                 id,
@@ -102,18 +100,16 @@ pub fn get_track_from_file(path: &PathBuf) -> Option<Track> {
  */
 pub fn get_track_id_for_path(path: &PathBuf) -> Option<String> {
     match std::fs::canonicalize(path) {
-        Ok(canonicalized_path) => {
-            return Some(
-                Uuid::new_v3(
-                    &Uuid::NAMESPACE_OID,
-                    canonicalized_path.to_string_lossy().as_bytes(),
-                )
-                .to_string(),
-            );
-        }
+        Ok(canonicalized_path) => Some(
+            Uuid::new_v3(
+                &Uuid::NAMESPACE_OID,
+                canonicalized_path.to_string_lossy().as_bytes(),
+            )
+            .to_string(),
+        ),
         Err(err) => {
             error!(r#"ID could not be generated for path {:?}: {}"#, path, err);
-            return None;
+            None
         }
-    };
+    }
 }

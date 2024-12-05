@@ -71,7 +71,7 @@ async fn get_test_db() -> DB {
     let mut db = DB { connection };
     db.create_tables().await.unwrap();
 
-    return db;
+    db
 }
 
 /** ----------------------------------------------------------------------------
@@ -84,7 +84,7 @@ async fn test_tracks_db() {
 
     // Table should be empty by default
     let mut all_tracks = db.get_all_tracks().await.unwrap();
-    assert!(all_tracks.len() == 0);
+    assert!(all_tracks.is_empty());
 
     // Testing insertion of tracks in the DB
     db.insert_tracks(vec![sample_track_1(), sample_track_2(), sample_track_3()])
@@ -94,7 +94,7 @@ async fn test_tracks_db() {
     assert!(all_tracks.len() == 3);
 
     // Inserting a track with the same ID should fail
-    assert!(db.insert_tracks(vec![sample_track_1()]).await.is_err() == true);
+    assert!(db.insert_tracks(vec![sample_track_1()]).await.is_err());
 
     // DB.get_tracks should return the track ordered by IDs, and ignored inexisting tracks
     let mut tracks = db
@@ -142,10 +142,10 @@ async fn test_playlists_db() {
 
     // Tables should be empty by default
     let mut all_playlists = db.get_all_playlists().await.unwrap();
-    assert!(all_playlists.len() == 0);
+    assert!(all_playlists.is_empty());
 
     let all_tracks = db.get_all_tracks().await.unwrap();
-    assert!(all_tracks.len() == 0);
+    assert!(all_tracks.is_empty());
     db.insert_tracks(vec![sample_track_1(), sample_track_2(), sample_track_3()])
         .await
         .unwrap();

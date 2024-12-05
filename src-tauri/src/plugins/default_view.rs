@@ -23,7 +23,7 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
 
             if webview.label().eq("main")
                 && payload.event() == PageLoadEvent::Finished
-                && url.fragment() == None
+                && url.fragment().is_none()
             {
                 let config_manager = webview.state::<ConfigManager>();
                 let mut url = payload.url().clone();
