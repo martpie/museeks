@@ -31,5 +31,6 @@
     "plugins": [{ "name": "typescript-plugin-css-modules" }]
   },
   "include": ["src"],
+  "exclude": ["src/routeTree.gen.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

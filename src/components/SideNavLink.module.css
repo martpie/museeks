@@ -24,7 +24,7 @@
     text-decoration: none;
   }
 
-  &:global(.isActive) {
+  &:global(.active) {
     outline: none;
     z-index: 10;
     border-style: solid;

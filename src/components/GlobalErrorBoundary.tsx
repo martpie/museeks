@@ -2,8 +2,8 @@
  * Components helpers
  */
 
+import { isRouteErrorResponse } from '@tanstack/react-router';
 import * as logger from '@tauri-apps/plugin-log';
-import { isRouteErrorResponse, useRouteError } from 'react-router';
 import ExternalLink from '../elements/ExternalLink';
 import * as ViewMessage from '../elements/ViewMessage';
 
