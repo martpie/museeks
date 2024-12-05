@@ -49,7 +49,12 @@ export function Input(props: JSX.IntrinsicElements['input'] & InputProps) {
   return (
     <div>
       <Label htmlFor={id}>{label}</Label>
-      <input id={id} className={styles.settingInput} {...otherProps} />
+      <input
+        id={id}
+        className={styles.settingInput}
+        autoComplete="off"
+        {...otherProps}
+      />
       {description != null && <Description>{description}</Description>}
     </div>
   );
