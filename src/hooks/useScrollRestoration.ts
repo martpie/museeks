@@ -23,11 +23,13 @@ const setScrollPosition = debounce(function setScrollPosition(
  *
  * Except we want to use location.pathname, and not location.key
  */
-export function useScrollRestoration(container: React.RefObject<HTMLElement>) {
+export function useScrollRestoration(
+  container: React.RefObject<HTMLElement | null>,
+) {
   const [init, setInit] = useState(false); // React strick mode is a nightmare
   const key = `scroll-position-${useLocation().pathname}`;
   const { state } = useNavigation();
-  const target = container.current;
+  const target = container?.current;
 
   useEffect(() => {
     function onScroll() {
