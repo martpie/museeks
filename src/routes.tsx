@@ -1,16 +1,16 @@
 import { type RouteObject, createHashRouter } from 'react-router';
 
 import GlobalErrorBoundary from './components/GlobalErrorBoundary';
-import RootView from './routes/Root';
-import ViewLibrary from './routes/ViewLibrary';
-import ViewPlaylistDetails from './routes/ViewPlaylistDetails';
-import ViewPlaylists from './routes/ViewPlaylists';
-import ViewSettings from './routes/ViewSettings';
-import ViewSettingsAbout from './routes/ViewSettingsAbout';
-import ViewSettingsAudio from './routes/ViewSettingsAudio';
-import ViewSettingsLibrary from './routes/ViewSettingsLibrary';
-import ViewSettingsUI from './routes/ViewSettingsUI';
-import ViewTrackDetails from './routes/ViewTrackDetails';
+import ViewLibrary from './routes/library';
+import ViewPlaylistDetails from './routes/playlist-details';
+import ViewPlaylists from './routes/playlists';
+import RootView from './routes/root';
+import ViewSettings from './routes/settings';
+import ViewSettingsAbout from './routes/settings-about';
+import ViewSettingsAudio from './routes/settings-audio';
+import ViewSettingsLibrary from './routes/settings-library';
+import ViewSettingsUI from './routes/settings-ui';
+import ViewTrackDetails from './routes/track-details';
 
 const routeTree: RouteObject[] = [
   {
