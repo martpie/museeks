@@ -17,7 +17,7 @@ const routeTree: RouteObject[] = [
     id: 'root',
     Component: RootView,
     loader: RootView.loader,
-
+    HydrateFallback: () => null, // there should be no hydration as we're SPA-only
     ErrorBoundary: GlobalErrorBoundary,
     children: [
       {
