@@ -76,8 +76,5 @@
     "vite": "^6.0.2",
     "vite-plugin-svgr": "^4.3.0"
   },
-  "trustedDependencies": [
-    "@biomejs/biome",
-    "@parcel/watcher"
-  ]
+  "trustedDependencies": ["@biomejs/biome", "@parcel/watcher"]
 }
