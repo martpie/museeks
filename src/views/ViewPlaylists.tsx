@@ -10,7 +10,7 @@ import {
   useLoaderData,
   useNavigate,
   useParams,
-} from 'react-router-dom';
+} from 'react-router';
 
 import SideNav from '../components/SideNav';
 import SideNavLink from '../components/SideNavLink';

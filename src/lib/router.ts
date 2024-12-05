@@ -1,4 +1,4 @@
-import { createHashRouter } from 'react-router-dom';
+import { createHashRouter } from 'react-router';
 import routeTree from './route-tree';
 
 const router = createHashRouter(routeTree, {

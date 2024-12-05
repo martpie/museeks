@@ -1,6 +1,6 @@
 import cx from 'classnames';
 import type React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router';
 
 import styles from './SettingsNav.module.css';
 

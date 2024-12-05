@@ -1,4 +1,4 @@
-import type { RouteObject } from 'react-router-dom';
+import type { RouteObject } from 'react-router';
 import GlobalErrorBoundary from '../components/GlobalErrorBoundary';
 import RootView from '../views/Root';
 import ViewLibrary from '../views/ViewLibrary';
