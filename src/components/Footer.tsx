@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import Icon from 'react-fontawesome';
-import { NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router';
 
 import useLibraryStore from '../stores/useLibraryStore';
 import ProgressBar from './ProgressBar';

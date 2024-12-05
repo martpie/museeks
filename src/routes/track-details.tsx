@@ -4,7 +4,7 @@ import {
   type LoaderFunctionArgs,
   useLoaderData,
   useNavigate,
-} from 'react-router-dom';
+} from 'react-router';
 
 import * as Setting from '../components/Setting';
 import Button from '../elements/Button';
@@ -16,7 +16,8 @@ import useInvalidate from '../hooks/useInvalidate';
 import database from '../lib/database';
 import { useLibraryAPI } from '../stores/useLibraryStore';
 import type { LoaderData, TrackMutation } from '../types/museeks';
-import styles from './ViewTrackDetails.module.css';
+
+import styles from './track-details.module.css';
 
 // We assume no artist or genre has a comma in its name (fingers crossed)
 const DELIMITER = ',';

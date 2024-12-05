@@ -1,11 +1,11 @@
-import { useLoaderData } from 'react-router-dom';
+import { useLoaderData } from 'react-router';
 
 import AudioOutputSelect from '../components/AudioOutputSelect';
 import * as Setting from '../components/Setting';
 import { usePlayerAPI } from '../stores/usePlayerStore';
 
 import useInvalidate, { useInvalidateCallback } from '../hooks/useInvalidate';
-import type { SettingsLoaderData } from './ViewSettings';
+import type { SettingsLoaderData } from './settings';
 
 export default function ViewSettingsAudio() {
   const { config } = useLoaderData() as SettingsLoaderData;

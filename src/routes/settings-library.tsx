@@ -1,4 +1,4 @@
-import { useLoaderData } from 'react-router-dom';
+import { useLoaderData } from 'react-router';
 
 import * as Setting from '../components/Setting';
 import CheckboxSetting from '../components/SettingCheckbox';
@@ -7,8 +7,9 @@ import Flexbox from '../elements/Flexbox';
 import useInvalidate, { useInvalidateCallback } from '../hooks/useInvalidate';
 import SettingsAPI from '../stores/SettingsAPI';
 import useLibraryStore, { useLibraryAPI } from '../stores/useLibraryStore';
-import type { SettingsLoaderData } from './ViewSettings';
-import styles from './ViewSettingsLibrary.module.css';
+import type { SettingsLoaderData } from './settings';
+
+import styles from './settings-library.module.css';
 
 export default function ViewSettingsLibrary() {
   const libraryAPI = useLibraryAPI();

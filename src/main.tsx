@@ -10,10 +10,10 @@ import { QueryClientProvider } from '@tanstack/react-query';
 import * as logger from '@tauri-apps/plugin-log';
 import React from 'react';
 import * as ReactDOM from 'react-dom/client';
-import { RouterProvider } from 'react-router-dom';
+import { RouterProvider } from 'react-router';
 
 import queryClient from './lib/query-client';
-import router from './lib/router';
+import router from './routes';
 
 /*
 |--------------------------------------------------------------------------

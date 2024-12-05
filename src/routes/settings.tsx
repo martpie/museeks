@@ -1,13 +1,13 @@
 import { getTauriVersion, getVersion } from '@tauri-apps/api/app';
 import { invoke } from '@tauri-apps/api/core';
-import { Navigate, Outlet, useMatch } from 'react-router-dom';
+import { Navigate, Outlet, useMatch } from 'react-router';
 
 import * as SettingNav from '../elements/SettingsNav';
 import View from '../elements/View';
 import config from '../lib/config';
 import type { LoaderData } from '../types/museeks';
 
-import styles from './ViewSettings.module.css';
+import styles from './settings.module.css';
 
 export default function ViewSettingsView() {
   const match = useMatch('/settings');
