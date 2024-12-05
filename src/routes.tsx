@@ -1,16 +1,16 @@
-import type { RouteObject } from 'react-router';
+import { type RouteObject, createHashRouter } from 'react-router';
 
-import GlobalErrorBoundary from '../components/GlobalErrorBoundary';
-import RootView from '../routes/Root';
-import ViewLibrary from '../routes/ViewLibrary';
-import ViewPlaylistDetails from '../routes/ViewPlaylistDetails';
-import ViewPlaylists from '../routes/ViewPlaylists';
-import ViewSettings from '../routes/ViewSettings';
-import ViewSettingsAbout from '../routes/ViewSettingsAbout';
-import ViewSettingsAudio from '../routes/ViewSettingsAudio';
-import ViewSettingsLibrary from '../routes/ViewSettingsLibrary';
-import ViewSettingsUI from '../routes/ViewSettingsUI';
-import ViewTrackDetails from '../routes/ViewTrackDetails';
+import GlobalErrorBoundary from './components/GlobalErrorBoundary';
+import RootView from './routes/Root';
+import ViewLibrary from './routes/ViewLibrary';
+import ViewPlaylistDetails from './routes/ViewPlaylistDetails';
+import ViewPlaylists from './routes/ViewPlaylists';
+import ViewSettings from './routes/ViewSettings';
+import ViewSettingsAbout from './routes/ViewSettingsAbout';
+import ViewSettingsAudio from './routes/ViewSettingsAudio';
+import ViewSettingsLibrary from './routes/ViewSettingsLibrary';
+import ViewSettingsUI from './routes/ViewSettingsUI';
+import ViewTrackDetails from './routes/ViewTrackDetails';
 
 const routeTree: RouteObject[] = [
   {
@@ -77,4 +77,6 @@ const routeTree: RouteObject[] = [
   },
 ];
 
-export default routeTree;
+const router = createHashRouter(routeTree);
+
+export default router;
