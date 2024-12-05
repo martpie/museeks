@@ -16,7 +16,7 @@ export function Description(props: Props) {
 }
 
 export function Label(
-  props: JSX.IntrinsicElements['label'] & {
+  props: React.LabelHTMLAttributes<HTMLLabelElement> & {
     noMargin?: boolean;
     htmlFor: string;
   },
@@ -44,7 +44,9 @@ export type InputProps = {
   id: string;
 };
 
-export function Input(props: JSX.IntrinsicElements['input'] & InputProps) {
+export function Input(
+  props: React.InputHTMLAttributes<HTMLInputElement> & InputProps,
+) {
   const { label, description, id, ...otherProps } = props;
   return (
     <div>
@@ -65,7 +67,7 @@ export function ErrorMessage(props: Props) {
 }
 
 export function Select(
-  props: Props & JSX.IntrinsicElements['select'] & InputProps,
+  props: Props & React.SelectHTMLAttributes<HTMLSelectElement> & InputProps,
 ) {
   const { label, description, id, ...otherProps } = props;
 

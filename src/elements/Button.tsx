@@ -6,9 +6,9 @@ type Props = {
   relevancy?: 'danger';
   bSize?: 'small';
   block?: boolean;
-};
+} & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
-export default function Button(props: Props & JSX.IntrinsicElements['button']) {
+export default function Button(props: Props) {
   const { relevancy, bSize, block, ...rest } = props;
 
   const classes = cx(styles.button, {
