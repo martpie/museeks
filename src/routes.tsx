@@ -1,10 +1,10 @@
 import { type RouteObject, createHashRouter } from 'react-router';
 
 import GlobalErrorBoundary from './components/GlobalErrorBoundary';
+import RootView from './routes/Root';
 import ViewLibrary from './routes/library';
 import ViewPlaylistDetails from './routes/playlist-details';
 import ViewPlaylists from './routes/playlists';
-import RootView from './routes/root';
 import ViewSettings from './routes/settings';
 import ViewSettingsAbout from './routes/settings-about';
 import ViewSettingsAudio from './routes/settings-audio';
