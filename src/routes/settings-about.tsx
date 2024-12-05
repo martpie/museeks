@@ -9,7 +9,7 @@ import Flexbox from '../elements/Flexbox';
 import Heart from '../elements/Heart';
 import useInvalidate, { useInvalidateCallback } from '../hooks/useInvalidate';
 import SettingsAPI from '../stores/SettingsAPI';
-import type { SettingsLoaderData } from './ViewSettings';
+import type { SettingsLoaderData } from './settings';
 
 export default function ViewSettingsAbout() {
   const { config, version, tauriVersion, appStorageDir } =
