@@ -1,16 +1,9 @@
+import { Outlet, createFileRoute, useNavigate } from '@tanstack/react-router';
 import type {
   MenuItemOptions,
   PredefinedMenuItemOptions,
 } from '@tauri-apps/api/menu';
 import { useCallback, useMemo } from 'react';
-import {
-  type LoaderFunctionArgs,
-  Outlet,
-  redirect,
-  useLoaderData,
-  useNavigate,
-  useParams,
-} from 'react-router';
 
 import SideNav from '../components/SideNav';
 import SideNavLink from '../components/SideNavLink';
@@ -20,13 +13,16 @@ import * as ViewMessage from '../elements/ViewMessage';
 import useInvalidate from '../hooks/useInvalidate';
 import database from '../lib/database';
 import PlaylistsAPI from '../stores/PlaylistsAPI';
-import type { LoaderData } from '../types/museeks';
+
+export const Route = createFileRoute('/playlists')({
+  component: ViewPlaylists,
+  loader,
+});
 
 export default function ViewPlaylists() {
-  const { playlists } = useLoaderData() as PlaylistsLoaderData;
+  const { playlists } = Route.useLoaderData();
   const invalidate = useInvalidate();
   const navigate = useNavigate();
-  const params = useParams();
 
   const createPlaylist = useCallback(async () => {
     // TODO: 'new playlist 1', 'new playlist 2' ...
@@ -34,7 +30,10 @@ export default function ViewPlaylists() {
 
     if (playlist) {
       invalidate();
-      navigate(`/playlists/${playlist.id}`);
+      navigate({
+        to: '/playlists/$playlistID',
+        params: { playlistID: playlist.id },
+      });
     }
   }, [navigate, invalidate]);
 
@@ -56,10 +55,11 @@ export default function ViewPlaylists() {
           action: async () => {
             await PlaylistsAPI.remove(playlist.id);
 
+            // FIXME router
             // Redirect to /playlists if we are deleting the current playlist
-            if (params.playlistID === playlist.id) {
-              navigate('/playlists');
-            }
+            // if (params.playlistID === playlist.id) {
+            //   navigate('/playlists');
+            // }
 
             invalidate();
           },
@@ -92,7 +92,7 @@ export default function ViewPlaylists() {
         />
       );
     });
-  }, [playlists, renamePlaylist, invalidate, navigate, params.playlistID]);
+  }, [playlists, renamePlaylist, invalidate]);
 
   // Empty and List states
   let playlistContent;
@@ -139,24 +139,23 @@ export default function ViewPlaylists() {
   );
 }
 
-export type PlaylistsLoaderData = LoaderData<typeof ViewPlaylists.loader>;
-
-ViewPlaylists.loader = async ({ params }: LoaderFunctionArgs) => {
+async function loader() {
   const playlists = await database.getAllPlaylists();
-  const [firstPlaylist] = playlists;
-  const { playlistID } = params;
+  // const [firstPlaylist] = playlists;
+  // FIXME router
+  // const { playlistID } = params;
 
-  if (
-    // If landing page, redirect to the first playlist
-    playlistID === undefined ||
-    // If playlist ID does not exist, redirect to the first playlist
-    (playlistID !== undefined &&
-      !playlists.map((playlist) => playlist.id).includes(playlistID))
-  ) {
-    if (firstPlaylist !== undefined) {
-      return redirect(`/playlists/${firstPlaylist.id}`);
-    }
-  }
+  // if (
+  //   // If landing page, redirect to the first playlist
+  //   playlistID === undefined ||
+  //   // If playlist ID does not exist, redirect to the first playlist
+  //   (playlistID !== undefined &&
+  //     !playlists.map((playlist) => playlist.id).includes(playlistID))
+  // ) {
+  //   if (firstPlaylist !== undefined) {
+  //     return redirect(`/playlists/${firstPlaylist.id}`);
+  //   }
+  // }
 
   return { playlists };
-};
+}

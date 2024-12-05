@@ -1,6 +1,6 @@
+import { Link as RouterLink } from '@tanstack/react-router';
 import cx from 'classnames';
 import type React from 'react';
-import { NavLink } from 'react-router';
 
 import styles from './SettingsNav.module.css';
 
@@ -30,14 +30,8 @@ interface LinkProps {
  */
 export function Link(props: LinkProps) {
   return (
-    <NavLink
-      to={props.to}
-      className={({ isActive }) =>
-        `${styles.navLink} ${isActive && styles.navLinkActive}`
-      }
-      draggable={false}
-    >
+    <RouterLink to={props.to} className={styles.navLink} draggable={false}>
       {props.children}
-    </NavLink>
+    </RouterLink>
   );
 }

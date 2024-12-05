@@ -69,7 +69,7 @@ fn main() {
             let window_builder =
                 WebviewWindowBuilder::new(app, "main", WebviewUrl::App("index.html".into()))
                     .title("Museeks")
-                    .visible(false)
+                    // .visible(false)
                     .theme(get_theme_from_name(&conf.theme))
                     .inner_size(900.0, 550.0)
                     .min_inner_size(900.0, 550.0)

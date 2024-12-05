@@ -1,4 +1,4 @@
-import { useLoaderData } from 'react-router';
+import { createFileRoute } from '@tanstack/react-router';
 
 import * as Setting from '../components/Setting';
 import CheckboxSetting from '../components/SettingCheckbox';
@@ -7,14 +7,19 @@ import Flexbox from '../elements/Flexbox';
 import useInvalidate, { useInvalidateCallback } from '../hooks/useInvalidate';
 import SettingsAPI from '../stores/SettingsAPI';
 import useLibraryStore, { useLibraryAPI } from '../stores/useLibraryStore';
-import type { SettingsLoaderData } from './settings';
+import { loader } from './settings._layout';
 
-import styles from './settings-library.module.css';
+import styles from './settings._layout.library.module.css';
 
-export default function ViewSettingsLibrary() {
+export const Route = createFileRoute('/settings/_layout/library')({
+  component: ViewSettingsLibrary,
+  loader,
+});
+
+function ViewSettingsLibrary() {
   const libraryAPI = useLibraryAPI();
   const isLibraryRefreshing = useLibraryStore((state) => state.refreshing);
-  const { config } = useLoaderData() as SettingsLoaderData;
+  const { config } = Route.useLoaderData();
   const invalidate = useInvalidate();
 
   return (

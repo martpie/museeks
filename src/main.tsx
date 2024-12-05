@@ -7,13 +7,33 @@ import './lib/wdyr';
 */
 
 import { QueryClientProvider } from '@tanstack/react-query';
+import {
+  RouterProvider,
+  createHashHistory,
+  createRouter,
+} from '@tanstack/react-router';
 import * as logger from '@tauri-apps/plugin-log';
 import React from 'react';
 import * as ReactDOM from 'react-dom/client';
-import { RouterProvider } from 'react-router';
 
 import queryClient from './lib/query-client';
-import router from './routes';
+
+/*
+|--------------------------------------------------------------------------
+| Routing
+|--------------------------------------------------------------------------
+*/
+import { routeTree } from './routeTree.gen';
+
+const history = createHashHistory();
+const router = createRouter({ routeTree, history });
+
+// Register the router instance for type safety
+declare module '@tanstack/react-router' {
+  interface Register {
+    router: typeof router;
+  }
+}
 
 /*
 |--------------------------------------------------------------------------
