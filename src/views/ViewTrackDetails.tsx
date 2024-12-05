@@ -61,7 +61,7 @@ export default function ViewTrackDetails() {
   return (
     <View hasPadding layout="centered">
       <form className={styles.detailsForm} onSubmit={handleSubmit}>
-        <h2>Edit &quot;{formData.title}&quot;</h2>
+        <h2>Edit &quot;{track.title}&quot;</h2>
         <Setting.Section>
           <Setting.Input
             label="Title"
