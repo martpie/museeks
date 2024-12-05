@@ -1,3 +1,4 @@
+import type { RouteObject } from 'react-router-dom';
 import GlobalErrorBoundary from '../components/GlobalErrorBoundary';
 import RootView from '../views/Root';
 import ViewLibrary from '../views/ViewLibrary';
@@ -10,30 +11,31 @@ import ViewSettingsLibrary from '../views/ViewSettingsLibrary';
 import ViewSettingsUI from '../views/ViewSettingsUI';
 import ViewTrackDetails from '../views/ViewTrackDetails';
 
-const routeTree = [
+const routeTree: RouteObject[] = [
   {
     path: '/',
     id: 'root',
-    element: <RootView />,
+    Component: RootView,
     loader: RootView.loader,
+
     ErrorBoundary: GlobalErrorBoundary,
     children: [
       {
         path: 'library',
         id: 'library',
-        element: <ViewLibrary />,
+        Component: ViewLibrary,
         loader: ViewLibrary.loader,
       },
       {
         path: 'playlists',
         id: 'playlists',
-        element: <ViewPlaylists />,
+        Component: ViewPlaylists,
         loader: ViewPlaylists.loader,
         children: [
           {
             path: ':playlistID',
             id: 'playlist-details',
-            element: <ViewPlaylistDetails />,
+            Component: ViewPlaylistDetails,
             loader: ViewPlaylistDetails.loader,
           },
         ],
@@ -41,33 +43,33 @@ const routeTree = [
       {
         path: 'settings',
         id: 'settings',
-        element: <ViewSettings />,
+        Component: ViewSettings,
         children: [
           {
             path: 'library',
-            element: <ViewSettingsLibrary />,
+            Component: ViewSettingsLibrary,
             loader: ViewSettings.loader,
           },
           {
             path: 'interface',
-            element: <ViewSettingsUI />,
+            Component: ViewSettingsUI,
             loader: ViewSettings.loader,
           },
           {
             path: 'audio',
-            element: <ViewSettingsAudio />,
+            Component: ViewSettingsAudio,
             loader: ViewSettings.loader,
           },
           {
             path: 'about',
-            element: <ViewSettingsAbout />,
+            Component: ViewSettingsAbout,
             loader: ViewSettings.loader,
           },
         ],
       },
       {
         path: 'details/:trackID',
-        element: <ViewTrackDetails />,
+        Component: ViewTrackDetails,
         loader: ViewTrackDetails.loader,
       },
     ],
