@@ -1,15 +1,16 @@
 import type { RouteObject } from 'react-router';
+
 import GlobalErrorBoundary from '../components/GlobalErrorBoundary';
-import RootView from '../views/Root';
-import ViewLibrary from '../views/ViewLibrary';
-import ViewPlaylistDetails from '../views/ViewPlaylistDetails';
-import ViewPlaylists from '../views/ViewPlaylists';
-import ViewSettings from '../views/ViewSettings';
-import ViewSettingsAbout from '../views/ViewSettingsAbout';
-import ViewSettingsAudio from '../views/ViewSettingsAudio';
-import ViewSettingsLibrary from '../views/ViewSettingsLibrary';
-import ViewSettingsUI from '../views/ViewSettingsUI';
-import ViewTrackDetails from '../views/ViewTrackDetails';
+import RootView from '../routes/Root';
+import ViewLibrary from '../routes/ViewLibrary';
+import ViewPlaylistDetails from '../routes/ViewPlaylistDetails';
+import ViewPlaylists from '../routes/ViewPlaylists';
+import ViewSettings from '../routes/ViewSettings';
+import ViewSettingsAbout from '../routes/ViewSettingsAbout';
+import ViewSettingsAudio from '../routes/ViewSettingsAudio';
+import ViewSettingsLibrary from '../routes/ViewSettingsLibrary';
+import ViewSettingsUI from '../routes/ViewSettingsUI';
+import ViewTrackDetails from '../routes/ViewTrackDetails';
 
 const routeTree: RouteObject[] = [
   {
