@@ -31,6 +31,8 @@ fn main() {
                     }),
                 ])
                 .level(LevelFilter::Info)
+                // Prevent noisy logs from logging
+                .level_for("lofty", LevelFilter::Error)
                 .with_colors(ColoredLevelConfig::default())
                 .build(),
         )
