@@ -23,7 +23,7 @@ import queryClient from './lib/query-client';
 | Routing
 |--------------------------------------------------------------------------
 */
-import { routeTree } from './routeTree.gen';
+import { routeTree } from './generated/route-tree';
 
 const history = createHashHistory();
 const router = createRouter({ routeTree, history });

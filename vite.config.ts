@@ -5,7 +5,13 @@ import svgr from 'vite-plugin-svgr';
 
 // https://vitejs.dev/config/
 export default defineConfig(async () => ({
-  plugins: [react(), svgr(), TanStackRouterVite()],
+  plugins: [
+    react(),
+    svgr(),
+    TanStackRouterVite({
+      generatedRouteTree: 'src/generated/route-tree.ts',
+    }),
+  ],
 
   // Vite options tailored for Tauri development and only applied in `tauri dev` or `tauri build`
   //

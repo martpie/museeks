@@ -12,16 +12,16 @@ import { createFileRoute } from '@tanstack/react-router'
 
 // Import Routes
 
-import { Route as rootRoute } from './routes/__root'
-import { Route as PlaylistsImport } from './routes/playlists'
-import { Route as LibraryImport } from './routes/library'
-import { Route as TracksTrackIDImport } from './routes/tracks.$trackID'
-import { Route as SettingsLayoutImport } from './routes/settings._layout'
-import { Route as PlaylistsPlaylistIDImport } from './routes/playlists.$playlistID'
-import { Route as SettingsLayoutLibraryImport } from './routes/settings._layout.library'
-import { Route as SettingsLayoutInterfaceImport } from './routes/settings._layout.interface'
-import { Route as SettingsLayoutAudioImport } from './routes/settings._layout.audio'
-import { Route as SettingsLayoutAboutImport } from './routes/settings._layout.about'
+import { Route as rootRoute } from './../routes/__root'
+import { Route as PlaylistsImport } from './../routes/playlists'
+import { Route as LibraryImport } from './../routes/library'
+import { Route as TracksTrackIDImport } from './../routes/tracks.$trackID'
+import { Route as SettingsLayoutImport } from './../routes/settings._layout'
+import { Route as PlaylistsPlaylistIDImport } from './../routes/playlists.$playlistID'
+import { Route as SettingsLayoutLibraryImport } from './../routes/settings._layout.library'
+import { Route as SettingsLayoutInterfaceImport } from './../routes/settings._layout.interface'
+import { Route as SettingsLayoutAudioImport } from './../routes/settings._layout.audio'
+import { Route as SettingsLayoutAboutImport } from './../routes/settings._layout.about'
 
 // Create Virtual Routes
 
