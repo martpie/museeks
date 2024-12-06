@@ -42,7 +42,7 @@
     margin-left: -1px;
   }
 
-  &.footerNavigationLinkIsActive {
+  &:global(.active) {
     background-color: var(--footer-nav-bg-color-active);
     color: var(--main-color);
   }

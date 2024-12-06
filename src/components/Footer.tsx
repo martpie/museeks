@@ -1,10 +1,10 @@
 import { useCallback } from 'react';
 import Icon from 'react-fontawesome';
-import { NavLink } from 'react-router';
 
 import useLibraryStore from '../stores/useLibraryStore';
 import ProgressBar from './ProgressBar';
 
+import { Link } from '@tanstack/react-router';
 import styles from './Footer.module.css';
 
 export default function Footer() {
@@ -45,42 +45,30 @@ export default function Footer() {
     <footer className={styles.footer}>
       <div className={styles.footerNavigation}>
         <div className={styles.footerNavigationLinkgroup}>
-          <NavLink
+          <Link
             to="/library"
-            className={({ isActive }) =>
-              `${styles.footerNavigationLink} ${
-                isActive && styles.footerNavigationLinkIsActive
-              }`
-            }
+            className={styles.footerNavigationLink}
             title="Library"
             draggable={false}
           >
             <Icon name="align-justify" fixedWidth />
-          </NavLink>
-          <NavLink
+          </Link>
+          <Link
             to="/playlists"
-            className={({ isActive }) =>
-              `${styles.footerNavigationLink} ${
-                isActive && styles.footerNavigationLinkIsActive
-              }`
-            }
+            className={styles.footerNavigationLink}
             title="Playlists"
             draggable={false}
           >
             <Icon name="star" fixedWidth />
-          </NavLink>
-          <NavLink
-            to="/settings"
-            className={({ isActive }) =>
-              `${styles.footerNavigationLink} ${
-                isActive && styles.footerNavigationLinkIsActive
-              }`
-            }
+          </Link>
+          <Link
+            to="/settings/library"
+            className={styles.footerNavigationLink}
             title="Settings"
             draggable={false}
           >
             <Icon name="gear" fixedWidth />
-          </NavLink>
+          </Link>
         </div>
       </div>
       <div className={styles.footerStatus}>{getStatusContent()}</div>

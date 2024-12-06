@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router';
+import { Link } from '@tanstack/react-router';
 
 import {
   Menu,
@@ -101,10 +101,8 @@ export default function SideNavLink(props: Props) {
   }, []);
 
   return (
-    <NavLink
-      className={({ isActive }) =>
-        `${styles.sideNavLink} ${isActive && 'isActive'}`
-      }
+    <Link
+      className={styles.sideNavLink}
       to={props.href}
       onContextMenu={onContextMenu}
       draggable={false}
@@ -122,6 +120,6 @@ export default function SideNavLink(props: Props) {
       ) : (
         props.label
       )}
-    </NavLink>
+    </Link>
   );
 }

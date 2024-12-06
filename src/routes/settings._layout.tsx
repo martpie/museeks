@@ -1,17 +1,19 @@
+import { createFileRoute } from '@tanstack/react-router';
+import { Outlet } from '@tanstack/react-router';
 import { getTauriVersion, getVersion } from '@tauri-apps/api/app';
 import { invoke } from '@tauri-apps/api/core';
-import { Navigate, Outlet, useMatch } from 'react-router';
 
 import * as SettingNav from '../elements/SettingsNav';
 import View from '../elements/View';
 import config from '../lib/config';
-import type { LoaderData } from '../types/museeks';
 
-import styles from './settings.module.css';
+import styles from './settings._layout.module.css';
 
-export default function ViewSettingsView() {
-  const match = useMatch('/settings');
+export const Route = createFileRoute('/settings/_layout')({
+  component: SettingsLayout,
+});
 
+function SettingsLayout() {
   return (
     <View hasPadding layout="centered">
       <div className={styles.settingsNav}>
@@ -26,19 +28,15 @@ export default function ViewSettingsView() {
       <div className={styles.settingsContent}>
         <Outlet />
       </div>
-
-      {match && <Navigate to="/settings/library" />}
     </View>
   );
 }
 
-export type SettingsLoaderData = LoaderData<typeof ViewSettingsView.loader>;
-
-ViewSettingsView.loader = async () => {
+export async function loader() {
   return {
     config: await config.getAll(),
     version: await getVersion(),
     tauriVersion: await getTauriVersion(),
     appStorageDir: await invoke<string>('plugin:config|get_storage_dir'),
   };
-};
+}

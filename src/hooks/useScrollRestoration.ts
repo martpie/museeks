@@ -1,6 +1,5 @@
 import debounce from 'lodash-es/debounce';
 import { useEffect, useState } from 'react';
-import { useLocation, useNavigation } from 'react-router';
 
 function getScrollPosition(key: string) {
   const pos = window.sessionStorage.getItem(key);
@@ -24,27 +23,29 @@ const setScrollPosition = debounce(function setScrollPosition(
  * Except we want to use location.pathname, and not location.key
  */
 export function useScrollRestoration(container: React.RefObject<HTMLElement>) {
-  const [init, setInit] = useState(false); // React strick mode is a nightmare
-  const key = `scroll-position-${useLocation().pathname}`;
-  const { state } = useNavigation();
-  const target = container.current;
+  // FIXME router
+  return;
+  // const [init, setInit] = useState(false); // React strick mode is a nightmare
+  // const key = `scroll-position-${useLocation().pathname}`;
+  // const { state } = useNavigation();
+  // const target = container.current;
 
-  useEffect(() => {
-    function onScroll() {
-      setScrollPosition(key, target?.scrollTop ?? 0);
-    }
+  // useEffect(() => {
+  //   function onScroll() {
+  //     setScrollPosition(key, target?.scrollTop ?? 0);
+  //   }
 
-    target?.addEventListener('scroll', onScroll);
+  //   target?.addEventListener('scroll', onScroll);
 
-    return () => {
-      target?.removeEventListener('scroll', onScroll);
-    };
-  }, [target, key]);
+  //   return () => {
+  //     target?.removeEventListener('scroll', onScroll);
+  //   };
+  // }, [target, key]);
 
-  useEffect(() => {
-    if (state === 'idle' && !init) {
-      setInit(true);
-      target?.scrollTo(0, getScrollPosition(key));
-    }
-  }, [key, state, target, init]);
+  // useEffect(() => {
+  //   if (state === 'idle' && !init) {
+  //     setInit(true);
+  //     target?.scrollTo(0, getScrollPosition(key));
+  //   }
+  // }, [key, state, target, init]);
 }

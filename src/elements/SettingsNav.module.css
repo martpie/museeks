@@ -20,7 +20,7 @@
     text-decoration: none;
   }
 
-  &.navLinkActive {
+  &:global(.active) {
     color: var(--main-color);
   }
 }

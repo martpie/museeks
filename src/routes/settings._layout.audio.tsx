@@ -1,14 +1,19 @@
-import { useLoaderData } from 'react-router';
+import { createFileRoute } from '@tanstack/react-router';
 
 import AudioOutputSelect from '../components/AudioOutputSelect';
 import * as Setting from '../components/Setting';
 import { usePlayerAPI } from '../stores/usePlayerStore';
 
 import useInvalidate, { useInvalidateCallback } from '../hooks/useInvalidate';
-import type { SettingsLoaderData } from './settings';
+import { loader } from './settings._layout';
+
+export const Route = createFileRoute('/settings/_layout/audio')({
+  component: ViewSettingsAudio,
+  loader,
+});
 
 export default function ViewSettingsAudio() {
-  const { config } = useLoaderData() as SettingsLoaderData;
+  const { config } = Route.useLoaderData();
   const playerAPI = usePlayerAPI();
   const invalidate = useInvalidate();
 

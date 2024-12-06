@@ -1,6 +1,5 @@
 import { useQueryClient } from '@tanstack/react-query';
 import { useCallback } from 'react';
-import { useRevalidator } from 'react-router';
 
 /**
  * Hook returning a function to be manually called after anything that represents
@@ -9,7 +8,6 @@ import { useRevalidator } from 'react-router';
  * rule of hooks.
  */
 export default function useInvalidate() {
-  const routerRevalidator = useRevalidator();
   const queryClient = useQueryClient();
 
   return useCallback(() => {
@@ -19,10 +17,7 @@ export default function useInvalidate() {
       exact: true,
       queryKey: ['tracks'],
     });
-
-    // Reload the route data
-    routerRevalidator.revalidate();
-  }, [routerRevalidator, queryClient]);
+  }, [queryClient]);
 }
 
 // biome-ignore lint/suspicious/noExplicitAny: we don't care about the actual args

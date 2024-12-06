@@ -1,7 +1,7 @@
 import { getCurrentWindow } from '@tauri-apps/api/window';
 import { useEffect } from 'react';
-import { createSearchParams, useNavigate } from 'react-router';
 
+import { useNavigate } from '@tanstack/react-router';
 import usePlayerStore from '../stores/usePlayerStore';
 
 /**
@@ -15,27 +15,30 @@ function IPCNavigationEvents() {
 
   useEffect(() => {
     function goToLibrary() {
-      navigate('/library');
+      navigate({
+        to: '/library',
+      });
     }
 
     function goToPlaylists() {
-      navigate('/playlists');
+      navigate({ to: '/playlists' });
     }
 
     function goToSettings() {
-      navigate('/settings');
+      navigate({ to: '/settings' });
     }
 
     function goToPlayingTrack() {
-      navigate(
-        {
-          pathname: queueOrigin,
-          search: createSearchParams({
-            jump_to_playing_track: 'true',
-          }).toString(),
-        },
-        { replace: true },
-      );
+      // FIXME router
+      // navigate(
+      //   {
+      //     pathname: queueOrigin,
+      //     search: {
+      //         "jump_to_playing_track": 'true',
+      //       },
+      //       replace: true
+      //   },
+      // );
     }
 
     const unlisteners = [
@@ -51,7 +54,7 @@ function IPCNavigationEvents() {
         unlisteners.forEach((u) => u());
       });
     };
-  }, [navigate, queueOrigin]);
+  }, [navigate]);
 
   return null;
 }

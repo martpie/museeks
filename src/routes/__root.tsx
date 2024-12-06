@@ -1,5 +1,5 @@
+import { Outlet, createRootRoute } from '@tanstack/react-router';
 import { Suspense, useEffect } from 'react';
-import { Outlet } from 'react-router';
 
 import AppEvents from '../components/AppEvents';
 import DropzoneImport from '../components/DropzoneImport';
@@ -14,11 +14,15 @@ import PlayerEvents from '../components/PlayerEvents';
 import Toasts from '../components/Toasts';
 import useInvalidate from '../hooks/useInvalidate';
 import SettingsAPI from '../stores/SettingsAPI';
-import type { LoaderData } from '../types/museeks';
 
-import styles from './Root.module.css';
+import styles from './__root.module.css';
 
-export default function ViewRoot() {
+export const Route = createRootRoute({
+  component: Root,
+});
+
+// biome-ignore lint/nursery/useComponentExportOnlyModules: <explanation>
+function Root() {
   const invalidate = useInvalidate();
 
   useEffect(() => {
@@ -49,7 +53,3 @@ export default function ViewRoot() {
     </div>
   );
 }
-
-export type RootLoaderData = LoaderData<typeof ViewRoot.loader>;
-
-ViewRoot.loader = async () => null;
