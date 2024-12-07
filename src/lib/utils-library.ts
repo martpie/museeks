@@ -4,6 +4,7 @@ import uniq from 'lodash-es/uniq';
 import type { SortBy, SortOrder, Track } from '../generated/typings';
 import { parseDuration } from '../hooks/useFormattedDuration';
 import type { Path } from '../types/museeks';
+import { plural } from './localization';
 
 /**
  * Filter an array of tracks by string
@@ -39,10 +40,10 @@ export function sortTracks(
  * Format a list of tracks to a nice status
  */
 export function getStatus(tracks: Track[]): string {
-  const status = parseDuration(
+  const duration = parseDuration(
     tracks.map((d) => d.duration).reduce((a, b) => a + b, 0),
   );
-  return `${tracks.length} track${tracks.length !== 1 ? 's' : ''}, ${status}`;
+  return `${tracks.length} ${plural('track', tracks.length)}, ${duration}`;
 }
 
 /**
