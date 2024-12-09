@@ -12,7 +12,6 @@ pub mod debug;
 pub mod app_close;
 pub mod app_menu;
 pub mod cover;
-pub mod shell_extension;
 
 /**
  * Stores

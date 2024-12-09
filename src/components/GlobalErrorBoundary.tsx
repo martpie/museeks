@@ -33,7 +33,10 @@ export default function GlobalErrorBoundary() {
       </p>
       <ViewMessage.Sub>
         If it happens again, please{' '}
-        <ExternalLink href="https://github.com/martpie/museeks/issues">
+        <ExternalLink
+          href="https://github.com/martpie/museeks/issues"
+          type="url"
+        >
           report an issue
         </ExternalLink>
       </ViewMessage.Sub>

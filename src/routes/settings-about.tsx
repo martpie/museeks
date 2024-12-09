@@ -24,10 +24,13 @@ export default function ViewSettingsAbout() {
         <Setting.Description>
           Museeks {version}
           {' - '}
-          <ExternalLink href="http://museeks.io">museeks.io</ExternalLink>
+          <ExternalLink href="https://museeks.io" type="url">
+            museeks.io
+          </ExternalLink>
           {' - '}
           <ExternalLink
             href={`https://github.com/martpie/museeks/releases/tag/${version}`}
+            type="url"
           >
             release notes
           </ExternalLink>{' '}
@@ -52,9 +55,14 @@ export default function ViewSettingsAbout() {
         <Setting.Title>Contributors</Setting.Title>
         <Setting.Description>
           Made with <Heart /> by Pierre de la Martinière (
-          <ExternalLink href="https://martpie.io">@martpie</ExternalLink>) and a
-          bunch of{' '}
-          <ExternalLink href="https://github.com/martpie/museeks/graphs/contributors">
+          <ExternalLink href="https://martpie.io" type="url">
+            @martpie
+          </ExternalLink>
+          ) and a bunch of{' '}
+          <ExternalLink
+            href="https://github.com/martpie/museeks/graphs/contributors"
+            type="url"
+          >
             great people
           </ExternalLink>
           .
@@ -65,7 +73,10 @@ export default function ViewSettingsAbout() {
         <Setting.Description>
           Bugs happen. Please, do not hesitate to report them or to ask for
           features you would like to see, using the{' '}
-          <ExternalLink href="http://github.com/martpie/Museeks/issues">
+          <ExternalLink
+            href="http://github.com/martpie/Museeks/issues"
+            type="url"
+          >
             issue tracker
           </ExternalLink>
           .
@@ -75,7 +86,7 @@ export default function ViewSettingsAbout() {
         <Setting.Title>Internals</Setting.Title>
         <Setting.Description>Tauri {tauriVersion}</Setting.Description>
         <Flexbox gap={4}>
-          <ExternalButton href={appStorageDir}>
+          <ExternalButton href={appStorageDir} type="filedir">
             Open storage directory
           </ExternalButton>
         </Flexbox>

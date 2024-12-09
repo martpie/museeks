@@ -18,6 +18,8 @@
     "shell:allow-open",
     "dialog:allow-open",
     "dialog:allow-ask",
+    "opener:allow-open-url",
+    "opener:allow-reveal-item-in-dir",
     "os:allow-os-type",
     "log:allow-log",
     "notification:default",
@@ -40,7 +42,6 @@
     "database:allow-delete-playlist",
     "database:allow-reset",
     "default-view:allow-set",
-    "shell-extension:allow-show-item-in-folder",
     "sleepblocker:allow-enable",
     "sleepblocker:allow-disable"
   ],

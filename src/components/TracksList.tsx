@@ -1,5 +1,4 @@
 import { useVirtualizer } from '@tanstack/react-virtual';
-import { invoke } from '@tauri-apps/api/core';
 import {
   Menu,
   MenuItem,
@@ -20,6 +19,7 @@ import { usePlayerAPI } from '../stores/usePlayerStore';
 import TrackRow from './TrackRow';
 import TracksListHeader from './TracksListHeader';
 
+import { revealItemInDir } from '@tauri-apps/plugin-opener';
 import useInvalidate from '../hooks/useInvalidate';
 import { useScrollRestoration } from '../hooks/useScrollRestoration';
 import { keyboardSelect } from '../lib/utils-list';
@@ -413,9 +413,7 @@ export default function TracksList(props: Props) {
           MenuItem.new({
             text: 'Show in file manager',
             action: async () => {
-              await invoke('plugin:shell-extension|show_item_in_folder', {
-                path: track.path,
-              });
+              await revealItemInDir(track.path);
             },
           }),
           MenuItem.new({
