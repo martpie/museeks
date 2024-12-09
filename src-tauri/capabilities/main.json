@@ -18,6 +18,8 @@
     "shell:allow-open",
     "dialog:allow-open",
     "dialog:allow-ask",
+    "opener:allow-open-path",
+    "opener:allow-open-url",
     "os:allow-os-type",
     "log:allow-log",
     "notification:default",

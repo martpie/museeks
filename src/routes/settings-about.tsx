@@ -24,7 +24,7 @@ export default function ViewSettingsAbout() {
         <Setting.Description>
           Museeks {version}
           {' - '}
-          <ExternalLink href="http://museeks.io">museeks.io</ExternalLink>
+          <ExternalLink href="https://museeks.io">museeks.io</ExternalLink>
           {' - '}
           <ExternalLink
             href={`https://github.com/martpie/museeks/releases/tag/${version}`}

@@ -3,7 +3,7 @@
 ![Build Status](https://github.com/martpie/museeks/workflows/build/badge.svg)
 ![Github All Releases](https://img.shields.io/github/downloads/martpie/museeks/total)
 
-A simple, clean and cross-platform music player. ([museeks.io](http://museeks.io))
+A simple, clean and cross-platform music player. ([museeks.io](https://museeks.io))
 
 ![Screenshot](screenshot.png)
 

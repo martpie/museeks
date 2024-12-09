@@ -1,4 +1,4 @@
-import { open } from '@tauri-apps/plugin-shell';
+import { openPath, openUrl } from '@tauri-apps/plugin-opener';
 import { useCallback } from 'react';
 
 import Button from './Button';
@@ -12,7 +12,11 @@ export default function ExternalButton(props: Props) {
   const openLink = useCallback(
     (e: React.SyntheticEvent) => {
       e.preventDefault();
-      open(props.href);
+      if (props.href.startsWith('http')) {
+        openUrl(props.href);
+      } else {
+        openPath(props.href);
+      }
     },
     [props.href],
   );

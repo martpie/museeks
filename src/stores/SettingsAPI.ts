@@ -128,7 +128,7 @@ async function checkForUpdate(
 
     let message: string | undefined;
     if (newRelease) {
-      message = `Museeks ${newRelease.tag_name} is available, check http://museeks.io!`;
+      message = `Museeks ${newRelease.tag_name} is available, check https://museeks.io!`;
     } else if (!options.silentFail) {
       message = `Museeks ${currentVersion} is the latest version available.`;
     }
