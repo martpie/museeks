@@ -1,21 +1,14 @@
-import { open } from '@tauri-apps/plugin-shell';
-import { useCallback } from 'react';
-
+import useOpener from '../hooks/useOpener';
 import Button from './Button';
 
 type Props = {
   children: string;
   href: string;
+  type: 'filedir' | 'url';
 };
 
 export default function ExternalButton(props: Props) {
-  const openLink = useCallback(
-    (e: React.SyntheticEvent) => {
-      e.preventDefault();
-      open(props.href);
-    },
-    [props.href],
-  );
+  const onClick = useOpener(props.href, props.type);
 
-  return <Button onClick={openLink}>{props.children}</Button>;
+  return <Button onClick={onClick}>{props.children}</Button>;
 }

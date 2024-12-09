@@ -6,7 +6,7 @@ use tauri::{
     plugin::{Builder, TauriPlugin},
     Manager, Runtime,
 };
-use tauri_plugin_shell::ShellExt;
+use tauri_plugin_opener::OpenerExt;
 
 use crate::libs::error::AnyResult;
 use crate::libs::events::IPCEvent;
@@ -249,8 +249,9 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
                     win.minimize().unwrap();
                 }
                 "report_an_issue" => {
-                    win.shell()
-                        .open("https://github.com/martpie/museeks/issues", None)
+                    win.app_handle()
+                        .opener()
+                        .open_url("https://github.com/martpie/museeks/issues", None::<&str>)
                         .unwrap();
                 }
                 _ => {}

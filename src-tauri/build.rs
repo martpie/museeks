@@ -42,10 +42,6 @@ fn main() {
                 tauri_build::InlinedPlugin::new().commands(&["set"]),
             )
             .plugin(
-                "shell-extension",
-                tauri_build::InlinedPlugin::new().commands(&["show_item_in_folder"]),
-            )
-            .plugin(
                 "sleepblocker",
                 tauri_build::InlinedPlugin::new().commands(&["enable", "disable"]),
             ),
