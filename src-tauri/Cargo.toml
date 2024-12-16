@@ -49,3 +49,4 @@ thiserror = "2.0.6"
 ts-rs = "10.1.0"
 uuid = { version = "1.11.0", features = ["v3", "v4", "fast-rng"] }
 walkdir = "2.5.0"
+futures = "0.3.31"

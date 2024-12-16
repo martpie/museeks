@@ -2662,6 +2662,7 @@ dependencies = [
  "anyhow",
  "base64 0.22.1",
  "dirs 5.0.1",
+ "futures",
  "home-config",
  "itertools",
  "lofty",

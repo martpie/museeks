@@ -137,8 +137,8 @@ async fn import_tracks_to_library<R: Runtime>(
     let scan_logger = TimeLogger::new("Scanned all id3 tags".into());
 
     let tracks = track_paths
-        .par_iter()
-        .map(|path| -> Option<Track> {
+        .iter()
+        .flat_map(|path| -> Option<Track> {
             // let counter = processed.clone();
             let p_current = progress.clone().fetch_add(1, Ordering::SeqCst);
             let p_total = total.clone().load(Ordering::SeqCst);
@@ -158,7 +158,6 @@ async fn import_tracks_to_library<R: Runtime>(
 
             get_track_from_file(path)
         })
-        .flatten()
         .collect::<Vec<Track>>();
 
     let track_failures = track_paths.len() - tracks.len();
