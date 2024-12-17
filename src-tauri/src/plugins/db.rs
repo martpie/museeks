@@ -1,9 +1,13 @@
+use lofty::config::ParseOptions;
+use lofty::file::FileType;
+use lofty::probe::Probe;
 use log::{error, info, warn};
 use ormlite::sqlite::{SqliteConnectOptions, SqliteConnection};
 use ormlite::{Connection, TableMeta};
 use rayon::iter::{IntoParallelRefIterator, ParallelIterator};
 use serde::{Deserialize, Serialize};
 use std::collections::HashSet;
+use std::fs::File;
 use std::path::PathBuf;
 use std::sync::atomic::{AtomicUsize, Ordering};
 use std::sync::Arc;
@@ -92,6 +96,7 @@ async fn import_tracks_to_library<R: Runtime>(
     let webview_window = window.get_webview_window("main").unwrap();
 
     info!("Importing paths to library:");
+
     for path in &import_paths {
         info!("  - {:?}", path)
     }
@@ -136,133 +141,162 @@ async fn import_tracks_to_library<R: Runtime>(
     info!("Importing ID3 tags from {} files", track_paths.len());
     let scan_logger = TimeLogger::new("Scanned all id3 tags".into());
 
-    let tracks = track_paths
-        .iter()
-        .flat_map(|path| -> Option<Track> {
-            // let counter = processed.clone();
-            let p_current = progress.clone().fetch_add(1, Ordering::SeqCst);
-            let p_total = total.clone().load(Ordering::SeqCst);
+    // ---------
+    // let path = &track_paths[0];
 
-            if p_current % 200 == 0 || p_current == p_total {
-                info!("Processing tracks {:?}/{:?}", p_current, total);
-                webview_window
-                    .emit(
-                        IPCEvent::LibraryScanProgress.as_ref(),
-                        ScanProgress {
-                            current: p_current,
-                            total: p_total,
-                        },
-                    )
-                    .unwrap();
-            }
+    let parse_options = ParseOptions::new()
+        .read_properties(false)
+        .read_tags(false)
+        .read_cover_art(false)
+        .implicit_conversions(false)
+        .parsing_mode(lofty::config::ParsingMode::Strict)
+        .max_junk_bytes(0);
 
-            get_track_from_file(path)
-        })
-        .collect::<Vec<Track>>();
+    // ead_properties: true,
+    // 		read_tags: true,
+    // 		parsing_mode: Self::DEFAULT_PARSING_MODE,
+    // 		max_junk_bytes: Self::DEFAULT_MAX_JUNK_BYTES,
+    // 		read_cover_art: true,
+    // 		implicit_conversions: true,
 
-    let track_failures = track_paths.len() - tracks.len();
-    scan_result.track_count = tracks.len();
-    scan_result.track_failures = track_failures;
-    info!("{} tracks successfully scanned", tracks.len());
-    info!("{} tracks failed to be scanned", track_failures);
+    for (index, path) in track_paths.iter().enumerate() {
+        info!("{:?} iter", &index);
 
-    scan_logger.complete();
-
-    // Insert all tracks in the DB, we'are kind of assuming it cannot fail (regarding scan progress information), but
-    // it technically could.
-    let db_insert_logger: TimeLogger = TimeLogger::new("Inserted tracks".into());
-    let result = db.insert_tracks(tracks).await;
-
-    if result.is_err() {
-        error!(
-            "Something went wrong when inserting tracks: {}",
-            result.err().unwrap()
-        );
-    }
-
-    db_insert_logger.complete();
-
-    // Now that all tracks are inserted, let's scan for playlists, and import them
-    let mut playlist_paths = scan_dirs(&import_paths, &SUPPORTED_PLAYLISTS_EXTENSIONS);
-
-    // Ignore playlists that are already in the DB (speedup scan + prevent duplicate errors)
-    let existing_playlists_paths = db
-        .get_all_playlists()
-        .await?
-        .iter()
-        .filter_map(move |playlist| playlist.import_path.to_owned())
-        .map(PathBuf::from)
-        .collect::<HashSet<_>>();
-
-    playlist_paths.retain(|path| !existing_playlists_paths.contains(path));
-
-    info!("Found {} playlist(s) to import", playlist_paths.len());
-
-    // Start scanning the content of the playlists and adding them to the DB
-    for playlist_path in playlist_paths {
-        let res = {
-            let mut reader = m3u::Reader::open(&playlist_path).unwrap();
-            let playlist_dir_path = playlist_path.parent().unwrap();
-
-            let track_paths: Vec<PathBuf> = reader
-                .entries()
-                .filter_map(|entry| {
-                    let Ok(entry) = entry else {
-                        return None;
-                    };
-
-                    match entry {
-                        m3u::Entry::Path(path) => Some(playlist_dir_path.join(path)),
-                        _ => None, // We don't support (yet?) URLs in playlists
-                    }
-                })
-                .collect();
-
-            // Ok, this is sketchy. To avoid having to create a TrackByPath DB View,
-            // let's guess the ID of the track with UUID::v3
-            let track_ids = track_paths
-                .iter()
-                .flat_map(get_track_id_for_path)
-                .collect::<Vec<String>>();
-
-            let playlist_name = playlist_path
-                .file_stem()
-                .unwrap()
-                .to_str()
-                .unwrap_or("unknown playlist")
-                .to_owned();
-
-            let tracks = db.get_tracks(&track_ids).await?;
-
-            if tracks.len() != track_ids.len() {
-                warn!(
-                    "Playlist track mismatch ({} from playlist, {} from library)",
-                    track_paths.len(),
-                    tracks.len()
-                );
-            }
-
-            info!(
-                r#"Creating playlist "{}" ({} tracks)"#,
-                &playlist_name,
-                &track_ids.len()
-            );
-
-            db.create_playlist(playlist_name, track_ids, Some(playlist_path))
-                .await?;
-            Ok::<(), MuseeksError>(())
-        };
-
-        match res {
-            Ok(_) => {
-                scan_result.playlist_count += 1;
-            }
-            Err(err) => {
-                warn!("Failed to import playlist: {}", err);
-                scan_result.playlist_failures += 1;
-            }
+        match Probe::open(&path)?.options(parse_options).read() {
+            // match File::open(&path) {
+            Ok(_) => {}
+            Err(err) => error!("{:?} /// {:?}", err, path),
         }
     }
+    // --------
+
+    // let tracks = track_paths
+    //     .iter()
+    //     .flat_map(|path| -> Option<Track> {
+    //         // let counter = processed.clone();
+    //         let p_current = progress.clone().fetch_add(1, Ordering::SeqCst);
+    //         let p_total = total.clone().load(Ordering::SeqCst);
+
+    //         if p_current % 200 == 0 || p_current == p_total {
+    //             info!("Processing tracks {:?}/{:?}", p_current, total);
+    //             webview_window
+    //                 .emit(
+    //                     IPCEvent::LibraryScanProgress.as_ref(),
+    //                     ScanProgress {
+    //                         current: p_current,
+    //                         total: p_total,
+    //                     },
+    //                 )
+    //                 .unwrap();
+    //         }
+
+    //         get_track_from_file(path)
+    //     })
+    //     .collect::<Vec<Track>>();
+
+    // let track_failures = track_paths.len() - tracks.len();
+    // scan_result.track_count = tracks.len();
+    // scan_result.track_failures = track_failures;
+    // info!("{} tracks successfully scanned", tracks.len());
+    // info!("{} tracks failed to be scanned", track_failures);
+
+    // scan_logger.complete();
+
+    // // Insert all tracks in the DB, we'are kind of assuming it cannot fail (regarding scan progress information), but
+    // // it technically could.
+    // let db_insert_logger: TimeLogger = TimeLogger::new("Inserted tracks".into());
+    // let result = db.insert_tracks(tracks).await;
+
+    // if result.is_err() {
+    //     error!(
+    //         "Something went wrong when inserting tracks: {}",
+    //         result.err().unwrap()
+    //     );
+    // }
+
+    // db_insert_logger.complete();
+
+    // // Now that all tracks are inserted, let's scan for playlists, and import them
+    // let mut playlist_paths = scan_dirs(&import_paths, &SUPPORTED_PLAYLISTS_EXTENSIONS);
+
+    // // Ignore playlists that are already in the DB (speedup scan + prevent duplicate errors)
+    // let existing_playlists_paths = db
+    //     .get_all_playlists()
+    //     .await?
+    //     .iter()
+    //     .filter_map(move |playlist| playlist.import_path.to_owned())
+    //     .map(PathBuf::from)
+    //     .collect::<HashSet<_>>();
+
+    // playlist_paths.retain(|path| !existing_playlists_paths.contains(path));
+
+    // info!("Found {} playlist(s) to import", playlist_paths.len());
+
+    // // Start scanning the content of the playlists and adding them to the DB
+    // for playlist_path in playlist_paths {
+    //     let res = {
+    //         let mut reader = m3u::Reader::open(&playlist_path).unwrap();
+    //         let playlist_dir_path = playlist_path.parent().unwrap();
+
+    //         let track_paths: Vec<PathBuf> = reader
+    //             .entries()
+    //             .filter_map(|entry| {
+    //                 let Ok(entry) = entry else {
+    //                     return None;
+    //                 };
+
+    //                 match entry {
+    //                     m3u::Entry::Path(path) => Some(playlist_dir_path.join(path)),
+    //                     _ => None, // We don't support (yet?) URLs in playlists
+    //                 }
+    //             })
+    //             .collect();
+
+    //         // Ok, this is sketchy. To avoid having to create a TrackByPath DB View,
+    //         // let's guess the ID of the track with UUID::v3
+    //         let track_ids = track_paths
+    //             .iter()
+    //             .flat_map(get_track_id_for_path)
+    //             .collect::<Vec<String>>();
+
+    //         let playlist_name = playlist_path
+    //             .file_stem()
+    //             .unwrap()
+    //             .to_str()
+    //             .unwrap_or("unknown playlist")
+    //             .to_owned();
+
+    //         let tracks = db.get_tracks(&track_ids).await?;
+
+    //         if tracks.len() != track_ids.len() {
+    //             warn!(
+    //                 "Playlist track mismatch ({} from playlist, {} from library)",
+    //                 track_paths.len(),
+    //                 tracks.len()
+    //             );
+    //         }
+
+    //         info!(
+    //             r#"Creating playlist "{}" ({} tracks)"#,
+    //             &playlist_name,
+    //             &track_ids.len()
+    //         );
+
+    //         db.create_playlist(playlist_name, track_ids, Some(playlist_path))
+    //             .await?;
+    //         Ok::<(), MuseeksError>(())
+    //     };
+
+    //     match res {
+    //         Ok(_) => {
+    //             scan_result.playlist_count += 1;
+    //         }
+    //         Err(err) => {
+    //             warn!("Failed to import playlist: {}", err);
+    //             scan_result.playlist_failures += 1;
+    //         }
+    //     }
+    // }
 
     // All good :]
     Ok(scan_result)
