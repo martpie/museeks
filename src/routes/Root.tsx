@@ -1,4 +1,4 @@
-import { Suspense, useEffect } from 'react';
+import { useEffect } from 'react';
 import { Outlet } from 'react-router';
 
 import AppEvents from '../components/AppEvents';
@@ -43,9 +43,7 @@ export default function ViewRoot() {
       </main>
       <Footer />
       <Toasts />
-      <Suspense fallback={null}>
-        <DropzoneImport />
-      </Suspense>
+      <DropzoneImport />
     </div>
   );
 }

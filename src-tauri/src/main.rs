@@ -47,6 +47,7 @@ fn main() {
         .plugin(plugins::sleepblocker::init())
         // Tauri integrations with the Operating System
         .plugin(tauri_plugin_dialog::init())
+        .plugin(tauri_plugin_fs::init())
         .plugin(tauri_plugin_opener::init())
         .plugin(tauri_plugin_os::init())
         .plugin(tauri_plugin_notification::init())
@@ -77,16 +78,21 @@ fn main() {
                     .min_inner_size(900.0, 550.0)
                     .fullscreen(false)
                     .resizable(true)
-                    .disable_drag_drop_handler() // TODO: Windows drag-n-drop on windows does not work :| https://github.com/tauri-apps/wry/issues/904
                     .zoom_hotkeys_enabled(true);
 
+            // TODO: Windows drag-n-drop on windows does not work :|
+            // https://github.com/tauri-apps/wry/issues/904
+            #[cfg(target_os = "windows")]
+            window_builder.disable_drag_drop_handler().build()?;
+
+            // On macOS, we hide the native frame and use overlay controls as they're nicer
             #[cfg(target_os = "macos")]
             window_builder
                 .hidden_title(true)
                 .title_bar_style(tauri::TitleBarStyle::Overlay)
                 .build()?;
 
-            #[cfg(not(target_os = "macos"))]
+            #[cfg(target_os = "linux")]
             window_builder.build()?;
 
             info!("Main window built");

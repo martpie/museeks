@@ -18,6 +18,7 @@
     "shell:allow-open",
     "dialog:allow-open",
     "dialog:allow-ask",
+    "fs:allow-lstat",
     "opener:allow-open-url",
     "opener:allow-reveal-item-in-dir",
     "os:allow-os-type",

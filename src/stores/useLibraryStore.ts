@@ -27,7 +27,7 @@ type LibraryState = API<{
     search: (value: string) => void;
     sort: (sortBy: SortBy) => void;
     add: () => Promise<void>;
-    addLibraryFolder: () => Promise<void>;
+    addLibraryFolders: (paths: Array<string>) => Promise<void>;
     removeLibraryFolder: (path: string) => Promise<void>;
     refresh: () => Promise<void>;
     remove: (tracksIDs: string[]) => Promise<void>;
@@ -147,20 +147,12 @@ const useLibraryStore = createLibraryStore<LibraryState>((set, get) => ({
       }
     },
 
-    addLibraryFolder: async () => {
+    addLibraryFolders: async (paths: Array<string>) => {
       try {
-        const path = await open({
-          directory: true,
-        });
-
-        if (path == null) {
-          return;
-        }
-
         const musicFolders = await config.get('library_folders');
         const newFolders = removeRedundantFolders([
           ...musicFolders,
-          path,
+          ...paths,
         ]).sort();
         await config.set('library_folders', newFolders);
       } catch (err) {
