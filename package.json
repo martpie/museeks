@@ -36,6 +36,7 @@
     "@tanstack/react-virtual": "3.11.1",
     "@tauri-apps/api": "2.1.1",
     "@tauri-apps/plugin-dialog": "2.2.0",
+    "@tauri-apps/plugin-fs": "^2.2.0",
     "@tauri-apps/plugin-log": "2.2.0",
     "@tauri-apps/plugin-notification": "2.2.0",
     "@tauri-apps/plugin-opener": "^2.2.1",

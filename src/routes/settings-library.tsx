@@ -9,6 +9,8 @@ import SettingsAPI from '../stores/SettingsAPI';
 import useLibraryStore, { useLibraryAPI } from '../stores/useLibraryStore';
 import type { SettingsLoaderData } from './settings';
 
+import { open } from '@tauri-apps/plugin-dialog';
+import { useCallback } from 'react';
 import styles from './settings-library.module.css';
 
 export default function ViewSettingsLibrary() {
@@ -16,6 +18,19 @@ export default function ViewSettingsLibrary() {
   const isLibraryRefreshing = useLibraryStore((state) => state.refreshing);
   const { config } = useLoaderData() as SettingsLoaderData;
   const invalidate = useInvalidate();
+
+  const addLibraryFolders = useCallback(async () => {
+    const paths = await open({
+      directory: true,
+      multiple: true,
+    });
+
+    if (paths == null) {
+      return;
+    }
+
+    await libraryAPI.addLibraryFolders(paths);
+  }, [libraryAPI.addLibraryFolders]);
 
   return (
     <div className="setting settings-musicfolder">
@@ -52,7 +67,7 @@ export default function ViewSettingsLibrary() {
         <Flexbox gap={4}>
           <Button
             disabled={isLibraryRefreshing}
-            onClick={useInvalidateCallback(libraryAPI.addLibraryFolder)}
+            onClick={useInvalidateCallback(addLibraryFolders)}
           >
             Add folder
           </Button>

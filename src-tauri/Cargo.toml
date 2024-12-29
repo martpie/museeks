@@ -19,6 +19,7 @@ tauri = { version = "2.1.1", features = [
     "devtools",
 ] }
 tauri-plugin-dialog = "2.2.0"
+tauri-plugin-fs = "2.2.0"
 tauri-plugin-log = { version = "2.2.0", features = ["colored"] }
 tauri-plugin-notification = "2.2.0"
 tauri-plugin-opener = "2.2.1"

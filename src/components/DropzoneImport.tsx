@@ -1,64 +1,98 @@
+import { getCurrentWindow } from '@tauri-apps/api/window';
+import { lstat } from '@tauri-apps/plugin-fs';
 import cx from 'classnames';
-// import { getCurrent } from '@tauri-apps/api/window';
-import { /** useEffect,*/ useState } from 'react';
-// import { getCurrent } from '@tauri-apps/api/window';
+import { useEffect, useState } from 'react';
 
-// import { logAndNotifyError } from '../../lib/utils';
-
+import useInvalidate from '../hooks/useInvalidate';
+import { plural } from '../lib/localization';
+import { logAndNotifyError } from '../lib/utils';
+import { useLibraryAPI } from '../stores/useLibraryStore';
+import { useToastsAPI } from '../stores/useToastsStore';
 import styles from './DropzoneImport.module.css';
 
 export default function DropzoneImport() {
-  const [isShown, _setIsShown] = useState(false);
+  const libraryAPI = useLibraryAPI();
+  const toastsAPI = useToastsAPI();
 
-  // const unlisten = await getCurrent().onFileDropEvent((event) => {
-  //   if (event.payload.type === 'hover') {
-  //     console.log('User hovering', event.payload.paths);
-  //   } else if (event.payload.type === 'drop') {
-  //     console.log('User dropped', event.payload.paths);
-  //   } else {
-  //     console.log('File drop cancelled');
-  //   }
-  // });
+  const [isShown, setIsShown] = useState(false);
+  const invalidate = useInvalidate();
 
-  // useEffect(() => {
-  //   async function attachFileDropEvent() {
-  //     await getCurrent()
-  //       .onFileDropEvent((event) => {
-  //         if (event.payload.type === 'hover') {
-  //           setIsShown(true);
-  //         } else if (event.payload.type === 'drop') {
-  //           console.log(event.payload.paths);
-  //           setIsShown(false);
-  //         } else {
-  //           setIsShown(false);
-  //         }
-  //       })
-  //       .catch(logAndNotifyError);
-  //   }
+  // Simplification welcome
+  useEffect(() => {
+    async function attachFileDropEvent() {
+      const unlisten = getCurrentWindow()
+        .onDragDropEvent(async (event) => {
+          if (event.payload.type === 'over') {
+            setIsShown(true);
+          } else if (event.payload.type === 'drop') {
+            setIsShown(false);
 
-  //   attachFileDropEvent().catch(logAndNotifyError);
+            // Museeks does not deal in terms of files anymore, so we need to only retain folders.
+            // Why? Because in case a user imports a specific file from within a folder, it should
+            // ignore all other files, but it cannot do that as of today.
+            const fileInfos = await Promise.all(
+              event.payload.paths.map(async (path) => {
+                return {
+                  ...(await lstat(path)),
+                  path,
+                };
+              }),
+            );
 
-  //   return getCurrent().clearEffects;
-  // }, []);
+            const folders = fileInfos
+              .filter((fileOrFolder) => fileOrFolder.isDirectory)
+              .map((folderInfo) => folderInfo.path);
+
+            const skippedItemsCount =
+              event.payload.paths.length - folders.length;
+
+            if (skippedItemsCount !== 0) {
+              toastsAPI.add(
+                'warning',
+                `${skippedItemsCount} non-folder ${plural('item', skippedItemsCount)} ignored`,
+              );
+            }
+
+            if (folders.length > 0) {
+              await libraryAPI.addLibraryFolders(folders);
+              toastsAPI.add(
+                'success',
+                `${folders.length} ${plural('folder', folders.length)} added to the library`,
+              );
+
+              await libraryAPI.refresh();
+
+              invalidate();
+            }
+          } else {
+            setIsShown(false);
+          }
+        })
+        .catch(logAndNotifyError);
+
+      return unlisten;
+    }
+
+    const unlisten = attachFileDropEvent().catch(logAndNotifyError);
+
+    return function cleanup() {
+      unlisten.then((u) => (u ? u() : null));
+    };
+  }, [
+    libraryAPI.addLibraryFolders,
+    libraryAPI.refresh,
+    toastsAPI.add,
+    invalidate,
+  ]);
 
   const classes = cx(styles.dropzone, {
     [styles.shown]: isShown,
   });
 
-  // TODO: Fix this, drop files from TAURI instead
-  // const files = item.files.map((file) => file.path);
-  // libraryAPI
-  //   .add(files)
-  //   .then((/* _importedTracks */) => {
-  //     // TODO: Import to playlist here
-  //   })
-  //   .catch((err) => {
-  //     logger.warn(err);
-  //   });
   return (
     <div className={classes}>
       <div className={styles.dropzoneTitle}>Add music to the library</div>
-      <span>Drop files or folders anywhere</span>
+      <span>Drop folders anywhere</span>
     </div>
   );
 }
