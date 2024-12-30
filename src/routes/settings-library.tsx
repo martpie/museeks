@@ -30,7 +30,8 @@ export default function ViewSettingsLibrary() {
     }
 
     await libraryAPI.addLibraryFolders(paths);
-  }, [libraryAPI.addLibraryFolders]);
+    invalidate();
+  }, [libraryAPI.addLibraryFolders, invalidate]);
 
   return (
     <div className="setting settings-musicfolder">
