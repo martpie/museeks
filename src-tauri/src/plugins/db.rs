@@ -46,7 +46,8 @@ async fn setup() -> AnyResult<DB> {
         .filename(&database_path)
         .create_if_missing(true)
         .optimize_on_close(true, None)
-        .auto_vacuum(ormlite::sqlite::SqliteAutoVacuum::Incremental);
+        .auto_vacuum(ormlite::sqlite::SqliteAutoVacuum::Incremental)
+        .journal_mode(ormlite::sqlite::SqliteJournalMode::Wal);
 
     let connection = SqliteConnection::connect_with(&options).await?;
 
