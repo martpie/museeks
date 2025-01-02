@@ -15,7 +15,7 @@
         "enable": true,
         "scope": ["**/*"]
       },
-      "csp": "default-src 'none'; img-src 'self' asset: data:; media-src 'self' blob: asset: https://asset.localhost http://asset.localhost; child-src 'self'; object-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; connect-src ipc: asset: https://asset.localhost http://asset.localhost http://ipc.localhost 'self' https://api.github.com; font-src 'self' data:"
+      "csp": "default-src 'none'; img-src 'self' asset: https://asset.localhost http://asset.localhost data: ; media-src 'self' blob: asset: https://asset.localhost http://asset.localhost; child-src 'self'; object-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; connect-src ipc: asset: https://asset.localhost http://asset.localhost http://ipc.localhost 'self' https://api.github.com; font-src 'self' data:"
     }
   },
   "bundle": {
