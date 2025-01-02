@@ -1,13 +1,18 @@
 import { invoke } from '@tauri-apps/api/core';
 
-import type { Playlist, ScanResult, Track } from '../generated/typings';
+import type {
+  Playlist,
+  ScanResult,
+  Track,
+  TrackGroup,
+} from '../generated/typings';
 
 /**
  * Bridge for the UI to communicate with the backend and manipulate the Database
  */
 const database = {
   // ---------------------------------------------------------------------------
-  // Playlists read/write actions
+  // Library read/write actions
   // ---------------------------------------------------------------------------
 
   async getAllTracks(): Promise<Array<Track>> {
@@ -36,6 +41,14 @@ const database = {
     return invoke('plugin:database|import_tracks_to_library', {
       importPaths,
     });
+  },
+
+  async getAllArtists(): Promise<Array<string>> {
+    return invoke('plugin:database|get_artists');
+  },
+
+  async getArtistTracks(artist: string): Promise<Array<TrackGroup>> {
+    return invoke('plugin:database|get_artist_tracks', { artist });
   },
 
   // ---------------------------------------------------------------------------

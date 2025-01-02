@@ -58,6 +58,18 @@ export default function Footer() {
             <Icon name="align-justify" fixedWidth />
           </NavLink>
           <NavLink
+            to="/artists"
+            className={({ isActive }) =>
+              `${styles.footerNavigationLink} ${
+                isActive && styles.footerNavigationLinkIsActive
+              }`
+            }
+            title="Artists"
+            draggable={false}
+          >
+            <Icon name="microphone" fixedWidth />
+          </NavLink>
+          <NavLink
             to="/playlists"
             className={({ isActive }) =>
               `${styles.footerNavigationLink} ${

@@ -33,7 +33,7 @@ const ROW_HEIGHT_COMPACT = 24;
 // --------------------------------------------------------------------------
 
 type Props = {
-  type: string;
+  type: 'library' | 'playlist';
   tracks: Track[];
   tracksDensity: Config['track_view_density'];
   trackPlayingID: string | null;
@@ -46,6 +46,7 @@ type Props = {
     targetTrackID: string,
     position: 'above' | 'below',
   ) => void;
+  headless?: boolean;
 };
 
 export default function TracksList(props: Props) {
@@ -58,6 +59,7 @@ export default function TracksList(props: Props) {
     currentPlaylist,
     onReorder,
     playlists,
+    headless = false,
   } = props;
 
   const [selectedTracks, setSelectedTracks] = useState<Set<string>>(new Set());
@@ -449,8 +451,13 @@ export default function TracksList(props: Props) {
     <div className={styles.tracksList}>
       <Keybinding onKey={onKey} preventInputConflict />
       {/* Scrollable element */}
-      <div ref={scrollableRef} className={styles.tracksListScroller}>
-        <TracksListHeader enableSort={type === 'library'} />
+      <div
+        ref={scrollableRef}
+        className={`${styles.tracksListScroller} ${styles.headless}`}
+      >
+        {headless === false && (
+          <TracksListHeader enableSort={type === 'library'} />
+        )}
 
         {/* The large inner element to hold all of the items */}
         <div

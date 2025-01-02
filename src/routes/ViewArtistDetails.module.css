@@ -1,0 +1,7 @@
+.artist {
+  margin: 0;
+}
+
+.artistMetadata {
+  color: var(--text-muted);
+}
