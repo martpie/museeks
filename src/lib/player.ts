@@ -49,7 +49,7 @@ class Player {
     this.audio.muted = mergedOptions.muted;
     this.playbackMode = mergedOptions.playbackMode;
 
-    info(`Player playback type: ${this.playbackMode}`);
+    info(`Player playback mode: ${this.playbackMode}`);
   }
 
   async play() {
@@ -97,7 +97,7 @@ class Player {
   }
 
   setPlaybackMode(playbackMode: PlaybackMode) {
-    info(`Playback type set to: ${playbackMode}`);
+    info(`Playback mode set to: ${playbackMode}`);
     this.playbackMode = playbackMode;
   }
 
