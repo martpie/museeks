@@ -1,4 +1,3 @@
-import { error } from '@tauri-apps/plugin-log';
 import debounce from 'lodash-es/debounce';
 import type { StateCreator } from 'zustand';
 import { persist } from 'zustand/middleware';
