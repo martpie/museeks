@@ -27,7 +27,7 @@ export default function CheckboxSetting(props: Props) {
         checked={props.value}
         disabled={disabled}
       />
-      <Setting.Label htmlFor={slug} noMargin>
+      <Setting.Label htmlFor={`setting-${slug}`} noMargin>
         {title}
       </Setting.Label>
       <Setting.Description>{description}</Setting.Description>
