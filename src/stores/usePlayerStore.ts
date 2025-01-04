@@ -2,7 +2,7 @@ import debounce from 'lodash-es/debounce';
 import type { StateCreator } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-import type { Repeat, Track } from '../generated/typings';
+import type { PlaybackMode, Repeat, Track } from '../generated/typings';
 import config from '../lib/config';
 import database from '../lib/database';
 import player from '../lib/player';
@@ -33,7 +33,7 @@ type PlayerState = API<{
     setVolume: (volume: number) => void;
     setMuted: (muted: boolean) => void;
     setPlaybackRate: (value: number) => Promise<void>;
-    setBlobPlayback: (value: boolean) => Promise<void>;
+    setPlaybackMode: (value: PlaybackMode) => Promise<void>;
     setOutputDevice: (deviceID: string) => Promise<void>;
     jumpTo: (to: number) => void;
     startFromQueue: (index: number) => Promise<void>;
@@ -365,9 +365,9 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
      * Enable alternate playback for audio (more latency, but better x-platform
      * compatibility).
      */
-    setBlobPlayback: async (value) => {
-      await config.set('audio_blob_playback', value);
-      player.setBlobPlayback(value);
+    setPlaybackMode: async (value) => {
+      await config.set('audio_playback_mode', value);
+      player.setPlaybackMode(value);
     },
 
     /**

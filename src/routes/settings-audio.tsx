@@ -47,8 +47,10 @@ export default function ViewSettingsAudio() {
         title="Audio Blob Playback"
         description="Alternative way to play audio, use only if you encounter issues with audio playback (always enabled on Linux)"
         disabled={window.__MUSEEKS_PLATFORM === 'linux'}
-        value={config.audio_blob_playback}
-        onChange={useInvalidateCallback(playerAPI.setBlobPlayback)}
+        value={config.audio_playback_mode === 'Blob'}
+        onChange={(e) =>
+          playerAPI.setPlaybackMode(e ? 'Blob' : 'Default').then(invalidate)
+        }
       />
     </div>
   );

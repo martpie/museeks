@@ -1,7 +1,7 @@
 import { convertFileSrc } from '@tauri-apps/api/core';
 import { info } from '@tauri-apps/plugin-log';
 
-import type { Track } from '../generated/typings';
+import type { PlaybackMode, Track } from '../generated/typings';
 
 import config from './config';
 import { logAndNotifyError } from './utils';
@@ -11,7 +11,7 @@ interface PlayerOptions {
   audioOutputDevice?: string;
   volume?: number;
   muted?: boolean;
-  blobPlayback: boolean;
+  playbackMode: PlaybackMode;
 }
 
 /**
@@ -25,7 +25,7 @@ interface PlayerOptions {
 class Player {
   private audio: HTMLAudioElement;
   private track: Track | null;
-  private blobPlayback: boolean;
+  private playbackMode: PlaybackMode;
 
   constructor(options?: PlayerOptions) {
     const mergedOptions = {
@@ -33,7 +33,7 @@ class Player {
       volume: 1,
       muted: false,
       audioOutputDevice: 'default',
-      blobPlayback: false,
+      playbackMode: 'Default' as PlaybackMode,
       ...options,
     };
 
@@ -47,9 +47,9 @@ class Player {
     this.audio.playbackRate = mergedOptions.playbackRate;
     this.audio.volume = mergedOptions.volume;
     this.audio.muted = mergedOptions.muted;
-    this.blobPlayback = mergedOptions.blobPlayback;
+    this.playbackMode = mergedOptions.playbackMode;
 
-    info(`Blob playback: ${this.blobPlayback}`);
+    info(`Player playback type: ${this.playbackMode}`);
   }
 
   async play() {
@@ -96,9 +96,9 @@ class Player {
     this.audio.defaultPlaybackRate = playbackRate;
   }
 
-  setBlobPlayback(enabled: boolean) {
-    info(`Blob playback: ${enabled}`);
-    this.blobPlayback = enabled;
+  setPlaybackMode(playbackMode: PlaybackMode) {
+    info(`Playback type set to: ${playbackMode}`);
+    this.playbackMode = playbackMode;
   }
 
   async setOutputDevice(deviceID: string) {
@@ -117,15 +117,19 @@ class Player {
   async setTrack(track: Track) {
     this.track = track;
 
-    if (this.blobPlayback) {
-      const blobUrl = URL.createObjectURL(
-        await fetch(convertFileSrc(track.path)).then((res) => res.blob()),
-      );
-      this.audio.src = blobUrl;
-      return;
+    switch (this.playbackMode) {
+      case 'Default': {
+        const blobUrl = URL.createObjectURL(
+          await fetch(convertFileSrc(track.path)).then((res) => res.blob()),
+        );
+        this.audio.src = blobUrl;
+        return;
+      }
+      case 'Blob': {
+        this.audio.src = convertFileSrc(track.path);
+        return;
+      }
     }
-
-    this.audio.src = convertFileSrc(track.path);
   }
 
   setCurrentTime(currentTime: number) {
@@ -151,5 +155,5 @@ export default new Player({
   playbackRate: config.getInitial('audio_playback_rate') ?? 1,
   audioOutputDevice: config.getInitial('audio_output_device'),
   muted: config.getInitial('audio_muted'),
-  blobPlayback: config.getInitial('audio_blob_playback'),
+  playbackMode: config.getInitial('audio_playback_mode'),
 });
