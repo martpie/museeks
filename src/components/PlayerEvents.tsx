@@ -2,6 +2,7 @@ import { getCurrentWindow } from '@tauri-apps/api/window';
 import { sendNotification } from '@tauri-apps/plugin-notification';
 import { useEffect } from 'react';
 
+import { error } from '@tauri-apps/plugin-log';
 import config from '../lib/config';
 import { getCover } from '../lib/cover';
 import player from '../lib/player';
@@ -13,7 +14,7 @@ const AUDIO_ERRORS = {
   aborted: 'The video playback was aborted.',
   corrupt: 'The audio playback was aborted due to a corruption problem.',
   notFound:
-    'The track file could not be found. It may be due to a file move or an unmounted partition.',
+    'The track file could not be found. It may be due to a file move, an unmounted partition or missing rights.',
   unknown: 'An unknown error occurred.',
 };
 
@@ -28,6 +29,9 @@ function PlayerEvents() {
   useEffect(() => {
     function handleAudioError(e: ErrorEvent) {
       playerAPI.stop();
+
+      error(e.error);
+      error(e.message);
 
       const element = e.target as HTMLAudioElement;
 
