@@ -11,7 +11,6 @@ import * as ReactDOM from 'react-dom/client';
 import { RouterProvider } from 'react-router';
 
 import queryClient from './lib/query-client';
-import router from './routes';
 
 /*
 |--------------------------------------------------------------------------
@@ -28,19 +27,22 @@ import './styles/general.css';
 |--------------------------------------------------------------------------
 */
 
-logger.attachConsole();
+(async function createRoot() {
+  await logger.attachConsole();
 
-const wrap = document.getElementById('wrap');
+  const wrap = document.getElementById('wrap');
+  const router = (await import('./routes')).default;
 
-if (wrap) {
-  const root = ReactDOM.createRoot(wrap);
-  root.render(
-    <React.StrictMode>
-      <QueryClientProvider client={queryClient}>
-        <RouterProvider router={router} />
-      </QueryClientProvider>
-    </React.StrictMode>,
-  );
-} else {
-  document.body.innerHTML = '<div style="text-align: center;">x_x</div>';
-}
+  if (wrap) {
+    const root = ReactDOM.createRoot(wrap);
+    root.render(
+      <React.StrictMode>
+        <QueryClientProvider client={queryClient}>
+          <RouterProvider router={router} />
+        </QueryClientProvider>
+      </React.StrictMode>,
+    );
+  } else {
+    document.body.innerHTML = '<div style="text-align: center;">x_x</div>';
+  }
+})();
