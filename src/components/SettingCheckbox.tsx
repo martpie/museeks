@@ -20,7 +20,7 @@ export default function CheckboxSetting(props: Props) {
         onChange={(e) => props.onChange(e.currentTarget.checked)}
         checked={props.value}
       />
-      <Setting.Label htmlFor={slug} noMargin>
+      <Setting.Label htmlFor={`setting-${slug}`} noMargin>
         {title}
       </Setting.Label>
       <Setting.Description>{description}</Setting.Description>
