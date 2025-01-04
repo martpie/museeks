@@ -33,3 +33,12 @@
     }
   }
 }
+
+.checkbox.disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+
+  input[type="checkbox"] {
+    cursor: not-allowed;
+  }
+}

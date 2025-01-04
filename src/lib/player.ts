@@ -1,4 +1,5 @@
 import { convertFileSrc } from '@tauri-apps/api/core';
+import { info } from '@tauri-apps/plugin-log';
 
 import type { Track } from '../generated/typings';
 
@@ -10,6 +11,7 @@ interface PlayerOptions {
   audioOutputDevice?: string;
   volume?: number;
   muted?: boolean;
+  blobPlayback: boolean;
 }
 
 /**
@@ -23,6 +25,7 @@ interface PlayerOptions {
 class Player {
   private audio: HTMLAudioElement;
   private track: Track | null;
+  private blobPlayback: boolean;
 
   constructor(options?: PlayerOptions) {
     const mergedOptions = {
@@ -30,6 +33,7 @@ class Player {
       volume: 1,
       muted: false,
       audioOutputDevice: 'default',
+      blobPlayback: false,
       ...options,
     };
 
@@ -43,6 +47,9 @@ class Player {
     this.audio.playbackRate = mergedOptions.playbackRate;
     this.audio.volume = mergedOptions.volume;
     this.audio.muted = mergedOptions.muted;
+    this.blobPlayback = mergedOptions.blobPlayback;
+
+    info(`Blob playback: ${this.blobPlayback}`);
   }
 
   async play() {
@@ -89,6 +96,11 @@ class Player {
     this.audio.defaultPlaybackRate = playbackRate;
   }
 
+  setBlobPlayback(enabled: boolean) {
+    info(`Blob playback: ${enabled}`);
+    this.blobPlayback = enabled;
+  }
+
   async setOutputDevice(deviceID: string) {
     try {
       // @ts-ignore
@@ -105,8 +117,7 @@ class Player {
   async setTrack(track: Track) {
     this.track = track;
 
-    // Cursed Linux: https://github.com/tauri-apps/tauri/issues/3725#issuecomment-2325248116
-    if (window.__MUSEEKS_PLATFORM === 'linux') {
+    if (this.blobPlayback) {
       const blobUrl = URL.createObjectURL(
         await fetch(convertFileSrc(track.path)).then((res) => res.blob()),
       );
@@ -140,4 +151,5 @@ export default new Player({
   playbackRate: config.getInitial('audio_playback_rate') ?? 1,
   audioOutputDevice: config.getInitial('audio_output_device'),
   muted: config.getInitial('audio_muted'),
+  blobPlayback: config.getInitial('audio_blob_playback'),
 });

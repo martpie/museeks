@@ -33,6 +33,7 @@ type PlayerState = API<{
     setVolume: (volume: number) => void;
     setMuted: (muted: boolean) => void;
     setPlaybackRate: (value: number) => Promise<void>;
+    setBlobPlayback: (value: boolean) => Promise<void>;
     setOutputDevice: (deviceID: string) => Promise<void>;
     jumpTo: (to: number) => void;
     startFromQueue: (index: number) => Promise<void>;
@@ -358,6 +359,15 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
           logAndNotifyError(err);
         }
       }
+    },
+
+    /**
+     * Enable alternate playback for audio (more latency, but better x-platform
+     * compatibility).
+     */
+    setBlobPlayback: async (value) => {
+      await config.set('audio_blob_playback', value);
+      player.setBlobPlayback(value);
     },
 
     /**
