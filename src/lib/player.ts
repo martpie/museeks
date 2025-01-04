@@ -143,6 +143,17 @@ class Player {
   isPaused() {
     return this.audio.paused;
   }
+
+  getDebug(): string {
+    return `
+Player Debug Information:
+- mode: ${this.playbackMode}
+- internal src: ${this.audio.src}
+- external src: ${this.track?.path}
+- current time: ${this.audio.currentTime}
+- playback rate: ${this.audio.playbackRate}
+- volume: ${this.audio.volume}`;
+  }
 }
 
 /**

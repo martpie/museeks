@@ -1,3 +1,4 @@
+import { error } from '@tauri-apps/plugin-log';
 import debounce from 'lodash-es/debounce';
 import type { StateCreator } from 'zustand';
 import { persist } from 'zustand/middleware';
@@ -107,7 +108,9 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
         const track = queue[queuePosition];
 
         await player.setTrack(track);
-        await player.play().catch(logAndNotifyError);
+        await player
+          .play()
+          .catch((err) => logAndNotifyError(err, undefined, false, true));
 
         let queueCursor = queuePosition; // Clean that variable mess later
 

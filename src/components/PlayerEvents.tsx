@@ -1,20 +1,19 @@
 import { getCurrentWindow } from '@tauri-apps/api/window';
+import { error as logError } from '@tauri-apps/plugin-log';
 import { sendNotification } from '@tauri-apps/plugin-notification';
 import { useEffect } from 'react';
 
-import { error } from '@tauri-apps/plugin-log';
 import config from '../lib/config';
 import { getCover } from '../lib/cover';
 import player from '../lib/player';
 import { logAndNotifyError } from '../lib/utils';
 import { usePlayerAPI } from '../stores/usePlayerStore';
-import { useToastsAPI } from '../stores/useToastsStore';
 
 const AUDIO_ERRORS = {
   aborted: 'The video playback was aborted.',
   corrupt: 'The audio playback was aborted due to a corruption problem.',
   notFound:
-    'The track file could not be found. It may be due to a file move, an unmounted partition or missing rights.',
+    'The track file could not be loaded. It may be due to a file move, an unmounted partition or missing rights.',
   unknown: 'An unknown error occurred.',
 };
 
@@ -24,14 +23,10 @@ const AUDIO_ERRORS = {
  */
 function PlayerEvents() {
   const playerAPI = usePlayerAPI();
-  const toastsAPI = useToastsAPI();
 
   useEffect(() => {
     function handleAudioError(e: ErrorEvent) {
       playerAPI.stop();
-
-      error(e.error);
-      error(e.message);
 
       const element = e.target as HTMLAudioElement;
 
@@ -40,20 +35,25 @@ function PlayerEvents() {
 
         if (!error) return;
 
+        let errorMessage;
+
         switch (error.code) {
           case error.MEDIA_ERR_ABORTED:
-            toastsAPI.add('warning', AUDIO_ERRORS.aborted);
+            errorMessage = AUDIO_ERRORS.aborted;
             break;
           case error.MEDIA_ERR_DECODE:
-            toastsAPI.add('danger', AUDIO_ERRORS.corrupt);
+            errorMessage = AUDIO_ERRORS.corrupt;
             break;
           case error.MEDIA_ERR_SRC_NOT_SUPPORTED:
-            toastsAPI.add('danger', AUDIO_ERRORS.notFound);
+            errorMessage = AUDIO_ERRORS.notFound;
             break;
           default:
-            toastsAPI.add('danger', AUDIO_ERRORS.unknown);
+            errorMessage = AUDIO_ERRORS.unknown;
             break;
         }
+
+        logAndNotifyError(errorMessage);
+        logError(player.getDebug());
       }
     }
 
@@ -94,7 +94,7 @@ function PlayerEvents() {
       player.getAudio().removeEventListener('error', handleAudioError);
       player.getAudio().removeEventListener('ended', playerAPI.next);
     };
-  }, [toastsAPI, playerAPI]);
+  }, [playerAPI]);
 
   return null;
 }
