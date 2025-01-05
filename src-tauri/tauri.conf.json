@@ -13,9 +13,22 @@
     "security": {
       "assetProtocol": {
         "enable": true,
-        "scope": ["**/*"]
+        "scope": {
+          "allow": ["**/*"]
+        }
       },
-      "csp": "default-src 'none'; img-src 'self' asset: https://asset.localhost http://asset.localhost data: ; media-src 'self' blob: asset: https://asset.localhost http://asset.localhost; child-src 'self'; object-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; connect-src ipc: asset: https://asset.localhost http://asset.localhost http://ipc.localhost 'self' https://api.github.com; font-src 'self' data:"
+      "pattern": {
+        "use": "brownfield"
+      },
+      "csp": {
+        "default-src": "'self' asset: http://asset.localhost",
+        "connect-src": "'self' asset: http://asset.localhost blob: ipc: http://ipc.localhost https://api.github.com",
+        "img-src": "'self' asset: http://asset.localhost data:",
+        "media-src": "'self' asset: http://asset.localhost blob: data:",
+        "child-src": "'self'; object-src 'self'",
+        "font-src": "'self' data:",
+        "style-src": "'self' 'unsafe-inline'"
+      }
     }
   },
   "bundle": {
