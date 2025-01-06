@@ -74,7 +74,7 @@ export function Select(
   return (
     <div>
       <Label htmlFor={id}>{label}</Label>
-      <select className={styles.settingSelect} {...otherProps}>
+      <select className={styles.settingSelect} id={id} {...otherProps}>
         {props.children}
       </select>
       {description != null && <Description>{description}</Description>}
