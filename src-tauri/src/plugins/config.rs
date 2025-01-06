@@ -46,6 +46,13 @@ pub enum DefaultView {
 
 #[derive(Serialize, Deserialize, Debug, Clone, TS)]
 #[ts(export, export_to = "../../src/generated/typings/index.ts")]
+pub enum PlaybackMode {
+    Default,
+    Blob,
+}
+
+#[derive(Serialize, Deserialize, Debug, Clone, TS)]
+#[ts(export, export_to = "../../src/generated/typings/index.ts")]
 pub struct Config {
     pub theme: String,
     pub audio_volume: f32,
@@ -54,6 +61,7 @@ pub struct Config {
     pub audio_muted: bool,
     pub audio_shuffle: bool,
     pub audio_repeat: Repeat,
+    pub audio_playback_mode: PlaybackMode,
     pub default_view: DefaultView,
     pub library_sort_by: SortBy,
     pub library_sort_order: SortOrder,
@@ -70,6 +78,13 @@ pub const SYSTEM_THEME: &str = "__system";
 
 impl Config {
     pub fn default() -> Self {
+        // Cursed Linux: https://github.com/tauri-apps/tauri/issues/3725#issuecomment-2325248116
+        #[cfg(target_os = "linux")]
+        let audio_playback_mode = PlaybackMode::Blob;
+
+        #[cfg(not(target_os = "linux"))]
+        let audio_playback_mode = PlaybackMode::Default;
+
         Config {
             theme: SYSTEM_THEME.to_owned(),
             audio_volume: 1.0,
@@ -78,6 +93,7 @@ impl Config {
             audio_muted: false,
             audio_shuffle: false,
             audio_repeat: Repeat::None,
+            audio_playback_mode,
             default_view: DefaultView::Library,
             library_sort_by: SortBy::Artist,
             library_sort_order: SortOrder::Asc,

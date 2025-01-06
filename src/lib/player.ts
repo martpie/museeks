@@ -1,6 +1,7 @@
 import { convertFileSrc } from '@tauri-apps/api/core';
+import { info } from '@tauri-apps/plugin-log';
 
-import type { Track } from '../generated/typings';
+import type { PlaybackMode, Track } from '../generated/typings';
 
 import config from './config';
 import { logAndNotifyError } from './utils';
@@ -10,6 +11,7 @@ interface PlayerOptions {
   audioOutputDevice?: string;
   volume?: number;
   muted?: boolean;
+  playbackMode: PlaybackMode;
 }
 
 /**
@@ -23,6 +25,7 @@ interface PlayerOptions {
 class Player {
   private audio: HTMLAudioElement;
   private track: Track | null;
+  private playbackMode: PlaybackMode;
 
   constructor(options?: PlayerOptions) {
     const mergedOptions = {
@@ -30,6 +33,7 @@ class Player {
       volume: 1,
       muted: false,
       audioOutputDevice: 'default',
+      playbackMode: 'Default' as PlaybackMode,
       ...options,
     };
 
@@ -43,6 +47,9 @@ class Player {
     this.audio.playbackRate = mergedOptions.playbackRate;
     this.audio.volume = mergedOptions.volume;
     this.audio.muted = mergedOptions.muted;
+    this.playbackMode = mergedOptions.playbackMode;
+
+    info(`Player playback mode: ${this.playbackMode}`);
   }
 
   async play() {
@@ -89,6 +96,11 @@ class Player {
     this.audio.defaultPlaybackRate = playbackRate;
   }
 
+  setPlaybackMode(playbackMode: PlaybackMode) {
+    info(`Playback mode set to: ${playbackMode}`);
+    this.playbackMode = playbackMode;
+  }
+
   async setOutputDevice(deviceID: string) {
     try {
       // @ts-ignore
@@ -105,16 +117,19 @@ class Player {
   async setTrack(track: Track) {
     this.track = track;
 
-    // Cursed Linux: https://github.com/tauri-apps/tauri/issues/3725#issuecomment-2325248116
-    if (window.__MUSEEKS_PLATFORM === 'linux') {
-      const blobUrl = URL.createObjectURL(
-        await fetch(convertFileSrc(track.path)).then((res) => res.blob()),
-      );
-      this.audio.src = blobUrl;
-      return;
+    switch (this.playbackMode) {
+      case 'Default': {
+        const blobUrl = URL.createObjectURL(
+          await fetch(convertFileSrc(track.path)).then((res) => res.blob()),
+        );
+        this.audio.src = blobUrl;
+        return;
+      }
+      case 'Blob': {
+        this.audio.src = convertFileSrc(track.path);
+        return;
+      }
     }
-
-    this.audio.src = convertFileSrc(track.path);
   }
 
   setCurrentTime(currentTime: number) {
@@ -128,6 +143,17 @@ class Player {
   isPaused() {
     return this.audio.paused;
   }
+
+  getDebug(): string {
+    return `
+Player Debug Information:
+- mode: ${this.playbackMode}
+- internal src: ${this.audio.src}
+- external src: ${this.track?.path}
+- current time: ${this.audio.currentTime}
+- playback rate: ${this.audio.playbackRate}
+- volume: ${this.audio.volume}`;
+  }
 }
 
 /**
@@ -140,4 +166,5 @@ export default new Player({
   playbackRate: config.getInitial('audio_playback_rate') ?? 1,
   audioOutputDevice: config.getInitial('audio_output_device'),
   muted: config.getInitial('audio_muted'),
+  playbackMode: config.getInitial('audio_playback_mode'),
 });

@@ -4,6 +4,7 @@ import AudioOutputSelect from '../components/AudioOutputSelect';
 import * as Setting from '../components/Setting';
 import { usePlayerAPI } from '../stores/usePlayerStore';
 
+import CheckboxSetting from '../components/SettingCheckbox';
 import useInvalidate, { useInvalidateCallback } from '../hooks/useInvalidate';
 import type { SettingsLoaderData } from './settings';
 
@@ -41,6 +42,16 @@ export default function ViewSettingsAudio() {
           onChange={useInvalidateCallback(playerAPI.setOutputDevice)}
         />
       </Setting.Section>
+      <CheckboxSetting
+        slug="audio_blob_playback"
+        title="Audio Blob Playback"
+        description="Alternative way to play audio, use only if you encounter issues with audio playback (always enabled on Linux)"
+        disabled={window.__MUSEEKS_PLATFORM === 'linux'}
+        value={config.audio_playback_mode === 'Blob'}
+        onChange={(e) =>
+          playerAPI.setPlaybackMode(e ? 'Blob' : 'Default').then(invalidate)
+        }
+      />
     </div>
   );
 }
