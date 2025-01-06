@@ -179,8 +179,9 @@ export default function TracksList(props: Props) {
         selectedTracks.has(track.id),
       );
 
-      switch (e.code) {
-        case 'KeyA':
+      console.log(e.key);
+      switch (e.key) {
+        case 'a':
           if (isCtrlKey(e)) {
             onControlAll(tracks);
             e.preventDefault();
