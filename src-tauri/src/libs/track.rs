@@ -2,7 +2,7 @@ use std::path::PathBuf;
 
 use lofty::file::{AudioFile, TaggedFileExt};
 use lofty::tag::{Accessor, ItemKey};
-use log::{error, warn};
+use log::warn;
 use ormlite::model::Model;
 use serde::{Deserialize, Serialize};
 use ts_rs::TS;
@@ -108,7 +108,7 @@ pub fn get_track_id_for_path(path: &PathBuf) -> Option<String> {
             .to_string(),
         ),
         Err(err) => {
-            error!(r#"ID could not be generated for path {:?}: {}"#, path, err);
+            warn!(r#"ID could not be generated for path {:?}: {}"#, path, err);
             None
         }
     }
