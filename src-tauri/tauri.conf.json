@@ -1,6 +1,6 @@
 {
   "productName": "Museeks",
-  "version": "0.20.1",
+  "version": "0.20.2",
   "identifier": "Museeks",
   "build": {
     "beforeDevCommand": "bun run dev",
