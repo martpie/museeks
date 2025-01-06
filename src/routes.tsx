@@ -2,6 +2,8 @@ import { type RouteObject, createHashRouter } from 'react-router';
 
 import GlobalErrorBoundary from './components/GlobalErrorBoundary';
 import RootView from './routes/Root';
+import ViewArtistDetails from './routes/artist-details';
+import ViewArtists from './routes/artists';
 import ViewLibrary from './routes/library';
 import ViewPlaylistDetails from './routes/playlist-details';
 import ViewPlaylists from './routes/playlists';
@@ -26,6 +28,21 @@ const routeTree: RouteObject[] = [
         id: 'library',
         Component: ViewLibrary,
         loader: ViewLibrary.loader,
+      },
+      {
+        path: 'artists',
+        id: 'artists',
+        element: <ViewArtists />,
+        loader: ViewArtists.loader,
+        children: [
+          {
+            path: ':artist',
+            id: 'artist-details',
+            element: <ViewArtistDetails />,
+            loader: ViewArtistDetails.loader,
+            caseSensitive: true,
+          },
+        ],
       },
       {
         path: 'playlists',
