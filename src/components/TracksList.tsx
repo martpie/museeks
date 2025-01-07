@@ -1,8 +1,10 @@
 import {
   DndContext,
   type DragEndEvent,
-  DragOverlay,
-  type DragStartEvent,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
 } from '@dnd-kit/core';
 import { restrictToVerticalAxis } from '@dnd-kit/modifiers';
 import {
@@ -220,16 +222,11 @@ export default function TracksList(props: Props) {
   /**
    * Playlist tracks re-order events handlers
    */
-  const [dragOverlay, setDragOverlay] = useState<Track | null>(null);
+  const pointerSensor = useSensor(PointerSensor, {
+    activationConstraint: { distance: 8 },
+  });
 
-  const onDragStart = useCallback(
-    (event: DragStartEvent) => {
-      const track = tracks[event.active.data.current?.index];
-
-      setDragOverlay(track);
-    },
-    [tracks],
-  );
+  const sensors = useSensors(pointerSensor, useSensor(KeyboardSensor));
 
   const onDragEnd = useCallback(
     (event: DragEndEvent) => {
@@ -472,10 +469,10 @@ export default function TracksList(props: Props) {
 
   return (
     <DndContext
-      onDragStart={onDragStart}
       onDragEnd={onDragEnd}
       id="dnd-playlist"
       modifiers={DND_MODIFIERS}
+      sensors={sensors}
     >
       <div className={styles.tracksList}>
         <Keybinding onKey={onKey} preventInputConflict />
@@ -526,15 +523,6 @@ export default function TracksList(props: Props) {
                   />
                 );
               })}
-              <DragOverlay dropAnimation={null}>
-                {dragOverlay ? (
-                  <TrackRow
-                    selected={selectedTracks.has(dragOverlay.id)}
-                    track={dragOverlay}
-                    index={-1}
-                  />
-                ) : null}
-              </DragOverlay>
             </SortableContext>
           </div>
         </div>

@@ -32,4 +32,29 @@
       border-top-color: rgba(255 255 255 / 0.2);
     }
   }
+
+  &.isDragging {
+    opacity: 0.5;
+  }
+
+  &.isOver:not(.isDragging) {
+    &::after {
+      pointer-events: none;
+      position: absolute;
+      z-index: 1;
+      display: block;
+      width: 100%;
+      content: "";
+      height: 2px;
+      background-color: var(--main-color);
+    }
+  }
+
+  &.isAbove::after {
+    top: -1px;
+  }
+
+  &.isBelow::after {
+    bottom: -1px;
+  }
 }

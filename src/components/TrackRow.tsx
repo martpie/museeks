@@ -1,5 +1,4 @@
 import { useSortable } from '@dnd-kit/sortable';
-import { CSS } from '@dnd-kit/utilities';
 import cx from 'classnames';
 import type React from 'react';
 
@@ -49,9 +48,10 @@ export default function TrackRow(props: Props) {
     attributes,
     listeners,
     setNodeRef,
-    transform,
-    transition,
     isDragging,
+    isOver,
+    activeIndex,
+    overIndex,
   } = useSortable({
     id: props.track.id,
     disabled: !draggable,
@@ -61,18 +61,13 @@ export default function TrackRow(props: Props) {
     },
   });
 
-  const style: React.CSSProperties | undefined = transform
-    ? {
-        transform: CSS.Translate.toString(transform),
-        transition,
-        zIndex: 2,
-        visibility: isDragging ? 'hidden' : 'visible',
-      }
-    : undefined;
-
   const trackClasses = cx(styles.track, {
     [styles.selected]: selected,
     [styles.even]: index % 2 === 0,
+    [styles.isDragging]: isDragging,
+    [styles.isOver]: isOver,
+    [styles.isAbove]: isOver && overIndex < activeIndex,
+    [styles.isBelow]: isOver && overIndex > activeIndex,
   });
 
   return (
@@ -93,7 +88,7 @@ export default function TrackRow(props: Props) {
       ref={setNodeRef}
       {...listeners}
       {...attributes}
-      style={{ ...style, ...props.style }} // memo that
+      style={props.style}
     >
       <div className={`${styles.cell} ${cellStyles.cellTrackPlaying}`}>
         {props.isPlaying ? <PlayingIndicator /> : null}
