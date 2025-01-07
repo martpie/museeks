@@ -1,4 +1,4 @@
-import type { Playlist } from '../generated/typings';
+import type { Playlist, Track } from '../generated/typings';
 import database from '../lib/database';
 import { logAndNotifyError } from '../lib/utils';
 
@@ -128,35 +128,14 @@ async function duplicate(playlistID: string): Promise<void> {
  */
 async function reorderTracks(
   playlistID: string,
-  tracksIDs: string[],
-  targetTrackID: string,
-  position: 'above' | 'below',
+  tracks: Track[],
 ): Promise<void> {
-  if (tracksIDs.includes(targetTrackID)) return;
-
   try {
-    const playlist: Playlist = await database.getPlaylist(playlistID);
-
-    // Remove the current track
-    const newTracks = playlist.tracks.filter((id) => !tracksIDs.includes(id));
-
-    // Find where to insert the selected tracks
-    let targetIndex = newTracks.indexOf(targetTrackID);
-
-    if (targetIndex === -1) {
-      throw new Error(
-        `Could not find targetTrackID in the playlist "${playlist.name}"`,
-      );
-    }
-
-    if (position === 'above') {
-      targetIndex -= 1;
-    }
-
-    newTracks.splice(targetIndex + 1, 0, ...tracksIDs);
-
     // Save and reload the playlist
-    await database.setPlaylistTracks(playlistID, newTracks);
+    await database.setPlaylistTracks(
+      playlistID,
+      tracks.map((track) => track.id),
+    );
   } catch (err) {
     logAndNotifyError(err);
   }

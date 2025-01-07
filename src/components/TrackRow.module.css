@@ -32,29 +32,4 @@
       border-top-color: rgba(255 255 255 / 0.2);
     }
   }
-
-  &.reordered {
-    opacity: 0.5;
-  }
-
-  &.isReorderedOver {
-    &::after {
-      pointer-events: none;
-      position: absolute;
-      z-index: 1;
-      display: block;
-      width: 100%;
-      content: "";
-      height: 2px;
-      background-color: var(--main-color);
-    }
-
-    &.isAbove::after {
-      top: -2px;
-    }
-
-    &.isBelow::after {
-      bottom: -2px;
-    }
-  }
 }

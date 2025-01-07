@@ -1,3 +1,14 @@
+import {
+  DndContext,
+  type DragEndEvent,
+  DragOverlay,
+  type DragStartEvent,
+} from '@dnd-kit/core';
+import { restrictToVerticalAxis } from '@dnd-kit/modifiers';
+import {
+  SortableContext,
+  verticalListSortingStrategy,
+} from '@dnd-kit/sortable';
 import { useVirtualizer } from '@tanstack/react-virtual';
 import {
   Menu,
@@ -27,6 +38,7 @@ import styles from './TracksList.module.css';
 
 const ROW_HEIGHT = 30;
 const ROW_HEIGHT_COMPACT = 24;
+const DND_MODIFIERS = [restrictToVerticalAxis];
 
 // --------------------------------------------------------------------------
 // TrackList
@@ -40,12 +52,7 @@ type Props = {
   playlists: Playlist[];
   currentPlaylist?: string;
   reorderable?: boolean;
-  onReorder?: (
-    playlistID: string,
-    tracksIDs: Set<string>,
-    targetTrackID: string,
-    position: 'above' | 'below',
-  ) => void;
+  onReorder?: (tracks: Track[]) => void;
 };
 
 export default function TracksList(props: Props) {
@@ -61,9 +68,6 @@ export default function TracksList(props: Props) {
   } = props;
 
   const [selectedTracks, setSelectedTracks] = useState<Set<string>>(new Set());
-  const [reorderedTracks, setReorderedTracks] = useState<Set<string> | null>(
-    new Set(),
-  );
 
   const navigate = useNavigate();
   const invalidate = useInvalidate();
@@ -214,21 +218,42 @@ export default function TracksList(props: Props) {
   );
 
   /**
-   * Playlists re-order events handlers
+   * Playlist tracks re-order events handlers
    */
-  const onReorderStart = useCallback(
-    () => setReorderedTracks(selectedTracks),
-    [selectedTracks],
-  );
-  const onReorderEnd = useCallback(() => setReorderedTracks(null), []);
+  const [dragOverlay, setDragOverlay] = useState<Track | null>(null);
 
-  const onDrop = useCallback(
-    async (targetTrackID: string, position: 'above' | 'below') => {
-      if (onReorder && currentPlaylist && reorderedTracks) {
-        onReorder(currentPlaylist, reorderedTracks, targetTrackID, position);
-      }
+  const onDragStart = useCallback(
+    (event: DragStartEvent) => {
+      const track = tracks[event.active.data.current?.index];
+
+      setDragOverlay(track);
     },
-    [currentPlaylist, onReorder, reorderedTracks],
+    [tracks],
+  );
+
+  const onDragEnd = useCallback(
+    (event: DragEndEvent) => {
+      const {
+        active, // dragged item
+        over, // on which item it was dropped
+      } = event;
+
+      // The item was dropped either nowhere, or on the same item
+      if (over == null || active.id === over.id || !onReorder) {
+        return;
+      }
+
+      const activeIndex = tracks.findIndex((track) => track.id === active.id);
+      const overIndex = tracks.findIndex((track) => track.id === over.id);
+
+      const newTracks = [...tracks];
+
+      const movedTrack = newTracks.splice(activeIndex, 1)[0]; // Remove active track
+      newTracks.splice(overIndex, 0, movedTrack); // Move it to where the user dropped it
+
+      onReorder(newTracks);
+    },
+    [onReorder, tracks],
   );
 
   /**
@@ -446,56 +471,74 @@ export default function TracksList(props: Props) {
   );
 
   return (
-    <div className={styles.tracksList}>
-      <Keybinding onKey={onKey} preventInputConflict />
-      {/* Scrollable element */}
-      <div ref={scrollableRef} className={styles.tracksListScroller}>
-        <TracksListHeader enableSort={type === 'library'} />
+    <DndContext
+      onDragStart={onDragStart}
+      onDragEnd={onDragEnd}
+      id="dnd-playlist"
+      modifiers={DND_MODIFIERS}
+    >
+      <div className={styles.tracksList}>
+        <Keybinding onKey={onKey} preventInputConflict />
+        {/* Scrollable element */}
+        <div ref={scrollableRef} className={styles.tracksListScroller}>
+          <TracksListHeader enableSort={type === 'library'} />
 
-        {/* The large inner element to hold all of the items */}
-        <div
-          className={styles.tracksListRows}
-          style={{
-            height: `${virtualizer.getTotalSize()}px`,
-            width: '100%',
-            position: 'relative',
-          }}
-        >
-          {/* Only the visible items in the virtualizer, manually positioned to be in view */}
-          {virtualizer.getVirtualItems().map((virtualItem) => {
-            const track = tracks[virtualItem.index];
-            return (
-              <TrackRow
-                key={virtualItem.key}
-                selected={selectedTracks.has(track.id)}
-                track={track}
-                isPlaying={trackPlayingID === track.id}
-                index={virtualItem.index}
-                onMouseDown={selectTrack}
-                onClick={selectTrackClick}
-                onContextMenu={showContextMenu}
-                onDoubleClick={startPlayback}
-                draggable={reorderable}
-                reordered={reorderedTracks?.has(track.id) || false}
-                onDragStart={onReorderStart}
-                onDragEnd={onReorderEnd}
-                onDrop={onDrop}
-                style={{
-                  position: 'absolute',
-                  left: 0,
-                  width: '100%',
-                  height: `${virtualItem.size}px`,
-                  // Intentionally not translateY, as it would create another paint
-                  // layer where every row would cover elements from the previous one.
-                  // This would typically prevent the drop effect to be properly displayed
-                  // when reordering a playlist
-                  top: `${virtualItem.start}px`,
-                }}
-              />
-            );
-          })}
+          {/* The large inner element to hold all of the items */}
+          <div
+            className={styles.tracksListRows}
+            style={{
+              height: `${virtualizer.getTotalSize()}px`,
+              width: '100%',
+              position: 'relative',
+            }}
+          >
+            <SortableContext
+              items={tracks}
+              strategy={verticalListSortingStrategy}
+            >
+              {/* Only the visible items in the virtualizer, manually positioned to be in view */}
+              {virtualizer.getVirtualItems().map((virtualItem) => {
+                const track = tracks[virtualItem.index];
+                return (
+                  <TrackRow
+                    key={virtualItem.key}
+                    selected={selectedTracks.has(track.id)}
+                    track={track}
+                    isPlaying={trackPlayingID === track.id}
+                    index={virtualItem.index}
+                    onMouseDown={selectTrack}
+                    onClick={selectTrackClick}
+                    onContextMenu={showContextMenu}
+                    onDoubleClick={startPlayback}
+                    draggable={reorderable}
+                    style={{
+                      position: 'absolute',
+                      left: 0,
+                      width: '100%',
+                      height: `${virtualItem.size}px`,
+                      // Intentionally not translateY, as it would create another paint
+                      // layer where every row would cover elements from the previous one.
+                      // This would typically prevent the drop effect to be properly displayed
+                      // when reordering a playlist
+                      top: `${virtualItem.start}px`,
+                      zIndex: 1,
+                    }}
+                  />
+                );
+              })}
+              <DragOverlay dropAnimation={null}>
+                {dragOverlay ? (
+                  <TrackRow
+                    selected={selectedTracks.has(dragOverlay.id)}
+                    track={dragOverlay}
+                    index={-1}
+                  />
+                ) : null}
+              </DragOverlay>
+            </SortableContext>
+          </div>
         </div>
       </div>
-    </div>
+    </DndContext>
   );
 }
