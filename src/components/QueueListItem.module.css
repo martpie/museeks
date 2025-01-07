@@ -10,31 +10,6 @@
     border-top: dashed 1px var(--border-color);
   }
 
-  &.isDragged {
-    .queueItemInfo {
-      opacity: 0.25;
-    }
-  }
-
-  &.isDraggedOver {
-    &::after {
-      position: absolute;
-      z-index: 1;
-      display: block;
-      width: 100%;
-      content: "";
-      border-bottom: solid 3px var(--main-color);
-    }
-
-    &.isAbove::after {
-      top: -2px;
-    }
-
-    &.isBelow::after {
-      bottom: -2px;
-    }
-  }
-
   &:hover .queueItemRemove {
     visibility: visible;
   }

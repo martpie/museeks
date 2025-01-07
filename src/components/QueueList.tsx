@@ -1,4 +1,9 @@
-import type React from 'react';
+import { DndContext, type DragEndEvent } from '@dnd-kit/core';
+import { restrictToVerticalAxis } from '@dnd-kit/modifiers';
+import {
+  SortableContext,
+  verticalListSortingStrategy,
+} from '@dnd-kit/sortable';
 import { useCallback, useState } from 'react';
 
 import Button from '../elements/Button';
@@ -10,6 +15,7 @@ import QueueListItem from './QueueListItem';
 import styles from './QueueList.module.css';
 
 const INITIAL_QUEUE_SIZE = 20;
+const DND_MODIFIERS = [restrictToVerticalAxis];
 
 type Props = {
   queue: Track[];
@@ -17,96 +23,44 @@ type Props = {
 };
 
 export default function QueueList(props: Props) {
-  const playerAPI = usePlayerAPI();
-
-  const [draggedTrackIndex, setDraggedTrackIndex] = useState<number | null>(
-    null,
-  );
-  const [draggedOverTrackIndex, setDraggedOverTrackIndex] = useState<
-    number | null
-  >(null);
-  const [dragPosition, setDragPosition] = useState<null | 'above' | 'below'>(
-    null,
-  );
-
-  const dragStart = useCallback(
-    (e: React.DragEvent<HTMLDivElement>, index: number) => {
-      e.dataTransfer.setData('text/html', props.queue[index].id);
-      e.dataTransfer.dropEffect = 'move';
-      e.dataTransfer.effectAllowed = 'move';
-
-      setDraggedTrackIndex(index);
-    },
-    [props.queue],
-  );
-
-  const dragEnd = useCallback(() => {
-    // Move that to a reducer may be a good idea
-
-    const { queue, queueCursor } = props;
-
-    const draggedIndex = draggedTrackIndex;
-    const draggedOverIndex = draggedOverTrackIndex;
-
-    if (draggedIndex !== null && draggedOverIndex !== null) {
-      const offsetPosition = dragPosition === 'below' ? 1 : 0;
-      const offsetHigherIndex =
-        draggedOverIndex < draggedIndex ||
-        (draggedOverIndex === draggedIndex && dragPosition === 'above')
-          ? 1
-          : 0;
-
-      // Real position in queue
-      const draggedQueueIndex = draggedIndex + queueCursor + 1;
-      const draggedOverQueueIndex =
-        draggedOverIndex + queueCursor + offsetPosition + offsetHigherIndex;
-
-      const newQueue = [...queue];
-
-      // remove draggedTrackIndex
-      const movedTrack = newQueue.splice(draggedQueueIndex, 1)[0];
-
-      // add removed track at its new position
-      newQueue.splice(draggedOverQueueIndex, 0, movedTrack);
-
-      setDraggedTrackIndex(null);
-      setDraggedOverTrackIndex(null);
-      setDragPosition(null);
-
-      playerAPI.setQueue(newQueue);
-    }
-  }, [
-    dragPosition,
-    draggedOverTrackIndex,
-    draggedTrackIndex,
-    props,
-    playerAPI,
-  ]);
-
-  const dragOver = useCallback(
-    (e: React.DragEvent<HTMLDivElement>, index: number) => {
-      e.preventDefault();
-
-      const relativePosition =
-        e.nativeEvent.offsetY / e.currentTarget.offsetHeight;
-      const dragPosition = relativePosition < 0.5 ? 'above' : 'below';
-
-      setDraggedOverTrackIndex(index);
-      setDragPosition(dragPosition);
-    },
-    [],
-  );
-
   const { queue, queueCursor } = props;
   const [queueSize, setQueueSize] = useState(INITIAL_QUEUE_SIZE);
+
+  const playerAPI = usePlayerAPI();
 
   // Get the 20 next tracks displayed
   const shownQueue = queue.slice(queueCursor + 1, queueCursor + 1 + queueSize);
   const hiddenQueue = queue.slice(queueCursor + 1 + queueSize);
   const incomingQueue = queue.slice(queueCursor + 1);
 
+  // Drag-and-Drop support for reordering the queue
+  const onDragEnd = useCallback(
+    (event: DragEndEvent) => {
+      const {
+        active, // dragged item
+        over, // on which item it was dropped
+      } = event;
+
+      // The item was dropped either nowhere, or on the same item
+      if (over == null || active.id === over.id) {
+        return;
+      }
+
+      const activeIndex = queue.findIndex((track) => track.id === active.id);
+      const overIndex = queue.findIndex((track) => track.id === over.id);
+
+      const newQueue = [...queue];
+
+      const movedTrack = newQueue.splice(activeIndex, 1)[0]; // Remove active track
+      newQueue.splice(overIndex, 0, movedTrack); // Move it to where the user dropped it
+
+      playerAPI.setQueue(newQueue);
+    },
+    [queue, playerAPI],
+  );
+
   return (
-    <>
+    <DndContext onDragEnd={onDragEnd} id="dnd-queue" modifiers={DND_MODIFIERS}>
       <div className={styles.queueHeader}>
         <div className={styles.queueHeaderInfos}>
           {getStatus(incomingQueue)}
@@ -116,20 +70,19 @@ export default function QueueList(props: Props) {
         </Button>
       </div>
       <div className={styles.queueContent}>
-        {shownQueue.map((track, index) => (
-          <QueueListItem
-            key={`track-${track.id}-${index}`}
-            index={index}
-            track={track}
-            queueCursor={props.queueCursor}
-            dragged={index === draggedTrackIndex}
-            draggedOver={index === draggedOverTrackIndex}
-            dragPosition={index === draggedOverTrackIndex ? dragPosition : null}
-            onDragStart={dragStart}
-            onDragOver={dragOver}
-            onDragEnd={dragEnd}
-          />
-        ))}
+        <SortableContext
+          items={shownQueue}
+          strategy={verticalListSortingStrategy}
+        >
+          {shownQueue.map((track, index) => (
+            <QueueListItem
+              key={`track-${track.id}-${index}`}
+              index={index}
+              track={track}
+              queueCursor={props.queueCursor}
+            />
+          ))}
+        </SortableContext>
         {hiddenQueue.length > 0 && (
           <Button
             block
@@ -143,6 +96,6 @@ export default function QueueList(props: Props) {
           </Button>
         )}
       </div>
-    </>
+    </DndContext>
   );
 }
