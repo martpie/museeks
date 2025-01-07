@@ -9,6 +9,7 @@ import {
 
 import TracksList from '../components/TracksList';
 import * as ViewMessage from '../elements/ViewMessage';
+import type { Track } from '../generated/typings';
 import useFilteredTracks from '../hooks/useFilteredTracks';
 import useInvalidate from '../hooks/useInvalidate';
 import usePlayingTrackID from '../hooks/usePlayingTrackID';
@@ -30,21 +31,13 @@ export default function ViewPlaylistDetails() {
   const filteredTracks = useFilteredTracks(playlistTracks);
 
   const onReorder = useCallback(
-    async (
-      playlistID: string,
-      tracksIDs: Set<string>,
-      targetTrackID: string,
-      position: 'above' | 'below',
-    ) => {
-      await PlaylistsAPI.reorderTracks(
-        playlistID,
-        Array.from(tracksIDs),
-        targetTrackID,
-        position,
-      );
-      invalidate();
+    async (tracks: Track[]) => {
+      if (playlistID != null) {
+        await PlaylistsAPI.reorderTracks(playlistID, tracks);
+        invalidate();
+      }
     },
-    [invalidate],
+    [invalidate, playlistID],
   );
 
   if (playlistTracks.length === 0) {
