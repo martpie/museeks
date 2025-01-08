@@ -2768,7 +2768,7 @@ dependencies = [
 
 [[package]]
 name = "museeks"
-version = "0.20.3"
+version = "0.20.4"
 dependencies = [
  "anyhow",
  "base64 0.22.1",
