@@ -33,14 +33,14 @@ Want more? Open a new issue or 👍 an existing one so we can talk about it.
 
 ## Installation
 
-### Classic
+### Installers
 
-Binaries can be found [on this page](https://github.com/martpie/museeks/releases).
+Binaries/Installers can be found [on the releases page](https://github.com/martpie/museeks/releases).
+
+> [!NOTE]  
+> Publication of Museeks to package managers is community-maintained. Museeks may be available there (like Homebrew, AUR, etc), but with no guarantee of it being the latest version available.
 
 ### Build (advanced)
-
-> **Warning**
-> Those instructions, are for the still work-in-progress Tauri version of Museeks. If you wish to see how to build it for Electron (`<=0.20`), please see the [previous version of the README](https://github.com/martpie/museeks/blob/277203176555331f88462d4ba2cf88d07d436ddc/README.md#build-advanced).
 
 Museeks is built upon:
 
