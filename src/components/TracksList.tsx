@@ -1,11 +1,4 @@
-import {
-  DndContext,
-  type DragEndEvent,
-  KeyboardSensor,
-  PointerSensor,
-  useSensor,
-  useSensors,
-} from '@dnd-kit/core';
+import { DndContext, type DragEndEvent } from '@dnd-kit/core';
 import { restrictToVerticalAxis } from '@dnd-kit/modifiers';
 import {
   SortableContext,
@@ -18,6 +11,7 @@ import {
   PredefinedMenuItem,
   Submenu,
 } from '@tauri-apps/api/menu';
+import { revealItemInDir } from '@tauri-apps/plugin-opener';
 import type React from 'react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import Keybinding from 'react-keybinding-component';
@@ -32,7 +26,7 @@ import { usePlayerAPI } from '../stores/usePlayerStore';
 import TrackRow from './TrackRow';
 import TracksListHeader from './TracksListHeader';
 
-import { revealItemInDir } from '@tauri-apps/plugin-opener';
+import useDndSensors from '../hooks/useDnDSensors';
 import useInvalidate from '../hooks/useInvalidate';
 import { useScrollRestoration } from '../hooks/useScrollRestoration';
 import { keyboardSelect } from '../lib/utils-list';
@@ -222,11 +216,7 @@ export default function TracksList(props: Props) {
   /**
    * Playlist tracks re-order events handlers
    */
-  const pointerSensor = useSensor(PointerSensor, {
-    activationConstraint: { distance: 8 },
-  });
-
-  const sensors = useSensors(pointerSensor, useSensor(KeyboardSensor));
+  const sensors = useDndSensors();
 
   const onDragEnd = useCallback(
     (event: DragEndEvent) => {

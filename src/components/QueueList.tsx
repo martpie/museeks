@@ -8,6 +8,7 @@ import { useCallback, useState } from 'react';
 
 import Button from '../elements/Button';
 import type { Track } from '../generated/typings';
+import useDndSensors from '../hooks/useDnDSensors';
 import { getStatus } from '../lib/utils-library';
 import { usePlayerAPI } from '../stores/usePlayerStore';
 import QueueListItem from './QueueListItem';
@@ -34,6 +35,8 @@ export default function QueueList(props: Props) {
   const incomingQueue = queue.slice(queueCursor + 1);
 
   // Drag-and-Drop support for reordering the queue
+  const sensors = useDndSensors();
+
   const onDragEnd = useCallback(
     (event: DragEndEvent) => {
       const {
@@ -60,7 +63,12 @@ export default function QueueList(props: Props) {
   );
 
   return (
-    <DndContext onDragEnd={onDragEnd} id="dnd-queue" modifiers={DND_MODIFIERS}>
+    <DndContext
+      onDragEnd={onDragEnd}
+      id="dnd-queue"
+      modifiers={DND_MODIFIERS}
+      sensors={sensors}
+    >
       <div className={styles.queueHeader}>
         <div className={styles.queueHeaderInfos}>
           {getStatus(incomingQueue)}
