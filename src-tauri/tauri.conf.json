@@ -1,7 +1,7 @@
 {
-  "productName": "Museeks",
+  "productName": "Syncudio",
   "version": "0.20.5",
-  "identifier": "Museeks",
+  "identifier": "Syncudio",
   "build": {
     "beforeDevCommand": "bun run dev",
     "devUrl": "http://localhost:1420",

@@ -24,12 +24,12 @@ export default function ViewSettingsAbout() {
         <Setting.Description>
           Museeks {version}
           {' - '}
-          <ExternalLink href="https://museeks.io" type="url">
-            museeks.io
+          <ExternalLink href="https://syncudio.io" type="url">
+            syncudio.io
           </ExternalLink>
           {' - '}
           <ExternalLink
-            href={`https://github.com/martpie/museeks/releases/tag/${version}`}
+            href={`https://github.com/martpie/syncudio/releases/tag/${version}`}
             type="url"
           >
             release notes
@@ -60,7 +60,7 @@ export default function ViewSettingsAbout() {
           </ExternalLink>
           ) and a bunch of{' '}
           <ExternalLink
-            href="https://github.com/martpie/museeks/graphs/contributors"
+            href="https://github.com/martpie/syncudio/graphs/contributors"
             type="url"
           >
             great people

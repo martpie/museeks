@@ -179,7 +179,7 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
 
                 #[cfg(target_os = "macos")]
                 {
-                    let museeks_menu = SubmenuBuilder::new(app_handle, "Museeks")
+                    let museeks_menu = SubmenuBuilder::new(app_handle, "Syncudio")
                         .about(Some(about_metadata))
                         .separator()
                         .services()

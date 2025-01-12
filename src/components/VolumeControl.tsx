@@ -83,7 +83,7 @@ export default function VolumeControl() {
         className={controlClasses}
         title="Volume"
         onClick={mute}
-        data-museeks-action
+        data-syncudio-action
       >
         <Icon name={getVolumeIcon(unsmoothifyVolume(volume), muted)} />
       </button>
@@ -103,7 +103,7 @@ export default function VolumeControl() {
           <Slider.Thumb
             className={styles.sliderThumb}
             aria-label="Volume"
-            data-museeks-action
+            data-syncudio-action
           />
         </Slider.Root>
       </div>

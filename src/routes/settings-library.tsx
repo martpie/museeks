@@ -51,7 +51,7 @@ export default function ViewSettingsLibrary() {
                     <button
                       type="button"
                       className={styles.libraryFoldersRemove}
-                      data-museeks-action
+                      data-syncudio-action
                       onClick={() =>
                         libraryAPI.removeLibraryFolder(folder).then(invalidate)
                       }
@@ -94,7 +94,7 @@ export default function ViewSettingsLibrary() {
       <Setting.Section>
         <Setting.Title>Danger zone</Setting.Title>
         <Setting.Description>
-          Delete all tracks and playlists from Museeks.
+          Delete all tracks and playlists from Syncudio.
         </Setting.Description>
         <Flexbox>
           <Button

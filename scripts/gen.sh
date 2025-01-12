@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [ ! -f ./package.json ]; then
-    echo "You should run Museeks scripts from the project root directory, exiting..."
+    echo "You should run Syncudio scripts from the project root directory, exiting..."
     exit 1
 fi
 

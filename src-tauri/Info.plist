@@ -11,11 +11,11 @@
 		<dict>
 			<key>CFBundleURLName</key>
 			<!-- app's bundle identifier -->
-			<string>Museeks</string>
+			<string>Syncudio</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<!-- register the museeks:// schemes -->
-				<string>museeks</string>
+				<!-- register the syncudio:// schemes -->
+				<string>syncudio</string>
 			</array>
 		</dict>
 	</array>

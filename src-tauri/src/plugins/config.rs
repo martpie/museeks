@@ -10,7 +10,7 @@ use tauri::plugin::{Builder, TauriPlugin};
 use tauri::{Manager, Runtime, State};
 use ts_rs::TS;
 
-use crate::libs::error::{AnyResult, MuseeksError};
+use crate::libs::error::{AnyResult, SyncudioError};
 
 #[derive(Serialize, Deserialize, Debug, Clone, TS)]
 #[ts(export, export_to = "../../src/generated/typings/index.ts")]
@@ -98,8 +98,8 @@ pub struct ConfigManager {
     pub data: RwLock<Config>,
 }
 
-fn config_err<T: Display>(err: T) -> MuseeksError {
-    MuseeksError::Config(format!("{}", err))
+fn config_err<T: Display>(err: T) -> SyncudioError {
+    SyncudioError::Config(format!("{}", err))
 }
 
 impl ConfigManager {
@@ -144,7 +144,7 @@ impl ConfigManager {
 pub fn get_storage_dir() -> PathBuf {
     // TODO: Replace with PathResolver::app_config_dir() + app identifier, somehow
     let path = dirs::config_dir().expect("Get config dir");
-    path.join("Museeks")
+    path.join("Syncudio")
 }
 
 #[tauri::command]
@@ -186,8 +186,8 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
     // parsing time and require data that would otherwise only load-able asynchronously
     let initial_config_script = format!(
         r#"
-            window.__MUSEEKS_INITIAL_CONFIG = {};
-            window.__MUSEEKS_PLATFORM = {:?};
+            window.__SYNCUDIO_INITIAL_CONFIG = {};
+            window.__SYNCUDIO_PLATFORM = {:?};
         "#,
         serde_json::to_string(&config.get().unwrap()).unwrap(),
         tauri_plugin_os::type_().to_string()

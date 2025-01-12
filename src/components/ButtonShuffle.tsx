@@ -20,7 +20,7 @@ export default function ButtonShuffle() {
       onClick={() => {
         playerAPI.toggleShuffle();
       }}
-      data-museeks-action
+      data-syncudio-action
     >
       <icons.SHUFFLE className={styles.icon} />
     </button>

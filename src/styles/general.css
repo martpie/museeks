@@ -70,15 +70,15 @@ strong {
 }
 
 /* Generic class that can be used on call-to-actions to show the interactibility of an element */
-[data-museeks-action] {
+[data-syncudio-action] {
   transition: transform 0.1s ease-in-out;
 }
 
-[data-museeks-action]:hover {
+[data-syncudio-action]:hover {
   transform: scale(1.2);
 }
 
-[data-museeks-action]:active {
+[data-syncudio-action]:active {
   transform: scale(1);
 }
 

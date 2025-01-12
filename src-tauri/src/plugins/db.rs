@@ -15,7 +15,7 @@ use tokio::sync::{Mutex, MutexGuard};
 use ts_rs::TS;
 
 use crate::libs::database::{DB, SUPPORTED_PLAYLISTS_EXTENSIONS, SUPPORTED_TRACKS_EXTENSIONS};
-use crate::libs::error::{AnyResult, MuseeksError};
+use crate::libs::error::{AnyResult, SyncudioError};
 use crate::libs::events::IPCEvent;
 use crate::libs::playlist::Playlist;
 use crate::libs::track::{get_track_from_file, get_track_id_for_path, Track};
@@ -38,7 +38,7 @@ impl DBState {
  * Doc: https://github.com/khonsulabs/bonsaidb/blob/main/examples/basic-local/examples/basic-local-multidb.rs
  */
 async fn setup() -> AnyResult<DB> {
-    let database_path = get_storage_dir().join("museeks.db");
+    let database_path = get_storage_dir().join("syncudio.db");
 
     info!("Opening connection to database: {:?}", database_path);
 
@@ -252,7 +252,7 @@ async fn import_tracks_to_library<R: Runtime>(
 
             db.create_playlist(playlist_name, track_ids, Some(playlist_path))
                 .await?;
-            Ok::<(), MuseeksError>(())
+            Ok::<(), SyncudioError>(())
         };
 
         match res {
@@ -299,7 +299,7 @@ async fn get_all_playlists(db_state: State<'_, DBState>) -> AnyResult<Vec<Playli
 async fn get_playlist(db_state: State<'_, DBState>, id: String) -> AnyResult<Playlist> {
     match db_state.get_lock().await.get_playlist(&id).await {
         Ok(Some(playlist)) => Ok(playlist),
-        Ok(None) => Err(MuseeksError::PlaylistNotFound),
+        Ok(None) => Err(SyncudioError::PlaylistNotFound),
         Err(err) => Err(err),
     }
 }

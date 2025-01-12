@@ -52,7 +52,7 @@ export default function Search() {
           type="button"
           className={styles.searchClear}
           onClick={onClear}
-          data-museeks-action
+          data-syncudio-action
         >
           &times;
         </button>

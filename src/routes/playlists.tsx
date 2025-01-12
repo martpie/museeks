@@ -20,7 +20,7 @@ import * as ViewMessage from '../elements/ViewMessage';
 import useInvalidate from '../hooks/useInvalidate';
 import database from '../lib/database';
 import PlaylistsAPI from '../stores/PlaylistsAPI';
-import type { LoaderData } from '../types/museeks';
+import type { LoaderData } from '../types/syncudio';
 
 export default function ViewPlaylists() {
   const { playlists } = useLoaderData() as PlaylistsLoaderData;

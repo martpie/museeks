@@ -10,7 +10,7 @@ import usePlayingTrackID from '../hooks/usePlayingTrackID';
 import config from '../lib/config';
 import database from '../lib/database';
 import useLibraryStore from '../stores/useLibraryStore';
-import type { LoaderData } from '../types/museeks';
+import type { LoaderData } from '../types/syncudio';
 
 export default function ViewLibrary() {
   const trackPlayingID = usePlayingTrackID();

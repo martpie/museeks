@@ -27,7 +27,7 @@ export default function DropzoneImport() {
           } else if (event.payload.type === 'drop') {
             setIsShown(false);
 
-            // Museeks does not deal in terms of files anymore, so we need to only retain folders.
+            // Syncudio does not deal in terms of files anymore, so we need to only retain folders.
             // Why? Because in case a user imports a specific file from within a folder, it should
             // ignore all other files, but it cannot do that as of today.
             const fileInfos = await Promise.all(

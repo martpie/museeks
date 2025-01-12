@@ -8,7 +8,7 @@ import { logAndNotifyError } from '../lib/utils';
 import type { StateCreator } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { getStatus, removeRedundantFolders } from '../lib/utils-library';
-import type { API, TrackMutation } from '../types/museeks';
+import type { API, TrackMutation } from '../types/syncudio';
 import { createStore } from './store-helpers';
 import usePlayerStore from './usePlayerStore';
 import useToastsStore from './useToastsStore';
@@ -208,7 +208,7 @@ const useLibraryStore = createLibraryStore<LibraryState>((set, get) => ({
       usePlayerStore.getState().api.stop();
       try {
         const confirmed = await ask(
-          'All your tracks and playlists will be deleted from Museeks.',
+          'All your tracks and playlists will be deleted from Syncudio.',
           {
             title: 'Reset library?',
             kind: 'warning',
@@ -286,7 +286,7 @@ export function useLibraryAPI() {
 function createLibraryStore<T extends LibraryState>(store: StateCreator<T>) {
   return createStore(
     persist(store, {
-      name: 'museeks-library',
+      name: 'syncudio-library',
       merge(persistedState, currentState) {
         const mergedState = {
           ...currentState,

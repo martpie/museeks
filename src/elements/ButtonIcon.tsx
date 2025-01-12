@@ -16,7 +16,7 @@ export default function ButtonIcon(props: Props) {
       className={styles.buttonIcon}
       onClick={props.onClick}
       title={props.title}
-      data-museeks-action
+      data-syncudio-action
     >
       <Icon name={props.icon} />
     </button>

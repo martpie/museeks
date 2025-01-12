@@ -29,7 +29,7 @@ export default function ButtonRepeat() {
       type="button"
       className={buttonClasses}
       onClick={() => playerAPI.toggleRepeat()}
-      data-museeks-action
+      data-syncudio-action
     >
       <Svg className={styles.icon} />
     </button>

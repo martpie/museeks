@@ -104,7 +104,7 @@ async function checkForUpdate(
 
   try {
     const response = await fetch(
-      'https://api.github.com/repos/martpie/museeks/releases',
+      'https://api.github.com/repos/martpie/syncudio/releases',
     );
 
     if (!response.ok) {
@@ -128,9 +128,9 @@ async function checkForUpdate(
 
     let message: string | undefined;
     if (newRelease) {
-      message = `Museeks ${newRelease.tag_name} is available, check https://museeks.io!`;
+      message = `Syncudio ${newRelease.tag_name} is available, check https://syncudio.io!`;
     } else if (!options.silentFail) {
-      message = `Museeks ${currentVersion} is the latest version available.`;
+      message = `Syncudio ${currentVersion} is the latest version available.`;
     }
 
     if (message) {

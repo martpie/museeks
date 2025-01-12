@@ -1,7 +1,7 @@
 import darkTheme from '../themes/dark.json';
 import lightTheme from '../themes/light.json';
 // IMPROVE ME: scan the directory for all json files instead
-import type { Theme } from '../types/museeks';
+import type { Theme } from '../types/syncudio';
 import { logAndNotifyError } from './utils';
 
 export const themes: Record<string, Theme> = {

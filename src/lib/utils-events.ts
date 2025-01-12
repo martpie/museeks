@@ -35,7 +35,7 @@ export function isDev() {
 export function isCtrlKey(
   e: React.KeyboardEvent | React.MouseEvent | KeyboardEvent,
 ): boolean {
-  const isMacOS = window.__MUSEEKS_PLATFORM === 'macos';
+  const isMacOS = window.__SYNCUDIO_PLATFORM === 'macos';
 
   return (isMacOS && e.metaKey) || (!isMacOS && e.ctrlKey);
 }
@@ -43,7 +43,7 @@ export function isCtrlKey(
 export function isAltKey(
   e: React.KeyboardEvent | React.MouseEvent | KeyboardEvent,
 ): boolean {
-  const isMacOS = window.__MUSEEKS_PLATFORM === 'macos';
+  const isMacOS = window.__SYNCUDIO_PLATFORM === 'macos';
 
   return (isMacOS && e.ctrlKey) || (!isMacOS && e.metaKey);
 }

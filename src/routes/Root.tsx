@@ -14,7 +14,7 @@ import PlayerEvents from '../components/PlayerEvents';
 import Toasts from '../components/Toasts';
 import useInvalidate from '../hooks/useInvalidate';
 import SettingsAPI from '../stores/SettingsAPI';
-import type { LoaderData } from '../types/museeks';
+import type { LoaderData } from '../types/syncudio';
 
 import styles from './Root.module.css';
 
@@ -27,7 +27,7 @@ export default function ViewRoot() {
   }, [invalidate]);
 
   return (
-    <div className={`${styles.root} os__${window.__MUSEEKS_PLATFORM}`}>
+    <div className={`${styles.root} os__${window.__SYNCUDIO_PLATFORM}`}>
       {/** Bunch of global event handlers */}
       <IPCNavigationEvents />
       <IPCPlayerEvents />

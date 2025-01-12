@@ -5,7 +5,7 @@ import { Navigate, Outlet, useMatch } from 'react-router';
 import * as SettingNav from '../elements/SettingsNav';
 import View from '../elements/View';
 import config from '../lib/config';
-import type { LoaderData } from '../types/museeks';
+import type { LoaderData } from '../types/syncudio';
 
 import styles from './settings.module.css';
 

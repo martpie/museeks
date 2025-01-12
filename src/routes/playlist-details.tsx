@@ -17,7 +17,7 @@ import config from '../lib/config';
 import database from '../lib/database';
 import PlaylistsAPI from '../stores/PlaylistsAPI';
 import useLibraryStore from '../stores/useLibraryStore';
-import type { LoaderData } from '../types/museeks';
+import type { LoaderData } from '../types/syncudio';
 
 export default function ViewPlaylistDetails() {
   const { playlists, playlistTracks, tracksDensity } =

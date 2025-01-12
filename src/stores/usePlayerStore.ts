@@ -8,7 +8,7 @@ import database from '../lib/database';
 import player from '../lib/player';
 import { logAndNotifyError } from '../lib/utils';
 import { shuffleTracks } from '../lib/utils-player';
-import { type API, PlayerStatus } from '../types/museeks';
+import { type API, PlayerStatus } from '../types/syncudio';
 
 import { createStore } from './store-helpers';
 
@@ -480,7 +480,7 @@ export function usePlayerAPI() {
 function createPlayerStore<T extends PlayerState>(store: StateCreator<T>) {
   return createStore(
     persist(store, {
-      name: 'museeks-player',
+      name: 'syncudio-player',
       partialize: (state) => {
         // on macOS, localStorage is quite limited, so we limit the max number of items
         // in the queue by slicing the queue around the currently playing track
@@ -541,7 +541,7 @@ function createPlayerStore<T extends PlayerState>(store: StateCreator<T>) {
 
         if (persistedState != null) {
           // If player status was playing, set it to pause, as it makes no sense
-          // to auto-start playing a song when Museeks starts
+          // to auto-start playing a song when Syncudio starts
           mergedState.playerStatus =
             (persistedState as PlayerState).playerStatus === PlayerStatus.PLAY
               ? PlayerStatus.PAUSE

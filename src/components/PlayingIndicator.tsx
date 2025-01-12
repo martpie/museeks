@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Icon from 'react-fontawesome';
 
 import usePlayerStore, { usePlayerAPI } from '../stores/usePlayerStore';
-import { PlayerStatus } from '../types/museeks';
+import { PlayerStatus } from '../types/syncudio';
 
 import styles from './PlayingIndicator.module.css';
 
@@ -39,7 +39,7 @@ export default function TrackPlayingIndicator() {
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       tabIndex={0}
-      data-museeks-action
+      data-syncudio-action
     >
       {icon}
     </button>

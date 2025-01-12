@@ -1,7 +1,7 @@
 import Icon from 'react-fontawesome';
 
 import usePlayerStore, { usePlayerAPI } from '../stores/usePlayerStore';
-import { PlayerStatus } from '../types/museeks';
+import { PlayerStatus } from '../types/syncudio';
 import VolumeControl from './VolumeControl';
 
 import styles from './PlayerControls.module.css';
@@ -17,7 +17,7 @@ export default function PlayerControls() {
         className={styles.control}
         title="Previous"
         onClick={playerAPI.previous}
-        data-museeks-action
+        data-syncudio-action
       >
         <Icon name="backward" />
       </button>
@@ -26,7 +26,7 @@ export default function PlayerControls() {
         className={`${styles.control} ${styles.play}`}
         title={playerStatus === PlayerStatus.PLAY ? 'Pause' : 'Play'}
         onClick={playerAPI.playPause}
-        data-museeks-action
+        data-syncudio-action
       >
         <Icon
           name={playerStatus === PlayerStatus.PLAY ? 'pause' : 'play'}
@@ -38,7 +38,7 @@ export default function PlayerControls() {
         className={styles.control}
         title="Next"
         onClick={playerAPI.next}
-        data-museeks-action
+        data-syncudio-action
       >
         <Icon name="forward" />
       </button>

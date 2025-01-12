@@ -3,7 +3,7 @@ import uniq from 'lodash-es/uniq';
 
 import type { SortBy, SortOrder, Track } from '../generated/typings';
 import { parseDuration } from '../hooks/useFormattedDuration';
-import type { Path } from '../types/museeks';
+import type { Path } from '../types/syncudio';
 import { plural } from './localization';
 
 /**

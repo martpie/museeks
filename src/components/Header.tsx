@@ -31,7 +31,7 @@ export default function Header() {
                   className={styles.queueToggle}
                   data-tauri-drag-region
                 >
-                  <Icon name="list" data-museeks-action />
+                  <Icon name="list" data-syncudio-action />
                 </button>
               </Popover.Trigger>
               <Popover.Portal>

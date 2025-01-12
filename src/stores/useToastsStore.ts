@@ -1,6 +1,6 @@
 import { nanoid } from 'nanoid';
 
-import type { API, Toast, ToastType } from '../types/museeks';
+import type { API, Toast, ToastType } from '../types/syncudio';
 
 import { createStore } from './store-helpers';
 

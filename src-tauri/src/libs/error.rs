@@ -8,7 +8,7 @@ use thiserror::Error;
  * Stolen from https://github.com/tauri-apps/tauri/discussions/3913
  */
 #[derive(Debug, Error)]
-pub enum MuseeksError {
+pub enum SyncudioError {
     #[error(transparent)]
     IO(#[from] std::io::Error),
 
@@ -43,7 +43,7 @@ pub enum MuseeksError {
 /**
  * Let's make anyhow's errors Tauri friendly, so they can be used for commands
  */
-impl Serialize for MuseeksError {
+impl Serialize for SyncudioError {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
@@ -52,4 +52,4 @@ impl Serialize for MuseeksError {
     }
 }
 
-pub type AnyResult<T, E = MuseeksError> = Result<T, E>;
+pub type AnyResult<T, E = SyncudioError> = Result<T, E>;

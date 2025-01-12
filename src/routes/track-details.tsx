@@ -15,7 +15,7 @@ import { parseDuration } from '../hooks/useFormattedDuration';
 import useInvalidate from '../hooks/useInvalidate';
 import database from '../lib/database';
 import { useLibraryAPI } from '../stores/useLibraryStore';
-import type { LoaderData, TrackMutation } from '../types/museeks';
+import type { LoaderData, TrackMutation } from '../types/syncudio';
 
 import styles from './track-details.module.css';
 

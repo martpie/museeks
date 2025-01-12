@@ -106,7 +106,7 @@ class Player {
     this.track = track;
 
     // Cursed Linux: https://github.com/tauri-apps/tauri/issues/3725#issuecomment-2325248116
-    if (window.__MUSEEKS_PLATFORM === 'linux') {
+    if (window.__SYNCUDIO_PLATFORM === 'linux') {
       const blobUrl = URL.createObjectURL(
         await fetch(convertFileSrc(track.path)).then((res) => res.blob()),
       );

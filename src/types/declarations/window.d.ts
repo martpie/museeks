@@ -11,7 +11,7 @@ declare global {
    * around by polluting the global namespace
    */
   interface Window {
-    __MUSEEKS_PLATFORM: OsType;
-    __MUSEEKS_INITIAL_CONFIG: Config;
+    __SYNCUDIO_PLATFORM: OsType;
+    __SYNCUDIO_INITIAL_CONFIG: Config;
   }
 }
