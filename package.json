@@ -1,17 +1,17 @@
 {
-  "name": "museeks",
-  "productName": "Museeks",
+  "name": "syncudio",
+  "productName": "Syncudio",
   "version": "0.20.5",
-  "description": "A simple, clean and cross-platform music player.",
+  "description": "A fork of Museeks that enables music syncing across devices. A simple, clean and cross-platform music player.",
   "type": "module",
   "repository": {
     "type": "git",
-    "url": "https://github.com/martpie/museeks"
+    "url": "https://github.com/lazykern/syncudio-desktop"
   },
   "author": "Pierre de la Martinière <pierre.de.la.martiniere@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/martpie/museeks/issues"
+    "url": "https://github.com/lazykern/syncudio-desktop/issues"
   },
   "scripts": {
     "dev": "vite",

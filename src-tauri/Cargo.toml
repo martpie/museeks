@@ -1,12 +1,12 @@
 # https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [package]
-name = "museeks"
+name = "syncudio"
 version = "0.20.5"
-description = "A simple, clean and cross-platform music player"
+description = "A fork of Museeks that enables music syncing across devices. A simple, clean and cross-platform music player"
 authors = ["Pierre de la Martinière <pierre.de.la.martiniere@gmail.com>"]
 license = "MIT"
-repository = "https://github.com/martpie/museeks"
+repository = "https://github.com/lazykern/syncudio-desktop"
 edition = "2021"
 
 [build-dependencies]

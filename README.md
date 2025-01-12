@@ -1,18 +1,19 @@
-# Museeks
+# Syncudio
 
-![Build Status](https://github.com/martpie/museeks/workflows/build/badge.svg)
-![Github All Releases](https://img.shields.io/github/downloads/martpie/museeks/total)
+![Build Status](https://github.com/lazykern/syncudio-desktop/workflows/build/badge.svg)
+![Github All Releases](https://img.shields.io/github/downloads/lazykern/syncudio-desktop/total)
 
-A simple, clean and cross-platform music player. ([museeks.io](https://museeks.io))
+Syncudio is a fork of [Museeks](https://github.com/martpie/museeks) that adds music syncing capabilities across devices while maintaining the simple, clean and cross-platform music player experience of the original project.
 
 ![Screenshot](screenshot.png)
 
 ## Features
 
-Museeks aims to be a simple and easy to use music player with a clean UI. You will not find tons of features, as it goal is not to compete with more complete and more famous music players.
+Syncudio builds upon Museeks' foundation, adding synchronization features while maintaining its simple and clean UI. You will find all the original features plus new sync capabilities.
 
-Here is a little preview though:
+Here is a little preview:
 
+- 🔄 Cross-device music synchronization
 - 💻 Cross-platform music player (Linux, macOS and Windows)
 - 🎧 Supported formats: mp3, mp4, m4a/aac, flac, wav, ogg, 3gpp
 - 🔄 Library auto-refresh
@@ -29,20 +30,20 @@ Want more? Open a new issue or 👍 an existing one so we can talk about it.
 
 ## Releases notes
 
-[Over here!](https://github.com/martpie/museeks/releases)
+[Over here!](https://github.com/lazykern/syncudio-desktop/releases)
 
 ## Installation
 
 ### Installers
 
-Binaries/Installers can be found [on the releases page](https://github.com/martpie/museeks/releases).
+Binaries/Installers can be found [on the releases page](https://github.com/lazykern/syncudio-desktop/releases).
 
 > [!NOTE]  
-> Publication of Museeks to package managers is community-maintained. Museeks may be available there (like Homebrew, AUR, etc), but with no guarantee of it being the latest version available.
+> Publication of Syncudio to package managers is community-maintained. Syncudio may be available there (like Homebrew, AUR, etc), but with no guarantee of it being the latest version available.
 
 ### Build (advanced)
 
-Museeks is built upon:
+Syncudio is built upon:
 
 - Back-end: [Tauri v2](https://v2.tauri.app/) / Rust 🦀
 - UI: [React.js](https://react.dev)
@@ -54,8 +55,8 @@ Requirements:
 
 Please consider that **`master` is unstable**.
 
-- `git clone git@github.com:martpie/museeks.git`
-- `cd museeks`
+- `git clone git@github.com:lazykern/syncudio-desktop.git`
+- `cd syncudio-desktop`
 - `bun install --frozen-lockfile`
 - `bun tauri dev`
 
@@ -68,23 +69,23 @@ Tauri does not support x-platform binaries, so the command will only generate bi
 
 ## Troubleshooting
 
-Museeks is currently in development. This implies some things can break after an update (database schemes changes, config...).
+Syncudio is currently in development. This implies some things can break after an update (database schemes changes, config...).
 
-If you encounter freezes or crashes when using the app, you can reset Museeks by following these steps:
+If you encounter freezes or crashes when using the app, you can reset Syncudio by following these steps:
 
 - Go to Settings -> Open Storage Directory
-- Alternatively, go to the Museeks folder directory
-  - Windows: `%AppData%\Museeks`
-  - OSX: `~/Library/Application Support/Museeks`
-  - Linux: `~/.config/museeks/` or `$XDG_CONFIG_HOME/Museeks`
+- Alternatively, go to the Syncudio folder directory
+  - Windows: `%AppData%\Syncudio`
+  - OSX: `~/Library/Application Support/Syncudio`
+  - Linux: `~/.config/syncudio/` or `$XDG_CONFIG_HOME/Syncudio`
 - Delete everything there
-- Restart Museeks
+- Restart Syncudio
 
 If you still get problems after that, please open an issue :)
 
 ## Bug report
 
-If you want to report a bug, first, thanks a lot, that helps us a lot. Please open an issue and mention your OS, your Museeks version, and how to reproduce it. Adding a screen of the console (Menu -> View -> Toggle Developer Tools) is a big help too.
+If you want to report a bug, first, thanks a lot, that helps us a lot. Please open an issue and mention your OS, your Syncudio version, and how to reproduce it. Adding a screen of the console (Menu -> View -> Toggle Developer Tools) is a big help too.
 
 ## Contribute
 

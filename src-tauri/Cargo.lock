@@ -2767,45 +2767,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "museeks"
-version = "0.20.5"
-dependencies = [
- "anyhow",
- "base64 0.22.1",
- "dirs 5.0.1",
- "futures",
- "home-config",
- "itertools 0.14.0",
- "lofty",
- "log",
- "m3u",
- "memoize",
- "nosleep",
- "ormlite",
- "pathdiff",
- "rayon",
- "serde",
- "serde_json",
- "strum",
- "tauri",
- "tauri-build",
- "tauri-plugin-dialog",
- "tauri-plugin-fs",
- "tauri-plugin-log",
- "tauri-plugin-notification",
- "tauri-plugin-opener",
- "tauri-plugin-os",
- "tauri-plugin-shell",
- "tauri-plugin-single-instance",
- "tauri-plugin-window-state",
- "thiserror 2.0.9",
- "tokio",
- "ts-rs",
- "uuid",
- "walkdir",
-]
-
-[[package]]
 name = "ndk"
 version = "0.9.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -5050,6 +5011,45 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "0bf256ce5efdfa370213c1dabab5935a12e49f2c58d15e9eac2870d3b4f27263"
 dependencies = [
  "futures-core",
+]
+
+[[package]]
+name = "syncudio"
+version = "0.20.5"
+dependencies = [
+ "anyhow",
+ "base64 0.22.1",
+ "dirs 5.0.1",
+ "futures",
+ "home-config",
+ "itertools 0.14.0",
+ "lofty",
+ "log",
+ "m3u",
+ "memoize",
+ "nosleep",
+ "ormlite",
+ "pathdiff",
+ "rayon",
+ "serde",
+ "serde_json",
+ "strum",
+ "tauri",
+ "tauri-build",
+ "tauri-plugin-dialog",
+ "tauri-plugin-fs",
+ "tauri-plugin-log",
+ "tauri-plugin-notification",
+ "tauri-plugin-opener",
+ "tauri-plugin-os",
+ "tauri-plugin-shell",
+ "tauri-plugin-single-instance",
+ "tauri-plugin-window-state",
+ "thiserror 2.0.9",
+ "tokio",
+ "ts-rs",
+ "uuid",
+ "walkdir",
 ]
 
 [[package]]
