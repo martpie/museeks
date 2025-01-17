@@ -19,7 +19,7 @@ jobs:
   qa:
     # For QA (lint, test, etc), Linux is enough
     # https://github.com/tauri-apps/tauri-action/issues/745#issuecomment-2024998604
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
 
     steps:
       - uses: actions/checkout@v4
@@ -84,7 +84,7 @@ jobs:
       fail-fast: false
       matrix:
         # - include
-        platform: [macos-latest, ubuntu-20.04, windows-latest]
+        platform: [macos-latest, ubuntu-22.04, windows-latest]
 
     runs-on: ${{ matrix.platform }}
     steps:
@@ -106,7 +106,7 @@ jobs:
           workspaces: './src-tauri -> target'
 
       - name: Install native dependencies (ubuntu only)
-        if: matrix.platform == 'ubuntu-20.04'
+        if: matrix.platform == 'ubuntu-22.04'
         run: |
           sudo apt-get update
           sudo apt-get install -y libgtk-3-dev libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf
@@ -130,7 +130,7 @@ jobs:
           args: ${{ matrix.platform == 'macos-latest' && '--target universal-apple-darwin' || '' }}
 
       - uses: actions/upload-artifact@v4
-        if: matrix.platform == 'ubuntu-20.04'
+        if: matrix.platform == 'ubuntu-22.04'
         with:
           name: binaries-linux
           path: |
