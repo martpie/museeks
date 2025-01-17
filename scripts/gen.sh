@@ -7,4 +7,5 @@ fi
 
 # Generate types via ts-rs
 find ./src/generated/typings -iname '*.ts' -not -iname 'index.ts' -execdir rm {} \;
+cargo install --path src-tauri
 cargo test --manifest-path src-tauri/Cargo.toml
