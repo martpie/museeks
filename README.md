@@ -1,6 +1,6 @@
 # Museeks
 
-![Build Status](https://github.com/martpie/museeks/workflows/build/badge.svg)
+![build](https://github.com/martpie/museeks/actions/workflows/build.yml/badge.svg?branch=master)
 ![Github All Releases](https://img.shields.io/github/downloads/martpie/museeks/total)
 
 A simple, clean and cross-platform music player. ([museeks.io](https://museeks.io))
