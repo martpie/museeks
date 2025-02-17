@@ -66,7 +66,11 @@ pub fn get_track_from_file(path: &PathBuf) -> Option<Track> {
                 path: path.to_string_lossy().into_owned(),
                 title: tag
                     .get_string(&ItemKey::TrackTitle)
-                    .unwrap_or("Unknown")
+                    .unwrap_or(
+                        path.file_name()
+                            .and_then(|f| f.to_str())
+                            .unwrap_or("Unknown"),
+                    )
                     .to_string(),
                 album: tag
                     .get_string(&ItemKey::AlbumTitle)
