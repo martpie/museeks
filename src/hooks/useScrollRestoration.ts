@@ -44,7 +44,7 @@ export function useScrollRestoration(
   }, [target, key]);
 
   useEffect(() => {
-    if (state === 'idle' && !init) {
+    if (state === 'idle' && !init && target != null) {
       setInit(true);
       target?.scrollTo(0, getScrollPosition(key));
     }
