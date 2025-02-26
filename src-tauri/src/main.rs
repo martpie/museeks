@@ -34,6 +34,7 @@ fn main() {
                 // Prevent noisy logs from logging
                 .level_for("lofty", LevelFilter::Error)
                 .with_colors(ColoredLevelConfig::default())
+                .max_file_size(50_000)
                 .build(),
         )
         // Custom integrations
