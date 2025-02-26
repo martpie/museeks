@@ -28,6 +28,7 @@ fn get_cover_from_id3(path: String) -> Option<String> {
     let cover = primary_tag
         .get_picture_type(PictureType::CoverFront)
         .or_else(|| primary_tag.get_picture_type(PictureType::Illustration))
+        .or_else(|| primary_tag.get_picture_type(PictureType::Other))
         .or_else(|| primary_tag.get_picture_type(PictureType::Icon))
         .or_else(|| primary_tag.get_picture_type(PictureType::OtherIcon))?;
 
