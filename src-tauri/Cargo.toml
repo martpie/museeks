@@ -2,7 +2,7 @@
 
 [package]
 name = "museeks"
-version = "0.20.7"
+version = "0.20.8"
 description = "A simple, clean and cross-platform music player"
 authors = ["Pierre de la Martinière <pierre.de.la.martiniere@gmail.com>"]
 license = "MIT"

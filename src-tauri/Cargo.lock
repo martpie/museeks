@@ -2771,7 +2771,7 @@ dependencies = [
 
 [[package]]
 name = "museeks"
-version = "0.20.7"
+version = "0.20.8"
 dependencies = [
  "anyhow",
  "base64 0.22.1",
@@ -3798,7 +3798,7 @@ version = "2.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "7e8366a6159044a37876a2b9817124296703c586a5c92e2c53751fa06d8d43e8"
 dependencies = [
- "toml_edit 0.20.7",
+ "toml_edit 0.20.8",
 ]
 
 [[package]]
@@ -5954,7 +5954,7 @@ dependencies = [
 
 [[package]]
 name = "toml_edit"
-version = "0.20.7"
+version = "0.20.8"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "70f427fce4d84c72b5b732388bf4a9f4531b53f74e2887e3ecb2481f68f66d81"
 dependencies = [

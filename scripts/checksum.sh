@@ -9,8 +9,8 @@ checksum_file () {
   shasum -a 256 $1 > $1.sha256
 }
 
-checksum_file release/Museeks_0.20.7_amd64.deb
-checksum_file release/Museeks_0.20.7_x64-setup.exe
-checksum_file release/Museeks_0.20.7_amd64.AppImage
-checksum_file release/Museeks-0.20.7-1.x86_64.rpm
-checksum_file release/Museeks_0.20.7_universal.dmg
+checksum_file release/Museeks_0.20.8_amd64.deb
+checksum_file release/Museeks_0.20.8_x64-setup.exe
+checksum_file release/Museeks_0.20.8_amd64.AppImage
+checksum_file release/Museeks-0.20.8-1.x86_64.rpm
+checksum_file release/Museeks_0.20.8_universal.dmg
