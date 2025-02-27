@@ -10,10 +10,10 @@ repository = "https://github.com/martpie/museeks"
 edition = "2021"
 
 [build-dependencies]
-tauri-build = { version = "2.0.5", features = ["codegen"] }
+tauri-build = { version = "2.0.6", features = ["codegen"] }
 
 [dependencies]
-tauri = { version = "2.2.5", features = [
+tauri = { version = "2.3.0", features = [
     "protocol-asset",
     "image-png",
     "devtools",
@@ -49,7 +49,7 @@ strum = { version = "0.27.1", features = ["derive"] }
 tokio = "1.43.0"
 thiserror = "2.0.11"
 ts-rs = "10.1.0"
-uuid = { version = "1.15.0", features = ["v3", "v4", "fast-rng"] }
+uuid = { version = "1.15.1", features = ["v3", "v4", "fast-rng"] }
 walkdir = "2.5.0"
 
 [profile.dev]

@@ -233,7 +233,7 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
                     win.emit(IPCEvent::GoToSettings.as_ref(), ()).unwrap();
                 }
                 "reload" => {
-                    let mut webview = win.get_webview_window("main").unwrap();
+                    let webview = win.get_webview_window("main").unwrap();
                     webview
                         .navigate(webview.url().expect("webview should havea a URL"))
                         .unwrap();
