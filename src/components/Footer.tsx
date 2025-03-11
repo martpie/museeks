@@ -70,7 +70,7 @@ export default function Footer() {
             <Icon name="star" fixedWidth />
           </NavLink>
           <NavLink
-            to="/settings"
+            to="/settings/library"
             className={({ isActive }) =>
               `${styles.footerNavigationLink} ${
                 isActive && styles.footerNavigationLinkIsActive

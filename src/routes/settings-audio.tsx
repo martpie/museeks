@@ -5,7 +5,7 @@ import * as Setting from '../components/Setting';
 import { usePlayerAPI } from '../stores/usePlayerStore';
 
 import useInvalidate, { useInvalidateCallback } from '../hooks/useInvalidate';
-import type { SettingsLoaderData } from './settings';
+import type { SettingsLoaderData } from './settings-library';
 
 export default function ViewSettingsAudio() {
   const { config } = useLoaderData() as SettingsLoaderData;
@@ -44,3 +44,5 @@ export default function ViewSettingsAudio() {
     </div>
   );
 }
+
+export { clientLoader } from './settings-library';

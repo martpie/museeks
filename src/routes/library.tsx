@@ -100,15 +100,15 @@ export default function ViewLibrary() {
   return <View>{getLibraryComponent}</View>;
 }
 
-export type LibraryLoaderData = LoaderData<typeof ViewLibrary.loader>;
+export type LibraryLoaderData = LoaderData<typeof clientLoader>;
 
-ViewLibrary.loader = async () => {
+export async function clientLoader() {
   return {
     playlists: await database.getAllPlaylists(),
     tracksDensity: (await config.get('track_view_density')) as
       | 'compact'
       | 'normal',
   };
-};
+}
 
 // ViewLibrary.whyDidYouRender = true;

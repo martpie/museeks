@@ -91,9 +91,9 @@ export default function ViewPlaylistDetails() {
   );
 }
 
-export type PlaylistLoaderData = LoaderData<typeof ViewPlaylistDetails.loader>;
+export type PlaylistLoaderData = LoaderData<typeof clientLoader>;
 
-ViewPlaylistDetails.loader = async ({ params }: LoaderFunctionArgs) => {
+export async function clientLoader({ params }: LoaderFunctionArgs) {
   if (typeof params.playlistID !== 'string') {
     throw new Error('Playlist ID is not defined');
   }
@@ -112,4 +112,4 @@ ViewPlaylistDetails.loader = async ({ params }: LoaderFunctionArgs) => {
 
     throw err;
   }
-};
+}

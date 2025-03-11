@@ -139,9 +139,9 @@ export default function ViewPlaylists() {
   );
 }
 
-export type PlaylistsLoaderData = LoaderData<typeof ViewPlaylists.loader>;
+export type PlaylistsLoaderData = LoaderData<typeof clientLoader>;
 
-ViewPlaylists.loader = async ({ params }: LoaderFunctionArgs) => {
+export async function clientLoader({ params }: LoaderFunctionArgs) {
   const playlists = await database.getAllPlaylists();
   const [firstPlaylist] = playlists;
   const { playlistID } = params;
@@ -159,4 +159,4 @@ ViewPlaylists.loader = async ({ params }: LoaderFunctionArgs) => {
   }
 
   return { playlists };
-};
+}

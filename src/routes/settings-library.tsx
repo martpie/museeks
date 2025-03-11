@@ -1,3 +1,5 @@
+import { getTauriVersion, getVersion } from '@tauri-apps/api/app';
+import { invoke } from '@tauri-apps/api/core';
 import { useLoaderData } from 'react-router';
 
 import * as Setting from '../components/Setting';
@@ -7,11 +9,13 @@ import Flexbox from '../elements/Flexbox';
 import useInvalidate, { useInvalidateCallback } from '../hooks/useInvalidate';
 import SettingsAPI from '../stores/SettingsAPI';
 import useLibraryStore, { useLibraryAPI } from '../stores/useLibraryStore';
-import type { SettingsLoaderData } from './settings';
 
 import { open } from '@tauri-apps/plugin-dialog';
 import { useCallback } from 'react';
+import config from '../lib/config';
 import styles from './settings-library.module.css';
+
+import type { LoaderData } from '../types/museeks';
 
 export default function ViewSettingsLibrary() {
   const libraryAPI = useLibraryAPI();
@@ -109,4 +113,15 @@ export default function ViewSettingsLibrary() {
       </Setting.Section>
     </div>
   );
+}
+
+export type SettingsLoaderData = LoaderData<typeof clientLoader>;
+
+export async function clientLoader() {
+  return {
+    config: await config.getAll(),
+    version: await getVersion(),
+    tauriVersion: await getTauriVersion(),
+    appStorageDir: await invoke<string>('plugin:config|get_storage_dir'),
+  };
 }

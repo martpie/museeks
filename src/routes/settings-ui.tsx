@@ -6,7 +6,7 @@ import type { Config, DefaultView } from '../generated/typings';
 import useInvalidate, { useInvalidateCallback } from '../hooks/useInvalidate';
 import { themes } from '../lib/themes';
 import SettingsAPI from '../stores/SettingsAPI';
-import type { SettingsLoaderData } from './settings';
+import type { SettingsLoaderData } from './settings-library';
 
 export default function ViewSettingsUI() {
   const { config } = useLoaderData() as SettingsLoaderData;
@@ -89,3 +89,5 @@ export default function ViewSettingsUI() {
     </div>
   );
 }
+
+export { clientLoader } from './settings-library';

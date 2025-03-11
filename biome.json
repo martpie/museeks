@@ -9,9 +9,6 @@
       },
       "suspicious": {
         "noImplicitAnyLet": "off"
-      },
-      "nursery": {
-        "useComponentExportOnlyModules": "warn"
       }
     }
   },

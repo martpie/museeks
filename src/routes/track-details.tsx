@@ -235,9 +235,9 @@ export default function ViewTrackDetails() {
   );
 }
 
-export type DetailsLoaderData = LoaderData<typeof ViewTrackDetails.loader>;
+export type DetailsLoaderData = LoaderData<typeof clientLoader>;
 
-ViewTrackDetails.loader = async ({ params }: LoaderFunctionArgs) => {
+export async function clientLoader({ params }: LoaderFunctionArgs) {
   const { trackID } = params;
 
   if (trackID == null) {
@@ -251,7 +251,7 @@ ViewTrackDetails.loader = async ({ params }: LoaderFunctionArgs) => {
   }
 
   return { track };
-};
+}
 
 function parseNullableNumber(str: string): number | null {
   if (str === '' || str === '0') {
