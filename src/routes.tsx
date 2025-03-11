@@ -17,7 +17,7 @@ const routeTree: RouteObject[] = [
   {
     path: '/',
     id: 'root',
-    lazy: () => import('./routes/Root').then(convert),
+    lazy: () => import('./routes/index').then(convert),
     HydrateFallback: () => null, // there should be no hydration as we're SPA-only
     ErrorBoundary: GlobalErrorBoundary,
     children: [
