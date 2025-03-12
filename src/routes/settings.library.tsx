@@ -1,6 +1,5 @@
-import { getTauriVersion, getVersion } from '@tauri-apps/api/app';
-import { invoke } from '@tauri-apps/api/core';
-import { useLoaderData } from 'react-router';
+import { createFileRoute, useLoaderData } from '@tanstack/react-router';
+import { open } from '@tauri-apps/plugin-dialog';
 
 import * as Setting from '../components/Setting';
 import CheckboxSetting from '../components/SettingCheckbox';
@@ -10,17 +9,18 @@ import useInvalidate, { useInvalidateCallback } from '../hooks/useInvalidate';
 import SettingsAPI from '../stores/SettingsAPI';
 import useLibraryStore, { useLibraryAPI } from '../stores/useLibraryStore';
 
-import { open } from '@tauri-apps/plugin-dialog';
 import { useCallback } from 'react';
-import config from '../lib/config';
 import styles from './settings-library.module.css';
 
-import type { LoaderData } from '../types/museeks';
+export const Route = createFileRoute('/settings/library')({
+  component: ViewSettingsLibrary,
+});
 
-export default function ViewSettingsLibrary() {
+function ViewSettingsLibrary() {
+  const { config } = useLoaderData({ from: '/settings' });
+
   const libraryAPI = useLibraryAPI();
   const isLibraryRefreshing = useLibraryStore((state) => state.refreshing);
-  const { config } = useLoaderData() as SettingsLoaderData;
   const invalidate = useInvalidate();
 
   const addLibraryFolders = useCallback(async () => {
@@ -113,15 +113,4 @@ export default function ViewSettingsLibrary() {
       </Setting.Section>
     </div>
   );
-}
-
-export type SettingsLoaderData = LoaderData<typeof clientLoader>;
-
-export async function clientLoader() {
-  return {
-    config: await config.getAll(),
-    version: await getVersion(),
-    tauriVersion: await getTauriVersion(),
-    appStorageDir: await invoke<string>('plugin:config|get_storage_dir'),
-  };
 }

@@ -1,10 +1,19 @@
+import { TanStackRouterVite as router } from '@tanstack/router-plugin/vite';
 import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
 import svgr from 'vite-plugin-svgr';
 
 // https://vitejs.dev/config/
 export default defineConfig(async () => ({
-  plugins: [react(), svgr()],
+  plugins: [
+    router({
+      target: 'react',
+      autoCodeSplitting: true,
+      generatedRouteTree: './src/generated/route-tree.ts',
+    }),
+    react(),
+    svgr(),
+  ],
 
   // Vite options tailored for Tauri development and only applied in `tauri dev` or `tauri build`
   //

@@ -1,16 +1,15 @@
+import {
+  Outlet,
+  createFileRoute,
+  redirect,
+  useMatch,
+  useNavigate,
+} from '@tanstack/react-router';
 import type {
   MenuItemOptions,
   PredefinedMenuItemOptions,
 } from '@tauri-apps/api/menu';
 import { useCallback, useMemo } from 'react';
-import {
-  type LoaderFunctionArgs,
-  Outlet,
-  redirect,
-  useLoaderData,
-  useNavigate,
-  useParams,
-} from 'react-router';
 
 import SideNav from '../components/SideNav';
 import SideNavLink from '../components/SideNavLink';
@@ -20,13 +19,29 @@ import * as ViewMessage from '../elements/ViewMessage';
 import useInvalidate from '../hooks/useInvalidate';
 import database from '../lib/database';
 import PlaylistsAPI from '../stores/PlaylistsAPI';
-import type { LoaderData } from '../types/museeks';
+
+export const Route = createFileRoute('/playlists')({
+  component: ViewPlaylists,
+  loader: async ({ params }) => {
+    const playlists = await database.getAllPlaylists();
+
+    // If landing page, redirect to the first playlist if it exists
+    if (!('playlistID' in params) && playlists.length > 0) {
+      throw redirect({
+        to: '/playlists/$playlistID',
+        params: { playlistID: playlists[0].id },
+      });
+    }
+
+    return { playlists };
+  },
+});
 
 export default function ViewPlaylists() {
-  const { playlists } = useLoaderData() as PlaylistsLoaderData;
+  const { playlists } = Route.useLoaderData();
+
   const invalidate = useInvalidate();
   const navigate = useNavigate();
-  const params = useParams();
 
   const createPlaylist = useCallback(async () => {
     // TODO: 'new playlist 1', 'new playlist 2' ...
@@ -34,7 +49,7 @@ export default function ViewPlaylists() {
 
     if (playlist) {
       invalidate();
-      navigate(`/playlists/${playlist.id}`);
+      navigate({ to: `/playlists/${playlist.id}` });
     }
   }, [navigate, invalidate]);
 
@@ -45,6 +60,11 @@ export default function ViewPlaylists() {
     },
     [invalidate],
   );
+
+  const childPlaylistMatch = useMatch({
+    from: '/playlists/$playlistID',
+    shouldThrow: false,
+  });
 
   const sideNavItems = useMemo(() => {
     return playlists.map((playlist) => {
@@ -57,8 +77,8 @@ export default function ViewPlaylists() {
             await PlaylistsAPI.remove(playlist.id);
 
             // Redirect to /playlists if we are deleting the current playlist
-            if (params.playlistID === playlist.id) {
-              navigate('/playlists');
+            if (childPlaylistMatch?.params.playlistID === playlist.id) {
+              navigate({ to: '/playlists' });
             }
 
             invalidate();
@@ -92,7 +112,7 @@ export default function ViewPlaylists() {
         />
       );
     });
-  }, [playlists, renamePlaylist, invalidate, navigate, params.playlistID]);
+  }, [playlists, renamePlaylist, invalidate, navigate, childPlaylistMatch]);
 
   // Empty and List states
   let playlistContent;
@@ -137,26 +157,4 @@ export default function ViewPlaylists() {
       {playlistContent}
     </View>
   );
-}
-
-export type PlaylistsLoaderData = LoaderData<typeof clientLoader>;
-
-export async function clientLoader({ params }: LoaderFunctionArgs) {
-  const playlists = await database.getAllPlaylists();
-  const [firstPlaylist] = playlists;
-  const { playlistID } = params;
-
-  if (
-    // If landing page, redirect to the first playlist
-    playlistID === undefined ||
-    // If playlist ID does not exist, redirect to the first playlist
-    (playlistID !== undefined &&
-      !playlists.map((playlist) => playlist.id).includes(playlistID))
-  ) {
-    if (firstPlaylist !== undefined) {
-      return redirect(`/playlists/${firstPlaylist.id}`);
-    }
-  }
-
-  return { playlists };
 }

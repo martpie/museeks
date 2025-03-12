@@ -2,18 +2,16 @@
  * Components helpers
  */
 
+import type { ErrorComponentProps } from '@tanstack/react-router';
 import * as logger from '@tauri-apps/plugin-log';
-import { isRouteErrorResponse, useRouteError } from 'react-router';
 import ExternalLink from '../elements/ExternalLink';
 import * as ViewMessage from '../elements/ViewMessage';
 
-export default function GlobalErrorBoundary() {
-  const error = useRouteError();
+export default function GlobalErrorBoundary(props: ErrorComponentProps) {
+  const error = props.error;
   let errorMessage: string;
 
-  if (isRouteErrorResponse(error)) {
-    errorMessage = error.statusText;
-  } else if (error instanceof Error) {
+  if (error instanceof Error) {
     errorMessage = error.message;
   } else if (typeof error === 'string') {
     errorMessage = error;

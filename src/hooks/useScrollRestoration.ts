@@ -1,6 +1,6 @@
+import { useLocation, useRouterState } from '@tanstack/react-router';
 import debounce from 'lodash-es/debounce';
 import { useEffect, useState } from 'react';
-import { useLocation, useNavigation } from 'react-router';
 
 function getScrollPosition(key: string) {
   const pos = window.sessionStorage.getItem(key);
@@ -28,7 +28,7 @@ export function useScrollRestoration(
 ) {
   const [init, setInit] = useState(false); // React strick mode is a nightmare
   const key = `scroll-position-${useLocation().pathname}`;
-  const { state } = useNavigation();
+  const state = useRouterState().status;
   const target = container?.current;
 
   useEffect(() => {

@@ -13,9 +13,8 @@ import {
 } from '@tauri-apps/api/menu';
 import { revealItemInDir } from '@tauri-apps/plugin-opener';
 import type React from 'react';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import Keybinding from 'react-keybinding-component';
-import { useNavigate, useSearchParams } from 'react-router';
 
 import type { Config, Playlist, Track } from '../generated/typings';
 import { logAndNotifyError } from '../lib/utils';
@@ -26,6 +25,7 @@ import { usePlayerAPI } from '../stores/usePlayerStore';
 import TrackRow from './TrackRow';
 import TracksListHeader from './TracksListHeader';
 
+import { useNavigate } from '@tanstack/react-router';
 import useDndSensors from '../hooks/useDnDSensors';
 import useInvalidate from '../hooks/useInvalidate';
 import { useScrollRestoration } from '../hooks/useScrollRestoration';
@@ -67,9 +67,9 @@ export default function TracksList(props: Props) {
 
   const navigate = useNavigate();
   const invalidate = useInvalidate();
-  const [searchParams, setSearchParams] = useSearchParams();
-  const shouldJumpToPlayingTrack =
-    searchParams.get('jump_to_playing_track') === 'true';
+  // const [searchParams, setSearchParams] = useSearchParams();
+  // const shouldJumpToPlayingTrack =
+  //   searchParams.get('jump_to_playing_track') === 'true';
 
   // Scrollable element for the virtual list + virtualizer
   const scrollableRef = useRef<HTMLDivElement>(null);
@@ -94,29 +94,29 @@ export default function TracksList(props: Props) {
   useScrollRestoration(scrollableRef);
 
   // Highlight playing track and scroll to it
-  useEffect(() => {
-    if (shouldJumpToPlayingTrack && trackPlayingID) {
-      setSearchParams(undefined);
-      setSelectedTracks(new Set([trackPlayingID]));
+  // useEffect(() => {
+  //   if (shouldJumpToPlayingTrack && trackPlayingID) {
+  //     setSearchParams(undefined);
+  //     setSelectedTracks(new Set([trackPlayingID]));
 
-      const playingTrackIndex = tracks.findIndex(
-        (track) => track.id === trackPlayingID,
-      );
+  //     const playingTrackIndex = tracks.findIndex(
+  //       (track) => track.id === trackPlayingID,
+  //     );
 
-      if (playingTrackIndex >= 0) {
-        setTimeout(() => {
-          // avoid conflict with scroll restoration
-          virtualizer.scrollToIndex(playingTrackIndex, { behavior: 'smooth' });
-        }, 0);
-      }
-    }
-  }, [
-    shouldJumpToPlayingTrack,
-    setSearchParams,
-    trackPlayingID,
-    tracks,
-    virtualizer.scrollToIndex,
-  ]);
+  //     if (playingTrackIndex >= 0) {
+  //       setTimeout(() => {
+  //         // avoid conflict with scroll restoration
+  //         virtualizer.scrollToIndex(playingTrackIndex, { behavior: 'smooth' });
+  //       }, 0);
+  //     }
+  //   }
+  // }, [
+  //   shouldJumpToPlayingTrack,
+  //   setSearchParams,
+  //   trackPlayingID,
+  //   tracks,
+  //   virtualizer.scrollToIndex,
+  // ]);
 
   /**
    * Helpers
@@ -418,7 +418,7 @@ export default function TracksList(props: Props) {
           MenuItem.new({
             text: 'Edit track',
             action: () => {
-              navigate(`/details/${track.id}`);
+              navigate({ to: `/tracks/${track.id}` });
             },
           }),
           PredefinedMenuItem.new({ item: 'Separator' }),

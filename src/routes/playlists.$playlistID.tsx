@@ -1,11 +1,5 @@
+import { Link, createFileRoute } from '@tanstack/react-router';
 import { useCallback } from 'react';
-import {
-  Link,
-  type LoaderFunctionArgs,
-  redirect,
-  useLoaderData,
-  useParams,
-} from 'react-router';
 
 import TracksList from '../components/TracksList';
 import * as ViewMessage from '../elements/ViewMessage';
@@ -17,12 +11,34 @@ import config from '../lib/config';
 import database from '../lib/database';
 import PlaylistsAPI from '../stores/PlaylistsAPI';
 import useLibraryStore from '../stores/useLibraryStore';
-import type { LoaderData } from '../types/museeks';
 
-export default function ViewPlaylistDetails() {
-  const { playlists, playlistTracks, tracksDensity } =
-    useLoaderData() as PlaylistLoaderData;
-  const { playlistID } = useParams();
+export const Route = createFileRoute('/playlists/$playlistID')({
+  component: ViewPlaylistDetails,
+  loader: async ({ params }) => {
+    if (typeof params.playlistID !== 'string') {
+      throw new Error('Playlist ID is not defined');
+    }
+
+    // try {
+    const playlist = await database.getPlaylist(params.playlistID);
+    return {
+      playlists: await database.getAllPlaylists(),
+      playlistTracks: await database.getTracks(playlist.tracks),
+      tracksDensity: await config.get('track_view_density'),
+    };
+    // } catch (err) {
+    //   if (err === 'Playlist not found') {
+    //     return redirect('/playlists');
+    //   }
+
+    //   throw err;
+    // }
+  },
+});
+
+function ViewPlaylistDetails() {
+  const { playlists, playlistTracks, tracksDensity } = Route.useLoaderData();
+  const { playlistID } = Route.useParams();
   const trackPlayingID = usePlayingTrackID();
 
   const invalidate = useInvalidate();
@@ -89,27 +105,4 @@ export default function ViewPlaylistDetails() {
       currentPlaylist={playlistID}
     />
   );
-}
-
-export type PlaylistLoaderData = LoaderData<typeof clientLoader>;
-
-export async function clientLoader({ params }: LoaderFunctionArgs) {
-  if (typeof params.playlistID !== 'string') {
-    throw new Error('Playlist ID is not defined');
-  }
-
-  try {
-    const playlist = await database.getPlaylist(params.playlistID);
-    return {
-      playlists: await database.getAllPlaylists(),
-      playlistTracks: await database.getTracks(playlist.tracks),
-      tracksDensity: await config.get('track_view_density'),
-    };
-  } catch (err) {
-    if (err === 'Playlist not found') {
-      return redirect('/playlists');
-    }
-
-    throw err;
-  }
 }

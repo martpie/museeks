@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
+import { Link, createFileRoute } from '@tanstack/react-router';
 import { useMemo } from 'react';
-import { Link, useLoaderData } from 'react-router';
 
 import TracksList from '../components/TracksList';
 import View from '../elements/View';
@@ -10,16 +10,27 @@ import usePlayingTrackID from '../hooks/usePlayingTrackID';
 import config from '../lib/config';
 import database from '../lib/database';
 import useLibraryStore from '../stores/useLibraryStore';
-import type { LoaderData } from '../types/museeks';
 
-export default function ViewLibrary() {
+export const Route = createFileRoute('/library')({
+  component: ViewLibrary,
+  loader: async () => {
+    return {
+      playlists: await database.getAllPlaylists(),
+      tracksDensity: (await config.get('track_view_density')) as
+        | 'compact'
+        | 'normal',
+    };
+  },
+});
+
+function ViewLibrary() {
   const trackPlayingID = usePlayingTrackID();
   const refreshing = useLibraryStore((state) => state.refreshing);
   const search = useLibraryStore((state) => state.search);
   const sortBy = useLibraryStore((state) => state.sortBy);
   const sortOrder = useLibraryStore((state) => state.sortOrder);
 
-  const { playlists, tracksDensity } = useLoaderData() as LibraryLoaderData;
+  const { playlists, tracksDensity } = Route.useLoaderData();
 
   // Some queries when switching routes can be expensive-ish (like getting all tracks),
   // while at the same time, the data will most of the time never change.
@@ -98,17 +109,6 @@ export default function ViewLibrary() {
   ]);
 
   return <View>{getLibraryComponent}</View>;
-}
-
-export type LibraryLoaderData = LoaderData<typeof clientLoader>;
-
-export async function clientLoader() {
-  return {
-    playlists: await database.getAllPlaylists(),
-    tracksDensity: (await config.get('track_view_density')) as
-      | 'compact'
-      | 'normal',
-  };
 }
 
 // ViewLibrary.whyDidYouRender = true;
