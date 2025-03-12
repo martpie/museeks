@@ -1,4 +1,4 @@
-import { Link, createFileRoute } from '@tanstack/react-router';
+import { Link, createFileRoute, redirect } from '@tanstack/react-router';
 import { useCallback } from 'react';
 
 import TracksList from '../components/TracksList';
@@ -15,24 +15,20 @@ import useLibraryStore from '../stores/useLibraryStore';
 export const Route = createFileRoute('/playlists/$playlistID')({
   component: ViewPlaylistDetails,
   loader: async ({ params }) => {
-    if (typeof params.playlistID !== 'string') {
-      throw new Error('Playlist ID is not defined');
+    try {
+      const playlist = await database.getPlaylist(params.playlistID);
+      return {
+        playlists: await database.getAllPlaylists(),
+        playlistTracks: await database.getTracks(playlist.tracks),
+        tracksDensity: await config.get('track_view_density'),
+      };
+    } catch (err) {
+      if (err === 'Playlist not found') {
+        throw redirect({ to: '/playlists' });
+      }
+
+      throw err;
     }
-
-    // try {
-    const playlist = await database.getPlaylist(params.playlistID);
-    return {
-      playlists: await database.getAllPlaylists(),
-      playlistTracks: await database.getTracks(playlist.tracks),
-      tracksDensity: await config.get('track_view_density'),
-    };
-    // } catch (err) {
-    //   if (err === 'Playlist not found') {
-    //     return redirect('/playlists');
-    //   }
-
-    //   throw err;
-    // }
   },
 });
 
