@@ -8,7 +8,6 @@ export default defineConfig(async () => ({
   plugins: [
     router({
       target: 'react',
-      autoCodeSplitting: true,
       generatedRouteTree: './src/generated/route-tree.ts',
     }),
     react(),
