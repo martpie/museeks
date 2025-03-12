@@ -19,9 +19,18 @@ import SettingsAPI from '../stores/SettingsAPI';
 
 import styles from './__root.module.css';
 
+type Search = {
+  jump_to_playing_track?: boolean;
+};
+
 export const Route = createRootRoute({
   component: ViewRoot,
   errorComponent: GlobalErrorBoundary,
+  validateSearch: (search): Search => {
+    return {
+      jump_to_playing_track: Boolean(search?.jump_to_playing_track ?? false),
+    };
+  },
 });
 
 function ViewRoot() {

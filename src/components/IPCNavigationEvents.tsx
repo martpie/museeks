@@ -27,16 +27,13 @@ function IPCNavigationEvents() {
     }
 
     function goToPlayingTrack() {
-      navigate(
-        {
-          to: queueOrigin,
-          // TODO: fixme
-          // search: createSearchParams({
-          //   jump_to_playing_track: 'true',
-          // }).toString(),
+      navigate({
+        to: queueOrigin,
+        replace: true, // Force rerendering to activate the scroll TODO: not working
+        search: {
+          jump_to_playing_track: true,
         },
-        // { replace: true },
-      );
+      });
     }
 
     const unlisteners = [
