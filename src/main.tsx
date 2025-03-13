@@ -29,7 +29,11 @@ import './styles/general.css';
 import { createHashHistory, createRouter } from '@tanstack/react-router';
 import { routeTree } from './generated/route-tree';
 
-const router = createRouter({ routeTree, history: createHashHistory() });
+const router = createRouter({
+  routeTree,
+  history: createHashHistory(),
+  scrollRestoration: false,
+});
 
 // Register the router instance for type safety
 declare module '@tanstack/react-router' {
