@@ -9,7 +9,10 @@ import useFilteredTracks from '../hooks/useFilteredTracks';
 import usePlayingTrackID from '../hooks/usePlayingTrackID';
 import config from '../lib/config';
 import database from '../lib/database';
+import queryClient from '../lib/query-client';
 import useLibraryStore from '../stores/useLibraryStore';
+
+const QUERY_ALL_TRACKS = 'all_tracks';
 
 export const Route = createFileRoute('/library')({
   component: ViewLibrary,
@@ -19,6 +22,10 @@ export const Route = createFileRoute('/library')({
       tracksDensity: (await config.get('track_view_density')) as
         | 'compact'
         | 'normal',
+      tracks: queryClient.prefetchQuery({
+        queryKey: [QUERY_ALL_TRACKS],
+        queryFn: database.getAllTracks,
+      }),
     };
   },
 });
@@ -36,7 +43,7 @@ function ViewLibrary() {
   // while at the same time, the data will most of the time never change.
   // Using stale-while-revalidate libraries help us (fake-)loading this page faster
   const { data: tracks, isLoading } = useQuery({
-    queryKey: ['tracks'],
+    queryKey: [QUERY_ALL_TRACKS],
     queryFn: database.getAllTracks,
     refetchOnWindowFocus: false,
     refetchOnReconnect: false,
