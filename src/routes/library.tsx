@@ -24,9 +24,7 @@ export const Route = createFileRoute('/library')({
 
     return {
       playlists: await database.getAllPlaylists(),
-      tracksDensity: (await config.get('track_view_density')) as
-        | 'compact'
-        | 'normal',
+      tracksDensity: await config.get('track_view_density'),
     };
   },
 });

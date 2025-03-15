@@ -46,6 +46,14 @@ pub enum DefaultView {
 
 #[derive(Serialize, Deserialize, Debug, Clone, TS)]
 #[ts(export, export_to = "../../src/generated/typings/index.ts")]
+#[serde(rename_all = "lowercase")]
+pub enum TrackViewDensity {
+    Normal,
+    Compact,
+}
+
+#[derive(Serialize, Deserialize, Debug, Clone, TS)]
+#[ts(export, export_to = "../../src/generated/typings/index.ts")]
 pub struct Config {
     pub theme: String,
     pub audio_volume: f32,
@@ -63,7 +71,7 @@ pub struct Config {
     pub auto_update_checker: bool,
     pub minimize_to_tray: bool,
     pub notifications: bool,
-    pub track_view_density: String,
+    pub track_view_density: TrackViewDensity,
 }
 
 pub const SYSTEM_THEME: &str = "__system";
@@ -87,7 +95,7 @@ impl Config {
             auto_update_checker: true,
             minimize_to_tray: false,
             notifications: false,
-            track_view_density: "normal".to_owned(),
+            track_view_density: TrackViewDensity::Normal,
         }
     }
 }
