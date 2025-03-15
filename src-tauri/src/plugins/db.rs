@@ -58,14 +58,14 @@ async fn setup() -> AnyResult<DB> {
  * Scan progress
  */
 #[derive(Debug, Clone, Serialize, Deserialize, TS)]
-#[ts(export, export_to = "../../src/generated/typings/index.ts")]
+#[ts(export, export_to = "../../src/generated/typings.ts")]
 pub struct ScanProgress {
     current: usize,
     total: usize,
 }
 
 #[derive(Default, Debug, Clone, Serialize, Deserialize, TS)]
-#[ts(export, export_to = "../../src/generated/typings/index.ts")]
+#[ts(export, export_to = "../../src/generated/typings.ts")]
 pub struct ScanResult {
     track_count: usize,
     track_failures: usize,

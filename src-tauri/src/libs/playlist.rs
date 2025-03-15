@@ -9,7 +9,7 @@ use ts_rs::TS;
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize, Model, TS)]
 #[ormlite(table = "playlists")]
-#[ts(export, export_to = "../../src/generated/typings/index.ts")]
+#[ts(export, export_to = "../../src/generated/typings.ts")]
 pub struct Playlist {
     #[ormlite(primary_key)]
     pub id: String,

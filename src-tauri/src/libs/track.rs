@@ -14,7 +14,7 @@ use uuid::Uuid;
  */
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize, Model, TS)]
 #[ormlite(table = "tracks")]
-#[ts(export, export_to = "../../src/generated/typings/index.ts")]
+#[ts(export, export_to = "../../src/generated/typings.ts")]
 pub struct Track {
     #[ormlite(primary_key)]
     pub id: String,
