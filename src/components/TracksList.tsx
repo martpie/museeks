@@ -4,6 +4,7 @@ import {
   SortableContext,
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
+
 import { useVirtualizer } from '@tanstack/react-virtual';
 import {
   Menu,
@@ -13,9 +14,8 @@ import {
 } from '@tauri-apps/api/menu';
 import { revealItemInDir } from '@tauri-apps/plugin-opener';
 import type React from 'react';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { type UIEvent, useCallback, useEffect, useRef, useState } from 'react';
 import Keybinding from 'react-keybinding-component';
-import { useNavigate, useSearchParams } from 'react-router';
 
 import type { Config, Playlist, Track } from '../generated/typings';
 import { logAndNotifyError } from '../lib/utils';
@@ -26,9 +26,13 @@ import { usePlayerAPI } from '../stores/usePlayerStore';
 import TrackRow from './TrackRow';
 import TracksListHeader from './TracksListHeader';
 
+import { useNavigate, useSearch } from '@tanstack/react-router';
 import useDndSensors from '../hooks/useDnDSensors';
 import useInvalidate from '../hooks/useInvalidate';
-import { useScrollRestoration } from '../hooks/useScrollRestoration';
+import {
+  getScrollPosition,
+  saveScrollPosition,
+} from '../lib/scroll-restoration';
 import { keyboardSelect } from '../lib/utils-list';
 import styles from './TracksList.module.css';
 
@@ -67,14 +71,18 @@ export default function TracksList(props: Props) {
 
   const navigate = useNavigate();
   const invalidate = useInvalidate();
-  const [searchParams, setSearchParams] = useSearchParams();
-  const shouldJumpToPlayingTrack =
-    searchParams.get('jump_to_playing_track') === 'true';
+  const searchParams = useSearch({ from: '__root__' });
+  const shouldJumpToPlayingTrack = searchParams.jump_to_playing_track === true;
+
+  const onScroll = useCallback((e: UIEvent<HTMLElement>) => {
+    saveScrollPosition(e.currentTarget.scrollTop);
+  }, []);
 
   // Scrollable element for the virtual list + virtualizer
   const scrollableRef = useRef<HTMLDivElement>(null);
   const virtualizer = useVirtualizer({
     count: tracks.length,
+    initialOffset: getScrollPosition(),
     overscan: 20,
     scrollPaddingEnd: 22, // Height of the track list header
     getScrollElement: () => scrollableRef.current,
@@ -91,12 +99,11 @@ export default function TracksList(props: Props) {
 
   const playerAPI = usePlayerAPI();
   const libraryAPI = useLibraryAPI();
-  useScrollRestoration(scrollableRef);
 
   // Highlight playing track and scroll to it
   useEffect(() => {
     if (shouldJumpToPlayingTrack && trackPlayingID) {
-      setSearchParams(undefined);
+      navigate({ to: '.', search: { jump_to_playing_track: false } });
       setSelectedTracks(new Set([trackPlayingID]));
 
       const playingTrackIndex = tracks.findIndex(
@@ -112,8 +119,8 @@ export default function TracksList(props: Props) {
     }
   }, [
     shouldJumpToPlayingTrack,
-    setSearchParams,
     trackPlayingID,
+    navigate,
     tracks,
     virtualizer.scrollToIndex,
   ]);
@@ -418,7 +425,7 @@ export default function TracksList(props: Props) {
           MenuItem.new({
             text: 'Edit track',
             action: () => {
-              navigate(`/details/${track.id}`);
+              navigate({ to: `/tracks/${track.id}` });
             },
           }),
           PredefinedMenuItem.new({ item: 'Separator' }),
@@ -467,7 +474,11 @@ export default function TracksList(props: Props) {
       <div className={styles.tracksList}>
         <Keybinding onKey={onKey} preventInputConflict />
         {/* Scrollable element */}
-        <div ref={scrollableRef} className={styles.tracksListScroller}>
+        <div
+          ref={scrollableRef}
+          className={styles.tracksListScroller}
+          onScroll={onScroll}
+        >
           <TracksListHeader enableSort={type === 'library'} />
 
           {/* The large inner element to hold all of the items */}

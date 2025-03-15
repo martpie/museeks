@@ -1,5 +1,4 @@
-import { NavLink } from 'react-router';
-
+import { Link } from '@tanstack/react-router';
 import {
   Menu,
   MenuItem,
@@ -8,6 +7,7 @@ import {
   type PredefinedMenuItemOptions,
 } from '@tauri-apps/api/menu';
 import { useCallback, useState } from 'react';
+
 import { logAndNotifyError } from '../lib/utils';
 import styles from './SideNavLink.module.css';
 
@@ -101,10 +101,9 @@ export default function SideNavLink(props: Props) {
   }, []);
 
   return (
-    <NavLink
-      className={({ isActive }) =>
-        `${styles.sideNavLink} ${isActive && 'isActive'}`
-      }
+    <Link
+      className={styles.sideNavLink}
+      activeProps={{ className: 'isActive' }}
       to={props.href}
       onContextMenu={onContextMenu}
       draggable={false}
@@ -122,6 +121,6 @@ export default function SideNavLink(props: Props) {
       ) : (
         props.label
       )}
-    </NavLink>
+    </Link>
   );
 }

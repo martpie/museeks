@@ -1,23 +1,18 @@
+import { Link } from '@tanstack/react-router';
 import cx from 'classnames';
 import type React from 'react';
-import { NavLink } from 'react-router';
 
 import styles from './SettingsNav.module.css';
 
 interface WrapProps {
   children: React.ReactNode;
-  vertical?: boolean;
 }
 
 /**
  * Wrapper for navigation
  */
-export function Wrap(props: WrapProps) {
-  return (
-    <nav className={cx(styles.nav, { [styles.navVertical]: props.vertical })}>
-      {props.children}
-    </nav>
-  );
+export function SettingsNav(props: WrapProps) {
+  return <nav className={cx(styles.nav)}>{props.children}</nav>;
 }
 
 interface LinkProps {
@@ -28,16 +23,15 @@ interface LinkProps {
 /**
  * Single navigation item (anchor)
  */
-export function Link(props: LinkProps) {
+export function SettingsNavLink(props: LinkProps) {
   return (
-    <NavLink
+    <Link
       to={props.to}
-      className={({ isActive }) =>
-        `${styles.navLink} ${isActive && styles.navLinkActive}`
-      }
+      className={styles.navLink}
+      activeProps={{ className: styles.navLinkActive }}
       draggable={false}
     >
       {props.children}
-    </NavLink>
+    </Link>
   );
 }

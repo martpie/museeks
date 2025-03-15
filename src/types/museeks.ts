@@ -1,5 +1,3 @@
-import type { LoaderFunctionArgs } from 'react-router';
-
 import type { Track } from '../generated/typings';
 
 /**
@@ -53,15 +51,6 @@ export type Path<T> = T extends object
   ? {
       [P in keyof T & StringableKey<T>]: `${P}` | `${P}.${Path<T[P]>}`;
     }[keyof T & StringableKey<T>]
-  : never;
-
-/**
- * Loader Types, to manually type useLoaderData()
- */
-export type LoaderData<T> = T extends (
-  args: LoaderFunctionArgs,
-) => Promise<infer U>
-  ? Exclude<U, Response>
   : never;
 
 /**

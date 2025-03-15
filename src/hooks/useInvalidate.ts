@@ -1,6 +1,6 @@
 import { useQueryClient } from '@tanstack/react-query';
+import { useRouter } from '@tanstack/react-router';
 import { useCallback } from 'react';
-import { useRevalidator } from 'react-router';
 
 /**
  * Hook returning a function to be manually called after anything that represents
@@ -9,8 +9,8 @@ import { useRevalidator } from 'react-router';
  * rule of hooks.
  */
 export default function useInvalidate() {
-  const routerRevalidator = useRevalidator();
   const queryClient = useQueryClient();
+  const router = useRouter();
 
   return useCallback(() => {
     //  Need to call mutate with undefined to make sure stale-while-revalidate is
@@ -21,8 +21,8 @@ export default function useInvalidate() {
     });
 
     // Reload the route data
-    routerRevalidator.revalidate();
-  }, [routerRevalidator, queryClient]);
+    router.invalidate();
+  }, [queryClient, router]);
 }
 
 // biome-ignore lint/suspicious/noExplicitAny: we don't care about the actual args

@@ -1,15 +1,18 @@
-import { useLoaderData } from 'react-router';
-
+import { createFileRoute, useLoaderData } from '@tanstack/react-router';
 import * as Setting from '../components/Setting';
 import CheckboxSetting from '../components/SettingCheckbox';
 import type { Config, DefaultView } from '../generated/typings';
 import useInvalidate, { useInvalidateCallback } from '../hooks/useInvalidate';
 import { themes } from '../lib/themes';
 import SettingsAPI from '../stores/SettingsAPI';
-import type { SettingsLoaderData } from './settings';
 
-export default function ViewSettingsUI() {
-  const { config } = useLoaderData() as SettingsLoaderData;
+export const Route = createFileRoute('/settings/ui')({
+  component: ViewSettingsUI,
+});
+
+function ViewSettingsUI() {
+  const { config } = useLoaderData({ from: '/settings' });
+
   const invalidate = useInvalidate();
 
   return (

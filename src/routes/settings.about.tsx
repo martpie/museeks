@@ -1,4 +1,4 @@
-import { useLoaderData } from 'react-router';
+import { createFileRoute, useLoaderData } from '@tanstack/react-router';
 
 import * as Setting from '../components/Setting';
 import CheckboxSetting from '../components/SettingCheckbox';
@@ -9,11 +9,15 @@ import Flexbox from '../elements/Flexbox';
 import Heart from '../elements/Heart';
 import useInvalidate, { useInvalidateCallback } from '../hooks/useInvalidate';
 import SettingsAPI from '../stores/SettingsAPI';
-import type { SettingsLoaderData } from './settings';
 
-export default function ViewSettingsAbout() {
-  const { config, version, tauriVersion, appStorageDir } =
-    useLoaderData() as SettingsLoaderData;
+export const Route = createFileRoute('/settings/about')({
+  component: ViewSettingsAbout,
+});
+
+function ViewSettingsAbout() {
+  const { config, version, tauriVersion, appStorageDir } = useLoaderData({
+    from: '/settings',
+  });
 
   const invalidate = useInvalidate();
 

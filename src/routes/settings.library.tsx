@@ -1,4 +1,5 @@
-import { useLoaderData } from 'react-router';
+import { createFileRoute, useLoaderData } from '@tanstack/react-router';
+import { open } from '@tauri-apps/plugin-dialog';
 
 import * as Setting from '../components/Setting';
 import CheckboxSetting from '../components/SettingCheckbox';
@@ -7,16 +8,19 @@ import Flexbox from '../elements/Flexbox';
 import useInvalidate, { useInvalidateCallback } from '../hooks/useInvalidate';
 import SettingsAPI from '../stores/SettingsAPI';
 import useLibraryStore, { useLibraryAPI } from '../stores/useLibraryStore';
-import type { SettingsLoaderData } from './settings';
 
-import { open } from '@tauri-apps/plugin-dialog';
 import { useCallback } from 'react';
 import styles from './settings-library.module.css';
 
-export default function ViewSettingsLibrary() {
+export const Route = createFileRoute('/settings/library')({
+  component: ViewSettingsLibrary,
+});
+
+function ViewSettingsLibrary() {
+  const { config } = useLoaderData({ from: '/settings' });
+
   const libraryAPI = useLibraryAPI();
   const isLibraryRefreshing = useLibraryStore((state) => state.refreshing);
-  const { config } = useLoaderData() as SettingsLoaderData;
   const invalidate = useInvalidate();
 
   const addLibraryFolders = useCallback(async () => {

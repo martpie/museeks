@@ -1,9 +1,6 @@
 .nav {
   display: flex;
-
-  &.navVertical {
-    flex-direction: column;
-  }
+  flex-direction: column;
 }
 
 .navLink {

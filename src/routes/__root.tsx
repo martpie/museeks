@@ -1,9 +1,11 @@
+import { Outlet, createRootRoute } from '@tanstack/react-router';
+import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
 import { useEffect } from 'react';
-import { Outlet } from 'react-router';
 
 import AppEvents from '../components/AppEvents';
 import DropzoneImport from '../components/DropzoneImport';
 import Footer from '../components/Footer';
+import GlobalErrorBoundary from '../components/GlobalErrorBoundary';
 import GlobalKeyBindings from '../components/GlobalKeyBindings';
 import Header from '../components/Header';
 import IPCNavigationEvents from '../components/IPCNavigationEvents';
@@ -14,11 +16,24 @@ import PlayerEvents from '../components/PlayerEvents';
 import Toasts from '../components/Toasts';
 import useInvalidate from '../hooks/useInvalidate';
 import SettingsAPI from '../stores/SettingsAPI';
-import type { LoaderData } from '../types/museeks';
 
-import styles from './Root.module.css';
+import styles from './__root.module.css';
 
-export default function ViewRoot() {
+type Search = {
+  jump_to_playing_track?: boolean;
+};
+
+export const Route = createRootRoute({
+  component: ViewRoot,
+  errorComponent: GlobalErrorBoundary,
+  validateSearch: (search): Search => {
+    return {
+      jump_to_playing_track: Boolean(search?.jump_to_playing_track ?? false),
+    };
+  },
+});
+
+function ViewRoot() {
   const invalidate = useInvalidate();
 
   useEffect(() => {
@@ -36,18 +51,18 @@ export default function ViewRoot() {
       <PlayerEvents />
       <MediaSessionEvents />
       <GlobalKeyBindings />
+
       {/** The actual app */}
       <Header />
       <main className={styles.mainContent}>
         <Outlet />
       </main>
       <Footer />
+
+      {/** Out-of-the-flow UI bits */}
       <Toasts />
       <DropzoneImport />
+      <TanStackRouterDevtools position="bottom-right" />
     </div>
   );
 }
-
-export type RootLoaderData = LoaderData<typeof ViewRoot.loader>;
-
-ViewRoot.loader = async () => null;

@@ -1,10 +1,6 @@
+import { createFileRoute, useRouter } from '@tanstack/react-router';
 import type React from 'react';
 import { useCallback, useState } from 'react';
-import {
-  type LoaderFunctionArgs,
-  useLoaderData,
-  useNavigate,
-} from 'react-router';
 
 import * as Setting from '../components/Setting';
 import Button from '../elements/Button';
@@ -15,15 +11,34 @@ import { parseDuration } from '../hooks/useFormattedDuration';
 import useInvalidate from '../hooks/useInvalidate';
 import database from '../lib/database';
 import { useLibraryAPI } from '../stores/useLibraryStore';
-import type { LoaderData, TrackMutation } from '../types/museeks';
+import type { TrackMutation } from '../types/museeks';
 
-import styles from './track-details.module.css';
+import styles from './tracks.$trackID.module.css';
 
 // We assume no artist or genre has a comma in its name (fingers crossed)
 const DELIMITER = ',';
 
-export default function ViewTrackDetails() {
-  const { track } = useLoaderData() as DetailsLoaderData;
+export const Route = createFileRoute('/tracks/$trackID')({
+  component: ViewTrackDetails,
+  loader: async ({ params }) => {
+    const { trackID } = params;
+
+    if (trackID == null) {
+      throw new Error('Track ID should not be null');
+    }
+
+    const [track] = await database.getTracks([trackID]);
+
+    if (track == null) {
+      throw new Error('Track not found');
+    }
+
+    return { track };
+  },
+});
+
+function ViewTrackDetails() {
+  const { track } = Route.useLoaderData();
   const invalidate = useInvalidate();
 
   const [formData, setFormData] = useState<TrackMutation>({
@@ -39,24 +54,24 @@ export default function ViewTrackDetails() {
   });
 
   const libraryAPI = useLibraryAPI();
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const handleSubmit = useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       await libraryAPI.updateTrackMetadata(track.id, formData);
       invalidate();
-      navigate(-1);
+      router.history.back();
     },
-    [track, formData, navigate, libraryAPI, invalidate],
+    [track, formData, router, libraryAPI, invalidate],
   );
 
   const handleCancel = useCallback(
     (e: React.MouseEvent<HTMLButtonElement>) => {
       e.preventDefault();
-      navigate(-1);
+      router.history.back();
     },
-    [navigate],
+    [router],
   );
 
   return (
@@ -234,24 +249,6 @@ export default function ViewTrackDetails() {
     </View>
   );
 }
-
-export type DetailsLoaderData = LoaderData<typeof ViewTrackDetails.loader>;
-
-ViewTrackDetails.loader = async ({ params }: LoaderFunctionArgs) => {
-  const { trackID } = params;
-
-  if (trackID == null) {
-    throw new Error('Track ID should not be null');
-  }
-
-  const [track] = await database.getTracks([trackID]);
-
-  if (track == null) {
-    throw new Error('Track not found');
-  }
-
-  return { track };
-};
 
 function parseNullableNumber(str: string): number | null {
   if (str === '' || str === '0') {
