@@ -107,7 +107,7 @@ const TITLE = (t: Track): string => stripAccents(t.title.toLowerCase());
 type TrackKeys = Path<Track>;
 type IterateeFunction = (track: Track) => string;
 
-export type SortConfig = Array<TrackKeys | IterateeFunction>;
+type SortConfig = Array<TrackKeys | IterateeFunction>;
 
 // Declarations
 const SORT_ORDERS: Record<SortBy, SortConfig> = {

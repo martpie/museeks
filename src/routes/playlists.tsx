@@ -37,7 +37,7 @@ export const Route = createFileRoute('/playlists')({
   },
 });
 
-export default function ViewPlaylists() {
+function ViewPlaylists() {
   const { playlists } = Route.useLoaderData();
 
   const invalidate = useInvalidate();

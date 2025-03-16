@@ -20,7 +20,7 @@ export const Route = createFileRoute('/settings')({
   },
 });
 
-export default function ViewSettings() {
+function ViewSettings() {
   return (
     <View hasPadding layout="centered">
       <div className={styles.settingsNav}>
