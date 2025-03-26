@@ -6,8 +6,8 @@ mod plugins;
 
 use libs::file_associations::setup_file_associations;
 use libs::utils::get_theme_from_name;
-use log::{info, LevelFilter};
-use plugins::config::{get_storage_dir, ConfigManager};
+use log::{LevelFilter, info};
+use plugins::config::{ConfigManager, get_storage_dir};
 use tauri::{Manager, WebviewUrl, WebviewWindowBuilder};
 use tauri_plugin_log::fern::colors::ColoredLevelConfig;
 use tauri_plugin_log::{Target, TargetKind};

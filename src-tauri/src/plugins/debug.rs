@@ -1,5 +1,5 @@
-use tauri::plugin::{Builder, TauriPlugin};
 use tauri::Runtime;
+use tauri::plugin::{Builder, TauriPlugin};
 
 pub fn init<R: Runtime>() -> TauriPlugin<R> {
     Builder::<R>::new("debug")

@@ -1,6 +1,6 @@
+use ormlite::Model;
 use ormlite::model::ModelBuilder;
 use ormlite::sqlite::SqliteConnection;
-use ormlite::Model;
 use std::collections::HashMap;
 use std::path::PathBuf;
 

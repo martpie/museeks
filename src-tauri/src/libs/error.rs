@@ -1,6 +1,6 @@
 use anyhow::Result;
 use lofty::error::LoftyError;
-use serde::{ser::Serializer, Serialize};
+use serde::{Serialize, ser::Serializer};
 use thiserror::Error;
 
 /**
