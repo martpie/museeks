@@ -1,10 +1,10 @@
 use std::path::PathBuf;
-use tauri::image::Image;
 use tauri::Emitter;
+use tauri::image::Image;
 use tauri::{
+    Manager, Runtime,
     menu::{AboutMetadataBuilder, MenuBuilder, MenuId, MenuItemBuilder, SubmenuBuilder},
     plugin::{Builder, TauriPlugin},
-    Manager, Runtime,
 };
 use tauri_plugin_opener::OpenerExt;
 

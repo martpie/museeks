@@ -1,7 +1,7 @@
 use std::path::PathBuf;
 
-use ormlite::sqlite::{SqliteConnectOptions, SqliteConnection};
 use ormlite::Connection;
+use ormlite::sqlite::{SqliteConnectOptions, SqliteConnection};
 
 use super::database::DB;
 use super::track::Track;

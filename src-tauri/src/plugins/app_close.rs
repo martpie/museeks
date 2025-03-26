@@ -1,5 +1,5 @@
-use tauri::plugin::{Builder, TauriPlugin};
 use tauri::Runtime;
+use tauri::plugin::{Builder, TauriPlugin};
 
 /**
  * Plugin in charge on making sure closing the app does not stop the audio

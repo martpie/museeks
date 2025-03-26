@@ -1,11 +1,11 @@
 use std::path::PathBuf;
 use std::str::FromStr;
 
-use base64::prelude::{Engine as _, BASE64_STANDARD};
+use base64::prelude::{BASE64_STANDARD, Engine as _};
 use lofty::file::TaggedFileExt;
 use lofty::picture::{MimeType, PictureType};
-use tauri::plugin::{Builder, TauriPlugin};
 use tauri::Runtime;
+use tauri::plugin::{Builder, TauriPlugin};
 
 use crate::libs::error::AnyResult;
 use crate::libs::utils::scan_dir;
