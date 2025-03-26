@@ -55,6 +55,15 @@ export default function Footer() {
             <Icon name="align-justify" fixedWidth />
           </Link>
           <Link
+            to="/artists"
+            className={styles.footerNavigationLink}
+            activeProps={{ className: styles.footerNavigationLinkIsActive }}
+            title="Artists"
+            draggable={false}
+          >
+            <Icon name="microphone" fixedWidth />
+          </Link>
+          <Link
             to="/playlists"
             className={styles.footerNavigationLink}
             activeProps={{ className: styles.footerNavigationLinkIsActive }}
