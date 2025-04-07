@@ -20,10 +20,7 @@ fn get_cover_from_id3(path: String) -> Option<String> {
         Err(_) => return None,
     };
 
-    let primary_tag = match tagged_file.primary_tag() {
-        Some(tag) => tag,
-        None => return None,
-    };
+    let primary_tag = tagged_file.primary_tag()?;
 
     let cover = primary_tag
         .get_picture_type(PictureType::CoverFront)

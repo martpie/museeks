@@ -16,12 +16,11 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
                 // Weird, should "win" be a reference instead maybe?
                 let window = win.clone();
 
-                win.on_window_event(move |event| match event {
-                    tauri::WindowEvent::CloseRequested { api, .. } => {
+                win.on_window_event(move |event| {
+                    if let tauri::WindowEvent::CloseRequested { api, .. } = event {
                         window.app_handle().hide().unwrap();
                         api.prevent_close();
                     }
-                    _ => {}
                 });
             }
 
