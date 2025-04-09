@@ -40,10 +40,24 @@ export function isCtrlKey(
   return (isMacOS && e.metaKey) || (!isMacOS && e.ctrlKey);
 }
 
+/**
+ * Returns true if
+ * - the alt key was pressed on a non-mac platform
+ * - the option key is pressed on macOS
+ */
 export function isAltKey(
   e: React.KeyboardEvent | React.MouseEvent | KeyboardEvent,
 ): boolean {
   const isMacOS = window.__MUSEEKS_PLATFORM === 'macos';
 
   return (isMacOS && e.ctrlKey) || (!isMacOS && e.metaKey);
+}
+
+/**
+ * Returns true if no modifier was pressed during an event
+ */
+export function isKeyWithoutModifiers(
+  e: React.KeyboardEvent | React.MouseEvent | KeyboardEvent,
+): boolean {
+  return !e.metaKey && !e.ctrlKey && !e.shiftKey;
 }

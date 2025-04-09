@@ -19,7 +19,7 @@ import Keybinding from 'react-keybinding-component';
 
 import type { Config, Playlist, Track } from '../generated/typings';
 import { logAndNotifyError } from '../lib/utils';
-import { isCtrlKey } from '../lib/utils-events';
+import { isCtrlKey, isKeyWithoutModifiers } from '../lib/utils-events';
 import PlaylistsAPI from '../stores/PlaylistsAPI';
 import { useLibraryAPI } from '../stores/useLibraryStore';
 import { usePlayerAPI } from '../stores/usePlayerStore';
@@ -257,12 +257,7 @@ export default function TracksList(props: Props) {
     (event: React.MouseEvent, trackID: string) => {
       // To allow selection drag-and-drop, we need to prevent track selection
       // when selection a track that is already selected
-      if (
-        selectedTracks.has(trackID) &&
-        !event.metaKey &&
-        !event.ctrlKey &&
-        !event.shiftKey
-      ) {
+      if (isKeyWithoutModifiers(event) && selectedTracks.has(trackID)) {
         return;
       }
 
@@ -273,12 +268,7 @@ export default function TracksList(props: Props) {
 
   const selectTrackClick = useCallback(
     (event: React.MouseEvent | React.KeyboardEvent, trackID: string) => {
-      if (
-        !event.metaKey &&
-        !event.ctrlKey &&
-        !event.shiftKey &&
-        selectedTracks.has(trackID)
-      ) {
+      if (isKeyWithoutModifiers(event) && selectedTracks.has(trackID)) {
         setSelectedTracks(new Set([trackID]));
       }
     },
