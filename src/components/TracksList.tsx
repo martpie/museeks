@@ -45,7 +45,7 @@ const DND_MODIFIERS = [restrictToVerticalAxis];
 // --------------------------------------------------------------------------
 
 type Props = {
-  type: string;
+  type: 'library' | 'playlist';
   tracks: Track[];
   tracksDensity: Config['track_view_density'];
   trackPlayingID: string | null;
@@ -53,6 +53,13 @@ type Props = {
   currentPlaylist?: string;
   reorderable?: boolean;
   onReorder?: (tracks: Track[]) => void;
+  // onReorder?: (
+  //   playlistID: string,
+  //   tracksIDs: Set<string>,
+  //   targetTrackID: string,
+  //   position: 'above' | 'below',
+  // ) => void;
+  headless?: boolean;
 };
 
 export default function TracksList(props: Props) {
@@ -65,6 +72,7 @@ export default function TracksList(props: Props) {
     currentPlaylist,
     onReorder,
     playlists,
+    headless = false,
   } = props;
 
   const [selectedTracks, setSelectedTracks] = useState<Set<string>>(new Set());
@@ -466,10 +474,12 @@ export default function TracksList(props: Props) {
         {/* Scrollable element */}
         <div
           ref={scrollableRef}
-          className={styles.tracksListScroller}
+          className={`${styles.tracksListScroller} ${styles.headless}`}
           onScroll={onScroll}
         >
-          <TracksListHeader enableSort={type === 'library'} />
+          {headless === false && (
+            <TracksListHeader enableSort={type === 'library'} />
+          )}
 
           {/* The large inner element to hold all of the items */}
           <div

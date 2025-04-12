@@ -31,4 +31,10 @@ export type SortOrder = "Asc" | "Dsc";
  */
 export type Track = { id: string, path: string, title: string, album: string, artists: Array<string>, genres: Array<string>, year: number | null, duration: number, track_no: number | null, track_of: number | null, disk_no: number | null, disk_of: number | null, };
 
+/**
+ * Represents a group of tracks, grouped by "something", lib artist name, or
+ * album name
+ */
+export type TrackGroup = { label: string, tracks: Array<Track>, };
+
 export type TrackViewDensity = "normal" | "compact";
