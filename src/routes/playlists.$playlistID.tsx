@@ -6,7 +6,6 @@ import * as ViewMessage from '../elements/ViewMessage';
 import type { Track } from '../generated/typings';
 import useFilteredTracks from '../hooks/useFilteredTracks';
 import useInvalidate from '../hooks/useInvalidate';
-import usePlayingTrackID from '../hooks/usePlayingTrackID';
 import config from '../lib/config';
 import database from '../lib/database';
 import PlaylistsAPI from '../stores/PlaylistsAPI';
@@ -17,10 +16,17 @@ export const Route = createFileRoute('/playlists/$playlistID')({
   loader: async ({ params }) => {
     try {
       const playlist = await database.getPlaylist(params.playlistID);
+
+      const [playlists, playlistTracks, tracksDensity] = await Promise.all([
+        database.getAllPlaylists(),
+        database.getTracks(playlist.tracks),
+        config.get('track_view_density'),
+      ]);
+
       return {
-        playlists: await database.getAllPlaylists(),
-        playlistTracks: await database.getTracks(playlist.tracks),
-        tracksDensity: await config.get('track_view_density'),
+        playlists,
+        playlistTracks,
+        tracksDensity,
       };
     } catch (err) {
       if (err === 'Playlist not found') {

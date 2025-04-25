@@ -11,11 +11,19 @@ import styles from './settings.module.css';
 export const Route = createFileRoute('/settings')({
   component: ViewSettings,
   loader: async function loader() {
+    const [configContent, version, tauriVersion, appStorageDir] =
+      await Promise.all([
+        config.getAll(),
+        getVersion(),
+        getTauriVersion(),
+        invoke<string>('plugin:config|get_storage_dir'),
+      ]);
+
     return {
-      config: await config.getAll(),
-      version: await getVersion(),
-      tauriVersion: await getTauriVersion(),
-      appStorageDir: await invoke<string>('plugin:config|get_storage_dir'),
+      config: configContent,
+      version,
+      tauriVersion,
+      appStorageDir,
     };
   },
 });

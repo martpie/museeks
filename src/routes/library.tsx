@@ -21,9 +21,14 @@ export const Route = createFileRoute('/library')({
       queryFn: database.getAllTracks,
     });
 
+    const [playlists, tracksDensity] = await Promise.all([
+      database.getAllPlaylists(),
+      config.get('track_view_density'),
+    ]);
+
     return {
-      playlists: await database.getAllPlaylists(),
-      tracksDensity: await config.get('track_view_density'),
+      playlists,
+      tracksDensity,
     };
   },
 });
