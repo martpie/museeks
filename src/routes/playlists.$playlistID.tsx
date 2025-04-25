@@ -35,7 +35,6 @@ export const Route = createFileRoute('/playlists/$playlistID')({
 function ViewPlaylistDetails() {
   const { playlists, playlistTracks, tracksDensity } = Route.useLoaderData();
   const { playlistID } = Route.useParams();
-  const trackPlayingID = usePlayingTrackID();
 
   const invalidate = useInvalidate();
 
@@ -107,13 +106,12 @@ function ViewPlaylistDetails() {
   return (
     <TracksList
       isSortEnabled={false}
-      reorderable={true}
-      onReorder={onReorder}
       tracks={filteredTracks}
       tracksDensity={tracksDensity}
-      trackPlayingID={trackPlayingID}
       playlists={playlists}
       currentPlaylist={playlistID}
+      onReorder={onReorder}
+      reorderable={true}
       extraContextMenu={extraContextMenu}
     />
   );

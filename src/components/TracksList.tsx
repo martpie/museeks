@@ -29,6 +29,7 @@ import TracksListHeader from './TracksListHeader';
 import { useNavigate, useSearch } from '@tanstack/react-router';
 import useDndSensors from '../hooks/useDnDSensors';
 import useInvalidate from '../hooks/useInvalidate';
+import usePlayingTrackID from '../hooks/usePlayingTrackID';
 import {
   getScrollPosition,
   saveScrollPosition,
@@ -47,7 +48,6 @@ const DND_MODIFIERS = [restrictToVerticalAxis];
 type Props = {
   tracks: Track[];
   tracksDensity: Config['track_view_density'];
-  trackPlayingID: string | null;
   playlists: Playlist[];
   currentPlaylist?: string;
   isSortEnabled: boolean;
@@ -65,13 +65,14 @@ export default function TracksList(props: Props) {
     tracks,
     isSortEnabled,
     tracksDensity,
-    trackPlayingID,
     reorderable,
     currentPlaylist,
     onReorder,
     playlists,
     extraContextMenu,
   } = props;
+
+  const trackPlayingID = usePlayingTrackID();
 
   const [selectedTracks, setSelectedTracks] = useState<Set<string>>(new Set());
 

@@ -6,7 +6,6 @@ import TracksList from '../components/TracksList';
 import View from '../elements/View';
 import * as ViewMessage from '../elements/ViewMessage';
 import useFilteredTracks from '../hooks/useFilteredTracks';
-import usePlayingTrackID from '../hooks/usePlayingTrackID';
 import config from '../lib/config';
 import database from '../lib/database';
 import queryClient from '../lib/query-client';
@@ -30,7 +29,6 @@ export const Route = createFileRoute('/library')({
 });
 
 function ViewLibrary() {
-  const trackPlayingID = usePlayingTrackID();
   const refreshing = useLibraryStore((state) => state.refreshing);
   const search = useLibraryStore((state) => state.search);
   const sortBy = useLibraryStore((state) => state.sortBy);
@@ -99,20 +97,11 @@ function ViewLibrary() {
       <TracksList
         tracks={filteredTracks}
         tracksDensity={tracksDensity}
-        trackPlayingID={trackPlayingID}
-        isSortEnabled={true}
         playlists={playlists}
+        isSortEnabled={true}
       />
     );
-  }, [
-    search,
-    refreshing,
-    filteredTracks,
-    playlists,
-    trackPlayingID,
-    tracksDensity,
-    isLoading,
-  ]);
+  }, [search, refreshing, filteredTracks, playlists, tracksDensity, isLoading]);
 
   return <View>{getLibraryComponent}</View>;
 }
