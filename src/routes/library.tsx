@@ -97,10 +97,10 @@ function ViewLibrary() {
     // All good !
     return (
       <TracksList
-        type="library"
         tracks={filteredTracks}
         tracksDensity={tracksDensity}
         trackPlayingID={trackPlayingID}
+        isSortEnabled={true}
         playlists={playlists}
       />
     );

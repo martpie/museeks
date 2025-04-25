@@ -45,26 +45,32 @@ const DND_MODIFIERS = [restrictToVerticalAxis];
 // --------------------------------------------------------------------------
 
 type Props = {
-  type: string;
   tracks: Track[];
   tracksDensity: Config['track_view_density'];
   trackPlayingID: string | null;
   playlists: Playlist[];
   currentPlaylist?: string;
+  isSortEnabled: boolean;
   reorderable?: boolean;
   onReorder?: (tracks: Track[]) => void;
+  // For View-specific context menus
+  extraContextMenu?: Array<{
+    label: string;
+    action: (selectedTrackIDs: Set<string>) => void;
+  }>;
 };
 
 export default function TracksList(props: Props) {
   const {
     tracks,
-    type,
+    isSortEnabled,
     tracksDensity,
     trackPlayingID,
     reorderable,
     currentPlaylist,
     onReorder,
     playlists,
+    extraContextMenu,
   } = props;
 
   const [selectedTracks, setSelectedTracks] = useState<Set<string>>(new Set());
@@ -284,14 +290,11 @@ export default function TracksList(props: Props) {
 
       const selectedCount = selectedTracks.size;
       const track = tracks[index];
-      let shownPlaylists = playlists;
 
       // Hide current playlist if one the given playlist view
-      if (type === 'playlist') {
-        shownPlaylists = playlists.filter(
-          (elem) => elem.id !== currentPlaylist,
-        );
-      }
+      const shownPlaylists = playlists.filter(
+        (elem) => elem.id !== currentPlaylist,
+      );
 
       // Playlist sub-menu
       const playlistSubMenu = await Promise.all([
@@ -332,7 +335,8 @@ export default function TracksList(props: Props) {
         );
       }
 
-      const menuItems = await Promise.all([
+      const menuItemsBuilder = [
+        // Tracks Selected indicator
         MenuItem.new({
           text:
             selectedCount > 1
@@ -344,6 +348,7 @@ export default function TracksList(props: Props) {
           text: '?',
           item: 'Separator',
         }),
+        // Queue Management
         MenuItem.new({
           text: 'Add to queue',
           action() {
@@ -359,6 +364,7 @@ export default function TracksList(props: Props) {
         PredefinedMenuItem.new({
           item: 'Separator',
         }),
+        // Playlist Management -> to be moved elsewhere
         Submenu.new({
           text: 'Add to playlist',
           items: playlistSubMenu,
@@ -367,50 +373,37 @@ export default function TracksList(props: Props) {
           text: '?',
           item: 'Separator',
         }),
-      ]);
-
-      menuItems.push(
-        ...(await Promise.all(
-          track.artists.map((artist) =>
-            MenuItem.new({
-              text: `Search for "${artist}" `,
-              action: () => {
-                libraryAPI.search(artist);
-              },
-            }),
-          ),
-        )),
-      );
-
-      menuItems.push(
-        await MenuItem.new({
+        // Quick-search
+        ...track.artists.map((artist) =>
+          MenuItem.new({
+            text: `Search for "${artist}" `,
+            action: () => {
+              libraryAPI.search(artist);
+            },
+          }),
+        ),
+        MenuItem.new({
           text: `Search for "${track.album}"`,
           action() {
             libraryAPI.search(track.album);
           },
         }),
-      );
+      ];
 
-      if (type === 'playlist' && currentPlaylist) {
-        menuItems.push(
-          ...(await Promise.all([
-            PredefinedMenuItem.new({ item: 'Separator' }),
+      if (extraContextMenu != null) {
+        menuItemsBuilder.push(
+          PredefinedMenuItem.new({ item: 'Separator' }),
+          ...extraContextMenu.map((item) =>
             MenuItem.new({
-              text: 'Remove from playlist',
-              async action() {
-                await PlaylistsAPI.removeTracks(
-                  currentPlaylist,
-                  Array.from(selectedTracks),
-                );
-                invalidate();
-              },
+              text: item.label,
+              action: () => item.action(selectedTracks),
             }),
-          ])),
+          ),
         );
       }
 
-      menuItems.push(
-        ...(await Promise.all([
+      menuItemsBuilder.push(
+        ...[
           PredefinedMenuItem.new({ item: 'Separator' }),
           MenuItem.new({
             text: 'Edit track',
@@ -432,11 +425,11 @@ export default function TracksList(props: Props) {
               invalidate();
             },
           }),
-        ])),
+        ],
       );
 
       const menu = await Menu.new({
-        items: menuItems,
+        items: await Promise.all(menuItemsBuilder),
       });
 
       await menu.popup().catch(logAndNotifyError);
@@ -446,11 +439,11 @@ export default function TracksList(props: Props) {
       playlists,
       selectedTracks,
       tracks,
-      type,
       navigate,
       playerAPI,
       libraryAPI,
       invalidate,
+      extraContextMenu,
     ],
   );
 
@@ -469,7 +462,7 @@ export default function TracksList(props: Props) {
           className={styles.tracksListScroller}
           onScroll={onScroll}
         >
-          <TracksListHeader enableSort={type === 'library'} />
+          <TracksListHeader enableSort={isSortEnabled} />
 
           {/* The large inner element to hold all of the items */}
           <div

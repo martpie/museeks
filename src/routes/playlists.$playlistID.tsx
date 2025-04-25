@@ -1,5 +1,5 @@
 import { Link, createFileRoute, redirect } from '@tanstack/react-router';
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 
 import TracksList from '../components/TracksList';
 import * as ViewMessage from '../elements/ViewMessage';
@@ -52,6 +52,21 @@ function ViewPlaylistDetails() {
     [invalidate, playlistID],
   );
 
+  const extraContextMenu = useMemo(() => {
+    return [
+      {
+        label: 'Remove from playlist',
+        action: async (selectedTracks: Set<string>) => {
+          await PlaylistsAPI.removeTracks(
+            playlistID,
+            Array.from(selectedTracks),
+          );
+          invalidate();
+        },
+      },
+    ];
+  }, [playlistID, invalidate]);
+
   if (playlistTracks.length === 0) {
     return (
       <ViewMessage.Notice>
@@ -91,7 +106,7 @@ function ViewPlaylistDetails() {
 
   return (
     <TracksList
-      type="playlist"
+      isSortEnabled={false}
       reorderable={true}
       onReorder={onReorder}
       tracks={filteredTracks}
@@ -99,6 +114,7 @@ function ViewPlaylistDetails() {
       trackPlayingID={trackPlayingID}
       playlists={playlists}
       currentPlaylist={playlistID}
+      extraContextMenu={extraContextMenu}
     />
   );
 }
