@@ -16,7 +16,7 @@ const QUERY_ALL_TRACKS = 'all_tracks';
 export const Route = createFileRoute('/library')({
   component: ViewLibrary,
   loader: async () => {
-    queryClient.fetchQuery({
+    queryClient.prefetchQuery({
       queryKey: [QUERY_ALL_TRACKS],
       queryFn: database.getAllTracks,
     });
