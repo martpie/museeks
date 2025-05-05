@@ -2519,9 +2519,9 @@ dependencies = [
 
 [[package]]
 name = "lofty"
-version = "0.22.3"
+version = "0.22.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "42bb5723d4fa9339e32809b3b9e3043b45ae784ad04fe7b65dd1ac243c6680ba"
+checksum = "ca260c51a9c71f823fbfd2e6fbc8eb2ee09834b98c00763d877ca8bfa85cde3e"
 dependencies = [
  "byteorder",
  "data-encoding",
@@ -3271,9 +3271,9 @@ dependencies = [
 
 [[package]]
 name = "ormlite"
-version = "0.23.1"
+version = "0.23.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "5fb42379d7bfdc2f6e55dbb1357177b198e5ec2a8722a7cd94e0b2007c77ef85"
+checksum = "fb0b2b11619e13f4300c3d8387a3e3c30977dc785335c790817bba27aa5688c5"
 dependencies = [
  "ormlite-core",
  "ormlite-macro",
