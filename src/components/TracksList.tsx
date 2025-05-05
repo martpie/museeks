@@ -14,7 +14,13 @@ import {
 } from '@tauri-apps/api/menu';
 import { revealItemInDir } from '@tauri-apps/plugin-opener';
 import type React from 'react';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import {
+  useCallback,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from 'react';
 import Keybinding from 'react-keybinding-component';
 
 import type { Config, Playlist, Track } from '../generated/typings';
@@ -45,8 +51,11 @@ const DND_MODIFIERS = [restrictToVerticalAxis];
 // TrackList
 // --------------------------------------------------------------------------
 
+type TracksListVirtualizer = Virtualizer<HTMLDivElement, Element>;
+
 type CommonProps = {
   tracks: Track[];
+  tracksDensity: Config['track_view_density'];
   isSortEnabled: boolean;
   reorderable?: boolean;
   onReorder?: (tracks: Track[]) => void;
@@ -54,7 +63,6 @@ type CommonProps = {
 
 type Props = CommonProps & {
   layout: 'default';
-  tracksDensity: Config['track_view_density'];
   playlists: Playlist[];
   currentPlaylist?: string;
   // For View-specific context menus
@@ -89,27 +97,12 @@ export default function TracksList(props: Props) {
 
   // Scrollable element for the virtual list + virtualizer
   // TODO: should be colocated with the child component
-  const scrollableRef = useRef<HTMLDivElement>(null);
-  const virtualizer = useVirtualizer({
-    count: tracks.length,
-    initialOffset: getScrollPosition(),
-    overscan: 20,
-    scrollPaddingEnd: 22, // Height of the track list header
-    getScrollElement: () => scrollableRef.current,
-    estimateSize: () => {
-      switch (tracksDensity) {
-        case 'compact':
-          return ROW_HEIGHT_COMPACT;
-        default:
-          return ROW_HEIGHT;
-      }
-    },
-    getItemKey: (index) => tracks[index].id,
-  });
+  const scrollableRef = useRef<TracksListVirtualizer>(null);
+  const virtualizer = scrollableRef.current;
 
   // Persist scroll position
   useEffect(() => {
-    const target = scrollableRef.current;
+    const target = virtualizer?.scrollElement;
 
     function onSaveScrollPosition() {
       if (target?.scrollTop != null) {
@@ -122,7 +115,7 @@ export default function TracksList(props: Props) {
     return function cleanup() {
       target?.removeEventListener('scroll', onSaveScrollPosition);
     };
-  }, []);
+  }, [virtualizer]);
 
   // Highlight playing track and scroll to it
   useEffect(() => {
@@ -137,7 +130,7 @@ export default function TracksList(props: Props) {
       if (playingTrackIndex >= 0) {
         setTimeout(() => {
           // avoid conflict with scroll restoration
-          virtualizer.scrollToIndex(playingTrackIndex, { behavior: 'smooth' });
+          virtualizer?.scrollToIndex(playingTrackIndex, { behavior: 'smooth' });
         }, 0);
       }
     }
@@ -146,7 +139,7 @@ export default function TracksList(props: Props) {
     trackPlayingID,
     navigate,
     tracks,
-    virtualizer.scrollToIndex,
+    virtualizer?.scrollToIndex,
   ]);
 
   /**
@@ -185,7 +178,7 @@ export default function TracksList(props: Props) {
 
       setSelectedTracks(newSelection);
       if (scrollIndex != null) {
-        virtualizer.scrollToIndex(scrollIndex);
+        virtualizer?.scrollToIndex(scrollIndex);
       }
     },
     [selectedTracks, tracks, playerAPI, virtualizer],
@@ -379,10 +372,10 @@ export default function TracksList(props: Props) {
     <div className={styles.tracksList}>
       <Keybinding onKey={onKeyEvent} preventInputConflict />
       <TrackListDefault
+        ref={scrollableRef}
         tracks={tracks}
+        tracksDensity={tracksDensity}
         selectedTracks={selectedTracks}
-        virtualizer={virtualizer}
-        scrollableRef={scrollableRef}
         isSortEnabled={isSortEnabled}
         reorderable={reorderable}
         onReorder={onReorder}
@@ -400,9 +393,8 @@ export default function TracksList(props: Props) {
  *  - Reorderable if needed (for playlists)
  * -------------------------------------------------------------------------- */
 type DefaultListProps = CommonProps & {
+  ref: React.RefObject<Virtualizer<HTMLDivElement, Element> | null>;
   selectedTracks: Set<string>;
-  scrollableRef: React.RefObject<HTMLDivElement | null>;
-  virtualizer: Virtualizer<HTMLDivElement, Element>;
   onTrackSelect: (event: React.MouseEvent, trackID: string) => void;
   onContextMenu: (event: React.MouseEvent, index: number) => Promise<void>;
   onPlaybackStart: (trackID: string) => Promise<void>;
@@ -410,9 +402,9 @@ type DefaultListProps = CommonProps & {
 
 function TrackListDefault(props: DefaultListProps) {
   const {
+    ref,
     tracks,
-    scrollableRef,
-    virtualizer,
+    tracksDensity,
     isSortEnabled,
     reorderable,
     selectedTracks,
@@ -423,6 +415,28 @@ function TrackListDefault(props: DefaultListProps) {
   } = props;
 
   const trackPlayingID = usePlayingTrackID();
+  const innerScrollableRef = useRef<HTMLDivElement>(null);
+
+  const virtualizer = useVirtualizer({
+    count: tracks.length,
+    initialOffset: getScrollPosition(),
+    overscan: 20,
+    scrollPaddingEnd: 22, // Height of the track list header
+    getScrollElement: () => innerScrollableRef.current,
+    estimateSize: () => {
+      switch (tracksDensity) {
+        case 'compact':
+          return ROW_HEIGHT_COMPACT;
+        default:
+          return ROW_HEIGHT;
+      }
+    },
+    getItemKey: (index) => tracks[index].id,
+  });
+
+  // Passes the ref back to the master component for interaction with the
+  // scrollable view
+  useImperativeHandle(ref, () => virtualizer, [virtualizer]);
 
   /**
    * Playlist tracks re-order events handlers
@@ -461,7 +475,7 @@ function TrackListDefault(props: DefaultListProps) {
       modifiers={DND_MODIFIERS}
       sensors={sensors}
     >
-      <div ref={scrollableRef} className={styles.tracksListScroller}>
+      <div ref={innerScrollableRef} className={styles.tracksListScroller}>
         <TracksListHeader enableSort={isSortEnabled} />
 
         {/* The large inner element to hold all of the items */}
