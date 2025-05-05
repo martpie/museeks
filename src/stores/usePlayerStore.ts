@@ -520,7 +520,7 @@ function createPlayerStore<T extends PlayerState>(store: StateCreator<T>) {
           } else {
             //  Let's set the player's src and currentTime with the info we have persisted in store
             const { queue, queueCursor } = state;
-            if (queue && queueCursor) {
+            if (queue && queueCursor != null) {
               const track = queue[queueCursor];
               await player.setTrack(track);
             }
