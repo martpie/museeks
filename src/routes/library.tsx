@@ -100,6 +100,7 @@ function ViewLibrary() {
     // All good !
     return (
       <TracksList
+        layout="default"
         tracks={filteredTracks}
         tracksDensity={tracksDensity}
         playlists={playlists}

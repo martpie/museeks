@@ -5,7 +5,7 @@ import {
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 
-import { useVirtualizer } from '@tanstack/react-virtual';
+import { type Virtualizer, useVirtualizer } from '@tanstack/react-virtual';
 import {
   Menu,
   MenuItem,
@@ -14,7 +14,7 @@ import {
 } from '@tauri-apps/api/menu';
 import { revealItemInDir } from '@tauri-apps/plugin-opener';
 import type React from 'react';
-import { type UIEvent, useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import Keybinding from 'react-keybinding-component';
 
 import type { Config, Playlist, Track } from '../generated/typings';
@@ -45,14 +45,18 @@ const DND_MODIFIERS = [restrictToVerticalAxis];
 // TrackList
 // --------------------------------------------------------------------------
 
-type Props = {
+type CommonProps = {
   tracks: Track[];
-  tracksDensity: Config['track_view_density'];
-  playlists: Playlist[];
-  currentPlaylist?: string;
   isSortEnabled: boolean;
   reorderable?: boolean;
   onReorder?: (tracks: Track[]) => void;
+};
+
+type Props = CommonProps & {
+  layout: 'default';
+  tracksDensity: Config['track_view_density'];
+  playlists: Playlist[];
+  currentPlaylist?: string;
   // For View-specific context menus
   extraContextMenu?: Array<{
     label: string;
@@ -73,6 +77,8 @@ export default function TracksList(props: Props) {
   } = props;
 
   const trackPlayingID = usePlayingTrackID();
+  const playerAPI = usePlayerAPI();
+  const libraryAPI = useLibraryAPI();
 
   const [selectedTracks, setSelectedTracks] = useState<Set<string>>(new Set());
 
@@ -81,11 +87,8 @@ export default function TracksList(props: Props) {
   const searchParams = useSearch({ from: '__root__' });
   const shouldJumpToPlayingTrack = searchParams.jump_to_playing_track === true;
 
-  const onScroll = useCallback((e: UIEvent<HTMLElement>) => {
-    saveScrollPosition(e.currentTarget.scrollTop);
-  }, []);
-
   // Scrollable element for the virtual list + virtualizer
+  // TODO: should be colocated with the child component
   const scrollableRef = useRef<HTMLDivElement>(null);
   const virtualizer = useVirtualizer({
     count: tracks.length,
@@ -104,8 +107,22 @@ export default function TracksList(props: Props) {
     getItemKey: (index) => tracks[index].id,
   });
 
-  const playerAPI = usePlayerAPI();
-  const libraryAPI = useLibraryAPI();
+  // Persist scroll position
+  useEffect(() => {
+    const target = scrollableRef.current;
+
+    function onSaveScrollPosition() {
+      if (target?.scrollTop != null) {
+        saveScrollPosition(target.scrollTop);
+      }
+    }
+
+    target?.addEventListener('scroll', onSaveScrollPosition);
+
+    return function cleanup() {
+      target?.removeEventListener('scroll', onSaveScrollPosition);
+    };
+  }, []);
 
   // Highlight playing track and scroll to it
   useEffect(() => {
@@ -135,7 +152,7 @@ export default function TracksList(props: Props) {
   /**
    * Helpers
    */
-  const startPlayback = useCallback(
+  const onPlaybackStart = useCallback(
     async (trackID: string) => {
       playerAPI.start(tracks, trackID);
     },
@@ -175,39 +192,9 @@ export default function TracksList(props: Props) {
   );
 
   /**
-   * Playlist tracks re-order events handlers
-   */
-  const sensors = useDndSensors();
-
-  const onDragEnd = useCallback(
-    (event: DragEndEvent) => {
-      const {
-        active, // dragged item
-        over, // on which item it was dropped
-      } = event;
-
-      // The item was dropped either nowhere, or on the same item
-      if (over == null || active.id === over.id || !onReorder) {
-        return;
-      }
-
-      const activeIndex = tracks.findIndex((track) => track.id === active.id);
-      const overIndex = tracks.findIndex((track) => track.id === over.id);
-
-      const newTracks = [...tracks];
-
-      const movedTrack = newTracks.splice(activeIndex, 1)[0]; // Remove active track
-      newTracks.splice(overIndex, 0, movedTrack); // Move it to where the user dropped it
-
-      onReorder(newTracks);
-    },
-    [onReorder, tracks],
-  );
-
-  /**
    * Tracks selection
    */
-  const selectTrack = useCallback(
+  const onTrackSelect = useCallback(
     (event: React.MouseEvent, trackID: string) => {
       // To allow selection drag-and-drop, we need to prevent track selection
       // when selection a track that is already selected
@@ -222,21 +209,12 @@ export default function TracksList(props: Props) {
     [tracks, selectedTracks],
   );
 
-  const selectTrackClick = useCallback(
-    (event: React.MouseEvent | React.KeyboardEvent, trackID: string) => {
-      if (isKeyWithoutModifiers(event) && selectedTracks.has(trackID)) {
-        setSelectedTracks(new Set([trackID]));
-      }
-    },
-    [selectedTracks],
-  );
-
   /**
    * Context menus
    */
-  const showContextMenu = useCallback(
-    async (e: React.MouseEvent, index: number) => {
-      e.preventDefault();
+  const onContextMenu = useCallback(
+    async (event: React.MouseEvent, index: number) => {
+      event.preventDefault();
 
       const selectedCount = selectedTracks.size;
       const track = tracks[index];
@@ -398,65 +376,137 @@ export default function TracksList(props: Props) {
   );
 
   return (
+    <div className={styles.tracksList}>
+      <Keybinding onKey={onKeyEvent} preventInputConflict />
+      <TrackListDefault
+        tracks={tracks}
+        selectedTracks={selectedTracks}
+        virtualizer={virtualizer}
+        scrollableRef={scrollableRef}
+        isSortEnabled={isSortEnabled}
+        reorderable={reorderable}
+        onReorder={onReorder}
+        onTrackSelect={onTrackSelect}
+        onContextMenu={onContextMenu}
+        onPlaybackStart={onPlaybackStart}
+      />
+    </div>
+  );
+}
+
+/** ----------------------------------------------------------------------------
+ * List-based layout for TracksList:
+ *  - Uses a Virtual List
+ *  - Reorderable if needed (for playlists)
+ * -------------------------------------------------------------------------- */
+type DefaultListProps = CommonProps & {
+  selectedTracks: Set<string>;
+  scrollableRef: React.RefObject<HTMLDivElement | null>;
+  virtualizer: Virtualizer<HTMLDivElement, Element>;
+  onTrackSelect: (event: React.MouseEvent, trackID: string) => void;
+  onContextMenu: (event: React.MouseEvent, index: number) => Promise<void>;
+  onPlaybackStart: (trackID: string) => Promise<void>;
+};
+
+function TrackListDefault(props: DefaultListProps) {
+  const {
+    tracks,
+    scrollableRef,
+    virtualizer,
+    isSortEnabled,
+    reorderable,
+    selectedTracks,
+    onReorder,
+    onTrackSelect,
+    onContextMenu,
+    onPlaybackStart,
+  } = props;
+
+  const trackPlayingID = usePlayingTrackID();
+
+  /**
+   * Playlist tracks re-order events handlers
+   */
+  const sensors = useDndSensors();
+
+  const onDragEnd = useCallback(
+    (event: DragEndEvent) => {
+      const {
+        active, // dragged item
+        over, // on which item it was dropped
+      } = event;
+
+      // The item was dropped either nowhere, or on the same item
+      if (over == null || active.id === over.id || !onReorder) {
+        return;
+      }
+
+      const activeIndex = tracks.findIndex((track) => track.id === active.id);
+      const overIndex = tracks.findIndex((track) => track.id === over.id);
+
+      const newTracks = [...tracks];
+
+      const movedTrack = newTracks.splice(activeIndex, 1)[0]; // Remove active track
+      newTracks.splice(overIndex, 0, movedTrack); // Move it to where the user dropped it
+
+      onReorder(newTracks);
+    },
+    [onReorder, tracks],
+  );
+
+  return (
     <DndContext
       onDragEnd={onDragEnd}
       id="dnd-playlist"
       modifiers={DND_MODIFIERS}
       sensors={sensors}
     >
-      <div className={styles.tracksList}>
-        <Keybinding onKey={onKeyEvent} preventInputConflict />
-        <div
-          ref={scrollableRef}
-          className={styles.tracksListScroller}
-          onScroll={onScroll}
-        >
-          <TracksListHeader enableSort={isSortEnabled} />
+      <div ref={scrollableRef} className={styles.tracksListScroller}>
+        <TracksListHeader enableSort={isSortEnabled} />
 
-          {/* The large inner element to hold all of the items */}
-          <div
-            className={styles.tracksListRows}
-            style={{
-              height: `${virtualizer.getTotalSize()}px`,
-              width: '100%',
-              position: 'relative',
-            }}
+        {/* The large inner element to hold all of the items */}
+        <div
+          className={styles.tracksListRows}
+          style={{
+            height: `${virtualizer.getTotalSize()}px`,
+            width: '100%',
+            position: 'relative',
+          }}
+        >
+          <SortableContext
+            items={tracks}
+            strategy={verticalListSortingStrategy}
           >
-            <SortableContext
-              items={tracks}
-              strategy={verticalListSortingStrategy}
-            >
-              {/* Only the visible items in the virtualizer, manually positioned to be in view */}
-              {virtualizer.getVirtualItems().map((virtualItem) => {
-                const track = tracks[virtualItem.index];
-                return (
-                  <TrackRow
-                    key={virtualItem.key}
-                    selected={selectedTracks.has(track.id)}
-                    track={track}
-                    isPlaying={trackPlayingID === track.id}
-                    index={virtualItem.index}
-                    onMouseDown={selectTrack}
-                    onContextMenu={showContextMenu}
-                    onDoubleClick={startPlayback}
-                    draggable={reorderable}
-                    style={{
-                      position: 'absolute',
-                      left: 0,
-                      width: '100%',
-                      height: `${virtualItem.size}px`,
-                      // Intentionally not translateY, as it would create another paint
-                      // layer where every row would cover elements from the previous one.
-                      // This would typically prevent the drop effect to be properly displayed
-                      // when reordering a playlist
-                      top: `${virtualItem.start}px`,
-                      zIndex: 1,
-                    }}
-                  />
-                );
-              })}
-            </SortableContext>
-          </div>
+            {/* Only the visible items in the virtualizer, manually positioned to be in view */}
+            {virtualizer.getVirtualItems().map((virtualItem) => {
+              const track = tracks[virtualItem.index];
+              return (
+                <TrackRow
+                  key={virtualItem.key}
+                  selected={selectedTracks.has(track.id)}
+                  track={track}
+                  isPlaying={trackPlayingID === track.id}
+                  index={virtualItem.index}
+                  onMouseDown={onTrackSelect}
+                  onContextMenu={onContextMenu}
+                  onDoubleClick={onPlaybackStart}
+                  draggable={reorderable}
+                  style={{
+                    position: 'absolute',
+                    left: 0,
+                    width: '100%',
+                    height: `${virtualItem.size}px`,
+                    // Intentionally not translateY, as it would create another paint
+                    // layer where every row would cover elements from the previous one.
+                    // This would typically prevent the drop effect to be properly displayed
+                    // when reordering a playlist
+                    top: `${virtualItem.start}px`,
+                    zIndex: 1,
+                  }}
+                />
+              );
+            })}
+          </SortableContext>
         </div>
       </div>
     </DndContext>

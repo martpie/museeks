@@ -111,6 +111,7 @@ function ViewPlaylistDetails() {
 
   return (
     <TracksList
+      layout="default"
       isSortEnabled={false}
       tracks={filteredTracks}
       tracksDensity={tracksDensity}
