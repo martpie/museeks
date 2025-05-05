@@ -437,7 +437,6 @@ export default function TracksList(props: Props) {
                     isPlaying={trackPlayingID === track.id}
                     index={virtualItem.index}
                     onMouseDown={selectTrack}
-                    onClick={selectTrackClick}
                     onContextMenu={showContextMenu}
                     onDoubleClick={startPlayback}
                     draggable={reorderable}

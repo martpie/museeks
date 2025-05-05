@@ -21,10 +21,6 @@ type Props = {
     index: number,
   ) => void;
   onContextMenu?: (event: React.MouseEvent, index: number) => void;
-  onClick?: (
-    event: React.MouseEvent | React.KeyboardEvent,
-    trackID: string,
-  ) => void;
   draggable?: boolean;
   style?: React.CSSProperties;
 };
@@ -36,7 +32,6 @@ export default function TrackRow(props: Props) {
     selected,
     draggable,
     onMouseDown,
-    onClick,
     onContextMenu,
     onDoubleClick,
   } = props;
@@ -75,12 +70,6 @@ export default function TrackRow(props: Props) {
       className={trackClasses}
       onDoubleClick={() => onDoubleClick?.(props.track.id)}
       onMouseDown={(e) => onMouseDown?.(e, track.id, index)}
-      onClick={(e) => onClick?.(e, props.track.id)}
-      onKeyDown={(e) => {
-        if (e.key === 'Enter') {
-          onClick?.(e, track.id);
-        }
-      }}
       onContextMenu={(e) => onContextMenu?.(e, index)}
       aria-selected={selected}
       {...(props.isPlaying ? { 'data-is-playing': true } : {})}
