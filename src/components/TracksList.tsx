@@ -19,7 +19,7 @@ import Keybinding from 'react-keybinding-component';
 
 import type { Config, Playlist, Track } from '../generated/typings';
 import { logAndNotifyError } from '../lib/utils';
-import { isCtrlKey, isKeyWithoutModifiers } from '../lib/utils-events';
+import { isKeyWithoutModifiers } from '../lib/utils-events';
 import PlaylistsAPI from '../stores/PlaylistsAPI';
 import { useLibraryAPI } from '../stores/useLibraryStore';
 import { usePlayerAPI } from '../stores/usePlayerStore';
@@ -34,7 +34,7 @@ import {
   getScrollPosition,
   saveScrollPosition,
 } from '../lib/scroll-restoration';
-import { keyboardSelect } from '../lib/utils-list';
+import { listKeyboardSelect, listMouseSelect } from '../lib/utils-list';
 import styles from './TracksList.module.css';
 
 const ROW_HEIGHT = 30;
@@ -145,86 +145,33 @@ export default function TracksList(props: Props) {
   /**
    * Keyboard navigations events/helpers
    */
-  const onEnter = useCallback(
-    async (index: number, tracks: Track[]) => {
-      if (index !== -1) playerAPI.start(tracks, tracks[index].id);
-    },
-    [playerAPI],
-  );
-
-  const onControlAll = useCallback((tracks: Track[]) => {
-    setSelectedTracks(new Set(tracks.map((track) => track.id)));
-  }, []);
-
-  const onUp = useCallback(
-    (index: number, tracks: Track[], shiftKeyPressed: boolean) => {
-      const addedIndex = Math.max(0, index - 1);
-
-      // Add to the selection if shift key is pressed
-      let newSelected = selectedTracks;
-
-      if (shiftKeyPressed)
-        newSelected = new Set([tracks[addedIndex].id, ...selectedTracks]);
-      else newSelected = new Set([tracks[addedIndex].id]);
-
-      setSelectedTracks(newSelected);
-      virtualizer.scrollToIndex(addedIndex);
-    },
-    [selectedTracks, virtualizer],
-  );
-
-  const onDown = useCallback(
-    (index: number, tracks: Track[], shiftKeyPressed: boolean) => {
-      const addedIndex = Math.min(tracks.length - 1, index + 1);
-      // Add to the selection if shift key is pressed
-      let newSelected: Set<string>;
-      if (shiftKeyPressed)
-        newSelected = new Set([...selectedTracks, tracks[addedIndex].id]);
-      else newSelected = new Set([tracks[addedIndex].id]);
-      setSelectedTracks(newSelected);
-      virtualizer.scrollToIndex(addedIndex);
-    },
-    [selectedTracks, virtualizer],
-  );
-
-  const onKey = useCallback(
-    async (e: KeyboardEvent) => {
-      const firstSelectedTrackID = tracks.findIndex((track) =>
+  const onKeyEvent = useCallback(
+    (event: KeyboardEvent) => {
+      const firstSelectedTrackIndex = tracks.findIndex((track) =>
         selectedTracks.has(track.id),
       );
 
-      switch (e.key) {
-        case 'a':
-          if (isCtrlKey(e)) {
-            onControlAll(tracks);
-            e.preventDefault();
-          }
-          break;
-
-        case 'ArrowUp':
-          e.preventDefault();
-          onUp(firstSelectedTrackID, tracks, e.shiftKey);
-          break;
-
-        case 'ArrowDown': {
-          const lastSelectedTrackID = tracks.findLastIndex((track) =>
-            selectedTracks.has(track.id),
-          );
-          e.preventDefault();
-          onDown(lastSelectedTrackID, tracks, e.shiftKey);
-          break;
+      if (event.key === 'Enter') {
+        event.preventDefault();
+        // Start playback at first select track location
+        if (firstSelectedTrackIndex !== -1) {
+          playerAPI.start(tracks, tracks[firstSelectedTrackIndex].id);
         }
+      }
 
-        case 'Enter':
-          e.preventDefault();
-          await onEnter(firstSelectedTrackID, tracks);
-          break;
+      // Handle cmd+A, arrow up and down
+      const [newSelection, scrollIndex] = listKeyboardSelect(
+        tracks,
+        selectedTracks,
+        event,
+      );
 
-        default:
-          break;
+      setSelectedTracks(newSelection);
+      if (scrollIndex != null) {
+        virtualizer.scrollToIndex(scrollIndex);
       }
     },
-    [onControlAll, onDown, onUp, onEnter, selectedTracks, tracks],
+    [selectedTracks, tracks, playerAPI, virtualizer],
   );
 
   /**
@@ -268,7 +215,9 @@ export default function TracksList(props: Props) {
         return;
       }
 
-      setSelectedTracks(keyboardSelect(tracks, selectedTracks, trackID, event));
+      setSelectedTracks(
+        listMouseSelect(tracks, selectedTracks, trackID, event),
+      );
     },
     [tracks, selectedTracks],
   );
@@ -456,8 +405,7 @@ export default function TracksList(props: Props) {
       sensors={sensors}
     >
       <div className={styles.tracksList}>
-        <Keybinding onKey={onKey} preventInputConflict />
-        {/* Scrollable element */}
+        <Keybinding onKey={onKeyEvent} preventInputConflict />
         <div
           ref={scrollableRef}
           className={styles.tracksListScroller}

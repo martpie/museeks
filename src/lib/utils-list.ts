@@ -6,10 +6,11 @@ type ListItem = {
 
 /**
  * Data agnostic super-function able to retrieve the right user-selection based
- * on a list of item, and a mouse event. Immutable.
- * Supports modifiers (like shift, cmd/ctrl, etc)
+ * on a list of item, and a *mouse* event. Immutable.
+ *  - shift: will select all tracks between last selection and selected item
+ *  - cmd/ctrl: will toggle on/off the selected item from the selection
  */
-export function keyboardSelect(
+export function listMouseSelect(
   list: Array<ListItem>,
   // The already selected IDs within the list of items
   selection: Set<string>,
@@ -94,4 +95,68 @@ export function keyboardSelect(
 
   // Otherwise, nothing to be done
   return selection;
+}
+
+/**
+ * Data agnostic super-function able to retrieve the right user-selection based
+ * on a list of item, and a * keyboard * event. Immutable.
+ *  - shift: will progressively add tracks to the selection as they key event is
+ *           triggered.
+ */
+export function listKeyboardSelect(
+  list: Array<ListItem>,
+  // The already selected IDs within the list of items
+  selection: Set<string>,
+  // The mouse event
+  event: KeyboardEvent,
+): [Set<string>, scrollIndex: number | null] {
+  const firstSelectedTrackIndex = list.findIndex((track) =>
+    selection.has(track.id),
+  );
+
+  switch (event.key) {
+    case 'a':
+      if (isCtrlKey(event)) {
+        event.preventDefault();
+        // Select all tracks
+        return [new Set(list.map((track) => track.id)), null];
+      }
+      break;
+
+    case 'ArrowUp': {
+      event.preventDefault();
+
+      const addedIndex = Math.max(0, firstSelectedTrackIndex - 1);
+
+      // Add to the selection if shift key is pressed
+      let newSelected = selection;
+
+      if (event.shiftKey)
+        newSelected = new Set([list[addedIndex].id, ...selection]);
+      // Or select only one from the first
+      else newSelected = new Set([list[addedIndex].id]);
+
+      return [newSelected, addedIndex];
+    }
+
+    case 'ArrowDown': {
+      event.preventDefault();
+      const lastSelectedTrackIndex = list.findLastIndex((track) =>
+        selection.has(track.id),
+      );
+
+      const addedIndex = Math.min(list.length - 1, lastSelectedTrackIndex + 1);
+
+      // Add to the selection if shift key is pressed
+      let newSelected: Set<string>;
+      if (event.shiftKey)
+        newSelected = new Set([...selection, list[addedIndex].id]);
+      // Or select only one from the last
+      else newSelected = new Set([list[addedIndex].id]);
+
+      return [newSelected, addedIndex];
+    }
+  }
+
+  return [selection, null];
 }
