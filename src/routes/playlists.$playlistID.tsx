@@ -116,7 +116,7 @@ function ViewPlaylistDetails() {
       tracks={filteredTracks}
       tracksDensity={tracksDensity}
       playlists={playlists}
-      currentPlaylist={playlistID}
+      currentPlaylistID={playlistID}
       onReorder={onReorder}
       reorderable={true}
       extraContextMenu={extraContextMenu}

@@ -68,3 +68,16 @@ export type TrackMutation = Pick<
   | 'disk_no'
   | 'disk_of'
 >;
+
+/**
+ * The origin of a player queue. Used to navigate to some pages faster + be able
+ * to jump to playing track.
+ */
+export type QueueOrigin =
+  | {
+      type: 'library';
+    }
+  | {
+      type: 'playlist';
+      playlistID: string;
+    };

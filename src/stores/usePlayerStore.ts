@@ -8,7 +8,7 @@ import database from '../lib/database';
 import player from '../lib/player';
 import { logAndNotifyError } from '../lib/utils';
 import { shuffleTracks } from '../lib/utils-player';
-import { type API, PlayerStatus } from '../types/museeks';
+import { type API, PlayerStatus, type QueueOrigin } from '../types/museeks';
 
 import { createStore } from './store-helpers';
 
@@ -16,12 +16,16 @@ type PlayerState = API<{
   queue: Track[];
   oldQueue: Track[];
   queueCursor: number | null;
-  queueOrigin: null | string;
+  queueOrigin: null | QueueOrigin;
   repeat: Repeat;
   shuffle: boolean;
   playerStatus: PlayerStatus;
   api: {
-    start: (queue: Track[], id?: string) => Promise<void>;
+    start: (
+      queue: Track[],
+      trackID: string | null,
+      queueOrigin: QueueOrigin,
+    ) => Promise<void>;
     play: () => Promise<void>;
     pause: () => void;
     playPause: () => Promise<void>;
@@ -58,28 +62,7 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
      * Start playing audio (queue instantiation, shuffle and everything...)
      * TODO: this function ~could probably~ needs to be refactored ~a bit~
      */
-    start: async (tracks, _id) => {
-      // TODO: implement start with no queue
-      //   // If no queue is provided, we create it based on the screen the user is on
-      // if (!queue) {
-      //   if (location.hash.startsWith('#/playlists')) {
-      //     queue = library.tracks.playlist;
-      //     queue = [];
-      //   } else {
-      //     // we are either on the library or the settings view
-      //     // so let's play the whole library
-      //     // Because the tracks in the store are not ordered, let's filter
-      //     // and sort everything
-      //     const { sort, search } = library;
-      //     queue = library.tracks;
-
-      //     queue = sortTracks(
-      //       filterTracks(newQueue, search),
-      //       SORT_ORDERS[sort.by][sort.order],
-      //     );
-      //   }
-      // }
-
+    start: async (tracks, maybeTrackID, queueOrigin) => {
       let queue = tracks;
 
       if (queue.length === 0) return;
@@ -94,7 +77,7 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
       const shuffle = state.shuffle;
 
       const oldQueue = [...queue];
-      const trackID = _id || queue[0].id;
+      const trackID = maybeTrackID ?? queue[0].id;
 
       // Typically, if we are in the playlists generic view without any view selected
       if (queue.length === 0) return;
@@ -117,11 +100,6 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
           // Let's set the cursor to 0
           queueCursor = 0;
         }
-
-        // Determine the queue origin in case the user wants to jump to the current
-        // track
-        const { hash } = window.location;
-        const queueOrigin = hash.substring(1); // remove #
 
         set({
           queue,
@@ -368,7 +346,9 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
     },
 
     /**
-     * Start audio playback from the queue
+     * Start audio playback from the queue. We don't want to call start() because
+     * the queue is already set (and we don't want to reshuffle everything and
+     * all the other checks)
      */
     startFromQueue: async (index) => {
       const { queue } = get();
@@ -546,6 +526,14 @@ function createPlayerStore<T extends PlayerState>(store: StateCreator<T>) {
             (persistedState as PlayerState).playerStatus === PlayerStatus.PLAY
               ? PlayerStatus.PAUSE
               : (persistedState as PlayerState).playerStatus;
+
+          // queueOrigin migration
+          if (
+            'queueOrigin' in mergedState &&
+            typeof mergedState.queueOrigin === 'string'
+          ) {
+            mergedState.queueOrigin = { type: 'library' };
+          }
         }
 
         return mergedState;

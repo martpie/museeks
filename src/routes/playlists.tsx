@@ -49,7 +49,10 @@ function ViewPlaylists() {
 
     if (playlist) {
       invalidate();
-      navigate({ to: `/playlists/${playlist.id}` });
+      navigate({
+        to: '/playlists/$playlistID',
+        params: { playlistID: playlist.id },
+      });
     }
   }, [navigate, invalidate]);
 
