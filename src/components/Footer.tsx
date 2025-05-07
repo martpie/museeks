@@ -7,7 +7,14 @@ import ProgressBar from './ProgressBar';
 import { Link } from '@tanstack/react-router';
 import styles from './Footer.module.css';
 
-export default function Footer() {
+type Props = {
+  /** If defined, the playlist link will redirect to it */
+  playlistID: string | null;
+};
+
+export default function Footer(props: Props) {
+  const { playlistID } = props;
+
   const refresh = useLibraryStore((state) => state.refresh);
   const refreshing = useLibraryStore((state) => state.refreshing);
   const status = useLibraryStore((state) => state.tracksStatus);
@@ -41,6 +48,10 @@ export default function Footer() {
     return status;
   }, [refresh, refreshing, status]);
 
+  const playlistProps = playlistID
+    ? { to: '/playlists/$playlistID', params: { playlistID } }
+    : { to: '/playlists' };
+
   return (
     <footer className={styles.footer}>
       <div className={styles.footerNavigation}>
@@ -55,7 +66,7 @@ export default function Footer() {
             <Icon name="align-justify" fixedWidth />
           </Link>
           <Link
-            to="/playlists"
+            {...playlistProps}
             className={styles.footerNavigationLink}
             activeProps={{ className: styles.footerNavigationLinkIsActive }}
             title="Playlists"

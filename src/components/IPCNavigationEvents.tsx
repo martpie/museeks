@@ -3,16 +3,13 @@ import { useEffect } from 'react';
 
 import { useNavigate } from '@tanstack/react-router';
 import usePlayerStore from '../stores/usePlayerStore';
-import type { QueueOrigin } from '../types/museeks';
 
 /**
  * Handle app-level IPC Navigation events
  */
 export default function IPCNavigationEvents() {
   const navigate = useNavigate();
-  const queueOrigin: QueueOrigin = usePlayerStore(
-    (state) => state.queueOrigin ?? { type: 'library' },
-  );
+  const queueOrigin = usePlayerStore((state) => state.queueOrigin);
 
   useEffect(() => {
     function goToLibrary() {
@@ -28,6 +25,8 @@ export default function IPCNavigationEvents() {
     }
 
     function goToPlayingTrack() {
+      if (!queueOrigin) return;
+
       switch (queueOrigin.type) {
         case 'library': {
           navigate({
