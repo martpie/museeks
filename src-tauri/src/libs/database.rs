@@ -1,4 +1,4 @@
-use log::info;
+use indexmap::IndexMap;
 use ormlite::model::ModelBuilder;
 use ormlite::sqlite::SqliteConnection;
 use ormlite::{Model, TableMeta};
@@ -7,7 +7,7 @@ use std::path::PathBuf;
 
 use super::error::AnyResult;
 use super::playlist::Playlist;
-use super::track::Track;
+use super::track::{Track, TrackGroup};
 use super::utils::TimeLogger;
 
 // KEEP THAT IN SYNC with Tauri's file associations in tauri.conf.json
@@ -147,18 +147,17 @@ impl DB {
     }
 
     /**
-     * Insert a new track in the DB, will fail in case there is a duplicate unique
-     * key (like track.path)
-     *
-     * Doc: https://github.com/khonsulabs/bonsaidb/blob/main/examples/basic-local/examples/basic-local-multidb.rs
+     * Get the list of artist registered in the database.
+     * Only fetches the first artist for each row.
      */
     pub async fn get_artists(&mut self) -> AnyResult<Vec<String>> {
+        let timer = TimeLogger::new("Retrieved artists".into());
+
         let query = format!(
             "SELECT DISTINCT JSON_EXTRACT({}, '$[0]') FROM {};",
             "artists",
             Track::table_name()
         );
-        info!("query for all artists: {}", query);
 
         let mut result: Vec<String> = ormlite::query_as(&query)
             .fetch_all(&mut self.connection)
@@ -168,9 +167,43 @@ impl DB {
             .collect();
 
         // sort them alphabetically
-        result.sort_by(|a, b| a.to_lowercase().cmp(&b.to_lowercase()));
+        result.sort_by_key(|a| a.to_lowercase());
 
+        timer.complete();
         Ok(result)
+    }
+
+    /**
+     * Get the list of artist registered in the database.
+     * Only fetches the first artist for each row.
+     */
+    pub async fn get_artist_tracks(&mut self, artist: String) -> AnyResult<Vec<TrackGroup>> {
+        let timer = TimeLogger::new("Retrieved tracks for artist".into());
+
+        let tracks = Track::select()
+            .where_bind("JSON_EXTRACT(artists, '$[0]') = ?", &artist)
+            .order_asc("album")
+            .order_asc("disk_no")
+            .order_asc("track_no")
+            .fetch_all(&mut self.connection)
+            .await?;
+
+        let mut groups: IndexMap<String, Vec<Track>> = IndexMap::new();
+
+        for item in tracks {
+            groups.entry(item.album.clone()).or_default().push(item);
+        }
+
+        let track_groups = groups
+            .into_iter()
+            .map(|(album, tracks)| TrackGroup {
+                label: album,
+                tracks,
+            })
+            .collect();
+
+        timer.complete();
+        Ok(track_groups)
     }
 
     /** Get all the playlists (and their content) from the database */

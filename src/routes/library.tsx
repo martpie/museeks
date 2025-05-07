@@ -101,7 +101,7 @@ function ViewLibrary() {
     return (
       <TracksList
         layout="default"
-        tracks={filteredTracks}
+        data={filteredTracks}
         tracksDensity={tracksDensity}
         playlists={playlists}
         isSortEnabled={true}

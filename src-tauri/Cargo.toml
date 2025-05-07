@@ -51,6 +51,7 @@ thiserror = "2.0.12"
 ts-rs = "10.1.0"
 uuid = { version = "1.16.0", features = ["v3", "v4", "fast-rng"] }
 walkdir = "2.5.0"
+indexmap = "2.9.0"
 
 [profile.dev]
 incremental = true # Compile your binary in smaller steps.

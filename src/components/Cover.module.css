@@ -20,7 +20,6 @@
 }
 
 .note {
-  font-family: monospace; /* the sexy one */
-  font-size: 1em;
-  line-height: 1em;
+  font-family: Verdana, sans-serif; /* the sexy one */
+  color: var(--text-muted);
 }
