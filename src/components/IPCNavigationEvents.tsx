@@ -3,14 +3,15 @@ import { useEffect } from 'react';
 
 import { useNavigate } from '@tanstack/react-router';
 import usePlayerStore from '../stores/usePlayerStore';
+import type { QueueOrigin } from '../types/museeks';
 
 /**
  * Handle app-level IPC Navigation events
  */
-function IPCNavigationEvents() {
+export default function IPCNavigationEvents() {
   const navigate = useNavigate();
-  const queueOrigin = usePlayerStore(
-    (state) => state.queueOrigin ?? '/library',
+  const queueOrigin: QueueOrigin = usePlayerStore(
+    (state) => state.queueOrigin ?? { type: 'library' },
   );
 
   useEffect(() => {
@@ -27,13 +28,29 @@ function IPCNavigationEvents() {
     }
 
     function goToPlayingTrack() {
-      navigate({
-        to: queueOrigin,
-        replace: true, // Force rerendering to activate the scroll TODO: not working
-        search: {
-          jump_to_playing_track: true,
-        },
-      });
+      switch (queueOrigin.type) {
+        case 'library': {
+          navigate({
+            to: '/library',
+            replace: true, // Force rerendering to activate the scroll TODO: not working
+            search: {
+              jump_to_playing_track: true,
+            },
+          });
+          break;
+        }
+        case 'playlist': {
+          navigate({
+            to: '/playlists/$playlistID',
+            params: { playlistID: queueOrigin.playlistID },
+            replace: true, // Force rerendering to activate the scroll TODO: not working
+            search: {
+              jump_to_playing_track: true,
+            },
+          });
+          break;
+        }
+      }
     }
 
     const unlisteners = [
@@ -53,5 +70,3 @@ function IPCNavigationEvents() {
 
   return null;
 }
-
-export default IPCNavigationEvents;

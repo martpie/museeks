@@ -20,7 +20,11 @@ function IPCPlayerEvents() {
       listen('PlaybackStop' satisfies IPCEvent, playerAPI.stop),
       listen(
         'PlaybackStart' satisfies IPCEvent,
-        ({ payload }: { payload: Track[] }) => playerAPI.start(payload),
+        ({ payload }: { payload: Track[] }) => {
+          if (payload.length > 0) {
+            playerAPI.start(payload, payload[0].id, { type: 'library' });
+          }
+        },
       ),
     ];
 

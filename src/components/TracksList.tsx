@@ -41,6 +41,7 @@ import {
   saveScrollPosition,
 } from '../lib/scroll-restoration';
 import { listKeyboardSelect, listMouseSelect } from '../lib/utils-list';
+import type { QueueOrigin } from '../types/museeks';
 import styles from './TracksList.module.css';
 
 const ROW_HEIGHT = 30;
@@ -64,7 +65,7 @@ type CommonProps = {
 type Props = CommonProps & {
   layout: 'default';
   playlists: Playlist[];
-  currentPlaylist?: string;
+  currentPlaylistID?: string;
   // For View-specific context menus
   extraContextMenu?: Array<{
     label: string;
@@ -78,7 +79,7 @@ export default function TracksList(props: Props) {
     isSortEnabled,
     tracksDensity,
     reorderable,
-    currentPlaylist,
+    currentPlaylistID,
     onReorder,
     playlists,
     extraContextMenu,
@@ -147,9 +148,12 @@ export default function TracksList(props: Props) {
    */
   const onPlaybackStart = useCallback(
     async (trackID: string) => {
-      playerAPI.start(tracks, trackID);
+      const queueOrigin: QueueOrigin = currentPlaylistID
+        ? { type: 'playlist', playlistID: currentPlaylistID }
+        : { type: 'library' };
+      playerAPI.start(tracks, trackID, queueOrigin);
     },
-    [tracks, playerAPI],
+    [tracks, playerAPI, currentPlaylistID],
   );
 
   /**
@@ -165,7 +169,7 @@ export default function TracksList(props: Props) {
         event.preventDefault();
         // Start playback at first select track location
         if (firstSelectedTrackIndex !== -1) {
-          playerAPI.start(tracks, tracks[firstSelectedTrackIndex].id);
+          onPlaybackStart(tracks[firstSelectedTrackIndex].id);
         }
       }
 
@@ -181,7 +185,7 @@ export default function TracksList(props: Props) {
         virtualizer?.scrollToIndex(scrollIndex);
       }
     },
-    [selectedTracks, tracks, playerAPI, virtualizer],
+    [selectedTracks, tracks, virtualizer, onPlaybackStart],
   );
 
   /**
@@ -214,7 +218,7 @@ export default function TracksList(props: Props) {
 
       // Hide current playlist if one the given playlist view
       const shownPlaylists = playlists.filter(
-        (elem) => elem.id !== currentPlaylist,
+        (elem) => elem.id !== currentPlaylistID,
       );
 
       // Playlist sub-menu
@@ -329,7 +333,10 @@ export default function TracksList(props: Props) {
           MenuItem.new({
             text: 'Edit track',
             action: () => {
-              navigate({ to: `/tracks/${track.id}` });
+              navigate({
+                to: '/tracks/$trackID',
+                params: { trackID: track.id },
+              });
             },
           }),
           PredefinedMenuItem.new({ item: 'Separator' }),
@@ -356,7 +363,7 @@ export default function TracksList(props: Props) {
       await menu.popup().catch(logAndNotifyError);
     },
     [
-      currentPlaylist,
+      currentPlaylistID,
       playlists,
       selectedTracks,
       tracks,

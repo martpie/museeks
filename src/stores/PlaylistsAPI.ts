@@ -12,7 +12,9 @@ async function play(playlistID: string): Promise<void> {
   try {
     const playlist = await database.getPlaylist(playlistID);
     const tracks = await database.getTracks(playlist.tracks);
-    usePlayerStore.getState().api.start(tracks);
+    usePlayerStore
+      .getState()
+      .api.start(tracks, null, { type: 'playlist', playlistID });
   } catch (err) {
     logAndNotifyError(err);
   }
