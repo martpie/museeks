@@ -33,7 +33,6 @@ const router = createRouter({
   routeTree,
   history: createHashHistory(),
   scrollRestoration: false,
-  defaultPreload: 'intent',
 });
 
 // Register the router instance for type safety
