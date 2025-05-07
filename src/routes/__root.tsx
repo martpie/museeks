@@ -17,6 +17,8 @@ import Toasts from '../components/Toasts';
 import useInvalidate from '../hooks/useInvalidate';
 import SettingsAPI from '../stores/SettingsAPI';
 
+import database from '../lib/database';
+import usePlayerStore from '../stores/usePlayerStore';
 import styles from './__root.module.css';
 
 type Search = {
@@ -31,10 +33,22 @@ export const Route = createRootRoute({
       jump_to_playing_track: Boolean(search?.jump_to_playing_track ?? false),
     };
   },
+  loader: async () => {
+    const playlists = await database.getAllPlaylists();
+    const firstPlaylistID: string | null = playlists[0].id ?? null;
+
+    return {
+      firstPlaylistID,
+    };
+  },
 });
 
 function ViewRoot() {
   const invalidate = useInvalidate();
+  const { firstPlaylistID } = Route.useLoaderData();
+  const queueOrigin = usePlayerStore((state) => state.queueOrigin);
+  const playlistID =
+    queueOrigin?.type === 'playlist' ? queueOrigin.playlistID : firstPlaylistID;
 
   useEffect(() => {
     // If the app imported tracks, we need to refresh route data, but it seems invalidate is not super stable
@@ -57,7 +71,7 @@ function ViewRoot() {
       <main className={styles.mainContent}>
         <Outlet />
       </main>
-      <Footer />
+      <Footer playlistID={playlistID} />
 
       {/** Out-of-the-flow UI bits */}
       <Toasts />

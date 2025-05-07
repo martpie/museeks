@@ -160,6 +160,7 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
         queue: [],
         queueCursor: null,
         playerStatus: PlayerStatus.STOP,
+        queueOrigin: null,
       });
     },
 

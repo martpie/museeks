@@ -1,7 +1,6 @@
 import {
   Outlet,
   createFileRoute,
-  redirect,
   useMatch,
   useNavigate,
 } from '@tanstack/react-router';
@@ -22,17 +21,8 @@ import PlaylistsAPI from '../stores/PlaylistsAPI';
 
 export const Route = createFileRoute('/playlists')({
   component: ViewPlaylists,
-  loader: async ({ params }) => {
+  loader: async () => {
     const playlists = await database.getAllPlaylists();
-
-    // If landing page, redirect to the first playlist if it exists
-    if (!('playlistID' in params) && playlists.length > 0) {
-      throw redirect({
-        to: '/playlists/$playlistID',
-        params: { playlistID: playlists[0].id },
-      });
-    }
-
     return { playlists };
   },
 });
@@ -134,6 +124,12 @@ function ViewPlaylists() {
             create one now
           </button>
         </ViewMessage.Sub>
+      </ViewMessage.Notice>
+    );
+  } else if (!childPlaylistMatch) {
+    playlistContent = (
+      <ViewMessage.Notice>
+        <p>No playlist selected</p>
       </ViewMessage.Notice>
     );
   } else {
