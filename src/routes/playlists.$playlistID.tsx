@@ -113,7 +113,7 @@ function ViewPlaylistDetails() {
     <TracksList
       layout="default"
       isSortEnabled={false}
-      tracks={filteredTracks}
+      data={filteredTracks}
       tracksDensity={tracksDensity}
       playlists={playlists}
       currentPlaylistID={playlistID}

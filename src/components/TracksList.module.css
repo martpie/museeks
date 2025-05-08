@@ -13,7 +13,34 @@
   position: relative;
 }
 
+.headless {
+  overflow-y: auto;
+}
+
 .tracksListRows {
   width: 100%;
   position: relative;
+}
+
+.tracksGroup {
+  display: flex;
+  gap: 16px;
+  padding: 16px 16px;
+  align-items: flex-start;
+  position: relative;
+}
+
+.tracksGroupLabel {
+  margin: 0;
+  margin-bottom: 8px;
+}
+
+.tracksGroupMetadata {
+  width: 200px;
+  position: sticky;
+  top: 16px;
+}
+
+.tracksGroupContent {
+  flex-grow: 1;
 }
