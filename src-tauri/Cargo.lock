@@ -2728,6 +2728,7 @@ dependencies = [
  "dirs 6.0.0",
  "futures",
  "home-config",
+ "indexmap 2.9.0",
  "itertools",
  "lofty",
  "log",

@@ -18,7 +18,7 @@ use crate::libs::database::{DB, SUPPORTED_PLAYLISTS_EXTENSIONS, SUPPORTED_TRACKS
 use crate::libs::error::{AnyResult, MuseeksError};
 use crate::libs::events::IPCEvent;
 use crate::libs::playlist::Playlist;
-use crate::libs::track::{get_track_from_file, get_track_id_for_path, Track};
+use crate::libs::track::{get_track_from_file, get_track_id_for_path, Track, TrackGroup};
 use crate::libs::utils::{scan_dirs, TimeLogger};
 
 use super::config::get_storage_dir;
@@ -296,6 +296,14 @@ async fn get_artists(db_state: State<'_, DBState>) -> AnyResult<Vec<String>> {
 }
 
 #[tauri::command]
+async fn get_artist_tracks(
+    db_state: State<'_, DBState>,
+    artist: String,
+) -> AnyResult<Vec<TrackGroup>> {
+    db_state.get_lock().await.get_artist_tracks(artist).await
+}
+
+#[tauri::command]
 async fn get_all_playlists(db_state: State<'_, DBState>) -> AnyResult<Vec<Playlist>> {
     db_state.get_lock().await.get_all_playlists().await
 }
@@ -432,6 +440,7 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
             remove_tracks,
             update_track,
             get_artists,
+            get_artist_tracks,
             get_all_playlists,
             get_playlist,
             get_playlist,
