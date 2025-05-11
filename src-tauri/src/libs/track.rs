@@ -34,6 +34,18 @@ pub struct Track {
 }
 
 /**
+ * Represents a group of tracks, grouped by "something", lib artist name, or
+ * album name
+ */
+#[derive(Debug, Clone, Serialize, Deserialize, TS)]
+#[ts(export, export_to = "../../src/generated/typings.ts")]
+
+pub struct TrackGroup {
+    pub label: String,
+    pub tracks: Vec<Track>,
+}
+
+/**
  * Generate a Track struct from a Path, or nothing if it is not a valid audio
  * file
  */
