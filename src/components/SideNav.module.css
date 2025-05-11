@@ -1,6 +1,7 @@
 .sideNav {
   display: flex;
   flex-flow: column;
+  flex-shrink: 0;
   width: 200px;
   border-right: 1px solid var(--border-color);
   background-color: var(--sidebar-bg);
