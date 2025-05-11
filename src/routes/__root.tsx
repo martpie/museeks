@@ -35,7 +35,7 @@ export const Route = createRootRoute({
   },
   loader: async () => {
     const playlists = await database.getAllPlaylists();
-    const firstPlaylistID: string | null = playlists[0].id ?? null;
+    const firstPlaylistID: string | null = playlists[0]?.id ?? null;
 
     return {
       firstPlaylistID,

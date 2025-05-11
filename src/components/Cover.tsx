@@ -9,18 +9,11 @@ import styles from './Cover.module.css';
 type Props = {
   track: Track;
   noBorder?: boolean;
+  noteSize?: number;
 };
 
 export default function Cover(props: Props) {
   const coverPath = useCover(props.track);
-
-  if (coverPath) {
-    return (
-      <AspectRatio.Root ratio={1}>
-        <img src={coverPath} alt="Album cover" className={styles.cover} />
-      </AspectRatio.Root>
-    );
-  }
 
   const classes = cx(styles.cover, styles.empty, {
     [styles.noBorder]: props.noBorder,
@@ -30,7 +23,25 @@ export default function Cover(props: Props) {
     <AspectRatio.Root ratio={1}>
       <div className={classes}>
         {/** billion dollar problem: convert emoji to text, good luck 🎵 */}
-        <div className={styles.note}>♪</div>
+        <div
+          className={styles.note}
+          style={{
+            fontSize: `${props.noteSize ?? 1}rem`,
+            lineHeight: `${props.noteSize ?? 1}rem`,
+            // the note always seems a bit "high"
+            marginBottom: `-${(props.noteSize ?? 1) / 10}rem`,
+          }}
+        >
+          ♫
+        </div>
+        <img
+          src={coverPath ?? undefined}
+          alt="Album cover"
+          className={cx(styles.image, {
+            [styles.visible]: coverPath != null,
+          })}
+          draggable={false}
+        />
       </div>
     </AspectRatio.Root>
   );
