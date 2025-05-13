@@ -17,3 +17,39 @@
   width: 100%;
   position: relative;
 }
+
+.tracksGroup {
+  display: flex;
+  gap: 16px;
+  padding: 16px 16px;
+  align-items: flex-start;
+  position: relative;
+}
+
+.tracksGroupLabel {
+  font-size: 1.4rem;
+  font-weight: bold;
+  margin: 0;
+}
+
+.tracksGroupGenres {
+  color: var(--text-muted);
+  /* text-transform: uppercase; */
+}
+
+.tracksGroupMetadata {
+  width: 160px;
+  position: sticky;
+  top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  @media (min-width: 1024px) {
+    width: 240px;
+  }
+}
+
+.tracksGroupContent {
+  flex-grow: 1;
+}

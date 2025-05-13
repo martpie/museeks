@@ -6,6 +6,7 @@ import * as ViewMessage from '../elements/ViewMessage';
 import type { Track } from '../generated/typings';
 import useFilteredTracks from '../hooks/useFilteredTracks';
 import useInvalidate from '../hooks/useInvalidate';
+import useViewStatus from '../hooks/useViewStatus';
 import config from '../lib/config';
 import database from '../lib/database';
 import PlaylistsAPI from '../stores/PlaylistsAPI';
@@ -47,6 +48,7 @@ function ViewPlaylistDetails() {
 
   const search = useLibraryStore((state) => state.search);
   const filteredTracks = useFilteredTracks(playlistTracks);
+  useViewStatus(filteredTracks);
 
   const queueOrigin = useMemo(() => {
     return { type: 'playlist', playlistID } satisfies QueueOrigin;
@@ -118,7 +120,7 @@ function ViewPlaylistDetails() {
     <TracksList
       layout="default"
       isSortEnabled={false}
-      tracks={filteredTracks}
+      data={filteredTracks}
       tracksDensity={tracksDensity}
       playlists={playlists}
       queueOrigin={queueOrigin}

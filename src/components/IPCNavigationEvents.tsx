@@ -31,7 +31,7 @@ export default function IPCNavigationEvents() {
         case 'library': {
           navigate({
             to: '/library',
-            replace: true, // Force rerendering to activate the scroll TODO: not working
+            replace: true, // Force rerendering to activate the scroll
             search: {
               jump_to_playing_track: true,
             },
@@ -42,12 +42,22 @@ export default function IPCNavigationEvents() {
           navigate({
             to: '/playlists/$playlistID',
             params: { playlistID: queueOrigin.playlistID },
-            replace: true, // Force rerendering to activate the scroll TODO: not working
+            replace: true, // Force rerendering to activate the scroll
             search: {
               jump_to_playing_track: true,
             },
           });
           break;
+        }
+        case 'artist': {
+          navigate({
+            to: '/artists/$artistID',
+            params: { artistID: queueOrigin.artistID },
+            replace: true,
+            search: {
+              jump_to_playing_track: true,
+            },
+          });
         }
       }
     }

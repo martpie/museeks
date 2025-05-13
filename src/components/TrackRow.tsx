@@ -9,21 +9,29 @@ import PlayingIndicator from './PlayingIndicator';
 import styles from './TrackRow.module.css';
 import cellStyles from './TracksListHeader.module.css';
 
+export type TrackRowEvents = {
+  onTrackSelect: (
+    event: React.MouseEvent,
+    trackID: string,
+    trackIndex: number,
+  ) => void;
+  onContextMenu: (
+    event: React.MouseEvent,
+    trackID: string,
+    trackIndex: number,
+  ) => void;
+  onPlaybackStart: (trackID: string) => void;
+};
+
 type Props = {
   selected: boolean;
   track: Track;
   index: number;
   isPlaying?: boolean;
-  onDoubleClick?: (trackID: string) => void;
-  onMouseDown?: (
-    event: React.MouseEvent,
-    trackID: string,
-    index: number,
-  ) => void;
-  onContextMenu?: (event: React.MouseEvent, index: number) => void;
   draggable?: boolean;
+  simplified?: boolean;
   style?: React.CSSProperties;
-};
+} & TrackRowEvents;
 
 export default function TrackRow(props: Props) {
   const {
@@ -31,9 +39,9 @@ export default function TrackRow(props: Props) {
     index,
     selected,
     draggable,
-    onMouseDown,
+    onTrackSelect,
     onContextMenu,
-    onDoubleClick,
+    onPlaybackStart,
   } = props;
 
   const duration = useFormattedDuration(track.duration);
@@ -63,14 +71,15 @@ export default function TrackRow(props: Props) {
     [styles.isOver]: isOver,
     [styles.isAbove]: isOver && overIndex < activeIndex,
     [styles.isBelow]: isOver && overIndex > activeIndex,
+    [styles.simplified]: props.simplified,
   });
 
   return (
     <div
       className={trackClasses}
-      onDoubleClick={() => onDoubleClick?.(props.track.id)}
-      onMouseDown={(e) => onMouseDown?.(e, track.id, index)}
-      onContextMenu={(e) => onContextMenu?.(e, index)}
+      onDoubleClick={() => onPlaybackStart(track.id)}
+      onMouseDown={(e) => onTrackSelect(e, track.id, index)}
+      onContextMenu={(e) => onContextMenu(e, track.id, index)}
       aria-selected={selected}
       {...(props.isPlaying ? { 'data-is-playing': true } : {})}
       // dnd-related props:
@@ -88,15 +97,19 @@ export default function TrackRow(props: Props) {
       <div className={`${styles.cell} ${cellStyles.cellDuration}`}>
         {duration}
       </div>
-      <div className={`${styles.cell} ${cellStyles.cellArtist}`}>
-        {track.artists.join(', ')}
-      </div>
-      <div className={`${styles.cell} ${cellStyles.cellAlbum}`}>
-        {track.album}
-      </div>
-      <div className={`${styles.cell} ${cellStyles.cellGenre}`}>
-        {track.genres.join(', ')}
-      </div>
+      {props.simplified !== true && (
+        <>
+          <div className={`${styles.cell} ${cellStyles.cellArtist}`}>
+            {track.artists.join(', ')}
+          </div>
+          <div className={`${styles.cell} ${cellStyles.cellAlbum}`}>
+            {track.album}
+          </div>
+          <div className={`${styles.cell} ${cellStyles.cellGenre}`}>
+            {track.genres.join(', ')}
+          </div>
+        </>
+      )}
     </div>
   );
 }

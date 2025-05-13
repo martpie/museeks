@@ -58,3 +58,11 @@
     bottom: -1px;
   }
 }
+
+/* For simplified track rows, as they don't have a header, let's display the
+ * last cell right-aligned.
+ */
+.simplified > :last-child {
+  text-align: right;
+  padding-right: 8px;
+}

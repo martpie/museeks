@@ -74,10 +74,6 @@ export type TrackMutation = Pick<
  * to jump to playing track.
  */
 export type QueueOrigin =
-  | {
-      type: 'library';
-    }
-  | {
-      type: 'playlist';
-      playlistID: string;
-    };
+  | { type: 'library' }
+  | { type: 'playlist'; playlistID: string }
+  | { type: 'artist'; artistID: string };
