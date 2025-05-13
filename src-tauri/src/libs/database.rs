@@ -208,7 +208,7 @@ impl DB {
 
     /** Get all the playlists (and their content) from the database */
     pub async fn get_all_playlists(&mut self) -> AnyResult<Vec<Playlist>> {
-        let timer = TimeLogger::new("Retrieved and decoded playlists".into());
+        let timer = TimeLogger::new("Retrieved playlists".into());
         let mut playlists = Playlist::select()
             .order_asc("name")
             .fetch_all(&mut self.connection)
