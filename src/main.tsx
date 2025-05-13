@@ -5,7 +5,11 @@
 */
 
 import { QueryClientProvider } from '@tanstack/react-query';
-import { RouterProvider } from '@tanstack/react-router';
+import {
+  RouterProvider,
+  createHashHistory,
+  createRouter,
+} from '@tanstack/react-router';
 import * as logger from '@tauri-apps/plugin-log';
 import React from 'react';
 import * as ReactDOM from 'react-dom/client';
@@ -26,7 +30,6 @@ import './styles/general.css';
 | Routing
 |--------------------------------------------------------------------------
 */
-import { createHashHistory, createRouter } from '@tanstack/react-router';
 import { routeTree } from './generated/route-tree';
 
 const router = createRouter({
