@@ -6,7 +6,6 @@ import { useFilteredTrackGroup } from '../hooks/useFilteredTracks';
 import config from '../lib/config';
 import database from '../lib/database';
 
-import View from '../elements/View';
 import useViewStatus from '../hooks/useViewStatus';
 import type { QueueOrigin } from '../types/museeks';
 
@@ -38,15 +37,13 @@ export default function ViewArtistDetails() {
   }, [artistID]);
 
   return (
-    <View>
-      <TracksList
-        layout="grouped"
-        data={content}
-        tracksDensity={tracksDensity}
-        playlists={playlists}
-        queueOrigin={queueOrigin}
-        isSortEnabled={false}
-      />
-    </View>
+    <TracksList
+      layout="grouped"
+      data={content}
+      tracksDensity={tracksDensity}
+      playlists={playlists}
+      queueOrigin={queueOrigin}
+      isSortEnabled={false}
+    />
   );
 }

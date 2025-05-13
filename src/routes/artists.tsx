@@ -1,9 +1,4 @@
-import {
-  Outlet,
-  createFileRoute,
-  redirect,
-  useMatch,
-} from '@tanstack/react-router';
+import { Outlet, createFileRoute, useMatch } from '@tanstack/react-router';
 import SideNav from '../components/SideNav';
 import SideNavLink from '../components/SideNavLink';
 import View from '../elements/View';
@@ -12,17 +7,8 @@ import database from '../lib/database';
 
 export const Route = createFileRoute('/artists')({
   component: ViewArtists,
-  loader: async ({ params }) => {
+  loader: async () => {
     const artists = await database.getAllArtists();
-
-    if (!('artistID' in params) && artists.length > 0) {
-      throw redirect({
-        to: '/artists/$artistID',
-        params: { artistID: artists[0] },
-        replace: true,
-      });
-    }
-
     return { artists };
   },
 });

@@ -17,7 +17,7 @@ export default function useInvalidate() {
     // reset (otherwise, we'd see a "no tracks in the library" instead of "loading")
     queryClient.invalidateQueries({
       exact: true,
-      queryKey: ['tracks'],
+      queryKey: ['tracks', 'footer'],
     });
 
     // Reload the route data

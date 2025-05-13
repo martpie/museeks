@@ -116,5 +116,3 @@ function ViewLibrary() {
 
   return <View>{getLibraryComponent}</View>;
 }
-
-// ViewLibrary.whyDidYouRender = true;
