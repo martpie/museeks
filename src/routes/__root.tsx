@@ -1,4 +1,4 @@
-import { Outlet, createRootRoute } from '@tanstack/react-router';
+import { Outlet, createRootRoute, useLocation } from '@tanstack/react-router';
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
 import cx from 'classnames';
 import { useEffect } from 'react';
@@ -18,6 +18,7 @@ import Toasts from '../components/Toasts';
 import useInvalidate from '../hooks/useInvalidate';
 import SettingsAPI from '../stores/SettingsAPI';
 
+import { info } from '@tauri-apps/plugin-log';
 import styles from './__root.module.css';
 
 type Search = {
@@ -41,6 +42,15 @@ function ViewRoot() {
     // If the app imported tracks, we need to refresh route data, but it seems invalidate is not super stable
     SettingsAPI.init(invalidate);
   }, [invalidate]);
+
+  // Log each navigation to the console for debug purposes
+  const location = useLocation();
+
+  useEffect(() => {
+    info(`Navigated to: ${location.pathname}`, {
+      file: 'UI',
+    });
+  }, [location]);
 
   return (
     <div className={cx(styles.root, `os__${window.__MUSEEKS_PLATFORM}`)}>
