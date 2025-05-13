@@ -1,4 +1,9 @@
-import { Link, createFileRoute, redirect } from '@tanstack/react-router';
+import {
+  Link,
+  createFileRoute,
+  redirect,
+  useLoaderData,
+} from '@tanstack/react-router';
 import { useCallback, useMemo } from 'react';
 
 import TracksList from '../components/TracksList';
@@ -19,14 +24,12 @@ export const Route = createFileRoute('/playlists/$playlistID')({
     try {
       const playlist = await database.getPlaylist(params.playlistID);
 
-      const [playlists, playlistTracks, tracksDensity] = await Promise.all([
-        database.getAllPlaylists(),
+      const [playlistTracks, tracksDensity] = await Promise.all([
         database.getTracks(playlist.tracks),
         config.get('track_view_density'),
       ]);
 
       return {
-        playlists,
         playlistTracks,
         tracksDensity,
       };
@@ -41,7 +44,8 @@ export const Route = createFileRoute('/playlists/$playlistID')({
 });
 
 function ViewPlaylistDetails() {
-  const { playlists, playlistTracks, tracksDensity } = Route.useLoaderData();
+  const { playlistTracks, tracksDensity } = Route.useLoaderData();
+  const { playlists } = useLoaderData({ from: '/playlists' });
   const { playlistID } = Route.useParams();
 
   const invalidate = useInvalidate();
