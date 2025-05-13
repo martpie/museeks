@@ -21,7 +21,7 @@
 
 .visible {
   opacity: 1;
-  transition: .1s ease-in-out;
+  transition: .2s ease-in-out;
 }
 
 .empty {
@@ -34,7 +34,6 @@
 }
 
 .note {
-  font-family: monospace; /* the sexy one */
-  font-size: 1em;
-  line-height: 1em;
+  font-family: Verdana, sans-serif; /* the sexy one */
+  color: var(--text-muted);
 }
