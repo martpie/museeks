@@ -1,6 +1,11 @@
 import { invoke } from '@tauri-apps/api/core';
 
-import type { Playlist, ScanResult, Track } from '../generated/typings';
+import type {
+  Playlist,
+  ScanResult,
+  Track,
+  TrackGroup,
+} from '../generated/typings';
 
 /**
  * Bridge for the UI to communicate with the backend and manipulate the Database
@@ -40,6 +45,10 @@ const database = {
 
   async getAllArtists(): Promise<Array<string>> {
     return invoke('plugin:database|get_artists');
+  },
+
+  async getArtistTracks(artist: string): Promise<Array<TrackGroup>> {
+    return invoke('plugin:database|get_artist_tracks', { artist });
   },
 
   // ---------------------------------------------------------------------------

@@ -1,13 +1,13 @@
 import { ask, open } from '@tauri-apps/plugin-dialog';
 
-import type { SortBy, SortOrder, Track } from '../generated/typings';
+import type { SortBy, SortOrder } from '../generated/typings';
 import config from '../lib/config';
 import database from '../lib/database';
 import { logAndNotifyError } from '../lib/utils';
 
 import type { StateCreator } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { getStatus, removeRedundantFolders } from '../lib/utils-library';
+import { removeRedundantFolders } from '../lib/utils-library';
 import type { API, TrackMutation } from '../types/museeks';
 import { createStore } from './store-helpers';
 import usePlayerStore from './usePlayerStore';
@@ -37,7 +37,7 @@ type LibraryState = API<{
       trackID: string,
       fields: TrackMutation,
     ) => Promise<void>;
-    setTracksStatus: (status: Array<Track> | null) => void;
+    setTracksStatus: (status?: string) => void;
   };
 }>;
 
@@ -262,9 +262,9 @@ const useLibraryStore = createLibraryStore<LibraryState>((set, get) => ({
     /**
      * Manually set the footer content based on a list of tracks
      */
-    setTracksStatus: async (tracks) => {
+    setTracksStatus: async (status) => {
       set({
-        tracksStatus: tracks !== null ? getStatus(tracks) : '',
+        tracksStatus: status,
       });
     },
   },

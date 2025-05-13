@@ -6,6 +6,7 @@ import TracksList from '../components/TracksList';
 import View from '../elements/View';
 import * as ViewMessage from '../elements/ViewMessage';
 import useFilteredTracks from '../hooks/useFilteredTracks';
+import useViewStatus from '../hooks/useViewStatus';
 import config from '../lib/config';
 import database from '../lib/database';
 import queryClient from '../lib/query-client';
@@ -54,6 +55,7 @@ function ViewLibrary() {
   });
 
   const filteredTracks = useFilteredTracks(tracks ?? [], sortBy, sortOrder);
+  useViewStatus(filteredTracks);
 
   const getLibraryComponent = useMemo(() => {
     // Refreshing library
@@ -103,7 +105,7 @@ function ViewLibrary() {
     return (
       <TracksList
         layout="default"
-        tracks={filteredTracks}
+        data={filteredTracks}
         queueOrigin={QUEUE_ORIGIN}
         tracksDensity={tracksDensity}
         playlists={playlists}

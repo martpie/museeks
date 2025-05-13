@@ -20,6 +20,7 @@
 
 .cellDuration {
   width: 7%;
+  min-width: 70px;
 }
 
 .cellArtist,

@@ -7,10 +7,10 @@ import {
 } from '@tauri-apps/api/menu';
 import { revealItemInDir } from '@tauri-apps/plugin-opener';
 import type React from 'react';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Keybinding from 'react-keybinding-component';
 
-import type { Config, Playlist, Track } from '../generated/typings';
+import type { Config, Playlist, Track, TrackGroup } from '../generated/typings';
 import { logAndNotifyError } from '../lib/utils';
 import { isKeyWithoutModifiers } from '../lib/utils-events';
 import PlaylistsAPI from '../stores/PlaylistsAPI';
@@ -26,8 +26,10 @@ import {
 } from '../lib/scroll-restoration';
 import { listKeyboardSelect, listMouseSelect } from '../lib/utils-list';
 import type { QueueOrigin } from '../types/museeks';
+import TracksListDefault from './TracksListDefault';
+import TracksListGrouped from './TracksListGrouped';
+
 import styles from './TracksList.module.css';
-import TrackListDefault from './TracksListDefault';
 
 // --------------------------------------------------------------------------
 // TrackList
@@ -35,9 +37,7 @@ import TrackListDefault from './TracksListDefault';
 
 type TracksListVirtualizer = Virtualizer<HTMLDivElement, Element>;
 
-type Props = {
-  layout: 'default';
-  tracks: Track[];
+type TracksListProps = {
   playlists: Playlist[];
   tracksDensity: Config['track_view_density'];
   isSortEnabled: boolean;
@@ -51,9 +51,25 @@ type Props = {
   }>;
 };
 
+interface TrackListDefaultLayoutProps extends TracksListProps {
+  layout: 'default';
+  data: Array<Track>;
+}
+
+interface TrackListGroupedLayoutProps extends TracksListProps {
+  layout: 'grouped';
+  data: Array<TrackGroup>;
+}
+
+type Props = TrackListDefaultLayoutProps | TrackListGroupedLayoutProps;
+
+const ROW_HEIGHT = 30;
+const ROW_HEIGHT_COMPACT = 24;
+
 export default function TracksList(props: Props) {
   const {
-    tracks,
+    layout,
+    data,
     isSortEnabled,
     tracksDensity,
     reorderable,
@@ -62,6 +78,15 @@ export default function TracksList(props: Props) {
     playlists,
     extraContextMenu,
   } = props;
+
+  // We need to flatten the list of tracks for some operations
+  const tracks: Array<Track> = useMemo(() => {
+    if (layout === 'default') {
+      return data;
+    }
+
+    return data.flatMap((group) => group.tracks);
+  }, [data, layout]);
 
   const trackPlayingID = usePlayingTrackID();
   const playerAPI = usePlayerAPI();
@@ -185,7 +210,7 @@ export default function TracksList(props: Props) {
    * Context menus
    */
   const onContextMenu = useCallback(
-    async (event: React.MouseEvent, index: number) => {
+    async (event: React.MouseEvent, _trackID: string, index: number) => {
       event.preventDefault();
 
       const selectedCount = selectedTracks.size;
@@ -352,22 +377,39 @@ export default function TracksList(props: Props) {
     ],
   );
 
+  const rowHeight =
+    tracksDensity === 'compact' ? ROW_HEIGHT_COMPACT : ROW_HEIGHT;
+
   return (
     <div className={styles.tracksList}>
       <Keybinding onKey={onKeyEvent} preventInputConflict />
-      <TrackListDefault
-        ref={scrollableRef}
-        tracks={tracks}
-        tracksDensity={tracksDensity}
-        selectedTracks={selectedTracks}
-        isSortEnabled={isSortEnabled}
-        reorderable={reorderable}
-        initialOffset={getScrollPosition()}
-        onReorder={onReorder}
-        onTrackSelect={onTrackSelect}
-        onContextMenu={onContextMenu}
-        onPlaybackStart={onPlaybackStart}
-      />
+      {layout === 'default' && (
+        <TracksListDefault
+          ref={scrollableRef}
+          tracks={data}
+          rowHeight={rowHeight}
+          selectedTracks={selectedTracks}
+          isSortEnabled={isSortEnabled}
+          reorderable={reorderable}
+          initialOffset={getScrollPosition()}
+          onReorder={onReorder}
+          onTrackSelect={onTrackSelect}
+          onContextMenu={onContextMenu}
+          onPlaybackStart={onPlaybackStart}
+        />
+      )}
+      {layout === 'grouped' && (
+        <TracksListGrouped
+          ref={scrollableRef}
+          trackGroups={data}
+          rowHeight={rowHeight}
+          selectedTracks={selectedTracks}
+          initialOffset={getScrollPosition()}
+          onTrackSelect={onTrackSelect}
+          onContextMenu={onContextMenu}
+          onPlaybackStart={onPlaybackStart}
+        />
+      )}
     </div>
   );
 }

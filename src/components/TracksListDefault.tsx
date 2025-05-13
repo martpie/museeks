@@ -9,17 +9,15 @@ import { type Virtualizer, useVirtualizer } from '@tanstack/react-virtual';
 import type React from 'react';
 import { useCallback, useImperativeHandle, useRef } from 'react';
 
-import TrackRow from './TrackRow';
+import TrackRow, { type TrackRowEvents } from './TrackRow';
 import TracksListHeader from './TracksListHeader';
 
-import type { Config, Track } from '../generated/typings';
+import type { Track } from '../generated/typings';
 import useDndSensors from '../hooks/useDnDSensors';
 import usePlayingTrackID from '../hooks/usePlayingTrackID';
 
 import styles from './TracksList.module.css';
 
-const ROW_HEIGHT = 30;
-const ROW_HEIGHT_COMPACT = 24;
 const DND_MODIFIERS = [restrictToVerticalAxis];
 
 /** ----------------------------------------------------------------------------
@@ -30,26 +28,23 @@ const DND_MODIFIERS = [restrictToVerticalAxis];
 type Props = {
   ref: React.RefObject<Virtualizer<HTMLDivElement, Element> | null>;
   tracks: Track[];
-  tracksDensity: Config['track_view_density'];
   isSortEnabled: boolean;
   reorderable?: boolean;
   selectedTracks: Set<string>;
   initialOffset: number;
+  rowHeight: number;
   onReorder?: (tracks: Track[]) => void;
-  onTrackSelect: (event: React.MouseEvent, trackID: string) => void;
-  onContextMenu: (event: React.MouseEvent, index: number) => Promise<void>;
-  onPlaybackStart: (trackID: string) => Promise<void>;
-};
+} & TrackRowEvents;
 
 export default function TrackListDefault(props: Props) {
   const {
     ref,
     tracks,
-    tracksDensity,
     isSortEnabled,
     reorderable,
     selectedTracks,
     initialOffset,
+    rowHeight,
     onReorder,
     onTrackSelect,
     onContextMenu,
@@ -65,14 +60,7 @@ export default function TrackListDefault(props: Props) {
     overscan: 20,
     scrollPaddingEnd: 22, // Height of the track list header
     getScrollElement: () => innerScrollableRef.current,
-    estimateSize: () => {
-      switch (tracksDensity) {
-        case 'compact':
-          return ROW_HEIGHT_COMPACT;
-        default:
-          return ROW_HEIGHT;
-      }
-    },
+    estimateSize: () => rowHeight,
     getItemKey: (index) => tracks[index].id,
   });
 
@@ -143,9 +131,9 @@ export default function TrackListDefault(props: Props) {
                   track={track}
                   isPlaying={trackPlayingID === track.id}
                   index={virtualItem.index}
-                  onMouseDown={onTrackSelect}
+                  onTrackSelect={onTrackSelect}
                   onContextMenu={onContextMenu}
-                  onDoubleClick={onPlaybackStart}
+                  onPlaybackStart={onPlaybackStart}
                   draggable={reorderable}
                   style={{
                     position: 'absolute',
