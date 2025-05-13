@@ -43,7 +43,7 @@ type Props = {
   isSortEnabled: boolean;
   reorderable?: boolean;
   onReorder?: (tracks: Track[]) => void;
-  currentPlaylistID?: string;
+  queueOrigin: QueueOrigin;
   // For View-specific context menus
   extraContextMenu?: Array<{
     label: string;
@@ -57,7 +57,7 @@ export default function TracksList(props: Props) {
     isSortEnabled,
     tracksDensity,
     reorderable,
-    currentPlaylistID,
+    queueOrigin,
     onReorder,
     playlists,
     extraContextMenu,
@@ -126,12 +126,9 @@ export default function TracksList(props: Props) {
    */
   const onPlaybackStart = useCallback(
     async (trackID: string) => {
-      const queueOrigin: QueueOrigin = currentPlaylistID
-        ? { type: 'playlist', playlistID: currentPlaylistID }
-        : { type: 'library' };
       playerAPI.start(tracks, trackID, queueOrigin);
     },
-    [tracks, playerAPI, currentPlaylistID],
+    [tracks, playerAPI, queueOrigin],
   );
 
   /**
@@ -193,6 +190,8 @@ export default function TracksList(props: Props) {
 
       const selectedCount = selectedTracks.size;
       const track = tracks[index];
+      const currentPlaylistID =
+        queueOrigin.type === 'playlist' ? queueOrigin.playlistID : null;
 
       // Hide current playlist if one the given playlist view
       const shownPlaylists = playlists.filter(
@@ -341,7 +340,7 @@ export default function TracksList(props: Props) {
       await menu.popup().catch(logAndNotifyError);
     },
     [
-      currentPlaylistID,
+      queueOrigin,
       playlists,
       selectedTracks,
       tracks,

@@ -10,8 +10,10 @@ import config from '../lib/config';
 import database from '../lib/database';
 import queryClient from '../lib/query-client';
 import useLibraryStore from '../stores/useLibraryStore';
+import type { QueueOrigin } from '../types/museeks';
 
 const QUERY_ALL_TRACKS = 'all_tracks';
+const QUEUE_ORIGIN: QueueOrigin = { type: 'library' };
 
 export const Route = createFileRoute('/library')({
   component: ViewLibrary,
@@ -102,6 +104,7 @@ function ViewLibrary() {
       <TracksList
         layout="default"
         tracks={filteredTracks}
+        queueOrigin={QUEUE_ORIGIN}
         tracksDensity={tracksDensity}
         playlists={playlists}
         isSortEnabled={true}

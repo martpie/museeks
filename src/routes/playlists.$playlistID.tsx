@@ -10,6 +10,7 @@ import config from '../lib/config';
 import database from '../lib/database';
 import PlaylistsAPI from '../stores/PlaylistsAPI';
 import useLibraryStore from '../stores/useLibraryStore';
+import type { QueueOrigin } from '../types/museeks';
 
 export const Route = createFileRoute('/playlists/$playlistID')({
   component: ViewPlaylistDetails,
@@ -46,6 +47,10 @@ function ViewPlaylistDetails() {
 
   const search = useLibraryStore((state) => state.search);
   const filteredTracks = useFilteredTracks(playlistTracks);
+
+  const queueOrigin = useMemo(() => {
+    return { type: 'playlist', playlistID } satisfies QueueOrigin;
+  }, [playlistID]);
 
   const onReorder = useCallback(
     async (tracks: Track[]) => {
@@ -116,7 +121,7 @@ function ViewPlaylistDetails() {
       tracks={filteredTracks}
       tracksDensity={tracksDensity}
       playlists={playlists}
-      currentPlaylistID={playlistID}
+      queueOrigin={queueOrigin}
       onReorder={onReorder}
       reorderable={true}
       extraContextMenu={extraContextMenu}
