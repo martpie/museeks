@@ -1,6 +1,7 @@
 import {
   Outlet,
   createFileRoute,
+  redirect,
   useMatch,
   useNavigate,
 } from '@tanstack/react-router';
@@ -18,11 +19,29 @@ import * as ViewMessage from '../elements/ViewMessage';
 import useInvalidate from '../hooks/useInvalidate';
 import database from '../lib/database';
 import PlaylistsAPI from '../stores/PlaylistsAPI';
+import usePlayerStore from '../stores/usePlayerStore';
 
 export const Route = createFileRoute('/playlists')({
   component: ViewPlaylists,
-  loader: async () => {
+  loader: async ({ params }) => {
     const playlists = await database.getAllPlaylists();
+    const queueOrigin = usePlayerStore.getState().queueOrigin;
+
+    if (!('playlistID' in params) && playlists.length > 0) {
+      // If there is a playing Playlist, redirect to it
+      if (queueOrigin?.type === 'playlist') {
+        throw redirect({
+          to: '/playlists/$playlistID',
+          params: { playlistID: queueOrigin.playlistID },
+        });
+      }
+
+      throw redirect({
+        to: '/playlists/$playlistID',
+        params: { playlistID: playlists[0].id },
+      });
+    }
+
     return { playlists };
   },
 });

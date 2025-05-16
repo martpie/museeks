@@ -47,9 +47,7 @@ function ViewRoot() {
   const location = useLocation();
 
   useEffect(() => {
-    info(`Navigated to: ${location.pathname}`, {
-      file: 'UI',
-    });
+    info(`Navigated to: ${location.pathname}`);
   }, [location]);
 
   return (
