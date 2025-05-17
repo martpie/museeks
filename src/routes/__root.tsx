@@ -63,7 +63,7 @@ function ViewRoot() {
 
       {/** The actual app */}
       <Header />
-      <main className={styles.mainContent} style={{ background: 'red' }}>
+      <main className={styles.mainContent}>
         <Outlet />
       </main>
       <Footer />
