@@ -30,9 +30,18 @@ export const Route = createRootRoute({
   errorComponent: ErrorView,
   notFoundComponent: NotFoundView,
   validateSearch: (search): Search => {
-    return {
-      jump_to_playing_track: Boolean(search?.jump_to_playing_track ?? false),
-    };
+    // Why circumvolutions here? If the key is defined, it will be added to the
+    // fragment of the URL (after the #), which will prevent the default_view
+    // plugin to navigate to the default view.
+    const jump_to_playing_track = Boolean(search?.jump_to_playing_track);
+
+    if (jump_to_playing_track === true) {
+      return {
+        jump_to_playing_track,
+      };
+    }
+
+    return {};
   },
 });
 
