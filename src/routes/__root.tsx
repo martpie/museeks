@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 import AppEvents from '../components/AppEvents';
 import DropzoneImport from '../components/DropzoneImport';
 import Footer from '../components/Footer';
-import GlobalErrorBoundary from '../components/GlobalErrorBoundary';
+import { ErrorView, NotFoundView } from '../components/GlobalErrors';
 import GlobalKeyBindings from '../components/GlobalKeyBindings';
 import Header from '../components/Header';
 import IPCNavigationEvents from '../components/IPCNavigationEvents';
@@ -27,11 +27,21 @@ type Search = {
 
 export const Route = createRootRoute({
   component: ViewRoot,
-  errorComponent: GlobalErrorBoundary,
+  errorComponent: ErrorView,
+  notFoundComponent: NotFoundView,
   validateSearch: (search): Search => {
-    return {
-      jump_to_playing_track: Boolean(search?.jump_to_playing_track ?? false),
-    };
+    // Why circumvolutions here? If the key is defined, it will be added to the
+    // fragment of the URL (after the #), which will prevent the default_view
+    // plugin to navigate to the default view.
+    const jump_to_playing_track = Boolean(search?.jump_to_playing_track);
+
+    if (jump_to_playing_track === true) {
+      return {
+        jump_to_playing_track,
+      };
+    }
+
+    return {};
   },
 });
 
