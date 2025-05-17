@@ -20,6 +20,7 @@
     "dialog:allow-ask",
     "fs:allow-lstat",
     "opener:allow-open-url",
+    "opener:allow-default-urls",
     "opener:allow-reveal-item-in-dir",
     "os:allow-os-type",
     "log:allow-log",
