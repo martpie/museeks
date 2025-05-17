@@ -7,7 +7,7 @@ description = "A simple, clean and cross-platform music player"
 authors = ["Pierre de la Martinière <pierre.de.la.martiniere@gmail.com>"]
 license = "MIT"
 repository = "https://github.com/martpie/museeks"
-edition = "2021"
+edition = "2024"
 
 [build-dependencies]
 tauri-build = { version = "2.2.0", features = ["codegen"] }
