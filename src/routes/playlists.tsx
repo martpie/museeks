@@ -23,7 +23,7 @@ import usePlayerStore from '../stores/usePlayerStore';
 
 export const Route = createFileRoute('/playlists')({
   component: ViewPlaylists,
-  loader: async ({ params }) => {
+  beforeLoad: async ({ params }) => {
     const playlists = await database.getAllPlaylists();
     const queueOrigin = usePlayerStore.getState().queueOrigin;
 
@@ -43,6 +43,9 @@ export const Route = createFileRoute('/playlists')({
     }
 
     return { playlists };
+  },
+  loader: async ({ context }) => {
+    return context;
   },
 });
 

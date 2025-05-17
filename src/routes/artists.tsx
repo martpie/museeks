@@ -13,7 +13,7 @@ import usePlayerStore from '../stores/usePlayerStore';
 
 export const Route = createFileRoute('/artists')({
   component: ViewArtists,
-  loader: async ({ params }) => {
+  beforeLoad: async ({ params }) => {
     const artists = await database.getAllArtists();
     const queueOrigin = usePlayerStore.getState().queueOrigin;
 
@@ -33,6 +33,9 @@ export const Route = createFileRoute('/artists')({
     }
 
     return { artists };
+  },
+  loader: async ({ context }) => {
+    return context;
   },
 });
 
