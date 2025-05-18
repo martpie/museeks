@@ -25,8 +25,8 @@
   }
 
   &.selected {
-    background-color: var(--main-color);
-    color: white;
+    background-color: var(--active-item-bg);
+    color: var(--active-item-color);
 
     & + .selected {
       border-top-color: rgba(255 255 255 / 0.2);

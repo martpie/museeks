@@ -11,9 +11,6 @@
   cursor: pointer;
   padding: 8px 12px;
   text-decoration: none;
-  border-style: solid;
-  border-color: transparent;
-  border-width: 1px 0;
 
   &:hover {
     background-color: var(--sidebar-item-active-bg);
@@ -28,11 +25,8 @@
   &:global(.isActive) {
     outline: none;
     z-index: 10;
-    border-style: solid;
-    border-color: var(--border-color);
-    border-width: 1px 0;
-    background-color: var(--sidebar-item-active-bg);
-    color: var(--main-color);
+    background-color: var(--active-item-bg);
+    color: var(--active-item-color);
   }
 }
 

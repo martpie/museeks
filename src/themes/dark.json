@@ -20,11 +20,16 @@
     "--footer-bg": "hsl(216, 0%, 13%)",
     "--footer-nav-bg-color-active": "hsl(216, 0%, 9.5%)",
 
+    "--active-item-bg": "hsl(216, 0%, 20%)",
+    "--active-item-color": "var(--text)",
+
     "--tracks-bg-even": "hsl(216, 0%, 9.5%)",
     "--tracks-bg-odd": "hsl(216, 0%, 13%)",
 
     "--tracks-header-bg": "hsl(216, 0%, 9.5%)",
     "--tracks-header-color": "#efefef",
+
+    "--cover-bg": "hsl(216deg 0% 16%)",
 
     "--success-color": "#5CB85C",
     "--info-color": "#5BC0DE",
