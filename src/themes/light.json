@@ -20,11 +20,16 @@
     "--footer-bg": "#F4F4F4",
     "--footer-nav-bg-color-active": "#E6E6E6",
 
+    "--active-item-bg": "rgb(220, 220, 220)",
+    "--active-item-color": "var(--text)",
+
     "--tracks-bg-even": "white",
     "--tracks-bg-odd": "#F4F4F4",
 
     "--tracks-header-bg": "white",
     "--tracks-header-color": "#555555",
+
+    "--cover-bg": "#F4F4F4",
 
     "--success-color": "#5CB85C",
     "--info-color": "#5BC0DE",

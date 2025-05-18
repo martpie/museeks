@@ -7,7 +7,7 @@
   align-items: center;
   justify-content: center;
   box-sizing: content-box;
-  background-color: var(--header-bg-softer);
+  background-color: var(--cover-bg);
   position: relative;
 }
 
