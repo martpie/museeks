@@ -72,14 +72,22 @@ strong {
 /* Generic class that can be used on call-to-actions to show the interactibility of an element */
 [data-museeks-action] {
   transition: transform 0.1s ease-in-out;
+
+  &:hover {
+    transform: scale(1.2);
+  }
+
+  &:active {
+    transform: scale(1);
+  }
 }
 
-[data-museeks-action]:hover {
-  transform: scale(1.2);
-}
-
-[data-museeks-action]:active {
-  transform: scale(1);
+/* Generic class to controll the active state of some element that get
+ * de-emphasized, but still visibe, in case the focus is not on the list.
+ */
+[data-museeks-list]:focus-within {
+  --active-item-bg: var(--main-color);
+  --active-item-color: white;
 }
 
 /* Various CSS utils to reset styles */

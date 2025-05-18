@@ -11,7 +11,7 @@ type Props = {
 
 export default function SideNav(props: Props) {
   return (
-    <div className={styles.sideNav}>
+    <div className={styles.sideNav} data-museeks-list>
       <Flexbox gap={8} align="center">
         <h4 className={styles.sideNavTitle}>{props.title}</h4>
         <div className={styles.sideNavActions}>{props.actions}</div>
