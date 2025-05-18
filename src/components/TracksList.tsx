@@ -192,7 +192,18 @@ export default function TracksList(props: Props) {
    * Tracks selection
    */
   const onTrackSelect = useCallback(
-    (event: React.MouseEvent, trackID: string) => {
+    (event: React.MouseEvent, trackID: string, _trackIndex: number) => {
+      // There can be a race condition between mousedown and click, where mousedown
+      // will remove an item from the selection (with ctrl) for example, but then
+      // the mouseup part of click will re-toggle the selection immediately.
+      // Ideally, all of below should be within `listMouseSelect`
+      if (event.type === 'click') {
+        if (isKeyWithoutModifiers(event)) {
+          setSelectedTracks(new Set([trackID]));
+        }
+        return;
+      }
+
       // To allow selection drag-and-drop, we need to prevent track selection
       // when selection a track that is already selected
       if (isKeyWithoutModifiers(event) && selectedTracks.has(trackID)) {

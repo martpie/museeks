@@ -79,6 +79,7 @@ export default function TrackRow(props: Props) {
       className={trackClasses}
       onDoubleClick={() => onPlaybackStart(track.id)}
       onMouseDown={(e) => onTrackSelect(e, track.id, index)}
+      onClick={(e) => onTrackSelect(e, track.id, index)}
       onContextMenu={(e) => onContextMenu(e, track.id, index)}
       aria-selected={selected}
       {...(props.isPlaying ? { 'data-is-playing': true } : {})}
