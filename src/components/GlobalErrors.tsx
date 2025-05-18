@@ -36,7 +36,6 @@ export function ErrorView(props: ErrorComponentProps) {
 
 export function NotFoundView() {
   const location = useLocation();
-  logger.error(`View not found: ${location.pathname}`);
 
   return (
     <ViewMessage.Notice>
@@ -44,7 +43,7 @@ export function NotFoundView() {
         <span role="img" aria-label="how?">
           🤔
         </span>{' '}
-        View not found. How did you get there?
+        View not found ({location.pathname}). How did you get here?
       </p>
       <Issue />
     </ViewMessage.Notice>
