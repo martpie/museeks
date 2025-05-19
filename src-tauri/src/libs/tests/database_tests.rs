@@ -1,7 +1,7 @@
 use std::path::PathBuf;
 
-use ormlite::sqlite::{SqliteConnectOptions, SqliteConnection};
 use ormlite::Connection;
+use ormlite::sqlite::{SqliteConnectOptions, SqliteConnection};
 
 use super::database::DB;
 use super::track::Track;
@@ -16,6 +16,7 @@ fn sample_track_1() -> Track {
         path: "/music/artist1/album1/track1.mp3".to_string(),
         title: "Song One".to_string(),
         album: "Album One".to_string(),
+        album_artist: "Artist One".to_string(),
         artists: vec!["Artist One".to_string()],
         genres: vec!["Pop".to_string(), "Rock".to_string()],
         year: Some(2023),
@@ -33,6 +34,7 @@ fn sample_track_2() -> Track {
         path: "/music/artist2/album2/track2.mp3".to_string(),
         title: "Song Two".to_string(),
         album: "Album Two".to_string(),
+        album_artist: "Artist Two".to_string(),
         artists: vec!["Artist Two".to_string()],
         genres: vec!["Jazz".to_string()],
         year: None,
@@ -50,6 +52,7 @@ fn sample_track_3() -> Track {
         path: "/music/artist3/album3/track3.mp3".to_string(),
         title: "Song Three".to_string(),
         album: "Album Three".to_string(),
+        album_artist: "Artist Three".to_string(),
         artists: vec!["Artist Three".to_string(), "Artist Four".to_string()],
         genres: vec!["Hip-Hop".to_string()],
         year: Some(2022),
@@ -70,6 +73,7 @@ async fn get_test_db() -> DB {
 
     let mut db = DB { connection };
     db.create_tables().await.unwrap();
+    db.run_migrations().await.unwrap();
 
     db
 }
@@ -115,6 +119,7 @@ async fn test_tracks_db() {
             path: "/music/artist2/album2/track2.mp3".to_string(),
             title: "Song Two Point Five".to_string(),
             album: "Album Two".to_string(),
+            album_artist: "Artist Two".to_string(),
             artists: vec!["Artist Two".to_string()],
             genres: vec!["Jazz".to_string()],
             year: None,

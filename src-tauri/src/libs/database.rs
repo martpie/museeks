@@ -1,7 +1,7 @@
 use indexmap::IndexMap;
 use ormlite::model::ModelBuilder;
 use ormlite::sqlite::SqliteConnection;
-use ormlite::{Model, TableMeta};
+use ormlite::{Model, Row, TableMeta};
 use std::collections::HashMap;
 use std::path::PathBuf;
 
@@ -41,6 +41,7 @@ impl DB {
                 path TEXT NOT NULL UNIQUE, -- Path as a string and unique
                 title TEXT NOT NULL,
                 album TEXT NOT NULL,
+                album_artist TEXT NOT NULL,
                 artists JSON NOT NULL, -- Array of strings
                 genres JSON NOT NULL, -- Array of strings
                 year INTEGER,
@@ -69,6 +70,37 @@ impl DB {
         )
         .execute(&mut self.connection)
         .await?;
+
+        Ok(())
+    }
+
+    /**
+     * Big pile of migrations, no up/down, yolo, yay.
+     */
+    pub async fn run_migrations(&mut self) -> AnyResult<()> {
+        let rows = ormlite::query(&format!("PRAGMA table_info(tracks)"))
+            .fetch_all(&mut self.connection)
+            .await?;
+
+        // 1. Add album_artist field
+        let album_artist_column_presence = rows
+            .iter()
+            .any(|row| row.try_get("name").unwrap_or("?") == "album_artist");
+
+        if !album_artist_column_presence {
+            ormlite::query("ALTER TABLE tracks ADD COLUMN album_artist TEXT NOT NULL;")
+                .execute(&mut self.connection)
+                .await?;
+        }
+
+        ormlite::query(
+            "CREATE INDEX IF NOT EXISTS index_track_album_artist ON tracks (album_artist);",
+        )
+        .execute(&mut self.connection)
+        .await?;
+
+        // TODO: auto-backfill that. As it may take some time, we need to show some feedback to users.
+        // From the UI is probably the easiest, but a waste of time.
 
         Ok(())
     }
@@ -165,6 +197,9 @@ impl DB {
             .into_iter()
             .map(|row: (String,)| row.0)
             .collect();
+
+        // Some artists may have a / in their name?
+        // Daft Punk/Todd Edwards
 
         // sort them alphabetically
         result.sort_by_key(|a| a.to_lowercase());

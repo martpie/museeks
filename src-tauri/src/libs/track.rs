@@ -21,8 +21,9 @@ pub struct Track {
     pub path: String, // must be unique, ideally, a PathBuf
     pub title: String,
     pub album: String,
+    pub album_artist: String, // Artist for album grouping
     #[ormlite(json)]
-    pub artists: Vec<String>,
+    pub artists: Vec<String>, // Artist(s) for per-track display
     #[ormlite(json)]
     pub genres: Vec<String>,
     pub year: Option<u32>,
@@ -53,25 +54,16 @@ pub fn get_track_from_file(path: &PathBuf) -> Option<Track> {
     match lofty::read_from_path(path) {
         Ok(tagged_file) => {
             let tag = tagged_file.primary_tag()?;
+            let id = get_track_id_for_path(path)?;
 
-            // IMPROVE ME: Is there a more idiomatic way of doing the following?
             let mut artists: Vec<String> = tag
                 .get_strings(&ItemKey::TrackArtist)
                 .map(ToString::to_string)
                 .collect();
 
             if artists.is_empty() {
-                artists = tag
-                    .get_strings(&ItemKey::AlbumArtist)
-                    .map(ToString::to_string)
-                    .collect();
+                artists = vec!["Unknown Artist".to_string()];
             }
-
-            if artists.is_empty() {
-                artists = vec!["Unknown Artist".into()];
-            }
-
-            let id = get_track_id_for_path(path)?;
 
             Some(Track {
                 id,
@@ -87,6 +79,10 @@ pub fn get_track_from_file(path: &PathBuf) -> Option<Track> {
                 album: tag
                     .get_string(&ItemKey::AlbumTitle)
                     .unwrap_or("Unknown")
+                    .to_string(),
+                album_artist: tag
+                    .get_string(&ItemKey::AlbumArtist)
+                    .unwrap_or("Unknown Artist")
                     .to_string(),
                 artists,
                 genres: tag
