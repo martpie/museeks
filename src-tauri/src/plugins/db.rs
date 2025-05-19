@@ -5,10 +5,10 @@ use rayon::iter::{IntoParallelRefIterator, ParallelIterator};
 use serde::{Deserialize, Serialize};
 use std::collections::HashSet;
 use std::path::PathBuf;
-use std::sync::atomic::{AtomicUsize, Ordering};
 use std::sync::Arc;
-use tauri::plugin::{Builder, TauriPlugin};
+use std::sync::atomic::{AtomicUsize, Ordering};
 use tauri::Emitter;
+use tauri::plugin::{Builder, TauriPlugin};
 use tauri::{Manager, Runtime, State};
 use tauri_plugin_dialog::{DialogExt, FilePath};
 use tokio::sync::{Mutex, MutexGuard};
@@ -18,8 +18,8 @@ use crate::libs::database::{DB, SUPPORTED_PLAYLISTS_EXTENSIONS, SUPPORTED_TRACKS
 use crate::libs::error::{AnyResult, MuseeksError};
 use crate::libs::events::IPCEvent;
 use crate::libs::playlist::Playlist;
-use crate::libs::track::{get_track_from_file, get_track_id_for_path, Track, TrackGroup};
-use crate::libs::utils::{scan_dirs, TimeLogger};
+use crate::libs::track::{Track, TrackGroup, get_track_from_file, get_track_id_for_path};
+use crate::libs::utils::{TimeLogger, scan_dirs};
 
 use super::config::get_storage_dir;
 
@@ -466,6 +466,10 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
                 db.create_tables()
                     .await
                     .expect("Could not create DB tables");
+
+                db.run_migrations()
+                    .await
+                    .expect("Could not run DB migrations");
 
                 app_handle.manage(DBState(Mutex::new(db)));
             });
