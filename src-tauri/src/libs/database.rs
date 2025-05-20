@@ -1,7 +1,7 @@
 use indexmap::IndexMap;
-use ormlite::model::ModelBuilder;
-use ormlite::sqlite::SqliteConnection;
-use ormlite::{Model, TableMeta};
+use serde_json::json;
+use sqlx::Row;
+use sqlx::SqliteConnection;
 use std::collections::HashMap;
 use std::path::PathBuf;
 
@@ -35,7 +35,7 @@ impl DB {
      */
     pub async fn create_tables(&mut self) -> AnyResult<()> {
         // TODO: move that to SQL files, or derive that from the struct itself, probably need to create a PR for ormlite-cli
-        ormlite::query(
+        sqlx::query(
             "CREATE TABLE IF NOT EXISTS tracks (
                 id TEXT PRIMARY KEY NOT NULL,
                 path TEXT NOT NULL UNIQUE, -- Path as a string and unique
@@ -55,11 +55,11 @@ impl DB {
         .await?;
 
         // Index for the path column in Track
-        ormlite::query("CREATE INDEX IF NOT EXISTS index_track_path ON tracks (path);")
+        sqlx::query("CREATE INDEX IF NOT EXISTS index_track_path ON tracks (path);")
             .execute(&mut self.connection)
             .await?;
 
-        ormlite::query(
+        sqlx::query(
             "CREATE TABLE IF NOT EXISTS playlists (
                 id TEXT PRIMARY KEY NOT NULL,
                 name TEXT NOT NULL,
@@ -78,7 +78,9 @@ impl DB {
      */
     pub async fn get_all_tracks(&mut self) -> AnyResult<Vec<Track>> {
         let timer = TimeLogger::new("Retrieved and decoded tracks".into());
-        let tracks = Track::select().fetch_all(&mut self.connection).await?;
+        let tracks = sqlx::query_as::<_, Track>("SELECT * FROM tracks")
+            .fetch_all(&mut self.connection)
+            .await?;
         timer.complete();
         Ok(tracks)
     }
@@ -90,9 +92,9 @@ impl DB {
         // TODO: Can this be improved somehow?
         // Improve me once https://github.com/launchbadge/sqlx/issues/875 is fixed
         let placeholders = track_ids.iter().map(|_| "?").collect::<Vec<_>>().join(", ");
-        let where_statement = format!("id IN ({})", placeholders);
+        let query = format!("SELECT * FROM tracks WHERE id IN ({})", placeholders);
 
-        let mut query_builder = Track::select().dangerous_where(&where_statement);
+        let mut query_builder = sqlx::query_as::<_, Track>(&query);
 
         for id in track_ids {
             query_builder = query_builder.bind(id);
@@ -115,18 +117,53 @@ impl DB {
      * Get tracks (and their content) given a set of document IDs
      */
     pub async fn update_track(&mut self, track: Track) -> AnyResult<Track> {
-        let updated_track = track.update_all_fields(&mut self.connection).await?;
-        Ok(updated_track)
+        sqlx::query(
+            r#"
+            UPDATE tracks SET
+                path = ?,
+                title = ?,
+                album = ?,
+                artists = ?,
+                genres = ?,
+                year = ?,
+                duration = ?,
+                track_no = ?,
+                track_of = ?,
+                disk_no = ?,
+                disk_of = ?
+            WHERE id = ?
+            "#,
+        )
+        .bind(&track.path)
+        .bind(&track.title)
+        .bind(&track.album)
+        .bind(json!(&track.artists))
+        .bind(json!(&track.genres))
+        .bind(&track.year)
+        .bind(&track.duration)
+        .bind(&track.track_no)
+        .bind(&track.track_of)
+        .bind(&track.disk_no)
+        .bind(&track.disk_of)
+        .bind(&track.id)
+        .execute(&mut self.connection)
+        .await?;
+
+        Ok(track)
     }
 
     /** Delete multiple tracks by ID */
     pub async fn remove_tracks(&mut self, track_ids: &Vec<String>) -> AnyResult<()> {
-        // TODO: batch that, use DELETE statement instead
-        let tracks = self.get_tracks(track_ids).await?;
+        let placeholders = track_ids.iter().map(|_| "?").collect::<Vec<_>>().join(", ");
+        let query = format!("DELETE FROM tracks WHERE id IN ({})", placeholders);
 
-        for track in tracks {
-            track.delete(&mut self.connection).await?
+        let mut query_builder = sqlx::query(&query);
+
+        for id in track_ids {
+            query_builder = query_builder.bind(id);
         }
+
+        query_builder.execute(&mut self.connection).await?;
 
         Ok(())
     }
@@ -140,7 +177,28 @@ impl DB {
     pub async fn insert_tracks(&mut self, tracks: Vec<Track>) -> AnyResult<()> {
         // Weirdly, this is fast enough with SQLite, no need to create transactions
         for track in tracks {
-            track.insert(&mut self.connection).await?;
+            sqlx::query(
+                r#"
+                INSERT INTO tracks (
+                    id, path, title, album, artists, genres, year,
+                    duration, track_no, track_of, disk_no, disk_of
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                "#,
+            )
+            .bind(&track.id)
+            .bind(&track.path)
+            .bind(&track.title)
+            .bind(&track.album)
+            .bind(json!(&track.artists))
+            .bind(json!(&track.genres))
+            .bind(&track.year) // Use i64 for SQL compatibility
+            .bind(&track.duration)
+            .bind(&track.track_no)
+            .bind(&track.track_of)
+            .bind(&track.disk_no)
+            .bind(&track.disk_of)
+            .execute(&mut self.connection)
+            .await?;
         }
 
         Ok(())
@@ -153,18 +211,17 @@ impl DB {
     pub async fn get_artists(&mut self) -> AnyResult<Vec<String>> {
         let timer = TimeLogger::new("Retrieved artists".into());
 
-        let query = format!(
-            "SELECT DISTINCT JSON_EXTRACT({}, '$[0]') FROM {};",
-            "artists",
-            Track::table_name()
-        );
-
-        let mut result: Vec<String> = ormlite::query_as(&query)
-            .fetch_all(&mut self.connection)
-            .await?
-            .into_iter()
-            .map(|row: (String,)| row.0)
-            .collect();
+        let mut result: Vec<String> = sqlx::query(
+            "SELECT DISTINCT JSON_EXTRACT(artists, '$[0]') AS artist_name FROM tracks;",
+        )
+        .fetch_all(&mut self.connection)
+        .await?
+        .into_iter()
+        .map(|row| {
+            row.try_get("artist_name")
+                .expect("Failed to get artist name")
+        })
+        .collect();
 
         // sort them alphabetically
         result.sort_by_key(|a| a.to_lowercase());
@@ -180,13 +237,12 @@ impl DB {
     pub async fn get_artist_tracks(&mut self, artist: String) -> AnyResult<Vec<TrackGroup>> {
         let timer = TimeLogger::new("Retrieved tracks for artist".into());
 
-        let tracks = Track::select()
-            .where_bind("JSON_EXTRACT(artists, '$[0]') = ?", &artist)
-            .order_asc("album")
-            .order_asc("disk_no")
-            .order_asc("track_no")
-            .fetch_all(&mut self.connection)
-            .await?;
+        let tracks = sqlx::query_as::<_, Track>(
+            "SELECT * FROM tracks WHERE JSON_EXTRACT(artists, '$[0]') = ? ORDER BY album, disk_no, track_no",
+        )
+        .bind(&artist)
+        .fetch_all(&mut self.connection)
+        .await?;
 
         let mut groups: IndexMap<String, Vec<Track>> = IndexMap::new();
 
@@ -209,8 +265,7 @@ impl DB {
     /** Get all the playlists (and their content) from the database */
     pub async fn get_all_playlists(&mut self) -> AnyResult<Vec<Playlist>> {
         let timer = TimeLogger::new("Retrieved playlists".into());
-        let mut playlists = Playlist::select()
-            .order_asc("name")
+        let mut playlists = sqlx::query_as::<_, Playlist>("SELECT * FROM playlists ORDER BY name")
             .fetch_all(&mut self.connection)
             .await?;
 
@@ -223,12 +278,12 @@ impl DB {
 
     /** Get a single playlist by ID */
     pub async fn get_playlist(&mut self, playlist_id: &String) -> AnyResult<Option<Playlist>> {
-        let playlist = Playlist::select()
-            .where_bind("id = ?", playlist_id)
-            .fetch_one(&mut self.connection)
+        let playlist = sqlx::query_as::<_, Playlist>("SELECT * FROM playlists WHERE id = ?")
+            .bind(playlist_id)
+            .fetch_optional(&mut self.connection)
             .await?;
 
-        Ok(Some(playlist))
+        Ok(playlist)
     }
 
     /** Create a playlist given a name and a set of track IDs */
@@ -248,7 +303,18 @@ impl DB {
             import_path: playlist_path,
         };
 
-        let playlist = playlist.insert(&mut self.connection).await?;
+        sqlx::query(
+            r#"
+            INSERT INTO playlists (id, name, tracks, import_path)
+            VALUES (?, ?, ?, ?)
+            "#,
+        )
+        .bind(&playlist.id)
+        .bind(&playlist.name)
+        .bind(json!(&playlist.tracks))
+        .bind(&playlist.import_path)
+        .execute(&mut self.connection)
+        .await?;
 
         Ok(playlist)
     }
@@ -259,44 +325,42 @@ impl DB {
         id: &String,
         tracks: Vec<String>,
     ) -> AnyResult<Playlist> {
-        let playlist = Playlist::select()
-            .where_bind("id = ?", id)
+        sqlx::query("UPDATE playlists SET tracks = ? WHERE id = ?")
+            .bind(json!(&tracks))
+            .bind(id)
+            .execute(&mut self.connection)
+            .await?;
+
+        let playlist = sqlx::query_as::<_, Playlist>("SELECT * FROM playlists WHERE id = ?")
+            .bind(id)
             .fetch_one(&mut self.connection)
             .await?;
 
-        let updated_playlist = playlist
-            .update_partial()
-            .tracks(tracks)
-            .update(&mut self.connection)
-            .await?;
-
-        Ok(updated_playlist)
+        Ok(playlist)
     }
 
     /** Update a playlist name by ID */
     pub async fn rename_playlist(&mut self, id: &String, name: String) -> AnyResult<Playlist> {
-        let playlist = Playlist::select()
-            .where_bind("id = ?", id)
+        sqlx::query("UPDATE playlists SET name = ? WHERE id = ?")
+            .bind(&name)
+            .bind(id)
+            .execute(&mut self.connection)
+            .await?;
+
+        let playlist = sqlx::query_as::<_, Playlist>("SELECT * FROM playlists WHERE id = ?")
+            .bind(id)
             .fetch_one(&mut self.connection)
             .await?;
 
-        let updated_playlist = playlist
-            .update_partial()
-            .name(name)
-            .update(&mut self.connection)
-            .await?;
-
-        Ok(updated_playlist)
+        Ok(playlist)
     }
 
     /** Delete a playlist by ID */
     pub async fn delete_playlist(&mut self, id: &String) -> AnyResult<()> {
-        let playlist = Playlist::select()
-            .where_bind("id = ?", id)
-            .fetch_one(&mut self.connection)
+        sqlx::query("DELETE FROM playlists WHERE id = ?")
+            .bind(id)
+            .execute(&mut self.connection)
             .await?;
-
-        playlist.delete(&mut self.connection).await?;
 
         Ok(())
     }

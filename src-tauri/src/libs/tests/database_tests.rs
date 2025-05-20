@@ -1,7 +1,6 @@
+use sqlx::sqlite::SqliteConnectOptions;
+use sqlx::{Connection, SqliteConnection, sqlite};
 use std::path::PathBuf;
-
-use ormlite::sqlite::{SqliteConnectOptions, SqliteConnection};
-use ormlite::Connection;
 
 use super::database::DB;
 use super::track::Track;
@@ -64,7 +63,7 @@ fn sample_track_3() -> Track {
 async fn get_test_db() -> DB {
     let options = SqliteConnectOptions::new()
         .in_memory(true)
-        .auto_vacuum(ormlite::sqlite::SqliteAutoVacuum::Incremental);
+        .auto_vacuum(sqlite::SqliteAutoVacuum::Incremental);
 
     let connection = SqliteConnection::connect_with(&options).await.unwrap();
 

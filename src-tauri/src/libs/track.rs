@@ -1,10 +1,9 @@
-use std::path::PathBuf;
-
 use lofty::file::{AudioFile, TaggedFileExt};
 use lofty::tag::{Accessor, ItemKey};
 use log::warn;
-use ormlite::model::Model;
 use serde::{Deserialize, Serialize};
+use sqlx::FromRow;
+use std::path::PathBuf;
 use ts_rs::TS;
 use uuid::Uuid;
 
@@ -12,19 +11,17 @@ use uuid::Uuid;
  * Track
  * represent a single track, id and path should be unique
  */
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, Model, TS)]
-#[ormlite(table = "tracks")]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, FromRow, TS)]
 #[ts(export, export_to = "../../src/generated/typings.ts")]
 pub struct Track {
-    #[ormlite(primary_key)]
     pub id: String,
     pub path: String, // must be unique, ideally, a PathBuf
     pub title: String,
     pub album: String,
-    #[ormlite(json)]
-    pub artists: Vec<String>,
-    #[ormlite(json)]
-    pub genres: Vec<String>,
+    #[sqlx(json)]
+    pub artists: Vec<String>, // JSON
+    #[sqlx(json)]
+    pub genres: Vec<String>, // JSON
     pub year: Option<u32>,
     pub duration: u32,
     pub track_no: Option<u32>,
