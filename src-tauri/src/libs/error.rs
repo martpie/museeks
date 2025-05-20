@@ -1,6 +1,6 @@
 use anyhow::Result;
 use lofty::error::LoftyError;
-use serde::{ser::Serializer, Serialize};
+use serde::{Serialize, ser::Serializer};
 use thiserror::Error;
 
 /**
@@ -19,10 +19,7 @@ pub enum MuseeksError {
     Lofty(#[from] LoftyError),
 
     #[error(transparent)]
-    ORMLite(#[from] ormlite::Error),
-
-    #[error(transparent)]
-    ORMLiteSqlx(#[from] ormlite::SqlxError),
+    Sqlx(#[from] sqlx::Error),
 
     #[error(transparent)]
     NoSleep(#[from] nosleep::Error),
