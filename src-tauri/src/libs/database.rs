@@ -35,13 +35,13 @@ impl DB {
      */
     pub async fn create_tables(&mut self) -> AnyResult<()> {
         // TODO: move that to SQL files, or derive that from the struct itself, probably need to create a PR for ormlite-cli
+        // DOES NOT INCLUDE MUTATIONS
         ormlite::query(
             "CREATE TABLE IF NOT EXISTS tracks (
                 id TEXT PRIMARY KEY NOT NULL,
                 path TEXT NOT NULL UNIQUE, -- Path as a string and unique
                 title TEXT NOT NULL,
                 album TEXT NOT NULL,
-                album_artist TEXT NOT NULL,
                 artists JSON NOT NULL, -- Array of strings
                 genres JSON NOT NULL, -- Array of strings
                 year INTEGER,
