@@ -51,6 +51,11 @@ async fn setup() -> AnyResult<DB> {
 
     let mut connection = SqliteConnection::connect_with(&options).await?;
 
+    // Clear Journal
+    sqlx::query("PRAGMA  wal_checkpoint(TRUNCATE)")
+        .execute(&mut connection)
+        .await?;
+
     info!("Attempting to run possible migrations...");
     let migrator = sqlx::migrate::Migrator::new(Path::new("./src/migrations")).await?;
     migrator.run_direct(&mut connection).await?;
