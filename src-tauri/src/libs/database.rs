@@ -1,6 +1,5 @@
 use indexmap::IndexMap;
 use serde_json::json;
-use sqlx::Row;
 use sqlx::SqliteConnection;
 use std::collections::HashMap;
 use std::path::PathBuf;
@@ -137,15 +136,16 @@ impl DB {
             sqlx::query(
                 r#"
                 INSERT INTO tracks (
-                    id, path, title, album, artists, genres, year,
+                    id, path, title, album, album_artist, artists, genres, year,
                     duration, track_no, track_of, disk_no, disk_of
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 "#,
             )
             .bind(&track.id)
             .bind(&track.path)
             .bind(&track.title)
             .bind(&track.album)
+            .bind(&track.album_artist)
             .bind(json!(&track.artists))
             .bind(json!(&track.genres))
             .bind(&track.year) // Use i64 for SQL compatibility
@@ -168,20 +168,11 @@ impl DB {
     pub async fn get_artists(&mut self) -> AnyResult<Vec<String>> {
         let timer = TimeLogger::new("Retrieved artists".into());
 
-        let mut result: Vec<String> = sqlx::query(
-            "SELECT DISTINCT JSON_EXTRACT(artists, '$[0]') AS artist_name FROM tracks;",
+        let result: Vec<String> = sqlx::query_scalar(
+            "SELECT DISTINCT album_artist FROM tracks ORDER BY album_artist COLLATE NOCASE;",
         )
         .fetch_all(&mut self.connection)
-        .await?
-        .into_iter()
-        .map(|row| {
-            row.try_get("artist_name")
-                .expect("Failed to get artist name")
-        })
-        .collect();
-
-        // sort them alphabetically
-        result.sort_by_key(|a| a.to_lowercase());
+        .await?;
 
         timer.complete();
         Ok(result)
@@ -192,10 +183,10 @@ impl DB {
      * Only fetches the first artist for each row.
      */
     pub async fn get_artist_tracks(&mut self, artist: String) -> AnyResult<Vec<TrackGroup>> {
-        let timer = TimeLogger::new("Retrieved tracks for artist".into());
+        let timer = TimeLogger::new(format!("Retrieved tracks for artist '{}'", &artist).into());
 
         let tracks = sqlx::query_as::<_, Track>(
-            "SELECT * FROM tracks WHERE JSON_EXTRACT(artists, '$[0]') = ? ORDER BY album, disk_no, track_no",
+            "SELECT * FROM tracks WHERE album_artist = ? ORDER BY album, disk_no, track_no",
         )
         .bind(&artist)
         .fetch_all(&mut self.connection)
