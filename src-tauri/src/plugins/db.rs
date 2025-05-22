@@ -4,7 +4,7 @@ use serde::{Deserialize, Serialize};
 use sqlx::sqlite::{SqliteAutoVacuum, SqliteConnectOptions, SqliteJournalMode};
 use sqlx::{Connection, SqliteConnection};
 use std::collections::HashSet;
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 use std::sync::Arc;
 use std::sync::atomic::{AtomicUsize, Ordering};
 use tauri::Emitter;
@@ -49,7 +49,11 @@ async fn setup() -> AnyResult<DB> {
         .auto_vacuum(SqliteAutoVacuum::Incremental)
         .journal_mode(SqliteJournalMode::Wal);
 
-    let connection = SqliteConnection::connect_with(&options).await?;
+    let mut connection = SqliteConnection::connect_with(&options).await?;
+
+    info!("Attempting to run possible migrations...");
+    let migrator = sqlx::migrate::Migrator::new(Path::new("./src/migrations")).await?;
+    migrator.run_direct(&mut connection).await?;
 
     Ok(DB { connection })
 }
@@ -449,8 +453,9 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
         ])
         .setup(move |app_handle, _api| {
             let app_handle = app_handle.clone();
+
             tauri::async_runtime::spawn(async move {
-                let mut db = match setup().await {
+                let db = match setup().await {
                     Ok(db) => db,
                     Err(err) => {
                         error!("Failed to setup database: {:?}", err);
@@ -458,12 +463,9 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
                     }
                 };
 
-                db.create_tables()
-                    .await
-                    .expect("Could not create DB tables");
-
                 app_handle.manage(DBState(Mutex::new(db)));
             });
+
             Ok(())
         })
         .build()

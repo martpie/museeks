@@ -65,12 +65,14 @@ async fn get_test_db() -> DB {
         .in_memory(true)
         .auto_vacuum(sqlite::SqliteAutoVacuum::Incremental);
 
-    let connection = SqliteConnection::connect_with(&options).await.unwrap();
+    let mut connection = SqliteConnection::connect_with(&options).await.unwrap();
 
-    let mut db = DB { connection };
-    db.create_tables().await.unwrap();
+    sqlx::migrate!("src/migrations")
+        .run(&mut connection)
+        .await
+        .expect("Failed to run migrations");
 
-    db
+    DB { connection }
 }
 
 /** ----------------------------------------------------------------------------

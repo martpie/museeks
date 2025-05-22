@@ -22,6 +22,9 @@ pub enum MuseeksError {
     Sqlx(#[from] sqlx::Error),
 
     #[error(transparent)]
+    SqlxMigrate(#[from] sqlx::migrate::MigrateError),
+
+    #[error(transparent)]
     NoSleep(#[from] nosleep::Error),
 
     #[error("An error occurred while manipulating the config: {0}")]
