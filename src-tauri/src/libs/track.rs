@@ -18,6 +18,7 @@ pub struct Track {
     pub path: String, // must be unique, ideally, a PathBuf
     pub title: String,
     pub album: String,
+    pub album_artist: String,
     #[sqlx(json)]
     pub artists: Vec<String>, // JSON
     #[sqlx(json)]
@@ -84,6 +85,10 @@ pub fn get_track_from_file(path: &PathBuf) -> Option<Track> {
                 album: tag
                     .get_string(&ItemKey::AlbumTitle)
                     .unwrap_or("Unknown")
+                    .to_string(),
+                album_artist: tag
+                    .get_string(&ItemKey::AlbumArtist)
+                    .unwrap_or("Unknown Artist")
                     .to_string(),
                 artists,
                 genres: tag
