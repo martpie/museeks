@@ -4,37 +4,37 @@
   "themeSource": "dark",
   "variables": {
     "--color-scheme": "dark",
-    "--text": "#efefef",
-    "--text-muted": "#bfbfbf",
+    "--text": "hsl(0, 0%, 94%)",
+    "--text-muted": "hsl(0, 0%, 75%)",
     "--background": "hsl(216, 0%, 9.5%)",
-    "--faded-bg": "rgba(0, 0, 0, 0.8)",
+    "--faded-bg": "hsla(0, 0%, 0%, 0.8)",
 
-    "--border-color": "hsl(216deg 0% 20%)",
-    "--border-color-softer": "hsl(216deg 0% 24%)",
+    "--border-color": "hsl(216, 0%, 20%)",
+    "--border-color-softer": "hsl(216, 0%, 24%)",
     "--border-radius": "2px",
 
-    "--header-color": "#efefef",
+    "--header-color": "hsl(0, 0%, 94%)",
     "--header-bg": "hsl(216, 0%, 13%)",
-    "--header-bg-softer": "hsl(216deg 0% 16%)",
+    "--header-bg-softer": "hsl(216, 0%, 16%)",
 
     "--footer-bg": "hsl(216, 0%, 13%)",
     "--footer-nav-bg-color-active": "hsl(216, 0%, 9.5%)",
 
     "--active-item-bg": "hsl(216, 0%, 20%)",
-    "--active-item-color": "var(--text)",
+    "--active-item-color": "hsl(0, 0%, 94%)",
 
     "--tracks-bg-even": "hsl(216, 0%, 9.5%)",
     "--tracks-bg-odd": "hsl(216, 0%, 13%)",
 
     "--tracks-header-bg": "hsl(216, 0%, 9.5%)",
-    "--tracks-header-color": "#efefef",
+    "--tracks-header-color": "hsl(0, 0%, 94%)",
 
-    "--cover-bg": "hsl(216deg 0% 16%)",
+    "--cover-bg": "hsl(216, 0%, 16%)",
 
-    "--success-color": "#5CB85C",
-    "--info-color": "#5BC0DE",
-    "--warning-color": "#F0AD4E",
-    "--danger-color": "#de4343",
+    "--success-color": "hsl(120, 39%, 56%)",
+    "--info-color": "hsl(191, 64%, 59%)",
+    "--warning-color": "hsl(38, 86%, 62%)",
+    "--danger-color": "hsl(0, 66%, 56%)",
 
     "--toasts-bg": "hsl(216, 0%, 9.5%)",
 
@@ -51,9 +51,9 @@
 
     "--checkbox-bg": "hsl(216, 0%, 17%)",
     "--input-bg": "hsl(216, 0%, 15%)",
-    "--input-color": "#efefef",
+    "--input-color": "hsl(0, 0%, 94%)",
     "--button-bg": "hsl(216, 0%, 20%)",
-    "--button-border": "rgb(255 255 255 / 0.2)",
-    "--button-color": "#efefef"
+    "--button-border": "hsla(0, 0%, 100%, 0.2)",
+    "--button-color": "hsl(0, 0%, 94%)"
   }
 }
