@@ -1,14 +1,14 @@
 use log::{error, info, warn};
-use ormlite::sqlite::{SqliteConnectOptions, SqliteConnection};
-use ormlite::{Connection, TableMeta};
 use rayon::iter::{IntoParallelRefIterator, ParallelIterator};
 use serde::{Deserialize, Serialize};
+use sqlx::sqlite::{SqliteAutoVacuum, SqliteConnectOptions, SqliteJournalMode};
+use sqlx::{Connection, SqliteConnection};
 use std::collections::HashSet;
-use std::path::PathBuf;
-use std::sync::atomic::{AtomicUsize, Ordering};
+use std::path::{Path, PathBuf};
 use std::sync::Arc;
-use tauri::plugin::{Builder, TauriPlugin};
+use std::sync::atomic::{AtomicUsize, Ordering};
 use tauri::Emitter;
+use tauri::plugin::{Builder, TauriPlugin};
 use tauri::{Manager, Runtime, State};
 use tauri_plugin_dialog::{DialogExt, FilePath};
 use tokio::sync::{Mutex, MutexGuard};
@@ -18,8 +18,8 @@ use crate::libs::database::{DB, SUPPORTED_PLAYLISTS_EXTENSIONS, SUPPORTED_TRACKS
 use crate::libs::error::{AnyResult, MuseeksError};
 use crate::libs::events::IPCEvent;
 use crate::libs::playlist::Playlist;
-use crate::libs::track::{get_track_from_file, get_track_id_for_path, Track, TrackGroup};
-use crate::libs::utils::{scan_dirs, TimeLogger};
+use crate::libs::track::{Track, TrackGroup, get_track_from_file, get_track_id_for_path};
+use crate::libs::utils::{TimeLogger, scan_dirs};
 
 use super::config::get_storage_dir;
 
@@ -46,10 +46,19 @@ async fn setup() -> AnyResult<DB> {
         .filename(&database_path)
         .create_if_missing(true)
         .optimize_on_close(true, None)
-        .auto_vacuum(ormlite::sqlite::SqliteAutoVacuum::Incremental)
-        .journal_mode(ormlite::sqlite::SqliteJournalMode::Wal);
+        .auto_vacuum(SqliteAutoVacuum::Incremental)
+        .journal_mode(SqliteJournalMode::Wal);
 
-    let connection = SqliteConnection::connect_with(&options).await?;
+    let mut connection = SqliteConnection::connect_with(&options).await?;
+
+    // Clear Journal
+    sqlx::query("PRAGMA  wal_checkpoint(TRUNCATE)")
+        .execute(&mut connection)
+        .await?;
+
+    info!("Attempting to run possible migrations...");
+    let migrator = sqlx::migrate::Migrator::new(Path::new("./src/migrations")).await?;
+    migrator.run_direct(&mut connection).await?;
 
     Ok(DB { connection })
 }
@@ -411,18 +420,13 @@ async fn reset(db_state: State<'_, DBState>) -> AnyResult<()> {
 
     let mut db = db_state.get_lock().await;
 
-    let delete_tracks_query = format!("DELETE FROM {};", Track::table_name());
-    let delete_playlists_query = format!("DELETE FROM {};", Playlist::table_name());
-
-    ormlite::query(&delete_tracks_query)
+    sqlx::query("DELETE FROM tracks;")
         .execute(&mut db.connection)
         .await?;
-    ormlite::query(&delete_playlists_query)
+    sqlx::query("DELETE FROM playlists;")
         .execute(&mut db.connection)
         .await?;
-    ormlite::query("VACUUM;")
-        .execute(&mut db.connection)
-        .await?;
+    sqlx::query("VACUUM;").execute(&mut db.connection).await?;
 
     timer.complete();
 
@@ -454,8 +458,9 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
         ])
         .setup(move |app_handle, _api| {
             let app_handle = app_handle.clone();
+
             tauri::async_runtime::spawn(async move {
-                let mut db = match setup().await {
+                let db = match setup().await {
                     Ok(db) => db,
                     Err(err) => {
                         error!("Failed to setup database: {:?}", err);
@@ -463,12 +468,9 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
                     }
                 };
 
-                db.create_tables()
-                    .await
-                    .expect("Could not create DB tables");
-
                 app_handle.manage(DBState(Mutex::new(db)));
             });
+
             Ok(())
         })
         .build()

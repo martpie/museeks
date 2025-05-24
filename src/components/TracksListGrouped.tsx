@@ -1,10 +1,11 @@
-import { type Virtualizer, useVirtualizer } from '@tanstack/react-virtual';
 import { useImperativeHandle, useMemo, useRef } from 'react';
 
 import type { TrackGroup } from '../generated/typings';
+import useAllTracks from '../hooks/useAllTracks';
 import { parseDuration } from '../hooks/useFormattedDuration';
 import usePlayingTrackID from '../hooks/usePlayingTrackID';
 import { plural } from '../lib/localization';
+import type { TracksListVirtualizer } from '../types/museeks';
 import Cover from './Cover';
 import TrackRow, { type TrackRowEvents } from './TrackRow';
 import styles from './TracksList.module.css';
@@ -16,7 +17,7 @@ import styles from './TracksList.module.css';
  * -------------------------------------------------------------------------- */
 
 type Props = {
-  ref: React.RefObject<Virtualizer<HTMLDivElement, Element> | null>;
+  ref: React.RefObject<TracksListVirtualizer | null>;
   trackGroups: TrackGroup[];
   selectedTracks: Set<string>;
   initialOffset: number;
@@ -25,23 +26,30 @@ type Props = {
 
 export default function TrackListGroupedLayout(props: Props) {
   const { ref, trackGroups, initialOffset, rowHeight, ...rest } = props;
+  const tracks = useAllTracks(trackGroups);
 
   const innerScrollableRef = useRef<HTMLDivElement>(null);
 
-  const virtualizer = useVirtualizer({
-    count: trackGroups.length,
-    initialOffset,
-    overscan: 20,
-    scrollPaddingEnd: 22, // Height of the track list header
-    getScrollElement: () => innerScrollableRef.current,
-    estimateSize() {
-      return rowHeight;
-    },
-  });
-
   // Passes the ref back to the master component for interaction with the
   // scrollable view
-  useImperativeHandle(ref, () => virtualizer, [virtualizer]);
+  useImperativeHandle(
+    ref,
+    () => {
+      return {
+        scrollElement: innerScrollableRef.current,
+        scrollToIndex: (index: number) => {
+          if (innerScrollableRef.current) {
+            const track = tracks[index];
+            // not super idiomatic, but works eh
+            document
+              .querySelector(`[data-track-id="${track.id}"]`)
+              ?.scrollIntoView({ block: 'nearest' });
+          }
+        },
+      } satisfies TracksListVirtualizer;
+    },
+    [tracks],
+  );
 
   return (
     <div ref={innerScrollableRef} className={styles.tracksListScroller}>

@@ -41,13 +41,13 @@ lofty = "0.22.4"
 m3u = "1.0.0"
 memoize = "0.5.1"
 nosleep = "0.2.1"
-ormlite = { version = "0.23.3", features = ["default-sqlite"] }
 pathdiff = "0.2.3"
 rayon = "1.10.0"
 serde = { version = "1.0.219", features = ["derive"] }
 serde_json = "1.0.140"
+sqlx = { version = "0.8.6", features = ["sqlite", "runtime-tokio", "macros"] }
 strum = { version = "0.27.1", features = ["derive"] }
-tokio = "1.45.0"
+tokio = { version = "1.45.0", features = ["full"] }
 thiserror = "2.0.12"
 ts-rs = "10.1.0"
 uuid = { version = "1.16.0", features = ["v3", "v4", "fast-rng"] }

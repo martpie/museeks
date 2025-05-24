@@ -55,7 +55,7 @@ export default function QueueListItem(props: Props) {
       <div className={styles.queueItemInfo} onDoubleClick={play}>
         <div className={styles.queueItemInfoTitle}>{track.title}</div>
         <div className={styles.queueItemInfoOtherInfos}>
-          <span>{track.artists[0]}</span> - <span>{track.album}</span>
+          <span>{track.artists.join(', ')}</span> - <span>{track.album}</span>
         </div>
       </div>
       <button type="button" className={styles.queueItemRemove} onClick={remove}>

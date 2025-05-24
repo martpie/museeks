@@ -88,6 +88,7 @@ export default function TrackRow(props: Props) {
       {...listeners}
       {...attributes}
       style={props.style}
+      data-track-id={track.id}
     >
       <div className={`${styles.cell} ${cellStyles.cellTrackPlaying}`}>
         {props.isPlaying ? <PlayingIndicator /> : null}

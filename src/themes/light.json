@@ -4,56 +4,56 @@
   "themeSource": "light",
   "variables": {
     "--color-scheme": "light",
-    "--text": "#333333",
-    "--text-muted": "#555555",
-    "--background": "white",
-    "--faded-bg": "rgba(255, 255, 255, 0.9)",
+    "--text": "hsl(0, 0%, 20%)",
+    "--text-muted": "hsl(0, 0%, 33%)",
+    "--background": "hsl(0, 0%, 100%)",
+    "--faded-bg": "hsla(0, 0%, 100%, 0.9)",
 
-    "--border-color": "#D9D9D9",
-    "--border-color-softer": "#E2E2E2",
+    "--border-color": "hsl(0, 0%, 85%)",
+    "--border-color-softer": "hsl(0, 0%, 89%)",
     "--border-radius": "2px",
 
-    "--header-color": "#555555",
-    "--header-bg": "rgb(244, 244, 244)",
-    "--header-bg-softer": "rgb(250, 250, 250)",
+    "--header-color": "hsl(0, 0%, 33%)",
+    "--header-bg": "hsl(0, 0%, 96%)",
+    "--header-bg-softer": "hsl(0, 0%, 98%)",
 
-    "--footer-bg": "#F4F4F4",
-    "--footer-nav-bg-color-active": "#E6E6E6",
+    "--footer-bg": "hsl(0, 0%, 96%)",
+    "--footer-nav-bg-color-active": "hsl(0, 0%, 90%)",
 
-    "--active-item-bg": "rgb(220, 220, 220)",
+    "--active-item-bg": "hsl(0, 0%, 86%)",
     "--active-item-color": "var(--text)",
 
-    "--tracks-bg-even": "white",
-    "--tracks-bg-odd": "#F4F4F4",
+    "--tracks-bg-even": "hsl(0, 0%, 100%)",
+    "--tracks-bg-odd": "hsl(0, 0%, 96%)",
 
-    "--tracks-header-bg": "white",
-    "--tracks-header-color": "#555555",
+    "--tracks-header-bg": "hsl(0, 0%, 100%)",
+    "--tracks-header-color": "hsl(0, 0%, 33%)",
 
-    "--cover-bg": "#F4F4F4",
+    "--cover-bg": "hsl(0, 0%, 96%)",
 
-    "--success-color": "#5CB85C",
-    "--info-color": "#5BC0DE",
-    "--warning-color": "#F0AD4E",
-    "--danger-color": "#de4343",
+    "--success-color": "hsl(120, 39%, 56%)",
+    "--info-color": "hsl(191, 64%, 59%)",
+    "--warning-color": "hsl(38, 86%, 62%)",
+    "--danger-color": "hsl(0, 66%, 56%)",
 
-    "--toasts-bg": "white",
+    "--toasts-bg": "hsl(0, 0%, 100%)",
 
-    "--progress-bg": "rgb(219, 219, 219)",
+    "--progress-bg": "hsl(0, 0%, 86%)",
 
-    "--sidebar-bg": "#F4F4F4",
-    "--sidebar-item-active-bg": "#E6E6E6",
+    "--sidebar-bg": "hsl(0, 0%, 96%)",
+    "--sidebar-item-active-bg": "hsl(0, 0%, 90%)",
 
-    "--search-bg": "white",
-    "--slider-bg": "#DADADA",
+    "--search-bg": "hsl(0, 0%, 100%)",
+    "--slider-bg": "hsl(0, 0%, 85%)",
 
-    "--queue-bg": "white",
-    "--queue-header-bg": "rgb(244, 244, 244)",
+    "--queue-bg": "hsl(0, 0%, 100%)",
+    "--queue-header-bg": "hsl(0, 0%, 96%)",
 
-    "--checkbox-bg": "#F4F4F4",
-    "--input-bg": "#F4F4F4",
-    "--input-color": "#333333",
-    "--button-bg": "#f3f3f3",
-    "--button-border": "rgb(0 0 0 / 0.1)",
-    "--button-color": "#333333"
+    "--checkbox-bg": "hsl(0, 0%, 96%)",
+    "--input-bg": "hsl(0, 0%, 96%)",
+    "--input-color": "hsl(0, 0%, 20%)",
+    "--button-bg": "hsl(0, 0%, 95%)",
+    "--button-border": "hsla(0, 0%, 0%, 0.1)",
+    "--button-color": "hsl(0, 0%, 20%)"
   }
 }

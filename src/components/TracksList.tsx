@@ -1,4 +1,3 @@
-import type { Virtualizer } from '@tanstack/react-virtual';
 import {
   Menu,
   MenuItem,
@@ -25,7 +24,7 @@ import {
   saveScrollPosition,
 } from '../lib/scroll-restoration';
 import { listKeyboardSelect, listMouseSelect } from '../lib/utils-list';
-import type { QueueOrigin } from '../types/museeks';
+import type { QueueOrigin, TracksListVirtualizer } from '../types/museeks';
 import TracksListDefault from './TracksListDefault';
 import TracksListGrouped from './TracksListGrouped';
 
@@ -34,8 +33,6 @@ import styles from './TracksList.module.css';
 // --------------------------------------------------------------------------
 // TrackList
 // --------------------------------------------------------------------------
-
-type TracksListVirtualizer = Virtualizer<HTMLDivElement, Element>;
 
 type TracksListProps = {
   playlists: Playlist[];
