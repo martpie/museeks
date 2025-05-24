@@ -77,3 +77,12 @@ export type QueueOrigin =
   | { type: 'library' }
   | { type: 'playlist'; playlistID: string }
   | { type: 'artist'; artistID: string };
+
+/**
+ * A common interface used by TracksList to be able to control custom children
+ * layouts
+ */
+export type TracksListVirtualizer = {
+  scrollElement: HTMLDivElement | null;
+  scrollToIndex: (index: number, options?: ScrollIntoViewOptions) => void;
+};
