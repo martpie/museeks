@@ -52,6 +52,8 @@ pub fn get_track_from_file(path: &PathBuf) -> Option<Track> {
         Ok(tagged_file) => {
             let tag = tagged_file.primary_tag()?;
 
+            // Lots of tags are missing eaither TrackArtist or AlbumArtist, so instead
+            // of being correct, we'll swap them if needed.
             // IMPROVE ME: Is there a more idiomatic way of doing the following?
             let mut artists: Vec<String> = tag
                 .get_strings(&ItemKey::TrackArtist)
@@ -69,6 +71,13 @@ pub fn get_track_from_file(path: &PathBuf) -> Option<Track> {
                 artists = vec!["Unknown Artist".into()];
             }
 
+            let album_artist = tag
+                .get_string(&ItemKey::AlbumArtist)
+                .map(|s| s.to_string())
+                .or_else(|| artists.first().cloned())
+                .unwrap_or_else(|| "Unknown Artist".to_string());
+
+            // Generate a stable ID for the track, based on its path
             let id = get_track_id_for_path(path)?;
 
             Some(Track {
@@ -86,10 +95,7 @@ pub fn get_track_from_file(path: &PathBuf) -> Option<Track> {
                     .get_string(&ItemKey::AlbumTitle)
                     .unwrap_or("Unknown")
                     .to_string(),
-                album_artist: tag
-                    .get_string(&ItemKey::AlbumArtist)
-                    .unwrap_or("Unknown Artist")
-                    .to_string(),
+                album_artist,
                 artists,
                 genres: tag
                     .get_strings(&ItemKey::Genre)
