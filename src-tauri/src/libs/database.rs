@@ -95,12 +95,12 @@ impl DB {
         .bind(&track.album)
         .bind(json!(&track.artists))
         .bind(json!(&track.genres))
-        .bind(&track.year)
-        .bind(&track.duration)
-        .bind(&track.track_no)
-        .bind(&track.track_of)
-        .bind(&track.disk_no)
-        .bind(&track.disk_of)
+        .bind(track.year)
+        .bind(track.duration)
+        .bind(track.track_no)
+        .bind(track.track_of)
+        .bind(track.disk_no)
+        .bind(track.disk_of)
         .bind(&track.id)
         .execute(&mut self.connection)
         .await?;
@@ -148,12 +148,12 @@ impl DB {
             .bind(&track.album_artist)
             .bind(json!(&track.artists))
             .bind(json!(&track.genres))
-            .bind(&track.year) // Use i64 for SQL compatibility
-            .bind(&track.duration)
-            .bind(&track.track_no)
-            .bind(&track.track_of)
-            .bind(&track.disk_no)
-            .bind(&track.disk_of)
+            .bind(track.year) // Use i64 for SQL compatibility
+            .bind(track.duration)
+            .bind(track.track_no)
+            .bind(track.track_of)
+            .bind(track.disk_no)
+            .bind(track.disk_of)
             .execute(&mut self.connection)
             .await?;
         }
@@ -183,7 +183,7 @@ impl DB {
      * Only fetches the first artist for each row.
      */
     pub async fn get_artist_tracks(&mut self, artist: String) -> AnyResult<Vec<TrackGroup>> {
-        let timer = TimeLogger::new(format!("Retrieved tracks for artist '{}'", &artist).into());
+        let timer = TimeLogger::new(format!("Retrieved tracks for artist '{}'", &artist));
 
         let tracks = sqlx::query_as::<_, Track>(
             "SELECT * FROM tracks WHERE album_artist = ? ORDER BY album, disk_no, track_no",

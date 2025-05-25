@@ -37,7 +37,6 @@ pub struct Track {
  */
 #[derive(Debug, Clone, Serialize, Deserialize, TS)]
 #[ts(export, export_to = "../../src/generated/typings.ts")]
-
 pub struct TrackGroup {
     pub label: String,
     pub tracks: Vec<Track>,
