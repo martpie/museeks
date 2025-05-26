@@ -1,7 +1,6 @@
 use indexmap::IndexMap;
 use serde_json::json;
 use sqlx::SqliteConnection;
-use std::collections::HashMap;
 use std::path::PathBuf;
 
 use super::error::AnyResult;
@@ -45,27 +44,36 @@ impl DB {
      * Get tracks (and their content) given a set of document IDs
      */
     pub async fn get_tracks(&mut self, track_ids: &Vec<String>) -> AnyResult<Vec<Track>> {
-        // TODO: Can this be improved somehow?
-        // Improve me once https://github.com/launchbadge/sqlx/issues/875 is fixed
-        let placeholders = track_ids.iter().map(|_| "?").collect::<Vec<_>>().join(", ");
-        let query = format!("SELECT * FROM tracks WHERE id IN ({})", placeholders);
+        // Construct `IN` clause with placeholders
+        let in_placeholders = track_ids.iter().map(|_| "?").collect::<Vec<_>>().join(", ");
 
-        let mut query_builder = sqlx::query_as::<_, Track>(&query);
+        // Construct `ORDER BY CASE` using bindable expressions like: CASE id WHEN ? THEN 0 ...
+        let mut order_by_case = String::from("CASE id ");
+        for index in 0..track_ids.len() {
+            order_by_case.push_str("WHEN ? THEN ");
+            order_by_case.push_str(&index.to_string());
+            order_by_case.push(' ');
+        }
+        order_by_case.push_str("END");
+
+        // Improve me once https://github.com/launchbadge/sqlx/issues/875 is fixed
+        let sql = format!(
+            "SELECT * FROM tracks WHERE id IN ({}) ORDER BY {}",
+            in_placeholders, order_by_case
+        );
+
+        // Build query and bind all UUIDs twice (once for IN, once for ORDER BY CASE)
+        let mut query = sqlx::query_as::<_, Track>(&sql);
 
         for id in track_ids {
-            query_builder = query_builder.bind(id);
+            query = query.bind(id); // for IN (...)
         }
 
-        let mut tracks: Vec<Track> = query_builder.fetch_all(&mut self.connection).await?;
+        for id in track_ids {
+            query = query.bind(id); // for ORDER BY CASE
+        }
 
-        // document may not ordered the way we want, so let's ensure they map to track_ids
-        let track_id_positions: HashMap<&String, usize> = track_ids
-            .iter()
-            .enumerate()
-            .map(|(i, id)| (id, i))
-            .collect();
-        tracks.sort_by_key(|track| track_id_positions.get(&track.id));
-
+        let tracks = query.fetch_all(&mut self.connection).await?;
         Ok(tracks)
     }
 
