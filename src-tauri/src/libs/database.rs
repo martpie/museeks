@@ -87,6 +87,7 @@ impl DB {
                 path = ?,
                 title = ?,
                 album = ?,
+                album_artist = ?,
                 artists = ?,
                 genres = ?,
                 year = ?,
@@ -101,6 +102,7 @@ impl DB {
         .bind(&track.path)
         .bind(&track.title)
         .bind(&track.album)
+        .bind(&track.album_artist)
         .bind(json!(&track.artists))
         .bind(json!(&track.genres))
         .bind(track.year)

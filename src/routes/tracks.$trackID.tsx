@@ -43,8 +43,9 @@ function ViewTrackDetails() {
 
   const [formData, setFormData] = useState<TrackMutation>({
     title: track.title ?? '',
-    artists: track.artists,
     album: track.album ?? '',
+    artists: track.artists,
+    album_artist: track.album_artist ?? '',
     genres: track.genres,
     year: track.year,
     track_no: track.track_no ?? null,
@@ -92,7 +93,34 @@ function ViewTrackDetails() {
         </Setting.Section>
         <Setting.Section>
           <Setting.Input
-            label="Artist"
+            label="Album"
+            id="album"
+            name="album"
+            type="text"
+            value={formData.album}
+            onChange={(e) => {
+              setFormData({ ...formData, album: e.currentTarget.value });
+            }}
+          />
+        </Setting.Section>
+        <Setting.Section>
+          <Setting.Input
+            label="Album Artist"
+            id="album_artist"
+            name="album_artist"
+            type="text"
+            value={formData.album_artist}
+            onChange={(e) => {
+              setFormData({
+                ...formData,
+                album_artist: e.currentTarget.value,
+              });
+            }}
+          />
+        </Setting.Section>
+        <Setting.Section>
+          <Setting.Input
+            label="Track Artists"
             description="You can add multiple artists with commas"
             id="artist"
             name="artist"
@@ -103,18 +131,6 @@ function ViewTrackDetails() {
                 ...formData,
                 artists: e.currentTarget.value.split(DELIMITER),
               });
-            }}
-          />
-        </Setting.Section>
-        <Setting.Section>
-          <Setting.Input
-            label="Album"
-            id="album"
-            name="album"
-            type="text"
-            value={formData.album}
-            onChange={(e) => {
-              setFormData({ ...formData, album: e.currentTarget.value });
             }}
           />
         </Setting.Section>
