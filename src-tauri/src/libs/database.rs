@@ -135,10 +135,8 @@ impl DB {
     }
 
     /**
-     * Insert a new track in the DB, will fail in case there is a duplicate unique
-     * key (like track.path)
-     *
-     * Doc: https://github.com/khonsulabs/bonsaidb/blob/main/examples/basic-local/examples/basic-local-multidb.rs
+     * Insert multiple tracks in the DB, will fail in case there is a duplicate
+     * unique key (like track.path)
      */
     pub async fn insert_tracks(&mut self, tracks: Vec<Track>) -> AnyResult<()> {
         // Weirdly, this is fast enough with SQLite, no need to create transactions
@@ -166,6 +164,17 @@ impl DB {
             .bind(track.disk_of)
             .execute(&mut self.connection)
             .await?;
+        }
+
+        Ok(())
+    }
+
+    /**
+     * Update a list of tracks in the database by just overriding everything
+     */
+    pub async fn update_tracks(&mut self, tracks: Vec<Track>) -> AnyResult<()> {
+        for track in tracks {
+            self.update_track(track).await?;
         }
 
         Ok(())

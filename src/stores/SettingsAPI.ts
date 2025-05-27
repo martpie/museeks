@@ -177,7 +177,7 @@ async function checkForLibraryRefresh(): Promise<void> {
   const autorefreshEnabled = config.getInitial('library_autorefresh');
 
   if (autorefreshEnabled) {
-    useLibraryStore.getState().api.refresh();
+    useLibraryStore.getState().api.scan();
   }
 }
 

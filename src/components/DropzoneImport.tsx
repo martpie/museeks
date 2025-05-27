@@ -60,7 +60,7 @@ export default function DropzoneImport() {
                 `${folders.length} ${plural('folder', folders.length)} added to the library`,
               );
 
-              await libraryAPI.refresh();
+              await libraryAPI.scan();
 
               invalidate();
             }
@@ -80,7 +80,7 @@ export default function DropzoneImport() {
     };
   }, [
     libraryAPI.addLibraryFolders,
-    libraryAPI.refresh,
+    libraryAPI.scan,
     toastsAPI.add,
     invalidate,
   ]);
