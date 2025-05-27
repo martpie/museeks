@@ -1,6 +1,6 @@
 import { createFileRoute, useLoaderData } from '@tanstack/react-router';
 import { open } from '@tauri-apps/plugin-dialog';
-
+import { useCallback } from 'react';
 import * as Setting from '../components/Setting';
 import CheckboxSetting from '../components/SettingCheckbox';
 import Button from '../elements/Button';
@@ -8,8 +8,6 @@ import Flexbox from '../elements/Flexbox';
 import useInvalidate, { useInvalidateCallback } from '../hooks/useInvalidate';
 import SettingsAPI from '../stores/SettingsAPI';
 import useLibraryStore, { useLibraryAPI } from '../stores/useLibraryStore';
-
-import { useCallback } from 'react';
 import styles from './settings-library.module.css';
 
 export const Route = createFileRoute('/settings/library')({
@@ -78,9 +76,16 @@ function ViewSettingsLibrary() {
           </Button>
           <Button
             disabled={isLibraryRefreshing}
-            onClick={useInvalidateCallback(libraryAPI.refresh)}
+            onClick={useInvalidateCallback(() => libraryAPI.scan())}
           >
-            Refresh library
+            Scan
+          </Button>
+          <Button
+            disabled={isLibraryRefreshing}
+            onClick={useInvalidateCallback(() => libraryAPI.scan(true))}
+            title="Force the refresh of all tracks tags"
+          >
+            Refresh
           </Button>
         </Flexbox>
         <Setting.Description>

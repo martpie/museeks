@@ -37,9 +37,13 @@ const database = {
     });
   },
 
-  async importTracks(importPaths: Array<string>): Promise<ScanResult> {
-    return invoke('plugin:database|import_tracks_to_library', {
+  async importTracks(
+    importPaths: Array<string>,
+    refresh = false,
+  ): Promise<ScanResult> {
+    return invoke('plugin:database|scan_library', {
       importPaths,
+      refresh,
     });
   },
 

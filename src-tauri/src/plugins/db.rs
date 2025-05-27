@@ -35,7 +35,6 @@ impl DBState {
 
 /**
  * Database setup
- * Doc: https://github.com/khonsulabs/bonsaidb/blob/main/examples/basic-local/examples/basic-local-multidb.rs
  */
 async fn setup() -> AnyResult<DB> {
     let database_path = get_storage_dir().join("museeks.db");
@@ -92,10 +91,11 @@ pub struct ScanResult {
  * TODO: move that to libs/database
  */
 #[tauri::command]
-async fn import_tracks_to_library<R: Runtime>(
+async fn scan_library<R: Runtime>(
     window: tauri::Window<R>,
     db_state: State<'_, DBState>,
     import_paths: Vec<PathBuf>,
+    refresh: bool,
 ) -> AnyResult<ScanResult> {
     let mut db = db_state.get_lock().await;
 
@@ -113,14 +113,20 @@ async fn import_tracks_to_library<R: Runtime>(
     let scanned_paths_count = track_paths.len();
 
     // Remove files that are already in the DB (speedup scan + prevent duplicate errors)
-    let existing_paths = db
-        .get_all_tracks()
-        .await?
-        .iter()
-        .map(move |track| PathBuf::from(track.path.to_owned()))
-        .collect::<HashSet<_>>();
+    if refresh == false {
+        let existing_paths = db
+            .get_all_tracks()
+            .await?
+            .iter()
+            .map(move |track| PathBuf::from(track.path.to_owned()))
+            .collect::<HashSet<_>>();
 
-    track_paths.retain(|path| !existing_paths.contains(path));
+        info!(
+            "Skipping {} files that are already in the library",
+            existing_paths.len()
+        );
+        track_paths.retain(|path| !existing_paths.contains(path));
+    }
 
     info!("Found {} files to import", track_paths.len());
     info!(
@@ -179,16 +185,14 @@ async fn import_tracks_to_library<R: Runtime>(
 
     scan_logger.complete();
 
-    // Insert all tracks in the DB, we'are kind of assuming it cannot fail (regarding scan progress information), but
-    // it technically could.
+    // Insert all tracks in the DB, we'are kind of assuming it cannot fail
+    // (regarding scan progress information), but it technically could.
     let db_insert_logger: TimeLogger = TimeLogger::new("Inserted tracks".into());
-    let result = db.insert_tracks(tracks).await;
 
-    if result.is_err() {
-        error!(
-            "Something went wrong when inserting tracks: {}",
-            result.err().unwrap()
-        );
+    if refresh == false {
+        db.insert_tracks(tracks).await?;
+    } else {
+        db.update_tracks(tracks).await?;
     }
 
     db_insert_logger.complete();
@@ -454,7 +458,7 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
             export_playlist,
             delete_playlist,
             reset,
-            import_tracks_to_library,
+            scan_library,
         ])
         .setup(move |app_handle, _api| {
             let app_handle = app_handle.clone();

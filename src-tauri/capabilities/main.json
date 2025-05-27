@@ -30,7 +30,7 @@
     "config:allow-set-config",
     "config:allow-get-config",
     "cover:allow-get-cover",
-    "database:allow-import-tracks-to-library",
+    "database:allow-scan-library",
     "database:allow-get-all-tracks",
     "database:allow-get-tracks",
     "database:allow-update-track",

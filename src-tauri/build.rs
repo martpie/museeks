@@ -22,7 +22,7 @@ fn main() {
             .plugin(
                 "database",
                 tauri_build::InlinedPlugin::new().commands(&[
-                    "import_tracks_to_library",
+                    "scan_library",
                     "get_all_tracks",
                     "remove_tracks",
                     "get_tracks",

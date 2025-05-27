@@ -1,12 +1,11 @@
 import { ask, open } from '@tauri-apps/plugin-dialog';
+import type { StateCreator } from 'zustand';
+import { persist } from 'zustand/middleware';
 
 import type { SortBy, SortOrder } from '../generated/typings';
 import config from '../lib/config';
 import database from '../lib/database';
 import { logAndNotifyError } from '../lib/utils';
-
-import type { StateCreator } from 'zustand';
-import { persist } from 'zustand/middleware';
 import { removeRedundantFolders } from '../lib/utils-library';
 import type { API, TrackMutation } from '../types/museeks';
 import { createStore } from './store-helpers';
@@ -29,7 +28,7 @@ type LibraryState = API<{
     add: () => Promise<void>;
     addLibraryFolders: (paths: Array<string>) => Promise<void>;
     removeLibraryFolder: (path: string) => Promise<void>;
-    refresh: () => Promise<void>;
+    scan: (refresh?: boolean) => Promise<void>;
     remove: (tracksIDs: string[]) => Promise<void>;
     reset: () => Promise<void>;
     setRefresh: (processed: number, total: number) => void;
@@ -111,21 +110,36 @@ const useLibraryStore = createLibraryStore<LibraryState>((set, get) => ({
       }
     },
 
-    refresh: async () => {
+    scan: async (
+      // Force a refresh of the ID3 tags stored in the DB
+      refresh = false,
+    ) => {
       try {
         set({ refreshing: true });
 
+        if (refresh) {
+          const confirm = await ask(
+            'All track data will be updated from the base files, but your original files won’t be modified. Any Museeks-specific edits you may have done will be reset.',
+            {
+              title: 'Refresh all tracks?',
+              kind: 'warning',
+            },
+          );
+
+          if (!confirm) {
+            return;
+          }
+        }
+
         const libraryFolders = await config.get('library_folders');
-        const scanResult = await database.importTracks(libraryFolders);
+        const scanResult = await database.importTracks(libraryFolders, refresh);
 
         if (scanResult.track_count > 0) {
-          useToastsStore
-            .getState()
-            .api.add(
-              'success',
-              `${scanResult.track_count} track(s) were added to the library.`,
-              5000,
-            );
+          const message = refresh
+            ? `${scanResult.track_count} track(s) were refreshed.`
+            : `${scanResult.track_count} track(s) were added to the library.`;
+
+          useToastsStore.getState().api.add('success', message, 5000);
         }
 
         if (scanResult.playlist_count > 0) {
