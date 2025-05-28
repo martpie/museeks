@@ -1,6 +1,9 @@
 use anyhow::Result;
 use lofty::error::LoftyError;
+use log::error;
 use serde::{Serialize, ser::Serializer};
+use tauri::Runtime;
+use tauri_plugin_dialog::{DialogExt, MessageDialogKind};
 use thiserror::Error;
 
 /**
@@ -53,3 +56,16 @@ impl Serialize for MuseeksError {
 }
 
 pub type AnyResult<T, E = MuseeksError> = Result<T, E>;
+
+/**
+ * Log an error, show blocking dialog with the error message, then exit the app
+ */
+pub fn handle_fatal_error<R: Runtime>(app_handle: &tauri::AppHandle<R>, err: MuseeksError) {
+    error!("Something went wrong: {:?}", err);
+    app_handle
+        .dialog()
+        .message(format!("Something went wrong: {}", err))
+        .kind(MessageDialogKind::Error)
+        .blocking_show();
+    app_handle.exit(1);
+}

@@ -1,4 +1,4 @@
-use log::{error, info, warn};
+use log::{info, warn};
 use rayon::iter::{IntoParallelRefIterator, ParallelIterator};
 use serde::{Deserialize, Serialize};
 use sqlx::sqlite::{SqliteAutoVacuum, SqliteConnectOptions, SqliteJournalMode};
@@ -15,7 +15,7 @@ use tokio::sync::{Mutex, MutexGuard};
 use ts_rs::TS;
 
 use crate::libs::database::{DB, SUPPORTED_PLAYLISTS_EXTENSIONS, SUPPORTED_TRACKS_EXTENSIONS};
-use crate::libs::error::{AnyResult, MuseeksError};
+use crate::libs::error::{AnyResult, MuseeksError, handle_fatal_error};
 use crate::libs::events::IPCEvent;
 use crate::libs::playlist::Playlist;
 use crate::libs::track::{Track, TrackGroup, get_track_from_file, get_track_id_for_path};
@@ -467,7 +467,7 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
                 let db = match setup().await {
                     Ok(db) => db,
                     Err(err) => {
-                        error!("Failed to setup database: {:?}", err);
+                        handle_fatal_error(&app_handle, err);
                         return;
                     }
                 };
