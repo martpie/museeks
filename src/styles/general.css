@@ -91,14 +91,6 @@ strong {
 }
 
 /* Various CSS utils to reset styles */
-.noPadding {
-  padding: 0;
-}
-
-.noMargin {
-  margin: 0;
-}
-
 .reset {
   border: 0;
   background-color: inherit;

@@ -24,7 +24,7 @@ export function Label(
   const { children, noMargin, htmlFor, ...restProps } = props;
 
   const classNames = cx(styles.settingLabel, {
-    noMargin,
+    [styles.settingLabelNoMargin]: noMargin,
   });
 
   return (

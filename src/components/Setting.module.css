@@ -23,6 +23,10 @@
   font-weight: bold;
 }
 
+.settingLabelNoMargin {
+  margin: 0;
+}
+
 .settingSelect,
 .settingInput {
   appearance: none;
