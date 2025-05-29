@@ -1,8 +1,7 @@
 import type { SortBy, SortOrder } from '../generated/typings';
 import useLibraryStore from '../stores/useLibraryStore';
-import TracksListHeaderCell from './TracksListHeaderCell';
-
 import styles from './TracksListHeader.module.css';
+import TracksListHeaderCell from './TracksListHeaderCell';
 
 const getIcon = (
   enableSort: boolean,

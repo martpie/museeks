@@ -1,4 +1,4 @@
-import { useImperativeHandle, useMemo, useRef } from 'react';
+import { useEffect, useImperativeHandle, useMemo, useRef } from 'react';
 
 import type { TrackGroup } from '../generated/typings';
 import useAllTracks from '../hooks/useAllTracks';
@@ -8,6 +8,7 @@ import { plural } from '../lib/localization';
 import type { TracksListVirtualizer } from '../types/museeks';
 import Cover from './Cover';
 import TrackRow, { type TrackRowEvents } from './TrackRow';
+
 import styles from './TracksList.module.css';
 
 /** ----------------------------------------------------------------------------
@@ -30,26 +31,29 @@ export default function TrackListGroupedLayout(props: Props) {
 
   const innerScrollableRef = useRef<HTMLDivElement>(null);
 
+  useEffect(() => {
+    innerScrollableRef.current?.scrollTo({
+      top: initialOffset,
+      behavior: 'instant',
+    });
+  }, [initialOffset]);
+
   // Passes the ref back to the master component for interaction with the
   // scrollable view
-  useImperativeHandle(
-    ref,
-    () => {
-      return {
-        scrollElement: innerScrollableRef.current,
-        scrollToIndex: (index: number) => {
-          if (innerScrollableRef.current) {
-            const track = tracks[index];
-            // not super idiomatic, but works eh
-            document
-              .querySelector(`[data-track-id="${track.id}"]`)
-              ?.scrollIntoView({ block: 'nearest' });
-          }
-        },
-      } satisfies TracksListVirtualizer;
-    },
-    [tracks],
-  );
+  useImperativeHandle(ref, () => {
+    return {
+      scrollElement: innerScrollableRef.current,
+      scrollToIndex: (index: number) => {
+        if (innerScrollableRef.current) {
+          const track = tracks[index];
+          // not super idiomatic, but works eh
+          document
+            .querySelector(`[data-track-id="${track.id}"]`)
+            ?.scrollIntoView({ block: 'nearest' });
+        }
+      },
+    } satisfies TracksListVirtualizer;
+  }, [tracks]);
 
   return (
     <div ref={innerScrollableRef} className={styles.tracksListScroller}>

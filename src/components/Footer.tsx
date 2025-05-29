@@ -1,10 +1,9 @@
+import { Link } from '@tanstack/react-router';
 import Icon from 'react-fontawesome';
 
 import useLibraryStore from '../stores/useLibraryStore';
-import ProgressBar from './ProgressBar';
-
-import { Link } from '@tanstack/react-router';
 import styles from './Footer.module.css';
+import ProgressBar from './ProgressBar';
 
 export default function Footer() {
   return (
@@ -72,7 +71,7 @@ function Status() {
       <div className={styles.footerLibraryRefresh}>
         <div className={styles.footerLibraryRefreshProgress}>
           {isScanning ? (
-            <>scanning tracks...</>
+            'scanning tracks...'
           ) : (
             <ProgressBar progress={progress} animated={total === 0} />
           )}

@@ -1,11 +1,9 @@
+import { useSortable } from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
 import { useCallback } from 'react';
-
 import type { Track } from '../generated/typings';
 import { usePlayerAPI } from '../stores/usePlayerStore';
 import Cover from './Cover';
-
-import { useSortable } from '@dnd-kit/sortable';
-import { CSS } from '@dnd-kit/utilities';
 import styles from './QueueListItem.module.css';
 
 type Props = {

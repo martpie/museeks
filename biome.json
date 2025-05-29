@@ -9,6 +9,18 @@
       },
       "suspicious": {
         "noImplicitAnyLet": "off"
+      },
+      "style": {
+        "noParameterAssign": "error",
+        "useAsConstAssertion": "error",
+        "useDefaultParameterLast": "error",
+        "useEnumInitializers": "error",
+        "useSelfClosingElements": "error",
+        "useSingleVarDeclarator": "error",
+        "noUnusedTemplateLiteral": "error",
+        "useNumberNamespace": "error",
+        "noInferrableTypes": "error",
+        "noUselessElse": "error"
       }
     }
   },
@@ -34,12 +46,13 @@
     }
   },
   "files": {
-    "ignore": [
-      "node_modules",
-      "dist",
-      "src/generated/**/*.ts",
-      "src-tauri/target/**/*",
-      "src-tauri/gen/**/*"
+    "includes": [
+      "**",
+      "!**/node_modules",
+      "!**/dist",
+      "!**/src/generated/**/*.ts",
+      "!**/src-tauri/target/**/*",
+      "!**/src-tauri/gen/**/*"
     ]
   }
 }

@@ -1,3 +1,23 @@
+.queueItemRemove {
+  color: var(--text);
+  border: none;
+  background-color: transparent;
+  width: 25px;
+  height: 25px;
+  line-height: 10px;
+  padding: 3px;
+  margin-right: 5px;
+  visibility: hidden;
+  font-size: 14px;
+
+  &:hover,
+  &:focus,
+  &:active {
+    color: var(--text);
+    text-decoration: none;
+  }
+}
+
 .queueItem {
   display: flex;
   flex-wrap: nowrap;
@@ -22,26 +42,6 @@
   border-radius: 3px;
   overflow: hidden;
   font-size: 16px;
-}
-
-.queueItemRemove {
-  color: var(--text);
-  border: none;
-  background-color: transparent;
-  width: 25px;
-  height: 25px;
-  line-height: 10px;
-  padding: 3px;
-  margin-right: 5px;
-  visibility: hidden;
-  font-size: 14px;
-
-  &:hover,
-  &:focus,
-  &:active {
-    color: var(--text);
-    text-decoration: none;
-  }
 }
 
 .queueItemInfo {

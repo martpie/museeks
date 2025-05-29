@@ -2,10 +2,9 @@ import * as Slider from '@radix-ui/react-slider';
 import { useCallback, useState } from 'react';
 
 import type { Track } from '../generated/typings';
+import useFormattedDuration from '../hooks/useFormattedDuration';
 import usePlayingTrackCurrentTime from '../hooks/usePlayingTrackCurrentTime';
 import { usePlayerAPI } from '../stores/usePlayerStore';
-
-import useFormattedDuration from '../hooks/useFormattedDuration';
 import styles from './TrackProgress.module.css';
 
 type Props = {

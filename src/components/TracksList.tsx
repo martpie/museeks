@@ -1,3 +1,4 @@
+import { useNavigate, useSearch } from '@tanstack/react-router';
 import {
   Menu,
   MenuItem,
@@ -10,25 +11,22 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Keybinding from 'react-keybinding-component';
 
 import type { Config, Playlist, Track, TrackGroup } from '../generated/typings';
-import { logAndNotifyError } from '../lib/utils';
-import { isKeyWithoutModifiers } from '../lib/utils-events';
-import PlaylistsAPI from '../stores/PlaylistsAPI';
-import { useLibraryAPI } from '../stores/useLibraryStore';
-import { usePlayerAPI } from '../stores/usePlayerStore';
-
-import { useNavigate, useSearch } from '@tanstack/react-router';
 import useInvalidate from '../hooks/useInvalidate';
 import usePlayingTrackID from '../hooks/usePlayingTrackID';
 import {
   getScrollPosition,
   saveScrollPosition,
 } from '../lib/scroll-restoration';
+import { logAndNotifyError } from '../lib/utils';
+import { isKeyWithoutModifiers } from '../lib/utils-events';
 import { listKeyboardSelect, listMouseSelect } from '../lib/utils-list';
+import PlaylistsAPI from '../stores/PlaylistsAPI';
+import { useLibraryAPI } from '../stores/useLibraryStore';
+import { usePlayerAPI } from '../stores/usePlayerStore';
 import type { QueueOrigin, TracksListVirtualizer } from '../types/museeks';
+import styles from './TracksList.module.css';
 import TracksListDefault from './TracksListDefault';
 import TracksListGrouped from './TracksListGrouped';
-
-import styles from './TracksList.module.css';
 
 // --------------------------------------------------------------------------
 // TrackList

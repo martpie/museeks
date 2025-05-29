@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { Link, createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, Link } from '@tanstack/react-router';
 import { useMemo } from 'react';
 
 import TracksList from '../components/TracksList';

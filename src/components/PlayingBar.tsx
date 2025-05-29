@@ -3,9 +3,8 @@ import usePlayerStore from '../stores/usePlayerStore';
 import ButtonRepeat from './ButtonRepeat';
 import ButtonShuffle from './ButtonShuffle';
 import Cover from './Cover';
-import PlayingBarInfos from './PlayingBarInfo';
-
 import styles from './PlayingBar.module.css';
+import PlayingBarInfos from './PlayingBarInfo';
 
 type Props = {
   trackPlaying: Track;

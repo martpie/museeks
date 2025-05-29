@@ -11,9 +11,8 @@ import type { Track } from '../generated/typings';
 import useDndSensors from '../hooks/useDnDSensors';
 import { getStatus } from '../lib/utils-library';
 import { usePlayerAPI } from '../stores/usePlayerStore';
-import QueueListItem from './QueueListItem';
-
 import styles from './QueueList.module.css';
+import QueueListItem from './QueueListItem';
 
 const INITIAL_QUEUE_SIZE = 20;
 const DND_MODIFIERS = [restrictToVerticalAxis];
