@@ -44,6 +44,10 @@ impl DB {
      * Get tracks (and their content) given a set of document IDs
      */
     pub async fn get_tracks(&mut self, track_ids: &Vec<String>) -> AnyResult<Vec<Track>> {
+        if track_ids.is_empty() {
+            return Ok(vec![]);
+        }
+
         // Construct `IN` clause with placeholders
         let in_placeholders = track_ids.iter().map(|_| "?").collect::<Vec<_>>().join(", ");
 
