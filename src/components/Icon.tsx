@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import next from '../assets/icons/player-next.svg?react';
 import pause from '../assets/icons/player-pause.svg?react';
 import play from '../assets/icons/player-play.svg?react';
@@ -20,12 +21,23 @@ const icons = {
 
 type Props = {
   name: keyof typeof icons;
+  fill?: string;
   className?: string;
 };
 
 export default function Icon(props: Props) {
-  const { name } = props;
+  const { name, fill = 'var(--text)', className } = props;
   const IconComponent = icons[name];
 
-  return <IconComponent className={props.className} />;
+  const style = useMemo(() => {
+    const innerStyles: React.CSSProperties = {};
+
+    if (fill) {
+      innerStyles.fill = fill;
+    }
+
+    return innerStyles;
+  }, [fill]);
+
+  return <IconComponent className={className} style={style} />;
 }
