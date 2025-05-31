@@ -1,9 +1,9 @@
 import { t } from '@lingui/core/macro';
 import cx from 'classnames';
 
-import icons from '../lib/icons';
 import usePlayerStore, { usePlayerAPI } from '../stores/usePlayerStore';
 import styles from './ButtonShuffleRepeat.module.css';
+import Icon from './Icon';
 
 export default function ButtonShuffle() {
   const shuffle = usePlayerStore((state) => state.shuffle);
@@ -26,7 +26,7 @@ export default function ButtonShuffle() {
       aria-checked={shuffle}
       title={t`Shuffle`}
     >
-      <icons.SHUFFLE className={styles.icon} />
+      <Icon name="shuffle" className={styles.icon} />
     </button>
   );
 }
