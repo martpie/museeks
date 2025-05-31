@@ -1,7 +1,7 @@
 import cx from 'classnames';
 
-import icons from '../lib/icons';
 import usePlayerStore, { usePlayerAPI } from '../stores/usePlayerStore';
+import Icon from './Icon';
 
 import styles from './ButtonShuffleRepeat.module.css';
 
@@ -22,7 +22,7 @@ export default function ButtonShuffle() {
       }}
       data-museeks-action
     >
-      <icons.SHUFFLE className={styles.icon} />
+      <Icon name="shuffle" className={styles.icon} />
     </button>
   );
 }
