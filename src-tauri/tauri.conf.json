@@ -42,7 +42,10 @@
       "icons/icon.icns",
       "icons/icon.ico"
     ],
-    "resources": ["icons/icon.png"],
+    "resources": {
+      "icons/icon.png": "icons/icon.png",
+      "src/migrations/*": "migrations/"
+    },
     "linux": {
       "appimage": {
         "bundleMediaFramework": true
