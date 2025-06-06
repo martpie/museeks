@@ -1,10 +1,10 @@
 use std::path::PathBuf;
-use tauri::image::Image;
 use tauri::Emitter;
+use tauri::image::Image;
 use tauri::{
+    Manager, Runtime,
     menu::{AboutMetadataBuilder, MenuBuilder, MenuId, MenuItemBuilder, SubmenuBuilder},
     plugin::{Builder, TauriPlugin},
-    Manager, Runtime,
 };
 use tauri_plugin_opener::OpenerExt;
 
@@ -56,14 +56,6 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
                 .website_label("museeks.io".into())
                 .icon(Some(icon))
                 .build();
-
-            // -----------------------------------------------------------------
-            // File sub-menu
-            // -----------------------------------------------------------------
-            let file_menu = SubmenuBuilder::new(app_handle, "File")
-                .close_window()
-                .build()
-                .unwrap();
 
             // -----------------------------------------------------------------
             // Edit sub-menu
@@ -200,14 +192,19 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
                 }
             };
 
-            let menu = menu_builder
-                .items(&[&file_menu, &edit_menu, &view_menu, &window_menu, &help_menu])
-                .build()
-                .unwrap();
-
             // The menu on macOS is app-wide and not specific to one window
             #[cfg(target_os = "macos")]
             {
+                let file_menu = SubmenuBuilder::new(app_handle, "File")
+                    .close_window()
+                    .build()
+                    .unwrap();
+
+                let menu = menu_builder
+                    .items(&[&file_menu, &edit_menu, &view_menu, &window_menu, &help_menu])
+                    .build()
+                    .unwrap();
+
                 app_handle.set_menu(menu).unwrap();
             }
 
@@ -215,6 +212,12 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
             // hide it by default. The menu get toggle-able by pressing Alt.
             #[cfg(not(target_os = "macos"))]
             {
+                let menu = menu_builder
+                    // No file menu on Windows / Linux
+                    .items(&[&edit_menu, &view_menu, &window_menu, &help_menu])
+                    .build()
+                    .unwrap();
+
                 window.set_menu(menu).unwrap();
                 window.hide_menu().unwrap();
             }
