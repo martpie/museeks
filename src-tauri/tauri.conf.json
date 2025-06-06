@@ -49,6 +49,12 @@
     "linux": {
       "appimage": {
         "bundleMediaFramework": true
+      },
+      "deb": {
+        "desktopTemplate": "./template.desktop"
+      },
+      "rpm": {
+        "desktopTemplate": "./template.desktop"
       }
     }
   }
