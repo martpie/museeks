@@ -4,6 +4,7 @@
 |--------------------------------------------------------------------------
 */
 
+import { HydrationOverlay } from '@builder.io/react-hydration-overlay';
 import { QueryClientProvider } from '@tanstack/react-query';
 import {
   RouterProvider,
@@ -11,7 +12,7 @@ import {
   createRouter,
 } from '@tanstack/react-router';
 import * as logger from '@tauri-apps/plugin-log';
-import React from 'react';
+import React, { Suspense } from 'react';
 import * as ReactDOM from 'react-dom/client';
 
 import queryClient from './lib/query-client';
@@ -52,14 +53,16 @@ declare module '@tanstack/react-router' {
 |--------------------------------------------------------------------------
 */
 
+// const IS_PRERENDERING = import.meta.env.SSR;
+
 (async function createRoot() {
   await logger.attachConsole();
 
   const wrap = document.getElementById('wrap');
 
   if (wrap) {
-    const root = ReactDOM.createRoot(wrap);
-    root.render(
+    ReactDOM.hydrateRoot(
+      wrap,
       <React.StrictMode>
         <QueryClientProvider client={queryClient}>
           <RouterProvider router={router} />
@@ -70,3 +73,21 @@ declare module '@tanstack/react-router' {
     document.body.innerHTML = '<div style="text-align: center;">x_x</div>';
   }
 })();
+
+/**
+ * Pre-rendering skeletong of the app
+ */
+export async function prerender() {
+  const { renderToString } = await import('react-dom/server');
+
+  // const html = renderToString(
+  //   <React.StrictMode>
+  //     <QueryClientProvider client={queryClient}>
+  //       <RouterProvider router={router} />
+  //     </QueryClientProvider>
+  //   </React.StrictMode>,
+  // );
+  const html = renderToString(<div>test</div>);
+
+  return { html };
+}

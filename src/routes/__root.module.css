@@ -4,13 +4,13 @@
   height: 100%;
 
   /* Fade-in Effect */
-  opacity: 0;
-  transition: opacity 0.2s ease-in-out;
+  /* opacity: 0;
+  transition: opacity 0.2s ease-in-out; */
 }
 
-.root.loaded {
+/* .root.loaded {
   opacity: 1;
-}
+} */
 
 .mainContent {
   width: 100%;

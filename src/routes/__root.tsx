@@ -1,7 +1,7 @@
 import { Outlet, createRootRoute, useLocation } from '@tanstack/react-router';
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
 import cx from 'classnames';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 import AppEvents from '../components/AppEvents';
 import DropzoneImport from '../components/DropzoneImport';
@@ -26,71 +26,65 @@ type Search = {
 };
 
 export const Route = createRootRoute({
+  wrapInSuspense: true,
   component: ViewRoot,
-  errorComponent: ErrorView,
-  notFoundComponent: NotFoundView,
-  validateSearch: (search): Search => {
-    // Why circumvolutions here? If the key is defined, it will be added to the
-    // fragment of the URL (after the #), which will prevent the default_view
-    // plugin to navigate to the default view.
-    const jump_to_playing_track = Boolean(search?.jump_to_playing_track);
+  // errorComponent: ErrorView,
+  // notFoundComponent: NotFoundView,
+  // validateSearch: (search): Search => {
+  //   // Why circumvolutions here? If the key is defined, it will be added to the
+  //   // fragment of the URL (after the #), which will prevent the default_view
+  //   // plugin to navigate to the default view.
+  //   const jump_to_playing_track = Boolean(search?.jump_to_playing_track);
 
-    if (jump_to_playing_track === true) {
-      return {
-        jump_to_playing_track,
-      };
-    }
+  //   if (jump_to_playing_track === true) {
+  //     return {
+  //       jump_to_playing_track,
+  //     };
+  //   }
 
-    return {};
-  },
+  //   return {};
+  // },
 });
 
 function ViewRoot() {
-  const invalidate = useInvalidate();
+  // const invalidate = useInvalidate();
 
-  useEffect(() => {
-    // If the app imported tracks, we need to refresh route data, but it seems invalidate is not super stable
-    SettingsAPI.init(invalidate);
-  }, [invalidate]);
+  // useEffect(() => {
+  //   // If the app imported tracks, we need to refresh route data, but it seems invalidate is not super stable
+  //   SettingsAPI.init(invalidate);
+  // }, [invalidate]);
 
   // Log each navigation to the console for debug purposes
-  const location = useLocation();
+  // const location = useLocation();
 
-  useEffect(() => {
-    info(`Navigated to: ${location.pathname}`);
-  }, [location]);
+  // useEffect(() => {
+  //   info(`Navigated to: ${location.pathname}`);
+  // }, [location]);
 
-  const [loaded, setLoaded] = useState(false);
-  useEffect(() => {
-    setLoaded(true);
-  }, []);
+  return <div>test</div>;
 
-  return (
-    <div
-      className={cx(styles.root, `os__${window.__MUSEEKS_PLATFORM}`, {
-        [styles.loaded]: loaded,
-      })}
-    >
-      {/** Bunch of global event handlers */}
-      <IPCNavigationEvents />
-      <IPCPlayerEvents />
-      <AppEvents />
-      <LibraryEvents />
-      <PlayerEvents />
-      <MediaSessionEvents />
-      <GlobalKeyBindings />
+  // return (
+  //   <div className={cx(styles.root, `os__${window.__MUSEEKS_PLATFORM}`)}>
+  //     {/** Bunch of global event handlers */}
+  //     {/* <IPCNavigationEvents />
+  //     <IPCPlayerEvents />
+  //     <AppEvents />
+  //     <LibraryEvents />
+  //     <PlayerEvents />
+  //     <MediaSessionEvents />
+  //     <GlobalKeyBindings /> */}
 
-      {/** The actual app */}
-      <Header />
-      <main className={styles.mainContent}>
-        <Outlet />
-      </main>
-      <Footer />
+  //     {/** The actual app */}
+  //     {/* <Header />
+  //     <main className={styles.mainContent}>
+  //       <Outlet />
+  //     </main>
+  //     <Footer /> */}
 
-      {/** Out-of-the-flow UI bits */}
-      <Toasts />
-      <DropzoneImport />
-      <TanStackRouterDevtools position="bottom-right" />
-    </div>
-  );
+  //     {/** Out-of-the-flow UI bits */}
+  //     {/* <Toasts />
+  //     <DropzoneImport />
+  //     <TanStackRouterDevtools position="bottom-right" /> */}
+  //   </div>
+  // );
 }
