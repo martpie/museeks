@@ -1,7 +1,6 @@
 import { getVersion } from '@tauri-apps/api/app';
 import { invoke } from '@tauri-apps/api/core';
 import { getCurrentWindow } from '@tauri-apps/api/window';
-import { info } from '@tauri-apps/plugin-log';
 import * as semver from 'semver';
 
 import type { Config, DefaultView } from '../generated/typings';
@@ -30,10 +29,6 @@ async function init(then: () => void): Promise<void> {
     checkTheme(),
     checkForUpdate({ silentFail: true }),
   ]);
-
-  // Show the app once everything is loaded
-  await getCurrentWindow().show();
-  info('UI is ready!');
 
   // Non-blocking, this can we done later
   await checkForLibraryRefresh().catch(logAndNotifyError);

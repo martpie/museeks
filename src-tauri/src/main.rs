@@ -6,8 +6,8 @@ mod plugins;
 
 use libs::file_associations::setup_file_associations;
 use libs::utils::get_theme_from_name;
-use log::{info, LevelFilter};
-use plugins::config::{get_storage_dir, ConfigManager};
+use log::{LevelFilter, info};
+use plugins::config::{ConfigManager, get_storage_dir};
 use tauri::{Manager, WebviewUrl, WebviewWindowBuilder};
 use tauri_plugin_log::fern::colors::ColoredLevelConfig;
 use tauri_plugin_log::{Target, TargetKind};
@@ -60,9 +60,7 @@ fn main() {
         }))
         .plugin(
             tauri_plugin_window_state::Builder::default()
-                .with_state_flags(
-                    StateFlags::all() & !StateFlags::VISIBLE, // Museeks manages its visible state by itself
-                )
+                .with_state_flags(StateFlags::all() & !StateFlags::VISIBLE)
                 .build(),
         )
         .setup(|app| {
@@ -73,7 +71,6 @@ fn main() {
             let window_builder =
                 WebviewWindowBuilder::new(app, "main", WebviewUrl::App("index.html".into()))
                     .title("Museeks")
-                    .visible(false)
                     .theme(get_theme_from_name(&conf.theme))
                     .inner_size(900.0, 550.0)
                     .min_inner_size(900.0, 550.0)

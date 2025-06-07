@@ -1,7 +1,7 @@
 import { Outlet, createRootRoute, useLocation } from '@tanstack/react-router';
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
 import cx from 'classnames';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import AppEvents from '../components/AppEvents';
 import DropzoneImport from '../components/DropzoneImport';
@@ -60,8 +60,17 @@ function ViewRoot() {
     info(`Navigated to: ${location.pathname}`);
   }, [location]);
 
+  const [loaded, setLoaded] = useState(false);
+  useEffect(() => {
+    setLoaded(true);
+  }, []);
+
   return (
-    <div className={cx(styles.root, `os__${window.__MUSEEKS_PLATFORM}`)}>
+    <div
+      className={cx(styles.root, `os__${window.__MUSEEKS_PLATFORM}`, {
+        [styles.loaded]: loaded,
+      })}
+    >
       {/** Bunch of global event handlers */}
       <IPCNavigationEvents />
       <IPCPlayerEvents />
