@@ -11,7 +11,7 @@ function MediaSessionEvents() {
   const playerAPI = usePlayerAPI();
 
   useEffect(() => {
-    player.getAudio().addEventListener('loadstart', syncArtwork);
+    player.getAudio().addEventListener('loadstart', syncMediaSession);
     player.getAudio().addEventListener('play', onAudioPlay);
     player.getAudio().addEventListener('pause', onAudioPause);
 
@@ -27,7 +27,7 @@ function MediaSessionEvents() {
     }
 
     return function cleanup() {
-      player.getAudio().removeEventListener('loadstart', syncArtwork);
+      player.getAudio().removeEventListener('loadstart', syncMediaSession);
       player.getAudio().removeEventListener('play', onAudioPlay);
       player.getAudio().removeEventListener('pause', onAudioPause);
 
@@ -49,7 +49,7 @@ export default MediaSessionEvents;
  * Helpers
  */
 
-async function syncArtwork() {
+async function syncMediaSession() {
   const track = player.getTrack();
 
   if (track) {
