@@ -77,8 +77,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        # - include
-        platform: [macos-latest, windows-latest, ubuntu-24.04, 'ubuntu-24.04-arm']
+        platform: [macos-latest, windows-latest, windows-11-arm, ubuntu-24.04, 'ubuntu-24.04-arm']
 
     runs-on: ${{ matrix.platform }}
     steps:
@@ -165,5 +164,12 @@ jobs:
         if: matrix.platform == 'windows-latest'
         with:
           name: binaries-windows
+          path: |
+            ${{ github.workspace }}/src-tauri/target/release/bundle/**/*.exe
+
+      - uses: actions/upload-artifact@v4
+        if: matrix.platform == 'windows-11-arm'
+        with:
+          name: binaries-windows-arm
           path: |
             ${{ github.workspace }}/src-tauri/target/release/bundle/**/*.exe
