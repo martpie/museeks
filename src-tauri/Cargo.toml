@@ -24,6 +24,7 @@ tauri-plugin-log = { version = "2.4.0", features = ["colored"] }
 tauri-plugin-notification = "2.2.2"
 tauri-plugin-opener = "2.2.7"
 tauri-plugin-os = "2.2.1"
+tauri-plugin-prevent-default = "2.1.1"
 tauri-plugin-shell = "2.2.1"
 tauri-plugin-single-instance = "2.2.4"
 tauri-plugin-window-state = "2.2.2"
