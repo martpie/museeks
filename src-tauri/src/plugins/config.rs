@@ -69,7 +69,6 @@ pub struct Config {
     pub library_autorefresh: bool,
     pub sleepblocker: bool,
     pub auto_update_checker: bool,
-    pub minimize_to_tray: bool,
     pub notifications: bool,
     pub track_view_density: TrackViewDensity,
 }
@@ -93,7 +92,6 @@ impl Config {
             library_autorefresh: false,
             sleepblocker: false,
             auto_update_checker: true,
-            minimize_to_tray: false,
             notifications: false,
             track_view_density: TrackViewDensity::Normal,
         }
