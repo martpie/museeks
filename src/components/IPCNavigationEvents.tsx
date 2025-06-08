@@ -24,7 +24,7 @@ export default function IPCNavigationEvents() {
   }, [navigate]);
 
   const goToSettings = useCallback(() => {
-    navigate({ to: '/settings' }); // FIXME
+    navigate({ to: '/settings/library' });
   }, [navigate]);
 
   const goToPlayingTrackOnEvent = useCallback(() => {
