@@ -2,7 +2,9 @@ import { createFileRoute, useLoaderData } from '@tanstack/react-router';
 
 import AudioOutputSelect from '../components/AudioOutputSelect';
 import * as Setting from '../components/Setting';
+import CheckboxSetting from '../components/SettingCheckbox';
 import useInvalidate, { useInvalidateCallback } from '../hooks/useInvalidate';
+import SettingsAPI from '../stores/SettingsAPI';
 import { usePlayerAPI } from '../stores/usePlayerStore';
 
 export const Route = createFileRoute('/settings/audio')({
@@ -42,6 +44,15 @@ function ViewSettingsAudio() {
           id="setting-playbackrate"
           value={config.audio_output_device}
           onChange={useInvalidateCallback(playerAPI.setOutputDevice)}
+        />
+      </Setting.Section>
+      <Setting.Section>
+        <CheckboxSetting
+          slug="follow-playing-track"
+          title="Follow playing track"
+          description="Automatically follow the currently playing track (only when the app is not focused)"
+          value={config.audio_follow_playing_track}
+          onChange={useInvalidateCallback(SettingsAPI.toggleFollowPlayingTrack)}
         />
       </Setting.Section>
     </div>

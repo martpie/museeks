@@ -2,6 +2,7 @@ import { getCurrentWindow } from '@tauri-apps/api/window';
 import { useEffect } from 'react';
 
 import { useNavigate } from '@tanstack/react-router';
+import { goToPlayingTrack } from '../lib/queue-origin';
 import usePlayerStore from '../stores/usePlayerStore';
 
 /**
@@ -24,42 +25,8 @@ export default function IPCNavigationEvents() {
       navigate({ to: '/settings' });
     }
 
-    function goToPlayingTrack() {
-      if (!queueOrigin) return;
-
-      switch (queueOrigin.type) {
-        case 'library': {
-          navigate({
-            to: '/library',
-            replace: true, // Force rerendering to activate the scroll
-            search: {
-              jump_to_playing_track: true,
-            },
-          });
-          break;
-        }
-        case 'playlist': {
-          navigate({
-            to: '/playlists/$playlistID',
-            params: { playlistID: queueOrigin.playlistID },
-            replace: true, // Force rerendering to activate the scroll
-            search: {
-              jump_to_playing_track: true,
-            },
-          });
-          break;
-        }
-        case 'artist': {
-          navigate({
-            to: '/artists/$artistID',
-            params: { artistID: queueOrigin.artistID },
-            replace: true,
-            search: {
-              jump_to_playing_track: true,
-            },
-          });
-        }
-      }
+    function goToPlayingTrackOnEvent() {
+      goToPlayingTrack(queueOrigin, navigate);
     }
 
     const unlisteners = [
@@ -67,7 +34,7 @@ export default function IPCNavigationEvents() {
       getCurrentWindow().listen('GoToLibrary', goToLibrary),
       getCurrentWindow().listen('GoToPlaylists', goToPlaylists),
       getCurrentWindow().listen('GoToSettings', goToSettings),
-      getCurrentWindow().listen('JumpToPlayingTrack', goToPlayingTrack),
+      getCurrentWindow().listen('JumpToPlayingTrack', goToPlayingTrackOnEvent),
     ];
 
     return function cleanup() {

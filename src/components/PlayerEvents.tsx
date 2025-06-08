@@ -2,11 +2,13 @@ import { getCurrentWindow } from '@tauri-apps/api/window';
 import { sendNotification } from '@tauri-apps/plugin-notification';
 import { useEffect } from 'react';
 
+import { useNavigate } from '@tanstack/react-router';
 import config from '../lib/config';
 import { getCover } from '../lib/cover';
 import player from '../lib/player';
+import { goToPlayingTrack } from '../lib/queue-origin';
 import { logAndNotifyError } from '../lib/utils';
-import { usePlayerAPI } from '../stores/usePlayerStore';
+import usePlayerStore, { usePlayerAPI } from '../stores/usePlayerStore';
 import { useToastsAPI } from '../stores/useToastsStore';
 
 const AUDIO_ERRORS = {
@@ -24,6 +26,8 @@ const AUDIO_ERRORS = {
 function PlayerEvents() {
   const playerAPI = usePlayerAPI();
   const toastsAPI = useToastsAPI();
+  const queueOrigin = usePlayerStore((state) => state.queueOrigin);
+  const navigate = useNavigate();
 
   useEffect(() => {
     function handleAudioError(e: ErrorEvent) {
@@ -79,18 +83,31 @@ function PlayerEvents() {
       });
     }
 
+    async function onTrackEnded() {
+      await playerAPI.next();
+
+      const isFocused = await getCurrentWindow().isFocused();
+      console.log(isFocused);
+
+      // If follow track is enabled, switch to the right view + scroll to the track
+      // Do not do it if the app if focused, as users could be interacting with the app
+      if ((await config.get('audio_follow_playing_track')) && !isFocused) {
+        goToPlayingTrack(queueOrigin, navigate);
+      }
+    }
+
     // Bind player events
     // Audio Events
     player.getAudio().addEventListener('play', notifyTrackChange);
     player.getAudio().addEventListener('error', handleAudioError);
-    player.getAudio().addEventListener('ended', playerAPI.next);
+    player.getAudio().addEventListener('ended', onTrackEnded);
 
     return function cleanup() {
       player.getAudio().removeEventListener('play', notifyTrackChange);
       player.getAudio().removeEventListener('error', handleAudioError);
-      player.getAudio().removeEventListener('ended', playerAPI.next);
+      player.getAudio().removeEventListener('ended', onTrackEnded);
     };
-  }, [toastsAPI, playerAPI]);
+  }, [toastsAPI, playerAPI, queueOrigin, navigate]);
 
   return null;
 }
