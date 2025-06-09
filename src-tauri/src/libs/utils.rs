@@ -27,7 +27,7 @@ impl TimeLogger {
 
     pub fn complete(&self) {
         let duration = self.start_time.elapsed();
-        info!("{} in {:.2?}", self.message, duration);
+        info!("{} ({:.2?})", self.message, duration);
     }
 }
 

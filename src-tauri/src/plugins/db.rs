@@ -427,7 +427,6 @@ async fn delete_playlist(db_state: State<'_, DBState>, id: String) -> AnyResult<
 #[tauri::command]
 async fn reset(db_state: State<'_, DBState>) -> AnyResult<()> {
     info!("Resetting DB...");
-    let timer = TimeLogger::new("Reset DB".into());
 
     let mut db = db_state.get_lock().await;
 
@@ -438,8 +437,6 @@ async fn reset(db_state: State<'_, DBState>) -> AnyResult<()> {
         .execute(&mut db.connection)
         .await?;
     sqlx::query("VACUUM;").execute(&mut db.connection).await?;
-
-    timer.complete();
 
     Ok(())
 }
