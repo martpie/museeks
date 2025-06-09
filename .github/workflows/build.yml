@@ -71,10 +71,14 @@ jobs:
   # https://docs.github.com/en/free-pro-team@latest/actions/reference/specifications-for-github-hosted-runners
 
   binaries:
+    if: |
+      github.ref == 'refs/heads/master' || github.event.pull_request.base.ref == 'master'
+
     needs: qa
 
     permissions:
       contents: write
+
     strategy:
       fail-fast: false
       matrix:
