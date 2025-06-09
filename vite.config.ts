@@ -1,10 +1,12 @@
 import { TanStackRouterVite as router } from '@tanstack/router-plugin/vite';
 import react from '@vitejs/plugin-react';
+import browserslist from 'browserslist';
+import { browserslistToTargets } from 'lightningcss';
 import { defineConfig } from 'vite';
 import svgr from 'vite-plugin-svgr';
 
 // https://vitejs.dev/config/
-export default defineConfig(async () => ({
+export default defineConfig({
   plugins: [
     router({
       target: 'react',
@@ -13,6 +15,20 @@ export default defineConfig(async () => ({
     react(),
     svgr(),
   ],
+
+  // LightningCSS
+  css: {
+    transformer: 'lightningcss',
+    lightningcss: {
+      cssModules: true,
+      targets: browserslistToTargets(
+        browserslist(['last 3 Chrome versions', 'safari >= 13']),
+      ),
+    },
+  },
+  build: {
+    cssMinify: 'lightningcss',
+  },
 
   // Vite options tailored for Tauri development and only applied in `tauri dev` or `tauri build`
   //
@@ -27,4 +43,4 @@ export default defineConfig(async () => ({
       ignored: ['**/src-tauri/**'],
     },
   },
-}));
+});
