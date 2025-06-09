@@ -6,7 +6,6 @@ use std::path::PathBuf;
 use super::error::AnyResult;
 use super::playlist::Playlist;
 use super::track::{Track, TrackGroup};
-use super::utils::TimeLogger;
 
 // KEEP THAT IN SYNC with Tauri's file associations in tauri.conf.json
 pub const SUPPORTED_TRACKS_EXTENSIONS: [&str; 9] = [
@@ -32,11 +31,9 @@ impl DB {
      * Get all the tracks (and their content) from the database
      */
     pub async fn get_all_tracks(&mut self) -> AnyResult<Vec<Track>> {
-        let timer = TimeLogger::new("Retrieved and decoded tracks".into());
         let tracks = sqlx::query_as::<_, Track>("SELECT * FROM tracks")
             .fetch_all(&mut self.connection)
             .await?;
-        timer.complete();
         Ok(tracks)
     }
 
@@ -189,15 +186,12 @@ impl DB {
      * Only fetches the first artist for each row.
      */
     pub async fn get_artists(&mut self) -> AnyResult<Vec<String>> {
-        let timer = TimeLogger::new("Retrieved artists".into());
-
         let result: Vec<String> = sqlx::query_scalar(
             "SELECT DISTINCT album_artist FROM tracks ORDER BY album_artist COLLATE NOCASE;",
         )
         .fetch_all(&mut self.connection)
         .await?;
 
-        timer.complete();
         Ok(result)
     }
 
@@ -206,8 +200,6 @@ impl DB {
      * Only fetches the first artist for each row.
      */
     pub async fn get_artist_tracks(&mut self, artist: String) -> AnyResult<Vec<TrackGroup>> {
-        let timer = TimeLogger::new(format!("Retrieved tracks for artist '{}'", &artist));
-
         let tracks = sqlx::query_as::<_, Track>(
             "SELECT * FROM tracks WHERE album_artist = ? ORDER BY album, disk_no, track_no",
         )
@@ -229,13 +221,11 @@ impl DB {
             })
             .collect();
 
-        timer.complete();
         Ok(track_groups)
     }
 
     /** Get all the playlists (and their content) from the database */
     pub async fn get_all_playlists(&mut self) -> AnyResult<Vec<Playlist>> {
-        let timer = TimeLogger::new("Retrieved playlists".into());
         let mut playlists = sqlx::query_as::<_, Playlist>("SELECT * FROM playlists ORDER BY name")
             .fetch_all(&mut self.connection)
             .await?;
@@ -243,7 +233,6 @@ impl DB {
         // Ensure the playlists are sorted alphabetically (case-insensitive) for better UX
         playlists.sort_by(|a, b| a.name.to_lowercase().cmp(&b.name.to_lowercase()));
 
-        timer.complete();
         Ok(playlists)
     }
 
