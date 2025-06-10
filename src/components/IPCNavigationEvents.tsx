@@ -1,7 +1,8 @@
-import { useCallback } from 'react';
+import { useNavigate } from '@tanstack/react-router';
+import { getCurrentWindow } from '@tauri-apps/api/window';
+import { useCallback, useEffect } from 'react';
 import Keybinding from 'react-keybinding-component';
 
-import { useNavigate } from '@tanstack/react-router';
 import { goToPlayingTrack } from '../lib/queue-origin';
 import { isCtrlKey } from '../lib/utils-events';
 import usePlayerStore from '../stores/usePlayerStore';
@@ -31,31 +32,35 @@ export default function IPCNavigationEvents() {
     goToPlayingTrack(queueOrigin, navigate);
   }, [queueOrigin, navigate]);
 
+  // Listen to IPC events for navigation
+  useEffect(() => {
+    const unlisteners = [
+      // Shortcuts from the application menu
+      getCurrentWindow().listen('GoToLibrary', () => {
+        goToLibrary();
+      }),
+      getCurrentWindow().listen('GoToPlaylists', goToPlaylists),
+      getCurrentWindow().listen('GoToSettings', goToSettings),
+      getCurrentWindow().listen('JumpToPlayingTrack', goToPlayingTrackOnEvent),
+    ];
+
+    return function cleanup() {
+      Promise.all(unlisteners).then((unlisteners) => {
+        unlisteners.forEach((u) => u());
+      });
+    };
+  }, [goToLibrary, goToPlaylists, goToSettings, goToPlayingTrackOnEvent]);
+
   // On Windows, accelerators don't work https://github.com/tauri-apps/tauri/issues/6981
   // On Linux, accelerators don't work if the window menu is hidden
   // So we need to leverage a semi-global keybinding for those in the meantime ._.
-
-  // Listen to IPC events for navigation
-  // useEffect(() => {
-  //   const unlisteners = [
-  //     // Shortcuts from the application menu
-  //     getCurrentWindow().listen('GoToLibrary', () => {
-  //       goToLibrary();
-  //     }),
-  //     getCurrentWindow().listen('GoToPlaylists', goToPlaylists),
-  //     getCurrentWindow().listen('GoToSettings', goToSettings),
-  //     getCurrentWindow().listen('JumpToPlayingTrack', goToPlayingTrackOnEvent),
-  //   ];
-
-  //   return function cleanup() {
-  //     Promise.all(unlisteners).then((unlisteners) => {
-  //       unlisteners.forEach((u) => u());
-  //     });
-  //   };
-  // }, [goToLibrary, goToPlaylists, goToSettings, goToPlayingTrackOnEvent]);
-
   const onKey = useCallback(
     async (e: KeyboardEvent) => {
+      // Prevent double navigation for cases we know work well
+      if (window.__MUSEEKS_PLATFORM === 'macos') {
+        return;
+      }
+
       if (!isCtrlKey(e)) {
         return;
       }
