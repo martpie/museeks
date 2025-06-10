@@ -1,3 +1,4 @@
+import { lingui } from '@lingui/vite-plugin';
 import { TanStackRouterVite as router } from '@tanstack/router-plugin/vite';
 import react from '@vitejs/plugin-react';
 import browserslist from 'browserslist';
@@ -12,8 +13,16 @@ export default defineConfig({
       target: 'react',
       generatedRouteTree: './src/generated/route-tree.ts',
     }),
-    react(),
+    react({
+      babel: {
+        plugins: ['@lingui/babel-plugin-lingui-macro'],
+        parserOpts: {
+          plugins: ['decorators'],
+        },
+      },
+    }),
     svgr(),
+    lingui(),
   ],
 
   // LightningCSS
