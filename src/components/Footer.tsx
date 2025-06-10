@@ -1,3 +1,4 @@
+import { useLingui } from '@lingui/react/macro';
 import Icon from 'react-fontawesome';
 
 import useLibraryStore from '../stores/useLibraryStore';
@@ -7,6 +8,8 @@ import { Link } from '@tanstack/react-router';
 import styles from './Footer.module.css';
 
 export default function Footer() {
+  const { t } = useLingui();
+
   return (
     <footer className={styles.footer}>
       <div className={styles.footerNavigation}>
@@ -15,7 +18,7 @@ export default function Footer() {
             to="/library"
             className={styles.footerNavigationLink}
             activeProps={{ className: styles.footerNavigationLinkIsActive }}
-            title="Library"
+            title={t`Library`}
             draggable={false}
           >
             <Icon name="align-justify" fixedWidth />

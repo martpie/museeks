@@ -4,6 +4,8 @@
 |--------------------------------------------------------------------------
 */
 
+import { i18n } from '@lingui/core';
+import { I18nProvider } from '@lingui/react';
 import { QueryClientProvider } from '@tanstack/react-query';
 import {
   RouterProvider,
@@ -48,12 +50,26 @@ declare module '@tanstack/react-router' {
 
 /*
 |--------------------------------------------------------------------------
+| Translations
+|--------------------------------------------------------------------------
+*/
+
+async function loadTranslation(locale = 'en') {
+  const { messages } = await import(`./translations/${locale}.po`);
+
+  i18n.load(locale, messages);
+  i18n.activate(locale);
+}
+
+/*
+|--------------------------------------------------------------------------
 | Render the app
 |--------------------------------------------------------------------------
 */
 
 (async function createRoot() {
   await logger.attachConsole();
+  await loadTranslation('fr'); // TODO :)
 
   const wrap = document.getElementById('wrap');
 
@@ -62,7 +78,9 @@ declare module '@tanstack/react-router' {
     root.render(
       <React.StrictMode>
         <QueryClientProvider client={queryClient}>
-          <RouterProvider router={router} />
+          <I18nProvider i18n={i18n}>
+            <RouterProvider router={router} />
+          </I18nProvider>
         </QueryClientProvider>
       </React.StrictMode>,
     );
