@@ -6,7 +6,7 @@ import { useFilteredTrackGroup } from '../hooks/useFilteredTracks';
 import config from '../lib/config';
 import database from '../lib/database';
 
-import useViewStatus from '../hooks/useViewStatus';
+import useGlobalTrackListStatus from '../hooks/useGlobalTrackListStatus';
 import type { QueueOrigin } from '../types/museeks';
 
 export const Route = createFileRoute('/artists/$artistID')({
@@ -30,7 +30,7 @@ export default function ViewArtistDetails() {
   const { albums, tracksDensity, playlists } = Route.useLoaderData();
   const { artistID } = Route.useParams();
   const content = useFilteredTrackGroup(albums);
-  useViewStatus(content);
+  useGlobalTrackListStatus(content);
 
   const queueOrigin = useMemo(() => {
     return { type: 'artist', artistID } satisfies QueueOrigin;

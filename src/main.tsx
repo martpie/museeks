@@ -69,7 +69,7 @@ async function loadTranslation(locale = 'en') {
 
 (async function createRoot() {
   await logger.attachConsole();
-  await loadTranslation('fr'); // TODO :)
+  await loadTranslation('en');
 
   const wrap = document.getElementById('wrap');
 

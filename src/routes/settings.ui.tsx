@@ -1,4 +1,6 @@
 import { createFileRoute, useLoaderData } from '@tanstack/react-router';
+
+import { Trans, useLingui } from '@lingui/react/macro';
 import * as Setting from '../components/Setting';
 import CheckboxSetting from '../components/SettingCheckbox';
 import type { Config, DefaultView } from '../generated/typings';
@@ -12,6 +14,7 @@ export const Route = createFileRoute('/settings/ui')({
 
 function ViewSettingsUI() {
   const { config } = useLoaderData({ from: '/settings' });
+  const { t } = useLingui();
 
   const invalidate = useInvalidate();
 
@@ -19,19 +22,19 @@ function ViewSettingsUI() {
     <div className="setting setting-interface">
       <Setting.Section>
         <Setting.Select
-          label="Theme"
-          description="Change the appearance of the interface"
+          label={t`Theme`}
+          description={t`Change the appearance of the interface`}
           id="setting-theme"
           value={config.theme}
           onChange={(e) =>
             SettingsAPI.setTheme(e.currentTarget.value).then(invalidate)
           }
         >
-          <option value="__system">System (default)</option>
+          <option value="__system">{t`System (default)`}</option>
           {Object.values(themes).map((theme) => {
             return (
               <option key={theme._id} value={theme._id}>
-                {theme.name}
+                {theme.name} {/** TODO: translate that */}
               </option>
             );
           })}
@@ -39,8 +42,8 @@ function ViewSettingsUI() {
       </Setting.Section>
       <Setting.Section>
         <Setting.Select
-          label="Tracks density"
-          description="Change the default view when starting the application"
+          label={t`Tracks density`}
+          description={t`Change the default view when starting the application`}
           id="setting-tracks-density"
           value={config.track_view_density}
           onChange={(e) =>
@@ -49,15 +52,19 @@ function ViewSettingsUI() {
             ).then(invalidate)
           }
         >
-          <option value="normal">Normal (default)</option>
-          <option value="compact">Compact</option>
+          <option value="normal">
+            <Trans>Normal (default)</Trans>
+          </option>
+          <option value="compact">
+            <Trans>Compact</Trans>
+          </option>
         </Setting.Select>
       </Setting.Section>
       <Setting.Section>
         <Setting.Select
-          label="Default view"
+          label={t`Default view`}
           value={config.default_view}
-          description="Change the default view when starting the application"
+          description={t`Change the default view when starting the application`}
           id="setting-default-view"
           onChange={(e) =>
             SettingsAPI.setDefaultView(
@@ -65,15 +72,19 @@ function ViewSettingsUI() {
             ).then(invalidate)
           }
         >
-          <option value="Library">Library (default)</option>
-          <option value="Playlists">Playlists</option>
+          <option value="Library">
+            <Trans>Library (default)</Trans>
+          </option>
+          <option value="Playlists">
+            <Trans>Playlists</Trans>
+          </option>
         </Setting.Select>
       </Setting.Section>
       <Setting.Section>
         <CheckboxSetting
           slug="native-notifications"
-          title="Display Notifications"
-          description="Send notifications when the playing track changes"
+          title={t`Display Notifications`}
+          description={t`Send notifications when the playing track changes`}
           value={config.notifications}
           onChange={useInvalidateCallback(
             SettingsAPI.toggleDisplayNotifications,
@@ -83,8 +94,8 @@ function ViewSettingsUI() {
       <Setting.Section>
         <CheckboxSetting
           slug="sleepmode"
-          title="Sleep mode blocker"
-          description="Prevent the computer from going into sleep mode when playing"
+          title={t`Sleep mode blocker`}
+          description={t`Prevent the computer from going into sleep mode when playing`}
           value={config.sleepblocker}
           onChange={useInvalidateCallback(SettingsAPI.toggleSleepBlocker)}
         />

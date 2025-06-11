@@ -1,3 +1,4 @@
+import { useLingui } from '@lingui/react/macro';
 import { createFileRoute, useLoaderData } from '@tanstack/react-router';
 
 import AudioOutputSelect from '../components/AudioOutputSelect';
@@ -16,14 +17,14 @@ function ViewSettingsAudio() {
 
   const playerAPI = usePlayerAPI();
   const invalidate = useInvalidate();
+  const { t } = useLingui();
 
   return (
     <div className="setting setting-audio">
       <Setting.Section>
         <Setting.Input
-          label="Playback rate"
-          description="Increase the playback rate: a value of 2 will play your music at a 2x
-          speed"
+          label={t`Playback rate`}
+          description={t`Increase the playback rate: a value of 2 will play your music at a 2x speed`}
           id="setting-playbackrate"
           value={config.audio_playback_rate ?? ''}
           onChange={(e) =>
@@ -39,8 +40,8 @@ function ViewSettingsAudio() {
       </Setting.Section>
       <Setting.Section>
         <AudioOutputSelect
-          label="Audio output"
-          description="Advanced: set a custom audio output device."
+          label={t`Audio output`}
+          description={t`Advanced: set a custom audio output device.`}
           id="setting-playbackrate"
           value={config.audio_output_device}
           onChange={useInvalidateCallback(playerAPI.setOutputDevice)}
@@ -49,8 +50,8 @@ function ViewSettingsAudio() {
       <Setting.Section>
         <CheckboxSetting
           slug="follow-playing-track"
-          title="Follow playing track"
-          description="Automatically follow the currently playing track (only when the app is not focused)"
+          title={t`Follow playing track`}
+          description={t`Automatically follow the currently playing track (only when the app is not focused)`}
           value={config.audio_follow_playing_track}
           onChange={useInvalidateCallback(SettingsAPI.toggleFollowPlayingTrack)}
         />
