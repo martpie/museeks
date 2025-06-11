@@ -1,3 +1,4 @@
+import { useLingui } from '@lingui/react/macro';
 import cx from 'classnames';
 
 import type { Repeat } from '../generated/typings';
@@ -18,6 +19,7 @@ function getIcon(repeat: Repeat) {
 export default function ButtonRepeat() {
   const repeat = usePlayerStore((state) => state.repeat);
   const playerAPI = usePlayerAPI();
+  const { t } = useLingui();
 
   const Svg = getIcon(repeat);
   const buttonClasses = cx(styles.button, {
@@ -30,6 +32,7 @@ export default function ButtonRepeat() {
       className={buttonClasses}
       onClick={() => playerAPI.toggleRepeat()}
       data-museeks-action
+      aria-label={t`Repeat`}
     >
       <Svg className={styles.icon} />
     </button>

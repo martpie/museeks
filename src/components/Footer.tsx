@@ -1,10 +1,10 @@
 import { useLingui } from '@lingui/react/macro';
+import { Link } from '@tanstack/react-router';
 import Icon from 'react-fontawesome';
 
 import useLibraryStore from '../stores/useLibraryStore';
 import ProgressBar from './ProgressBar';
 
-import { Link } from '@tanstack/react-router';
 import styles from './Footer.module.css';
 
 export default function Footer() {
@@ -27,7 +27,7 @@ export default function Footer() {
             to="/artists"
             className={styles.footerNavigationLink}
             activeProps={{ className: styles.footerNavigationLinkIsActive }}
-            title="Artists"
+            title={t`Artists`}
             draggable={false}
           >
             <Icon name="microphone" fixedWidth />
@@ -36,7 +36,7 @@ export default function Footer() {
             to="/playlists"
             className={styles.footerNavigationLink}
             activeProps={{ className: styles.footerNavigationLinkIsActive }}
-            title="Playlists"
+            title={t`Playlists`}
             draggable={false}
           >
             <Icon name="star" fixedWidth />
@@ -45,7 +45,7 @@ export default function Footer() {
             to="/settings/library"
             className={styles.footerNavigationLink}
             activeProps={{ className: styles.footerNavigationLinkIsActive }}
-            title="Settings"
+            title={t`Settings`}
             draggable={false}
           >
             <Icon name="gear" fixedWidth />
@@ -63,6 +63,7 @@ function Status() {
   const refresh = useLibraryStore((state) => state.refresh);
   const refreshing = useLibraryStore((state) => state.refreshing);
   const status = useLibraryStore((state) => state.tracksStatus);
+  const { t } = useLingui();
 
   const { current, total } = refresh;
 
@@ -75,7 +76,7 @@ function Status() {
       <div className={styles.footerLibraryRefresh}>
         <div className={styles.footerLibraryRefreshProgress}>
           {isScanning ? (
-            <>scanning tracks...</>
+            t`scanning tracks...`
           ) : (
             <ProgressBar progress={progress} animated={total === 0} />
           )}
