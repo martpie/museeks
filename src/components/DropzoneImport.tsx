@@ -1,10 +1,11 @@
+import { useLingui } from '@lingui/react/macro';
 import { getCurrentWindow } from '@tauri-apps/api/window';
 import { lstat } from '@tauri-apps/plugin-fs';
 import cx from 'classnames';
 import { useEffect, useState } from 'react';
 
+import { plural } from '@lingui/core/macro';
 import useInvalidate from '../hooks/useInvalidate';
-import { plural } from '../lib/localization';
 import { logAndNotifyError } from '../lib/utils';
 import { useLibraryAPI } from '../stores/useLibraryStore';
 import { useToastsAPI } from '../stores/useToastsStore';
@@ -13,6 +14,7 @@ import styles from './DropzoneImport.module.css';
 export default function DropzoneImport() {
   const libraryAPI = useLibraryAPI();
   const toastsAPI = useToastsAPI();
+  const { t } = useLingui();
 
   const [isShown, setIsShown] = useState(false);
   const invalidate = useInvalidate();
@@ -47,18 +49,23 @@ export default function DropzoneImport() {
               event.payload.paths.length - folders.length;
 
             if (skippedItemsCount !== 0) {
-              toastsAPI.add(
-                'warning',
-                `${skippedItemsCount} non-folder ${plural('item', skippedItemsCount)} ignored`,
-              );
+              const message = plural(skippedItemsCount, {
+                one: t`${skippedItemsCount} non-folder item ignored`,
+                other: t`${skippedItemsCount} non-folder items ignored`,
+              });
+
+              toastsAPI.add('warning', message);
             }
 
             if (folders.length > 0) {
               await libraryAPI.addLibraryFolders(folders);
-              toastsAPI.add(
-                'success',
-                `${folders.length} ${plural('folder', folders.length)} added to the library`,
-              );
+
+              const message = plural(folders.length, {
+                one: t`${folders.length} folder added to the library`,
+                other: t`${folders.length} folders added to the library`,
+              });
+
+              toastsAPI.add('success', message);
 
               await libraryAPI.scan();
 
@@ -83,6 +90,7 @@ export default function DropzoneImport() {
     libraryAPI.scan,
     toastsAPI.add,
     invalidate,
+    t,
   ]);
 
   const classes = cx(styles.dropzone, {
@@ -91,8 +99,8 @@ export default function DropzoneImport() {
 
   return (
     <div className={classes}>
-      <div className={styles.dropzoneTitle}>Add music to the library</div>
-      <span>Drop folders anywhere</span>
+      <div className={styles.dropzoneTitle}>{t`Add music to the library`}</div>
+      <span>{t`Drop folders anywhere`}</span>
     </div>
   );
 }

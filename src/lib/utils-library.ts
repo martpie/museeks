@@ -2,9 +2,7 @@ import orderBy from 'lodash-es/orderBy';
 import uniq from 'lodash-es/uniq';
 
 import type { SortBy, SortOrder, Track } from '../generated/typings';
-import { parseDuration } from '../hooks/useFormattedDuration';
 import type { Path } from '../types/museeks';
-import { plural } from './localization';
 
 /**
  * Filter an array of tracks by string
@@ -34,16 +32,6 @@ export function sortTracks(
   // The first column is sorted either asc or desc, but the rest is always asc
   const firstOrder = sortOrder === 'Asc' ? 'asc' : 'desc';
   return orderBy<Track>(tracks, sortBy, [firstOrder]);
-}
-
-/**
- * Format a list of tracks to a nice status
- */
-export function getStatus(tracks: Track[]): string {
-  const duration = parseDuration(
-    tracks.map((d) => d.duration).reduce((a, b) => a + b, 0),
-  );
-  return `${tracks.length} ${plural('track', tracks.length)}, ${duration}`;
 }
 
 /**

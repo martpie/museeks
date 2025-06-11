@@ -1,3 +1,4 @@
+import { Trans } from '@lingui/react/macro';
 import { Outlet, createFileRoute, redirect } from '@tanstack/react-router';
 import { getTauriVersion, getVersion } from '@tauri-apps/api/app';
 import { invoke } from '@tauri-apps/api/core';
@@ -39,10 +40,18 @@ function ViewSettings() {
     <View hasPadding layout="centered">
       <div className={styles.settingsNav}>
         <SettingsNav>
-          <SettingsNavLink to="/settings/library">Library</SettingsNavLink>
-          <SettingsNavLink to="/settings/audio">Audio</SettingsNavLink>
-          <SettingsNavLink to="/settings/ui">Interface</SettingsNavLink>
-          <SettingsNavLink to="/settings/about">About</SettingsNavLink>
+          <SettingsNavLink to="/settings/library">
+            <Trans>Library</Trans>
+          </SettingsNavLink>
+          <SettingsNavLink to="/settings/audio">
+            <Trans>Audio</Trans>
+          </SettingsNavLink>
+          <SettingsNavLink to="/settings/ui">
+            <Trans>Interface</Trans>
+          </SettingsNavLink>
+          <SettingsNavLink to="/settings/about">
+            <Trans>About</Trans>
+          </SettingsNavLink>
         </SettingsNav>
       </div>
 

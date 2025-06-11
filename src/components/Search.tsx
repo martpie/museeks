@@ -1,3 +1,4 @@
+import { useLingui } from '@lingui/react/macro';
 import type React from 'react';
 import { useCallback, useRef } from 'react';
 import Keybinding from 'react-keybinding-component';
@@ -11,6 +12,7 @@ export default function Search() {
   const search = useLibraryStore((state) => state.search);
   const libraryAPI = useLibraryAPI();
   const inputRef = useRef<HTMLInputElement>(null);
+  const { t } = useLingui();
 
   const onClear = useCallback(() => libraryAPI.search(''), [libraryAPI]);
   const onChange = useCallback<React.ChangeEventHandler<HTMLInputElement>>(
@@ -39,7 +41,7 @@ export default function Search() {
       <input
         type="text"
         className={styles.searchInput}
-        placeholder="search..."
+        placeholder={t`search...`}
         value={search}
         onChange={onChange}
         onFocus={onFocus}

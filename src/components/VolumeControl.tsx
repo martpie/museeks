@@ -8,6 +8,7 @@ import player from '../lib/player';
 import { stopPropagation } from '../lib/utils-events';
 import { usePlayerAPI } from '../stores/usePlayerStore';
 
+import { useLingui } from '@lingui/react/macro';
 import controlStyles from './PlayerControls.module.css';
 import styles from './VolumeControl.module.css';
 
@@ -30,6 +31,7 @@ export default function VolumeControl() {
   const [showVolume, setShowVolume] = useState(false);
   const [volume, setVolume] = useState(audio.volume);
   const [muted, setMuted] = useState(audio.muted);
+  const { t } = useLingui();
 
   const playerAPI = usePlayerAPI();
 
@@ -81,7 +83,7 @@ export default function VolumeControl() {
       <button
         type="button"
         className={controlClasses}
-        title="Volume"
+        title={t`Volume`}
         onClick={mute}
         data-museeks-action
       >
@@ -102,7 +104,7 @@ export default function VolumeControl() {
           </Slider.Track>
           <Slider.Thumb
             className={styles.sliderThumb}
-            aria-label="Volume"
+            aria-label={t`Volume`}
             data-museeks-action
           />
         </Slider.Root>

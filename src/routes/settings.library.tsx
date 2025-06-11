@@ -1,6 +1,8 @@
+import { Trans, useLingui } from '@lingui/react/macro';
 import { createFileRoute, useLoaderData } from '@tanstack/react-router';
 import { open } from '@tauri-apps/plugin-dialog';
 import { useCallback } from 'react';
+
 import * as Setting from '../components/Setting';
 import CheckboxSetting from '../components/SettingCheckbox';
 import Button from '../elements/Button';
@@ -8,6 +10,7 @@ import Flexbox from '../elements/Flexbox';
 import useInvalidate, { useInvalidateCallback } from '../hooks/useInvalidate';
 import SettingsAPI from '../stores/SettingsAPI';
 import useLibraryStore, { useLibraryAPI } from '../stores/useLibraryStore';
+
 import styles from './settings-library.module.css';
 
 export const Route = createFileRoute('/settings/library')({
@@ -20,6 +23,7 @@ function ViewSettingsLibrary() {
   const libraryAPI = useLibraryAPI();
   const isLibraryRefreshing = useLibraryStore((state) => state.refreshing);
   const invalidate = useInvalidate();
+  const { t } = useLingui();
 
   const addLibraryFolders = useCallback(async () => {
     const paths = await open({
@@ -38,10 +42,12 @@ function ViewSettingsLibrary() {
   return (
     <div className="setting settings-musicfolder">
       <Setting.Section>
-        <Setting.Title>Files</Setting.Title>
+        <Setting.Title>
+          <Trans>Files</Trans>
+        </Setting.Title>
         {config.library_folders.length === 0 && (
           <Setting.Description>
-            There are no folders in your library.
+            <Trans>There are no folders in your library.</Trans>
           </Setting.Description>
         )}
         {config.library_folders.length > 0 && (
@@ -53,6 +59,7 @@ function ViewSettingsLibrary() {
                     <button
                       type="button"
                       className={styles.libraryFoldersRemove}
+                      title={t`Remove`}
                       data-museeks-action
                       onClick={() =>
                         libraryAPI.removeLibraryFolder(folder).then(invalidate)
@@ -72,47 +79,51 @@ function ViewSettingsLibrary() {
             disabled={isLibraryRefreshing}
             onClick={useInvalidateCallback(addLibraryFolders)}
           >
-            Add folder
+            <Trans>Add folder</Trans>
           </Button>
           <Button
             disabled={isLibraryRefreshing}
             onClick={useInvalidateCallback(() => libraryAPI.scan())}
           >
-            Scan
+            <Trans>Scan</Trans>
           </Button>
           <Button
             disabled={isLibraryRefreshing}
             onClick={useInvalidateCallback(() => libraryAPI.scan(true))}
-            title="Force the refresh of all tracks tags"
+            title={t`Force the refresh of all tracks tags`}
           >
-            Refresh
+            <Trans>Refresh</Trans>
           </Button>
         </Flexbox>
         <Setting.Description>
-          <code>.m3u</code> files will also be imported as playlists.
+          <Trans>
+            <code>.m3u</code> files will also be imported as playlists.
+          </Trans>
         </Setting.Description>
       </Setting.Section>
       <Setting.Section>
         <CheckboxSetting
           slug="library-autorefresh"
-          title="Automatically refresh library on startup"
+          title={t`Automatically refresh library on startup`}
           value={config.library_autorefresh}
           onChange={useInvalidateCallback(SettingsAPI.toggleLibraryAutorefresh)}
         />
       </Setting.Section>
       <Setting.Section>
-        <Setting.Title>Danger zone</Setting.Title>
+        <Setting.Title>
+          <Trans>Danger zone</Trans>
+        </Setting.Title>
         <Setting.Description>
-          Delete all tracks and playlists from Museeks.
+          <Trans>Delete all tracks and playlists from Museeks.</Trans>
         </Setting.Description>
         <Flexbox>
           <Button
             relevancy="danger"
-            title="Fully reset the library"
+            title={t`Fully reset the library`}
             disabled={isLibraryRefreshing}
             onClick={useInvalidateCallback(libraryAPI.reset)}
           >
-            Reset library
+            <Trans>Reset library</Trans>
           </Button>
         </Flexbox>
       </Setting.Section>
