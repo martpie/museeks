@@ -1,6 +1,7 @@
 import type React from 'react';
 import { useEffect, useState } from 'react';
 
+import { useLingui } from '@lingui/react/macro';
 import { logAndNotifyError } from '../lib/utils';
 import * as Setting from './Setting';
 
@@ -12,6 +13,7 @@ type Props = {
 export default function AudioOutputSelect(props: Props) {
   const { label, description, id } = props;
   const selectProps = { label, description, id };
+  const { t } = useLingui();
 
   const [devices, setDevices] = useState<MediaDeviceInfo[] | null>(null);
   const [hasError, setHasError] = useState(false);
@@ -48,7 +50,7 @@ export default function AudioOutputSelect(props: Props) {
   if (!devices) {
     return (
       <Setting.Select {...selectProps} disabled key="selectDisabled">
-        <option>loading devices...</option>
+        <option>{t`Loading devices...`}</option>
       </Setting.Select>
     );
   }
@@ -56,7 +58,7 @@ export default function AudioOutputSelect(props: Props) {
   if (hasError) {
     return (
       <Setting.Select {...selectProps} disabled key="selectDisabled">
-        <option>Could not get audio output devices</option>
+        <option>{t`Could not get audio output devices`}</option>
       </Setting.Select>
     );
   }
@@ -64,7 +66,7 @@ export default function AudioOutputSelect(props: Props) {
   if (devices.length === 0) {
     return (
       <Setting.Select {...selectProps} disabled key="selectDisabled">
-        <option>no audio output devices found</option>
+        <option>{t`No audio devices found`}</option>
       </Setting.Select>
     );
   }

@@ -1,3 +1,4 @@
+import { Trans, useLingui } from '@lingui/react/macro';
 import {
   Outlet,
   createFileRoute,
@@ -51,13 +52,14 @@ export const Route = createFileRoute('/playlists')({
 
 function ViewPlaylists() {
   const { playlists } = Route.useLoaderData();
+  const { t } = useLingui();
 
   const invalidate = useInvalidate();
   const navigate = useNavigate();
 
   const createPlaylist = useCallback(async () => {
     // TODO: 'new playlist 1', 'new playlist 2' ...
-    const playlist = await PlaylistsAPI.create('New playlist', [], false);
+    const playlist = await PlaylistsAPI.create(t`New playlist`, [], false);
 
     if (playlist) {
       invalidate();
@@ -66,7 +68,7 @@ function ViewPlaylists() {
         params: { playlistID: playlist.id },
       });
     }
-  }, [navigate, invalidate]);
+  }, [navigate, invalidate, t]);
 
   const renamePlaylist = useCallback(
     async (playlistID: string, name: string) => {
@@ -87,7 +89,7 @@ function ViewPlaylists() {
         MenuItemOptions | PredefinedMenuItemOptions
       > = [
         {
-          text: 'Delete',
+          text: t`Delete`,
           action: async () => {
             await PlaylistsAPI.remove(playlist.id);
 
@@ -101,7 +103,7 @@ function ViewPlaylists() {
         },
         { item: 'Separator' },
         {
-          text: 'Duplicate',
+          text: t`Duplicate`,
           action: async () => {
             await PlaylistsAPI.duplicate(playlist.id);
             invalidate();
@@ -109,7 +111,7 @@ function ViewPlaylists() {
         },
         { item: 'Separator' },
         {
-          text: 'Export',
+          text: t`Export`,
           action: async () => {
             await database.exportPlaylist(playlist.id);
           },
@@ -127,7 +129,7 @@ function ViewPlaylists() {
         />
       );
     });
-  }, [playlists, renamePlaylist, invalidate, navigate, childPlaylistMatch]);
+  }, [playlists, renamePlaylist, invalidate, navigate, childPlaylistMatch, t]);
 
   // Empty and List states
   let playlistContent;
@@ -135,7 +137,9 @@ function ViewPlaylists() {
   if (playlists.length === 0) {
     playlistContent = (
       <ViewMessage.Notice>
-        <p>You haven{"'"}t created any playlist yet</p>
+        <p>
+          <Trans>You haven{"'"}t created any playlist yet</Trans>
+        </p>
         <ViewMessage.Sub>
           <button
             type="button"
@@ -143,7 +147,7 @@ function ViewPlaylists() {
             className="reset"
             tabIndex={0}
           >
-            create one now
+            <Trans>create one now</Trans>
           </button>
         </ViewMessage.Sub>
       </ViewMessage.Notice>
@@ -151,7 +155,9 @@ function ViewPlaylists() {
   } else if (!childPlaylistMatch) {
     playlistContent = (
       <ViewMessage.Notice>
-        <p>No playlist selected</p>
+        <p>
+          <Trans>No playlist selected</Trans>
+        </p>
       </ViewMessage.Notice>
     );
   } else {
@@ -162,12 +168,12 @@ function ViewPlaylists() {
     <View
       sideNav={
         <SideNav
-          title="Playlists"
+          title={t`Playlists`}
           actions={
             <ButtonIcon
               icon="plus"
               onClick={createPlaylist}
-              title="New Playlist"
+              title={t`New Playlist`}
             />
           }
         >

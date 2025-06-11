@@ -1,3 +1,4 @@
+import { useLingui } from '@lingui/react/macro';
 import * as AspectRatio from '@radix-ui/react-aspect-ratio';
 import cx from 'classnames';
 
@@ -14,6 +15,7 @@ type Props = {
 
 export default function Cover(props: Props) {
   const coverPath = useCover(props.track);
+  const { t } = useLingui();
 
   const classes = cx(styles.cover, styles.empty, {
     [styles.noBorder]: props.noBorder,
@@ -36,7 +38,7 @@ export default function Cover(props: Props) {
         </div>
         <img
           src={coverPath ?? undefined}
-          alt="Album cover"
+          alt={t`Album cover`}
           className={cx(styles.image, {
             [styles.visible]: coverPath != null,
           })}

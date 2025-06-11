@@ -7,7 +7,7 @@ const DEFAULT_LOCALE = 'en';
 // 2. Run bun run intl-extract
 // 3. Edit the generated file in src/translations/<locale>.po
 // 4. Profit
-const SUPPORTED_LOCALES = [DEFAULT_LOCALE, 'fr'];
+const SUPPORTED_LOCALES = [DEFAULT_LOCALE];
 
 /**
  * Lingui Config - https://lingui.dev/ref/conf
@@ -25,4 +25,5 @@ export default defineConfig({
       include: ['src'],
     },
   ],
+  orderBy: 'origin',
 });

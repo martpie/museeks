@@ -1,3 +1,4 @@
+import { t } from '@lingui/core/macro';
 import cx from 'classnames';
 
 import icons from '../lib/icons';
@@ -21,6 +22,7 @@ export default function ButtonShuffle() {
         playerAPI.toggleShuffle();
       }}
       data-museeks-action
+      aria-label={t`Shuffle`}
     >
       <icons.SHUFFLE className={styles.icon} />
     </button>
