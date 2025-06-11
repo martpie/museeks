@@ -7,7 +7,7 @@ import config from '../lib/config';
 import database from '../lib/database';
 import { logAndNotifyError } from '../lib/utils';
 import { removeRedundantFolders } from '../lib/utils-library';
-import type { API, TrackMutation } from '../types/museeks';
+import type { API, TrackListStatusInfo, TrackMutation } from '../types/museeks';
 import { createStore } from './store-helpers';
 import usePlayerStore from './usePlayerStore';
 import useToastsStore from './useToastsStore';
@@ -21,7 +21,7 @@ type LibraryState = API<{
     current: number;
     total: number;
   };
-  tracksStatus: string;
+  tracksStatus: TrackListStatusInfo | null;
   api: {
     search: (value: string) => void;
     sort: (sortBy: SortBy) => void;
@@ -36,7 +36,7 @@ type LibraryState = API<{
       trackID: string,
       fields: TrackMutation,
     ) => Promise<void>;
-    setTracksStatus: (status?: string) => void;
+    setTracksStatus: (status?: TrackListStatusInfo) => void;
   };
 }>;
 
@@ -49,7 +49,7 @@ const useLibraryStore = createLibraryStore<LibraryState>((set, get) => ({
     current: 0,
     total: 0,
   },
-  tracksStatus: '',
+  tracksStatus: null,
 
   api: {
     /**

@@ -87,3 +87,11 @@ export type TracksListVirtualizer = {
   scrollElement: HTMLDivElement | null;
   scrollToIndex: (index: number, options?: ScrollIntoViewOptions) => void;
 };
+
+/**
+ * Information about a list of tracks (count + duration)
+ */
+export type TrackListStatusInfo = {
+  count: number;
+  duration: number;
+};

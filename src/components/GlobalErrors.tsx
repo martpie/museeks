@@ -2,6 +2,7 @@
  * Components helpers
  */
 
+import { Trans, useLingui } from '@lingui/react/macro';
 import { type ErrorComponentProps, useLocation } from '@tanstack/react-router';
 import * as logger from '@tauri-apps/plugin-log';
 import ExternalLink from '../elements/ExternalLink';
@@ -27,7 +28,7 @@ export function ErrorView(props: ErrorComponentProps) {
         <span role="img" aria-label="boom">
           💥
         </span>{' '}
-        Something wrong happened: {errorMessage}
+        <Trans>Something wrong happened: {errorMessage}</Trans>
       </p>
       <Issue />
     </ViewMessage.Notice>
@@ -36,14 +37,17 @@ export function ErrorView(props: ErrorComponentProps) {
 
 export function NotFoundView() {
   const location = useLocation();
+  const { t } = useLingui();
 
   return (
     <ViewMessage.Notice>
       <p>
-        <span role="img" aria-label="how?">
+        <span role="img" aria-label={t`how?`}>
           🤔
         </span>{' '}
-        View not found ({location.pathname}). How did you get here?
+        <Trans>
+          View not found ({location.pathname}). How did you get here?
+        </Trans>
       </p>
       <Issue />
     </ViewMessage.Notice>
@@ -53,10 +57,15 @@ export function NotFoundView() {
 function Issue() {
   return (
     <ViewMessage.Sub>
-      If it happens again, please{' '}
-      <ExternalLink href="https://github.com/martpie/museeks/issues" type="url">
-        report an issue
-      </ExternalLink>
+      <Trans>
+        If it happens again, please{' '}
+        <ExternalLink
+          href="https://github.com/martpie/museeks/issues"
+          type="url"
+        >
+          report an issue
+        </ExternalLink>
+      </Trans>
     </ViewMessage.Sub>
   );
 }

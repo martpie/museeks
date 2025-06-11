@@ -1,5 +1,6 @@
 import { Outlet, createRootRoute, useLocation } from '@tanstack/react-router';
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
+import { info } from '@tauri-apps/plugin-log';
 import cx from 'classnames';
 import { useEffect } from 'react';
 
@@ -18,7 +19,6 @@ import Toasts from '../components/Toasts';
 import useInvalidate from '../hooks/useInvalidate';
 import SettingsAPI from '../stores/SettingsAPI';
 
-import { info } from '@tauri-apps/plugin-log';
 import styles from './__root.module.css';
 
 type Search = {

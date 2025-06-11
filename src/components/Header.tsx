@@ -8,12 +8,14 @@ import PlayingBar from './PlayingBar';
 import Queue from './Queue';
 import Search from './Search';
 
+import { useLingui } from '@lingui/react/macro';
 import styles from './Header.module.css';
 
 export default function Header() {
   const queue = usePlayerStore((state) => state.queue);
   const queueCursor = usePlayerStore((state) => state.queueCursor);
   const trackPlaying = usePlayingTrack();
+  const { t } = useLingui();
 
   return (
     <header className={styles.header} data-tauri-drag-region>
@@ -30,6 +32,7 @@ export default function Header() {
                   type="button"
                   className={styles.queueToggle}
                   data-tauri-drag-region
+                  title={t`Queue`}
                 >
                   <Icon name="list" data-museeks-action />
                 </button>
