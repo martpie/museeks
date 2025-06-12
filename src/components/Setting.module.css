@@ -33,7 +33,7 @@
   display: block;
   background: var(--input-bg);
   color: var(--input-color);
-  border: solid 1px var(--border-color);
+  border: solid 1px var(--border-color-softer);
   border-radius: var(--border-radius);
   padding: 8px;
   width: 100%;

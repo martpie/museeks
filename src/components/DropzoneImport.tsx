@@ -50,8 +50,8 @@ export default function DropzoneImport() {
 
             if (skippedItemsCount !== 0) {
               const message = plural(skippedItemsCount, {
-                one: t`${skippedItemsCount} non-folder item ignored`,
-                other: t`${skippedItemsCount} non-folder items ignored`,
+                one: '# invalid item ignored',
+                other: '# invalid items ignored',
               });
 
               toastsAPI.add('warning', message);
@@ -61,8 +61,8 @@ export default function DropzoneImport() {
               await libraryAPI.addLibraryFolders(folders);
 
               const message = plural(folders.length, {
-                one: t`${folders.length} folder added to the library`,
-                other: t`${folders.length} folders added to the library`,
+                one: '# folder added to the library',
+                other: '# folders added to the library',
               });
 
               toastsAPI.add('success', message);
@@ -90,7 +90,6 @@ export default function DropzoneImport() {
     libraryAPI.scan,
     toastsAPI.add,
     invalidate,
-    t,
   ]);
 
   const classes = cx(styles.dropzone, {
