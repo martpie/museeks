@@ -7,7 +7,7 @@ export const ALL_LOCALES = [
   // Default / Fallback
   {
     label: 'English',
-    translatedLabel: null,
+    englishLabel: null,
     code: 'en',
   },
   // Additional languages below
