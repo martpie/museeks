@@ -16,6 +16,7 @@ import * as logger from '@tauri-apps/plugin-log';
 import React from 'react';
 import * as ReactDOM from 'react-dom/client';
 
+import { loadTranslation } from './lib/i18n';
 import queryClient from './lib/query-client';
 
 /*
@@ -50,26 +51,15 @@ declare module '@tanstack/react-router' {
 
 /*
 |--------------------------------------------------------------------------
-| Translations
-|--------------------------------------------------------------------------
-*/
-
-async function loadTranslation(locale = 'en') {
-  const { messages } = await import(`./translations/${locale}.po`);
-
-  i18n.load(locale, messages);
-  i18n.activate(locale);
-}
-
-/*
-|--------------------------------------------------------------------------
 | Render the app
 |--------------------------------------------------------------------------
 */
 
 (async function createRoot() {
-  await logger.attachConsole();
-  await loadTranslation('en');
+  Promise.allSettled([
+    logger.attachConsole(),
+    loadTranslation(window.__MUSEEKS_INITIAL_CONFIG.language),
+  ]);
 
   const wrap = document.getElementById('wrap');
 

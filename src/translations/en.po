@@ -88,7 +88,7 @@ msgstr "Artists"
 
 #: src/components/Footer.tsx:40
 #: src/routes/playlists.tsx:171
-#: src/routes/settings.ui.tsx:79
+#: src/routes/settings.ui.tsx:109
 msgid "Playlists"
 msgstr "Playlists"
 
@@ -438,56 +438,64 @@ msgstr "Interface"
 msgid "About"
 msgstr "About"
 
-#: src/routes/settings.ui.tsx:25
+#: src/routes/settings.ui.tsx:35
 msgid "Theme"
 msgstr "Theme"
 
-#: src/routes/settings.ui.tsx:26
+#: src/routes/settings.ui.tsx:36
 msgid "Change the appearance of the interface"
 msgstr "Change the appearance of the interface"
 
-#: src/routes/settings.ui.tsx:33
+#: src/routes/settings.ui.tsx:43
 msgid "System (default)"
 msgstr "System (default)"
 
-#: src/routes/settings.ui.tsx:45
+#: src/routes/settings.ui.tsx:55
+msgid "Language"
+msgstr "Language"
+
+#: src/routes/settings.ui.tsx:63
+msgid "Auto"
+msgstr "Auto"
+
+#: src/routes/settings.ui.tsx:75
 msgid "Tracks density"
 msgstr "Tracks density"
 
-#: src/routes/settings.ui.tsx:46
-#: src/routes/settings.ui.tsx:67
+#: src/routes/settings.ui.tsx:76
+#: src/routes/settings.ui.tsx:97
 msgid "Change the default view when starting the application"
 msgstr "Change the default view when starting the application"
 
-#: src/routes/settings.ui.tsx:56
+#: src/routes/settings.ui.tsx:86
 msgid "Normal (default)"
 msgstr "Normal (default)"
 
-#: src/routes/settings.ui.tsx:59
+#: src/routes/settings.ui.tsx:89
 msgid "Compact"
 msgstr "Compact"
 
-#: src/routes/settings.ui.tsx:65
+#: src/routes/settings.ui.tsx:95
 msgid "Default view"
 msgstr "Default view"
 
-#: src/routes/settings.ui.tsx:76
+#: src/routes/settings.ui.tsx:106
 msgid "Library (default)"
 msgstr "Library (default)"
 
-#: src/routes/settings.ui.tsx:86
+#: src/routes/settings.ui.tsx:116
 msgid "Display Notifications"
 msgstr "Display Notifications"
 
-#: src/routes/settings.ui.tsx:87
+#: src/routes/settings.ui.tsx:117
 msgid "Send notifications when the playing track changes"
 msgstr "Send notifications when the playing track changes"
 
-#: src/routes/settings.ui.tsx:97
+#: src/routes/settings.ui.tsx:127
 msgid "Sleep mode blocker"
 msgstr "Sleep mode blocker"
 
-#: src/routes/settings.ui.tsx:98
+#: src/routes/settings.ui.tsx:128
 msgid "Prevent the computer from going into sleep mode when playing"
 msgstr "Prevent the computer from going into sleep mode when playing"
 
