@@ -11,4 +11,9 @@ export const ALL_LOCALES = [
     code: 'en',
   },
   // Additional languages below
+  {
+    label: 'Français',
+    englishLabel: 'French',
+    code: 'fr',
+  },
 ];
