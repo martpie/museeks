@@ -1,0 +1,57 @@
+id: io.museeks.museeks
+
+runtime: org.gnome.Platform
+runtime-version: '46'
+sdk: org.gnome.Sdk
+
+command: museeks
+finish-args:
+  # X11 + XShm access
+  - --share=ipc
+  - --socket=fallback-x11
+  # Wayland access
+  - --socket=wayland
+  # OpenGL access
+  - --device=dri
+  # To send and receive notifications
+  - --talk-name=org.freedesktop.Notifications
+  # Network access - to receive and send messages
+  - --share=network
+  # Access to the user's home directory for config
+  - --filesystem=~/.config/Museeks
+  # Webview is black otherwise, may be a Wayland issue
+  - --env=WEBKIT_DISABLE_COMPOSITING_MODE=1
+
+modules:
+  - name: binary
+    buildsystem: simple
+    sources:
+      - type: file
+        url: https://github.com/martpie/museeks/releases/download/0.21.1/Museeks_0.21.1_amd64.deb
+        sha256: e141cc87cad950318d973e7d10c193815fe37dde8af51c9756932bdac8a73d44
+      - type: file
+        path: flatpak.metainfo.xml
+    build-commands:
+      - set -e
+      # Extract the deb package
+      - mkdir deb-extracted
+      - ar -x *.deb --output deb-extracted
+      - tar -C deb-extracted -xf deb-extracted/data.tar.gz
+
+      # Copy binary
+      - 'install -Dm755 deb-extracted/usr/bin/museeks /app/bin/museeks'
+
+      # Copy app files (migrations and icons)
+      - mkdir -p /app/lib/Museeks/migrations
+      - cp -r deb-extracted/usr/lib/Museeks/. /app/lib/Museeks
+      - find /app/lib/Museeks -type f -exec chmod 644 {} \;
+
+      # Copy desktop file + ensure the right icon is set
+      - sed -i 's/^Icon=.*/Icon=io.museeks.museeks/' deb-extracted/usr/share/applications/Museeks.desktop
+      - install -Dm644 deb-extracted/usr/share/applications/Museeks.desktop /app/share/applications/io.museeks.museeks.desktop
+
+      # Copy icons
+      - install -Dm644 deb-extracted/usr/share/icons/hicolor/128x128/apps/museeks.png /app/share/icons/hicolor/128x128/apps/io.museeks.museeks.png
+      - install -Dm644 deb-extracted/usr/share/icons/hicolor/32x32/apps/museeks.png /app/share/icons/hicolor/32x32/apps/io.museeks.museeks.png
+      - install -Dm644 deb-extracted/usr/share/icons/hicolor/256x256@2/apps/museeks.png /app/share/icons/hicolor/256x256@2/apps/io.museeks.museeks.png
+      - install -Dm644 flatpak.metainfo.xml /app/share/metainfo/io.museeks.museeks.metainfo.xml

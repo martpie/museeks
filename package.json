@@ -25,7 +25,10 @@
     "test:lint": "biome ci .",
     "test:lint:fix": "biome check --write .",
     "package:checksums": "bash scripts/checksum.sh",
-    "clippy": "cargo clippy --manifest-path src-tauri/Cargo.toml"
+    "clippy": "cargo clippy --manifest-path src-tauri/Cargo.toml",
+    "release": "bash scripts/release.sh",
+    "release:flatpak:build": "flatpak-builder --force-clean --user --disable-cache release/flatpak release/flatpak-builder.yaml",
+    "release:flatpak:install": "flatpak-builder --force-clean --user --disable-cache --install release/flatpak release/flatpak-builder.yaml flatpak"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",

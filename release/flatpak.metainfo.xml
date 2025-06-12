@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>io.museeks.museeks</id>
+
+  <name>Museeks</name>
+  <summary>A simple, clean and cross-platform music player</summary>
+
+  <metadata_license>MIT</metadata_license>
+  <project_license>MIT</project_license>
+
+  <description>
+    <p>
+      Museeks aims to be a simple and easy to use music player with a clean UI. You will not find tons of features, as it goal is not to compete with more complete and more famous music players.
+    </p>
+    <p>
+      Here is a little preview though:
+    </p>
+    <p>
+      - 💻 Cross-platform music player (Linux, macOS and Windows) - 🎧 Supported formats: mp3, mp4, m4a/aac, flac, wav, ogg, 3gpp - 🔄 Library auto-refresh - 🌟 Playlists - 🎼 Queue management - ➰ Shuffle, loop - 🌄 Covers - 🤓 Dark theme - 🚤 Playback speed control - 😴 Sleep mode blocker - 📥 <code>.m3u</code> import/export
+    </p>
+  </description>
+
+  <launchable type="desktop-id">io.museeks.museeks.desktop</launchable>
+  <screenshots>
+    <screenshot type="default">
+      <image>https://museeks.io/screenshot.png?FIXMEFORLINUX</image>
+    </screenshot>
+  </screenshots>
+</component>
