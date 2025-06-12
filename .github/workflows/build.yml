@@ -39,7 +39,7 @@ jobs:
         run: bun install --frozen-lockfile
 
       - name: 'Test: Rust (+ Generate Types)'
-        run: bun run gen
+        run: bun run gen:types
 
       - name: 'Test: TS/JS linting & formatting'
         run: 'bun run test:lint'
@@ -52,6 +52,9 @@ jobs:
 
       - name: 'Test: Circular Dependencies'
         run: 'bun run test:circdeps'
+
+      - name: 'Generate translations'
+        run: bun run gen:translations
 
       - name: Build application
         run: bun run build
