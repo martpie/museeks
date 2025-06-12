@@ -4,6 +4,7 @@ use serde::{Deserialize, Serialize};
 use sqlx::sqlite::{SqliteAutoVacuum, SqliteConnectOptions, SqliteJournalMode};
 use sqlx::{Connection, SqliteConnection};
 use std::collections::HashSet;
+use std::fs;
 use std::path::PathBuf;
 use std::sync::Arc;
 use std::sync::atomic::{AtomicUsize, Ordering};
@@ -55,6 +56,12 @@ async fn setup<R: Runtime>(app_handle: &AppHandle<R>) -> AnyResult<DB> {
     sqlx::query("PRAGMA  wal_checkpoint(TRUNCATE)")
         .execute(&mut connection)
         .await?;
+
+    let paths = fs::read_dir("./").unwrap();
+
+    for path in paths {
+        println!("Name: {}", path.unwrap().path().display())
+    }
 
     let migrations_path = app_handle
         .path()
