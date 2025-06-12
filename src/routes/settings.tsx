@@ -1,4 +1,4 @@
-import { Outlet, createFileRoute } from '@tanstack/react-router';
+import { Outlet, createFileRoute, redirect } from '@tanstack/react-router';
 import { getTauriVersion, getVersion } from '@tauri-apps/api/app';
 import { invoke } from '@tauri-apps/api/core';
 
@@ -10,6 +10,12 @@ import styles from './settings.module.css';
 
 export const Route = createFileRoute('/settings')({
   component: ViewSettings,
+  beforeLoad: async ({ location }) => {
+    if (location.pathname === '/settings') {
+      console.log('redirect');
+      throw redirect({ to: '/settings/library' });
+    }
+  },
   loader: async function loader() {
     const [configContent, version, tauriVersion, appStorageDir] =
       await Promise.all([
