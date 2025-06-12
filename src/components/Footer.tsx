@@ -39,7 +39,7 @@ export default function Footer() {
             <Icon name="star" fixedWidth />
           </Link>
           <Link
-            to="/settings/library"
+            to="/settings"
             className={styles.footerNavigationLink}
             activeProps={{ className: styles.footerNavigationLinkIsActive }}
             title="Settings"
