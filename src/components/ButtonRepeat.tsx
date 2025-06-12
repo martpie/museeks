@@ -32,7 +32,8 @@ export default function ButtonRepeat() {
       className={buttonClasses}
       onClick={() => playerAPI.toggleRepeat()}
       data-museeks-action
-      aria-label={t`Repeat`}
+      aria-selected={repeat === 'One' || repeat === 'All'}
+      title={t`Repeat`}
     >
       <Svg className={styles.icon} />
     </button>

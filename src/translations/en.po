@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2025-06-10 16:21+0200\n"
+"POT-Creation-Date: 2025-06-12 15:50+0200\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -25,11 +25,11 @@ msgstr "Could not get audio output devices"
 msgid "No audio devices found"
 msgstr "No audio devices found"
 
-#: src/components/ButtonRepeat.tsx:35
+#: src/components/ButtonRepeat.tsx:36
 msgid "Repeat"
 msgstr "Repeat"
 
-#: src/components/ButtonShuffle.tsx:25
+#: src/components/ButtonShuffle.tsx:26
 msgid "Shuffle"
 msgstr "Shuffle"
 
@@ -37,42 +37,20 @@ msgstr "Shuffle"
 msgid "Album cover"
 msgstr "Album cover"
 
-#. placeholder {0}: import { useLingui } from '@lingui/react/macro'; import { getCurrentWindow } from '@tauri-apps/api/window'; import { lstat } from '@tauri-apps/plugin-fs'; import cx from 'classnames'; import { useEffect, useState } from 'react'; import { plural } from '@lingui/core/macro'; import useInvalidate from '../hooks/useInvalidate'; import { logAndNotifyError } from '../lib/utils'; import { useLibraryAPI } from '../stores/useLibraryStore'; import { useToastsAPI } from '../stores/useToastsStore'; import styles from './DropzoneImport.module.css'; export default function DropzoneImport() { const libraryAPI = useLibraryAPI(); const toastsAPI = useToastsAPI(); const { t } = useLingui(); const [isShown, setIsShown] = useState(false); const invalidate = useInvalidate(); // Simplification welcome useEffect(() => { async function attachFileDropEvent() { const unlisten = getCurrentWindow() .onDragDropEvent(async (event) => { if (event.payload.type === 'over') { setIsShown(true); } else if (event.payload.type === 'drop') { setIsShown(false); // Museeks does not deal in terms of files anymore, so we need to only retain folders. // Why? Because in case a user imports a specific file from within a folder, it should // ignore all other files, but it cannot do that as of today. const fileInfos = await Promise.all( event.payload.paths.map(async (path) => { return { ...(await lstat(path)), path, }; }), ); const folders = fileInfos .filter((fileOrFolder) => fileOrFolder.isDirectory) .map((folderInfo) => folderInfo.path); const skippedItemsCount = event.payload.paths.length - folders.length; if (skippedItemsCount !== 0) { const message = plural(skippedItemsCount, { one: t`${skippedItemsCount} non-folder item ignored`, other: t`${skippedItemsCount} non-folder items ignored`, }); toastsAPI.add('warning', message); } if (folders.length > 0) { await libraryAPI.addLibraryFolders(folders); const message = plural(folders.length, { one: t`${folders.length} folder added to the library`, other: t`${folders.length} folders added to the library`, }); toastsAPI.add('success', message); await libraryAPI.scan(); invalidate(); } } else { setIsShown(false); } }) .catch(logAndNotifyError); return unlisten; } const unlisten = attachFileDropEvent().catch(logAndNotifyError); return function cleanup() { unlisten.then((u) => (u ? u() : null)); }; }, [ libraryAPI.addLibraryFolders, libraryAPI.scan, toastsAPI.add, invalidate, t, ]); const classes = cx(styles.dropzone, { [styles.shown]: isShown, }); return ( <div className={classes}> <div className={styles.dropzoneTitle}>{t`Add music to the library`}</div> <span>{t`Drop folders anywhere`}</span> </div> ); } 
-#. placeholder {1}: import { useLingui } from '@lingui/react/macro'; import { getCurrentWindow } from '@tauri-apps/api/window'; import { lstat } from '@tauri-apps/plugin-fs'; import cx from 'classnames'; import { useEffect, useState } from 'react'; import { plural } from '@lingui/core/macro'; import useInvalidate from '../hooks/useInvalidate'; import { logAndNotifyError } from '../lib/utils'; import { useLibraryAPI } from '../stores/useLibraryStore'; import { useToastsAPI } from '../stores/useToastsStore'; import styles from './DropzoneImport.module.css'; export default function DropzoneImport() { const libraryAPI = useLibraryAPI(); const toastsAPI = useToastsAPI(); const { t } = useLingui(); const [isShown, setIsShown] = useState(false); const invalidate = useInvalidate(); // Simplification welcome useEffect(() => { async function attachFileDropEvent() { const unlisten = getCurrentWindow() .onDragDropEvent(async (event) => { if (event.payload.type === 'over') { setIsShown(true); } else if (event.payload.type === 'drop') { setIsShown(false); // Museeks does not deal in terms of files anymore, so we need to only retain folders. // Why? Because in case a user imports a specific file from within a folder, it should // ignore all other files, but it cannot do that as of today. const fileInfos = await Promise.all( event.payload.paths.map(async (path) => { return { ...(await lstat(path)), path, }; }), ); const folders = fileInfos .filter((fileOrFolder) => fileOrFolder.isDirectory) .map((folderInfo) => folderInfo.path); const skippedItemsCount = event.payload.paths.length - folders.length; if (skippedItemsCount !== 0) { const message = plural(skippedItemsCount, { one: t`${skippedItemsCount} non-folder item ignored`, other: t`${skippedItemsCount} non-folder items ignored`, }); toastsAPI.add('warning', message); } if (folders.length > 0) { await libraryAPI.addLibraryFolders(folders); const message = plural(folders.length, { one: t`${folders.length} folder added to the library`, other: t`${folders.length} folders added to the library`, }); toastsAPI.add('success', message); await libraryAPI.scan(); invalidate(); } } else { setIsShown(false); } }) .catch(logAndNotifyError); return unlisten; } const unlisten = attachFileDropEvent().catch(logAndNotifyError); return function cleanup() { unlisten.then((u) => (u ? u() : null)); }; }, [ libraryAPI.addLibraryFolders, libraryAPI.scan, toastsAPI.add, invalidate, t, ]); const classes = cx(styles.dropzone, { [styles.shown]: isShown, }); return ( <div className={classes}> <div className={styles.dropzoneTitle}>{t`Add music to the library`}</div> <span>{t`Drop folders anywhere`}</span> </div> ); } 
 #: src/components/DropzoneImport.tsx:52
-msgid "{skippedItemsCount, plural, one {{0}} other {{1}}}"
-msgstr "{skippedItemsCount, plural, one {{0}} other {{1}}}"
-
-#: src/components/DropzoneImport.tsx:53
-msgid "{skippedItemsCount} non-folder item ignored"
-msgstr "{skippedItemsCount} non-folder item ignored"
-
-#: src/components/DropzoneImport.tsx:54
-msgid "{skippedItemsCount} non-folder items ignored"
-msgstr "{skippedItemsCount} non-folder items ignored"
+msgid "{skippedItemsCount, plural, one {# invalid item ignored} other {# invalid items ignored}}"
+msgstr "{skippedItemsCount, plural, one {# invalid item ignored} other {# invalid items ignored}}"
 
 #. placeholder {0}: folders.length
-#. placeholder {1}: import { useLingui } from '@lingui/react/macro'; import { getCurrentWindow } from '@tauri-apps/api/window'; import { lstat } from '@tauri-apps/plugin-fs'; import cx from 'classnames'; import { useEffect, useState } from 'react'; import { plural } from '@lingui/core/macro'; import useInvalidate from '../hooks/useInvalidate'; import { logAndNotifyError } from '../lib/utils'; import { useLibraryAPI } from '../stores/useLibraryStore'; import { useToastsAPI } from '../stores/useToastsStore'; import styles from './DropzoneImport.module.css'; export default function DropzoneImport() { const libraryAPI = useLibraryAPI(); const toastsAPI = useToastsAPI(); const { t } = useLingui(); const [isShown, setIsShown] = useState(false); const invalidate = useInvalidate(); // Simplification welcome useEffect(() => { async function attachFileDropEvent() { const unlisten = getCurrentWindow() .onDragDropEvent(async (event) => { if (event.payload.type === 'over') { setIsShown(true); } else if (event.payload.type === 'drop') { setIsShown(false); // Museeks does not deal in terms of files anymore, so we need to only retain folders. // Why? Because in case a user imports a specific file from within a folder, it should // ignore all other files, but it cannot do that as of today. const fileInfos = await Promise.all( event.payload.paths.map(async (path) => { return { ...(await lstat(path)), path, }; }), ); const folders = fileInfos .filter((fileOrFolder) => fileOrFolder.isDirectory) .map((folderInfo) => folderInfo.path); const skippedItemsCount = event.payload.paths.length - folders.length; if (skippedItemsCount !== 0) { const message = plural(skippedItemsCount, { one: t`${skippedItemsCount} non-folder item ignored`, other: t`${skippedItemsCount} non-folder items ignored`, }); toastsAPI.add('warning', message); } if (folders.length > 0) { await libraryAPI.addLibraryFolders(folders); const message = plural(folders.length, { one: t`${folders.length} folder added to the library`, other: t`${folders.length} folders added to the library`, }); toastsAPI.add('success', message); await libraryAPI.scan(); invalidate(); } } else { setIsShown(false); } }) .catch(logAndNotifyError); return unlisten; } const unlisten = attachFileDropEvent().catch(logAndNotifyError); return function cleanup() { unlisten.then((u) => (u ? u() : null)); }; }, [ libraryAPI.addLibraryFolders, libraryAPI.scan, toastsAPI.add, invalidate, t, ]); const classes = cx(styles.dropzone, { [styles.shown]: isShown, }); return ( <div className={classes}> <div className={styles.dropzoneTitle}>{t`Add music to the library`}</div> <span>{t`Drop folders anywhere`}</span> </div> ); } 
-#. placeholder {2}: import { useLingui } from '@lingui/react/macro'; import { getCurrentWindow } from '@tauri-apps/api/window'; import { lstat } from '@tauri-apps/plugin-fs'; import cx from 'classnames'; import { useEffect, useState } from 'react'; import { plural } from '@lingui/core/macro'; import useInvalidate from '../hooks/useInvalidate'; import { logAndNotifyError } from '../lib/utils'; import { useLibraryAPI } from '../stores/useLibraryStore'; import { useToastsAPI } from '../stores/useToastsStore'; import styles from './DropzoneImport.module.css'; export default function DropzoneImport() { const libraryAPI = useLibraryAPI(); const toastsAPI = useToastsAPI(); const { t } = useLingui(); const [isShown, setIsShown] = useState(false); const invalidate = useInvalidate(); // Simplification welcome useEffect(() => { async function attachFileDropEvent() { const unlisten = getCurrentWindow() .onDragDropEvent(async (event) => { if (event.payload.type === 'over') { setIsShown(true); } else if (event.payload.type === 'drop') { setIsShown(false); // Museeks does not deal in terms of files anymore, so we need to only retain folders. // Why? Because in case a user imports a specific file from within a folder, it should // ignore all other files, but it cannot do that as of today. const fileInfos = await Promise.all( event.payload.paths.map(async (path) => { return { ...(await lstat(path)), path, }; }), ); const folders = fileInfos .filter((fileOrFolder) => fileOrFolder.isDirectory) .map((folderInfo) => folderInfo.path); const skippedItemsCount = event.payload.paths.length - folders.length; if (skippedItemsCount !== 0) { const message = plural(skippedItemsCount, { one: t`${skippedItemsCount} non-folder item ignored`, other: t`${skippedItemsCount} non-folder items ignored`, }); toastsAPI.add('warning', message); } if (folders.length > 0) { await libraryAPI.addLibraryFolders(folders); const message = plural(folders.length, { one: t`${folders.length} folder added to the library`, other: t`${folders.length} folders added to the library`, }); toastsAPI.add('success', message); await libraryAPI.scan(); invalidate(); } } else { setIsShown(false); } }) .catch(logAndNotifyError); return unlisten; } const unlisten = attachFileDropEvent().catch(logAndNotifyError); return function cleanup() { unlisten.then((u) => (u ? u() : null)); }; }, [ libraryAPI.addLibraryFolders, libraryAPI.scan, toastsAPI.add, invalidate, t, ]); const classes = cx(styles.dropzone, { [styles.shown]: isShown, }); return ( <div className={classes}> <div className={styles.dropzoneTitle}>{t`Add music to the library`}</div> <span>{t`Drop folders anywhere`}</span> </div> ); } 
 #: src/components/DropzoneImport.tsx:63
-msgid "{0, plural, one {{1}} other {{2}}}"
-msgstr "{0, plural, one {{1}} other {{2}}}"
+msgid "{0, plural, one {# folder added to the library} other {# folders added to the library}}"
+msgstr "{0, plural, one {# folder added to the library} other {# folders added to the library}}"
 
-#. placeholder {0}: folders.length
-#: src/components/DropzoneImport.tsx:64
-msgid "{0} folder added to the library"
-msgstr "{0} folder added to the library"
-
-#. placeholder {0}: folders.length
-#: src/components/DropzoneImport.tsx:65
-msgid "{0} folders added to the library"
-msgstr "{0} folders added to the library"
-
-#: src/components/DropzoneImport.tsx:102
+#: src/components/DropzoneImport.tsx:101
 msgid "Add music to the library"
 msgstr "Add music to the library"
 
-#: src/components/DropzoneImport.tsx:103
+#: src/components/DropzoneImport.tsx:102
 msgid "Drop folders anywhere"
 msgstr "Drop folders anywhere"
 
@@ -88,7 +66,7 @@ msgstr "Artists"
 
 #: src/components/Footer.tsx:40
 #: src/routes/playlists.tsx:171
-#: src/routes/settings.ui.tsx:109
+#: src/routes/settings.ui.tsx:99
 msgid "Playlists"
 msgstr "Playlists"
 
@@ -174,8 +152,8 @@ msgid "No playlists"
 msgstr "No playlists"
 
 #: src/components/TracksList.tsx:279
-msgid "{selectedCount, plural, one {{selectedCount} track selected} other {{selectedCount} tracks selected}}"
-msgstr "{selectedCount, plural, one {{selectedCount} track selected} other {{selectedCount} tracks selected}}"
+msgid "{selectedCount, plural, one {# track selected} other {# tracks selected}}"
+msgstr "{selectedCount, plural, one {# track selected} other {# tracks selected}}"
 
 #: src/components/TracksList.tsx:291
 msgid "Add to queue"
@@ -190,8 +168,8 @@ msgid "Add to playlist"
 msgstr "Add to playlist"
 
 #: src/components/TracksList.tsx:317
-msgid "Search for \"{artist}\" "
-msgstr "Search for \"{artist}\" "
+msgid "Search for \"{artist}\""
+msgstr "Search for \"{artist}\""
 
 #. placeholder {0}: track.album
 #: src/components/TracksList.tsx:324
@@ -438,64 +416,60 @@ msgstr "Interface"
 msgid "About"
 msgstr "About"
 
-#: src/routes/settings.ui.tsx:35
+#: src/routes/settings.ui.tsx:26
 msgid "Theme"
 msgstr "Theme"
 
-#: src/routes/settings.ui.tsx:36
+#: src/routes/settings.ui.tsx:27
 msgid "Change the appearance of the interface"
 msgstr "Change the appearance of the interface"
 
-#: src/routes/settings.ui.tsx:43
+#: src/routes/settings.ui.tsx:34
 msgid "System (default)"
 msgstr "System (default)"
 
-#: src/routes/settings.ui.tsx:55
+#: src/routes/settings.ui.tsx:46
 msgid "Language"
 msgstr "Language"
 
-#: src/routes/settings.ui.tsx:63
-msgid "Auto"
-msgstr "Auto"
-
-#: src/routes/settings.ui.tsx:75
+#: src/routes/settings.ui.tsx:65
 msgid "Tracks density"
 msgstr "Tracks density"
 
-#: src/routes/settings.ui.tsx:76
-#: src/routes/settings.ui.tsx:97
+#: src/routes/settings.ui.tsx:66
+#: src/routes/settings.ui.tsx:87
 msgid "Change the default view when starting the application"
 msgstr "Change the default view when starting the application"
 
-#: src/routes/settings.ui.tsx:86
+#: src/routes/settings.ui.tsx:76
 msgid "Normal (default)"
 msgstr "Normal (default)"
 
-#: src/routes/settings.ui.tsx:89
+#: src/routes/settings.ui.tsx:79
 msgid "Compact"
 msgstr "Compact"
 
-#: src/routes/settings.ui.tsx:95
+#: src/routes/settings.ui.tsx:85
 msgid "Default view"
 msgstr "Default view"
 
-#: src/routes/settings.ui.tsx:106
+#: src/routes/settings.ui.tsx:96
 msgid "Library (default)"
 msgstr "Library (default)"
 
-#: src/routes/settings.ui.tsx:116
+#: src/routes/settings.ui.tsx:106
 msgid "Display Notifications"
 msgstr "Display Notifications"
 
-#: src/routes/settings.ui.tsx:117
+#: src/routes/settings.ui.tsx:107
 msgid "Send notifications when the playing track changes"
 msgstr "Send notifications when the playing track changes"
 
-#: src/routes/settings.ui.tsx:127
+#: src/routes/settings.ui.tsx:117
 msgid "Sleep mode blocker"
 msgstr "Sleep mode blocker"
 
-#: src/routes/settings.ui.tsx:128
+#: src/routes/settings.ui.tsx:118
 msgid "Prevent the computer from going into sleep mode when playing"
 msgstr "Prevent the computer from going into sleep mode when playing"
 

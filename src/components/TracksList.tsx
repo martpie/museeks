@@ -277,8 +277,8 @@ export default function TracksList(props: Props) {
         // Tracks Selected indicator
         MenuItem.new({
           text: plural(selectedCount, {
-            one: `${selectedCount} track selected`,
-            other: `${selectedCount} tracks selected`,
+            one: '# track selected',
+            other: '# tracks selected',
           }),
           enabled: false,
         }),
@@ -314,7 +314,7 @@ export default function TracksList(props: Props) {
         // Quick-search
         ...track.artists.map((artist) =>
           MenuItem.new({
-            text: t`Search for "${artist}" `,
+            text: t`Search for "${artist}"`,
             action: () => {
               libraryAPI.search(artist);
             },

@@ -22,7 +22,8 @@ export default function ButtonShuffle() {
         playerAPI.toggleShuffle();
       }}
       data-museeks-action
-      aria-label={t`Shuffle`}
+      aria-selected={shuffle}
+      title={t`Shuffle`}
     >
       <icons.SHUFFLE className={styles.icon} />
     </button>
