@@ -1,3 +1,5 @@
+import { useLingui } from '@lingui/react/macro';
+
 import type { SortBy, SortOrder } from '../generated/typings';
 import useLibraryStore from '../stores/useLibraryStore';
 import TracksListHeaderCell from './TracksListHeaderCell';
@@ -34,6 +36,7 @@ export default function TracksListHeader(props: Props) {
   const { enableSort } = props;
   const sortBy = useLibraryStore((state) => state.sortBy);
   const sortOrder = useLibraryStore((state) => state.sortOrder);
+  const { t } = useLingui();
 
   return (
     <div className={styles.tracksListHeader}>
@@ -43,31 +46,31 @@ export default function TracksListHeader(props: Props) {
       />
       <TracksListHeaderCell
         className={styles.cellTrack}
-        title="Title"
+        title={t`Title`}
         sortBy={enableSort ? 'Title' : null}
         icon={getIcon(enableSort, sortBy, sortOrder, 'Title')}
       />
       <TracksListHeaderCell
         className={styles.cellDuration}
-        title="Duration"
+        title={t`Duration`}
         sortBy={enableSort ? 'Duration' : null}
         icon={getIcon(enableSort, sortBy, sortOrder, 'Duration')}
       />
       <TracksListHeaderCell
         className={styles.cellArtist}
-        title="Artist"
+        title={t`Artist`}
         sortBy={enableSort ? 'Artist' : null}
         icon={getIcon(enableSort, sortBy, sortOrder, 'Artist')}
       />
       <TracksListHeaderCell
         className={styles.cellAlbum}
-        title="Album"
+        title={t`Album`}
         sortBy={enableSort ? 'Album' : null}
         icon={getIcon(enableSort, sortBy, sortOrder, 'Album')}
       />
       <TracksListHeaderCell
         className={styles.cellGenre}
-        title="Genre"
+        title={t`Genre`}
         sortBy={enableSort ? 'Genre' : null}
         icon={getIcon(enableSort, sortBy, sortOrder, 'Genre')}
       />

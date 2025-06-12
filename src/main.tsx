@@ -4,6 +4,8 @@
 |--------------------------------------------------------------------------
 */
 
+import { i18n } from '@lingui/core';
+import { I18nProvider } from '@lingui/react';
 import { QueryClientProvider } from '@tanstack/react-query';
 import {
   RouterProvider,
@@ -14,6 +16,7 @@ import * as logger from '@tauri-apps/plugin-log';
 import React from 'react';
 import * as ReactDOM from 'react-dom/client';
 
+import { loadTranslation } from './lib/i18n';
 import queryClient from './lib/query-client';
 
 /*
@@ -53,7 +56,10 @@ declare module '@tanstack/react-router' {
 */
 
 (async function createRoot() {
-  await logger.attachConsole();
+  Promise.allSettled([
+    logger.attachConsole(),
+    loadTranslation(window.__MUSEEKS_INITIAL_CONFIG.language),
+  ]);
 
   const wrap = document.getElementById('wrap');
 
@@ -62,7 +68,9 @@ declare module '@tanstack/react-router' {
     root.render(
       <React.StrictMode>
         <QueryClientProvider client={queryClient}>
-          <RouterProvider router={router} />
+          <I18nProvider i18n={i18n}>
+            <RouterProvider router={router} />
+          </I18nProvider>
         </QueryClientProvider>
       </React.StrictMode>,
     );

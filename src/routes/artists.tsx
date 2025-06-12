@@ -1,9 +1,11 @@
+import { Trans, useLingui } from '@lingui/react/macro';
 import {
   Outlet,
   createFileRoute,
   redirect,
   useMatch,
 } from '@tanstack/react-router';
+
 import SideNav from '../components/SideNav';
 import SideNavLink from '../components/SideNavLink';
 import View from '../elements/View';
@@ -42,11 +44,12 @@ export const Route = createFileRoute('/artists')({
 function ViewArtists() {
   const { artists } = Route.useLoaderData();
   const match = useMatch({ from: '/artists/$artistID', shouldThrow: false });
+  const { t } = useLingui();
 
   return (
     <View
       sideNav={
-        <SideNav title="Artists">
+        <SideNav title={t`Artists`}>
           {artists.map((artist) => (
             <SideNavLink
               key={artist}
@@ -62,7 +65,9 @@ function ViewArtists() {
         <Outlet />
       ) : (
         <ViewMessage.Notice>
-          <p>No artist selected</p>
+          <p>
+            <Trans>No artist selected</Trans>
+          </p>
         </ViewMessage.Notice>
       )}
     </View>

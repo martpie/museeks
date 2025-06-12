@@ -1,3 +1,4 @@
+import { Trans, useLingui } from '@lingui/react/macro';
 import {
   Link,
   createFileRoute,
@@ -10,8 +11,8 @@ import TracksList from '../components/TracksList';
 import * as ViewMessage from '../elements/ViewMessage';
 import type { Track } from '../generated/typings';
 import useFilteredTracks from '../hooks/useFilteredTracks';
+import useGlobalTrackListStatus from '../hooks/useGlobalTrackListStatus';
 import useInvalidate from '../hooks/useInvalidate';
-import useViewStatus from '../hooks/useViewStatus';
 import config from '../lib/config';
 import database from '../lib/database';
 import PlaylistsAPI from '../stores/PlaylistsAPI';
@@ -47,12 +48,13 @@ function ViewPlaylistDetails() {
   const { playlistTracks, tracksDensity } = Route.useLoaderData();
   const { playlists } = useLoaderData({ from: '/playlists' });
   const { playlistID } = Route.useParams();
+  const { t } = useLingui();
 
   const invalidate = useInvalidate();
 
   const search = useLibraryStore((state) => state.search);
   const filteredTracks = useFilteredTracks(playlistTracks);
-  useViewStatus(filteredTracks);
+  useGlobalTrackListStatus(filteredTracks);
 
   const queueOrigin = useMemo(() => {
     return { type: 'playlist', playlistID } satisfies QueueOrigin;
@@ -71,7 +73,7 @@ function ViewPlaylistDetails() {
   const extraContextMenu = useMemo(() => {
     return [
       {
-        label: 'Remove from playlist',
+        label: t`Remove from playlist`,
         action: async (selectedTracks: Set<string>) => {
           await PlaylistsAPI.removeTracks(
             playlistID,
@@ -81,17 +83,21 @@ function ViewPlaylistDetails() {
         },
       },
     ];
-  }, [playlistID, invalidate]);
+  }, [playlistID, invalidate, t]);
 
   if (playlistTracks.length === 0) {
     return (
       <ViewMessage.Notice>
-        <p>Empty playlist</p>
+        <p>
+          <Trans>Empty playlist</Trans>
+        </p>
         <ViewMessage.Sub>
-          You can add tracks from the{' '}
-          <Link to="/library" draggable={false}>
-            library view
-          </Link>
+          <Trans>
+            You can add tracks from the{' '}
+            <Link to="/library" draggable={false}>
+              library view
+            </Link>
+          </Trans>
         </ViewMessage.Sub>
       </ViewMessage.Notice>
     );
@@ -100,7 +106,9 @@ function ViewPlaylistDetails() {
   if (filteredTracks.length === 0 && search.length > 0) {
     return (
       <ViewMessage.Notice>
-        <p>Your search returned no results</p>
+        <p>
+          <Trans>Your search returned no results</Trans>
+        </p>
       </ViewMessage.Notice>
     );
   }
@@ -109,12 +117,16 @@ function ViewPlaylistDetails() {
   if (filteredTracks && filteredTracks.length === 0) {
     return (
       <ViewMessage.Notice>
-        <p>Empty playlist</p>
+        <p>
+          <Trans>Empty playlist</Trans>
+        </p>
         <ViewMessage.Sub>
-          You can add tracks from the{' '}
-          <Link to="/library" draggable={false}>
-            library view
-          </Link>
+          <Trans>
+            You can add tracks from the{' '}
+            <Link to="/library" draggable={false}>
+              library view
+            </Link>
+          </Trans>
         </ViewMessage.Sub>
       </ViewMessage.Notice>
     );
