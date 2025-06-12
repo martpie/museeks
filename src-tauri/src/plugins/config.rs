@@ -55,6 +55,7 @@ pub enum TrackViewDensity {
 #[derive(Serialize, Deserialize, Debug, Clone, TS)]
 #[ts(export, export_to = "../../src/generated/typings.ts")]
 pub struct Config {
+    pub language: String,
     pub theme: String,
     pub audio_volume: f32,
     pub audio_playback_rate: Option<f32>,
@@ -79,6 +80,7 @@ pub const SYSTEM_THEME: &str = "__system";
 impl Config {
     pub fn default() -> Self {
         Config {
+            language: "en".to_owned(),
             theme: SYSTEM_THEME.to_owned(),
             audio_volume: 1.0,
             audio_playback_rate: Some(1.0),

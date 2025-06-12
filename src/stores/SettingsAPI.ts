@@ -9,6 +9,7 @@ import config from '../lib/config';
 import { getTheme } from '../lib/themes';
 import { logAndNotifyError } from '../lib/utils';
 
+import { loadTranslation } from '../lib/i18n';
 import useLibraryStore from './useLibraryStore';
 import useToastsStore from './useToastsStore';
 
@@ -39,6 +40,11 @@ async function init(then: () => void): Promise<void> {
   await checkForLibraryRefresh().catch(logAndNotifyError);
   then();
 }
+
+const setLanguage = async (language: Config['language']): Promise<void> => {
+  await loadTranslation(language);
+  await config.set('language', language);
+};
 
 const setTheme = async (themeID: string): Promise<void> => {
   await config.set('theme', themeID);
@@ -205,6 +211,7 @@ async function toggleFollowPlayingTrack(value: boolean): Promise<void> {
 // Should we use something else to harmonize between zustand and non-store APIs?
 const SettingsAPI = {
   init,
+  setLanguage,
   setTheme,
   applyThemeToUI,
   setTracksDensity,

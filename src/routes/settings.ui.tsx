@@ -5,8 +5,10 @@ import * as Setting from '../components/Setting';
 import CheckboxSetting from '../components/SettingCheckbox';
 import type { Config, DefaultView } from '../generated/typings';
 import useInvalidate, { useInvalidateCallback } from '../hooks/useInvalidate';
+import { loadTranslation } from '../lib/i18n';
 import { themes } from '../lib/themes';
 import SettingsAPI from '../stores/SettingsAPI';
+import { ALL_LOCALES } from '../translations/locales';
 
 export const Route = createFileRoute('/settings/ui')({
   component: ViewSettingsUI,
@@ -35,6 +37,25 @@ function ViewSettingsUI() {
             return (
               <option key={theme._id} value={theme._id}>
                 {theme.name} {/** TODO: translate that */}
+              </option>
+            );
+          })}
+        </Setting.Select>
+      </Setting.Section>
+      <Setting.Section>
+        <Setting.Select
+          label={t`Language`}
+          id="language"
+          value={config.language}
+          onChange={(e) => {
+            SettingsAPI.setLanguage(e.target.value).then(invalidate);
+          }}
+        >
+          {ALL_LOCALES.map((locale) => {
+            return (
+              <option key={locale.code} value={locale.code}>
+                {locale.label}{' '}
+                {locale.englishLabel && `(${locale.englishLabel})`}
               </option>
             );
           })}

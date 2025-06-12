@@ -1,23 +1,25 @@
 import { defineConfig } from '@lingui/cli';
 
-const DEFAULT_LOCALE = 'en';
+import { ALL_LOCALES } from './src/translations/locales';
 
-// Are you looking to add support for a language?
-// 1. Add the language name below
-// 2. Run bun run intl-extract
-// 3. Edit the generated file in src/translations/<locale>.po
-// 4. Profit
-const SUPPORTED_LOCALES = [DEFAULT_LOCALE];
+const LOCALES_CODE = ALL_LOCALES.map((l) => l.code);
+const [DEFAULT_LOCALE_CODE] = LOCALES_CODE;
+
+if (DEFAULT_LOCALE_CODE !== 'en') {
+  throw new Error(
+    `Default locale must be 'en', but got '${DEFAULT_LOCALE_CODE}'. Please ensure the locales configuration is correct`,
+  );
+}
 
 /**
  * Lingui Config - https://lingui.dev/ref/conf
  */
 export default defineConfig({
-  sourceLocale: DEFAULT_LOCALE,
+  sourceLocale: DEFAULT_LOCALE_CODE,
   fallbackLocales: {
-    default: DEFAULT_LOCALE,
+    default: DEFAULT_LOCALE_CODE,
   },
-  locales: SUPPORTED_LOCALES,
+  locales: LOCALES_CODE,
   catalogs: [
     {
       name: 'main',
