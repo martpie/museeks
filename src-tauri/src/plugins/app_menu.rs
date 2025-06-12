@@ -46,7 +46,8 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
             let version = package_info.version.to_string().into();
             let resource_path: PathBuf = app_handle.path().resource_dir().unwrap();
             let icon_path = resource_path.join("icons").join("icon.png");
-            let icon = Image::from_path(icon_path).unwrap();
+            let icon = Image::from_path(&icon_path)
+                .expect(&format!("Failed to load icon from path: {:?}", &icon_path));
 
             let about_metadata = AboutMetadataBuilder::new()
                 .version(version)

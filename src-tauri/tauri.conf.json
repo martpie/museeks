@@ -33,7 +33,7 @@
   },
   "bundle": {
     "active": true,
-    "targets": ["dmg", "nsis", "appimage", "deb", "rpm"],
+    "targets": ["deb"],
     "category": "Music",
     "icon": [
       "icons/32x32.png",
