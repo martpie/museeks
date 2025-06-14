@@ -25,7 +25,11 @@
     "test:lint:fix": "biome check --write .",
     "test:circdeps": "madge --circular --extensions ts --extensions tsx .",
     "package:checksums": "bash scripts/checksum.sh",
-    "clippy": "cargo clippy --manifest-path src-tauri/Cargo.toml"
+    "clippy": "cargo clippy --manifest-path src-tauri/Cargo.toml",
+    "release": "bash scripts/release.sh",
+    "release:flatpak:build": "flatpak-builder --force-clean --user --disable-cache --repo release/flatpak-repo release/flatpak release/flatpak-builder.yaml",
+    "release:flatpak:install": "bun run release:flatpak:build --install",
+    "release:flatpak:package": "flatpak build-bundle release/flatpak-repo release/museeks.flatpak io.museeks.museeks"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",
