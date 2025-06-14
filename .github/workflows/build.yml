@@ -83,7 +83,7 @@ jobs:
       fail-fast: false
       matrix:
         # - include
-        platform: [macos-latest, ubuntu-22.04, windows-latest]
+        platform: [macos-latest, windows-latest, ubuntu-22.04, 'ubuntu-22.04-arm']
 
     runs-on: ${{ matrix.platform }}
     steps:
@@ -100,7 +100,7 @@ jobs:
           targets: ${{ matrix.platform == 'macos-latest' && 'aarch64-apple-darwin,x86_64-apple-darwin' || '' }}
 
       - name: Install native dependencies (ubuntu only)
-        if: matrix.platform == 'ubuntu-22.04'
+        if: matrix.platform == 'ubuntu-22.04' || matrix.platform == 'ubuntu-22.04-arm'
         run: |
           sudo apt-get update
           sudo apt-get install -y libgtk-3-dev libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf
@@ -131,6 +131,16 @@ jobs:
             ${{ github.workspace }}/src-tauri/target/release/bundle/**/*.deb
             ${{ github.workspace }}/src-tauri/target/release/bundle/**/*.rpm
             ${{ github.workspace }}/src-tauri/target/release/bundle/**/*.AppImage
+
+      - uses: actions/upload-artifact@v4
+        if: matrix.platform == 'ubuntu-22.04'
+        with:
+          name: binaries-linux (arm)
+          path: |
+            ${{ github.workspace }}/src-tauri/target/release/bundle/**/*.deb
+            ${{ github.workspace }}/src-tauri/target/release/bundle/**/*.rpm
+            ${{ github.workspace }}/src-tauri/target/release/bundle/**/*.AppImage
+
 
       - uses: actions/upload-artifact@v4
         if: matrix.platform == 'macos-latest'
