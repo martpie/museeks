@@ -19,6 +19,8 @@ finish-args:
   - --share=network
   # Access to the user's home directory for config
   - --filesystem=~/.config/Museeks
+  # Ensure the app can play audio
+  - --socket=pulseaudio
   # Webview is black otherwise, may be a Wayland issue
   - --env=WEBKIT_DISABLE_COMPOSITING_MODE=1
 
