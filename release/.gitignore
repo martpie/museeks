@@ -1,0 +1,4 @@
+*
+!.gitignore
+!flatpak.metainfo.xml
+!flatpak-builder.yaml

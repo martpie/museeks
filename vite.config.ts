@@ -1,4 +1,4 @@
-import { TanStackRouterVite as router } from '@tanstack/router-plugin/vite';
+import { tanstackRouter } from '@tanstack/router-plugin/vite';
 import react from '@vitejs/plugin-react';
 import browserslist from 'browserslist';
 import { browserslistToTargets } from 'lightningcss';
@@ -8,7 +8,7 @@ import svgr from 'vite-plugin-svgr';
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
-    router({
+    tanstackRouter({
       target: 'react',
       generatedRouteTree: './src/generated/route-tree.ts',
     }),
@@ -40,7 +40,7 @@ export default defineConfig({
     strictPort: true,
     watch: {
       // 3. tell vite to ignore watching `src-tauri`
-      ignored: ['**/src-tauri/**'],
+      ignored: ['**/src-tauri/**, **/release/**'],
     },
   },
 });

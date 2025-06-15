@@ -5,6 +5,7 @@ mod libs;
 mod plugins;
 
 use libs::file_associations::setup_file_associations;
+use libs::init::init;
 use libs::utils::get_theme_from_name;
 use log::{LevelFilter, info};
 use plugins::config::{ConfigManager, get_storage_dir};
@@ -17,6 +18,16 @@ use tauri_plugin_window_state::StateFlags;
  * The beast
  */
 fn main() {
+    match init() {
+        Ok(_) => {
+            println!("Initialization successful");
+        }
+        Err(e) => {
+            println!("Error during initialization: {}", e);
+            std::process::exit(1);
+        }
+    }
+
     tauri::Builder::default()
         // Logging must be setup first, otherwise the logs won't be captured
         // while setting up the other plugins.

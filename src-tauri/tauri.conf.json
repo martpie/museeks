@@ -1,7 +1,8 @@
 {
   "productName": "Museeks",
+  "mainBinaryName": "museeks",
   "version": "0.21.1",
-  "identifier": "Museeks",
+  "identifier": "io.museeks.desktop",
   "build": {
     "beforeDevCommand": "bun run dev",
     "devUrl": "http://localhost:1420",
@@ -33,7 +34,7 @@
   },
   "bundle": {
     "active": true,
-    "targets": ["dmg", "nsis", "appimage", "deb", "rpm"],
+    "targets": ["deb"],
     "category": "Music",
     "icon": [
       "icons/32x32.png",
