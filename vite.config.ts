@@ -49,7 +49,7 @@ export default defineConfig({
     strictPort: true,
     watch: {
       // 3. tell vite to ignore watching `src-tauri`
-      ignored: ['**/src-tauri/**'],
+      ignored: ['**/src-tauri/**, **/release/**'],
     },
   },
 });
