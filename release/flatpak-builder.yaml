@@ -1,4 +1,4 @@
-id: io.museeks.museeks
+id: io.museeks.desktop
 
 runtime: org.gnome.Platform
 runtime-version: '46'
@@ -29,8 +29,9 @@ modules:
     buildsystem: simple
     sources:
       - type: file
-        url: https://github.com/martpie/museeks/releases/download/0.21.1/Museeks_0.21.1_amd64.deb
-        sha256: e141cc87cad950318d973e7d10c193815fe37dde8af51c9756932bdac8a73d44
+        # url: https://github.com/martpie/museeks/releases/download/0.21.1/Museeks_0.21.1_amd64.deb
+        # sha256: e141cc87cad950318d973e7d10c193815fe37dde8af51c9756932bdac8a73d44
+        path: ../src-tauri/target/release/bundle/deb/Museeks_0.21.1_amd64.deb
       - type: file
         path: flatpak.metainfo.xml
     build-commands:
@@ -49,11 +50,11 @@ modules:
       - find /app/lib/Museeks -type f -exec chmod 644 {} \;
 
       # Copy desktop file + ensure the right icon is set
-      - sed -i 's/^Icon=.*/Icon=io.museeks.museeks/' deb-extracted/usr/share/applications/Museeks.desktop
-      - install -Dm644 deb-extracted/usr/share/applications/Museeks.desktop /app/share/applications/io.museeks.museeks.desktop
+      - sed -i 's/^Icon=.*/Icon=io.museeks.desktop/' deb-extracted/usr/share/applications/Museeks.desktop
+      - install -Dm644 deb-extracted/usr/share/applications/Museeks.desktop /app/share/applications/io.museeks.desktop.desktop
 
       # Copy icons
-      - install -Dm644 deb-extracted/usr/share/icons/hicolor/128x128/apps/museeks.png /app/share/icons/hicolor/128x128/apps/io.museeks.museeks.png
-      - install -Dm644 deb-extracted/usr/share/icons/hicolor/32x32/apps/museeks.png /app/share/icons/hicolor/32x32/apps/io.museeks.museeks.png
-      - install -Dm644 deb-extracted/usr/share/icons/hicolor/256x256@2/apps/museeks.png /app/share/icons/hicolor/256x256@2/apps/io.museeks.museeks.png
-      - install -Dm644 flatpak.metainfo.xml /app/share/metainfo/io.museeks.museeks.metainfo.xml
+      - install -Dm644 deb-extracted/usr/share/icons/hicolor/128x128/apps/museeks.png /app/share/icons/hicolor/128x128/apps/io.museeks.desktop.png
+      - install -Dm644 deb-extracted/usr/share/icons/hicolor/32x32/apps/museeks.png /app/share/icons/hicolor/32x32/apps/io.museeks.desktop.png
+      - install -Dm644 deb-extracted/usr/share/icons/hicolor/256x256@2/apps/museeks.png /app/share/icons/hicolor/256x256@2/apps/io.museeks.desktop.png
+      - install -Dm644 flatpak.metainfo.xml /app/share/metainfo/io.museeks.desktop.metainfo.xml
