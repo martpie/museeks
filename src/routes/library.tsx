@@ -1,3 +1,4 @@
+import { Trans } from '@lingui/react/macro';
 import { useQuery } from '@tanstack/react-query';
 import { Link, createFileRoute } from '@tanstack/react-router';
 import { useMemo } from 'react';
@@ -6,7 +7,7 @@ import TracksList from '../components/TracksList';
 import View from '../elements/View';
 import * as ViewMessage from '../elements/ViewMessage';
 import useFilteredTracks from '../hooks/useFilteredTracks';
-import useViewStatus from '../hooks/useViewStatus';
+import useGlobalTrackListStatus from '../hooks/useGlobalTrackListStatus';
 import config from '../lib/config';
 import database from '../lib/database';
 import queryClient from '../lib/query-client';
@@ -55,14 +56,16 @@ function ViewLibrary() {
   });
 
   const filteredTracks = useFilteredTracks(tracks ?? [], sortBy, sortOrder);
-  useViewStatus(filteredTracks);
+  useGlobalTrackListStatus(filteredTracks);
 
-  const getLibraryComponent = useMemo(() => {
+  const content = useMemo(() => {
     // Refreshing library
     if (isLoading) {
       return (
         <ViewMessage.Notice>
-          <p>Loading library...</p>
+          <p>
+            <Trans>Loading library...</Trans>
+          </p>
         </ViewMessage.Notice>
       );
     }
@@ -71,8 +74,12 @@ function ViewLibrary() {
     if (refreshing) {
       return (
         <ViewMessage.Notice>
-          <p>Your library is being scanned =)</p>
-          <ViewMessage.Sub>hold on...</ViewMessage.Sub>
+          <p>
+            <Trans>Your library is being scanned =)</Trans>
+          </p>
+          <ViewMessage.Sub>
+            <Trans>hold on...</Trans>
+          </ViewMessage.Sub>
         </ViewMessage.Notice>
       );
     }
@@ -81,12 +88,16 @@ function ViewLibrary() {
     if (filteredTracks.length === 0 && search === '') {
       return (
         <ViewMessage.Notice>
-          <p>There is no music in your library :(</p>
+          <p>
+            <Trans>There is no music in your library :(</Trans>
+          </p>
           <ViewMessage.Sub>
-            <span>you can</span>{' '}
-            <Link to="/settings/library" draggable={false}>
-              add your music here
-            </Link>
+            <Trans>
+              you can{' '}
+              <Link to="/settings/library" draggable={false}>
+                add your music here
+              </Link>
+            </Trans>
           </ViewMessage.Sub>
         </ViewMessage.Notice>
       );
@@ -96,7 +107,9 @@ function ViewLibrary() {
     if (filteredTracks.length === 0) {
       return (
         <ViewMessage.Notice>
-          <p>Your search returned no results</p>
+          <p>
+            <Trans>Your search returned no results</Trans>
+          </p>
         </ViewMessage.Notice>
       );
     }
@@ -114,5 +127,5 @@ function ViewLibrary() {
     );
   }, [search, refreshing, filteredTracks, playlists, tracksDensity, isLoading]);
 
-  return <View>{getLibraryComponent}</View>;
+  return <View>{content}</View>;
 }

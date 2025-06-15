@@ -1,3 +1,4 @@
+import { Trans, useLingui } from '@lingui/react/macro';
 import { createFileRoute, useLoaderData } from '@tanstack/react-router';
 
 import * as Setting from '../components/Setting';
@@ -7,8 +8,10 @@ import ExternalButton from '../elements/ExternalButton';
 import ExternalLink from '../elements/ExternalLink';
 import Flexbox from '../elements/Flexbox';
 import Heart from '../elements/Heart';
+import List from '../elements/List';
 import useInvalidate, { useInvalidateCallback } from '../hooks/useInvalidate';
 import SettingsAPI from '../stores/SettingsAPI';
+import { NON_DEFAULT_LOCALES } from '../translations/locales';
 
 export const Route = createFileRoute('/settings/about')({
   component: ViewSettingsAbout,
@@ -20,11 +23,14 @@ function ViewSettingsAbout() {
   });
 
   const invalidate = useInvalidate();
+  const { t } = useLingui();
 
   return (
     <div className="setting setting-about">
       <Setting.Section>
-        <Setting.Title>About Museeks</Setting.Title>
+        <Setting.Title>
+          <Trans>About Museeks</Trans>
+        </Setting.Title>
         <Setting.Description>
           Museeks {version}
           {' - '}
@@ -35,13 +41,11 @@ function ViewSettingsAbout() {
           <ExternalLink
             href={`https://github.com/martpie/museeks/releases/tag/${version}`}
             type="url"
-          >
-            release notes
-          </ExternalLink>{' '}
+          >{t`release notes`}</ExternalLink>
         </Setting.Description>
         <CheckboxSetting
           slug="update"
-          title="Automatically check for updates"
+          title={t`Automatically check for updates`}
           value={config.auto_update_checker}
           onChange={useInvalidateCallback(SettingsAPI.toggleAutoUpdateChecker)}
         />
@@ -51,47 +55,69 @@ function ViewSettingsAbout() {
               SettingsAPI.checkForUpdate().then(invalidate);
             }}
           >
-            Check for update
+            <Trans>Check for update</Trans>
           </Button>
         </div>
       </Setting.Section>
       <Setting.Section>
-        <Setting.Title>Contributors</Setting.Title>
+        <Setting.Title>
+          <Trans>Contributors</Trans>
+        </Setting.Title>
         <Setting.Description>
-          Made with <Heart /> by Pierre de la Martinière (
-          <ExternalLink href="https://martpie.io" type="url">
-            @martpie
-          </ExternalLink>
-          ) and a bunch of{' '}
-          <ExternalLink
-            href="https://github.com/martpie/museeks/graphs/contributors"
-            type="url"
-          >
-            great people
-          </ExternalLink>
+          <Trans>
+            Made with <Heart /> by Pierre de la Martinière (
+            <ExternalLink href="https://martpie.io" type="url">
+              martpie.io
+            </ExternalLink>
+            ) and a bunch of{' '}
+            <ExternalLink
+              href="https://github.com/martpie/museeks/graphs/contributors"
+              type="url"
+            >
+              great people
+            </ExternalLink>
+          </Trans>
           .
+        </Setting.Description>
+        <Setting.Description>
+          <Trans>Translations:</Trans>
+        </Setting.Description>
+        <List>
+          {NON_DEFAULT_LOCALES.map((locale) => (
+            <List.Item
+              key={locale.code}
+              label={`${locale.label}:`}
+              content={locale.contributors.join(', ')}
+            />
+          ))}
+        </List>
+      </Setting.Section>
+      <Setting.Section>
+        <Setting.Title>
+          <Trans>Report issue / Ask for a feature</Trans>
+        </Setting.Title>
+        <Setting.Description>
+          <Trans>
+            Bugs happen. Please, do not hesitate to report them or to ask for
+            features you would like to see, using the{' '}
+            <ExternalLink
+              href="http://github.com/martpie/Museeks/issues"
+              type="url"
+            >
+              issue tracker
+            </ExternalLink>
+            .
+          </Trans>
         </Setting.Description>
       </Setting.Section>
       <Setting.Section>
-        <Setting.Title>Report issue / Ask for a feature</Setting.Title>
-        <Setting.Description>
-          Bugs happen. Please, do not hesitate to report them or to ask for
-          features you would like to see, using the{' '}
-          <ExternalLink
-            href="http://github.com/martpie/Museeks/issues"
-            type="url"
-          >
-            issue tracker
-          </ExternalLink>
-          .
-        </Setting.Description>
-      </Setting.Section>
-      <Setting.Section>
-        <Setting.Title>Internals</Setting.Title>
+        <Setting.Title>
+          <Trans>Internals</Trans>
+        </Setting.Title>
         <Setting.Description>Tauri {tauriVersion}</Setting.Description>
         <Flexbox gap={4}>
           <ExternalButton href={appStorageDir} type="filedir">
-            Open storage directory
+            {t`Open storage directory`}
           </ExternalButton>
         </Flexbox>
       </Setting.Section>

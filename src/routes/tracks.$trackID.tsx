@@ -1,3 +1,4 @@
+import { Trans, useLingui } from '@lingui/react/macro';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
 import type React from 'react';
 import { useCallback, useState } from 'react';
@@ -40,6 +41,7 @@ export const Route = createFileRoute('/tracks/$trackID')({
 function ViewTrackDetails() {
   const { track } = Route.useLoaderData();
   const invalidate = useInvalidate();
+  const { t } = useLingui();
 
   const [formData, setFormData] = useState<TrackMutation>({
     title: track.title ?? '',
@@ -78,10 +80,12 @@ function ViewTrackDetails() {
   return (
     <View hasPadding layout="centered">
       <form className={styles.detailsForm} onSubmit={handleSubmit}>
-        <h2>Edit &quot;{track.title}&quot;</h2>
+        <h2>
+          <Trans>Edit "{track.title}"</Trans>
+        </h2>
         <Setting.Section>
           <Setting.Input
-            label="Title"
+            label={t`Title`}
             id="title"
             name="title"
             type="text"
@@ -93,7 +97,7 @@ function ViewTrackDetails() {
         </Setting.Section>
         <Setting.Section>
           <Setting.Input
-            label="Album"
+            label={t`Album`}
             id="album"
             name="album"
             type="text"
@@ -105,7 +109,7 @@ function ViewTrackDetails() {
         </Setting.Section>
         <Setting.Section>
           <Setting.Input
-            label="Album Artist"
+            label={t`Album Artist`}
             id="album_artist"
             name="album_artist"
             type="text"
@@ -120,8 +124,8 @@ function ViewTrackDetails() {
         </Setting.Section>
         <Setting.Section>
           <Setting.Input
-            label="Track Artists"
-            description="You can add multiple artists with commas"
+            label={t`Track Artists`}
+            description={t`You can add multiple artists with commas`}
             id="artist"
             name="artist"
             type="text"
@@ -136,9 +140,9 @@ function ViewTrackDetails() {
         </Setting.Section>
         <Setting.Section>
           <Setting.Input
-            label="Genre"
+            label={t`Genre`}
+            description={t`You can add multiple genres with commas`}
             id="genre"
-            description="You can add multiple genres with commas"
             name="genre"
             type="text"
             value={formData.genres.join(DELIMITER)}
@@ -152,7 +156,7 @@ function ViewTrackDetails() {
         </Setting.Section>
         <Setting.Section>
           <Setting.Input
-            label="Year"
+            label={t`Year`}
             id="year"
             name="year"
             type="number"
@@ -167,7 +171,7 @@ function ViewTrackDetails() {
         <Setting.Section>
           <Flexbox direction="horizontal" gap={16}>
             <Setting.Input
-              label="Track Nº"
+              label={t`Track Nº`}
               id="track"
               name="track"
               type="number"
@@ -182,7 +186,7 @@ function ViewTrackDetails() {
               }}
             />
             <Setting.Input
-              label="Of"
+              label={t`Of`}
               id="trackOf"
               name="trackOf"
               type="number"
@@ -201,7 +205,7 @@ function ViewTrackDetails() {
         <Setting.Section>
           <Flexbox direction="horizontal" gap={16}>
             <Setting.Input
-              label="Disk Nº"
+              label={t`Disk Nº`}
               id="disk"
               name="disk"
               type="number"
@@ -216,7 +220,7 @@ function ViewTrackDetails() {
               }}
             />
             <Setting.Input
-              label="Of"
+              label={t`Of`}
               id="diskOf"
               name="diskOf"
               type="number"
@@ -234,7 +238,7 @@ function ViewTrackDetails() {
         </Setting.Section>
         <Setting.Section>
           <Setting.Input
-            label="Duration"
+            label={t`Duration`}
             id="duration"
             type="text"
             disabled
@@ -243,7 +247,7 @@ function ViewTrackDetails() {
         </Setting.Section>
         <Setting.Section>
           <Setting.Input
-            label="Path"
+            label={t`Path`}
             id="path"
             type="text"
             disabled
@@ -252,14 +256,18 @@ function ViewTrackDetails() {
         </Setting.Section>
         <div className={styles.detailsActions}>
           <Button type="button" onClick={handleCancel}>
-            Cancel
+            <Trans>Cancel</Trans>
           </Button>
-          <Button type="submit">Save</Button>
+          <Button type="submit">
+            <Trans>Save</Trans>
+          </Button>
         </div>
         <Separator />
         <p>
-          Clicking &quot;save&quot; will only update the library data, but will
-          not save it to the original file.
+          <Trans>
+            Clicking "save" will only update the library data, but will not save
+            it to the original file.
+          </Trans>
         </p>
       </form>
     </View>

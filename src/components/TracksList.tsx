@@ -1,9 +1,12 @@
+import { plural } from '@lingui/core/macro';
+import { useLingui } from '@lingui/react/macro';
 import {
   Menu,
   MenuItem,
   PredefinedMenuItem,
   Submenu,
 } from '@tauri-apps/api/menu';
+import { ask } from '@tauri-apps/plugin-dialog';
 import { revealItemInDir } from '@tauri-apps/plugin-opener';
 import type React from 'react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
@@ -88,6 +91,7 @@ export default function TracksList(props: Props) {
   const trackPlayingID = usePlayingTrackID();
   const playerAPI = usePlayerAPI();
   const libraryAPI = useLibraryAPI();
+  const { t } = useLingui();
 
   const [selectedTracks, setSelectedTracks] = useState<Set<string>>(new Set());
 
@@ -234,10 +238,10 @@ export default function TracksList(props: Props) {
       // Playlist sub-menu
       const playlistSubMenu = await Promise.all([
         MenuItem.new({
-          text: 'Create new playlist...',
+          text: t`Create new playlist...`,
           async action() {
             await PlaylistsAPI.create(
-              'New playlist',
+              t`New playlist`,
               Array.from(selectedTracks),
             );
             invalidate();
@@ -250,7 +254,7 @@ export default function TracksList(props: Props) {
 
       if (shownPlaylists.length === 0) {
         playlistSubMenu.push(
-          await MenuItem.new({ text: 'No playlists', enabled: false }),
+          await MenuItem.new({ text: t`No playlists`, enabled: false }),
         );
       } else {
         playlistSubMenu.push(
@@ -273,10 +277,10 @@ export default function TracksList(props: Props) {
       const menuItemsBuilder = [
         // Tracks Selected indicator
         MenuItem.new({
-          text:
-            selectedCount > 1
-              ? `${selectedCount} tracks selected`
-              : `${selectedCount} track selected`,
+          text: plural(selectedCount, {
+            one: '# track selected',
+            other: '# tracks selected',
+          }),
           enabled: false,
         }),
         PredefinedMenuItem.new({
@@ -285,13 +289,13 @@ export default function TracksList(props: Props) {
         }),
         // Queue Management
         MenuItem.new({
-          text: 'Add to queue',
+          text: t`Add to queue`,
           action() {
             playerAPI.addInQueue(Array.from(selectedTracks));
           },
         }),
         MenuItem.new({
-          text: 'Play next',
+          text: t`Play next`,
           action() {
             playerAPI.addNextInQueue(Array.from(selectedTracks));
           },
@@ -301,7 +305,7 @@ export default function TracksList(props: Props) {
         }),
         // Playlist Management -> to be moved elsewhere
         Submenu.new({
-          text: 'Add to playlist',
+          text: t`Add to playlist`,
           items: playlistSubMenu,
         }),
         PredefinedMenuItem.new({
@@ -311,14 +315,14 @@ export default function TracksList(props: Props) {
         // Quick-search
         ...track.artists.map((artist) =>
           MenuItem.new({
-            text: `Search for "${artist}" `,
+            text: t`Search for "${artist}"`,
             action: () => {
               libraryAPI.search(artist);
             },
           }),
         ),
         MenuItem.new({
-          text: `Search for "${track.album}"`,
+          text: t`Search for "${track.album}"`,
           action() {
             libraryAPI.search(track.album);
           },
@@ -341,7 +345,7 @@ export default function TracksList(props: Props) {
         ...[
           PredefinedMenuItem.new({ item: 'Separator' }),
           MenuItem.new({
-            text: 'Edit track',
+            text: t`Edit track`,
             action: () => {
               navigate({
                 to: '/tracks/$trackID',
@@ -351,16 +355,28 @@ export default function TracksList(props: Props) {
           }),
           PredefinedMenuItem.new({ item: 'Separator' }),
           MenuItem.new({
-            text: 'Show in file manager',
+            text: t`Show in file manager`,
             action: async () => {
               await revealItemInDir(track.path);
             },
           }),
           MenuItem.new({
-            text: 'Remove from library',
+            text: t`Remove from library`,
             action: async () => {
-              await libraryAPI.remove(Array.from(selectedTracks));
-              invalidate();
+              const confirm = await ask(
+                t`Are you sure you want to remove ${selectedTracks.size} track(s) from your library?`,
+                {
+                  title: t`Remove tracks`,
+                  kind: 'warning',
+                  cancelLabel: t`Cancel`,
+                  okLabel: t`Remove`,
+                },
+              );
+
+              if (confirm) {
+                await libraryAPI.remove(Array.from(selectedTracks));
+                invalidate();
+              }
             },
           }),
         ],
@@ -382,6 +398,7 @@ export default function TracksList(props: Props) {
       libraryAPI,
       invalidate,
       extraContextMenu,
+      t,
     ],
   );
 

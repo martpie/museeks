@@ -1,3 +1,4 @@
+import { useLingui } from '@lingui/react/macro';
 import Icon from 'react-fontawesome';
 
 import usePlayerStore, { usePlayerAPI } from '../stores/usePlayerStore';
@@ -9,13 +10,14 @@ import styles from './PlayerControls.module.css';
 export default function PlayerControls() {
   const playerAPI = usePlayerAPI();
   const playerStatus = usePlayerStore((state) => state.playerStatus);
+  const { t } = useLingui();
 
   return (
     <div className={styles.playerControls}>
       <button
         type="button"
         className={styles.control}
-        title="Previous"
+        title={t`Previous`}
         onClick={playerAPI.previous}
         data-museeks-action
       >
@@ -24,7 +26,7 @@ export default function PlayerControls() {
       <button
         type="button"
         className={`${styles.control} ${styles.play}`}
-        title={playerStatus === PlayerStatus.PLAY ? 'Pause' : 'Play'}
+        title={playerStatus === PlayerStatus.PLAY ? t`Pause` : t`Play`}
         onClick={playerAPI.playPause}
         data-museeks-action
       >
@@ -36,7 +38,7 @@ export default function PlayerControls() {
       <button
         type="button"
         className={styles.control}
-        title="Next"
+        title={t`Next`}
         onClick={playerAPI.next}
         data-museeks-action
       >

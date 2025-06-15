@@ -1,10 +1,10 @@
+import { Plural } from '@lingui/react/macro';
 import { useImperativeHandle, useMemo, useRef } from 'react';
 
 import type { TrackGroup } from '../generated/typings';
 import useAllTracks from '../hooks/useAllTracks';
 import { parseDuration } from '../hooks/useFormattedDuration';
 import usePlayingTrackID from '../hooks/usePlayingTrackID';
-import { plural } from '../lib/localization';
 import type { TracksListVirtualizer } from '../types/museeks';
 import Cover from './Cover';
 import TrackRow, { type TrackRowEvents } from './TrackRow';
@@ -109,7 +109,7 @@ function TrackListGroup(props: TracksListGroupProps) {
         <Cover track={tracks[0]} noteSize={5} noBorder />
         <h3 className={styles.tracksGroupLabel}>{label}</h3>
         <div className={styles.tracksGroupGenres}>
-          {tracks.length} {plural('track', tracks.length)},{' '}
+          <Plural value={tracks.length} one="track" other="tracks" />,{' '}
           {parseDuration(duration)}
         </div>
         <div className={styles.tracksGroupGenres}>{genres.join(', ')}</div>

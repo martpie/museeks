@@ -4,16 +4,18 @@ import {
   SortableContext,
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
+import { Trans } from '@lingui/react/macro';
 import { useCallback, useState } from 'react';
 
 import Button from '../elements/Button';
 import type { Track } from '../generated/typings';
 import useDndSensors from '../hooks/useDnDSensors';
-import { getStatus } from '../lib/utils-library';
 import { usePlayerAPI } from '../stores/usePlayerStore';
 import QueueListItem from './QueueListItem';
 
+import { useTrackListStatus } from '../hooks/useGlobalTrackListStatus';
 import styles from './QueueList.module.css';
+import TrackListStatus from './TrackListStatus';
 
 const INITIAL_QUEUE_SIZE = 20;
 const DND_MODIFIERS = [restrictToVerticalAxis];
@@ -33,6 +35,8 @@ export default function QueueList(props: Props) {
   const shownQueue = queue.slice(queueCursor + 1, queueCursor + 1 + queueSize);
   const hiddenQueue = queue.slice(queueCursor + 1 + queueSize);
   const incomingQueue = queue.slice(queueCursor + 1);
+
+  const status = useTrackListStatus(incomingQueue);
 
   // Drag-and-Drop support for reordering the queue
   const sensors = useDndSensors();
@@ -71,10 +75,10 @@ export default function QueueList(props: Props) {
     >
       <div className={styles.queueHeader}>
         <div className={styles.queueHeaderInfos}>
-          {getStatus(incomingQueue)}
+          <TrackListStatus {...status} />
         </div>
         <Button bSize="small" onClick={playerAPI.clearQueue}>
-          clear queue
+          <Trans>clear queue</Trans>
         </Button>
       </div>
       <div className={styles.queueContent}>
@@ -100,7 +104,7 @@ export default function QueueList(props: Props) {
               )
             }
           >
-            See more
+            <Trans>see more</Trans>
           </Button>
         )}
       </div>
