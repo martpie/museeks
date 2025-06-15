@@ -37,7 +37,7 @@ Want more? Open a new issue or 👍 an existing one so we can talk about it.
 
 Binaries/Installers can be found [on the releases page](https://github.com/martpie/museeks/releases).
 
-> [!NOTE]  
+> [!NOTE]
 > Publication of Museeks to package managers is community-maintained. Museeks may be available there (like Homebrew, AUR, etc), but with no guarantee of it being the latest version available.
 
 ### Build (advanced)
@@ -86,11 +86,13 @@ If you still get problems after that, please open an issue :)
 
 If you want to report a bug, first, thanks a lot, that helps us a lot. Please open an issue and mention your OS, your Museeks version, and how to reproduce it. Adding a screen of the console (Menu -> View -> Toggle Developer Tools) is a big help too.
 
-## Contribute
+## Contributing
+
+### Development
 
 - Fork and clone
 - Master may be unstable, checkout to a tag to have a stable state of the app
-- `bun install --frozen-lockfile && bun tauri dev` will launch Tauri and compile the app. Hot reload will work out of the box.
+- `bun install && bun tauri dev` will launch Tauri and compile the app. Hot reload will work out of the box.
 
 Please respect a few rules:
 
@@ -99,3 +101,16 @@ Please respect a few rules:
 - Make sure your build pass
 
 Then open a PR :)
+
+### Translations
+
+- Follow the steps from the previous section
+- Go to `src/translations/locales.ts`
+- Add your language information to the list
+- run `bun run gen:translations`
+- this will create a new file `<your_language_code>.po` in the same folder
+- you can fill the translations from this file :)
+
+Then open a PR :)
+
+ps: translations are in an early stage. If your language has special characteristics, like right-to-left or else, Museeks might not be ready for it yet. Please open an issue so we can discuss it :)
