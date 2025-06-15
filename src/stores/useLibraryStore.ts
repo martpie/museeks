@@ -1,4 +1,3 @@
-import { ask, open } from '@tauri-apps/plugin-dialog';
 import type { StateCreator } from 'zustand';
 import { persist } from 'zustand/middleware';
 
@@ -25,7 +24,6 @@ type LibraryState = API<{
   api: {
     search: (value: string) => void;
     sort: (sortBy: SortBy) => void;
-    add: () => Promise<void>;
     addLibraryFolders: (paths: Array<string>) => Promise<void>;
     removeLibraryFolder: (path: string) => Promise<void>;
     scan: (refresh?: boolean) => Promise<void>;
@@ -84,52 +82,12 @@ const useLibraryStore = createLibraryStore<LibraryState>((set, get) => ({
       set({ sortBy, sortOrder });
     },
 
-    /**
-     * Add tracks to Library
-     */
-    add: async () => {
-      try {
-        const result = await open({
-          multiple: true,
-          directory: true,
-        });
-
-        if (result == null) {
-          return;
-        }
-
-        set({ refreshing: true });
-        await database.importTracks(result);
-      } catch (err) {
-        logAndNotifyError(err);
-      } finally {
-        set({
-          refreshing: false,
-          refresh: { current: 0, total: 0 },
-        });
-      }
-    },
-
     scan: async (
       // Force a refresh of the ID3 tags stored in the DB
       refresh = false,
     ) => {
       try {
         set({ refreshing: true });
-
-        if (refresh) {
-          const confirm = await ask(
-            'All track data will be updated from the base files, but your original files won’t be modified. Any Museeks-specific edits you may have done will be reset.',
-            {
-              title: 'Refresh all tracks?',
-              kind: 'warning',
-            },
-          );
-
-          if (!confirm) {
-            return;
-          }
-        }
 
         const libraryFolders = await config.get('library_folders');
         const scanResult = await database.importTracks(libraryFolders, refresh);
@@ -194,25 +152,10 @@ const useLibraryStore = createLibraryStore<LibraryState>((set, get) => ({
      * remove tracks from library
      */
     remove: async (tracksIDs) => {
-      const confirmed = await ask(
-        `Are you sure you want to remove ${tracksIDs.length} element(s) from your library?`,
-        {
-          title: 'Remove tracks from library?',
-          kind: 'warning',
-          cancelLabel: 'Cancel',
-          okLabel: 'Remove',
-        },
-      );
-
-      if (confirmed) {
-        // button possition, here 'remove'
-        // Remove tracks from the Track collection
-        await database.removeTracks(tracksIDs);
-
-        // That would be great to remove those ids from all the playlists, but it's not easy
-        // and should not cause strange behaviors, all PR for that would be really appreciated
-        // TODO: see if it's possible to remove the IDs from the selected state of TracksList as it "could" lead to strange behaviors
-      }
+      await database.removeTracks(tracksIDs);
+      // That would be great to remove those ids from all the playlists, but it's not easy
+      // and should not cause strange behaviors, all PR for that would be really appreciated
+      // TODO: see if it's possible to remove the IDs from the selected state of TracksList as it "could" lead to strange behaviors
     },
 
     /**
@@ -221,21 +164,9 @@ const useLibraryStore = createLibraryStore<LibraryState>((set, get) => ({
     reset: async () => {
       usePlayerStore.getState().api.stop();
       try {
-        const confirmed = await ask(
-          'All your tracks and playlists will be deleted from Museeks.',
-          {
-            title: 'Reset library?',
-            kind: 'warning',
-            cancelLabel: 'Cancel',
-            okLabel: 'Reset',
-          },
-        );
-
-        if (confirmed) {
-          await database.reset();
-          await config.set('library_folders', []);
-          useToastsStore.getState().api.add('success', 'Library was reset');
-        }
+        await database.reset();
+        await config.set('library_folders', []);
+        useToastsStore.getState().api.add('success', 'Library was reset');
       } catch (err) {
         logAndNotifyError(err);
       }
