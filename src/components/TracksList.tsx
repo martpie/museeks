@@ -6,6 +6,7 @@ import {
   PredefinedMenuItem,
   Submenu,
 } from '@tauri-apps/api/menu';
+import { ask } from '@tauri-apps/plugin-dialog';
 import { revealItemInDir } from '@tauri-apps/plugin-opener';
 import type React from 'react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
@@ -362,8 +363,20 @@ export default function TracksList(props: Props) {
           MenuItem.new({
             text: t`Remove from library`,
             action: async () => {
-              await libraryAPI.remove(Array.from(selectedTracks));
-              invalidate();
+              const confirm = await ask(
+                t`Are you sure you want to remove ${selectedTracks.size} track(s) from your library?`,
+                {
+                  title: t`Remove tracks`,
+                  kind: 'warning',
+                  cancelLabel: t`Cancel`,
+                  okLabel: t`Remove`,
+                },
+              );
+
+              if (confirm) {
+                await libraryAPI.remove(Array.from(selectedTracks));
+                invalidate();
+              }
             },
           }),
         ],

@@ -138,55 +138,75 @@ msgstr "search..."
 msgid "{0, plural, one {track} other {tracks}}"
 msgstr "{0, plural, one {track} other {tracks}}"
 
-#: src/components/TracksList.tsx:240
+#: src/components/TracksList.tsx:241
 msgid "Create new playlist..."
 msgstr "Create new playlist..."
 
-#: src/components/TracksList.tsx:243
+#: src/components/TracksList.tsx:244
 #: src/routes/playlists.tsx:62
 msgid "New playlist"
 msgstr "New playlist"
 
-#: src/components/TracksList.tsx:256
+#: src/components/TracksList.tsx:257
 msgid "No playlists"
 msgstr "No playlists"
 
-#: src/components/TracksList.tsx:279
+#: src/components/TracksList.tsx:280
 msgid "{selectedCount, plural, one {# track selected} other {# tracks selected}}"
 msgstr "{selectedCount, plural, one {# track selected} other {# tracks selected}}"
 
-#: src/components/TracksList.tsx:291
+#: src/components/TracksList.tsx:292
 msgid "Add to queue"
 msgstr "Add to queue"
 
-#: src/components/TracksList.tsx:297
+#: src/components/TracksList.tsx:298
 msgid "Play next"
 msgstr "Play next"
 
-#: src/components/TracksList.tsx:307
+#: src/components/TracksList.tsx:308
 msgid "Add to playlist"
 msgstr "Add to playlist"
 
-#: src/components/TracksList.tsx:317
+#: src/components/TracksList.tsx:318
 msgid "Search for \"{artist}\""
 msgstr "Search for \"{artist}\""
 
 #. placeholder {0}: track.album
-#: src/components/TracksList.tsx:324
+#: src/components/TracksList.tsx:325
 msgid "Search for \"{0}\""
 msgstr "Search for \"{0}\""
 
-#: src/components/TracksList.tsx:347
+#: src/components/TracksList.tsx:348
 msgid "Edit track"
 msgstr "Edit track"
 
-#: src/components/TracksList.tsx:357
+#: src/components/TracksList.tsx:358
 msgid "Show in file manager"
 msgstr "Show in file manager"
 
-#: src/components/TracksList.tsx:363
+#: src/components/TracksList.tsx:364
 msgid "Remove from library"
 msgstr "Remove from library"
+
+#. placeholder {0}: selectedTracks.size
+#: src/components/TracksList.tsx:367
+msgid "Are you sure you want to remove {0} track(s) from your library?"
+msgstr "Are you sure you want to remove {0} track(s) from your library?"
+
+#: src/components/TracksList.tsx:369
+msgid "Remove tracks"
+msgstr "Remove tracks"
+
+#: src/components/TracksList.tsx:371
+#: src/routes/settings.library.tsx:142
+#: src/routes/tracks.$trackID.tsx:259
+msgid "Cancel"
+msgstr "Cancel"
+
+#: src/components/TracksList.tsx:372
+#: src/routes/settings.library.tsx:62
+msgid "Remove"
+msgstr "Remove"
 
 #: src/components/TracksListHeader.tsx:49
 #: src/routes/tracks.$trackID.tsx:88
@@ -360,10 +380,6 @@ msgstr "Files"
 msgid "There are no folders in your library."
 msgstr "There are no folders in your library."
 
-#: src/routes/settings.library.tsx:62
-msgid "Remove"
-msgstr "Remove"
-
 #: src/routes/settings.library.tsx:82
 msgid "Add folder"
 msgstr "Add folder"
@@ -372,35 +388,55 @@ msgstr "Add folder"
 msgid "Scan"
 msgstr "Scan"
 
-#: src/routes/settings.library.tsx:93
+#: src/routes/settings.library.tsx:94
+msgid "All track data will be updated from the base files, but your original files won't be modified. Any Museeks-specific edits you may have done will be reset."
+msgstr "All track data will be updated from the base files, but your original files won't be modified. Any Museeks-specific edits you may have done will be reset."
+
+#: src/routes/settings.library.tsx:96
+msgid "Refresh all tracks?"
+msgstr "Refresh all tracks?"
+
+#: src/routes/settings.library.tsx:105
 msgid "Force the refresh of all tracks tags"
 msgstr "Force the refresh of all tracks tags"
 
-#: src/routes/settings.library.tsx:95
+#: src/routes/settings.library.tsx:107
 msgid "Refresh"
 msgstr "Refresh"
 
-#: src/routes/settings.library.tsx:99
+#: src/routes/settings.library.tsx:111
 msgid "<0>.m3u</0> files will also be imported as playlists."
 msgstr "<0>.m3u</0> files will also be imported as playlists."
 
-#: src/routes/settings.library.tsx:107
+#: src/routes/settings.library.tsx:119
 msgid "Automatically refresh library on startup"
 msgstr "Automatically refresh library on startup"
 
-#: src/routes/settings.library.tsx:114
+#: src/routes/settings.library.tsx:126
 msgid "Danger zone"
 msgstr "Danger zone"
 
-#: src/routes/settings.library.tsx:117
+#: src/routes/settings.library.tsx:129
 msgid "Delete all tracks and playlists from Museeks."
 msgstr "Delete all tracks and playlists from Museeks."
 
-#: src/routes/settings.library.tsx:122
+#: src/routes/settings.library.tsx:134
 msgid "Fully reset the library"
 msgstr "Fully reset the library"
 
-#: src/routes/settings.library.tsx:126
+#: src/routes/settings.library.tsx:138
+msgid "All your tracks and playlists will be deleted from Museeks."
+msgstr "All your tracks and playlists will be deleted from Museeks."
+
+#: src/routes/settings.library.tsx:140
+msgid "Reset library?"
+msgstr "Reset library?"
+
+#: src/routes/settings.library.tsx:143
+msgid "Reset"
+msgstr "Reset"
+
+#: src/routes/settings.library.tsx:152
 msgid "Reset library"
 msgstr "Reset library"
 
@@ -514,10 +550,6 @@ msgstr "Disk Nº"
 #: src/routes/tracks.$trackID.tsx:250
 msgid "Path"
 msgstr "Path"
-
-#: src/routes/tracks.$trackID.tsx:259
-msgid "Cancel"
-msgstr "Cancel"
 
 #: src/routes/tracks.$trackID.tsx:262
 msgid "Save"

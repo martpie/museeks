@@ -1,6 +1,6 @@
 import { Trans, useLingui } from '@lingui/react/macro';
 import { createFileRoute, useLoaderData } from '@tanstack/react-router';
-import { open } from '@tauri-apps/plugin-dialog';
+import { ask, open } from '@tauri-apps/plugin-dialog';
 import { useCallback } from 'react';
 
 import * as Setting from '../components/Setting';
@@ -40,7 +40,7 @@ function ViewSettingsLibrary() {
   }, [libraryAPI.addLibraryFolders, invalidate]);
 
   return (
-    <div className="setting settings-musicfolder">
+    <>
       <Setting.Section>
         <Setting.Title>
           <Trans>Files</Trans>
@@ -89,7 +89,19 @@ function ViewSettingsLibrary() {
           </Button>
           <Button
             disabled={isLibraryRefreshing}
-            onClick={useInvalidateCallback(() => libraryAPI.scan(true))}
+            onClick={useInvalidateCallback(async () => {
+              const confirm = await ask(
+                t`All track data will be updated from the base files, but your original files won't be modified. Any Museeks-specific edits you may have done will be reset.`,
+                {
+                  title: t`Refresh all tracks?`,
+                  kind: 'warning',
+                },
+              );
+
+              if (confirm) {
+                libraryAPI.scan(true);
+              }
+            })}
             title={t`Force the refresh of all tracks tags`}
           >
             <Trans>Refresh</Trans>
@@ -121,12 +133,26 @@ function ViewSettingsLibrary() {
             relevancy="danger"
             title={t`Fully reset the library`}
             disabled={isLibraryRefreshing}
-            onClick={useInvalidateCallback(libraryAPI.reset)}
+            onClick={useInvalidateCallback(async () => {
+              const confirm = await ask(
+                t`All your tracks and playlists will be deleted from Museeks.`,
+                {
+                  title: t`Reset library?`,
+                  kind: 'warning',
+                  cancelLabel: t`Cancel`,
+                  okLabel: t`Reset`,
+                },
+              );
+
+              if (confirm) {
+                libraryAPI.reset();
+              }
+            })}
           >
             <Trans>Reset library</Trans>
           </Button>
         </Flexbox>
       </Setting.Section>
-    </div>
+    </>
   );
 }
