@@ -1,7 +1,8 @@
 {
   "productName": "Museeks",
+  "mainBinaryName": "museeks",
   "version": "0.21.1",
-  "identifier": "Museeks",
+  "identifier": "io.museeks.desktop",
   "build": {
     "beforeDevCommand": "bun run dev",
     "devUrl": "http://localhost:1420",
