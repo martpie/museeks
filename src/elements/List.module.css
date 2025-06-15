@@ -1,0 +1,17 @@
+.list {
+  margin: 0;
+  color: var(--text-muted);
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  column-gap: 4px;
+}
+
+.label {
+  font-weight: bold;
+  white-space: nowrap;
+  margin: 0;
+}
+
+.content {
+  margin-inline-start: 0;
+}
