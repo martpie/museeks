@@ -1,5 +1,6 @@
 import { openUrl, revealItemInDir } from '@tauri-apps/plugin-opener';
 import { useCallback } from 'react';
+import { logAndNotifyError } from '../lib/utils';
 
 export default function useOpener(
   href: string,
@@ -8,10 +9,10 @@ export default function useOpener(
   return useCallback(() => {
     switch (type) {
       case 'filedir':
-        revealItemInDir(href);
+        revealItemInDir(href).catch(logAndNotifyError);
         break;
       case 'url':
-        openUrl(href);
+        openUrl(href).catch(logAndNotifyError);
         break;
     }
   }, [href, type]);
