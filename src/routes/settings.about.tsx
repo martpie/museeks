@@ -8,8 +8,10 @@ import ExternalButton from '../elements/ExternalButton';
 import ExternalLink from '../elements/ExternalLink';
 import Flexbox from '../elements/Flexbox';
 import Heart from '../elements/Heart';
+import List from '../elements/List';
 import useInvalidate, { useInvalidateCallback } from '../hooks/useInvalidate';
 import SettingsAPI from '../stores/SettingsAPI';
+import { NON_DEFAULT_LOCALES } from '../translations/locales';
 
 export const Route = createFileRoute('/settings/about')({
   component: ViewSettingsAbout,
@@ -77,6 +79,18 @@ function ViewSettingsAbout() {
           </Trans>
           .
         </Setting.Description>
+        <Setting.Description>
+          <Trans>Translations:</Trans>
+        </Setting.Description>
+        <List>
+          {NON_DEFAULT_LOCALES.map((locale) => (
+            <List.Item
+              key={locale.code}
+              label={`${locale.label}:`}
+              content={locale.contributors.join(', ')}
+            />
+          ))}
+        </List>
       </Setting.Section>
       <Setting.Section>
         <Setting.Title>
