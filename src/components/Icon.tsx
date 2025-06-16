@@ -1,12 +1,24 @@
 import { error } from '@tauri-apps/plugin-log';
 import {
+  caretDown,
+  caretUp,
+  menu as library,
+  mic as microphone,
   playForwardSharp as next,
   pauseSharp as pause,
   playSharp as play,
+  add as plus,
   playBackSharp as previous,
   listSharp as queue,
   repeat,
+  options as settings,
   shuffle,
+  star,
+  volumeHigh,
+  volumeLow,
+  volumeMedium,
+  volumeMute,
+  volumeOff,
 } from 'ionicons/icons';
 import { defineCustomElements } from 'ionicons/loader';
 
@@ -19,7 +31,7 @@ import './Icon.module.css';
 
 defineCustomElements(window);
 
-const icons: Record<string, string | undefined> = {
+const icons = {
   next,
   pause,
   play,
@@ -28,17 +40,32 @@ const icons: Record<string, string | undefined> = {
   repeat_one: repeat,
   repeat,
   shuffle,
+  plus,
+  microphone,
+  star,
+  library,
+  settings,
+  'caret-up': caretUp,
+  'caret-down': caretDown,
+  'volume-high': volumeHigh,
+  'volume-low': volumeLow,
+  'volume-medium': volumeMedium,
+  'volume-off': volumeOff,
+  'volume-mute': volumeMute,
 };
 
+export type IconName = keyof typeof icons;
+
 type Props = {
-  name: keyof typeof icons;
+  name: IconName;
   fill?: string;
   className?: string;
+  size?: 12 | 16 | 20 | 24;
 };
 
 export default function Icon(props: Props) {
-  const { name, fill, className } = props;
-  const icon = icons[name];
+  const { name, fill, className, size = 16 } = props;
+  const icon: string | undefined = icons[name];
 
   if (icon === undefined) {
     error(`Icon "${name}" not found.`);
@@ -48,7 +75,10 @@ export default function Icon(props: Props) {
   return (
     <ion-icon
       icon={icon}
-      style={{ color: fill ?? 'currentColor' }}
+      style={{
+        color: fill ?? undefined,
+        fontSize: `${size}px`,
+      }}
       className={className}
     />
   );

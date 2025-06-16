@@ -26,7 +26,7 @@ export default function ButtonShuffle() {
       aria-checked={shuffle}
       title={t`Shuffle`}
     >
-      <Icon name="shuffle" className={styles.icon} />
+      <Icon name="shuffle" size={12} className={styles.icon} />
     </button>
   );
 }

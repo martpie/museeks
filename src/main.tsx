@@ -24,7 +24,6 @@ import queryClient from './lib/query-client';
 | Styles
 |--------------------------------------------------------------------------
 */
-import 'font-awesome/css/font-awesome.css';
 import 'normalize.css/normalize.css';
 import './styles/general.css';
 

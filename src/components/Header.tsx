@@ -34,7 +34,7 @@ export default function Header() {
                   title={t`Queue`}
                   data-museeks-action
                 >
-                  <Icon name="queue" />
+                  <Icon name="queue" size={20} />
                 </button>
               </Popover.Trigger>
               <Popover.Portal>

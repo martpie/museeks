@@ -22,8 +22,6 @@
 
       &::after {
         content: "\f00c";
-        /* biome-ignore lint/a11y/useGenericFontNames: this is an icon font */
-        font-family: FontAwesome;
         font-size: 10px;
         color: white;
         position: absolute;
