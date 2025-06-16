@@ -1,4 +1,4 @@
-export const DEFAULT_LOCALE = {
+export const DEFAULT_LANGUAGE = {
   label: 'English',
   englishLabel: null,
   code: 'en',
@@ -8,9 +8,9 @@ export const DEFAULT_LOCALE = {
 // Are you looking to add support for a language?
 // 1. Add the language information below
 // 2. Run bun run gen:translations
-// 3. Edit the generated file in src/translations/<locale>.po
+// 3. Edit the generated file in src/translations/<language>.po
 // 4. Profit
-export const NON_DEFAULT_LOCALES = [
+export const NON_DEFAULT_LANGUAGE = [
   {
     label: 'Français',
     englishLabel: 'French',
@@ -19,4 +19,4 @@ export const NON_DEFAULT_LOCALES = [
   },
 ];
 
-export const ALL_LOCALES = [DEFAULT_LOCALE, ...NON_DEFAULT_LOCALES];
+export const ALL_LANGUAGES = [DEFAULT_LANGUAGE, ...NON_DEFAULT_LANGUAGE];
