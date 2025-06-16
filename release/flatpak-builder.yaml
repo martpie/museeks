@@ -29,8 +29,6 @@ modules:
     buildsystem: simple
     sources:
       - type: file
-        # url: https://github.com/martpie/museeks/releases/download/0.21.1/Museeks_0.21.1_amd64.deb
-        # sha256: e141cc87cad950318d973e7d10c193815fe37dde8af51c9756932bdac8a73d44
         path: ../src-tauri/target/release/bundle/deb/Museeks_0.21.1_amd64.deb
       - type: file
         path: flatpak.metainfo.xml
