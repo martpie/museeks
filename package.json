@@ -51,6 +51,7 @@
     "browserslist": "^4.25.0",
     "classnames": "^2.5.1",
     "font-awesome": "^4.7.0",
+    "ionicons": "^8.0.9",
     "lodash-es": "^4.17.21",
     "nanoid": "^5.1.5",
     "normalize.css": "^8.0.1",
