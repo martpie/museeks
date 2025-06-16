@@ -1,3 +1,4 @@
+import { t } from '@lingui/core/macro';
 import type { StateCreator } from 'zustand';
 import { persist } from 'zustand/middleware';
 
@@ -94,8 +95,8 @@ const useLibraryStore = createLibraryStore<LibraryState>((set, get) => ({
 
         if (scanResult.track_count > 0) {
           const message = refresh
-            ? `${scanResult.track_count} track(s) were refreshed.`
-            : `${scanResult.track_count} track(s) were added to the library.`;
+            ? t`${scanResult.track_count} track(s) were refreshed.`
+            : t`${scanResult.track_count} track(s) were added to the library.`;
 
           useToastsStore.getState().api.add('success', message, 5000);
         }
@@ -105,7 +106,7 @@ const useLibraryStore = createLibraryStore<LibraryState>((set, get) => ({
             .getState()
             .api.add(
               'success',
-              `${scanResult.playlist_count} playlist(s) were added to the library.`,
+              t`${scanResult.playlist_count} playlist(s) were added to the library.`,
               5000,
             );
         }
@@ -166,7 +167,7 @@ const useLibraryStore = createLibraryStore<LibraryState>((set, get) => ({
       try {
         await database.reset();
         await config.set('library_folders', []);
-        useToastsStore.getState().api.add('success', 'Library was reset');
+        useToastsStore.getState().api.add('success', t`Library was reset`);
       } catch (err) {
         logAndNotifyError(err);
       }

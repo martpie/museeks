@@ -1,3 +1,4 @@
+import { t } from '@lingui/core/macro';
 import type { Playlist, Track } from '../generated/typings';
 import database from '../lib/database';
 import { logAndNotifyError } from '../lib/utils';
@@ -34,7 +35,7 @@ async function create(
     if (!silent) {
       useToastsStore
         .getState()
-        .api.add('success', `The playlist "${name}" was created`);
+        .api.add('success', t`The playlist "${name}" was created`);
     }
 
     return playlist;
@@ -73,21 +74,11 @@ async function remove(playlistID: string): Promise<void> {
 async function addTracks(
   playlistID: string,
   tracksIDs: string[],
-  isShown?: boolean,
 ): Promise<void> {
-  // isShown should never be true, letting it here anyway to remember of a design issue
-  if (isShown) return;
-
-  const toastsAPI = useToastsStore.getState().api;
-
   try {
     const playlist = await database.getPlaylist(playlistID);
     const playlistTracks = playlist.tracks.concat(tracksIDs);
     await database.setPlaylistTracks(playlistID, playlistTracks);
-    toastsAPI.add(
-      'success',
-      `${tracksIDs.length} tracks were successfully added to "${playlist.name}"`,
-    );
   } catch (err) {
     logAndNotifyError(err);
   }

@@ -31,6 +31,7 @@ import type { QueueOrigin, TracksListVirtualizer } from '../types/museeks';
 import TracksListDefault from './TracksListDefault';
 import TracksListGrouped from './TracksListGrouped';
 
+import { useToastsAPI } from '../stores/useToastsStore';
 import styles from './TracksList.module.css';
 
 // --------------------------------------------------------------------------
@@ -91,6 +92,7 @@ export default function TracksList(props: Props) {
   const trackPlayingID = usePlayingTrackID();
   const playerAPI = usePlayerAPI();
   const libraryAPI = useLibraryAPI();
+  const toastsAPI = useToastsAPI();
   const { t } = useLingui();
 
   const [selectedTracks, setSelectedTracks] = useState<Set<string>>(new Set());
@@ -267,6 +269,11 @@ export default function TracksList(props: Props) {
                     playlist.id,
                     Array.from(selectedTracks),
                   );
+
+                  toastsAPI.add(
+                    'success',
+                    t`${selectedTracks.size} track(s) were added to "${playlist.name}"`,
+                  );
                 },
               }),
             ),
@@ -396,6 +403,7 @@ export default function TracksList(props: Props) {
       navigate,
       playerAPI,
       libraryAPI,
+      toastsAPI,
       invalidate,
       extraContextMenu,
       t,
