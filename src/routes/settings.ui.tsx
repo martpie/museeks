@@ -1,6 +1,7 @@
+import { t } from '@lingui/core/macro';
+import { Trans, useLingui } from '@lingui/react/macro';
 import { createFileRoute, useLoaderData } from '@tanstack/react-router';
 
-import { Trans, useLingui } from '@lingui/react/macro';
 import * as Setting from '../components/Setting';
 import CheckboxSetting from '../components/SettingCheckbox';
 import type { Config, DefaultView } from '../generated/typings';
@@ -35,7 +36,7 @@ function ViewSettingsUI() {
           {Object.values(themes).map((theme) => {
             return (
               <option key={theme._id} value={theme._id}>
-                {theme.name} {/** TODO: translate that */}
+                {getThemeName(theme.name)}
               </option>
             );
           })}
@@ -122,4 +123,15 @@ function ViewSettingsUI() {
       </Setting.Section>
     </div>
   );
+}
+
+function getThemeName(themeName: string) {
+  switch (themeName) {
+    case 'Light':
+      return t`Light`;
+    case 'Dark':
+      return t`Dark`;
+  }
+
+  return themeName;
 }
