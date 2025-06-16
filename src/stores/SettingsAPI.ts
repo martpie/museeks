@@ -1,3 +1,4 @@
+import { t } from '@lingui/core/macro';
 import { getVersion } from '@tauri-apps/api/app';
 import { invoke } from '@tauri-apps/api/core';
 import { getCurrentWindow } from '@tauri-apps/api/window';
@@ -134,9 +135,9 @@ async function checkForUpdate(
 
     let message: string | undefined;
     if (newRelease) {
-      message = `Museeks ${newRelease.tag_name} is available, check https://museeks.io!`;
+      message = t`Museeks ${newRelease.tag_name} is available, check https://museeks.io!`;
     } else if (!options.silentFail) {
-      message = `Museeks ${currentVersion} is the latest version available.`;
+      message = t`Museeks ${currentVersion} is the latest version available.`;
     }
 
     if (message) {

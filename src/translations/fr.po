@@ -138,72 +138,78 @@ msgstr "rechercher..."
 msgid "{0, plural, one {track} other {tracks}}"
 msgstr "{0, plural, one {piste} other {pistes}}"
 
-#: src/components/TracksList.tsx:241
+#: src/components/TracksList.tsx:243
 msgid "Create new playlist..."
 msgstr "Créer une nouvelle playlist..."
 
-#: src/components/TracksList.tsx:244
+#: src/components/TracksList.tsx:246
 #: src/routes/playlists.tsx:62
 msgid "New playlist"
 msgstr "Nouvelle playlist"
 
-#: src/components/TracksList.tsx:257
+#: src/components/TracksList.tsx:259
 msgid "No playlists"
 msgstr "Aucune playlist"
 
-#: src/components/TracksList.tsx:280
+#. placeholder {0}: selectedTracks.size
+#. placeholder {1}: playlist.name
+#: src/components/TracksList.tsx:275
+msgid "{0} track(s) were added to \"{1}\""
+msgstr "{0} piste(s) ont été ajoutées à \"{1}\""
+
+#: src/components/TracksList.tsx:287
 msgid "{selectedCount, plural, one {# track selected} other {# tracks selected}}"
 msgstr "{selectedCount, plural, one {# piste sélectionnée} other {# pistes sélectionnées}}"
 
-#: src/components/TracksList.tsx:292
+#: src/components/TracksList.tsx:299
 msgid "Add to queue"
 msgstr "Ajouter à la file d'attente"
 
-#: src/components/TracksList.tsx:298
+#: src/components/TracksList.tsx:305
 msgid "Play next"
 msgstr "Lire ensuite"
 
-#: src/components/TracksList.tsx:308
+#: src/components/TracksList.tsx:315
 msgid "Add to playlist"
 msgstr "Ajouter à une playlist"
 
-#: src/components/TracksList.tsx:318
+#: src/components/TracksList.tsx:325
 msgid "Search for \"{artist}\""
 msgstr "Rechercher \"{artist}\""
 
 #. placeholder {0}: track.album
-#: src/components/TracksList.tsx:325
+#: src/components/TracksList.tsx:332
 msgid "Search for \"{0}\""
 msgstr "Rechercher \"{0}\""
 
-#: src/components/TracksList.tsx:348
+#: src/components/TracksList.tsx:355
 msgid "Edit track"
 msgstr "Modifier la piste"
 
-#: src/components/TracksList.tsx:358
+#: src/components/TracksList.tsx:365
 msgid "Show in file manager"
 msgstr "Montrer dans le gestionnaire de fichiers"
 
-#: src/components/TracksList.tsx:364
+#: src/components/TracksList.tsx:371
 msgid "Remove from library"
 msgstr "Retirer de la bibliothèque"
 
 #. placeholder {0}: selectedTracks.size
-#: src/components/TracksList.tsx:367
+#: src/components/TracksList.tsx:374
 msgid "Are you sure you want to remove {0} track(s) from your library?"
 msgstr "Êtes-vous sûr de vouloir retirer {0} piste(s) de votre bibliothèque ?"
 
-#: src/components/TracksList.tsx:369
+#: src/components/TracksList.tsx:376
 msgid "Remove tracks"
 msgstr "Retirer les pistes"
 
-#: src/components/TracksList.tsx:371
+#: src/components/TracksList.tsx:378
 #: src/routes/settings.library.tsx:142
 #: src/routes/tracks.$trackID.tsx:259
 msgid "Cancel"
 msgstr "Annuler"
 
-#: src/components/TracksList.tsx:372
+#: src/components/TracksList.tsx:379
 #: src/routes/settings.library.tsx:62
 msgid "Remove"
 msgstr "Retirer"
@@ -562,3 +568,35 @@ msgstr "Enregistrer"
 #: src/routes/tracks.$trackID.tsx:267
 msgid "Clicking \"save\" will only update the library data, but will not save it to the original file."
 msgstr "Cliquer sur \"enregistrer\" mettra uniquement à jour les données de la bibliothèque, mais ne les enregistrera pas dans le fichier d'origine."
+
+#: src/stores/PlaylistsAPI.ts:38
+msgid "The playlist \"{name}\" was created"
+msgstr "La playlist \"{name}\" a été créée"
+
+#. placeholder {0}: newRelease.tag_name
+#: src/stores/SettingsAPI.ts:138
+msgid "Museeks {0} is available, check https://museeks.io!"
+msgstr "Museeks {0} est disponible, consultez https://museeks.io !"
+
+#: src/stores/SettingsAPI.ts:140
+msgid "Museeks {currentVersion} is the latest version available."
+msgstr "Museeks {currentVersion} est la dernière version disponible."
+
+#. placeholder {0}: scanResult.track_count
+#: src/stores/useLibraryStore.ts:98
+msgid "{0} track(s) were refreshed."
+msgstr "{0} piste(s) ont été actualisée(s)."
+
+#. placeholder {0}: scanResult.track_count
+#: src/stores/useLibraryStore.ts:99
+msgid "{0} track(s) were added to the library."
+msgstr "{0} piste(s) ont été ajoutée(s) à la bibliothèque."
+
+#. placeholder {0}: scanResult.playlist_count
+#: src/stores/useLibraryStore.ts:109
+msgid "{0} playlist(s) were added to the library."
+msgstr "{0} playlist(s) ont été ajoutée(s) à la bibliothèque."
+
+#: src/stores/useLibraryStore.ts:170
+msgid "Library was reset"
+msgstr "La bibliothèque a été réinitialisée"
