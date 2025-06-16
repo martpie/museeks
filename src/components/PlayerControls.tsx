@@ -1,8 +1,8 @@
 import { useLingui } from '@lingui/react/macro';
-import Icon from 'react-fontawesome';
 
 import usePlayerStore, { usePlayerAPI } from '../stores/usePlayerStore';
 import { PlayerStatus } from '../types/museeks';
+import Icon from './Icon';
 import styles from './PlayerControls.module.css';
 import VolumeControl from './VolumeControl';
 
@@ -20,7 +20,7 @@ export default function PlayerControls() {
         onClick={playerAPI.previous}
         data-museeks-action
       >
-        <Icon name="backward" />
+        <Icon name="previous" />
       </button>
       <button
         type="button"
@@ -29,10 +29,7 @@ export default function PlayerControls() {
         onClick={playerAPI.playPause}
         data-museeks-action
       >
-        <Icon
-          name={playerStatus === PlayerStatus.PLAY ? 'pause' : 'play'}
-          fixedWidth
-        />
+        <Icon name={playerStatus === PlayerStatus.PLAY ? 'pause' : 'play'} />
       </button>
       <button
         type="button"
@@ -41,7 +38,7 @@ export default function PlayerControls() {
         onClick={playerAPI.next}
         data-museeks-action
       >
-        <Icon name="forward" />
+        <Icon name="next" />
       </button>
       <VolumeControl />
     </div>

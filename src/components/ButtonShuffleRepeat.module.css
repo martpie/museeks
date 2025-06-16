@@ -15,8 +15,6 @@
   padding: 0 8px;
 
   &.active {
-    .icon {
-      fill: var(--main-color);
-    }
+    color: var(--main-color);
   }
 }

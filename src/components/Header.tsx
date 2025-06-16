@@ -1,10 +1,10 @@
 import { useLingui } from '@lingui/react/macro';
 import * as Popover from '@radix-ui/react-popover';
-import Icon from 'react-fontawesome';
 
 import usePlayingTrack from '../hooks/usePlayingTrack';
 import usePlayerStore from '../stores/usePlayerStore';
 import styles from './Header.module.css';
+import Icon from './Icon';
 import PlayerControls from './PlayerControls';
 import PlayingBar from './PlayingBar';
 import Queue from './Queue';
@@ -32,8 +32,9 @@ export default function Header() {
                   className={styles.queueToggle}
                   data-tauri-drag-region
                   title={t`Queue`}
+                  data-museeks-action
                 >
-                  <Icon name="list" data-museeks-action />
+                  <Icon name="queue" />
                 </button>
               </Popover.Trigger>
               <Popover.Portal>

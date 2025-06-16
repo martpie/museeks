@@ -1,31 +1,55 @@
-import next from '../assets/icons/player-next.svg?react';
-import pause from '../assets/icons/player-pause.svg?react';
-import play from '../assets/icons/player-play.svg?react';
-import previous from '../assets/icons/player-previous.svg?react';
-import queue from '../assets/icons/player-queue.svg?react';
-import repeat_one from '../assets/icons/player-repeat-one.svg?react';
-import repeat from '../assets/icons/player-repeat.svg?react';
-import shuffle from '../assets/icons/player-shuffle.svg?react';
+import { error } from '@tauri-apps/plugin-log';
+import {
+  playForwardSharp as next,
+  pauseSharp as pause,
+  playSharp as play,
+  playBackSharp as previous,
+  listSharp as queue,
+  repeat,
+  shuffle,
+} from 'ionicons/icons';
+import { defineCustomElements } from 'ionicons/loader';
 
-const icons = {
+// import repeat_one from '../assets/icons/player-repeat-one.svg?react';
+// import repeat from '../assets/icons/player-repeat.svg?react';
+// maybe keep this one?
+// import shuffle from '../assets/icons/player-shuffle.svg?react';
+
+import './Icon.module.css';
+
+defineCustomElements(window);
+
+const icons: Record<string, string | undefined> = {
   next,
   pause,
   play,
   previous,
   queue,
-  repeat_one,
+  repeat_one: repeat,
   repeat,
   shuffle,
 };
 
 type Props = {
   name: keyof typeof icons;
+  fill?: string;
   className?: string;
 };
 
 export default function Icon(props: Props) {
-  const { name } = props;
-  const IconComponent = icons[name];
+  const { name, fill, className } = props;
+  const icon = icons[name];
 
-  return <IconComponent className={props.className} />;
+  if (icon === undefined) {
+    error(`Icon "${name}" not found.`);
+    return null;
+  }
+
+  return (
+    <ion-icon
+      icon={icon}
+      style={{ color: fill ?? 'currentColor' }}
+      className={className}
+    />
+  );
 }
