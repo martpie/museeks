@@ -55,7 +55,7 @@ msgid "Drop folders anywhere"
 msgstr "Déposer des dossiers n'importe où"
 
 #: src/components/Footer.tsx:22
-#: src/routes/settings.tsx:38
+#: src/routes/settings.tsx:44
 msgid "Library"
 msgstr "Bibliothèque"
 
@@ -308,43 +308,47 @@ msgstr "Aucune playlist sélectionnée"
 msgid "New Playlist"
 msgstr "Nouvelle Playlist"
 
-#: src/routes/settings.about.tsx:30
+#: src/routes/settings.about.tsx:32
 msgid "About Museeks"
 msgstr "À propos de Museeks"
 
-#: src/routes/settings.about.tsx:42
+#: src/routes/settings.about.tsx:44
 msgid "release notes"
 msgstr "notes de version"
 
-#: src/routes/settings.about.tsx:46
+#: src/routes/settings.about.tsx:48
 msgid "Automatically check for updates"
 msgstr "Vérifier automatiquement les mises à jour"
 
-#: src/routes/settings.about.tsx:56
+#: src/routes/settings.about.tsx:58
 msgid "Check for update"
 msgstr "Vérifier les mises à jour"
 
-#: src/routes/settings.about.tsx:62
+#: src/routes/settings.about.tsx:64
 msgid "Contributors"
 msgstr "Contributeurs"
 
-#: src/routes/settings.about.tsx:65
+#: src/routes/settings.about.tsx:67
 msgid "Made with <0/> by Pierre de la Martinière (<1>martpie.io</1>) and a bunch of <2>great people</2>"
 msgstr "Fait avec <0/> par Pierre de la Martinière (<1>martpie.io</1>) et un tas de <2>gens formidables</2>"
 
 #: src/routes/settings.about.tsx:83
+msgid "Translations:"
+msgstr "Traductions :"
+
+#: src/routes/settings.about.tsx:97
 msgid "Report issue / Ask for a feature"
 msgstr "Signaler un problème / Demander une fonctionnalité"
 
-#: src/routes/settings.about.tsx:86
+#: src/routes/settings.about.tsx:100
 msgid "Bugs happen. Please, do not hesitate to report them or to ask for features you would like to see, using the <0>issue tracker</0>."
 msgstr "Les bugs arrivent. N'hésitez pas à les signaler ou à demander des fonctionnalités que vous aimeriez voir, en utilisant le <0>gestionnaire de bug</0>."
 
-#: src/routes/settings.about.tsx:101
+#: src/routes/settings.about.tsx:115
 msgid "Internals"
 msgstr "Détails techniques"
 
-#: src/routes/settings.about.tsx:106
+#: src/routes/settings.about.tsx:120
 msgid "Open storage directory"
 msgstr "Ouvrir le dossier de stockage"
 
@@ -440,15 +444,15 @@ msgstr "Réinitialiser"
 msgid "Reset library"
 msgstr "Réinitialiser la bibliothèque"
 
-#: src/routes/settings.tsx:41
+#: src/routes/settings.tsx:47
 msgid "Audio"
 msgstr "Audio"
 
-#: src/routes/settings.tsx:44
+#: src/routes/settings.tsx:50
 msgid "Interface"
 msgstr "Interface"
 
-#: src/routes/settings.tsx:47
+#: src/routes/settings.tsx:53
 msgid "About"
 msgstr "À propos"
 
