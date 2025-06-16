@@ -24,6 +24,7 @@
   color: inherit;
   padding: 8px 12px;
   display: inline-block;
+  line-height: 1;
 
   &:hover {
     color: inherit;

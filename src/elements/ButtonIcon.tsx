@@ -1,11 +1,11 @@
 import type React from 'react';
-import Icon from 'react-fontawesome';
 
+import Icon, { type IconName } from '../components/Icon';
 import styles from './ButtonIcon.module.css';
 
 type Props = {
   onClick: React.MouseEventHandler<HTMLButtonElement>;
-  icon: string;
+  icon: IconName;
   title?: string;
 };
 

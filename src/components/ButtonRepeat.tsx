@@ -27,6 +27,7 @@ export default function ButtonRepeat() {
     >
       <Icon
         name={repeat === 'One' ? 'repeat_one' : 'repeat'}
+        size={12}
         className={styles.icon}
       />
     </button>

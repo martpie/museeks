@@ -20,7 +20,7 @@ export default function PlayerControls() {
         onClick={playerAPI.previous}
         data-museeks-action
       >
-        <Icon name="previous" />
+        <Icon name="previous" size={20} />
       </button>
       <button
         type="button"
@@ -29,7 +29,10 @@ export default function PlayerControls() {
         onClick={playerAPI.playPause}
         data-museeks-action
       >
-        <Icon name={playerStatus === PlayerStatus.PLAY ? 'pause' : 'play'} />
+        <Icon
+          name={playerStatus === PlayerStatus.PLAY ? 'pause' : 'play'}
+          size={24}
+        />
       </button>
       <button
         type="button"
@@ -38,7 +41,7 @@ export default function PlayerControls() {
         onClick={playerAPI.next}
         data-museeks-action
       >
-        <Icon name="next" />
+        <Icon name="next" size={20} />
       </button>
       <VolumeControl />
     </div>

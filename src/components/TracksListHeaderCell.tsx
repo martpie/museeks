@@ -1,16 +1,16 @@
 import cx from 'classnames';
 import React, { useCallback } from 'react';
-import Icon from 'react-fontawesome';
 
 import type { SortBy } from '../generated/typings';
 import { useLibraryAPI } from '../stores/useLibraryStore';
+import Icon, { type IconName } from './Icon';
 import styles from './TracksListHeaderCell.module.css';
 
 type Props = {
   title: string;
   className?: string;
   sortBy?: SortBy | null;
-  icon?: string | null;
+  icon?: IconName | null;
 };
 
 export default function TracksListHeaderCell(props: Props) {
@@ -32,7 +32,7 @@ export default function TracksListHeaderCell(props: Props) {
       <div className={styles.name}>{title}</div>
       {icon && (
         <div className={styles.icon}>
-          <Icon name={icon} />
+          <Icon name={icon} size={12} />
         </div>
       )}
     </React.Fragment>

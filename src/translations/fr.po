@@ -25,7 +25,7 @@ msgstr "Impossible d'obtenir les périphériques de sortie audio"
 msgid "No audio devices found"
 msgstr "Aucun périphérique audio trouvé"
 
-#: src/components/ButtonRepeat.tsx:37
+#: src/components/ButtonRepeat.tsx:26
 msgid "Repeat"
 msgstr "Lecture en boucle"
 
@@ -214,32 +214,32 @@ msgstr "Annuler"
 msgid "Remove"
 msgstr "Retirer"
 
-#: src/components/TracksListHeader.tsx:48
+#: src/components/TracksListHeader.tsx:49
 #: src/routes/tracks.$trackID.tsx:87
 msgid "Title"
 msgstr "Titre"
 
-#: src/components/TracksListHeader.tsx:54
+#: src/components/TracksListHeader.tsx:55
 #: src/routes/tracks.$trackID.tsx:230
 msgid "Duration"
 msgstr "Durée"
 
-#: src/components/TracksListHeader.tsx:60
+#: src/components/TracksListHeader.tsx:61
 msgid "Artist"
 msgstr "Artiste"
 
-#: src/components/TracksListHeader.tsx:66
+#: src/components/TracksListHeader.tsx:67
 #: src/routes/tracks.$trackID.tsx:98
 msgid "Album"
 msgstr "Album"
 
-#: src/components/TracksListHeader.tsx:72
+#: src/components/TracksListHeader.tsx:73
 #: src/routes/tracks.$trackID.tsx:138
 msgid "Genre"
 msgstr "Genre"
 
-#: src/components/VolumeControl.tsx:86
-#: src/components/VolumeControl.tsx:107
+#: src/components/VolumeControl.tsx:89
+#: src/components/VolumeControl.tsx:113
 msgid "Volume"
 msgstr "Volume"
 

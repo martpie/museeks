@@ -2,6 +2,7 @@ import { useLingui } from '@lingui/react/macro';
 
 import type { SortBy, SortOrder } from '../generated/typings';
 import useLibraryStore from '../stores/useLibraryStore';
+import type { IconName } from './Icon';
 import styles from './TracksListHeader.module.css';
 import TracksListHeaderCell from './TracksListHeaderCell';
 
@@ -10,18 +11,18 @@ const getIcon = (
   sortBy: SortBy,
   sortOrder: SortOrder,
   sortByTarget: SortBy,
-) => {
+): IconName | null => {
   if (!enableSort) {
     return null;
   }
 
   if (sortBy === sortByTarget) {
     if (sortOrder === 'Asc') {
-      return 'angle-up';
+      return 'caret-up';
     }
 
     // Must be DSC then
-    return 'angle-down';
+    return 'caret-down';
   }
 
   return null;

@@ -3,11 +3,12 @@ import * as Slider from '@radix-ui/react-slider';
 import cx from 'classnames';
 import type React from 'react';
 import { useCallback, useState } from 'react';
-import Icon from 'react-fontawesome';
 
 import player from '../lib/player';
 import { stopPropagation } from '../lib/utils-events';
 import { usePlayerAPI } from '../stores/usePlayerStore';
+import type { IconName } from './Icon';
+import Icon from './Icon';
 import controlStyles from './PlayerControls.module.css';
 import styles from './VolumeControl.module.css';
 
@@ -18,10 +19,12 @@ const smoothifyVolume = (value: number): number => value ** SMOOTHING_FACTOR;
 const unsmoothifyVolume = (value: number): number =>
   value ** (1 / SMOOTHING_FACTOR);
 
-const getVolumeIcon = (volume: number, muted: boolean): string => {
-  if (muted || volume === 0) return 'volume-off';
-  if (volume < 0.5) return 'volume-down';
-  return 'volume-up';
+const getVolumeIcon = (volume: number, muted: boolean): IconName => {
+  if (muted) return 'volume-mute';
+  if (volume === 0) return 'volume-off';
+  if (volume < 0.33) return 'volume-low';
+  if (volume < 0.67) return 'volume-medium';
+  return 'volume-high';
 };
 
 export default function VolumeControl() {
@@ -87,7 +90,10 @@ export default function VolumeControl() {
         onClick={mute}
         data-museeks-action
       >
-        <Icon name={getVolumeIcon(unsmoothifyVolume(volume), muted)} />
+        <Icon
+          name={getVolumeIcon(unsmoothifyVolume(volume), muted)}
+          size={20}
+        />
       </button>
       <div className={volumeClasses}>
         <Slider.Root

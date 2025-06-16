@@ -1,9 +1,9 @@
 import { useLingui } from '@lingui/react/macro';
 import { Link } from '@tanstack/react-router';
-import Icon from 'react-fontawesome';
 
 import useLibraryStore from '../stores/useLibraryStore';
 import styles from './Footer.module.css';
+import Icon from './Icon';
 import ProgressBar from './ProgressBar';
 import TrackListStatus from './TrackListStatus';
 
@@ -21,7 +21,7 @@ export default function Footer() {
             title={t`Library`}
             draggable={false}
           >
-            <Icon name="align-justify" fixedWidth />
+            <Icon name="library" />
           </Link>
           <Link
             to="/artists"
@@ -30,7 +30,7 @@ export default function Footer() {
             title={t`Artists`}
             draggable={false}
           >
-            <Icon name="microphone" fixedWidth />
+            <Icon name="microphone" />
           </Link>
           <Link
             to="/playlists"
@@ -39,7 +39,7 @@ export default function Footer() {
             title={t`Playlists`}
             draggable={false}
           >
-            <Icon name="star" fixedWidth />
+            <Icon name="star" />
           </Link>
           <Link
             to="/settings"
@@ -48,7 +48,7 @@ export default function Footer() {
             title={t`Settings`}
             draggable={false}
           >
-            <Icon name="gear" fixedWidth />
+            <Icon name="settings" />
           </Link>
         </div>
       </div>
