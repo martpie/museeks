@@ -7,7 +7,7 @@ import type { Config, DefaultView } from '../generated/typings';
 import useInvalidate, { useInvalidateCallback } from '../hooks/useInvalidate';
 import { themes } from '../lib/themes';
 import SettingsAPI from '../stores/SettingsAPI';
-import { ALL_LOCALES } from '../translations/locales';
+import { ALL_LANGUAGES } from '../translations/languages';
 
 export const Route = createFileRoute('/settings/ui')({
   component: ViewSettingsUI,
@@ -50,11 +50,11 @@ function ViewSettingsUI() {
             SettingsAPI.setLanguage(e.target.value).then(invalidate);
           }}
         >
-          {ALL_LOCALES.map((locale) => {
+          {ALL_LANGUAGES.map((language) => {
             return (
-              <option key={locale.code} value={locale.code}>
-                {locale.label}
-                {locale.englishLabel && ` (${locale.englishLabel})`}
+              <option key={language.code} value={language.code}>
+                {language.label}
+                {language.englishLabel && ` (${language.englishLabel})`}
               </option>
             );
           })}

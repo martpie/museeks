@@ -105,7 +105,7 @@ Then open a PR :)
 ### Translations
 
 - Follow the steps from the previous section
-- Go to `src/translations/locales.ts`
+- Go to `src/translations/languages.ts`
 - Add your language information to the list
 - run `bun run gen:translations`
 - this will create a new file `<your_language_code>.po` in the same folder
