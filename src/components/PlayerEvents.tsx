@@ -87,7 +87,6 @@ function PlayerEvents() {
       await playerAPI.next();
 
       const isFocused = await getCurrentWindow().isFocused();
-      console.log(isFocused);
 
       // If follow track is enabled, switch to the right view + scroll to the track
       // Do not do it if the app if focused, as users could be interacting with the app

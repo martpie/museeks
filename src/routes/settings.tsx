@@ -13,7 +13,6 @@ export const Route = createFileRoute('/settings')({
   component: ViewSettings,
   beforeLoad: async ({ location }) => {
     if (location.pathname === '/settings') {
-      console.log('redirect');
       throw redirect({ to: '/settings/library' });
     }
   },
