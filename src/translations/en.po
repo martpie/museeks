@@ -55,7 +55,7 @@ msgid "Drop folders anywhere"
 msgstr "Drop folders anywhere"
 
 #: src/components/Footer.tsx:22
-#: src/routes/settings.tsx:44
+#: src/routes/settings.tsx:43
 msgid "Library"
 msgstr "Library"
 
@@ -450,15 +450,15 @@ msgstr "Reset"
 msgid "Reset library"
 msgstr "Reset library"
 
-#: src/routes/settings.tsx:47
+#: src/routes/settings.tsx:46
 msgid "Audio"
 msgstr "Audio"
 
-#: src/routes/settings.tsx:50
+#: src/routes/settings.tsx:49
 msgid "Interface"
 msgstr "Interface"
 
-#: src/routes/settings.tsx:53
+#: src/routes/settings.tsx:52
 msgid "About"
 msgstr "About"
 
