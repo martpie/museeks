@@ -25,8 +25,7 @@ export default function useInvalidate() {
   }, [queryClient, router]);
 }
 
-// biome-ignore lint/suspicious/noExplicitAny: we don't care about the actual args
-type AnyArgs = any[];
+type AnyArgs = Array<any>;
 type Callback = (...args: AnyArgs) => Promise<void>;
 
 /**

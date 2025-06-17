@@ -7,9 +7,11 @@ import type { Path } from '../types/museeks';
 /**
  * Filter an array of tracks by string
  */
-export function filterTracks(tracks: Track[], search: string): Track[] {
+export function filterTracks(tracks: Array<Track>, search: string): Array<Track> {
   // Avoid performing useless searches
-  if (search.length === 0) return tracks;
+  if (search.length === 0) {
+    return tracks;
+  };
 
   // Unoptimized, bad
   return tracks.filter(
@@ -25,10 +27,10 @@ export function filterTracks(tracks: Track[], search: string): Track[] {
  * Sort an array of tracks (alias to lodash.orderby)
  */
 export function sortTracks(
-  tracks: Track[],
+  tracks: Array<Track>,
   sortBy: SortConfig,
   sortOrder: SortOrder,
-): Track[] {
+): Array<Track> {
   // The first column is sorted either asc or desc, but the rest is always asc
   const firstOrder = sortOrder === 'Asc' ? 'asc' : 'desc';
   return orderBy<Track>(tracks, sortBy, [firstOrder]);
@@ -41,11 +43,11 @@ export function sortTracks(
 export function stripAccents(str: string): string {
   let newStr = '';
 
-  for (let i = 0; i < str.length; i++) {
-    if (ACCENT_MAP.has(str[i])) {
-      newStr += ACCENT_MAP.get(str[i]);
+  for (const character of str) {
+    if (ACCENT_MAP.has(character)) {
+      newStr += ACCENT_MAP.get(character);
     } else {
-      newStr += str[i];
+      newStr += character;
     }
   }
 

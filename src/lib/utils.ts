@@ -13,8 +13,11 @@ export function logAndNotifyError(
   silent = false,
 ): void {
   let message;
-  if (err instanceof Error) message = err.message;
-  else message = String(err);
+  if (err instanceof Error) {
+    message = err.message
+  } else {
+     message = String(err)
+  };
 
   if (pre != null) {
     message = `${pre}: ${message}`;

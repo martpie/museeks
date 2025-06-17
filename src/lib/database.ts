@@ -11,8 +11,7 @@ import type {
 /**
  * Bridge for the UI to communicate with the backend and manipulate the Database
  */
-
-// biome-ignore lint/complexity/noStaticOnlyClass: conflict with decorators rules
+// oxlint-disable-next-line no-extraneous-class: Need a class to use decorators
 class DatabaseBridge {
   // ---------------------------------------------------------------------------
   // Library read/write actions
@@ -128,6 +127,7 @@ class DatabaseBridge {
   // ---------------------------------------------------------------------------
   // Common
   // ---------------------------------------------------------------------------
+
   @LogExecutionTime
   static async reset(): Promise<string | null> {
     return invoke('plugin:database|reset');
@@ -140,15 +140,13 @@ export default DatabaseBridge;
  * Helpers to compute the time it takes to
  */
 function LogExecutionTime(
-  // biome-ignore lint/suspicious/noExplicitAny: it's a decorator duh
   _target: any,
   propertyKey: string,
   descriptor: PropertyDescriptor,
 ) {
   const originalMethod = descriptor.value;
 
-  // biome-ignore lint/suspicious/noExplicitAny: we don't know the signature of the original method
-  descriptor.value = async function (...args: any[]) {
+  descriptor.value = async function descriptorValue(...args: Array<any>) {
     const startTime = Date.now();
     const result = await originalMethod.apply(this, args);
     const endTime = Date.now();

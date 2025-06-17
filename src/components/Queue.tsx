@@ -7,7 +7,7 @@ import QueueEmpty from './QueueEmpty';
 import QueueList from './QueueList';
 
 type Props = {
-  queue: Track[];
+  queue: Array<Track>;
   queueCursor: number | null;
 };
 

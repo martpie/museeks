@@ -36,11 +36,11 @@ import TracksListGrouped from './TracksListGrouped';
 // --------------------------------------------------------------------------
 
 type TracksListProps = {
-  playlists: Playlist[];
+  playlists: Array<Playlist>;
   tracksDensity: Config['track_view_density'];
   isSortEnabled: boolean;
   reorderable?: boolean;
-  onReorder?: (tracks: Track[]) => void;
+  onReorder?: (tracks: Array<Track>) => void;
   queueOrigin: QueueOrigin;
   // For View-specific context menus
   extraContextMenu?: Array<{
@@ -49,12 +49,12 @@ type TracksListProps = {
   }>;
 };
 
-interface TrackListDefaultLayoutProps extends TracksListProps {
+type TrackListDefaultLayoutProps = TracksListProps & {
   layout: 'default';
   data: Array<Track>;
 }
 
-interface TrackListGroupedLayoutProps extends TracksListProps {
+type TrackListGroupedLayoutProps = TracksListProps & {
   layout: 'grouped';
   data: Array<TrackGroup>;
 }
@@ -131,7 +131,7 @@ export default function TracksList(props: Props) {
         (track) => track.id === trackPlayingID,
       );
 
-      if (playingTrackIndex >= 0) {
+      if (playingTrackIndex !== -1) {
         setTimeout(() => {
           // avoid conflict with scroll restoration
           virtualizer?.scrollToIndex(playingTrackIndex, { behavior: 'smooth' });
@@ -143,7 +143,7 @@ export default function TracksList(props: Props) {
     trackPlayingID,
     navigate,
     tracks,
-    virtualizer?.scrollToIndex,
+    virtualizer,
   ]);
 
   /**
@@ -346,44 +346,42 @@ export default function TracksList(props: Props) {
       }
 
       menuItemsBuilder.push(
-        ...[
-          PredefinedMenuItem.new({ item: 'Separator' }),
-          MenuItem.new({
-            text: t`Edit track`,
-            action: () => {
-              navigate({
-                to: '/tracks/$trackID',
-                params: { trackID: track.id },
-              });
-            },
-          }),
-          PredefinedMenuItem.new({ item: 'Separator' }),
-          MenuItem.new({
-            text: t`Show in file manager`,
-            action: async () => {
-              await revealItemInDir(track.path);
-            },
-          }),
-          MenuItem.new({
-            text: t`Remove from library`,
-            action: async () => {
-              const confirm = await ask(
-                t`Are you sure you want to remove ${selectedTracks.size} track(s) from your library?`,
-                {
-                  title: t`Remove tracks`,
-                  kind: 'warning',
-                  cancelLabel: t`Cancel`,
-                  okLabel: t`Remove`,
-                },
-              );
+        PredefinedMenuItem.new({ item: 'Separator' }),
+        MenuItem.new({
+          text: t`Edit track`,
+          action: () => {
+            navigate({
+              to: '/tracks/$trackID',
+              params: { trackID: track.id },
+            });
+          },
+        }),
+        PredefinedMenuItem.new({ item: 'Separator' }),
+        MenuItem.new({
+          text: t`Show in file manager`,
+          action: async () => {
+            await revealItemInDir(track.path);
+          },
+        }),
+        MenuItem.new({
+          text: t`Remove from library`,
+          action: async () => {
+            const confirm = await ask(
+              t`Are you sure you want to remove ${selectedTracks.size} track(s) from your library?`,
+              {
+                title: t`Remove tracks`,
+                kind: 'warning',
+                cancelLabel: t`Cancel`,
+                okLabel: t`Remove`,
+              },
+            );
 
-              if (confirm) {
-                await libraryAPI.remove(Array.from(selectedTracks));
-                invalidate();
-              }
-            },
-          }),
-        ],
+            if (confirm) {
+              await libraryAPI.remove(Array.from(selectedTracks));
+              invalidate();
+            }
+          },
+        }),
       );
 
       const menu = await Menu.new({

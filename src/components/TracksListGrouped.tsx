@@ -18,9 +18,9 @@ import styles from './TracksList.module.css';
 
 type Props = {
   ref: React.RefObject<TracksListVirtualizer | null>;
-  trackGroups: TrackGroup[];
+  trackGroups: Array<TrackGroup>;
   selectedTracks: Set<string>;
-  initialOffset: number;
+  initialOffset: number; // Scroll restoration not implemented yet
   rowHeight: number;
 } & TrackRowEvents;
 
@@ -46,6 +46,7 @@ export default function TrackListGroupedLayout(props: Props) {
       },
     } satisfies TracksListVirtualizer;
   }, [tracks]);
+
 
   return (
     <div ref={innerScrollableRef} className={styles.tracksListScroller}>
@@ -123,7 +124,7 @@ function TrackListGroup(props: TracksListGroupProps) {
               onContextMenu={onContextMenu}
               onPlaybackStart={onPlaybackStart}
               draggable={false}
-              simplified={true}
+              simplified
               style={{ height: `${rowHeight}px` }} // Figure out virtualization for grouped stuff
             />
           );

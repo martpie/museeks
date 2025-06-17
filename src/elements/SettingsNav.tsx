@@ -4,7 +4,7 @@ import type React from 'react';
 
 import styles from './SettingsNav.module.css';
 
-interface WrapProps {
+type WrapProps = {
   children: React.ReactNode;
 }
 
@@ -15,7 +15,7 @@ export function SettingsNav(props: WrapProps) {
   return <nav className={cx(styles.nav)}>{props.children}</nav>;
 }
 
-interface LinkProps {
+type LinkProps = {
   children: React.ReactNode;
   to: string;
 }

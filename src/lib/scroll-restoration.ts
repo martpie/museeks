@@ -6,12 +6,12 @@ function getKey() {
 
 export const saveScrollPosition = debounce(
   (y: number) => {
-    window.sessionStorage.setItem(getKey(), y.toString());
+    globalThis.sessionStorage.setItem(getKey(), y.toString());
   },
   1000,
   {},
 );
 
 export const getScrollPosition = (): number => {
-  return Number(window.sessionStorage.getItem(getKey()));
+  return Number(globalThis.sessionStorage.getItem(getKey()));
 };

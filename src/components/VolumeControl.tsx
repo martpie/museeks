@@ -18,8 +18,12 @@ const unsmoothifyVolume = (value: number): number =>
   value ** (1 / SMOOTHING_FACTOR);
 
 const getVolumeIcon = (volume: number, muted: boolean): string => {
-  if (muted || volume === 0) return 'volume-off';
-  if (volume < 0.5) return 'volume-down';
+  if (muted || volume === 0) {
+    return 'volume-off'
+  };
+  if (volume < 0.5) {
+    return 'volume-down'
+  };
   return 'volume-up';
 };
 
@@ -34,7 +38,7 @@ export default function VolumeControl() {
   const playerAPI = usePlayerAPI();
 
   const setPlayerVolume = useCallback(
-    (values: number[]) => {
+    (values: Array<number>) => {
       const [value] = values;
       const smoothVolume = smoothifyVolume(value);
 

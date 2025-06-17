@@ -5,7 +5,7 @@ import type { API, Toast, ToastType } from '../types/museeks';
 import { createStore } from './store-helpers';
 
 type ToastsState = API<{
-  toasts: Toast[];
+  toasts: Array<Toast>;
   api: {
     add: (type: ToastType, content: string, duration?: number) => void;
     remove: (id: string) => void;
@@ -22,7 +22,7 @@ const useToastsStore = createStore<ToastsState>((set, get) => ({
 
       set((state) => ({ toasts: [...state.toasts, toast] }));
 
-      window.setTimeout(function removeToast() {
+      globalThis.setTimeout(function removeToast() {
         get().api.remove(id);
       }, duration);
     },

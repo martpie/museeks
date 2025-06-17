@@ -5,7 +5,7 @@ import type { Track } from '../generated/typings';
 import config from './config';
 import { logAndNotifyError } from './utils';
 
-interface PlayerOptions {
+type PlayerOptions = {
   playbackRate?: number;
   audioOutputDevice?: string;
   volume?: number;
@@ -46,8 +46,9 @@ class Player {
   }
 
   async play() {
-    if (!this.audio.src)
+    if (!this.audio.src) {
       throw new Error('Trying to play a track but not audio.src is defined');
+    }
 
     await this.audio.play();
   }
@@ -93,8 +94,8 @@ class Player {
     try {
       // @ts-ignore
       await this.audio.setSinkId(deviceID);
-    } catch (err) {
-      logAndNotifyError(err);
+    } catch (error) {
+      logAndNotifyError(error);
     }
   }
 
@@ -106,7 +107,7 @@ class Player {
     this.track = track;
 
     // Cursed Linux: https://github.com/tauri-apps/tauri/issues/3725#issuecomment-2325248116
-    if (window.__MUSEEKS_PLATFORM === 'linux') {
+    if (globalThis.__MUSEEKS_PLATFORM === 'linux') {
       const blobUrl = URL.createObjectURL(
         await fetch(convertFileSrc(track.path)).then((res) => res.blob()),
       );

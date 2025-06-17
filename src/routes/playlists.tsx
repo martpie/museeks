@@ -138,7 +138,7 @@ function ViewPlaylists() {
     playlistContent = (
       <ViewMessage.Notice>
         <p>
-          <Trans>You haven{"'"}t created any playlist yet</Trans>
+          <Trans>You haven't created any playlist yet</Trans>
         </p>
         <ViewMessage.Sub>
           <button

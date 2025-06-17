@@ -25,13 +25,13 @@ const DND_MODIFIERS = [restrictToVerticalAxis];
  * -------------------------------------------------------------------------- */
 type Props = {
   ref: React.RefObject<TracksListVirtualizer | null>;
-  tracks: Track[];
+  tracks: Array<Track>;
   isSortEnabled: boolean;
   reorderable?: boolean;
   selectedTracks: Set<string>;
   initialOffset: number;
   rowHeight: number;
-  onReorder?: (tracks: Track[]) => void;
+  onReorder?: (tracks: Array<Track>) => void;
 } & TrackRowEvents;
 
 export default function TrackListDefault(props: Props) {

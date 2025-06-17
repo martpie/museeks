@@ -34,12 +34,12 @@ export const Route = createFileRoute('/playlists/$playlistID')({
         playlistTracks,
         tracksDensity,
       };
-    } catch (err) {
-      if (err === 'Playlist not found') {
+    } catch (error) {
+      if (error === 'Playlist not found') {
         throw redirect({ to: '/playlists' });
       }
 
-      throw err;
+      throw error;
     }
   },
 });
@@ -61,7 +61,7 @@ function ViewPlaylistDetails() {
   }, [playlistID]);
 
   const onReorder = useCallback(
-    async (tracks: Track[]) => {
+    async (tracks: Array<Track>) => {
       if (playlistID != null) {
         await PlaylistsAPI.reorderTracks(playlistID, tracks);
         invalidate();
@@ -141,7 +141,7 @@ function ViewPlaylistDetails() {
       playlists={playlists}
       queueOrigin={queueOrigin}
       onReorder={onReorder}
-      reorderable={true}
+      reorderable
       extraContextMenu={extraContextMenu}
     />
   );
