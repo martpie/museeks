@@ -1,4 +1,7 @@
-ion-icon {
-  color: currentColor;
+.icon {
+  display: inline-block;
+  text-align: center;
+  aspect-ratio: 1;
+  fill: currentColor;
   line-height: 1;
 }

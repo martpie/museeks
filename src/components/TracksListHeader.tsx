@@ -18,11 +18,11 @@ const getIcon = (
 
   if (sortBy === sortByTarget) {
     if (sortOrder === 'Asc') {
-      return 'caret-up';
+      return 'chevronUp';
     }
 
     // Must be DSC then
-    return 'caret-down';
+    return 'chevronDown';
   }
 
   return null;

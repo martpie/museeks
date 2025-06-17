@@ -5,11 +5,12 @@ import cx from 'classnames';
 import type { Track } from '../generated/typings';
 import useCover from '../hooks/useCover';
 import styles from './Cover.module.css';
+import Icon, { type IconSize } from './Icon';
 
 type Props = {
   track: Track;
   noBorder?: boolean;
-  noteSize?: number;
+  iconSize?: IconSize;
 };
 
 export default function Cover(props: Props) {
@@ -23,17 +24,8 @@ export default function Cover(props: Props) {
   return (
     <AspectRatio.Root ratio={1}>
       <div className={classes}>
-        {/** billion dollar problem: convert emoji to text, good luck 🎵 */}
-        <div
-          className={styles.note}
-          style={{
-            fontSize: `${props.noteSize ?? 1}rem`,
-            lineHeight: `${props.noteSize ?? 1}rem`,
-            // the note always seems a bit "high"
-            marginBottom: `-${(props.noteSize ?? 1) / 10}rem`,
-          }}
-        >
-          ♫
+        <div className={styles.note}>
+          <Icon name="musicalNotes" size={props.iconSize} />
         </div>
         <img
           src={coverPath ?? undefined}
@@ -42,6 +34,7 @@ export default function Cover(props: Props) {
             [styles.visible]: coverPath != null,
           })}
           draggable={false}
+          aria-hidden={coverPath === null}
         />
       </div>
     </AspectRatio.Root>

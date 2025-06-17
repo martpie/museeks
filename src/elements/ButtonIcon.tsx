@@ -1,24 +1,30 @@
 import type React from 'react';
 
-import Icon, { type IconName } from '../components/Icon';
+import Icon, { type IconName, type IconSize } from '../components/Icon';
 import styles from './ButtonIcon.module.css';
 
-type Props = {
-  onClick: React.MouseEventHandler<HTMLButtonElement>;
+type Props = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   icon: IconName;
-  title?: string;
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
+  iconSize?: IconSize;
+  isActive?: boolean;
 };
 
 export default function ButtonIcon(props: Props) {
+  const { onClick, icon, iconSize, isActive, ...rest } = props;
   return (
     <button
       type="button"
       className={styles.buttonIcon}
-      onClick={props.onClick}
-      title={props.title}
+      onClick={onClick}
       data-museeks-action
+      {...rest}
     >
-      <Icon name={props.icon} />
+      <Icon
+        name={icon}
+        size={iconSize}
+        color={isActive ? 'var(--main-color)' : undefined}
+      />
     </button>
   );
 }

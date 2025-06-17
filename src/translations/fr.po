@@ -25,15 +25,15 @@ msgstr "Impossible d'obtenir les périphériques de sortie audio"
 msgid "No audio devices found"
 msgstr "Aucun périphérique audio trouvé"
 
-#: src/components/ButtonRepeat.tsx:26
+#: src/components/ButtonRepeat.tsx:18
 msgid "Repeat"
 msgstr "Lecture en boucle"
 
-#: src/components/ButtonShuffle.tsx:27
+#: src/components/ButtonShuffle.tsx:12
 msgid "Shuffle"
 msgstr "Lecture aléatoire"
 
-#: src/components/Cover.tsx:40
+#: src/components/Cover.tsx:32
 msgid "Album cover"
 msgstr "Couverture de l'album"
 
@@ -103,15 +103,15 @@ msgstr "File d'attente"
 msgid "Previous"
 msgstr "Précédent"
 
-#: src/components/PlayerControls.tsx:28
+#: src/components/PlayerControls.tsx:25
 msgid "Pause"
 msgstr "Pause"
 
-#: src/components/PlayerControls.tsx:28
+#: src/components/PlayerControls.tsx:25
 msgid "Play"
 msgstr "Lecture"
 
-#: src/components/PlayerControls.tsx:40
+#: src/components/PlayerControls.tsx:31
 msgid "Next"
 msgstr "Suivant"
 
@@ -238,8 +238,8 @@ msgstr "Album"
 msgid "Genre"
 msgstr "Genre"
 
-#: src/components/VolumeControl.tsx:89
-#: src/components/VolumeControl.tsx:113
+#: src/components/VolumeControl.tsx:73
+#: src/components/VolumeControl.tsx:93
 msgid "Volume"
 msgstr "Volume"
 

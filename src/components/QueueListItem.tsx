@@ -49,7 +49,7 @@ export default function QueueListItem(props: Props) {
       {...listeners}
     >
       <div className={styles.queueItemCover}>
-        <Cover track={track} />
+        <Cover track={track} iconSize={12} />
       </div>
       {/** biome-ignore lint/a11y/noStaticElementInteractions: later, make a <li> */}
       <div className={styles.queueItemInfo} onDoubleClick={play}>

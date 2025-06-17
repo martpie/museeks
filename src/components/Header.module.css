@@ -25,6 +25,7 @@
   align-items: center;
   padding-right: 10px;
   min-width: 200px;
+  padding-left: 12px;
 }
 
 :global(.os__macos) .headerMainControls {
@@ -32,7 +33,6 @@
 }
 
 .headerSearch {
-  margin-left: 12px;
   flex: 0 0 auto;
   display: flex;
   justify-content: flex-end;
@@ -45,23 +45,14 @@
   display: flex;
 }
 
-.queueToggle {
-  line-height: 1;
-  margin-left: 12px;
-  color: inherit;
-  border: 0;
-  background: transparent;
-  font-size: 14px;
-  box-shadow: none;
-  flex-shrink: 0;
+.queue {
+  margin: 0px 16px;
+  display: flex;
+  align-items: center;
 }
 
 .queueContainer {
-  display: none;
-  position: absolute;
   z-index: 1000;
-  text-align: left;
-  right: 0;
 
   &[data-state="open"] {
     display: block;

@@ -1,6 +1,6 @@
 .volumeControlContainer {
   position: relative;
-  width: 35px;
+  margin-left: 4px;
 }
 
 .volumeControl {
@@ -62,4 +62,8 @@
 .sliderThumb:active {
   outline: none;
   box-shadow: 0 0 0 2px var(--main-color);
+}
+
+.faded {
+  opacity: 0.6;
 }

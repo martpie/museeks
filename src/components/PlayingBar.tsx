@@ -18,7 +18,7 @@ export default function PlayingBar(props: Props) {
   return (
     <div className={styles.playingBar}>
       <div className={styles.playingBarCover}>
-        <Cover track={trackPlaying} noBorder />
+        <Cover track={trackPlaying} noBorder iconSize={16} />
       </div>
       <PlayingBarInfos
         trackPlaying={trackPlaying}

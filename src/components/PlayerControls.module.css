@@ -2,36 +2,7 @@
   display: flex;
   align-items: center;
   position: relative;
-
-  .control {
-    display: flex;
-    border: 0;
-    background: transparent;
-    font-size: 16px;
-    padding: 0 10px;
-    color: inherit;
-    cursor: pointer;
-
-    &.play {
-      font-size: 20px;
-      padding: 0 5px;
-    }
-
-    &.volume {
-      padding: 0;
-      width: 34px;
-      position: relative;
-    }
-
-    i {
-      display: flex;
-      align-items: center;
-    }
-  }
-}
-
-.faded {
-  opacity: 0.7;
+  gap: 12px;
 }
 
 .playerOptions {

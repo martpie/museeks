@@ -102,7 +102,7 @@ function TrackListGroup(props: TracksListGroupProps) {
     <div className={styles.tracksGroup}>
       <div className={styles.tracksGroupMetadata}>
         {/** Instead of the first one, maybe get the first track within the album to hold a cover? */}
-        <Cover track={tracks[0]} noteSize={5} noBorder />
+        <Cover track={tracks[0]} iconSize={36} noBorder />
         <h3 className={styles.tracksGroupLabel}>{label}</h3>
         <div className={styles.tracksGroupGenres}>
           <Plural value={tracks.length} one="track" other="tracks" />,{' '}
