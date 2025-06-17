@@ -11,8 +11,8 @@ type Props = {
 } & Setting.InputProps;
 
 export default function AudioOutputSelect(props: Props) {
-  const { label, description, id } = props;
-  const selectProps = { label, description, id };
+  const { label, description } = props;
+  const selectProps = { label, description };
   const { t } = useLingui();
 
   const [devices, setDevices] = useState<MediaDeviceInfo[] | null>(null);
