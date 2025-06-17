@@ -1,35 +1,26 @@
 import { useLingui } from '@lingui/react/macro';
-import cx from 'classnames';
 
+import ButtonIcon from '../elements/ButtonIcon';
 import usePlayerStore, { usePlayerAPI } from '../stores/usePlayerStore';
-import styles from './ButtonShuffleRepeat.module.css';
-import Icon from './Icon';
 
 export default function ButtonRepeat() {
   const repeat = usePlayerStore((state) => state.repeat);
   const playerAPI = usePlayerAPI();
   const { t } = useLingui();
 
-  const buttonClasses = cx(styles.button, {
-    [styles.active]: repeat === 'One' || repeat === 'All',
-  });
+  let pressed: boolean | 'mixed' = false;
+  if (repeat === 'All') pressed = true;
+  if (repeat === 'One') pressed = 'mixed';
 
   return (
     // This should be a checkbox for accessibility
-    <button
-      type="button"
-      className={buttonClasses}
-      onClick={() => playerAPI.toggleRepeat()}
-      data-museeks-action
-      role="menuitemcheckbox"
-      aria-checked={repeat === 'One' || repeat === 'All'}
+    <ButtonIcon
       title={t`Repeat`}
-    >
-      <Icon
-        name={repeat === 'One' ? 'repeat_one' : 'repeat'}
-        size={12}
-        className={styles.icon}
-      />
-    </button>
+      icon={repeat === 'One' ? 'repeatOne' : 'repeat'}
+      iconSize={20}
+      onClick={() => playerAPI.toggleRepeat()}
+      isActive={repeat === 'One' || repeat === 'All'}
+      aria-pressed={pressed}
+    />
   );
 }

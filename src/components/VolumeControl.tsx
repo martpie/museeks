@@ -1,15 +1,13 @@
 import { useLingui } from '@lingui/react/macro';
 import * as Slider from '@radix-ui/react-slider';
 import cx from 'classnames';
-import type React from 'react';
 import { useCallback, useState } from 'react';
 
+import ButtonIcon from '../elements/ButtonIcon';
 import player from '../lib/player';
 import { stopPropagation } from '../lib/utils-events';
 import { usePlayerAPI } from '../stores/usePlayerStore';
 import type { IconName } from './Icon';
-import Icon from './Icon';
-import controlStyles from './PlayerControls.module.css';
 import styles from './VolumeControl.module.css';
 
 // Volume easing - http://www.dr-lex.be/info-stuff/volumecontrols.html#about
@@ -20,11 +18,11 @@ const unsmoothifyVolume = (value: number): number =>
   value ** (1 / SMOOTHING_FACTOR);
 
 const getVolumeIcon = (volume: number, muted: boolean): IconName => {
-  if (muted) return 'volume-mute';
-  if (volume === 0) return 'volume-off';
-  if (volume < 0.33) return 'volume-low';
-  if (volume < 0.67) return 'volume-medium';
-  return 'volume-high';
+  if (muted) return 'volumeMute';
+  if (volume === 0) return 'volumeOff';
+  if (volume < 0.33) return 'volumeLow';
+  if (volume < 0.67) return 'volumeMedium';
+  return 'volumeHigh';
 };
 
 export default function VolumeControl() {
@@ -49,31 +47,19 @@ export default function VolumeControl() {
   );
 
   // TODO: move to player actions
-  const mute = useCallback(
-    (e: React.MouseEvent<HTMLButtonElement>) => {
-      if (
-        e.currentTarget.classList.contains(controlStyles.control) ||
-        e.currentTarget.classList.contains('fa')
-      ) {
-        const muted = !player.isMuted();
+  const mute = useCallback(() => {
+    const muted = !player.isMuted();
 
-        playerAPI.setMuted(muted);
-        setMuted(muted);
-      }
-    },
-    [playerAPI],
-  );
+    playerAPI.setMuted(muted);
+    setMuted(muted);
+  }, [playerAPI]);
 
   const volumeClasses = cx(styles.volumeControl, {
     [styles.visible]: showVolume,
   });
 
-  const controlClasses = cx(controlStyles.control, {
-    [controlStyles.faded]: muted,
-  });
-
   const sliderClasses = cx(styles.sliderRoot, {
-    [controlStyles.faded]: muted,
+    [styles.faded]: muted,
   });
 
   return (
@@ -83,18 +69,12 @@ export default function VolumeControl() {
       onMouseEnter={() => setShowVolume(true)}
       onMouseLeave={() => setShowVolume(false)}
     >
-      <button
-        type="button"
-        className={controlClasses}
+      <ButtonIcon
         title={t`Volume`}
         onClick={mute}
-        data-museeks-action
-      >
-        <Icon
-          name={getVolumeIcon(unsmoothifyVolume(volume), muted)}
-          size={20}
-        />
-      </button>
+        icon={getVolumeIcon(unsmoothifyVolume(volume), muted)}
+        iconSize={16}
+      />
       <div className={volumeClasses}>
         <Slider.Root
           className={sliderClasses}

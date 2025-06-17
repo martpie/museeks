@@ -34,6 +34,7 @@
 }
 
 .note {
-  font-family: Verdana, sans-serif; /* the sexy one */
   color: var(--text-muted);
+  font-size: 1rem;
+  line-height: 1;
 }

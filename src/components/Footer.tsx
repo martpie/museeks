@@ -21,7 +21,7 @@ export default function Footer() {
             title={t`Library`}
             draggable={false}
           >
-            <Icon name="library" />
+            <Icon name="musicalNotes" size={16} />
           </Link>
           <Link
             to="/artists"
@@ -30,7 +30,7 @@ export default function Footer() {
             title={t`Artists`}
             draggable={false}
           >
-            <Icon name="microphone" />
+            <Icon name="microphone" size={16} />
           </Link>
           <Link
             to="/playlists"
@@ -39,7 +39,7 @@ export default function Footer() {
             title={t`Playlists`}
             draggable={false}
           >
-            <Icon name="star" />
+            <Icon name="playlist" size={16} />
           </Link>
           <Link
             to="/settings"
@@ -48,7 +48,7 @@ export default function Footer() {
             title={t`Settings`}
             draggable={false}
           >
-            <Icon name="settings" />
+            <Icon name="settings" size={16} />
           </Link>
         </div>
       </div>

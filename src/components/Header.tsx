@@ -1,10 +1,10 @@
 import { useLingui } from '@lingui/react/macro';
 import * as Popover from '@radix-ui/react-popover';
 
+import ButtonIcon from '../elements/ButtonIcon';
 import usePlayingTrack from '../hooks/usePlayingTrack';
 import usePlayerStore from '../stores/usePlayerStore';
 import styles from './Header.module.css';
-import Icon from './Icon';
 import PlayerControls from './PlayerControls';
 import PlayingBar from './PlayingBar';
 import Queue from './Queue';
@@ -26,17 +26,16 @@ export default function Header() {
           <>
             <PlayingBar trackPlaying={trackPlaying} />
             <Popover.Root>
-              <Popover.Trigger asChild>
-                <button
-                  type="button"
-                  className={styles.queueToggle}
-                  data-tauri-drag-region
-                  title={t`Queue`}
-                  data-museeks-action
-                >
-                  <Icon name="queue" size={20} />
-                </button>
-              </Popover.Trigger>
+              <div className={styles.queue}>
+                <Popover.Trigger asChild>
+                  <ButtonIcon
+                    icon="list"
+                    iconSize={20}
+                    title={t`Queue`}
+                    data-tauri-drag-region
+                  />
+                </Popover.Trigger>
+              </div>
               <Popover.Portal>
                 <Popover.Content
                   side="bottom"

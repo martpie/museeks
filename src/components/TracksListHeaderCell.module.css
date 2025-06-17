@@ -19,7 +19,9 @@
   }
 
   .icon {
-    padding-right: 6px;
+    margin-right: 6px;
+    display: flex;
+    align-items: center;
   }
 
   .name {
