@@ -1,5 +1,5 @@
 import { lingui } from '@lingui/vite-plugin';
-import { TanStackRouterVite as router } from '@tanstack/router-plugin/vite';
+import { tanstackRouter } from '@tanstack/router-plugin/vite';
 import react from '@vitejs/plugin-react';
 import browserslist from 'browserslist';
 import { browserslistToTargets } from 'lightningcss';
@@ -9,7 +9,7 @@ import svgr from 'vite-plugin-svgr';
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
-    router({
+    tanstackRouter({
       target: 'react',
       generatedRouteTree: './src/generated/route-tree.ts',
     }),
