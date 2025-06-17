@@ -24,7 +24,7 @@ export function preventNativeDefault(e: Event) {
  * Check if we are running in a dev environment
  */
 export function isDev() {
-  return window.location.host.startsWith('localhost:');
+  return globalThis.location.host.startsWith('localhost:');
 }
 
 /**
@@ -35,7 +35,7 @@ export function isDev() {
 export function isCtrlKey(
   e: React.KeyboardEvent | React.MouseEvent | KeyboardEvent,
 ): boolean {
-  const isMacOS = window.__MUSEEKS_PLATFORM === 'macos';
+  const isMacOS = globalThis.__MUSEEKS_PLATFORM === 'macos';
 
   return (isMacOS && e.metaKey) || (!isMacOS && e.ctrlKey);
 }
@@ -48,7 +48,7 @@ export function isCtrlKey(
 export function isAltKey(
   e: React.KeyboardEvent | React.MouseEvent | KeyboardEvent,
 ): boolean {
-  const isMacOS = window.__MUSEEKS_PLATFORM === 'macos';
+  const isMacOS = globalThis.__MUSEEKS_PLATFORM === 'macos';
 
   return (isMacOS && e.ctrlKey) || (!isMacOS && e.metaKey);
 }

@@ -10,6 +10,6 @@ describe('parseDuration', () => {
     expect(parseDuration(60)).toStrictEqual('01:00');
     expect(parseDuration(695)).toStrictEqual('11:35');
     expect(parseDuration(7261)).toStrictEqual('02:01:01');
-    expect(parseDuration(9999999)).toStrictEqual('2777:46:39');
+    expect(parseDuration(9_999_999)).toStrictEqual('2777:46:39');
   });
 });

@@ -44,6 +44,7 @@ const router = createRouter({
 
 // Register the router instance for type safety
 declare module '@tanstack/react-router' {
+  // oxlint-disable-next-line consistent-type-definitions
   interface Register {
     router: typeof router;
   }
@@ -58,7 +59,7 @@ declare module '@tanstack/react-router' {
 (async function createRoot() {
   Promise.allSettled([
     logger.attachConsole(),
-    loadTranslation(window.__MUSEEKS_INITIAL_CONFIG.language),
+    loadTranslation(globalThis.__MUSEEKS_INITIAL_CONFIG.language),
   ]);
 
   const wrap = document.getElementById('wrap');

@@ -12,7 +12,7 @@ export enum PlayerStatus {
 /**
  * Various
  */
-export interface Toast {
+export type Toast = {
   _id: string;
   content: string;
   type: ToastType;
@@ -23,7 +23,7 @@ export type ToastType = 'success' | 'danger' | 'warning';
 /**
  * Themes
  */
-export interface Theme {
+export type Theme = {
   _id: string;
   name: string;
   themeSource: 'light' | 'dark';
@@ -34,7 +34,7 @@ export interface Theme {
  * APIs Helpers
  */
 export type API<
-  T extends { api: Record<string, (...args: any[]) => Promise<any> | any> },
+  T extends { api: Record<string, (...args: Array<any>) => Promise<any> | any> },
 > = T;
 
 /**

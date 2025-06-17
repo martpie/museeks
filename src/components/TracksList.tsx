@@ -36,11 +36,11 @@ import TracksListGrouped from './TracksListGrouped';
 // --------------------------------------------------------------------------
 
 type TracksListProps = {
-  playlists: Playlist[];
+  playlists: Array<Playlist>;
   tracksDensity: Config['track_view_density'];
   isSortEnabled: boolean;
   reorderable?: boolean;
-  onReorder?: (tracks: Track[]) => void;
+  onReorder?: (tracks: Array<Track>) => void;
   queueOrigin: QueueOrigin;
   // For View-specific context menus
   extraContextMenu?: Array<{
@@ -49,12 +49,12 @@ type TracksListProps = {
   }>;
 };
 
-interface TrackListDefaultLayoutProps extends TracksListProps {
+type TrackListDefaultLayoutProps = TracksListProps & {
   layout: 'default';
   data: Array<Track>;
 }
 
-interface TrackListGroupedLayoutProps extends TracksListProps {
+type TrackListGroupedLayoutProps = TracksListProps & {
   layout: 'grouped';
   data: Array<TrackGroup>;
 }
@@ -131,7 +131,7 @@ export default function TracksList(props: Props) {
         (track) => track.id === trackPlayingID,
       );
 
-      if (playingTrackIndex >= 0) {
+      if (playingTrackIndex !== -1) {
         setTimeout(() => {
           // avoid conflict with scroll restoration
           virtualizer?.scrollToIndex(playingTrackIndex, { behavior: 'smooth' });

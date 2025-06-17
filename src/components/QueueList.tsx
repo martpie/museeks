@@ -20,7 +20,7 @@ const INITIAL_QUEUE_SIZE = 20;
 const DND_MODIFIERS = [restrictToVerticalAxis];
 
 type Props = {
-  queue: Track[];
+  queue: Array<Track>;
   queueCursor: number;
 };
 

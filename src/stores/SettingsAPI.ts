@@ -23,7 +23,9 @@ let did_init = false;
  * Init all settings, then show the app
  */
 async function init(then: () => void): Promise<void> {
-  if (did_init) return;
+  if (did_init) {
+    return;
+  }
 
   did_init = true;
   // Blocking (the window should not be shown until it's done)
@@ -140,9 +142,9 @@ async function checkForUpdate(
     if (message) {
       useToastsStore.getState().api.add('success', message);
     }
-  } catch (e) {
+  } catch (error) {
     logAndNotifyError(
-      e,
+      error,
       'An error occurred while checking updates.',
       true,
       options.silentFail,

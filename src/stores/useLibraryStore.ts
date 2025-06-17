@@ -28,7 +28,7 @@ type LibraryState = API<{
     addLibraryFolders: (paths: Array<string>) => Promise<void>;
     removeLibraryFolder: (path: string) => Promise<void>;
     scan: (refresh?: boolean) => Promise<void>;
-    remove: (tracksIDs: string[]) => Promise<void>;
+    remove: (tracksIDs: Array<string>) => Promise<void>;
     reset: () => Promise<void>;
     setRefresh: (processed: number, total: number) => void;
     updateTrackMetadata: (
@@ -110,8 +110,8 @@ const useLibraryStore = createLibraryStore<LibraryState>((set, get) => ({
               5000,
             );
         }
-      } catch (err) {
-        logAndNotifyError(err);
+      } catch (error) {
+        logAndNotifyError(error);
       } finally {
         set({
           refreshing: false,
@@ -128,8 +128,8 @@ const useLibraryStore = createLibraryStore<LibraryState>((set, get) => ({
           ...paths,
         ]).sort();
         await config.set('library_folders', newFolders);
-      } catch (err) {
-        logAndNotifyError(err);
+      } catch (error) {
+        logAndNotifyError(error);
       }
     },
 
@@ -168,8 +168,8 @@ const useLibraryStore = createLibraryStore<LibraryState>((set, get) => ({
         await database.reset();
         await config.set('library_folders', []);
         useToastsStore.getState().api.add('success', t`Library was reset`);
-      } catch (err) {
-        logAndNotifyError(err);
+      } catch (error) {
+        logAndNotifyError(error);
       }
     },
 
@@ -197,9 +197,9 @@ const useLibraryStore = createLibraryStore<LibraryState>((set, get) => ({
         };
 
         await database.updateTrack(track);
-      } catch (err) {
+      } catch (error) {
         logAndNotifyError(
-          err,
+          error,
           'Something wrong happened when updating the track',
         );
       }

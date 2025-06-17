@@ -146,7 +146,7 @@ function LogExecutionTime(
 ) {
   const originalMethod = descriptor.value;
 
-  descriptor.value = async function (...args: any[]) {
+  descriptor.value = async function descriptorValue(...args: Array<any>) {
     const startTime = Date.now();
     const result = await originalMethod.apply(this, args);
     const endTime = Date.now();

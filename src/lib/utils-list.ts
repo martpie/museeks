@@ -131,10 +131,13 @@ export function listKeyboardSelect(
       // Add to the selection if shift key is pressed
       let newSelected = selection;
 
-      if (event.shiftKey)
+      if (event.shiftKey) {
         newSelected = new Set([list[addedIndex].id, ...selection]);
+      }
       // Or select only one from the first
-      else newSelected = new Set([list[addedIndex].id]);
+      else {
+        newSelected = new Set([list[addedIndex].id]);
+      }
 
       return [newSelected, addedIndex];
     }
@@ -149,10 +152,13 @@ export function listKeyboardSelect(
 
       // Add to the selection if shift key is pressed
       let newSelected: Set<string>;
-      if (event.shiftKey)
-        newSelected = new Set([...selection, list[addedIndex].id]);
+      if (event.shiftKey) {
+         newSelected = new Set([...selection, list[addedIndex].id]);
+      }
       // Or select only one from the last
-      else newSelected = new Set([list[addedIndex].id]);
+      else {
+        newSelected = new Set([list[addedIndex].id]);
+      }
 
       return [newSelected, addedIndex];
     }

@@ -10,8 +10,6 @@ declare global {
    * which is very inconvenient for small-synchronous utils, so we hack our way
    * around by polluting the global namespace
    */
-  interface Window {
-    __MUSEEKS_PLATFORM: OsType;
-    __MUSEEKS_INITIAL_CONFIG: Config;
-  }
+   var __MUSEEKS_PLATFORM: OsType;
+   var __MUSEEKS_INITIAL_CONFIG: Config;
 }

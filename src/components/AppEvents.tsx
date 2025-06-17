@@ -15,12 +15,12 @@ function onSystemThemeChange({ payload }: { payload: string }) {
 function AppEvents() {
   useEffect(() => {
     // Prevent drop events on the window
-    window.addEventListener('dragover', preventNativeDefault, false);
-    window.addEventListener('drop', preventNativeDefault, false);
+    globalThis.addEventListener('dragover', preventNativeDefault, false);
+    globalThis.addEventListener('drop', preventNativeDefault, false);
 
     // Disable the default context menu on production builds
     if (!isDev()) {
-      window.addEventListener('contextmenu', preventNativeDefault);
+      globalThis.addEventListener('contextmenu', preventNativeDefault);
     }
 
     // TODO: fix that https://github.com/tauri-apps/tauri/issues/5279
@@ -37,19 +37,19 @@ function AppEvents() {
     async function updateOutputDevice() {
       try {
         await player.setOutputDevice('default');
-      } catch (err) {
-        logAndNotifyError(err);
+      } catch (error) {
+        logAndNotifyError(error);
       }
     }
 
     navigator.mediaDevices.addEventListener('devicechange', updateOutputDevice);
 
     return function cleanup() {
-      window.removeEventListener('dragover', preventNativeDefault, false);
-      window.removeEventListener('drop', preventNativeDefault, false);
+      globalThis.removeEventListener('dragover', preventNativeDefault, false);
+      globalThis.removeEventListener('drop', preventNativeDefault, false);
 
       if (!isDev()) {
-        window.removeEventListener('contextmenu', preventNativeDefault);
+        globalThis.removeEventListener('contextmenu', preventNativeDefault);
       }
 
       unlistenSystemThemeChange.then((u) => u());

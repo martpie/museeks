@@ -5,7 +5,9 @@ export function goToPlayingTrack(
   queueOrigin: QueueOrigin | null,
   navigate: NavigateFn,
 ) {
-  if (!queueOrigin) return;
+  if (!queueOrigin) {
+    return;
+  }
 
   switch (queueOrigin.type) {
     case 'library': {

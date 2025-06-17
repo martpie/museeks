@@ -13,8 +13,8 @@ import { type API, PlayerStatus, type QueueOrigin } from '../types/museeks';
 import { createStore } from './store-helpers';
 
 type PlayerState = API<{
-  queue: Track[];
-  oldQueue: Track[];
+  queue: Array<Track>;
+  oldQueue: Array<Track>;
   queueCursor: number | null;
   queueOrigin: null | QueueOrigin;
   repeat: Repeat;
@@ -22,7 +22,7 @@ type PlayerState = API<{
   playerStatus: PlayerStatus;
   api: {
     start: (
-      queue: Track[],
+      queue: Array<Track>,
       trackID: string | null,
       queueOrigin: QueueOrigin,
     ) => Promise<void>;
@@ -42,9 +42,9 @@ type PlayerState = API<{
     startFromQueue: (index: number) => Promise<void>;
     clearQueue: () => void;
     removeFromQueue: (index: number) => void;
-    addInQueue: (tracksIDs: string[]) => Promise<void>;
-    addNextInQueue: (tracksIDs: string[]) => Promise<void>;
-    setQueue: (tracks: Track[]) => void;
+    addInQueue: (tracksIDs: Array<string>) => Promise<void>;
+    addNextInQueue: (tracksIDs: Array<string>) => Promise<void>;
+    setQueue: (tracks: Array<Track>) => void;
   };
 }>;
 
@@ -65,7 +65,9 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
     start: async (tracks, maybeTrackID, queueOrigin) => {
       let queue = tracks;
 
-      if (queue.length === 0) return;
+      if (queue.length === 0) {
+        return
+      };
 
       const state = get();
 
@@ -80,12 +82,14 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
       const trackID = maybeTrackID ?? queue[0].id;
 
       // Typically, if we are in the playlists generic view without any view selected
-      if (queue.length === 0) return;
+      if (queue.length === 0) {
+        return
+      };
 
       const queuePosition = queue.findIndex((track) => track.id === trackID);
 
       // If a track exists
-      if (queuePosition > -1) {
+      if (queuePosition !== -1) {
         const track = queue[queuePosition];
 
         await player.setTrack(track);
@@ -305,8 +309,12 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
      * Mute/unmute the audio
      */
     setMuted: async (muted = false) => {
-      if (muted) player.mute();
-      else player.unmute();
+      if (muted) {
+        player.mute();
+      }
+      else {
+        player.unmute();
+      }
 
       await config.set('audio_muted', muted);
     },
@@ -321,7 +329,7 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
         player.setPlaybackRate(value);
       } else {
         await config.set('audio_playback_rate', null);
-        player.setPlaybackRate(1.0);
+        player.setPlaybackRate(1);
       }
     },
 
@@ -333,8 +341,8 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
         try {
           await player.setOutputDevice(deviceID);
           await config.set('audio_output_device', deviceID);
-        } catch (err) {
-          logAndNotifyError(err);
+        } catch (error) {
+          logAndNotifyError(error);
         }
       }
     },

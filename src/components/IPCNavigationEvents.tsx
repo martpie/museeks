@@ -57,7 +57,7 @@ export default function IPCNavigationEvents() {
   const onKey = useCallback(
     async (e: KeyboardEvent) => {
       // Prevent double navigation for cases we know work well
-      if (window.__MUSEEKS_PLATFORM === 'macos') {
+      if (globalThis.__MUSEEKS_PLATFORM === 'macos') {
         return;
       }
 

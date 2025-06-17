@@ -122,7 +122,7 @@ function ViewLibrary() {
         queueOrigin={QUEUE_ORIGIN}
         tracksDensity={tracksDensity}
         playlists={playlists}
-        isSortEnabled={true}
+        isSortEnabled
       />
     );
   }, [search, refreshing, filteredTracks, playlists, tracksDensity, isLoading]);

@@ -25,7 +25,7 @@ export default function useFilteredTracks(
 
   return useMemo(() => {
     // 1. Raw List
-    let searchedTracks: Track[] = filterTracks(tracks, search);
+    let searchedTracks: Array<Track> = filterTracks(tracks, search);
 
     if (sortBy && sortOrder) {
       // sorting being a costly operation, do it after filtering, ignore it if not needed
@@ -46,14 +46,14 @@ export default function useFilteredTracks(
  * IMPORTANT: can only be used ONCE per view, as it has side effects
  */
 export function useFilteredTrackGroup(
-  tracks: TrackGroup[],
+  tracks: Array<TrackGroup>,
   sortBy?: SortBy,
   sortOrder?: SortOrder,
-): TrackGroup[] {
+): Array<TrackGroup> {
   const search = useLibraryStore((state) => stripAccents(state.search));
 
   return useMemo(() => {
-    let searchedGroups: TrackGroup[] = tracks.map((group) => {
+    let searchedGroups: Array<TrackGroup> = tracks.map((group) => {
       return {
         ...group,
         tracks: filterTracks(group.tracks, search),

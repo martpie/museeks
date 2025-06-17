@@ -18,7 +18,7 @@ export default function TrackProgress(props: Props) {
   const playerAPI = usePlayerAPI();
 
   const jumpAudioTo = useCallback(
-    (values: number[]) => {
+    (values: Array<number>) => {
       const [to] = values;
 
       playerAPI.jumpTo(to);

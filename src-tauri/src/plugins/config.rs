@@ -197,8 +197,8 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
     // parsing time and require data that would otherwise only load-able asynchronously
     let initial_config_script = format!(
         r#"
-            window.__MUSEEKS_INITIAL_CONFIG = {};
-            window.__MUSEEKS_PLATFORM = {:?};
+            globalThis.__MUSEEKS_INITIAL_CONFIG = {};
+            globalThis.__MUSEEKS_PLATFORM = {:?};
         "#,
         serde_json::to_string(&config.get().unwrap()).unwrap(),
         tauri_plugin_os::type_().to_string()

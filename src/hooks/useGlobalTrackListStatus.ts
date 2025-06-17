@@ -9,7 +9,7 @@ import useAllTracks from './useAllTracks';
  * Update the footer status based on the given tracks
  */
 export default function useGlobalTrackListStatus(
-  tracks: Track[] | TrackGroup[],
+  tracks: Array<Track> | Array<TrackGroup>,
 ) {
   const libraryAPI = useLibraryAPI();
   const info = useTrackListStatus(tracks);
@@ -28,7 +28,7 @@ export default function useGlobalTrackListStatus(
  * footer status.
  */
 export function useTrackListStatus(
-  tracks: Track[] | TrackGroup[],
+  tracks: Array<Track> | Array<TrackGroup>,
 ): TrackListStatusInfo {
   const allTracks = useAllTracks(tracks);
 

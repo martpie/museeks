@@ -37,7 +37,9 @@ function PlayerEvents() {
       if (element) {
         const { error } = element;
 
-        if (!error) return;
+        if (!error) {
+          return;
+        }
 
         switch (error.code) {
           case error.MEDIA_ERR_ABORTED:

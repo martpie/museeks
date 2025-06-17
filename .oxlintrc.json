@@ -1,10 +1,11 @@
 {
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
   "categories": {
     "correctness": "error",
     "suspicious": "error",
     "pedantic": "off",
-    "perf": "off",
-    "style": "off",
+    "perf": "error",
+    "style": "error",
     "restriction": "off",
     "nursery": "off"
   },
@@ -12,5 +13,23 @@
   "plugins": ["react", "unicorn", "typescript", "oxc"],
   "rules": {
     "react/react-in-jsx-scope": "off", // Not needed in React 17+
+    // TypeScript stylistic rules
+    "array-type": ["error", { "default": "generic" }],
+    "consistent-type-definitions": ["error", "type"],
+    "consistent-indexed-object-style": ["error", "record"],
+    // Stylistic below
+    "yoda": "off",
+    "no-ternary": "off",
+    "sort-keys": "off",
+    "sort-imports": "off",
+    "func-style": "off",
+    "switch-case-braces": "off",
+    "no-null": "off",
+    "no-magic-numbers": "off",
+    "max-params": "off",
+    "init-declarations": "off",
+    "unicorn/filename-case": "off",
+    "unicorn/prefer-spread": "off",
+    "unicorn/no-array-method-this-argument": "off"
   }
 }

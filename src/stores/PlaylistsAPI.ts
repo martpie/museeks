@@ -16,8 +16,8 @@ async function play(playlistID: string): Promise<void> {
     usePlayerStore
       .getState()
       .api.start(tracks, null, { type: 'playlist', playlistID });
-  } catch (err) {
-    logAndNotifyError(err);
+  } catch (error) {
+    logAndNotifyError(error);
   }
 }
 
@@ -26,7 +26,7 @@ async function play(playlistID: string): Promise<void> {
  */
 async function create(
   name: string,
-  trackIDs: string[] = [],
+  trackIDs: Array<string> = [],
   silent = false,
 ): Promise<Playlist | null> {
   try {
@@ -39,8 +39,8 @@ async function create(
     }
 
     return playlist;
-  } catch (err) {
-    logAndNotifyError(err);
+  } catch (error) {
+    logAndNotifyError(error);
   }
 
   return null;
@@ -52,8 +52,8 @@ async function create(
 async function rename(playlistID: string, name: string): Promise<void> {
   try {
     await database.renamePlaylist(playlistID, name);
-  } catch (err) {
-    logAndNotifyError(err);
+  } catch (error) {
+    logAndNotifyError(error);
   }
 }
 
@@ -63,8 +63,8 @@ async function rename(playlistID: string, name: string): Promise<void> {
 async function remove(playlistID: string): Promise<void> {
   try {
     await database.deletePlaylist(playlistID);
-  } catch (err) {
-    logAndNotifyError(err);
+  } catch (error) {
+    logAndNotifyError(error);
   }
 }
 
@@ -73,14 +73,14 @@ async function remove(playlistID: string): Promise<void> {
  */
 async function addTracks(
   playlistID: string,
-  tracksIDs: string[],
+  tracksIDs: Array<string>,
 ): Promise<void> {
   try {
     const playlist = await database.getPlaylist(playlistID);
     const playlistTracks = playlist.tracks.concat(tracksIDs);
     await database.setPlaylistTracks(playlistID, playlistTracks);
-  } catch (err) {
-    logAndNotifyError(err);
+  } catch (error) {
+    logAndNotifyError(error);
   }
 }
 
@@ -89,7 +89,7 @@ async function addTracks(
  */
 async function removeTracks(
   playlistID: string,
-  tracksIDs: string[],
+  tracksIDs: Array<string>,
 ): Promise<void> {
   try {
     const playlist = await database.getPlaylist(playlistID);
@@ -97,8 +97,8 @@ async function removeTracks(
       (elem: string) => !tracksIDs.includes(elem),
     );
     await database.setPlaylistTracks(playlistID, playlistTracks);
-  } catch (err) {
-    logAndNotifyError(err);
+  } catch (error) {
+    logAndNotifyError(error);
   }
 }
 
@@ -109,8 +109,8 @@ async function duplicate(playlistID: string): Promise<void> {
   try {
     const playlist = await database.getPlaylist(playlistID);
     await database.createPlaylist(`Copy of ${playlist.name}`, playlist.tracks);
-  } catch (err) {
-    logAndNotifyError(err);
+  } catch (error) {
+    logAndNotifyError(error);
   }
 }
 
@@ -121,7 +121,7 @@ async function duplicate(playlistID: string): Promise<void> {
  */
 async function reorderTracks(
   playlistID: string,
-  tracks: Track[],
+  tracks: Array<Track>,
 ): Promise<void> {
   try {
     // Save and reload the playlist
@@ -129,8 +129,8 @@ async function reorderTracks(
       playlistID,
       tracks.map((track) => track.id),
     );
-  } catch (err) {
-    logAndNotifyError(err);
+  } catch (error) {
+    logAndNotifyError(error);
   }
 }
 

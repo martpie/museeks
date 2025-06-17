@@ -5,7 +5,7 @@ import { isTracksArray } from '../lib/typeguards';
 /**
  * Given a list of tracks or tracks groups, return all tracks, flat.
  */
-export default function useAllTracks(tracks: Track[] | TrackGroup[]) {
+export default function useAllTracks(tracks: Array<Track> | Array<TrackGroup>) {
   return useMemo(() => {
     if (isTracksArray(tracks)) {
       return tracks;

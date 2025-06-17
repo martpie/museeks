@@ -25,7 +25,7 @@ export default function useInvalidate() {
   }, [queryClient, router]);
 }
 
-type AnyArgs = any[];
+type AnyArgs = Array<any>;
 type Callback = (...args: AnyArgs) => Promise<void>;
 
 /**

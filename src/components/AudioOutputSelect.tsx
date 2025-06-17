@@ -32,10 +32,10 @@ export default function AudioOutputSelect(props: Props) {
         );
 
         setDevices(audioDevices);
-      } catch (err) {
+      } catch (error) {
         setDevices([]);
         setHasError(true);
-        logAndNotifyError(err);
+        logAndNotifyError(error);
       }
     };
 
