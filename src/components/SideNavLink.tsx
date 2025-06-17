@@ -20,11 +20,12 @@ type Props = {
 };
 
 export default function SideNavLink(props: Props) {
+  const { onRename } = props;
   const [renamed, setRenamed] = useState(false);
 
   const onContextMenu: React.MouseEventHandler<HTMLAnchorElement> = useCallback(
     async (event) => {
-      if (!props.onRename && !props.contextMenuItems) {
+      if (!onRename && !props.contextMenuItems) {
         return;
       }
 
@@ -56,7 +57,7 @@ export default function SideNavLink(props: Props) {
 
       await menu.popup().catch(logAndNotifyError);
     },
-    [props.onRename, props.contextMenuItems],
+    [onRename, props.contextMenuItems],
   );
 
   const keyDown: React.KeyboardEventHandler<HTMLInputElement> = useCallback(
@@ -66,8 +67,8 @@ export default function SideNavLink(props: Props) {
       switch (e.nativeEvent.code) {
         case 'Enter': {
           // Enter
-          if (renamed && e.currentTarget && props.onRename) {
-            props.onRename(props.id, e.currentTarget.value);
+          if (renamed && e.currentTarget && onRename) {
+            onRename(props.id, e.currentTarget.value);
             setRenamed(false);
           }
           break;
@@ -82,18 +83,18 @@ export default function SideNavLink(props: Props) {
         }
       }
     },
-    [props.onRename, props.id, renamed],
+    [onRename, props.id, renamed],
   );
 
   const onBlur = useCallback(
     async (e: React.FocusEvent<HTMLInputElement>) => {
-      if (renamed && props.onRename) {
-        props.onRename(props.id, e.currentTarget.value);
+      if (renamed && onRename) {
+        onRename(props.id, e.currentTarget.value);
       }
 
       setRenamed(false);
     },
-    [props.onRename, props.id, renamed],
+    [onRename, props.id, renamed],
   );
 
   const onFocus = useCallback((e: React.FocusEvent<HTMLInputElement>) => {

@@ -34,7 +34,6 @@ export interface Theme {
  * APIs Helpers
  */
 export type API<
-  // biome-ignore lint/suspicious/noExplicitAny: loose type enforcement by design
   T extends { api: Record<string, (...args: any[]) => Promise<any> | any> },
 > = T;
 

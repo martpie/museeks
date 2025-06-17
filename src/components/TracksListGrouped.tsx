@@ -20,7 +20,7 @@ type Props = {
   ref: React.RefObject<TracksListVirtualizer | null>;
   trackGroups: TrackGroup[];
   selectedTracks: Set<string>;
-  initialOffset: number;
+  initialOffset: number; // Scroll restoration not implemented yet
   rowHeight: number;
 } & TrackRowEvents;
 
@@ -46,6 +46,7 @@ export default function TrackListGroupedLayout(props: Props) {
       },
     } satisfies TracksListVirtualizer;
   }, [tracks]);
+
 
   return (
     <div ref={innerScrollableRef} className={styles.tracksListScroller}>

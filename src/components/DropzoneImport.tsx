@@ -85,9 +85,8 @@ export default function DropzoneImport() {
       unlisten.then((u) => (u ? u() : null));
     };
   }, [
-    libraryAPI.addLibraryFolders,
-    libraryAPI.scan,
-    toastsAPI.add,
+    libraryAPI,
+    toastsAPI,
     invalidate,
   ]);
 

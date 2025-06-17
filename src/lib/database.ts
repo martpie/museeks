@@ -11,8 +11,6 @@ import type {
 /**
  * Bridge for the UI to communicate with the backend and manipulate the Database
  */
-
-// biome-ignore lint/complexity/noStaticOnlyClass: conflict with decorators rules
 class DatabaseBridge {
   // ---------------------------------------------------------------------------
   // Library read/write actions
@@ -140,14 +138,12 @@ export default DatabaseBridge;
  * Helpers to compute the time it takes to
  */
 function LogExecutionTime(
-  // biome-ignore lint/suspicious/noExplicitAny: it's a decorator duh
   _target: any,
   propertyKey: string,
   descriptor: PropertyDescriptor,
 ) {
   const originalMethod = descriptor.value;
 
-  // biome-ignore lint/suspicious/noExplicitAny: we don't know the signature of the original method
   descriptor.value = async function (...args: any[]) {
     const startTime = Date.now();
     const result = await originalMethod.apply(this, args);

@@ -48,7 +48,7 @@ export default function AudioOutputSelect(props: Props) {
 
   if (!devices) {
     return (
-      <Setting.Select {...selectProps} disabled key="selectDisabled">
+      <Setting.Select key="selectDisabled" disabled {...selectProps}  >
         <option>{t`Loading devices...`}</option>
       </Setting.Select>
     );
@@ -56,7 +56,7 @@ export default function AudioOutputSelect(props: Props) {
 
   if (hasError) {
     return (
-      <Setting.Select {...selectProps} disabled key="selectDisabled">
+      <Setting.Select key="selectDisabled" disabled  {...selectProps}>
         <option>{t`Could not get audio output devices`}</option>
       </Setting.Select>
     );
@@ -64,7 +64,7 @@ export default function AudioOutputSelect(props: Props) {
 
   if (devices.length === 0) {
     return (
-      <Setting.Select {...selectProps} disabled key="selectDisabled">
+      <Setting.Select key="selectDisabled" disabled  {...selectProps}>
         <option>{t`No audio devices found`}</option>
       </Setting.Select>
     );
@@ -72,8 +72,8 @@ export default function AudioOutputSelect(props: Props) {
 
   return (
     <Setting.Select
-      {...selectProps}
       key="devicesOk" // avoid default value problems
+      {...selectProps}
       value={props.value}
       onChange={setAudioOutputDevice}
     >

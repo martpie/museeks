@@ -1,0 +1,13 @@
+{
+  "categories": {
+    "correctness": "error",
+    "suspicious": "off",
+    "pedantic": "off",
+    "perf": "off",
+    "style": "off",
+    "restriction": "off",
+    "nursery": "off"
+  },
+  // Enable all of these plugins (which are enabled by default):
+  "plugins": ["react", "unicorn", "typescript", "oxc"]
+}

@@ -121,12 +121,10 @@ async function checkForUpdate(
       throw new Error('Impossible to retrieve releases information.');
     }
 
-    // biome-ignore lint/suspicious/noExplicitAny: ok for now
     const releases: any = await response.json();
 
     // TODO Github API types?
     const newRelease = releases.find(
-      // biome-ignore lint/suspicious/noExplicitAny: ok for now
       (release: any) =>
         semver.valid(release.tag_name) !== null &&
         semver.gt(release.tag_name, currentVersion),
