@@ -1,4 +1,4 @@
-import { Outlet, createRootRoute, useLocation } from '@tanstack/react-router';
+import { createRootRoute, Outlet, useLocation } from '@tanstack/react-router';
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
 import { info } from '@tauri-apps/plugin-log';
 import cx from 'classnames';

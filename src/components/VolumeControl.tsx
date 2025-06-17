@@ -1,14 +1,12 @@
+import { useLingui } from '@lingui/react/macro';
 import * as Slider from '@radix-ui/react-slider';
 import cx from 'classnames';
 import type React from 'react';
 import { useCallback, useState } from 'react';
 import Icon from 'react-fontawesome';
-
 import player from '../lib/player';
 import { stopPropagation } from '../lib/utils-events';
 import { usePlayerAPI } from '../stores/usePlayerStore';
-
-import { useLingui } from '@lingui/react/macro';
 import controlStyles from './PlayerControls.module.css';
 import styles from './VolumeControl.module.css';
 
@@ -75,6 +73,7 @@ export default function VolumeControl() {
   });
 
   return (
+    // biome-ignore lint/a11y/noStaticElementInteractions: will fix one day and make it interactive
     <div
       className={styles.volumeControlContainer}
       onMouseEnter={() => setShowVolume(true)}

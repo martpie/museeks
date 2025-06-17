@@ -1,15 +1,3 @@
-:global(.os__macos) .headerMainControls {
-  padding-left: 60px; /* let some space for titleBarStyle */
-}
-
-/* The native frame may be light, so we need to increase the contrast between
-   the frame and the header */
-:global(.os__windows) {
-  .header {
-    border-top: 1px solid var(--border-color);
-  }
-}
-
 .header {
   border-bottom: solid 1px var(--border-color);
   background-color: var(--header-bg);
@@ -23,12 +11,24 @@
   flex: 0 0 auto;
 }
 
+/* The native frame may be light, so we need to increase the contrast between
+   the frame and the header */
+:global(.os__windows) {
+  .header {
+    border-top: 1px solid var(--border-color);
+  }
+}
+
 .headerMainControls {
   flex: 0 0 auto;
   display: flex;
   align-items: center;
   padding-right: 10px;
   min-width: 200px;
+}
+
+:global(.os__macos) .headerMainControls {
+  padding-left: 60px; /* let some space for titleBarStyle */
 }
 
 .headerSearch {

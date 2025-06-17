@@ -75,6 +75,8 @@ export default function TrackRow(props: Props) {
   });
 
   return (
+    // biome-ignore lint/a11y/noStaticElementInteractions: later, make a <li>
+    // biome-ignore lint/a11y/useAriaPropsSupportedByRole: later, make a listitem
     <div
       className={trackClasses}
       onDoubleClick={() => onPlaybackStart(track.id)}

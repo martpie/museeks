@@ -2,10 +2,9 @@ import type React from 'react';
 import { useMemo } from 'react';
 
 import type { Track } from '../generated/typings';
+import styles from './Queue.module.css';
 import QueueEmpty from './QueueEmpty';
 import QueueList from './QueueList';
-
-import styles from './Queue.module.css';
 
 type Props = {
   queue: Track[];

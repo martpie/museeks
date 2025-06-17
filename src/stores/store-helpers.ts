@@ -1,4 +1,4 @@
-import { type StateCreator, create } from 'zustand';
+import { create, type StateCreator } from 'zustand';
 import { devtools } from 'zustand/middleware';
 
 /**

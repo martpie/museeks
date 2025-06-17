@@ -1,8 +1,7 @@
+import { useNavigate } from '@tanstack/react-router';
 import { getCurrentWindow } from '@tauri-apps/api/window';
 import { sendNotification } from '@tauri-apps/plugin-notification';
 import { useEffect } from 'react';
-
-import { useNavigate } from '@tanstack/react-router';
 import config from '../lib/config';
 import { getCover } from '../lib/cover';
 import player from '../lib/player';

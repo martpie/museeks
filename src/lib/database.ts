@@ -12,7 +12,7 @@ import type {
  * Bridge for the UI to communicate with the backend and manipulate the Database
  */
 
-// biome-ignore lint/complexity/noStaticOnlyClass: <explanation>
+// biome-ignore lint/complexity/noStaticOnlyClass: conflict with decorators rules
 class DatabaseBridge {
   // ---------------------------------------------------------------------------
   // Library read/write actions
@@ -149,9 +149,9 @@ function LogExecutionTime(
 
   // biome-ignore lint/suspicious/noExplicitAny: we don't know the signature of the original method
   descriptor.value = async function (...args: any[]) {
-    const startTime = new Date().getTime();
+    const startTime = Date.now();
     const result = await originalMethod.apply(this, args);
-    const endTime = new Date().getTime();
+    const endTime = Date.now();
     info(`[DatabaseBridge] ${propertyKey} (${endTime - startTime}ms)`);
     return result;
   };

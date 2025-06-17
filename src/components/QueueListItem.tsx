@@ -1,11 +1,9 @@
+import { useSortable } from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
 import { useCallback } from 'react';
-
 import type { Track } from '../generated/typings';
 import { usePlayerAPI } from '../stores/usePlayerStore';
 import Cover from './Cover';
-
-import { useSortable } from '@dnd-kit/sortable';
-import { CSS } from '@dnd-kit/utilities';
 import styles from './QueueListItem.module.css';
 
 type Props = {
@@ -52,6 +50,7 @@ export default function QueueListItem(props: Props) {
       <div className={styles.queueItemCover}>
         <Cover track={track} />
       </div>
+      {/** biome-ignore lint/a11y/noStaticElementInteractions: later, make a <li> */}
       <div className={styles.queueItemInfo} onDoubleClick={play}>
         <div className={styles.queueItemInfoTitle}>{track.title}</div>
         <div className={styles.queueItemInfoOtherInfos}>

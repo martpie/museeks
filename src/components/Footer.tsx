@@ -3,10 +3,9 @@ import { Link } from '@tanstack/react-router';
 import Icon from 'react-fontawesome';
 
 import useLibraryStore from '../stores/useLibraryStore';
+import styles from './Footer.module.css';
 import ProgressBar from './ProgressBar';
 import TrackListStatus from './TrackListStatus';
-
-import styles from './Footer.module.css';
 
 export default function Footer() {
   const { t } = useLingui();

@@ -8,9 +8,9 @@ import { i18n } from '@lingui/core';
 import { I18nProvider } from '@lingui/react';
 import { QueryClientProvider } from '@tanstack/react-query';
 import {
-  RouterProvider,
   createHashHistory,
   createRouter,
+  RouterProvider,
 } from '@tanstack/react-router';
 import * as logger from '@tauri-apps/plugin-log';
 import React from 'react';

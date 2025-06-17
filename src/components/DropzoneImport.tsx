@@ -1,10 +1,9 @@
+import { plural } from '@lingui/core/macro';
 import { useLingui } from '@lingui/react/macro';
 import { getCurrentWindow } from '@tauri-apps/api/window';
 import { lstat } from '@tauri-apps/plugin-fs';
 import cx from 'classnames';
 import { useEffect, useState } from 'react';
-
-import { plural } from '@lingui/core/macro';
 import useInvalidate from '../hooks/useInvalidate';
 import { logAndNotifyError } from '../lib/utils';
 import { useLibraryAPI } from '../stores/useLibraryStore';

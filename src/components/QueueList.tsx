@@ -10,11 +10,10 @@ import { useCallback, useState } from 'react';
 import Button from '../elements/Button';
 import type { Track } from '../generated/typings';
 import useDndSensors from '../hooks/useDnDSensors';
-import { usePlayerAPI } from '../stores/usePlayerStore';
-import QueueListItem from './QueueListItem';
-
 import { useTrackListStatus } from '../hooks/useGlobalTrackListStatus';
+import { usePlayerAPI } from '../stores/usePlayerStore';
 import styles from './QueueList.module.css';
+import QueueListItem from './QueueListItem';
 import TrackListStatus from './TrackListStatus';
 
 const INITIAL_QUEUE_SIZE = 20;
