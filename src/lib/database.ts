@@ -11,6 +11,7 @@ import type {
 /**
  * Bridge for the UI to communicate with the backend and manipulate the Database
  */
+// oxlint-disable-next-line no-extraneous-class: Need a class to use decorators
 class DatabaseBridge {
   // ---------------------------------------------------------------------------
   // Library read/write actions
@@ -126,6 +127,7 @@ class DatabaseBridge {
   // ---------------------------------------------------------------------------
   // Common
   // ---------------------------------------------------------------------------
+
   @LogExecutionTime
   static async reset(): Promise<string | null> {
     return invoke('plugin:database|reset');

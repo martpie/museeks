@@ -1,7 +1,7 @@
 {
   "categories": {
     "correctness": "error",
-    "suspicious": "off",
+    "suspicious": "error",
     "pedantic": "off",
     "perf": "off",
     "style": "off",
@@ -9,5 +9,8 @@
     "nursery": "off"
   },
   // Enable all of these plugins (which are enabled by default):
-  "plugins": ["react", "unicorn", "typescript", "oxc"]
+  "plugins": ["react", "unicorn", "typescript", "oxc"],
+  "rules": {
+    "react/react-in-jsx-scope": "off", // Not needed in React 17+
+  }
 }
