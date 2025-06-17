@@ -66,6 +66,11 @@
       "enabled": true
     }
   },
+  "html": {
+    "formatter": {
+      "enabled": true
+    }
+  },
   "files": {
     "includes": [
       "**",
