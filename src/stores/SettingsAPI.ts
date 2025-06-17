@@ -7,10 +7,9 @@ import * as semver from 'semver';
 
 import type { Config, DefaultView } from '../generated/typings';
 import config from '../lib/config';
+import { loadTranslation } from '../lib/i18n';
 import { getTheme } from '../lib/themes';
 import { logAndNotifyError } from '../lib/utils';
-
-import { loadTranslation } from '../lib/i18n';
 import useLibraryStore from './useLibraryStore';
 import useToastsStore from './useToastsStore';
 

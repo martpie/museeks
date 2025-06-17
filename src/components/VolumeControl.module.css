@@ -13,7 +13,7 @@
   padding: 10px 12px;
   opacity: 0;
   pointer-events: none;
-  transition: all .1s ease-in-out;
+  transition: all 0.1s ease-in-out;
   border: solid 1px var(--border-color);
 
   &.visible {

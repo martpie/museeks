@@ -3,9 +3,8 @@ import Icon from 'react-fontawesome';
 
 import usePlayerStore, { usePlayerAPI } from '../stores/usePlayerStore';
 import { PlayerStatus } from '../types/museeks';
-import VolumeControl from './VolumeControl';
-
 import styles from './PlayerControls.module.css';
+import VolumeControl from './VolumeControl';
 
 export default function PlayerControls() {
   const playerAPI = usePlayerAPI();

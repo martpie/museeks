@@ -25,31 +25,27 @@ type Props = {
 } & TrackRowEvents;
 
 export default function TrackListGroupedLayout(props: Props) {
-  const { ref, trackGroups, initialOffset, rowHeight, ...rest } = props;
+  const { ref, trackGroups, rowHeight, ...rest } = props;
   const tracks = useAllTracks(trackGroups);
 
   const innerScrollableRef = useRef<HTMLDivElement>(null);
 
   // Passes the ref back to the master component for interaction with the
   // scrollable view
-  useImperativeHandle(
-    ref,
-    () => {
-      return {
-        scrollElement: innerScrollableRef.current,
-        scrollToIndex: (index: number) => {
-          if (innerScrollableRef.current) {
-            const track = tracks[index];
-            // not super idiomatic, but works eh
-            document
-              .querySelector(`[data-track-id="${track.id}"]`)
-              ?.scrollIntoView({ block: 'nearest' });
-          }
-        },
-      } satisfies TracksListVirtualizer;
-    },
-    [tracks],
-  );
+  useImperativeHandle(ref, () => {
+    return {
+      scrollElement: innerScrollableRef.current,
+      scrollToIndex: (index: number) => {
+        if (innerScrollableRef.current) {
+          const track = tracks[index];
+          // not super idiomatic, but works eh
+          document
+            .querySelector(`[data-track-id="${track.id}"]`)
+            ?.scrollIntoView({ block: 'nearest' });
+        }
+      },
+    } satisfies TracksListVirtualizer;
+  }, [tracks]);
 
   return (
     <div ref={innerScrollableRef} className={styles.tracksListScroller}>

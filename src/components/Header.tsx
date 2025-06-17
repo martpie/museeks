@@ -1,15 +1,13 @@
+import { useLingui } from '@lingui/react/macro';
 import * as Popover from '@radix-ui/react-popover';
 import Icon from 'react-fontawesome';
-
 import usePlayingTrack from '../hooks/usePlayingTrack';
 import usePlayerStore from '../stores/usePlayerStore';
+import styles from './Header.module.css';
 import PlayerControls from './PlayerControls';
 import PlayingBar from './PlayingBar';
 import Queue from './Queue';
 import Search from './Search';
-
-import { useLingui } from '@lingui/react/macro';
-import styles from './Header.module.css';
 
 export default function Header() {
   const queue = usePlayerStore((state) => state.queue);

@@ -1,7 +1,7 @@
 import { Trans, useLingui } from '@lingui/react/macro';
 import {
-  Link,
   createFileRoute,
+  Link,
   redirect,
   useLoaderData,
 } from '@tanstack/react-router';

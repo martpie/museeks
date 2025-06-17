@@ -15,6 +15,7 @@ export default function ButtonShuffle() {
   });
 
   return (
+    // This should be a checkbox for accessibility
     <button
       type="button"
       className={buttonClasses}
@@ -22,7 +23,8 @@ export default function ButtonShuffle() {
         playerAPI.toggleShuffle();
       }}
       data-museeks-action
-      aria-selected={shuffle}
+      role="menuitemcheckbox"
+      aria-checked={shuffle}
       title={t`Shuffle`}
     >
       <icons.SHUFFLE className={styles.icon} />

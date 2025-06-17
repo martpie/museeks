@@ -63,7 +63,7 @@
     "zustand": "^5.0.5"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.9.4",
+    "@biomejs/biome": "^2.0.0-beta.6",
     "@lingui/babel-plugin-lingui-macro": "^5.3.2",
     "@lingui/vite-plugin": "^5.3.2",
     "@tanstack/react-router-devtools": "^1.120.20",
@@ -83,5 +83,9 @@
     "vite": "^6.3.5",
     "vite-plugin-svgr": "^4.3.0"
   },
-  "trustedDependencies": ["@biomejs/biome", "@parcel/watcher", "esbuild"]
+  "trustedDependencies": [
+    "@biomejs/biome",
+    "@parcel/watcher",
+    "esbuild"
+  ]
 }

@@ -27,12 +27,14 @@ export default function ButtonRepeat() {
   });
 
   return (
+    // This should be a checkbox for accessibility
     <button
       type="button"
       className={buttonClasses}
       onClick={() => playerAPI.toggleRepeat()}
       data-museeks-action
-      aria-selected={repeat === 'One' || repeat === 'All'}
+      role="menuitemcheckbox"
+      aria-checked={repeat === 'One' || repeat === 'All'}
       title={t`Repeat`}
     >
       <Svg className={styles.icon} />

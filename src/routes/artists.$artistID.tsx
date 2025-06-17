@@ -3,10 +3,9 @@ import { useMemo } from 'react';
 
 import TracksList from '../components/TracksList';
 import { useFilteredTrackGroup } from '../hooks/useFilteredTracks';
+import useGlobalTrackListStatus from '../hooks/useGlobalTrackListStatus';
 import config from '../lib/config';
 import database from '../lib/database';
-
-import useGlobalTrackListStatus from '../hooks/useGlobalTrackListStatus';
 import type { QueueOrigin } from '../types/museeks';
 
 export const Route = createFileRoute('/artists/$artistID')({

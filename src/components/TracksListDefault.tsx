@@ -13,9 +13,8 @@ import useDndSensors from '../hooks/useDnDSensors';
 import usePlayingTrackID from '../hooks/usePlayingTrackID';
 import type { TracksListVirtualizer } from '../types/museeks';
 import TrackRow, { type TrackRowEvents } from './TrackRow';
-import TracksListHeader from './TracksListHeader';
-
 import styles from './TracksList.module.css';
+import TracksListHeader from './TracksListHeader';
 
 const DND_MODIFIERS = [restrictToVerticalAxis];
 
@@ -65,18 +64,14 @@ export default function TrackListDefault(props: Props) {
 
   // Passes the ref back to the master component for interaction with the
   // scrollable view
-  useImperativeHandle(
-    ref,
-    () => {
-      return {
-        scrollElement: innerScrollableRef.current,
-        scrollToIndex: (index) => {
-          virtualizer.scrollToIndex(index);
-        },
-      } satisfies TracksListVirtualizer;
-    },
-    [virtualizer],
-  );
+  useImperativeHandle(ref, () => {
+    return {
+      scrollElement: innerScrollableRef.current,
+      scrollToIndex: (index) => {
+        virtualizer.scrollToIndex(index);
+      },
+    } satisfies TracksListVirtualizer;
+  }, [virtualizer]);
 
   /**
    * Playlist tracks re-order events handlers
