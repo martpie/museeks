@@ -1,5 +1,4 @@
 import * as Setting from './Setting';
-
 import styles from './SettingCheckbox.module.css';
 
 type Props = {

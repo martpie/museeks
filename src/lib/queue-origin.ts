@@ -1,4 +1,5 @@
 import type { NavigateFn } from '@tanstack/react-router';
+
 import type { QueueOrigin } from '../types/museeks';
 
 export function goToPlayingTrack(

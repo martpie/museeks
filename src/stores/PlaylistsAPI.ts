@@ -1,8 +1,8 @@
 import { t } from '@lingui/core/macro';
+
 import type { Playlist, Track } from '../generated/typings';
 import database from '../lib/database';
 import { logAndNotifyError } from '../lib/utils';
-
 import usePlayerStore from './usePlayerStore';
 import useToastsStore from './useToastsStore';
 

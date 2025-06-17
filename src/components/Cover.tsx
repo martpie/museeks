@@ -4,7 +4,6 @@ import cx from 'classnames';
 
 import type { Track } from '../generated/typings';
 import useCover from '../hooks/useCover';
-
 import styles from './Cover.module.css';
 
 type Props = {

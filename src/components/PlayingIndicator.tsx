@@ -3,7 +3,6 @@ import Icon from 'react-fontawesome';
 
 import usePlayerStore, { usePlayerAPI } from '../stores/usePlayerStore';
 import { PlayerStatus } from '../types/museeks';
-
 import styles from './PlayingIndicator.module.css';
 
 const getIcon = (state: PlayerStatus, hovered: boolean) => {

@@ -10,7 +10,6 @@ import Flexbox from '../elements/Flexbox';
 import useInvalidate, { useInvalidateCallback } from '../hooks/useInvalidate';
 import SettingsAPI from '../stores/SettingsAPI';
 import useLibraryStore, { useLibraryAPI } from '../stores/useLibraryStore';
-
 import styles from './settings-library.module.css';
 
 export const Route = createFileRoute('/settings/library')({

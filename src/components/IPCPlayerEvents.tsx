@@ -30,7 +30,9 @@ function IPCPlayerEvents() {
 
     return function cleanup() {
       Promise.all(unlisteners).then((unlisteners) => {
-        unlisteners.forEach((u) => u());
+        unlisteners.forEach((u) => {
+          u();
+        });
       });
     };
   }, [playerAPI]);

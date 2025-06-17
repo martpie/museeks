@@ -5,7 +5,6 @@ import Keybinding from 'react-keybinding-component';
 
 import { isCtrlKey } from '../lib/utils-events';
 import useLibraryStore, { useLibraryAPI } from '../stores/useLibraryStore';
-
 import styles from './Search.module.css';
 
 export default function Search() {

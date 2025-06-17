@@ -4,6 +4,7 @@ import cx from 'classnames';
 import type React from 'react';
 import { useCallback, useState } from 'react';
 import Icon from 'react-fontawesome';
+
 import player from '../lib/player';
 import { stopPropagation } from '../lib/utils-events';
 import { usePlayerAPI } from '../stores/usePlayerStore';

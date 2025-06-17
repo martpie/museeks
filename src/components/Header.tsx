@@ -1,6 +1,7 @@
 import { useLingui } from '@lingui/react/macro';
 import * as Popover from '@radix-ui/react-popover';
 import Icon from 'react-fontawesome';
+
 import usePlayingTrack from '../hooks/usePlayingTrack';
 import usePlayerStore from '../stores/usePlayerStore';
 import styles from './Header.module.css';

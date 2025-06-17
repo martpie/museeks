@@ -4,7 +4,6 @@ import Icon from 'react-fontawesome';
 
 import type { SortBy } from '../generated/typings';
 import { useLibraryAPI } from '../stores/useLibraryStore';
-
 import styles from './TracksListHeaderCell.module.css';
 
 type Props = {

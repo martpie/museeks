@@ -46,7 +46,9 @@ export default function IPCNavigationEvents() {
 
     return function cleanup() {
       Promise.all(unlisteners).then((unlisteners) => {
-        unlisteners.forEach((u) => u());
+        unlisteners.forEach((u) => {
+          u();
+        });
       });
     };
   }, [goToLibrary, goToPlaylists, goToSettings, goToPlayingTrackOnEvent]);

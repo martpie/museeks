@@ -4,6 +4,7 @@ import { getCurrentWindow } from '@tauri-apps/api/window';
 import { lstat } from '@tauri-apps/plugin-fs';
 import cx from 'classnames';
 import { useEffect, useState } from 'react';
+
 import useInvalidate from '../hooks/useInvalidate';
 import { logAndNotifyError } from '../lib/utils';
 import { useLibraryAPI } from '../stores/useLibraryStore';

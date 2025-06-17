@@ -4,7 +4,6 @@ import cx from 'classnames';
 import type { Repeat } from '../generated/typings';
 import icons from '../lib/icons';
 import usePlayerStore, { usePlayerAPI } from '../stores/usePlayerStore';
-
 import styles from './ButtonShuffleRepeat.module.css';
 
 function getIcon(repeat: Repeat) {

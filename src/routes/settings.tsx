@@ -6,7 +6,6 @@ import { invoke } from '@tauri-apps/api/core';
 import { SettingsNav, SettingsNavLink } from '../elements/SettingsNav';
 import View from '../elements/View';
 import config from '../lib/config';
-
 import styles from './settings.module.css';
 
 export const Route = createFileRoute('/settings')({

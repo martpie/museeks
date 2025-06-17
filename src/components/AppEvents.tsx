@@ -1,5 +1,6 @@
 import { getCurrentWindow } from '@tauri-apps/api/window';
 import { useEffect } from 'react';
+
 import player from '../lib/player';
 import { logAndNotifyError } from '../lib/utils';
 import { isDev, preventNativeDefault } from '../lib/utils-events';

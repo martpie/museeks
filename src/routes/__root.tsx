@@ -18,7 +18,6 @@ import PlayerEvents from '../components/PlayerEvents';
 import Toasts from '../components/Toasts';
 import useInvalidate from '../hooks/useInvalidate';
 import SettingsAPI from '../stores/SettingsAPI';
-
 import styles from './__root.module.css';
 
 type Search = {

@@ -3,7 +3,6 @@ import cx from 'classnames';
 
 import icons from '../lib/icons';
 import usePlayerStore, { usePlayerAPI } from '../stores/usePlayerStore';
-
 import styles from './ButtonShuffleRepeat.module.css';
 
 export default function ButtonShuffle() {

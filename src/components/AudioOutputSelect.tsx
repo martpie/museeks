@@ -1,6 +1,7 @@
 import { useLingui } from '@lingui/react/macro';
 import type React from 'react';
 import { useEffect, useState } from 'react';
+
 import { logAndNotifyError } from '../lib/utils';
 import * as Setting from './Setting';
 

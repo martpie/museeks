@@ -9,7 +9,6 @@ import player from '../lib/player';
 import { logAndNotifyError } from '../lib/utils';
 import { shuffleTracks } from '../lib/utils-player';
 import { type API, PlayerStatus, type QueueOrigin } from '../types/museeks';
-
 import { createStore } from './store-helpers';
 
 type PlayerState = API<{

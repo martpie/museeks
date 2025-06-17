@@ -1,7 +1,6 @@
 import { nanoid } from 'nanoid';
 
 import type { API, Toast, ToastType } from '../types/museeks';
-
 import { createStore } from './store-helpers';
 
 type ToastsState = API<{

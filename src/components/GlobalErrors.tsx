@@ -5,6 +5,7 @@
 import { Trans, useLingui } from '@lingui/react/macro';
 import { type ErrorComponentProps, useLocation } from '@tanstack/react-router';
 import * as logger from '@tauri-apps/plugin-log';
+
 import ExternalLink from '../elements/ExternalLink';
 import * as ViewMessage from '../elements/ViewMessage';
 

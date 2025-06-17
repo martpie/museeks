@@ -1,7 +1,6 @@
 import { invoke } from '@tauri-apps/api/core';
 
 import type { Config } from '../generated/typings';
-
 import { logAndNotifyError } from './utils';
 
 /**

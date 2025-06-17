@@ -1,6 +1,5 @@
 import ToastItem from '../elements/Toast';
 import useToastsStore from '../stores/useToastsStore';
-
 import styles from './Toasts.module.css';
 
 export default function Toasts() {

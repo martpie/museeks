@@ -12,6 +12,7 @@ import { revealItemInDir } from '@tauri-apps/plugin-opener';
 import type React from 'react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Keybinding from 'react-keybinding-component';
+
 import type { Config, Playlist, Track, TrackGroup } from '../generated/typings';
 import useInvalidate from '../hooks/useInvalidate';
 import usePlayingTrackID from '../hooks/usePlayingTrackID';

@@ -32,6 +32,24 @@
     "indentStyle": "space",
     "lineEnding": "lf"
   },
+  "assist": {
+    "actions": {
+      "source": {
+        "organizeImports": {
+          "level": "on",
+          "options": {
+            "groups": [
+              [":NODE:", ":BUN:"],
+              ":BLANK_LINE:",
+              [":ALIAS:", ":PACKAGE:"],
+              ":BLANK_LINE:",
+              ":PATH:"
+            ]
+          }
+        }
+      }
+    }
+  },
   "javascript": {
     "formatter": {
       "quoteStyle": "single"
