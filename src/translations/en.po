@@ -66,7 +66,7 @@ msgstr "Artists"
 
 #: src/components/Footer.tsx:39
 #: src/routes/playlists.tsx:171
-#: src/routes/settings.ui.tsx:100
+#: src/routes/settings.ui.tsx:96
 msgid "Playlists"
 msgstr "Playlists"
 
@@ -119,11 +119,11 @@ msgstr "Next"
 msgid "Queue is empty"
 msgstr "Queue is empty"
 
-#: src/components/QueueList.tsx:80
+#: src/components/QueueList.tsx:81
 msgid "clear queue"
 msgstr "clear queue"
 
-#: src/components/QueueList.tsx:106
+#: src/components/QueueList.tsx:107
 msgid "see more"
 msgstr "see more"
 
@@ -205,7 +205,7 @@ msgstr "Remove tracks"
 
 #: src/components/TracksList.tsx:375
 #: src/routes/settings.library.tsx:142
-#: src/routes/tracks.$trackID.tsx:259
+#: src/routes/tracks.$trackID.tsx:247
 msgid "Cancel"
 msgstr "Cancel"
 
@@ -220,7 +220,7 @@ msgid "Title"
 msgstr "Title"
 
 #: src/components/TracksListHeader.tsx:54
-#: src/routes/tracks.$trackID.tsx:241
+#: src/routes/tracks.$trackID.tsx:231
 msgid "Duration"
 msgstr "Duration"
 
@@ -229,12 +229,12 @@ msgid "Artist"
 msgstr "Artist"
 
 #: src/components/TracksListHeader.tsx:66
-#: src/routes/tracks.$trackID.tsx:100
+#: src/routes/tracks.$trackID.tsx:99
 msgid "Album"
 msgstr "Album"
 
 #: src/components/TracksListHeader.tsx:72
-#: src/routes/tracks.$trackID.tsx:143
+#: src/routes/tracks.$trackID.tsx:139
 msgid "Genre"
 msgstr "Genre"
 
@@ -366,19 +366,19 @@ msgstr "Playback rate"
 msgid "Increase the playback rate: a value of 2 will play your music at a 2x speed"
 msgstr "Increase the playback rate: a value of 2 will play your music at a 2x speed"
 
-#: src/routes/settings.audio.tsx:43
+#: src/routes/settings.audio.tsx:42
 msgid "Audio output"
 msgstr "Audio output"
 
-#: src/routes/settings.audio.tsx:44
+#: src/routes/settings.audio.tsx:43
 msgid "Advanced: set a custom audio output device."
 msgstr "Advanced: set a custom audio output device."
 
-#: src/routes/settings.audio.tsx:53
+#: src/routes/settings.audio.tsx:51
 msgid "Follow playing track"
 msgstr "Follow playing track"
 
-#: src/routes/settings.audio.tsx:54
+#: src/routes/settings.audio.tsx:52
 msgid "Automatically follow the currently playing track (only when the app is not focused)"
 msgstr "Automatically follow the currently playing track (only when the app is not focused)"
 
@@ -470,60 +470,60 @@ msgstr "Theme"
 msgid "Change the appearance of the interface"
 msgstr "Change the appearance of the interface"
 
-#: src/routes/settings.ui.tsx:35
+#: src/routes/settings.ui.tsx:34
 msgid "System (default)"
 msgstr "System (default)"
 
-#: src/routes/settings.ui.tsx:47
+#: src/routes/settings.ui.tsx:46
 msgid "Language"
 msgstr "Language"
 
-#: src/routes/settings.ui.tsx:66
+#: src/routes/settings.ui.tsx:64
 msgid "Tracks density"
 msgstr "Tracks density"
 
-#: src/routes/settings.ui.tsx:67
-#: src/routes/settings.ui.tsx:88
+#: src/routes/settings.ui.tsx:65
+#: src/routes/settings.ui.tsx:85
 msgid "Change the default view when starting the application"
 msgstr "Change the default view when starting the application"
 
-#: src/routes/settings.ui.tsx:77
+#: src/routes/settings.ui.tsx:74
 msgid "Normal (default)"
 msgstr "Normal (default)"
 
-#: src/routes/settings.ui.tsx:80
+#: src/routes/settings.ui.tsx:77
 msgid "Compact"
 msgstr "Compact"
 
-#: src/routes/settings.ui.tsx:86
+#: src/routes/settings.ui.tsx:83
 msgid "Default view"
 msgstr "Default view"
 
-#: src/routes/settings.ui.tsx:97
+#: src/routes/settings.ui.tsx:93
 msgid "Library (default)"
 msgstr "Library (default)"
 
-#: src/routes/settings.ui.tsx:107
+#: src/routes/settings.ui.tsx:103
 msgid "Display Notifications"
 msgstr "Display Notifications"
 
-#: src/routes/settings.ui.tsx:108
+#: src/routes/settings.ui.tsx:104
 msgid "Send notifications when the playing track changes"
 msgstr "Send notifications when the playing track changes"
 
-#: src/routes/settings.ui.tsx:118
+#: src/routes/settings.ui.tsx:114
 msgid "Sleep mode blocker"
 msgstr "Sleep mode blocker"
 
-#: src/routes/settings.ui.tsx:119
+#: src/routes/settings.ui.tsx:115
 msgid "Prevent the computer from going into sleep mode when playing"
 msgstr "Prevent the computer from going into sleep mode when playing"
 
-#: src/routes/settings.ui.tsx:131
+#: src/routes/settings.ui.tsx:127
 msgid "Light"
 msgstr "Light"
 
-#: src/routes/settings.ui.tsx:133
+#: src/routes/settings.ui.tsx:129
 msgid "Dark"
 msgstr "Dark"
 
@@ -532,48 +532,48 @@ msgstr "Dark"
 msgid "Edit \"{0}\""
 msgstr "Edit \"{0}\""
 
-#: src/routes/tracks.$trackID.tsx:112
+#: src/routes/tracks.$trackID.tsx:110
 msgid "Album Artist"
 msgstr "Album Artist"
 
-#: src/routes/tracks.$trackID.tsx:127
+#: src/routes/tracks.$trackID.tsx:124
 msgid "Track Artists"
 msgstr "Track Artists"
 
-#: src/routes/tracks.$trackID.tsx:128
+#: src/routes/tracks.$trackID.tsx:125
 msgid "You can add multiple artists with commas"
 msgstr "You can add multiple artists with commas"
 
-#: src/routes/tracks.$trackID.tsx:144
+#: src/routes/tracks.$trackID.tsx:140
 msgid "You can add multiple genres with commas"
 msgstr "You can add multiple genres with commas"
 
-#: src/routes/tracks.$trackID.tsx:159
+#: src/routes/tracks.$trackID.tsx:154
 msgid "Year"
 msgstr "Year"
 
-#: src/routes/tracks.$trackID.tsx:174
+#: src/routes/tracks.$trackID.tsx:168
 msgid "Track Nº"
 msgstr "Track Nº"
 
-#: src/routes/tracks.$trackID.tsx:189
-#: src/routes/tracks.$trackID.tsx:223
+#: src/routes/tracks.$trackID.tsx:182
+#: src/routes/tracks.$trackID.tsx:214
 msgid "Of"
 msgstr "Of"
 
-#: src/routes/tracks.$trackID.tsx:208
+#: src/routes/tracks.$trackID.tsx:200
 msgid "Disk Nº"
 msgstr "Disk Nº"
 
-#: src/routes/tracks.$trackID.tsx:250
+#: src/routes/tracks.$trackID.tsx:239
 msgid "Path"
 msgstr "Path"
 
-#: src/routes/tracks.$trackID.tsx:262
+#: src/routes/tracks.$trackID.tsx:250
 msgid "Save"
 msgstr "Save"
 
-#: src/routes/tracks.$trackID.tsx:267
+#: src/routes/tracks.$trackID.tsx:255
 msgid "Clicking \"save\" will only update the library data, but will not save it to the original file."
 msgstr "Clicking \"save\" will only update the library data, but will not save it to the original file."
 

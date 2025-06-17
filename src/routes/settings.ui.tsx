@@ -26,7 +26,6 @@ function ViewSettingsUI() {
         <Setting.Select
           label={t`Theme`}
           description={t`Change the appearance of the interface`}
-          id="setting-theme"
           value={config.theme}
           onChange={(e) =>
             SettingsAPI.setTheme(e.currentTarget.value).then(invalidate)
@@ -45,7 +44,6 @@ function ViewSettingsUI() {
       <Setting.Section>
         <Setting.Select
           label={t`Language`}
-          id="language"
           value={config.language}
           onChange={(e) => {
             SettingsAPI.setLanguage(e.target.value).then(invalidate);
@@ -65,7 +63,6 @@ function ViewSettingsUI() {
         <Setting.Select
           label={t`Tracks density`}
           description={t`Change the default view when starting the application`}
-          id="setting-tracks-density"
           value={config.track_view_density}
           onChange={(e) =>
             SettingsAPI.setTracksDensity(
@@ -86,7 +83,6 @@ function ViewSettingsUI() {
           label={t`Default view`}
           value={config.default_view}
           description={t`Change the default view when starting the application`}
-          id="setting-default-view"
           onChange={(e) =>
             SettingsAPI.setDefaultView(
               e.currentTarget.value as DefaultView,

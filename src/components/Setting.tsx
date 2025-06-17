@@ -1,6 +1,6 @@
 import cx from 'classnames';
 import type React from 'react';
-
+import { useId } from 'react';
 import styles from './Setting.module.css';
 
 type Props = {
@@ -41,13 +41,14 @@ export function Title(props: Props) {
 export type InputProps = {
   label: string;
   description?: string;
-  id: string;
 };
 
 export function Input(
   props: React.InputHTMLAttributes<HTMLInputElement> & InputProps,
 ) {
-  const { label, description, id, ...otherProps } = props;
+  const { label, description, ...otherProps } = props;
+  const id = useId();
+
   return (
     <div>
       <Label htmlFor={id}>{label}</Label>
@@ -69,7 +70,8 @@ export function ErrorMessage(props: Props) {
 export function Select(
   props: Props & React.SelectHTMLAttributes<HTMLSelectElement> & InputProps,
 ) {
-  const { label, description, id, ...otherProps } = props;
+  const { label, description, ...otherProps } = props;
+  const id = useId();
 
   return (
     <div>

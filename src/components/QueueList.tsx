@@ -5,7 +5,7 @@ import {
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 import { Trans } from '@lingui/react/macro';
-import { useCallback, useState } from 'react';
+import { useCallback, useId, useState } from 'react';
 
 import Button from '../elements/Button';
 import type { Track } from '../generated/typings';
@@ -39,6 +39,7 @@ export default function QueueList(props: Props) {
 
   // Drag-and-Drop support for reordering the queue
   const sensors = useDndSensors();
+  const dndId = useId();
 
   const onDragEnd = useCallback(
     (event: DragEndEvent) => {
@@ -68,7 +69,7 @@ export default function QueueList(props: Props) {
   return (
     <DndContext
       onDragEnd={onDragEnd}
-      id="dnd-queue"
+      id={dndId}
       modifiers={DND_MODIFIERS}
       sensors={sensors}
     >

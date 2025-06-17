@@ -6,7 +6,7 @@ import {
 } from '@dnd-kit/sortable';
 import { useVirtualizer } from '@tanstack/react-virtual';
 import type React from 'react';
-import { useCallback, useImperativeHandle, useRef } from 'react';
+import { useCallback, useId, useImperativeHandle, useRef } from 'react';
 
 import type { Track } from '../generated/typings';
 import useDndSensors from '../hooks/useDnDSensors';
@@ -77,6 +77,7 @@ export default function TrackListDefault(props: Props) {
    * Playlist tracks re-order events handlers
    */
   const sensors = useDndSensors();
+  const dndId = useId();
 
   const onDragEnd = useCallback(
     (event: DragEndEvent) => {
@@ -106,7 +107,7 @@ export default function TrackListDefault(props: Props) {
   return (
     <DndContext
       onDragEnd={onDragEnd}
-      id="dnd-playlist"
+      id={dndId}
       modifiers={DND_MODIFIERS}
       sensors={sensors}
     >

@@ -86,7 +86,6 @@ function ViewTrackDetails() {
         <Setting.Section>
           <Setting.Input
             label={t`Title`}
-            id="title"
             name="title"
             type="text"
             value={formData.title}
@@ -98,7 +97,6 @@ function ViewTrackDetails() {
         <Setting.Section>
           <Setting.Input
             label={t`Album`}
-            id="album"
             name="album"
             type="text"
             value={formData.album}
@@ -110,7 +108,6 @@ function ViewTrackDetails() {
         <Setting.Section>
           <Setting.Input
             label={t`Album Artist`}
-            id="album_artist"
             name="album_artist"
             type="text"
             value={formData.album_artist}
@@ -126,7 +123,6 @@ function ViewTrackDetails() {
           <Setting.Input
             label={t`Track Artists`}
             description={t`You can add multiple artists with commas`}
-            id="artist"
             name="artist"
             type="text"
             value={formData.artists.join(DELIMITER)}
@@ -142,7 +138,6 @@ function ViewTrackDetails() {
           <Setting.Input
             label={t`Genre`}
             description={t`You can add multiple genres with commas`}
-            id="genre"
             name="genre"
             type="text"
             value={formData.genres.join(DELIMITER)}
@@ -157,7 +152,6 @@ function ViewTrackDetails() {
         <Setting.Section>
           <Setting.Input
             label={t`Year`}
-            id="year"
             name="year"
             type="number"
             min="0"
@@ -172,7 +166,6 @@ function ViewTrackDetails() {
           <Flexbox direction="horizontal" gap={16}>
             <Setting.Input
               label={t`Track Nº`}
-              id="track"
               name="track"
               type="number"
               min="0"
@@ -187,7 +180,6 @@ function ViewTrackDetails() {
             />
             <Setting.Input
               label={t`Of`}
-              id="trackOf"
               name="trackOf"
               type="number"
               min="0"
@@ -206,7 +198,6 @@ function ViewTrackDetails() {
           <Flexbox direction="horizontal" gap={16}>
             <Setting.Input
               label={t`Disk Nº`}
-              id="disk"
               name="disk"
               type="number"
               min="0"
@@ -221,7 +212,6 @@ function ViewTrackDetails() {
             />
             <Setting.Input
               label={t`Of`}
-              id="diskOf"
               name="diskOf"
               type="number"
               min="0"
@@ -239,7 +229,6 @@ function ViewTrackDetails() {
         <Setting.Section>
           <Setting.Input
             label={t`Duration`}
-            id="duration"
             type="text"
             disabled
             value={parseDuration(track.duration)}
@@ -248,7 +237,6 @@ function ViewTrackDetails() {
         <Setting.Section>
           <Setting.Input
             label={t`Path`}
-            id="path"
             type="text"
             disabled
             value={track.path}

@@ -50,9 +50,6 @@ jobs:
       - name: 'Test: Types'
         run: 'bun run test:typings'
 
-      - name: 'Test: Circular Dependencies'
-        run: 'bun run test:circdeps'
-
       - name: 'Generate translations'
         run: bun run gen:translations
 

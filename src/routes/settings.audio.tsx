@@ -25,7 +25,6 @@ function ViewSettingsAudio() {
         <Setting.Input
           label={t`Playback rate`}
           description={t`Increase the playback rate: a value of 2 will play your music at a 2x speed`}
-          id="setting-playbackrate"
           value={config.audio_playback_rate ?? ''}
           onChange={(e) =>
             playerAPI
@@ -42,7 +41,6 @@ function ViewSettingsAudio() {
         <AudioOutputSelect
           label={t`Audio output`}
           description={t`Advanced: set a custom audio output device.`}
-          id="setting-playbackrate"
           value={config.audio_output_device}
           onChange={useInvalidateCallback(playerAPI.setOutputDevice)}
         />

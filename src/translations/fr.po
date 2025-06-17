@@ -66,7 +66,7 @@ msgstr "Artistes"
 
 #: src/components/Footer.tsx:39
 #: src/routes/playlists.tsx:171
-#: src/routes/settings.ui.tsx:100
+#: src/routes/settings.ui.tsx:96
 msgid "Playlists"
 msgstr "Playlists"
 
@@ -119,11 +119,11 @@ msgstr "Suivant"
 msgid "Queue is empty"
 msgstr "La file d'attente est vide"
 
-#: src/components/QueueList.tsx:80
+#: src/components/QueueList.tsx:81
 msgid "clear queue"
 msgstr "vider la file d'attente"
 
-#: src/components/QueueList.tsx:106
+#: src/components/QueueList.tsx:107
 msgid "see more"
 msgstr "voir plus"
 
@@ -205,7 +205,7 @@ msgstr "Retirer les pistes"
 
 #: src/components/TracksList.tsx:375
 #: src/routes/settings.library.tsx:142
-#: src/routes/tracks.$trackID.tsx:259
+#: src/routes/tracks.$trackID.tsx:247
 msgid "Cancel"
 msgstr "Annuler"
 
@@ -220,7 +220,7 @@ msgid "Title"
 msgstr "Titre"
 
 #: src/components/TracksListHeader.tsx:54
-#: src/routes/tracks.$trackID.tsx:241
+#: src/routes/tracks.$trackID.tsx:231
 msgid "Duration"
 msgstr "Durée"
 
@@ -229,12 +229,12 @@ msgid "Artist"
 msgstr "Artiste"
 
 #: src/components/TracksListHeader.tsx:66
-#: src/routes/tracks.$trackID.tsx:100
+#: src/routes/tracks.$trackID.tsx:99
 msgid "Album"
 msgstr "Album"
 
 #: src/components/TracksListHeader.tsx:72
-#: src/routes/tracks.$trackID.tsx:143
+#: src/routes/tracks.$trackID.tsx:139
 msgid "Genre"
 msgstr "Genre"
 
@@ -366,19 +366,19 @@ msgstr "Vitesse de lecture"
 msgid "Increase the playback rate: a value of 2 will play your music at a 2x speed"
 msgstr "Augmenter la vitesse de lecture : une valeur de 2 jouera votre musique à une vitesse 2x"
 
-#: src/routes/settings.audio.tsx:43
+#: src/routes/settings.audio.tsx:42
 msgid "Audio output"
 msgstr "Sortie audio"
 
-#: src/routes/settings.audio.tsx:44
+#: src/routes/settings.audio.tsx:43
 msgid "Advanced: set a custom audio output device."
 msgstr "Avancé : définir un périphérique de sortie audio personnalisé."
 
-#: src/routes/settings.audio.tsx:53
+#: src/routes/settings.audio.tsx:51
 msgid "Follow playing track"
 msgstr "Suivre la piste en cours"
 
-#: src/routes/settings.audio.tsx:54
+#: src/routes/settings.audio.tsx:52
 msgid "Automatically follow the currently playing track (only when the app is not focused)"
 msgstr "Suivre automatiquement la piste en cours (uniquement lorsque l'application n'a pas le focus)"
 
@@ -470,60 +470,60 @@ msgstr "Thème"
 msgid "Change the appearance of the interface"
 msgstr "Changer l'apparence de l'interface"
 
-#: src/routes/settings.ui.tsx:35
+#: src/routes/settings.ui.tsx:34
 msgid "System (default)"
 msgstr "Système (par défaut)"
 
-#: src/routes/settings.ui.tsx:47
+#: src/routes/settings.ui.tsx:46
 msgid "Language"
 msgstr "Langue"
 
-#: src/routes/settings.ui.tsx:66
+#: src/routes/settings.ui.tsx:64
 msgid "Tracks density"
 msgstr "Densité visuelle des pistes"
 
-#: src/routes/settings.ui.tsx:67
-#: src/routes/settings.ui.tsx:88
+#: src/routes/settings.ui.tsx:65
+#: src/routes/settings.ui.tsx:85
 msgid "Change the default view when starting the application"
 msgstr "Changer la vue par défaut au démarrage de l'application"
 
-#: src/routes/settings.ui.tsx:77
+#: src/routes/settings.ui.tsx:74
 msgid "Normal (default)"
 msgstr "Normal (par défaut)"
 
-#: src/routes/settings.ui.tsx:80
+#: src/routes/settings.ui.tsx:77
 msgid "Compact"
 msgstr "Compact"
 
-#: src/routes/settings.ui.tsx:86
+#: src/routes/settings.ui.tsx:83
 msgid "Default view"
 msgstr "Vue par défaut"
 
-#: src/routes/settings.ui.tsx:97
+#: src/routes/settings.ui.tsx:93
 msgid "Library (default)"
 msgstr "Bibliothèque (par défaut)"
 
-#: src/routes/settings.ui.tsx:107
+#: src/routes/settings.ui.tsx:103
 msgid "Display Notifications"
 msgstr "Afficher les notifications"
 
-#: src/routes/settings.ui.tsx:108
+#: src/routes/settings.ui.tsx:104
 msgid "Send notifications when the playing track changes"
 msgstr "Envoyer des notifications lorsque la piste en cours change"
 
-#: src/routes/settings.ui.tsx:118
+#: src/routes/settings.ui.tsx:114
 msgid "Sleep mode blocker"
 msgstr "Bloqueur de mode veille"
 
-#: src/routes/settings.ui.tsx:119
+#: src/routes/settings.ui.tsx:115
 msgid "Prevent the computer from going into sleep mode when playing"
 msgstr "Empêcher l'ordinateur de passer en mode veille lors de la lecture"
 
-#: src/routes/settings.ui.tsx:131
+#: src/routes/settings.ui.tsx:127
 msgid "Light"
 msgstr "Clair"
 
-#: src/routes/settings.ui.tsx:133
+#: src/routes/settings.ui.tsx:129
 msgid "Dark"
 msgstr "Sombre"
 
@@ -532,48 +532,48 @@ msgstr "Sombre"
 msgid "Edit \"{0}\""
 msgstr "Modifier \"{0}\""
 
-#: src/routes/tracks.$trackID.tsx:112
+#: src/routes/tracks.$trackID.tsx:110
 msgid "Album Artist"
 msgstr "Artiste de l'album"
 
-#: src/routes/tracks.$trackID.tsx:127
+#: src/routes/tracks.$trackID.tsx:124
 msgid "Track Artists"
 msgstr "Artistes de la piste"
 
-#: src/routes/tracks.$trackID.tsx:128
+#: src/routes/tracks.$trackID.tsx:125
 msgid "You can add multiple artists with commas"
 msgstr "Vous pouvez ajouter plusieurs artistes avec des virgules"
 
-#: src/routes/tracks.$trackID.tsx:144
+#: src/routes/tracks.$trackID.tsx:140
 msgid "You can add multiple genres with commas"
 msgstr "Vous pouvez ajouter plusieurs genres avec des virgules"
 
-#: src/routes/tracks.$trackID.tsx:159
+#: src/routes/tracks.$trackID.tsx:154
 msgid "Year"
 msgstr "Année"
 
-#: src/routes/tracks.$trackID.tsx:174
+#: src/routes/tracks.$trackID.tsx:168
 msgid "Track Nº"
 msgstr "Nº de piste"
 
-#: src/routes/tracks.$trackID.tsx:189
-#: src/routes/tracks.$trackID.tsx:223
+#: src/routes/tracks.$trackID.tsx:182
+#: src/routes/tracks.$trackID.tsx:214
 msgid "Of"
 msgstr "Sur"
 
-#: src/routes/tracks.$trackID.tsx:208
+#: src/routes/tracks.$trackID.tsx:200
 msgid "Disk Nº"
 msgstr "Nº de disque"
 
-#: src/routes/tracks.$trackID.tsx:250
+#: src/routes/tracks.$trackID.tsx:239
 msgid "Path"
 msgstr "Chemin du fichier"
 
-#: src/routes/tracks.$trackID.tsx:262
+#: src/routes/tracks.$trackID.tsx:250
 msgid "Save"
 msgstr "Enregistrer"
 
-#: src/routes/tracks.$trackID.tsx:267
+#: src/routes/tracks.$trackID.tsx:255
 msgid "Clicking \"save\" will only update the library data, but will not save it to the original file."
 msgstr "Cliquer sur \"enregistrer\" mettra uniquement à jour les données de la bibliothèque, mais ne les enregistrera pas dans le fichier d'origine."
 

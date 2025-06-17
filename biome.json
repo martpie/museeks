@@ -4,7 +4,9 @@
     "enabled": true,
     "rules": {
       "recommended": true,
-      "nursery": "off",
+      "nursery": {
+        "noImportCycles": "error"
+      },
       "complexity": {
         "noForEach": "off"
       },
