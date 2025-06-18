@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component type="desktop-application">
-  <id>io.museeks.museeks</id>
+  <id>io.museeks.desktop</id>
 
   <name>Museeks</name>
   <summary>A simple, clean and cross-platform music player</summary>
@@ -16,14 +16,14 @@
       Here is a little preview though:
     </p>
     <p>
-      - 💻 Cross-platform music player (Linux, macOS and Windows) - 🎧 Supported formats: mp3, mp4, m4a/aac, flac, wav, ogg, 3gpp - 🔄 Library auto-refresh - 🌟 Playlists - 🎼 Queue management - ➰ Shuffle, loop - 🌄 Covers - 🤓 Dark theme - 🚤 Playback speed control - 😴 Sleep mode blocker - 📥 <code>.m3u</code> import/export
+      - 💻 Cross-platform music player (Linux, macOS and Windows) - 🎧 Supported formats: mp3, mp4, m4a/aac, flac, wav, ogg, 3gpp - 🔄 Library auto-refresh - 🌟 Playlists - 🎼 Queue management - ➰ Shuffle, loop - 🌄 Covers - 🤓 Dark theme - 🚤 Playback speed control - 😴 Sleep mode blocker - 📥 &lt;code&gt;.m3u&lt;/code&gt; import/export
     </p>
   </description>
 
-  <launchable type="desktop-id">io.museeks.museeks.desktop</launchable>
+  <launchable type="desktop-id">io.museeks.desktop.desktop</launchable>
   <screenshots>
     <screenshot type="default">
-      <image>https://museeks.io/screenshot.png?FIXMEFORLINUX</image>
+      <image>https://museeks.io/screenshot-linux.png</image>
     </screenshot>
   </screenshots>
 </component>
