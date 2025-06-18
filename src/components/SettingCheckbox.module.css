@@ -1,33 +1,34 @@
 .checkbox {
   input[type="checkbox"] {
+    display: grid;
+    place-content: center;
     appearance: none;
-    width: 16px;
-    height: 16px;
-    border: solid 1px var(--border-color);
+    border: solid 1px var(--border-color-softer);
     border-radius: var(--border-radius);
-    display: inline-block;
     background-color: var(--checkbox-bg);
-    outline: none;
-    vertical-align: sub;
-    position: relative;
-    margin-right: 6px;
+
+    &::after {
+      content: "";
+      visibility: hidden;
+      width: 14px;
+      height: 14px;
+      box-shadow: inset 1em 1em var(--form-control-color);
+      background-color: CanvasText;
+    }
 
     &:focus {
       box-shadow: 0 0 0 3px var(--border-color);
     }
+  }
+}
 
-    &:checked {
-      background-color: var(--main-color);
-      border-color: var(--main-color-darker);
+.checkbox input[type="checkbox"]:checked {
+  border-color: var(--main-color-darker);
+  background-color: var(--main-color);
 
-      &::after {
-        content: "\f00c";
-        font-size: 10px;
-        color: white;
-        position: absolute;
-        top: 2px;
-        left: 2px;
-      }
-    }
+  &::after {
+    visibility: visible;
+    clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 79% 0%, 43% 62%);
+    transform: scale(0.8) rotate(10deg);
   }
 }
