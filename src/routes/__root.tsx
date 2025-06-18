@@ -1,5 +1,4 @@
 import { createRootRoute, Outlet, useLocation } from '@tanstack/react-router';
-import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
 import { info } from '@tauri-apps/plugin-log';
 import cx from 'classnames';
 import { useEffect } from 'react';
@@ -80,7 +79,6 @@ function ViewRoot() {
       {/** Out-of-the-flow UI bits */}
       <Toasts />
       <DropzoneImport />
-      <TanStackRouterDevtools position="bottom-right" />
     </div>
   );
 }
