@@ -36,12 +36,11 @@ export default function Header() {
                   />
                 </Popover.Trigger>
               </div>
+              <Popover.Anchor />
               <Popover.Portal>
                 <Popover.Content
                   side="bottom"
-                  sideOffset={0}
                   align="end"
-                  alignOffset={-10}
                   avoidCollisions={false}
                   className={styles.queueContainer}
                 >
