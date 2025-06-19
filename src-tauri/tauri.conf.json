@@ -52,7 +52,10 @@
         "bundleMediaFramework": true
       },
       "deb": {
-        "desktopTemplate": "./template.desktop"
+        "desktopTemplate": "./template.desktop",
+        "files": {
+          "/usr/share/metainfo/io.museeks.desktop.metainfo.xml": "flatpak.metainfo.xml"
+        }
       },
       "rpm": {
         "desktopTemplate": "./template.desktop"
