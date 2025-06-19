@@ -27,3 +27,4 @@ dist-ssr
 # Generated files
 src-tauri/gen
 .flatpak-builder
+release

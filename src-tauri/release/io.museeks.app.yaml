@@ -15,10 +15,9 @@ finish-args:
   - --device=dri
   # To send and receive notifications
   - --talk-name=org.freedesktop.Notifications
+  - --talk-name=org.freedesktop.portal.OpenURI
   # Network access - to receive and send messages
   - --share=network
-  # Access to the user's home directory for config
-  - --filesystem=~/.config/Museeks
   # Ensure the app can play audio
   - --socket=pulseaudio
   # Webview is black otherwise, may be a Wayland issue
@@ -29,7 +28,7 @@ modules:
     buildsystem: simple
     sources:
       - type: file
-        path: ../src-tauri/target/release/bundle/deb/Museeks_0.22.0_amd64.deb
+        path: ../target/release/bundle/deb/Museeks_0.22.0_amd64.deb
     build-commands:
       - set -e
       # Extract the deb package
@@ -48,6 +47,9 @@ modules:
       # Copy desktop file + ensure the right icon is set
       - sed -i 's/^Icon=.*/Icon=io.museeks.app/' deb-extracted/usr/share/applications/Museeks.desktop
       - install -Dm644 deb-extracted/usr/share/applications/Museeks.desktop /app/share/applications/io.museeks.app.desktop
+
+      # Copy screenshots
+      - install -Dm644 deb-extracted/usr/share/screenshots/screenshot.png /app/share/share/screenshots/screenshot.png
 
       # Copy icons
       - install -Dm644 deb-extracted/usr/share/icons/hicolor/128x128/apps/museeks.png /app/share/icons/hicolor/128x128/apps/io.museeks.app.png
