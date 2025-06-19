@@ -5,12 +5,15 @@
 
   <name>Museeks</name>
   <summary>A simple, clean and cross-platform music player</summary>
+
   <developer id="io.martpie">
     <name>Pierre de la Martinière</name>
   </developer>
+  <developer_name>Pierre de la Martinière</developer_name>
 
   <metadata_license>MIT</metadata_license>
   <project_license>MIT</project_license>
+  <content_rating type="oars-1.1" />
 
   <description>
     <p>
@@ -36,7 +39,7 @@
 
   <screenshots>
     <screenshot type="default">
-      <image>https://museeks.io/screenshot-linux.png</image>
+      <image>screenshot.png</image>
       <caption>A screenshot of Museeks' library view in both light and dark theme</caption>
     </screenshot>
   </screenshots>
