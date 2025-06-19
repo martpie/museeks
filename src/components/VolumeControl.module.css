@@ -2,6 +2,7 @@
   position: relative;
   margin-left: 4px;
   padding: 0 4px;
+  line-height: 1;
 }
 
 .volumeControl {
