@@ -1,4 +1,4 @@
-id: io.museeks.desktop
+id: io.museeks.app
 
 runtime: org.gnome.Platform
 runtime-version: '46'
@@ -46,11 +46,11 @@ modules:
       - find /app/lib/Museeks -type f -exec chmod 644 {} \;
 
       # Copy desktop file + ensure the right icon is set
-      - sed -i 's/^Icon=.*/Icon=io.museeks.desktop/' deb-extracted/usr/share/applications/Museeks.desktop
-      - install -Dm644 deb-extracted/usr/share/applications/Museeks.desktop /app/share/applications/io.museeks.desktop.desktop
+      - sed -i 's/^Icon=.*/Icon=io.museeks.app/' deb-extracted/usr/share/applications/Museeks.desktop
+      - install -Dm644 deb-extracted/usr/share/applications/Museeks.desktop /app/share/applications/io.museeks.app.desktop
 
       # Copy icons
-      - install -Dm644 deb-extracted/usr/share/icons/hicolor/128x128/apps/museeks.png /app/share/icons/hicolor/128x128/apps/io.museeks.desktop.png
-      - install -Dm644 deb-extracted/usr/share/icons/hicolor/32x32/apps/museeks.png /app/share/icons/hicolor/32x32/apps/io.museeks.desktop.png
-      - install -Dm644 deb-extracted/usr/share/icons/hicolor/256x256@2/apps/museeks.png /app/share/icons/hicolor/256x256@2/apps/io.museeks.desktop.png
-      - install -Dm644 deb-extracted/usr/share/metainfo/io.museeks.desktop.metainfo.xml /app/share/metainfo/io.museeks.desktop.metainfo.xml
+      - install -Dm644 deb-extracted/usr/share/icons/hicolor/128x128/apps/museeks.png /app/share/icons/hicolor/128x128/apps/io.museeks.app.png
+      - install -Dm644 deb-extracted/usr/share/icons/hicolor/32x32/apps/museeks.png /app/share/icons/hicolor/32x32/apps/io.museeks.app.png
+      - install -Dm644 deb-extracted/usr/share/icons/hicolor/256x256@2/apps/museeks.png /app/share/icons/hicolor/256x256@2/apps/io.museeks.app.png
+      - install -Dm644 deb-extracted/usr/share/metainfo/io.museeks.app.metainfo.xml /app/share/metainfo/io.museeks.app.metainfo.xml

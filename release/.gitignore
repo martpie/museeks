@@ -1,4 +1,4 @@
 *
 !.gitignore
 !flatpak.metainfo.xml
-!flatpak-builder.yaml
+!io.museeks.app.yaml

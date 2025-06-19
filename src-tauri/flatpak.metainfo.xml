@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component type="desktop-application">
-  <id>io.museeks.desktop</id>
+  <id>io.museeks.app</id>
+  <launchable type="desktop-id">io.museeks.app.desktop</launchable>
 
   <name>Museeks</name>
   <summary>A simple, clean and cross-platform music player</summary>
+  <developer id="io.martpie">
+    <name>Pierre de la Martinière</name>
+  </developer>
 
   <metadata_license>MIT</metadata_license>
   <project_license>MIT</project_license>
@@ -15,15 +19,25 @@
     <p>
       Here is a little preview though:
     </p>
-    <p>
-      - 💻 Cross-platform music player (Linux, macOS and Windows) - 🎧 Supported formats: mp3, mp4, m4a/aac, flac, wav, ogg, 3gpp - 🔄 Library auto-refresh - 🌟 Playlists - 🎼 Queue management - ➰ Shuffle, loop - 🌄 Covers - 🤓 Dark theme - 🚤 Playback speed control - 😴 Sleep mode blocker - 📥 &lt;code&gt;.m3u&lt;/code&gt; import/export
-    </p>
+    <ul>
+      <li>💻 Cross-platform music player (Linux, macOS and Windows)</li>
+      <li>🎧 Supported formats: mp3, mp4, m4a/aac, flac, wav, ogg, 3gpp</li>
+      <li>🔄 Library auto-refresh</li>
+      <li>🌟 Playlists</li>
+      <li>🎼 Queue management</li>
+      <li>➰ Shuffle, loop</li>
+      <li>🌄 Covers</li>
+      <li>🤓 Dark theme</li>
+      <li>🚤 Playback speed control</li>
+      <li>😴 Sleep mode blocker</li>
+      <li>📥 &lt;code&gt;.m3u&lt;/code&gt; import/export</li>
+    </ul>
   </description>
 
-  <launchable type="desktop-id">io.museeks.desktop.desktop</launchable>
   <screenshots>
     <screenshot type="default">
       <image>https://museeks.io/screenshot-linux.png</image>
+      <caption>A screenshot of Museeks' library view in both light and dark theme</caption>
     </screenshot>
   </screenshots>
 

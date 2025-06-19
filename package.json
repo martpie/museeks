@@ -27,9 +27,10 @@
     "package:checksums": "bash scripts/checksum.sh",
     "clippy": "cargo clippy --manifest-path src-tauri/Cargo.toml",
     "release": "bash scripts/release.sh",
-    "release:flatpak:build": "flatpak-builder --force-clean --user --disable-cache --repo release/flatpak-repo release/flatpak release/flatpak-builder.yaml",
+    "release:flatpak:build": "flatpak-builder --force-clean --user --disable-cache --repo release/flatpak-repo release/flatpak release/io.museeks.app.yaml",
     "release:flatpak:install": "bun run release:flatpak:build --install",
-    "release:flatpak:package": "flatpak build-bundle release/flatpak-repo release/museeks.flatpak io.museeks.desktop"
+    "release:flatpak:package": "flatpak build-bundle release/flatpak-repo release/museeks.flatpak io.museeks.app",
+    "release:flatpak:lint": "flatpak run --command=flatpak-builder-lint org.flatpak.Builder manifest release/io.museeks.app.yaml && flatpak run --command=flatpak-builder-lint org.flatpak.Builder repo release/flatpak-repo"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",

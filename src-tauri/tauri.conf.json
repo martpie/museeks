@@ -2,7 +2,7 @@
   "productName": "Museeks",
   "mainBinaryName": "museeks",
   "version": "0.22.0",
-  "identifier": "io.museeks.desktop",
+  "identifier": "io.museeks.app",
   "build": {
     "beforeDevCommand": "bun run dev",
     "devUrl": "http://localhost:1420",
@@ -54,7 +54,7 @@
       "deb": {
         "desktopTemplate": "./template.desktop",
         "files": {
-          "/usr/share/metainfo/io.museeks.desktop.metainfo.xml": "flatpak.metainfo.xml"
+          "/usr/share/metainfo/io.museeks.app.metainfo.xml": "flatpak.metainfo.xml"
         }
       },
       "rpm": {
