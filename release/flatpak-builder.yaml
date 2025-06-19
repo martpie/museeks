@@ -30,8 +30,6 @@ modules:
     sources:
       - type: file
         path: ../src-tauri/target/release/bundle/deb/Museeks_0.22.0_amd64.deb
-      - type: file
-        path: flatpak.metainfo.xml
     build-commands:
       - set -e
       # Extract the deb package
@@ -55,4 +53,4 @@ modules:
       - install -Dm644 deb-extracted/usr/share/icons/hicolor/128x128/apps/museeks.png /app/share/icons/hicolor/128x128/apps/io.museeks.desktop.png
       - install -Dm644 deb-extracted/usr/share/icons/hicolor/32x32/apps/museeks.png /app/share/icons/hicolor/32x32/apps/io.museeks.desktop.png
       - install -Dm644 deb-extracted/usr/share/icons/hicolor/256x256@2/apps/museeks.png /app/share/icons/hicolor/256x256@2/apps/io.museeks.desktop.png
-      - install -Dm644 flatpak.metainfo.xml /app/share/metainfo/io.museeks.desktop.metainfo.xml
+      - install -Dm644 deb-extracted/usr/share/metainfo/io.museeks.desktop.metainfo.xml /app/share/metainfo/io.museeks.desktop.metainfo.xml

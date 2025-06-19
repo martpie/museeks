@@ -26,4 +26,8 @@
       <image>https://museeks.io/screenshot-linux.png</image>
     </screenshot>
   </screenshots>
+
+  <url type="homepage">https://museeks.io</url>
+  <url type="bugtracker">https://github.com/martpie/museeks/issues</url>
+  <url type="translate">https://github.com/martpie/museeks?tab=readme-ov-file#translations</url>
 </component>
