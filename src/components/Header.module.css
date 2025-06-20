@@ -30,7 +30,7 @@
 }
 
 :global(.os__macos) .headerMainControls {
-  padding-left: 60px; /* let some space for titleBarStyle */
+  padding-left: 64px; /* let some space for titleBarStyle */
 }
 
 .headerSearch {
