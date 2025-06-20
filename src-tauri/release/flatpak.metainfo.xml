@@ -39,8 +39,8 @@
 
   <screenshots>
     <screenshot type="default">
-      <image>screenshot.png</image>
       <caption>A screenshot of Museeks' library view in both light and dark theme</caption>
+      <image type="source">https://github.com/martpie/museeks.io/blob/ebf15ded2d215e90d887b090b68d91447de4145b/public/screenshot-linux-single.png</image>
     </screenshot>
   </screenshots>
 

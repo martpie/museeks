@@ -15,7 +15,6 @@ finish-args:
   - --device=dri
   # To send and receive notifications
   - --talk-name=org.freedesktop.Notifications
-  - --talk-name=org.freedesktop.portal.OpenURI
   # Network access - to receive and send messages
   - --share=network
   # Ensure the app can play audio
@@ -47,9 +46,6 @@ modules:
       # Copy desktop file + ensure the right icon is set
       - sed -i 's/^Icon=.*/Icon=io.museeks.app/' deb-extracted/usr/share/applications/Museeks.desktop
       - install -Dm644 deb-extracted/usr/share/applications/Museeks.desktop /app/share/applications/io.museeks.app.desktop
-
-      # Copy screenshots
-      - install -Dm644 deb-extracted/usr/share/screenshots/screenshot.png /app/share/share/screenshots/screenshot.png
 
       # Copy icons
       - install -Dm644 deb-extracted/usr/share/icons/hicolor/128x128/apps/museeks.png /app/share/icons/hicolor/128x128/apps/io.museeks.app.png

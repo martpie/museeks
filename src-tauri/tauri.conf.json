@@ -54,8 +54,7 @@
       "deb": {
         "desktopTemplate": "./release/template.desktop",
         "files": {
-          "/usr/share/metainfo/io.museeks.app.metainfo.xml": "release/flatpak.metainfo.xml",
-          "/usr/share/screenshots/screenshot.png": "release/screenshot.png"
+          "/usr/share/metainfo/io.museeks.app.metainfo.xml": "release/flatpak.metainfo.xml"
         }
       },
       "rpm": {
