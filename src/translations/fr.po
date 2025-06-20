@@ -416,7 +416,7 @@ msgstr "Rafraîchir"
 
 #: src/routes/settings.library.tsx:110
 msgid "<0>.m3u</0> files will also be imported as playlists."
-msgstr "<0>.m3u</0> les fichiers seront également importés en tant que playlists."
+msgstr "Les fichiers <0>.m3u</0> seront également importés en tant que playlists."
 
 #: src/routes/settings.library.tsx:118
 msgid "Automatically refresh library on startup"
