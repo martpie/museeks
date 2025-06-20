@@ -42,3 +42,4 @@ checksum_file release/Museeks_${VERSION}_x64-setup.exe
 checksum_file release/Museeks_${VERSION}_amd64.AppImage
 checksum_file release/Museeks-${VERSION}-1.x86_64.rpm
 checksum_file release/Museeks_${VERSION}_universal.dmg
+checksum_file release/museeks.flatpak
