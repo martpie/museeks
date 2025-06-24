@@ -6,6 +6,8 @@ use tauri::Runtime;
 use tauri_plugin_dialog::{DialogExt, MessageDialogKind};
 use thiserror::Error;
 
+use crate::plugins::config::get_storage_dir;
+
 /**
  * Create the error type that represents all errors possible in our program
  * Stolen from https://github.com/tauri-apps/tauri/discussions/3913
@@ -61,11 +63,22 @@ pub type AnyResult<T, E = MuseeksError> = Result<T, E>;
  * Log an error, show blocking dialog with the error message, then exit the app
  */
 pub fn handle_fatal_error<R: Runtime>(app_handle: &tauri::AppHandle<R>, err: MuseeksError) {
-    error!("Something went wrong: {:?}", err);
-    app_handle
+    error!("Something went terribly wrong: {:?}", err);
+    let result = app_handle
         .dialog()
-        .message(format!("Something went wrong: {}", err))
+        .message(format!("Something went terribly wrong: \"{}\". Resetting Museeks may help. If this keep happening, please report an issue.", err))
         .kind(MessageDialogKind::Error)
+        .buttons(tauri_plugin_dialog::MessageDialogButtons::OkCancelCustom(
+            "Reset settings".to_string(),
+            "Exit".to_string(),
+        ))
         .blocking_show();
+
+    if result {
+        std::fs::remove_dir_all(get_storage_dir()).unwrap_or_else(|e| {
+            error!("Failed to reset settings: {:?}", e);
+        });
+    }
+
     app_handle.exit(1);
 }
