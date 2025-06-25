@@ -20,6 +20,7 @@
 
   &:focus {
     text-decoration: none;
+    color: inherit;
   }
 
   &:global(.isActive) {
@@ -32,10 +33,8 @@
 
 .sideNavLinkInput {
   appearance: none;
-  display: block;
-  padding: 0;
   border: none;
   background: transparent;
-  font-size: 1rem;
-  line-height: 1;
+  background-color: var(--sidebar-item-active-bg);
+  height: 28px; /* Problem with inputs? */
 }

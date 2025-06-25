@@ -65,7 +65,7 @@ msgid "Artists"
 msgstr "Artists"
 
 #: src/components/Footer.tsx:39
-#: src/routes/playlists.tsx:171
+#: src/routes/playlists.tsx:174
 #: src/routes/settings.ui.tsx:96
 msgid "Playlists"
 msgstr "Playlists"
@@ -243,7 +243,7 @@ msgstr "Genre"
 msgid "Volume"
 msgstr "Volume"
 
-#: src/routes/artists.tsx:69
+#: src/routes/artists.tsx:72
 msgid "No artist selected"
 msgstr "No artist selected"
 
@@ -298,19 +298,19 @@ msgstr "Duplicate"
 msgid "Export"
 msgstr "Export"
 
-#: src/routes/playlists.tsx:141
+#: src/routes/playlists.tsx:144
 msgid "You haven't created any playlist yet"
 msgstr "You haven't created any playlist yet"
 
-#: src/routes/playlists.tsx:150
+#: src/routes/playlists.tsx:153
 msgid "create one now"
 msgstr "create one now"
 
-#: src/routes/playlists.tsx:159
+#: src/routes/playlists.tsx:162
 msgid "No playlist selected"
 msgstr "No playlist selected"
 
-#: src/routes/playlists.tsx:176
+#: src/routes/playlists.tsx:179
 msgid "New Playlist"
 msgstr "New Playlist"
 

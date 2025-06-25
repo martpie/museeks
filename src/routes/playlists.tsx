@@ -123,7 +123,10 @@ function ViewPlaylists() {
           key={playlist.id}
           label={playlist.name}
           id={playlist.id}
-          href={`/playlists/${playlist.id}`}
+          linkOptions={{
+            to: '/playlists/$playlistID',
+            params: { playlistID: playlist.id },
+          }}
           onRename={renamePlaylist}
           contextMenuItems={contextMenuItems}
         />
