@@ -55,7 +55,10 @@ function ViewArtists() {
               key={artist}
               id={artist}
               label={artist}
-              href={`/artists/${artist}`}
+              linkOptions={{
+                to: '/artists/$artistID',
+                params: { artistID: artist },
+              }}
             />
           ))}
         </SideNav>

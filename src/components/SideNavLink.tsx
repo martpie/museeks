@@ -1,4 +1,8 @@
-import { Link } from '@tanstack/react-router';
+import {
+  Link,
+  type RegisteredRouter,
+  type ValidateLinkOptions,
+} from '@tanstack/react-router';
 import {
   Menu,
   MenuItem,
@@ -11,28 +15,36 @@ import { useCallback, useState } from 'react';
 import { logAndNotifyError } from '../lib/utils';
 import styles from './SideNavLink.module.css';
 
-type Props = {
+// *sigh* https://tanstack.com/router/latest/docs/framework/react/guide/type-utilities#type-checking-link-options-with-validatelinkoptions
+export interface Props<
+  TRouter extends RegisteredRouter = RegisteredRouter,
+  TOptions = unknown,
+> {
+  linkOptions: ValidateLinkOptions<TRouter, TOptions>;
   label: string;
   id: string;
-  href: string;
   onRename?: (id: string, name: string) => void;
   contextMenuItems?: Array<MenuItemOptions | PredefinedMenuItemOptions>;
-};
+}
 
-export default function SideNavLink(props: Props) {
+export default function SideNavLink<TRouter extends RegisteredRouter, TOptions>(
+  props: Props<TRouter, TOptions>,
+): React.ReactNode;
+export default function SideNavLink(props: Props): React.ReactNode {
+  const { label, id, onRename, contextMenuItems, linkOptions } = props;
   const [renamed, setRenamed] = useState(false);
 
   const onContextMenu: React.MouseEventHandler<HTMLAnchorElement> = useCallback(
     async (event) => {
-      if (!props.onRename && !props.contextMenuItems) {
+      if (!onRename && !contextMenuItems) {
         return;
       }
 
       event.preventDefault();
 
-      const contextMenuItems = props.contextMenuItems ?? [];
+      const itemsBuilder = contextMenuItems ?? [];
 
-      const menuItemsBuilders = contextMenuItems.map((item) => {
+      const menuItemsBuilders = itemsBuilder.map((item) => {
         if ('item' in item) {
           return PredefinedMenuItem.new(item);
         }
@@ -56,7 +68,7 @@ export default function SideNavLink(props: Props) {
 
       await menu.popup().catch(logAndNotifyError);
     },
-    [props.onRename, props.contextMenuItems],
+    [onRename, contextMenuItems],
   );
 
   const keyDown: React.KeyboardEventHandler<HTMLInputElement> = useCallback(
@@ -66,8 +78,8 @@ export default function SideNavLink(props: Props) {
       switch (e.nativeEvent.code) {
         case 'Enter': {
           // Enter
-          if (renamed && e.currentTarget && props.onRename) {
-            props.onRename(props.id, e.currentTarget.value);
+          if (renamed && e.currentTarget && onRename) {
+            onRename(id, e.currentTarget.value);
             setRenamed(false);
           }
           break;
@@ -82,45 +94,47 @@ export default function SideNavLink(props: Props) {
         }
       }
     },
-    [props.onRename, props.id, renamed],
+    [onRename, id, renamed],
   );
 
   const onBlur = useCallback(
     async (e: React.FocusEvent<HTMLInputElement>) => {
-      if (renamed && props.onRename) {
-        props.onRename(props.id, e.currentTarget.value);
+      if (renamed && onRename) {
+        onRename(id, e.currentTarget.value);
       }
 
       setRenamed(false);
     },
-    [props.onRename, props.id, renamed],
+    [onRename, id, renamed],
   );
 
   const onFocus = useCallback((e: React.FocusEvent<HTMLInputElement>) => {
     e.currentTarget.select();
   }, []);
 
+  if (renamed) {
+    return (
+      <input
+        className={`${styles.sideNavLink} ${styles.sideNavLinkInput}`}
+        type="text"
+        defaultValue={label}
+        onKeyDown={keyDown}
+        onBlur={onBlur}
+        onFocus={onFocus}
+        ref={(ref) => ref?.focus()}
+      />
+    );
+  }
+
   return (
     <Link
       className={styles.sideNavLink}
       activeProps={{ className: 'isActive' }}
-      to={props.href}
       onContextMenu={onContextMenu}
       draggable={false}
+      {...linkOptions}
     >
-      {renamed ? (
-        <input
-          className={`${styles.sideNavLink} ${styles.sideNavLinkInput}`}
-          type="text"
-          defaultValue={props.label}
-          onKeyDown={keyDown}
-          onBlur={onBlur}
-          onFocus={onFocus}
-          ref={(ref) => ref?.focus()}
-        />
-      ) : (
-        props.label
-      )}
+      {label}
     </Link>
   );
 }
