@@ -8,8 +8,7 @@ export default function TrackListStatus(props: TrackListStatusInfo) {
 
   return (
     <>
-      {props.count} <Plural value={props.count} one="track" other="tracks" />,{' '}
-      {duration}
+      <Plural value={props.count} one="# track" other="# tracks" />, {duration}
     </>
   );
 }

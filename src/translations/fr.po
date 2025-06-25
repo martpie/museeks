@@ -135,8 +135,8 @@ msgstr "rechercher..."
 #. placeholder {0}: props.count
 #: src/components/TrackListStatus.tsx:11
 #: src/components/TracksListGrouped.tsx:108
-msgid "{0, plural, one {track} other {tracks}}"
-msgstr "{0, plural, one {piste} other {pistes}}"
+msgid "{0, plural, one {# track} other {# tracks}}"
+msgstr "{0, plural, one {# piste} other {# pistes}}"
 
 #: src/components/TracksList.tsx:241
 msgid "Create new playlist..."

@@ -105,7 +105,7 @@ function TrackListGroup(props: TracksListGroupProps) {
         <Cover track={tracks[0]} iconSize={36} noBorder />
         <h3 className={styles.tracksGroupLabel}>{label}</h3>
         <div className={styles.tracksGroupGenres}>
-          <Plural value={tracks.length} one="track" other="tracks" />,{' '}
+          <Plural value={tracks.length} one="# track" other="# tracks" />,{' '}
           {parseDuration(duration)}
         </div>
         <div className={styles.tracksGroupGenres}>{genres.join(', ')}</div>
