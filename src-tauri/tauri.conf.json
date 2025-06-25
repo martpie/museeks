@@ -1,7 +1,7 @@
 {
   "productName": "Museeks",
   "mainBinaryName": "museeks",
-  "version": "0.22.0",
+  "version": "0.22.1",
   "identifier": "io.museeks.app",
   "build": {
     "beforeDevCommand": "bun run dev",
