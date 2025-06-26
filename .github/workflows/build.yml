@@ -19,9 +19,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: oven-sh/setup-bun@v2
+      - uses: actions/setup-node@v4
         with:
-          bun-version: latest
+          node-version: 22
 
       - uses: actions-rust-lang/setup-rust-toolchain@v1
 
@@ -31,25 +31,25 @@ jobs:
           sudo apt-get install -y libgtk-3-dev libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf
 
       - name: Install dependencies
-        run: bun install --frozen-lockfile
+        run: npm ci
 
       - name: 'Test: Rust (+ Generate Types)'
-        run: bun run gen:types
+        run: npm run gen:types
 
       - name: 'Test: TS/JS linting & formatting'
-        run: 'bun run test:lint'
+        run: 'npm run test:lint'
 
       - name: 'Test: unit'
-        run: 'bun run test:unit'
+        run: 'npm run test:unit'
 
       - name: 'Test: Types'
-        run: 'bun run test:typings'
+        run: 'npm run test:typings'
 
       - name: 'Generate translations'
-        run: bun run gen:translations
+        run: npm run gen:translations
 
       - name: Build application
-        run: bun run build
+        run: npm run build
 
       # Check one of the command above did not generate any unexpected artifacts
       # (like types generation)
@@ -85,9 +85,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: oven-sh/setup-bun@v2
+      - uses: actions/setup-node@v4
         with:
-          bun-version: latest
+          node-version: 22
 
       - name: Install Rust stable
         uses: dtolnay/rust-toolchain@stable
@@ -110,7 +110,7 @@ jobs:
           flatpak install flathub -y org.flatpak.Builder
 
       - name: Install frontend dependencies
-        run: bun install --frozen-lockfile
+        run: npm ci
 
       - uses: tauri-apps/tauri-action@v0
         env:
@@ -131,9 +131,9 @@ jobs:
         if: matrix.platform == 'ubuntu-24.04'
         continue-on-error: true
         run: |
-          bun run release:flatpak:build
-          bun run release:flatpak:package
-          bun run release:flatpak:lint
+          npm run release:flatpak:build
+          npm run release:flatpak:package
+          npm run release:flatpak:lint
 
       - uses: actions/upload-artifact@v4
         if: matrix.platform == 'ubuntu-24.04'
