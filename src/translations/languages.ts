@@ -7,7 +7,7 @@ export const DEFAULT_LANGUAGE = {
 
 // Are you looking to add support for a language?
 // 1. Add the language information below
-// 2. Run bun run gen:translations
+// 2. Run npm run gen:translations
 // 3. Edit the generated file in src/translations/<language>.po
 // 4. Profit
 export const NON_DEFAULT_LANGUAGE = [
