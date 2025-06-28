@@ -39,12 +39,12 @@ msgstr "Обложка альбома"
 
 #: src/components/DropzoneImport.tsx:52
 msgid "{skippedItemsCount, plural, one {# invalid item ignored} other {# invalid items ignored}}"
-msgstr "{skippedItemsCount, plural, one {# некорректный объект пропущен} few {# некорректных объекта пропущено} many {# некорректных объектов пропущено}}"
+msgstr "Пропущен{skippedItemsCount, plural, one { # некорректный объект} few {ы # некорректных объекта} many {о # некорректных объектов}}"
 
 #. placeholder {0}: folders.length
 #: src/components/DropzoneImport.tsx:63
 msgid "{0, plural, one {# folder added to the library} other {# folders added to the library}}"
-msgstr "{0, plural, one {# папка добавлена в библиотеку} few {# папки добавлены в библиотеку} many {# папок добавлено в библиотеку}}"
+msgstr "В библиотеку добавлен{0, plural, one {а # папка} few {ы # папки} many {о # папок}}"
 
 #: src/components/DropzoneImport.tsx:101
 msgid "Add music to the library"
@@ -89,7 +89,7 @@ msgstr "как?"
 #. placeholder {0}: location.pathname
 #: src/components/GlobalErrors.tsx:49
 msgid "View not found ({0}). How did you get here?"
-msgstr "Вью не обнаружен ({0}). Как вы тут оказались?"
+msgstr "Представление не обнаружено ({0}). Как вы тут оказались?"
 
 #: src/components/GlobalErrors.tsx:61
 msgid "If it happens again, please <0>report an issue</0>"
@@ -159,7 +159,7 @@ msgstr "{0} трек(ов) добавлено в \"{1}\""
 
 #: src/components/TracksList.tsx:285
 msgid "{selectedCount, plural, one {# track selected} other {# tracks selected}}"
-msgstr "{selectedCount, plural, one {# трек выбран} few {# трека выбрано} many {# треков выбрано}}"
+msgstr "Выбран{selectedCount, plural, one { # трек} few {ы # трека} many {о # треков}}"
 
 #: src/components/TracksList.tsx:297
 msgid "Add to queue"
@@ -279,20 +279,20 @@ msgstr "Удалить из плейлиста"
 #: src/routes/playlists.$playlistID.tsx:92
 #: src/routes/playlists.$playlistID.tsx:121
 msgid "Empty playlist"
-msgstr "Очистить плейлист"
+msgstr "Пустой плейлист"
 
 #: src/routes/playlists.$playlistID.tsx:95
 #: src/routes/playlists.$playlistID.tsx:124
 msgid "You can add tracks from the <0>library view</0>"
-msgstr "Вы можете добавить треки из <0>библиотечного режима</0>"
+msgstr "Вы можете добавить треки из <0>библиотечного представления</0>"
 
 #: src/routes/playlists.tsx:92
 msgid "Delete"
-msgstr "Стереть"
+msgstr "Удалить"
 
 #: src/routes/playlists.tsx:106
 msgid "Duplicate"
-msgstr "Продублировать"
+msgstr "Создать копию"
 
 #: src/routes/playlists.tsx:114
 msgid "Export"
@@ -372,7 +372,7 @@ msgstr "Аудио вывод"
 
 #: src/routes/settings.audio.tsx:43
 msgid "Advanced: set a custom audio output device."
-msgstr "Продвинутый режим: выбрать специфическое устройство вывода звука."
+msgstr "Для продвинутых: выбрать специфическое устройство вывода звука."
 
 #: src/routes/settings.audio.tsx:51
 msgid "Follow playing track"
@@ -485,7 +485,7 @@ msgstr "Плотность треков"
 #: src/routes/settings.ui.tsx:65
 #: src/routes/settings.ui.tsx:85
 msgid "Change the default view when starting the application"
-msgstr "Изменить вид по умолчанию при запуске приложения"
+msgstr "Изменить представление по умолчанию при запуске приложения"
 
 #: src/routes/settings.ui.tsx:74
 msgid "Normal (default)"
@@ -497,7 +497,7 @@ msgstr "Компатная"
 
 #: src/routes/settings.ui.tsx:83
 msgid "Default view"
-msgstr "Вид по умолчанию"
+msgstr "Представление по умолчанию"
 
 #: src/routes/settings.ui.tsx:93
 msgid "Library (default)"
@@ -530,7 +530,7 @@ msgstr "Тёмная"
 #. placeholder {0}: track.title
 #: src/routes/tracks.$trackID.tsx:83
 msgid "Edit \"{0}\""
-msgstr "Изменить \"{0}\""
+msgstr "Редактировать \"{0}\""
 
 #: src/routes/tracks.$trackID.tsx:109
 msgid "Album Artist"
@@ -575,7 +575,7 @@ msgstr "Сохранить"
 
 #: src/routes/tracks.$trackID.tsx:254
 msgid "Clicking \"save\" will only update the library data, but will not save it to the original file."
-msgstr "После нажатия \"сохранить\" обновятся лишь данные библиотеки, но в исходный файл не будет внесено изменений."
+msgstr "После нажатия \"Сохранить\" обновятся лишь данные библиотеки, но в исходный файл не будет внесено изменений."
 
 #: src/stores/PlaylistsAPI.ts:38
 msgid "The playlist \"{name}\" was created"
