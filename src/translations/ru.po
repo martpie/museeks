@@ -487,6 +487,9 @@ msgid "Tracks density"
 msgstr "Плотность треков"
 
 #: src/routes/settings.ui.tsx:65
+msgid "Change the tracks spacing"
+msgstr "Изменить расстояние между треками"
+
 #: src/routes/settings.ui.tsx:85
 msgid "Change the default view when starting the application"
 msgstr "Изменить представление по умолчанию при запуске приложения"

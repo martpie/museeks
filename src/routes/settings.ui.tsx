@@ -62,7 +62,7 @@ function ViewSettingsUI() {
       <Setting.Section>
         <Setting.Select
           label={t`Tracks density`}
-          description={t`Change the default view when starting the application`}
+          description={t`Change the tracks spacing`}
           value={config.track_view_density}
           onChange={(e) =>
             SettingsAPI.setTracksDensity(
