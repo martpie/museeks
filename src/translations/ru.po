@@ -287,6 +287,10 @@ msgid "You can add tracks from the <0>library view</0>"
 msgstr "Вы можете добавить треки из <0>библиотечного представления</0>"
 
 #: src/routes/playlists.tsx:92
+msgid "Rename"
+msgstr "Переименовать"
+
+#: src/routes/playlists.tsx:92
 msgid "Delete"
 msgstr "Удалить"
 

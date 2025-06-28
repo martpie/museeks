@@ -1,3 +1,4 @@
+import { useLingui } from '@lingui/react/macro';
 import {
   Link,
   type RegisteredRouter,
@@ -31,6 +32,7 @@ export default function SideNavLink<TRouter extends RegisteredRouter, TOptions>(
   props: Props<TRouter, TOptions>,
 ): React.ReactNode;
 export default function SideNavLink(props: Props): React.ReactNode {
+  const { t } = useLingui();
   const { label, id, onRename, contextMenuItems, linkOptions } = props;
   const [renamed, setRenamed] = useState(false);
 
@@ -54,7 +56,7 @@ export default function SideNavLink(props: Props): React.ReactNode {
 
       const items = await Promise.all([
         MenuItem.new({
-          text: 'Rename',
+          text: t`Rename`,
           action: () => {
             setRenamed(true);
           },
