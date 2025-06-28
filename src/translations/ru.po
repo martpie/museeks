@@ -131,6 +131,10 @@ msgstr "показать ещё"
 msgid "search..."
 msgstr "поиск..."
 
+#: src/components/SideNavLink.tsx:59
+msgid "Rename"
+msgstr "Переименовать"
+
 #. placeholder {0}: tracks.length
 #. placeholder {0}: props.count
 #: src/components/TrackListStatus.tsx:11
@@ -204,7 +208,8 @@ msgid "Remove tracks"
 msgstr "Удалить треки"
 
 #: src/components/TracksList.tsx:376
-#: src/routes/settings.library.tsx:141
+#: src/routes/settings.library.tsx:97
+#: src/routes/settings.library.tsx:143
 #: src/routes/tracks.$trackID.tsx:246
 msgid "Cancel"
 msgstr "Отмена"
@@ -285,10 +290,6 @@ msgstr "Пустой плейлист"
 #: src/routes/playlists.$playlistID.tsx:124
 msgid "You can add tracks from the <0>library view</0>"
 msgstr "Вы можете добавить треки из <0>библиотечного представления</0>"
-
-#: src/routes/playlists.tsx:92
-msgid "Rename"
-msgstr "Переименовать"
 
 #: src/routes/playlists.tsx:92
 msgid "Delete"
@@ -410,47 +411,48 @@ msgstr "Вся информация о треках будет обновлен�
 msgid "Refresh all tracks?"
 msgstr "Обновить все треки?"
 
-#: src/routes/settings.library.tsx:104
-msgid "Force the refresh of all tracks tags"
-msgstr "Принудительное обновление тэгов всех треков"
-
-#: src/routes/settings.library.tsx:106
+#: src/routes/settings.library.tsx:98
+#: src/routes/settings.library.tsx:108
 msgid "Refresh"
 msgstr "Обновить"
 
-#: src/routes/settings.library.tsx:110
+#: src/routes/settings.library.tsx:106
+msgid "Force the refresh of all tracks tags"
+msgstr "Принудительное обновление тэгов всех треков"
+
+#: src/routes/settings.library.tsx:112
 msgid "<0>.m3u</0> files will also be imported as playlists."
 msgstr "Файлы <0>.m3u</0> будут дополнительно импортированы как плейлисты."
 
-#: src/routes/settings.library.tsx:118
+#: src/routes/settings.library.tsx:120
 msgid "Automatically refresh library on startup"
 msgstr "Автоматически обновлять библиотеку при запуске"
 
-#: src/routes/settings.library.tsx:125
+#: src/routes/settings.library.tsx:127
 msgid "Danger zone"
 msgstr "Опасная зона"
 
-#: src/routes/settings.library.tsx:128
+#: src/routes/settings.library.tsx:130
 msgid "Delete all tracks and playlists from Museeks."
 msgstr "Удалить все треки и плейлисты из Museeks."
 
-#: src/routes/settings.library.tsx:133
+#: src/routes/settings.library.tsx:135
 msgid "Fully reset the library"
 msgstr "Полный сброс библиотеки"
 
-#: src/routes/settings.library.tsx:137
+#: src/routes/settings.library.tsx:139
 msgid "All your tracks and playlists will be deleted from Museeks."
 msgstr "Все ваши треки и плейлисты будут удалены из Museeks."
 
-#: src/routes/settings.library.tsx:139
+#: src/routes/settings.library.tsx:141
 msgid "Reset library?"
 msgstr "Сбросить библиотеку?"
 
-#: src/routes/settings.library.tsx:142
+#: src/routes/settings.library.tsx:144
 msgid "Reset"
 msgstr "Сбросить"
 
-#: src/routes/settings.library.tsx:151
+#: src/routes/settings.library.tsx:153
 msgid "Reset library"
 msgstr "Сбросить библиотеку"
 
@@ -490,10 +492,6 @@ msgstr "Плотность треков"
 msgid "Change the tracks spacing"
 msgstr "Изменить расстояние между треками"
 
-#: src/routes/settings.ui.tsx:85
-msgid "Change the default view when starting the application"
-msgstr "Изменить представление по умолчанию при запуске приложения"
-
 #: src/routes/settings.ui.tsx:74
 msgid "Normal (default)"
 msgstr "Номральная (по умолчанию)"
@@ -505,6 +503,10 @@ msgstr "Компатная"
 #: src/routes/settings.ui.tsx:83
 msgid "Default view"
 msgstr "Представление по умолчанию"
+
+#: src/routes/settings.ui.tsx:85
+msgid "Change the default view when starting the application"
+msgstr "Изменить представление по умолчанию при запуске приложения"
 
 #: src/routes/settings.ui.tsx:93
 msgid "Library (default)"
