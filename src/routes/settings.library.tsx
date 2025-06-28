@@ -94,6 +94,8 @@ function ViewSettingsLibrary() {
                 {
                   title: t`Refresh all tracks?`,
                   kind: 'warning',
+                  cancelLabel: t`Cancel`,
+                  okLabel: t`Refresh`,
                 },
               );
 
