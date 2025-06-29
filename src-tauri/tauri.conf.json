@@ -4,9 +4,9 @@
   "version": "0.22.2",
   "identifier": "io.museeks.app",
   "build": {
-    "beforeDevCommand": "bun run dev",
+    "beforeDevCommand": "yarn run dev",
     "devUrl": "http://localhost:1420",
-    "beforeBuildCommand": "bun run build",
+    "beforeBuildCommand": "yarn run build",
     "frontendDist": "../dist"
   },
   "app": {

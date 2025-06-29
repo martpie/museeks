@@ -29,3 +29,5 @@ src-tauri/gen
 .flatpak-builder
 release
 !src-tauri/release
+.yarn/unplugged
+.yarn/build-state.yml

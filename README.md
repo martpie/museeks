@@ -86,7 +86,7 @@ Museeks is built upon:
 So you will need to install the following dependencies:
 
 - [Tauri requirements](https://v2.tauri.app/start/prerequisites/) for `rust`
-- [`bun`](https://bun.sh)
+- [`Node.js`](https://nodejs.org)
 
 Then you can:
 
@@ -96,15 +96,15 @@ Then you can:
 
 ### Development Mode
 
-- `bun install --frozen-lockfile`
-- `bun tauri dev`
+- `yarn install --frozen-lockfile`
+- `yarn run tauri dev`
 
 This will launch Museeks in dev mode. Hot reload will work out-of-the-box, so when you update a `.js` file, the UI will automatically update, and when you edit a `.rs` file, Museeks will automatically relaunch.
 
 ### Package binaries
 
-- `bun install --frozen-lockfile`
-- `bun tauri build`
+- `yarn install --frozen-lockfile`
+- `yarn tauri build`
 
 Tauri does not support x-platform binaries, so the command will only generate binaries for your current platform (macOS, Linux or Windows).
 
@@ -113,7 +113,7 @@ Tauri does not support x-platform binaries, so the command will only generate bi
 - follow the steps from the "Setup" and "Development Mode" sections
 - go to `src/translations/languages.ts`
 - add your language information to the list
-- run `bun run gen:translations`
+- run `yarn run gen:translations`
 - this will create a new file `<your_language_code>.po` in the same folder
 - fill the translations from the created `.po` file
 - open a Pull Request

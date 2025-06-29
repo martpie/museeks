@@ -78,7 +78,9 @@
       "!**/dist",
       "!**/src/generated/**/*.ts",
       "!**/src-tauri/target/**/*",
-      "!**/src-tauri/gen/**/*"
+      "!**/src-tauri/gen/**/*",
+      "!.pnp.cjs",
+      "!.pnp.loader.mjs"
     ]
   }
 }
