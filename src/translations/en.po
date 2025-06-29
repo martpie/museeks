@@ -46,11 +46,11 @@ msgstr "{skippedItemsCount, plural, one {# invalid item ignored} other {# invali
 msgid "{0, plural, one {# folder added to the library} other {# folders added to the library}}"
 msgstr "{0, plural, one {# folder added to the library} other {# folders added to the library}}"
 
-#: src/components/DropzoneImport.tsx:101
+#: src/components/DropzoneImport.tsx:100
 msgid "Add music to the library"
 msgstr "Add music to the library"
 
-#: src/components/DropzoneImport.tsx:102
+#: src/components/DropzoneImport.tsx:101
 msgid "Drop folders anywhere"
 msgstr "Drop folders anywhere"
 
@@ -65,7 +65,7 @@ msgid "Artists"
 msgstr "Artists"
 
 #: src/components/Footer.tsx:39
-#: src/routes/playlists.tsx:174
+#: src/routes/playlists.tsx:169
 #: src/routes/settings.ui.tsx:96
 msgid "Playlists"
 msgstr "Playlists"
@@ -295,27 +295,27 @@ msgstr "You can add tracks from the <0>library view</0>"
 msgid "Delete"
 msgstr "Delete"
 
-#: src/routes/playlists.tsx:106
+#: src/routes/playlists.tsx:101
 msgid "Duplicate"
 msgstr "Duplicate"
 
-#: src/routes/playlists.tsx:114
+#: src/routes/playlists.tsx:109
 msgid "Export"
 msgstr "Export"
 
-#: src/routes/playlists.tsx:144
+#: src/routes/playlists.tsx:139
 msgid "You haven't created any playlist yet"
 msgstr "You haven't created any playlist yet"
 
-#: src/routes/playlists.tsx:153
+#: src/routes/playlists.tsx:148
 msgid "create one now"
 msgstr "create one now"
 
-#: src/routes/playlists.tsx:162
+#: src/routes/playlists.tsx:157
 msgid "No playlist selected"
 msgstr "No playlist selected"
 
-#: src/routes/playlists.tsx:179
+#: src/routes/playlists.tsx:174
 msgid "New Playlist"
 msgstr "New Playlist"
 
