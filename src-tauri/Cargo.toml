@@ -13,7 +13,7 @@ edition = "2024"
 tauri-build = { version = "2.3.0", features = ["codegen"] }
 
 [dependencies]
-tauri = { version = "2.6.0", features = [
+tauri = { version = "2.6.2", features = [
     "protocol-asset",
     "image-png",
     "devtools",
@@ -35,7 +35,7 @@ base64 = "0.22.1"
 dirs = "6.0.0"
 futures = "0.3.31"
 home-config = { version = "0.6.0", features = ["toml"] }
-indexmap = "2.9.0"
+indexmap = "2.10.0"
 itertools = "0.14.0"
 log = "0.4.27"
 lofty = "0.22.4"
