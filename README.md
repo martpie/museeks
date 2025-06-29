@@ -118,4 +118,15 @@ Tauri does not support x-platform binaries, so the command will only generate bi
 - fill the translations from the created `.po` file
 - open a Pull Request
 
+<p>
+  <details>
+    <summary>
+      Pluralization Help
+    </summary>
+
+  - [Pluralization guide](https://lingui.dev/guides/plurals)
+  - [Pluralization reference](https://www.unicode.org/cldr/charts/42/supplemental/language_plural_rules.html)
+  </details>
+</p>
+
 ps: _translations are in an early stage. If your language has "special" characteristics, like right-to-left, specific locales instead of languages, or else, Museeks might not be ready for it yet. Please open an issue so we can discuss it :)_
