@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "PO-Revision-Date: \n"
-"Last-Translator: \n"
+"Last-Translator: Pierre de la Martinière\n"
 "Language-Team: \n"
 "Plural-Forms: \n"
 
@@ -289,7 +289,7 @@ msgstr "Playlist vide"
 #: src/routes/playlists.$playlistID.tsx:95
 #: src/routes/playlists.$playlistID.tsx:124
 msgid "You can add tracks from the <0>library view</0>"
-msgstr "Vous pouvez ajouter des pistes depuis la <0>vue bibliothèque</0>"
+msgstr "Vous pouvez ajouter des pistes depuis la <0>bibliothèque</0>"
 
 #: src/routes/playlists.tsx:92
 msgid "Delete"
