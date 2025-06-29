@@ -133,7 +133,7 @@ msgstr "rechercher..."
 
 #: src/components/SideNavLink.tsx:59
 msgid "Rename"
-msgstr ""
+msgstr "Renommer"
 
 #. placeholder {0}: tracks.length
 #. placeholder {0}: props.count
@@ -490,7 +490,7 @@ msgstr "Densité visuelle des pistes"
 
 #: src/routes/settings.ui.tsx:65
 msgid "Change the tracks spacing"
-msgstr ""
+msgstr "Adapter l'espace entre les pistes"
 
 #: src/routes/settings.ui.tsx:74
 msgid "Normal (default)"
