@@ -70,7 +70,7 @@ export default function SideNavLink(props: Props): React.ReactNode {
 
       await menu.popup().catch(logAndNotifyError);
     },
-    [onRename, contextMenuItems],
+    [onRename, contextMenuItems, t],
   );
 
   const keyDown: React.KeyboardEventHandler<HTMLInputElement> = useCallback(
