@@ -12,16 +12,18 @@ export default function useInvalidate() {
   const queryClient = useQueryClient();
   const router = useRouter();
 
-  return useCallback(() => {
+  return useCallback(async () => {
     //  Need to call mutate with undefined to make sure stale-while-revalidate is
     // reset (otherwise, we'd see a "no tracks in the library" instead of "loading")
-    queryClient.invalidateQueries({
+    const queryInvalidator = queryClient.invalidateQueries({
       exact: true,
       queryKey: ['tracks', 'footer'],
     });
 
     // Reload the route data
-    router.invalidate();
+    const routerInvalidator = router.invalidate();
+
+    return Promise.allSettled([queryInvalidator, routerInvalidator]);
   }, [queryClient, router]);
 }
 
@@ -39,7 +41,7 @@ export function useInvalidateCallback<T extends Callback>(callback: T): T {
   return useCallback(
     async (...args: Parameters<T>) => {
       await callback(...args);
-      invalidate();
+      await invalidate();
     },
     [callback, invalidate],
   ) as T;

@@ -62,7 +62,7 @@ function ViewPlaylists() {
     const playlist = await PlaylistsAPI.create(t`New playlist`, [], false);
 
     if (playlist) {
-      invalidate();
+      await invalidate();
       navigate({
         to: '/playlists/$playlistID',
         params: { playlistID: playlist.id },
@@ -73,7 +73,7 @@ function ViewPlaylists() {
   const renamePlaylist = useCallback(
     async (playlistID: string, name: string) => {
       await PlaylistsAPI.rename(playlistID, name);
-      invalidate();
+      await invalidate();
     },
     [invalidate],
   );
@@ -93,7 +93,7 @@ function ViewPlaylists() {
           action: async () => {
             await PlaylistsAPI.remove(playlist.id);
 
-            invalidate();
+            await invalidate();
           },
         },
         { item: 'Separator' },
@@ -101,7 +101,7 @@ function ViewPlaylists() {
           text: t`Duplicate`,
           action: async () => {
             await PlaylistsAPI.duplicate(playlist.id);
-            invalidate();
+            await invalidate();
           },
         },
         { item: 'Separator' },
@@ -127,7 +127,7 @@ function ViewPlaylists() {
         />
       );
     });
-  }, [playlists, renamePlaylist, invalidate, navigate, childPlaylistMatch, t]);
+  }, [playlists, renamePlaylist, invalidate, t]);
 
   // Empty and List states
   let playlistContent;

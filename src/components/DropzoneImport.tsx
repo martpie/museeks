@@ -68,8 +68,7 @@ export default function DropzoneImport() {
               toastsAPI.add('success', message);
 
               await libraryAPI.scan();
-
-              invalidate();
+              await invalidate();
             }
           } else {
             setIsShown(false);

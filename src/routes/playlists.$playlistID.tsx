@@ -64,7 +64,7 @@ function ViewPlaylistDetails() {
     async (tracks: Track[]) => {
       if (playlistID != null) {
         await PlaylistsAPI.reorderTracks(playlistID, tracks);
-        invalidate();
+        await invalidate();
       }
     },
     [invalidate, playlistID],
@@ -79,7 +79,7 @@ function ViewPlaylistDetails() {
             playlistID,
             Array.from(selectedTracks),
           );
-          invalidate();
+          await invalidate();
         },
       },
     ];

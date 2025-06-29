@@ -244,7 +244,7 @@ export default function TracksList(props: Props) {
               t`New playlist`,
               Array.from(selectedTracks),
             );
-            invalidate();
+            await invalidate();
           },
         }),
         PredefinedMenuItem.new({
@@ -380,7 +380,7 @@ export default function TracksList(props: Props) {
 
               if (confirm) {
                 await libraryAPI.remove(Array.from(selectedTracks));
-                invalidate();
+                await invalidate();
               }
             },
           }),

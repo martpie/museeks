@@ -62,7 +62,7 @@ function ViewTrackDetails() {
     async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       await libraryAPI.updateTrackMetadata(track.id, formData);
-      invalidate();
+      await invalidate();
       router.history.back();
     },
     [track, formData, router, libraryAPI, invalidate],
