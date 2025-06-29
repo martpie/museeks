@@ -17,6 +17,12 @@ export const NON_DEFAULT_LANGUAGE = [
     code: 'fr',
     contributors: ['Pierre de la Martinière'],
   },
+  {
+    label: 'Русский',
+    englishLabel: 'Russian',
+    code: 'ru',
+    contributors: ['ildar nizamov'],
+  },
 ];
 
 export const ALL_LANGUAGES = [DEFAULT_LANGUAGE, ...NON_DEFAULT_LANGUAGE];
