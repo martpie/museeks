@@ -93,11 +93,6 @@ function ViewPlaylists() {
           action: async () => {
             await PlaylistsAPI.remove(playlist.id);
 
-            // Redirect to /playlists if we are deleting the current playlist
-            if (childPlaylistMatch?.params.playlistID === playlist.id) {
-              navigate({ to: '/playlists' });
-            }
-
             invalidate();
           },
         },
