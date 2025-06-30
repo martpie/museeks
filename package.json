@@ -2,7 +2,7 @@
   "name": "museeks",
   "productName": "Museeks",
   "version": "0.22.3",
-  "description": "A simple, clean and cross-platform music player.",
+  "description": "A simple, clean, and cross-platform music player.",
   "type": "module",
   "repository": {
     "type": "git",

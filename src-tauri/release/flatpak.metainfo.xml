@@ -4,7 +4,7 @@
   <launchable type="desktop-id">io.museeks.app.desktop</launchable>
 
   <name>Museeks</name>
-  <summary>A simple, clean and cross-platform music player</summary>
+  <summary>A simple, clean, and cross-platform music player</summary>
 
   <developer id="io.martpie">
     <name>Pierre de la Martinière</name>

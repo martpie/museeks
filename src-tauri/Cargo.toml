@@ -3,7 +3,7 @@
 [package]
 name = "museeks"
 version = "0.22.3"
-description = "A simple, clean and cross-platform music player"
+description = "A simple, clean, and cross-platform music player"
 authors = ["Pierre de la Martinière <pierre.de.la.martiniere@gmail.com>"]
 license = "MIT"
 repository = "https://github.com/martpie/museeks"
