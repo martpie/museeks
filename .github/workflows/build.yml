@@ -3,6 +3,9 @@ name: build
 on:
   push:
     branches:
+      - 'master'
+  pull_request:
+    branches:
       - '**'
   workflow_dispatch:
 
@@ -66,10 +69,6 @@ jobs:
   # https://docs.github.com/en/free-pro-team@latest/actions/reference/specifications-for-github-hosted-runners
 
   binaries:
-    if: |
-      startsWith(github.ref, 'refs/heads/release') ||
-      (github.event_name == 'pull_request' && github.base_ref == 'release')
-
     needs: qa
 
     permissions:
