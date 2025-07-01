@@ -1,7 +1,9 @@
 use indexmap::IndexMap;
+use itertools::Itertools;
 use serde_json::json;
 use sqlx::SqliteConnection;
 use std::path::PathBuf;
+use std::u32;
 
 use super::error::AnyResult;
 use super::playlist::Playlist;
@@ -213,13 +215,27 @@ impl DB {
             groups.entry(item.album.clone()).or_default().push(item);
         }
 
-        let track_groups = groups
+        let mut track_groups = groups
             .into_iter()
             .map(|(album, tracks)| TrackGroup {
                 label: album,
+                genres: tracks
+                    .iter()
+                    .flat_map(|s| &s.genres)
+                    .cloned()
+                    .unique()
+                    .collect(),
+                duration: tracks.iter().map(|t| t.duration).sum(),
+                year: tracks.first().and_then(|t| t.year),
                 tracks,
             })
-            .collect();
+            .collect::<Vec<TrackGroup>>();
+
+        // Sort by group year, we only use the first track's year and different
+        // tracks can have different years. If no year is provided, put the group
+        // at the end, as it's probably a library management issue, and we want
+        // clean lists!
+        track_groups.sort_by_key(|group| group.year.unwrap_or(u32::MAX));
 
         Ok(track_groups)
     }
