@@ -35,6 +35,6 @@ export type Track = { id: string, path: string, title: string, album: string, al
  * Represents a group of tracks, grouped by "something", lib artist name, or
  * album name
  */
-export type TrackGroup = { label: string, tracks: Array<Track>, };
+export type TrackGroup = { label: string, genres: Array<string>, duration: number, year: number | null, tracks: Array<Track>, };
 
 export type TrackViewDensity = "normal" | "compact";

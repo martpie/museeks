@@ -1,5 +1,5 @@
 import { Plural } from '@lingui/react/macro';
-import { useImperativeHandle, useMemo, useRef } from 'react';
+import { useImperativeHandle, useRef } from 'react';
 
 import type { TrackGroup } from '../generated/typings';
 import useAllTracks from '../hooks/useAllTracks';
@@ -78,42 +78,28 @@ function TrackListGroup(props: TracksListGroupProps) {
     onContextMenu,
     onPlaybackStart,
   } = props;
-  const { tracks, label } = props.tracksGroup;
+  const { tracks, label, year, genres, duration } = props.tracksGroup;
 
   const trackPlayingID = usePlayingTrackID();
-
-  const genres = useMemo(() => {
-    const aggregator = new Set<string>();
-    tracks.forEach((track) => {
-      track.genres.forEach(aggregator.add, aggregator);
-    });
-    return Array.from(aggregator);
-  }, [tracks]);
-
-  const duration = useMemo(() => {
-    return tracks.reduce((sum, track) => sum + track.duration, 0);
-  }, [tracks]);
 
   if (tracks.length === 0) {
     return null;
   }
 
-  const firstTrack = tracks[0];
-
   return (
     <div className={styles.tracksGroup}>
       <div className={styles.tracksGroupSide}>
         {/** Instead of the first one, maybe get the first track within the album to hold a cover? */}
-        <Cover track={firstTrack} iconSize={36} noBorder />
+        <Cover track={tracks[0]} iconSize={36} noBorder />
         <h3 className={styles.tracksGroupLabel}>{label}</h3>
         <div className={styles.tracksGroupMetadata}>
           <div>
-            <Plural value={tracks.length} one="# track" other="# tracks" />,{' '}
-            {parseDuration(duration)}
+            {year ? <span>{year} - </span> : null}
+            {genres.join(', ')}
           </div>
           <div>
-            {firstTrack.year ? <span>{firstTrack.year} - </span> : null}
-            {genres.join(', ')}
+            <Plural value={tracks.length} one="# track" other="# tracks" />,{' '}
+            {parseDuration(duration)}
           </div>
         </div>
       </div>
