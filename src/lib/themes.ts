@@ -1,5 +1,3 @@
-import { t } from '@lingui/core/macro';
-
 import darkTheme from '../themes/dark.json' with { type: 'json' };
 import lightTheme from '../themes/light.json' with { type: 'json' };
 // IMPROVE ME: scan the directory for all json files instead
@@ -25,18 +23,4 @@ export function getTheme(themeID: string): Theme {
   }
 
   return theme;
-}
-
-/**
- * Get the theme name in the current language
- */
-export function getTranslatedThemeName(themeName: string) {
-  switch (themeName) {
-    case 'Light':
-      return t`Light`;
-    case 'Dark':
-      return t`Dark`;
-  }
-
-  return themeName;
 }
