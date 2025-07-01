@@ -1,11 +1,11 @@
-import { Trans, useLingui } from '@lingui/react/macro';
+import { type _t, Trans, useLingui } from '@lingui/react/macro';
 import { createFileRoute, useLoaderData } from '@tanstack/react-router';
 
 import * as Setting from '../components/Setting';
 import CheckboxSetting from '../components/SettingCheckbox';
 import type { Config, DefaultView } from '../generated/typings';
 import useInvalidate, { useInvalidateCallback } from '../hooks/useInvalidate';
-import { getTranslatedThemeName, themes } from '../lib/themes';
+import { themes } from '../lib/themes';
 import SettingsAPI from '../stores/SettingsAPI';
 import { ALL_LANGUAGES } from '../translations/languages';
 
@@ -34,7 +34,7 @@ function ViewSettingsUI() {
           {Object.values(themes).map((theme) => {
             return (
               <option key={theme._id} value={theme._id}>
-                {getTranslatedThemeName(theme.name)}
+                {getTranslatedThemeName(t, theme.name)}
               </option>
             );
           })}
@@ -118,4 +118,18 @@ function ViewSettingsUI() {
       </Setting.Section>
     </div>
   );
+}
+
+/**
+ * Get the theme name in the current language
+ */
+export function getTranslatedThemeName(t: typeof _t, themeName: string) {
+  switch (themeName) {
+    case 'Light':
+      return t`Light`;
+    case 'Dark':
+      return t`Dark`;
+  }
+
+  return themeName;
 }
