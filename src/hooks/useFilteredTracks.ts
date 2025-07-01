@@ -65,7 +65,7 @@ export function useFilteredTrackGroup(
       // sorting being a costly operation, do it after filtering, ignore it if not needed
       searchedGroups = searchedGroups.map((group) => {
         return {
-          label: group.label,
+          ...group,
           tracks: sortTracks(group.tracks, getSortOrder(sortBy), sortOrder),
         };
       });
