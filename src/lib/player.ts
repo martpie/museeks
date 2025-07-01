@@ -20,7 +20,7 @@ interface PlayerOptions {
  *     we merge player actions here?)
  */
 class Player {
-  private audio: HTMLAudioElement;
+  private readonly audio: HTMLAudioElement;
   private track: Track | null;
 
   constructor(options?: PlayerOptions) {
