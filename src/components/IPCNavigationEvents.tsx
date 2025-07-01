@@ -34,7 +34,7 @@ export default function IPCNavigationEvents() {
 
   // Listen to IPC events for navigation
   useEffect(() => {
-    const unlisteners = [
+    const unlistenerPromises = [
       // Shortcuts from the application menu
       getCurrentWindow().listen('GoToLibrary', () => {
         goToLibrary();
@@ -45,7 +45,7 @@ export default function IPCNavigationEvents() {
     ];
 
     return function cleanup() {
-      Promise.all(unlisteners).then((unlisteners) => {
+      Promise.all(unlistenerPromises).then((unlisteners) => {
         unlisteners.forEach((u) => {
           u();
         });

@@ -27,8 +27,8 @@ export default function AudioOutputSelect(props: Props) {
         //   audio: true,
         //   video: false,
         // });
-        const devices = await navigator.mediaDevices.enumerateDevices();
-        const audioDevices = devices.filter(
+        const allDevices = await navigator.mediaDevices.enumerateDevices();
+        const audioDevices = allDevices.filter(
           (device) => device.kind === 'audiooutput' && device.deviceId !== '',
         );
 
