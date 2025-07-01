@@ -12,7 +12,7 @@ import styles from './TracksList.module.css';
 
 /** ----------------------------------------------------------------------------
  * Group-based layout for TracksList:
- *  - Uses a Virtual List
+ *  - Does NOT use a virtual list (but it should)
  *  - Non-reorderable
  * -------------------------------------------------------------------------- */
 
@@ -98,17 +98,24 @@ function TrackListGroup(props: TracksListGroupProps) {
     return null;
   }
 
+  const firstTrack = tracks[0];
+
   return (
     <div className={styles.tracksGroup}>
-      <div className={styles.tracksGroupMetadata}>
+      <div className={styles.tracksGroupSide}>
         {/** Instead of the first one, maybe get the first track within the album to hold a cover? */}
-        <Cover track={tracks[0]} iconSize={36} noBorder />
+        <Cover track={firstTrack} iconSize={36} noBorder />
         <h3 className={styles.tracksGroupLabel}>{label}</h3>
-        <div className={styles.tracksGroupGenres}>
-          <Plural value={tracks.length} one="# track" other="# tracks" />,{' '}
-          {parseDuration(duration)}
+        <div className={styles.tracksGroupMetadata}>
+          <div>
+            <Plural value={tracks.length} one="# track" other="# tracks" />,{' '}
+            {parseDuration(duration)}
+          </div>
+          <div>
+            {firstTrack.year ? <span>{firstTrack.year} - </span> : null}
+            {genres.join(', ')}
+          </div>
         </div>
-        <div className={styles.tracksGroupGenres}>{genres.join(', ')}</div>
       </div>
       <div className={styles.tracksGroupContent}>
         {tracks.map((track, index) => {

@@ -32,12 +32,14 @@
   margin: 0;
 }
 
-.tracksGroupGenres {
+.tracksGroupMetadata {
   color: var(--text-muted);
-  /* text-transform: uppercase; */
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
-.tracksGroupMetadata {
+.tracksGroupSide {
   width: 160px;
   position: sticky;
   top: 16px;
