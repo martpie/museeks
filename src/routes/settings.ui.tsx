@@ -1,4 +1,5 @@
-import { type _t, Trans, useLingui } from '@lingui/react/macro';
+import { t as tMacro } from '@lingui/core/macro';
+import { Trans, useLingui } from '@lingui/react/macro';
 import { createFileRoute, useLoaderData } from '@tanstack/react-router';
 
 import * as Setting from '../components/Setting';
@@ -34,7 +35,7 @@ function ViewSettingsUI() {
           {Object.values(themes).map((theme) => {
             return (
               <option key={theme._id} value={theme._id}>
-                {getTranslatedThemeName(t, theme.name)}
+                {getTranslatedThemeName(theme.name)}
               </option>
             );
           })}
@@ -123,12 +124,12 @@ function ViewSettingsUI() {
 /**
  * Get the theme name in the current language
  */
-export function getTranslatedThemeName(t: typeof _t, themeName: string) {
+export function getTranslatedThemeName(themeName: string) {
   switch (themeName) {
     case 'Light':
-      return t`Light`;
+      return tMacro`Light`;
     case 'Dark':
-      return t`Dark`;
+      return tMacro`Dark`;
   }
 
   return themeName;
