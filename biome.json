@@ -41,12 +41,16 @@
         "noUselessEscapeInString": "error",
         "noUselessUndefined": "error",
         "noConstantBinaryExpression": "error",
+        "noTsIgnore": "error",
+        "noShadow": "error",
         "noSecrets": "off",
+        "noFloatingPromises": "off",
         "noExcessiveLinesPerFunction": "off",
         "noNoninteractiveElementInteractions": "off",
         "useForComponent": "off",
         "useExplicitType": "off",
-        "useExportsLast": "off"
+        "useExportsLast": "off",
+        "noUnresolvedImports": "off"
       },
       "complexity": {
         "noForEach": "off"

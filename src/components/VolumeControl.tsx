@@ -48,10 +48,10 @@ export default function VolumeControl() {
 
   // TODO: move to player actions
   const mute = useCallback(() => {
-    const muted = !player.isMuted();
+    const isMuted = !player.isMuted();
 
-    playerAPI.setMuted(muted);
-    setMuted(muted);
+    playerAPI.setMuted(isMuted);
+    setMuted(isMuted);
   }, [playerAPI]);
 
   const volumeClasses = cx(styles.volumeControl, {

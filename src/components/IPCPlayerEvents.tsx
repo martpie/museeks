@@ -11,7 +11,7 @@ function IPCPlayerEvents() {
   const playerAPI = usePlayerAPI();
 
   useEffect(() => {
-    const unlisteners = [
+    const unlistenerPromises = [
       listen('PlaybackPlay' satisfies IPCEvent, playerAPI.play),
       listen('PlaybackPause' satisfies IPCEvent, playerAPI.pause),
       listen('PlaybackPlayPause' satisfies IPCEvent, playerAPI.playPause),
@@ -29,7 +29,7 @@ function IPCPlayerEvents() {
     ];
 
     return function cleanup() {
-      Promise.all(unlisteners).then((unlisteners) => {
+      Promise.all(unlistenerPromises).then((unlisteners) => {
         unlisteners.forEach((u) => {
           u();
         });
