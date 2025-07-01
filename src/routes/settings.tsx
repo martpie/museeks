@@ -15,7 +15,7 @@ export const Route = createFileRoute('/settings')({
       throw redirect({ to: '/settings/library' });
     }
   },
-  loader: async function loader() {
+  async loader() {
     const [configContent, version, tauriVersion, appStorageDir] =
       await Promise.all([
         config.getAll(),
