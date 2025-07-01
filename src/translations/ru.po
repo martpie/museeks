@@ -138,7 +138,7 @@ msgstr "Переименовать"
 #. placeholder {0}: tracks.length
 #. placeholder {0}: props.count
 #: src/components/TrackListStatus.tsx:11
-#: src/components/TracksListGrouped.tsx:108
+#: src/components/TracksListGrouped.tsx:101
 msgid "{0, plural, one {# track} other {# tracks}}"
 msgstr "{0, plural, one {# трек} few {# трека} many {# треков}}"
 
@@ -528,11 +528,11 @@ msgstr "Блокировать режим сна"
 msgid "Prevent the computer from going into sleep mode when playing"
 msgstr "Предпятствовать переходу компьютера в режим сна во время проигрывания"
 
-#: src/routes/settings.ui.tsx:127
+#: src/routes/settings.ui.tsx:130
 msgid "Light"
 msgstr "Светлая"
 
-#: src/routes/settings.ui.tsx:129
+#: src/routes/settings.ui.tsx:132
 msgid "Dark"
 msgstr "Тёмная"
 

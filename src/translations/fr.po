@@ -138,7 +138,7 @@ msgstr "Renommer"
 #. placeholder {0}: tracks.length
 #. placeholder {0}: props.count
 #: src/components/TrackListStatus.tsx:11
-#: src/components/TracksListGrouped.tsx:108
+#: src/components/TracksListGrouped.tsx:101
 msgid "{0, plural, one {# track} other {# tracks}}"
 msgstr "{0, plural, one {# piste} other {# pistes}}"
 
@@ -528,11 +528,11 @@ msgstr "Bloqueur de mode veille"
 msgid "Prevent the computer from going into sleep mode when playing"
 msgstr "Empêcher l'ordinateur de passer en mode veille lors de la lecture"
 
-#: src/routes/settings.ui.tsx:127
+#: src/routes/settings.ui.tsx:130
 msgid "Light"
 msgstr "Clair"
 
-#: src/routes/settings.ui.tsx:129
+#: src/routes/settings.ui.tsx:132
 msgid "Dark"
 msgstr "Sombre"
 
