@@ -29,3 +29,18 @@
   flex-direction: column;
   overflow: auto;
 }
+
+.letter {
+  display: block;
+  padding: 8px 12px;
+  text-transform: uppercase;
+  font-weight: bolder;
+  position: sticky;
+  top: 0;
+  background-color: var(--sidebar-bg);
+  color: var(--text-muted);
+}
+
+* + .letter {
+  margin-top: 12px;
+}
