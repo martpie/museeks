@@ -80,10 +80,10 @@ export type QueueOrigin =
   | { type: 'artist'; artistID: string };
 
 /**
- * A common interface used by TracksList to be able to control custom children
+ * A common interface used by TrackList to be able to control custom children
  * layouts
  */
-export type TracksListVirtualizer = {
+export type TrackListVirtualizer = {
   scrollElement: HTMLDivElement | null;
   scrollToIndex: (index: number, options?: ScrollIntoViewOptions) => void;
 };

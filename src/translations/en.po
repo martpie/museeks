@@ -135,110 +135,110 @@ msgstr "search..."
 msgid "Rename"
 msgstr "Rename"
 
-#. placeholder {0}: tracks.length
-#. placeholder {0}: props.count
-#: src/components/TrackListStatus.tsx:11
-#: src/components/TracksListGrouped.tsx:101
-msgid "{0, plural, one {# track} other {# tracks}}"
-msgstr "{0, plural, one {# track} other {# tracks}}"
-
-#: src/components/TracksList.tsx:241
+#: src/components/TrackList.tsx:241
 msgid "Create new playlist..."
 msgstr "Create new playlist..."
 
-#: src/components/TracksList.tsx:244
+#: src/components/TrackList.tsx:244
 #: src/routes/playlists.tsx:62
 msgid "New playlist"
 msgstr "New playlist"
 
-#: src/components/TracksList.tsx:257
+#: src/components/TrackList.tsx:257
 msgid "No playlists"
 msgstr "No playlists"
 
 #. placeholder {0}: selectedTracks.size
 #. placeholder {1}: playlist.name
-#: src/components/TracksList.tsx:273
+#: src/components/TrackList.tsx:273
 msgid "{0} track(s) were added to \"{1}\""
 msgstr "{0} track(s) were added to \"{1}\""
 
-#: src/components/TracksList.tsx:285
+#: src/components/TrackList.tsx:285
 msgid "{selectedCount, plural, one {# track selected} other {# tracks selected}}"
 msgstr "{selectedCount, plural, one {# track selected} other {# tracks selected}}"
 
-#: src/components/TracksList.tsx:297
+#: src/components/TrackList.tsx:297
 msgid "Add to queue"
 msgstr "Add to queue"
 
-#: src/components/TracksList.tsx:303
+#: src/components/TrackList.tsx:303
 msgid "Play next"
 msgstr "Play next"
 
-#: src/components/TracksList.tsx:313
+#: src/components/TrackList.tsx:313
 msgid "Add to playlist"
 msgstr "Add to playlist"
 
-#: src/components/TracksList.tsx:323
+#: src/components/TrackList.tsx:323
 msgid "Search for \"{artist}\""
 msgstr "Search for \"{artist}\""
 
 #. placeholder {0}: track.album
-#: src/components/TracksList.tsx:330
+#: src/components/TrackList.tsx:330
 msgid "Search for \"{0}\""
 msgstr "Search for \"{0}\""
 
-#: src/components/TracksList.tsx:353
+#: src/components/TrackList.tsx:353
 msgid "Edit track"
 msgstr "Edit track"
 
-#: src/components/TracksList.tsx:363
+#: src/components/TrackList.tsx:363
 msgid "Show in file manager"
 msgstr "Show in file manager"
 
-#: src/components/TracksList.tsx:369
+#: src/components/TrackList.tsx:369
 msgid "Remove from library"
 msgstr "Remove from library"
 
 #. placeholder {0}: selectedTracks.size
-#: src/components/TracksList.tsx:372
+#: src/components/TrackList.tsx:372
 msgid "Are you sure you want to remove {0} track(s) from your library?"
 msgstr "Are you sure you want to remove {0} track(s) from your library?"
 
-#: src/components/TracksList.tsx:374
+#: src/components/TrackList.tsx:374
 msgid "Remove tracks"
 msgstr "Remove tracks"
 
-#: src/components/TracksList.tsx:376
+#: src/components/TrackList.tsx:376
 #: src/routes/settings.library.tsx:97
 #: src/routes/settings.library.tsx:143
 #: src/routes/tracks.$trackID.tsx:246
 msgid "Cancel"
 msgstr "Cancel"
 
-#: src/components/TracksList.tsx:377
+#: src/components/TrackList.tsx:377
 #: src/routes/settings.library.tsx:61
 msgid "Remove"
 msgstr "Remove"
 
-#: src/components/TracksListHeader.tsx:49
+#. placeholder {0}: props.count
+#. placeholder {0}: tracks.length
+#: src/components/TrackListGrouped.tsx:101
+#: src/components/TrackListStatus.tsx:11
+msgid "{0, plural, one {# track} other {# tracks}}"
+msgstr "{0, plural, one {# track} other {# tracks}}"
+
+#: src/components/TrackListHeader.tsx:46
 #: src/routes/tracks.$trackID.tsx:87
 msgid "Title"
 msgstr "Title"
 
-#: src/components/TracksListHeader.tsx:55
+#: src/components/TrackListHeader.tsx:52
 #: src/routes/tracks.$trackID.tsx:230
 msgid "Duration"
 msgstr "Duration"
 
-#: src/components/TracksListHeader.tsx:61
+#: src/components/TrackListHeader.tsx:58
 msgid "Artist"
 msgstr "Artist"
 
-#: src/components/TracksListHeader.tsx:67
+#: src/components/TrackListHeader.tsx:64
 #: src/routes/tracks.$trackID.tsx:98
 msgid "Album"
 msgstr "Album"
 
-#: src/components/TracksListHeader.tsx:73
+#: src/components/TrackListHeader.tsx:70
 #: src/routes/tracks.$trackID.tsx:138
 msgid "Genre"
 msgstr "Genre"

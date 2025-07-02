@@ -5,19 +5,19 @@ import type { TrackGroup } from '../generated/typings';
 import useAllTracks from '../hooks/useAllTracks';
 import { parseDuration } from '../hooks/useFormattedDuration';
 import usePlayingTrackID from '../hooks/usePlayingTrackID';
-import type { TracksListVirtualizer } from '../types/museeks';
+import type { TrackListVirtualizer } from '../types/museeks';
 import Cover from './Cover';
+import styles from './TrackList.module.css';
 import TrackRow, { type TrackRowEvents } from './TrackRow';
-import styles from './TracksList.module.css';
 
 /** ----------------------------------------------------------------------------
- * Group-based layout for TracksList:
+ * Group-based layout for TrackList:
  *  - Does NOT use a virtual list (but it should)
  *  - Non-reorderable
  * -------------------------------------------------------------------------- */
 
 type Props = {
-  ref: React.RefObject<TracksListVirtualizer | null>;
+  ref: React.RefObject<TrackListVirtualizer | null>;
   trackGroups: TrackGroup[];
   selectedTracks: Set<string>;
   initialOffset: number;
@@ -44,11 +44,11 @@ export default function TrackListGroupedLayout(props: Props) {
             ?.scrollIntoView({ block: 'nearest' });
         }
       },
-    } satisfies TracksListVirtualizer;
+    } satisfies TrackListVirtualizer;
   }, [tracks]);
 
   return (
-    <div ref={innerScrollableRef} className={styles.tracksListScroller}>
+    <div ref={innerScrollableRef} className={styles.trackListScroller}>
       {trackGroups.map((tracksGroup) => {
         return (
           <TrackListGroup
@@ -64,13 +64,13 @@ export default function TrackListGroupedLayout(props: Props) {
   );
 }
 
-type TracksListGroupProps = {
+type TrackListGroupProps = {
   tracksGroup: TrackGroup;
   selectedTracks: Set<string>;
   rowHeight: number;
 } & TrackRowEvents;
 
-function TrackListGroup(props: TracksListGroupProps) {
+function TrackListGroup(props: TrackListGroupProps) {
   const {
     selectedTracks,
     rowHeight,

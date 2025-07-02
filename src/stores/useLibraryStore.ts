@@ -156,7 +156,7 @@ const useLibraryStore = createLibraryStore<LibraryState>((set, get) => ({
       await database.removeTracks(tracksIDs);
       // That would be great to remove those ids from all the playlists, but it's not easy
       // and should not cause strange behaviors, all PR for that would be really appreciated
-      // TODO: see if it's possible to remove the IDs from the selected state of TracksList as it "could" lead to strange behaviors
+      // TODO: see if it's possible to remove the IDs from the selected state of TrackList as it "could" lead to strange behaviors
     },
 
     /**
