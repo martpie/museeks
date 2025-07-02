@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { useMemo } from 'react';
 
-import TracksList from '../components/TracksList';
+import TrackList from '../components/TrackList';
 import View from '../elements/View';
 import * as ViewMessage from '../elements/ViewMessage';
 import useFilteredTracks from '../hooks/useFilteredTracks';
@@ -116,7 +116,7 @@ function ViewLibrary() {
 
     // All good !
     return (
-      <TracksList
+      <TrackList
         layout="default"
         data={filteredTracks}
         queueOrigin={QUEUE_ORIGIN}

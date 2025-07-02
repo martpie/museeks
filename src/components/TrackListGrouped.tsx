@@ -1,23 +1,23 @@
 import { Plural } from '@lingui/react/macro';
-import { useImperativeHandle, useMemo, useRef } from 'react';
+import { useImperativeHandle, useRef } from 'react';
 
 import type { TrackGroup } from '../generated/typings';
 import useAllTracks from '../hooks/useAllTracks';
 import { parseDuration } from '../hooks/useFormattedDuration';
 import usePlayingTrackID from '../hooks/usePlayingTrackID';
-import type { TracksListVirtualizer } from '../types/museeks';
+import type { TrackListVirtualizer } from '../types/museeks';
 import Cover from './Cover';
+import styles from './TrackList.module.css';
 import TrackRow, { type TrackRowEvents } from './TrackRow';
-import styles from './TracksList.module.css';
 
 /** ----------------------------------------------------------------------------
- * Group-based layout for TracksList:
- *  - Uses a Virtual List
+ * Group-based layout for TrackList:
+ *  - Does NOT use a virtual list (but it should)
  *  - Non-reorderable
  * -------------------------------------------------------------------------- */
 
 type Props = {
-  ref: React.RefObject<TracksListVirtualizer | null>;
+  ref: React.RefObject<TrackListVirtualizer | null>;
   trackGroups: TrackGroup[];
   selectedTracks: Set<string>;
   initialOffset: number;
@@ -44,11 +44,11 @@ export default function TrackListGroupedLayout(props: Props) {
             ?.scrollIntoView({ block: 'nearest' });
         }
       },
-    } satisfies TracksListVirtualizer;
+    } satisfies TrackListVirtualizer;
   }, [tracks]);
 
   return (
-    <div ref={innerScrollableRef} className={styles.tracksListScroller}>
+    <div ref={innerScrollableRef} className={styles.trackListScroller}>
       {trackGroups.map((tracksGroup) => {
         return (
           <TrackListGroup
@@ -64,13 +64,13 @@ export default function TrackListGroupedLayout(props: Props) {
   );
 }
 
-type TracksListGroupProps = {
+type TrackListGroupProps = {
   tracksGroup: TrackGroup;
   selectedTracks: Set<string>;
   rowHeight: number;
 } & TrackRowEvents;
 
-function TrackListGroup(props: TracksListGroupProps) {
+function TrackListGroup(props: TrackListGroupProps) {
   const {
     selectedTracks,
     rowHeight,
@@ -78,21 +78,9 @@ function TrackListGroup(props: TracksListGroupProps) {
     onContextMenu,
     onPlaybackStart,
   } = props;
-  const { tracks, label } = props.tracksGroup;
+  const { tracks, label, year, genres, duration } = props.tracksGroup;
 
   const trackPlayingID = usePlayingTrackID();
-
-  const genres = useMemo(() => {
-    const aggregator = new Set<string>();
-    tracks.forEach((track) => {
-      track.genres.forEach(aggregator.add, aggregator);
-    });
-    return Array.from(aggregator);
-  }, [tracks]);
-
-  const duration = useMemo(() => {
-    return tracks.reduce((sum, track) => sum + track.duration, 0);
-  }, [tracks]);
 
   if (tracks.length === 0) {
     return null;
@@ -100,15 +88,20 @@ function TrackListGroup(props: TracksListGroupProps) {
 
   return (
     <div className={styles.tracksGroup}>
-      <div className={styles.tracksGroupMetadata}>
+      <div className={styles.tracksGroupSide}>
         {/** Instead of the first one, maybe get the first track within the album to hold a cover? */}
         <Cover track={tracks[0]} iconSize={36} noBorder />
         <h3 className={styles.tracksGroupLabel}>{label}</h3>
-        <div className={styles.tracksGroupGenres}>
-          <Plural value={tracks.length} one="# track" other="# tracks" />,{' '}
-          {parseDuration(duration)}
+        <div className={styles.tracksGroupMetadata}>
+          <div>
+            {year ? <span>{year} - </span> : null}
+            {genres.join(', ')}
+          </div>
+          <div>
+            <Plural value={tracks.length} one="# track" other="# tracks" />,{' '}
+            {parseDuration(duration)}
+          </div>
         </div>
-        <div className={styles.tracksGroupGenres}>{genres.join(', ')}</div>
       </div>
       <div className={styles.tracksGroupContent}>
         {tracks.map((track, index) => {

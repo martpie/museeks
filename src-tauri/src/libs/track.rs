@@ -39,6 +39,9 @@ pub struct Track {
 #[ts(export, export_to = "../../src/generated/typings.ts")]
 pub struct TrackGroup {
     pub label: String,
+    pub genres: Vec<String>,
+    pub duration: u32,
+    pub year: Option<u32>,
     pub tracks: Vec<Track>,
 }
 

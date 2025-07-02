@@ -15,7 +15,7 @@ const SMOOTHING_FACTOR = 2.5;
 
 const smoothifyVolume = (value: number): number => value ** SMOOTHING_FACTOR;
 const unsmoothifyVolume = (value: number): number =>
-  value ** (1 / SMOOTHING_FACTOR);
+  value ** (1.0 / SMOOTHING_FACTOR);
 
 const getVolumeIcon = (volume: number, muted: boolean): IconName => {
   if (muted) return 'volumeMute';
@@ -48,10 +48,10 @@ export default function VolumeControl() {
 
   // TODO: move to player actions
   const mute = useCallback(() => {
-    const muted = !player.isMuted();
+    const isMuted = !player.isMuted();
 
-    playerAPI.setMuted(muted);
-    setMuted(muted);
+    playerAPI.setMuted(isMuted);
+    setMuted(isMuted);
   }, [playerAPI]);
 
   const volumeClasses = cx(styles.volumeControl, {
