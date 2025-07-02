@@ -17,7 +17,7 @@ import { logAndNotifyError } from '../lib/utils';
 import styles from './SideNavLink.module.css';
 
 // *sigh* https://tanstack.com/router/latest/docs/framework/react/guide/type-utilities#type-checking-link-options-with-validatelinkoptions
-export interface Props<
+interface Props<
   TRouter extends RegisteredRouter = RegisteredRouter,
   TOptions = unknown,
 > {
@@ -27,6 +27,8 @@ export interface Props<
   onRename?: (id: string, name: string) => void;
   contextMenuItems?: Array<MenuItemOptions | PredefinedMenuItemOptions>;
 }
+
+export type SideNavLinkProps = Props;
 
 export default function SideNavLink<TRouter extends RegisteredRouter, TOptions>(
   props: Props<TRouter, TOptions>,
