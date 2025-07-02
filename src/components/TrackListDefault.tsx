@@ -11,20 +11,20 @@ import { useCallback, useId, useImperativeHandle, useRef } from 'react';
 import type { Track } from '../generated/typings';
 import useDndSensors from '../hooks/useDnDSensors';
 import usePlayingTrackID from '../hooks/usePlayingTrackID';
-import type { TracksListVirtualizer } from '../types/museeks';
+import type { TrackListVirtualizer } from '../types/museeks';
+import styles from './TrackList.module.css';
+import TrackListHeader from './TrackListHeader';
 import TrackRow, { type TrackRowEvents } from './TrackRow';
-import styles from './TracksList.module.css';
-import TracksListHeader from './TracksListHeader';
 
 const DND_MODIFIERS = [restrictToVerticalAxis];
 
 /** ----------------------------------------------------------------------------
- * List-based layout for TracksList:
+ * List-based layout for TrackList:
  *  - Uses a Virtual List
  *  - Reorderable if needed (for playlists)
  * -------------------------------------------------------------------------- */
 type Props = {
-  ref: React.RefObject<TracksListVirtualizer | null>;
+  ref: React.RefObject<TrackListVirtualizer | null>;
   tracks: Track[];
   isSortEnabled: boolean;
   reorderable?: boolean;
@@ -70,7 +70,7 @@ export default function TrackListDefault(props: Props) {
       scrollToIndex: (index) => {
         virtualizer.scrollToIndex(index);
       },
-    } satisfies TracksListVirtualizer;
+    } satisfies TrackListVirtualizer;
   }, [virtualizer]);
 
   /**
@@ -111,12 +111,12 @@ export default function TrackListDefault(props: Props) {
       modifiers={DND_MODIFIERS}
       sensors={sensors}
     >
-      <div ref={innerScrollableRef} className={styles.tracksListScroller}>
-        <TracksListHeader enableSort={isSortEnabled} />
+      <div ref={innerScrollableRef} className={styles.trackListScroller}>
+        <TrackListHeader enableSort={isSortEnabled} />
 
         {/* The large inner element to hold all of the items */}
         <div
-          className={styles.tracksListRows}
+          className={styles.trackListRows}
           style={{
             height: `${virtualizer.getTotalSize()}px`,
             width: '100%',

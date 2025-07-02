@@ -1,4 +1,4 @@
-.tracksList {
+.trackList {
   outline: none;
   display: flex;
   flex-direction: column;
@@ -7,13 +7,13 @@
   user-select: none;
 }
 
-.tracksListScroller {
+.trackListScroller {
   overflow-y: scroll;
   flex: 1 1 auto;
   position: relative;
 }
 
-.tracksListRows {
+.trackListRows {
   width: 100%;
   position: relative;
 }

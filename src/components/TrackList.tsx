@@ -27,16 +27,16 @@ import PlaylistsAPI from '../stores/PlaylistsAPI';
 import { useLibraryAPI } from '../stores/useLibraryStore';
 import { usePlayerAPI } from '../stores/usePlayerStore';
 import { useToastsAPI } from '../stores/useToastsStore';
-import type { QueueOrigin, TracksListVirtualizer } from '../types/museeks';
-import styles from './TracksList.module.css';
-import TracksListDefault from './TracksListDefault';
-import TracksListGrouped from './TracksListGrouped';
+import type { QueueOrigin, TrackListVirtualizer } from '../types/museeks';
+import styles from './TrackList.module.css';
+import TrackListDefault from './TrackListDefault';
+import TrackListGrouped from './TrackListGrouped';
 
 // --------------------------------------------------------------------------
 // TrackList
 // --------------------------------------------------------------------------
 
-type TracksListProps = {
+type TrackListProps = {
   playlists: Playlist[];
   tracksDensity: Config['track_view_density'];
   isSortEnabled: boolean;
@@ -50,12 +50,12 @@ type TracksListProps = {
   }>;
 };
 
-interface TrackListDefaultLayoutProps extends TracksListProps {
+interface TrackListDefaultLayoutProps extends TrackListProps {
   layout: 'default';
   data: Array<Track>;
 }
 
-interface TrackListGroupedLayoutProps extends TracksListProps {
+interface TrackListGroupedLayoutProps extends TrackListProps {
   layout: 'grouped';
   data: Array<TrackGroup>;
 }
@@ -65,7 +65,7 @@ type Props = TrackListDefaultLayoutProps | TrackListGroupedLayoutProps;
 const ROW_HEIGHT = 30;
 const ROW_HEIGHT_COMPACT = 24;
 
-export default function TracksList(props: Props) {
+export default function TrackList(props: Props) {
   const {
     layout,
     data,
@@ -102,7 +102,7 @@ export default function TracksList(props: Props) {
 
   // Scrollable element for the virtual list + virtualizer
   // TODO: should be colocated with the child component
-  const scrollableRef = useRef<TracksListVirtualizer>(null);
+  const scrollableRef = useRef<TrackListVirtualizer>(null);
   const virtualizer = scrollableRef.current;
 
   // Persist scroll position
@@ -412,10 +412,10 @@ export default function TracksList(props: Props) {
     tracksDensity === 'compact' ? ROW_HEIGHT_COMPACT : ROW_HEIGHT;
 
   return (
-    <div className={styles.tracksList} data-museeks-list>
+    <div className={styles.trackList} data-museeks-list>
       <Keybinding onKey={onKeyEvent} preventInputConflict />
       {layout === 'default' && (
-        <TracksListDefault
+        <TrackListDefault
           ref={scrollableRef}
           tracks={data}
           rowHeight={rowHeight}
@@ -430,7 +430,7 @@ export default function TracksList(props: Props) {
         />
       )}
       {layout === 'grouped' && (
-        <TracksListGrouped
+        <TrackListGrouped
           ref={scrollableRef}
           trackGroups={data}
           rowHeight={rowHeight}

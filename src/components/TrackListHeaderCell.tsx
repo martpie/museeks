@@ -4,7 +4,7 @@ import React, { useCallback } from 'react';
 import type { SortBy } from '../generated/typings';
 import { useLibraryAPI } from '../stores/useLibraryStore';
 import Icon, { type IconName } from './Icon';
-import styles from './TracksListHeaderCell.module.css';
+import styles from './TrackListHeaderCell.module.css';
 
 type Props = {
   title: string;
@@ -13,7 +13,7 @@ type Props = {
   icon?: IconName | null;
 };
 
-export default function TracksListHeaderCell(props: Props) {
+export default function TrackListHeaderCell(props: Props) {
   const { sortBy, className, title, icon } = props;
   const libraryAPI = useLibraryAPI();
 
