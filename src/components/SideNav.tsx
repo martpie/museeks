@@ -1,4 +1,5 @@
-import React from 'react';
+import { groupBy } from 'lodash-es';
+import React, { useMemo } from 'react';
 
 import Flexbox from '../elements/Flexbox';
 import { stripAccents } from '../lib/utils-library';
@@ -12,34 +13,27 @@ type Props = {
 };
 
 export default function SideNav(props: Props) {
+  // Let's group the children by first character
+  const groupedChildren = useMemo(() => {
+    const groups = groupBy(props.children, (child) =>
+      stripAccents(child.props.label[0].toUpperCase()),
+    );
+
+    return groups;
+  }, [props.children]);
+
   return (
-    <div className={styles.sideNav} data-museeks-list>
-      <Flexbox gap={8} align="center">
-        <h4 className={styles.sideNavTitle}>{props.title}</h4>
-        <div className={styles.sideNavActions}>{props.actions}</div>
+    <div className={styles.nav} data-museeks-list>
+      <Flexbox gap={8} align="center" className={styles.header}>
+        <h4 className={styles.title}>{props.title}</h4>
+        <div className={styles.actions}>{props.actions}</div>
       </Flexbox>
-      <div className={styles.sideNavItems}>
-        {/*
-          Custom Rendering so we can display single letters to help visually
-          grouping items on very long lists
-        */}
-        {React.Children.map(props.children, (child, index) => {
-          const previousChild = props.children[index - 1];
-
-          const previousChar = previousChild?.props.label[0];
-          const currentChar = child.props.label[0];
-
-          const isNewSection =
-            previousChild === undefined ||
-            stripAccents(previousChar.toLowerCase()) !==
-              stripAccents(currentChar.toLowerCase());
-
+      <div className={styles.content}>
+        {Object.entries(groupedChildren).map(([letter, children]) => {
           return (
-            <React.Fragment key={child.props.id}>
-              {isNewSection && (
-                <div className={styles.letter}>{stripAccents(currentChar)}</div>
-              )}
-              {child}
+            <React.Fragment key={letter}>
+              <div className={styles.letter}>{letter}</div>
+              <div className={styles.items}>{children}</div>
             </React.Fragment>
           );
         })}
