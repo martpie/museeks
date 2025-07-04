@@ -1,21 +1,29 @@
-.sideNav {
+.nav {
   display: flex;
   flex-flow: column;
   flex-shrink: 0;
-  width: 200px;
+  width: 220px;
   border-right: 1px solid var(--border-color);
   background-color: var(--sidebar-bg);
   max-height: 100%;
-  overflow: hidden;
+  overflow-y: auto;
   position: relative;
+  top: 0;
 }
 
-.sideNavActions {
+.header {
+  z-index: 10;
+  position: sticky;
+  top: 0;
+  background-color: var(--sidebar-bg);
+}
+
+.actions {
   align-items: stretch;
   margin-right: 8px;
 }
 
-.sideNavTitle {
+.title {
   margin: 10px 12px;
   font-size: 0.875rem;
   font-weight: bold;
@@ -23,9 +31,27 @@
   flex: 1;
 }
 
-.sideNavItems {
+.content {
   flex: 1 1 auto;
   display: flex;
   flex-direction: column;
-  overflow: auto;
+}
+
+.letter {
+  display: block;
+  padding: 8px 12px;
+  text-transform: uppercase;
+  font-weight: bolder;
+  position: sticky;
+  top: 32px;
+  background-color: var(--sidebar-bg);
+  color: var(--text-muted);
+}
+
+.items {
+  display: block;
+}
+
+.letter + .items {
+  margin-bottom: 12px;
 }

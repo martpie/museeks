@@ -8,9 +8,13 @@
 }
 
 .centered {
-  display: flex;
+  display: grid;
+  grid-template-columns: 500px;
   justify-content: center;
-  scrollbar-gutter: stable;
+}
+
+.centeredViewContent {
+  position: relative;
 }
 
 .hasPadding {

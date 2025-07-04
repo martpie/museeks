@@ -7,7 +7,7 @@ import {
 } from '@tanstack/react-router';
 import { useCallback, useMemo } from 'react';
 
-import TracksList from '../components/TracksList';
+import TrackList from '../components/TrackList';
 import * as ViewMessage from '../elements/ViewMessage';
 import type { Track } from '../generated/typings';
 import useFilteredTracks from '../hooks/useFilteredTracks';
@@ -133,7 +133,7 @@ function ViewPlaylistDetails() {
   }
 
   return (
-    <TracksList
+    <TrackList
       layout="default"
       isSortEnabled={false}
       data={filteredTracks}

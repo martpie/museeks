@@ -1,4 +1,4 @@
-import { t } from '@lingui/core/macro';
+import { t as tMacro } from '@lingui/core/macro';
 import { Trans, useLingui } from '@lingui/react/macro';
 import { createFileRoute, useLoaderData } from '@tanstack/react-router';
 
@@ -21,7 +21,7 @@ function ViewSettingsUI() {
   const invalidate = useInvalidate();
 
   return (
-    <div className="setting setting-interface">
+    <>
       <Setting.Section>
         <Setting.Select
           label={t`Theme`}
@@ -35,7 +35,7 @@ function ViewSettingsUI() {
           {Object.values(themes).map((theme) => {
             return (
               <option key={theme._id} value={theme._id}>
-                {getThemeName(theme.name)}
+                {getTranslatedThemeName(theme.name)}
               </option>
             );
           })}
@@ -117,16 +117,19 @@ function ViewSettingsUI() {
           onChange={useInvalidateCallback(SettingsAPI.toggleSleepBlocker)}
         />
       </Setting.Section>
-    </div>
+    </>
   );
 }
 
-function getThemeName(themeName: string) {
+/**
+ * Get the theme name in the current language
+ */
+export function getTranslatedThemeName(themeName: string) {
   switch (themeName) {
     case 'Light':
-      return t`Light`;
+      return tMacro`Light`;
     case 'Dark':
-      return t`Dark`;
+      return tMacro`Dark`;
   }
 
   return themeName;

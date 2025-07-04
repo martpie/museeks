@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { useMemo } from 'react';
 
-import TracksList from '../components/TracksList';
+import TrackList from '../components/TrackList';
 import { useFilteredTrackGroup } from '../hooks/useFilteredTracks';
 import useGlobalTrackListStatus from '../hooks/useGlobalTrackListStatus';
 import config from '../lib/config';
@@ -36,7 +36,7 @@ export default function ViewArtistDetails() {
   }, [artistID]);
 
   return (
-    <TracksList
+    <TrackList
       layout="grouped"
       data={content}
       tracksDensity={tracksDensity}

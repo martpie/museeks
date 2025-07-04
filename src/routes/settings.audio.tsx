@@ -20,7 +20,7 @@ function ViewSettingsAudio() {
   const { t } = useLingui();
 
   return (
-    <div className="setting setting-audio">
+    <>
       <Setting.Section>
         <Setting.Input
           label={t`Playback rate`}
@@ -54,6 +54,6 @@ function ViewSettingsAudio() {
           onChange={useInvalidateCallback(SettingsAPI.toggleFollowPlayingTrack)}
         />
       </Setting.Section>
-    </div>
+    </>
   );
 }
