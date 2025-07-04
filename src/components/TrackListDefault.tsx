@@ -8,11 +8,12 @@ import { useVirtualizer } from '@tanstack/react-virtual';
 import type React from 'react';
 import { useCallback, useId, useImperativeHandle, useRef } from 'react';
 
+import Scrollable from '../elements/Scrollable';
 import type { Track } from '../generated/typings';
 import useDndSensors from '../hooks/useDnDSensors';
 import usePlayingTrackID from '../hooks/usePlayingTrackID';
 import type { TrackListVirtualizer } from '../types/museeks';
-import styles from './TrackList.module.css';
+import styles from './TrackListDefault.module.css';
 import TrackListHeader from './TrackListHeader';
 import TrackRow, { type TrackRowEvents } from './TrackRow';
 
@@ -111,16 +112,14 @@ export default function TrackListDefault(props: Props) {
       modifiers={DND_MODIFIERS}
       sensors={sensors}
     >
-      <div ref={innerScrollableRef} className={styles.trackListScroller}>
+      <Scrollable ref={innerScrollableRef}>
         <TrackListHeader enableSort={isSortEnabled} />
 
         {/* The large inner element to hold all of the items */}
         <div
-          className={styles.trackListRows}
+          className={styles.rows}
           style={{
             height: `${virtualizer.getTotalSize()}px`,
-            width: '100%',
-            position: 'relative',
           }}
         >
           <SortableContext
@@ -158,7 +157,7 @@ export default function TrackListDefault(props: Props) {
             })}
           </SortableContext>
         </div>
-      </div>
+      </Scrollable>
     </DndContext>
   );
 }

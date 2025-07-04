@@ -1,13 +1,14 @@
 import { Plural } from '@lingui/react/macro';
 import { useImperativeHandle, useRef } from 'react';
 
+import Scrollable from '../elements/Scrollable';
 import type { TrackGroup } from '../generated/typings';
 import useAllTracks from '../hooks/useAllTracks';
 import { parseDuration } from '../hooks/useFormattedDuration';
 import usePlayingTrackID from '../hooks/usePlayingTrackID';
 import type { TrackListVirtualizer } from '../types/museeks';
 import Cover from './Cover';
-import styles from './TrackList.module.css';
+import styles from './TrackListGrouped.module.css';
 import TrackRow, { type TrackRowEvents } from './TrackRow';
 
 /** ----------------------------------------------------------------------------
@@ -48,7 +49,7 @@ export default function TrackListGroupedLayout(props: Props) {
   }, [tracks]);
 
   return (
-    <div ref={innerScrollableRef} className={styles.trackListScroller}>
+    <Scrollable ref={innerScrollableRef}>
       {trackGroups.map((tracksGroup) => {
         return (
           <TrackListGroup
@@ -60,7 +61,7 @@ export default function TrackListGroupedLayout(props: Props) {
           />
         );
       })}
-    </div>
+    </Scrollable>
   );
 }
 
@@ -87,23 +88,23 @@ function TrackListGroup(props: TrackListGroupProps) {
   }
 
   return (
-    <div className={styles.tracksGroup}>
-      <div className={styles.tracksGroupSide}>
+    <div className={styles.group}>
+      <aside className={styles.aside}>
         {/** Instead of the first one, maybe get the first track within the album to hold a cover? */}
         <Cover track={tracks[0]} iconSize={36} noBorder />
-        <h3 className={styles.tracksGroupLabel}>{label}</h3>
-        <div className={styles.tracksGroupMetadata}>
+        <h3 className={styles.label}>{label}</h3>
+        <div className={styles.metadata}>
           <div>
-            {year ? <span>{year} - </span> : null}
-            {genres.join(', ')}
+            {year}
+            {genres.length > 0 && <span> - {genres.join(', ')}</span>}
           </div>
           <div>
             <Plural value={tracks.length} one="# track" other="# tracks" />,{' '}
             {parseDuration(duration)}
           </div>
         </div>
-      </div>
-      <div className={styles.tracksGroupContent}>
+      </aside>
+      <div className={styles.rows}>
         {tracks.map((track, index) => {
           return (
             <TrackRow

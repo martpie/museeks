@@ -1,0 +1,41 @@
+:root {
+  --spacing: 24px;
+}
+
+.group {
+  display: flex;
+  gap: var(--spacing);
+  padding: var(--spacing);
+  align-items: flex-start;
+  position: relative;
+}
+
+.aside {
+  width: 160px;
+  position: sticky;
+  top: var(--spacing);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  @media (min-width: 1024px) {
+    width: 240px;
+  }
+}
+
+.label {
+  font-size: 1.4rem;
+  font-weight: bold;
+  margin: 0;
+}
+
+.metadata {
+  color: var(--text-muted);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.rows {
+  flex-grow: 1;
+}
