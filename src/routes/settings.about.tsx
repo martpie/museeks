@@ -26,7 +26,7 @@ function ViewSettingsAbout() {
   const { t } = useLingui();
 
   return (
-    <div className="setting setting-about">
+    <>
       <Setting.Section>
         <Setting.Title>
           <Trans>About Museeks</Trans>
@@ -121,6 +121,6 @@ function ViewSettingsAbout() {
           </ExternalButton>
         </Flexbox>
       </Setting.Section>
-    </div>
+    </>
   );
 }

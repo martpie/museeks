@@ -35,6 +35,14 @@ export default function View(props: Props) {
     );
   }
 
+  if (props.layout === 'centered') {
+    return (
+      <div className={cx(viewClassNames, contentClassNames)}>
+        <div className={styles.centeredViewContent}>{props.children}</div>
+      </div>
+    );
+  }
+
   return (
     <div className={cx(viewClassNames, contentClassNames)}>
       {props.children}

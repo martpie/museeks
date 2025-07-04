@@ -36,7 +36,7 @@ export const Route = createFileRoute('/settings')({
 function ViewSettings() {
   return (
     <View hasPadding layout="centered">
-      <div className={styles.settingsNav}>
+      <div className={styles.nav}>
         <SettingsNav>
           <SettingsNavLink to="/settings/library">
             <Trans>Library</Trans>
@@ -53,9 +53,7 @@ function ViewSettings() {
         </SettingsNav>
       </div>
 
-      <div className={styles.settingsContent}>
-        <Outlet />
-      </div>
+      <Outlet />
     </View>
   );
 }
