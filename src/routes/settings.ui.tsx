@@ -21,7 +21,7 @@ function ViewSettingsUI() {
   const invalidate = useInvalidate();
 
   return (
-    <div className="setting setting-interface">
+    <>
       <Setting.Section>
         <Setting.Select
           label={t`Theme`}
@@ -117,7 +117,7 @@ function ViewSettingsUI() {
           onChange={useInvalidateCallback(SettingsAPI.toggleSleepBlocker)}
         />
       </Setting.Section>
-    </div>
+    </>
   );
 }
 

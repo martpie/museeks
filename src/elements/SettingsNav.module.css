@@ -1,11 +1,11 @@
 .nav {
   display: flex;
   flex-direction: column;
+  gap: 32px;
 }
 
 .navLink {
   display: inline-block;
-  padding: 15px;
   color: var(--text);
   font-weight: bold;
   text-decoration: none;

@@ -1,11 +1,5 @@
-.settingsNav {
-  padding: 0 30px;
-  width: 170px;
-  margin-left: -150px;
-}
-
-.settingsContent {
-  padding: 10px 15px;
-  width: 400px;
-  max-width: calc(100% - 170px);
+.nav {
+  position: absolute;
+  right: 100%;
+  margin-right: 60px;
 }
