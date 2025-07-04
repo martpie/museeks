@@ -13,6 +13,8 @@ import { logAndNotifyError } from '../lib/utils';
 import useLibraryStore from './useLibraryStore';
 import useToastsStore from './useToastsStore';
 
+export const DEFAULT_MAIN_COLOR = '#459ce7';
+
 // Manual prevention of a useEffect being called twice (to avoid refreshing the
 // library twice on startup in dev mode).
 // Also, we useInvalidate, SettingsAPI.init would infinitely loop. It means
@@ -27,10 +29,18 @@ async function init(then: () => void): Promise<void> {
 
   did_init = true;
   // Blocking (the window should not be shown until it's done)
-  await Promise.allSettled([
-    checkTheme(),
+  const [theme, color] = await Promise.all([
+    getCurrentWindow()
+      .theme()
+      .then((maybeTheme) => maybeTheme ?? 'light'),
+    config
+      .get('ui_accent_color')
+      .then((maybeColor) => maybeColor ?? DEFAULT_MAIN_COLOR),
     checkForUpdate({ silentFail: true }),
   ]);
+
+  applyThemeToUI(theme);
+  applyUIMainColorToUI(color);
 
   // Show the app once everything is loaded
   await getCurrentWindow().show();
@@ -72,7 +82,7 @@ const setTheme = async (themeID: string): Promise<void> => {
 /**
  * Apply theme colors to  the BrowserWindow
  */
-async function applyThemeToUI(themeID: string): Promise<void> {
+function applyThemeToUI(themeID: string): void {
   const theme = getTheme(themeID);
 
   // TODO think about variables validity?
@@ -83,16 +93,27 @@ async function applyThemeToUI(themeID: string): Promise<void> {
   });
 }
 
-async function checkTheme(): Promise<void> {
-  const theme = (await getCurrentWindow().theme()) ?? 'light';
-  applyThemeToUI(theme);
-}
-
 async function setTracksDensity(
   density: Config['track_view_density'],
 ): Promise<void> {
   await config.set('track_view_density', density);
 }
+
+const setUIMainColor = async (
+  mainColor: Config['ui_accent_color'],
+): Promise<void> => {
+  await config.set('ui_accent_color', mainColor);
+};
+
+const applyUIMainColorToUI = (mainColor: Config['ui_accent_color']) => {
+  document.documentElement.style.setProperty('--main-color', mainColor);
+
+  //   --main-color: #459ce7;
+  // --main-color-darker: #3a73a4;
+  // --main-color-lighter: #63aff0;
+  // --link-color: #459ce7;
+  // --link-color-hover: #52afff;
+};
 
 /**
  * Check if a new release is available
@@ -214,6 +235,8 @@ const SettingsAPI = {
   setLanguage,
   setTheme,
   applyThemeToUI,
+  setUIMainColor,
+  applyUIMainColorToUI,
   setTracksDensity,
   checkForUpdate,
   toggleSleepBlocker,

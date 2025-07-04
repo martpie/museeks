@@ -57,6 +57,7 @@ pub enum TrackViewDensity {
 pub struct Config {
     pub language: String,
     pub theme: String,
+    pub ui_accent_color: Option<String>,
     pub audio_volume: f32,
     pub audio_playback_rate: Option<f32>,
     pub audio_output_device: String,
@@ -82,6 +83,7 @@ impl Config {
         Config {
             language: "en".to_owned(),
             theme: SYSTEM_THEME.to_owned(),
+            ui_accent_color: None,
             audio_volume: 1.0,
             audio_playback_rate: Some(1.0),
             audio_output_device: "default".to_owned(),

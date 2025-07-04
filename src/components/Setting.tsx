@@ -41,7 +41,7 @@ export function Title(props: Props) {
 
 export type InputProps = {
   label: string;
-  description?: string;
+  description?: string | React.ReactNode;
 };
 
 export function Input(
@@ -80,6 +80,26 @@ export function Select(
       <select className={styles.settingSelect} id={id} {...otherProps}>
         {props.children}
       </select>
+      {description != null && <Description>{description}</Description>}
+    </div>
+  );
+}
+
+export function ColorSelector(
+  props: React.InputHTMLAttributes<HTMLInputElement> & InputProps,
+) {
+  const { label, description, ...otherProps } = props;
+  const id = useId();
+
+  return (
+    <div>
+      <Label htmlFor={id}>{label}</Label>
+      <input
+        id={id}
+        type="color"
+        className={styles.settingInput}
+        {...otherProps}
+      />
       {description != null && <Description>{description}</Description>}
     </div>
   );

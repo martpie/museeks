@@ -48,6 +48,11 @@
     opacity: 0.6;
     cursor: not-allowed;
   }
+
+  &[type="color"] {
+    padding: 0;
+    width: 80px;
+  }
 }
 
 .settingError {

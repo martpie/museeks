@@ -7,7 +7,7 @@ type Props = {
   children: React.ReactNode;
   className?: string;
   direction?: 'vertical' | 'horizontal';
-  align?: 'center';
+  align?: 'center' | 'baseline';
 };
 
 export default function Flexbox(props: Props) {
