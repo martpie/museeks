@@ -66,7 +66,7 @@ msgstr "Artistes"
 
 #: src/components/Footer.tsx:39
 #: src/routes/playlists.tsx:169
-#: src/routes/settings.ui.tsx:96
+#: src/routes/settings.ui.tsx:127
 msgid "Playlists"
 msgstr "Playlists"
 
@@ -449,6 +449,7 @@ msgid "Reset library?"
 msgstr "Réinitialiser la bibliothèque ?"
 
 #: src/routes/settings.library.tsx:144
+#: src/routes/settings.ui.tsx:72
 msgid "Reset"
 msgstr "Réinitialiser"
 
@@ -468,71 +469,79 @@ msgstr "Interface"
 msgid "About"
 msgstr "À propos"
 
-#: src/routes/settings.ui.tsx:27
+#: src/routes/settings.ui.tsx:33
 msgid "Theme"
 msgstr "Thème"
 
-#: src/routes/settings.ui.tsx:28
+#: src/routes/settings.ui.tsx:34
 msgid "Change the appearance of the interface"
 msgstr "Changer l'apparence de l'interface"
 
-#: src/routes/settings.ui.tsx:34
+#: src/routes/settings.ui.tsx:40
 msgid "System (default)"
 msgstr "Système (par défaut)"
 
-#: src/routes/settings.ui.tsx:46
+#: src/routes/settings.ui.tsx:51
+msgid "Main color"
+msgstr ""
+
+#: src/routes/settings.ui.tsx:63
+msgid "Change the main color of the interface"
+msgstr ""
+
+#: src/routes/settings.ui.tsx:77
 msgid "Language"
 msgstr "Langue"
 
-#: src/routes/settings.ui.tsx:64
+#: src/routes/settings.ui.tsx:95
 msgid "Tracks density"
 msgstr "Densité visuelle des pistes"
 
-#: src/routes/settings.ui.tsx:65
+#: src/routes/settings.ui.tsx:96
 msgid "Change the tracks spacing"
 msgstr "Adapter l'espace entre les pistes"
 
-#: src/routes/settings.ui.tsx:74
+#: src/routes/settings.ui.tsx:105
 msgid "Normal (default)"
 msgstr "Normal (par défaut)"
 
-#: src/routes/settings.ui.tsx:77
+#: src/routes/settings.ui.tsx:108
 msgid "Compact"
 msgstr "Compact"
 
-#: src/routes/settings.ui.tsx:83
+#: src/routes/settings.ui.tsx:114
 msgid "Default view"
 msgstr "Vue par défaut"
 
-#: src/routes/settings.ui.tsx:85
+#: src/routes/settings.ui.tsx:116
 msgid "Change the default view when starting the application"
 msgstr "Changer la vue par défaut au démarrage de l'application"
 
-#: src/routes/settings.ui.tsx:93
+#: src/routes/settings.ui.tsx:124
 msgid "Library (default)"
 msgstr "Bibliothèque (par défaut)"
 
-#: src/routes/settings.ui.tsx:103
+#: src/routes/settings.ui.tsx:134
 msgid "Display Notifications"
 msgstr "Afficher les notifications"
 
-#: src/routes/settings.ui.tsx:104
+#: src/routes/settings.ui.tsx:135
 msgid "Send notifications when the playing track changes"
 msgstr "Envoyer des notifications lorsque la piste en cours change"
 
-#: src/routes/settings.ui.tsx:114
+#: src/routes/settings.ui.tsx:145
 msgid "Sleep mode blocker"
 msgstr "Bloqueur de mode veille"
 
-#: src/routes/settings.ui.tsx:115
+#: src/routes/settings.ui.tsx:146
 msgid "Prevent the computer from going into sleep mode when playing"
 msgstr "Empêcher l'ordinateur de passer en mode veille lors de la lecture"
 
-#: src/routes/settings.ui.tsx:130
+#: src/routes/settings.ui.tsx:161
 msgid "Light"
 msgstr "Clair"
 
-#: src/routes/settings.ui.tsx:132
+#: src/routes/settings.ui.tsx:163
 msgid "Dark"
 msgstr "Sombre"
 
@@ -591,11 +600,11 @@ msgid "The playlist \"{name}\" was created"
 msgstr "La playlist \"{name}\" a été créée"
 
 #. placeholder {0}: newRelease.tag_name
-#: src/stores/SettingsAPI.ts:137
+#: src/stores/SettingsAPI.ts:153
 msgid "Museeks {0} is available, check https://museeks.io!"
 msgstr "Museeks {0} est disponible, consultez https://museeks.io !"
 
-#: src/stores/SettingsAPI.ts:139
+#: src/stores/SettingsAPI.ts:155
 msgid "Museeks {currentVersion} is the latest version available."
 msgstr "Museeks {currentVersion} est la dernière version disponible."
 

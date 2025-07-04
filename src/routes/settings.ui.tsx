@@ -1,13 +1,16 @@
 import { t as tMacro } from '@lingui/core/macro';
 import { Trans, useLingui } from '@lingui/react/macro';
 import { createFileRoute, useLoaderData } from '@tanstack/react-router';
+import { useId } from 'react';
 
 import * as Setting from '../components/Setting';
 import CheckboxSetting from '../components/SettingCheckbox';
+import Button from '../elements/Button';
+import Flexbox from '../elements/Flexbox';
 import type { Config, DefaultView } from '../generated/typings';
 import useInvalidate, { useInvalidateCallback } from '../hooks/useInvalidate';
 import { themes } from '../lib/themes';
-import SettingsAPI from '../stores/SettingsAPI';
+import SettingsAPI, { DEFAULT_MAIN_COLOR } from '../stores/SettingsAPI';
 import { ALL_LANGUAGES } from '../translations/languages';
 
 export const Route = createFileRoute('/settings/ui')({
@@ -19,6 +22,7 @@ function ViewSettingsUI() {
   const { t } = useLingui();
 
   const invalidate = useInvalidate();
+  const colorInputID = useId();
 
   return (
     <>
@@ -40,6 +44,31 @@ function ViewSettingsUI() {
             );
           })}
         </Setting.Select>
+      </Setting.Section>
+      <Setting.Section>
+        <Setting.Label htmlFor={colorInputID}>{t`Main color`}</Setting.Label>
+        <input
+          id={colorInputID}
+          type="color"
+          value={config.ui_main_color ?? DEFAULT_MAIN_COLOR}
+          onChange={(e) => {
+            SettingsAPI.setUIMainColor(e.currentTarget.value).then(invalidate);
+            SettingsAPI.applyUIMainColorToUI(e.currentTarget.value);
+          }}
+        />
+        <Flexbox gap={8} align="center">
+          <Setting.Description>
+            {t`Change the main color of the interface`}
+          </Setting.Description>
+          <Button
+            type="button"
+            bSize="small"
+            onClick={() => {
+              SettingsAPI.setUIMainColor(DEFAULT_MAIN_COLOR).then(invalidate);
+              SettingsAPI.applyUIMainColorToUI(DEFAULT_MAIN_COLOR);
+            }}
+          >{t`Reset`}</Button>
+        </Flexbox>
       </Setting.Section>
       <Setting.Section>
         <Setting.Select
