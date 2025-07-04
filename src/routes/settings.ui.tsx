@@ -1,13 +1,16 @@
 import { t as tMacro } from '@lingui/core/macro';
 import { Trans, useLingui } from '@lingui/react/macro';
 import { createFileRoute, useLoaderData } from '@tanstack/react-router';
+import { debounce } from 'lodash-es';
+import { useMemo } from 'react';
 
 import * as Setting from '../components/Setting';
 import CheckboxSetting from '../components/SettingCheckbox';
+import Button from '../elements/Button';
 import type { Config, DefaultView } from '../generated/typings';
 import useInvalidate, { useInvalidateCallback } from '../hooks/useInvalidate';
 import { themes } from '../lib/themes';
-import SettingsAPI from '../stores/SettingsAPI';
+import SettingsAPI, { DEFAULT_MAIN_COLOR } from '../stores/SettingsAPI';
 import { ALL_LANGUAGES } from '../translations/languages';
 
 export const Route = createFileRoute('/settings/ui')({
@@ -19,6 +22,12 @@ function ViewSettingsUI() {
   const { t } = useLingui();
 
   const invalidate = useInvalidate();
+
+  const setUIMainColorThrottled = useMemo(() => {
+    return debounce((value: string) => {
+      SettingsAPI.setUIMainColor(value).then(invalidate);
+    }, 250);
+  }, [invalidate]);
 
   return (
     <>
@@ -40,6 +49,27 @@ function ViewSettingsUI() {
             );
           })}
         </Setting.Select>
+      </Setting.Section>
+      <Setting.Section>
+        <Setting.ColorSelector
+          label={t`Accent color`}
+          value={config.ui_accent_color ?? DEFAULT_MAIN_COLOR}
+          description={
+            <Button
+              type="button"
+              bSize="small"
+              onClick={() => {
+                SettingsAPI.setUIMainColor(DEFAULT_MAIN_COLOR).then(invalidate);
+                SettingsAPI.applyUIMainColorToUI(DEFAULT_MAIN_COLOR);
+              }}
+            >{t`Reset`}</Button>
+          }
+          onChange={(e) => {
+            const value = e.currentTarget.value;
+            SettingsAPI.applyUIMainColorToUI(value);
+            setUIMainColorThrottled(value);
+          }}
+        />
       </Setting.Section>
       <Setting.Section>
         <Setting.Select
