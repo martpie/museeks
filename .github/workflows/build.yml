@@ -3,11 +3,14 @@ name: build
 on:
   push:
     branches:
-      - '**'
+      - '**'           # All branches
+  pull_request:
+    branches:
+      - '**'           # PR targeting any branch
   workflow_dispatch:
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -67,7 +70,8 @@ jobs:
 
   binaries:
     if: |
-      github.ref == 'refs/heads/release' || github.event.pull_request.base.ref == 'release'
+      startsWith(github.ref, 'refs/heads/release') ||
+      (github.event_name == 'pull_request' && github.base_ref == 'release')
 
     needs: qa
 
