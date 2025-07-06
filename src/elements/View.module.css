@@ -9,7 +9,7 @@
 
 .centered {
   display: grid;
-  grid-template-columns: 500px;
+  grid-template-columns: 350px;
   justify-content: center;
 }
 
