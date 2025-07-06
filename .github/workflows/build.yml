@@ -5,14 +5,14 @@ on:
   # but only for the main branch
   push:
     branches:
-      - master
+      - '**'
   pull_request:
     branches:
-      - '*'
+      - '**'
   workflow_dispatch:
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -72,7 +72,8 @@ jobs:
 
   binaries:
     if: |
-      github.ref == 'refs/heads/master' || github.event.pull_request.base.ref == 'master'
+      startsWith(github.ref, 'refs/heads/release') ||
+      (github.event_name == 'pull_request' && github.base_ref == 'release')
 
     needs: qa
 
