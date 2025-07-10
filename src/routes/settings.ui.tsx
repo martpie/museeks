@@ -9,6 +9,7 @@ import CheckboxSetting from '../components/SettingCheckbox';
 import Button from '../elements/Button';
 import type { Config, DefaultView } from '../generated/typings';
 import useInvalidate, { useInvalidateCallback } from '../hooks/useInvalidate';
+import SettingsBridge from '../lib/bridge-settings';
 import { themes } from '../lib/themes';
 import SettingsAPI, { DEFAULT_MAIN_COLOR } from '../stores/SettingsAPI';
 import { ALL_LANGUAGES } from '../translations/languages';
@@ -114,7 +115,7 @@ function ViewSettingsUI() {
           value={config.default_view}
           description={t`Change the default view when starting the application`}
           onChange={(e) =>
-            SettingsAPI.setDefaultView(
+            SettingsBridge.setDefaultView(
               e.currentTarget.value as DefaultView,
             ).then(invalidate)
           }
@@ -142,7 +143,7 @@ function ViewSettingsUI() {
           title={t`Sleep mode blocker`}
           description={t`Prevent the computer from going into sleep mode when playing`}
           value={config.sleepblocker}
-          onChange={useInvalidateCallback(SettingsAPI.toggleSleepBlocker)}
+          onChange={useInvalidateCallback(SettingsBridge.toggleSleepBlocker)}
         />
       </Setting.Section>
     </>

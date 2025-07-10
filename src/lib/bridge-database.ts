@@ -9,9 +9,9 @@ import type {
 } from '../generated/typings';
 
 /**
- * Bridge for the UI to communicate with the backend and manipulate the Database
+ * Bridge for the UI to communicate with the backend and manipulate the Database.
+ * Grouped here so they're easier to mock in E2E tests.
  */
-
 // biome-ignore lint/complexity/noStaticOnlyClass: conflict with decorators rules
 class DatabaseBridge {
   // ---------------------------------------------------------------------------

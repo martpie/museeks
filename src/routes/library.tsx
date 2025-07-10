@@ -8,8 +8,8 @@ import View from '../elements/View';
 import * as ViewMessage from '../elements/ViewMessage';
 import useFilteredTracks from '../hooks/useFilteredTracks';
 import useGlobalTrackListStatus from '../hooks/useGlobalTrackListStatus';
-import config from '../lib/config';
-import database from '../lib/database';
+import ConfigBridge from '../lib/bridge-config';
+import DatabaseBridge from '../lib/bridge-database';
 import queryClient from '../lib/query-client';
 import useLibraryStore from '../stores/useLibraryStore';
 import type { QueueOrigin } from '../types/museeks';
@@ -22,12 +22,12 @@ export const Route = createFileRoute('/library')({
   loader: async () => {
     queryClient.prefetchQuery({
       queryKey: [QUERY_ALL_TRACKS],
-      queryFn: database.getAllTracks,
+      queryFn: DatabaseBridge.getAllTracks,
     });
 
     const [playlists, tracksDensity] = await Promise.all([
-      database.getAllPlaylists(),
-      config.get('track_view_density'),
+      DatabaseBridge.getAllPlaylists(),
+      ConfigBridge.get('track_view_density'),
     ]);
 
     return {
@@ -50,7 +50,7 @@ function ViewLibrary() {
   // Using stale-while-revalidate libraries help us (fake-)loading this page faster
   const { data: tracks, isLoading } = useQuery({
     queryKey: [QUERY_ALL_TRACKS],
-    queryFn: database.getAllTracks,
+    queryFn: DatabaseBridge.getAllTracks,
     refetchOnWindowFocus: false,
     refetchOnReconnect: false,
   });

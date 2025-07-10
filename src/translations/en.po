@@ -66,7 +66,7 @@ msgstr "Artists"
 
 #: src/components/Footer.tsx:39
 #: src/routes/playlists.tsx:169
-#: src/routes/settings.ui.tsx:126
+#: src/routes/settings.ui.tsx:127
 msgid "Playlists"
 msgstr "Playlists"
 
@@ -212,8 +212,8 @@ msgstr "Cancel"
 msgid "Remove"
 msgstr "Remove"
 
-#. placeholder {0}: props.count
 #. placeholder {0}: tracks.length
+#. placeholder {0}: props.count
 #: src/components/TrackListGrouped.tsx:102
 #: src/components/TrackListStatus.tsx:11
 msgid "{0, plural, one {# track} other {# tracks}}"
@@ -449,7 +449,7 @@ msgid "Reset library?"
 msgstr "Reset library?"
 
 #: src/routes/settings.library.tsx:143
-#: src/routes/settings.ui.tsx:65
+#: src/routes/settings.ui.tsx:66
 msgid "Reset"
 msgstr "Reset"
 
@@ -469,75 +469,75 @@ msgstr "Interface"
 msgid "About"
 msgstr "About"
 
-#: src/routes/settings.ui.tsx:36
+#: src/routes/settings.ui.tsx:37
 msgid "Theme"
 msgstr "Theme"
 
-#: src/routes/settings.ui.tsx:37
+#: src/routes/settings.ui.tsx:38
 msgid "Change the appearance of the interface"
 msgstr "Change the appearance of the interface"
 
-#: src/routes/settings.ui.tsx:43
+#: src/routes/settings.ui.tsx:44
 msgid "System (default)"
 msgstr "System (default)"
 
-#: src/routes/settings.ui.tsx:55
+#: src/routes/settings.ui.tsx:56
 msgid "Accent color"
 msgstr "Accent color"
 
-#: src/routes/settings.ui.tsx:76
+#: src/routes/settings.ui.tsx:77
 msgid "Language"
 msgstr "Language"
 
-#: src/routes/settings.ui.tsx:94
+#: src/routes/settings.ui.tsx:95
 msgid "Tracks density"
 msgstr "Tracks density"
 
-#: src/routes/settings.ui.tsx:95
+#: src/routes/settings.ui.tsx:96
 msgid "Change the tracks spacing"
 msgstr "Change the tracks spacing"
 
-#: src/routes/settings.ui.tsx:104
+#: src/routes/settings.ui.tsx:105
 msgid "Normal (default)"
 msgstr "Normal (default)"
 
-#: src/routes/settings.ui.tsx:107
+#: src/routes/settings.ui.tsx:108
 msgid "Compact"
 msgstr "Compact"
 
-#: src/routes/settings.ui.tsx:113
+#: src/routes/settings.ui.tsx:114
 msgid "Default view"
 msgstr "Default view"
 
-#: src/routes/settings.ui.tsx:115
+#: src/routes/settings.ui.tsx:116
 msgid "Change the default view when starting the application"
 msgstr "Change the default view when starting the application"
 
-#: src/routes/settings.ui.tsx:123
+#: src/routes/settings.ui.tsx:124
 msgid "Library (default)"
 msgstr "Library (default)"
 
-#: src/routes/settings.ui.tsx:132
+#: src/routes/settings.ui.tsx:133
 msgid "Display Notifications"
 msgstr "Display Notifications"
 
-#: src/routes/settings.ui.tsx:133
+#: src/routes/settings.ui.tsx:134
 msgid "Send notifications when the playing track changes"
 msgstr "Send notifications when the playing track changes"
 
-#: src/routes/settings.ui.tsx:142
+#: src/routes/settings.ui.tsx:143
 msgid "Sleep mode blocker"
 msgstr "Sleep mode blocker"
 
-#: src/routes/settings.ui.tsx:143
+#: src/routes/settings.ui.tsx:144
 msgid "Prevent the computer from going into sleep mode when playing"
 msgstr "Prevent the computer from going into sleep mode when playing"
 
-#: src/routes/settings.ui.tsx:158
+#: src/routes/settings.ui.tsx:159
 msgid "Light"
 msgstr "Light"
 
-#: src/routes/settings.ui.tsx:160
+#: src/routes/settings.ui.tsx:161
 msgid "Dark"
 msgstr "Dark"
 
@@ -596,29 +596,29 @@ msgid "The playlist \"{name}\" was created"
 msgstr "The playlist \"{name}\" was created"
 
 #. placeholder {0}: newRelease.tag_name
-#: src/stores/SettingsAPI.ts:171
+#: src/stores/SettingsAPI.ts:170
 msgid "Museeks {0} is available, check https://museeks.io!"
 msgstr "Museeks {0} is available, check https://museeks.io!"
 
-#: src/stores/SettingsAPI.ts:173
+#: src/stores/SettingsAPI.ts:172
 msgid "Museeks {currentVersion} is the latest version available."
 msgstr "Museeks {currentVersion} is the latest version available."
 
 #. placeholder {0}: scanResult.track_count
-#: src/stores/useLibraryStore.ts:98
+#: src/stores/useLibraryStore.ts:101
 msgid "{0} track(s) were refreshed."
 msgstr "{0} track(s) were refreshed."
 
 #. placeholder {0}: scanResult.track_count
-#: src/stores/useLibraryStore.ts:99
+#: src/stores/useLibraryStore.ts:102
 msgid "{0} track(s) were added to the library."
 msgstr "{0} track(s) were added to the library."
 
 #. placeholder {0}: scanResult.playlist_count
-#: src/stores/useLibraryStore.ts:109
+#: src/stores/useLibraryStore.ts:112
 msgid "{0} playlist(s) were added to the library."
 msgstr "{0} playlist(s) were added to the library."
 
-#: src/stores/useLibraryStore.ts:170
+#: src/stores/useLibraryStore.ts:173
 msgid "Library was reset"
 msgstr "Library was reset"

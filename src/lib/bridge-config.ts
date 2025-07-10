@@ -4,11 +4,10 @@ import type { Config } from '../generated/typings';
 import { logAndNotifyError } from './utils';
 
 /**
- * Config Bridge for the UI to communicate with the backend
+ * Config Bridge for the UI to communicate with the backend.
+ * Grouped here so they're easier to mock in E2E tests.
  */
-class ConfigManager {
-  initialConfig: Config | null = null;
-
+const ConfigBridge = {
   /**
    * Get the initial value of the config at the time of instantiation.
    * Should only be used when starting the app.
@@ -19,17 +18,16 @@ class ConfigManager {
     }
 
     return window.__MUSEEKS_INITIAL_CONFIG[key];
-  }
+  },
 
   async getAll(): Promise<Config> {
-    // TODO: check data shape?
     return invoke('plugin:config|get_config');
-  }
+  },
 
   async get<T extends keyof Config>(key: T): Promise<Config[T]> {
     const config = await this.getAll();
     return config[key];
-  }
+  },
 
   async set<T extends keyof Config>(key: T, value: Config[T]): Promise<void> {
     const config = await this.getAll();
@@ -42,7 +40,7 @@ class ConfigManager {
     }
 
     return;
-  }
-}
+  },
+};
 
-export default new ConfigManager();
+export default ConfigBridge;

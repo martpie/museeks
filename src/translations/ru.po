@@ -66,7 +66,7 @@ msgstr "Исполнители"
 
 #: src/components/Footer.tsx:39
 #: src/routes/playlists.tsx:169
-#: src/routes/settings.ui.tsx:126
+#: src/routes/settings.ui.tsx:127
 msgid "Playlists"
 msgstr "Плейлисты"
 
@@ -212,8 +212,8 @@ msgstr "Отмена"
 msgid "Remove"
 msgstr "Удалить"
 
-#. placeholder {0}: props.count
 #. placeholder {0}: tracks.length
+#. placeholder {0}: props.count
 #: src/components/TrackListGrouped.tsx:102
 #: src/components/TrackListStatus.tsx:11
 msgid "{0, plural, one {# track} other {# tracks}}"
@@ -446,10 +446,10 @@ msgstr "Все ваши треки и плейлисты будут удален
 
 #: src/routes/settings.library.tsx:140
 msgid "Reset library?"
-msgstr "Сбросить библиотеку?"
+msgstr "Сбросить библиотеку?<<<<<<< HEAD"
 
 #: src/routes/settings.library.tsx:143
-#: src/routes/settings.ui.tsx:65
+#: src/routes/settings.ui.tsx:66
 msgid "Reset"
 msgstr "Сбросить"
 
@@ -469,75 +469,75 @@ msgstr "Интерфейс"
 msgid "About"
 msgstr "О программе"
 
-#: src/routes/settings.ui.tsx:36
+#: src/routes/settings.ui.tsx:37
 msgid "Theme"
 msgstr "Тема"
 
-#: src/routes/settings.ui.tsx:37
+#: src/routes/settings.ui.tsx:38
 msgid "Change the appearance of the interface"
 msgstr "Изменить внешний вид интерфейса"
 
-#: src/routes/settings.ui.tsx:43
+#: src/routes/settings.ui.tsx:44
 msgid "System (default)"
 msgstr "Системная (по умолчанию)"
 
-#: src/routes/settings.ui.tsx:55
+#: src/routes/settings.ui.tsx:56
 msgid "Accent color"
 msgstr "Цвет акцента"
 
-#: src/routes/settings.ui.tsx:76
+#: src/routes/settings.ui.tsx:77
 msgid "Language"
 msgstr "Язык"
 
-#: src/routes/settings.ui.tsx:94
+#: src/routes/settings.ui.tsx:95
 msgid "Tracks density"
 msgstr "Плотность треков"
 
-#: src/routes/settings.ui.tsx:95
+#: src/routes/settings.ui.tsx:96
 msgid "Change the tracks spacing"
 msgstr "Изменить расстояние между треками"
 
-#: src/routes/settings.ui.tsx:104
+#: src/routes/settings.ui.tsx:105
 msgid "Normal (default)"
 msgstr "Номральная (по умолчанию)"
 
-#: src/routes/settings.ui.tsx:107
+#: src/routes/settings.ui.tsx:108
 msgid "Compact"
 msgstr "Компатная"
 
-#: src/routes/settings.ui.tsx:113
+#: src/routes/settings.ui.tsx:114
 msgid "Default view"
 msgstr "Представление по умолчанию"
 
-#: src/routes/settings.ui.tsx:115
+#: src/routes/settings.ui.tsx:116
 msgid "Change the default view when starting the application"
 msgstr "Изменить представление по умолчанию при запуске приложения"
 
-#: src/routes/settings.ui.tsx:123
+#: src/routes/settings.ui.tsx:124
 msgid "Library (default)"
-msgstr "Библиотека (по умолчанию)"
+msgstr "Библиотека (по умолчанию)<<<<<<< HEAD"
 
-#: src/routes/settings.ui.tsx:132
+#: src/routes/settings.ui.tsx:133
 msgid "Display Notifications"
 msgstr "Отображать уведомления"
 
-#: src/routes/settings.ui.tsx:133
+#: src/routes/settings.ui.tsx:134
 msgid "Send notifications when the playing track changes"
 msgstr "Посылать уведомления при смене проигрываемого трека"
 
-#: src/routes/settings.ui.tsx:142
+#: src/routes/settings.ui.tsx:143
 msgid "Sleep mode blocker"
 msgstr "Блокировать режим сна"
 
-#: src/routes/settings.ui.tsx:143
+#: src/routes/settings.ui.tsx:144
 msgid "Prevent the computer from going into sleep mode when playing"
 msgstr "Предпятствовать переходу компьютера в режим сна во время проигрывания"
 
-#: src/routes/settings.ui.tsx:158
+#: src/routes/settings.ui.tsx:159
 msgid "Light"
 msgstr "Светлая"
 
-#: src/routes/settings.ui.tsx:160
+#: src/routes/settings.ui.tsx:161
 msgid "Dark"
 msgstr "Тёмная"
 
@@ -596,29 +596,29 @@ msgid "The playlist \"{name}\" was created"
 msgstr "Создан плейлист \"{name}\""
 
 #. placeholder {0}: newRelease.tag_name
-#: src/stores/SettingsAPI.ts:171
+#: src/stores/SettingsAPI.ts:170
 msgid "Museeks {0} is available, check https://museeks.io!"
 msgstr "Доступна версия Museeks {0}, проверьте https://museeks.io!"
 
-#: src/stores/SettingsAPI.ts:173
+#: src/stores/SettingsAPI.ts:172
 msgid "Museeks {currentVersion} is the latest version available."
 msgstr "Museeks {currentVersion} является самой последней доступной версией."
 
 #. placeholder {0}: scanResult.track_count
-#: src/stores/useLibraryStore.ts:98
+#: src/stores/useLibraryStore.ts:101
 msgid "{0} track(s) were refreshed."
 msgstr "{0} трек(ов) обновлено."
 
 #. placeholder {0}: scanResult.track_count
-#: src/stores/useLibraryStore.ts:99
+#: src/stores/useLibraryStore.ts:102
 msgid "{0} track(s) were added to the library."
 msgstr "{0} трек(ов) добавлено в библиотеку."
 
 #. placeholder {0}: scanResult.playlist_count
-#: src/stores/useLibraryStore.ts:109
+#: src/stores/useLibraryStore.ts:112
 msgid "{0} playlist(s) were added to the library."
 msgstr "{0} плейлист(ов) добавлено в библиотеку."
 
-#: src/stores/useLibraryStore.ts:170
+#: src/stores/useLibraryStore.ts:173
 msgid "Library was reset"
 msgstr "Библиотека сброшена"

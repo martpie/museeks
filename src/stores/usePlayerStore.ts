@@ -3,8 +3,8 @@ import type { StateCreator } from 'zustand';
 import { persist } from 'zustand/middleware';
 
 import type { Repeat, Track } from '../generated/typings';
-import config from '../lib/config';
-import database from '../lib/database';
+import ConfigBridge from '../lib/bridge-config';
+import DatabaseBridge from '../lib/bridge-database';
 import player from '../lib/player';
 import { logAndNotifyError } from '../lib/utils';
 import { shuffleTracks } from '../lib/utils-player';
@@ -52,8 +52,8 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
   oldQueue: [], // Queue backup (in case of shuffle)
   queueCursor: null, // The cursor of the queue
   queueOrigin: null, // URL of the queue when it was started
-  repeat: config.getInitial('audio_repeat'), // the current repeat state (one, all, none)
-  shuffle: config.getInitial('audio_shuffle'), // If shuffle mode is enabled
+  repeat: ConfigBridge.getInitial('audio_repeat'), // the current repeat state (one, all, none)
+  shuffle: ConfigBridge.getInitial('audio_shuffle'), // If shuffle mode is enabled
   playerStatus: PlayerStatus.STOP, // Player status
 
   api: {
@@ -233,7 +233,7 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
      */
     toggleShuffle: async (shuffle) => {
       const nextShuffleState: boolean = shuffle ?? !get().shuffle;
-      await config.set('audio_shuffle', nextShuffleState);
+      await ConfigBridge.set('audio_shuffle', nextShuffleState);
 
       const { queue, queueCursor, oldQueue } = get();
 
@@ -288,7 +288,7 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
         }
       }
 
-      await config.set('audio_repeat', nextRepeatState);
+      await ConfigBridge.set('audio_repeat', nextRepeatState);
       set({ repeat: nextRepeatState });
     },
 
@@ -307,7 +307,7 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
       if (muted) player.mute();
       else player.unmute();
 
-      await config.set('audio_muted', muted);
+      await ConfigBridge.set('audio_muted', muted);
     },
 
     /**
@@ -316,10 +316,10 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
     setPlaybackRate: async (value) => {
       // if in allowed range
       if (!Number.isNaN(value) && value >= 0.5 && value <= 5) {
-        await config.set('audio_playback_rate', value);
+        await ConfigBridge.set('audio_playback_rate', value);
         player.setPlaybackRate(value);
       } else {
-        await config.set('audio_playback_rate', null);
+        await ConfigBridge.set('audio_playback_rate', null);
         player.setPlaybackRate(1.0);
       }
     },
@@ -331,7 +331,7 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
       if (deviceID) {
         try {
           await player.setOutputDevice(deviceID);
-          await config.set('audio_output_device', deviceID);
+          await ConfigBridge.set('audio_output_device', deviceID);
         } catch (err) {
           logAndNotifyError(err);
         }
@@ -401,7 +401,7 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
      */
     addInQueue: async (tracksIDs) => {
       const { queue, queueCursor } = get();
-      const tracks = await database.getTracks(tracksIDs);
+      const tracks = await DatabaseBridge.getTracks(tracksIDs);
       const newQueue = [...queue, ...tracks];
 
       set({
@@ -415,7 +415,7 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
      * Add tracks at the beginning of the queue
      */
     addNextInQueue: async (tracksIDs) => {
-      const tracks = await database.getTracks(tracksIDs);
+      const tracks = await DatabaseBridge.getTracks(tracksIDs);
 
       const { queueCursor } = get();
       const queue = [...get().queue];
@@ -546,5 +546,5 @@ function createPlayerStore<T extends PlayerState>(store: StateCreator<T>) {
  * Make sure we don't save audio volume to the file system too often
  */
 const saveVolume = debounce(async (volume: number) => {
-  await config.set('audio_volume', volume);
+  await ConfigBridge.set('audio_volume', volume);
 }, 500);

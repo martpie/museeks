@@ -1,12 +1,11 @@
 import { t } from '@lingui/core/macro';
 import { getVersion } from '@tauri-apps/api/app';
-import { invoke } from '@tauri-apps/api/core';
 import { getCurrentWindow } from '@tauri-apps/api/window';
 import { info } from '@tauri-apps/plugin-log';
 import * as semver from 'semver';
 
-import type { Config, DefaultView } from '../generated/typings';
-import config from '../lib/config';
+import type { Config } from '../generated/typings';
+import ConfigBridge from '../lib/bridge-config';
 import { loadTranslation } from '../lib/i18n';
 import { getTheme } from '../lib/themes';
 import { logAndNotifyError } from '../lib/utils';
@@ -34,9 +33,9 @@ async function init(then: () => void): Promise<void> {
     getCurrentWindow()
       .theme()
       .then((maybeTheme) => maybeTheme ?? 'light'),
-    config
-      .get('ui_accent_color')
-      .then((maybeColor) => maybeColor ?? DEFAULT_MAIN_COLOR),
+    ConfigBridge.get('ui_accent_color').then(
+      (maybeColor) => maybeColor ?? DEFAULT_MAIN_COLOR,
+    ),
     checkForUpdate({ silentFail: true }),
   ]);
 
@@ -66,11 +65,11 @@ async function init(then: () => void): Promise<void> {
 
 const setLanguage = async (language: Config['language']): Promise<void> => {
   await loadTranslation(language);
-  await config.set('language', language);
+  await ConfigBridge.set('language', language);
 };
 
 const setTheme = async (themeID: string): Promise<void> => {
-  await config.set('theme', themeID);
+  await ConfigBridge.set('theme', themeID);
 
   switch (themeID) {
     case '__system': {
@@ -109,13 +108,13 @@ function applyThemeToUI(themeID: string): void {
 async function setTracksDensity(
   density: Config['track_view_density'],
 ): Promise<void> {
-  await config.set('track_view_density', density);
+  await ConfigBridge.set('track_view_density', density);
 }
 
 const setUIMainColor = async (
   mainColor: Config['ui_accent_color'],
 ): Promise<void> => {
-  await config.set('ui_accent_color', mainColor);
+  await ConfigBridge.set('ui_accent_color', mainColor);
 };
 
 const applyUIMainColorToUI = (mainColor: Config['ui_accent_color']) => {
@@ -134,7 +133,7 @@ const applyUIMainColorToUI = (mainColor: Config['ui_accent_color']) => {
 async function checkForUpdate(
   options: { silentFail?: boolean } = {},
 ): Promise<void> {
-  const shouldCheck = await config.get('auto_update_checker');
+  const shouldCheck = await ConfigBridge.get('auto_update_checker');
 
   if (!shouldCheck) {
     return;
@@ -187,34 +186,14 @@ async function checkForUpdate(
 }
 
 /**
- * Toggle sleep blocker
- */
-async function toggleSleepBlocker(value: boolean): Promise<void> {
-  if (value === true) {
-    await invoke('plugin:sleepblocker|enable');
-  } else {
-    await invoke('plugin:sleepblocker|disable');
-  }
-}
-
-/**
- * Set the default view of the app
- */
-async function setDefaultView(defaultView: DefaultView): Promise<void> {
-  await invoke('plugin:default-view|set', {
-    defaultView,
-  });
-}
-
-/**
  * Toggle library refresh on startup
  */
 async function toggleLibraryAutorefresh(value: boolean): Promise<void> {
-  await config.set('library_autorefresh', value);
+  await ConfigBridge.set('library_autorefresh', value);
 }
 
 async function checkForLibraryRefresh(): Promise<void> {
-  const autorefreshEnabled = config.getInitial('library_autorefresh');
+  const autorefreshEnabled = ConfigBridge.getInitial('library_autorefresh');
 
   if (autorefreshEnabled) {
     useLibraryStore.getState().api.scan();
@@ -225,21 +204,21 @@ async function checkForLibraryRefresh(): Promise<void> {
  * Toggle update check on startup
  */
 async function toggleAutoUpdateChecker(value: boolean): Promise<void> {
-  await config.set('auto_update_checker', value);
+  await ConfigBridge.set('auto_update_checker', value);
 }
 
 /**
  * Toggle native notifications display
  */
 async function toggleDisplayNotifications(value: boolean): Promise<void> {
-  await config.set('notifications', value);
+  await ConfigBridge.set('notifications', value);
 }
 
 /**
  * Toggle follow track on track change
  */
 async function toggleFollowPlayingTrack(value: boolean): Promise<void> {
-  await config.set('audio_follow_playing_track', value);
+  await ConfigBridge.set('audio_follow_playing_track', value);
 }
 
 // Should we use something else to harmonize between zustand and non-store APIs?
@@ -252,8 +231,6 @@ const SettingsAPI = {
   applyUIMainColorToUI,
   setTracksDensity,
   checkForUpdate,
-  toggleSleepBlocker,
-  setDefaultView,
   toggleLibraryAutorefresh,
   toggleAutoUpdateChecker,
   toggleDisplayNotifications,

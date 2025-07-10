@@ -10,13 +10,13 @@ import SideNav from '../components/SideNav';
 import SideNavLink from '../components/SideNavLink';
 import View from '../elements/View';
 import * as ViewMessage from '../elements/ViewMessage';
-import database from '../lib/database';
+import DatabaseBridge from '../lib/bridge-database';
 import usePlayerStore from '../stores/usePlayerStore';
 
 export const Route = createFileRoute('/artists')({
   component: ViewArtists,
   beforeLoad: async ({ params }) => {
-    const artists = await database.getAllArtists();
+    const artists = await DatabaseBridge.getAllArtists();
     const queueOrigin = usePlayerStore.getState().queueOrigin;
 
     if (!('artistID' in params) && artists.length > 0) {
