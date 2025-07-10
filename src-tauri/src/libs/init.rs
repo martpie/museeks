@@ -3,12 +3,17 @@ use std::fs;
 use crate::libs::error::AnyResult;
 
 pub fn init() -> AnyResult<()> {
-    ensure_new_config_dir()?;
+    let config_dir_check = ensure_new_config_dir()?;
+
+    match config_dir_check {
+        Some(message) => println!("[init] {}", message),
+        None => println!("[init] No actions needed"),
+    }
 
     Ok(())
 }
 
-fn ensure_new_config_dir() -> AnyResult<()> {
+fn ensure_new_config_dir() -> AnyResult<Option<String>> {
     let config_dir = dirs::config_dir().expect("Could not find config directory");
 
     let old_path = config_dir.join("./Museeks");
@@ -16,10 +21,8 @@ fn ensure_new_config_dir() -> AnyResult<()> {
 
     if old_path.exists() && !new_path.exists() {
         fs::rename(&old_path, &new_path)?;
-        println!("Renamed config folder from Museeks to museeks");
-    } else {
-        println!("No special initialization needed");
+        return Ok(Some("Renamed config folder from Museeks to museeks".into()));
     }
 
-    Ok(())
+    Ok(None)
 }

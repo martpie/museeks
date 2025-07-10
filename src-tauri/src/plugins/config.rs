@@ -161,6 +161,9 @@ pub fn get_storage_dir() -> PathBuf {
 
 #[tauri::command]
 pub fn get_config(config_manager: State<ConfigManager>) -> AnyResult<Config> {
+    // TODO remove this
+    let args: Vec<String> = std::env::args().collect();
+    info!("Arguments: {:?}", args);
     info!("Retrieved config");
     config_manager.get()
 }

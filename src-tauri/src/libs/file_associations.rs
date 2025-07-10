@@ -1,12 +1,9 @@
 use log::{info, warn};
-use rayon::iter::{IntoParallelRefIterator, ParallelIterator};
 use std::path::PathBuf;
 use tauri::{AppHandle, Emitter, Manager};
 use tauri_plugin_dialog::{DialogExt, MessageDialogKind};
 
-use crate::libs::database::SUPPORTED_TRACKS_EXTENSIONS;
-use crate::libs::track::get_track_from_file;
-use crate::libs::utils::is_file_valid;
+use crate::libs::track::get_tracks_from_paths;
 
 use super::events::IPCEvent;
 
@@ -19,7 +16,7 @@ pub fn setup_file_associations(app: &tauri::App) {
 
     // NOTICE: `args` may include URL protocol (`your-app-protocol://`)
     // or arguments (`--`) if your app supports them.
-    // files may aslo be passed as `file://path/to/file`
+    // files may also be passed as `file://path/to/file`
     for maybe_file in std::env::args().skip(1) {
         // skip flags like -f or --flag
         if maybe_file.starts_with("-") {
@@ -60,13 +57,11 @@ pub fn setup_file_associations(app_handle: &AppHandle, event: tauri::RunEvent) {
  * For audio files, it will scan the files, create a queue and play it, *without* adding the tracks to the library.
  * For playlists files, not implemented.
  */
-fn handle_file_associations(app_handle: AppHandle, mut files: Vec<PathBuf>) {
+fn handle_file_associations(app_handle: AppHandle, files: Vec<PathBuf>) {
     info!("Handling the opening of the following files:");
     for file in &files {
         info!("  - {:?}", file)
     }
-
-    files.retain(|path| is_file_valid(path, &SUPPORTED_TRACKS_EXTENSIONS));
 
     // This is for the `asset:` protocol to work, ensuring access to the files
     let asset_protocol_scope = app_handle.asset_protocol_scope();
@@ -75,12 +70,7 @@ fn handle_file_associations(app_handle: AppHandle, mut files: Vec<PathBuf>) {
         let _ = asset_protocol_scope.allow_file(file);
     }
 
-    // Build a list of tracks, without importing them to the library
-    let queue = files
-        .par_iter()
-        .map(get_track_from_file)
-        .flatten()
-        .collect::<Vec<_>>();
+    let queue = get_tracks_from_paths(files);
 
     let window = app_handle.get_webview_window("main");
 

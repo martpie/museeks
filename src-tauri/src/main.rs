@@ -56,6 +56,7 @@ fn main() {
         .plugin(plugins::db::init())
         .plugin(plugins::debug::init())
         .plugin(plugins::default_view::init())
+        .plugin(plugins::file_associations::init())
         .plugin(plugins::sleepblocker::init())
         // Tauri integrations with the Operating System
         .plugin(tauri_plugin_dialog::init())
@@ -121,6 +122,8 @@ fn main() {
         })
         .build(tauri::generate_context!())
         .expect("error while running tauri application")
+        // Handle file associations on macOS, this will get triggered when the
+        // app starts, AND when the app is already running and a file is opened.
         .run(
             #[allow(unused_variables)]
             |app_handle, event| {
