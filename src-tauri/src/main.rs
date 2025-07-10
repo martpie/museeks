@@ -7,8 +7,8 @@ mod plugins;
 use libs::file_associations::setup_file_associations;
 use libs::init::init;
 use libs::utils::get_theme_from_name;
-use log::{info, LevelFilter};
-use plugins::config::{get_storage_dir, ConfigManager};
+use log::{LevelFilter, info};
+use plugins::config::{ConfigManager, get_storage_dir};
 use tauri::{Manager, WebviewUrl, WebviewWindowBuilder};
 use tauri_plugin_log::fern::colors::ColoredLevelConfig;
 use tauri_plugin_log::{Target, TargetKind};
@@ -56,6 +56,7 @@ fn main() {
         .plugin(plugins::db::init())
         .plugin(plugins::debug::init())
         .plugin(plugins::default_view::init())
+        .plugin(plugins::file_associations::init())
         .plugin(plugins::sleepblocker::init())
         // Tauri integrations with the Operating System
         .plugin(tauri_plugin_dialog::init())

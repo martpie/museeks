@@ -1,11 +1,16 @@
 use lofty::file::{AudioFile, TaggedFileExt};
 use lofty::tag::{Accessor, ItemKey};
 use log::warn;
+use rayon::iter::IntoParallelRefIterator;
+use rayon::iter::ParallelIterator;
 use serde::{Deserialize, Serialize};
 use sqlx::FromRow;
 use std::path::PathBuf;
 use ts_rs::TS;
 use uuid::Uuid;
+
+use crate::libs::database::SUPPORTED_TRACKS_EXTENSIONS;
+use crate::libs::utils::is_file_valid;
 
 /**
  * Track
@@ -138,4 +143,18 @@ pub fn get_track_id_for_path(path: &PathBuf) -> Option<String> {
             None
         }
     }
+}
+
+/**
+ * Given a list of files, return a potential list of tracks
+ */
+pub fn get_tracks_from_paths(mut files: Vec<PathBuf>) -> Vec<Track> {
+    files.retain(|path| is_file_valid(path, &SUPPORTED_TRACKS_EXTENSIONS));
+
+    // Build a list of tracks, without importing them to the library
+    files
+        .par_iter()
+        .map(get_track_from_file)
+        .flatten()
+        .collect::<Vec<_>>()
 }
