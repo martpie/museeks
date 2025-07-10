@@ -212,8 +212,8 @@ msgstr "Annuler"
 msgid "Remove"
 msgstr "Retirer"
 
-#. placeholder {0}: tracks.length
 #. placeholder {0}: props.count
+#. placeholder {0}: tracks.length
 #: src/components/TrackListGrouped.tsx:102
 #: src/components/TrackListStatus.tsx:11
 msgid "{0, plural, one {# track} other {# tracks}}"
@@ -446,7 +446,7 @@ msgstr "Toutes vos pistes et playlists seront supprimées de Museeks."
 
 #: src/routes/settings.library.tsx:140
 msgid "Reset library?"
-msgstr "Réinitialiser la bibliothèque ?<<<<<<< HEAD"
+msgstr "Réinitialiser la bibliothèque ?<<<<<<< HEAD<<<<<<< HEAD"
 
 #: src/routes/settings.library.tsx:143
 #: src/routes/settings.ui.tsx:66
@@ -523,7 +523,7 @@ msgstr "Afficher les notifications"
 
 #: src/routes/settings.ui.tsx:134
 msgid "Send notifications when the playing track changes"
-msgstr "Envoyer des notifications lorsque la piste en cours change"
+msgstr "Envoyer des notifications lorsque la piste en cours change<<<<<<< HEAD"
 
 #: src/routes/settings.ui.tsx:143
 msgid "Sleep mode blocker"
