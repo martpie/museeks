@@ -2,7 +2,7 @@
 
 import type { OsType } from '@tauri-apps/plugin-os';
 
-import type { Config } from '../../generated/typings';
+import type { Config, Track } from '../../generated/typings';
 
 declare global {
   /**
@@ -13,5 +13,6 @@ declare global {
   interface Window {
     __MUSEEKS_PLATFORM: OsType;
     __MUSEEKS_INITIAL_CONFIG: Config;
+    __MUSEEKS_INITIAL_QUEUE: Array<Track>;
   }
 }
