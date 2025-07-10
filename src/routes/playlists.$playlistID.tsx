@@ -13,8 +13,8 @@ import type { Track } from '../generated/typings';
 import useFilteredTracks from '../hooks/useFilteredTracks';
 import useGlobalTrackListStatus from '../hooks/useGlobalTrackListStatus';
 import useInvalidate from '../hooks/useInvalidate';
-import config from '../lib/config';
-import database from '../lib/database';
+import ConfigBridge from '../lib/bridge-config';
+import DatabaseBridge from '../lib/bridge-database';
 import PlaylistsAPI from '../stores/PlaylistsAPI';
 import useLibraryStore from '../stores/useLibraryStore';
 import type { QueueOrigin } from '../types/museeks';
@@ -23,11 +23,11 @@ export const Route = createFileRoute('/playlists/$playlistID')({
   component: ViewPlaylistDetails,
   loader: async ({ params }) => {
     try {
-      const playlist = await database.getPlaylist(params.playlistID);
+      const playlist = await DatabaseBridge.getPlaylist(params.playlistID);
 
       const [playlistTracks, tracksDensity] = await Promise.all([
-        database.getTracks(playlist.tracks),
-        config.get('track_view_density'),
+        DatabaseBridge.getTracks(playlist.tracks),
+        ConfigBridge.get('track_view_density'),
       ]);
 
       return {

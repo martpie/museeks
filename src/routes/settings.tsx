@@ -5,7 +5,7 @@ import { invoke } from '@tauri-apps/api/core';
 
 import { SettingsNav, SettingsNavLink } from '../elements/SettingsNav';
 import View from '../elements/View';
-import config from '../lib/config';
+import ConfigBridge from '../lib/bridge-config';
 import styles from './settings.module.css';
 
 export const Route = createFileRoute('/settings')({
@@ -18,7 +18,7 @@ export const Route = createFileRoute('/settings')({
   async loader() {
     const [configContent, version, tauriVersion, appStorageDir] =
       await Promise.all([
-        config.getAll(),
+        ConfigBridge.getAll(),
         getVersion(),
         getTauriVersion(),
         invoke<string>('plugin:config|get_storage_dir'),
