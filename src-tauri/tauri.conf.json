@@ -34,8 +34,8 @@
   },
   "bundle": {
     "active": true,
-    "targets": ["dmg", "nsis", "appimage", "deb", "rpm"],
     "category": "Music",
+    "targets": ["dmg", "nsis", "appimage", "deb", "rpm"],
     "icon": [
       "icons/32x32.png",
       "icons/128x128.png",
@@ -56,6 +56,48 @@
           "/usr/share/metainfo/io.museeks.app.metainfo.xml": "release/flatpak.metainfo.xml"
         }
       }
-    }
+    },
+    "fileAssociations": [
+      {
+        "ext": ["aac"],
+        "mimeType": "audio/aac",
+        "role": "Viewer"
+      },
+      {
+        "ext": ["mp3"],
+        "mimeType": "audio/mpeg",
+        "role": "Viewer"
+      },
+      {
+        "ext": ["m4a"],
+        "mimeType": "audio/mp4",
+        "role": "Viewer"
+      },
+      {
+        "ext": ["3gp"],
+        "mimeType": "audio/3gp",
+        "role": "Viewer"
+      },
+      {
+        "ext": ["wav"],
+        "mimeType": "audio/wav",
+        "role": "Viewer"
+      },
+      {
+        "ext": ["ogg", "opus"],
+        "mimeType": "audio/ogg",
+        "role": "Viewer"
+      },
+      {
+        "ext": ["flac"],
+        "mimeType": "audio/flac",
+        "role": "Viewer"
+      },
+      {
+        "ext": ["weba"],
+        "mimeType": "audio/weba",
+        "role": "Viewer"
+      }
+    ]
   }
 }

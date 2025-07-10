@@ -7,8 +7,8 @@ mod plugins;
 use libs::file_associations::setup_file_associations;
 use libs::init::init;
 use libs::utils::get_theme_from_name;
-use log::{LevelFilter, info};
-use plugins::config::{ConfigManager, get_storage_dir};
+use log::{info, LevelFilter};
+use plugins::config::{get_storage_dir, ConfigManager};
 use tauri::{Manager, WebviewUrl, WebviewWindowBuilder};
 use tauri_plugin_log::fern::colors::ColoredLevelConfig;
 use tauri_plugin_log::{Target, TargetKind};
@@ -125,6 +125,8 @@ fn main() {
         })
         .build(tauri::generate_context!())
         .expect("error while running tauri application")
+        // Handle file associations on macOS, this will get triggered when the
+        // app starts, AND when the app is already running and a file is opened.
         .run(
             #[allow(unused_variables)]
             |app_handle, event| {
