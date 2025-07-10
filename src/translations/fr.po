@@ -212,8 +212,8 @@ msgstr "Annuler"
 msgid "Remove"
 msgstr "Retirer"
 
-#. placeholder {0}: props.count
 #. placeholder {0}: tracks.length
+#. placeholder {0}: props.count
 #: src/components/TrackListGrouped.tsx:102
 #: src/components/TrackListStatus.tsx:11
 msgid "{0, plural, one {# track} other {# tracks}}"

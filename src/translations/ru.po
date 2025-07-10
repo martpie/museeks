@@ -212,8 +212,8 @@ msgstr "Отмена"
 msgid "Remove"
 msgstr "Удалить"
 
-#. placeholder {0}: props.count
 #. placeholder {0}: tracks.length
+#. placeholder {0}: props.count
 #: src/components/TrackListGrouped.tsx:102
 #: src/components/TrackListStatus.tsx:11
 msgid "{0, plural, one {# track} other {# tracks}}"
@@ -446,7 +446,7 @@ msgstr "Все ваши треки и плейлисты будут удален
 
 #: src/routes/settings.library.tsx:140
 msgid "Reset library?"
-msgstr "Сбросить библиотеку?"
+msgstr "Сбросить библиотеку?<<<<<<< HEAD"
 
 #: src/routes/settings.library.tsx:143
 #: src/routes/settings.ui.tsx:66
@@ -515,7 +515,7 @@ msgstr "Изменить представление по умолчанию пр
 
 #: src/routes/settings.ui.tsx:124
 msgid "Library (default)"
-msgstr "Библиотека (по умолчанию)"
+msgstr "Библиотека (по умолчанию)<<<<<<< HEAD"
 
 #: src/routes/settings.ui.tsx:133
 msgid "Display Notifications"
