@@ -10,7 +10,7 @@ import Separator from '../elements/Separator';
 import View from '../elements/View';
 import { parseDuration } from '../hooks/useFormattedDuration';
 import useInvalidate from '../hooks/useInvalidate';
-import database from '../lib/database';
+import DatabaseBridge from '../lib/bridge-database';
 import { useLibraryAPI } from '../stores/useLibraryStore';
 import type { TrackMutation } from '../types/museeks';
 import styles from './tracks.$trackID.module.css';
@@ -27,7 +27,7 @@ export const Route = createFileRoute('/tracks/$trackID')({
       throw new Error('Track ID should not be null');
     }
 
-    const [track] = await database.getTracks([trackID]);
+    const [track] = await DatabaseBridge.getTracks([trackID]);
 
     if (track == null) {
       throw new Error('Track not found');

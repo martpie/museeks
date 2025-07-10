@@ -3,8 +3,8 @@ import type { StateCreator } from 'zustand';
 import { persist } from 'zustand/middleware';
 
 import type { SortBy, SortOrder } from '../generated/typings';
-import config from '../lib/config';
-import database from '../lib/database';
+import ConfigBridge from '../lib/bridge-config';
+import DatabaseBridge from '../lib/bridge-database';
 import { logAndNotifyError } from '../lib/utils';
 import { removeRedundantFolders } from '../lib/utils-library';
 import type { API, TrackListStatusInfo, TrackMutation } from '../types/museeks';
@@ -41,8 +41,8 @@ type LibraryState = API<{
 
 const useLibraryStore = createLibraryStore<LibraryState>((set, get) => ({
   search: '',
-  sortBy: config.getInitial('library_sort_by'),
-  sortOrder: config.getInitial('library_sort_order'),
+  sortBy: ConfigBridge.getInitial('library_sort_by'),
+  sortOrder: ConfigBridge.getInitial('library_sort_order'),
   refreshing: false,
   refresh: {
     current: 0,
@@ -77,8 +77,8 @@ const useLibraryStore = createLibraryStore<LibraryState>((set, get) => ({
         sortOrder = 'Asc';
       }
 
-      await config.set('library_sort_by', sortBy);
-      await config.set('library_sort_order', sortOrder);
+      await ConfigBridge.set('library_sort_by', sortBy);
+      await ConfigBridge.set('library_sort_order', sortOrder);
 
       set({ sortBy, sortOrder });
     },
@@ -90,8 +90,11 @@ const useLibraryStore = createLibraryStore<LibraryState>((set, get) => ({
       try {
         set({ refreshing: true });
 
-        const libraryFolders = await config.get('library_folders');
-        const scanResult = await database.importTracks(libraryFolders, refresh);
+        const libraryFolders = await ConfigBridge.get('library_folders');
+        const scanResult = await DatabaseBridge.importTracks(
+          libraryFolders,
+          refresh,
+        );
 
         if (scanResult.track_count > 0) {
           const message = refresh
@@ -122,22 +125,22 @@ const useLibraryStore = createLibraryStore<LibraryState>((set, get) => ({
 
     addLibraryFolders: async (paths: Array<string>) => {
       try {
-        const musicFolders = await config.get('library_folders');
+        const musicFolders = await ConfigBridge.get('library_folders');
         const newFolders = removeRedundantFolders([
           ...musicFolders,
           ...paths,
         ]).sort();
-        await config.set('library_folders', newFolders);
+        await ConfigBridge.set('library_folders', newFolders);
       } catch (err) {
         logAndNotifyError(err);
       }
     },
 
     removeLibraryFolder: async (path) => {
-      const musicFolders = await config.get('library_folders');
+      const musicFolders = await ConfigBridge.get('library_folders');
       const index = musicFolders.indexOf(path);
       musicFolders.splice(index, 1);
-      await config.set('library_folders', musicFolders);
+      await ConfigBridge.set('library_folders', musicFolders);
     },
 
     setRefresh: async (current, total) => {
@@ -153,7 +156,7 @@ const useLibraryStore = createLibraryStore<LibraryState>((set, get) => ({
      * remove tracks from library
      */
     remove: async (tracksIDs) => {
-      await database.removeTracks(tracksIDs);
+      await DatabaseBridge.removeTracks(tracksIDs);
       // That would be great to remove those ids from all the playlists, but it's not easy
       // and should not cause strange behaviors, all PR for that would be really appreciated
       // TODO: see if it's possible to remove the IDs from the selected state of TrackList as it "could" lead to strange behaviors
@@ -165,8 +168,8 @@ const useLibraryStore = createLibraryStore<LibraryState>((set, get) => ({
     reset: async () => {
       usePlayerStore.getState().api.stop();
       try {
-        await database.reset();
-        await config.set('library_folders', []);
+        await DatabaseBridge.reset();
+        await ConfigBridge.set('library_folders', []);
         useToastsStore.getState().api.add('success', t`Library was reset`);
       } catch (err) {
         logAndNotifyError(err);
@@ -183,7 +186,7 @@ const useLibraryStore = createLibraryStore<LibraryState>((set, get) => ({
      */
     updateTrackMetadata: async (trackID, newFields) => {
       try {
-        let [track] = await database.getTracks([trackID]);
+        let [track] = await DatabaseBridge.getTracks([trackID]);
 
         if (!track) {
           throw new Error(
@@ -196,7 +199,7 @@ const useLibraryStore = createLibraryStore<LibraryState>((set, get) => ({
           ...newFields,
         };
 
-        await database.updateTrack(track);
+        await DatabaseBridge.updateTrack(track);
       } catch (err) {
         logAndNotifyError(
           err,

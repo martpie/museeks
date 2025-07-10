@@ -4,17 +4,17 @@ import { useMemo } from 'react';
 import TrackList from '../components/TrackList';
 import { useFilteredTrackGroup } from '../hooks/useFilteredTracks';
 import useGlobalTrackListStatus from '../hooks/useGlobalTrackListStatus';
-import config from '../lib/config';
-import database from '../lib/database';
+import ConfigBridge from '../lib/bridge-config';
+import DatabaseBridge from '../lib/bridge-database';
 import type { QueueOrigin } from '../types/museeks';
 
 export const Route = createFileRoute('/artists/$artistID')({
   component: ViewArtistDetails,
   loader: async ({ params }) => {
     const [albums, playlists, tracksDensity] = await Promise.all([
-      database.getArtistTracks(params.artistID),
-      database.getAllPlaylists(),
-      config.get('track_view_density'),
+      DatabaseBridge.getArtistTracks(params.artistID),
+      DatabaseBridge.getAllPlaylists(),
+      ConfigBridge.get('track_view_density'),
     ]);
 
     return {

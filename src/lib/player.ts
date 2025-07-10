@@ -1,7 +1,7 @@
 import { convertFileSrc } from '@tauri-apps/api/core';
 
 import type { Track } from '../generated/typings';
-import config from './config';
+import ConfigBridge from './bridge-config';
 import { logAndNotifyError } from './utils';
 
 interface PlayerOptions {
@@ -133,8 +133,8 @@ class Player {
  */
 
 export default new Player({
-  volume: config.getInitial('audio_volume'),
-  playbackRate: config.getInitial('audio_playback_rate') ?? 1,
-  audioOutputDevice: config.getInitial('audio_output_device'),
-  muted: config.getInitial('audio_muted'),
+  volume: ConfigBridge.getInitial('audio_volume'),
+  playbackRate: ConfigBridge.getInitial('audio_playback_rate') ?? 1,
+  audioOutputDevice: ConfigBridge.getInitial('audio_output_device'),
+  muted: ConfigBridge.getInitial('audio_muted'),
 });

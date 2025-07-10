@@ -1,7 +1,7 @@
 import { t } from '@lingui/core/macro';
 
 import type { Playlist, Track } from '../generated/typings';
-import database from '../lib/database';
+import DatabaseBridge from '../lib/bridge-database';
 import { logAndNotifyError } from '../lib/utils';
 import usePlayerStore from './usePlayerStore';
 import useToastsStore from './useToastsStore';
@@ -11,8 +11,8 @@ import useToastsStore from './useToastsStore';
  */
 async function play(playlistID: string): Promise<void> {
   try {
-    const playlist = await database.getPlaylist(playlistID);
-    const tracks = await database.getTracks(playlist.tracks);
+    const playlist = await DatabaseBridge.getPlaylist(playlistID);
+    const tracks = await DatabaseBridge.getTracks(playlist.tracks);
     usePlayerStore
       .getState()
       .api.start(tracks, null, { type: 'playlist', playlistID });
@@ -30,7 +30,7 @@ async function create(
   silent = false,
 ): Promise<Playlist | null> {
   try {
-    const playlist = await database.createPlaylist(name, trackIDs);
+    const playlist = await DatabaseBridge.createPlaylist(name, trackIDs);
 
     if (!silent) {
       useToastsStore
@@ -51,7 +51,7 @@ async function create(
  */
 async function rename(playlistID: string, name: string): Promise<void> {
   try {
-    await database.renamePlaylist(playlistID, name);
+    await DatabaseBridge.renamePlaylist(playlistID, name);
   } catch (err) {
     logAndNotifyError(err);
   }
@@ -62,7 +62,7 @@ async function rename(playlistID: string, name: string): Promise<void> {
  */
 async function remove(playlistID: string): Promise<void> {
   try {
-    await database.deletePlaylist(playlistID);
+    await DatabaseBridge.deletePlaylist(playlistID);
   } catch (err) {
     logAndNotifyError(err);
   }
@@ -76,9 +76,9 @@ async function addTracks(
   tracksIDs: string[],
 ): Promise<void> {
   try {
-    const playlist = await database.getPlaylist(playlistID);
+    const playlist = await DatabaseBridge.getPlaylist(playlistID);
     const playlistTracks = playlist.tracks.concat(tracksIDs);
-    await database.setPlaylistTracks(playlistID, playlistTracks);
+    await DatabaseBridge.setPlaylistTracks(playlistID, playlistTracks);
   } catch (err) {
     logAndNotifyError(err);
   }
@@ -92,11 +92,11 @@ async function removeTracks(
   tracksIDs: string[],
 ): Promise<void> {
   try {
-    const playlist = await database.getPlaylist(playlistID);
+    const playlist = await DatabaseBridge.getPlaylist(playlistID);
     const playlistTracks = playlist.tracks.filter(
       (elem: string) => !tracksIDs.includes(elem),
     );
-    await database.setPlaylistTracks(playlistID, playlistTracks);
+    await DatabaseBridge.setPlaylistTracks(playlistID, playlistTracks);
   } catch (err) {
     logAndNotifyError(err);
   }
@@ -107,8 +107,11 @@ async function removeTracks(
  */
 async function duplicate(playlistID: string): Promise<void> {
   try {
-    const playlist = await database.getPlaylist(playlistID);
-    await database.createPlaylist(`Copy of ${playlist.name}`, playlist.tracks);
+    const playlist = await DatabaseBridge.getPlaylist(playlistID);
+    await DatabaseBridge.createPlaylist(
+      `Copy of ${playlist.name}`,
+      playlist.tracks,
+    );
   } catch (err) {
     logAndNotifyError(err);
   }
@@ -125,7 +128,7 @@ async function reorderTracks(
 ): Promise<void> {
   try {
     // Save and reload the playlist
-    await database.setPlaylistTracks(
+    await DatabaseBridge.setPlaylistTracks(
       playlistID,
       tracks.map((track) => track.id),
     );

@@ -3,7 +3,7 @@ import { getCurrentWindow } from '@tauri-apps/api/window';
 import { sendNotification } from '@tauri-apps/plugin-notification';
 import { useEffect } from 'react';
 
-import config from '../lib/config';
+import ConfigBridge from '../lib/bridge-config';
 import { getCover } from '../lib/cover';
 import player from '../lib/player';
 import { goToPlayingTrack } from '../lib/queue-origin';
@@ -59,7 +59,7 @@ function PlayerEvents() {
 
     async function notifyTrackChange() {
       const track = player.getTrack();
-      const isEnabled = await config.get('notifications');
+      const isEnabled = await ConfigBridge.get('notifications');
       const isMinimized = await getCurrentWindow()
         .isMinimized()
         .catch(logAndNotifyError);
@@ -90,7 +90,10 @@ function PlayerEvents() {
 
       // If follow track is enabled, switch to the right view + scroll to the track
       // Do not do it if the app if focused, as users could be interacting with the app
-      if ((await config.get('audio_follow_playing_track')) && !isFocused) {
+      if (
+        (await ConfigBridge.get('audio_follow_playing_track')) &&
+        !isFocused
+      ) {
         goToPlayingTrack(queueOrigin, navigate);
       }
     }
