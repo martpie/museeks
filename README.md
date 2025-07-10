@@ -101,7 +101,7 @@ This will launch Museeks in dev mode. Hot reload will work out-of-the-box, so wh
 ### Package Binaries
 
 - `npm ci`
-- `npm tauri build`
+- `npm run tauri build`
 
 Tauri does not support cross-platform binaries, so the command will only generate binaries for your current platform (macOS, Linux, or Windows).
 

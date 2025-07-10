@@ -4,11 +4,10 @@
 mod libs;
 mod plugins;
 
-use libs::file_associations::setup_file_associations;
 use libs::init::init;
 use libs::utils::get_theme_from_name;
-use log::{info, LevelFilter};
-use plugins::config::{get_storage_dir, ConfigManager};
+use log::{LevelFilter, info};
+use plugins::config::{ConfigManager, get_storage_dir};
 use tauri::{Manager, WebviewUrl, WebviewWindowBuilder};
 use tauri_plugin_log::fern::colors::ColoredLevelConfig;
 use tauri_plugin_log::{Target, TargetKind};
@@ -56,6 +55,7 @@ fn main() {
         .plugin(plugins::db::init())
         .plugin(plugins::debug::init())
         .plugin(plugins::default_view::init())
+        .plugin(plugins::file_associations::init())
         .plugin(plugins::sleepblocker::init())
         // Tauri integrations with the Operating System
         .plugin(tauri_plugin_dialog::init())
@@ -114,13 +114,6 @@ fn main() {
 
             info!("Main window built");
 
-            // FIXME: File association for non-macOS is not working well:
-            // - Does not work with single instance when the app is already open
-            // - Issues with C:\... URLs parsing with rust-url
-            // - The main window is created, but the UI may not be ready yet to receive the event requesting a playback
-            #[cfg(not(target_os = "macos"))]
-            setup_file_associations(app);
-
             Ok(())
         })
         .build(tauri::generate_context!())
@@ -131,7 +124,7 @@ fn main() {
             #[allow(unused_variables)]
             |app_handle, event| {
                 #[cfg(target_os = "macos")]
-                setup_file_associations(app_handle, event);
+                plugins::file_associations::send_queue_to_ui(app_handle, event);
             },
         );
 }
