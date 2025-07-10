@@ -161,7 +161,6 @@ pub fn get_storage_dir() -> PathBuf {
 
 #[tauri::command]
 pub fn get_config(config_manager: State<ConfigManager>) -> AnyResult<Config> {
-    info!("Retrieved config");
     config_manager.get()
 }
 

@@ -11,6 +11,7 @@ import { loadTranslation } from '../lib/i18n';
 import { getTheme } from '../lib/themes';
 import { logAndNotifyError } from '../lib/utils';
 import useLibraryStore from './useLibraryStore';
+import usePlayerStore from './usePlayerStore';
 import useToastsStore from './useToastsStore';
 
 export const DEFAULT_MAIN_COLOR = '#459ce7';
@@ -48,6 +49,21 @@ async function init(then: () => void): Promise<void> {
 
   // Non-blocking, this can we done later
   await checkForLibraryRefresh().catch(logAndNotifyError);
+
+  // Check if we should start a queue (maybe put that somewhere else)
+  if (window.__MUSEEKS_INITIAL_QUEUE.length > 0) {
+    info(
+      `Starting queue from file associations (${window.__MUSEEKS_INITIAL_QUEUE.length} tracks)`,
+    );
+    usePlayerStore
+      .getState()
+      .api.start(
+        window.__MUSEEKS_INITIAL_QUEUE,
+        window.__MUSEEKS_INITIAL_QUEUE[0].id,
+        { type: 'file-associations' },
+      );
+  }
+
   then();
 }
 
