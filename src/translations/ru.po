@@ -212,8 +212,8 @@ msgstr "Отмена"
 msgid "Remove"
 msgstr "Удалить"
 
-#. placeholder {0}: tracks.length
 #. placeholder {0}: props.count
+#. placeholder {0}: tracks.length
 #: src/components/TrackListGrouped.tsx:102
 #: src/components/TrackListStatus.tsx:11
 msgid "{0, plural, one {# track} other {# tracks}}"
@@ -446,7 +446,7 @@ msgstr "Все ваши треки и плейлисты будут удален
 
 #: src/routes/settings.library.tsx:140
 msgid "Reset library?"
-msgstr "Сбросить библиотеку?<<<<<<< HEAD"
+msgstr "Сбросить библиотеку?<<<<<<< HEAD<<<<<<< HEAD"
 
 #: src/routes/settings.library.tsx:143
 #: src/routes/settings.ui.tsx:66
@@ -523,7 +523,7 @@ msgstr "Отображать уведомления"
 
 #: src/routes/settings.ui.tsx:134
 msgid "Send notifications when the playing track changes"
-msgstr "Посылать уведомления при смене проигрываемого трека"
+msgstr "Посылать уведомления при смене проигрываемого трека<<<<<<< HEAD"
 
 #: src/routes/settings.ui.tsx:143
 msgid "Sleep mode blocker"
