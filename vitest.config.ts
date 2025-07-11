@@ -1,6 +1,11 @@
+import process from 'node:process';
+
 import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
+  define: {
+    'process.env': process.env,
+  },
   test: {
     projects: [
       {
@@ -17,6 +22,11 @@ export default defineConfig({
           browser: {
             enabled: true,
             provider: 'playwright',
+            viewport: {
+              width: 900,
+              height: 500,
+            },
+
             // https://vitest.dev/guide/browser/playwright
             instances: [
               {

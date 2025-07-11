@@ -54,6 +54,16 @@ declare module '@tanstack/react-router' {
 |--------------------------------------------------------------------------
 */
 
+export const app = (
+  <React.StrictMode>
+    <QueryClientProvider client={queryClient}>
+      {/* <I18nProvider i18n={i18n}> */}
+      <RouterProvider router={router} />
+      {/* </I18nProvider> */}
+    </QueryClientProvider>
+  </React.StrictMode>
+);
+
 (async function createRoot() {
   Promise.allSettled([
     logger.attachConsole(),
@@ -64,15 +74,7 @@ declare module '@tanstack/react-router' {
 
   if (wrap) {
     const root = ReactDOM.createRoot(wrap);
-    root.render(
-      <React.StrictMode>
-        <QueryClientProvider client={queryClient}>
-          <I18nProvider i18n={i18n}>
-            <RouterProvider router={router} />
-          </I18nProvider>
-        </QueryClientProvider>
-      </React.StrictMode>,
-    );
+    root.render(app);
   } else {
     document.body.innerHTML = '<div style="text-align: center;">x_x</div>';
   }
