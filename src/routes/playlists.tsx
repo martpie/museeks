@@ -18,14 +18,14 @@ import ButtonIcon from '../elements/ButtonIcon';
 import View from '../elements/View';
 import * as ViewMessage from '../elements/ViewMessage';
 import useInvalidate from '../hooks/useInvalidate';
-import database from '../lib/database';
+import DatabaseBridge from '../lib/bridge-database';
 import PlaylistsAPI from '../stores/PlaylistsAPI';
 import usePlayerStore from '../stores/usePlayerStore';
 
 export const Route = createFileRoute('/playlists')({
   component: ViewPlaylists,
   beforeLoad: async ({ params }) => {
-    const playlists = await database.getAllPlaylists();
+    const playlists = await DatabaseBridge.getAllPlaylists();
     const queueOrigin = usePlayerStore.getState().queueOrigin;
 
     if (!('playlistID' in params) && playlists.length > 0) {
@@ -108,7 +108,7 @@ function ViewPlaylists() {
         {
           text: t`Export`,
           action: async () => {
-            await database.exportPlaylist(playlist.id);
+            await DatabaseBridge.exportPlaylist(playlist.id);
           },
         },
       ];
