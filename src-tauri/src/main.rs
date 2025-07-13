@@ -47,6 +47,14 @@ fn main() {
                 .max_file_size(50_000)
                 .build(),
         )
+        // Ensure a single instance of the app is running, if needed, play opened files
+        .plugin(tauri_plugin_single_instance::init(|app_handle, args, _| {
+            // Focus on the already running app in case the app is opened again
+            let window = app_handle.get_webview_window("main").unwrap();
+            window.set_focus().unwrap();
+
+            plugins::file_associations::handle_opened_files(app_handle, args);
+        }))
         // Custom integrations
         .plugin(plugins::app_close::init())
         .plugin(plugins::app_menu::init())
@@ -65,11 +73,6 @@ fn main() {
         .plugin(tauri_plugin_prevent_default::init())
         .plugin(tauri_plugin_notification::init())
         .plugin(tauri_plugin_shell::init())
-        .plugin(tauri_plugin_single_instance::init(|app_handle, _, _| {
-            // Focus on the already running app in case the app is opened again
-            let window = app_handle.get_webview_window("main").unwrap();
-            window.set_focus().unwrap();
-        }))
         .plugin(
             tauri_plugin_window_state::Builder::default()
                 .with_state_flags(
@@ -124,7 +127,7 @@ fn main() {
             #[allow(unused_variables)]
             |app_handle, event| {
                 #[cfg(target_os = "macos")]
-                plugins::file_associations::send_queue_to_ui(app_handle, event);
+                plugins::file_associations::handle_run_event(app_handle, event);
             },
         );
 }
