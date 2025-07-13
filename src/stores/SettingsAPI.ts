@@ -56,11 +56,9 @@ async function init(then: () => void): Promise<void> {
     info(
       `Starting queue from file associations (${initialQueue.length} tracks)`,
     );
-    usePlayerStore
-      .getState()
-      .api.start(initialQueue, initialQueue[0].id, {
-        type: 'file-associations',
-      });
+    usePlayerStore.getState().api.start(initialQueue, initialQueue[0].id, {
+      type: 'file-associations',
+    });
   }
 
   then();
