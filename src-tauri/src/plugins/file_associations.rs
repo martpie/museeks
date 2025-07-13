@@ -39,11 +39,6 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
         serialized_tracks,
     );
 
-    println!(
-        "[file-associations]vSCRIPT FOR FILE ASSOC: {}",
-        initial_queue_script
-    );
-
     Builder::<R>::new("file_associations")
         .js_init_script(initial_queue_script)
         .build()
