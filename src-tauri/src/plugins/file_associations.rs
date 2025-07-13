@@ -1,7 +1,7 @@
 use std::path::PathBuf;
 
-use log::{info, warn};
 use tauri::plugin::{Builder, TauriPlugin};
+
 /**
  * Plugin in charge of handle file associations.
  * It's convoluted due to x-platform issues.
@@ -39,7 +39,10 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
         serialized_tracks,
     );
 
-    info!("SCRIPT FOR FILE ASSOC: {}", initial_queue_script);
+    println!(
+        "[file-associations]vSCRIPT FOR FILE ASSOC: {}",
+        initial_queue_script
+    );
 
     Builder::<R>::new("file_associations")
         .js_init_script(initial_queue_script)
@@ -73,8 +76,23 @@ pub fn get_tracks_from_args(args: Vec<String>) -> Option<Vec<Track>> {
             let path = match PathBuf::from(&maybe_file).canonicalize() {
                 Ok(path) => path,
                 Err(err) => {
-                    warn!(
+                    println!(
                         "[file_associations] Failed to canonicalize path {:?}: {:?}",
+                        maybe_file, err
+                    );
+                    continue;
+                }
+            };
+
+            paths.push(path);
+        }
+        // Handle classic /path/to/file, like on Linux
+        else {
+            let path = match PathBuf::from(&maybe_file).canonicalize() {
+                Ok(path) => path,
+                Err(err) => {
+                    println!(
+                        "[file_associations] Invalid argument {:?}: {:?}",
                         maybe_file, err
                     );
                     continue;
@@ -96,8 +114,8 @@ pub fn get_tracks_from_args(args: Vec<String>) -> Option<Vec<Track>> {
  * running.
  */
 pub fn handle_opened_files(app_handle: &AppHandle, args: Vec<String>) {
-    info!(
-        "Handling opened files from command line arguments: {:?}",
+    println!(
+        "[file-associations] Handling opened files from command line arguments: {:?}",
         &args
     );
     let tracks = get_tracks_from_args(args);
@@ -129,13 +147,13 @@ pub fn handle_run_event(app_handle: &AppHandle, event: tauri::RunEvent) {
  */
 fn send_queue_to_ui(app_handle: &AppHandle, maybe_tracks: Option<Vec<Track>>) {
     if maybe_tracks.is_none() {
-        warn!("No tracks found in opened files, do nothing");
+        println!("[file-associations] No tracks found in opened files, do nothing");
         return;
     }
 
     let tracks = maybe_tracks.unwrap();
-    info!(
-        "Sending queue to UI: {:?}",
+    println!(
+        "[file-associations] Sending queue to UI: {:?}",
         &tracks.iter().map(|t| t.path.clone()).collect::<Vec<_>>()
     );
 
@@ -164,7 +182,7 @@ fn send_queue_to_ui(app_handle: &AppHandle, maybe_tracks: Option<Vec<Track>>) {
             };
         }
         None => {
-            warn!("Main window not created, cannot open the files...");
+            println!("[file-associations] Main window not created, cannot open the files...");
         }
     }
 }
