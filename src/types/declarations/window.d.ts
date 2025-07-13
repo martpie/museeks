@@ -13,6 +13,6 @@ declare global {
   interface Window {
     __MUSEEKS_PLATFORM: OsType;
     __MUSEEKS_INITIAL_CONFIG: Config;
-    __MUSEEKS_INITIAL_QUEUE: Array<Track>;
+    __MUSEEKS_INITIAL_QUEUE: Array<Track> | null;
   }
 }

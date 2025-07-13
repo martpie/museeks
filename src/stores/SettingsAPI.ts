@@ -51,17 +51,16 @@ async function init(then: () => void): Promise<void> {
   await checkForLibraryRefresh().catch(logAndNotifyError);
 
   // Check if we should start a queue (maybe put that somewhere else)
-  if (window.__MUSEEKS_INITIAL_QUEUE.length > 0) {
+  const initialQueue = window.__MUSEEKS_INITIAL_QUEUE;
+  if (initialQueue !== null && initialQueue.length > 0) {
     info(
-      `Starting queue from file associations (${window.__MUSEEKS_INITIAL_QUEUE.length} tracks)`,
+      `Starting queue from file associations (${initialQueue.length} tracks)`,
     );
     usePlayerStore
       .getState()
-      .api.start(
-        window.__MUSEEKS_INITIAL_QUEUE,
-        window.__MUSEEKS_INITIAL_QUEUE[0].id,
-        { type: 'file-associations' },
-      );
+      .api.start(initialQueue, initialQueue[0].id, {
+        type: 'file-associations',
+      });
   }
 
   then();
