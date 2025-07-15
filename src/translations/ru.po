@@ -1,17 +1,21 @@
+# 
+# Translators:
+# Pierre de la Martinière <pierre.de.la.martiniere@gmail.com>, 2025
+# 
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2025-06-27 18:25+0300\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"X-Generator: @lingui/cli\n"
-"Language: ru\n"
-"Last-Translator: Ildar Nizamov\n"
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: \n"
-"Language-Team: \n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11) ? 0 : ((n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20)) ? 1 : 2);\n"
+"POT-Creation-Date: 2025-06-12 15:50+0200\n"
+"PO-Revision-Date: 2025-07-15 17:52+0000\n"
+"Last-Translator: Pierre de la Martinière <pierre.de.la.martiniere@gmail.com>, 2025\n"
+"Language-Team: Russian (https://app.transifex.com/museeks/teams/66305/ru/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ru\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
+"X-Generator: @lingui/cli\n"
 
 #: src/components/AudioOutputSelect.tsx:53
 msgid "Loading devices..."
@@ -38,13 +42,21 @@ msgid "Album cover"
 msgstr "Обложка альбома"
 
 #: src/components/DropzoneImport.tsx:52
-msgid "{skippedItemsCount, plural, one {# invalid item ignored} other {# invalid items ignored}}"
-msgstr "Пропущен{skippedItemsCount, plural, one { # некорректный объект} few {ы # некорректных объекта} many {о # некорректных объектов}}"
+msgid ""
+"{skippedItemsCount, plural, one {# invalid item ignored} other {# invalid "
+"items ignored}}"
+msgstr ""
+"Пропущен{skippedItemsCount, plural, one { # некорректный объект} few {ы # "
+"некорректных объекта} many {о # некорректных объектов}}"
 
 #. placeholder {0}: folders.length
 #: src/components/DropzoneImport.tsx:63
-msgid "{0, plural, one {# folder added to the library} other {# folders added to the library}}"
-msgstr "В библиотеку добавлен{0, plural, one {а # папка} few {ы # папки} many {о # папок}}"
+msgid ""
+"{0, plural, one {# folder added to the library} other {# folders added to "
+"the library}}"
+msgstr ""
+"В библиотеку добавлен{0, plural, one {а # папка} few {ы # папки} many {о # "
+"папок}}"
 
 #: src/components/DropzoneImport.tsx:100
 msgid "Add music to the library"
@@ -54,18 +66,15 @@ msgstr "Добавить музыку в библиотеку"
 msgid "Drop folders anywhere"
 msgstr "Отпустите папки в любом месте"
 
-#: src/components/Footer.tsx:21
-#: src/routes/settings.tsx:42
+#: src/components/Footer.tsx:21 src/routes/settings.tsx:42
 msgid "Library"
 msgstr "Библиотека"
 
-#: src/components/Footer.tsx:30
-#: src/routes/artists.tsx:52
+#: src/components/Footer.tsx:30 src/routes/artists.tsx:52
 msgid "Artists"
 msgstr "Исполнители"
 
-#: src/components/Footer.tsx:39
-#: src/routes/playlists.tsx:169
+#: src/components/Footer.tsx:39 src/routes/playlists.tsx:169
 #: src/routes/settings.ui.tsx:126
 msgid "Playlists"
 msgstr "Плейлисты"
@@ -139,8 +148,7 @@ msgstr "Переименовать"
 msgid "Create new playlist..."
 msgstr "Создать новый плейлист..."
 
-#: src/components/TrackList.tsx:244
-#: src/routes/playlists.tsx:62
+#: src/components/TrackList.tsx:244 src/routes/playlists.tsx:62
 msgid "New playlist"
 msgstr "Новый плейлист"
 
@@ -155,8 +163,11 @@ msgid "{0} track(s) were added to \"{1}\""
 msgstr "{0} трек(ов) добавлено в \"{1}\""
 
 #: src/components/TrackList.tsx:285
-msgid "{selectedCount, plural, one {# track selected} other {# tracks selected}}"
-msgstr "Выбран{selectedCount, plural, one { # трек} few {ы # трека} many {о # треков}}"
+msgid ""
+"{selectedCount, plural, one {# track selected} other {# tracks selected}}"
+msgstr ""
+"Выбран{selectedCount, plural, one { # трек} few {ы # трека} many {о # "
+"треков}}"
 
 #: src/components/TrackList.tsx:297
 msgid "Add to queue"
@@ -200,15 +211,12 @@ msgstr "Вы уверены, что хотите удалить {0} трек(о�
 msgid "Remove tracks"
 msgstr "Удалить треки"
 
-#: src/components/TrackList.tsx:376
-#: src/routes/settings.library.tsx:97
-#: src/routes/settings.library.tsx:143
-#: src/routes/tracks.$trackID.tsx:246
+#: src/components/TrackList.tsx:376 src/routes/settings.library.tsx:97
+#: src/routes/settings.library.tsx:143 src/routes/tracks.$trackID.tsx:246
 msgid "Cancel"
 msgstr "Отмена"
 
-#: src/components/TrackList.tsx:377
-#: src/routes/settings.library.tsx:61
+#: src/components/TrackList.tsx:377 src/routes/settings.library.tsx:61
 msgid "Remove"
 msgstr "Удалить"
 
@@ -219,13 +227,11 @@ msgstr "Удалить"
 msgid "{0, plural, one {# track} other {# tracks}}"
 msgstr "{0, plural, one {# трек} few {# трека} many {# треков}}"
 
-#: src/components/TrackListHeader.tsx:46
-#: src/routes/tracks.$trackID.tsx:87
+#: src/components/TrackListHeader.tsx:46 src/routes/tracks.$trackID.tsx:87
 msgid "Title"
 msgstr "Заголовок"
 
-#: src/components/TrackListHeader.tsx:52
-#: src/routes/tracks.$trackID.tsx:230
+#: src/components/TrackListHeader.tsx:52 src/routes/tracks.$trackID.tsx:230
 msgid "Duration"
 msgstr "Длительность"
 
@@ -233,18 +239,15 @@ msgstr "Длительность"
 msgid "Artist"
 msgstr "Исполнитель"
 
-#: src/components/TrackListHeader.tsx:64
-#: src/routes/tracks.$trackID.tsx:98
+#: src/components/TrackListHeader.tsx:64 src/routes/tracks.$trackID.tsx:98
 msgid "Album"
 msgstr "Альбом"
 
-#: src/components/TrackListHeader.tsx:70
-#: src/routes/tracks.$trackID.tsx:138
+#: src/components/TrackListHeader.tsx:70 src/routes/tracks.$trackID.tsx:138
 msgid "Genre"
 msgstr "Жанр"
 
-#: src/components/VolumeControl.tsx:73
-#: src/components/VolumeControl.tsx:93
+#: src/components/VolumeControl.tsx:73 src/components/VolumeControl.tsx:93
 msgid "Volume"
 msgstr "Громкость"
 
@@ -272,8 +275,7 @@ msgstr "В вашей библиотеке нет музыки :("
 msgid "you can <0>add your music here</0>"
 msgstr "вы можете добавить <0>вашу музыку здесь</0>"
 
-#: src/routes/library.tsx:111
-#: src/routes/playlists.$playlistID.tsx:110
+#: src/routes/library.tsx:111 src/routes/playlists.$playlistID.tsx:110
 msgid "Your search returned no results"
 msgstr "Ваш поиск не принёс результатов"
 
@@ -340,8 +342,12 @@ msgid "Contributors"
 msgstr "Участники"
 
 #: src/routes/settings.about.tsx:67
-msgid "Made with <0/> by Pierre de la Martinière (<1>martpie.io</1>) and a bunch of <2>great people</2>"
-msgstr "Создали <0/>Пьер де ла Мартиньер (<1>martpie.io</1>) и множество <2>замечательных людей</2>"
+msgid ""
+"Made with <0/> by Pierre de la Martinière (<1>martpie.io</1>) and a bunch of"
+" <2>great people</2>"
+msgstr ""
+"Создали <0/>Пьер де ла Мартиньер (<1>martpie.io</1>) и множество "
+"<2>замечательных людей</2>"
 
 #: src/routes/settings.about.tsx:83
 msgid "Translations:"
@@ -352,8 +358,13 @@ msgid "Report issue / Ask for a feature"
 msgstr "Сообщить об ошибке / Предложить улучшение"
 
 #: src/routes/settings.about.tsx:100
-msgid "Bugs happen. Please, do not hesitate to report them or to ask for features you would like to see, using the <0>issue tracker</0>."
-msgstr "Ошибки случаются. Пожалуйста, не стесняйтесь сообщать о них, а так же предлагать улучшения, которые вам хотелось бы видеть, посредством <0>трекера</0>."
+msgid ""
+"Bugs happen. Please, do not hesitate to report them or to ask for features "
+"you would like to see, using the <0>issue tracker</0>."
+msgstr ""
+"Ошибки случаются. Пожалуйста, не стесняйтесь сообщать о них, а так же "
+"предлагать улучшения, которые вам хотелось бы видеть, посредством "
+"<0>трекера</0>."
 
 #: src/routes/settings.about.tsx:115
 msgid "Internals"
@@ -368,8 +379,11 @@ msgid "Playback rate"
 msgstr "Скорость воспроизведения"
 
 #: src/routes/settings.audio.tsx:27
-msgid "Increase the playback rate: a value of 2 will play your music at a 2x speed"
-msgstr "Увеличить скорость воспроизведения: при значении 2 ваша музыка будет проигрываться на скорости 2x"
+msgid ""
+"Increase the playback rate: a value of 2 will play your music at a 2x speed"
+msgstr ""
+"Увеличить скорость воспроизведения: при значении 2 ваша музыка будет "
+"проигрываться на скорости 2x"
 
 #: src/routes/settings.audio.tsx:42
 msgid "Audio output"
@@ -384,8 +398,12 @@ msgid "Follow playing track"
 msgstr "Следовать за проигрываемым треком"
 
 #: src/routes/settings.audio.tsx:52
-msgid "Automatically follow the currently playing track (only when the app is not focused)"
-msgstr "Автоматически следовать за проигрываемым треком (только если приложение находится не в фокусе)"
+msgid ""
+"Automatically follow the currently playing track (only when the app is not "
+"focused)"
+msgstr ""
+"Автоматически следовать за проигрываемым треком (только если приложение "
+"находится не в фокусе)"
 
 #: src/routes/settings.library.tsx:45
 msgid "Files"
@@ -404,15 +422,20 @@ msgid "Scan"
 msgstr "Сканировать"
 
 #: src/routes/settings.library.tsx:93
-msgid "All track data will be updated from the base files, but your original files won't be modified. Any Museeks-specific edits you may have done will be reset."
-msgstr "Вся информация о треках будет обновлена из исходных файлов, но ваши исходные файлы не будут изменены. Все внесённые вами изменения, касающиеся Museeks, будут сброшены."
+msgid ""
+"All track data will be updated from the base files, but your original files "
+"won't be modified. Any Museeks-specific edits you may have done will be "
+"reset."
+msgstr ""
+"Вся информация о треках будет обновлена из исходных файлов, но ваши исходные"
+" файлы не будут изменены. Все внесённые вами изменения, касающиеся Museeks, "
+"будут сброшены."
 
 #: src/routes/settings.library.tsx:95
 msgid "Refresh all tracks?"
 msgstr "Обновить все треки?"
 
-#: src/routes/settings.library.tsx:98
-#: src/routes/settings.library.tsx:108
+#: src/routes/settings.library.tsx:98 src/routes/settings.library.tsx:108
 msgid "Refresh"
 msgstr "Обновить"
 
@@ -448,8 +471,7 @@ msgstr "Все ваши треки и плейлисты будут удален
 msgid "Reset library?"
 msgstr "Сбросить библиотеку?"
 
-#: src/routes/settings.library.tsx:144
-#: src/routes/settings.ui.tsx:65
+#: src/routes/settings.library.tsx:144 src/routes/settings.ui.tsx:65
 msgid "Reset"
 msgstr "Сбросить"
 
@@ -570,8 +592,7 @@ msgstr "Год"
 msgid "Track Nº"
 msgstr "Трек Nº"
 
-#: src/routes/tracks.$trackID.tsx:181
-#: src/routes/tracks.$trackID.tsx:213
+#: src/routes/tracks.$trackID.tsx:181 src/routes/tracks.$trackID.tsx:213
 msgid "Of"
 msgstr "из"
 
@@ -588,8 +609,12 @@ msgid "Save"
 msgstr "Сохранить"
 
 #: src/routes/tracks.$trackID.tsx:254
-msgid "Clicking \"save\" will only update the library data, but will not save it to the original file."
-msgstr "После нажатия \"Сохранить\" обновятся лишь данные библиотеки, но в исходный файл не будет внесено изменений."
+msgid ""
+"Clicking \"save\" will only update the library data, but will not save it to"
+" the original file."
+msgstr ""
+"После нажатия \"Сохранить\" обновятся лишь данные библиотеки, но в исходный "
+"файл не будет внесено изменений."
 
 #: src/stores/PlaylistsAPI.ts:38
 msgid "The playlist \"{name}\" was created"
