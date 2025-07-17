@@ -125,13 +125,14 @@ pub fn handle_opened_files(app_handle: &AppHandle, args: Vec<String>) {
 #[cfg(target_os = "macos")]
 pub fn handle_run_event(app_handle: &AppHandle, event: tauri::RunEvent) {
     if let tauri::RunEvent::Opened { urls } = event {
-        let tracks = urls
+        let paths = urls
             .into_iter()
             .filter_map(|url| url.to_file_path().ok())
-            .map(|path| get_tracks_from_paths(paths))
             .collect::<Vec<_>>();
 
-        send_queue_to_ui(app_handle.clone(), tracks);
+        let tracks = get_tracks_from_paths(paths);
+
+        send_queue_to_ui(app_handle, Some(tracks));
     }
 }
 
