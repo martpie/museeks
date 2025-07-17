@@ -3,7 +3,6 @@ use itertools::Itertools;
 use serde_json::json;
 use sqlx::SqliteConnection;
 use std::path::PathBuf;
-use std::u32;
 
 use super::error::AnyResult;
 use super::playlist::Playlist;

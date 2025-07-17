@@ -120,7 +120,7 @@ async fn scan_library<R: Runtime>(
     let scanned_paths_count = track_paths.len();
 
     // Remove files that are already in the DB (speedup scan + prevent duplicate errors)
-    if refresh == false {
+    if !refresh {
         let existing_paths = db
             .get_all_tracks()
             .await?
@@ -196,10 +196,10 @@ async fn scan_library<R: Runtime>(
     // (regarding scan progress information), but it technically could.
     let db_insert_logger: TimeLogger = TimeLogger::new("Inserted tracks".into());
 
-    if refresh == false {
-        db.insert_tracks(tracks).await?;
-    } else {
+    if refresh {
         db.update_tracks(tracks).await?;
+    } else {
+        db.insert_tracks(tracks).await?;
     }
 
     db_insert_logger.complete();
