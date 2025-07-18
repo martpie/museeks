@@ -24,6 +24,7 @@ export default function ButtonIcon(props: Props) {
         name={icon}
         size={iconSize}
         color={isActive ? 'var(--main-color)' : undefined}
+        className={styles.icon}
       />
     </button>
   );

@@ -1,4 +1,5 @@
 import { error } from '@tauri-apps/plugin-log';
+import cx from 'classnames';
 
 import chevronDown from '../assets/icons/chevron-down.svg?react';
 import chevronUp from '../assets/icons/chevron-up.svg?react';
@@ -55,6 +56,7 @@ type Props = {
   name: IconName;
   color?: string;
   size?: IconSize;
+  className?: string;
 };
 
 export default function Icon(props: Props) {
@@ -77,7 +79,7 @@ export default function Icon(props: Props) {
 
   return (
     <IconImpl
-      className={styles.icon}
+      className={cx(styles.icon, props.className)}
       style={{
         width: `${size}px`,
         color: props.color,

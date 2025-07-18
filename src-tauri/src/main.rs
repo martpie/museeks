@@ -103,6 +103,10 @@ fn main() {
             window_builder
                 .hidden_title(true)
                 .title_bar_style(tauri::TitleBarStyle::Overlay)
+                .traffic_light_position(tauri::Position::Logical(tauri::LogicalPosition {
+                    x: 10.0,
+                    y: 23.0,
+                }))
                 .build()?;
 
             #[cfg(target_os = "linux")]

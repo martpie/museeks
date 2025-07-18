@@ -1,7 +1,7 @@
 .header {
+  box-sizing: border-box;
   border-bottom: solid 1px var(--border-color);
   background-color: var(--header-bg);
-  box-sizing: content-box;
   color: var(--header-color);
   padding: 0 10px;
   display: flex;
