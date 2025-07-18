@@ -1,4 +1,4 @@
-import * as Slider from '@radix-ui/react-slider';
+import { Slider } from 'radix-ui';
 import { useCallback, useState } from 'react';
 
 import type { Track } from '../generated/typings';

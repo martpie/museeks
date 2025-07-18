@@ -1,6 +1,6 @@
 import { useLingui } from '@lingui/react/macro';
-import * as Slider from '@radix-ui/react-slider';
 import cx from 'classnames';
+import { Slider } from 'radix-ui';
 import { useCallback, useState } from 'react';
 
 import ButtonIcon from '../elements/ButtonIcon';

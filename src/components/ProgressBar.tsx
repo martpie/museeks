@@ -1,4 +1,4 @@
-import * as Progress from '@radix-ui/react-progress';
+import { Progress } from 'radix-ui';
 
 import styles from './ProgressBar.module.css';
 

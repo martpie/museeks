@@ -1,6 +1,6 @@
 import { useLingui } from '@lingui/react/macro';
-import * as AspectRatio from '@radix-ui/react-aspect-ratio';
 import cx from 'classnames';
+import { AspectRatio } from 'radix-ui';
 
 import type { Track } from '../generated/typings';
 import useCover from '../hooks/useCover';

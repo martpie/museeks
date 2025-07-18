@@ -1,5 +1,5 @@
 import { useLingui } from '@lingui/react/macro';
-import * as Popover from '@radix-ui/react-popover';
+import { Popover } from 'radix-ui';
 
 import ButtonIcon from '../elements/ButtonIcon';
 import usePlayingTrack from '../hooks/usePlayingTrack';
