@@ -40,7 +40,7 @@ pub fn disable(
         .unwrap() // TODO, use ?
         .stop()?;
 
-    info!("Sleepblocker enabled");
+    info!("Sleepblocker disabled");
     Ok(())
 }
 
