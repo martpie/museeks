@@ -116,7 +116,6 @@ function ViewSettingsLibrary() {
       </Setting.Section>
       <Setting.Section>
         <CheckboxSetting
-          slug="library-autorefresh"
           title={t`Automatically refresh library on startup`}
           value={config.library_autorefresh}
           onChange={useInvalidateCallback(SettingsAPI.toggleLibraryAutorefresh)}

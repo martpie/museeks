@@ -202,7 +202,7 @@ msgstr "Удалить треки"
 
 #: src/components/TrackList.tsx:376
 #: src/routes/settings.library.tsx:97
-#: src/routes/settings.library.tsx:143
+#: src/routes/settings.library.tsx:142
 #: src/routes/tracks.$trackID.tsx:246
 msgid "Cancel"
 msgstr "Отмена"
@@ -327,39 +327,39 @@ msgstr "О Museeks"
 msgid "release notes"
 msgstr "примечания к релизу"
 
-#: src/routes/settings.about.tsx:48
+#: src/routes/settings.about.tsx:47
 msgid "Automatically check for updates"
 msgstr "Автоматически проверять обновления"
 
-#: src/routes/settings.about.tsx:58
+#: src/routes/settings.about.tsx:57
 msgid "Check for update"
 msgstr "Проверить обновления"
 
-#: src/routes/settings.about.tsx:64
+#: src/routes/settings.about.tsx:63
 msgid "Contributors"
 msgstr "Участники"
 
-#: src/routes/settings.about.tsx:67
+#: src/routes/settings.about.tsx:66
 msgid "Made with <0/> by Pierre de la Martinière (<1>martpie.io</1>) and a bunch of <2>great people</2>"
 msgstr "Создали <0/>Пьер де ла Мартиньер (<1>martpie.io</1>) и множество <2>замечательных людей</2>"
 
-#: src/routes/settings.about.tsx:83
+#: src/routes/settings.about.tsx:82
 msgid "Translations:"
 msgstr "Переводы:"
 
-#: src/routes/settings.about.tsx:97
+#: src/routes/settings.about.tsx:96
 msgid "Report issue / Ask for a feature"
 msgstr "Сообщить об ошибке / Предложить улучшение"
 
-#: src/routes/settings.about.tsx:100
+#: src/routes/settings.about.tsx:99
 msgid "Bugs happen. Please, do not hesitate to report them or to ask for features you would like to see, using the <0>issue tracker</0>."
 msgstr "Ошибки случаются. Пожалуйста, не стесняйтесь сообщать о них, а так же предлагать улучшения, которые вам хотелось бы видеть, посредством <0>трекера</0>."
 
-#: src/routes/settings.about.tsx:115
+#: src/routes/settings.about.tsx:114
 msgid "Internals"
 msgstr "Внутренности"
 
-#: src/routes/settings.about.tsx:120
+#: src/routes/settings.about.tsx:119
 msgid "Open storage directory"
 msgstr "Открыть папку-хранилище"
 
@@ -379,11 +379,11 @@ msgstr "Аудио вывод"
 msgid "Advanced: set a custom audio output device."
 msgstr "Для продвинутых: выбрать специфическое устройство вывода звука."
 
-#: src/routes/settings.audio.tsx:51
+#: src/routes/settings.audio.tsx:50
 msgid "Follow playing track"
 msgstr "Следовать за проигрываемым треком"
 
-#: src/routes/settings.audio.tsx:52
+#: src/routes/settings.audio.tsx:51
 msgid "Automatically follow the currently playing track (only when the app is not focused)"
 msgstr "Автоматически следовать за проигрываемым треком (только если приложение находится не в фокусе)"
 
@@ -424,36 +424,36 @@ msgstr "Принудительное обновление тэгов всех т
 msgid "<0>.m3u</0> files will also be imported as playlists."
 msgstr "Файлы <0>.m3u</0> будут дополнительно импортированы как плейлисты."
 
-#: src/routes/settings.library.tsx:120
+#: src/routes/settings.library.tsx:119
 msgid "Automatically refresh library on startup"
 msgstr "Автоматически обновлять библиотеку при запуске"
 
-#: src/routes/settings.library.tsx:127
+#: src/routes/settings.library.tsx:126
 msgid "Danger zone"
 msgstr "Опасная зона"
 
-#: src/routes/settings.library.tsx:130
+#: src/routes/settings.library.tsx:129
 msgid "Delete all tracks and playlists from Museeks."
 msgstr "Удалить все треки и плейлисты из Museeks."
 
-#: src/routes/settings.library.tsx:135
+#: src/routes/settings.library.tsx:134
 msgid "Fully reset the library"
 msgstr "Полный сброс библиотеки"
 
-#: src/routes/settings.library.tsx:139
+#: src/routes/settings.library.tsx:138
 msgid "All your tracks and playlists will be deleted from Museeks."
 msgstr "Все ваши треки и плейлисты будут удалены из Museeks."
 
-#: src/routes/settings.library.tsx:141
+#: src/routes/settings.library.tsx:140
 msgid "Reset library?"
 msgstr "Сбросить библиотеку?"
 
-#: src/routes/settings.library.tsx:144
+#: src/routes/settings.library.tsx:143
 #: src/routes/settings.ui.tsx:65
 msgid "Reset"
 msgstr "Сбросить"
 
-#: src/routes/settings.library.tsx:153
+#: src/routes/settings.library.tsx:152
 msgid "Reset library"
 msgstr "Сбросить библиотеку"
 
@@ -517,27 +517,27 @@ msgstr "Изменить представление по умолчанию пр
 msgid "Library (default)"
 msgstr "Библиотека (по умолчанию)"
 
-#: src/routes/settings.ui.tsx:133
+#: src/routes/settings.ui.tsx:132
 msgid "Display Notifications"
 msgstr "Отображать уведомления"
 
-#: src/routes/settings.ui.tsx:134
+#: src/routes/settings.ui.tsx:133
 msgid "Send notifications when the playing track changes"
 msgstr "Посылать уведомления при смене проигрываемого трека"
 
-#: src/routes/settings.ui.tsx:144
+#: src/routes/settings.ui.tsx:142
 msgid "Sleep mode blocker"
 msgstr "Блокировать режим сна"
 
-#: src/routes/settings.ui.tsx:145
+#: src/routes/settings.ui.tsx:143
 msgid "Prevent the computer from going into sleep mode when playing"
 msgstr "Предпятствовать переходу компьютера в режим сна во время проигрывания"
 
-#: src/routes/settings.ui.tsx:160
+#: src/routes/settings.ui.tsx:158
 msgid "Light"
 msgstr "Светлая"
 
-#: src/routes/settings.ui.tsx:162
+#: src/routes/settings.ui.tsx:160
 msgid "Dark"
 msgstr "Тёмная"
 

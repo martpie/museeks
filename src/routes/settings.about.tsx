@@ -44,7 +44,6 @@ function ViewSettingsAbout() {
           >{t`release notes`}</ExternalLink>
         </Setting.Description>
         <CheckboxSetting
-          slug="update"
           title={t`Automatically check for updates`}
           value={config.auto_update_checker}
           onChange={useInvalidateCallback(SettingsAPI.toggleAutoUpdateChecker)}

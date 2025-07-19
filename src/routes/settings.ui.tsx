@@ -129,7 +129,6 @@ function ViewSettingsUI() {
       </Setting.Section>
       <Setting.Section>
         <CheckboxSetting
-          slug="native-notifications"
           title={t`Display Notifications`}
           description={t`Send notifications when the playing track changes`}
           value={config.notifications}
@@ -140,7 +139,6 @@ function ViewSettingsUI() {
       </Setting.Section>
       <Setting.Section>
         <CheckboxSetting
-          slug="sleepmode"
           title={t`Sleep mode blocker`}
           description={t`Prevent the computer from going into sleep mode when playing`}
           value={config.sleepblocker}

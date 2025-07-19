@@ -1,27 +1,30 @@
+import { useId } from 'react';
+
 import Flexbox from '../elements/Flexbox';
 import * as Setting from './Setting';
 import styles from './SettingCheckbox.module.css';
 
 type Props = {
   title: string;
-  slug: string;
   value: boolean;
   onChange: (value: boolean) => void;
   description?: string;
 };
 
 export default function CheckboxSetting(props: Props) {
-  const { slug, title, description } = props;
+  const { title, description } = props;
+  const id = useId();
+
   return (
     <div className={styles.checkbox}>
       <Flexbox gap={8} align="center">
         <input
-          id={`setting-${slug}`}
+          id={id}
           type="checkbox"
           onChange={(e) => props.onChange(e.currentTarget.checked)}
           checked={props.value}
         />
-        <Setting.Label htmlFor={`setting-${slug}`} noMargin>
+        <Setting.Label htmlFor={id} noMargin>
           {title}
         </Setting.Label>
       </Flexbox>

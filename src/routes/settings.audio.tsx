@@ -47,7 +47,6 @@ function ViewSettingsAudio() {
       </Setting.Section>
       <Setting.Section>
         <CheckboxSetting
-          slug="follow-playing-track"
           title={t`Follow playing track`}
           description={t`Automatically follow the currently playing track (only when the app is not focused)`}
           value={config.audio_follow_playing_track}

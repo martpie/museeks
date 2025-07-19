@@ -202,7 +202,7 @@ msgstr "Remove tracks"
 
 #: src/components/TrackList.tsx:376
 #: src/routes/settings.library.tsx:97
-#: src/routes/settings.library.tsx:143
+#: src/routes/settings.library.tsx:142
 #: src/routes/tracks.$trackID.tsx:246
 msgid "Cancel"
 msgstr "Cancel"
@@ -327,39 +327,39 @@ msgstr "About Museeks"
 msgid "release notes"
 msgstr "release notes"
 
-#: src/routes/settings.about.tsx:48
+#: src/routes/settings.about.tsx:47
 msgid "Automatically check for updates"
 msgstr "Automatically check for updates"
 
-#: src/routes/settings.about.tsx:58
+#: src/routes/settings.about.tsx:57
 msgid "Check for update"
 msgstr "Check for update"
 
-#: src/routes/settings.about.tsx:64
+#: src/routes/settings.about.tsx:63
 msgid "Contributors"
 msgstr "Contributors"
 
-#: src/routes/settings.about.tsx:67
+#: src/routes/settings.about.tsx:66
 msgid "Made with <0/> by Pierre de la Martinière (<1>martpie.io</1>) and a bunch of <2>great people</2>"
 msgstr "Made with <0/> by Pierre de la Martinière (<1>martpie.io</1>) and a bunch of <2>great people</2>"
 
-#: src/routes/settings.about.tsx:83
+#: src/routes/settings.about.tsx:82
 msgid "Translations:"
 msgstr "Translations:"
 
-#: src/routes/settings.about.tsx:97
+#: src/routes/settings.about.tsx:96
 msgid "Report issue / Ask for a feature"
 msgstr "Report issue / Ask for a feature"
 
-#: src/routes/settings.about.tsx:100
+#: src/routes/settings.about.tsx:99
 msgid "Bugs happen. Please, do not hesitate to report them or to ask for features you would like to see, using the <0>issue tracker</0>."
 msgstr "Bugs happen. Please, do not hesitate to report them or to ask for features you would like to see, using the <0>issue tracker</0>."
 
-#: src/routes/settings.about.tsx:115
+#: src/routes/settings.about.tsx:114
 msgid "Internals"
 msgstr "Internals"
 
-#: src/routes/settings.about.tsx:120
+#: src/routes/settings.about.tsx:119
 msgid "Open storage directory"
 msgstr "Open storage directory"
 
@@ -379,11 +379,11 @@ msgstr "Audio output"
 msgid "Advanced: set a custom audio output device."
 msgstr "Advanced: set a custom audio output device."
 
-#: src/routes/settings.audio.tsx:51
+#: src/routes/settings.audio.tsx:50
 msgid "Follow playing track"
 msgstr "Follow playing track"
 
-#: src/routes/settings.audio.tsx:52
+#: src/routes/settings.audio.tsx:51
 msgid "Automatically follow the currently playing track (only when the app is not focused)"
 msgstr "Automatically follow the currently playing track (only when the app is not focused)"
 
@@ -424,36 +424,36 @@ msgstr "Force the refresh of all tracks tags"
 msgid "<0>.m3u</0> files will also be imported as playlists."
 msgstr "<0>.m3u</0> files will also be imported as playlists."
 
-#: src/routes/settings.library.tsx:120
+#: src/routes/settings.library.tsx:119
 msgid "Automatically refresh library on startup"
 msgstr "Automatically refresh library on startup"
 
-#: src/routes/settings.library.tsx:127
+#: src/routes/settings.library.tsx:126
 msgid "Danger zone"
 msgstr "Danger zone"
 
-#: src/routes/settings.library.tsx:130
+#: src/routes/settings.library.tsx:129
 msgid "Delete all tracks and playlists from Museeks."
 msgstr "Delete all tracks and playlists from Museeks."
 
-#: src/routes/settings.library.tsx:135
+#: src/routes/settings.library.tsx:134
 msgid "Fully reset the library"
 msgstr "Fully reset the library"
 
-#: src/routes/settings.library.tsx:139
+#: src/routes/settings.library.tsx:138
 msgid "All your tracks and playlists will be deleted from Museeks."
 msgstr "All your tracks and playlists will be deleted from Museeks."
 
-#: src/routes/settings.library.tsx:141
+#: src/routes/settings.library.tsx:140
 msgid "Reset library?"
 msgstr "Reset library?"
 
-#: src/routes/settings.library.tsx:144
+#: src/routes/settings.library.tsx:143
 #: src/routes/settings.ui.tsx:65
 msgid "Reset"
 msgstr "Reset"
 
-#: src/routes/settings.library.tsx:153
+#: src/routes/settings.library.tsx:152
 msgid "Reset library"
 msgstr "Reset library"
 
@@ -517,27 +517,27 @@ msgstr "Change the default view when starting the application"
 msgid "Library (default)"
 msgstr "Library (default)"
 
-#: src/routes/settings.ui.tsx:133
+#: src/routes/settings.ui.tsx:132
 msgid "Display Notifications"
 msgstr "Display Notifications"
 
-#: src/routes/settings.ui.tsx:134
+#: src/routes/settings.ui.tsx:133
 msgid "Send notifications when the playing track changes"
 msgstr "Send notifications when the playing track changes"
 
-#: src/routes/settings.ui.tsx:144
+#: src/routes/settings.ui.tsx:142
 msgid "Sleep mode blocker"
 msgstr "Sleep mode blocker"
 
-#: src/routes/settings.ui.tsx:145
+#: src/routes/settings.ui.tsx:143
 msgid "Prevent the computer from going into sleep mode when playing"
 msgstr "Prevent the computer from going into sleep mode when playing"
 
-#: src/routes/settings.ui.tsx:160
+#: src/routes/settings.ui.tsx:158
 msgid "Light"
 msgstr "Light"
 
-#: src/routes/settings.ui.tsx:162
+#: src/routes/settings.ui.tsx:160
 msgid "Dark"
 msgstr "Dark"
 
