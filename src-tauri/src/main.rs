@@ -4,7 +4,6 @@
 mod libs;
 mod plugins;
 
-use libs::file_associations::setup_file_associations;
 use libs::init::init;
 use libs::utils::get_theme_from_name;
 use log::{LevelFilter, info};
@@ -48,6 +47,14 @@ fn main() {
                 .max_file_size(50_000)
                 .build(),
         )
+        // Ensure a single instance of the app is running, if needed, play opened files
+        .plugin(tauri_plugin_single_instance::init(|app_handle, args, _| {
+            // Focus on the already running app in case the app is opened again
+            let window = app_handle.get_webview_window("main").unwrap();
+            window.set_focus().unwrap();
+
+            plugins::file_associations::handle_opened_files(app_handle, args);
+        }))
         // Custom integrations
         .plugin(plugins::app_close::init())
         .plugin(plugins::app_menu::init())
@@ -56,6 +63,7 @@ fn main() {
         .plugin(plugins::db::init())
         .plugin(plugins::debug::init())
         .plugin(plugins::default_view::init())
+        .plugin(plugins::file_associations::init())
         .plugin(plugins::sleepblocker::init())
         // Tauri integrations with the Operating System
         .plugin(tauri_plugin_dialog::init())
@@ -65,11 +73,6 @@ fn main() {
         .plugin(tauri_plugin_prevent_default::init())
         .plugin(tauri_plugin_notification::init())
         .plugin(tauri_plugin_shell::init())
-        .plugin(tauri_plugin_single_instance::init(|app_handle, _, _| {
-            // Focus on the already running app in case the app is opened again
-            let window = app_handle.get_webview_window("main").unwrap();
-            window.set_focus().unwrap();
-        }))
         .plugin(
             tauri_plugin_window_state::Builder::default()
                 .with_state_flags(
@@ -114,22 +117,17 @@ fn main() {
 
             info!("Main window built");
 
-            // FIXME: File association for non-macOS is not working well:
-            // - Does not work with single instance when the app is already open
-            // - Issues with C:\... URLs parsing with rust-url
-            // - The main window is created, but the UI may not be ready yet to receive the event requesting a playback
-            #[cfg(not(target_os = "macos"))]
-            setup_file_associations(app);
-
             Ok(())
         })
         .build(tauri::generate_context!())
         .expect("error while running tauri application")
+        // Handle file associations on macOS, this will get triggered when the
+        // app starts, AND when the app is already running and a file is opened.
         .run(
             #[allow(unused_variables)]
             |app_handle, event| {
                 #[cfg(target_os = "macos")]
-                setup_file_associations(app_handle, event);
+                plugins::file_associations::handle_run_event(app_handle, event);
             },
         );
 }
