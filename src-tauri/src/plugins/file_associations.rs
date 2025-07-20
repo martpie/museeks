@@ -8,10 +8,12 @@ use tauri::plugin::{Builder, TauriPlugin};
  *
  * On Windows, the files are passed as command line arguments, without any prefix:
  * - C:\\users\\someone\\music\\song.mp3
- * On Linux, check that everything works (TODO)
- * On macOS, they are passed via the RunEvent::Opened event, as a list of URLs (TODO)
+ * On Linux, the files can be passed as command line arguments, like:
+ * - /home/someone/music/song.mp3
+ * - file:///home/someone/music/song.mp3
+ * On macOS, they are passed via the RunEvent::Opened event, as a list of URLs
  *
- * Test on dev mode with
+ * Test on windows dev mode with:
  * npm run tauri dev -- -- "G:\Mon Drive\Music\Air\Love 2\03 So Light Is Her Footfall.mp3" "G:\Mon Drive\Music\Air\Love 2\08 Night Hunter.mp3"
  * (replace by your own files)
  */
@@ -24,6 +26,8 @@ use crate::libs::track::{Track, get_tracks_from_paths};
 pub fn init<R: Runtime>() -> TauriPlugin<R> {
     // This happens only at startup, so this does not support opening files
     // after the app has started.
+    // Once the app is started, the tauri_plugin_single_instance plugin is in
+    // charge of handling opened files.
     let tracks = get_tracks_from_args(std::env::args().collect());
 
     let serialized_tracks =
