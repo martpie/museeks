@@ -10,6 +10,7 @@ use ts_rs::TS;
 use uuid::Uuid;
 
 use crate::libs::database::SUPPORTED_TRACKS_EXTENSIONS;
+use crate::libs::error::{AnyResult, MuseeksError};
 use crate::libs::utils::is_file_valid;
 
 /**
@@ -54,10 +55,16 @@ pub struct TrackGroup {
  * Generate a Track struct from a Path, or nothing if it is not a valid audio
  * file
  */
-pub fn get_track_from_file(path: &PathBuf) -> Option<Track> {
+pub fn get_track_from_file(path: &PathBuf) -> AnyResult<Track> {
     match lofty::read_from_path(path) {
         Ok(tagged_file) => {
-            let tag = tagged_file.primary_tag()?;
+            let tag = match tagged_file.primary_tag() {
+                Some(tag) => tag,
+                None => {
+                    warn!("No tags found for file {:?}", path);
+                    return Err(MuseeksError::ID3NoTags(path.clone()));
+                }
+            };
 
             // Lots of tags are missing eaither TrackArtist or AlbumArtist, so instead
             // of being correct, we'll swap them if needed.
@@ -87,7 +94,7 @@ pub fn get_track_from_file(path: &PathBuf) -> Option<Track> {
             // Generate a stable ID for the track, based on its path
             let id = get_track_id_for_path(path)?;
 
-            Some(Track {
+            Ok(Track {
                 id,
                 path: path.to_string_lossy().into_owned(),
                 title: tag
@@ -118,7 +125,7 @@ pub fn get_track_from_file(path: &PathBuf) -> Option<Track> {
         }
         Err(err) => {
             warn!("Failed to get ID3 tags: \"{}\". File {:?}", err, path);
-            None
+            Err(MuseeksError::Lofty(err))
         }
     }
 }
@@ -129,18 +136,16 @@ pub fn get_track_from_file(path: &PathBuf) -> Option<Track> {
  * We leverage UUID v3 on tracks paths to easily retrieve tracks by path.
  * This is not great and ideally we should use a DB view instead. One day.
  */
-pub fn get_track_id_for_path(path: &PathBuf) -> Option<String> {
+pub fn get_track_id_for_path(path: &PathBuf) -> AnyResult<String> {
     match std::fs::canonicalize(path) {
-        Ok(canonicalized_path) => Some(
-            Uuid::new_v3(
-                &Uuid::NAMESPACE_OID,
-                canonicalized_path.to_string_lossy().as_bytes(),
-            )
-            .to_string(),
-        ),
+        Ok(canonicalized_path) => Ok(Uuid::new_v3(
+            &Uuid::NAMESPACE_OID,
+            canonicalized_path.to_string_lossy().as_bytes(),
+        )
+        .to_string()),
         Err(err) => {
             warn!(r#"ID could not be generated for path {:?}: {}"#, path, err);
-            None
+            Err(MuseeksError::IDGeneration(path.clone()))
         }
     }
 }
@@ -148,13 +153,12 @@ pub fn get_track_id_for_path(path: &PathBuf) -> Option<String> {
 /**
  * Given a list of files, return a potential list of tracks
  */
-pub fn get_tracks_from_paths(mut files: Vec<PathBuf>) -> Vec<Track> {
+pub fn get_tracks_from_paths(mut files: Vec<PathBuf>) -> Vec<AnyResult<Track>> {
     files.retain(|path| is_file_valid(path, &SUPPORTED_TRACKS_EXTENSIONS));
 
     // Build a list of tracks, without importing them to the library
     files
         .par_iter()
         .map(get_track_from_file)
-        .flatten()
         .collect::<Vec<_>>()
 }

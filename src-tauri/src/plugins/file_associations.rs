@@ -20,6 +20,7 @@ use tauri::plugin::{Builder, TauriPlugin};
 use tauri::{AppHandle, Emitter, Manager, Runtime};
 use tauri_plugin_dialog::{DialogExt, MessageDialogKind};
 
+use crate::libs::error::AnyResult;
 use crate::libs::events::IPCEvent;
 use crate::libs::track::{Track, get_tracks_from_paths};
 
@@ -28,7 +29,14 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
     // after the app has started.
     // Once the app is started, the tauri_plugin_single_instance plugin is in
     // charge of handling opened files.
-    let tracks = get_tracks_from_args(std::env::args().collect());
+    let args = std::env::args().collect();
+
+    println!(
+        "[file_associations] Handling opened files at startup: {:?}",
+        &args
+    );
+
+    let tracks = get_tracks_from_args(args);
 
     let serialized_tracks =
         serde_json::to_string(&tracks).expect("Failed to serialize tracks for the initial queue");
@@ -102,10 +110,32 @@ pub fn get_tracks_from_args(args: Vec<String>) -> Option<Vec<Track>> {
         }
     }
 
+    println!("[file_associations] Found those valid paths: {:?}", &paths);
+
     match paths.is_empty() {
         true => None,
-        false => Some(get_tracks_from_paths(paths)),
+        false => Some(get_valid_tracks_and_report_errors(get_tracks_from_paths(
+            paths,
+        ))),
     }
+}
+
+/**
+ * Given a scan result (a vec of tracks and potential errors), log errors, warn
+ * user and return only the valid tracks.
+ */
+pub fn get_valid_tracks_and_report_errors(tracks: Vec<AnyResult<Track>>) -> Vec<Track> {
+    let mut valid_tracks = vec![];
+    for track in tracks {
+        match track {
+            Ok(track) => valid_tracks.push(track),
+            Err(err) => {
+                // TODO: display errors to users, somehow, via app_handle.dialog()
+                println!("[file_associations] Error processing track: {:?}", err);
+            }
+        }
+    }
+    valid_tracks
 }
 
 /**
@@ -114,7 +144,7 @@ pub fn get_tracks_from_args(args: Vec<String>) -> Option<Vec<Track>> {
  */
 pub fn handle_opened_files(app_handle: &AppHandle, args: Vec<String>) {
     println!(
-        "[file-associations] Handling opened files from command line arguments: {:?}",
+        "[file_associations] Handling opened files from command line arguments: {:?}",
         &args
     );
     let tracks = get_tracks_from_args(args);
@@ -134,7 +164,7 @@ pub fn handle_run_event(app_handle: &AppHandle, event: tauri::RunEvent) {
             .filter_map(|url| url.to_file_path().ok())
             .collect::<Vec<_>>();
 
-        let tracks = get_tracks_from_paths(paths);
+        let tracks = get_valid_tracks_and_report_errors(get_tracks_from_paths(paths));
 
         send_queue_to_ui(app_handle, Some(tracks));
     }
@@ -147,13 +177,13 @@ pub fn handle_run_event(app_handle: &AppHandle, event: tauri::RunEvent) {
  */
 fn send_queue_to_ui(app_handle: &AppHandle, maybe_tracks: Option<Vec<Track>>) {
     if maybe_tracks.is_none() {
-        println!("[file-associations] No tracks found in opened files, do nothing");
+        println!("[file_associations] No tracks found in opened files, do nothing");
         return;
     }
 
     let tracks = maybe_tracks.unwrap();
     println!(
-        "[file-associations] Sending queue to UI: {:?}",
+        "[file_associations] Sending queue to UI: {:?}",
         &tracks.iter().map(|t| t.path.clone()).collect::<Vec<_>>()
     );
 
@@ -182,7 +212,7 @@ fn send_queue_to_ui(app_handle: &AppHandle, maybe_tracks: Option<Vec<Track>>) {
             };
         }
         None => {
-            println!("[file-associations] Main window not created, cannot open the files...");
+            println!("[file_associations] Main window not created, cannot open the files...");
         }
     }
 }

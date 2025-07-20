@@ -78,7 +78,7 @@ export type QueueOrigin =
   | { type: 'library' }
   | { type: 'playlist'; playlistID: string }
   | { type: 'artist'; artistID: string }
-  | { type: 'file-associations' };
+  | { type: 'file_associations' };
 
 /**
  * A common interface used by TrackList to be able to control custom children

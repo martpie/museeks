@@ -19,10 +19,10 @@ use tauri_plugin_window_state::StateFlags;
 fn main() {
     match init() {
         Ok(_) => {
-            println!("Initialization successful");
+            println!("[init] Initialization successful");
         }
         Err(e) => {
-            println!("Error during initialization: {}", e);
+            println!("[init] Error during initialization: {}", e);
             std::process::exit(1);
         }
     }
