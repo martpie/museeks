@@ -1,3 +1,5 @@
+use std::path::PathBuf;
+
 use anyhow::Result;
 use lofty::error::LoftyError;
 use log::error;
@@ -43,6 +45,12 @@ pub enum MuseeksError {
      */
     #[error("Playlist not found")]
     PlaylistNotFound,
+
+    #[error("Failed to generate ID for path: {0}")]
+    IDGeneration(PathBuf),
+
+    #[error("Failed to find ID3 tags for path: {0}")]
+    ID3NoTags(PathBuf),
 }
 
 /**
