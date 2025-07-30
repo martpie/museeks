@@ -235,13 +235,6 @@ async function toggleDisplayNotifications(value: boolean): Promise<void> {
   await config.set('notifications', value);
 }
 
-/**
- * Toggle follow track on track change
- */
-async function toggleFollowPlayingTrack(value: boolean): Promise<void> {
-  await config.set('audio_follow_playing_track', value);
-}
-
 // Should we use something else to harmonize between zustand and non-store APIs?
 const SettingsAPI = {
   init,
@@ -257,7 +250,6 @@ const SettingsAPI = {
   toggleLibraryAutorefresh,
   toggleAutoUpdateChecker,
   toggleDisplayNotifications,
-  toggleFollowPlayingTrack,
 };
 
 export default SettingsAPI;

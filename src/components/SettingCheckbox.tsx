@@ -11,7 +11,7 @@ type Props = {
   description?: string;
 };
 
-export default function CheckboxSetting(props: Props) {
+export default function SettingCheckbox(props: Props) {
   const { title, description } = props;
   const id = useId();
 

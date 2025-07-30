@@ -13,7 +13,7 @@ export default function useInvalidate() {
   const router = useRouter();
 
   return useCallback(async () => {
-    //  Need to call mutate with undefined to make sure stale-while-revalidate is
+    // Need to call mutate with undefined to make sure stale-while-revalidate is
     // reset (otherwise, we'd see a "no tracks in the library" instead of "loading")
     const queryInvalidator = queryClient.invalidateQueries({
       exact: true,

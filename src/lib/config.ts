@@ -10,7 +10,7 @@ class ConfigManager {
   initialConfig: Config | null = null;
 
   /**
-   * Get the initial value of the config at the time of instantiation.
+   * Get the initial value of the config at the time of application start.
    * Should only be used when starting the app.
    */
   getInitial<T extends keyof Config>(key: T): Config[T] {
@@ -21,16 +21,25 @@ class ConfigManager {
     return window.__MUSEEKS_INITIAL_CONFIG[key];
   }
 
+  /**
+   * Get all config values
+   */
   async getAll(): Promise<Config> {
     // TODO: check data shape?
     return invoke('plugin:config|get_config');
   }
 
+  /**
+   * Get a single config value
+   */
   async get<T extends keyof Config>(key: T): Promise<Config[T]> {
     const config = await this.getAll();
     return config[key];
   }
 
+  /**
+   * Set a single config value
+   */
   async set<T extends keyof Config>(key: T, value: Config[T]): Promise<void> {
     const config = await this.getAll();
     config[key] = value;
