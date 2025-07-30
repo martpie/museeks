@@ -1,8 +1,6 @@
 import { getCurrentWindow } from '@tauri-apps/api/window';
 import { useEffect } from 'react';
 
-import player from '../lib/player';
-import { logAndNotifyError } from '../lib/utils';
 import { isDev, preventNativeDefault } from '../lib/utils-events';
 import SettingsAPI from '../stores/SettingsAPI';
 
@@ -34,17 +32,6 @@ function AppEvents() {
       onSystemThemeChange,
     );
 
-    // Support for multiple audio output
-    async function updateOutputDevice() {
-      try {
-        await player.setOutputDevice('default');
-      } catch (err) {
-        logAndNotifyError(err);
-      }
-    }
-
-    navigator.mediaDevices.addEventListener('devicechange', updateOutputDevice);
-
     return function cleanup() {
       window.removeEventListener('dragover', preventNativeDefault, false);
       window.removeEventListener('drop', preventNativeDefault, false);
@@ -54,11 +41,6 @@ function AppEvents() {
       }
 
       unlistenSystemThemeChange.then((u) => u());
-
-      navigator.mediaDevices.removeEventListener(
-        'devicechange',
-        updateOutputDevice,
-      );
     };
   }, []);
 

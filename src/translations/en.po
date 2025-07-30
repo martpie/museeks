@@ -13,18 +13,6 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/components/AudioOutputSelect.tsx:53
-msgid "Loading devices..."
-msgstr "Loading devices..."
-
-#: src/components/AudioOutputSelect.tsx:61
-msgid "Could not get audio output devices"
-msgstr "Could not get audio output devices"
-
-#: src/components/AudioOutputSelect.tsx:69
-msgid "No audio devices found"
-msgstr "No audio devices found"
-
 #: src/components/ButtonRepeat.tsx:18
 msgid "Repeat"
 msgstr "Repeat"
@@ -363,27 +351,19 @@ msgstr "Internals"
 msgid "Open storage directory"
 msgstr "Open storage directory"
 
-#: src/routes/settings.audio.tsx:26
+#: src/routes/settings.audio.tsx:25
 msgid "Playback rate"
 msgstr "Playback rate"
 
-#: src/routes/settings.audio.tsx:27
+#: src/routes/settings.audio.tsx:26
 msgid "Increase the playback rate: a value of 2 will play your music at a 2x speed"
 msgstr "Increase the playback rate: a value of 2 will play your music at a 2x speed"
 
-#: src/routes/settings.audio.tsx:42
-msgid "Audio output"
-msgstr "Audio output"
-
-#: src/routes/settings.audio.tsx:43
-msgid "Advanced: set a custom audio output device."
-msgstr "Advanced: set a custom audio output device."
-
-#: src/routes/settings.audio.tsx:50
+#: src/routes/settings.audio.tsx:41
 msgid "Follow playing track"
 msgstr "Follow playing track"
 
-#: src/routes/settings.audio.tsx:51
+#: src/routes/settings.audio.tsx:42
 msgid "Automatically follow the currently playing track (only when the app is not focused)"
 msgstr "Automatically follow the currently playing track (only when the app is not focused)"
 
