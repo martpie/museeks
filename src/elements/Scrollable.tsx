@@ -7,6 +7,7 @@ type Props = {
 
 export default function Scrollable(props: Props) {
   return (
+    // biome-ignore lint/style/noParameterAssign: biomejs/biome#7065
     <div className={styles.scrollable} ref={props.ref}>
       {props.children}
     </div>
