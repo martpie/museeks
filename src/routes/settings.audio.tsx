@@ -1,7 +1,6 @@
 import { useLingui } from '@lingui/react/macro';
 import { createFileRoute, useLoaderData } from '@tanstack/react-router';
 
-import AudioOutputSelect from '../components/AudioOutputSelect';
 import * as Setting from '../components/Setting';
 import CheckboxSetting from '../components/SettingCheckbox';
 import useInvalidate, { useInvalidateCallback } from '../hooks/useInvalidate';
@@ -35,14 +34,6 @@ function ViewSettingsAudio() {
           min="0.5"
           max="5"
           step="0.1"
-        />
-      </Setting.Section>
-      <Setting.Section>
-        <AudioOutputSelect
-          label={t`Audio output`}
-          description={t`Advanced: set a custom audio output device.`}
-          value={config.audio_output_device}
-          onChange={useInvalidateCallback(playerAPI.setOutputDevice)}
         />
       </Setting.Section>
       <Setting.Section>
