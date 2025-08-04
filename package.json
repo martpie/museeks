@@ -30,7 +30,10 @@
     "release:flatpak:build": "flatpak-builder --force-clean --user --disable-cache --repo release/flatpak-repo release/flatpak src-tauri/release/io.museeks.app.yaml",
     "release:flatpak:install": "npm run release:flatpak:build --install",
     "release:flatpak:package": "flatpak build-bundle release/flatpak-repo release/museeks.flatpak io.museeks.app",
-    "release:flatpak:lint": "flatpak run --command=flatpak-builder-lint org.flatpak.Builder manifest src-tauri/release/io.museeks.app.yaml && flatpak run --command=flatpak-builder-lint org.flatpak.Builder repo release/flatpak-repo --exceptions --user-exceptions src-tauri/release/flatpak.exceptions.json"
+    "release:flatpak:lint": "flatpak run --command=flatpak-builder-lint org.flatpak.Builder manifest src-tauri/release/io.museeks.app.yaml && flatpak run --command=flatpak-builder-lint org.flatpak.Builder repo release/flatpak-repo --exceptions --user-exceptions src-tauri/release/flatpak.exceptions.json",
+    "safetest": "OPT_URL=${OPT_URL:-http://localhost:1420/} vitest --config vite.safetest.config",
+    "safetest:ci": "rm -f artifacts.json && OPT_URL=${DEPLOYED_URL} OPT_CI=1 OPT_DOCKER=1 OPT_ARTIFACTS=artifacts.json npm run safetest -- --run --bail=5",
+    "safetest:regenerate-screenshots": "OPT_DOCKER=1 npm run safetest -- --run --update"
   },
   "dependencies": {
     "@dnd-kit/core": "6.3.1",
@@ -73,7 +76,9 @@
     "@types/react-dom": "19.1.7",
     "@types/semver": "7.7.0",
     "@vitejs/plugin-react": "4.7.0",
+    "jest": "30.0.5",
     "lightningcss": "1.30.1",
+    "safetest": "0.1.13",
     "typescript": "5.9.2",
     "typescript-plugin-css-modules": "5.2.0",
     "vite": "7.0.6",

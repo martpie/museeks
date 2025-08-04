@@ -15,6 +15,7 @@ import {
 import * as logger from '@tauri-apps/plugin-log';
 import React from 'react';
 import * as ReactDOM from 'react-dom/client';
+import { bootstrap } from 'safetest/react';
 
 import { loadTranslation } from './lib/i18n';
 import queryClient from './lib/query-client';
@@ -26,6 +27,8 @@ import queryClient from './lib/query-client';
 */
 import 'normalize.css/normalize.css';
 import './styles/general.css';
+
+import process from 'node:process';
 
 /*
 |--------------------------------------------------------------------------
@@ -62,17 +65,26 @@ declare module '@tanstack/react-router' {
 
   const wrap = document.getElementById('wrap');
 
+  const App = (
+    <React.StrictMode>
+      <QueryClientProvider client={queryClient}>
+        <I18nProvider i18n={i18n}>
+          <RouterProvider router={router} />
+        </I18nProvider>
+      </QueryClientProvider>
+    </React.StrictMode>
+  );
+
   if (wrap) {
-    const root = ReactDOM.createRoot(wrap);
-    root.render(
-      <React.StrictMode>
-        <QueryClientProvider client={queryClient}>
-          <I18nProvider i18n={i18n}>
-            <RouterProvider router={router} />
-          </I18nProvider>
-        </QueryClientProvider>
-      </React.StrictMode>,
-    );
+    const isDev = process.env.NODE_ENV !== 'production';
+
+    bootstrap({
+      app: App,
+      render: (element) => ReactDOM.createRoot(wrap).render(element),
+
+      // Vite:
+      importGlob: isDev && import.meta.glob('./**/*.safetest.{j,t}s{,x}'),
+    });
   } else {
     document.body.innerHTML = '<div style="text-align: center;">x_x</div>';
   }
