@@ -30,3 +30,9 @@ src-tauri/gen
 release
 !src-tauri/release
 .tanstack
+
+# Playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
