@@ -59,22 +59,22 @@ msgstr "Отпустите папки в любом месте"
 msgid "Library"
 msgstr "Библиотека"
 
-#: src/components/Footer.tsx:30
+#: src/components/Footer.tsx:31
 #: src/routes/artists.tsx:52
 msgid "Artists"
 msgstr "Исполнители"
 
-#: src/components/Footer.tsx:39
+#: src/components/Footer.tsx:41
 #: src/routes/playlists.tsx:169
-#: src/routes/settings.ui.tsx:127
+#: src/routes/settings.ui.tsx:128
 msgid "Playlists"
 msgstr "Плейлисты"
 
-#: src/components/Footer.tsx:48
+#: src/components/Footer.tsx:51
 msgid "Settings"
 msgstr "Настройки"
 
-#: src/components/Footer.tsx:79
+#: src/components/Footer.tsx:83
 msgid "scanning tracks..."
 msgstr "сканирование треков..."
 
@@ -446,7 +446,7 @@ msgstr "Все ваши треки и плейлисты будут удален
 
 #: src/routes/settings.library.tsx:140
 msgid "Reset library?"
-msgstr "Сбросить библиотеку?<<<<<<< HEAD<<<<<<< HEAD"
+msgstr "Сбросить библиотеку?"
 
 #: src/routes/settings.library.tsx:143
 #: src/routes/settings.ui.tsx:66
@@ -489,55 +489,55 @@ msgstr "Цвет акцента"
 msgid "Language"
 msgstr "Язык"
 
-#: src/routes/settings.ui.tsx:95
+#: src/routes/settings.ui.tsx:96
 msgid "Tracks density"
 msgstr "Плотность треков"
 
-#: src/routes/settings.ui.tsx:96
+#: src/routes/settings.ui.tsx:97
 msgid "Change the tracks spacing"
 msgstr "Изменить расстояние между треками"
 
-#: src/routes/settings.ui.tsx:105
+#: src/routes/settings.ui.tsx:106
 msgid "Normal (default)"
 msgstr "Номральная (по умолчанию)"
 
-#: src/routes/settings.ui.tsx:108
+#: src/routes/settings.ui.tsx:109
 msgid "Compact"
 msgstr "Компатная"
 
-#: src/routes/settings.ui.tsx:114
+#: src/routes/settings.ui.tsx:115
 msgid "Default view"
 msgstr "Представление по умолчанию"
 
-#: src/routes/settings.ui.tsx:116
+#: src/routes/settings.ui.tsx:117
 msgid "Change the default view when starting the application"
 msgstr "Изменить представление по умолчанию при запуске приложения"
 
-#: src/routes/settings.ui.tsx:124
+#: src/routes/settings.ui.tsx:125
 msgid "Library (default)"
-msgstr "Библиотека (по умолчанию)<<<<<<< HEAD"
+msgstr "Библиотека (по умолчанию)"
 
-#: src/routes/settings.ui.tsx:133
+#: src/routes/settings.ui.tsx:134
 msgid "Display Notifications"
 msgstr "Отображать уведомления"
 
-#: src/routes/settings.ui.tsx:134
+#: src/routes/settings.ui.tsx:135
 msgid "Send notifications when the playing track changes"
-msgstr "Посылать уведомления при смене проигрываемого трека<<<<<<< HEAD"
+msgstr "Посылать уведомления при смене проигрываемого трека"
 
-#: src/routes/settings.ui.tsx:143
+#: src/routes/settings.ui.tsx:144
 msgid "Sleep mode blocker"
 msgstr "Блокировать режим сна"
 
-#: src/routes/settings.ui.tsx:144
+#: src/routes/settings.ui.tsx:145
 msgid "Prevent the computer from going into sleep mode when playing"
 msgstr "Предпятствовать переходу компьютера в режим сна во время проигрывания"
 
-#: src/routes/settings.ui.tsx:159
+#: src/routes/settings.ui.tsx:160
 msgid "Light"
 msgstr "Светлая"
 
-#: src/routes/settings.ui.tsx:161
+#: src/routes/settings.ui.tsx:162
 msgid "Dark"
 msgstr "Тёмная"
 

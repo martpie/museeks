@@ -59,22 +59,22 @@ msgstr "Déposer des dossiers n'importe où"
 msgid "Library"
 msgstr "Bibliothèque"
 
-#: src/components/Footer.tsx:30
+#: src/components/Footer.tsx:31
 #: src/routes/artists.tsx:52
 msgid "Artists"
 msgstr "Artistes"
 
-#: src/components/Footer.tsx:39
+#: src/components/Footer.tsx:41
 #: src/routes/playlists.tsx:169
-#: src/routes/settings.ui.tsx:127
+#: src/routes/settings.ui.tsx:128
 msgid "Playlists"
 msgstr "Playlists"
 
-#: src/components/Footer.tsx:48
+#: src/components/Footer.tsx:51
 msgid "Settings"
 msgstr "Paramètres"
 
-#: src/components/Footer.tsx:79
+#: src/components/Footer.tsx:83
 msgid "scanning tracks..."
 msgstr "scan des pistes..."
 
@@ -446,7 +446,7 @@ msgstr "Toutes vos pistes et playlists seront supprimées de Museeks."
 
 #: src/routes/settings.library.tsx:140
 msgid "Reset library?"
-msgstr "Réinitialiser la bibliothèque ?<<<<<<< HEAD<<<<<<< HEAD"
+msgstr "Réinitialiser la bibliothèque ?"
 
 #: src/routes/settings.library.tsx:143
 #: src/routes/settings.ui.tsx:66
@@ -489,55 +489,55 @@ msgstr "Couleur d'accentuation"
 msgid "Language"
 msgstr "Langue"
 
-#: src/routes/settings.ui.tsx:95
+#: src/routes/settings.ui.tsx:96
 msgid "Tracks density"
 msgstr "Densité visuelle des pistes"
 
-#: src/routes/settings.ui.tsx:96
+#: src/routes/settings.ui.tsx:97
 msgid "Change the tracks spacing"
 msgstr "Adapter l'espace entre les pistes"
 
-#: src/routes/settings.ui.tsx:105
+#: src/routes/settings.ui.tsx:106
 msgid "Normal (default)"
 msgstr "Normal (par défaut)"
 
-#: src/routes/settings.ui.tsx:108
+#: src/routes/settings.ui.tsx:109
 msgid "Compact"
 msgstr "Compact"
 
-#: src/routes/settings.ui.tsx:114
+#: src/routes/settings.ui.tsx:115
 msgid "Default view"
 msgstr "Vue par défaut"
 
-#: src/routes/settings.ui.tsx:116
+#: src/routes/settings.ui.tsx:117
 msgid "Change the default view when starting the application"
 msgstr "Changer la vue par défaut au démarrage de l'application"
 
-#: src/routes/settings.ui.tsx:124
+#: src/routes/settings.ui.tsx:125
 msgid "Library (default)"
-msgstr "Bibliothèque (par défaut)<<<<<<< HEAD"
+msgstr "Bibliothèque (par défaut)"
 
-#: src/routes/settings.ui.tsx:133
+#: src/routes/settings.ui.tsx:134
 msgid "Display Notifications"
 msgstr "Afficher les notifications"
 
-#: src/routes/settings.ui.tsx:134
+#: src/routes/settings.ui.tsx:135
 msgid "Send notifications when the playing track changes"
-msgstr "Envoyer des notifications lorsque la piste en cours change<<<<<<< HEAD"
+msgstr "Envoyer des notifications lorsque la piste en cours change"
 
-#: src/routes/settings.ui.tsx:143
+#: src/routes/settings.ui.tsx:144
 msgid "Sleep mode blocker"
 msgstr "Bloqueur de mode veille"
 
-#: src/routes/settings.ui.tsx:144
+#: src/routes/settings.ui.tsx:145
 msgid "Prevent the computer from going into sleep mode when playing"
 msgstr "Empêcher l'ordinateur de passer en mode veille lors de la lecture"
 
-#: src/routes/settings.ui.tsx:159
+#: src/routes/settings.ui.tsx:160
 msgid "Light"
 msgstr "Clair"
 
-#: src/routes/settings.ui.tsx:161
+#: src/routes/settings.ui.tsx:162
 msgid "Dark"
 msgstr "Sombre"
 
