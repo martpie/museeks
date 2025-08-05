@@ -1,8 +1,6 @@
 import { getCurrentWindow } from '@tauri-apps/api/window';
 import { useEffect } from 'react';
 
-import player from '../lib/player';
-import { logAndNotifyError } from '../lib/utils';
 import { isDev, preventNativeDefault } from '../lib/utils-events';
 import SettingsAPI from '../stores/SettingsAPI';
 
@@ -24,26 +22,10 @@ function AppEvents() {
       window.addEventListener('contextmenu', preventNativeDefault);
     }
 
-    // TODO: fix that https://github.com/tauri-apps/tauri/issues/5279
-    // Auto-update theme if set to system and the native theme changes
-    // function updateTheme(_event: IpcRendererEvent, theme: unknown) {
-    //   SettingsAPI.applyThemeToUI(theme as Theme);
-    // }
     const unlistenSystemThemeChange = getCurrentWindow().listen(
       'tauri://theme-changed',
       onSystemThemeChange,
     );
-
-    // Support for multiple audio output
-    async function updateOutputDevice() {
-      try {
-        await player.setOutputDevice('default');
-      } catch (err) {
-        logAndNotifyError(err);
-      }
-    }
-
-    navigator.mediaDevices.addEventListener('devicechange', updateOutputDevice);
 
     return function cleanup() {
       window.removeEventListener('dragover', preventNativeDefault, false);
@@ -54,11 +36,6 @@ function AppEvents() {
       }
 
       unlistenSystemThemeChange.then((u) => u());
-
-      navigator.mediaDevices.removeEventListener(
-        'devicechange',
-        updateOutputDevice,
-      );
     };
   }, []);
 
