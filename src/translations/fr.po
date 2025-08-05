@@ -266,7 +266,7 @@ msgstr "veuillez patienter..."
 
 #: src/routes/library.tsx:92
 msgid "There is no music in your library :("
-msgstr "Aucune musique dans votre bibliothèque :("
+msgstr "Votre bibliothèque est vide :("
 
 #: src/routes/library.tsx:95
 msgid "you can <0>add your music here</0>"

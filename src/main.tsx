@@ -54,7 +54,23 @@ declare module '@tanstack/react-router' {
 |--------------------------------------------------------------------------
 */
 
+export const app = (
+  <React.StrictMode>
+    <QueryClientProvider client={queryClient}>
+      <I18nProvider i18n={i18n}>
+        <RouterProvider router={router} />
+      </I18nProvider>
+    </QueryClientProvider>
+  </React.StrictMode>
+);
+
 (async function createRoot() {
+  // don't auto-execute this for E2E tests, as the test is responsible for
+  // rendering the app
+  if (import.meta.env.MODE === 'test') {
+    return;
+  }
+
   Promise.allSettled([
     logger.attachConsole(),
     loadTranslation(window.__MUSEEKS_INITIAL_CONFIG.language),
@@ -64,15 +80,7 @@ declare module '@tanstack/react-router' {
 
   if (wrap) {
     const root = ReactDOM.createRoot(wrap);
-    root.render(
-      <React.StrictMode>
-        <QueryClientProvider client={queryClient}>
-          <I18nProvider i18n={i18n}>
-            <RouterProvider router={router} />
-          </I18nProvider>
-        </QueryClientProvider>
-      </React.StrictMode>,
-    );
+    root.render(app);
   } else {
     document.body.innerHTML = '<div style="text-align: center;">x_x</div>';
   }

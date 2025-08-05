@@ -28,7 +28,9 @@
     "experimentalDecorators": true,
 
     /* Plugins */
-    "plugins": [{ "name": "typescript-plugin-css-modules" }]
+    "plugins": [{ "name": "typescript-plugin-css-modules" }],
+
+    "types": ["@vitest/browser/providers/webdriverio"]
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]

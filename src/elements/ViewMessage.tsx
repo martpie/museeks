@@ -10,7 +10,11 @@ type Props = {
  * Main message of a ViewMessage
  */
 export function Notice(props: Props) {
-  return <div className={styles.fullMessage}>{props.children}</div>;
+  return (
+    <div className={styles.fullMessage} data-testid="view-message">
+      {props.children}
+    </div>
+  );
 }
 
 /**

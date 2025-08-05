@@ -20,6 +20,7 @@ export default function Footer() {
             activeProps={{ className: styles.footerNavigationLinkIsActive }}
             title={t`Library`}
             draggable={false}
+            data-testid="footer-library-link"
           >
             <Icon name="musicalNotes" size={16} />
           </Link>
@@ -29,6 +30,7 @@ export default function Footer() {
             activeProps={{ className: styles.footerNavigationLinkIsActive }}
             title={t`Artists`}
             draggable={false}
+            data-testid="footer-artists-link"
           >
             <Icon name="microphone" size={16} />
           </Link>
@@ -38,6 +40,7 @@ export default function Footer() {
             activeProps={{ className: styles.footerNavigationLinkIsActive }}
             title={t`Playlists`}
             draggable={false}
+            data-testid="footer-playlists-link"
           >
             <Icon name="playlist" size={16} />
           </Link>
@@ -47,6 +50,7 @@ export default function Footer() {
             activeProps={{ className: styles.footerNavigationLinkIsActive }}
             title={t`Settings`}
             draggable={false}
+            data-testid="footer-settings-link"
           >
             <Icon name="settings" size={16} />
           </Link>
