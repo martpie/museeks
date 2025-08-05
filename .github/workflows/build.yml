@@ -37,7 +37,7 @@ jobs:
         run: npm ci
 
       - name: Install Playwright dependencies
-        run: npx playwright install --with-deps
+        run: npx playwright install webkit --with-deps
 
       - name: 'Test: Rust (+ Generate Types)'
         run: npm run gen:types
@@ -45,7 +45,10 @@ jobs:
       - name: 'Test: TS/JS linting & formatting'
         run: 'npm run test:lint'
 
-      - name: 'Test: unit and e2e'
+      - name: 'Test: unit'
+        run: 'npm run test:unit'
+
+      - name: 'Test: E2E'
         run: 'npm run test:ui'
 
       - name: 'Test: Types'

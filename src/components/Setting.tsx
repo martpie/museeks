@@ -6,14 +6,26 @@ import styles from './Setting.module.css';
 
 type Props = {
   children: React.ReactNode;
+  'data-testid'?: string;
 };
 
 export function Section(props: Props) {
-  return <section className={styles.settingSection}>{props.children}</section>;
+  return (
+    <section
+      className={styles.settingSection}
+      data-testid={props['data-testid']}
+    >
+      {props.children}
+    </section>
+  );
 }
 
 export function Description(props: Props) {
-  return <p className={styles.settingDescription}>{props.children}</p>;
+  return (
+    <p className={styles.settingDescription} data-testid={props['data-testid']}>
+      {props.children}
+    </p>
+  );
 }
 
 export function Label(
@@ -36,7 +48,11 @@ export function Label(
 }
 
 export function Title(props: Props) {
-  return <h3 className={styles.settingTitle}>{props.children}</h3>;
+  return (
+    <h3 className={styles.settingTitle} data-testid={props['data-testid']}>
+      {props.children}
+    </h3>
+  );
 }
 
 export type InputProps = {

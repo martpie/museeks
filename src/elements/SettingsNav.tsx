@@ -30,6 +30,7 @@ export function SettingsNavLink(props: LinkProps) {
       className={styles.navLink}
       activeProps={{ className: styles.navLinkActive }}
       draggable={false}
+      data-testid={`settings-nav-link${props.to}`}
     >
       {props.children}
     </Link>

@@ -3,27 +3,29 @@ import { tanstackRouter } from '@tanstack/router-plugin/vite';
 import react from '@vitejs/plugin-react';
 import browserslist from 'browserslist';
 import { browserslistToTargets } from 'lightningcss';
-import { defineConfig } from 'vite';
+import { defineConfig, type PluginOption } from 'vite';
 import svgr from 'vite-plugin-svgr';
+
+export const VITE_PLUGINS: PluginOption[] = [
+  react({
+    babel: {
+      plugins: ['@lingui/babel-plugin-lingui-macro'],
+      parserOpts: {
+        plugins: ['decorators'],
+      },
+    },
+  }),
+  lingui(),
+  tanstackRouter({
+    target: 'react',
+    generatedRouteTree: './src/generated/route-tree.ts',
+  }),
+  svgr(),
+];
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [
-    tanstackRouter({
-      target: 'react',
-      generatedRouteTree: './src/generated/route-tree.ts',
-    }),
-    react({
-      babel: {
-        plugins: ['@lingui/babel-plugin-lingui-macro'],
-        parserOpts: {
-          plugins: ['decorators'],
-        },
-      },
-    }),
-    svgr(),
-    lingui(),
-  ],
+  plugins: VITE_PLUGINS,
 
   // LightningCSS
   css: {

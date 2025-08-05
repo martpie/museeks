@@ -79,6 +79,7 @@ function ViewSettingsUI() {
           onChange={(e) => {
             SettingsAPI.setLanguage(e.target.value).then(invalidate);
           }}
+          data-testid="language-selector"
         >
           {ALL_LANGUAGES.map((language) => {
             return (
