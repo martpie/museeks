@@ -36,7 +36,6 @@ type PlayerState = API<{
     setVolume: (volume: number) => void;
     setMuted: (muted: boolean) => void;
     setPlaybackRate: (value: number) => Promise<void>;
-    setOutputDevice: (deviceID: string) => Promise<void>;
     jumpTo: (to: number) => void;
     startFromQueue: (index: number) => Promise<void>;
     clearQueue: () => void;
@@ -321,20 +320,6 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
       } else {
         await ConfigBridge.set('audio_playback_rate', null);
         player.setPlaybackRate(1.0);
-      }
-    },
-
-    /**
-     * Set audio's output device
-     */
-    setOutputDevice: async (deviceID = 'default') => {
-      if (deviceID) {
-        try {
-          await player.setOutputDevice(deviceID);
-          await ConfigBridge.set('audio_output_device', deviceID);
-        } catch (err) {
-          logAndNotifyError(err);
-        }
       }
     },
 

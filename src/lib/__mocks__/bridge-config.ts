@@ -6,7 +6,6 @@ export const MOCK_CONFIG: Config = {
   ui_accent_color: null,
   audio_volume: 1.0,
   audio_playback_rate: 1.0,
-  audio_output_device: 'default',
   audio_follow_playing_track: false,
   audio_muted: false,
   audio_shuffle: false,

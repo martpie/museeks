@@ -2,7 +2,6 @@ import { convertFileSrc } from '@tauri-apps/api/core';
 
 import type { Track } from '../generated/typings';
 import ConfigBridge from './bridge-config';
-import { logAndNotifyError } from './utils';
 
 interface PlayerOptions {
   playbackRate?: number;
@@ -28,7 +27,6 @@ class Player {
       playbackRate: 1,
       volume: 1,
       muted: false,
-      audioOutputDevice: 'default',
       ...options,
     };
 
@@ -36,8 +34,6 @@ class Player {
     this.track = null;
 
     this.audio.defaultPlaybackRate = mergedOptions.playbackRate;
-    // TODO:
-    // this.audio.setSinkId(mergedOptions.audioOutputDevice);
     this.audio.playbackRate = mergedOptions.playbackRate;
     this.audio.volume = mergedOptions.volume;
     this.audio.muted = mergedOptions.muted;
@@ -87,14 +83,6 @@ class Player {
     this.audio.defaultPlaybackRate = playbackRate;
   }
 
-  async setOutputDevice(deviceID: string) {
-    try {
-      await this.audio.setSinkId(deviceID);
-    } catch (err) {
-      logAndNotifyError(err);
-    }
-  }
-
   getTrack() {
     return this.track;
   }
@@ -135,6 +123,5 @@ class Player {
 export default new Player({
   volume: ConfigBridge.getInitial('audio_volume'),
   playbackRate: ConfigBridge.getInitial('audio_playback_rate') ?? 1,
-  audioOutputDevice: ConfigBridge.getInitial('audio_output_device'),
   muted: ConfigBridge.getInitial('audio_muted'),
 });
