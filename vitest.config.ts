@@ -16,6 +16,7 @@ export default defineConfig({
         test: {
           name: 'e2e',
           include: ['**/*.test-e2e.ts', '**/*.test-e2e.tsx'],
+          testTimeout: 1000,
           browser: {
             enabled: true,
             provider: 'playwright', // webdriverio?
@@ -27,8 +28,10 @@ export default defineConfig({
             // https://vitest.dev/guide/browser/playwright
             instances: [{ browser: 'webkit' }],
           },
+          includeTaskLocation: true,
         },
         plugins: VITE_PLUGINS,
+        publicDir: 'src/__tests__/assets',
       },
     ],
   },
@@ -41,6 +44,5 @@ export default defineConfig({
       '@lingui/react',
       'vitest-browser-react',
     ],
-    // exclude: ['@lingui/core/macro', '@lingui/react/macro'],
   },
 });

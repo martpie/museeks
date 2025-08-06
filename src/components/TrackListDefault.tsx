@@ -116,7 +116,7 @@ export default function TrackListDefault(props: Props) {
         <TrackListHeader enableSort={isSortEnabled} />
 
         {/* The large inner element to hold all of the items */}
-        <div
+        <ul
           className={styles.rows}
           style={{
             height: `${virtualizer.getTotalSize()}px`,
@@ -156,7 +156,7 @@ export default function TrackListDefault(props: Props) {
               );
             })}
           </SortableContext>
-        </div>
+        </ul>
       </Scrollable>
     </DndContext>
   );

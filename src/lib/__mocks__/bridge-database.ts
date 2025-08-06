@@ -6,34 +6,65 @@ import type {
 } from '../../generated/typings';
 import type { DatabaseBridgeInterface } from '../bridge-database';
 
+// Thank you Pixabay for the copyright-free tracks
 const MOCK_TRACKS: Array<Track> = [
   {
     id: '0',
-    title: 'Test Track',
-    artists: ['Test Artist'],
-    album: 'Test Album',
+    title: 'Majestic Blues',
+    artists: ['Desicomix07'],
+    album: 'Pixabay',
     duration: 300,
-    album_artist: 'Test Album Artist',
-    year: 2023,
+    album_artist: 'Desicomix07',
+    year: 2025,
+    disk_no: 1,
+    disk_of: 1,
+    track_no: 1,
+    track_of: 2,
+    genres: ['blues'],
+    path: '/majestic-blues.mp3',
+  },
+  {
+    id: '1',
+    title: 'Romantic Blues',
+    artists: ['Jean-Paul-V'],
+    album: 'Pixabay',
+    duration: 300,
+    album_artist: 'Jean-Paul-V',
+    year: 2025,
+    disk_no: 1,
+    disk_of: 1,
+    track_no: 2,
+    track_of: 2,
+    genres: ['blues'],
+    path: '/romantic-blues.mp3',
+  },
+  {
+    id: '2',
+    title: 'Whiskey Blues',
+    artists: ['Captain_Sleepy'],
+    album: 'Another Album from Pixabay',
+    duration: 300,
+    album_artist: 'Captain_Sleepy',
+    year: 2025,
     disk_no: 1,
     disk_of: 1,
     track_no: 1,
     track_of: 1,
-    genres: ['blues'],
-    path: '/test-assets/majestic-blues.mp3',
+    genres: ['rock', 'blues'],
+    path: '/whiskey-blues.mp3',
   },
 ];
 
-class DatabaseBridge implements DatabaseBridgeInterface {
-  tracks: Array<Track> = [];
+// Weirdly, when using a class property, accessing it is extremely slow. No idea why. May be a webkit issue.
+let tracks: Array<Track> = [];
 
+class DatabaseBridge implements DatabaseBridgeInterface {
   async getAllTracks(): Promise<Array<Track>> {
-    // return this.tracks;
-    return [];
+    return tracks;
   }
 
   async getTracks(trackIDs: Array<string>): Promise<Array<Track>> {
-    return this.tracks.filter((track) => trackIDs.includes(track.id));
+    return tracks.filter((track) => trackIDs.includes(track.id));
   }
 
   async updateTrack(_track: Track): Promise<Track> {
@@ -48,7 +79,7 @@ class DatabaseBridge implements DatabaseBridgeInterface {
     _importPaths: Array<string>,
     _refresh = false,
   ): Promise<ScanResult> {
-    this.tracks = MOCK_TRACKS;
+    tracks = MOCK_TRACKS;
 
     return {
       playlist_count: 0,
