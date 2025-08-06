@@ -13,18 +13,6 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/components/AudioOutputSelect.tsx:53
-msgid "Loading devices..."
-msgstr "Chargement des périphériques..."
-
-#: src/components/AudioOutputSelect.tsx:61
-msgid "Could not get audio output devices"
-msgstr "Impossible d'obtenir les périphériques de sortie audio"
-
-#: src/components/AudioOutputSelect.tsx:69
-msgid "No audio devices found"
-msgstr "Aucun périphérique audio trouvé"
-
 #: src/components/ButtonRepeat.tsx:18
 msgid "Repeat"
 msgstr "Lecture en boucle"
@@ -363,27 +351,19 @@ msgstr "Détails techniques"
 msgid "Open storage directory"
 msgstr "Ouvrir le dossier de stockage"
 
-#: src/routes/settings.audio.tsx:26
+#: src/routes/settings.audio.tsx:25
 msgid "Playback rate"
 msgstr "Vitesse de lecture"
 
-#: src/routes/settings.audio.tsx:27
+#: src/routes/settings.audio.tsx:26
 msgid "Increase the playback rate: a value of 2 will play your music at a 2x speed"
 msgstr "Augmenter la vitesse de lecture : une valeur de 2 jouera votre musique à une vitesse 2x"
 
-#: src/routes/settings.audio.tsx:42
-msgid "Audio output"
-msgstr "Sortie audio"
-
-#: src/routes/settings.audio.tsx:43
-msgid "Advanced: set a custom audio output device."
-msgstr "Avancé : définir un périphérique de sortie audio personnalisé."
-
-#: src/routes/settings.audio.tsx:50
+#: src/routes/settings.audio.tsx:41
 msgid "Follow playing track"
 msgstr "Suivre la piste en cours"
 
-#: src/routes/settings.audio.tsx:51
+#: src/routes/settings.audio.tsx:42
 msgid "Automatically follow the currently playing track (only when the app is not focused)"
 msgstr "Suivre automatiquement la piste en cours (uniquement lorsque l'application n'a pas le focus)"
 

@@ -13,18 +13,6 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11) ? 0 : ((n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20)) ? 1 : 2);\n"
 
-#: src/components/AudioOutputSelect.tsx:53
-msgid "Loading devices..."
-msgstr "Загружается список устройств..."
-
-#: src/components/AudioOutputSelect.tsx:61
-msgid "Could not get audio output devices"
-msgstr "Не удалось получить список устройств вывода звука"
-
-#: src/components/AudioOutputSelect.tsx:69
-msgid "No audio devices found"
-msgstr "Звуковые устройства не обнаружены"
-
 #: src/components/ButtonRepeat.tsx:18
 msgid "Repeat"
 msgstr "Повтор"
@@ -363,27 +351,19 @@ msgstr "Внутренности"
 msgid "Open storage directory"
 msgstr "Открыть папку-хранилище"
 
-#: src/routes/settings.audio.tsx:26
+#: src/routes/settings.audio.tsx:25
 msgid "Playback rate"
 msgstr "Скорость воспроизведения"
 
-#: src/routes/settings.audio.tsx:27
+#: src/routes/settings.audio.tsx:26
 msgid "Increase the playback rate: a value of 2 will play your music at a 2x speed"
 msgstr "Увеличить скорость воспроизведения: при значении 2 ваша музыка будет проигрываться на скорости 2x"
 
-#: src/routes/settings.audio.tsx:42
-msgid "Audio output"
-msgstr "Аудио вывод"
-
-#: src/routes/settings.audio.tsx:43
-msgid "Advanced: set a custom audio output device."
-msgstr "Для продвинутых: выбрать специфическое устройство вывода звука."
-
-#: src/routes/settings.audio.tsx:50
+#: src/routes/settings.audio.tsx:41
 msgid "Follow playing track"
 msgstr "Следовать за проигрываемым треком"
 
-#: src/routes/settings.audio.tsx:51
+#: src/routes/settings.audio.tsx:42
 msgid "Automatically follow the currently playing track (only when the app is not focused)"
 msgstr "Автоматически следовать за проигрываемым треком (только если приложение находится не в фокусе)"
 
