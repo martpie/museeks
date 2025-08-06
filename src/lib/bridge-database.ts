@@ -8,44 +8,64 @@ import type {
   TrackGroup,
 } from '../generated/typings';
 
+export interface DatabaseBridgeInterface {
+  getAllTracks(): Promise<Array<Track>>;
+  getTracks(trackIDs: Array<string>): Promise<Array<Track>>;
+  updateTrack(track: Track): Promise<Track>;
+  removeTracks(trackIDs: Array<string>): Promise<Array<Track>>;
+  importTracks(
+    importPaths: Array<string>,
+    refresh?: boolean,
+  ): Promise<ScanResult>;
+  getAllArtists(): Promise<Array<string>>;
+  getArtistTracks(artist: string): Promise<Array<TrackGroup>>;
+  getAllPlaylists(): Promise<Array<Playlist>>;
+  getPlaylist(id: string): Promise<Playlist>;
+  createPlaylist(name: string, ids: Array<string>): Promise<Playlist>;
+  renamePlaylist(id: string, name: string): Promise<Playlist>;
+  setPlaylistTracks(id: string, tracks: Array<string>): Promise<Playlist>;
+  exportPlaylist(id: string): Promise<void>;
+  deletePlaylist(id: string): Promise<void>;
+  reset(): Promise<string | null>;
+}
+
 /**
  * Bridge for the UI to communicate with the backend and manipulate the Database.
  * Grouped here so they're easier to mock in E2E tests.
  */
-// biome-ignore lint/complexity/noStaticOnlyClass: conflict with decorators rules
-class DatabaseBridge {
+class DatabaseBridge implements DatabaseBridgeInterface {
   // ---------------------------------------------------------------------------
   // Library read/write actions
   // ---------------------------------------------------------------------------
 
   @LogExecutionTime
-  static async getAllTracks(): Promise<Array<Track>> {
+  async getAllTracks(): Promise<Array<Track>> {
     return invoke<Array<Track>>('plugin:database|get_all_tracks');
   }
 
   @LogExecutionTime
-  static async getTracks(trackIDs: Array<string>): Promise<Array<Track>> {
+  async getTracks(trackIDs: Array<string>): Promise<Array<Track>> {
     return invoke('plugin:database|get_tracks', {
       ids: trackIDs,
     });
   }
 
   @LogExecutionTime
-  static async updateTrack(track: Track): Promise<Track> {
+  async updateTrack(track: Track): Promise<Track> {
     return invoke('plugin:database|update_track', {
       track,
     });
   }
 
   @LogExecutionTime
-  static async removeTracks(trackIDs: Array<string>): Promise<Array<Track>> {
+  async removeTracks(trackIDs: Array<string>): Promise<Array<Track>> {
     return invoke('plugin:database|remove_tracks', {
       ids: trackIDs,
     });
   }
 
   @LogExecutionTime
-  static async importTracks(
+  async importTracks(
     importPaths: Array<string>,
     refresh = false,
   ): Promise<ScanResult> {
@@ -56,12 +76,12 @@ class DatabaseBridge {
   }
 
   @LogExecutionTime
-  static async getAllArtists(): Promise<Array<string>> {
+  async getAllArtists(): Promise<Array<string>> {
     return invoke('plugin:database|get_artists');
   }
 
   @LogExecutionTime
-  static async getArtistTracks(artist: string): Promise<Array<TrackGroup>> {
+  async getArtistTracks(artist: string): Promise<Array<TrackGroup>> {
     return invoke('plugin:database|get_artist_tracks', { artist });
   }
 
@@ -70,22 +90,19 @@ class DatabaseBridge {
   // ---------------------------------------------------------------------------
 
   @LogExecutionTime
-  static async getAllPlaylists(): Promise<Array<Playlist>> {
+  async getAllPlaylists(): Promise<Array<Playlist>> {
     return invoke('plugin:database|get_all_playlists');
   }
 
   @LogExecutionTime
-  static async getPlaylist(id: string): Promise<Playlist> {
+  async getPlaylist(id: string): Promise<Playlist> {
     return invoke('plugin:database|get_playlist', {
       id,
     });
   }
 
   @LogExecutionTime
-  static async createPlaylist(
-    name: string,
-    ids: Array<string>,
-  ): Promise<Playlist> {
+  async createPlaylist(name: string, ids: Array<string>): Promise<Playlist> {
     return invoke('plugin:database|create_playlist', {
       name,
       ids,
@@ -93,7 +110,7 @@ class DatabaseBridge {
   }
 
   @LogExecutionTime
-  static async renamePlaylist(id: string, name: string): Promise<Playlist> {
+  async renamePlaylist(id: string, name: string): Promise<Playlist> {
     return invoke('plugin:database|rename_playlist', {
       id,
       name,
@@ -101,7 +118,7 @@ class DatabaseBridge {
   }
 
   @LogExecutionTime
-  static async setPlaylistTracks(
+  async setPlaylistTracks(
     id: string,
     tracks: Array<string>,
   ): Promise<Playlist> {
@@ -112,14 +129,14 @@ class DatabaseBridge {
   }
 
   @LogExecutionTime
-  static async exportPlaylist(id: string): Promise<void> {
+  async exportPlaylist(id: string): Promise<void> {
     return invoke('plugin:database|export_playlist', {
       id,
     });
   }
 
   @LogExecutionTime
-  static async deletePlaylist(id: string): Promise<void> {
+  async deletePlaylist(id: string): Promise<void> {
     return invoke('plugin:database|delete_playlist', {
       id,
     });
@@ -129,12 +146,12 @@ class DatabaseBridge {
   // Common
   // ---------------------------------------------------------------------------
   @LogExecutionTime
-  static async reset(): Promise<string | null> {
+  async reset(): Promise<string | null> {
     return invoke('plugin:database|reset');
   }
 }
 
-export default DatabaseBridge;
+export default new DatabaseBridge();
 
 /**
  * Helpers to compute the time it takes to

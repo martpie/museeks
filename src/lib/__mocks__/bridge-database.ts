@@ -4,31 +4,52 @@ import type {
   Track,
   TrackGroup,
 } from '../../generated/typings';
+import type { DatabaseBridgeInterface } from '../bridge-database';
 
-// TODO: use Interface for the class
+const MOCK_TRACKS: Array<Track> = [
+  {
+    id: '0',
+    title: 'Test Track',
+    artists: ['Test Artist'],
+    album: 'Test Album',
+    duration: 300,
+    album_artist: 'Test Album Artist',
+    year: 2023,
+    disk_no: 1,
+    disk_of: 1,
+    track_no: 1,
+    track_of: 1,
+    genres: ['blues'],
+    path: '/test-assets/majestic-blues.mp3',
+  },
+];
 
-// biome-ignore lint/complexity/noStaticOnlyClass: it's a mock, it's ok
-class DatabaseBridge {
-  static async getAllTracks(): Promise<Array<Track>> {
+class DatabaseBridge implements DatabaseBridgeInterface {
+  tracks: Array<Track> = [];
+
+  async getAllTracks(): Promise<Array<Track>> {
+    // return this.tracks;
     return [];
   }
 
-  static async getTracks(_trackIDs: Array<string>): Promise<Array<Track>> {
-    return [];
+  async getTracks(trackIDs: Array<string>): Promise<Array<Track>> {
+    return this.tracks.filter((track) => trackIDs.includes(track.id));
   }
 
-  static async updateTrack(_track: Track): Promise<Track> {
+  async updateTrack(_track: Track): Promise<Track> {
     return {} as Track;
   }
 
-  static async removeTracks(_trackIDs: Array<string>): Promise<Array<Track>> {
+  async removeTracks(_trackIDs: Array<string>): Promise<Array<Track>> {
     return [];
   }
 
-  static async importTracks(
+  async importTracks(
     _importPaths: Array<string>,
     _refresh = false,
   ): Promise<ScanResult> {
+    this.tracks = MOCK_TRACKS;
+
     return {
       playlist_count: 0,
       track_count: 0,
@@ -37,19 +58,19 @@ class DatabaseBridge {
     };
   }
 
-  static async getAllArtists(): Promise<Array<string>> {
+  async getAllArtists(): Promise<Array<string>> {
     return [];
   }
 
-  static async getArtistTracks(_artist: string): Promise<Array<TrackGroup>> {
+  async getArtistTracks(_artist: string): Promise<Array<TrackGroup>> {
     return [];
   }
 
-  static async getAllPlaylists(): Promise<Array<Playlist>> {
+  async getAllPlaylists(): Promise<Array<Playlist>> {
     return [];
   }
 
-  static async getPlaylist(_id: string): Promise<Playlist> {
+  async getPlaylist(_id: string): Promise<Playlist> {
     return {
       id: '0',
       name: 'test playlist',
@@ -58,35 +79,32 @@ class DatabaseBridge {
     };
   }
 
-  static async createPlaylist(
-    _name: string,
-    _ids: Array<string>,
-  ): Promise<Playlist> {
-    return DatabaseBridge.getPlaylist('0');
+  async createPlaylist(_name: string, _ids: Array<string>): Promise<Playlist> {
+    return this.getPlaylist('0');
   }
 
-  static async renamePlaylist(_id: string, _name: string): Promise<Playlist> {
-    return DatabaseBridge.getPlaylist('0');
+  async renamePlaylist(_id: string, _name: string): Promise<Playlist> {
+    return this.getPlaylist('0');
   }
 
-  static async setPlaylistTracks(
+  async setPlaylistTracks(
     _id: string,
     _tracks: Array<string>,
   ): Promise<Playlist> {
-    return DatabaseBridge.getPlaylist('0');
+    return this.getPlaylist('0');
   }
 
-  static async exportPlaylist(_id: string): Promise<void> {
+  async exportPlaylist(_id: string): Promise<void> {
     return;
   }
 
-  static async deletePlaylist(_id: string): Promise<void> {
+  async deletePlaylist(_id: string): Promise<void> {
     return;
   }
 
-  static async reset(): Promise<string | null> {
+  async reset(): Promise<string | null> {
     return null;
   }
 }
 
-export default DatabaseBridge;
+export default new DatabaseBridge();
