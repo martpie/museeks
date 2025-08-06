@@ -16,6 +16,7 @@
     "core:webview:deny-print",
     "core:webview:allow-set-webview-zoom",
     "shell:allow-open",
+    "clipboard-manager:allow-write-text",
     "dialog:allow-open",
     "dialog:allow-ask",
     "fs:allow-lstat",

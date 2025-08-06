@@ -7,6 +7,7 @@ import {
   PredefinedMenuItem,
   Submenu,
 } from '@tauri-apps/api/menu';
+import { writeText } from '@tauri-apps/plugin-clipboard-manager';
 import { ask } from '@tauri-apps/plugin-dialog';
 import { revealItemInDir } from '@tauri-apps/plugin-opener';
 import type React from 'react';
@@ -278,6 +279,10 @@ export default function TrackList(props: Props) {
       }
 
       const playlistSubMenu = await Promise.all(playlistSubMenuItems);
+      const artistsAndAlbum = [...new Set([...track.artists, track.album])];
+      const artistsAndAlbumAndTitle = [
+        ...new Set([track.title, ...artistsAndAlbum]),
+      ];
 
       const menuItemsBuilder = [
         // Tracks Selected indicator
@@ -318,20 +323,27 @@ export default function TrackList(props: Props) {
           item: 'Separator',
         }),
         // Quick-search
-        ...track.artists.map((artist) =>
+        ...[track.title, ...artistsAndAlbum].map((item) =>
           MenuItem.new({
-            text: t`Search for "${artist}"`,
+            text: t`Search for "${item}"`,
             action: () => {
-              libraryAPI.search(artist);
+              libraryAPI.search(item);
             },
           }),
         ),
-        MenuItem.new({
-          text: t`Search for "${track.album}"`,
-          action() {
-            libraryAPI.search(track.album);
-          },
+        PredefinedMenuItem.new({
+          text: '?',
+          item: 'Separator',
         }),
+        // Copy
+        ...artistsAndAlbumAndTitle.map((item) =>
+          MenuItem.new({
+            text: t`Copy "${item}"`,
+            action: () => {
+              writeText(item).catch(logAndNotifyError);
+            },
+          }),
+        ),
       ];
 
       if (extraContextMenu != null) {

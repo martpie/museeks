@@ -123,79 +123,78 @@ msgstr "поиск..."
 msgid "Rename"
 msgstr "Переименовать"
 
-#: src/components/TrackList.tsx:241
+#: src/components/TrackList.tsx:242
 msgid "Create new playlist..."
 msgstr "Создать новый плейлист..."
 
-#: src/components/TrackList.tsx:244
+#: src/components/TrackList.tsx:245
 #: src/routes/playlists.tsx:62
 msgid "New playlist"
 msgstr "Новый плейлист"
 
-#: src/components/TrackList.tsx:257
+#: src/components/TrackList.tsx:258
 msgid "No playlists"
 msgstr "Плейлистов нет"
 
 #. placeholder {0}: selectedTracks.size
 #. placeholder {1}: playlist.name
-#: src/components/TrackList.tsx:272
+#: src/components/TrackList.tsx:273
 msgid "{0} track(s) were added to \"{1}\""
 msgstr "{0} трек(ов) добавлено в \"{1}\""
 
-#: src/components/TrackList.tsx:285
+#: src/components/TrackList.tsx:290
 msgid "{selectedCount, plural, one {# track selected} other {# tracks selected}}"
 msgstr "Выбран{selectedCount, plural, one { # трек} few {ы # трека} many {о # треков}}"
 
-#: src/components/TrackList.tsx:297
+#: src/components/TrackList.tsx:302
 msgid "Add to queue"
 msgstr "Добавить в очередь"
 
-#: src/components/TrackList.tsx:303
+#: src/components/TrackList.tsx:308
 msgid "Play next"
 msgstr "Играть следующим"
 
-#: src/components/TrackList.tsx:313
+#: src/components/TrackList.tsx:318
 msgid "Add to playlist"
 msgstr "Добавить в плейлист"
 
-#: src/components/TrackList.tsx:323
-msgid "Search for \"{artist}\""
-msgstr "Искать \"{artist}\""
+#: src/components/TrackList.tsx:328
+msgid "Search for \"{item}\""
+msgstr "Искать \"{item}\""
 
-#. placeholder {0}: track.album
-#: src/components/TrackList.tsx:330
-msgid "Search for \"{0}\""
-msgstr "Искать \"{0}\""
+#: src/components/TrackList.tsx:341
+msgid "Copy \"{item}\""
+msgstr "Скопировать \"{item}\""
 
-#: src/components/TrackList.tsx:353
+#: src/components/TrackList.tsx:365
 msgid "Edit track"
 msgstr "Редактировать трек"
 
-#: src/components/TrackList.tsx:363
+#: src/components/TrackList.tsx:375
 msgid "Show in file manager"
 msgstr "Открыть в файловом менеджере"
 
-#: src/components/TrackList.tsx:369
+#: src/components/TrackList.tsx:381
 msgid "Remove from library"
 msgstr "Удалить из библиотеки"
 
 #. placeholder {0}: selectedTracks.size
-#: src/components/TrackList.tsx:372
+#: src/components/TrackList.tsx:384
 msgid "Are you sure you want to remove {0} track(s) from your library?"
 msgstr "Вы уверены, что хотите удалить {0} трек(ов) из вашей библиотеки?"
 
-#: src/components/TrackList.tsx:374
+#: src/components/TrackList.tsx:386
 msgid "Remove tracks"
 msgstr "Удалить треки"
 
-#: src/components/TrackList.tsx:376
+#: src/components/TrackList.tsx:388
 #: src/routes/settings.library.tsx:97
 #: src/routes/settings.library.tsx:142
 #: src/routes/tracks.$trackID.tsx:246
 msgid "Cancel"
 msgstr "Отмена"
 
-#: src/components/TrackList.tsx:377
+#: src/components/TrackList.tsx:389
 #: src/routes/settings.library.tsx:61
 msgid "Remove"
 msgstr "Удалить"
