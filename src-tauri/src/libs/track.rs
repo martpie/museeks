@@ -58,13 +58,10 @@ pub struct TrackGroup {
 pub fn get_track_from_file(path: &PathBuf) -> AnyResult<Track> {
     match lofty::read_from_path(path) {
         Ok(tagged_file) => {
-            let tag = match tagged_file.primary_tag() {
-                Some(tag) => tag,
-                None => {
-                    warn!("No tags found for file {:?}", path);
-                    return Err(MuseeksError::ID3NoTags(path.clone()));
-                }
-            };
+            let tag = tagged_file.primary_tag().ok_or_else(|| {
+                warn!("No tags found for file {:?}", path);
+                MuseeksError::ID3NoTags(path.clone())
+            })?;
 
             // Lots of tags are missing eaither TrackArtist or AlbumArtist, so instead
             // of being correct, we'll swap them if needed.
@@ -87,14 +84,14 @@ pub fn get_track_from_file(path: &PathBuf) -> AnyResult<Track> {
                 artists = vec!["Unknown Artist".into()];
             }
 
+            // Try AlbumArtist, fallback to first artist, then to "Unknown Artist"
             let album_artist = tag
                 .get_string(&ItemKey::AlbumArtist)
-                .map(|s| s.to_string())
+                .map(ToString::to_string)
                 .or_else(|| artists.first().cloned())
                 .filter(|s| !s.is_empty())
-                .unwrap_or("Unknown Artist".to_string());
+                .unwrap_or_else(|| "Unknown Artist".to_string());
 
-            // Gen|| erate a stable ID for the track, based on its path
             let id = get_track_id_for_path(path)?;
 
             Ok(Track {
@@ -103,17 +100,18 @@ pub fn get_track_from_file(path: &PathBuf) -> AnyResult<Track> {
                 title: tag
                     .get_string(&ItemKey::TrackTitle)
                     .filter(|s| !s.is_empty())
-                    .unwrap_or(
+                    .map(ToString::to_string)
+                    .unwrap_or_else(|| {
                         path.file_name()
                             .and_then(|f| f.to_str())
-                            .unwrap_or("Unknown"),
-                    )
-                    .to_string(),
+                            .unwrap_or("Unknown")
+                            .to_string()
+                    }),
                 album: tag
                     .get_string(&ItemKey::AlbumTitle)
                     .filter(|s| !s.is_empty())
-                    .unwrap_or("Unknown")
-                    .to_string(),
+                    .map(ToString::to_string)
+                    .unwrap_or_else(|| "Unknown".to_string()),
                 album_artist,
                 artists,
                 genres: tag
