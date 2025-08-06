@@ -1,4 +1,7 @@
 .rows {
   width: 100%;
   position: relative;
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }

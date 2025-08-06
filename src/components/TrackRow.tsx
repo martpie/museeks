@@ -74,10 +74,9 @@ export default function TrackRow(props: Props) {
   });
 
   return (
-    // biome-ignore lint/a11y/noStaticElementInteractions: later, make a <li>
     // biome-ignore lint/a11y/useAriaPropsSupportedByRole: later, make a listitem
     // biome-ignore lint/a11y/useKeyWithClickEvents: handled by parent, maybe should be moved here
-    <div
+    <li
       className={trackClasses}
       onDoubleClick={() => onPlaybackStart(track.id)}
       onMouseDown={(e) => onTrackSelect(e, track.id, index)}
@@ -91,6 +90,8 @@ export default function TrackRow(props: Props) {
       {...attributes}
       style={props.style}
       data-track-id={track.id}
+      data-testid={`track-row-${track.id}`}
+      aria-disabled="false"
     >
       <div className={`${styles.cell} ${cellStyles.cellTrackPlaying}`}>
         {props.isPlaying ? <PlayingIndicator /> : null}
@@ -114,6 +115,6 @@ export default function TrackRow(props: Props) {
           </div>
         </>
       )}
-    </div>
+    </li>
   );
 }

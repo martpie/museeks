@@ -38,4 +38,7 @@
 
 .rows {
   flex-grow: 1;
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }

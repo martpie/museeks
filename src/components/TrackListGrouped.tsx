@@ -104,7 +104,7 @@ function TrackListGroup(props: TrackListGroupProps) {
           </div>
         </div>
       </aside>
-      <div className={styles.rows}>
+      <ul className={styles.rows}>
         {tracks.map((track, index) => {
           return (
             <TrackRow
@@ -122,7 +122,7 @@ function TrackListGroup(props: TrackListGroupProps) {
             />
           );
         })}
-      </div>
+      </ul>
     </div>
   );
 }

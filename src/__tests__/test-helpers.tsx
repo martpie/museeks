@@ -51,6 +51,7 @@ export function beforeEachSetup() {
     // Mock Bridges
     vi.mock('../lib/bridge-database');
     vi.mock('../lib/bridge-config');
+    vi.mock('../lib/cover');
 
     // Initial Location
     window.location.hash = '#/library';

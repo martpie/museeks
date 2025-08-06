@@ -188,8 +188,8 @@ msgid "Remove tracks"
 msgstr "Remove tracks"
 
 #: src/components/TrackList.tsx:388
-#: src/routes/settings.library.tsx:97
-#: src/routes/settings.library.tsx:142
+#: src/routes/settings.library.tsx:98
+#: src/routes/settings.library.tsx:143
 #: src/routes/tracks.$trackID.tsx:246
 msgid "Cancel"
 msgstr "Cancel"
@@ -378,61 +378,61 @@ msgstr "There are no folders in your library."
 msgid "Add folder"
 msgstr "Add folder"
 
-#: src/routes/settings.library.tsx:87
+#: src/routes/settings.library.tsx:88
 msgid "Scan"
 msgstr "Scan"
 
-#: src/routes/settings.library.tsx:93
+#: src/routes/settings.library.tsx:94
 msgid "All track data will be updated from the base files, but your original files won't be modified. Any Museeks-specific edits you may have done will be reset."
 msgstr "All track data will be updated from the base files, but your original files won't be modified. Any Museeks-specific edits you may have done will be reset."
 
-#: src/routes/settings.library.tsx:95
+#: src/routes/settings.library.tsx:96
 msgid "Refresh all tracks?"
 msgstr "Refresh all tracks?"
 
-#: src/routes/settings.library.tsx:98
-#: src/routes/settings.library.tsx:108
+#: src/routes/settings.library.tsx:99
+#: src/routes/settings.library.tsx:109
 msgid "Refresh"
 msgstr "Refresh"
 
-#: src/routes/settings.library.tsx:106
+#: src/routes/settings.library.tsx:107
 msgid "Force the refresh of all tracks tags"
 msgstr "Force the refresh of all tracks tags"
 
-#: src/routes/settings.library.tsx:112
+#: src/routes/settings.library.tsx:113
 msgid "<0>.m3u</0> files will also be imported as playlists."
 msgstr "<0>.m3u</0> files will also be imported as playlists."
 
-#: src/routes/settings.library.tsx:119
+#: src/routes/settings.library.tsx:120
 msgid "Automatically refresh library on startup"
 msgstr "Automatically refresh library on startup"
 
-#: src/routes/settings.library.tsx:126
+#: src/routes/settings.library.tsx:127
 msgid "Danger zone"
 msgstr "Danger zone"
 
-#: src/routes/settings.library.tsx:129
+#: src/routes/settings.library.tsx:130
 msgid "Delete all tracks and playlists from Museeks."
 msgstr "Delete all tracks and playlists from Museeks."
 
-#: src/routes/settings.library.tsx:134
+#: src/routes/settings.library.tsx:135
 msgid "Fully reset the library"
 msgstr "Fully reset the library"
 
-#: src/routes/settings.library.tsx:138
+#: src/routes/settings.library.tsx:139
 msgid "All your tracks and playlists will be deleted from Museeks."
 msgstr "All your tracks and playlists will be deleted from Museeks."
 
-#: src/routes/settings.library.tsx:140
+#: src/routes/settings.library.tsx:141
 msgid "Reset library?"
 msgstr "Reset library?"
 
-#: src/routes/settings.library.tsx:143
+#: src/routes/settings.library.tsx:144
 #: src/routes/settings.ui.tsx:66
 msgid "Reset"
 msgstr "Reset"
 
-#: src/routes/settings.library.tsx:152
+#: src/routes/settings.library.tsx:153
 msgid "Reset library"
 msgstr "Reset library"
 
