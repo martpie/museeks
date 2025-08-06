@@ -138,7 +138,7 @@ msgstr "No playlists"
 
 #. placeholder {0}: selectedTracks.size
 #. placeholder {1}: playlist.name
-#: src/components/TrackList.tsx:273
+#: src/components/TrackList.tsx:272
 msgid "{0} track(s) were added to \"{1}\""
 msgstr "{0} track(s) were added to \"{1}\""
 

@@ -236,7 +236,7 @@ export default function TrackList(props: Props) {
       );
 
       // Playlist sub-menu
-      const playlistSubMenu = await Promise.all([
+      const playlistSubMenuItems = [
         MenuItem.new({
           text: t`Create new playlist...`,
           async action() {
@@ -250,34 +250,34 @@ export default function TrackList(props: Props) {
         PredefinedMenuItem.new({
           item: 'Separator',
         }),
-      ]);
+      ];
 
       if (shownPlaylists.length === 0) {
-        playlistSubMenu.push(
-          await MenuItem.new({ text: t`No playlists`, enabled: false }),
+        playlistSubMenuItems.push(
+          MenuItem.new({ text: t`No playlists`, enabled: false }),
         );
       } else {
-        playlistSubMenu.push(
-          ...(await Promise.all(
-            shownPlaylists.map((playlist) =>
-              MenuItem.new({
-                text: playlist.name,
-                async action() {
-                  await PlaylistsAPI.addTracks(
-                    playlist.id,
-                    Array.from(selectedTracks),
-                  );
+        playlistSubMenuItems.push(
+          ...shownPlaylists.map((playlist) =>
+            MenuItem.new({
+              text: playlist.name,
+              async action() {
+                await PlaylistsAPI.addTracks(
+                  playlist.id,
+                  Array.from(selectedTracks),
+                );
 
-                  toastsAPI.add(
-                    'success',
-                    t`${selectedTracks.size} track(s) were added to "${playlist.name}"`,
-                  );
-                },
-              }),
-            ),
-          )),
+                toastsAPI.add(
+                  'success',
+                  t`${selectedTracks.size} track(s) were added to "${playlist.name}"`,
+                );
+              },
+            }),
+          ),
         );
       }
+
+      const playlistSubMenu = await Promise.all(playlistSubMenuItems);
 
       const menuItemsBuilder = [
         // Tracks Selected indicator
