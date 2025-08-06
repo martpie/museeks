@@ -38,8 +38,7 @@ modules:
       # Copy binary
       - 'install -Dm755 deb-extracted/usr/bin/museeks /app/bin/museeks'
 
-      # Copy app files (migrations and icons)
-      - mkdir -p /app/lib/Museeks/migrations
+      # Copy app icons
       - cp -r deb-extracted/usr/lib/Museeks/. /app/lib/Museeks
       - find /app/lib/Museeks -type f -exec chmod 644 {} \;
 

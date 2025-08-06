@@ -7,9 +7,8 @@ use std::collections::HashSet;
 use std::path::PathBuf;
 use std::sync::Arc;
 use std::sync::atomic::{AtomicUsize, Ordering};
-use tauri::path::BaseDirectory;
+use tauri::Emitter;
 use tauri::plugin::{Builder, TauriPlugin};
-use tauri::{AppHandle, Emitter};
 use tauri::{Manager, Runtime, State};
 use tauri_plugin_dialog::{DialogExt, FilePath};
 use tokio::sync::{Mutex, MutexGuard};
@@ -37,7 +36,7 @@ impl DBState {
 /**
  * Database setup
  */
-async fn setup<R: Runtime>(app_handle: &AppHandle<R>) -> AnyResult<DB> {
+async fn setup() -> AnyResult<DB> {
     let database_path = get_storage_dir().join("museeks.db");
 
     info!("Opening connection to database: {:?}", database_path);
@@ -56,15 +55,11 @@ async fn setup<R: Runtime>(app_handle: &AppHandle<R>) -> AnyResult<DB> {
         .execute(&mut connection)
         .await?;
 
-    let migrations_path = app_handle
-        .path()
-        .resolve("migrations", BaseDirectory::Resource)?;
-    info!(
-        "Attempting to run possible migrations from {:?}",
-        migrations_path
-    );
-    let migrator = sqlx::migrate::Migrator::new(migrations_path).await?;
-    migrator.run_direct(&mut connection).await?;
+    info!("Run possible migrations");
+
+    sqlx::migrate!("src/migrations")
+        .run_direct(&mut connection)
+        .await?;
 
     Ok(DB { connection })
 }
@@ -466,11 +461,11 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
             reset,
             scan_library,
         ])
-        .setup(move |app_handle, _api| {
+        .setup(|app_handle, _api| {
             let app_handle = app_handle.clone();
 
             tauri::async_runtime::spawn(async move {
-                let db = match setup(&app_handle).await {
+                let db = match setup().await {
                     Ok(db) => db,
                     Err(err) => {
                         handle_fatal_error(&app_handle, err);

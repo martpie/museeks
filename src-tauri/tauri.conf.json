@@ -44,8 +44,7 @@
       "icons/icon.ico"
     ],
     "resources": {
-      "icons/icon.png": "icons/icon.png",
-      "src/migrations/*": "migrations/"
+      "icons/icon.png": "icons/icon.png"
     },
     "linux": {
       "appimage": {
