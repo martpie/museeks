@@ -72,12 +72,14 @@ pub fn get_track_from_file(path: &PathBuf) -> AnyResult<Track> {
             let mut artists: Vec<String> = tag
                 .get_strings(&ItemKey::TrackArtist)
                 .map(ToString::to_string)
+                .filter(|s| !s.is_empty())
                 .collect();
 
             if artists.is_empty() {
                 artists = tag
                     .get_strings(&ItemKey::AlbumArtist)
                     .map(ToString::to_string)
+                    .filter(|s| !s.is_empty())
                     .collect();
             }
 
@@ -89,9 +91,10 @@ pub fn get_track_from_file(path: &PathBuf) -> AnyResult<Track> {
                 .get_string(&ItemKey::AlbumArtist)
                 .map(|s| s.to_string())
                 .or_else(|| artists.first().cloned())
-                .unwrap_or_else(|| "Unknown Artist".to_string());
+                .filter(|s| !s.is_empty())
+                .unwrap_or("Unknown Artist".to_string());
 
-            // Generate a stable ID for the track, based on its path
+            // Gen|| erate a stable ID for the track, based on its path
             let id = get_track_id_for_path(path)?;
 
             Ok(Track {
@@ -99,6 +102,7 @@ pub fn get_track_from_file(path: &PathBuf) -> AnyResult<Track> {
                 path: path.to_string_lossy().into_owned(),
                 title: tag
                     .get_string(&ItemKey::TrackTitle)
+                    .filter(|s| !s.is_empty())
                     .unwrap_or(
                         path.file_name()
                             .and_then(|f| f.to_str())
@@ -107,6 +111,7 @@ pub fn get_track_from_file(path: &PathBuf) -> AnyResult<Track> {
                     .to_string(),
                 album: tag
                     .get_string(&ItemKey::AlbumTitle)
+                    .filter(|s| !s.is_empty())
                     .unwrap_or("Unknown")
                     .to_string(),
                 album_artist,
@@ -114,6 +119,7 @@ pub fn get_track_from_file(path: &PathBuf) -> AnyResult<Track> {
                 genres: tag
                     .get_strings(&ItemKey::Genre)
                     .map(ToString::to_string)
+                    .filter(|s| !s.is_empty())
                     .collect(),
                 year: tag.year(),
                 duration: u32::try_from(tagged_file.properties().duration().as_secs()).unwrap_or(0),
