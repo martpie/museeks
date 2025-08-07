@@ -21,7 +21,7 @@ msgstr "Повтор"
 msgid "Shuffle"
 msgstr "Шафл"
 
-#: src/components/Cover.tsx:32
+#: src/components/Cover.tsx:33
 msgid "Album cover"
 msgstr "Обложка альбома"
 
