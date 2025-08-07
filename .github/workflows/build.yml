@@ -37,7 +37,7 @@ jobs:
         run: npm ci
 
       - name: Install Playwright dependencies
-        run: npx playwright install webkit --with-deps
+        run: npx playwright install chromium --with-deps
 
       - name: 'Test: TS/JS linting & formatting'
         run: 'npm run test:lint'
