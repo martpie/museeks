@@ -21,7 +21,7 @@ msgstr "Repeat"
 msgid "Shuffle"
 msgstr "Shuffle"
 
-#: src/components/Cover.tsx:32
+#: src/components/Cover.tsx:33
 msgid "Album cover"
 msgstr "Album cover"
 

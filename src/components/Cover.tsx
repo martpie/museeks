@@ -9,7 +9,7 @@ import Icon, { type IconSize } from './Icon';
 
 type Props = {
   track: Track;
-  noBorder?: boolean;
+  noHorizontalBorder?: boolean;
   iconSize?: IconSize;
 };
 
@@ -18,7 +18,8 @@ export default function Cover(props: Props) {
   const { t } = useLingui();
 
   const classes = cx(styles.cover, styles.empty, {
-    [styles.noBorder]: props.noBorder,
+    [styles.noBorder]: coverPath != null,
+    [styles.noHorizontalBorder]: coverPath == null && props.noHorizontalBorder,
   });
 
   return (

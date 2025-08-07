@@ -30,7 +30,12 @@
 }
 
 .noBorder {
-  border-width: 0;
+  border: none;
+}
+
+.noHorizontalBorder {
+  border-top-width: 0;
+  border-bottom-width: 0;
 }
 
 .note {

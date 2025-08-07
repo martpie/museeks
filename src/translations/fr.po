@@ -21,7 +21,7 @@ msgstr "Lecture en boucle"
 msgid "Shuffle"
 msgstr "Lecture aléatoire"
 
-#: src/components/Cover.tsx:32
+#: src/components/Cover.tsx:33
 msgid "Album cover"
 msgstr "Couverture de l'album"
 

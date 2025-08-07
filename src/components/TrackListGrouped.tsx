@@ -91,7 +91,7 @@ function TrackListGroup(props: TrackListGroupProps) {
     <div className={styles.group}>
       <aside className={styles.aside}>
         {/** Instead of the first one, maybe get the first track within the album to hold a cover? */}
-        <Cover track={tracks[0]} iconSize={36} noBorder />
+        <Cover track={tracks[0]} iconSize={36} />
         <h3 className={styles.label}>{label}</h3>
         <div className={styles.metadata}>
           <div>
