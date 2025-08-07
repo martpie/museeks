@@ -28,7 +28,7 @@ test('The library tab should display all tracks', async () => {
     .toHaveAttribute('aria-selected', 'false');
 });
 
-test('The library should support selecting single and multiple tracks via click + modifiers', async () => {
+test('Tracks should selectable via click + modifiers', async () => {
   // Fake the import of tracks
   await page.getByTestId('footer-settings-link').click();
   await page.getByTestId('scan-library-button').click();
@@ -68,7 +68,7 @@ test('The library should support selecting single and multiple tracks via click 
   await expect.element(thirdTrack).toHaveAttribute('aria-selected', 'true');
 });
 
-test('The library tracks should be selectable via keyboard only (after a single selection)', async () => {
+test('Tracks should be selectable via keyboard only (after a single selection)', async () => {
   // Fake the import of tracks
   await page.getByTestId('footer-settings-link').click();
   await page.getByTestId('scan-library-button').click();
@@ -125,4 +125,47 @@ test('The library tracks should be selectable via keyboard only (after a single 
   await expect.element(firstTrack).toHaveAttribute('aria-selected', 'true');
   await expect.element(secondTrack).toHaveAttribute('aria-selected', 'true');
   await expect.element(thirdTrack).toHaveAttribute('aria-selected', 'true');
+});
+
+test('Search should filter tracks in the library', async () => {
+  // Fake the import of tracks
+  await page.getByTestId('footer-settings-link').click();
+  await page.getByTestId('scan-library-button').click();
+  await page.getByTestId('footer-library-link').click();
+
+  const search = page.getByTestId('library-search');
+  const searchClear = page.getByTestId('library-search-clear');
+
+  // Searching by a common word should display all tracks
+  await search.fill('Blues');
+  await expect.element(page.getByTestId('track-row-0')).toBeInTheDocument();
+  await expect.element(page.getByTestId('track-row-1')).toBeInTheDocument();
+  await expect.element(page.getByTestId('track-row-2')).toBeInTheDocument();
+
+  // Searching by a specific word should display only the matching tracks,
+  // regardless of accents and cases
+  await search.fill('pixAbày');
+  await expect.element(page.getByTestId('track-row-0')).not.toBeInTheDocument();
+  await expect.element(page.getByTestId('track-row-1')).toBeInTheDocument();
+  await expect.element(page.getByTestId('track-row-2')).toBeInTheDocument();
+
+  await search.fill('hisk');
+  await expect.element(page.getByTestId('track-row-0')).toBeInTheDocument();
+  await expect.element(page.getByTestId('track-row-1')).not.toBeInTheDocument();
+  await expect.element(page.getByTestId('track-row-2')).not.toBeInTheDocument();
+
+  // Searching by an unknown word should display no tracks and a warning
+  await search.fill('Something that does not exist');
+  await expect.element(page.getByTestId('track-row-0')).not.toBeInTheDocument();
+  await expect.element(page.getByTestId('track-row-1')).not.toBeInTheDocument();
+  await expect.element(page.getByTestId('track-row-2')).not.toBeInTheDocument();
+  await expect
+    .element(page.getByTestId('view-message'))
+    .toHaveTextContent('Your search returned no results');
+
+  // Clicking the search clear button should clear the search
+  await searchClear.click();
+  await expect.element(page.getByTestId('track-row-0')).toBeInTheDocument();
+  await expect.element(page.getByTestId('track-row-1')).toBeInTheDocument();
+  await expect.element(page.getByTestId('track-row-2')).toBeInTheDocument();
 });

@@ -47,6 +47,7 @@ export default function Search() {
         onMouseUp={(e) => e.preventDefault()}
         spellCheck={false}
         ref={inputRef}
+        data-testid="library-search"
       />
       {search.length > 0 && (
         <button
@@ -54,6 +55,7 @@ export default function Search() {
           className={styles.searchClear}
           onClick={onClear}
           data-museeks-action
+          data-testid="library-search-clear"
         >
           &times;
         </button>
