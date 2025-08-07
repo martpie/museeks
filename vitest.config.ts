@@ -28,7 +28,8 @@ export default defineConfig({
             },
 
             // https://vitest.dev/guide/browser/playwright
-            instances: [{ browser: 'webkit' }],
+            // ideally, 'webkit' or 'safari', but there are potential issues with the Audio API
+            instances: [{ browser: 'chromium' }],
           },
           env: {
             PLATFORM: getTauriPlatform(),
