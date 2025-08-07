@@ -10,7 +10,7 @@ export function beforeEachSetup() {
     // Stub Museeks Globals
     vi.stubGlobal('__MUSEEKS_INITIAL_CONFIG', MOCK_CONFIG);
     vi.stubGlobal('__MUSEEKS_INITIAL_QUEUE', []);
-    vi.stubGlobal('__MUSEEKS_PLATFORM', 'macos'); // TODO: replace that with Linux values
+    vi.stubGlobal('__MUSEEKS_PLATFORM', import.meta.env.PLATFORM);
 
     // Stub Tauri Globals
     vi.stubGlobal('__TAURI_INTERNALS__', {
