@@ -18,18 +18,25 @@ export default function PlayerControls() {
         iconSize={16}
         title={t`Previous`}
         onClick={playerAPI.previous}
+        data-testid="playercontrol-skipback"
       />
       <ButtonIcon
         icon={playerStatus === PlayerStatus.PLAY ? 'pause' : 'play'}
         iconSize={28}
         title={playerStatus === PlayerStatus.PLAY ? t`Pause` : t`Play`}
         onClick={playerAPI.playPause}
+        data-testid={
+          playerStatus === PlayerStatus.PLAY
+            ? 'playercontrol-pause'
+            : 'playercontrol-play'
+        }
       />
       <ButtonIcon
         icon="skipForward"
         iconSize={16}
         title={t`Next`}
         onClick={playerAPI.next}
+        data-testid="playercontrol-skipforward"
       />
       <VolumeControl />
     </div>

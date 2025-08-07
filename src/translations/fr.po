@@ -91,15 +91,15 @@ msgstr "File d'attente"
 msgid "Previous"
 msgstr "Précédent"
 
-#: src/components/PlayerControls.tsx:25
+#: src/components/PlayerControls.tsx:26
 msgid "Pause"
 msgstr "Pause"
 
-#: src/components/PlayerControls.tsx:25
+#: src/components/PlayerControls.tsx:26
 msgid "Play"
 msgstr "Lecture"
 
-#: src/components/PlayerControls.tsx:31
+#: src/components/PlayerControls.tsx:37
 msgid "Next"
 msgstr "Suivant"
 

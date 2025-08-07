@@ -24,10 +24,16 @@ export default function PlayingBarInfo(props: Props) {
         <div className={styles.duration}>{formattedProgress}</div>
 
         <div className={styles.metas}>
-          <div className={`${styles.metadata} ${styles.metadataTitle}`}>
+          <div
+            className={`${styles.metadata} ${styles.metadataTitle}`}
+            data-testid="playing-track-title"
+          >
             <strong>{trackPlaying.title}</strong>
           </div>
-          <div className={styles.metadata}>
+          <div
+            className={styles.metadata}
+            data-testid="playing-track-artist-album"
+          >
             {trackPlaying.artists.join(', ')}
             &nbsp;—&nbsp;
             {trackPlaying.album}
