@@ -1,3 +1,5 @@
+import os from 'node:os';
+
 import { defineConfig } from 'vitest/config';
 
 import { VITE_PLUGINS } from './vite.config';
@@ -16,7 +18,7 @@ export default defineConfig({
         test: {
           name: 'e2e',
           include: ['**/*.test-e2e.ts', '**/*.test-e2e.tsx'],
-          testTimeout: 1000,
+          includeTaskLocation: true,
           browser: {
             enabled: true,
             provider: 'playwright', // webdriverio?
@@ -28,7 +30,9 @@ export default defineConfig({
             // https://vitest.dev/guide/browser/playwright
             instances: [{ browser: 'webkit' }],
           },
-          includeTaskLocation: true,
+          env: {
+            PLATFORM: getTauriPlatform(),
+          },
         },
         plugins: VITE_PLUGINS,
         publicDir: 'src/__tests__/assets',
@@ -46,3 +50,16 @@ export default defineConfig({
     ],
   },
 });
+
+function getTauriPlatform() {
+  switch (os.platform()) {
+    case 'darwin':
+      return 'macos';
+    case 'win32':
+      return 'windows';
+    case 'linux':
+      return 'linux';
+    default:
+      throw new Error(`Unsupported platform: ${os.platform()}`);
+  }
+}

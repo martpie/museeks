@@ -50,7 +50,10 @@ test('Tracks should selectable via click + modifiers', async () => {
   await expect.element(thirdTrack).toHaveAttribute('aria-selected', 'true');
 
   // Cmd/Ctrl + click on a selected track should deselect it
-  await userEvent.click(firstTrack, { modifiers: ['ControlOrMeta'] });
+  await userEvent.click(firstTrack, {
+    modifiers: ['ControlOrMeta'],
+    button: 'left',
+  });
   await expect.element(firstTrack).toHaveAttribute('aria-selected', 'true');
   await expect.element(secondTrack).toHaveAttribute('aria-selected', 'false');
   await expect.element(thirdTrack).toHaveAttribute('aria-selected', 'true');
