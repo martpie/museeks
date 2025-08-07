@@ -211,21 +211,21 @@ msgstr "{0, plural, one {# track} other {# tracks}}"
 msgid "Title"
 msgstr "Title"
 
-#: src/components/TrackListHeader.tsx:52
+#: src/components/TrackListHeader.tsx:53
 #: src/routes/tracks.$trackID.tsx:230
 msgid "Duration"
 msgstr "Duration"
 
-#: src/components/TrackListHeader.tsx:58
+#: src/components/TrackListHeader.tsx:60
 msgid "Artist"
 msgstr "Artist"
 
-#: src/components/TrackListHeader.tsx:64
+#: src/components/TrackListHeader.tsx:67
 #: src/routes/tracks.$trackID.tsx:98
 msgid "Album"
 msgstr "Album"
 
-#: src/components/TrackListHeader.tsx:70
+#: src/components/TrackListHeader.tsx:74
 #: src/routes/tracks.$trackID.tsx:138
 msgid "Genre"
 msgstr "Genre"
