@@ -10,6 +10,21 @@ import type { DatabaseBridgeInterface } from '../bridge-database';
 const MOCK_TRACKS: Array<Track> = [
   {
     id: '0',
+    title: 'Whiskey Blues',
+    artists: ['Captain_Sleepy'],
+    album: 'Another Album',
+    duration: 300,
+    album_artist: 'Captain_Sleepy',
+    year: 2025,
+    disk_no: 1,
+    disk_of: 1,
+    track_no: 1,
+    track_of: 1,
+    genres: ['rock', 'blues'],
+    path: '/whiskey-blues.mp3',
+  },
+  {
+    id: '1',
     title: 'Majestic Blues',
     artists: ['Desicomix07'],
     album: 'Pixabay',
@@ -24,7 +39,7 @@ const MOCK_TRACKS: Array<Track> = [
     path: '/majestic-blues.mp3',
   },
   {
-    id: '1',
+    id: '2',
     title: 'Romantic Blues',
     artists: ['Jean-Paul-V'],
     album: 'Pixabay',
@@ -37,21 +52,6 @@ const MOCK_TRACKS: Array<Track> = [
     track_of: 2,
     genres: ['blues'],
     path: '/romantic-blues.mp3',
-  },
-  {
-    id: '2',
-    title: 'Whiskey Blues',
-    artists: ['Captain_Sleepy'],
-    album: 'Another Album from Pixabay',
-    duration: 300,
-    album_artist: 'Captain_Sleepy',
-    year: 2025,
-    disk_no: 1,
-    disk_of: 1,
-    track_no: 1,
-    track_of: 1,
-    genres: ['rock', 'blues'],
-    path: '/whiskey-blues.mp3',
   },
 ];
 
