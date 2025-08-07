@@ -169,3 +169,42 @@ test('Search should filter tracks in the library', async () => {
   await expect.element(page.getByTestId('track-row-1')).toBeInTheDocument();
   await expect.element(page.getByTestId('track-row-2')).toBeInTheDocument();
 });
+
+test('Column headers should sort tracks in the library', async () => {
+  // Fake the import of tracks
+  await page.getByTestId('footer-settings-link').click();
+  await page.getByTestId('scan-library-button').click();
+  await page.getByTestId('footer-library-link').click();
+
+  const firstTrack = page.getByTestId(/track-row-/).first();
+  const secondTrack = page.getByTestId(/track-row-/).nth(1);
+  const thirdTrack = page.getByTestId(/track-row-/).nth(2);
+
+  const track0content =
+    'Whiskey Blues05:00Captain_SleepyAnother Albumrock, blues';
+  const track1content = 'Majestic Blues05:00Desicomix07Pixabayblues';
+  const track2content = 'Romantic Blues05:00Jean-Paul-VPixabayblues';
+
+  // By default, we sort by artist, album year, album name, track number, disk number
+  await expect.element(firstTrack).toHaveTextContent(track0content);
+  await expect.element(secondTrack).toHaveTextContent(track1content);
+  await expect.element(thirdTrack).toHaveTextContent(track2content);
+
+  // Clicking on the title header should change the sorting to Descending by Artist name
+  await page.getByTestId('tracklist-header-artist').click();
+  await expect.element(firstTrack).toHaveTextContent(track2content);
+  await expect.element(secondTrack).toHaveTextContent(track1content);
+  await expect.element(thirdTrack).toHaveTextContent(track0content);
+
+  // Clicking again should change the sorting back to Ascending by Artist name
+  await page.getByTestId('tracklist-header-artist').click();
+  await expect.element(firstTrack).toHaveTextContent(track0content);
+  await expect.element(secondTrack).toHaveTextContent(track1content);
+  await expect.element(thirdTrack).toHaveTextContent(track2content);
+
+  // Let's sort by title as well
+  await page.getByTestId('tracklist-header-title').click();
+  await expect.element(firstTrack).toHaveTextContent(track1content);
+  await expect.element(secondTrack).toHaveTextContent(track2content);
+  await expect.element(thirdTrack).toHaveTextContent(track0content);
+});

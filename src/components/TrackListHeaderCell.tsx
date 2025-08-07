@@ -11,6 +11,7 @@ type Props = {
   className?: string;
   sortBy?: SortBy | null;
   icon?: IconName | null;
+  'data-testid'?: string;
 };
 
 export default function TrackListHeaderCell(props: Props) {
@@ -44,6 +45,7 @@ export default function TrackListHeaderCell(props: Props) {
       className={classes}
       disabled={sortBy === null}
       onClick={sort}
+      data-testid={props['data-testid']}
     >
       {content}
     </button>
