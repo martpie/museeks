@@ -39,9 +39,6 @@ jobs:
       - name: Install Playwright dependencies
         run: npx playwright install webkit --with-deps
 
-      - name: 'Test: Rust (+ Generate Types)'
-        run: npm run gen:types
-
       - name: 'Test: TS/JS linting & formatting'
         run: 'npm run test:lint'
 
@@ -59,6 +56,9 @@ jobs:
 
       - name: Build application
         run: npm run build
+
+      - name: 'Test: Rust (+ Generate Types)'
+        run: npm run gen:types
 
       # Check one of the command above did not generate any unexpected artifacts
       # (like types generation)
