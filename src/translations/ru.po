@@ -91,15 +91,15 @@ msgstr "Очередь"
 msgid "Previous"
 msgstr "Предыдущий"
 
-#: src/components/PlayerControls.tsx:25
+#: src/components/PlayerControls.tsx:26
 msgid "Pause"
 msgstr "Пауза"
 
-#: src/components/PlayerControls.tsx:25
+#: src/components/PlayerControls.tsx:26
 msgid "Play"
 msgstr "Плей"
 
-#: src/components/PlayerControls.tsx:31
+#: src/components/PlayerControls.tsx:37
 msgid "Next"
 msgstr "Следующий"
 

@@ -11,11 +11,14 @@ function MediaSessionEvents() {
   const playerAPI = usePlayerAPI();
 
   useEffect(() => {
-    player.getAudio().addEventListener('loadstart', syncMediaSession);
-    player.getAudio().addEventListener('play', onAudioPlay);
-    player.getAudio().addEventListener('pause', onAudioPause);
+    if (
+      'mediaSession' in navigator &&
+      typeof navigator.mediaSession === 'object'
+    ) {
+      player.getAudio().addEventListener('loadstart', syncMediaSession);
+      player.getAudio().addEventListener('play', onAudioPlay);
+      player.getAudio().addEventListener('pause', onAudioPause);
 
-    if ('mediaSession' in navigator) {
       navigator.mediaSession.setActionHandler('play', () => playerAPI.play());
       navigator.mediaSession.setActionHandler('pause', () => playerAPI.pause());
       navigator.mediaSession.setActionHandler('previoustrack', () =>
@@ -27,11 +30,14 @@ function MediaSessionEvents() {
     }
 
     return function cleanup() {
-      player.getAudio().removeEventListener('loadstart', syncMediaSession);
-      player.getAudio().removeEventListener('play', onAudioPlay);
-      player.getAudio().removeEventListener('pause', onAudioPause);
+      if (
+        'mediaSession' in navigator &&
+        typeof navigator.mediaSession === 'object'
+      ) {
+        player.getAudio().removeEventListener('loadstart', syncMediaSession);
+        player.getAudio().removeEventListener('play', onAudioPlay);
+        player.getAudio().removeEventListener('pause', onAudioPause);
 
-      if ('mediaSession' in navigator) {
         navigator.mediaSession.setActionHandler('play', null);
         navigator.mediaSession.setActionHandler('pause', null);
         navigator.mediaSession.setActionHandler('previoustrack', null);
@@ -52,7 +58,7 @@ export default MediaSessionEvents;
 async function syncMediaSession() {
   const track = player.getTrack();
 
-  if (track) {
+  if (track && 'MediaMetadata' in globalThis) {
     const cover = await getCover(track.path);
 
     navigator.mediaSession.metadata = new MediaMetadata({
