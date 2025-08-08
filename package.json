@@ -56,6 +56,7 @@
     "@tauri-apps/plugin-notification": "2.3.0",
     "@tauri-apps/plugin-opener": "2.4.0",
     "@tauri-apps/plugin-os": "2.3.0",
+    "@tauri-apps/plugin-process": "2.3.0",
     "browserslist": "4.25.1",
     "classnames": "2.5.1",
     "lodash-es": "4.17.21",

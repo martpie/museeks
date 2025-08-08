@@ -19,6 +19,7 @@ export const MOCK_CONFIG: Config = {
   auto_update_checker: true,
   notifications: false,
   track_view_density: 'normal',
+  wayland_compat: false,
 };
 
 /**

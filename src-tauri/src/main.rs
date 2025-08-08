@@ -8,6 +8,7 @@ use libs::init::init;
 use libs::utils::get_theme_from_name;
 use log::{LevelFilter, info};
 use plugins::config::{ConfigManager, get_storage_dir};
+use std::env;
 use tauri::{Manager, WebviewUrl, WebviewWindowBuilder};
 use tauri_plugin_log::fern::colors::ColoredLevelConfig;
 use tauri_plugin_log::{Target, TargetKind};
@@ -17,17 +18,19 @@ use tauri_plugin_window_state::StateFlags;
  * The beast
  */
 fn main() {
-    match init() {
-        Ok(_) => {
+    let config = match init() {
+        Ok(config) => {
             println!("[init] Initialization successful");
+            config
         }
         Err(e) => {
             println!("[init] Error during initialization: {}", e);
             std::process::exit(1);
         }
-    }
+    };
 
     tauri::Builder::default()
+        .plugin(tauri_plugin_process::init())
         // Logging must be setup first, otherwise the logs won't be captured
         // while setting up the other plugins.
         .plugin(
@@ -58,7 +61,7 @@ fn main() {
         // Custom integrations
         .plugin(plugins::app_close::init())
         .plugin(plugins::app_menu::init())
-        .plugin(plugins::config::init())
+        .plugin(plugins::config::init(config))
         .plugin(plugins::cover::init())
         .plugin(plugins::db::init())
         .plugin(plugins::debug::init())

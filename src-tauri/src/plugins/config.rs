@@ -73,6 +73,7 @@ pub struct Config {
     pub auto_update_checker: bool,
     pub notifications: bool,
     pub track_view_density: TrackViewDensity,
+    pub wayland_compat: bool,
 }
 
 pub const SYSTEM_THEME: &str = "__system";
@@ -98,6 +99,7 @@ impl Config {
             auto_update_checker: true,
             notifications: false,
             track_view_density: TrackViewDensity::Normal,
+            wayland_compat: false,
         }
     }
 }
@@ -106,6 +108,15 @@ impl Config {
 pub struct ConfigManager {
     manager: HomeConfig,
     pub data: RwLock<Config>,
+}
+
+impl ConfigManager {
+    pub fn new(manager: HomeConfig, config: Config) -> Self {
+        Self {
+            manager,
+            data: RwLock::new(config),
+        }
+    }
 }
 
 fn config_err<T: Display>(err: T) -> MuseeksError {
@@ -167,30 +178,7 @@ pub fn set_config(config_manager: State<ConfigManager>, config: Config) -> AnyRe
     config_manager.update(config)
 }
 
-pub fn init<R: Runtime>() -> TauriPlugin<R> {
-    let conf_path = get_storage_dir();
-    let manager = HomeConfig::with_file(conf_path.join("config.toml"));
-    let existing_config = manager.toml::<Config>();
-
-    let config = match existing_config {
-        Ok(config) => ConfigManager {
-            manager,
-            data: RwLock::new(config),
-        },
-        Err(_) => {
-            // The config does not exist, so let's instantiate it with defaults
-            // Potential issue: if the config is extended, the defaults will be
-            // reloaded
-            let default_config = Config::default();
-            manager.save_toml(&default_config).unwrap();
-
-            ConfigManager {
-                manager,
-                data: RwLock::new(default_config),
-            }
-        }
-    };
-
+pub fn init<R: Runtime>(config: ConfigManager) -> TauriPlugin<R> {
     // We need to inject the initial state of the config to the window object of
     // our webview, because some of our front-end modules are instantiated at
     // parsing time and require data that would otherwise only load-able asynchronously

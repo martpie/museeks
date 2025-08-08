@@ -1,6 +1,7 @@
 import { t as tMacro } from '@lingui/core/macro';
 import { Trans, useLingui } from '@lingui/react/macro';
 import { createFileRoute, useLoaderData } from '@tanstack/react-router';
+import { relaunch } from '@tauri-apps/plugin-process';
 import { debounce } from 'lodash-es';
 import { useMemo } from 'react';
 
@@ -147,6 +148,23 @@ function ViewSettingsUI() {
           onChange={useInvalidateCallback(SettingsBridge.toggleSleepBlocker)}
         />
       </Setting.Section>
+      {window.__MUSEEKS_PLATFORM === 'linux' && (
+        <Setting.Section>
+          <CheckboxSetting
+            title={t`[Linux-Only] Wayland compatibility mode`}
+            description={t`If you face issues with Wayland, try out this option`}
+            value={config.wayland_compat}
+            onChange={() =>
+              SettingsBridge.toggleWaylandCompat(!config.wayland_compat).then(
+                async () => {
+                  await invalidate();
+                  await relaunch();
+                },
+              )
+            }
+          />
+        </Setting.Section>
+      )}
     </>
   );
 }

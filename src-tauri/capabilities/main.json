@@ -24,6 +24,7 @@
     "opener:allow-default-urls",
     "opener:allow-reveal-item-in-dir",
     "os:allow-os-type",
+    "process:allow-restart",
     "log:allow-log",
     "notification:default",
     "app-menu:allow-toggle",
