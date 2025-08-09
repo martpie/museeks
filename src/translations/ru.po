@@ -53,7 +53,7 @@ msgid "Artists"
 msgstr "Исполнители"
 
 #: src/components/Footer.tsx:41
-#: src/routes/playlists.tsx:169
+#: src/routes/playlists.tsx:165
 #: src/routes/settings.ui.tsx:129
 msgid "Playlists"
 msgstr "Плейлисты"
@@ -128,7 +128,7 @@ msgid "Create new playlist..."
 msgstr "Создать новый плейлист..."
 
 #: src/components/TrackList.tsx:245
-#: src/routes/playlists.tsx:62
+#: src/routes/playlists.tsx:63
 msgid "New playlist"
 msgstr "Новый плейлист"
 
@@ -239,28 +239,28 @@ msgstr "Громкость"
 msgid "No artist selected"
 msgstr "Не выбран исполнитель"
 
-#: src/routes/library.tsx:67
+#: src/routes/library.tsx:68
 msgid "Loading library..."
 msgstr "Библиотека загружается..."
 
-#: src/routes/library.tsx:78
+#: src/routes/library.tsx:79
 msgid "Your library is being scanned =)"
 msgstr "Ваша библиотека сканируется =)"
 
-#: src/routes/library.tsx:81
+#: src/routes/library.tsx:82
 msgid "hold on..."
 msgstr "подождите..."
 
-#: src/routes/library.tsx:92
+#: src/routes/library.tsx:93
 msgid "There is no music in your library :("
 msgstr "В вашей библиотеке нет музыки :("
 
-#: src/routes/library.tsx:95
+#: src/routes/library.tsx:96
 msgid "you can <0>add your music here</0>"
 msgstr "вы можете добавить <0>вашу музыку здесь</0>"
 
-#: src/routes/library.tsx:111
-#: src/routes/playlists.$playlistID.tsx:110
+#: src/routes/library.tsx:112
+#: src/routes/playlists.$playlistID.tsx:108
 msgid "Your search returned no results"
 msgstr "Ваш поиск не принёс результатов"
 
@@ -269,40 +269,40 @@ msgid "Remove from playlist"
 msgstr "Удалить из плейлиста"
 
 #: src/routes/playlists.$playlistID.tsx:92
-#: src/routes/playlists.$playlistID.tsx:121
+#: src/routes/playlists.$playlistID.tsx:119
 msgid "Empty playlist"
 msgstr "Пустой плейлист"
 
 #: src/routes/playlists.$playlistID.tsx:95
-#: src/routes/playlists.$playlistID.tsx:124
+#: src/routes/playlists.$playlistID.tsx:122
 msgid "You can add tracks from the <0>library view</0>"
 msgstr "Вы можете добавить треки из <0>библиотечного представления</0>"
 
-#: src/routes/playlists.tsx:92
+#: src/routes/playlists.tsx:93
 msgid "Delete"
 msgstr "Удалить"
 
-#: src/routes/playlists.tsx:101
+#: src/routes/playlists.tsx:102
 msgid "Duplicate"
 msgstr "Создать копию"
 
-#: src/routes/playlists.tsx:109
+#: src/routes/playlists.tsx:110
 msgid "Export"
 msgstr "Экспортировать"
 
-#: src/routes/playlists.tsx:139
+#: src/routes/playlists.tsx:140
 msgid "You haven't created any playlist yet"
 msgstr "Вы пока не создали ни одного плейлиста"
 
-#: src/routes/playlists.tsx:148
+#: src/routes/playlists.tsx:144
 msgid "create one now"
 msgstr "создать сейчас"
 
-#: src/routes/playlists.tsx:157
+#: src/routes/playlists.tsx:153
 msgid "No playlist selected"
 msgstr "Плейлист не выбран"
 
-#: src/routes/playlists.tsx:174
+#: src/routes/playlists.tsx:170
 msgid "New Playlist"
 msgstr "Новый плейлист"
 

@@ -1,5 +1,5 @@
 import useOpener from '../hooks/useOpener';
-import styles from './ExternalLink.module.css';
+import Link from './Link';
 
 type Props = {
   children: string;
@@ -10,9 +10,5 @@ type Props = {
 export default function ExternalLink(props: Props) {
   const onClick = useOpener(props.href, props.type);
 
-  return (
-    <button type="button" className={styles.externalLink} onClick={onClick}>
-      {props.children}
-    </button>
-  );
+  return <Link onClick={onClick}>{props.children}</Link>;
 }

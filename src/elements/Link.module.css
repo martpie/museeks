@@ -1,0 +1,18 @@
+.link {
+  display: inline;
+  color: var(--link-color);
+  text-decoration: none;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  padding: 0;
+  font-weight: 600;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  &:visited {
+    color: var(--link-color);
+  }
+}

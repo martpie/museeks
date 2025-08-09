@@ -15,6 +15,7 @@ import { useCallback, useMemo } from 'react';
 import SideNav from '../components/SideNav';
 import SideNavLink from '../components/SideNavLink';
 import ButtonIcon from '../elements/ButtonIcon';
+import Link from '../elements/Link';
 import View from '../elements/View';
 import * as ViewMessage from '../elements/ViewMessage';
 import useInvalidate from '../hooks/useInvalidate';
@@ -139,14 +140,9 @@ function ViewPlaylists() {
           <Trans>You haven{"'"}t created any playlist yet</Trans>
         </p>
         <ViewMessage.Sub>
-          <button
-            type="button"
-            onClick={createPlaylist}
-            className="reset"
-            tabIndex={0}
-          >
+          <Link onClick={createPlaylist}>
             <Trans>create one now</Trans>
-          </button>
+          </Link>
         </ViewMessage.Sub>
       </ViewMessage.Notice>
     );

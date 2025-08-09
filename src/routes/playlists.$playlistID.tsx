@@ -1,13 +1,13 @@
 import { Trans, useLingui } from '@lingui/react/macro';
 import {
   createFileRoute,
-  Link,
   redirect,
   useLoaderData,
 } from '@tanstack/react-router';
 import { useCallback, useMemo } from 'react';
 
 import TrackList from '../components/TrackList';
+import Link from '../elements/Link';
 import * as ViewMessage from '../elements/ViewMessage';
 import type { Track } from '../generated/typings';
 import useFilteredTracks from '../hooks/useFilteredTracks';
@@ -94,9 +94,7 @@ function ViewPlaylistDetails() {
         <ViewMessage.Sub>
           <Trans>
             You can add tracks from the{' '}
-            <Link to="/library" draggable={false}>
-              library view
-            </Link>
+            <Link linkOptions={{ to: '/library' }}>library view</Link>
           </Trans>
         </ViewMessage.Sub>
       </ViewMessage.Notice>
@@ -123,9 +121,7 @@ function ViewPlaylistDetails() {
         <ViewMessage.Sub>
           <Trans>
             You can add tracks from the{' '}
-            <Link to="/library" draggable={false}>
-              library view
-            </Link>
+            <Link linkOptions={{ to: '/library' }}>library view</Link>
           </Trans>
         </ViewMessage.Sub>
       </ViewMessage.Notice>
