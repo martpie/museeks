@@ -6,6 +6,7 @@
     "--color-scheme": "dark",
     "--text": "hsl(0, 0%, 94%)",
     "--text-muted": "hsl(0, 0%, 75%)",
+    "--text-interactive-bg": "hsla(0, 0%, 100%, 0.08)",
     "--background": "hsl(216, 0%, 9.5%)",
     "--faded-bg": "hsla(0, 0%, 0%, 0.8)",
 

@@ -583,11 +583,11 @@ msgid "The playlist \"{name}\" was created"
 msgstr "Создан плейлист \"{name}\""
 
 #. placeholder {0}: newRelease.tag_name
-#: src/stores/SettingsAPI.ts:170
+#: src/stores/SettingsAPI.ts:169
 msgid "Museeks {0} is available, check https://museeks.io!"
 msgstr "Доступна версия Museeks {0}, проверьте https://museeks.io!"
 
-#: src/stores/SettingsAPI.ts:172
+#: src/stores/SettingsAPI.ts:171
 msgid "Museeks {currentVersion} is the latest version available."
 msgstr "Museeks {currentVersion} является самой последней доступной версией."
 
