@@ -1,9 +1,10 @@
 import { Trans } from '@lingui/react/macro';
 import { useQuery } from '@tanstack/react-query';
-import { createFileRoute, Link } from '@tanstack/react-router';
+import { createFileRoute } from '@tanstack/react-router';
 import { useMemo } from 'react';
 
 import TrackList from '../components/TrackList';
+import Link from '../elements/Link';
 import View from '../elements/View';
 import * as ViewMessage from '../elements/ViewMessage';
 import useFilteredTracks from '../hooks/useFilteredTracks';
@@ -94,7 +95,7 @@ function ViewLibrary() {
           <ViewMessage.Sub>
             <Trans>
               you can{' '}
-              <Link to="/settings/library" draggable={false}>
+              <Link linkOptions={{ to: '/settings/library' }}>
                 add your music here
               </Link>
             </Trans>
