@@ -29,7 +29,7 @@ export default function Link(props: LinkProps | ButtonProps): React.ReactNode {
   if ('linkOptions' in props) {
     return (
       <RouterLink
-        to={props.linkOptions.href}
+        {...props.linkOptions}
         draggable={false}
         className={styles.link}
       >

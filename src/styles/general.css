@@ -4,7 +4,6 @@
   --main-color-darker: hsl(208, 48%, 44%);
   --main-color-lighter: hsl(208, 82%, 66%);
   --link-color: var(--main-color);
-  --link-color-hover: hsl(208, 100%, 66%);
   --bold: 600;
 }
 

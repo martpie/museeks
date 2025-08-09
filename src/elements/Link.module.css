@@ -7,9 +7,23 @@
   cursor: pointer;
   padding: 0;
   font-weight: 600;
+  transition: box-shadow 0.2s ease-in-out;
+  position: relative;
 
-  &:hover {
-    text-decoration: underline;
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0; /* covers the padded area */
+    background: var(--text-interactive-bg);
+    border-radius: var(--border-radius);
+    right: -0.3rem;
+    left: -0.3rem;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  &:hover::before {
+    opacity: 1;
   }
 
   &:visited {

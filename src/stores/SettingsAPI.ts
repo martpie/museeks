@@ -120,11 +120,10 @@ const setUIMainColor = async (
 const applyUIMainColorToUI = (mainColor: Config['ui_accent_color']) => {
   document.documentElement.style.setProperty('--main-color', mainColor);
 
-  //   --main-color: #459ce7;
+  // --main-color: #459ce7;
   // --main-color-darker: #3a73a4;
   // --main-color-lighter: #63aff0;
   // --link-color: #459ce7;
-  // --link-color-hover: #52afff;
 };
 
 /**
