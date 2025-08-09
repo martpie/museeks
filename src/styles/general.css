@@ -1,10 +1,10 @@
 /* Colors (default theme) */
 :root {
-  --main-color: #459ce7;
-  --main-color-darker: #3a73a4;
-  --main-color-lighter: #63aff0;
-  --link-color: #459ce7;
-  --link-color-hover: #52afff;
+  --main-color: hsl(208, 77%, 59%);
+  --main-color-darker: hsl(208, 48%, 44%);
+  --main-color-lighter: hsl(208, 82%, 66%);
+  --link-color: var(--main-color);
+  --link-color-hover: hsl(208, 100%, 66%);
   --bold: 600;
 }
 
