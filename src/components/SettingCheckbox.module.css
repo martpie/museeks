@@ -23,7 +23,7 @@
 }
 
 .checkbox input[type="checkbox"]:checked {
-  border-color: var(--main-color-darker);
+  border-color: var(--button-border);
   background-color: var(--main-color);
 
   &::after {
