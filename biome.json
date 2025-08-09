@@ -29,7 +29,14 @@
         "noImportantStyles": "error",
         "noNestedComponentDefinitions": "error",
         "noProcessGlobal": "error",
-        "noRestrictedElements": "error",
+        "noRestrictedElements": {
+          "level": "error",
+          "options": {
+            "elements": {
+              "a": "use element/<Link> instead"
+            }
+          }
+        },
         "useUniqueElementIds": "error",
         "useAdjacentGetterSetter": "error",
         "useConsistentObjectDefinition": "error",

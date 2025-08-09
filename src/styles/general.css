@@ -43,16 +43,6 @@ button {
   outline: none;
 }
 
-a {
-  color: var(--link-color);
-
-  &:hover,
-  &:focus,
-  &:active {
-    color: var(--link-color-hover);
-  }
-}
-
 input {
   outline: none;
 }
