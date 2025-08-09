@@ -1,8 +1,6 @@
 /* Colors (default theme) */
 :root {
   --main-color: hsl(208, 77%, 59%);
-  --main-color-darker: hsl(208, 48%, 44%);
-  --main-color-lighter: hsl(208, 82%, 66%);
   --link-color: var(--main-color);
   --bold: 600;
 }

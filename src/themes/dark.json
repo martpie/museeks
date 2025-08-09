@@ -54,7 +54,7 @@
     "--input-bg": "hsl(216, 0%, 15%)",
     "--input-color": "hsl(0, 0%, 94%)",
     "--button-bg": "hsl(216, 0%, 16%)",
-    "--button-border": "hsla(0, 0%, 100%, 0.1)",
+    "--button-border": "hsla(0, 0%, 100%, .1)",
     "--button-color": "hsl(0, 0%, 94%)"
   }
 }
