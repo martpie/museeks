@@ -40,8 +40,11 @@ export function useInvalidateCallback<T extends Callback>(callback: T): T {
 
   return useCallback(
     async (...args: Parameters<T>) => {
-      await callback(...args);
-      await invalidate();
+      try {
+        await callback(...args);
+      } finally {
+        await invalidate();
+      }
     },
     [callback, invalidate],
   ) as T;

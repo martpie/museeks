@@ -512,19 +512,19 @@ msgstr "Bloqueur de mode veille"
 msgid "Prevent the computer from going into sleep mode when playing"
 msgstr "Empêcher l'ordinateur de passer en mode veille lors de la lecture"
 
-#: src/routes/settings.ui.tsx:158
+#: src/routes/settings.ui.tsx:154
 msgid "[Linux-Only] Wayland compatibility mode"
 msgstr ""
 
-#: src/routes/settings.ui.tsx:159
+#: src/routes/settings.ui.tsx:155
 msgid "If you face issues with Wayland, try out this option"
 msgstr ""
 
-#: src/routes/settings.ui.tsx:182
+#: src/routes/settings.ui.tsx:178
 msgid "Light"
 msgstr "Clair"
 
-#: src/routes/settings.ui.tsx:184
+#: src/routes/settings.ui.tsx:180
 msgid "Dark"
 msgstr "Sombre"
 
