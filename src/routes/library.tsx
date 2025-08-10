@@ -76,7 +76,7 @@ function ViewLibrary() {
       return (
         <ViewMessage.Notice>
           <p>
-            <Trans>Your library is being scanned =)</Trans>
+            <Trans>Your library is being scanned</Trans>
           </p>
           <ViewMessage.Sub>
             <Trans>hold on...</Trans>
@@ -90,7 +90,7 @@ function ViewLibrary() {
       return (
         <ViewMessage.Notice>
           <p>
-            <Trans>There is no music in your library :(</Trans>
+            <Trans>There is no music in your library</Trans>
           </p>
           <ViewMessage.Sub>
             <Trans>

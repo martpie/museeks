@@ -244,16 +244,16 @@ msgid "Loading library..."
 msgstr "Библиотека загружается..."
 
 #: src/routes/library.tsx:79
-msgid "Your library is being scanned =)"
-msgstr "Ваша библиотека сканируется =)"
+msgid "Your library is being scanned"
+msgstr "Ваша библиотека сканируется"
 
 #: src/routes/library.tsx:82
 msgid "hold on..."
 msgstr "подождите..."
 
 #: src/routes/library.tsx:93
-msgid "There is no music in your library :("
-msgstr "В вашей библиотеке нет музыки :("
+msgid "There is no music in your library"
+msgstr "В вашей библиотеке нет музыки"
 
 #: src/routes/library.tsx:96
 msgid "you can <0>add your music here</0>"
