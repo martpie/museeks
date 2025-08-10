@@ -151,8 +151,8 @@ function ViewSettingsUI() {
       {window.__MUSEEKS_PLATFORM === 'linux' && (
         <Setting.Section>
           <CheckboxSetting
-            title={t`[Linux-Only] Wayland compatibility mode`}
-            description={t`If you face issues with Wayland, try out this option`}
+            title={t`[Beta] Wayland compatibility enhancements`}
+            description={t`If you face issues using Wayland, try out this option`}
             value={config.wayland_compat}
             onChange={() =>
               SettingsBridge.toggleWaylandCompat(!config.wayland_compat).then(
