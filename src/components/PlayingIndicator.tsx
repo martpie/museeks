@@ -13,7 +13,7 @@ export default function TrackPlayingIndicator() {
   const icon = useMemo(() => {
     if (playerStatus === PlayerStatus.PLAY) {
       if (hovered) {
-        return <Icon name="pause" />;
+        return <Icon name="pause" size={12} />;
       }
 
       return (
