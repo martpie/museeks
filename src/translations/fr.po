@@ -509,12 +509,12 @@ msgid "Prevent the computer from going into sleep mode when playing"
 msgstr "Empêcher l'ordinateur de passer en mode veille lors de la lecture"
 
 #: src/routes/settings.ui.tsx:154
-msgid "[Linux-Only] Wayland compatibility mode"
-msgstr ""
+msgid "[Beta] Wayland compatibility enhancements"
+msgstr "[Beta] Améliorations de la compatibilité Wayland"
 
 #: src/routes/settings.ui.tsx:155
-msgid "If you face issues with Wayland, try out this option"
-msgstr ""
+msgid "If you face issues using Wayland, try out this option"
+msgstr "Si vous rencontrez des problèmes avec Wayland, essayez cette option"
 
 #: src/routes/settings.ui.tsx:178
 msgid "Light"
