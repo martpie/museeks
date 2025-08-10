@@ -150,7 +150,7 @@ jobs:
             ${{ github.workspace }}/release/museeks.flatpak
 
       - uses: actions/upload-artifact@v4
-        if: matrix.platform == 'ubuntu-22.04-arm'
+        if: matrix.platform == 'ubuntu-24.04-arm'
         with:
           name: binaries-linux-arm
           path: |
