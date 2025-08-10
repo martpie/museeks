@@ -27,6 +27,7 @@ const SettingsBridge = {
    * Toggle sleep blocker
    */
   async toggleSleepBlocker(value: boolean): Promise<void> {
+    console.log('Toggling sleep blocker', value);
     if (value === true) {
       await invoke('plugin:sleepblocker|enable');
     } else {
