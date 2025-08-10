@@ -15,6 +15,12 @@ import useToastsStore from './useToastsStore';
 
 export const DEFAULT_MAIN_COLOR = '#459ce7';
 
+/**
+ * THIS WHOLE MODULE IS DEPRECATED as it has organically grown into something weird
+ * and should be merged somehow with BridgeSettings + a way to listen and react
+ * to config changes and react to them.
+ */
+
 // Manual prevention of a useEffect being called twice (to avoid refreshing the
 // library twice on startup in dev mode).
 // Also, we useInvalidate, SettingsAPI.init would infinitely loop. It means
@@ -28,26 +34,24 @@ async function init(then: () => void): Promise<void> {
   if (did_init) return;
 
   did_init = true;
-  // Blocking (the window should not be shown until it's done)
-  const [theme, color] = await Promise.all([
-    getCurrentWindow()
-      .theme()
-      .then((maybeTheme) => maybeTheme ?? 'light'),
-    ConfigBridge.get('ui_accent_color').then(
-      (maybeColor) => maybeColor ?? DEFAULT_MAIN_COLOR,
-    ),
-    checkForUpdate({ silentFail: true }),
-  ]);
 
+  // Blocking (the window should not be shown until it's done)
+  const theme = await getCurrentWindow()
+    .theme()
+    .then((maybeTheme) => maybeTheme ?? 'light');
   applyThemeToUI(theme);
+
+  const color =
+    ConfigBridge.getInitial('ui_accent_color') ?? DEFAULT_MAIN_COLOR;
   applyUIMainColorToUI(color);
 
   // Show the app once everything is loaded
   await getCurrentWindow().show();
   info('UI is ready!');
 
-  // Non-blocking, this can we done later
-  await checkForLibraryRefresh().catch(logAndNotifyError);
+  // Non-blocking, these can be done later
+  checkForLibraryRefresh().catch(logAndNotifyError);
+  checkForUpdate({ silentFail: true });
 
   // Check if we should start a queue (maybe put that somewhere else)
   const initialQueue = window.__MUSEEKS_INITIAL_QUEUE;
@@ -88,7 +92,7 @@ const setTheme = async (themeID: string): Promise<void> => {
 
   const theme = (await getCurrentWindow().theme()) ?? 'light';
 
-  await applyThemeToUI(theme);
+  applyThemeToUI(theme);
 };
 
 /**
