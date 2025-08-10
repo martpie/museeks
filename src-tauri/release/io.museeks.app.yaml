@@ -45,6 +45,7 @@ modules:
       - 'install -Dm755 deb-extracted/usr/bin/museeks /app/bin/museeks'
 
       # Copy app icons
+      - mkdir -p /app/lib/Museeks
       - cp -r deb-extracted/usr/lib/Museeks/. /app/lib/Museeks
       - find /app/lib/Museeks -type f -exec chmod 644 {} \;
 
