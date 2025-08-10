@@ -512,19 +512,19 @@ msgstr "Sleep mode blocker"
 msgid "Prevent the computer from going into sleep mode when playing"
 msgstr "Prevent the computer from going into sleep mode when playing"
 
-#: src/routes/settings.ui.tsx:154
+#: src/routes/settings.ui.tsx:158
 msgid "[Linux-Only] Wayland compatibility mode"
 msgstr "[Linux-Only] Wayland compatibility mode"
 
-#: src/routes/settings.ui.tsx:155
+#: src/routes/settings.ui.tsx:159
 msgid "If you face issues with Wayland, try out this option"
 msgstr "If you face issues with Wayland, try out this option"
 
-#: src/routes/settings.ui.tsx:178
+#: src/routes/settings.ui.tsx:182
 msgid "Light"
 msgstr "Light"
 
-#: src/routes/settings.ui.tsx:180
+#: src/routes/settings.ui.tsx:184
 msgid "Dark"
 msgstr "Dark"
 
