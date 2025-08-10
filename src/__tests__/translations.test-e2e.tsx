@@ -12,7 +12,7 @@ test('The language selector should update the UI', async () => {
   await expect
     .element(viewMessage)
     .toHaveTextContent(
-      'There is no music in your library :(you can add your music here',
+      'There is no music in your libraryyou can add your music here',
     );
 
   await page.getByTestId('footer-settings-link').click();
@@ -25,6 +25,6 @@ test('The language selector should update the UI', async () => {
   await expect
     .element(viewMessage)
     .toHaveTextContent(
-      'Votre bibliothèque est vide :(vous pouvez ajouter votre musique ici',
+      'Votre bibliothèque est videvous pouvez ajouter votre musique ici',
     );
 });
