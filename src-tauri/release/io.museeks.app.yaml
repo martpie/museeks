@@ -28,6 +28,12 @@ modules:
     sources:
       - type: file
         path: ../target/release/bundle/deb/Museeks_0.23.0_amd64.deb
+        only-arches:
+          - x86_64
+      - type: file
+        path: ../target/release/bundle/deb/Museeks_0.23.0_arm64.deb
+        only-arches:
+          - aarch64
     build-commands:
       - set -e
       # Extract the deb package
