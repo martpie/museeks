@@ -230,39 +230,35 @@ msgstr "Альбом"
 msgid "Genre"
 msgstr "Жанр"
 
+#: src/components/TrackListStates.tsx:25
+msgid "Loading library..."
+msgstr "Библиотека загружается..."
+
+#: src/components/TrackListStates.tsx:36
+msgid "Your library is being scanned"
+msgstr "Ваша библиотека сканируется"
+
+#: src/components/TrackListStates.tsx:39
+msgid "hold on..."
+msgstr "подождите..."
+
+#: src/components/TrackListStates.tsx:50
+msgid "There is no music in your library"
+msgstr "В вашей библиотеке нет музыки"
+
+#: src/components/TrackListStates.tsx:53
+msgid "you can <0>add your music here</0>"
+msgstr "вы можете добавить <0>вашу музыку здесь</0>"
+
+#: src/components/TrackListStates.tsx:69
+#: src/routes/playlists.$playlistID.tsx:108
+msgid "Your search returned no results"
+msgstr "Ваш поиск не принёс результатов"
+
 #: src/components/VolumeControl.tsx:73
 #: src/components/VolumeControl.tsx:93
 msgid "Volume"
 msgstr "Громкость"
-
-#: src/routes/artists.tsx:72
-msgid "No artist selected"
-msgstr "Не выбран исполнитель"
-
-#: src/routes/library.tsx:68
-msgid "Loading library..."
-msgstr "Библиотека загружается..."
-
-#: src/routes/library.tsx:79
-msgid "Your library is being scanned"
-msgstr "Ваша библиотека сканируется"
-
-#: src/routes/library.tsx:82
-msgid "hold on..."
-msgstr "подождите..."
-
-#: src/routes/library.tsx:93
-msgid "There is no music in your library"
-msgstr "В вашей библиотеке нет музыки"
-
-#: src/routes/library.tsx:96
-msgid "you can <0>add your music here</0>"
-msgstr "вы можете добавить <0>вашу музыку здесь</0>"
-
-#: src/routes/library.tsx:112
-#: src/routes/playlists.$playlistID.tsx:108
-msgid "Your search returned no results"
-msgstr "Ваш поиск не принёс результатов"
 
 #: src/routes/playlists.$playlistID.tsx:76
 msgid "Remove from playlist"

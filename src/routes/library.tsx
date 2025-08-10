@@ -1,12 +1,9 @@
-import { Trans } from '@lingui/react/macro';
 import { useQuery } from '@tanstack/react-query';
 import { createFileRoute } from '@tanstack/react-router';
-import { useMemo } from 'react';
 
 import TrackList from '../components/TrackList';
-import Link from '../elements/Link';
+import TrackListStates from '../components/TrackListStates';
 import View from '../elements/View';
-import * as ViewMessage from '../elements/ViewMessage';
 import useFilteredTracks from '../hooks/useFilteredTracks';
 import useGlobalTrackListStatus from '../hooks/useGlobalTrackListStatus';
 import ConfigBridge from '../lib/bridge-config';
@@ -39,8 +36,6 @@ export const Route = createFileRoute('/library')({
 });
 
 function ViewLibrary() {
-  const refreshing = useLibraryStore((state) => state.refreshing);
-  const search = useLibraryStore((state) => state.search);
   const sortBy = useLibraryStore((state) => state.sortBy);
   const sortOrder = useLibraryStore((state) => state.sortOrder);
 
@@ -59,74 +54,18 @@ function ViewLibrary() {
   const filteredTracks = useFilteredTracks(tracks ?? [], sortBy, sortOrder);
   useGlobalTrackListStatus(filteredTracks);
 
-  const content = useMemo(() => {
-    // Refreshing library
-    if (isLoading) {
-      return (
-        <ViewMessage.Notice>
-          <p>
-            <Trans>Loading library...</Trans>
-          </p>
-        </ViewMessage.Notice>
-      );
-    }
-
-    // Refreshing library
-    if (refreshing) {
-      return (
-        <ViewMessage.Notice>
-          <p>
-            <Trans>Your library is being scanned</Trans>
-          </p>
-          <ViewMessage.Sub>
-            <Trans>hold on...</Trans>
-          </ViewMessage.Sub>
-        </ViewMessage.Notice>
-      );
-    }
-
-    // Empty library
-    if (filteredTracks.length === 0 && search === '') {
-      return (
-        <ViewMessage.Notice>
-          <p>
-            <Trans>There is no music in your library</Trans>
-          </p>
-          <ViewMessage.Sub>
-            <Trans>
-              you can{' '}
-              <Link linkOptions={{ to: '/settings/library' }}>
-                add your music here
-              </Link>
-            </Trans>
-          </ViewMessage.Sub>
-        </ViewMessage.Notice>
-      );
-    }
-
-    // Empty search
-    if (filteredTracks.length === 0) {
-      return (
-        <ViewMessage.Notice>
-          <p>
-            <Trans>Your search returned no results</Trans>
-          </p>
-        </ViewMessage.Notice>
-      );
-    }
-
-    // All good !
-    return (
-      <TrackList
-        layout="default"
-        data={filteredTracks}
-        queueOrigin={QUEUE_ORIGIN}
-        tracksDensity={tracksDensity}
-        playlists={playlists}
-        isSortEnabled={true}
-      />
-    );
-  }, [search, refreshing, filteredTracks, playlists, tracksDensity, isLoading]);
-
-  return <View>{content}</View>;
+  return (
+    <View>
+      <TrackListStates isLoading={isLoading} tracks={filteredTracks}>
+        <TrackList
+          layout="default"
+          data={filteredTracks}
+          queueOrigin={QUEUE_ORIGIN}
+          tracksDensity={tracksDensity}
+          playlists={playlists}
+          isSortEnabled={true}
+        />
+      </TrackListStates>
+    </View>
+  );
 }

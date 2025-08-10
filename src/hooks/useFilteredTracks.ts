@@ -71,6 +71,6 @@ export function useFilteredTrackGroup(
       });
     }
 
-    return searchedGroups;
+    return searchedGroups.filter((group) => group.tracks.length > 0);
   }, [tracks, search, sortBy, sortOrder]);
 }

@@ -230,39 +230,35 @@ msgstr "Album"
 msgid "Genre"
 msgstr "Genre"
 
+#: src/components/TrackListStates.tsx:25
+msgid "Loading library..."
+msgstr "Chargement de la bibliothèque..."
+
+#: src/components/TrackListStates.tsx:36
+msgid "Your library is being scanned"
+msgstr "Votre bibliothèque est en cours de scan"
+
+#: src/components/TrackListStates.tsx:39
+msgid "hold on..."
+msgstr "veuillez patienter..."
+
+#: src/components/TrackListStates.tsx:50
+msgid "There is no music in your library"
+msgstr "Votre bibliothèque est vide"
+
+#: src/components/TrackListStates.tsx:53
+msgid "you can <0>add your music here</0>"
+msgstr "vous pouvez <0>ajouter votre musique ici</0>"
+
+#: src/components/TrackListStates.tsx:69
+#: src/routes/playlists.$playlistID.tsx:108
+msgid "Your search returned no results"
+msgstr "Votre recherche n'a retourné aucun résultat"
+
 #: src/components/VolumeControl.tsx:73
 #: src/components/VolumeControl.tsx:93
 msgid "Volume"
 msgstr "Volume"
-
-#: src/routes/artists.tsx:72
-msgid "No artist selected"
-msgstr "Aucun artiste sélectionné"
-
-#: src/routes/library.tsx:68
-msgid "Loading library..."
-msgstr "Chargement de la bibliothèque..."
-
-#: src/routes/library.tsx:79
-msgid "Your library is being scanned"
-msgstr "Votre bibliothèque est en cours de scan"
-
-#: src/routes/library.tsx:82
-msgid "hold on..."
-msgstr "veuillez patienter..."
-
-#: src/routes/library.tsx:93
-msgid "There is no music in your library"
-msgstr "Votre bibliothèque est vide"
-
-#: src/routes/library.tsx:96
-msgid "you can <0>add your music here</0>"
-msgstr "vous pouvez <0>ajouter votre musique ici</0>"
-
-#: src/routes/library.tsx:112
-#: src/routes/playlists.$playlistID.tsx:108
-msgid "Your search returned no results"
-msgstr "Votre recherche n'a retourné aucun résultat"
 
 #: src/routes/playlists.$playlistID.tsx:76
 msgid "Remove from playlist"

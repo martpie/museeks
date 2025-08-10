@@ -1,4 +1,4 @@
-import { Trans, useLingui } from '@lingui/react/macro';
+import { useLingui } from '@lingui/react/macro';
 import {
   createFileRoute,
   Outlet,
@@ -8,8 +8,8 @@ import {
 
 import SideNav from '../components/SideNav';
 import SideNavLink from '../components/SideNavLink';
+import TrackListStates from '../components/TrackListStates';
 import View from '../elements/View';
-import * as ViewMessage from '../elements/ViewMessage';
 import DatabaseBridge from '../lib/bridge-database';
 import usePlayerStore from '../stores/usePlayerStore';
 
@@ -64,15 +64,7 @@ function ViewArtists() {
         </SideNav>
       }
     >
-      {match ? (
-        <Outlet />
-      ) : (
-        <ViewMessage.Notice>
-          <p>
-            <Trans>No artist selected</Trans>
-          </p>
-        </ViewMessage.Notice>
-      )}
+      {match ? <Outlet /> : <TrackListStates isLoading={false} tracks={[]} />}
     </View>
   );
 }
