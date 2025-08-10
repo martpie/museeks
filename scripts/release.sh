@@ -32,14 +32,14 @@ done
 VERSION=$(jq -r .version package.json)
 
 checksum_file () {
-  shasum -a 256 $1 > $1.sha256
+  shasum -a 256 "$1" > "$1.sha256"
+  echo "Generated checksum for $(basename "$1")"
 }
 
-echo Generating checksums for version ${VERSION}
+echo "Generating checksums for version ${VERSION}"
 
-checksum_file release/Museeks_${VERSION}_amd64.deb
-checksum_file release/Museeks_${VERSION}_x64-setup.exe
-checksum_file release/Museeks_${VERSION}_amd64.AppImage
-checksum_file release/Museeks-${VERSION}-1.x86_64.rpm
-checksum_file release/Museeks_${VERSION}_universal.dmg
-checksum_file release/museeks.flatpak
+# Generate checksums for all release files with relevant extensions
+for file in release/*.{deb,exe,AppImage,rpm,dmg,flatpak}; do
+  [ -f "$file" ] || continue
+  checksum_file "$file"
+done
