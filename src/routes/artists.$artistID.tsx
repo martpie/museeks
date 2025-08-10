@@ -2,6 +2,7 @@ import { createFileRoute } from '@tanstack/react-router';
 import { useMemo } from 'react';
 
 import TrackList from '../components/TrackList';
+import TrackListStates from '../components/TrackListStates';
 import { useFilteredTrackGroup } from '../hooks/useFilteredTracks';
 import useGlobalTrackListStatus from '../hooks/useGlobalTrackListStatus';
 import ConfigBridge from '../lib/bridge-config';
@@ -36,13 +37,15 @@ export default function ViewArtistDetails() {
   }, [artistID]);
 
   return (
-    <TrackList
-      layout="grouped"
-      data={content}
-      tracksDensity={tracksDensity}
-      playlists={playlists}
-      queueOrigin={queueOrigin}
-      isSortEnabled={false}
-    />
+    <TrackListStates isLoading={false} tracks={content}>
+      <TrackList
+        layout="grouped"
+        data={content}
+        tracksDensity={tracksDensity}
+        playlists={playlists}
+        queueOrigin={queueOrigin}
+        isSortEnabled={false}
+      />
+    </TrackListStates>
   );
 }
