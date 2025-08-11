@@ -9,9 +9,9 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "PO-Revision-Date: \n"
-"Last-Translator: \n"
+"Last-Translator: Tang Shijian\n"
 "Language-Team: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
 #: src/components/ButtonRepeat.tsx:18
 msgid "Repeat"
@@ -579,11 +579,11 @@ msgid "The playlist \"{name}\" was created"
 msgstr "播放列表 \"{name}\" 已创建"
 
 #. placeholder {0}: newRelease.tag_name
-#: src/stores/SettingsAPI.ts:168
+#: src/stores/SettingsAPI.ts:169
 msgid "Museeks {0} is available, check https://museeks.io!"
 msgstr "Museeks {0} 可用，请查看 https://museeks.io！"
 
-#: src/stores/SettingsAPI.ts:170
+#: src/stores/SettingsAPI.ts:171
 msgid "Museeks {currentVersion} is the latest version available."
 msgstr "Museeks {currentVersion} 是可用的最新版本。"
 

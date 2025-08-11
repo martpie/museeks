@@ -9,6 +9,7 @@
   color: var(--text);
   font-weight: bold;
   text-decoration: none;
+  white-space: nowrap;
 
   &:hover,
   &:active,

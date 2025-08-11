@@ -21,7 +21,7 @@ export const NON_DEFAULT_LANGUAGE = [
     label: 'Русский',
     englishLabel: 'Russian',
     code: 'ru',
-    contributors: ['ildar nizamov'],
+    contributors: ['Ildar Nizamov'],
   },
   {
     label: '简体中文',

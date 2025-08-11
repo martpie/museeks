@@ -36,13 +36,14 @@ async function init(then: () => void): Promise<void> {
   did_init = true;
 
   // Blocking (the window should not be shown until it's done)
-  const theme = await getCurrentWindow()
-    .theme()
-    .then((maybeTheme) => maybeTheme ?? 'light');
-  applyThemeToUI(theme);
+  const [theme, color] = await Promise.all([
+    getCurrentWindow()
+      .theme()
+      .then((maybeTheme) => maybeTheme ?? 'light'),
+    ConfigBridge.get('ui_accent_color').then((c) => c ?? DEFAULT_MAIN_COLOR),
+  ]);
 
-  const color =
-    ConfigBridge.getInitial('ui_accent_color') ?? DEFAULT_MAIN_COLOR;
+  applyThemeToUI(theme);
   applyUIMainColorToUI(color);
 
   // Show the app once everything is loaded
