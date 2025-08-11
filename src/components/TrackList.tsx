@@ -323,7 +323,7 @@ export default function TrackList(props: Props) {
           item: 'Separator',
         }),
         // Quick-search
-        ...[track.title, ...artistsAndAlbum].map((item) =>
+        ...artistsAndAlbum.map((item) =>
           MenuItem.new({
             text: t`Search for "${item}"`,
             action: () => {
