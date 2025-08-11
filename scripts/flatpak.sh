@@ -15,4 +15,7 @@ flatpak-builder --force-clean --user --disable-cache --repo release/flatpak-repo
 flatpak build-bundle release/flatpak-repo release/museeks.flatpak io.museeks.app
 
 # Lint
-flatpak run --command=flatpak-builder-lint org.flatpak.Builder manifest src-tauri/release/io.museeks.app.yaml && flatpak run --command=flatpak-builder-lint org.flatpak.Builder repo release/flatpak-repo --exceptions --user-exceptions src-tauri/release/flatpak.exceptions.json"
+flatpak run --command=flatpak-builder-lint org.flatpak.Builder manifest src-tauri/release/io.museeks.app.yaml && flatpak run --command=flatpak-builder-lint org.flatpak.Builder repo release/flatpak-repo --exceptions --user-exceptions src-tauri/release/flatpak.exceptions.json
+
+# Rename binary so it has a unique name
+mv release/museeks.flatpak release/museeks-${arch}.flatpak
