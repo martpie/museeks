@@ -23,6 +23,12 @@ export const NON_DEFAULT_LANGUAGE = [
     code: 'ru',
     contributors: ['ildar nizamov'],
   },
+  {
+    label: '简体中文',
+    englishLabel: 'Simplified Chinese',
+    code: 'zh-CN',
+    contributors: ['Tang Shijian'],
+  },
 ];
 
 export const ALL_LANGUAGES = [DEFAULT_LANGUAGE, ...NON_DEFAULT_LANGUAGE];
