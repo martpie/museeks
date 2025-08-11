@@ -27,12 +27,7 @@
     "test:lint": "biome ci .",
     "test:lint:fix": "biome check --write .",
     "package:checksums": "bash scripts/checksum.sh",
-    "clippy": "cargo clippy --manifest-path src-tauri/Cargo.toml",
-    "release": "bash scripts/release.sh",
-    "release:flatpak:build": "flatpak-builder --force-clean --user --disable-cache --repo release/flatpak-repo release/flatpak src-tauri/release/io.museeks.app.yaml",
-    "release:flatpak:install": "npm run release:flatpak:build --install",
-    "release:flatpak:package": "flatpak build-bundle release/flatpak-repo release/museeks.flatpak io.museeks.app",
-    "release:flatpak:lint": "flatpak run --command=flatpak-builder-lint org.flatpak.Builder manifest src-tauri/release/io.museeks.app.yaml && flatpak run --command=flatpak-builder-lint org.flatpak.Builder repo release/flatpak-repo --exceptions --user-exceptions src-tauri/release/flatpak.exceptions.json"
+    "clippy": "cargo clippy --manifest-path src-tauri/Cargo.toml"
   },
   "dependencies": {
     "@dnd-kit/core": "6.3.1",
