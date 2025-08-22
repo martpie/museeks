@@ -125,7 +125,6 @@ export default function SideNavLink(props: Props): React.ReactNode {
         onKeyDown={keyDown}
         onBlur={onBlur}
         onFocus={onFocus}
-        // biome-ignore lint/style/noParameterAssign: biomejs/biome#7065
         ref={(ref) => ref?.focus()}
       />
     );
