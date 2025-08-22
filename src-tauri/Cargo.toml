@@ -10,25 +10,25 @@ repository = "https://github.com/martpie/museeks"
 edition = "2024"
 
 [build-dependencies]
-tauri-build = { version = "2.3.1", features = ["codegen"] }
+tauri-build = { version = "2.4.0", features = ["codegen"] }
 
 [dependencies]
-tauri = { version = "2.7.0", features = [
+tauri = { version = "2.8.2", features = [
     "protocol-asset",
     "image-png",
     "devtools",
 ] }
 tauri-plugin-clipboard-manager = "2.3.0"
-tauri-plugin-dialog = "2.3.2"
-tauri-plugin-fs = "2.4.1"
+tauri-plugin-dialog = "2.3.3"
+tauri-plugin-fs = "2.4.2"
 tauri-plugin-log = { version = "2.6.0", features = ["colored"] }
-tauri-plugin-notification = "2.3.0"
-tauri-plugin-opener = "2.4.0"
-tauri-plugin-os = "2.3.0"
+tauri-plugin-notification = "2.3.1"
+tauri-plugin-opener = "2.5.0"
+tauri-plugin-os = "2.3.1"
 tauri-plugin-prevent-default = "3.0.1"
 tauri-plugin-process = "2.3.0"
 tauri-plugin-shell = "2.3.0"
-tauri-plugin-single-instance = "2.3.2"
+tauri-plugin-single-instance = "2.3.3"
 tauri-plugin-window-state = "2.4.0"
 
 # non-Tauri dependencies
@@ -47,11 +47,11 @@ nosleep = "0.2.1"
 pathdiff = "0.2.3"
 rayon = "1.11.0"
 serde = { version = "1.0.219", features = ["derive"] }
-serde_json = "1.0.142"
+serde_json = "1.0.143"
 sqlx = { version = "0.8.6", features = ["sqlite", "runtime-tokio", "macros"] }
 strum = { version = "0.27.2", features = ["derive"] }
 tokio = { version = "1.47.1", features = ["full"] }
-thiserror = "2.0.14"
+thiserror = "2.0.16"
 ts-rs = "11.0.1"
 uuid = { version = "1.18.0", features = ["v3", "v4", "fast-rng"] }
 walkdir = "2.5.0"
