@@ -16,7 +16,7 @@ import MediaSessionEvents from '../components/MediaSessionEvents';
 import PlayerEvents from '../components/PlayerEvents';
 import Toasts from '../components/Toasts';
 import useInvalidate from '../hooks/useInvalidate';
-import SettingsAPI from '../stores/SettingsAPI';
+import settingsStore from '../stores/useSettingsStore';
 import styles from './__root.module.css';
 
 type Search = {
@@ -48,7 +48,7 @@ function ViewRoot() {
 
   useEffect(() => {
     // If the app imported tracks, we need to refresh route data, but it seems invalidate is not super stable
-    SettingsAPI.init(invalidate);
+    settingsStore.init(invalidate);
   }, [invalidate]);
 
   // Log each navigation to the console for debug purposes

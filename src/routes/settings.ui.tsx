@@ -1,6 +1,6 @@
 import { t as tMacro } from '@lingui/core/macro';
 import { Trans, useLingui } from '@lingui/react/macro';
-import { createFileRoute, useLoaderData } from '@tanstack/react-router';
+import { createFileRoute } from '@tanstack/react-router';
 import { relaunch } from '@tauri-apps/plugin-process';
 import { debounce } from 'lodash-es';
 import { useMemo } from 'react';
@@ -10,9 +10,8 @@ import CheckboxSetting from '../components/SettingCheckbox';
 import Button from '../elements/Button';
 import type { Config, DefaultView } from '../generated/typings';
 import useInvalidate, { useInvalidateCallback } from '../hooks/useInvalidate';
-import SettingsBridge from '../lib/bridge-settings';
 import { themes } from '../lib/themes';
-import SettingsAPI, { DEFAULT_MAIN_COLOR } from '../stores/SettingsAPI';
+import settingsStore, { useSettings, DEFAULT_MAIN_COLOR } from '../stores/useSettingsStore';
 import { ALL_LANGUAGES } from '../translations/languages';
 
 export const Route = createFileRoute('/settings/ui')({
@@ -20,14 +19,14 @@ export const Route = createFileRoute('/settings/ui')({
 });
 
 function ViewSettingsUI() {
-  const { config } = useLoaderData({ from: '/settings' });
+  const config = useSettings();
   const { t } = useLingui();
 
   const invalidate = useInvalidate();
 
   const setUIMainColorThrottled = useMemo(() => {
     return debounce((value: string) => {
-      SettingsAPI.setUIMainColor(value).then(invalidate);
+      settingsStore.setUIMainColor(value).then(invalidate);
     }, 250);
   }, [invalidate]);
 
@@ -39,7 +38,7 @@ function ViewSettingsUI() {
           description={t`Change the appearance of the interface`}
           value={config.theme}
           onChange={(e) =>
-            SettingsAPI.setTheme(e.currentTarget.value).then(invalidate)
+            settingsStore.setTheme(e.currentTarget.value).then(invalidate)
           }
         >
           <option value="__system">{t`System (default)`}</option>
@@ -61,14 +60,14 @@ function ViewSettingsUI() {
               type="button"
               bSize="small"
               onClick={() => {
-                SettingsAPI.setUIMainColor(DEFAULT_MAIN_COLOR).then(invalidate);
-                SettingsAPI.applyUIMainColorToUI(DEFAULT_MAIN_COLOR);
+                settingsStore.setUIMainColor(DEFAULT_MAIN_COLOR).then(invalidate);
+                settingsStore.applyUIMainColorToUI(DEFAULT_MAIN_COLOR);
               }}
             >{t`Reset`}</Button>
           }
           onChange={(e) => {
             const value = e.currentTarget.value;
-            SettingsAPI.applyUIMainColorToUI(value);
+            settingsStore.applyUIMainColorToUI(value);
             setUIMainColorThrottled(value);
           }}
         />
@@ -78,7 +77,7 @@ function ViewSettingsUI() {
           label={t`Language`}
           value={config.language}
           onChange={(e) => {
-            SettingsAPI.setLanguage(e.target.value).then(invalidate);
+            settingsStore.setLanguage(e.target.value).then(invalidate);
           }}
           data-testid="language-selector"
         >
@@ -98,7 +97,7 @@ function ViewSettingsUI() {
           description={t`Change the tracks spacing`}
           value={config.track_view_density}
           onChange={(e) =>
-            SettingsAPI.setTracksDensity(
+            settingsStore.setTracksDensity(
               e.currentTarget.value as Config['track_view_density'],
             ).then(invalidate)
           }
@@ -117,7 +116,7 @@ function ViewSettingsUI() {
           value={config.default_view}
           description={t`Change the default view when starting the application`}
           onChange={(e) =>
-            SettingsBridge.setDefaultView(
+            settingsStore.setDefaultView(
               e.currentTarget.value as DefaultView,
             ).then(invalidate)
           }
@@ -136,7 +135,7 @@ function ViewSettingsUI() {
           description={t`Send notifications when the playing track changes`}
           value={config.notifications}
           onChange={useInvalidateCallback(
-            SettingsAPI.toggleDisplayNotifications,
+            settingsStore.toggleDisplayNotifications.bind(settingsStore),
           )}
         />
       </Setting.Section>
@@ -145,7 +144,7 @@ function ViewSettingsUI() {
           title={t`Sleep mode blocker`}
           description={t`Prevent the computer from going into sleep mode when playing`}
           value={config.sleepblocker}
-          onChange={useInvalidateCallback(SettingsBridge.toggleSleepBlocker)}
+          onChange={useInvalidateCallback(settingsStore.toggleSleepBlocker.bind(settingsStore))}
         />
       </Setting.Section>
       {window.__MUSEEKS_PLATFORM === 'linux' && (
@@ -155,7 +154,7 @@ function ViewSettingsUI() {
             description={t`If you face issues using Wayland, try out this option`}
             value={config.wayland_compat}
             onChange={() =>
-              SettingsBridge.toggleWaylandCompat(!config.wayland_compat).then(
+              settingsStore.toggleWaylandCompat(!config.wayland_compat).then(
                 async () => {
                   await invalidate();
                   await relaunch();

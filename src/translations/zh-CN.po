@@ -54,7 +54,7 @@ msgstr "艺术家"
 
 #: src/components/Footer.tsx:41
 #: src/routes/playlists.tsx:165
-#: src/routes/settings.ui.tsx:129
+#: src/routes/settings.ui.tsx:128
 msgid "Playlists"
 msgstr "播放列表"
 
@@ -189,7 +189,7 @@ msgstr "移除音轨"
 
 #: src/components/TrackList.tsx:388
 #: src/routes/settings.library.tsx:98
-#: src/routes/settings.library.tsx:143
+#: src/routes/settings.library.tsx:145
 #: src/routes/tracks.$trackID.tsx:246
 msgid "Cancel"
 msgstr "取消"
@@ -302,47 +302,47 @@ msgstr "未选择播放列表"
 msgid "New Playlist"
 msgstr "新播放列表"
 
-#: src/routes/settings.about.tsx:32
+#: src/routes/settings.about.tsx:33
 msgid "About Museeks"
 msgstr "关于 Museeks"
 
-#: src/routes/settings.about.tsx:44
+#: src/routes/settings.about.tsx:45
 msgid "release notes"
 msgstr "发布说明"
 
-#: src/routes/settings.about.tsx:47
+#: src/routes/settings.about.tsx:48
 msgid "Automatically check for updates"
 msgstr "自动检查更新"
 
-#: src/routes/settings.about.tsx:57
+#: src/routes/settings.about.tsx:58
 msgid "Check for update"
 msgstr "检查更新"
 
-#: src/routes/settings.about.tsx:63
+#: src/routes/settings.about.tsx:64
 msgid "Contributors"
 msgstr "贡献者"
 
-#: src/routes/settings.about.tsx:66
+#: src/routes/settings.about.tsx:67
 msgid "Made with <0/> by Pierre de la Martinière (<1>martpie.io</1>) and a bunch of <2>great people</2>"
 msgstr "由 Pierre de la Martinière (<1>martpie.io</1>) 和一群<2>优秀的人</2>使用 <0/> 制作"
 
-#: src/routes/settings.about.tsx:82
+#: src/routes/settings.about.tsx:83
 msgid "Translations:"
 msgstr "翻译："
 
-#: src/routes/settings.about.tsx:96
+#: src/routes/settings.about.tsx:97
 msgid "Report issue / Ask for a feature"
 msgstr "报告问题 / 请求功能"
 
-#: src/routes/settings.about.tsx:99
+#: src/routes/settings.about.tsx:100
 msgid "Bugs happen. Please, do not hesitate to report them or to ask for features you would like to see, using the <0>issue tracker</0>."
 msgstr "错误时有发生。请不要犹豫使用<0>问题跟踪器</0>报告它们或请求您希望看到的功能。"
 
-#: src/routes/settings.about.tsx:114
+#: src/routes/settings.about.tsx:115
 msgid "Internals"
 msgstr "内部信息"
 
-#: src/routes/settings.about.tsx:119
+#: src/routes/settings.about.tsx:120
 msgid "Open storage directory"
 msgstr "打开存储目录"
 
@@ -403,32 +403,32 @@ msgstr "<0>.m3u</0> 文件也将作为播放列表导入。"
 msgid "Automatically refresh library on startup"
 msgstr "启动时自动刷新音乐库"
 
-#: src/routes/settings.library.tsx:127
+#: src/routes/settings.library.tsx:129
 msgid "Danger zone"
 msgstr "危险区域"
 
-#: src/routes/settings.library.tsx:130
+#: src/routes/settings.library.tsx:132
 msgid "Delete all tracks and playlists from Museeks."
 msgstr "从 Museeks 中删除所有音轨和播放列表。"
 
-#: src/routes/settings.library.tsx:135
+#: src/routes/settings.library.tsx:137
 msgid "Fully reset the library"
 msgstr "完全重置音乐库"
 
-#: src/routes/settings.library.tsx:139
+#: src/routes/settings.library.tsx:141
 msgid "All your tracks and playlists will be deleted from Museeks."
 msgstr "您的所有音轨和播放列表将从 Museeks 中删除。"
 
-#: src/routes/settings.library.tsx:141
+#: src/routes/settings.library.tsx:143
 msgid "Reset library?"
 msgstr "重置音乐库？"
 
-#: src/routes/settings.library.tsx:144
-#: src/routes/settings.ui.tsx:67
+#: src/routes/settings.library.tsx:146
+#: src/routes/settings.ui.tsx:66
 msgid "Reset"
 msgstr "重置"
 
-#: src/routes/settings.library.tsx:153
+#: src/routes/settings.library.tsx:155
 msgid "Reset library"
 msgstr "重置音乐库"
 
@@ -444,83 +444,83 @@ msgstr "界面"
 msgid "About"
 msgstr "关于"
 
-#: src/routes/settings.ui.tsx:38
+#: src/routes/settings.ui.tsx:37
 msgid "Theme"
 msgstr "主题"
 
-#: src/routes/settings.ui.tsx:39
+#: src/routes/settings.ui.tsx:38
 msgid "Change the appearance of the interface"
 msgstr "更改界面的外观"
 
-#: src/routes/settings.ui.tsx:45
+#: src/routes/settings.ui.tsx:44
 msgid "System (default)"
 msgstr "系统（默认）"
 
-#: src/routes/settings.ui.tsx:57
+#: src/routes/settings.ui.tsx:56
 msgid "Accent color"
 msgstr "强调色"
 
-#: src/routes/settings.ui.tsx:78
+#: src/routes/settings.ui.tsx:77
 msgid "Language"
 msgstr "语言"
 
-#: src/routes/settings.ui.tsx:97
+#: src/routes/settings.ui.tsx:96
 msgid "Tracks density"
 msgstr "音轨密度"
 
-#: src/routes/settings.ui.tsx:98
+#: src/routes/settings.ui.tsx:97
 msgid "Change the tracks spacing"
 msgstr "更改音轨间距"
 
-#: src/routes/settings.ui.tsx:107
+#: src/routes/settings.ui.tsx:106
 msgid "Normal (default)"
 msgstr "正常（默认）"
 
-#: src/routes/settings.ui.tsx:110
+#: src/routes/settings.ui.tsx:109
 msgid "Compact"
 msgstr "紧凑"
 
-#: src/routes/settings.ui.tsx:116
+#: src/routes/settings.ui.tsx:115
 msgid "Default view"
 msgstr "默认视图"
 
-#: src/routes/settings.ui.tsx:118
+#: src/routes/settings.ui.tsx:117
 msgid "Change the default view when starting the application"
 msgstr "更改启动应用程序时的默认视图"
 
-#: src/routes/settings.ui.tsx:126
+#: src/routes/settings.ui.tsx:125
 msgid "Library (default)"
 msgstr "音乐库（默认）"
 
-#: src/routes/settings.ui.tsx:135
+#: src/routes/settings.ui.tsx:134
 msgid "Display Notifications"
 msgstr "显示通知"
 
-#: src/routes/settings.ui.tsx:136
+#: src/routes/settings.ui.tsx:135
 msgid "Send notifications when the playing track changes"
 msgstr "播放音轨更改时发送通知"
 
-#: src/routes/settings.ui.tsx:145
+#: src/routes/settings.ui.tsx:144
 msgid "Sleep mode blocker"
 msgstr "睡眠模式阻止器"
 
-#: src/routes/settings.ui.tsx:146
+#: src/routes/settings.ui.tsx:145
 msgid "Prevent the computer from going into sleep mode when playing"
 msgstr "播放时防止计算机进入睡眠模式"
 
-#: src/routes/settings.ui.tsx:154
+#: src/routes/settings.ui.tsx:153
 msgid "[Beta] Wayland compatibility enhancements"
 msgstr "[测试版] Wayland 兼容性增强"
 
-#: src/routes/settings.ui.tsx:155
+#: src/routes/settings.ui.tsx:154
 msgid "If you face issues using Wayland, try out this option"
 msgstr "如果您在使用 Wayland 时遇到问题，请尝试此选项"
 
-#: src/routes/settings.ui.tsx:178
+#: src/routes/settings.ui.tsx:177
 msgid "Light"
 msgstr "浅色"
 
-#: src/routes/settings.ui.tsx:180
+#: src/routes/settings.ui.tsx:179
 msgid "Dark"
 msgstr "深色"
 
@@ -580,10 +580,12 @@ msgstr "播放列表 \"{name}\" 已创建"
 
 #. placeholder {0}: newRelease.tag_name
 #: src/stores/SettingsAPI.ts:169
+#: src/stores/useSettingsStore.ts:225
 msgid "Museeks {0} is available, check https://museeks.io!"
 msgstr "Museeks {0} 可用，请查看 https://museeks.io！"
 
 #: src/stores/SettingsAPI.ts:171
+#: src/stores/useSettingsStore.ts:227
 msgid "Museeks {currentVersion} is the latest version available."
 msgstr "Museeks {currentVersion} 是可用的最新版本。"
 

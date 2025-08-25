@@ -10,7 +10,7 @@ import Flexbox from '../elements/Flexbox';
 import Heart from '../elements/Heart';
 import List from '../elements/List';
 import useInvalidate, { useInvalidateCallback } from '../hooks/useInvalidate';
-import SettingsAPI from '../stores/SettingsAPI';
+import settingsStore, { useSettings } from '../stores/useSettingsStore';
 import { NON_DEFAULT_LANGUAGE } from '../translations/languages';
 
 export const Route = createFileRoute('/settings/about')({
@@ -18,9 +18,10 @@ export const Route = createFileRoute('/settings/about')({
 });
 
 function ViewSettingsAbout() {
-  const { config, version, tauriVersion, appStorageDir } = useLoaderData({
+  const { version, tauriVersion, appStorageDir } = useLoaderData({
     from: '/settings',
   });
+  const config = useSettings();
 
   const invalidate = useInvalidate();
   const { t } = useLingui();
@@ -46,12 +47,12 @@ function ViewSettingsAbout() {
         <CheckboxSetting
           title={t`Automatically check for updates`}
           value={config.auto_update_checker}
-          onChange={useInvalidateCallback(SettingsAPI.toggleAutoUpdateChecker)}
+          onChange={useInvalidateCallback(settingsStore.toggleAutoUpdateChecker.bind(settingsStore))}
         />
         <div>
           <Button
             onClick={() => {
-              SettingsAPI.checkForUpdate().then(invalidate);
+              settingsStore.checkForUpdate().then(invalidate);
             }}
           >
             <Trans>Check for update</Trans>

@@ -1,5 +1,5 @@
 import { Trans, useLingui } from '@lingui/react/macro';
-import { createFileRoute, useLoaderData } from '@tanstack/react-router';
+import { createFileRoute } from '@tanstack/react-router';
 import { ask, open } from '@tauri-apps/plugin-dialog';
 import { useCallback } from 'react';
 
@@ -8,8 +8,8 @@ import CheckboxSetting from '../components/SettingCheckbox';
 import Button from '../elements/Button';
 import Flexbox from '../elements/Flexbox';
 import useInvalidate, { useInvalidateCallback } from '../hooks/useInvalidate';
-import SettingsAPI from '../stores/SettingsAPI';
 import useLibraryStore, { useLibraryAPI } from '../stores/useLibraryStore';
+import settingsStore, { useSettings } from '../stores/useSettingsStore';
 import styles from './settings-library.module.css';
 
 export const Route = createFileRoute('/settings/library')({
@@ -17,7 +17,7 @@ export const Route = createFileRoute('/settings/library')({
 });
 
 function ViewSettingsLibrary() {
-  const { config } = useLoaderData({ from: '/settings' });
+  const config = useSettings();
 
   const libraryAPI = useLibraryAPI();
   const isLibraryRefreshing = useLibraryStore((state) => state.refreshing);
@@ -119,7 +119,9 @@ function ViewSettingsLibrary() {
         <CheckboxSetting
           title={t`Automatically refresh library on startup`}
           value={config.library_autorefresh}
-          onChange={useInvalidateCallback(SettingsAPI.toggleLibraryAutorefresh)}
+          onChange={useInvalidateCallback(
+            settingsStore.toggleLibraryAutorefresh.bind(settingsStore),
+          )}
         />
       </Setting.Section>
       <Setting.Section>

@@ -54,7 +54,7 @@ msgstr "Artists"
 
 #: src/components/Footer.tsx:41
 #: src/routes/playlists.tsx:165
-#: src/routes/settings.ui.tsx:129
+#: src/routes/settings.ui.tsx:128
 msgid "Playlists"
 msgstr "Playlists"
 
@@ -189,7 +189,7 @@ msgstr "Remove tracks"
 
 #: src/components/TrackList.tsx:388
 #: src/routes/settings.library.tsx:98
-#: src/routes/settings.library.tsx:143
+#: src/routes/settings.library.tsx:145
 #: src/routes/tracks.$trackID.tsx:246
 msgid "Cancel"
 msgstr "Cancel"
@@ -302,47 +302,47 @@ msgstr "No playlist selected"
 msgid "New Playlist"
 msgstr "New Playlist"
 
-#: src/routes/settings.about.tsx:32
+#: src/routes/settings.about.tsx:33
 msgid "About Museeks"
 msgstr "About Museeks"
 
-#: src/routes/settings.about.tsx:44
+#: src/routes/settings.about.tsx:45
 msgid "release notes"
 msgstr "release notes"
 
-#: src/routes/settings.about.tsx:47
+#: src/routes/settings.about.tsx:48
 msgid "Automatically check for updates"
 msgstr "Automatically check for updates"
 
-#: src/routes/settings.about.tsx:57
+#: src/routes/settings.about.tsx:58
 msgid "Check for update"
 msgstr "Check for update"
 
-#: src/routes/settings.about.tsx:63
+#: src/routes/settings.about.tsx:64
 msgid "Contributors"
 msgstr "Contributors"
 
-#: src/routes/settings.about.tsx:66
+#: src/routes/settings.about.tsx:67
 msgid "Made with <0/> by Pierre de la Martinière (<1>martpie.io</1>) and a bunch of <2>great people</2>"
 msgstr "Made with <0/> by Pierre de la Martinière (<1>martpie.io</1>) and a bunch of <2>great people</2>"
 
-#: src/routes/settings.about.tsx:82
+#: src/routes/settings.about.tsx:83
 msgid "Translations:"
 msgstr "Translations:"
 
-#: src/routes/settings.about.tsx:96
+#: src/routes/settings.about.tsx:97
 msgid "Report issue / Ask for a feature"
 msgstr "Report issue / Ask for a feature"
 
-#: src/routes/settings.about.tsx:99
+#: src/routes/settings.about.tsx:100
 msgid "Bugs happen. Please, do not hesitate to report them or to ask for features you would like to see, using the <0>issue tracker</0>."
 msgstr "Bugs happen. Please, do not hesitate to report them or to ask for features you would like to see, using the <0>issue tracker</0>."
 
-#: src/routes/settings.about.tsx:114
+#: src/routes/settings.about.tsx:115
 msgid "Internals"
 msgstr "Internals"
 
-#: src/routes/settings.about.tsx:119
+#: src/routes/settings.about.tsx:120
 msgid "Open storage directory"
 msgstr "Open storage directory"
 
@@ -403,32 +403,32 @@ msgstr "<0>.m3u</0> files will also be imported as playlists."
 msgid "Automatically refresh library on startup"
 msgstr "Automatically refresh library on startup"
 
-#: src/routes/settings.library.tsx:127
+#: src/routes/settings.library.tsx:129
 msgid "Danger zone"
 msgstr "Danger zone"
 
-#: src/routes/settings.library.tsx:130
+#: src/routes/settings.library.tsx:132
 msgid "Delete all tracks and playlists from Museeks."
 msgstr "Delete all tracks and playlists from Museeks."
 
-#: src/routes/settings.library.tsx:135
+#: src/routes/settings.library.tsx:137
 msgid "Fully reset the library"
 msgstr "Fully reset the library"
 
-#: src/routes/settings.library.tsx:139
+#: src/routes/settings.library.tsx:141
 msgid "All your tracks and playlists will be deleted from Museeks."
 msgstr "All your tracks and playlists will be deleted from Museeks."
 
-#: src/routes/settings.library.tsx:141
+#: src/routes/settings.library.tsx:143
 msgid "Reset library?"
 msgstr "Reset library?"
 
-#: src/routes/settings.library.tsx:144
-#: src/routes/settings.ui.tsx:67
+#: src/routes/settings.library.tsx:146
+#: src/routes/settings.ui.tsx:66
 msgid "Reset"
 msgstr "Reset"
 
-#: src/routes/settings.library.tsx:153
+#: src/routes/settings.library.tsx:155
 msgid "Reset library"
 msgstr "Reset library"
 
@@ -444,83 +444,83 @@ msgstr "Interface"
 msgid "About"
 msgstr "About"
 
-#: src/routes/settings.ui.tsx:38
+#: src/routes/settings.ui.tsx:37
 msgid "Theme"
 msgstr "Theme"
 
-#: src/routes/settings.ui.tsx:39
+#: src/routes/settings.ui.tsx:38
 msgid "Change the appearance of the interface"
 msgstr "Change the appearance of the interface"
 
-#: src/routes/settings.ui.tsx:45
+#: src/routes/settings.ui.tsx:44
 msgid "System (default)"
 msgstr "System (default)"
 
-#: src/routes/settings.ui.tsx:57
+#: src/routes/settings.ui.tsx:56
 msgid "Accent color"
 msgstr "Accent color"
 
-#: src/routes/settings.ui.tsx:78
+#: src/routes/settings.ui.tsx:77
 msgid "Language"
 msgstr "Language"
 
-#: src/routes/settings.ui.tsx:97
+#: src/routes/settings.ui.tsx:96
 msgid "Tracks density"
 msgstr "Tracks density"
 
-#: src/routes/settings.ui.tsx:98
+#: src/routes/settings.ui.tsx:97
 msgid "Change the tracks spacing"
 msgstr "Change the tracks spacing"
 
-#: src/routes/settings.ui.tsx:107
+#: src/routes/settings.ui.tsx:106
 msgid "Normal (default)"
 msgstr "Normal (default)"
 
-#: src/routes/settings.ui.tsx:110
+#: src/routes/settings.ui.tsx:109
 msgid "Compact"
 msgstr "Compact"
 
-#: src/routes/settings.ui.tsx:116
+#: src/routes/settings.ui.tsx:115
 msgid "Default view"
 msgstr "Default view"
 
-#: src/routes/settings.ui.tsx:118
+#: src/routes/settings.ui.tsx:117
 msgid "Change the default view when starting the application"
 msgstr "Change the default view when starting the application"
 
-#: src/routes/settings.ui.tsx:126
+#: src/routes/settings.ui.tsx:125
 msgid "Library (default)"
 msgstr "Library (default)"
 
-#: src/routes/settings.ui.tsx:135
+#: src/routes/settings.ui.tsx:134
 msgid "Display Notifications"
 msgstr "Display Notifications"
 
-#: src/routes/settings.ui.tsx:136
+#: src/routes/settings.ui.tsx:135
 msgid "Send notifications when the playing track changes"
 msgstr "Send notifications when the playing track changes"
 
-#: src/routes/settings.ui.tsx:145
+#: src/routes/settings.ui.tsx:144
 msgid "Sleep mode blocker"
 msgstr "Sleep mode blocker"
 
-#: src/routes/settings.ui.tsx:146
+#: src/routes/settings.ui.tsx:145
 msgid "Prevent the computer from going into sleep mode when playing"
 msgstr "Prevent the computer from going into sleep mode when playing"
 
-#: src/routes/settings.ui.tsx:154
+#: src/routes/settings.ui.tsx:153
 msgid "[Beta] Wayland compatibility enhancements"
 msgstr "[Beta] Wayland compatibility enhancements"
 
-#: src/routes/settings.ui.tsx:155
+#: src/routes/settings.ui.tsx:154
 msgid "If you face issues using Wayland, try out this option"
 msgstr "If you face issues using Wayland, try out this option"
 
-#: src/routes/settings.ui.tsx:178
+#: src/routes/settings.ui.tsx:177
 msgid "Light"
 msgstr "Light"
 
-#: src/routes/settings.ui.tsx:180
+#: src/routes/settings.ui.tsx:179
 msgid "Dark"
 msgstr "Dark"
 
@@ -580,10 +580,12 @@ msgstr "The playlist \"{name}\" was created"
 
 #. placeholder {0}: newRelease.tag_name
 #: src/stores/SettingsAPI.ts:169
+#: src/stores/useSettingsStore.ts:225
 msgid "Museeks {0} is available, check https://museeks.io!"
 msgstr "Museeks {0} is available, check https://museeks.io!"
 
 #: src/stores/SettingsAPI.ts:171
+#: src/stores/useSettingsStore.ts:227
 msgid "Museeks {currentVersion} is the latest version available."
 msgstr "Museeks {currentVersion} is the latest version available."
 
