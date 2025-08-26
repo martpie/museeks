@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import Keybinding from 'react-keybinding-component';
 
-import settingsStore from '../stores/useSettingsStore';
+import settings from '../lib/settings';
 import player from '../lib/player';
 import { usePlayerAPI } from '../stores/usePlayerStore';
 
@@ -32,7 +32,7 @@ function GlobalKeyBindings() {
           playerAPI.jumpTo(player.getCurrentTime() + 10);
           break;
         case 'Alt':
-          await settingsStore.toggleMenu();
+          await settings.toggleMenu();
           break;
         default:
           break;

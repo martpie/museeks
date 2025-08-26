@@ -260,6 +260,15 @@ msgstr "您的搜索没有返回结果"
 msgid "Volume"
 msgstr "音量"
 
+#. placeholder {0}: newRelease.tag_name
+#: src/lib/settings.ts:279
+msgid "Museeks {0} is available, check https://museeks.io!"
+msgstr "Museeks {0} 可用，请查看 https://museeks.io！"
+
+#: src/lib/settings.ts:281
+msgid "Museeks {currentVersion} is the latest version available."
+msgstr "Museeks {currentVersion} 是可用的最新版本。"
+
 #: src/routes/playlists.$playlistID.tsx:76
 msgid "Remove from playlist"
 msgstr "从播放列表中移除"
@@ -577,17 +586,6 @@ msgstr "点击\"保存\"只会更新音乐库数据，但不会保存到原始�
 #: src/stores/PlaylistsAPI.ts:38
 msgid "The playlist \"{name}\" was created"
 msgstr "播放列表 \"{name}\" 已创建"
-
-#. placeholder {0}: newRelease.tag_name
-#: src/stores/SettingsAPI.ts:169
-#: src/stores/useSettingsStore.ts:225
-msgid "Museeks {0} is available, check https://museeks.io!"
-msgstr "Museeks {0} 可用，请查看 https://museeks.io！"
-
-#: src/stores/SettingsAPI.ts:171
-#: src/stores/useSettingsStore.ts:227
-msgid "Museeks {currentVersion} is the latest version available."
-msgstr "Museeks {currentVersion} 是可用的最新版本。"
 
 #. placeholder {0}: scanResult.track_count
 #: src/stores/useLibraryStore.ts:101

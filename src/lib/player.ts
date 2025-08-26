@@ -1,7 +1,7 @@
 import { convertFileSrc } from '@tauri-apps/api/core';
 
 import type { Track } from '../generated/typings';
-import ConfigBridge from './bridge-config';
+import settings from './settings';
 
 interface PlayerOptions {
   playbackRate?: number;
@@ -121,7 +121,7 @@ class Player {
  */
 
 export default new Player({
-  volume: ConfigBridge.getInitial('audio_volume'),
-  playbackRate: ConfigBridge.getInitial('audio_playback_rate') ?? 1,
-  muted: ConfigBridge.getInitial('audio_muted'),
+  volume: settings.getInitial('audio_volume'),
+  playbackRate: settings.getInitial('audio_playback_rate') ?? 1,
+  muted: settings.getInitial('audio_muted'),
 });

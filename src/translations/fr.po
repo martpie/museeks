@@ -260,6 +260,15 @@ msgstr "Votre recherche n'a retourné aucun résultat"
 msgid "Volume"
 msgstr "Volume"
 
+#. placeholder {0}: newRelease.tag_name
+#: src/lib/settings.ts:279
+msgid "Museeks {0} is available, check https://museeks.io!"
+msgstr "Museeks {0} est disponible, consultez https://museeks.io !"
+
+#: src/lib/settings.ts:281
+msgid "Museeks {currentVersion} is the latest version available."
+msgstr "Museeks {currentVersion} est la dernière version disponible."
+
 #: src/routes/playlists.$playlistID.tsx:76
 msgid "Remove from playlist"
 msgstr "Retirer de la playlist"
@@ -577,17 +586,6 @@ msgstr "Cliquer sur \"enregistrer\" mettra uniquement à jour les données de la
 #: src/stores/PlaylistsAPI.ts:38
 msgid "The playlist \"{name}\" was created"
 msgstr "La playlist \"{name}\" a été créée"
-
-#. placeholder {0}: newRelease.tag_name
-#: src/stores/SettingsAPI.ts:169
-#: src/stores/useSettingsStore.ts:225
-msgid "Museeks {0} is available, check https://museeks.io!"
-msgstr "Museeks {0} est disponible, consultez https://museeks.io !"
-
-#: src/stores/SettingsAPI.ts:171
-#: src/stores/useSettingsStore.ts:227
-msgid "Museeks {currentVersion} is the latest version available."
-msgstr "Museeks {currentVersion} est la dernière version disponible."
 
 #. placeholder {0}: scanResult.track_count
 #: src/stores/useLibraryStore.ts:101

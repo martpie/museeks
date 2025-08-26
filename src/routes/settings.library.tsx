@@ -9,7 +9,7 @@ import Button from '../elements/Button';
 import Flexbox from '../elements/Flexbox';
 import useInvalidate, { useInvalidateCallback } from '../hooks/useInvalidate';
 import useLibraryStore, { useLibraryAPI } from '../stores/useLibraryStore';
-import settingsStore, { useSettings } from '../stores/useSettingsStore';
+import settings, { useSettings } from '../lib/settings';
 import styles from './settings-library.module.css';
 
 export const Route = createFileRoute('/settings/library')({
@@ -120,7 +120,7 @@ function ViewSettingsLibrary() {
           title={t`Automatically refresh library on startup`}
           value={config.library_autorefresh}
           onChange={useInvalidateCallback(
-            settingsStore.toggleLibraryAutorefresh.bind(settingsStore),
+            settings.toggleLibraryAutorefresh.bind(settings),
           )}
         />
       </Setting.Section>

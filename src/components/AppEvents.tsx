@@ -2,10 +2,10 @@ import { getCurrentWindow } from '@tauri-apps/api/window';
 import { useEffect } from 'react';
 
 import { isDev, preventNativeDefault } from '../lib/utils-events';
-import settingsStore from '../stores/useSettingsStore';
+import settings from '../lib/settings';
 
 function onSystemThemeChange({ payload }: { payload: string }) {
-  settingsStore.applyThemeToUI(payload);
+  settings.applyThemeToUI(payload);
 }
 
 /**

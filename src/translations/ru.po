@@ -260,6 +260,15 @@ msgstr "Ваш поиск не принёс результатов"
 msgid "Volume"
 msgstr "Громкость"
 
+#. placeholder {0}: newRelease.tag_name
+#: src/lib/settings.ts:279
+msgid "Museeks {0} is available, check https://museeks.io!"
+msgstr "Доступна версия Museeks {0}, проверьте https://museeks.io!"
+
+#: src/lib/settings.ts:281
+msgid "Museeks {currentVersion} is the latest version available."
+msgstr "Museeks {currentVersion} является самой последней доступной версией."
+
 #: src/routes/playlists.$playlistID.tsx:76
 msgid "Remove from playlist"
 msgstr "Удалить из плейлиста"
@@ -577,17 +586,6 @@ msgstr "После нажатия \"Сохранить\" обновятся ли
 #: src/stores/PlaylistsAPI.ts:38
 msgid "The playlist \"{name}\" was created"
 msgstr "Создан плейлист \"{name}\""
-
-#. placeholder {0}: newRelease.tag_name
-#: src/stores/SettingsAPI.ts:169
-#: src/stores/useSettingsStore.ts:225
-msgid "Museeks {0} is available, check https://museeks.io!"
-msgstr "Доступна версия Museeks {0}, проверьте https://museeks.io!"
-
-#: src/stores/SettingsAPI.ts:171
-#: src/stores/useSettingsStore.ts:227
-msgid "Museeks {currentVersion} is the latest version available."
-msgstr "Museeks {currentVersion} является самой последней доступной версией."
 
 #. placeholder {0}: scanResult.track_count
 #: src/stores/useLibraryStore.ts:101

@@ -10,7 +10,7 @@ import Flexbox from '../elements/Flexbox';
 import Heart from '../elements/Heart';
 import List from '../elements/List';
 import useInvalidate, { useInvalidateCallback } from '../hooks/useInvalidate';
-import settingsStore, { useSettings } from '../stores/useSettingsStore';
+import settings, { useSettings } from '../lib/settings';
 import { NON_DEFAULT_LANGUAGE } from '../translations/languages';
 
 export const Route = createFileRoute('/settings/about')({
@@ -47,12 +47,12 @@ function ViewSettingsAbout() {
         <CheckboxSetting
           title={t`Automatically check for updates`}
           value={config.auto_update_checker}
-          onChange={useInvalidateCallback(settingsStore.toggleAutoUpdateChecker.bind(settingsStore))}
+          onChange={useInvalidateCallback(settings.toggleAutoUpdateChecker.bind(settings))}
         />
         <div>
           <Button
             onClick={() => {
-              settingsStore.checkForUpdate().then(invalidate);
+              settings.checkForUpdate().then(invalidate);
             }}
           >
             <Trans>Check for update</Trans>

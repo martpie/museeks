@@ -4,7 +4,7 @@ import { createFileRoute } from '@tanstack/react-router';
 import * as Setting from '../components/Setting';
 import CheckboxSetting from '../components/SettingCheckbox';
 import useInvalidate, { useInvalidateCallback } from '../hooks/useInvalidate';
-import settingsStore, { useSettings } from '../stores/useSettingsStore';
+import settings, { useSettings } from '../lib/settings';
 import { usePlayerAPI } from '../stores/usePlayerStore';
 
 export const Route = createFileRoute('/settings/audio')({
@@ -41,7 +41,7 @@ function ViewSettingsAudio() {
           title={t`Follow playing track`}
           description={t`Automatically follow the currently playing track (only when the app is not focused)`}
           value={config.audio_follow_playing_track}
-          onChange={useInvalidateCallback(settingsStore.toggleFollowPlayingTrack.bind(settingsStore))}
+          onChange={useInvalidateCallback(settings.toggleFollowPlayingTrack.bind(settings))}
         />
       </Setting.Section>
     </>

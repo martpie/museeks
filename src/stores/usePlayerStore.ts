@@ -3,7 +3,7 @@ import type { StateCreator } from 'zustand';
 import { persist } from 'zustand/middleware';
 
 import type { Repeat, Track } from '../generated/typings';
-import ConfigBridge from '../lib/bridge-config';
+import settings from '../lib/settings';
 import DatabaseBridge from '../lib/bridge-database';
 import player from '../lib/player';
 import { logAndNotifyError } from '../lib/utils';
@@ -51,8 +51,8 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
   oldQueue: [], // Queue backup (in case of shuffle)
   queueCursor: null, // The cursor of the queue
   queueOrigin: null, // URL of the queue when it was started
-  repeat: ConfigBridge.getInitial('audio_repeat'), // the current repeat state (one, all, none)
-  shuffle: ConfigBridge.getInitial('audio_shuffle'), // If shuffle mode is enabled
+  repeat: settings.getInitial('audio_repeat'), // the current repeat state (one, all, none)
+  shuffle: settings.getInitial('audio_shuffle'), // If shuffle mode is enabled
   playerStatus: PlayerStatus.STOP, // Player status
 
   api: {
@@ -232,7 +232,7 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
      */
     toggleShuffle: async (shuffle) => {
       const nextShuffleState: boolean = shuffle ?? !get().shuffle;
-      await ConfigBridge.set('audio_shuffle', nextShuffleState);
+      await settings.set('audio_shuffle', nextShuffleState);
 
       const { queue, queueCursor, oldQueue } = get();
 
@@ -287,7 +287,7 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
         }
       }
 
-      await ConfigBridge.set('audio_repeat', nextRepeatState);
+      await settings.set('audio_repeat', nextRepeatState);
       set({ repeat: nextRepeatState });
     },
 
@@ -306,7 +306,7 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
       if (muted) player.mute();
       else player.unmute();
 
-      await ConfigBridge.set('audio_muted', muted);
+      await settings.set('audio_muted', muted);
     },
 
     /**
@@ -315,10 +315,10 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
     setPlaybackRate: async (value) => {
       // if in allowed range
       if (!Number.isNaN(value) && value >= 0.5 && value <= 5) {
-        await ConfigBridge.set('audio_playback_rate', value);
+        await settings.set('audio_playback_rate', value);
         player.setPlaybackRate(value);
       } else {
-        await ConfigBridge.set('audio_playback_rate', null);
+        await settings.set('audio_playback_rate', null);
         player.setPlaybackRate(1.0);
       }
     },
@@ -531,5 +531,5 @@ function createPlayerStore<T extends PlayerState>(store: StateCreator<T>) {
  * Make sure we don't save audio volume to the file system too often
  */
 const saveVolume = debounce(async (volume: number) => {
-  await ConfigBridge.set('audio_volume', volume);
+  await settings.set('audio_volume', volume);
 }, 500);

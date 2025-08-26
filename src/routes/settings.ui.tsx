@@ -11,7 +11,7 @@ import Button from '../elements/Button';
 import type { Config, DefaultView } from '../generated/typings';
 import useInvalidate, { useInvalidateCallback } from '../hooks/useInvalidate';
 import { themes } from '../lib/themes';
-import settingsStore, { useSettings, DEFAULT_MAIN_COLOR } from '../stores/useSettingsStore';
+import settings, { useSettings, DEFAULT_MAIN_COLOR } from '../lib/settings';
 import { ALL_LANGUAGES } from '../translations/languages';
 
 export const Route = createFileRoute('/settings/ui')({
@@ -26,7 +26,7 @@ function ViewSettingsUI() {
 
   const setUIMainColorThrottled = useMemo(() => {
     return debounce((value: string) => {
-      settingsStore.setUIMainColor(value).then(invalidate);
+      settings.setUIMainColor(value).then(invalidate);
     }, 250);
   }, [invalidate]);
 
@@ -38,7 +38,7 @@ function ViewSettingsUI() {
           description={t`Change the appearance of the interface`}
           value={config.theme}
           onChange={(e) =>
-            settingsStore.setTheme(e.currentTarget.value).then(invalidate)
+            settings.setTheme(e.currentTarget.value).then(invalidate)
           }
         >
           <option value="__system">{t`System (default)`}</option>
@@ -60,14 +60,14 @@ function ViewSettingsUI() {
               type="button"
               bSize="small"
               onClick={() => {
-                settingsStore.setUIMainColor(DEFAULT_MAIN_COLOR).then(invalidate);
-                settingsStore.applyUIMainColorToUI(DEFAULT_MAIN_COLOR);
+                settings.setUIMainColor(DEFAULT_MAIN_COLOR).then(invalidate);
+                settings.applyUIMainColorToUI(DEFAULT_MAIN_COLOR);
               }}
             >{t`Reset`}</Button>
           }
           onChange={(e) => {
             const value = e.currentTarget.value;
-            settingsStore.applyUIMainColorToUI(value);
+            settings.applyUIMainColorToUI(value);
             setUIMainColorThrottled(value);
           }}
         />
@@ -77,7 +77,7 @@ function ViewSettingsUI() {
           label={t`Language`}
           value={config.language}
           onChange={(e) => {
-            settingsStore.setLanguage(e.target.value).then(invalidate);
+            settings.setLanguage(e.target.value).then(invalidate);
           }}
           data-testid="language-selector"
         >
@@ -97,7 +97,7 @@ function ViewSettingsUI() {
           description={t`Change the tracks spacing`}
           value={config.track_view_density}
           onChange={(e) =>
-            settingsStore.setTracksDensity(
+            settings.setTracksDensity(
               e.currentTarget.value as Config['track_view_density'],
             ).then(invalidate)
           }
@@ -116,7 +116,7 @@ function ViewSettingsUI() {
           value={config.default_view}
           description={t`Change the default view when starting the application`}
           onChange={(e) =>
-            settingsStore.setDefaultView(
+            settings.setDefaultView(
               e.currentTarget.value as DefaultView,
             ).then(invalidate)
           }
@@ -135,7 +135,7 @@ function ViewSettingsUI() {
           description={t`Send notifications when the playing track changes`}
           value={config.notifications}
           onChange={useInvalidateCallback(
-            settingsStore.toggleDisplayNotifications.bind(settingsStore),
+            settings.toggleDisplayNotifications.bind(settings),
           )}
         />
       </Setting.Section>
@@ -144,7 +144,7 @@ function ViewSettingsUI() {
           title={t`Sleep mode blocker`}
           description={t`Prevent the computer from going into sleep mode when playing`}
           value={config.sleepblocker}
-          onChange={useInvalidateCallback(settingsStore.toggleSleepBlocker.bind(settingsStore))}
+          onChange={useInvalidateCallback(settings.toggleSleepBlocker.bind(settings))}
         />
       </Setting.Section>
       {window.__MUSEEKS_PLATFORM === 'linux' && (
@@ -154,7 +154,7 @@ function ViewSettingsUI() {
             description={t`If you face issues using Wayland, try out this option`}
             value={config.wayland_compat}
             onChange={() =>
-              settingsStore.toggleWaylandCompat(!config.wayland_compat).then(
+              settings.toggleWaylandCompat(!config.wayland_compat).then(
                 async () => {
                   await invalidate();
                   await relaunch();

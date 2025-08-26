@@ -8,23 +8,81 @@ import { useSyncExternalStore } from 'react';
 import * as semver from 'semver';
 
 import type { Config } from '../generated/typings';
-import ConfigBridge from '../lib/bridge-config';
-import { loadTranslation } from '../lib/i18n';
-import { getTheme } from '../lib/themes';
-import { logAndNotifyError } from '../lib/utils';
-import useLibraryStore from './useLibraryStore';
-import usePlayerStore from './usePlayerStore';
-import useToastsStore from './useToastsStore';
+import { loadTranslation } from './i18n';
+import { getTheme } from './themes';
+import { logAndNotifyError } from './utils';
+import useLibraryStore from '../stores/useLibraryStore';
+import usePlayerStore from '../stores/usePlayerStore';
+import useToastsStore from '../stores/useToastsStore';
 
 export const DEFAULT_MAIN_COLOR = '#459ce7';
 
 /**
- * Unified Settings Store using EventEmitter for React's useSyncExternalStore
- * Combines functionality from SettingsAPI, SettingsBridge, and ConfigBridge
+ * Unified Settings module that handles:
+ * - Tauri backend communication (config read/write)
+ * - System-level operations (menu, sleep blocker, etc.)
+ * - UI operations (theme, language, colors)
+ * - React integration via useSyncExternalStore
  */
-class SettingsStore extends EventEmitter {
+class SettingsManager extends EventEmitter {
   private config: Config | null = null;
   private initialized = false;
+
+  // ======================
+  // Core Config Operations
+  // ======================
+
+  /**
+   * Get the initial value of the config at the time of instantiation.
+   * Should only be used when starting the app.
+   */
+  getInitial<T extends keyof Config>(key: T): Config[T] {
+    if (window.__MUSEEKS_INITIAL_CONFIG === undefined) {
+      throw new Error('Config has not been injected from the back-end');
+    }
+
+    return window.__MUSEEKS_INITIAL_CONFIG[key];
+  }
+
+  async getAll(): Promise<Config> {
+    const config: Config = await invoke('plugin:config|get_config');
+    this.config = config;
+    this.emit('change');
+    return config;
+  }
+
+  async get<T extends keyof Config>(key: T): Promise<Config[T]> {
+    const config = await this.getAll();
+    return config[key];
+  }
+
+  async set<T extends keyof Config>(key: T, value: Config[T]): Promise<void> {
+    const config = await this.getAll();
+    config[key] = value;
+
+    try {
+      await invoke<void>('plugin:config|set_config', { config });
+      this.config = config;
+      this.emit('change');
+    } catch (err) {
+      logAndNotifyError(err);
+    }
+  }
+
+  // ======================
+  // React Integration
+  // ======================
+
+  getSnapshot = (): Config | null => this.config;
+
+  subscribe = (callback: () => void) => {
+    this.on('change', callback);
+    return () => this.off('change', callback);
+  };
+
+  // ======================
+  // App Initialization
+  // ======================
 
   async init(then: () => void): Promise<void> {
     if (this.initialized) {
@@ -35,7 +93,7 @@ class SettingsStore extends EventEmitter {
     this.initialized = true;
 
     // Load initial config
-    this.config = await ConfigBridge.getAll();
+    this.config = await this.getAll();
 
     // Blocking (the window should not be shown until it's done)
     const [theme, color] = await Promise.all([
@@ -71,37 +129,19 @@ class SettingsStore extends EventEmitter {
     then();
   }
 
-  getSnapshot = (): Config | null => this.config;
+  // ======================
+  // Language Settings
+  // ======================
 
-  subscribe = (callback: () => void) => {
-    this.on('change', callback);
-    return () => this.off('change', callback);
-  };
-
-  // Config operations
-  get<T extends keyof Config>(key: T): Config[T] | undefined {
-    return this.config?.[key];
-  }
-
-  async set<T extends keyof Config>(key: T, value: Config[T]): Promise<void> {
-    await ConfigBridge.set(key, value);
-    this.config = await ConfigBridge.getAll();
-    this.emit('change');
-  }
-
-  async getAll(): Promise<Config> {
-    this.config = await ConfigBridge.getAll();
-    this.emit('change');
-    return this.config;
-  }
-
-  // Language settings
   async setLanguage(language: Config['language']): Promise<void> {
     await loadTranslation(language);
     await this.set('language', language);
   }
 
-  // Theme settings
+  // ======================
+  // Theme Settings
+  // ======================
+
   async setTheme(themeID: string): Promise<void> {
     await this.set('theme', themeID);
 
@@ -133,7 +173,10 @@ class SettingsStore extends EventEmitter {
     });
   }
 
-  // UI settings
+  // ======================
+  // UI Settings
+  // ======================
+
   async setUIMainColor(mainColor: Config['ui_accent_color']): Promise<void> {
     await this.set('ui_accent_color', mainColor);
     this.applyUIMainColorToUI(mainColor);
@@ -147,7 +190,10 @@ class SettingsStore extends EventEmitter {
     await this.set('track_view_density', density);
   }
 
-  // System settings (from SettingsBridge)
+  // ======================
+  // System Settings
+  // ======================
+
   async toggleMenu(): Promise<void> {
     return invoke('plugin:app-menu|toggle');
   }
@@ -170,26 +216,34 @@ class SettingsStore extends EventEmitter {
     await this.set('wayland_compat', value);
   }
 
-  // Library settings
+  // ======================
+  // Library Settings
+  // ======================
+
   async toggleLibraryAutorefresh(value: boolean): Promise<void> {
     await this.set('library_autorefresh', value);
   }
 
   async checkForLibraryRefresh(): Promise<void> {
-    const autorefreshEnabled = ConfigBridge.getInitial('library_autorefresh');
+    const autorefreshEnabled = this.getInitial('library_autorefresh');
 
     if (autorefreshEnabled) {
       useLibraryStore.getState().api.scan();
     }
   }
 
-  // Update settings
+  // ======================
+  // Update Settings
+  // ======================
+
   async toggleAutoUpdateChecker(value: boolean): Promise<void> {
     await this.set('auto_update_checker', value);
   }
 
-  async checkForUpdate(options: { silentFail?: boolean } = {}): Promise<void> {
-    const shouldCheck = await this.get('auto_update_checker');
+  async checkForUpdate(
+    options: { silentFail?: boolean } = {},
+  ): Promise<void> {
+    const shouldCheck = this.config?.auto_update_checker;
 
     if (!shouldCheck) {
       return;
@@ -240,25 +294,31 @@ class SettingsStore extends EventEmitter {
     }
   }
 
-  // Notification settings
+  // ======================
+  // Notification Settings
+  // ======================
+
   async toggleDisplayNotifications(value: boolean): Promise<void> {
     await this.set('notifications', value);
   }
 
-  // Audio settings
+  // ======================
+  // Audio Settings
+  // ======================
+
   async toggleFollowPlayingTrack(value: boolean): Promise<void> {
     await this.set('audio_follow_playing_track', value);
   }
 }
 
 // Create singleton instance
-export const settingsStore = new SettingsStore();
+export const settings = new SettingsManager();
 
 // React hook for components
 export function useSettings(): Config {
   const config = useSyncExternalStore(
-    settingsStore.subscribe,
-    settingsStore.getSnapshot,
+    settings.subscribe,
+    settings.getSnapshot,
     () => null, // Server snapshot
   );
   
@@ -266,5 +326,5 @@ export function useSettings(): Config {
   return config ?? window.__MUSEEKS_INITIAL_CONFIG;
 }
 
-// Expose the store instance for direct access when needed
-export default settingsStore;
+// Export the singleton as default for backward compatibility
+export default settings;
