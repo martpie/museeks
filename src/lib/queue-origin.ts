@@ -39,6 +39,11 @@ export function goToPlayingTrack(
           jump_to_playing_track: true,
         },
       });
+      break;
+    }
+    case 'file_associations': {
+      // do-nothing, eventually, show items in finder?
+      break;
     }
   }
 }
