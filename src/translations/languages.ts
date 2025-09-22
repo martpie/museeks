@@ -10,12 +10,18 @@ export const DEFAULT_LANGUAGE = {
 // 2. Run npm run gen:translations
 // 3. Edit the generated file in src/translations/<language>.po
 // 4. Profit
-export const NON_DEFAULT_LANGUAGE = [
+export const NON_DEFAULT_LANGUAGES = [
   {
     label: 'Français',
     englishLabel: 'French',
     code: 'fr',
     contributors: ['Pierre de la Martinière'],
+  },
+  {
+    label: '日本語',
+    englishLabel: 'Japanese',
+    code: 'ja',
+    contributors: ['Solvig Xu'],
   },
   {
     label: 'Русский',
@@ -35,12 +41,6 @@ export const NON_DEFAULT_LANGUAGE = [
     code: 'zh-TW',
     contributors: ['Solvig Xu'],
   },
-  {
-    label: '日本語',
-    englishLabel: 'Japanese',
-    code: 'ja',
-    contributors: ['Solvig Xu'],
-  },
 ];
 
-export const ALL_LANGUAGES = [DEFAULT_LANGUAGE, ...NON_DEFAULT_LANGUAGE];
+export const ALL_LANGUAGES = [DEFAULT_LANGUAGE, ...NON_DEFAULT_LANGUAGES];

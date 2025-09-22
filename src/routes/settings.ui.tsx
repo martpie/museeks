@@ -13,7 +13,10 @@ import useInvalidate, { useInvalidateCallback } from '../hooks/useInvalidate';
 import SettingsBridge from '../lib/bridge-settings';
 import { themes } from '../lib/themes';
 import SettingsAPI, { DEFAULT_MAIN_COLOR } from '../stores/SettingsAPI';
-import { ALL_LANGUAGES } from '../translations/languages';
+import {
+  DEFAULT_LANGUAGE,
+  NON_DEFAULT_LANGUAGES,
+} from '../translations/languages';
 
 export const Route = createFileRoute('/settings/ui')({
   component: ViewSettingsUI,
@@ -82,7 +85,11 @@ function ViewSettingsUI() {
           }}
           data-testid="language-selector"
         >
-          {ALL_LANGUAGES.map((language) => {
+          <option value={DEFAULT_LANGUAGE.code}>
+            {DEFAULT_LANGUAGE.label}
+          </option>
+          <option disabled>──────────</option>
+          {NON_DEFAULT_LANGUAGES.map((language) => {
             return (
               <option key={language.code} value={language.code}>
                 {language.label}

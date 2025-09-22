@@ -11,7 +11,7 @@ import Heart from '../elements/Heart';
 import List from '../elements/List';
 import useInvalidate, { useInvalidateCallback } from '../hooks/useInvalidate';
 import SettingsAPI from '../stores/SettingsAPI';
-import { NON_DEFAULT_LANGUAGE } from '../translations/languages';
+import { NON_DEFAULT_LANGUAGES } from '../translations/languages';
 
 export const Route = createFileRoute('/settings/about')({
   component: ViewSettingsAbout,
@@ -82,7 +82,7 @@ function ViewSettingsAbout() {
           <Trans>Translations:</Trans>
         </Setting.Description>
         <List>
-          {NON_DEFAULT_LANGUAGE.map((language) => (
+          {NON_DEFAULT_LANGUAGES.map((language) => (
             <List.Item
               key={language.code}
               label={`${language.label}:`}
