@@ -25,19 +25,19 @@ tauri-plugin-log = { version = "2.7.0", features = ["colored"] }
 tauri-plugin-notification = "2.3.1"
 tauri-plugin-opener = "2.5.0"
 tauri-plugin-os = "2.3.1"
-tauri-plugin-prevent-default = "3.0.1"
+tauri-plugin-prevent-default = "3.0.3"
 tauri-plugin-process = "2.3.0"
 tauri-plugin-shell = "2.3.1"
 tauri-plugin-single-instance = "2.3.4"
 tauri-plugin-window-state = "2.4.0"
 
 # non-Tauri dependencies
-anyhow = "1.0.99"
+anyhow = "1.0.100"
 base64 = "0.22.1"
 dirs = "6.0.0"
 futures = "0.3.31"
 home-config = { version = "0.6.0", features = ["toml"] }
-indexmap = "2.11.1"
+indexmap = "2.11.4"
 itertools = "0.14.0"
 log = "0.4.28"
 lofty = "0.22.4"
@@ -46,8 +46,8 @@ memoize = "0.5.1"
 nosleep = "0.2.1"
 pathdiff = "0.2.3"
 rayon = "1.11.0"
-serde = { version = "1.0.219", features = ["derive"] }
-serde_json = "1.0.143"
+serde = { version = "1.0.226", features = ["derive"] }
+serde_json = "1.0.145"
 sqlx = { version = "0.8.6", features = ["sqlite", "runtime-tokio", "macros"] }
 strum = { version = "0.27.2", features = ["derive"] }
 tokio = { version = "1.47.1", features = ["full"] }
