@@ -3,6 +3,7 @@ import cx from 'classnames';
 
 import chevronDown from '../assets/icons/chevron-down.svg?react';
 import chevronUp from '../assets/icons/chevron-up.svg?react';
+import globe from '../assets/icons/globe.svg?react';
 import list from '../assets/icons/list.svg?react';
 import microphone from '../assets/icons/microphone.svg?react';
 import musicalNotes from '../assets/icons/musical-notes.svg?react';
@@ -29,6 +30,7 @@ const icons: Record<
 > = {
   chevronDown,
   chevronUp,
+  globe,
   list,
   microphone,
   musicalNotes,
