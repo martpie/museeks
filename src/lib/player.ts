@@ -21,6 +21,7 @@ interface PlayerOptions {
 class Player {
   private readonly audio: HTMLAudioElement;
   private track: Track | null;
+  private blobUrl: string | null;
 
   constructor(options?: PlayerOptions) {
     const mergedOptions = {
@@ -32,6 +33,7 @@ class Player {
 
     this.audio = new Audio();
     this.track = null;
+    this.blobUrl = null;
 
     this.audio.defaultPlaybackRate = mergedOptions.playbackRate;
     this.audio.playbackRate = mergedOptions.playbackRate;
@@ -90,12 +92,18 @@ class Player {
   async setTrack(track: Track) {
     this.track = track;
 
+    // Revoke previous blob URL if it exists to prevent memory leaks
+    if (this.blobUrl !== null) {
+      URL.revokeObjectURL(this.blobUrl);
+      this.blobUrl = null;
+    }
+
     // Cursed Linux: https://github.com/tauri-apps/tauri/issues/3725#issuecomment-2325248116
     if (window.__MUSEEKS_PLATFORM === 'linux') {
-      const blobUrl = URL.createObjectURL(
+      this.blobUrl = URL.createObjectURL(
         await fetch(convertFileSrc(track.path)).then((res) => res.blob()),
       );
-      this.audio.src = blobUrl;
+      this.audio.src = this.blobUrl;
       return;
     }
 
