@@ -120,8 +120,13 @@ class Player {
  * one anyway)
  */
 
-export default new Player({
+const playerInstance = new Player({
   volume: ConfigBridge.getInitial('audio_volume'),
   playbackRate: ConfigBridge.getInitial('audio_playback_rate') ?? 1,
   muted: ConfigBridge.getInitial('audio_muted'),
 });
+
+export default playerInstance;
+
+// Expose for debugging
+window.__MUSEEKS_PLAYER = playerInstance;
