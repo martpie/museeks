@@ -1,7 +1,9 @@
 import { convertFileSrc } from '@tauri-apps/api/core';
+import EventEmitter from 'eventemitter3';
 
 import type { Track } from '../generated/typings';
 import ConfigBridge from './bridge-config';
+import { getCover } from './cover';
 
 interface PlayerOptions {
   playbackRate?: number;
@@ -11,19 +13,29 @@ interface PlayerOptions {
 }
 
 /**
- * Library in charge of playing audio. Currently uses HTMLAudioElement.
- *
- * Open questions:
- *   - Should it emit IPC events itself? Or expose events?
- *   - Should it hold the concepts of queue/random/etc? (in other words, should
- *     we merge player actions here?)
+ * Events emitted by the Player
  */
-class Player {
+export interface PlayerEvents {
+  play: () => void;
+  pause: () => void;
+  ended: () => void;
+  error: (error: MediaError) => void;
+  timeupdate: (currentTime: number) => void;
+  loadstart: () => void;
+}
+
+/**
+ * Library in charge of playing audio. Currently uses HTMLAudioElement.
+ * Emits events for playback state changes.
+ */
+class Player extends EventEmitter<PlayerEvents> {
   private readonly audio: HTMLAudioElement;
   private track: Track | null;
   private blobUrl: string | null;
 
   constructor(options?: PlayerOptions) {
+    super();
+
     const mergedOptions = {
       playbackRate: 1,
       volume: 1,
@@ -39,6 +51,55 @@ class Player {
     this.audio.playbackRate = mergedOptions.playbackRate;
     this.audio.volume = mergedOptions.volume;
     this.audio.muted = mergedOptions.muted;
+
+    this.setupMediaSession();
+  }
+
+  /**
+   * Setup MediaSession integration (for OS media controls, MPRIS, etc.)
+   */
+  private setupMediaSession() {
+    if (!('mediaSession' in navigator)) {
+      return;
+    }
+
+    // Update playback state when audio plays
+    this.audio.addEventListener('play', () => {
+      navigator.mediaSession.playbackState = 'playing';
+    });
+
+    // Update playback state when audio pauses
+    this.audio.addEventListener('pause', () => {
+      navigator.mediaSession.playbackState = 'paused';
+    });
+
+    // Sync metadata when track loads
+    this.audio.addEventListener('loadstart', async () => {
+      await this.syncMediaSession();
+    });
+  }
+
+  /**
+   * Sync current track metadata with MediaSession API
+   */
+  private async syncMediaSession() {
+    if (!('mediaSession' in navigator) || !('MediaMetadata' in globalThis)) {
+      return;
+    }
+
+    const track = this.track;
+    if (!track) {
+      return;
+    }
+
+    const cover = await getCover(track.path);
+
+    navigator.mediaSession.metadata = new MediaMetadata({
+      title: track.title,
+      artist: track.artists.join(', '),
+      album: track.album,
+      artwork: cover ? [{ src: cover }] : undefined,
+    });
   }
 
   async play() {
