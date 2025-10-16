@@ -87,19 +87,19 @@ msgstr "再度発生した場合は、<0>問題を報告</0>してください"
 msgid "Queue"
 msgstr "キュー"
 
-#: src/components/PlayerControls.tsx:19
+#: src/components/PlayerControls.tsx:18
 msgid "Previous"
 msgstr "前へ"
 
-#: src/components/PlayerControls.tsx:26
-msgid "Pause"
-msgstr "一時停止"
-
-#: src/components/PlayerControls.tsx:26
+#: src/components/PlayerControls.tsx:25
 msgid "Play"
 msgstr "再生"
 
-#: src/components/PlayerControls.tsx:37
+#: src/components/PlayerControls.tsx:25
+msgid "Pause"
+msgstr "一時停止"
+
+#: src/components/PlayerControls.tsx:32
 msgid "Next"
 msgstr "次へ"
 
@@ -107,11 +107,11 @@ msgstr "次へ"
 msgid "Queue is empty"
 msgstr "キューは空です"
 
-#: src/components/QueueList.tsx:81
+#: src/components/QueueList.tsx:79
 msgid "clear queue"
 msgstr "キューをクリア"
 
-#: src/components/QueueList.tsx:107
+#: src/components/QueueList.tsx:105
 msgid "see more"
 msgstr "もっと見る"
 
@@ -123,78 +123,78 @@ msgstr "検索..."
 msgid "Rename"
 msgstr "名前を変更"
 
-#: src/components/TrackList.tsx:242
+#: src/components/TrackList.tsx:241
 msgid "Create new playlist..."
 msgstr "新しいプレイリストを作成..."
 
-#: src/components/TrackList.tsx:245
+#: src/components/TrackList.tsx:244
 #: src/routes/playlists.tsx:63
 msgid "New playlist"
 msgstr "新しいプレイリスト"
 
-#: src/components/TrackList.tsx:258
+#: src/components/TrackList.tsx:257
 msgid "No playlists"
 msgstr "プレイリストがありません"
 
 #. placeholder {0}: selectedTracks.size
 #. placeholder {1}: playlist.name
-#: src/components/TrackList.tsx:273
+#: src/components/TrackList.tsx:272
 msgid "{0} track(s) were added to \"{1}\""
 msgstr "{0} 曲が「{1}」に追加されました"
 
-#: src/components/TrackList.tsx:290
+#: src/components/TrackList.tsx:289
 msgid "{selectedCount, plural, one {# track selected} other {# tracks selected}}"
 msgstr "{selectedCount, plural, one {# 曲が選択されています} other {# 曲が選択されています}}"
 
-#: src/components/TrackList.tsx:302
+#: src/components/TrackList.tsx:301
 msgid "Add to queue"
 msgstr "キューに追加"
 
-#: src/components/TrackList.tsx:308
+#: src/components/TrackList.tsx:311
 msgid "Play next"
 msgstr "次に再生"
 
-#: src/components/TrackList.tsx:318
+#: src/components/TrackList.tsx:325
 msgid "Add to playlist"
 msgstr "プレイリストに追加"
 
-#: src/components/TrackList.tsx:328
+#: src/components/TrackList.tsx:335
 msgid "Search for \"{item}\""
 msgstr "「{item}」を検索"
 
-#: src/components/TrackList.tsx:341
+#: src/components/TrackList.tsx:348
 msgid "Copy \"{item}\""
 msgstr "「{item}」をコピー"
 
-#: src/components/TrackList.tsx:365
+#: src/components/TrackList.tsx:372
 msgid "Edit track"
 msgstr "トラックを編集"
 
-#: src/components/TrackList.tsx:375
+#: src/components/TrackList.tsx:382
 msgid "Show in file manager"
 msgstr "ファイルマネージャーで表示"
 
-#: src/components/TrackList.tsx:381
+#: src/components/TrackList.tsx:388
 msgid "Remove from library"
 msgstr "ライブラリから削除"
 
 #. placeholder {0}: selectedTracks.size
-#: src/components/TrackList.tsx:384
+#: src/components/TrackList.tsx:391
 msgid "Are you sure you want to remove {0} track(s) from your library?"
 msgstr "ライブラリから {0} 曲を削除してもよろしいですか？"
 
-#: src/components/TrackList.tsx:386
+#: src/components/TrackList.tsx:393
 msgid "Remove tracks"
 msgstr "トラックを削除"
 
-#: src/components/TrackList.tsx:388
+#: src/components/TrackList.tsx:395
 #: src/routes/settings.library.tsx:98
 #: src/routes/settings.library.tsx:143
 #: src/routes/tracks.$trackID.tsx:246
 msgid "Cancel"
 msgstr "キャンセル"
 
-#: src/components/TrackList.tsx:389
+#: src/components/TrackList.tsx:396
 #: src/routes/settings.library.tsx:61
 msgid "Remove"
 msgstr "削除"
@@ -255,8 +255,8 @@ msgstr "<0>ここから音楽を追加</0>できます"
 msgid "Your search returned no results"
 msgstr "検索結果が見つかりませんでした"
 
-#: src/components/VolumeControl.tsx:73
-#: src/components/VolumeControl.tsx:93
+#: src/components/VolumeControl.tsx:60
+#: src/components/VolumeControl.tsx:80
 msgid "Volume"
 msgstr "音量"
 
@@ -346,19 +346,19 @@ msgstr "内部情報"
 msgid "Open storage directory"
 msgstr "ストレージディレクトリを開く"
 
-#: src/routes/settings.audio.tsx:25
+#: src/routes/settings.audio.tsx:24
 msgid "Playback rate"
 msgstr "再生速度"
 
-#: src/routes/settings.audio.tsx:26
+#: src/routes/settings.audio.tsx:25
 msgid "Increase the playback rate: a value of 2 will play your music at a 2x speed"
 msgstr "再生速度を上げる：値が2の場合、音楽が2倍速で再生されます"
 
-#: src/routes/settings.audio.tsx:41
+#: src/routes/settings.audio.tsx:40
 msgid "Follow playing track"
 msgstr "再生中のトラックを追従"
 
-#: src/routes/settings.audio.tsx:42
+#: src/routes/settings.audio.tsx:41
 msgid "Automatically follow the currently playing track (only when the app is not focused)"
 msgstr "現在再生中のトラックを自動的に追従（アプリがフォーカスされていない時のみ）"
 
@@ -574,7 +574,7 @@ msgstr "保存"
 msgid "Clicking \"save\" will only update the library data, but will not save it to the original file."
 msgstr "「保存」をクリックするとライブラリデータのみが更新され、元のファイルには保存されません。"
 
-#: src/stores/PlaylistsAPI.ts:38
+#: src/stores/PlaylistsAPI.ts:36
 msgid "The playlist \"{name}\" was created"
 msgstr "プレイリスト「{name}」が作成されました"
 

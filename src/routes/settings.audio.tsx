@@ -4,8 +4,8 @@ import { createFileRoute, useLoaderData } from '@tanstack/react-router';
 import * as Setting from '../components/Setting';
 import CheckboxSetting from '../components/SettingCheckbox';
 import useInvalidate, { useInvalidateCallback } from '../hooks/useInvalidate';
+import player from '../lib/player';
 import SettingsAPI from '../stores/SettingsAPI';
-import { usePlayerAPI } from '../stores/usePlayerStore';
 
 export const Route = createFileRoute('/settings/audio')({
   component: ViewSettingsAudio,
@@ -14,7 +14,6 @@ export const Route = createFileRoute('/settings/audio')({
 function ViewSettingsAudio() {
   const { config } = useLoaderData({ from: '/settings' });
 
-  const playerAPI = usePlayerAPI();
   const invalidate = useInvalidate();
   const { t } = useLingui();
 
@@ -26,7 +25,7 @@ function ViewSettingsAudio() {
           description={t`Increase the playback rate: a value of 2 will play your music at a 2x speed`}
           value={config.audio_playback_rate ?? ''}
           onChange={(e) =>
-            playerAPI
+            player
               .setPlaybackRate(Number.parseFloat(e.currentTarget.value))
               .then(invalidate)
           }

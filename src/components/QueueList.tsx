@@ -11,7 +11,7 @@ import Button from '../elements/Button';
 import type { Track } from '../generated/typings';
 import useDndSensors from '../hooks/useDnDSensors';
 import { useTrackListStatus } from '../hooks/useGlobalTrackListStatus';
-import { usePlayerAPI } from '../stores/usePlayerStore';
+import player from '../lib/player';
 import styles from './QueueList.module.css';
 import QueueListItem from './QueueListItem';
 import TrackListStatus from './TrackListStatus';
@@ -27,8 +27,6 @@ type Props = {
 export default function QueueList(props: Props) {
   const { queue, queueCursor } = props;
   const [queueSize, setQueueSize] = useState(INITIAL_QUEUE_SIZE);
-
-  const playerAPI = usePlayerAPI();
 
   // Get the 20 next tracks displayed
   const shownQueue = queue.slice(queueCursor + 1, queueCursor + 1 + queueSize);
@@ -61,9 +59,9 @@ export default function QueueList(props: Props) {
       const movedTrack = newQueue.splice(activeIndex, 1)[0]; // Remove active track
       newQueue.splice(overIndex, 0, movedTrack); // Move it to where the user dropped it
 
-      playerAPI.setQueue(newQueue);
+      player.setQueue(newQueue);
     },
-    [queue, playerAPI],
+    [queue],
   );
 
   return (
@@ -77,7 +75,7 @@ export default function QueueList(props: Props) {
         <div className={styles.queueHeaderInfos}>
           <TrackListStatus {...status} />
         </div>
-        <Button bSize="small" onClick={playerAPI.clearQueue}>
+        <Button bSize="small" onClick={player.clearQueue}>
           <Trans>clear queue</Trans>
         </Button>
       </div>

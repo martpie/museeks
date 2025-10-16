@@ -4,7 +4,7 @@ import { useCallback, useState } from 'react';
 import type { Track } from '../generated/typings';
 import useFormattedDuration from '../hooks/useFormattedDuration';
 import usePlayingTrackCurrentTime from '../hooks/usePlayingTrackCurrentTime';
-import { usePlayerAPI } from '../stores/usePlayerStore';
+import player from '../lib/player';
 import styles from './TrackProgress.module.css';
 
 type Props = {
@@ -15,16 +15,11 @@ export default function TrackProgress(props: Props) {
   const { trackPlaying } = props;
 
   const elapsed = usePlayingTrackCurrentTime();
-  const playerAPI = usePlayerAPI();
 
-  const jumpAudioTo = useCallback(
-    (values: number[]) => {
-      const [to] = values;
-
-      playerAPI.jumpTo(to);
-    },
-    [playerAPI],
-  );
+  const jumpAudioTo = useCallback((values: number[]) => {
+    const [to] = values;
+    player.setCurrentTime(to);
+  }, []);
 
   const [tooltipTargetTime, setTooltipTargetTime] = useState<null | number>(
     null,

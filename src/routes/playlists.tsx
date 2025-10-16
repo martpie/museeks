@@ -20,14 +20,14 @@ import View from '../elements/View';
 import * as ViewMessage from '../elements/ViewMessage';
 import useInvalidate from '../hooks/useInvalidate';
 import DatabaseBridge from '../lib/bridge-database';
+import player from '../lib/player';
 import PlaylistsAPI from '../stores/PlaylistsAPI';
-import usePlayerStore from '../stores/usePlayerStore';
 
 export const Route = createFileRoute('/playlists')({
   component: ViewPlaylists,
   beforeLoad: async ({ params }) => {
     const playlists = await DatabaseBridge.getAllPlaylists();
-    const queueOrigin = usePlayerStore.getState().queueOrigin;
+    const queueOrigin = player.getQueueOrigin();
 
     if (!('playlistID' in params) && playlists.length > 0) {
       // If there is a playing Playlist, redirect to it

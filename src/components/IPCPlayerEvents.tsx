@@ -2,27 +2,25 @@ import { listen } from '@tauri-apps/api/event';
 import { useEffect } from 'react';
 
 import type { IPCEvent, Track } from '../generated/typings';
-import { usePlayerAPI } from '../stores/usePlayerStore';
+import player from '../lib/player';
 
 /**
  * Handle back-end events attempting to control the player
  */
 function IPCPlayerEvents() {
-  const playerAPI = usePlayerAPI();
-
   useEffect(() => {
     const unlistenerPromises = [
-      listen('PlaybackPlay' satisfies IPCEvent, playerAPI.play),
-      listen('PlaybackPause' satisfies IPCEvent, playerAPI.pause),
-      listen('PlaybackPlayPause' satisfies IPCEvent, playerAPI.playPause),
-      listen('PlaybackPrevious' satisfies IPCEvent, playerAPI.previous),
-      listen('PlaybackNext' satisfies IPCEvent, playerAPI.next),
-      listen('PlaybackStop' satisfies IPCEvent, playerAPI.stop),
+      listen('PlaybackPlay' satisfies IPCEvent, () => player.play()),
+      listen('PlaybackPause' satisfies IPCEvent, () => player.pause()),
+      listen('PlaybackPlayPause' satisfies IPCEvent, () => player.playPause()),
+      listen('PlaybackPrevious' satisfies IPCEvent, () => player.previous()),
+      listen('PlaybackNext' satisfies IPCEvent, () => player.next()),
+      listen('PlaybackStop' satisfies IPCEvent, () => player.stop()),
       listen(
         'PlaybackStart' satisfies IPCEvent,
         ({ payload }: { payload: Track[] }) => {
           if (payload.length > 0) {
-            playerAPI.start(payload, payload[0].id, { type: 'library' });
+            player.start(payload, payload[0].id, { type: 'library' });
           }
         },
       ),
@@ -35,7 +33,7 @@ function IPCPlayerEvents() {
         });
       });
     };
-  }, [playerAPI]);
+  }, []);
 
   return null;
 }
