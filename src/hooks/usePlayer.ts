@@ -1,4 +1,4 @@
-import { useEffect, useState, useSyncExternalStore } from 'react';
+import { useSyncExternalStore } from 'react';
 
 import type { Track } from '../generated/typings';
 import player, { type PlayerState as PlayerStateType } from '../lib/player';
@@ -33,22 +33,18 @@ export function usePlayingTrack(): Track | null {
 }
 
 /**
- * Hook to get current playback time that updates frequently
+ * Hook to get current playback time that updates frequently.
+ * Uses useSyncExternalStore for optimal performance.
  */
 export function usePlayingTrackCurrentTime(): number {
-  const [currentTime, setCurrentTime] = useState(player.getCurrentTime());
-
-  useEffect(() => {
-    function tick(time: number) {
-      setCurrentTime(time);
-    }
-
-    player.on('timeupdate', tick);
-
-    return () => {
-      player.off('timeupdate', tick);
-    };
-  }, []);
-
-  return currentTime;
+  return useSyncExternalStore(
+    (callback) => {
+      player.on('timeupdate', callback);
+      return () => {
+        player.off('timeupdate', callback);
+      };
+    },
+    () => player.getCurrentTime(),
+    () => player.getCurrentTime(),
+  );
 }

@@ -26,7 +26,6 @@ export interface PlayerState {
   queueOrigin: QueueOrigin | null;
   repeat: Repeat;
   shuffle: boolean;
-  currentTime: number;
   volume: number;
   muted: boolean;
   isPaused: boolean;
@@ -252,7 +251,6 @@ class Player extends EventEmitter<PlayerEvents> {
       queueOrigin: this.queueOrigin,
       repeat: this.repeat,
       shuffle: this.shuffle,
-      currentTime: this.audio.currentTime,
       volume: this.audio.volume,
       muted: this.audio.muted,
       isPaused: this.audio.paused,
