@@ -502,8 +502,8 @@ class Player extends EventEmitter<PlayerEvents> {
 
     if (this.queueCursor === null) {
       this.shuffle = nextShuffleState;
-      await ConfigBridge.set('audio_shuffle', nextShuffleState);
       this.emitStateChange();
+      await ConfigBridge.set('audio_shuffle', nextShuffleState);
       return;
     }
 
@@ -525,8 +525,8 @@ class Player extends EventEmitter<PlayerEvents> {
     }
 
     this.shuffle = nextShuffleState;
-    await ConfigBridge.set('audio_shuffle', nextShuffleState);
     this.emitStateChange();
+    await ConfigBridge.set('audio_shuffle', nextShuffleState);
   }
 
   /**
@@ -549,8 +549,8 @@ class Player extends EventEmitter<PlayerEvents> {
     }
 
     this.repeat = nextRepeatState;
-    await ConfigBridge.set('audio_repeat', nextRepeatState);
     this.emitStateChange();
+    await ConfigBridge.set('audio_repeat', nextRepeatState);
   }
 
   /**
@@ -650,13 +650,14 @@ class Player extends EventEmitter<PlayerEvents> {
     if (!Number.isNaN(rate) && rate >= 0.5 && rate <= 5) {
       this.audio.playbackRate = rate;
       this.audio.defaultPlaybackRate = rate;
+      this.emitStateChange();
       await ConfigBridge.set('audio_playback_rate', rate);
     } else {
       this.audio.playbackRate = 1.0;
       this.audio.defaultPlaybackRate = 1.0;
+      this.emitStateChange();
       await ConfigBridge.set('audio_playback_rate', null);
     }
-    this.emitStateChange();
   }
 
   getPlaybackRate(): number {
