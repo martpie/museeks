@@ -4,10 +4,10 @@ import type { Track } from '../generated/typings';
 import player, { type PlayerState as PlayerStateType } from '../lib/player';
 
 /**
- * Hook to get the full player state.
- * Uses React 18's useSyncExternalStore for optimal performance.
+ * Hook to get a specific slice of player state.
+ * Uses useSyncExternalStore for optimal performance and only re-renders when the selected value changes.
  */
-export function usePlayerFullState(): PlayerStateType {
+export function usePlayerState<T>(selector: (state: PlayerStateType) => T): T {
   return useSyncExternalStore(
     (callback) => {
       player.on('stateChange', callback);
@@ -15,37 +15,9 @@ export function usePlayerFullState(): PlayerStateType {
         player.off('stateChange', callback);
       };
     },
-    () => player.getState(),
-    () => player.getState(),
+    () => selector(player.getState()),
+    () => selector(player.getState()),
   );
-}
-
-/**
- * Hook to get a specific slice of player state.
- * Only re-renders when the selected value changes.
- */
-export function usePlayerState<T>(selector: (state: PlayerStateType) => T): T {
-  const [value, setValue] = useState(() => selector(player.getState()));
-
-  useEffect(() => {
-    const handleChange = (state: PlayerStateType) => {
-      const newValue = selector(state);
-      setValue((prev) => {
-        // Only update if value actually changed
-        if (prev !== newValue) {
-          return newValue;
-        }
-        return prev;
-      });
-    };
-
-    player.on('stateChange', handleChange);
-    return () => {
-      player.off('stateChange', handleChange);
-    };
-  }, [selector]);
-
-  return value;
 }
 
 /**
@@ -80,8 +52,3 @@ export function usePlayingTrackCurrentTime(): number {
 
   return currentTime;
 }
-
-/**
- * Legacy hook for backwards compatibility
- */
-export default usePlayerFullState;

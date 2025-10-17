@@ -70,6 +70,9 @@ class Player extends EventEmitter<PlayerEvents> {
   private repeat: Repeat;
   private shuffle: boolean;
 
+  // Cached state for useSyncExternalStore
+  private state: PlayerState | null = null;
+
   constructor(options?: PlayerOptions) {
     super();
 
@@ -227,14 +230,23 @@ class Player extends EventEmitter<PlayerEvents> {
    * Emit state change event for React hooks
    */
   private emitStateChange() {
+    // Invalidate cache when state changes
+    this.state = null;
     this.emit('stateChange', this.getState());
   }
 
   /**
-   * Get current player state snapshot
+   * Get current player state snapshot with caching for useSyncExternalStore.
+   * Returns the same reference when called multiple times without state changes.
    */
   getState(): PlayerState {
-    return {
+    // Return cached state if available
+    if (this.state !== null) {
+      return this.state;
+    }
+
+    // Create new state object
+    this.state = {
       queue: [...this.queue],
       queueCursor: this.queueCursor,
       queueOrigin: this.queueOrigin,
@@ -245,6 +257,8 @@ class Player extends EventEmitter<PlayerEvents> {
       muted: this.audio.muted,
       isPaused: this.audio.paused,
     };
+
+    return this.state;
   }
 
   // ============================================================================
