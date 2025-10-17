@@ -123,78 +123,78 @@ msgstr "rechercher..."
 msgid "Rename"
 msgstr "Renommer"
 
-#: src/components/TrackList.tsx:241
+#: src/components/TrackList.tsx:242
 msgid "Create new playlist..."
 msgstr "Créer une nouvelle playlist..."
 
-#: src/components/TrackList.tsx:244
+#: src/components/TrackList.tsx:245
 #: src/routes/playlists.tsx:63
 msgid "New playlist"
 msgstr "Nouvelle playlist"
 
-#: src/components/TrackList.tsx:257
+#: src/components/TrackList.tsx:258
 msgid "No playlists"
 msgstr "Aucune playlist"
 
 #. placeholder {0}: selectedTracks.size
 #. placeholder {1}: playlist.name
-#: src/components/TrackList.tsx:272
+#: src/components/TrackList.tsx:273
 msgid "{0} track(s) were added to \"{1}\""
 msgstr "{0} piste(s) ont été ajoutées à \"{1}\""
 
-#: src/components/TrackList.tsx:289
+#: src/components/TrackList.tsx:290
 msgid "{selectedCount, plural, one {# track selected} other {# tracks selected}}"
 msgstr "{selectedCount, plural, one {# piste sélectionnée} other {# pistes sélectionnées}}"
 
-#: src/components/TrackList.tsx:301
+#: src/components/TrackList.tsx:302
 msgid "Add to queue"
 msgstr "Ajouter à la file d'attente"
 
-#: src/components/TrackList.tsx:311
+#: src/components/TrackList.tsx:310
 msgid "Play next"
 msgstr "Lire ensuite"
 
-#: src/components/TrackList.tsx:325
+#: src/components/TrackList.tsx:322
 msgid "Add to playlist"
 msgstr "Ajouter à une playlist"
 
-#: src/components/TrackList.tsx:335
+#: src/components/TrackList.tsx:332
 msgid "Search for \"{item}\""
 msgstr "Rechercher \"{item}\""
 
-#: src/components/TrackList.tsx:348
+#: src/components/TrackList.tsx:345
 msgid "Copy \"{item}\""
 msgstr "Copier \"{item}\""
 
-#: src/components/TrackList.tsx:372
+#: src/components/TrackList.tsx:369
 msgid "Edit track"
 msgstr "Modifier la piste"
 
-#: src/components/TrackList.tsx:382
+#: src/components/TrackList.tsx:379
 msgid "Show in file manager"
 msgstr "Montrer dans le gestionnaire de fichiers"
 
-#: src/components/TrackList.tsx:388
+#: src/components/TrackList.tsx:385
 msgid "Remove from library"
 msgstr "Retirer de la bibliothèque"
 
 #. placeholder {0}: selectedTracks.size
-#: src/components/TrackList.tsx:391
+#: src/components/TrackList.tsx:388
 msgid "Are you sure you want to remove {0} track(s) from your library?"
 msgstr "Êtes-vous sûr de vouloir retirer {0} piste(s) de votre bibliothèque ?"
 
-#: src/components/TrackList.tsx:393
+#: src/components/TrackList.tsx:390
 msgid "Remove tracks"
 msgstr "Retirer les pistes<<<<<<< HEAD"
 
-#: src/components/TrackList.tsx:395
+#: src/components/TrackList.tsx:392
 #: src/routes/settings.library.tsx:98
 #: src/routes/settings.library.tsx:143
 #: src/routes/tracks.$trackID.tsx:246
 msgid "Cancel"
 msgstr "Annuler"
 
-#: src/components/TrackList.tsx:396
+#: src/components/TrackList.tsx:393
 #: src/routes/settings.library.tsx:61
 msgid "Remove"
 msgstr "Retirer"

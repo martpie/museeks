@@ -17,6 +17,7 @@ import Keybinding from 'react-keybinding-component';
 import type { Config, Playlist, Track, TrackGroup } from '../generated/typings';
 import useInvalidate from '../hooks/useInvalidate';
 import usePlayingTrackID from '../hooks/usePlayingTrackID';
+import BridgeDatabase from '../lib/bridge-database';
 import player from '../lib/player';
 import {
   getScrollPosition,
@@ -301,9 +302,7 @@ export default function TrackList(props: Props) {
           text: t`Add to queue`,
           async action() {
             player.addToQueue(
-              await import('../lib/bridge-database').then((m) =>
-                m.default.getTracks(Array.from(selectedTracks)),
-              ),
+              await BridgeDatabase.getTracks(Array.from(selectedTracks)),
             );
           },
         }),
@@ -311,9 +310,7 @@ export default function TrackList(props: Props) {
           text: t`Play next`,
           async action() {
             player.addNextInQueue(
-              await import('../lib/bridge-database').then((m) =>
-                m.default.getTracks(Array.from(selectedTracks)),
-              ),
+              await BridgeDatabase.getTracks(Array.from(selectedTracks)),
             );
           },
         }),

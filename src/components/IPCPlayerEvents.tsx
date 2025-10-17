@@ -10,12 +10,12 @@ import player from '../lib/player';
 function IPCPlayerEvents() {
   useEffect(() => {
     const unlistenerPromises = [
-      listen('PlaybackPlay' satisfies IPCEvent, () => player.play()),
-      listen('PlaybackPause' satisfies IPCEvent, () => player.pause()),
-      listen('PlaybackPlayPause' satisfies IPCEvent, () => player.playPause()),
-      listen('PlaybackPrevious' satisfies IPCEvent, () => player.previous()),
-      listen('PlaybackNext' satisfies IPCEvent, () => player.next()),
-      listen('PlaybackStop' satisfies IPCEvent, () => player.stop()),
+      listen('PlaybackPlay' satisfies IPCEvent, player.play),
+      listen('PlaybackPause' satisfies IPCEvent, player.pause),
+      listen('PlaybackPlayPause' satisfies IPCEvent, player.playPause),
+      listen('PlaybackPrevious' satisfies IPCEvent, player.previous),
+      listen('PlaybackNext' satisfies IPCEvent, player.next),
+      listen('PlaybackStop' satisfies IPCEvent, player.stop),
       listen(
         'PlaybackStart' satisfies IPCEvent,
         ({ payload }: { payload: Track[] }) => {

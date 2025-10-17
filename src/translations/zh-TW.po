@@ -123,78 +123,78 @@ msgstr "搜尋..."
 msgid "Rename"
 msgstr "重新命名"
 
-#: src/components/TrackList.tsx:241
+#: src/components/TrackList.tsx:242
 msgid "Create new playlist..."
 msgstr "建立新播放清單..."
 
-#: src/components/TrackList.tsx:244
+#: src/components/TrackList.tsx:245
 #: src/routes/playlists.tsx:63
 msgid "New playlist"
 msgstr "新播放清單"
 
-#: src/components/TrackList.tsx:257
+#: src/components/TrackList.tsx:258
 msgid "No playlists"
 msgstr "沒有播放清單"
 
 #. placeholder {0}: selectedTracks.size
 #. placeholder {1}: playlist.name
-#: src/components/TrackList.tsx:272
+#: src/components/TrackList.tsx:273
 msgid "{0} track(s) were added to \"{1}\""
 msgstr "{0} 首音軌已新增到 \"{1}\""
 
-#: src/components/TrackList.tsx:289
+#: src/components/TrackList.tsx:290
 msgid "{selectedCount, plural, one {# track selected} other {# tracks selected}}"
 msgstr "{selectedCount, plural, one {# 首音軌已選擇} other {# 首音軌已選擇}}"
 
-#: src/components/TrackList.tsx:301
+#: src/components/TrackList.tsx:302
 msgid "Add to queue"
 msgstr "新增到佇列"
 
-#: src/components/TrackList.tsx:311
+#: src/components/TrackList.tsx:310
 msgid "Play next"
 msgstr "接著播放"
 
-#: src/components/TrackList.tsx:325
+#: src/components/TrackList.tsx:322
 msgid "Add to playlist"
 msgstr "新增到播放清單"
 
-#: src/components/TrackList.tsx:335
+#: src/components/TrackList.tsx:332
 msgid "Search for \"{item}\""
 msgstr "搜尋 \"{item}\""
 
-#: src/components/TrackList.tsx:348
+#: src/components/TrackList.tsx:345
 msgid "Copy \"{item}\""
 msgstr "複製 \"{item}\""
 
-#: src/components/TrackList.tsx:372
+#: src/components/TrackList.tsx:369
 msgid "Edit track"
 msgstr "編輯音軌"
 
-#: src/components/TrackList.tsx:382
+#: src/components/TrackList.tsx:379
 msgid "Show in file manager"
 msgstr "在檔案管理員中顯示"
 
-#: src/components/TrackList.tsx:388
+#: src/components/TrackList.tsx:385
 msgid "Remove from library"
 msgstr "從音樂庫中移除"
 
 #. placeholder {0}: selectedTracks.size
-#: src/components/TrackList.tsx:391
+#: src/components/TrackList.tsx:388
 msgid "Are you sure you want to remove {0} track(s) from your library?"
 msgstr "您確定要從音樂庫中移除 {0} 首音軌嗎？"
 
-#: src/components/TrackList.tsx:393
+#: src/components/TrackList.tsx:390
 msgid "Remove tracks"
 msgstr "移除音軌"
 
-#: src/components/TrackList.tsx:395
+#: src/components/TrackList.tsx:392
 #: src/routes/settings.library.tsx:98
 #: src/routes/settings.library.tsx:143
 #: src/routes/tracks.$trackID.tsx:246
 msgid "Cancel"
 msgstr "取消"
 
-#: src/components/TrackList.tsx:396
+#: src/components/TrackList.tsx:393
 #: src/routes/settings.library.tsx:61
 msgid "Remove"
 msgstr "移除"
