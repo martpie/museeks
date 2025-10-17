@@ -37,10 +37,6 @@ export default function VolumeControl() {
     player.setVolume(smoothVolume); // Debounced save happens in player
   }, []);
 
-  const toggleMute = useCallback(() => {
-    player.setMuted(!muted);
-  }, [muted]);
-
   const volumeClasses = cx(styles.volumeControl, {
     [styles.visible]: showVolume,
   });
@@ -58,7 +54,7 @@ export default function VolumeControl() {
     >
       <ButtonIcon
         title={t`Volume`}
-        onClick={toggleMute}
+        onClick={player.toggleMute}
         icon={getVolumeIcon(unsmoothifyVolume(volume), muted)}
         iconSize={16}
       />

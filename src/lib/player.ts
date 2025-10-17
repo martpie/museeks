@@ -118,9 +118,7 @@ class Player extends EventEmitter<PlayerEvents> {
     this.setTrack = this.setTrack.bind(this);
     this.setCurrentTime = this.setCurrentTime.bind(this);
     this.setVolume = this.setVolume.bind(this);
-    this.mute = this.mute.bind(this);
-    this.unmute = this.unmute.bind(this);
-    this.setMuted = this.setMuted.bind(this);
+    this.toggleMute = this.toggleMute.bind(this);
     this.setPlaybackRate = this.setPlaybackRate.bind(this);
   }
 
@@ -633,23 +631,10 @@ class Player extends EventEmitter<PlayerEvents> {
     return this.audio.volume;
   }
 
-  mute() {
-    this.audio.muted = true;
+  async toggleMute() {
+    this.audio.muted = !this.audio.muted;
     this.emitStateChange();
-  }
-
-  unmute() {
-    this.audio.muted = false;
-    this.emitStateChange();
-  }
-
-  async setMuted(muted: boolean) {
-    if (muted) {
-      this.mute();
-    } else {
-      this.unmute();
-    }
-    await ConfigBridge.set('audio_muted', muted);
+    await ConfigBridge.set('audio_muted', this.audio.muted);
   }
 
   isMuted(): boolean {
