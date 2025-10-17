@@ -98,6 +98,30 @@ class Player extends EventEmitter<PlayerEvents> {
 
     this.setupAudioListeners();
     this.setupMediaSession();
+
+    // Bind methods that are used as callbacks
+    this.play = this.play.bind(this);
+    this.pause = this.pause.bind(this);
+    this.playPause = this.playPause.bind(this);
+    this.previous = this.previous.bind(this);
+    this.next = this.next.bind(this);
+    this.stop = this.stop.bind(this);
+    this.start = this.start.bind(this);
+    this.startFromQueue = this.startFromQueue.bind(this);
+    this.addToQueue = this.addToQueue.bind(this);
+    this.addNextInQueue = this.addNextInQueue.bind(this);
+    this.removeFromQueue = this.removeFromQueue.bind(this);
+    this.clearQueue = this.clearQueue.bind(this);
+    this.setQueue = this.setQueue.bind(this);
+    this.toggleShuffle = this.toggleShuffle.bind(this);
+    this.toggleRepeat = this.toggleRepeat.bind(this);
+    this.setTrack = this.setTrack.bind(this);
+    this.setCurrentTime = this.setCurrentTime.bind(this);
+    this.setVolume = this.setVolume.bind(this);
+    this.mute = this.mute.bind(this);
+    this.unmute = this.unmute.bind(this);
+    this.setMuted = this.setMuted.bind(this);
+    this.setPlaybackRate = this.setPlaybackRate.bind(this);
   }
 
   /**
@@ -258,10 +282,14 @@ class Player extends EventEmitter<PlayerEvents> {
   }
 
   async playPause() {
-    if (this.audio.paused && this.queue.length > 0) {
-      await this.play();
-    } else {
-      this.pause();
+    try {
+      if (this.audio.paused && this.queue.length > 0) {
+        await this.play();
+      } else {
+        this.pause();
+      }
+    } catch (error) {
+      logAndNotifyError(error);
     }
   }
 
