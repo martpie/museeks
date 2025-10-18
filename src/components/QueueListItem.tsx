@@ -3,7 +3,7 @@ import { CSS } from '@dnd-kit/utilities';
 import { useCallback } from 'react';
 
 import type { Track } from '../generated/typings';
-import { usePlayerAPI } from '../stores/usePlayerStore';
+import player from '../lib/player';
 import Cover from './Cover';
 import styles from './QueueListItem.module.css';
 
@@ -14,8 +14,6 @@ type Props = {
 };
 
 export default function QueueListItem(props: Props) {
-  const playerAPI = usePlayerAPI();
-
   const { track } = props;
 
   const { attributes, listeners, setNodeRef, transform, transition } =
@@ -32,12 +30,12 @@ export default function QueueListItem(props: Props) {
   };
 
   const remove = useCallback(() => {
-    playerAPI.removeFromQueue(props.index);
-  }, [props.index, playerAPI]);
+    player.removeFromQueue(props.index);
+  }, [props.index]);
 
   const play = useCallback(() => {
-    playerAPI.startFromQueue(props.queueCursor + props.index + 1);
-  }, [props.index, props.queueCursor, playerAPI]);
+    player.startFromQueue(props.queueCursor + props.index + 1);
+  }, [props.index, props.queueCursor]);
 
   return (
     <div

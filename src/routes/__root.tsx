@@ -12,7 +12,6 @@ import Header from '../components/Header';
 import IPCNavigationEvents from '../components/IPCNavigationEvents';
 import IPCPlayerEvents from '../components/IPCPlayerEvents';
 import LibraryEvents from '../components/LibraryEvents';
-import MediaSessionEvents from '../components/MediaSessionEvents';
 import PlayerEvents from '../components/PlayerEvents';
 import Toasts from '../components/Toasts';
 import useInvalidate from '../hooks/useInvalidate';
@@ -66,7 +65,6 @@ function ViewRoot() {
       <AppEvents />
       <LibraryEvents />
       <PlayerEvents />
-      <MediaSessionEvents />
       <GlobalKeyBindings />
 
       {/** The actual app */}

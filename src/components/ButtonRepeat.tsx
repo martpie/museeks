@@ -1,11 +1,11 @@
 import { useLingui } from '@lingui/react/macro';
 
 import ButtonIcon from '../elements/ButtonIcon';
-import usePlayerStore, { usePlayerAPI } from '../stores/usePlayerStore';
+import { usePlayerState } from '../hooks/usePlayer';
+import player from '../lib/player';
 
 export default function ButtonRepeat() {
-  const repeat = usePlayerStore((state) => state.repeat);
-  const playerAPI = usePlayerAPI();
+  const repeat = usePlayerState((state) => state.repeat);
   const { t } = useLingui();
 
   let pressed: boolean | 'mixed' = false;
@@ -18,7 +18,7 @@ export default function ButtonRepeat() {
       title={t`Repeat`}
       icon={repeat === 'One' ? 'repeatOne' : 'repeat'}
       iconSize={20}
-      onClick={() => playerAPI.toggleRepeat()}
+      onClick={player.toggleRepeat}
       isActive={repeat === 'One' || repeat === 'All'}
       aria-pressed={pressed}
     />

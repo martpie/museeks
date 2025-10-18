@@ -1,14 +1,13 @@
 import { useLingui } from '@lingui/react/macro';
 
 import ButtonIcon from '../elements/ButtonIcon';
-import usePlayerStore, { usePlayerAPI } from '../stores/usePlayerStore';
-import { PlayerStatus } from '../types/museeks';
+import { usePlayerState } from '../hooks/usePlayer';
+import player from '../lib/player';
 import styles from './PlayerControls.module.css';
 import VolumeControl from './VolumeControl';
 
 export default function PlayerControls() {
-  const playerAPI = usePlayerAPI();
-  const playerStatus = usePlayerStore((state) => state.playerStatus);
+  const isPaused = usePlayerState((state) => state.isPaused);
   const { t } = useLingui();
 
   return (
@@ -17,25 +16,21 @@ export default function PlayerControls() {
         icon="skipBack"
         iconSize={16}
         title={t`Previous`}
-        onClick={playerAPI.previous}
+        onClick={player.previous}
         data-testid="playercontrol-skipback"
       />
       <ButtonIcon
-        icon={playerStatus === PlayerStatus.PLAY ? 'pause' : 'play'}
+        icon={isPaused ? 'play' : 'pause'}
         iconSize={28}
-        title={playerStatus === PlayerStatus.PLAY ? t`Pause` : t`Play`}
-        onClick={playerAPI.playPause}
-        data-testid={
-          playerStatus === PlayerStatus.PLAY
-            ? 'playercontrol-pause'
-            : 'playercontrol-play'
-        }
+        title={isPaused ? t`Play` : t`Pause`}
+        onClick={player.playPause}
+        data-testid={isPaused ? 'playercontrol-play' : 'playercontrol-pause'}
       />
       <ButtonIcon
         icon="skipForward"
         iconSize={16}
         title={t`Next`}
-        onClick={playerAPI.next}
+        onClick={player.next}
         data-testid="playercontrol-skipforward"
       />
       <VolumeControl />
