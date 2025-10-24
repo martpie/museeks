@@ -185,7 +185,7 @@ msgstr "Êtes-vous sûr de vouloir retirer {0} piste(s) de votre bibliothèque ?
 
 #: src/components/TrackList.tsx:390
 msgid "Remove tracks"
-msgstr "Retirer les pistes<<<<<<< HEAD"
+msgstr "Retirer les pistes"
 
 #: src/components/TrackList.tsx:392
 #: src/routes/settings.library.tsx:98
