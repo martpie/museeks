@@ -1,16 +1,16 @@
 import { t } from '@lingui/core/macro';
 
 import ButtonIcon from '../elements/ButtonIcon';
-import usePlayerStore, { usePlayerAPI } from '../stores/usePlayerStore';
+import { usePlayerState } from '../hooks/usePlayer';
+import player from '../lib/player';
 
 export default function ButtonShuffle() {
-  const shuffle = usePlayerStore((state) => state.shuffle);
-  const playerAPI = usePlayerAPI();
+  const shuffle = usePlayerState((state) => state.shuffle);
 
   return (
     <ButtonIcon
       title={t`Shuffle`}
-      onClick={() => playerAPI.toggleShuffle()}
+      onClick={player.toggleShuffle}
       icon={'shuffle'}
       iconSize={20}
       isActive={shuffle}

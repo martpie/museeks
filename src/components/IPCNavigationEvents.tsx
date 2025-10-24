@@ -3,9 +3,9 @@ import { getCurrentWindow } from '@tauri-apps/api/window';
 import { useCallback, useEffect } from 'react';
 import Keybinding from 'react-keybinding-component';
 
+import { usePlayerState } from '../hooks/usePlayer';
 import { goToPlayingTrack } from '../lib/queue-origin';
 import { isCtrlKey } from '../lib/utils-events';
-import usePlayerStore from '../stores/usePlayerStore';
 
 /**
  * Event Handlers for Navigation Events, triggered via IPC, typically, from
@@ -13,7 +13,7 @@ import usePlayerStore from '../stores/usePlayerStore';
  */
 export default function IPCNavigationEvents() {
   const navigate = useNavigate();
-  const queueOrigin = usePlayerStore((state) => state.queueOrigin);
+  const queueOrigin = usePlayerState((state) => state.queueOrigin);
 
   // Navigation handlers
   const goToLibrary = useCallback(() => {
