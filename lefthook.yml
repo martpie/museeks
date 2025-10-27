@@ -1,5 +1,0 @@
-# https://lefthook.dev/configuration/
-pre-commit:
-  parallel: true
-  jobs:
-    - run: npm run gen:translations && git add src/translations

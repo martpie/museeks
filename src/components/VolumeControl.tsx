@@ -4,9 +4,9 @@ import { Slider } from 'radix-ui';
 import { useCallback, useState } from 'react';
 
 import ButtonIcon from '../elements/ButtonIcon';
+import { usePlayerState } from '../hooks/usePlayer';
 import player from '../lib/player';
 import { stopPropagation } from '../lib/utils-events';
-import { usePlayerAPI } from '../stores/usePlayerStore';
 import type { IconName } from './Icon';
 import styles from './VolumeControl.module.css';
 
@@ -26,33 +26,16 @@ const getVolumeIcon = (volume: number, muted: boolean): IconName => {
 };
 
 export default function VolumeControl() {
-  const audio = player.getAudio();
-
+  const volume = usePlayerState((state) => state.volume);
+  const muted = usePlayerState((state) => state.muted);
   const [showVolume, setShowVolume] = useState(false);
-  const [volume, setVolume] = useState(audio.volume);
-  const [muted, setMuted] = useState(audio.muted);
   const { t } = useLingui();
 
-  const playerAPI = usePlayerAPI();
-
-  const setPlayerVolume = useCallback(
-    (values: number[]) => {
-      const [value] = values;
-      const smoothVolume = smoothifyVolume(value);
-
-      playerAPI.setVolume(smoothVolume);
-      setVolume(smoothVolume);
-    },
-    [playerAPI],
-  );
-
-  // TODO: move to player actions
-  const mute = useCallback(() => {
-    const isMuted = !player.isMuted();
-
-    playerAPI.setMuted(isMuted);
-    setMuted(isMuted);
-  }, [playerAPI]);
+  const setPlayerVolume = useCallback((values: number[]) => {
+    const [value] = values;
+    const smoothVolume = smoothifyVolume(value);
+    player.setVolume(smoothVolume); // Debounced save happens in player
+  }, []);
 
   const volumeClasses = cx(styles.volumeControl, {
     [styles.visible]: showVolume,
@@ -71,7 +54,7 @@ export default function VolumeControl() {
     >
       <ButtonIcon
         title={t`Volume`}
-        onClick={mute}
+        onClick={player.toggleMute}
         icon={getVolumeIcon(unsmoothifyVolume(volume), muted)}
         iconSize={16}
       />

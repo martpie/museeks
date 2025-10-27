@@ -1,5 +1,5 @@
 import type { Track } from '../generated/typings';
-import usePlayerStore from '../stores/usePlayerStore';
+import { usePlayerState } from '../hooks/usePlayer';
 import ButtonRepeat from './ButtonRepeat';
 import ButtonShuffle from './ButtonShuffle';
 import Cover from './Cover';
@@ -11,8 +11,8 @@ type Props = {
 };
 
 export default function PlayingBar(props: Props) {
-  const repeat = usePlayerStore((state) => state.repeat);
-  const shuffle = usePlayerStore((state) => state.shuffle);
+  const repeat = usePlayerState((state) => state.repeat);
+  const shuffle = usePlayerState((state) => state.shuffle);
   const trackPlaying = props.trackPlaying;
 
   return (

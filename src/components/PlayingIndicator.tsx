@@ -1,17 +1,16 @@
 import { useMemo, useState } from 'react';
 
-import usePlayerStore, { usePlayerAPI } from '../stores/usePlayerStore';
-import { PlayerStatus } from '../types/museeks';
+import { usePlayerState } from '../hooks/usePlayer';
+import player from '../lib/player';
 import Icon from './Icon';
 import styles from './PlayingIndicator.module.css';
 
 export default function TrackPlayingIndicator() {
   const [hovered, setHovered] = useState(false);
-  const playerStatus = usePlayerStore((state) => state.playerStatus);
-  const playerAPI = usePlayerAPI();
+  const isPaused = usePlayerState((state) => state.isPaused);
 
   const icon = useMemo(() => {
-    if (playerStatus === PlayerStatus.PLAY) {
+    if (!isPaused) {
       if (hovered) {
         return <Icon name="pause" size={12} />;
       }
@@ -26,13 +25,13 @@ export default function TrackPlayingIndicator() {
     }
 
     return <Icon name="play" />;
-  }, [playerStatus, hovered]);
+  }, [isPaused, hovered]);
 
   return (
     <button
       type="button"
       className={styles.playingIndicator}
-      onClick={playerAPI.playPause}
+      onClick={player.playPause}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       tabIndex={0}

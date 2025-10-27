@@ -87,19 +87,19 @@ msgstr "Если это случится снова, пожалуйста, <0>з
 msgid "Queue"
 msgstr "Очередь"
 
-#: src/components/PlayerControls.tsx:19
+#: src/components/PlayerControls.tsx:18
 msgid "Previous"
 msgstr "Предыдущий"
 
-#: src/components/PlayerControls.tsx:26
-msgid "Pause"
-msgstr "Пауза"
-
-#: src/components/PlayerControls.tsx:26
+#: src/components/PlayerControls.tsx:25
 msgid "Play"
 msgstr "Плей"
 
-#: src/components/PlayerControls.tsx:37
+#: src/components/PlayerControls.tsx:25
+msgid "Pause"
+msgstr "Пауза"
+
+#: src/components/PlayerControls.tsx:32
 msgid "Next"
 msgstr "Следующий"
 
@@ -107,11 +107,11 @@ msgstr "Следующий"
 msgid "Queue is empty"
 msgstr "Очередь пуста"
 
-#: src/components/QueueList.tsx:81
+#: src/components/QueueList.tsx:79
 msgid "clear queue"
 msgstr "очистить очередь"
 
-#: src/components/QueueList.tsx:107
+#: src/components/QueueList.tsx:105
 msgid "see more"
 msgstr "показать ещё"
 
@@ -150,51 +150,51 @@ msgstr "Выбран{selectedCount, plural, one { # трек} few {ы # трек
 msgid "Add to queue"
 msgstr "Добавить в очередь"
 
-#: src/components/TrackList.tsx:308
+#: src/components/TrackList.tsx:310
 msgid "Play next"
 msgstr "Играть следующим"
 
-#: src/components/TrackList.tsx:318
+#: src/components/TrackList.tsx:322
 msgid "Add to playlist"
 msgstr "Добавить в плейлист"
 
-#: src/components/TrackList.tsx:328
+#: src/components/TrackList.tsx:332
 msgid "Search for \"{item}\""
 msgstr "Искать \"{item}\""
 
-#: src/components/TrackList.tsx:341
+#: src/components/TrackList.tsx:345
 msgid "Copy \"{item}\""
 msgstr "Скопировать \"{item}\""
 
-#: src/components/TrackList.tsx:365
+#: src/components/TrackList.tsx:369
 msgid "Edit track"
 msgstr "Редактировать трек"
 
-#: src/components/TrackList.tsx:375
+#: src/components/TrackList.tsx:379
 msgid "Show in file manager"
 msgstr "Открыть в файловом менеджере"
 
-#: src/components/TrackList.tsx:381
+#: src/components/TrackList.tsx:385
 msgid "Remove from library"
 msgstr "Удалить из библиотеки"
 
 #. placeholder {0}: selectedTracks.size
-#: src/components/TrackList.tsx:384
+#: src/components/TrackList.tsx:388
 msgid "Are you sure you want to remove {0} track(s) from your library?"
 msgstr "Вы уверены, что хотите удалить {0} трек(ов) из вашей библиотеки?"
 
-#: src/components/TrackList.tsx:386
+#: src/components/TrackList.tsx:390
 msgid "Remove tracks"
 msgstr "Удалить треки"
 
-#: src/components/TrackList.tsx:388
+#: src/components/TrackList.tsx:392
 #: src/routes/settings.library.tsx:98
 #: src/routes/settings.library.tsx:143
 #: src/routes/tracks.$trackID.tsx:246
 msgid "Cancel"
 msgstr "Отмена"
 
-#: src/components/TrackList.tsx:389
+#: src/components/TrackList.tsx:393
 #: src/routes/settings.library.tsx:61
 msgid "Remove"
 msgstr "Удалить"
@@ -255,8 +255,8 @@ msgstr "вы можете добавить <0>вашу музыку здесь</
 msgid "Your search returned no results"
 msgstr "Ваш поиск не принёс результатов"
 
-#: src/components/VolumeControl.tsx:73
-#: src/components/VolumeControl.tsx:93
+#: src/components/VolumeControl.tsx:56
+#: src/components/VolumeControl.tsx:76
 msgid "Volume"
 msgstr "Громкость"
 
@@ -346,19 +346,19 @@ msgstr "Внутренности"
 msgid "Open storage directory"
 msgstr "Открыть папку-хранилище"
 
-#: src/routes/settings.audio.tsx:25
+#: src/routes/settings.audio.tsx:24
 msgid "Playback rate"
 msgstr "Скорость воспроизведения"
 
-#: src/routes/settings.audio.tsx:26
+#: src/routes/settings.audio.tsx:25
 msgid "Increase the playback rate: a value of 2 will play your music at a 2x speed"
 msgstr "Увеличить скорость воспроизведения: при значении 2 ваша музыка будет проигрываться на скорости 2x"
 
-#: src/routes/settings.audio.tsx:41
+#: src/routes/settings.audio.tsx:40
 msgid "Follow playing track"
 msgstr "Следовать за проигрываемым треком"
 
-#: src/routes/settings.audio.tsx:42
+#: src/routes/settings.audio.tsx:41
 msgid "Automatically follow the currently playing track (only when the app is not focused)"
 msgstr "Автоматически следовать за проигрываемым треком (только если приложение находится не в фокусе)"
 
@@ -574,7 +574,7 @@ msgstr "Сохранить"
 msgid "Clicking \"save\" will only update the library data, but will not save it to the original file."
 msgstr "После нажатия \"Сохранить\" обновятся лишь данные библиотеки, но в исходный файл не будет внесено изменений."
 
-#: src/stores/PlaylistsAPI.ts:38
+#: src/stores/PlaylistsAPI.ts:36
 msgid "The playlist \"{name}\" was created"
 msgstr "Создан плейлист \"{name}\""
 

@@ -11,13 +11,13 @@ import SideNavLink from '../components/SideNavLink';
 import TrackListStates from '../components/TrackListStates';
 import View from '../elements/View';
 import DatabaseBridge from '../lib/bridge-database';
-import usePlayerStore from '../stores/usePlayerStore';
+import player from '../lib/player';
 
 export const Route = createFileRoute('/artists')({
   component: ViewArtists,
   beforeLoad: async ({ params }) => {
     const artists = await DatabaseBridge.getAllArtists();
-    const queueOrigin = usePlayerStore.getState().queueOrigin;
+    const queueOrigin = player.getQueueOrigin();
 
     if (!('artistID' in params) && artists.length > 0) {
       // If there is a playing Playlist, redirect to it

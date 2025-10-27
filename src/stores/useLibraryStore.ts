@@ -5,11 +5,11 @@ import { persist } from 'zustand/middleware';
 import type { SortBy, SortOrder } from '../generated/typings';
 import ConfigBridge from '../lib/bridge-config';
 import DatabaseBridge from '../lib/bridge-database';
+import player from '../lib/player';
 import { logAndNotifyError } from '../lib/utils';
 import { removeRedundantFolders } from '../lib/utils-library';
 import type { API, TrackListStatusInfo, TrackMutation } from '../types/museeks';
 import { createStore } from './store-helpers';
-import usePlayerStore from './usePlayerStore';
 import useToastsStore from './useToastsStore';
 
 type LibraryState = API<{
@@ -166,7 +166,7 @@ const useLibraryStore = createLibraryStore<LibraryState>((set, get) => ({
      * Reset the library
      */
     reset: async () => {
-      usePlayerStore.getState().api.stop();
+      player.stop();
       try {
         await DatabaseBridge.reset();
         await ConfigBridge.set('library_folders', []);

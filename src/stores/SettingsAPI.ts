@@ -7,10 +7,10 @@ import * as semver from 'semver';
 import type { Config } from '../generated/typings';
 import ConfigBridge from '../lib/bridge-config';
 import { loadTranslation } from '../lib/i18n';
+import player from '../lib/player';
 import { getTheme } from '../lib/themes';
 import { logAndNotifyError } from '../lib/utils';
 import useLibraryStore from './useLibraryStore';
-import usePlayerStore from './usePlayerStore';
 import useToastsStore from './useToastsStore';
 
 export const DEFAULT_MAIN_COLOR = '#459ce7';
@@ -60,7 +60,7 @@ async function init(then: () => void): Promise<void> {
     info(
       `Starting queue from file associations (${initialQueue.length} tracks)`,
     );
-    usePlayerStore.getState().api.start(initialQueue, initialQueue[0].id, {
+    player.start(initialQueue, initialQueue[0].id, {
       type: 'file_associations',
     });
   }

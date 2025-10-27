@@ -9,14 +9,14 @@ export default function usePlayingTrackCurrentTime(): number {
   const [currentTime, setCurrentTime] = useState(player.getCurrentTime());
 
   useEffect(() => {
-    function tick() {
-      setCurrentTime(player.getCurrentTime());
+    function tick(time: number) {
+      setCurrentTime(time);
     }
 
-    player.getAudio().addEventListener('timeupdate', tick);
+    player.on('timeupdate', tick);
 
     return () => {
-      player.getAudio().removeEventListener('timeupdate', tick);
+      player.off('timeupdate', tick);
     };
   }, []);
 

@@ -2,8 +2,8 @@ import { t } from '@lingui/core/macro';
 
 import type { Playlist, Track } from '../generated/typings';
 import DatabaseBridge from '../lib/bridge-database';
+import player from '../lib/player';
 import { logAndNotifyError } from '../lib/utils';
-import usePlayerStore from './usePlayerStore';
 import useToastsStore from './useToastsStore';
 
 /**
@@ -13,9 +13,7 @@ async function play(playlistID: string): Promise<void> {
   try {
     const playlist = await DatabaseBridge.getPlaylist(playlistID);
     const tracks = await DatabaseBridge.getTracks(playlist.tracks);
-    usePlayerStore
-      .getState()
-      .api.start(tracks, null, { type: 'playlist', playlistID });
+    player.start(tracks, null, { type: 'playlist', playlistID });
   } catch (err) {
     logAndNotifyError(err);
   }

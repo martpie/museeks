@@ -87,19 +87,19 @@ msgstr "Si cela se produit à nouveau, veuillez <0>signaler un problème</0>"
 msgid "Queue"
 msgstr "File d'attente"
 
-#: src/components/PlayerControls.tsx:19
+#: src/components/PlayerControls.tsx:18
 msgid "Previous"
 msgstr "Précédent"
 
-#: src/components/PlayerControls.tsx:26
-msgid "Pause"
-msgstr "Pause"
-
-#: src/components/PlayerControls.tsx:26
+#: src/components/PlayerControls.tsx:25
 msgid "Play"
 msgstr "Lecture"
 
-#: src/components/PlayerControls.tsx:37
+#: src/components/PlayerControls.tsx:25
+msgid "Pause"
+msgstr "Pause"
+
+#: src/components/PlayerControls.tsx:32
 msgid "Next"
 msgstr "Suivant"
 
@@ -107,11 +107,11 @@ msgstr "Suivant"
 msgid "Queue is empty"
 msgstr "La file d'attente est vide"
 
-#: src/components/QueueList.tsx:81
+#: src/components/QueueList.tsx:79
 msgid "clear queue"
 msgstr "vider la file d'attente"
 
-#: src/components/QueueList.tsx:107
+#: src/components/QueueList.tsx:105
 msgid "see more"
 msgstr "voir plus"
 
@@ -150,51 +150,51 @@ msgstr "{selectedCount, plural, one {# piste sélectionnée} other {# pistes sé
 msgid "Add to queue"
 msgstr "Ajouter à la file d'attente"
 
-#: src/components/TrackList.tsx:308
+#: src/components/TrackList.tsx:310
 msgid "Play next"
 msgstr "Lire ensuite"
 
-#: src/components/TrackList.tsx:318
+#: src/components/TrackList.tsx:322
 msgid "Add to playlist"
 msgstr "Ajouter à une playlist"
 
-#: src/components/TrackList.tsx:328
+#: src/components/TrackList.tsx:332
 msgid "Search for \"{item}\""
 msgstr "Rechercher \"{item}\""
 
-#: src/components/TrackList.tsx:341
+#: src/components/TrackList.tsx:345
 msgid "Copy \"{item}\""
 msgstr "Copier \"{item}\""
 
-#: src/components/TrackList.tsx:365
+#: src/components/TrackList.tsx:369
 msgid "Edit track"
 msgstr "Modifier la piste"
 
-#: src/components/TrackList.tsx:375
+#: src/components/TrackList.tsx:379
 msgid "Show in file manager"
 msgstr "Montrer dans le gestionnaire de fichiers"
 
-#: src/components/TrackList.tsx:381
+#: src/components/TrackList.tsx:385
 msgid "Remove from library"
 msgstr "Retirer de la bibliothèque"
 
 #. placeholder {0}: selectedTracks.size
-#: src/components/TrackList.tsx:384
+#: src/components/TrackList.tsx:388
 msgid "Are you sure you want to remove {0} track(s) from your library?"
 msgstr "Êtes-vous sûr de vouloir retirer {0} piste(s) de votre bibliothèque ?"
 
-#: src/components/TrackList.tsx:386
+#: src/components/TrackList.tsx:390
 msgid "Remove tracks"
-msgstr "Retirer les pistes<<<<<<< HEAD"
+msgstr "Retirer les pistes"
 
-#: src/components/TrackList.tsx:388
+#: src/components/TrackList.tsx:392
 #: src/routes/settings.library.tsx:98
 #: src/routes/settings.library.tsx:143
 #: src/routes/tracks.$trackID.tsx:246
 msgid "Cancel"
 msgstr "Annuler"
 
-#: src/components/TrackList.tsx:389
+#: src/components/TrackList.tsx:393
 #: src/routes/settings.library.tsx:61
 msgid "Remove"
 msgstr "Retirer"
@@ -255,8 +255,8 @@ msgstr "vous pouvez <0>ajouter votre musique ici</0>"
 msgid "Your search returned no results"
 msgstr "Votre recherche n'a retourné aucun résultat"
 
-#: src/components/VolumeControl.tsx:73
-#: src/components/VolumeControl.tsx:93
+#: src/components/VolumeControl.tsx:56
+#: src/components/VolumeControl.tsx:76
 msgid "Volume"
 msgstr "Volume"
 
@@ -346,19 +346,19 @@ msgstr "Détails techniques"
 msgid "Open storage directory"
 msgstr "Ouvrir le dossier de stockage"
 
-#: src/routes/settings.audio.tsx:25
+#: src/routes/settings.audio.tsx:24
 msgid "Playback rate"
 msgstr "Vitesse de lecture"
 
-#: src/routes/settings.audio.tsx:26
+#: src/routes/settings.audio.tsx:25
 msgid "Increase the playback rate: a value of 2 will play your music at a 2x speed"
 msgstr "Augmenter la vitesse de lecture : une valeur de 2 jouera votre musique à une vitesse 2x"
 
-#: src/routes/settings.audio.tsx:41
+#: src/routes/settings.audio.tsx:40
 msgid "Follow playing track"
 msgstr "Suivre la piste en cours"
 
-#: src/routes/settings.audio.tsx:42
+#: src/routes/settings.audio.tsx:41
 msgid "Automatically follow the currently playing track (only when the app is not focused)"
 msgstr "Suivre automatiquement la piste en cours (uniquement lorsque l'application n'a pas le focus)"
 
@@ -574,7 +574,7 @@ msgstr "Enregistrer"
 msgid "Clicking \"save\" will only update the library data, but will not save it to the original file."
 msgstr "Cliquer sur \"enregistrer\" mettra uniquement à jour les données de la bibliothèque, mais ne les enregistrera pas dans le fichier d'origine."
 
-#: src/stores/PlaylistsAPI.ts:38
+#: src/stores/PlaylistsAPI.ts:36
 msgid "The playlist \"{name}\" was created"
 msgstr "La playlist \"{name}\" a été créée"
 

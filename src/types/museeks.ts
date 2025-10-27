@@ -1,15 +1,6 @@
 import type { Track } from '../generated/typings';
 
 /**
- * Player related stuff
- */
-export enum PlayerStatus {
-  PLAY = 'play',
-  PAUSE = 'pause',
-  STOP = 'stop',
-}
-
-/**
  * Various
  */
 export interface Toast {

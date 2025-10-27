@@ -17,6 +17,8 @@ import Keybinding from 'react-keybinding-component';
 import type { Config, Playlist, Track, TrackGroup } from '../generated/typings';
 import useInvalidate from '../hooks/useInvalidate';
 import usePlayingTrackID from '../hooks/usePlayingTrackID';
+import BridgeDatabase from '../lib/bridge-database';
+import player from '../lib/player';
 import {
   getScrollPosition,
   saveScrollPosition,
@@ -26,7 +28,6 @@ import { isKeyWithoutModifiers } from '../lib/utils-events';
 import { listKeyboardSelect, listMouseSelect } from '../lib/utils-list';
 import PlaylistsAPI from '../stores/PlaylistsAPI';
 import { useLibraryAPI } from '../stores/useLibraryStore';
-import { usePlayerAPI } from '../stores/usePlayerStore';
 import { useToastsAPI } from '../stores/useToastsStore';
 import type { QueueOrigin, TrackListVirtualizer } from '../types/museeks';
 import styles from './TrackList.module.css';
@@ -89,7 +90,6 @@ export default function TrackList(props: Props) {
   }, [data, layout]);
 
   const trackPlayingID = usePlayingTrackID();
-  const playerAPI = usePlayerAPI();
   const libraryAPI = useLibraryAPI();
   const toastsAPI = useToastsAPI();
   const { t } = useLingui();
@@ -153,9 +153,9 @@ export default function TrackList(props: Props) {
    */
   const onPlaybackStart = useCallback(
     async (trackID: string) => {
-      playerAPI.start(tracks, trackID, queueOrigin);
+      player.start(tracks, trackID, queueOrigin);
     },
-    [tracks, playerAPI, queueOrigin],
+    [tracks, queueOrigin],
   );
 
   /**
@@ -300,14 +300,18 @@ export default function TrackList(props: Props) {
         // Queue Management
         MenuItem.new({
           text: t`Add to queue`,
-          action() {
-            playerAPI.addInQueue(Array.from(selectedTracks));
+          async action() {
+            player.addToQueue(
+              await BridgeDatabase.getTracks(Array.from(selectedTracks)),
+            );
           },
         }),
         MenuItem.new({
           text: t`Play next`,
-          action() {
-            playerAPI.addNextInQueue(Array.from(selectedTracks));
+          async action() {
+            player.addNextInQueue(
+              await BridgeDatabase.getTracks(Array.from(selectedTracks)),
+            );
           },
         }),
         PredefinedMenuItem.new({
@@ -411,7 +415,6 @@ export default function TrackList(props: Props) {
       selectedTracks,
       tracks,
       navigate,
-      playerAPI,
       libraryAPI,
       toastsAPI,
       invalidate,

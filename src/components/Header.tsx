@@ -2,8 +2,8 @@ import { useLingui } from '@lingui/react/macro';
 import { Popover } from 'radix-ui';
 
 import ButtonIcon from '../elements/ButtonIcon';
+import { usePlayerState } from '../hooks/usePlayer';
 import usePlayingTrack from '../hooks/usePlayingTrack';
-import usePlayerStore from '../stores/usePlayerStore';
 import styles from './Header.module.css';
 import PlayerControls from './PlayerControls';
 import PlayingBar from './PlayingBar';
@@ -11,8 +11,8 @@ import Queue from './Queue';
 import Search from './Search';
 
 export default function Header() {
-  const queue = usePlayerStore((state) => state.queue);
-  const queueCursor = usePlayerStore((state) => state.queueCursor);
+  const queue = usePlayerState((state) => state.queue);
+  const queueCursor = usePlayerState((state) => state.queueCursor);
   const trackPlaying = usePlayingTrack();
   const { t } = useLingui();
 
