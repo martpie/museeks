@@ -10,7 +10,6 @@
         "useExhaustiveSwitchCases": "error",
         "noUselessUndefined": "error",
         "noShadow": "error",
-        "noSecrets": "off",
         "noFloatingPromises": "off",
         "useExplicitType": "off",
         "noUnresolvedImports": "off"
