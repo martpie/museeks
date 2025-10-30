@@ -13,7 +13,7 @@ edition = "2024"
 tauri-build = { version = "2.5.1", features = ["codegen"] }
 
 [dependencies]
-tauri = { version = "2.9.1", features = [
+tauri = { version = "2.9.2", features = [
     "protocol-asset",
     "image-png",
     "devtools",
