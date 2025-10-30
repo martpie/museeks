@@ -1,5 +1,5 @@
-import { page } from '@vitest/browser/context';
 import { expect, test } from 'vitest';
+import { page } from 'vitest/browser';
 
 import { beforeEachSetup } from './test-helpers';
 
