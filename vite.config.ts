@@ -9,7 +9,10 @@ import svgr from 'vite-plugin-svgr';
 export const VITE_PLUGINS: PluginOption[] = [
   react({
     babel: {
-      plugins: ['@lingui/babel-plugin-lingui-macro'],
+      plugins: [
+        '@lingui/babel-plugin-lingui-macro',
+        'babel-plugin-react-compiler',
+      ],
       parserOpts: {
         plugins: ['decorators'],
       },
