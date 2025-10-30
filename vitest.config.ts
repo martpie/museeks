@@ -1,5 +1,6 @@
 import os from 'node:os';
 
+import { playwright } from '@vitest/browser-playwright';
 import { defineConfig } from 'vitest/config';
 
 import { VITE_PLUGINS } from './vite.config';
@@ -21,7 +22,7 @@ export default defineConfig({
           includeTaskLocation: true,
           browser: {
             enabled: true,
-            provider: 'playwright', // webdriverio?
+            provider: playwright(),
             viewport: {
               width: 900,
               height: 500,

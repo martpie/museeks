@@ -76,6 +76,7 @@
     "@types/semver": "7.7.1",
     "@vitejs/plugin-react": "5.1.0",
     "@vitest/browser": "4.0.5",
+    "@vitest/browser-playwright": "4.0.5",
     "babel-plugin-react-compiler": "1.0.0",
     "lightningcss": "1.30.2",
     "playwright": "1.56.1",
