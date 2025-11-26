@@ -51,6 +51,8 @@
     "lastfm:allow-lastfm-get-auth-url",
     "lastfm:allow-lastfm-get-session",
     "lastfm:allow-lastfm-disconnect",
+    "lastfm:allow-lastfm-now-playing",
+    "lastfm:allow-lastfm-scrobble",
     "sleepblocker:allow-enable",
     "sleepblocker:allow-disable"
   ],

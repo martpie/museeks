@@ -54,6 +54,8 @@ fn main() {
                     "lastfm_get_auth_url",
                     "lastfm_get_session",
                     "lastfm_disconnect",
+                    "lastfm_now_playing",
+                    "lastfm_scrobble",
                 ]),
             )
             .plugin(

@@ -250,6 +250,152 @@ pub async fn lastfm_test_connection(config_manager: State<'_, ConfigManager>) ->
     Ok(json.error.is_none())
 }
 
+/**
+ * Update "Now Playing" status on Last.fm
+ * Should be called when a track starts playing
+ */
+#[tauri::command]
+pub async fn lastfm_now_playing(
+    artist: String,
+    track: String,
+    album: Option<String>,
+    duration: Option<u32>,
+    config_manager: State<'_, ConfigManager>,
+) -> AnyResult<()> {
+    let config = config_manager.get()?;
+
+    if !config.lastfm_enabled {
+        return Ok(());
+    }
+
+    let session_key = match &config.lastfm_session_key {
+        Some(key) => key,
+        None => return Ok(()),
+    };
+
+    info!("Updating Last.fm Now Playing: {} - {}", artist, track);
+
+    let client = Client::new();
+    let mut params = HashMap::new();
+    params.insert("method".to_string(), "track.updateNowPlaying".to_string());
+    params.insert("api_key".to_string(), API_KEY.to_string());
+    params.insert("sk".to_string(), session_key.clone());
+    params.insert("artist".to_string(), artist);
+    params.insert("track".to_string(), track);
+
+    if let Some(album_name) = album {
+        params.insert("album".to_string(), album_name);
+    }
+
+    if let Some(dur) = duration {
+        params.insert("duration".to_string(), dur.to_string());
+    }
+
+    let api_sig = generate_signature(&params);
+    params.insert("api_sig".to_string(), api_sig);
+    params.insert("format".to_string(), "json".to_string());
+
+    let response = client
+        .post(API_ROOT)
+        .form(&params)
+        .send()
+        .await
+        .map_err(|e| {
+            error!("Failed to update Now Playing: {}", e);
+            MuseeksError::LastFm(format!("Failed to update Now Playing: {}", e))
+        })?;
+
+    let json: LastfmResponse<serde_json::Value> = response
+        .json()
+        .await
+        .map_err(|e| MuseeksError::LastFm(format!("Failed to parse response: {}", e)))?;
+
+    if let Some(error_code) = json.error {
+        error!(
+            "Last.fm Now Playing error {}: {}",
+            error_code,
+            json.message.unwrap_or_default()
+        );
+    }
+
+    Ok(())
+}
+
+/**
+ * Scrobble a track to Last.fm
+ * Should be called when a track has been played for at least 50% or 4 minutes
+ */
+#[tauri::command]
+pub async fn lastfm_scrobble(
+    artist: String,
+    track: String,
+    timestamp: u64, // Unix timestamp when playback started
+    album: Option<String>,
+    duration: Option<u32>,
+    config_manager: State<'_, ConfigManager>,
+) -> AnyResult<()> {
+    let config = config_manager.get()?;
+
+    if !config.lastfm_enabled {
+        return Ok(());
+    }
+
+    let session_key = match &config.lastfm_session_key {
+        Some(key) => key,
+        None => return Ok(()),
+    };
+
+    info!("Scrobbling to Last.fm: {} - {}", artist, track);
+
+    let client = Client::new();
+    let mut params = HashMap::new();
+    params.insert("method".to_string(), "track.scrobble".to_string());
+    params.insert("api_key".to_string(), API_KEY.to_string());
+    params.insert("sk".to_string(), session_key.clone());
+    params.insert("artist".to_string(), artist);
+    params.insert("track".to_string(), track);
+    params.insert("timestamp".to_string(), timestamp.to_string());
+
+    if let Some(album_name) = album {
+        params.insert("album".to_string(), album_name);
+    }
+
+    if let Some(dur) = duration {
+        params.insert("duration".to_string(), dur.to_string());
+    }
+
+    let api_sig = generate_signature(&params);
+    params.insert("api_sig".to_string(), api_sig);
+    params.insert("format".to_string(), "json".to_string());
+
+    let response = client
+        .post(API_ROOT)
+        .form(&params)
+        .send()
+        .await
+        .map_err(|e| {
+            error!("Failed to scrobble: {}", e);
+            MuseeksError::LastFm(format!("Failed to scrobble: {}", e))
+        })?;
+
+    let json: LastfmResponse<serde_json::Value> = response
+        .json()
+        .await
+        .map_err(|e| MuseeksError::LastFm(format!("Failed to parse response: {}", e)))?;
+
+    if let Some(error_code) = json.error {
+        let message = json.message.unwrap_or_default();
+        error!("Last.fm scrobble error {}: {}", error_code, message);
+        return Err(MuseeksError::LastFm(format!(
+            "Scrobble failed: {}",
+            message
+        )));
+    }
+
+    info!("Successfully scrobbled track");
+    Ok(())
+}
+
 pub fn init<R: Runtime>() -> TauriPlugin<R> {
     Builder::<R>::new("lastfm")
         .invoke_handler(tauri::generate_handler![
@@ -257,6 +403,8 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
             lastfm_get_session,
             lastfm_disconnect,
             lastfm_test_connection,
+            lastfm_now_playing,
+            lastfm_scrobble,
         ])
         .build()
 }
