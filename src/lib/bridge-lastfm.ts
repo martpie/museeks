@@ -58,6 +58,52 @@ const LastfmBridge = {
       return false;
     }
   },
+
+  /**
+   * Update "Now Playing" status on Last.fm
+   * Should be called when a track starts playing
+   */
+  async nowPlaying(
+    artist: string,
+    track: string,
+    album?: string,
+    duration?: number,
+  ): Promise<void> {
+    try {
+      await invoke('plugin:lastfm|lastfm_now_playing', {
+        artist,
+        track,
+        album: album ?? null,
+        duration: duration ?? null,
+      });
+    } catch (err) {
+      logAndNotifyError(err);
+    }
+  },
+
+  /**
+   * Scrobble a track to Last.fm
+   * Should be called when a track has been played for at least 50% or 4 minutes
+   */
+  async scrobble(
+    artist: string,
+    track: string,
+    timestamp: number,
+    album?: string,
+    duration?: number,
+  ): Promise<void> {
+    try {
+      await invoke('plugin:lastfm|lastfm_scrobble', {
+        artist,
+        track,
+        timestamp,
+        album: album ?? null,
+        duration: duration ?? null,
+      });
+    } catch (err) {
+      logAndNotifyError(err);
+    }
+  },
 };
 
 export default LastfmBridge;
