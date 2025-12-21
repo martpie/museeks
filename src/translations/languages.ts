@@ -41,6 +41,12 @@ export const NON_DEFAULT_LANGUAGES = [
     code: 'zh-TW',
     contributors: ['Solvig Xu'],
   },
+  {
+    label: 'Español',
+    englishLabel: 'Spanish',
+    code: 'es',
+    contributors: ['Cayetano López'],
+  },
 ];
 
 export const ALL_LANGUAGES = [DEFAULT_LANGUAGE, ...NON_DEFAULT_LANGUAGES];
