@@ -47,6 +47,6 @@ export const NON_DEFAULT_LANGUAGES = [
     code: 'es',
     contributors: ['Cayetano López'],
   },
-];
+].sort((a, b) => a.code.localeCompare(b.code));
 
 export const ALL_LANGUAGES = [DEFAULT_LANGUAGE, ...NON_DEFAULT_LANGUAGES];
