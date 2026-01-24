@@ -10,25 +10,25 @@ repository = "https://github.com/martpie/museeks"
 edition = "2024"
 
 [build-dependencies]
-tauri-build = { version = "2.5.1", features = ["codegen"] }
+tauri-build = { version = "2.5.3", features = ["codegen"] }
 
 [dependencies]
-tauri = { version = "2.9.2", features = [
+tauri = { version = "2.9.5", features = [
     "protocol-asset",
     "image-png",
     "devtools",
 ] }
 tauri-plugin-clipboard-manager = "2.3.2"
-tauri-plugin-dialog = "2.4.2"
-tauri-plugin-fs = "2.4.4"
-tauri-plugin-log = { version = "2.7.1", features = ["colored"] }
+tauri-plugin-dialog = "2.6.0"
+tauri-plugin-fs = "2.4.5"
+tauri-plugin-log = { version = "2.8.0", features = ["colored"] }
 tauri-plugin-notification = "2.3.3"
-tauri-plugin-opener = "2.5.2"
+tauri-plugin-opener = "2.5.3"
 tauri-plugin-os = "2.3.2"
-tauri-plugin-prevent-default = "4.0.2"
+tauri-plugin-prevent-default = "4.0.3"
 tauri-plugin-process = "2.3.1"
-tauri-plugin-shell = "2.3.3"
-tauri-plugin-single-instance = "2.3.6"
+tauri-plugin-shell = "2.3.4"
+tauri-plugin-single-instance = "2.3.7"
 tauri-plugin-window-state = "2.4.1"
 
 # non-Tauri dependencies
@@ -37,23 +37,23 @@ base64 = "0.22.1"
 dirs = "6.0.0"
 futures = "0.3.31"
 home-config = { version = "0.6.0", features = ["toml"] }
-indexmap = "2.12.0"
+indexmap = "2.13.0"
 itertools = "0.14.0"
-log = "0.4.28"
+log = "0.4.29"
 lofty = "0.22.4"
 m3u = "1.0.0"
-memoize = "0.5.1"
+memoize = "0.6.0"
 nosleep = "0.2.1"
 pathdiff = "0.2.3"
 rayon = "1.11.0"
 serde = { version = "1.0.228", features = ["derive"] }
-serde_json = "1.0.145"
+serde_json = "1.0.149"
 sqlx = { version = "0.8.6", features = ["sqlite", "runtime-tokio", "macros"] }
 strum = { version = "0.27.2", features = ["derive"] }
-tokio = { version = "1.48.0", features = ["full"] }
-thiserror = "2.0.17"
+tokio = { version = "1.49.0", features = ["full"] }
+thiserror = "2.0.18"
 ts-rs = "11.1.0"
-uuid = { version = "1.18.1", features = ["v3", "v4", "fast-rng"] }
+uuid = { version = "1.19.0", features = ["v3", "v4", "fast-rng"] }
 walkdir = "2.5.0"
 
 [profile.dev]
