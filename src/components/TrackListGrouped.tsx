@@ -88,7 +88,7 @@ function TrackListGroup(props: TrackListGroupProps) {
   }
 
   return (
-    <div className={styles.group}>
+    <div className={styles.group} data-track-group={label}>
       <aside className={styles.aside}>
         {/** Instead of the first one, maybe get the first track within the album to hold a cover? */}
         <Cover track={tracks[0]} iconSize={36} />

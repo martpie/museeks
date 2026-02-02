@@ -3,6 +3,7 @@ import {
   Link as RouterLink,
   type ValidateLinkOptions,
 } from '@tanstack/react-router';
+import cx from 'classnames';
 
 import styles from './Link.module.css';
 
@@ -12,11 +13,15 @@ interface LinkProps<
 > {
   linkOptions: ValidateLinkOptions<TRouter, TOptions>;
   children: React.ReactNode;
+  inheritColor?: boolean;
+  notBold?: boolean;
 }
 
 interface ButtonProps {
   onClick: () => void;
   children: React.ReactNode;
+  inheritColor?: boolean;
+  notBold?: boolean;
 }
 
 /**
@@ -26,12 +31,17 @@ export default function Link<TRouter extends RegisteredRouter, TOptions>(
   props: LinkProps<TRouter, TOptions> | ButtonProps,
 ): React.ReactNode;
 export default function Link(props: LinkProps | ButtonProps): React.ReactNode {
+  const classNames = cx(styles.link, {
+    [styles.inheritColor]: props.inheritColor === true,
+    [styles.notBold]: props.notBold === true,
+  });
+
   if ('linkOptions' in props) {
     return (
       <RouterLink
         {...props.linkOptions}
         draggable={false}
-        className={styles.link}
+        className={classNames}
       >
         {props.children}
       </RouterLink>
@@ -39,7 +49,7 @@ export default function Link(props: LinkProps | ButtonProps): React.ReactNode {
   }
 
   return (
-    <button className={styles.link} onClick={props.onClick} type="button">
+    <button className={classNames} onClick={props.onClick} type="button">
       {props.children}
     </button>
   );

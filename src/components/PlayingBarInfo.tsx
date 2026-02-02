@@ -1,3 +1,4 @@
+import Link from '../elements/Link';
 import type { Repeat, Track } from '../generated/typings';
 import useFormattedDuration from '../hooks/useFormattedDuration';
 import usePlayingTrackCurrentTime from '../hooks/usePlayingTrackCurrentTime';
@@ -34,9 +35,34 @@ export default function PlayingBarInfo(props: Props) {
             className={styles.metadata}
             data-testid="playing-track-artist-album"
           >
-            {trackPlaying.artists.join(', ')}
+            <Link
+              inheritColor
+              notBold
+              linkOptions={{
+                to: '/artists/$artistID',
+                params: {
+                  artistID: trackPlaying.album_artist,
+                },
+              }}
+            >
+              {trackPlaying.artists.join(', ')}
+            </Link>
             &nbsp;—&nbsp;
-            {trackPlaying.album}
+            <Link
+              inheritColor
+              notBold
+              linkOptions={{
+                to: '/artists/$artistID',
+                params: {
+                  artistID: trackPlaying.album_artist,
+                },
+                search: {
+                  focused_album: trackPlaying.album,
+                },
+              }}
+            >
+              {trackPlaying.album}
+            </Link>
           </div>
         </div>
 

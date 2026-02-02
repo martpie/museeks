@@ -9,6 +9,7 @@
   font-weight: 600;
   transition: box-shadow 0.2s ease-in-out;
   position: relative;
+  pointer-events: all;
 
   &::before {
     content: "";
@@ -28,5 +29,13 @@
 
   &:visited {
     color: var(--link-color);
+  }
+
+  &.inheritColor {
+    color: inherit;
+  }
+
+  &.notBold {
+    font-weight: normal;
   }
 }
