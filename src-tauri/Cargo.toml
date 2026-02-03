@@ -13,7 +13,7 @@ edition = "2024"
 tauri-build = { version = "2.5.4", features = ["codegen"] }
 
 [dependencies]
-tauri = { version = "2.10.0", features = [
+tauri = { version = "2.10.1", features = [
     "protocol-asset",
     "image-png",
     "devtools",
@@ -27,7 +27,7 @@ tauri-plugin-opener = "2.5.3"
 tauri-plugin-os = "2.3.2"
 tauri-plugin-prevent-default = "4.0.3"
 tauri-plugin-process = "2.3.1"
-tauri-plugin-shell = "2.3.4"
+tauri-plugin-shell = "2.3.5"
 tauri-plugin-single-instance = "2.3.7"
 tauri-plugin-window-state = "2.4.1"
 
