@@ -21,6 +21,9 @@ finish-args:
   - --socket=pulseaudio
   # Webview is black otherwise, may be a Wayland issue
   - --env=WEBKIT_DISABLE_COMPOSITING_MODE=1
+  # Ensure single-instance works fine
+  - --talk-name=io.museeks.app
+  - --own-name=io.museeks.app
 
 modules:
   - name: binary
