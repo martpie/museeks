@@ -16,5 +16,7 @@ declare global {
     __MUSEEKS_INITIAL_CONFIG: Config;
     __MUSEEKS_INITIAL_QUEUE: Array<Track> | null;
     __MUSEEKS_PLAYER: Player;
+    /** Linux-only: port of the local HTTP server for audio streaming */
+    __MUSEEKS_STREAM_SERVER_PORT?: number;
   }
 }

@@ -25,7 +25,7 @@
         "default-src": "'self' asset: http://asset.localhost",
         "connect-src": "'self' asset: http://asset.localhost blob: ipc: http://ipc.localhost https://api.github.com",
         "img-src": "'self' asset: http://asset.localhost data:",
-        "media-src": "'self' asset: http://asset.localhost blob: data:",
+        "media-src": "'self' asset: http://asset.localhost blob: data: http://127.0.0.1:*",
         "child-src": "'self'; object-src 'self'",
         "font-src": "'self' data:",
         "style-src": "'self' 'unsafe-inline'"

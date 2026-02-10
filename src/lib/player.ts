@@ -57,7 +57,6 @@ export interface PlayerEvents {
  */
 class Player extends EventEmitter<PlayerEvents> {
   private readonly audio: HTMLAudioElement;
-  private blobUrl: string | null;
 
   // Queue state
   private queue: Track[];
@@ -85,7 +84,6 @@ class Player extends EventEmitter<PlayerEvents> {
     };
 
     this.audio = new Audio();
-    this.blobUrl = null;
     this.queue = [];
     this.oldQueue = [];
     this.queueCursor = null;
@@ -277,12 +275,6 @@ class Player extends EventEmitter<PlayerEvents> {
 
   stop() {
     this.audio.pause();
-
-    // Revoke blob URL if it exists
-    if (this.blobUrl !== null) {
-      URL.revokeObjectURL(this.blobUrl);
-      this.blobUrl = null;
-    }
 
     this.queue = [];
     this.queueCursor = null;
@@ -584,18 +576,14 @@ class Player extends EventEmitter<PlayerEvents> {
   // ============================================================================
 
   async setTrack(track: Track) {
-    // Revoke previous blob URL if it exists to prevent memory leaks
-    if (this.blobUrl !== null) {
-      URL.revokeObjectURL(this.blobUrl);
-      this.blobUrl = null;
-    }
-
-    // Cursed Linux: https://github.com/tauri-apps/tauri/issues/3725#issuecomment-2325248116
-    if (window.__MUSEEKS_PLATFORM === 'linux') {
-      this.blobUrl = URL.createObjectURL(
-        await fetch(convertFileSrc(track.path)).then((res) => res.blob()),
-      );
-      this.audio.src = this.blobUrl;
+    // On Linux, use a local HTTP server for audio streaming because
+    // WebKitGTK's asset protocol doesn't support media streaming properly.
+    // See: https://github.com/tauri-apps/tauri/issues/3725
+    if (
+      window.__MUSEEKS_PLATFORM === 'linux' &&
+      window.__MUSEEKS_STREAM_SERVER_PORT != null
+    ) {
+      this.audio.src = `http://127.0.0.1:${window.__MUSEEKS_STREAM_SERVER_PORT}/stream?path=${encodeURIComponent(track.path)}`;
     } else {
       this.audio.src = convertFileSrc(track.path);
     }
