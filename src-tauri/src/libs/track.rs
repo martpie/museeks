@@ -29,7 +29,7 @@ pub struct Track {
     pub artists: Vec<String>, // JSON
     #[sqlx(json)]
     pub genres: Vec<String>, // JSON
-    pub year: Option<u32>,
+    pub year: Option<u16>,
     pub duration: u32,
     pub track_no: Option<u32>,
     pub track_of: Option<u32>,
@@ -47,7 +47,7 @@ pub struct TrackGroup {
     pub label: String,
     pub genres: Vec<String>,
     pub duration: u32,
-    pub year: Option<u32>,
+    pub year: Option<u16>,
     pub tracks: Vec<Track>,
 }
 
@@ -67,14 +67,14 @@ pub fn get_track_from_file(path: &PathBuf) -> AnyResult<Track> {
             // of being correct, we'll swap them if needed.
             // IMPROVE ME: Is there a more idiomatic way of doing the following?
             let mut artists: Vec<String> = tag
-                .get_strings(&ItemKey::TrackArtist)
+                .get_strings(ItemKey::TrackArtist)
                 .map(ToString::to_string)
                 .filter(|s| !s.is_empty())
                 .collect();
 
             if artists.is_empty() {
                 artists = tag
-                    .get_strings(&ItemKey::AlbumArtist)
+                    .get_strings(ItemKey::AlbumArtist)
                     .map(ToString::to_string)
                     .filter(|s| !s.is_empty())
                     .collect();
@@ -86,7 +86,7 @@ pub fn get_track_from_file(path: &PathBuf) -> AnyResult<Track> {
 
             // Try AlbumArtist, fallback to first artist, then to "Unknown Artist"
             let album_artist = tag
-                .get_string(&ItemKey::AlbumArtist)
+                .get_string(ItemKey::AlbumArtist)
                 .map(ToString::to_string)
                 .or_else(|| artists.first().cloned())
                 .filter(|s| !s.is_empty())
@@ -98,7 +98,7 @@ pub fn get_track_from_file(path: &PathBuf) -> AnyResult<Track> {
                 id,
                 path: path.to_string_lossy().into_owned(),
                 title: tag
-                    .get_string(&ItemKey::TrackTitle)
+                    .get_string(ItemKey::TrackTitle)
                     .filter(|s| !s.is_empty())
                     .map(ToString::to_string)
                     .unwrap_or_else(|| {
@@ -108,18 +108,18 @@ pub fn get_track_from_file(path: &PathBuf) -> AnyResult<Track> {
                             .to_string()
                     }),
                 album: tag
-                    .get_string(&ItemKey::AlbumTitle)
+                    .get_string(ItemKey::AlbumTitle)
                     .filter(|s| !s.is_empty())
                     .map(ToString::to_string)
                     .unwrap_or_else(|| "Unknown".to_string()),
                 album_artist,
                 artists,
                 genres: tag
-                    .get_strings(&ItemKey::Genre)
+                    .get_strings(ItemKey::Genre)
                     .map(ToString::to_string)
                     .filter(|s| !s.is_empty())
                     .collect(),
-                year: tag.year(),
+                year: tag.date().map(|d| d.year),
                 duration: u32::try_from(tagged_file.properties().duration().as_secs()).unwrap_or(0),
                 track_no: tag.track(),
                 track_of: tag.track_total(),

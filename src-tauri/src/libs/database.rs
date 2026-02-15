@@ -234,7 +234,7 @@ impl DB {
         // tracks can have different years. If no year is provided, put the group
         // at the end, as it's probably a library management issue, and we want
         // clean lists!
-        track_groups.sort_by_key(|group| group.year.unwrap_or(u32::MAX));
+        track_groups.sort_by_key(|group| group.year.unwrap_or(u16::MAX));
 
         Ok(track_groups)
     }
