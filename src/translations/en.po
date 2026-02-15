@@ -49,12 +49,13 @@ msgstr "Library"
 
 #: src/components/Footer.tsx:31
 #: src/routes/artists.tsx:52
+#: src/routes/settings.ui.tsx:136
 msgid "Artists"
 msgstr "Artists"
 
 #: src/components/Footer.tsx:41
 #: src/routes/playlists.tsx:165
-#: src/routes/settings.ui.tsx:136
+#: src/routes/settings.ui.tsx:139
 msgid "Playlists"
 msgstr "Playlists"
 
@@ -492,35 +493,35 @@ msgstr "Change the default view when starting the application"
 msgid "Library (default)"
 msgstr "Library (default)"
 
-#: src/routes/settings.ui.tsx:142
+#: src/routes/settings.ui.tsx:145
 msgid "Display Notifications"
 msgstr "Display Notifications"
 
-#: src/routes/settings.ui.tsx:143
+#: src/routes/settings.ui.tsx:146
 msgid "Send notifications when the playing track changes"
 msgstr "Send notifications when the playing track changes"
 
-#: src/routes/settings.ui.tsx:152
+#: src/routes/settings.ui.tsx:155
 msgid "Sleep mode blocker"
 msgstr "Sleep mode blocker"
 
-#: src/routes/settings.ui.tsx:153
+#: src/routes/settings.ui.tsx:156
 msgid "Prevent the computer from going into sleep mode when playing"
 msgstr "Prevent the computer from going into sleep mode when playing"
 
-#: src/routes/settings.ui.tsx:161
+#: src/routes/settings.ui.tsx:164
 msgid "[Beta] Wayland compatibility enhancements"
 msgstr "[Beta] Wayland compatibility enhancements"
 
-#: src/routes/settings.ui.tsx:162
+#: src/routes/settings.ui.tsx:165
 msgid "If you face issues using Wayland, try out this option"
 msgstr "If you face issues using Wayland, try out this option"
 
-#: src/routes/settings.ui.tsx:185
+#: src/routes/settings.ui.tsx:188
 msgid "Light"
 msgstr "Light"
 
-#: src/routes/settings.ui.tsx:187
+#: src/routes/settings.ui.tsx:190
 msgid "Dark"
 msgstr "Dark"
 

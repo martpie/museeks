@@ -49,12 +49,13 @@ msgstr "音樂庫"
 
 #: src/components/Footer.tsx:31
 #: src/routes/artists.tsx:52
+#: src/routes/settings.ui.tsx:136
 msgid "Artists"
 msgstr "藝術家"
 
 #: src/components/Footer.tsx:41
 #: src/routes/playlists.tsx:165
-#: src/routes/settings.ui.tsx:136
+#: src/routes/settings.ui.tsx:139
 msgid "Playlists"
 msgstr "播放清單"
 
@@ -492,35 +493,35 @@ msgstr "變更啟動應用程式時的預設檢視"
 msgid "Library (default)"
 msgstr "音樂庫（預設）"
 
-#: src/routes/settings.ui.tsx:142
+#: src/routes/settings.ui.tsx:145
 msgid "Display Notifications"
 msgstr "顯示通知"
 
-#: src/routes/settings.ui.tsx:143
+#: src/routes/settings.ui.tsx:146
 msgid "Send notifications when the playing track changes"
 msgstr "播放音軌變更時發送通知"
 
-#: src/routes/settings.ui.tsx:152
+#: src/routes/settings.ui.tsx:155
 msgid "Sleep mode blocker"
 msgstr "睡眠模式阻止器"
 
-#: src/routes/settings.ui.tsx:153
+#: src/routes/settings.ui.tsx:156
 msgid "Prevent the computer from going into sleep mode when playing"
 msgstr "播放時防止電腦進入睡眠模式"
 
-#: src/routes/settings.ui.tsx:161
+#: src/routes/settings.ui.tsx:164
 msgid "[Beta] Wayland compatibility enhancements"
 msgstr "[測試版] Wayland 相容性強化"
 
-#: src/routes/settings.ui.tsx:162
+#: src/routes/settings.ui.tsx:165
 msgid "If you face issues using Wayland, try out this option"
 msgstr "如果您在使用 Wayland 時遇到問題，請嘗試此選項"
 
-#: src/routes/settings.ui.tsx:185
+#: src/routes/settings.ui.tsx:188
 msgid "Light"
 msgstr "淺色"
 
-#: src/routes/settings.ui.tsx:187
+#: src/routes/settings.ui.tsx:190
 msgid "Dark"
 msgstr "深色"
 
