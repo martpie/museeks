@@ -112,7 +112,7 @@ fn main() {
                 .title_bar_style(tauri::TitleBarStyle::Overlay)
                 .traffic_light_position(tauri::Position::Logical(tauri::LogicalPosition {
                     x: 10.0,
-                    y: 23.0,
+                    y: 27.0,
                 }))
                 .build()?;
 
