@@ -3,7 +3,7 @@
 import type { OsType } from '@tauri-apps/plugin-os';
 
 import type { Config, Track } from '../../generated/typings';
-import type Player from '../lib/player';
+import type { PlayerInstance } from '../../lib/player';
 
 declare global {
   /**
@@ -15,6 +15,6 @@ declare global {
     __MUSEEKS_PLATFORM: OsType;
     __MUSEEKS_INITIAL_CONFIG: Config;
     __MUSEEKS_INITIAL_QUEUE: Array<Track> | null;
-    __MUSEEKS_PLAYER: Player;
+    __MUSEEKS_PLAYER: PlayerInstance;
   }
 }

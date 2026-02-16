@@ -677,6 +677,8 @@ class Player extends EventEmitter<PlayerEvents> {
   }
 }
 
+export type PlayerInstance = InstanceType<typeof Player>;
+
 /**
  * Create and export singleton player instance
  */
