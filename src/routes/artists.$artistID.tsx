@@ -61,12 +61,10 @@ export default function ViewArtistDetails() {
 
   useEffect(() => {
     if (focusedAlbum) {
-      console.log(`[data-track-group="${focusedAlbum}"]`);
       const element = document.querySelector(
-        `[data-track-group="${focusedAlbum}"]`,
+        `[data-track-group="${encodeURIComponent(focusedAlbum)}"]`,
       );
 
-      console.log(element);
       element?.scrollIntoView({ behavior: 'instant', block: 'start' });
     }
   }, [focusedAlbum]);

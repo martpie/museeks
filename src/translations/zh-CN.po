@@ -49,12 +49,13 @@ msgstr "音乐库"
 
 #: src/components/Footer.tsx:31
 #: src/routes/artists.tsx:52
+#: src/routes/settings.ui.tsx:136
 msgid "Artists"
 msgstr "艺术家"
 
 #: src/components/Footer.tsx:41
 #: src/routes/playlists.tsx:165
-#: src/routes/settings.ui.tsx:136
+#: src/routes/settings.ui.tsx:139
 msgid "Playlists"
 msgstr "播放列表"
 
@@ -66,22 +67,26 @@ msgstr "设置"
 msgid "scanning tracks..."
 msgstr "正在扫描音轨..."
 
-#: src/components/GlobalErrors.tsx:32
+#: src/components/GlobalErrors.tsx:33
 msgid "Something wrong happened: {errorMessage}"
 msgstr "发生了错误：{errorMessage}"
 
-#: src/components/GlobalErrors.tsx:46
+#: src/components/GlobalErrors.tsx:47
 msgid "how?"
 msgstr "怎么回事？"
 
 #. placeholder {0}: location.pathname
-#: src/components/GlobalErrors.tsx:49
+#: src/components/GlobalErrors.tsx:50
 msgid "View not found ({0}). How did you get here?"
 msgstr "页面未找到 ({0})。您是怎么到达这里的？"
 
-#: src/components/GlobalErrors.tsx:61
-msgid "If it happens again, please <0>report an issue</0>"
-msgstr "如果再次发生，请<0>报告问题</0>"
+#: src/components/GlobalErrors.tsx:62
+msgid "Try <0>reloading the app</0>,"
+msgstr "尝试 <0>重新加载应用程序</0>，"
+
+#: src/components/GlobalErrors.tsx:74
+msgid "or if it happens again, please <0>report an issue</0>."
+msgstr "如果再次发生，请<0>报告问题</0>。"
 
 #: src/components/Header.tsx:34
 msgid "Queue"
@@ -492,35 +497,35 @@ msgstr "更改启动应用程序时的默认视图"
 msgid "Library (default)"
 msgstr "音乐库（默认）"
 
-#: src/routes/settings.ui.tsx:142
+#: src/routes/settings.ui.tsx:145
 msgid "Display Notifications"
 msgstr "显示通知"
 
-#: src/routes/settings.ui.tsx:143
+#: src/routes/settings.ui.tsx:146
 msgid "Send notifications when the playing track changes"
 msgstr "播放音轨更改时发送通知"
 
-#: src/routes/settings.ui.tsx:152
+#: src/routes/settings.ui.tsx:155
 msgid "Sleep mode blocker"
 msgstr "睡眠模式阻止器"
 
-#: src/routes/settings.ui.tsx:153
+#: src/routes/settings.ui.tsx:156
 msgid "Prevent the computer from going into sleep mode when playing"
 msgstr "播放时防止计算机进入睡眠模式"
 
-#: src/routes/settings.ui.tsx:161
+#: src/routes/settings.ui.tsx:164
 msgid "[Beta] Wayland compatibility enhancements"
 msgstr "[测试版] Wayland 兼容性增强"
 
-#: src/routes/settings.ui.tsx:162
+#: src/routes/settings.ui.tsx:165
 msgid "If you face issues using Wayland, try out this option"
 msgstr "如果您在使用 Wayland 时遇到问题，请尝试此选项"
 
-#: src/routes/settings.ui.tsx:185
+#: src/routes/settings.ui.tsx:188
 msgid "Light"
 msgstr "浅色"
 
-#: src/routes/settings.ui.tsx:187
+#: src/routes/settings.ui.tsx:190
 msgid "Dark"
 msgstr "深色"
 

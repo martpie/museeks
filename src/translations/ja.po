@@ -49,12 +49,13 @@ msgstr "ライブラリ"
 
 #: src/components/Footer.tsx:31
 #: src/routes/artists.tsx:52
+#: src/routes/settings.ui.tsx:136
 msgid "Artists"
 msgstr "アーティスト"
 
 #: src/components/Footer.tsx:41
 #: src/routes/playlists.tsx:165
-#: src/routes/settings.ui.tsx:136
+#: src/routes/settings.ui.tsx:139
 msgid "Playlists"
 msgstr "プレイリスト"
 
@@ -66,22 +67,26 @@ msgstr "設定"
 msgid "scanning tracks..."
 msgstr "トラックをスキャン中..."
 
-#: src/components/GlobalErrors.tsx:32
+#: src/components/GlobalErrors.tsx:33
 msgid "Something wrong happened: {errorMessage}"
 msgstr "エラーが発生しました：{errorMessage}"
 
-#: src/components/GlobalErrors.tsx:46
+#: src/components/GlobalErrors.tsx:47
 msgid "how?"
 msgstr "どうして？"
 
 #. placeholder {0}: location.pathname
-#: src/components/GlobalErrors.tsx:49
+#: src/components/GlobalErrors.tsx:50
 msgid "View not found ({0}). How did you get here?"
 msgstr "ページが見つかりません（{0}）。どうやってここに来ましたか？"
 
-#: src/components/GlobalErrors.tsx:61
-msgid "If it happens again, please <0>report an issue</0>"
-msgstr "再度発生した場合は、<0>問題を報告</0>してください"
+#: src/components/GlobalErrors.tsx:62
+msgid "Try <0>reloading the app</0>,"
+msgstr "<0>アプリを再読み込み</0>してみてください、"
+
+#: src/components/GlobalErrors.tsx:74
+msgid "or if it happens again, please <0>report an issue</0>."
+msgstr "また同じことが起こった場合は、<0>問題を報告してください</0>。"
 
 #: src/components/Header.tsx:34
 msgid "Queue"
@@ -492,35 +497,35 @@ msgstr "アプリケーション起動時のデフォルトビューを変更"
 msgid "Library (default)"
 msgstr "ライブラリ（デフォルト）"
 
-#: src/routes/settings.ui.tsx:142
+#: src/routes/settings.ui.tsx:145
 msgid "Display Notifications"
 msgstr "通知を表示"
 
-#: src/routes/settings.ui.tsx:143
+#: src/routes/settings.ui.tsx:146
 msgid "Send notifications when the playing track changes"
 msgstr "再生中のトラックが変更された時に通知を送信"
 
-#: src/routes/settings.ui.tsx:152
+#: src/routes/settings.ui.tsx:155
 msgid "Sleep mode blocker"
 msgstr "スリープモード防止"
 
-#: src/routes/settings.ui.tsx:153
+#: src/routes/settings.ui.tsx:156
 msgid "Prevent the computer from going into sleep mode when playing"
 msgstr "再生中にコンピューターがスリープモードに入るのを防ぐ"
 
-#: src/routes/settings.ui.tsx:161
+#: src/routes/settings.ui.tsx:164
 msgid "[Beta] Wayland compatibility enhancements"
 msgstr "[ベータ] Wayland互換性強化"
 
-#: src/routes/settings.ui.tsx:162
+#: src/routes/settings.ui.tsx:165
 msgid "If you face issues using Wayland, try out this option"
 msgstr "Waylandの使用で問題が発生した場合は、このオプションをお試しください"
 
-#: src/routes/settings.ui.tsx:185
+#: src/routes/settings.ui.tsx:188
 msgid "Light"
 msgstr "ライト"
 
-#: src/routes/settings.ui.tsx:187
+#: src/routes/settings.ui.tsx:190
 msgid "Dark"
 msgstr "ダーク"
 

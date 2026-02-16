@@ -32,6 +32,7 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
 
                 let fragment = match default_view {
                     DefaultView::Library => "/library",
+                    DefaultView::Artists => "/artists",
                     DefaultView::Playlists => "/playlists",
                 };
 

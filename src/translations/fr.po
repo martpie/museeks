@@ -49,12 +49,13 @@ msgstr "Bibliothèque"
 
 #: src/components/Footer.tsx:31
 #: src/routes/artists.tsx:52
+#: src/routes/settings.ui.tsx:136
 msgid "Artists"
 msgstr "Artistes"
 
 #: src/components/Footer.tsx:41
 #: src/routes/playlists.tsx:165
-#: src/routes/settings.ui.tsx:136
+#: src/routes/settings.ui.tsx:139
 msgid "Playlists"
 msgstr "Playlists"
 
@@ -66,22 +67,26 @@ msgstr "Paramètres"
 msgid "scanning tracks..."
 msgstr "scan des pistes..."
 
-#: src/components/GlobalErrors.tsx:32
+#: src/components/GlobalErrors.tsx:33
 msgid "Something wrong happened: {errorMessage}"
 msgstr "Une erreur s'est produite : {errorMessage}"
 
-#: src/components/GlobalErrors.tsx:46
+#: src/components/GlobalErrors.tsx:47
 msgid "how?"
 msgstr "comment ?"
 
 #. placeholder {0}: location.pathname
-#: src/components/GlobalErrors.tsx:49
+#: src/components/GlobalErrors.tsx:50
 msgid "View not found ({0}). How did you get here?"
 msgstr "Vue non trouvée ({0}). Comment êtes-vous arrivé ici ?"
 
-#: src/components/GlobalErrors.tsx:61
-msgid "If it happens again, please <0>report an issue</0>"
-msgstr "Si cela se produit à nouveau, veuillez <0>signaler un problème</0>"
+#: src/components/GlobalErrors.tsx:62
+msgid "Try <0>reloading the app</0>,"
+msgstr "Essayez de <0>recharger l'application</0>,"
+
+#: src/components/GlobalErrors.tsx:74
+msgid "or if it happens again, please <0>report an issue</0>."
+msgstr "ou si cela se reproduit, veuillez <0>signaler un problème</0>."
 
 #: src/components/Header.tsx:34
 msgid "Queue"
@@ -492,35 +497,35 @@ msgstr "Changer la vue par défaut au démarrage de l'application"
 msgid "Library (default)"
 msgstr "Bibliothèque (par défaut)"
 
-#: src/routes/settings.ui.tsx:142
+#: src/routes/settings.ui.tsx:145
 msgid "Display Notifications"
 msgstr "Afficher les notifications"
 
-#: src/routes/settings.ui.tsx:143
+#: src/routes/settings.ui.tsx:146
 msgid "Send notifications when the playing track changes"
 msgstr "Envoyer des notifications lorsque la piste en cours change"
 
-#: src/routes/settings.ui.tsx:152
+#: src/routes/settings.ui.tsx:155
 msgid "Sleep mode blocker"
 msgstr "Bloqueur de mode veille"
 
-#: src/routes/settings.ui.tsx:153
+#: src/routes/settings.ui.tsx:156
 msgid "Prevent the computer from going into sleep mode when playing"
 msgstr "Empêcher l'ordinateur de passer en mode veille lors de la lecture"
 
-#: src/routes/settings.ui.tsx:161
+#: src/routes/settings.ui.tsx:164
 msgid "[Beta] Wayland compatibility enhancements"
 msgstr "[Beta] Améliorations de la compatibilité Wayland"
 
-#: src/routes/settings.ui.tsx:162
+#: src/routes/settings.ui.tsx:165
 msgid "If you face issues using Wayland, try out this option"
 msgstr "Si vous rencontrez des problèmes avec Wayland, essayez cette option"
 
-#: src/routes/settings.ui.tsx:185
+#: src/routes/settings.ui.tsx:188
 msgid "Light"
 msgstr "Clair"
 
-#: src/routes/settings.ui.tsx:187
+#: src/routes/settings.ui.tsx:190
 msgid "Dark"
 msgstr "Sombre"
 

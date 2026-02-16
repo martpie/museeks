@@ -2,7 +2,7 @@
 
 export type Config = { language: string, theme: string, ui_accent_color: string | null, audio_volume: number, audio_playback_rate: number | null, audio_follow_playing_track: boolean, audio_muted: boolean, audio_shuffle: boolean, audio_repeat: Repeat, default_view: DefaultView, library_sort_by: SortBy, library_sort_order: SortOrder, library_folders: Array<string>, library_autorefresh: boolean, sleepblocker: boolean, auto_update_checker: boolean, notifications: boolean, track_view_density: TrackViewDensity, wayland_compat: boolean, };
 
-export type DefaultView = "Library" | "Playlists";
+export type DefaultView = "Library" | "Artists" | "Playlists";
 
 export type IPCEvent = { "Unknown": string } | "PlaybackPlay" | "PlaybackPause" | "PlaybackStop" | "PlaybackPlayPause" | "PlaybackPrevious" | "PlaybackNext" | "PlaybackStart" | "LibraryScanProgress" | "GoToLibrary" | "GoToPlaylists" | "GoToSettings" | "JumpToPlayingTrack";
 

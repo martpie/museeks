@@ -41,6 +41,7 @@ pub enum SortOrder {
 #[ts(export, export_to = "../../src/generated/typings.ts")]
 pub enum DefaultView {
     Library,
+    Artists,
     Playlists,
 }
 
