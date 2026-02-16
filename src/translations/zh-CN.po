@@ -67,22 +67,26 @@ msgstr "设置"
 msgid "scanning tracks..."
 msgstr "正在扫描音轨..."
 
-#: src/components/GlobalErrors.tsx:32
+#: src/components/GlobalErrors.tsx:33
 msgid "Something wrong happened: {errorMessage}"
 msgstr "发生了错误：{errorMessage}"
 
-#: src/components/GlobalErrors.tsx:46
+#: src/components/GlobalErrors.tsx:47
 msgid "how?"
 msgstr "怎么回事？"
 
 #. placeholder {0}: location.pathname
-#: src/components/GlobalErrors.tsx:49
+#: src/components/GlobalErrors.tsx:50
 msgid "View not found ({0}). How did you get here?"
 msgstr "页面未找到 ({0})。您是怎么到达这里的？"
 
-#: src/components/GlobalErrors.tsx:61
-msgid "If it happens again, please <0>report an issue</0>"
-msgstr "如果再次发生，请<0>报告问题</0>"
+#: src/components/GlobalErrors.tsx:62
+msgid "Try <0>reloading the app</0>,"
+msgstr "尝试 <0>重新加载应用程序</0>，"
+
+#: src/components/GlobalErrors.tsx:74
+msgid "or if it happens again, please <0>report an issue</0>."
+msgstr "如果再次发生，请<0>报告问题</0>。"
 
 #: src/components/Header.tsx:34
 msgid "Queue"

@@ -7,6 +7,7 @@ import { type ErrorComponentProps, useLocation } from '@tanstack/react-router';
 import * as logger from '@tauri-apps/plugin-log';
 
 import ExternalLink from '../elements/ExternalLink';
+import Link from '../elements/Link';
 import * as ViewMessage from '../elements/ViewMessage';
 
 export function ErrorView(props: ErrorComponentProps) {
@@ -59,13 +60,26 @@ function Issue() {
   return (
     <ViewMessage.Sub>
       <Trans>
-        If it happens again, please{' '}
+        Try{' '}
+        <Link
+          onClick={() => {
+            window.location.assign(import.meta.env.BASE_URL);
+          }}
+        >
+          reloading the app
+        </Link>
+        ,
+      </Trans>
+      <br />
+      <Trans>
+        or if it happens again, please{' '}
         <ExternalLink
           href="https://github.com/martpie/museeks/issues"
           type="url"
         >
           report an issue
         </ExternalLink>
+        .
       </Trans>
     </ViewMessage.Sub>
   );
