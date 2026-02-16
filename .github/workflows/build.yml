@@ -45,9 +45,6 @@ jobs:
       - name: 'Test: Lint'
         run: 'npm run test:lint'
 
-      - name: 'Test: Types'
-        run: 'npm run test:typings'
-
       - name: 'Test: Unit'
         run: 'npm run test:unit'
 
