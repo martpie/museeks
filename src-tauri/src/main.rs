@@ -29,7 +29,7 @@ fn main() {
         }
     };
 
-    tauri::Builder::default()
+    let builder = tauri::Builder::default()
         .plugin(tauri_plugin_process::init())
         // Logging must be setup first, otherwise the logs won't be captured
         // while setting up the other plugins.
@@ -83,7 +83,14 @@ fn main() {
                     StateFlags::all() & !StateFlags::VISIBLE, // Museeks manages its visible state by itself
                 )
                 .build(),
-        )
+        );
+
+    // Linux-only: local HTTP server for audio streaming
+    // (WebKitGTK's asset protocol doesn't support media streaming)
+    #[cfg(target_os = "linux")]
+    let builder = builder.plugin(plugins::stream_server::init());
+
+    builder
         .setup(|app| {
             let config_manager = app.state::<ConfigManager>();
             let conf = config_manager.get()?;
