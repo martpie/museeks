@@ -42,28 +42,28 @@ msgstr "Добавить музыку в библиотеку"
 msgid "Drop folders anywhere"
 msgstr "Отпустите папки в любом месте"
 
-#: src/components/Footer.tsx:21
+#: src/components/FooterContent.tsx:21
 #: src/routes/settings.tsx:42
 msgid "Library"
 msgstr "Библиотека"
 
-#: src/components/Footer.tsx:31
+#: src/components/FooterContent.tsx:31
 #: src/routes/artists.tsx:52
 #: src/routes/settings.ui.tsx:136
 msgid "Artists"
 msgstr "Исполнители"
 
-#: src/components/Footer.tsx:41
+#: src/components/FooterContent.tsx:41
 #: src/routes/playlists.tsx:165
 #: src/routes/settings.ui.tsx:139
 msgid "Playlists"
 msgstr "Плейлисты"
 
-#: src/components/Footer.tsx:51
+#: src/components/FooterContent.tsx:51
 msgid "Settings"
 msgstr "Настройки"
 
-#: src/components/Footer.tsx:83
+#: src/components/FooterContent.tsx:83
 msgid "scanning tracks..."
 msgstr "сканирование треков..."
 
@@ -88,7 +88,7 @@ msgstr "Попробуйте <0>перезагрузить приложение<
 msgid "or if it happens again, please <0>report an issue</0>."
 msgstr "Если это случится снова, пожалуйста, <0>заявите об ошибке</0>."
 
-#: src/components/Header.tsx:34
+#: src/components/HeaderContent.tsx:34
 msgid "Queue"
 msgstr "Очередь"
 

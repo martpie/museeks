@@ -7,6 +7,11 @@ import { defineConfig, type PluginOption } from 'vite';
 import svgr from 'vite-plugin-svgr';
 
 export const VITE_PLUGINS: PluginOption[] = [
+  tanstackRouter({
+    target: 'react',
+    generatedRouteTree: './src/generated/route-tree.ts',
+    autoCodeSplitting: true,
+  }),
   react({
     babel: {
       plugins: [
@@ -19,10 +24,6 @@ export const VITE_PLUGINS: PluginOption[] = [
     },
   }),
   lingui(),
-  tanstackRouter({
-    target: 'react',
-    generatedRouteTree: './src/generated/route-tree.ts',
-  }),
   svgr(),
 ];
 
@@ -36,7 +37,10 @@ export default defineConfig({
     lightningcss: {
       cssModules: true,
       targets: browserslistToTargets(
-        browserslist(['last 3 Chrome versions', 'safari >= 13']),
+        browserslist([
+          'safari >= 11.1', // Linux WebKitGTK 2.24+ and macOS WebKit (conservative)
+          'edge >= 87', // Windows WebView2 (Chromium-based)
+        ]),
       ),
     },
   },

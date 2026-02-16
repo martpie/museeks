@@ -42,28 +42,28 @@ msgstr "ライブラリに音楽を追加"
 msgid "Drop folders anywhere"
 msgstr "フォルダーをどこにでもドロップしてください"
 
-#: src/components/Footer.tsx:21
+#: src/components/FooterContent.tsx:21
 #: src/routes/settings.tsx:42
 msgid "Library"
 msgstr "ライブラリ"
 
-#: src/components/Footer.tsx:31
+#: src/components/FooterContent.tsx:31
 #: src/routes/artists.tsx:52
 #: src/routes/settings.ui.tsx:136
 msgid "Artists"
 msgstr "アーティスト"
 
-#: src/components/Footer.tsx:41
+#: src/components/FooterContent.tsx:41
 #: src/routes/playlists.tsx:165
 #: src/routes/settings.ui.tsx:139
 msgid "Playlists"
 msgstr "プレイリスト"
 
-#: src/components/Footer.tsx:51
+#: src/components/FooterContent.tsx:51
 msgid "Settings"
 msgstr "設定"
 
-#: src/components/Footer.tsx:83
+#: src/components/FooterContent.tsx:83
 msgid "scanning tracks..."
 msgstr "トラックをスキャン中..."
 
@@ -88,7 +88,7 @@ msgstr "<0>アプリを再読み込み</0>してみてください、"
 msgid "or if it happens again, please <0>report an issue</0>."
 msgstr "また同じことが起こった場合は、<0>問題を報告してください</0>。"
 
-#: src/components/Header.tsx:34
+#: src/components/HeaderContent.tsx:34
 msgid "Queue"
 msgstr "キュー"
 

@@ -42,28 +42,28 @@ msgstr "添加音乐到音乐库"
 msgid "Drop folders anywhere"
 msgstr "将文件夹拖放到任意位置"
 
-#: src/components/Footer.tsx:21
+#: src/components/FooterContent.tsx:21
 #: src/routes/settings.tsx:42
 msgid "Library"
 msgstr "音乐库"
 
-#: src/components/Footer.tsx:31
+#: src/components/FooterContent.tsx:31
 #: src/routes/artists.tsx:52
 #: src/routes/settings.ui.tsx:136
 msgid "Artists"
 msgstr "艺术家"
 
-#: src/components/Footer.tsx:41
+#: src/components/FooterContent.tsx:41
 #: src/routes/playlists.tsx:165
 #: src/routes/settings.ui.tsx:139
 msgid "Playlists"
 msgstr "播放列表"
 
-#: src/components/Footer.tsx:51
+#: src/components/FooterContent.tsx:51
 msgid "Settings"
 msgstr "设置"
 
-#: src/components/Footer.tsx:83
+#: src/components/FooterContent.tsx:83
 msgid "scanning tracks..."
 msgstr "正在扫描音轨..."
 
@@ -88,7 +88,7 @@ msgstr "尝试 <0>重新加载应用程序</0>，"
 msgid "or if it happens again, please <0>report an issue</0>."
 msgstr "如果再次发生，请<0>报告问题</0>。"
 
-#: src/components/Header.tsx:34
+#: src/components/HeaderContent.tsx:34
 msgid "Queue"
 msgstr "播放队列"
 
