@@ -36,7 +36,7 @@ function ViewSettingsLibrary() {
 
     await libraryAPI.addLibraryFolders(paths);
     await invalidate();
-  }, [libraryAPI.addLibraryFolders, invalidate]);
+  }, [libraryAPI, invalidate]);
 
   return (
     <>

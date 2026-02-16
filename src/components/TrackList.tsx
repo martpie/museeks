@@ -140,13 +140,7 @@ export default function TrackList(props: Props) {
         }, 0);
       }
     }
-  }, [
-    shouldJumpToPlayingTrack,
-    trackPlayingID,
-    navigate,
-    tracks,
-    virtualizer?.scrollToIndex,
-  ]);
+  }, [shouldJumpToPlayingTrack, trackPlayingID, navigate, tracks, virtualizer]);
 
   /**
    * Helpers
@@ -363,44 +357,42 @@ export default function TrackList(props: Props) {
       }
 
       menuItemsBuilder.push(
-        ...[
-          PredefinedMenuItem.new({ item: 'Separator' }),
-          MenuItem.new({
-            text: t`Edit track`,
-            action: () => {
-              navigate({
-                to: '/tracks/$trackID',
-                params: { trackID: track.id },
-              });
-            },
-          }),
-          PredefinedMenuItem.new({ item: 'Separator' }),
-          MenuItem.new({
-            text: t`Show in file manager`,
-            action: async () => {
-              await revealItemInDir(track.path);
-            },
-          }),
-          MenuItem.new({
-            text: t`Remove from library`,
-            action: async () => {
-              const confirm = await ask(
-                t`Are you sure you want to remove ${selectedTracks.size} track(s) from your library?`,
-                {
-                  title: t`Remove tracks`,
-                  kind: 'warning',
-                  cancelLabel: t`Cancel`,
-                  okLabel: t`Remove`,
-                },
-              );
+        PredefinedMenuItem.new({ item: 'Separator' }),
+        MenuItem.new({
+          text: t`Edit track`,
+          action: () => {
+            navigate({
+              to: '/tracks/$trackID',
+              params: { trackID: track.id },
+            });
+          },
+        }),
+        PredefinedMenuItem.new({ item: 'Separator' }),
+        MenuItem.new({
+          text: t`Show in file manager`,
+          action: async () => {
+            await revealItemInDir(track.path);
+          },
+        }),
+        MenuItem.new({
+          text: t`Remove from library`,
+          action: async () => {
+            const confirm = await ask(
+              t`Are you sure you want to remove ${selectedTracks.size} track(s) from your library?`,
+              {
+                title: t`Remove tracks`,
+                kind: 'warning',
+                cancelLabel: t`Cancel`,
+                okLabel: t`Remove`,
+              },
+            );
 
-              if (confirm) {
-                await libraryAPI.remove(Array.from(selectedTracks));
-                await invalidate();
-              }
-            },
-          }),
-        ],
+            if (confirm) {
+              await libraryAPI.remove(Array.from(selectedTracks));
+              await invalidate();
+            }
+          },
+        }),
       );
 
       const menu = await Menu.new({

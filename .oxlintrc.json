@@ -1,0 +1,22 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": [
+    "eslint",
+    "typescript",
+    "unicorn",
+    "react",
+    "react-perf",
+    "oxc",
+    "import",
+    "jsx-a11y",
+    "promise",
+    "vitest"
+  ],
+  "ignorePatterns": [
+    "**/node_modules",
+    "**/dist",
+    "**/src/generated/**/*.ts",
+    "**/src-tauri/target/**/*",
+    "**/src-tauri/gen/**/*"
+  ]
+}

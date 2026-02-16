@@ -49,9 +49,9 @@ export function beforeEachSetup() {
     i18n.activate('en');
 
     // Mock Bridges
-    vi.mock('../lib/bridge-database');
-    vi.mock('../lib/bridge-config');
-    vi.mock('../lib/cover');
+    vi.doMock('../lib/bridge-database');
+    vi.doMock('../lib/bridge-config');
+    vi.doMock('../lib/cover');
 
     // Initial Location
     window.location.hash = '#/library';

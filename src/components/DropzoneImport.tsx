@@ -84,12 +84,7 @@ export default function DropzoneImport() {
     return function cleanup() {
       unlisten.then((u) => (u ? u() : null));
     };
-  }, [
-    libraryAPI.addLibraryFolders,
-    libraryAPI.scan,
-    toastsAPI.add,
-    invalidate,
-  ]);
+  }, [libraryAPI, toastsAPI, invalidate]);
 
   const classes = cx(styles.dropzone, {
     [styles.shown]: isShown,
