@@ -1,7 +1,7 @@
 {
   "productName": "Museeks",
   "mainBinaryName": "museeks",
-  "version": "0.23.2",
+  "version": "0.23.3",
   "identifier": "io.museeks.app",
   "build": {
     "beforeDevCommand": "npm run dev",
