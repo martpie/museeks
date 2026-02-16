@@ -29,11 +29,6 @@ fn main() {
         }
     };
 
-    // On Linux, start a local HTTP server for audio streaming.
-    // WebKitGTK's asset protocol doesn't support media streaming properly.
-    #[cfg(target_os = "linux")]
-    let stream_server_port = plugins::stream_server::start();
-
     let builder = tauri::Builder::default()
         .plugin(tauri_plugin_process::init())
         // Logging must be setup first, otherwise the logs won't be captured
@@ -93,7 +88,7 @@ fn main() {
     // Linux-only: local HTTP server for audio streaming
     // (WebKitGTK's asset protocol doesn't support media streaming)
     #[cfg(target_os = "linux")]
-    let builder = builder.plugin(plugins::stream_server::init(stream_server_port));
+    let builder = builder.plugin(plugins::stream_server::init());
 
     builder
         .setup(|app| {

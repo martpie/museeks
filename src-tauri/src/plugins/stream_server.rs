@@ -23,24 +23,11 @@ use tauri::plugin::{Builder, TauriPlugin};
 use tauri::Runtime;
 use tokio::io::{AsyncReadExt, AsyncSeekExt};
 
+use crate::libs::database::content_type_for_extension;
+
 #[derive(Deserialize)]
 struct StreamParams {
     path: String,
-}
-
-fn content_type_for_extension(ext: &str) -> Option<&'static str> {
-    match ext {
-        "mp3" => Some("audio/mpeg"),
-        "flac" => Some("audio/flac"),
-        "aac" => Some("audio/aac"),
-        "m4a" => Some("audio/mp4"),
-        "3gp" => Some("audio/3gpp"),
-        "wav" => Some("audio/wav"),
-        "ogg" => Some("audio/ogg"),
-        "opus" => Some("audio/opus"),
-        "weba" => Some("audio/webm"),
-        _ => None,
-    }
 }
 
 /// Parse a Range header value like "bytes=0-1023" or "bytes=1024-"
@@ -69,11 +56,6 @@ fn build_response(status: StatusCode, content_type: &str, file_size: u64, body: 
     headers.insert(header::CONTENT_TYPE, content_type.parse().unwrap());
     headers.insert(header::CONTENT_LENGTH, body.len().to_string().parse().unwrap());
     headers.insert(header::ACCEPT_RANGES, "bytes".parse().unwrap());
-    headers.insert(header::ACCESS_CONTROL_ALLOW_ORIGIN, "*".parse().unwrap());
-    headers.insert(
-        header::ACCESS_CONTROL_EXPOSE_HEADERS,
-        "Content-Range, Accept-Ranges, Content-Length".parse().unwrap(),
-    );
 
     if let Some((start, end)) = range {
         headers.insert(
@@ -147,7 +129,7 @@ async fn stream_handler(Query(params): Query<StreamParams>, headers: AxumHeaderM
 }
 
 /// Start the HTTP stream server on a background thread and return the port.
-pub fn start() -> u16 {
+fn start() -> u16 {
     let (tx, rx) = std::sync::mpsc::channel();
 
     std::thread::spawn(move || {
@@ -174,8 +156,10 @@ pub fn start() -> u16 {
     rx.recv().expect("Failed to get stream server port")
 }
 
-/// Initialize the Tauri plugin, injecting the stream server port into the window.
-pub fn init<R: Runtime>(port: u16) -> TauriPlugin<R> {
+/// Initialize the Tauri plugin: starts the HTTP server and injects the port
+/// into the window so the frontend can use it.
+pub fn init<R: Runtime>() -> TauriPlugin<R> {
+    let port = start();
     let init_script = format!("window.__MUSEEKS_STREAM_SERVER_PORT = {};", port);
 
     Builder::<R>::new("stream-server")
