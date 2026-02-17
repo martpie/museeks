@@ -13,8 +13,8 @@
 
 /* The native frame may be light, so we need to increase the contrast between
    the frame and the header */
-:global(.os__windows),
-:global(.os__linux) {
+[data-museeks-os="windows"],
+[data-museeks-os="linux"] {
   .header {
     border-top: 1px solid var(--border-color);
   }
@@ -29,7 +29,7 @@
   padding-left: 12px;
 }
 
-:global(.os__macos) .headerMainControls {
+[data-museeks-os="macos"] .headerMainControls {
   padding-left: 64px; /* let some space for titleBarStyle */
 }
 

@@ -133,7 +133,7 @@ export default function SideNavLink(props: Props): React.ReactNode {
   return (
     <Link
       className={styles.sideNavLink}
-      activeProps={{ className: 'isActive' }}
+      activeProps={{ className: styles.isActive }}
       onContextMenu={onContextMenu}
       draggable={false}
       {...linkOptions}

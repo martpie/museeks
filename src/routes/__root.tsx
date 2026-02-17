@@ -58,7 +58,10 @@ function ViewRoot() {
   }, [location]);
 
   return (
-    <div className={cx(styles.root, `os__${window.__MUSEEKS_PLATFORM}`)}>
+    <div
+      className={cx(styles.root)}
+      data-museeks-os={window.__MUSEEKS_PLATFORM}
+    >
       {/** Bunch of global event handlers */}
       <IPCNavigationEvents />
       <IPCPlayerEvents />

@@ -12,6 +12,13 @@
   padding: 8px 12px;
   text-decoration: none;
 
+  &.isActive {
+    outline: none;
+    z-index: 10;
+    background-color: var(--active-item-bg);
+    color: var(--active-item-color);
+  }
+
   &:hover {
     background-color: var(--sidebar-item-active-bg);
     color: var(--text);
@@ -21,13 +28,6 @@
   &:focus {
     text-decoration: none;
     color: inherit;
-  }
-
-  &:global(.isActive) {
-    outline: none;
-    z-index: 10;
-    background-color: var(--active-item-bg);
-    color: var(--active-item-color);
   }
 }
 

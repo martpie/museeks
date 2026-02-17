@@ -31,8 +31,8 @@ body {
   overflow: hidden;
 }
 
-.os__linux,
-.os__macos {
+[data-museeks-os="linux"],
+[data-museeks-os="macos"] {
   font-weight: 500;
 }
 
