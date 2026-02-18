@@ -65,6 +65,7 @@ pub struct Config {
     pub audio_muted: bool,
     pub audio_shuffle: bool,
     pub audio_repeat: Repeat,
+    pub audio_stream_server: bool,
     pub default_view: DefaultView,
     pub library_sort_by: SortBy,
     pub library_sort_order: SortOrder,
@@ -91,6 +92,10 @@ impl Config {
             audio_muted: false,
             audio_shuffle: false,
             audio_repeat: Repeat::None,
+            #[cfg(target_os = "linux")]
+            audio_stream_server: true,
+            #[cfg(not(target_os = "linux"))]
+            audio_stream_server: false,
             default_view: DefaultView::Library,
             library_sort_by: SortBy::Artist,
             library_sort_order: SortOrder::Asc,

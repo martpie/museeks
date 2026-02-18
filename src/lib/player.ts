@@ -579,10 +579,7 @@ class Player extends EventEmitter<PlayerEvents> {
     // On Linux, use a local HTTP server for audio streaming because
     // WebKitGTK's asset protocol doesn't support media streaming properly.
     // See: https://github.com/tauri-apps/tauri/issues/3725
-    if (
-      window.__MUSEEKS_PLATFORM === 'linux' &&
-      window.__MUSEEKS_STREAM_SERVER_PORT != null
-    ) {
+    if (window.__MUSEEKS_STREAM_SERVER_PORT != null) {
       this.audio.src = `http://127.0.0.1:${window.__MUSEEKS_STREAM_SERVER_PORT}/stream?track_id=${encodeURIComponent(track.id)}`;
     } else {
       this.audio.src = convertFileSrc(track.path);
