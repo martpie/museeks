@@ -131,7 +131,7 @@ const useLibraryStore = createLibraryStore<LibraryState>((set, get) => ({
         const newFolders = removeRedundantFolders([
           ...musicFolders,
           ...paths,
-        ]).sort();
+        ]).toSorted();
         await ConfigBridge.set('library_folders', newFolders);
       } catch (err) {
         logAndNotifyError(err);

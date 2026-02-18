@@ -97,8 +97,8 @@ export default function QueueList(props: Props) {
           <Button
             block
             onClick={() =>
-              setQueueSize(
-                Math.min(queueSize + INITIAL_QUEUE_SIZE, incomingQueue.length),
+              setQueueSize((prev) =>
+                Math.min(prev + INITIAL_QUEUE_SIZE, incomingQueue.length),
               )
             }
           >

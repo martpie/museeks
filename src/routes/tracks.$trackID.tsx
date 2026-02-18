@@ -89,7 +89,10 @@ function ViewTrackDetails() {
             type="text"
             value={formData.title}
             onChange={(e) => {
-              setFormData({ ...formData, title: e.currentTarget.value });
+              setFormData((prev) => ({
+                ...prev,
+                title: e.currentTarget.value,
+              }));
             }}
           />
         </Setting.Section>
@@ -100,7 +103,10 @@ function ViewTrackDetails() {
             type="text"
             value={formData.album}
             onChange={(e) => {
-              setFormData({ ...formData, album: e.currentTarget.value });
+              setFormData((prev) => ({
+                ...prev,
+                album: e.currentTarget.value,
+              }));
             }}
           />
         </Setting.Section>
@@ -111,10 +117,10 @@ function ViewTrackDetails() {
             type="text"
             value={formData.album_artist}
             onChange={(e) => {
-              setFormData({
-                ...formData,
+              setFormData((prev) => ({
+                ...prev,
                 album_artist: e.currentTarget.value,
-              });
+              }));
             }}
           />
         </Setting.Section>
@@ -126,10 +132,10 @@ function ViewTrackDetails() {
             type="text"
             value={formData.artists.join(DELIMITER)}
             onChange={(e) => {
-              setFormData({
-                ...formData,
+              setFormData((prev) => ({
+                ...prev,
                 artists: e.currentTarget.value.split(DELIMITER),
-              });
+              }));
             }}
           />
         </Setting.Section>
@@ -141,10 +147,10 @@ function ViewTrackDetails() {
             type="text"
             value={formData.genres.join(DELIMITER)}
             onChange={(e) => {
-              setFormData({
-                ...formData,
+              setFormData((prev) => ({
+                ...prev,
                 genres: e.currentTarget.value.split(DELIMITER),
-              });
+              }));
             }}
           />
         </Setting.Section>
@@ -157,7 +163,10 @@ function ViewTrackDetails() {
             step="1"
             value={Number(formData.year)}
             onChange={(e) => {
-              setFormData({ ...formData, year: Number(e.currentTarget.value) });
+              setFormData((prev) => ({
+                ...prev,
+                year: Number(e.currentTarget.value),
+              }));
             }}
           />
         </Setting.Section>
@@ -171,10 +180,10 @@ function ViewTrackDetails() {
               step="1"
               value={formData.track_no ?? ''}
               onChange={(e) => {
-                setFormData({
-                  ...formData,
+                setFormData((prev) => ({
+                  ...prev,
                   track_no: parseNullableNumber(e.currentTarget.value),
-                });
+                }));
               }}
             />
             <Setting.Input
@@ -185,10 +194,10 @@ function ViewTrackDetails() {
               step="1"
               value={formData.track_of ?? ''}
               onChange={(e) => {
-                setFormData({
-                  ...formData,
+                setFormData((prev) => ({
+                  ...prev,
                   track_of: parseNullableNumber(e.currentTarget.value),
-                });
+                }));
               }}
             />
           </Flexbox>
@@ -203,10 +212,10 @@ function ViewTrackDetails() {
               step="1"
               value={formData.disk_no ?? ''}
               onChange={(e) => {
-                setFormData({
-                  ...formData,
+                setFormData((prev) => ({
+                  ...prev,
                   disk_no: parseNullableNumber(e.currentTarget.value),
-                });
+                }));
               }}
             />
             <Setting.Input
@@ -217,10 +226,10 @@ function ViewTrackDetails() {
               step="1"
               value={formData.disk_of ?? ''}
               onChange={(e) => {
-                setFormData({
-                  ...formData,
+                setFormData((prev) => ({
+                  ...prev,
                   disk_of: parseNullableNumber(e.currentTarget.value),
-                });
+                }));
               }}
             />
           </Flexbox>

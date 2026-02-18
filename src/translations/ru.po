@@ -195,7 +195,7 @@ msgstr "Удалить треки"
 #: src/components/TrackList.tsx:392
 #: src/routes/settings.library.tsx:98
 #: src/routes/settings.library.tsx:143
-#: src/routes/tracks.$trackID.tsx:246
+#: src/routes/tracks.$trackID.tsx:255
 msgid "Cancel"
 msgstr "Отмена"
 
@@ -217,7 +217,7 @@ msgid "Title"
 msgstr "Заголовок"
 
 #: src/components/TrackListHeader.tsx:53
-#: src/routes/tracks.$trackID.tsx:230
+#: src/routes/tracks.$trackID.tsx:239
 msgid "Duration"
 msgstr "Длительность"
 
@@ -226,12 +226,12 @@ msgid "Artist"
 msgstr "Исполнитель"
 
 #: src/components/TrackListHeader.tsx:67
-#: src/routes/tracks.$trackID.tsx:98
+#: src/routes/tracks.$trackID.tsx:101
 msgid "Album"
 msgstr "Альбом"
 
 #: src/components/TrackListHeader.tsx:74
-#: src/routes/tracks.$trackID.tsx:138
+#: src/routes/tracks.$trackID.tsx:144
 msgid "Genre"
 msgstr "Жанр"
 
@@ -534,48 +534,48 @@ msgstr "Тёмная"
 msgid "Edit \"{0}\""
 msgstr "Редактировать \"{0}\""
 
-#: src/routes/tracks.$trackID.tsx:109
+#: src/routes/tracks.$trackID.tsx:115
 msgid "Album Artist"
 msgstr "Исполнитель альбома"
 
-#: src/routes/tracks.$trackID.tsx:123
+#: src/routes/tracks.$trackID.tsx:129
 msgid "Track Artists"
 msgstr "Исполнители трека"
 
-#: src/routes/tracks.$trackID.tsx:124
+#: src/routes/tracks.$trackID.tsx:130
 msgid "You can add multiple artists with commas"
 msgstr "Вы можете указать несколько исполнителей через запятую"
 
-#: src/routes/tracks.$trackID.tsx:139
+#: src/routes/tracks.$trackID.tsx:145
 msgid "You can add multiple genres with commas"
 msgstr "Вы можете указать несколько жанров через запятую"
 
-#: src/routes/tracks.$trackID.tsx:153
+#: src/routes/tracks.$trackID.tsx:159
 msgid "Year"
 msgstr "Год"
 
-#: src/routes/tracks.$trackID.tsx:167
+#: src/routes/tracks.$trackID.tsx:176
 msgid "Track Nº"
 msgstr "Трек Nº"
 
-#: src/routes/tracks.$trackID.tsx:181
-#: src/routes/tracks.$trackID.tsx:213
+#: src/routes/tracks.$trackID.tsx:190
+#: src/routes/tracks.$trackID.tsx:222
 msgid "Of"
 msgstr "из"
 
-#: src/routes/tracks.$trackID.tsx:199
+#: src/routes/tracks.$trackID.tsx:208
 msgid "Disk Nº"
 msgstr "Диск Nº"
 
-#: src/routes/tracks.$trackID.tsx:238
+#: src/routes/tracks.$trackID.tsx:247
 msgid "Path"
 msgstr "Путь"
 
-#: src/routes/tracks.$trackID.tsx:249
+#: src/routes/tracks.$trackID.tsx:258
 msgid "Save"
 msgstr "Сохранить"
 
-#: src/routes/tracks.$trackID.tsx:254
+#: src/routes/tracks.$trackID.tsx:263
 msgid "Clicking \"save\" will only update the library data, but will not save it to the original file."
 msgstr "После нажатия \"Сохранить\" обновятся лишь данные библиотеки, но в исходный файл не будет внесено изменений."
 
@@ -584,11 +584,11 @@ msgid "The playlist \"{name}\" was created"
 msgstr "Создан плейлист \"{name}\""
 
 #. placeholder {0}: newRelease.tag_name
-#: src/stores/SettingsAPI.ts:160
+#: src/stores/SettingsAPI.ts:159
 msgid "Museeks {0} is available, check https://museeks.io!"
 msgstr "Доступна версия Museeks {0}, проверьте https://museeks.io!"
 
-#: src/stores/SettingsAPI.ts:162
+#: src/stores/SettingsAPI.ts:161
 msgid "Museeks {currentVersion} is the latest version available."
 msgstr "Museeks {currentVersion} является самой последней доступной версией."
 

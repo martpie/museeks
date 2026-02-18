@@ -33,9 +33,7 @@ export function useTrackListStatus(
   const allTracks = useAllTracks(tracks);
 
   return useMemo(() => {
-    const duration = allTracks
-      .map((d) => d.duration)
-      .reduce((a, b) => a + b, 0);
+    const duration = allTracks.reduce((sum, d) => sum + d.duration, 0);
 
     return {
       count: allTracks.length,

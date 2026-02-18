@@ -25,7 +25,6 @@ export const DEFAULT_MAIN_COLOR = '#459ce7';
  * Init all settings, then show the app
  */
 async function init(then: () => void): Promise<void> {
-
   // Blocking (the window should not be shown until it's done)
   const [theme, color] = await Promise.all([
     getCurrentWindow()

@@ -60,10 +60,11 @@ function ViewRoot() {
 
   // Log each navigation to the console for debug purposes
   const location = useLocation();
+  const pathname = location.pathname;
 
   useEffect(() => {
-    info(`Navigated to: ${location.pathname}`);
-  }, [location]);
+    info(`Navigated to: ${pathname}`);
+  }, [pathname]);
 
   return (
     <div

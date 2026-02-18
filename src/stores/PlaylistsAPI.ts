@@ -91,8 +91,9 @@ async function removeTracks(
 ): Promise<void> {
   try {
     const playlist = await DatabaseBridge.getPlaylist(playlistID);
+    const tracksIDsSet = new Set(tracksIDs);
     const playlistTracks = playlist.tracks.filter(
-      (elem: string) => !tracksIDs.includes(elem),
+      (elem: string) => !tracksIDsSet.has(elem),
     );
     await DatabaseBridge.setPlaylistTracks(playlistID, playlistTracks);
   } catch (err) {

@@ -25,6 +25,7 @@ export default function TrackProgress(props: Props) {
     null,
   );
   const [tooltipX, setTooltipX] = useState<null | number>(null);
+  const trackDuration = trackPlaying.duration;
 
   const showTooltip = useCallback(
     (e: React.MouseEvent<HTMLElement>) => {
@@ -33,12 +34,12 @@ export default function TrackProgress(props: Props) {
 
       const percent = (offsetX / barWidth) * 100;
 
-      const time = (percent * trackPlaying.duration) / 100;
+      const time = (percent * trackDuration) / 100;
 
       setTooltipTargetTime(time);
       setTooltipX(percent);
     },
-    [trackPlaying],
+    [trackDuration],
   );
 
   const hideTooltip = useCallback(() => {
