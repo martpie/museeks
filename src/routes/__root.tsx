@@ -47,8 +47,8 @@ function ViewRoot() {
 
   // Manual prevention of a useEffect being called twice (to avoid refreshing the
   // library twice on startup in dev mode).
-  // Also, we useInvalidate, SettingsAPI.init would infinitely loop. It means
-  // something is fishy and need to be fixed "somewhere".
+  // Also, with useInvalidate, SettingsAPI.init would infinitely loop. This means
+  // something is fishy and needs to be fixed "somewhere".
   const didInit = useRef(false);
 
   useEffect(() => {
