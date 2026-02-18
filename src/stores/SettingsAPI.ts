@@ -21,10 +21,17 @@ export const DEFAULT_MAIN_COLOR = '#459ce7';
  * to config changes and react to them.
  */
 
+// Manual prevention of init being called twice (to avoid refreshing the
+// library twice on startup in dev mode with React StrictMode).
+// Using module-scope flag ensures it persists across component remounts.
+let didInit = false;
+
 /**
  * Init all settings, then show the app
  */
 async function init(then: () => void): Promise<void> {
+  if (didInit) return;
+  didInit = true;
   // Blocking (the window should not be shown until it's done)
   const [theme, color] = await Promise.all([
     getCurrentWindow()
