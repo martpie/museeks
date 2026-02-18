@@ -116,7 +116,7 @@ export default function TrackList(props: Props) {
       }
     }
 
-    target?.addEventListener('scroll', onSaveScrollPosition);
+    target?.addEventListener('scroll', onSaveScrollPosition, { passive: true });
 
     return function cleanup() {
       target?.removeEventListener('scroll', onSaveScrollPosition);
