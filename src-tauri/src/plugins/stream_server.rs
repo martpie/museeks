@@ -14,14 +14,17 @@ use std::net::TcpListener as StdTcpListener;
 use std::path::Path;
 
 use axum::Router;
+use axum::body::Body;
 use axum::extract::{Query, State};
 use axum::http::{HeaderMap as AxumHeaderMap, StatusCode, header};
 use axum::response::{IntoResponse, Response};
 use axum::routing::get;
+use log::info;
 use serde::Deserialize;
 use tauri::plugin::{Builder, TauriPlugin};
 use tauri::{AppHandle, Manager, Runtime};
 use tokio::io::{AsyncReadExt, AsyncSeekExt};
+use tokio_util::io::ReaderStream;
 
 use crate::libs::database::content_type_for_extension;
 use crate::plugins::db::DBState;
@@ -58,14 +61,19 @@ fn build_response(
     status: StatusCode,
     content_type: &str,
     file_size: u64,
-    body: Vec<u8>,
+    body: Body,
     range: Option<(u64, u64)>,
 ) -> Response {
+    let content_length = match range {
+        Some((start, end)) => end - start + 1,
+        None => file_size,
+    };
+
     let mut headers = AxumHeaderMap::new();
     headers.insert(header::CONTENT_TYPE, content_type.parse().unwrap());
     headers.insert(
         header::CONTENT_LENGTH,
-        body.len().to_string().parse().unwrap(),
+        content_length.to_string().parse().unwrap(),
     );
     headers.insert(header::ACCEPT_RANGES, "bytes".parse().unwrap());
 
@@ -137,27 +145,25 @@ async fn stream_handler<R: Runtime>(
             return StatusCode::INTERNAL_SERVER_ERROR.into_response();
         }
 
-        let mut buffer = vec![0u8; length as usize];
-        if file.read_exact(&mut buffer).await.is_err() {
-            return StatusCode::INTERNAL_SERVER_ERROR.into_response();
-        }
-
+        let stream = ReaderStream::new(file.take(length));
         return build_response(
             StatusCode::PARTIAL_CONTENT,
             content_type,
             file_size,
-            buffer,
+            Body::from_stream(stream),
             Some((start, end)),
         );
     }
 
     // Full file response
-    let mut buffer = Vec::with_capacity(file_size as usize);
-    if file.read_to_end(&mut buffer).await.is_err() {
-        return StatusCode::INTERNAL_SERVER_ERROR.into_response();
-    }
-
-    build_response(StatusCode::OK, content_type, file_size, buffer, None)
+    let stream = ReaderStream::new(file);
+    build_response(
+        StatusCode::OK,
+        content_type,
+        file_size,
+        Body::from_stream(stream),
+        None,
+    )
 }
 
 /// Initialize the Tauri plugin: starts the HTTP server and injects the port

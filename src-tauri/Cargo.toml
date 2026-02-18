@@ -58,6 +58,7 @@ walkdir = "2.5.0"
 
 [target.'cfg(target_os = "linux")'.dependencies]
 axum = "0.7"
+tokio-util = { version = "0.7", features = ["io"] }
 
 [profile.dev]
 incremental = true # Compile your binary in smaller steps.

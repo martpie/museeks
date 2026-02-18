@@ -2813,6 +2813,7 @@ dependencies = [
  "tauri-plugin-window-state",
  "thiserror 2.0.18",
  "tokio",
+ "tokio-util",
  "ts-rs",
  "uuid",
  "walkdir",
