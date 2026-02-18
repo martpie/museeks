@@ -77,8 +77,10 @@ const useLibraryStore = createLibraryStore<LibraryState>((set, get) => ({
         sortOrder = 'Asc';
       }
 
-      await ConfigBridge.set('library_sort_by', sortBy);
-      await ConfigBridge.set('library_sort_order', sortOrder);
+      await Promise.all([
+        ConfigBridge.set('library_sort_by', sortBy),
+        ConfigBridge.set('library_sort_order', sortOrder),
+      ]);
 
       set({ sortBy, sortOrder });
     },

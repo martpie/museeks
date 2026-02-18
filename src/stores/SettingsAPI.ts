@@ -21,19 +21,10 @@ export const DEFAULT_MAIN_COLOR = '#459ce7';
  * to config changes and react to them.
  */
 
-// Manual prevention of a useEffect being called twice (to avoid refreshing the
-// library twice on startup in dev mode).
-// Also, we useInvalidate, SettingsAPI.init would infinitely loop. It means
-// something is fishy and need to be fixed "somewhere".
-let did_init = false;
-
 /**
  * Init all settings, then show the app
  */
 async function init(then: () => void): Promise<void> {
-  if (did_init) return;
-
-  did_init = true;
 
   // Blocking (the window should not be shown until it's done)
   const [theme, color] = await Promise.all([

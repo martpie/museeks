@@ -584,29 +584,29 @@ msgid "The playlist \"{name}\" was created"
 msgstr "The playlist \"{name}\" was created"
 
 #. placeholder {0}: newRelease.tag_name
-#: src/stores/SettingsAPI.ts:169
+#: src/stores/SettingsAPI.ts:160
 msgid "Museeks {0} is available, check https://museeks.io!"
 msgstr "Museeks {0} is available, check https://museeks.io!"
 
-#: src/stores/SettingsAPI.ts:171
+#: src/stores/SettingsAPI.ts:162
 msgid "Museeks {currentVersion} is the latest version available."
 msgstr "Museeks {currentVersion} is the latest version available."
 
 #. placeholder {0}: scanResult.track_count
-#: src/stores/useLibraryStore.ts:101
+#: src/stores/useLibraryStore.ts:103
 msgid "{0} track(s) were refreshed."
 msgstr "{0} track(s) were refreshed."
 
 #. placeholder {0}: scanResult.track_count
-#: src/stores/useLibraryStore.ts:102
+#: src/stores/useLibraryStore.ts:104
 msgid "{0} track(s) were added to the library."
 msgstr "{0} track(s) were added to the library."
 
 #. placeholder {0}: scanResult.playlist_count
-#: src/stores/useLibraryStore.ts:112
+#: src/stores/useLibraryStore.ts:114
 msgid "{0} playlist(s) were added to the library."
 msgstr "{0} playlist(s) were added to the library."
 
-#: src/stores/useLibraryStore.ts:173
+#: src/stores/useLibraryStore.ts:175
 msgid "Library was reset"
 msgstr "Library was reset"

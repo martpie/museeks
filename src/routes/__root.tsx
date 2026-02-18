@@ -1,7 +1,7 @@
 import { createRootRoute, Outlet, useLocation } from '@tanstack/react-router';
 import { info } from '@tauri-apps/plugin-log';
 import cx from 'classnames';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 import AppEvents from '../components/AppEvents';
 import DropzoneImport from '../components/DropzoneImport';
@@ -45,7 +45,15 @@ export const Route = createRootRoute({
 function ViewRoot() {
   const invalidate = useInvalidate();
 
+  // Manual prevention of a useEffect being called twice (to avoid refreshing the
+  // library twice on startup in dev mode).
+  // Also, we useInvalidate, SettingsAPI.init would infinitely loop. It means
+  // something is fishy and need to be fixed "somewhere".
+  const didInit = useRef(false);
+
   useEffect(() => {
+    if (didInit.current) return;
+    didInit.current = true;
     // If the app imported tracks, we need to refresh route data, but it seems invalidate is not super stable
     SettingsAPI.init(invalidate);
   }, [invalidate]);

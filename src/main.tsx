@@ -71,7 +71,7 @@ export const app = (
     return;
   }
 
-  Promise.allSettled([
+  await Promise.allSettled([
     logger.attachConsole(),
     loadTranslation(window.__MUSEEKS_INITIAL_CONFIG.language),
   ]);

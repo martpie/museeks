@@ -584,29 +584,29 @@ msgid "The playlist \"{name}\" was created"
 msgstr "Создан плейлист \"{name}\""
 
 #. placeholder {0}: newRelease.tag_name
-#: src/stores/SettingsAPI.ts:169
+#: src/stores/SettingsAPI.ts:160
 msgid "Museeks {0} is available, check https://museeks.io!"
 msgstr "Доступна версия Museeks {0}, проверьте https://museeks.io!"
 
-#: src/stores/SettingsAPI.ts:171
+#: src/stores/SettingsAPI.ts:162
 msgid "Museeks {currentVersion} is the latest version available."
 msgstr "Museeks {currentVersion} является самой последней доступной версией."
 
 #. placeholder {0}: scanResult.track_count
-#: src/stores/useLibraryStore.ts:101
+#: src/stores/useLibraryStore.ts:103
 msgid "{0} track(s) were refreshed."
 msgstr "{0} трек(ов) обновлено."
 
 #. placeholder {0}: scanResult.track_count
-#: src/stores/useLibraryStore.ts:102
+#: src/stores/useLibraryStore.ts:104
 msgid "{0} track(s) were added to the library."
 msgstr "{0} трек(ов) добавлено в библиотеку."
 
 #. placeholder {0}: scanResult.playlist_count
-#: src/stores/useLibraryStore.ts:112
+#: src/stores/useLibraryStore.ts:114
 msgid "{0} playlist(s) were added to the library."
 msgstr "{0} плейлист(ов) добавлено в библиотеку."
 
-#: src/stores/useLibraryStore.ts:173
+#: src/stores/useLibraryStore.ts:175
 msgid "Library was reset"
 msgstr "Библиотека сброшена"
