@@ -29,6 +29,14 @@ fn main() {
         }
     };
 
+    let enable_stream_server = match config.get() {
+        Ok(conf) => conf.audio_stream_server,
+        Err(e) => {
+            println!("[init] Error while loading stream-server setting: {}", e);
+            std::process::exit(1);
+        }
+    };
+
     let builder = tauri::Builder::default()
         .plugin(tauri_plugin_process::init())
         // Logging must be setup first, otherwise the logs won't be captured
@@ -85,10 +93,13 @@ fn main() {
                 .build(),
         );
 
-    // Linux-only: local HTTP server for audio streaming
+    // Experimental: local HTTP server for audio streaming
     // (WebKitGTK's asset protocol doesn't support media streaming)
-    #[cfg(target_os = "linux")]
-    let builder = builder.plugin(plugins::stream_server::init());
+    let builder = if enable_stream_server {
+        builder.plugin(plugins::stream_server::init())
+    } else {
+        builder
+    };
 
     builder
         .setup(|app| {

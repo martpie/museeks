@@ -30,5 +30,4 @@ pub mod sleepblocker;
  * Linux-only: local HTTP server for audio streaming
  * (works around WebKitGTK asset protocol limitations)
  */
-#[cfg(target_os = "linux")]
 pub mod stream_server;
