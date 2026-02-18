@@ -121,28 +121,34 @@ async fn stream_handler<R: Runtime>(
 
     // Handle Range requests
     if let Some(range_header) = headers.get(header::RANGE) {
-        if let Ok(range_str) = range_header.to_str() {
-            if let Some((start, end)) = parse_range_header(range_str, file_size) {
-                let length = end - start + 1;
+        let range_str = match range_header.to_str() {
+            Ok(s) => s,
+            Err(_) => return StatusCode::RANGE_NOT_SATISFIABLE.into_response(),
+        };
 
-                if file.seek(SeekFrom::Start(start)).await.is_err() {
-                    return StatusCode::INTERNAL_SERVER_ERROR.into_response();
-                }
+        let (start, end) = match parse_range_header(range_str, file_size) {
+            Some(range) => range,
+            None => return StatusCode::RANGE_NOT_SATISFIABLE.into_response(),
+        };
 
-                let mut buffer = vec![0u8; length as usize];
-                if file.read_exact(&mut buffer).await.is_err() {
-                    return StatusCode::INTERNAL_SERVER_ERROR.into_response();
-                }
+        let length = end - start + 1;
 
-                return build_response(
-                    StatusCode::PARTIAL_CONTENT,
-                    content_type,
-                    file_size,
-                    buffer,
-                    Some((start, end)),
-                );
-            }
+        if file.seek(SeekFrom::Start(start)).await.is_err() {
+            return StatusCode::INTERNAL_SERVER_ERROR.into_response();
         }
+
+        let mut buffer = vec![0u8; length as usize];
+        if file.read_exact(&mut buffer).await.is_err() {
+            return StatusCode::INTERNAL_SERVER_ERROR.into_response();
+        }
+
+        return build_response(
+            StatusCode::PARTIAL_CONTENT,
+            content_type,
+            file_size,
+            buffer,
+            Some((start, end)),
+        );
     }
 
     // Full file response
