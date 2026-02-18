@@ -25,9 +25,4 @@ pub mod db;
  */
 pub mod default_view;
 pub mod sleepblocker;
-
-/**
- * Linux-only: local HTTP server for audio streaming
- * (works around WebKitGTK asset protocol limitations)
- */
 pub mod stream_server;
