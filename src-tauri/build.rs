@@ -26,6 +26,7 @@ fn main() {
                     "get_all_tracks",
                     "remove_tracks",
                     "get_tracks",
+                    "get_track",
                     "update_track",
                     "get_artists",
                     "get_artist_tracks",

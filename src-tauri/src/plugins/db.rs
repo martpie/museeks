@@ -28,7 +28,7 @@ use super::config::get_storage_dir;
 pub struct DBState(Mutex<DB>);
 
 impl DBState {
-    async fn get_lock(&self) -> MutexGuard<'_, DB> {
+    pub async fn get_lock(&self) -> MutexGuard<'_, DB> {
         self.0.lock().await
     }
 }
@@ -298,6 +298,11 @@ async fn get_tracks(db_state: State<'_, DBState>, ids: Vec<String>) -> AnyResult
 }
 
 #[tauri::command]
+async fn get_track(db_state: State<'_, DBState>, id: String) -> AnyResult<Option<Track>> {
+    db_state.get_lock().await.get_track(&id).await
+}
+
+#[tauri::command]
 async fn update_track(db_state: State<'_, DBState>, track: Track) -> AnyResult<Track> {
     db_state.get_lock().await.update_track(track).await
 }
@@ -446,6 +451,7 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
         .invoke_handler(tauri::generate_handler![
             get_all_tracks,
             get_tracks,
+            get_track,
             remove_tracks,
             update_track,
             get_artists,
