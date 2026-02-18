@@ -583,7 +583,7 @@ class Player extends EventEmitter<PlayerEvents> {
       window.__MUSEEKS_PLATFORM === 'linux' &&
       window.__MUSEEKS_STREAM_SERVER_PORT != null
     ) {
-      this.audio.src = `http://127.0.0.1:${window.__MUSEEKS_STREAM_SERVER_PORT}/stream?path=${encodeURIComponent(track.path)}`;
+      this.audio.src = `http://127.0.0.1:${window.__MUSEEKS_STREAM_SERVER_PORT}/stream?track_id=${encodeURIComponent(track.id)}`;
     } else {
       this.audio.src = convertFileSrc(track.path);
     }

@@ -105,6 +105,18 @@ impl DB {
     }
 
     /**
+     * Get a single track by ID
+     */
+    pub async fn get_track(&mut self, track_id: &str) -> AnyResult<Option<Track>> {
+        let track = sqlx::query_as::<_, Track>("SELECT * FROM tracks WHERE id = ?")
+            .bind(track_id)
+            .fetch_optional(&mut self.connection)
+            .await?;
+
+        Ok(track)
+    }
+
+    /**
      * Get tracks (and their content) given a set of document IDs
      */
     pub async fn update_track(&mut self, track: Track) -> AnyResult<Track> {
