@@ -26,6 +26,8 @@ use tokio::io::{AsyncReadExt, AsyncSeekExt};
 use crate::libs::database::content_type_for_extension;
 use crate::plugins::db::DBState;
 
+const STREAM_SERVER_HOST: &str = "127.0.0.1";
+
 #[derive(Deserialize)]
 struct StreamParams {
     track_id: String,
@@ -158,14 +160,18 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
     // Bind synchronously to get the port before building the plugin, so it can
     // be injected into the JS init script. The listener is handed off to the
     // async server that starts inside `setup`.
-    let std_listener = StdTcpListener::bind("127.0.0.1:0").expect("Failed to bind stream server");
+    let std_listener = StdTcpListener::bind(format!("{}:0", STREAM_SERVER_HOST))
+        .expect("Failed to bind stream server");
     std_listener
         .set_nonblocking(true)
         .expect("Failed to set stream server listener to non-blocking");
     let port = std_listener.local_addr().unwrap().port();
 
-    // Inject the port into the window so the frontend can use it to construct stream URLs
-    let init_script = format!("window.__MUSEEKS_STREAM_SERVER_PORT = {};", port);
+    // Inject the base URL into the window so the frontend can construct stream URLs
+    let init_script = format!(
+        "window.__MUSEEKS_STREAM_SERVER_URL = \"http://{}:{}\";",
+        STREAM_SERVER_HOST, port
+    );
 
     Builder::<R>::new("stream-server")
         .setup(move |app_handle, _api| {
