@@ -19,7 +19,6 @@ use axum::extract::{Query, State};
 use axum::http::{HeaderMap as AxumHeaderMap, StatusCode, header};
 use axum::response::{IntoResponse, Response};
 use axum::routing::get;
-use log::info;
 use serde::Deserialize;
 use tauri::plugin::{Builder, TauriPlugin};
 use tauri::{AppHandle, Manager, Runtime};

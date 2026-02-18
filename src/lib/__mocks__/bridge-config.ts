@@ -10,6 +10,7 @@ export const MOCK_CONFIG: Config = {
   audio_muted: false,
   audio_shuffle: false,
   audio_repeat: 'None',
+  audio_stream_server: false,
   default_view: 'Library',
   library_sort_by: 'Artist',
   library_sort_order: 'Asc',
