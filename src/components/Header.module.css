@@ -30,7 +30,7 @@
 }
 
 [data-museeks-os="macos"] .headerMainControls {
-  padding-left: 64px; /* let some space for titleBarStyle */
+  padding-left: 72px; /* let some space for titleBarStyle */
 }
 
 .headerSearch {
