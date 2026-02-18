@@ -49,17 +49,16 @@ export function beforeEachSetup() {
     i18n.activate('en');
 
     // Mock Bridges
-    vi.mock('../lib/bridge-database');
-    vi.mock('../lib/bridge-config');
-    vi.mock('../lib/cover');
+    vi.doMock('../lib/bridge-database');
+    vi.doMock('../lib/bridge-config');
+    vi.doMock('../lib/cover');
 
     // Initial Location
     window.location.hash = '#/library';
 
     // Render the app
     const { app } = await import('../main.tsx');
-    render(app, {
-      // biome-ignore lint/correctness/useUniqueElementIds: because.
+    await render(app, {
       wrapper: ({ children }) => <div id="wrap">{children}</div>,
     });
   });

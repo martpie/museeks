@@ -34,11 +34,11 @@ msgstr "{skippedItemsCount, plural, one {# elemento inválido ignorado} other {#
 msgid "{0, plural, one {# folder added to the library} other {# folders added to the library}}"
 msgstr "{0, plural, one {# carpeta añadida a la biblioteca} other {# carpetas añadidas a la biblioteca}}"
 
-#: src/components/DropzoneImport.tsx:100
+#: src/components/DropzoneImport.tsx:95
 msgid "Add music to the library"
 msgstr "Añadir música a la biblioteca"
 
-#: src/components/DropzoneImport.tsx:101
+#: src/components/DropzoneImport.tsx:96
 msgid "Drop folders anywhere"
 msgstr "Arrastra carpetas aquí"
 
@@ -128,78 +128,78 @@ msgstr "buscar..."
 msgid "Rename"
 msgstr "Renombrar"
 
-#: src/components/TrackList.tsx:242
+#: src/components/TrackList.tsx:236
 msgid "Create new playlist..."
 msgstr "Crear nueva lista..."
 
-#: src/components/TrackList.tsx:245
+#: src/components/TrackList.tsx:239
 #: src/routes/playlists.tsx:63
 msgid "New playlist"
 msgstr "Nueva lista"
 
-#: src/components/TrackList.tsx:258
+#: src/components/TrackList.tsx:252
 msgid "No playlists"
 msgstr "Sin listas de reproducción"
 
 #. placeholder {0}: selectedTracks.size
 #. placeholder {1}: playlist.name
-#: src/components/TrackList.tsx:273
+#: src/components/TrackList.tsx:267
 msgid "{0} track(s) were added to \"{1}\""
 msgstr "{0} pista(s) añadida(s) a \"{1}\""
 
-#: src/components/TrackList.tsx:290
+#: src/components/TrackList.tsx:284
 msgid "{selectedCount, plural, one {# track selected} other {# tracks selected}}"
 msgstr "{selectedCount, plural, one {# pista seleccionada} other {# pistas seleccionadas}}"
 
-#: src/components/TrackList.tsx:302
+#: src/components/TrackList.tsx:296
 msgid "Add to queue"
 msgstr "Añadir a la cola"
 
-#: src/components/TrackList.tsx:310
+#: src/components/TrackList.tsx:304
 msgid "Play next"
 msgstr "Reproducir siguiente"
 
-#: src/components/TrackList.tsx:322
+#: src/components/TrackList.tsx:316
 msgid "Add to playlist"
 msgstr "Añadir a lista de reproducción"
 
-#: src/components/TrackList.tsx:332
+#: src/components/TrackList.tsx:326
 msgid "Search for \"{item}\""
 msgstr "Buscar \"{item}\""
 
-#: src/components/TrackList.tsx:345
+#: src/components/TrackList.tsx:339
 msgid "Copy \"{item}\""
 msgstr "Copiar \"{item}\""
 
-#: src/components/TrackList.tsx:369
+#: src/components/TrackList.tsx:362
 msgid "Edit track"
 msgstr "Editar pista"
 
-#: src/components/TrackList.tsx:379
+#: src/components/TrackList.tsx:372
 msgid "Show in file manager"
 msgstr "Mostrar en el explorador de archivos"
 
-#: src/components/TrackList.tsx:385
+#: src/components/TrackList.tsx:378
 msgid "Remove from library"
 msgstr "Eliminar de la biblioteca"
 
 #. placeholder {0}: selectedTracks.size
-#: src/components/TrackList.tsx:388
+#: src/components/TrackList.tsx:381
 msgid "Are you sure you want to remove {0} track(s) from your library?"
 msgstr "¿Estás seguro de que quieres eliminar {0} pista(s) de tu biblioteca?"
 
-#: src/components/TrackList.tsx:390
+#: src/components/TrackList.tsx:383
 msgid "Remove tracks"
 msgstr "Eliminar pistas"
 
-#: src/components/TrackList.tsx:392
+#: src/components/TrackList.tsx:385
 #: src/routes/settings.library.tsx:98
 #: src/routes/settings.library.tsx:143
 #: src/routes/tracks.$trackID.tsx:246
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: src/components/TrackList.tsx:393
+#: src/components/TrackList.tsx:386
 #: src/routes/settings.library.tsx:61
 msgid "Remove"
 msgstr "Eliminar"

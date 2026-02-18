@@ -34,11 +34,11 @@ msgstr "{skippedItemsCount, plural, one {# 個の無効なアイテムが無視�
 msgid "{0, plural, one {# folder added to the library} other {# folders added to the library}}"
 msgstr "{0, plural, one {# 個のフォルダーがライブラリに追加されました} other {# 個のフォルダーがライブラリに追加されました}}"
 
-#: src/components/DropzoneImport.tsx:100
+#: src/components/DropzoneImport.tsx:95
 msgid "Add music to the library"
 msgstr "ライブラリに音楽を追加"
 
-#: src/components/DropzoneImport.tsx:101
+#: src/components/DropzoneImport.tsx:96
 msgid "Drop folders anywhere"
 msgstr "フォルダーをどこにでもドロップしてください"
 
@@ -128,78 +128,78 @@ msgstr "検索..."
 msgid "Rename"
 msgstr "名前を変更"
 
-#: src/components/TrackList.tsx:242
+#: src/components/TrackList.tsx:236
 msgid "Create new playlist..."
 msgstr "新しいプレイリストを作成..."
 
-#: src/components/TrackList.tsx:245
+#: src/components/TrackList.tsx:239
 #: src/routes/playlists.tsx:63
 msgid "New playlist"
 msgstr "新しいプレイリスト"
 
-#: src/components/TrackList.tsx:258
+#: src/components/TrackList.tsx:252
 msgid "No playlists"
 msgstr "プレイリストがありません"
 
 #. placeholder {0}: selectedTracks.size
 #. placeholder {1}: playlist.name
-#: src/components/TrackList.tsx:273
+#: src/components/TrackList.tsx:267
 msgid "{0} track(s) were added to \"{1}\""
 msgstr "{0} 曲が「{1}」に追加されました"
 
-#: src/components/TrackList.tsx:290
+#: src/components/TrackList.tsx:284
 msgid "{selectedCount, plural, one {# track selected} other {# tracks selected}}"
 msgstr "{selectedCount, plural, one {# 曲が選択されています} other {# 曲が選択されています}}"
 
-#: src/components/TrackList.tsx:302
+#: src/components/TrackList.tsx:296
 msgid "Add to queue"
 msgstr "キューに追加"
 
-#: src/components/TrackList.tsx:310
+#: src/components/TrackList.tsx:304
 msgid "Play next"
 msgstr "次に再生"
 
-#: src/components/TrackList.tsx:322
+#: src/components/TrackList.tsx:316
 msgid "Add to playlist"
 msgstr "プレイリストに追加"
 
-#: src/components/TrackList.tsx:332
+#: src/components/TrackList.tsx:326
 msgid "Search for \"{item}\""
 msgstr "「{item}」を検索"
 
-#: src/components/TrackList.tsx:345
+#: src/components/TrackList.tsx:339
 msgid "Copy \"{item}\""
 msgstr "「{item}」をコピー"
 
-#: src/components/TrackList.tsx:369
+#: src/components/TrackList.tsx:362
 msgid "Edit track"
 msgstr "トラックを編集"
 
-#: src/components/TrackList.tsx:379
+#: src/components/TrackList.tsx:372
 msgid "Show in file manager"
 msgstr "ファイルマネージャーで表示"
 
-#: src/components/TrackList.tsx:385
+#: src/components/TrackList.tsx:378
 msgid "Remove from library"
 msgstr "ライブラリから削除"
 
 #. placeholder {0}: selectedTracks.size
-#: src/components/TrackList.tsx:388
+#: src/components/TrackList.tsx:381
 msgid "Are you sure you want to remove {0} track(s) from your library?"
 msgstr "ライブラリから {0} 曲を削除してもよろしいですか？"
 
-#: src/components/TrackList.tsx:390
+#: src/components/TrackList.tsx:383
 msgid "Remove tracks"
 msgstr "トラックを削除"
 
-#: src/components/TrackList.tsx:392
+#: src/components/TrackList.tsx:385
 #: src/routes/settings.library.tsx:98
 #: src/routes/settings.library.tsx:143
 #: src/routes/tracks.$trackID.tsx:246
 msgid "Cancel"
 msgstr "キャンセル"
 
-#: src/components/TrackList.tsx:393
+#: src/components/TrackList.tsx:386
 #: src/routes/settings.library.tsx:61
 msgid "Remove"
 msgstr "削除"

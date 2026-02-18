@@ -39,17 +39,17 @@ jobs:
       - name: Install Playwright dependencies
         run: npx playwright install chromium --with-deps
 
-      - name: 'Test: TS/JS linting & formatting'
+      - name: 'Test: Format'
+        run: 'npm run test:format'
+
+      - name: 'Test: Lint'
         run: 'npm run test:lint'
 
-      - name: 'Test: unit'
+      - name: 'Test: Unit'
         run: 'npm run test:unit'
 
       - name: 'Test: E2E'
         run: 'npm run test:ui'
-
-      - name: 'Test: Types'
-        run: 'npm run test:typings'
 
       - name: 'Generate translations'
         run: npm run gen:translations
@@ -83,7 +83,14 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        platform: [macos-latest, windows-latest, windows-11-arm, ubuntu-24.04, 'ubuntu-24.04-arm']
+        platform:
+          [
+            macos-latest,
+            windows-latest,
+            windows-11-arm,
+            ubuntu-24.04,
+            'ubuntu-24.04-arm',
+          ]
 
     runs-on: ${{ matrix.platform }}
     steps:

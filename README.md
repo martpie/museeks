@@ -53,13 +53,13 @@ If you encounter freezes or crashes when using the app, you can reset Museeks.
 <details>
   <summary>Reset Museeks</summary>
 
-  - Go to Settings -> Open Storage Directory
-  - Alternatively, go to the Museeks folder directly:
-    - Windows: `%AppData%\museeks`
-    - macOS: `~/Library/Application Support/museeks`
-    - Linux: `~/.config/museeks/` or `$XDG_CONFIG_HOME/museeks`
-  - Delete everything there
-  - Restart Museeks
+- Go to Settings -> Open Storage Directory
+- Alternatively, go to the Museeks folder directly:
+  - Windows: `%AppData%\museeks`
+  - macOS: `~/Library/Application Support/museeks`
+  - Linux: `~/.config/museeks/` or `$XDG_CONFIG_HOME/museeks`
+- Delete everything there
+- Restart Museeks
 
 </details>
 
@@ -118,8 +118,8 @@ Tauri does not support cross-platform binaries, so the command will only generat
 <details>
   <summary>Pluralization Help</summary>
 
-  - [Pluralization guide](https://lingui.dev/guides/plurals)
-  - [Pluralization reference](https://www.unicode.org/cldr/charts/42/supplemental/language_plural_rules.html)
+- [Pluralization guide](https://lingui.dev/guides/plurals)
+- [Pluralization reference](https://www.unicode.org/cldr/charts/42/supplemental/language_plural_rules.html)
 
 </details>
 
