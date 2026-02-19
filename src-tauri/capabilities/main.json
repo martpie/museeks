@@ -53,6 +53,7 @@
     "lastfm:allow-lastfm-disconnect",
     "lastfm:allow-lastfm-now-playing",
     "lastfm:allow-lastfm-scrobble",
+    "lastfm:allow-lastfm-test-connection",
     "sleepblocker:allow-enable",
     "sleepblocker:allow-disable"
   ],
