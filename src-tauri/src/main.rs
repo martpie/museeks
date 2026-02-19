@@ -130,7 +130,9 @@ fn main() {
                 .title_bar_style(tauri::TitleBarStyle::Overlay)
                 .traffic_light_position(tauri::Position::Logical(tauri::LogicalPosition {
                     x: 10.0,
-                    y: 27.0,
+                    // this will look meh on macOS 26 https://github.com/tauri-apps/tauri/issues/14477
+                    // but we're keeping this for not looking even worse on macOS 14 and 15
+                    y: 23.0,
                 }))
                 .build()?;
 
