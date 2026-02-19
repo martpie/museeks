@@ -30,11 +30,11 @@ modules:
     buildsystem: simple
     sources:
       - type: file
-        path: ../target/release/bundle/deb/Museeks_0.23.3_amd64.deb
+        path: ../target/release/bundle/deb/Museeks_0.23.4_amd64.deb
         only-arches:
           - x86_64
       - type: file
-        path: ../target/release/bundle/deb/Museeks_0.23.3_arm64.deb
+        path: ../target/release/bundle/deb/Museeks_0.23.4_arm64.deb
         only-arches:
           - aarch64
     build-commands:
