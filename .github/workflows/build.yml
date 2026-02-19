@@ -83,7 +83,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        platform: [macos-latest, windows-latest, windows-11-arm, ubuntu-24.04, 'ubuntu-24.04-arm']
+        platform: [macos-26, windows-latest, windows-11-arm, ubuntu-24.04, 'ubuntu-24.04-arm']
 
     runs-on: ${{ matrix.platform }}
     steps:
@@ -97,7 +97,7 @@ jobs:
         uses: dtolnay/rust-toolchain@stable
         with:
           # Those targets are only used on macos runners so it's in an `if` to slightly speed up windows and linux builds.
-          targets: ${{ matrix.platform == 'macos-latest' && 'aarch64-apple-darwin,x86_64-apple-darwin' || '' }}
+          targets: ${{ matrix.platform == 'macos-26' && 'aarch64-apple-darwin,x86_64-apple-darwin' || '' }}
 
       - name: Install native dependencies (ubuntu only)
         if: startsWith(matrix.platform, 'ubuntu')
@@ -129,7 +129,7 @@ jobs:
         with:
           includeUpdaterJson: false
           # compile a universal binary for intel + apple sillicon
-          args: ${{ matrix.platform == 'macos-latest' && '--target universal-apple-darwin' || '' }}
+          args: ${{ matrix.platform == 'macos-26' && '--target universal-apple-darwin' || '' }}
 
       - name: Flatpak Checks
         if: startsWith(matrix.platform, 'ubuntu')
@@ -158,7 +158,7 @@ jobs:
             ${{ github.workspace }}/release/*.flatpak
 
       - uses: actions/upload-artifact@v4
-        if: matrix.platform == 'macos-latest'
+        if: matrix.platform == 'macos-26'
         with:
           name: binaries-macos
           path: |
