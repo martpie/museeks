@@ -76,6 +76,9 @@ pub struct Config {
     pub notifications: bool,
     pub track_view_density: TrackViewDensity,
     pub wayland_compat: bool,
+    pub lastfm_enabled: bool,
+    pub lastfm_session_key: Option<String>,
+    pub lastfm_username: Option<String>,
 }
 
 pub const SYSTEM_THEME: &str = "__system";
@@ -106,6 +109,9 @@ impl Config {
             notifications: false,
             track_view_density: TrackViewDensity::Normal,
             wayland_compat: false,
+            lastfm_enabled: false,
+            lastfm_session_key: None,
+            lastfm_username: None,
         }
     }
 }

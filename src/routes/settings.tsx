@@ -47,6 +47,9 @@ function ViewSettings() {
           <SettingsNavLink to="/settings/ui">
             <Trans>Interface</Trans>
           </SettingsNavLink>
+          <SettingsNavLink to="/settings/scrobbling">
+            <Trans>Scrobbling</Trans>
+          </SettingsNavLink>
           <SettingsNavLink to="/settings/about">
             <Trans>About</Trans>
           </SettingsNavLink>

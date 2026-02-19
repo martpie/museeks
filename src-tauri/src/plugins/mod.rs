@@ -24,5 +24,6 @@ pub mod db;
  * Settings-related plugins
  */
 pub mod default_view;
+pub mod lastfm;
 pub mod sleepblocker;
 pub mod stream_server;

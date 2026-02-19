@@ -15,6 +15,7 @@ import { Route as LibraryRouteImport } from './../routes/library'
 import { Route as ArtistsRouteImport } from './../routes/artists'
 import { Route as TracksTrackIDRouteImport } from './../routes/tracks.$trackID'
 import { Route as SettingsUiRouteImport } from './../routes/settings.ui'
+import { Route as SettingsScrobblingRouteImport } from './../routes/settings.scrobbling'
 import { Route as SettingsLibraryRouteImport } from './../routes/settings.library'
 import { Route as SettingsAudioRouteImport } from './../routes/settings.audio'
 import { Route as SettingsAboutRouteImport } from './../routes/settings.about'
@@ -49,6 +50,11 @@ const TracksTrackIDRoute = TracksTrackIDRouteImport.update({
 const SettingsUiRoute = SettingsUiRouteImport.update({
   id: '/ui',
   path: '/ui',
+  getParentRoute: () => SettingsRoute,
+} as any)
+const SettingsScrobblingRoute = SettingsScrobblingRouteImport.update({
+  id: '/scrobbling',
+  path: '/scrobbling',
   getParentRoute: () => SettingsRoute,
 } as any)
 const SettingsLibraryRoute = SettingsLibraryRouteImport.update({
@@ -87,6 +93,7 @@ export interface FileRoutesByFullPath {
   '/settings/about': typeof SettingsAboutRoute
   '/settings/audio': typeof SettingsAudioRoute
   '/settings/library': typeof SettingsLibraryRoute
+  '/settings/scrobbling': typeof SettingsScrobblingRoute
   '/settings/ui': typeof SettingsUiRoute
   '/tracks/$trackID': typeof TracksTrackIDRoute
 }
@@ -100,6 +107,7 @@ export interface FileRoutesByTo {
   '/settings/about': typeof SettingsAboutRoute
   '/settings/audio': typeof SettingsAudioRoute
   '/settings/library': typeof SettingsLibraryRoute
+  '/settings/scrobbling': typeof SettingsScrobblingRoute
   '/settings/ui': typeof SettingsUiRoute
   '/tracks/$trackID': typeof TracksTrackIDRoute
 }
@@ -114,6 +122,7 @@ export interface FileRoutesById {
   '/settings/about': typeof SettingsAboutRoute
   '/settings/audio': typeof SettingsAudioRoute
   '/settings/library': typeof SettingsLibraryRoute
+  '/settings/scrobbling': typeof SettingsScrobblingRoute
   '/settings/ui': typeof SettingsUiRoute
   '/tracks/$trackID': typeof TracksTrackIDRoute
 }
@@ -129,6 +138,7 @@ export interface FileRouteTypes {
     | '/settings/about'
     | '/settings/audio'
     | '/settings/library'
+    | '/settings/scrobbling'
     | '/settings/ui'
     | '/tracks/$trackID'
   fileRoutesByTo: FileRoutesByTo
@@ -142,6 +152,7 @@ export interface FileRouteTypes {
     | '/settings/about'
     | '/settings/audio'
     | '/settings/library'
+    | '/settings/scrobbling'
     | '/settings/ui'
     | '/tracks/$trackID'
   id:
@@ -155,6 +166,7 @@ export interface FileRouteTypes {
     | '/settings/about'
     | '/settings/audio'
     | '/settings/library'
+    | '/settings/scrobbling'
     | '/settings/ui'
     | '/tracks/$trackID'
   fileRoutesById: FileRoutesById
@@ -209,6 +221,13 @@ declare module '@tanstack/react-router' {
       path: '/ui'
       fullPath: '/settings/ui'
       preLoaderRoute: typeof SettingsUiRouteImport
+      parentRoute: typeof SettingsRoute
+    }
+    '/settings/scrobbling': {
+      id: '/settings/scrobbling'
+      path: '/scrobbling'
+      fullPath: '/settings/scrobbling'
+      preLoaderRoute: typeof SettingsScrobblingRouteImport
       parentRoute: typeof SettingsRoute
     }
     '/settings/library': {
@@ -276,6 +295,7 @@ interface SettingsRouteChildren {
   SettingsAboutRoute: typeof SettingsAboutRoute
   SettingsAudioRoute: typeof SettingsAudioRoute
   SettingsLibraryRoute: typeof SettingsLibraryRoute
+  SettingsScrobblingRoute: typeof SettingsScrobblingRoute
   SettingsUiRoute: typeof SettingsUiRoute
 }
 
@@ -283,6 +303,7 @@ const SettingsRouteChildren: SettingsRouteChildren = {
   SettingsAboutRoute: SettingsAboutRoute,
   SettingsAudioRoute: SettingsAudioRoute,
   SettingsLibraryRoute: SettingsLibraryRoute,
+  SettingsScrobblingRoute: SettingsScrobblingRoute,
   SettingsUiRoute: SettingsUiRoute,
 }
 
