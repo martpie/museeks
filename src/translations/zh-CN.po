@@ -195,6 +195,7 @@ msgstr "移除音轨"
 #: src/components/TrackList.tsx:392
 #: src/routes/settings.library.tsx:98
 #: src/routes/settings.library.tsx:143
+#: src/routes/settings.scrobbling.tsx:115
 #: src/routes/tracks.$trackID.tsx:246
 msgid "Cancel"
 msgstr "取消"
@@ -437,6 +438,55 @@ msgstr "重置"
 msgid "Reset library"
 msgstr "重置音乐库"
 
+#: src/routes/settings.scrobbling.tsx:37
+msgid "Failed to start Last.fm authentication. Please try again."
+msgstr ""
+
+#: src/routes/settings.scrobbling.tsx:52
+msgid "Failed to complete authentication. Make sure you authorized the app on Last.fm."
+msgstr ""
+
+#: src/routes/settings.scrobbling.tsx:62
+msgid "Failed to disconnect from Last.fm."
+msgstr ""
+
+#: src/routes/settings.scrobbling.tsx:76
+msgid "Last.fm Integration"
+msgstr ""
+
+#: src/routes/settings.scrobbling.tsx:78
+msgid "Connect your Last.fm account to scrobble tracks and share your listening history."
+msgstr ""
+
+#: src/routes/settings.scrobbling.tsx:88
+msgid "Connect to Last.fm"
+msgstr ""
+
+#: src/routes/settings.scrobbling.tsx:97
+msgid "A browser window has been opened. Please authorize Museeks on Last.fm, then click the button below to complete the connection."
+msgstr ""
+
+#: src/routes/settings.scrobbling.tsx:104
+msgid "I've authorized Museeks"
+msgstr ""
+
+#. placeholder {0}: config.lastfm_username
+#: src/routes/settings.scrobbling.tsx:126
+msgid "Connected as <0>{0}</0>"
+msgstr ""
+
+#: src/routes/settings.scrobbling.tsx:136
+msgid "Disconnect"
+msgstr ""
+
+#: src/routes/settings.scrobbling.tsx:142
+msgid "Enable scrobbling"
+msgstr ""
+
+#: src/routes/settings.scrobbling.tsx:143
+msgid "Send your listening history to Last.fm"
+msgstr ""
+
 #: src/routes/settings.tsx:45
 msgid "Audio"
 msgstr "音频"
@@ -446,6 +496,10 @@ msgid "Interface"
 msgstr "界面"
 
 #: src/routes/settings.tsx:51
+msgid "Scrobbling"
+msgstr ""
+
+#: src/routes/settings.tsx:54
 msgid "About"
 msgstr "关于"
 

@@ -8,6 +8,7 @@ import ConfigBridge from '../lib/bridge-config';
 import { getCover } from '../lib/cover';
 import player from '../lib/player';
 import { goToPlayingTrack } from '../lib/queue-origin';
+import scrobbler from '../lib/scrobbler';
 import { logAndNotifyError } from '../lib/utils';
 import { useToastsAPI } from '../stores/useToastsStore';
 
@@ -28,6 +29,9 @@ function PlayerEvents() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    // Initialize the scrobbler to track playback and send to Last.fm
+    scrobbler.init();
+
     function handleAudioError(error: MediaError) {
       player.stop();
 

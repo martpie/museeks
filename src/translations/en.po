@@ -195,6 +195,7 @@ msgstr "Remove tracks"
 #: src/components/TrackList.tsx:392
 #: src/routes/settings.library.tsx:98
 #: src/routes/settings.library.tsx:143
+#: src/routes/settings.scrobbling.tsx:115
 #: src/routes/tracks.$trackID.tsx:246
 msgid "Cancel"
 msgstr "Cancel"
@@ -437,6 +438,55 @@ msgstr "Reset"
 msgid "Reset library"
 msgstr "Reset library"
 
+#: src/routes/settings.scrobbling.tsx:37
+msgid "Failed to start Last.fm authentication. Please try again."
+msgstr "Failed to start Last.fm authentication. Please try again."
+
+#: src/routes/settings.scrobbling.tsx:52
+msgid "Failed to complete authentication. Make sure you authorized the app on Last.fm."
+msgstr "Failed to complete authentication. Make sure you authorized the app on Last.fm."
+
+#: src/routes/settings.scrobbling.tsx:62
+msgid "Failed to disconnect from Last.fm."
+msgstr "Failed to disconnect from Last.fm."
+
+#: src/routes/settings.scrobbling.tsx:76
+msgid "Last.fm Integration"
+msgstr "Last.fm Integration"
+
+#: src/routes/settings.scrobbling.tsx:78
+msgid "Connect your Last.fm account to scrobble tracks and share your listening history."
+msgstr "Connect your Last.fm account to scrobble tracks and share your listening history."
+
+#: src/routes/settings.scrobbling.tsx:88
+msgid "Connect to Last.fm"
+msgstr "Connect to Last.fm"
+
+#: src/routes/settings.scrobbling.tsx:97
+msgid "A browser window has been opened. Please authorize Museeks on Last.fm, then click the button below to complete the connection."
+msgstr "A browser window has been opened. Please authorize Museeks on Last.fm, then click the button below to complete the connection."
+
+#: src/routes/settings.scrobbling.tsx:104
+msgid "I've authorized Museeks"
+msgstr "I've authorized Museeks"
+
+#. placeholder {0}: config.lastfm_username
+#: src/routes/settings.scrobbling.tsx:126
+msgid "Connected as <0>{0}</0>"
+msgstr "Connected as <0>{0}</0>"
+
+#: src/routes/settings.scrobbling.tsx:136
+msgid "Disconnect"
+msgstr "Disconnect"
+
+#: src/routes/settings.scrobbling.tsx:142
+msgid "Enable scrobbling"
+msgstr "Enable scrobbling"
+
+#: src/routes/settings.scrobbling.tsx:143
+msgid "Send your listening history to Last.fm"
+msgstr "Send your listening history to Last.fm"
+
 #: src/routes/settings.tsx:45
 msgid "Audio"
 msgstr "Audio"
@@ -446,6 +496,10 @@ msgid "Interface"
 msgstr "Interface"
 
 #: src/routes/settings.tsx:51
+msgid "Scrobbling"
+msgstr "Scrobbling"
+
+#: src/routes/settings.tsx:54
 msgid "About"
 msgstr "About"
 

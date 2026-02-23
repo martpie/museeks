@@ -45,6 +45,18 @@ fn main() {
                 tauri_build::InlinedPlugin::new().commands(&["set"]),
             )
             .plugin(
+
+                "lastfm",
+                tauri_build::InlinedPlugin::new().commands(&[
+                    "lastfm_get_auth_url",
+                    "lastfm_get_session",
+                    "lastfm_disconnect",
+                    "lastfm_now_playing",
+                    "lastfm_scrobble",
+                    "lastfm_test_connection",
+                ]),
+            )
+            .plugin(
                 "sleepblocker",
                 tauri_build::InlinedPlugin::new().commands(&["enable", "disable"]),
             ),

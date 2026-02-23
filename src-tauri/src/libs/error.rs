@@ -51,6 +51,9 @@ pub enum MuseeksError {
 
     #[error("Failed to find ID3 tags for path: {0}")]
     ID3NoTags(PathBuf),
+
+    #[error("Last.fm error: {0}")]
+    LastFm(String),
 }
 
 /**

@@ -48,6 +48,12 @@
     "database:allow-delete-playlist",
     "database:allow-reset",
     "default-view:allow-set",
+    "lastfm:allow-lastfm-get-auth-url",
+    "lastfm:allow-lastfm-get-session",
+    "lastfm:allow-lastfm-disconnect",
+    "lastfm:allow-lastfm-now-playing",
+    "lastfm:allow-lastfm-scrobble",
+    "lastfm:allow-lastfm-test-connection",
     "sleepblocker:allow-enable",
     "sleepblocker:allow-disable"
   ],
