@@ -112,52 +112,55 @@ export default function TrackListDefault(props: Props) {
       modifiers={DND_MODIFIERS}
       sensors={sensors}
     >
-      <Scrollable ref={innerScrollableRef}>
+      <div className={styles.root}>
         <TrackListHeader enableSort={isSortEnabled} />
 
-        {/* The large inner element to hold all of the items */}
-        <ul
-          className={styles.rows}
-          style={{
-            height: `${virtualizer.getTotalSize()}px`,
-          }}
-        >
-          <SortableContext
-            items={tracks}
-            strategy={verticalListSortingStrategy}
+        <Scrollable ref={innerScrollableRef} className={styles.scrollArea}>
+
+          {/* The large inner element to hold all of the items */}
+          <ul
+            className={styles.rows}
+            style={{
+              height: `${virtualizer.getTotalSize()}px`,
+            }}
           >
-            {/* Only the visible items in the virtualizer, manually positioned to be in view */}
-            {virtualizer.getVirtualItems().map((virtualItem) => {
-              const track = tracks[virtualItem.index];
-              return (
-                <TrackRow
-                  key={virtualItem.key}
-                  selected={selectedTracks.has(track.id)}
-                  track={track}
-                  isPlaying={trackPlayingID === track.id}
-                  index={virtualItem.index}
-                  onTrackSelect={onTrackSelect}
-                  onContextMenu={onContextMenu}
-                  onPlaybackStart={onPlaybackStart}
-                  draggable={reorderable}
-                  style={{
-                    position: 'absolute',
-                    left: 0,
-                    width: '100%',
-                    height: `${virtualItem.size}px`,
-                    // Intentionally not translateY, as it would create another paint
-                    // layer where every row would cover elements from the previous one.
-                    // This would typically prevent the drop effect to be properly displayed
-                    // when reordering a playlist
-                    top: `${virtualItem.start}px`,
-                    zIndex: 1,
-                  }}
-                />
-              );
-            })}
-          </SortableContext>
-        </ul>
-      </Scrollable>
+            <SortableContext
+              items={tracks}
+              strategy={verticalListSortingStrategy}
+            >
+              {/* Only the visible items in the virtualizer, manually positioned to be in view */}
+              {virtualizer.getVirtualItems().map((virtualItem) => {
+                const track = tracks[virtualItem.index];
+                return (
+                  <TrackRow
+                    key={virtualItem.key}
+                    selected={selectedTracks.has(track.id)}
+                    track={track}
+                    isPlaying={trackPlayingID === track.id}
+                    index={virtualItem.index}
+                    onTrackSelect={onTrackSelect}
+                    onContextMenu={onContextMenu}
+                    onPlaybackStart={onPlaybackStart}
+                    draggable={reorderable}
+                    style={{
+                      position: 'absolute',
+                      left: 0,
+                      width: '100%',
+                      height: `${virtualItem.size}px`,
+                      // Intentionally not translateY, as it would create another paint
+                      // layer where every row would cover elements from the previous one.
+                      // This would typically prevent the drop effect to be properly displayed
+                      // when reordering a playlist
+                      top: `${virtualItem.start}px`,
+                      zIndex: 1,
+                    }}
+                  />
+                );
+              })}
+            </SortableContext>
+          </ul>
+        </Scrollable>
+      </div>
     </DndContext>
   );
 }

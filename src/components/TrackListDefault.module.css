@@ -1,3 +1,15 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.scrollArea {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
 .rows {
   width: 100%;
   position: relative;
