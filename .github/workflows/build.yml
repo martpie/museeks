@@ -22,9 +22,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
+      - uses: oven-sh/setup-bun@v2
         with:
-          node-version: 22
+          bun-version: 1
 
       - uses: actions-rust-lang/setup-rust-toolchain@v1
 
@@ -34,31 +34,31 @@ jobs:
           sudo apt-get install -y libgtk-3-dev libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf
 
       - name: Install UI dependencies
-        run: npm ci
+        run: bun ci
 
       - name: Install Playwright dependencies
         run: npx playwright install chromium --with-deps
 
       - name: 'Test: Format'
-        run: 'npm run test:format'
+        run: 'bun run test:format'
 
       - name: 'Test: Lint'
-        run: 'npm run test:lint'
+        run: 'bun run test:lint'
 
       - name: 'Test: Unit'
-        run: 'npm run test:unit'
+        run: 'bun run test:unit'
 
       - name: 'Test: E2E'
-        run: 'npm run test:ui'
+        run: 'bun run test:ui'
 
       - name: 'Generate translations'
-        run: npm run gen:translations
+        run: bun run gen:translations
 
       - name: Build application
-        run: npm run build
+        run: bun run build
 
       - name: 'Test: Rust (+ Generate Types)'
-        run: npm run gen:types
+        run: bun run gen:types
 
       # Check one of the command above did not generate any unexpected artifacts
       # (like types generation)
@@ -96,9 +96,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
+      - uses: oven-sh/setup-bun@v2
         with:
-          node-version: 22
+          bun-version: 1
 
       - name: Install Rust stable
         uses: dtolnay/rust-toolchain@stable
@@ -121,7 +121,7 @@ jobs:
           flatpak install flathub -y org.flatpak.Builder
 
       - name: Install frontend dependencies
-        run: npm ci
+        run: bun ci
 
       - uses: tauri-apps/tauri-action@v0
         env:
