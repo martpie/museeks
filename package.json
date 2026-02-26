@@ -32,7 +32,7 @@
     "postinstall": "simple-git-hooks"
   },
   "simple-git-hooks": {
-    "pre-commit": "npm run gen:translations && git add src/translations"
+    "pre-commit": "bun run gen:translations && git add src/translations"
   },
   "dependencies": {
     "@dnd-kit/core": "6.3.1",
@@ -98,6 +98,7 @@
     "@parcel/watcher",
     "esbuild",
     "oxfmt",
-    "oxlint"
+    "oxlint",
+    "simple-git-hooks"
   ]
 }
