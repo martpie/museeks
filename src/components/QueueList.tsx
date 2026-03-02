@@ -79,7 +79,7 @@ export default function QueueList(props: Props) {
           <Trans>clear queue</Trans>
         </Button>
       </div>
-      <div className={styles.queueContent}>
+      <ul className={styles.queueContent}>
         <SortableContext
           items={shownQueue}
           strategy={verticalListSortingStrategy}
@@ -105,7 +105,7 @@ export default function QueueList(props: Props) {
             <Trans>see more</Trans>
           </Button>
         )}
-      </div>
+      </ul>
     </DndContext>
   );
 }

@@ -12,6 +12,9 @@
 }
 
 .queueContent {
-  max-height: 250px;
+  max-height: 300px;
   overflow: auto;
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }

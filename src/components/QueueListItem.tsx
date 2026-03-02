@@ -38,19 +38,19 @@ export default function QueueListItem(props: Props) {
   }, [props.index, props.queueCursor]);
 
   return (
-    <div
+    <li
       className={styles.queueItem}
       // DnD props for re-ordering
       ref={setNodeRef}
       style={style}
       {...attributes}
       {...listeners}
+       onDoubleClick={play}
     >
       <div className={styles.queueItemCover}>
         <Cover track={track} iconSize={12} />
       </div>
-      {/** biome-ignore lint/a11y/noStaticElementInteractions: later, make a <li> */}
-      <div className={styles.queueItemInfo} onDoubleClick={play}>
+      <div className={styles.queueItemInfo}>
         <div className={styles.queueItemInfoTitle}>{track.title}</div>
         <div className={styles.queueItemInfoOtherInfos}>
           <span>{track.artists.join(', ')}</span> - <span>{track.album}</span>
@@ -59,6 +59,6 @@ export default function QueueListItem(props: Props) {
       <button type="button" className={styles.queueItemRemove} onClick={remove}>
         &times;
       </button>
-    </div>
+    </li>
   );
 }
