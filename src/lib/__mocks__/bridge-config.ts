@@ -14,7 +14,7 @@ export const MOCK_CONFIG: Config = {
   default_view: 'Library',
   library_sort_by: 'Artist',
   library_sort_order: 'Asc',
-  library_folders: [],
+  library_folders: ['/home/user/music'],
   library_autorefresh: false,
   sleepblocker: false,
   auto_update_checker: true,
