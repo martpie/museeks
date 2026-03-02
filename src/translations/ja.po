@@ -261,7 +261,7 @@ msgid "Your search returned no results"
 msgstr "検索結果が見つかりませんでした"
 
 #: src/components/VolumeControl.tsx:48
-#: src/components/VolumeControl.tsx:69
+#: src/components/VolumeControl.tsx:73
 msgid "Volume"
 msgstr "音量"
 

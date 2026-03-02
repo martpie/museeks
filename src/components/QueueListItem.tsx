@@ -40,12 +40,12 @@ export default function QueueListItem(props: Props) {
   return (
     <li
       className={styles.queueItem}
+      {...attributes}
       // DnD props for re-ordering
       ref={setNodeRef}
       style={style}
-      {...attributes}
+      onDoubleClick={play}
       {...listeners}
-       onDoubleClick={play}
     >
       <div className={styles.queueItemCover}>
         <Cover track={track} iconSize={12} />

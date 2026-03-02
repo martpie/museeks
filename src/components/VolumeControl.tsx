@@ -51,25 +51,29 @@ export default function VolumeControl() {
             iconSize={16}
           />
         </HoverCard.Trigger>
-        <HoverCard.Content className={styles.volumeControl} side="right" sideOffset={8}>
-            <Slider.Root
-              className={sliderClasses}
-              value={[unsmoothifyVolume(volume)]}
-              onKeyDown={stopPropagation}
-              onValueChange={setPlayerVolume}
-              min={0}
-              max={1}
-              step={0.01}
-            >
-              <Slider.Track className={styles.sliderTrack}>
-                <Slider.Range className={styles.sliderRange} />
-              </Slider.Track>
-              <Slider.Thumb
-                className={styles.sliderThumb}
-                aria-label={t`Volume`}
-                data-museeks-action
-              />
-            </Slider.Root>
+        <HoverCard.Content
+          className={styles.volumeControl}
+          side="right"
+          sideOffset={8}
+        >
+          <Slider.Root
+            className={sliderClasses}
+            value={[unsmoothifyVolume(volume)]}
+            onKeyDown={stopPropagation}
+            onValueChange={setPlayerVolume}
+            min={0}
+            max={1}
+            step={0.01}
+          >
+            <Slider.Track className={styles.sliderTrack}>
+              <Slider.Range className={styles.sliderRange} />
+            </Slider.Track>
+            <Slider.Thumb
+              className={styles.sliderThumb}
+              aria-label={t`Volume`}
+              data-museeks-action
+            />
+          </Slider.Root>
         </HoverCard.Content>
       </div>
     </HoverCard.Root>
