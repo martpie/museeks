@@ -1,7 +1,7 @@
 import { useLingui } from '@lingui/react/macro';
 import cx from 'classnames';
-import { Slider } from 'radix-ui';
-import { useCallback, useState } from 'react';
+import { HoverCard, Slider } from 'radix-ui';
+import { useCallback } from 'react';
 
 import ButtonIcon from '../elements/ButtonIcon';
 import { usePlayerState } from '../hooks/usePlayer';
@@ -28,7 +28,6 @@ const getVolumeIcon = (volume: number, muted: boolean): IconName => {
 export default function VolumeControl() {
   const volume = usePlayerState((state) => state.volume);
   const muted = usePlayerState((state) => state.muted);
-  const [showVolume, setShowVolume] = useState(false);
   const { t } = useLingui();
 
   const setPlayerVolume = useCallback((values: number[]) => {
@@ -37,47 +36,42 @@ export default function VolumeControl() {
     player.setVolume(smoothVolume); // Debounced save happens in player
   }, []);
 
-  const volumeClasses = cx(styles.volumeControl, {
-    [styles.visible]: showVolume,
-  });
-
   const sliderClasses = cx(styles.sliderRoot, {
     [styles.faded]: muted,
   });
 
   return (
-    // biome-ignore lint/a11y/noStaticElementInteractions: will fix one day and make it interactive
-    <div
-      className={styles.volumeControlContainer}
-      onMouseEnter={() => setShowVolume(true)}
-      onMouseLeave={() => setShowVolume(false)}
-    >
-      <ButtonIcon
-        title={t`Volume`}
-        onClick={player.toggleMute}
-        icon={getVolumeIcon(unsmoothifyVolume(volume), muted)}
-        iconSize={16}
-      />
-      <div className={volumeClasses}>
-        <Slider.Root
-          className={sliderClasses}
-          value={[unsmoothifyVolume(volume)]}
-          onKeyDown={stopPropagation}
-          onValueChange={setPlayerVolume}
-          min={0}
-          max={1}
-          step={0.01}
-        >
-          <Slider.Track className={styles.sliderTrack}>
-            <Slider.Range className={styles.sliderRange} />
-          </Slider.Track>
-          <Slider.Thumb
-            className={styles.sliderThumb}
-            aria-label={t`Volume`}
-            data-museeks-action
+    <HoverCard.Root openDelay={0} closeDelay={0}>
+      <div className={styles.volumeControlContainer}>
+        <HoverCard.Trigger asChild>
+          <ButtonIcon
+            title={t`Volume`}
+            onClick={player.toggleMute}
+            icon={getVolumeIcon(unsmoothifyVolume(volume), muted)}
+            iconSize={16}
           />
-        </Slider.Root>
+        </HoverCard.Trigger>
+        <HoverCard.Content className={styles.volumeControl} side="right" sideOffset={8}>
+            <Slider.Root
+              className={sliderClasses}
+              value={[unsmoothifyVolume(volume)]}
+              onKeyDown={stopPropagation}
+              onValueChange={setPlayerVolume}
+              min={0}
+              max={1}
+              step={0.01}
+            >
+              <Slider.Track className={styles.sliderTrack}>
+                <Slider.Range className={styles.sliderRange} />
+              </Slider.Track>
+              <Slider.Thumb
+                className={styles.sliderThumb}
+                aria-label={t`Volume`}
+                data-museeks-action
+              />
+            </Slider.Root>
+        </HoverCard.Content>
       </div>
-    </div>
+    </HoverCard.Root>
   );
 }

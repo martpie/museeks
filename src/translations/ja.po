@@ -260,8 +260,8 @@ msgstr "<0>ここから音楽を追加</0>できます"
 msgid "Your search returned no results"
 msgstr "検索結果が見つかりませんでした"
 
-#: src/components/VolumeControl.tsx:56
-#: src/components/VolumeControl.tsx:76
+#: src/components/VolumeControl.tsx:48
+#: src/components/VolumeControl.tsx:69
 msgid "Volume"
 msgstr "音量"
 

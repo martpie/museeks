@@ -260,8 +260,8 @@ msgstr "вы можете добавить <0>вашу музыку здесь</
 msgid "Your search returned no results"
 msgstr "Ваш поиск не принёс результатов"
 
-#: src/components/VolumeControl.tsx:56
-#: src/components/VolumeControl.tsx:76
+#: src/components/VolumeControl.tsx:48
+#: src/components/VolumeControl.tsx:69
 msgid "Volume"
 msgstr "Громкость"
 

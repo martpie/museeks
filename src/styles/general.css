@@ -55,6 +55,7 @@ strong {
 /* App wrapper */
 #wrap {
   height: 100vh;
+  isolation: isolate;
 }
 
 /* Generic class that can be used on call-to-actions to show the interactibility of an element */
