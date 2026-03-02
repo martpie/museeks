@@ -193,14 +193,14 @@ msgid "Remove tracks"
 msgstr "トラックを削除"
 
 #: src/components/TrackList.tsx:392
-#: src/routes/settings.library.tsx:98
-#: src/routes/settings.library.tsx:143
+#: src/routes/settings.library.tsx:99
+#: src/routes/settings.library.tsx:144
 #: src/routes/tracks.$trackID.tsx:246
 msgid "Cancel"
 msgstr "キャンセル"
 
 #: src/components/TrackList.tsx:393
-#: src/routes/settings.library.tsx:61
+#: src/routes/settings.library.tsx:62
 msgid "Remove"
 msgstr "削除"
 
@@ -367,73 +367,73 @@ msgstr "再生中のトラックを追従"
 msgid "Automatically follow the currently playing track (only when the app is not focused)"
 msgstr "現在再生中のトラックを自動的に追従（アプリがフォーカスされていない時のみ）"
 
-#: src/routes/settings.library.tsx:45
+#: src/routes/settings.library.tsx:46
 msgid "Files"
 msgstr "ファイル"
 
-#: src/routes/settings.library.tsx:49
+#: src/routes/settings.library.tsx:50
 msgid "There are no folders in your library."
 msgstr "ライブラリにフォルダーがありません。"
 
-#: src/routes/settings.library.tsx:81
+#: src/routes/settings.library.tsx:82
 msgid "Add folder"
 msgstr "フォルダーを追加"
 
-#: src/routes/settings.library.tsx:88
+#: src/routes/settings.library.tsx:89
 msgid "Scan"
 msgstr "スキャン"
 
-#: src/routes/settings.library.tsx:94
+#: src/routes/settings.library.tsx:95
 msgid "All track data will be updated from the base files, but your original files won't be modified. Any Museeks-specific edits you may have done will be reset."
 msgstr "すべてのトラックデータがベースファイルから更新されますが、元のファイルは変更されません。Museeks固有の編集は全てリセットされます。"
 
-#: src/routes/settings.library.tsx:96
+#: src/routes/settings.library.tsx:97
 msgid "Refresh all tracks?"
 msgstr "すべてのトラックを更新しますか？"
 
-#: src/routes/settings.library.tsx:99
-#: src/routes/settings.library.tsx:109
+#: src/routes/settings.library.tsx:100
+#: src/routes/settings.library.tsx:110
 msgid "Refresh"
 msgstr "更新"
 
-#: src/routes/settings.library.tsx:107
+#: src/routes/settings.library.tsx:108
 msgid "Force the refresh of all tracks tags"
 msgstr "すべてのトラックタグを強制的に更新"
 
-#: src/routes/settings.library.tsx:113
+#: src/routes/settings.library.tsx:114
 msgid "<0>.m3u</0> files will also be imported as playlists."
 msgstr "<0>.m3u</0> ファイルもプレイリストとしてインポートされます。"
 
-#: src/routes/settings.library.tsx:120
+#: src/routes/settings.library.tsx:121
 msgid "Automatically refresh library on startup"
 msgstr "起動時にライブラリを自動的に更新"
 
-#: src/routes/settings.library.tsx:127
+#: src/routes/settings.library.tsx:128
 msgid "Danger zone"
 msgstr "危険ゾーン"
 
-#: src/routes/settings.library.tsx:130
+#: src/routes/settings.library.tsx:131
 msgid "Delete all tracks and playlists from Museeks."
 msgstr "Museeks からすべてのトラックとプレイリストを削除します。"
 
-#: src/routes/settings.library.tsx:135
+#: src/routes/settings.library.tsx:136
 msgid "Fully reset the library"
 msgstr "ライブラリを完全にリセット"
 
-#: src/routes/settings.library.tsx:139
+#: src/routes/settings.library.tsx:140
 msgid "All your tracks and playlists will be deleted from Museeks."
 msgstr "すべてのトラックとプレイリストが Museeks から削除されます。"
 
-#: src/routes/settings.library.tsx:141
+#: src/routes/settings.library.tsx:142
 msgid "Reset library?"
 msgstr "ライブラリをリセットしますか？"
 
-#: src/routes/settings.library.tsx:144
+#: src/routes/settings.library.tsx:145
 #: src/routes/settings.ui.tsx:70
 msgid "Reset"
 msgstr "リセット"
 
-#: src/routes/settings.library.tsx:153
+#: src/routes/settings.library.tsx:154
 msgid "Reset library"
 msgstr "ライブラリをリセット"
 

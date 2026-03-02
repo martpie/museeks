@@ -18,6 +18,7 @@ export const Route = createFileRoute('/settings/library')({
 
 function ViewSettingsLibrary() {
   const { config } = useLoaderData({ from: '/settings' });
+  const libraryFolders = config.library_folders;
 
   const libraryAPI = useLibraryAPI();
   const isLibraryRefreshing = useLibraryStore((state) => state.refreshing);
@@ -44,12 +45,12 @@ function ViewSettingsLibrary() {
         <Setting.Title>
           <Trans>Files</Trans>
         </Setting.Title>
-        {config.library_folders.length === 0 && (
+        {libraryFolders.length === 0 && (
           <Setting.Description>
             <Trans>There are no folders in your library.</Trans>
           </Setting.Description>
         )}
-        {config.library_folders.length > 0 && (
+        {libraryFolders.length > 0 && (
           <ul className={styles.libraryFolders}>
             {config.library_folders.map((folder) => {
               return (
@@ -81,14 +82,14 @@ function ViewSettingsLibrary() {
             <Trans>Add folder</Trans>
           </Button>
           <Button
-            disabled={isLibraryRefreshing}
+            disabled={isLibraryRefreshing || libraryFolders.length === 0}
             onClick={useInvalidateCallback(() => libraryAPI.scan())}
             data-testid="scan-library-button"
           >
             <Trans>Scan</Trans>
           </Button>
           <Button
-            disabled={isLibraryRefreshing}
+            disabled={isLibraryRefreshing || libraryFolders.length === 0}
             onClick={useInvalidateCallback(async () => {
               const confirm = await ask(
                 t`All track data will be updated from the base files, but your original files won't be modified. Any Museeks-specific edits you may have done will be reset.`,
