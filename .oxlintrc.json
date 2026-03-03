@@ -12,6 +12,7 @@
     "promise",
     "vitest"
   ],
+  "jsPlugins": ["@stylexjs/eslint-plugin"],
   "ignorePatterns": [
     "**/node_modules",
     "**/dist",
@@ -31,6 +32,12 @@
           }
         ]
       }
-    ]
+    ],
+    "@stylexjs/valid-styles": "error",
+    "@stylexjs/no-unused": "error",
+    "@stylexjs/valid-shorthands": "error",
+    "@stylexjs/enforce-extension": "error",
+    "@stylexjs/no-legacy-contextual-styles": "error",
+    "@stylexjs/sort-keys": "off"
   }
 }

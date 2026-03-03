@@ -1,29 +1,66 @@
-import cx from 'classnames';
-
-import styles from './Flexbox.module.css';
+import * as stylex from '@stylexjs/stylex';
 
 type Props = {
-  gap?: 4 | 8 | 16;
+  gap?: keyof typeof gapVariants;
   children: React.ReactNode;
-  className?: string;
-  direction?: 'vertical' | 'horizontal';
-  align?: 'center' | 'baseline';
+  xstyle?: stylex.CompiledStyles;
+  direction?: keyof typeof directionVariants;
+  align?: keyof typeof alignVariants;
 };
 
 export default function Flexbox(props: Props) {
-  const classNames = cx(styles.flexbox, props.className, {
-    [styles.vertical]: props.direction === 'vertical',
-  });
-
   return (
     <div
-      className={classNames}
-      style={{
-        gap: props.gap ?? 0,
-        alignItems: props.align,
-      }} // Eventually, move that to real classes, but I am lazy
+      {...stylex.props(
+        styles.flexbox,
+        directionVariants[props.direction ?? 'horizontal'],
+        gapVariants[props.gap ?? 0],
+        props.align ? alignVariants[props.align] : null,
+        props.xstyle,
+      )}
     >
       {props.children}
     </div>
   );
 }
+
+// -----------------------------------------------------------------------------
+
+const styles = stylex.create({
+  flexbox: {
+    display: 'flex',
+  },
+});
+
+const directionVariants = stylex.create({
+  horizontal: {
+    flexDirection: 'row',
+  },
+  vertical: {
+    flexDirection: 'column',
+  },
+});
+
+const gapVariants = stylex.create({
+  0: {
+    gap: 0,
+  },
+  4: {
+    gap: '4px',
+  },
+  8: {
+    gap: '8px',
+  },
+  16: {
+    gap: '16px',
+  },
+});
+
+const alignVariants = stylex.create({
+  center: {
+    alignItems: 'center',
+  },
+  baseline: {
+    alignItems: 'baseline',
+  },
+});

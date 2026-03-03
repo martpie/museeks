@@ -1,8 +1,7 @@
+import * as stylex from '@stylexjs/stylex';
 import type React from 'react';
 
 import Icon, { type IconName, type IconSize } from '../components/Icon';
-
-import styles from './ButtonIcon.module.css';
 
 type Props = React.ComponentPropsWithRef<'button'> & {
   icon: IconName;
@@ -16,17 +15,32 @@ export default function ButtonIcon(props: Props) {
     <button
       ref={ref}
       type="button"
-      className={styles.buttonIcon}
       onClick={onClick}
       data-museeks-action
       {...rest}
+      {...stylex.props(styles.buttonIcon)}
     >
       <Icon
         name={icon}
         size={iconSize}
         color={isActive ? 'var(--main-color)' : undefined}
-        className={styles.icon}
+        {...stylex.props(styles.icon)}
       />
     </button>
   );
 }
+
+const styles = stylex.create({
+  buttonIcon: {
+    backgroundColor: 'transparent',
+    borderStyle: 'none',
+    borderWidth: '0',
+    color: 'var(--text)',
+    textAlign: 'center',
+    padding: '0',
+    lineHeight: 1,
+  },
+  icon: {
+    verticalAlign: 'middle',
+  },
+});

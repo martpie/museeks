@@ -1,3 +1,4 @@
+import * as stylex from '@stylexjs/stylex';
 import { groupBy } from 'lodash-es';
 import React, { useMemo } from 'react';
 
@@ -25,7 +26,7 @@ export default function SideNav(props: Props) {
 
   return (
     <div className={styles.nav} data-museeks-list>
-      <Flexbox gap={8} align="center" className={styles.header}>
+      <Flexbox gap={8} align="center" xstyle={otherStyles.header}>
         <h4 className={styles.title}>{props.title}</h4>
         <div className={styles.actions}>{props.actions}</div>
       </Flexbox>
@@ -42,3 +43,12 @@ export default function SideNav(props: Props) {
     </div>
   );
 }
+
+const otherStyles = stylex.create({
+  header: {
+    zIndex: 10,
+    position: 'sticky',
+    top: 0,
+    backgroundColor: 'var(--sidebar-bg)',
+  },
+});

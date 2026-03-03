@@ -1,4 +1,4 @@
-import styles from './Scrollable.module.css';
+import * as stylex from '@stylexjs/stylex';
 
 type Props = {
   children: React.ReactNode;
@@ -7,8 +7,14 @@ type Props = {
 
 export default function Scrollable(props: Props) {
   return (
-    <div className={styles.scrollable} ref={props.ref}>
+    <div {...stylex.props(styles.scrollable)} ref={props.ref}>
       {props.children}
     </div>
   );
 }
+
+const styles = stylex.create({
+  scrollable: {
+    overflowY: 'auto',
+  },
+});

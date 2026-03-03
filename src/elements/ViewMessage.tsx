@@ -1,6 +1,5 @@
 import type React from 'react';
-
-import styles from './ViewMessage.module.css';
+import * as stylex from '@stylexjs/stylex';
 
 type Props = {
   children: React.ReactNode;
@@ -11,7 +10,7 @@ type Props = {
  */
 export function Notice(props: Props) {
   return (
-    <div className={styles.fullMessage} data-testid="view-message">
+    <div {...stylex.props(styles.fullMessage)} data-testid="view-message">
       {props.children}
     </div>
   );
@@ -21,5 +20,22 @@ export function Notice(props: Props) {
  * Sub-message of a ViewMessage, useful to add more contextual information
  */
 export function Sub(props: Props) {
-  return <div className={styles.subMessage}>{props.children}</div>;
+  return <div {...stylex.props(styles.subMessage)}>{props.children}</div>;
 }
+
+const styles = stylex.create({
+  fullMessage: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    height: '100%',
+    fontSize: '25px',
+    padding: '30px',
+    margin: 'auto',
+    textAlign: 'center',
+  },
+  subMessage: {
+    fontSize: '70%',
+    lineHeight: 1.8,
+  },
+});

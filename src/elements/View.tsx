@@ -1,8 +1,6 @@
-import cx from 'classnames';
+import * as stylex from '@stylexjs/stylex';
 
 import type SideNav from '../components/SideNav';
-
-import styles from './View.module.css';
 
 type Props = {
   children: React.ReactNode;
@@ -16,20 +14,32 @@ type Props = {
  * Default View to be used by all route components
  */
 export default function View(props: Props) {
-  const viewClassNames = cx(styles.view, {
-    [styles.viewWithSideNav]: props.sideNav,
-    [styles.centered]: props.layout === 'centered',
-  });
+  const viewClassName = stylex.props(
+    styles.view,
+    props.sideNav && styles.viewWithSideNav,
+    props.layout === 'centered' && styles.centered,
+  ).className;
 
-  const contentClassNames = cx(props.className, {
-    [styles.hasPadding]: props.hasPadding,
-  });
+  const contentClassName = joinClassNames(
+    stylex.props(props.hasPadding && styles.hasPadding).className,
+    props.className,
+  );
+
+  const viewAndContentClassName = joinClassNames(
+    viewClassName,
+    contentClassName,
+  );
 
   if (props.sideNav) {
     return (
-      <div className={viewClassNames}>
+      <div className={viewClassName}>
         {props.sideNav}
-        <div className={`${contentClassNames} ${styles.viewContent}`}>
+        <div
+          className={joinClassNames(
+            contentClassName,
+            stylex.props(styles.viewContent).className,
+          )}
+        >
           {props.children}
         </div>
       </div>
@@ -38,15 +48,47 @@ export default function View(props: Props) {
 
   if (props.layout === 'centered') {
     return (
-      <div className={cx(viewClassNames, contentClassNames)}>
-        <div className={styles.centeredViewContent}>{props.children}</div>
+      <div className={viewAndContentClassName}>
+        <div {...stylex.props(styles.centeredViewContent)}>
+          {props.children}
+        </div>
       </div>
     );
   }
 
-  return (
-    <div className={cx(viewClassNames, contentClassNames)}>
-      {props.children}
-    </div>
-  );
+  return <div className={viewAndContentClassName}>{props.children}</div>;
 }
+
+function joinClassNames(...classNames: Array<string | undefined>) {
+  return classNames.filter(Boolean).join(' ');
+}
+
+const styles = stylex.create({
+  view: {
+    height: '100%',
+    maxHeight: '100%',
+    backgroundColor: 'var(--background)',
+    flex: '1 1 auto',
+    overflow: 'auto',
+    position: 'relative',
+  },
+  centered: {
+    display: 'grid',
+    gridTemplateColumns: '350px',
+    justifyContent: 'center',
+    scrollbarGutter: 'stable',
+  },
+  centeredViewContent: {
+    position: 'relative',
+  },
+  hasPadding: {
+    padding: '40px',
+  },
+  viewWithSideNav: {
+    display: 'flex',
+    overflow: 'hidden',
+  },
+  viewContent: {
+    flex: '1',
+  },
+});
