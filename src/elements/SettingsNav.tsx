@@ -1,8 +1,6 @@
 import { Link } from '@tanstack/react-router';
-import cx from 'classnames';
 import type React from 'react';
-
-import styles from './SettingsNav.module.css';
+import * as stylex from '@stylexjs/stylex';
 
 interface WrapProps {
   children: React.ReactNode;
@@ -12,7 +10,7 @@ interface WrapProps {
  * Wrapper for navigation
  */
 export function SettingsNav(props: WrapProps) {
-  return <nav className={cx(styles.nav)}>{props.children}</nav>;
+  return <nav {...stylex.props(styles.nav)}>{props.children}</nav>;
 }
 
 interface LinkProps {
@@ -27,8 +25,7 @@ export function SettingsNavLink(props: LinkProps) {
   return (
     <Link
       to={props.to}
-      className={styles.navLink}
-      activeProps={{ className: styles.navLinkActive }}
+      {...stylex.props(styles.navLink)}
       draggable={false}
       data-testid={`settings-nav-link${props.to}`}
     >
@@ -36,3 +33,22 @@ export function SettingsNavLink(props: LinkProps) {
     </Link>
   );
 }
+
+const styles = stylex.create({
+  nav: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '32px',
+  },
+  navLink: {
+    display: 'inline-block',
+    fontWeight: 'bold',
+    textDecoration: 'none',
+    whiteSpace: 'nowrap',
+    textDecorationLine: 'none',
+    color: {
+      default: 'var(--text)',
+      ':is([data-status="active"])': 'var(--main-color)',
+    },
+  },
+});

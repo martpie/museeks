@@ -1,11 +1,11 @@
-import styles from './List.module.css';
+import * as stylex from '@stylexjs/stylex';
 
 type Props = {
   children: React.ReactNode;
 };
 
 export default function List(props: Props) {
-  return <dl className={styles.list}>{props.children}</dl>;
+  return <dl {...stylex.props(styles.list)}>{props.children}</dl>;
 }
 
 type ListItemProps = {
@@ -16,8 +16,26 @@ type ListItemProps = {
 List.Item = function ListItem(props: ListItemProps) {
   return (
     <>
-      <dt className={styles.label}>{props.label}</dt>
-      <dd className={styles.content}>{props.content}</dd>
+      <dt {...stylex.props(styles.label)}>{props.label}</dt>
+      <dd {...stylex.props(styles.content)}>{props.content}</dd>
     </>
   );
 };
+
+const styles = stylex.create({
+  list: {
+    margin: '0',
+    color: 'var(--text-muted)',
+    display: 'grid',
+    gridTemplateColumns: 'max-content 1fr',
+    columnGap: '4px',
+  },
+  label: {
+    fontWeight: 'bold',
+    whiteSpace: 'nowrap',
+    margin: '0',
+  },
+  content: {
+    marginInlineStart: '0',
+  },
+});

@@ -1,6 +1,4 @@
-import cx from 'classnames';
-
-import styles from './Button.module.css';
+import * as stylex from '@stylexjs/stylex';
 
 type Props = {
   relevancy?: 'danger';
@@ -11,15 +9,50 @@ type Props = {
 export default function Button(props: Props) {
   const { relevancy, bSize, block, ...rest } = props;
 
-  const classes = cx(styles.button, {
-    [styles.danger]: relevancy === 'danger',
-    [styles.small]: bSize === 'small',
-    [styles.block]: block,
-  });
-
   return (
-    <button type="button" className={classes} {...rest}>
+    <button
+      type="button"
+      {...rest}
+      {...stylex.props(
+        styles.button,
+        relevancy === 'danger' && styles.danger,
+        bSize === 'small' && styles.small,
+        block && styles.block,
+      )}
+    >
       {props.children}
     </button>
   );
 }
+
+const styles = stylex.create({
+  button: {
+    backgroundColor: 'var(--button-bg)',
+    color: 'var(--button-color)',
+    paddingBlock: '6px',
+    paddingInline: '8px',
+    borderRadius: 'var(--border-radius)',
+    borderStyle: 'solid',
+    borderWidth: '1px',
+    borderColor: 'var(--button-border)',
+    cursor: 'pointer',
+    boxSizing: 'border-box',
+    opacity: {
+      ':active': 0.7,
+      ':disabled': 0.5,
+    },
+  },
+  danger: {
+    color: 'white',
+    backgroundColor: '#b63333',
+  },
+  small: {
+    fontSize: '10px',
+    paddingBlock: '1px',
+    paddingInline: '5px',
+  },
+  block: {
+    display: 'block',
+    width: '100%',
+  },
+});

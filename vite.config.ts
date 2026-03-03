@@ -1,4 +1,5 @@
 import { lingui } from '@lingui/vite-plugin';
+import stylex from '@stylexjs/unplugin';
 import { tanstackRouter } from '@tanstack/router-plugin/vite';
 import react from '@vitejs/plugin-react';
 import browserslist from 'browserslist';
@@ -7,6 +8,10 @@ import { defineConfig, type PluginOption } from 'vite';
 import svgr from 'vite-plugin-svgr';
 
 export const VITE_PLUGINS: PluginOption[] = [
+  stylex.vite({
+    useCSSLayers: false,
+    propertyValidationMode: 'warn',
+  }),
   react({
     babel: {
       plugins: [
@@ -41,7 +46,7 @@ export default defineConfig({
     },
   },
   build: {
-    cssMinify: 'lightningcss',
+    cssMinify: false, // 'lightningcss',
   },
 
   // Vite options tailored for Tauri development and only applied in `tauri dev` or `tauri build`
