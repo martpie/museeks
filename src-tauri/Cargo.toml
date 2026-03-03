@@ -14,9 +14,9 @@ tauri-build = { version = "2.5.5", features = ["codegen"] }
 
 [dependencies]
 tauri = { version = "2.10.2", features = [
-    "protocol-asset",
-    "image-png",
-    "devtools",
+  "protocol-asset",
+  "image-png",
+  "devtools",
 ] }
 tauri-plugin-clipboard-manager = "2.3.2"
 tauri-plugin-dialog = "2.6.0"
