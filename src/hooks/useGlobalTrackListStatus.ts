@@ -20,7 +20,7 @@ export default function useGlobalTrackListStatus(
     return () => {
       libraryAPI.setTracksStatus(undefined);
     };
-  }, [info, libraryAPI.setTracksStatus]);
+  }, [info, libraryAPI]);
 }
 
 /**
