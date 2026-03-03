@@ -64,7 +64,7 @@ function ViewPlaylists() {
 
     if (playlist) {
       await invalidate();
-      navigate({
+      void navigate({
         to: '/playlists/$playlistID',
         params: { playlistID: playlist.id },
       });

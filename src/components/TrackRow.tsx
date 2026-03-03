@@ -74,8 +74,7 @@ export default function TrackRow(props: Props) {
   });
 
   return (
-    // biome-ignore lint/a11y/useAriaPropsSupportedByRole: later, make a listitem
-    // biome-ignore lint/a11y/useKeyWithClickEvents: handled by parent, maybe should be moved here
+    // oxlint-disable-next-line jsx_a11y/click-events-have-key-events - given by ...listeners
     <li
       className={trackClasses}
       onDoubleClick={() => onPlaybackStart(track.id)}
@@ -92,6 +91,7 @@ export default function TrackRow(props: Props) {
       data-track-id={track.id}
       data-testid={`track-row-${track.id}`}
       aria-disabled="false"
+      role="option" // technically already given by attributes, but that'll make the linter happy
     >
       <div className={`${styles.cell} ${cellStyles.cellTrackPlaying}`}>
         {props.isPlaying ? <PlayingIndicator /> : null}

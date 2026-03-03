@@ -82,7 +82,7 @@ export default function DropzoneImport() {
     const unlisten = attachFileDropEvent().catch(logAndNotifyError);
 
     return function cleanup() {
-      unlisten.then((u) => (u ? u() : null));
+      void unlisten.then((unlisten) => (unlisten ? unlisten() : null));
     };
   }, [libraryAPI, toastsAPI, invalidate]);
 

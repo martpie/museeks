@@ -10,7 +10,7 @@ export function goToPlayingTrack(
 
   switch (queueOrigin.type) {
     case 'library': {
-      navigate({
+      void navigate({
         to: '/library',
         replace: true, // Force rerendering to activate the scroll
         search: {
@@ -20,7 +20,7 @@ export function goToPlayingTrack(
       break;
     }
     case 'playlist': {
-      navigate({
+      void navigate({
         to: '/playlists/$playlistID',
         params: { playlistID: queueOrigin.playlistID },
         replace: true,
@@ -31,7 +31,7 @@ export function goToPlayingTrack(
       break;
     }
     case 'artist': {
-      navigate({
+      void navigate({
         to: '/artists/$artistID',
         params: { artistID: queueOrigin.artistID },
         replace: true,

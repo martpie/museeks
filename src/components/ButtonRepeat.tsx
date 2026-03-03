@@ -18,7 +18,7 @@ export default function ButtonRepeat() {
       title={t`Repeat`}
       icon={repeat === 'One' ? 'repeatOne' : 'repeat'}
       iconSize={20}
-      onClick={player.toggleRepeat}
+      onClick={() => player.toggleRepeat()}
       isActive={repeat === 'One' || repeat === 'All'}
       aria-pressed={pressed}
     />

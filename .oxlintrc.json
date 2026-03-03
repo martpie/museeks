@@ -18,5 +18,20 @@
     "**/src/generated/**/*.ts",
     "**/src-tauri/target/**/*",
     "**/src-tauri/gen/**/*"
-  ]
+  ],
+  "rules": {
+    "unbound-method": "off",
+    "typescript/no-floating-promises": [
+      "warn",
+      {
+        "allowForKnownSafeCalls": [
+          {
+            "from": "package",
+            "name": ["trace", "debug", "info", "warn", "error"],
+            "package": "@tauri-apps/plugin-log"
+          }
+        ]
+      }
+    ]
+  }
 }

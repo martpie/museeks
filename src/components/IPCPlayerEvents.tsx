@@ -18,18 +18,18 @@ function IPCPlayerEvents() {
       listen('PlaybackStop' satisfies IPCEvent, player.stop),
       listen(
         'PlaybackStart' satisfies IPCEvent,
-        ({ payload }: { payload: Track[] }) => {
+        async ({ payload }: { payload: Track[] }) => {
           if (payload.length > 0) {
-            player.start(payload, payload[0].id, { type: 'library' });
+            await player.start(payload, payload[0].id, { type: 'library' });
           }
         },
       ),
     ];
 
     return function cleanup() {
-      Promise.all(unlistenerPromises).then((unlisteners) => {
-        unlisteners.forEach((u) => {
-          u();
+      void Promise.all(unlistenerPromises).then((unlisteners) => {
+        unlisteners.forEach((unlisten) => {
+          unlisten();
         });
       });
     };

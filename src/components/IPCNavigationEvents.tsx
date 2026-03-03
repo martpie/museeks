@@ -17,15 +17,15 @@ export default function IPCNavigationEvents() {
 
   // Navigation handlers
   const goToLibrary = useCallback(() => {
-    navigate({ to: '/library' });
+    void navigate({ to: '/library' });
   }, [navigate]);
 
   const goToPlaylists = useCallback(() => {
-    navigate({ to: '/playlists' });
+    void navigate({ to: '/playlists' });
   }, [navigate]);
 
   const goToSettings = useCallback(() => {
-    navigate({ to: '/settings/library' });
+    void navigate({ to: '/settings/library' });
   }, [navigate]);
 
   const goToPlayingTrackOnEvent = useCallback(() => {
@@ -45,9 +45,9 @@ export default function IPCNavigationEvents() {
     ];
 
     return function cleanup() {
-      Promise.all(unlistenerPromises).then((unlisteners) => {
-        unlisteners.forEach((u) => {
-          u();
+      void Promise.all(unlistenerPromises).then((unlisteners) => {
+        unlisteners.forEach((unlisten) => {
+          unlisten();
         });
       });
     };

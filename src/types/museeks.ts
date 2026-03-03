@@ -25,7 +25,7 @@ export interface Theme {
  * APIs Helpers
  */
 export type API<
-  // biome-ignore lint/suspicious/noExplicitAny: loose type enforcement by design
+  // oxlint-disable-next-line typescript/no-redundant-type-constituents - this is alright
   T extends { api: Record<string, (...args: any[]) => Promise<any> | any> },
 > = T;
 

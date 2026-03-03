@@ -18,12 +18,11 @@ const QUEUE_ORIGIN: QueueOrigin = { type: 'library' };
 export const Route = createFileRoute('/library')({
   component: ViewLibrary,
   loader: async () => {
-    queryClient.prefetchQuery({
-      queryKey: [QUERY_ALL_TRACKS],
-      queryFn: DatabaseBridge.getAllTracks,
-    });
-
-    const [playlists, tracksDensity] = await Promise.all([
+    const [_, playlists, tracksDensity] = await Promise.all([
+      queryClient.prefetchQuery({
+        queryKey: [QUERY_ALL_TRACKS],
+        queryFn: DatabaseBridge.getAllTracks,
+      }),
       DatabaseBridge.getAllPlaylists(),
       ConfigBridge.get('track_view_density'),
     ]);

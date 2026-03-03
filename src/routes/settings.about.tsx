@@ -12,6 +12,7 @@ import List from '../elements/List';
 import useInvalidate, { useInvalidateCallback } from '../hooks/useInvalidate';
 import SettingsAPI from '../stores/SettingsAPI';
 import { NON_DEFAULT_LANGUAGES } from '../translations/languages';
+import { logAndNotifyError } from '../lib/utils';
 
 export const Route = createFileRoute('/settings/about')({
   component: ViewSettingsAbout,
@@ -51,7 +52,9 @@ function ViewSettingsAbout() {
         <div>
           <Button
             onClick={() => {
-              SettingsAPI.checkForUpdate().then(invalidate);
+              SettingsAPI.checkForUpdate()
+                .then(invalidate)
+                .catch(logAndNotifyError);
             }}
           >
             <Trans>Check for update</Trans>

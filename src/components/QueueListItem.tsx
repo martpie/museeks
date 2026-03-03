@@ -33,8 +33,8 @@ export default function QueueListItem(props: Props) {
     player.removeFromQueue(props.index);
   }, [props.index]);
 
-  const play = useCallback(() => {
-    player.startFromQueue(props.queueCursor + props.index + 1);
+  const play = useCallback(async () => {
+    await player.startFromQueue(props.queueCursor + props.index + 1);
   }, [props.index, props.queueCursor]);
 
   return (

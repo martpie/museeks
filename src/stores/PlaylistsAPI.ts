@@ -13,7 +13,7 @@ async function play(playlistID: string): Promise<void> {
   try {
     const playlist = await DatabaseBridge.getPlaylist(playlistID);
     const tracks = await DatabaseBridge.getTracks(playlist.tracks);
-    player.start(tracks, null, { type: 'playlist', playlistID });
+    await player.start(tracks, null, { type: 'playlist', playlistID });
   } catch (err) {
     logAndNotifyError(err);
   }

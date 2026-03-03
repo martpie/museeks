@@ -6,6 +6,7 @@ import CheckboxSetting from '../components/SettingCheckbox';
 import useInvalidate, { useInvalidateCallback } from '../hooks/useInvalidate';
 import player from '../lib/player';
 import SettingsAPI from '../stores/SettingsAPI';
+import { logAndNotifyError } from '../lib/utils';
 
 export const Route = createFileRoute('/settings/audio')({
   component: ViewSettingsAudio,
@@ -28,6 +29,7 @@ function ViewSettingsAudio() {
             player
               .setPlaybackRate(Number.parseFloat(e.currentTarget.value))
               .then(invalidate)
+              .catch(logAndNotifyError)
           }
           type="number"
           min="0.5"

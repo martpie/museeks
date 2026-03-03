@@ -17,6 +17,7 @@ import Toasts from '../components/Toasts';
 import useInvalidate from '../hooks/useInvalidate';
 import SettingsAPI from '../stores/SettingsAPI';
 import styles from './__root.module.css';
+import { logAndNotifyError } from '../lib/utils';
 
 type Search = {
   jump_to_playing_track?: boolean;
@@ -47,7 +48,7 @@ function ViewRoot() {
 
   useEffect(() => {
     // If the app imported tracks, we need to refresh route data, but it seems invalidate is not super stable
-    SettingsAPI.init(invalidate);
+    SettingsAPI.init(invalidate).catch(logAndNotifyError);
   }, [invalidate]);
 
   // Log each navigation to the console for debug purposes

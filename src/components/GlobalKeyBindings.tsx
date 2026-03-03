@@ -15,7 +15,7 @@ function GlobalKeyBindings() {
       case ' ':
         e.preventDefault();
         e.stopPropagation();
-        player.playPause();
+        await player.playPause();
         break;
       case 'ArrowLeft':
         e.preventDefault();
