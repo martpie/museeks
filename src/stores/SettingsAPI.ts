@@ -52,7 +52,7 @@ async function init(then: () => void): Promise<void> {
 
   // Non-blocking, these can be done later
   checkForLibraryRefresh().catch(logAndNotifyError);
-  checkForUpdate({ silentFail: true });
+  checkForUpdate({ silentFail: true }).catch(logAndNotifyError);
 
   // Check if we should start a queue (maybe put that somewhere else)
   const initialQueue = window.__MUSEEKS_INITIAL_QUEUE;
@@ -60,7 +60,7 @@ async function init(then: () => void): Promise<void> {
     info(
       `Starting queue from file associations (${initialQueue.length} tracks)`,
     );
-    player.start(initialQueue, initialQueue[0].id, {
+    await player.start(initialQueue, initialQueue[0].id, {
       type: 'file_associations',
     });
   }
@@ -153,12 +153,10 @@ async function checkForUpdate(
       throw new Error('Impossible to retrieve releases information.');
     }
 
-    // biome-ignore lint/suspicious/noExplicitAny: ok for now
     const releases: any = await response.json();
 
     // TODO Github API types?
     const newRelease = releases.find(
-      // biome-ignore lint/suspicious/noExplicitAny: ok for now
       (release: any) =>
         semver.valid(release.tag_name) !== null &&
         semver.gt(release.tag_name, currentVersion),
@@ -195,7 +193,7 @@ async function checkForLibraryRefresh(): Promise<void> {
   const autorefreshEnabled = ConfigBridge.getInitial('library_autorefresh');
 
   if (autorefreshEnabled) {
-    useLibraryStore.getState().api.scan();
+    void useLibraryStore.getState().api.scan();
   }
 }
 

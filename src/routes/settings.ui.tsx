@@ -17,6 +17,7 @@ import {
   DEFAULT_LANGUAGE,
   NON_DEFAULT_LANGUAGES,
 } from '../translations/languages';
+import { logAndNotifyError } from '../lib/utils';
 
 export const Route = createFileRoute('/settings/ui')({
   component: ViewSettingsUI,
@@ -30,7 +31,9 @@ function ViewSettingsUI() {
 
   const setUIMainColorThrottled = useMemo(() => {
     return debounce((value: string) => {
-      SettingsAPI.setUIMainColor(value).then(invalidate);
+      SettingsAPI.setUIMainColor(value)
+        .then(invalidate)
+        .catch(logAndNotifyError);
     }, 250);
   }, [invalidate]);
 
@@ -42,7 +45,9 @@ function ViewSettingsUI() {
           description={t`Change the appearance of the interface`}
           value={config.theme}
           onChange={(e) =>
-            SettingsAPI.setTheme(e.currentTarget.value).then(invalidate)
+            SettingsAPI.setTheme(e.currentTarget.value)
+              .then(invalidate)
+              .catch(logAndNotifyError)
           }
         >
           <option value="__system">{t`System (default)`}</option>
@@ -64,7 +69,9 @@ function ViewSettingsUI() {
               type="button"
               bSize="small"
               onClick={() => {
-                SettingsAPI.setUIMainColor(DEFAULT_MAIN_COLOR).then(invalidate);
+                SettingsAPI.setUIMainColor(DEFAULT_MAIN_COLOR)
+                  .then(invalidate)
+                  .catch(logAndNotifyError);
                 SettingsAPI.applyUIMainColorToUI(DEFAULT_MAIN_COLOR);
               }}
             >{t`Reset`}</Button>
@@ -81,7 +88,9 @@ function ViewSettingsUI() {
           label={t`Language`}
           value={config.language}
           onChange={(e) => {
-            SettingsAPI.setLanguage(e.target.value).then(invalidate);
+            SettingsAPI.setLanguage(e.target.value)
+              .then(invalidate)
+              .catch(logAndNotifyError);
           }}
           data-testid="language-selector"
         >
@@ -107,7 +116,9 @@ function ViewSettingsUI() {
           onChange={(e) =>
             SettingsAPI.setTracksDensity(
               e.currentTarget.value as Config['track_view_density'],
-            ).then(invalidate)
+            )
+              .then(invalidate)
+              .catch(logAndNotifyError)
           }
         >
           <option value="normal">
@@ -124,9 +135,9 @@ function ViewSettingsUI() {
           value={config.default_view}
           description={t`Change the default view when starting the application`}
           onChange={(e) =>
-            SettingsBridge.setDefaultView(
-              e.currentTarget.value as DefaultView,
-            ).then(invalidate)
+            SettingsBridge.setDefaultView(e.currentTarget.value as DefaultView)
+              .then(invalidate)
+              .catch(logAndNotifyError)
           }
         >
           <option value="Library">

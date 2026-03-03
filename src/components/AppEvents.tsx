@@ -35,7 +35,7 @@ function AppEvents() {
         window.removeEventListener('contextmenu', preventNativeDefault);
       }
 
-      unlistenSystemThemeChange.then((u) => u());
+      void unlistenSystemThemeChange.then((unlisten) => unlisten());
     };
   }, []);
 

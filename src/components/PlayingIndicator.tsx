@@ -31,7 +31,7 @@ export default function TrackPlayingIndicator() {
     <button
       type="button"
       className={styles.playingIndicator}
-      onClick={player.playPause}
+      onClick={() => player.playPause()}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       tabIndex={0}

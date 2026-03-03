@@ -49,13 +49,13 @@ msgstr "Библиотека"
 
 #: src/components/Footer.tsx:31
 #: src/routes/artists.tsx:52
-#: src/routes/settings.ui.tsx:136
+#: src/routes/settings.ui.tsx:147
 msgid "Artists"
 msgstr "Исполнители"
 
 #: src/components/Footer.tsx:41
 #: src/routes/playlists.tsx:165
-#: src/routes/settings.ui.tsx:139
+#: src/routes/settings.ui.tsx:150
 msgid "Playlists"
 msgstr "Плейлисты"
 
@@ -307,63 +307,63 @@ msgstr "Плейлист не выбран"
 msgid "New Playlist"
 msgstr "Новый плейлист"
 
-#: src/routes/settings.about.tsx:32
+#: src/routes/settings.about.tsx:33
 msgid "About Museeks"
 msgstr "О Museeks"
 
-#: src/routes/settings.about.tsx:44
+#: src/routes/settings.about.tsx:45
 msgid "release notes"
 msgstr "примечания к релизу"
 
-#: src/routes/settings.about.tsx:47
+#: src/routes/settings.about.tsx:48
 msgid "Automatically check for updates"
 msgstr "Автоматически проверять обновления"
 
-#: src/routes/settings.about.tsx:57
+#: src/routes/settings.about.tsx:60
 msgid "Check for update"
 msgstr "Проверить обновления"
 
-#: src/routes/settings.about.tsx:63
+#: src/routes/settings.about.tsx:66
 msgid "Contributors"
 msgstr "Участники"
 
-#: src/routes/settings.about.tsx:66
+#: src/routes/settings.about.tsx:69
 msgid "Made with <0/> by Pierre de la Martinière (<1>martpie.io</1>) and a bunch of <2>great people</2>"
 msgstr "Создали <0/>Пьер де ла Мартиньер (<1>martpie.io</1>) и множество <2>замечательных людей</2>"
 
-#: src/routes/settings.about.tsx:82
+#: src/routes/settings.about.tsx:85
 msgid "Translations:"
 msgstr "Переводы:"
 
-#: src/routes/settings.about.tsx:96
+#: src/routes/settings.about.tsx:99
 msgid "Report issue / Ask for a feature"
 msgstr "Сообщить об ошибке / Предложить улучшение"
 
-#: src/routes/settings.about.tsx:99
+#: src/routes/settings.about.tsx:102
 msgid "Bugs happen. Please, do not hesitate to report them or to ask for features you would like to see, using the <0>issue tracker</0>."
 msgstr "Ошибки случаются. Пожалуйста, не стесняйтесь сообщать о них, а так же предлагать улучшения, которые вам хотелось бы видеть, посредством <0>трекера</0>."
 
-#: src/routes/settings.about.tsx:114
+#: src/routes/settings.about.tsx:117
 msgid "Internals"
 msgstr "Внутренности"
 
-#: src/routes/settings.about.tsx:119
+#: src/routes/settings.about.tsx:122
 msgid "Open storage directory"
 msgstr "Открыть папку-хранилище"
 
-#: src/routes/settings.audio.tsx:24
+#: src/routes/settings.audio.tsx:25
 msgid "Playback rate"
 msgstr "Скорость воспроизведения"
 
-#: src/routes/settings.audio.tsx:25
+#: src/routes/settings.audio.tsx:26
 msgid "Increase the playback rate: a value of 2 will play your music at a 2x speed"
 msgstr "Увеличить скорость воспроизведения: при значении 2 ваша музыка будет проигрываться на скорости 2x"
 
-#: src/routes/settings.audio.tsx:40
+#: src/routes/settings.audio.tsx:42
 msgid "Follow playing track"
 msgstr "Следовать за проигрываемым треком"
 
-#: src/routes/settings.audio.tsx:41
+#: src/routes/settings.audio.tsx:43
 msgid "Automatically follow the currently playing track (only when the app is not focused)"
 msgstr "Автоматически следовать за проигрываемым треком (только если приложение находится не в фокусе)"
 
@@ -429,7 +429,7 @@ msgid "Reset library?"
 msgstr "Сбросить библиотеку?"
 
 #: src/routes/settings.library.tsx:145
-#: src/routes/settings.ui.tsx:70
+#: src/routes/settings.ui.tsx:77
 msgid "Reset"
 msgstr "Сбросить"
 
@@ -449,83 +449,83 @@ msgstr "Интерфейс"
 msgid "About"
 msgstr "О программе"
 
-#: src/routes/settings.ui.tsx:41
+#: src/routes/settings.ui.tsx:44
 msgid "Theme"
 msgstr "Тема"
 
-#: src/routes/settings.ui.tsx:42
+#: src/routes/settings.ui.tsx:45
 msgid "Change the appearance of the interface"
 msgstr "Изменить внешний вид интерфейса"
 
-#: src/routes/settings.ui.tsx:48
+#: src/routes/settings.ui.tsx:53
 msgid "System (default)"
 msgstr "Системная (по умолчанию)"
 
-#: src/routes/settings.ui.tsx:60
+#: src/routes/settings.ui.tsx:65
 msgid "Accent color"
 msgstr "Цвет акцента"
 
-#: src/routes/settings.ui.tsx:81
+#: src/routes/settings.ui.tsx:88
 msgid "Language"
 msgstr "Язык"
 
-#: src/routes/settings.ui.tsx:104
+#: src/routes/settings.ui.tsx:113
 msgid "Tracks density"
 msgstr "Плотность треков"
 
-#: src/routes/settings.ui.tsx:105
+#: src/routes/settings.ui.tsx:114
 msgid "Change the tracks spacing"
 msgstr "Изменить расстояние между треками"
 
-#: src/routes/settings.ui.tsx:114
+#: src/routes/settings.ui.tsx:125
 msgid "Normal (default)"
 msgstr "Номральная (по умолчанию)"
 
-#: src/routes/settings.ui.tsx:117
+#: src/routes/settings.ui.tsx:128
 msgid "Compact"
 msgstr "Компатная"
 
-#: src/routes/settings.ui.tsx:123
+#: src/routes/settings.ui.tsx:134
 msgid "Default view"
 msgstr "Представление по умолчанию"
 
-#: src/routes/settings.ui.tsx:125
+#: src/routes/settings.ui.tsx:136
 msgid "Change the default view when starting the application"
 msgstr "Изменить представление по умолчанию при запуске приложения"
 
-#: src/routes/settings.ui.tsx:133
+#: src/routes/settings.ui.tsx:144
 msgid "Library (default)"
 msgstr "Библиотека (по умолчанию)"
 
-#: src/routes/settings.ui.tsx:145
+#: src/routes/settings.ui.tsx:156
 msgid "Display Notifications"
 msgstr "Отображать уведомления"
 
-#: src/routes/settings.ui.tsx:146
+#: src/routes/settings.ui.tsx:157
 msgid "Send notifications when the playing track changes"
 msgstr "Посылать уведомления при смене проигрываемого трека"
 
-#: src/routes/settings.ui.tsx:155
+#: src/routes/settings.ui.tsx:166
 msgid "Sleep mode blocker"
 msgstr "Блокировать режим сна"
 
-#: src/routes/settings.ui.tsx:156
+#: src/routes/settings.ui.tsx:167
 msgid "Prevent the computer from going into sleep mode when playing"
 msgstr "Предпятствовать переходу компьютера в режим сна во время проигрывания"
 
-#: src/routes/settings.ui.tsx:164
+#: src/routes/settings.ui.tsx:175
 msgid "[Beta] Wayland compatibility enhancements"
 msgstr "[Beta] Улучшения совместимости с Wayland"
 
-#: src/routes/settings.ui.tsx:165
+#: src/routes/settings.ui.tsx:176
 msgid "If you face issues using Wayland, try out this option"
 msgstr "Если у вас возникли проблемы с Wayland, попробуйте эту опцию"
 
-#: src/routes/settings.ui.tsx:188
+#: src/routes/settings.ui.tsx:199
 msgid "Light"
 msgstr "Светлая"
 
-#: src/routes/settings.ui.tsx:190
+#: src/routes/settings.ui.tsx:201
 msgid "Dark"
 msgstr "Тёмная"
 
@@ -584,11 +584,11 @@ msgid "The playlist \"{name}\" was created"
 msgstr "Создан плейлист \"{name}\""
 
 #. placeholder {0}: newRelease.tag_name
-#: src/stores/SettingsAPI.ts:169
+#: src/stores/SettingsAPI.ts:167
 msgid "Museeks {0} is available, check https://museeks.io!"
 msgstr "Доступна версия Museeks {0}, проверьте https://museeks.io!"
 
-#: src/stores/SettingsAPI.ts:171
+#: src/stores/SettingsAPI.ts:169
 msgid "Museeks {currentVersion} is the latest version available."
 msgstr "Museeks {currentVersion} является самой последней доступной версией."
 

@@ -19,7 +19,7 @@ function LibraryEvents() {
     );
 
     return () => {
-      promise.then((unlisten) => unlisten());
+      void promise.then((unlisten) => unlisten());
     };
   }, [setRefresh]);
 

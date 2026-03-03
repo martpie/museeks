@@ -126,7 +126,7 @@ export default function TrackList(props: Props) {
   // Highlight playing track and scroll to it
   useEffect(() => {
     if (shouldJumpToPlayingTrack && trackPlayingID) {
-      navigate({ to: '.', search: { jump_to_playing_track: false } });
+      void navigate({ to: '.', search: { jump_to_playing_track: false } });
       setSelectedTracks(new Set([trackPlayingID]));
 
       const playingTrackIndex = tracks.findIndex(
@@ -146,8 +146,8 @@ export default function TrackList(props: Props) {
    * Helpers
    */
   const onPlaybackStart = useCallback(
-    async (trackID: string) => {
-      player.start(tracks, trackID, queueOrigin);
+    (trackID: string) => {
+      void player.start(tracks, trackID, queueOrigin);
     },
     [tracks, queueOrigin],
   );
@@ -361,7 +361,7 @@ export default function TrackList(props: Props) {
         MenuItem.new({
           text: t`Edit track`,
           action: () => {
-            navigate({
+            void navigate({
               to: '/tracks/$trackID',
               params: { trackID: track.id },
             });

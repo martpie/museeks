@@ -15,7 +15,7 @@ export default function useCover(track: Track): string | null {
       setCoverPath(cover);
     };
 
-    refreshCover();
+    void refreshCover();
   }, [track.path]);
 
   return coverPath;

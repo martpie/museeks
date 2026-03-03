@@ -64,14 +64,14 @@ export const app = (
   </React.StrictMode>
 );
 
-(async function createRoot() {
+async function createRoot() {
   // don't auto-execute this for E2E tests, as the test is responsible for
   // rendering the app
   if (import.meta.env.MODE === 'test') {
     return;
   }
 
-  Promise.allSettled([
+  await Promise.allSettled([
     logger.attachConsole(),
     loadTranslation(window.__MUSEEKS_INITIAL_CONFIG.language),
   ]);
@@ -84,4 +84,6 @@ export const app = (
   } else {
     document.body.innerHTML = '<div style="text-align: center;">x_x</div>';
   }
-})();
+}
+
+await createRoot();

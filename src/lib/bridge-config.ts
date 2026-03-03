@@ -34,7 +34,7 @@ const ConfigBridge = {
     config[key] = value;
 
     try {
-      invoke('plugin:config|set_config', { config });
+      await invoke('plugin:config|set_config', { config });
     } catch (err) {
       logAndNotifyError(err);
     }

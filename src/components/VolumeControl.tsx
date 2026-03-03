@@ -46,7 +46,7 @@ export default function VolumeControl() {
         <HoverCard.Trigger asChild>
           <ButtonIcon
             title={t`Volume`}
-            onClick={player.toggleMute}
+            onClick={() => player.toggleMute()}
             icon={getVolumeIcon(unsmoothifyVolume(volume), muted)}
             iconSize={16}
           />

@@ -117,6 +117,8 @@ export default function TrackListDefault(props: Props) {
 
         {/* The large inner element to hold all of the items */}
         <ul
+          role="listbox"
+          aria-multiselectable="true"
           className={styles.rows}
           style={{
             height: `${virtualizer.getTotalSize()}px`,

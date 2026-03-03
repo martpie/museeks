@@ -102,7 +102,7 @@ function ViewSettingsLibrary() {
               );
 
               if (confirm) {
-                libraryAPI.scan(true);
+                await libraryAPI.scan(true);
               }
             })}
             title={t`Force the refresh of all tracks tags`}
@@ -147,7 +147,7 @@ function ViewSettingsLibrary() {
               );
 
               if (confirm) {
-                libraryAPI.reset();
+                await libraryAPI.reset();
               }
             })}
           >

@@ -75,7 +75,7 @@ export default function QueueList(props: Props) {
         <div className={styles.queueHeaderInfos}>
           <TrackListStatus {...status} />
         </div>
-        <Button bSize="small" onClick={player.clearQueue}>
+        <Button bSize="small" onClick={() => player.clearQueue()}>
           <Trans>clear queue</Trans>
         </Button>
       </div>

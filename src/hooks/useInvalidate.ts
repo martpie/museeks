@@ -1,6 +1,7 @@
 import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from '@tanstack/react-router';
 import { useCallback } from 'react';
+import { logAndNotifyError } from '../lib/utils';
 
 /**
  * Hook returning a function to be manually called after anything that represents
@@ -27,7 +28,6 @@ export default function useInvalidate() {
   }, [queryClient, router]);
 }
 
-// biome-ignore lint/suspicious/noExplicitAny: we don't care about the actual args
 type AnyArgs = any[];
 type Callback = (...args: AnyArgs) => Promise<void>;
 
@@ -42,8 +42,9 @@ export function useInvalidateCallback<T extends Callback>(callback: T): T {
     async (...args: Parameters<T>) => {
       try {
         await callback(...args);
-      } finally {
         await invalidate();
+      } catch (error) {
+        logAndNotifyError(error);
       }
     },
     [callback, invalidate],

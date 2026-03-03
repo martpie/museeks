@@ -620,8 +620,8 @@ class Player extends EventEmitter<PlayerEvents> {
   /**
    * Debounced volume save to avoid too many writes to config
    */
-  private readonly saveVolumeDebounced = debounce(async (volume: number) => {
-    await ConfigBridge.set('audio_volume', volume);
+  private readonly saveVolumeDebounced = debounce((volume: number) => {
+    void ConfigBridge.set('audio_volume', volume);
   }, 500);
 
   getVolume(): number {
