@@ -1,4 +1,5 @@
 import { Trans } from '@lingui/react/macro';
+import * as stylex from '@stylexjs/stylex';
 import { createFileRoute, Outlet, redirect } from '@tanstack/react-router';
 import { getTauriVersion, getVersion } from '@tauri-apps/api/app';
 import { invoke } from '@tauri-apps/api/core';
@@ -6,8 +7,6 @@ import { invoke } from '@tauri-apps/api/core';
 import { SettingsNav, SettingsNavLink } from '../elements/SettingsNav';
 import View from '../elements/View';
 import ConfigBridge from '../lib/bridge-config';
-
-import styles from './settings.module.css';
 
 export const Route = createFileRoute('/settings')({
   component: ViewSettings,
@@ -37,7 +36,7 @@ export const Route = createFileRoute('/settings')({
 function ViewSettings() {
   return (
     <View hasPadding layout="centered">
-      <div className={styles.nav}>
+      <div {...stylex.props(styles.nav)}>
         <SettingsNav>
           <SettingsNavLink to="/settings/library">
             <Trans>Library</Trans>
@@ -58,3 +57,11 @@ function ViewSettings() {
     </View>
   );
 }
+
+const styles = stylex.create({
+  nav: {
+    position: 'absolute',
+    right: '100%',
+    marginRight: '60px',
+  },
+});

@@ -43,7 +43,7 @@ msgid "Drop folders anywhere"
 msgstr "將資料夾拖放到任意位置"
 
 #: src/components/Footer.tsx:22
-#: src/routes/settings.tsx:43
+#: src/routes/settings.tsx:42
 msgid "Library"
 msgstr "音樂庫"
 
@@ -193,14 +193,14 @@ msgid "Remove tracks"
 msgstr "移除音軌"
 
 #: src/components/TrackList.tsx:386
-#: src/routes/settings.library.tsx:100
-#: src/routes/settings.library.tsx:145
-#: src/routes/tracks.$trackID.tsx:247
+#: src/routes/settings.library.tsx:99
+#: src/routes/settings.library.tsx:144
+#: src/routes/tracks.$trackID.tsx:246
 msgid "Cancel"
 msgstr "取消"
 
 #: src/components/TrackList.tsx:387
-#: src/routes/settings.library.tsx:63
+#: src/routes/settings.library.tsx:62
 msgid "Remove"
 msgstr "移除"
 
@@ -212,12 +212,12 @@ msgid "{0, plural, one {# track} other {# tracks}}"
 msgstr "{0, plural, one {# 首音軌} other {# 首音軌}}"
 
 #: src/components/TrackListHeader.tsx:47
-#: src/routes/tracks.$trackID.tsx:88
+#: src/routes/tracks.$trackID.tsx:87
 msgid "Title"
 msgstr "標題"
 
 #: src/components/TrackListHeader.tsx:54
-#: src/routes/tracks.$trackID.tsx:231
+#: src/routes/tracks.$trackID.tsx:230
 msgid "Duration"
 msgstr "時長"
 
@@ -226,12 +226,12 @@ msgid "Artist"
 msgstr "藝術家"
 
 #: src/components/TrackListHeader.tsx:68
-#: src/routes/tracks.$trackID.tsx:99
+#: src/routes/tracks.$trackID.tsx:98
 msgid "Album"
 msgstr "專輯"
 
 #: src/components/TrackListHeader.tsx:75
-#: src/routes/tracks.$trackID.tsx:139
+#: src/routes/tracks.$trackID.tsx:138
 msgid "Genre"
 msgstr "流派"
 
@@ -367,85 +367,85 @@ msgstr "跟隨播放音軌"
 msgid "Automatically follow the currently playing track (only when the app is not focused)"
 msgstr "自動跟隨正在播放的音軌（僅在應用程式未聚焦時）"
 
-#: src/routes/settings.library.tsx:47
+#: src/routes/settings.library.tsx:46
 msgid "Files"
 msgstr "檔案"
 
-#: src/routes/settings.library.tsx:51
+#: src/routes/settings.library.tsx:50
 msgid "There are no folders in your library."
 msgstr "您的音樂庫中沒有資料夾。"
 
-#: src/routes/settings.library.tsx:83
+#: src/routes/settings.library.tsx:82
 msgid "Add folder"
 msgstr "新增資料夾"
 
-#: src/routes/settings.library.tsx:90
+#: src/routes/settings.library.tsx:89
 msgid "Scan"
 msgstr "掃描"
 
-#: src/routes/settings.library.tsx:96
+#: src/routes/settings.library.tsx:95
 msgid "All track data will be updated from the base files, but your original files won't be modified. Any Museeks-specific edits you may have done will be reset."
 msgstr "所有音軌資料將從基礎檔案更新，但您的原始檔案不會被修改。您可能做過的任何 Museeks 特定編輯將被重設。"
 
-#: src/routes/settings.library.tsx:98
+#: src/routes/settings.library.tsx:97
 msgid "Refresh all tracks?"
 msgstr "重新整理所有音軌？"
 
-#: src/routes/settings.library.tsx:101
-#: src/routes/settings.library.tsx:111
+#: src/routes/settings.library.tsx:100
+#: src/routes/settings.library.tsx:110
 msgid "Refresh"
 msgstr "重新整理"
 
-#: src/routes/settings.library.tsx:109
+#: src/routes/settings.library.tsx:108
 msgid "Force the refresh of all tracks tags"
 msgstr "強制重新整理所有音軌標籤"
 
-#: src/routes/settings.library.tsx:115
+#: src/routes/settings.library.tsx:114
 msgid "<0>.m3u</0> files will also be imported as playlists."
 msgstr "<0>.m3u</0> 檔案也將作為播放清單匯入。"
 
-#: src/routes/settings.library.tsx:122
+#: src/routes/settings.library.tsx:121
 msgid "Automatically refresh library on startup"
 msgstr "啟動時自動重新整理音樂庫"
 
-#: src/routes/settings.library.tsx:129
+#: src/routes/settings.library.tsx:128
 msgid "Danger zone"
 msgstr "危險區域"
 
-#: src/routes/settings.library.tsx:132
+#: src/routes/settings.library.tsx:131
 msgid "Delete all tracks and playlists from Museeks."
 msgstr "從 Museeks 中刪除所有音軌和播放清單。"
 
-#: src/routes/settings.library.tsx:137
+#: src/routes/settings.library.tsx:136
 msgid "Fully reset the library"
 msgstr "完全重設音樂庫"
 
-#: src/routes/settings.library.tsx:141
+#: src/routes/settings.library.tsx:140
 msgid "All your tracks and playlists will be deleted from Museeks."
 msgstr "您的所有音軌和播放清單將從 Museeks 中刪除。"
 
-#: src/routes/settings.library.tsx:143
+#: src/routes/settings.library.tsx:142
 msgid "Reset library?"
 msgstr "重設音樂庫？"
 
-#: src/routes/settings.library.tsx:146
+#: src/routes/settings.library.tsx:145
 #: src/routes/settings.ui.tsx:77
 msgid "Reset"
 msgstr "重設"
 
-#: src/routes/settings.library.tsx:155
+#: src/routes/settings.library.tsx:154
 msgid "Reset library"
 msgstr "重設音樂庫"
 
-#: src/routes/settings.tsx:46
+#: src/routes/settings.tsx:45
 msgid "Audio"
 msgstr "音訊"
 
-#: src/routes/settings.tsx:49
+#: src/routes/settings.tsx:48
 msgid "Interface"
 msgstr "介面"
 
-#: src/routes/settings.tsx:52
+#: src/routes/settings.tsx:51
 msgid "About"
 msgstr "關於"
 
@@ -530,52 +530,52 @@ msgid "Dark"
 msgstr "深色"
 
 #. placeholder {0}: track.title
-#: src/routes/tracks.$trackID.tsx:84
+#: src/routes/tracks.$trackID.tsx:83
 msgid "Edit \"{0}\""
 msgstr "編輯 \"{0}\""
 
-#: src/routes/tracks.$trackID.tsx:110
+#: src/routes/tracks.$trackID.tsx:109
 msgid "Album Artist"
 msgstr "專輯藝術家"
 
-#: src/routes/tracks.$trackID.tsx:124
+#: src/routes/tracks.$trackID.tsx:123
 msgid "Track Artists"
 msgstr "音軌藝術家"
 
-#: src/routes/tracks.$trackID.tsx:125
+#: src/routes/tracks.$trackID.tsx:124
 msgid "You can add multiple artists with commas"
 msgstr "您可以用逗號新增多個藝術家"
 
-#: src/routes/tracks.$trackID.tsx:140
+#: src/routes/tracks.$trackID.tsx:139
 msgid "You can add multiple genres with commas"
 msgstr "您可以用逗號新增多個流派"
 
-#: src/routes/tracks.$trackID.tsx:154
+#: src/routes/tracks.$trackID.tsx:153
 msgid "Year"
 msgstr "年份"
 
-#: src/routes/tracks.$trackID.tsx:168
+#: src/routes/tracks.$trackID.tsx:167
 msgid "Track Nº"
 msgstr "音軌編號"
 
-#: src/routes/tracks.$trackID.tsx:182
-#: src/routes/tracks.$trackID.tsx:214
+#: src/routes/tracks.$trackID.tsx:181
+#: src/routes/tracks.$trackID.tsx:213
 msgid "Of"
 msgstr "共"
 
-#: src/routes/tracks.$trackID.tsx:200
+#: src/routes/tracks.$trackID.tsx:199
 msgid "Disk Nº"
 msgstr "磁碟編號"
 
-#: src/routes/tracks.$trackID.tsx:239
+#: src/routes/tracks.$trackID.tsx:238
 msgid "Path"
 msgstr "路徑"
 
-#: src/routes/tracks.$trackID.tsx:250
+#: src/routes/tracks.$trackID.tsx:249
 msgid "Save"
 msgstr "儲存"
 
-#: src/routes/tracks.$trackID.tsx:255
+#: src/routes/tracks.$trackID.tsx:254
 msgid "Clicking \"save\" will only update the library data, but will not save it to the original file."
 msgstr "點擊\"儲存\"只會更新音樂庫資料，但不會儲存到原始檔案。"
 

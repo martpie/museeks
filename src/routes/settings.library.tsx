@@ -1,4 +1,5 @@
 import { Trans, useLingui } from '@lingui/react/macro';
+import * as stylex from '@stylexjs/stylex';
 import { createFileRoute, useLoaderData } from '@tanstack/react-router';
 import { ask, open } from '@tauri-apps/plugin-dialog';
 import { useCallback } from 'react';
@@ -10,8 +11,6 @@ import Flexbox from '../elements/Flexbox';
 import useInvalidate, { useInvalidateCallback } from '../hooks/useInvalidate';
 import SettingsAPI from '../stores/SettingsAPI';
 import useLibraryStore, { useLibraryAPI } from '../stores/useLibraryStore';
-
-import styles from './settings-library.module.css';
 
 export const Route = createFileRoute('/settings/library')({
   component: ViewSettingsLibrary,
@@ -52,14 +51,14 @@ function ViewSettingsLibrary() {
           </Setting.Description>
         )}
         {libraryFolders.length > 0 && (
-          <ul className={styles.libraryFolders}>
+          <ul {...stylex.props(styles.libraryFolders)}>
             {config.library_folders.map((folder) => {
               return (
                 <li key={folder}>
                   <Flexbox align="center">
                     <button
                       type="button"
-                      className={styles.libraryFoldersRemove}
+                      {...stylex.props(styles.libraryFoldersRemove)}
                       title={t`Remove`}
                       data-museeks-action
                       onClick={() =>
@@ -159,3 +158,26 @@ function ViewSettingsLibrary() {
     </>
   );
 }
+
+const styles = stylex.create({
+  libraryFolders: {
+    listStyle: 'none',
+    paddingBlock: '4px',
+    paddingInline: '8px',
+    margin: '0',
+    fontFamily: 'monospace',
+    borderStyle: 'solid',
+    borderWidth: '1px',
+    borderColor: 'var(--border-color)',
+    overflowX: 'auto',
+    whiteSpace: 'pre',
+    width: '120%',
+  },
+  libraryFoldersRemove: {
+    color: 'red',
+    borderStyle: 'none',
+    backgroundColor: 'transparent',
+    appearance: 'none',
+    fontSize: '16px',
+  },
+});

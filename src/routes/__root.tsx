@@ -1,6 +1,6 @@
+import * as stylex from '@stylexjs/stylex';
 import { createRootRoute, Outlet, useLocation } from '@tanstack/react-router';
 import { info } from '@tauri-apps/plugin-log';
-import cx from 'classnames';
 import { useEffect } from 'react';
 
 import AppEvents from '../components/AppEvents';
@@ -17,8 +17,6 @@ import Toasts from '../components/Toasts';
 import useInvalidate from '../hooks/useInvalidate';
 import { logAndNotifyError } from '../lib/utils';
 import SettingsAPI from '../stores/SettingsAPI';
-
-import styles from './__root.module.css';
 
 type Search = {
   jump_to_playing_track?: boolean;
@@ -61,7 +59,7 @@ function ViewRoot() {
 
   return (
     <div
-      className={cx(styles.root)}
+      {...stylex.props(styles.root)}
       data-museeks-os={window.__MUSEEKS_PLATFORM}
     >
       {/** Bunch of global event handlers */}
@@ -74,7 +72,7 @@ function ViewRoot() {
 
       {/** The actual app */}
       <Header />
-      <main className={styles.mainContent}>
+      <main {...stylex.props(styles.mainContent)}>
         <Outlet />
       </main>
       <Footer />
@@ -85,3 +83,19 @@ function ViewRoot() {
     </div>
   );
 }
+
+const styles = stylex.create({
+  root: {
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100%',
+  },
+  mainContent: {
+    width: '100%',
+    flex: '1 1 auto',
+    position: 'relative',
+    display: 'flex',
+    flexDirection: 'column',
+    minHeight: 0,
+  },
+});
