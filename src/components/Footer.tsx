@@ -1,4 +1,5 @@
 import { useLingui } from '@lingui/react/macro';
+import * as stylex from '@stylexjs/stylex';
 import { Link } from '@tanstack/react-router';
 
 import useLibraryStore from '../stores/useLibraryStore';
@@ -6,58 +7,56 @@ import Icon from './Icon';
 import ProgressBar from './ProgressBar';
 import TrackListStatus from './TrackListStatus';
 
-import styles from './Footer.module.css';
-
 export default function Footer() {
   const { t } = useLingui();
 
   return (
-    <footer className={styles.footer}>
-      <div className={styles.footerNavigation}>
-        <div className={styles.footerNavigationLinkgroup}>
+    <footer {...stylex.props(styles.footer)}>
+      <div {...stylex.props(styles.footerNavigation)}>
+        <div {...stylex.props(styles.footerNavigationLinkgroup)}>
           <Link
             to="/library"
-            className={styles.footerNavigationLink}
-            activeProps={{ className: styles.footerNavigationLinkIsActive }}
+            activeProps={stylex.props(styles.footerNavigationLinkIsActive)}
             title={t`Library`}
             draggable={false}
             data-testid="footer-library-link"
+            {...stylex.props(styles.footerNavigationLink)}
           >
             <Icon name="musicalNotes" size={16} />
           </Link>
           <Link
             to="/artists"
-            className={styles.footerNavigationLink}
-            activeProps={{ className: styles.footerNavigationLinkIsActive }}
+            activeProps={stylex.props(styles.footerNavigationLinkIsActive)}
             title={t`Artists`}
             draggable={false}
             data-testid="footer-artists-link"
+            {...stylex.props(styles.footerNavigationLink)}
           >
             <Icon name="microphone" size={16} />
           </Link>
           <Link
             to="/playlists"
-            className={styles.footerNavigationLink}
-            activeProps={{ className: styles.footerNavigationLinkIsActive }}
+            activeProps={stylex.props(styles.footerNavigationLinkIsActive)}
             title={t`Playlists`}
             draggable={false}
             data-testid="footer-playlists-link"
+            {...stylex.props(styles.footerNavigationLink)}
           >
             <Icon name="playlist" size={16} />
           </Link>
           <Link
             to="/settings"
-            className={styles.footerNavigationLink}
-            activeProps={{ className: styles.footerNavigationLinkIsActive }}
+            activeProps={stylex.props(styles.footerNavigationLinkIsActive)}
             title={t`Settings`}
             draggable={false}
             data-testid="footer-settings-link"
+            {...stylex.props(styles.footerNavigationLink)}
           >
             <Icon name="settings" size={16} />
           </Link>
         </div>
       </div>
-      <div className={styles.footerStatus}>
+      <div {...stylex.props(styles.footerStatus)}>
         <Status />
       </div>
     </footer>
@@ -78,8 +77,8 @@ function Status() {
     const progress = total > 0 ? Math.round((current / total) * 100) : 100;
 
     return (
-      <div className={styles.footerLibraryRefresh}>
-        <div className={styles.footerLibraryRefreshProgress}>
+      <div {...stylex.props(styles.footerLibraryRefresh)}>
+        <div {...stylex.props(styles.footerLibraryRefreshProgress)}>
           {isScanning ? (
             t`scanning tracks...`
           ) : (
@@ -87,7 +86,7 @@ function Status() {
           )}
         </div>
         {total > 0 && (
-          <div className={styles.footerLibraryRefreshCount}>
+          <div {...stylex.props(styles.footerLibraryRefreshCount)}>
             {current} / {total}
           </div>
         )}
@@ -101,3 +100,80 @@ function Status() {
 
   return null;
 }
+
+const styles = stylex.create({
+  footer: {
+    backgroundColor: 'var(--footer-bg)',
+    borderTopWidth: '1px',
+    borderTopStyle: 'solid',
+    borderTopColor: 'var(--border-color)',
+    flex: '0 0 auto',
+    paddingBlock: '0',
+    paddingInline: '15px',
+    display: 'flex',
+    alignItems: 'stretch',
+  },
+  footerNavigation: {
+    display: 'flex',
+    alignItems: 'stretch',
+    width: '30%',
+  },
+  footerNavigationLinkgroup: {
+    display: 'flex',
+    alignItems: 'stretch',
+  },
+  footerNavigationLink: {
+    borderWidth: '1px',
+    borderStyle: 'solid',
+    borderColor: 'var(--border-color)',
+    borderBlockWidth: '0',
+    borderInlineWidth: '1px',
+    color: {
+      default: 'inherit',
+      ':hover': 'inherit',
+      ':focus': 'inherit',
+    },
+    paddingBlock: '8px',
+    paddingInline: '12px',
+    lineHeight: 1,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: {
+      ':active': 'var(--footer-nav-bg-color-active)',
+    },
+    zIndex: {
+      ':active': 1,
+    },
+    marginLeft: {
+      default: '-1px',
+      ':first-child': '0',
+    },
+  },
+  footerNavigationLinkIsActive: {
+    backgroundColor: 'var(--footer-nav-bg-color-active)',
+    color: 'var(--main-color)',
+  },
+  footerStatus: {
+    width: '40%',
+    textAlign: 'center',
+    fontSize: '12px',
+    paddingTop: '7px',
+    paddingBottom: '7px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  footerLibraryRefresh: {
+    display: 'flex',
+    flex: '1',
+    alignItems: 'center',
+  },
+  footerLibraryRefreshProgress: {
+    flex: '1',
+    marginRight: '10px',
+  },
+  footerLibraryRefreshCount: {
+    fontVariantNumeric: 'tabular-nums',
+  },
+});

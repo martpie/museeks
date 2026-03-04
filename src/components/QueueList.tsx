@@ -5,6 +5,7 @@ import {
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 import { Trans } from '@lingui/react/macro';
+import * as stylex from '@stylexjs/stylex';
 import { useCallback, useId, useState } from 'react';
 
 import Button from '../elements/Button';
@@ -14,8 +15,6 @@ import { useTrackListStatus } from '../hooks/useGlobalTrackListStatus';
 import player from '../lib/player';
 import QueueListItem from './QueueListItem';
 import TrackListStatus from './TrackListStatus';
-
-import styles from './QueueList.module.css';
 
 const INITIAL_QUEUE_SIZE = 20;
 const DND_MODIFIERS = [restrictToVerticalAxis];
@@ -72,15 +71,15 @@ export default function QueueList(props: Props) {
       modifiers={DND_MODIFIERS}
       sensors={sensors}
     >
-      <div className={styles.queueHeader}>
-        <div className={styles.queueHeaderInfos}>
+      <div {...stylex.props(styles.queueHeader)}>
+        <div {...stylex.props(styles.queueHeaderInfos)}>
           <TrackListStatus {...status} />
         </div>
         <Button bSize="small" onClick={() => player.clearQueue()}>
           <Trans>clear queue</Trans>
         </Button>
       </div>
-      <ul className={styles.queueContent}>
+      <ul {...stylex.props(styles.queueContent)}>
         <SortableContext
           items={shownQueue}
           strategy={verticalListSortingStrategy}
@@ -110,3 +109,29 @@ export default function QueueList(props: Props) {
     </DndContext>
   );
 }
+
+const styles = stylex.create({
+  queueHeader: {
+    paddingTop: '5px',
+    paddingBottom: '5px',
+    paddingLeft: '10px',
+    paddingRight: '10px',
+    backgroundColor: 'var(--queue-header-bg)',
+    borderBottomWidth: '1px',
+    borderBottomStyle: 'solid',
+    borderBottomColor: 'var(--border-color)',
+  },
+  queueHeaderInfos: {
+    float: 'right',
+    fontSize: '11px',
+    paddingTop: '1px',
+    paddingBottom: '1px',
+  },
+  queueContent: {
+    maxHeight: '300px',
+    overflow: 'auto',
+    listStyle: 'none',
+    padding: 0,
+    margin: 0,
+  },
+});

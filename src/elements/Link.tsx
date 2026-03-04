@@ -29,18 +29,16 @@ export default function Link<TRouter extends RegisteredRouter, TOptions>(
   props: LinkProps<TRouter, TOptions> | ButtonProps,
 ): React.ReactNode;
 export default function Link(props: LinkProps | ButtonProps): React.ReactNode {
-  const sharedClassName = stylex.props(
-    styles.link,
-    props.inheritColor === true && styles.inheritColor,
-    props.notBold === true && styles.notBold,
-  ).className;
-
   if ('linkOptions' in props) {
     return (
       <RouterLink
         {...props.linkOptions}
         draggable={false}
-        className={sharedClassName}
+        {...stylex.props(
+          styles.link,
+          props.inheritColor === true && styles.inheritColor,
+          props.notBold === true && styles.notBold,
+        )}
       >
         {props.children}
       </RouterLink>

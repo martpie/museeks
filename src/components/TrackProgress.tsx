@@ -1,3 +1,4 @@
+import * as stylex from '@stylexjs/stylex';
 import { Slider } from 'radix-ui';
 import { useCallback, useState } from 'react';
 
@@ -5,8 +6,6 @@ import type { Track } from '../generated/typings';
 import useFormattedDuration from '../hooks/useFormattedDuration';
 import usePlayingTrackCurrentTime from '../hooks/usePlayingTrackCurrentTime';
 import player from '../lib/player';
-
-import styles from './TrackProgress.module.css';
 
 type Props = {
   trackPlaying: Track;
@@ -56,14 +55,14 @@ export default function TrackProgress(props: Props) {
       step={1}
       value={[elapsed]}
       onValueChange={jumpAudioTo}
-      className={styles.trackRoot}
+      {...stylex.props(styles.trackRoot)}
       onMouseMoveCapture={showTooltip}
       onMouseLeave={hideTooltip}
     >
-      <Slider.Track className={styles.trackProgress}>
-        <Slider.Range className={styles.trackRange} />
+      <Slider.Track {...stylex.props(styles.trackProgress)}>
+        <Slider.Range {...stylex.props(styles.trackRange)} />
         <div
-          className={styles.progressTooltip}
+          {...stylex.props(styles.progressTooltip)}
           style={{
             left: `${tooltipX}%`,
             display: tooltipX == null ? 'none' : 'block',
@@ -76,3 +75,73 @@ export default function TrackProgress(props: Props) {
     </Slider.Root>
   );
 }
+
+const styles = stylex.create({
+  trackRoot: {
+    position: 'relative',
+    display: 'flex',
+    alignItems: 'center',
+    userSelect: 'none',
+    touchAction: 'none',
+    height: '7px',
+    transform: 'translateY(4px)',
+  },
+  trackProgress: {
+    display: 'block',
+    position: 'relative',
+    width: '100%',
+    height: '100%',
+    backgroundColor: 'var(--header-bg)',
+    borderWidth: '1px',
+    borderStyle: 'solid',
+    borderColor: 'var(--border-color)',
+  },
+  trackRange: {
+    position: 'absolute',
+    height: '100%',
+    backgroundColor: 'var(--main-color)',
+    boxShadow: 'inset 0 0 0 1px rgba(0 0 0 / 0.2)',
+  },
+  progressTooltip: {
+    position: 'absolute',
+    backgroundColor: 'var(--background)',
+    borderWidth: '1px',
+    borderStyle: 'solid',
+    borderColor: 'var(--border-color)',
+    fontSize: '10px',
+    paddingTop: '2px',
+    paddingBottom: '2px',
+    paddingLeft: '5px',
+    paddingRight: '5px',
+    bottom: '10px',
+    zIndex: 1,
+    transform: 'translateX(-11px)',
+    pointerEvents: 'none',
+    '::before': {
+      content: '""',
+      position: 'absolute',
+      width: 0,
+      height: 0,
+      borderStyle: 'solid',
+      borderColor: 'transparent',
+      borderBottomWidth: 0,
+      top: '16px',
+      left: '5px',
+      borderTopColor: 'var(--border-color)',
+      borderWidth: '6px',
+    },
+    '::after': {
+      content: '""',
+      position: 'absolute',
+      width: 0,
+      height: 0,
+      borderStyle: 'solid',
+      borderColor: 'transparent',
+      borderBottomWidth: 0,
+      top: '15px',
+      left: '6px',
+      borderTopColor: 'var(--background)',
+      borderWidth: '5px',
+    },
+  },
+});

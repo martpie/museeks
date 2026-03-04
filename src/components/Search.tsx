@@ -1,12 +1,11 @@
 import { useLingui } from '@lingui/react/macro';
+import * as stylex from '@stylexjs/stylex';
 import type React from 'react';
 import { useCallback, useRef } from 'react';
 import Keybinding from 'react-keybinding-component';
 
 import { isCtrlKey } from '../lib/utils-events';
 import useLibraryStore, { useLibraryAPI } from '../stores/useLibraryStore';
-
-import styles from './Search.module.css';
 
 export default function Search() {
   const search = useLibraryStore((state) => state.search);
@@ -37,10 +36,10 @@ export default function Search() {
   };
 
   return (
-    <div className={styles.searchContainer}>
+    <div {...stylex.props(styles.searchContainer)}>
       <input
         type="text"
-        className={styles.searchInput}
+        {...stylex.props(styles.searchInput)}
         placeholder={t`search...`}
         value={search}
         onChange={onChange}
@@ -53,7 +52,7 @@ export default function Search() {
       {search.length > 0 && (
         <button
           type="button"
-          className={styles.searchClear}
+          {...stylex.props(styles.searchClear)}
           onClick={onClear}
           data-museeks-action
           data-testid="library-search-clear"
@@ -65,3 +64,41 @@ export default function Search() {
     </div>
   );
 }
+
+const styles = stylex.create({
+  searchContainer: {
+    position: 'relative',
+    maxWidth: '180px',
+    display: 'flex',
+    alignItems: 'center',
+  },
+  searchInput: {
+    display: 'block',
+    fontSize: 'inherit',
+    width: '100%',
+    paddingBlock: '6px',
+    paddingInline: '12px',
+    backgroundColor: 'var(--search-bg)',
+    borderWidth: '1px',
+    borderStyle: 'solid',
+    borderColor: 'var(--border-color)',
+    color: 'var(--text)',
+    borderRadius: 'var(--border-radius)',
+    lineHeight: '16px',
+  },
+  searchClear: {
+    position: 'absolute',
+    right: '4px',
+    fontSize: '15px',
+    color: 'var(--text)',
+    cursor: 'pointer',
+    borderStyle: 'none',
+    backgroundColor: 'transparent',
+    padding: 0,
+    height: '21px',
+    aspectRatio: '1 / 1',
+    lineHeight: '100%',
+    textAlign: 'center',
+    fontFamily: 'Arial, sans-serif',
+  },
+});

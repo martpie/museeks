@@ -1,8 +1,6 @@
-import cx from 'classnames';
+import * as stylex from '@stylexjs/stylex';
 import type React from 'react';
 import { useId } from 'react';
-
-import styles from './Setting.module.css';
 
 type Props = {
   children: React.ReactNode;
@@ -12,8 +10,8 @@ type Props = {
 export function Section(props: Props) {
   return (
     <section
-      className={styles.settingSection}
       data-testid={props['data-testid']}
+      {...stylex.props(styles.settingSection)}
     >
       {props.children}
     </section>
@@ -22,7 +20,10 @@ export function Section(props: Props) {
 
 export function Description(props: Props) {
   return (
-    <p className={styles.settingDescription} data-testid={props['data-testid']}>
+    <p
+      data-testid={props['data-testid']}
+      {...stylex.props(styles.settingDescription)}
+    >
       {props.children}
     </p>
   );
@@ -36,12 +37,15 @@ export function Label(
 ) {
   const { children, noMargin, htmlFor, ...restProps } = props;
 
-  const classNames = cx(styles.settingLabel, {
-    [styles.settingLabelNoMargin]: noMargin,
-  });
-
   return (
-    <label className={classNames} htmlFor={htmlFor} {...restProps}>
+    <label
+      htmlFor={htmlFor}
+      {...restProps}
+      {...stylex.props(
+        styles.settingLabel,
+        noMargin && styles.settingLabelNoMargin,
+      )}
+    >
       {children}
     </label>
   );
@@ -49,7 +53,10 @@ export function Label(
 
 export function Title(props: Props) {
   return (
-    <h3 className={styles.settingTitle} data-testid={props['data-testid']}>
+    <h3
+      data-testid={props['data-testid']}
+      {...stylex.props(styles.settingTitle)}
+    >
       {props.children}
     </h3>
   );
@@ -71,9 +78,9 @@ export function Input(
       <Label htmlFor={id}>{label}</Label>
       <input
         id={id}
-        className={styles.settingInput}
         autoComplete="off"
         {...otherProps}
+        {...stylex.props(styles.settingInput)}
       />
       {description != null && <Description>{description}</Description>}
     </div>
@@ -81,7 +88,7 @@ export function Input(
 }
 
 export function ErrorMessage(props: Props) {
-  return <p className={styles.settingError}>{props.children}</p>;
+  return <p {...stylex.props(styles.settingError)}>{props.children}</p>;
 }
 
 export function Select(
@@ -93,7 +100,7 @@ export function Select(
   return (
     <div>
       <Label htmlFor={id}>{label}</Label>
-      <select className={styles.settingSelect} id={id} {...otherProps}>
+      <select id={id} {...otherProps} {...stylex.props(styles.settingSelect)}>
         {props.children}
       </select>
       {description != null && <Description>{description}</Description>}
@@ -113,10 +120,94 @@ export function ColorSelector(
       <input
         id={id}
         type="color"
-        className={styles.settingInput}
         {...otherProps}
+        {...stylex.props(styles.settingInput, styles.settingColorInput)}
       />
       {description != null && <Description>{description}</Description>}
     </div>
   );
 }
+
+const styles = stylex.create({
+  settingSection: {
+    marginBottom: '16px',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '4px',
+  },
+  settingTitle: {
+    display: 'block',
+    margin: 0,
+  },
+  settingDescription: {
+    fontWeight: 'normal',
+    marginTop: '5px',
+    marginBottom: '4px',
+    color: 'var(--text-muted)',
+  },
+  settingLabel: {
+    display: 'inline-block',
+    marginBottom: '8px',
+    fontWeight: 'bold',
+  },
+  settingLabelNoMargin: {
+    margin: 0,
+  },
+  settingSelect: {
+    appearance: 'none',
+    display: 'block',
+    backgroundColor: 'var(--input-bg)',
+    color: 'var(--input-color)',
+    borderWidth: '1px',
+    borderStyle: 'solid',
+    borderColor: {
+      default: 'var(--border-color-softer)',
+      ':focus': 'var(--main-color)',
+    },
+    borderRadius: 'var(--border-radius)',
+    padding: '8px',
+    width: '100%',
+    fontSize: '1rem',
+    outline: {
+      ':focus': 'none',
+    },
+    opacity: {
+      ':disabled': 0.6,
+    },
+    cursor: {
+      ':disabled': 'not-allowed',
+    },
+  },
+  settingInput: {
+    appearance: 'none',
+    display: 'block',
+    backgroundColor: 'var(--input-bg)',
+    color: 'var(--input-color)',
+    borderWidth: '1px',
+    borderStyle: 'solid',
+    borderColor: {
+      default: 'var(--border-color-softer)',
+      ':focus': 'var(--main-color)',
+    },
+    borderRadius: 'var(--border-radius)',
+    padding: '8px',
+    width: '100%',
+    fontSize: '1rem',
+    outline: {
+      ':focus': 'none',
+    },
+    opacity: {
+      ':disabled': 0.6,
+    },
+    cursor: {
+      ':disabled': 'not-allowed',
+    },
+  },
+  settingColorInput: {
+    padding: 0,
+    width: '80px',
+  },
+  settingError: {
+    color: 'red',
+  },
+});

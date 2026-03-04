@@ -1,9 +1,8 @@
+import * as stylex from '@stylexjs/stylex';
 import { useId } from 'react';
 
 import Flexbox from '../elements/Flexbox';
 import * as Setting from './Setting';
-
-import styles from './SettingCheckbox.module.css';
 
 type Props = {
   title: string;
@@ -17,11 +16,12 @@ export default function CheckboxSetting(props: Props) {
   const id = useId();
 
   return (
-    <div className={styles.checkbox}>
+    <div>
       <Flexbox gap={8} align="center">
         <input
           id={id}
           type="checkbox"
+          {...stylex.props(styles.checkboxInput)}
           onChange={(e) => props.onChange(e.currentTarget.checked)}
           checked={props.value}
         />
@@ -33,3 +33,43 @@ export default function CheckboxSetting(props: Props) {
     </div>
   );
 }
+
+const styles = stylex.create({
+  checkboxInput: {
+    display: 'grid',
+    placeContent: 'center',
+    appearance: 'none',
+    borderWidth: '1px',
+    borderStyle: 'solid',
+    borderColor: {
+      default: 'var(--border-color-softer)',
+      ':checked': 'var(--button-border)',
+    },
+    borderRadius: 'var(--border-radius)',
+    backgroundColor: {
+      default: 'var(--checkbox-bg)',
+      ':checked': 'var(--main-color)',
+    },
+    boxShadow: {
+      ':focus': '0 0 0 3px var(--border-color)',
+    },
+    '::after': {
+      content: '""',
+      visibility: 'hidden',
+      width: '14px',
+      height: '14px',
+      boxShadow: 'inset 1em 1em var(--form-control-color)',
+      backgroundColor: 'white',
+    },
+    visibility: {
+      ':checked::after': 'visible',
+    },
+    clipPath: {
+      ':checked::after':
+        'polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 79% 0%, 43% 62%)',
+    },
+    transform: {
+      ':checked::after': 'scale(0.7) rotate(10deg)',
+    },
+  },
+});

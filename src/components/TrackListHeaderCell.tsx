@@ -1,22 +1,20 @@
-import cx from 'classnames';
+import * as stylex from '@stylexjs/stylex';
 import React, { useCallback } from 'react';
 
 import type { SortBy } from '../generated/typings';
 import { useLibraryAPI } from '../stores/useLibraryStore';
 import Icon, { type IconName } from './Icon';
 
-import styles from './TrackListHeaderCell.module.css';
-
 type Props = {
   title: string;
-  className?: string;
+  xstyle?: stylex.CompiledStyles;
   sortBy?: SortBy | null;
   icon?: IconName | null;
   'data-testid'?: string;
 };
 
 export default function TrackListHeaderCell(props: Props) {
-  const { sortBy, className, title, icon } = props;
+  const { sortBy, xstyle, title, icon } = props;
   const libraryAPI = useLibraryAPI();
 
   const sort = useCallback(() => {
@@ -25,15 +23,11 @@ export default function TrackListHeaderCell(props: Props) {
     }
   }, [libraryAPI, sortBy]);
 
-  const classes = cx(styles.trackCellHeader, className, {
-    [styles.sort]: sortBy,
-  });
-
   const content = (
     <React.Fragment>
-      <div className={styles.name}>{title}</div>
+      <div {...stylex.props(styles.name)}>{title}</div>
       {icon && (
-        <div className={styles.icon}>
+        <div {...stylex.props(styles.icon)}>
           <Icon name={icon} size={12} />
         </div>
       )}
@@ -43,12 +37,65 @@ export default function TrackListHeaderCell(props: Props) {
   return (
     <button
       type="button"
-      className={classes}
       disabled={sortBy === null}
       onClick={sort}
       data-testid={props['data-testid']}
+      {...stylex.props(
+        styles.trackCellHeader,
+        sortBy && styles.sortable,
+        xstyle,
+      )}
     >
       {content}
     </button>
   );
 }
+
+const styles = stylex.create({
+  trackCellHeader: {
+    fontWeight: 'var(--bold)',
+    appearance: 'none',
+    borderWidth: '0',
+    backgroundColor: 'transparent',
+    textAlign: 'left',
+    padding: 0,
+    cursor: 'default',
+    display: 'flex',
+    alignItems: 'center',
+    color: 'inherit',
+    borderLeftWidth: {
+      ':not(:first-child)': '1px',
+    },
+    borderLeftStyle: {
+      ':not(:first-child)': 'solid',
+    },
+    borderLeftColor: {
+      ':not(:first-child)': 'var(--border-color)',
+    },
+  },
+  sortable: {
+    backgroundColor: {
+      default: 'transparent',
+      ':focus': 'rgba(0 0 0 / 0.025)',
+      ':active': 'rgba(0 0 0 / 0.04)',
+    },
+  },
+  icon: {
+    marginBlock: '4px',
+    marginInline: '0',
+    paddingBlock: '0',
+    paddingInline: '4px',
+    display: 'flex',
+    alignItems: 'center',
+  },
+  name: {
+    flex: '1',
+    marginBlock: '4px',
+    marginInline: '0',
+    paddingBlock: '0',
+    paddingInline: '4px',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+  },
+});

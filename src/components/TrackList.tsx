@@ -1,5 +1,6 @@
 import { plural } from '@lingui/core/macro';
 import { useLingui } from '@lingui/react/macro';
+import * as stylex from '@stylexjs/stylex';
 import { useNavigate, useSearch } from '@tanstack/react-router';
 import {
   Menu,
@@ -32,8 +33,6 @@ import { useToastsAPI } from '../stores/useToastsStore';
 import type { QueueOrigin, TrackListVirtualizer } from '../types/museeks';
 import TrackListDefault from './TrackListDefault';
 import TrackListGrouped from './TrackListGrouped';
-
-import styles from './TrackList.module.css';
 
 // --------------------------------------------------------------------------
 // TrackList
@@ -421,7 +420,7 @@ export default function TrackList(props: Props) {
 
   return (
     <div
-      className={styles.trackList}
+      {...stylex.props(styles.trackList)}
       data-museeks-list
       data-testid="track-list"
     >
@@ -456,3 +455,14 @@ export default function TrackList(props: Props) {
     </div>
   );
 }
+
+const styles = stylex.create({
+  trackList: {
+    outline: 'none',
+    display: 'flex',
+    flexDirection: 'column',
+    flex: '1 1 auto',
+    height: '100%',
+    userSelect: 'none',
+  },
+});

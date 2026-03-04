@@ -1,6 +1,5 @@
+import * as stylex from '@stylexjs/stylex';
 import { Progress } from 'radix-ui';
-
-import styles from './ProgressBar.module.css';
 
 type Props = {
   progress?: number;
@@ -8,11 +7,25 @@ type Props = {
 
 export default function ProgressBar(props: Props) {
   return (
-    <Progress.Root className={styles.progress} value={props.progress}>
+    <Progress.Root {...stylex.props(styles.progress)} value={props.progress}>
       <Progress.Indicator
-        className={styles.progressBar}
+        {...stylex.props(styles.progressBar)}
         style={{ width: `${props.progress}%` }}
       />
     </Progress.Root>
   );
 }
+
+const styles = stylex.create({
+  progress: {
+    flex: '1',
+    display: 'block',
+    height: '6px',
+    backgroundColor: 'var(--progress-bg)',
+  },
+  progressBar: {
+    height: '6px',
+    backgroundColor: 'var(--main-color)',
+    transition: 'width 0.2s ease-in-out',
+  },
+});

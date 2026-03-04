@@ -4,6 +4,7 @@ import {
   SortableContext,
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
+import * as stylex from '@stylexjs/stylex';
 import { useVirtualizer } from '@tanstack/react-virtual';
 import type React from 'react';
 import { useCallback, useId, useImperativeHandle, useRef } from 'react';
@@ -15,8 +16,6 @@ import usePlayingTrackID from '../hooks/usePlayingTrackID';
 import type { TrackListVirtualizer } from '../types/museeks';
 import TrackListHeader from './TrackListHeader';
 import TrackRow, { type TrackRowEvents } from './TrackRow';
-
-import styles from './TrackListDefault.module.css';
 
 const DND_MODIFIERS = [restrictToVerticalAxis];
 
@@ -120,7 +119,7 @@ export default function TrackListDefault(props: Props) {
         <ul
           role="listbox"
           aria-multiselectable="true"
-          className={styles.rows}
+          {...stylex.props(styles.rows)}
           style={{
             height: `${virtualizer.getTotalSize()}px`,
           }}
@@ -143,6 +142,10 @@ export default function TrackListDefault(props: Props) {
                   onContextMenu={onContextMenu}
                   onPlaybackStart={onPlaybackStart}
                   draggable={reorderable}
+                  hasSelectedAbove={
+                    virtualItem.index > 0 &&
+                    selectedTracks.has(tracks[virtualItem.index - 1].id)
+                  }
                   style={{
                     position: 'absolute',
                     left: 0,
@@ -164,3 +167,13 @@ export default function TrackListDefault(props: Props) {
     </DndContext>
   );
 }
+
+const styles = stylex.create({
+  rows: {
+    width: '100%',
+    position: 'relative',
+    listStyle: 'none',
+    padding: 0,
+    margin: 0,
+  },
+});

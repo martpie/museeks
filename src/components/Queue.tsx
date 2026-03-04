@@ -1,11 +1,10 @@
+import * as stylex from '@stylexjs/stylex';
 import type React from 'react';
 import { useMemo } from 'react';
 
 import type { Track } from '../generated/typings';
 import QueueEmpty from './QueueEmpty';
 import QueueList from './QueueList';
-
-import styles from './Queue.module.css';
 
 type Props = {
   queue: Track[];
@@ -30,5 +29,21 @@ export default function Queue(props: Props) {
     content = <QueueList queue={queue} queueCursor={queueCursor} />;
   }
 
-  return <div className={`${styles.queue} text-left`}>{content}</div>;
+  return <div {...stylex.props(styles.queue)}>{content}</div>;
 }
+
+const styles = stylex.create({
+  queue: {
+    width: '300px',
+    backgroundColor: 'var(--queue-bg)',
+    borderWidth: '1px',
+    borderStyle: 'solid',
+    borderColor: 'var(--border-color)',
+    borderRadius: 'var(--border-radius)',
+    textOverflow: 'ellipsis',
+    overflowX: 'hidden',
+    fontSize: '12px',
+    boxShadow: '0 5px 3px -5px rgba(0 0 0 0.5)',
+    textAlign: 'left',
+  },
+});

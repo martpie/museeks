@@ -1,16 +1,14 @@
 import { plural } from '@lingui/core/macro';
 import { useLingui } from '@lingui/react/macro';
+import * as stylex from '@stylexjs/stylex';
 import { getCurrentWindow } from '@tauri-apps/api/window';
 import { lstat } from '@tauri-apps/plugin-fs';
-import cx from 'classnames';
 import { useEffect, useState } from 'react';
 
 import useInvalidate from '../hooks/useInvalidate';
 import { logAndNotifyError } from '../lib/utils';
 import { useLibraryAPI } from '../stores/useLibraryStore';
 import { useToastsAPI } from '../stores/useToastsStore';
-
-import styles from './DropzoneImport.module.css';
 
 export default function DropzoneImport() {
   const libraryAPI = useLibraryAPI();
@@ -87,14 +85,36 @@ export default function DropzoneImport() {
     };
   }, [libraryAPI, toastsAPI, invalidate]);
 
-  const classes = cx(styles.dropzone, {
-    [styles.shown]: isShown,
-  });
-
   return (
-    <div className={classes}>
-      <div className={styles.dropzoneTitle}>{t`Add music to the library`}</div>
+    <div {...stylex.props(styles.dropzone, isShown && styles.shown)}>
+      <div
+        {...stylex.props(styles.dropzoneTitle)}
+      >{t`Add music to the library`}</div>
       <span>{t`Drop folders anywhere`}</span>
     </div>
   );
 }
+
+const styles = stylex.create({
+  dropzone: {
+    position: 'fixed',
+    inset: 0,
+    pointerEvents: 'none',
+    backgroundColor: 'var(--faded-bg)',
+    zIndex: 1000,
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: '20px',
+    opacity: 0,
+    transition: 'opacity 0.1s ease-in-out',
+  },
+  shown: {
+    opacity: 1,
+  },
+  dropzoneTitle: {
+    fontSize: '1.4rem',
+    marginBottom: '8px',
+  },
+});
