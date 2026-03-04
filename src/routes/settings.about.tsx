@@ -10,9 +10,9 @@ import Flexbox from '../elements/Flexbox';
 import Heart from '../elements/Heart';
 import List from '../elements/List';
 import useInvalidate, { useInvalidateCallback } from '../hooks/useInvalidate';
+import { logAndNotifyError } from '../lib/utils';
 import SettingsAPI from '../stores/SettingsAPI';
 import { NON_DEFAULT_LANGUAGES } from '../translations/languages';
-import { logAndNotifyError } from '../lib/utils';
 
 export const Route = createFileRoute('/settings/about')({
   component: ViewSettingsAbout,

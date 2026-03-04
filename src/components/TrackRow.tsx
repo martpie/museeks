@@ -5,6 +5,7 @@ import type React from 'react';
 import type { Track } from '../generated/typings';
 import useFormattedDuration from '../hooks/useFormattedDuration';
 import PlayingIndicator from './PlayingIndicator';
+
 import cellStyles from './TrackListHeader.module.css';
 import styles from './TrackRow.module.css';
 

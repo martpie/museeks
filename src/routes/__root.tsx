@@ -15,9 +15,10 @@ import LibraryEvents from '../components/LibraryEvents';
 import PlayerEvents from '../components/PlayerEvents';
 import Toasts from '../components/Toasts';
 import useInvalidate from '../hooks/useInvalidate';
-import SettingsAPI from '../stores/SettingsAPI';
-import styles from './__root.module.css';
 import { logAndNotifyError } from '../lib/utils';
+import SettingsAPI from '../stores/SettingsAPI';
+
+import styles from './__root.module.css';
 
 type Search = {
   jump_to_playing_track?: boolean;

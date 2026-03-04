@@ -3,8 +3,9 @@ import { usePlayerState } from '../hooks/usePlayer';
 import ButtonRepeat from './ButtonRepeat';
 import ButtonShuffle from './ButtonShuffle';
 import Cover from './Cover';
-import styles from './PlayingBar.module.css';
 import PlayingBarInfos from './PlayingBarInfo';
+
+import styles from './PlayingBar.module.css';
 
 type Props = {
   trackPlaying: Track;

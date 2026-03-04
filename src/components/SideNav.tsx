@@ -3,8 +3,9 @@ import React, { useMemo } from 'react';
 
 import Flexbox from '../elements/Flexbox';
 import { stripAccents } from '../lib/utils-library';
-import styles from './SideNav.module.css';
 import type { SideNavLinkProps } from './SideNavLink';
+
+import styles from './SideNav.module.css';
 
 type Props = {
   children: Array<React.ReactElement<SideNavLinkProps>>;

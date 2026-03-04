@@ -8,8 +8,9 @@ import { parseDuration } from '../hooks/useFormattedDuration';
 import usePlayingTrackID from '../hooks/usePlayingTrackID';
 import type { TrackListVirtualizer } from '../types/museeks';
 import Cover from './Cover';
-import styles from './TrackListGrouped.module.css';
 import TrackRow, { type TrackRowEvents } from './TrackRow';
+
+import styles from './TrackListGrouped.module.css';
 
 /** ----------------------------------------------------------------------------
  * Group-based layout for TrackList:

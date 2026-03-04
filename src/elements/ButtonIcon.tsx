@@ -1,6 +1,7 @@
 import type React from 'react';
 
 import Icon, { type IconName, type IconSize } from '../components/Icon';
+
 import styles from './ButtonIcon.module.css';
 
 type Props = React.ComponentPropsWithRef<'button'> & {

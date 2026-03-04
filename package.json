@@ -25,6 +25,7 @@
     "test:ui:watch": "vitest watch --project e2e",
     "test:lint": "oxlint --type-aware --type-check",
     "test:format": "oxfmt --check",
+    "test:format:fix": "oxfmt",
     "package:checksums": "bash scripts/checksum.sh",
     "clippy": "cargo clippy --manifest-path src-tauri/Cargo.toml",
     "postinstall": "simple-git-hooks"

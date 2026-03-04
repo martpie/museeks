@@ -1,6 +1,7 @@
 import cx from 'classnames';
 
 import type SideNav from '../components/SideNav';
+
 import styles from './View.module.css';
 
 type Props = {

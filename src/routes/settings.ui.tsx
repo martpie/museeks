@@ -12,12 +12,12 @@ import type { Config, DefaultView } from '../generated/typings';
 import useInvalidate, { useInvalidateCallback } from '../hooks/useInvalidate';
 import SettingsBridge from '../lib/bridge-settings';
 import { themes } from '../lib/themes';
+import { logAndNotifyError } from '../lib/utils';
 import SettingsAPI, { DEFAULT_MAIN_COLOR } from '../stores/SettingsAPI';
 import {
   DEFAULT_LANGUAGE,
   NON_DEFAULT_LANGUAGES,
 } from '../translations/languages';
-import { logAndNotifyError } from '../lib/utils';
 
 export const Route = createFileRoute('/settings/ui')({
   component: ViewSettingsUI,
@@ -166,7 +166,9 @@ function ViewSettingsUI() {
           title={t`Sleep mode blocker`}
           description={t`Prevent the computer from going into sleep mode when playing`}
           value={config.sleepblocker}
-          onChange={useInvalidateCallback((value: boolean) => SettingsBridge.toggleSleepBlocker(value))}
+          onChange={useInvalidateCallback((value: boolean) =>
+            SettingsBridge.toggleSleepBlocker(value),
+          )}
         />
       </Setting.Section>
       {window.__MUSEEKS_PLATFORM === 'linux' && (

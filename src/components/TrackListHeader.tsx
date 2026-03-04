@@ -3,8 +3,9 @@ import { useLingui } from '@lingui/react/macro';
 import type { SortBy, SortOrder } from '../generated/typings';
 import useLibraryStore from '../stores/useLibraryStore';
 import type { IconName } from './Icon';
-import styles from './TrackListHeader.module.css';
 import TrackListHeaderCell from './TrackListHeaderCell';
+
+import styles from './TrackListHeader.module.css';
 
 const getIcon = (
   enableSort: boolean,

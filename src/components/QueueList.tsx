@@ -12,9 +12,10 @@ import type { Track } from '../generated/typings';
 import useDndSensors from '../hooks/useDnDSensors';
 import { useTrackListStatus } from '../hooks/useGlobalTrackListStatus';
 import player from '../lib/player';
-import styles from './QueueList.module.css';
 import QueueListItem from './QueueListItem';
 import TrackListStatus from './TrackListStatus';
+
+import styles from './QueueList.module.css';
 
 const INITIAL_QUEUE_SIZE = 20;
 const DND_MODIFIERS = [restrictToVerticalAxis];

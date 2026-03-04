@@ -3,8 +3,9 @@ import { useLingui } from '@lingui/react/macro';
 import ButtonIcon from '../elements/ButtonIcon';
 import { usePlayerState } from '../hooks/usePlayer';
 import player from '../lib/player';
-import styles from './PlayerControls.module.css';
 import VolumeControl from './VolumeControl';
+
+import styles from './PlayerControls.module.css';
 
 export default function PlayerControls() {
   const isPaused = usePlayerState((state) => state.isPaused);
