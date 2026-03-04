@@ -2,6 +2,7 @@ import { useId } from 'react';
 
 import Flexbox from '../elements/Flexbox';
 import * as Setting from './Setting';
+
 import styles from './SettingCheckbox.module.css';
 
 type Props = {

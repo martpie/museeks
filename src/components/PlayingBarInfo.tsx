@@ -2,8 +2,9 @@ import Link from '../elements/Link';
 import type { Repeat, Track } from '../generated/typings';
 import useFormattedDuration from '../hooks/useFormattedDuration';
 import usePlayingTrackCurrentTime from '../hooks/usePlayingTrackCurrentTime';
-import styles from './PlayingBarInfo.module.css';
 import TrackProgress from './TrackProgress';
+
+import styles from './PlayingBarInfo.module.css';
 
 type Props = {
   trackPlaying: Track;

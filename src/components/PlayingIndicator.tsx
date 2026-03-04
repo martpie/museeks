@@ -3,6 +3,7 @@ import { useMemo, useState } from 'react';
 import { usePlayerState } from '../hooks/usePlayer';
 import player from '../lib/player';
 import Icon from './Icon';
+
 import styles from './PlayingIndicator.module.css';
 
 export default function TrackPlayingIndicator() {

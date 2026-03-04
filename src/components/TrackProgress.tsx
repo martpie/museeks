@@ -5,6 +5,7 @@ import type { Track } from '../generated/typings';
 import useFormattedDuration from '../hooks/useFormattedDuration';
 import usePlayingTrackCurrentTime from '../hooks/usePlayingTrackCurrentTime';
 import player from '../lib/player';
+
 import styles from './TrackProgress.module.css';
 
 type Props = {

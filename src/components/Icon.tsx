@@ -11,8 +11,8 @@ import pause from '../assets/icons/pause.svg?react';
 import play from '../assets/icons/play.svg?react';
 import playlist from '../assets/icons/playlist.svg?react';
 import plus from '../assets/icons/plus.svg?react';
-import repeat from '../assets/icons/repeat.svg?react';
 import repeatOne from '../assets/icons/repeat-one.svg?react';
+import repeat from '../assets/icons/repeat.svg?react';
 import settings from '../assets/icons/settings.svg?react';
 import shuffle from '../assets/icons/shuffle.svg?react';
 import skipBack from '../assets/icons/skip-back.svg?react';
@@ -22,6 +22,7 @@ import volumeLow from '../assets/icons/volume-low.svg?react';
 import volumeMedium from '../assets/icons/volume-medium.svg?react';
 import volumeMute from '../assets/icons/volume-mute.svg?react';
 import volumeOff from '../assets/icons/volume-off.svg?react';
+
 import styles from './Icon.module.css';
 
 const icons: Record<

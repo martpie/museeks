@@ -4,11 +4,12 @@ import { Popover } from 'radix-ui';
 import ButtonIcon from '../elements/ButtonIcon';
 import { usePlayerState } from '../hooks/usePlayer';
 import usePlayingTrack from '../hooks/usePlayingTrack';
-import styles from './Header.module.css';
 import PlayerControls from './PlayerControls';
 import PlayingBar from './PlayingBar';
 import Queue from './Queue';
 import Search from './Search';
+
+import styles from './Header.module.css';
 
 export default function Header() {
   const queue = usePlayerState((state) => state.queue);

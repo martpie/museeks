@@ -13,9 +13,10 @@ import type { Track } from '../generated/typings';
 import useDndSensors from '../hooks/useDnDSensors';
 import usePlayingTrackID from '../hooks/usePlayingTrackID';
 import type { TrackListVirtualizer } from '../types/museeks';
-import styles from './TrackListDefault.module.css';
 import TrackListHeader from './TrackListHeader';
 import TrackRow, { type TrackRowEvents } from './TrackRow';
+
+import styles from './TrackListDefault.module.css';
 
 const DND_MODIFIERS = [restrictToVerticalAxis];
 

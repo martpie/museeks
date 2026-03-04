@@ -30,9 +30,10 @@ import PlaylistsAPI from '../stores/PlaylistsAPI';
 import { useLibraryAPI } from '../stores/useLibraryStore';
 import { useToastsAPI } from '../stores/useToastsStore';
 import type { QueueOrigin, TrackListVirtualizer } from '../types/museeks';
-import styles from './TrackList.module.css';
 import TrackListDefault from './TrackListDefault';
 import TrackListGrouped from './TrackListGrouped';
+
+import styles from './TrackList.module.css';
 
 // --------------------------------------------------------------------------
 // TrackList

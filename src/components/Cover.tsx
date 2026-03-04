@@ -4,8 +4,9 @@ import { AspectRatio } from 'radix-ui';
 
 import type { Track } from '../generated/typings';
 import useCover from '../hooks/useCover';
-import styles from './Cover.module.css';
 import Icon, { type IconSize } from './Icon';
+
+import styles from './Cover.module.css';
 
 type Props = {
   track: Track;

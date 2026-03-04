@@ -14,6 +14,7 @@ import {
 import { useCallback, useState } from 'react';
 
 import { logAndNotifyError } from '../lib/utils';
+
 import styles from './SideNavLink.module.css';
 
 // *sigh* https://tanstack.com/router/latest/docs/framework/react/guide/type-utilities#type-checking-link-options-with-validatelinkoptions

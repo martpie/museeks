@@ -8,6 +8,7 @@ import { usePlayerState } from '../hooks/usePlayer';
 import player from '../lib/player';
 import { stopPropagation } from '../lib/utils-events';
 import type { IconName } from './Icon';
+
 import styles from './VolumeControl.module.css';
 
 // Volume easing - http://www.dr-lex.be/info-stuff/volumecontrols.html#about

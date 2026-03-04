@@ -5,8 +5,8 @@ import * as Setting from '../components/Setting';
 import CheckboxSetting from '../components/SettingCheckbox';
 import useInvalidate, { useInvalidateCallback } from '../hooks/useInvalidate';
 import player from '../lib/player';
-import SettingsAPI from '../stores/SettingsAPI';
 import { logAndNotifyError } from '../lib/utils';
+import SettingsAPI from '../stores/SettingsAPI';
 
 export const Route = createFileRoute('/settings/audio')({
   component: ViewSettingsAudio,

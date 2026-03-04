@@ -5,6 +5,7 @@ import { useCallback } from 'react';
 import type { Track } from '../generated/typings';
 import player from '../lib/player';
 import Cover from './Cover';
+
 import styles from './QueueListItem.module.css';
 
 type Props = {

@@ -10,6 +10,23 @@
       }
     }
   ],
+  "experimentalSortImports": {
+    "newlinesBetween": true,
+    "partitionByComment": true,
+    "groups": [
+      ["value-builtin", "type-builtin"],
+      ["value-external", "value-internal", "type-external", "type-internal"],
+      [
+        "value-parent",
+        "value-sibling",
+        "value-index",
+        "type-parent",
+        "type-sibling",
+        "type-index"
+      ],
+      ["style"]
+    ]
+  },
   "ignorePatterns": [
     "**/node_modules",
     "**/dist",
