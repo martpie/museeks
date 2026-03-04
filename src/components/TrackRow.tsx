@@ -49,8 +49,8 @@ export default function TrackRow(props: Props) {
     attributes,
     listeners,
     setNodeRef,
-    isDragging,
-    isOver,
+    isDragging, // is this item being dragged around
+    isOver, // is this item being dragged over by another item
     activeIndex,
     overIndex,
   } = useSortable({
@@ -62,6 +62,13 @@ export default function TrackRow(props: Props) {
     },
   });
 
+  const isEvenRow = index % 2 === 0;
+  const isSelectedWithSelectedAbove =
+    selected && props.hasSelectedAbove === true;
+  const isDropIndicatorVisible = isOver && !isDragging;
+  const isDropAbove = isOver && overIndex < activeIndex;
+  const isDropBelow = isOver && overIndex > activeIndex;
+
   return (
     // oxlint-disable-next-line jsx_a11y/click-events-have-key-events - given by ...listeners
     <li
@@ -69,52 +76,54 @@ export default function TrackRow(props: Props) {
       onMouseDown={(e) => onTrackSelect(e, track.id, index)}
       onClick={(e) => onTrackSelect(e, track.id, index)}
       onContextMenu={(e) => onContextMenu(e, track.id, index)}
-      aria-selected={selected}
-      {...(props.isPlaying ? { 'data-is-playing': true } : {})}
+      data-is-playing={props.isPlaying === true}
+      data-track-id={track.id}
+      data-testid={`track-row-${track.id}`}
       // dnd-related props:
       ref={setNodeRef}
       {...listeners}
       {...attributes}
-      style={props.style}
-      data-track-id={track.id}
-      data-testid={`track-row-${track.id}`}
-      aria-disabled="false"
+      // accessibility
+      aria-disabled="false" // required
+      aria-selected={selected}
       role="option" // technically already given by attributes, but that'll make the linter happy
+      // styles
       {...stylex.props(
-        styles.track,
-        index % 2 === 0 && styles.even,
-        selected && styles.selected,
-        selected && props.hasSelectedAbove && styles.selectedAfterSelected,
-        isDragging && styles.isDragging,
-        isOver && !isDragging && styles.isOver,
-        isOver && overIndex < activeIndex && styles.isAbove,
-        isOver && overIndex > activeIndex && styles.isBelow,
+        trackStyles.track,
+        isEvenRow && trackStyles.trackEvenRow,
+        selected && trackStyles.trackSelected,
+        isSelectedWithSelectedAbove && trackStyles.selectedWithSelectedAbove,
+        isDragging && trackStyles.isDragging,
+        isDropIndicatorVisible && trackStyles.isDraggedOver,
+        isDropAbove && trackStyles.isDraggedOverAbove,
+        isDropBelow && trackStyles.isDraggedOverBelow,
       )}
+      style={props.style}
     >
-      <div {...stylex.props(styles.cell, cellStyles.cellTrackPlaying)}>
+      <div {...stylex.props(cellStyles.cell, cellStyles.trackPlaying)}>
         {props.isPlaying ? <PlayingIndicator /> : null}
       </div>
-      <div {...stylex.props(styles.cell, cellStyles.cellTrack)}>
+      <div {...stylex.props(cellStyles.cell, cellStyles.title)}>
         {track.title}
       </div>
       <div
         {...stylex.props(
-          styles.cell,
-          cellStyles.cellDuration,
-          props.simplified === true && styles.lastCellInSimplified,
+          cellStyles.cell,
+          cellStyles.duration,
+          props.simplified === true && cellStyles.rightAligned,
         )}
       >
         {duration}
       </div>
       {props.simplified !== true && (
         <>
-          <div {...stylex.props(styles.cell, cellStyles.cellArtist)}>
+          <div {...stylex.props(cellStyles.cell, cellStyles.artist)}>
             {track.artists.join(', ')}
           </div>
-          <div {...stylex.props(styles.cell, cellStyles.cellAlbum)}>
+          <div {...stylex.props(cellStyles.cell, cellStyles.album)}>
             {track.album}
           </div>
-          <div {...stylex.props(styles.cell, cellStyles.cellGenre)}>
+          <div {...stylex.props(cellStyles.cell, cellStyles.genre)}>
             {track.genres.join(', ')}
           </div>
         </>
@@ -123,19 +132,7 @@ export default function TrackRow(props: Props) {
   );
 }
 
-const styles = stylex.create({
-  cell: {
-    borderLeftWidth: '1px',
-    borderLeftStyle: 'solid',
-    borderLeftColor: 'transparent',
-    paddingRight: '4px',
-    paddingLeft: '4px',
-    cursor: 'default',
-    whiteSpace: 'nowrap',
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-    lineHeight: '24px',
-  },
+const trackStyles = stylex.create({
   track: {
     position: 'relative',
     display: 'flex',
@@ -149,20 +146,20 @@ const styles = stylex.create({
     backgroundColor: 'var(--tracks-bg-even)',
     alignItems: 'center',
   },
-  even: {
+  trackEvenRow: {
     backgroundColor: 'var(--tracks-bg-odd)',
   },
-  selected: {
+  trackSelected: {
     backgroundColor: 'var(--active-item-bg)',
     color: 'var(--active-item-color)',
   },
-  selectedAfterSelected: {
+  selectedWithSelectedAbove: {
     borderTopColor: 'rgba(255 255 255 / 0.2)',
   },
   isDragging: {
     opacity: 0.5,
   },
-  isOver: {
+  isDraggedOver: {
     '::after': {
       pointerEvents: 'none',
       position: 'absolute',
@@ -174,40 +171,52 @@ const styles = stylex.create({
       backgroundColor: 'var(--main-color)',
     },
   },
-  isAbove: {
+  isDraggedOverAbove: {
     '::after': {
       top: '-1px',
     },
   },
-  isBelow: {
+  isDraggedOverBelow: {
     '::after': {
       bottom: '-1px',
     },
   },
-  lastCellInSimplified: {
-    textAlign: 'right',
-    paddingRight: '8px',
-  },
 });
 
 const cellStyles = stylex.create({
-  cellTrackPlaying: {
+  cell: {
+    borderLeftWidth: '1px',
+    borderLeftStyle: 'solid',
+    borderLeftColor: 'transparent',
+    paddingRight: '4px',
+    paddingLeft: '4px',
+    cursor: 'default',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    lineHeight: '24px',
+  },
+  trackPlaying: {
     width: '30px',
   },
-  cellTrack: {
+  title: {
     flex: '1',
   },
-  cellDuration: {
+  duration: {
     width: '7%',
     minWidth: '70px',
   },
-  cellArtist: {
+  artist: {
     width: '20%',
   },
-  cellAlbum: {
+  album: {
     width: '20%',
   },
-  cellGenre: {
+  genre: {
     width: '20%',
+  },
+  rightAligned: {
+    textAlign: 'right',
+    paddingRight: '8px',
   },
 });

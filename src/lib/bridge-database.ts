@@ -157,14 +157,14 @@ export default new DatabaseBridge();
  * Helpers to compute the time it takes to
  */
 function LogExecutionTime(
-  // biome-ignore lint/suspicious/noExplicitAny: it's a decorator duh
+  // oxlint-disable-next-line typescript/no-explicit-any -- decorator target type is intentionally unconstrained
   _target: any,
   propertyKey: string,
   descriptor: PropertyDescriptor,
 ) {
   const originalMethod = descriptor.value;
 
-  // biome-ignore lint/suspicious/noExplicitAny: we don't know the signature of the original method
+  // oxlint-disable-next-line typescript/no-explicit-any -- preserve decorated method signature passthrough
   descriptor.value = async function (...args: any[]) {
     const startTime = Date.now();
     const result = await originalMethod.apply(this, args);
