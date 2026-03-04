@@ -39,14 +39,13 @@ export default defineConfig({
   css: {
     transformer: 'lightningcss',
     lightningcss: {
-      cssModules: true,
       targets: browserslistToTargets(
         browserslist(['last 3 Chrome versions', 'safari >= 13']),
       ),
     },
   },
   build: {
-    cssMinify: false, // 'lightningcss',
+    cssMinify: 'lightningcss',
   },
 
   // Vite options tailored for Tauri development and only applied in `tauri dev` or `tauri build`
