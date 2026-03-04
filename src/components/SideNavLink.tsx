@@ -172,7 +172,6 @@ const styles = stylex.create({
   sideNavLinkInput: {
     appearance: 'none',
     borderWidth: 0,
-    background: 'transparent',
     backgroundColor: 'var(--sidebar-item-active-bg)',
     height: '28px' /* Problem with inputs? */,
   },
