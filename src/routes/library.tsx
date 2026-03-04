@@ -21,7 +21,7 @@ export const Route = createFileRoute('/library')({
     const [_, playlists, tracksDensity] = await Promise.all([
       queryClient.prefetchQuery({
         queryKey: [QUERY_ALL_TRACKS],
-        queryFn: DatabaseBridge.getAllTracks,
+        queryFn: () => DatabaseBridge.getAllTracks(),
       }),
       DatabaseBridge.getAllPlaylists(),
       ConfigBridge.get('track_view_density'),
@@ -45,7 +45,7 @@ function ViewLibrary() {
   // Using stale-while-revalidate libraries help us (fake-)loading this page faster
   const { data: tracks, isLoading } = useQuery({
     queryKey: [QUERY_ALL_TRACKS],
-    queryFn: DatabaseBridge.getAllTracks,
+    queryFn: () => DatabaseBridge.getAllTracks(),
     refetchOnWindowFocus: false,
     refetchOnReconnect: false,
   });

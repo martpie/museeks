@@ -166,7 +166,7 @@ function ViewSettingsUI() {
           title={t`Sleep mode blocker`}
           description={t`Prevent the computer from going into sleep mode when playing`}
           value={config.sleepblocker}
-          onChange={useInvalidateCallback(SettingsBridge.toggleSleepBlocker)}
+          onChange={useInvalidateCallback((value: boolean) => SettingsBridge.toggleSleepBlocker(value))}
         />
       </Setting.Section>
       {window.__MUSEEKS_PLATFORM === 'linux' && (

@@ -20,7 +20,6 @@
     "**/src-tauri/gen/**/*"
   ],
   "rules": {
-    "unbound-method": "off",
     "typescript/no-floating-promises": [
       "warn",
       {
