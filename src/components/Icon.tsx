@@ -51,7 +51,7 @@ const icons: Record<
 };
 
 export type IconName = keyof typeof icons;
-export type IconSize = 12 | 16 | 20 | 24 | 28 | 36;
+export type IconSize = keyof typeof stylesBySize;
 
 type Props = {
   name: IconName;

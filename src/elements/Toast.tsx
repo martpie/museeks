@@ -1,7 +1,7 @@
 import * as stylex from '@stylexjs/stylex';
 
 type Props = {
-  type: 'danger' | 'info' | 'warning' | 'success';
+  type: keyof typeof typeVariantsStyles;
   content: string;
 };
 
@@ -12,15 +12,7 @@ export default function ToastItem(props: Props) {
   const { type, content } = props;
 
   return (
-    <div
-      {...stylex.props(
-        styles.toast,
-        type === 'success' && styles.toastSuccess,
-        type === 'warning' && styles.toastWarning,
-        type === 'danger' && styles.toastDanger,
-        type === 'info' && styles.toastInfo,
-      )}
-    >
+    <div {...stylex.props(styles.toast, typeVariantsStyles[type])}>
       {content}
     </div>
   );
@@ -43,16 +35,19 @@ const styles = stylex.create({
       ':not(:first-child)': '5px',
     },
   },
-  toastSuccess: {
+});
+
+const typeVariantsStyles = stylex.create({
+  success: {
     borderLeftColor: 'var(--success-color)',
   },
-  toastInfo: {
+  info: {
     borderLeftColor: 'var(--info-color)',
   },
-  toastWarning: {
+  warning: {
     borderLeftColor: 'var(--warning-color)',
   },
-  toastDanger: {
+  danger: {
     borderLeftColor: 'var(--danger-color)',
   },
 });

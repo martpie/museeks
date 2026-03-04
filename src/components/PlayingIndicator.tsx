@@ -1,35 +1,13 @@
 import * as stylex from '@stylexjs/stylex';
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import { usePlayerState } from '../hooks/usePlayer';
 import player from '../lib/player';
 import Icon from './Icon';
 
-const BAR_FRAMES = [
-  [0.15, 1, 0.45],
-  [0.7, 0.25, 1],
-  [1, 0.8, 0.2],
-  [0.35, 1, 0.65],
-  [1, 0.4, 0.9],
-  [0.2, 0.95, 0.5],
-] as const;
-
 export default function TrackPlayingIndicator() {
   const [hovered, setHovered] = useState(false);
-  const [step, setStep] = useState(0);
   const isPaused = usePlayerState((state) => state.isPaused);
-
-  useEffect(() => {
-    if (isPaused || hovered) {
-      return;
-    }
-
-    const id = setInterval(() => {
-      setStep((current) => (current + 1) % BAR_FRAMES.length);
-    }, 180);
-
-    return () => clearInterval(id);
-  }, [hovered, isPaused]);
 
   const icon = useMemo(() => {
     if (!isPaused) {
@@ -37,43 +15,38 @@ export default function TrackPlayingIndicator() {
         return <Icon name="pause" size={12} />;
       }
 
-      const [barOneScale, barTwoScale, barThreeScale] = BAR_FRAMES[step];
-
       return (
         <div {...stylex.props(styles.animation)}>
-          <div
-            {...stylex.props(styles.bar, styles.barSpaced)}
-            style={{ transform: `scale3d(1, ${barOneScale}, 1)` }}
-          />
-          <div
-            {...stylex.props(styles.bar, styles.barSpaced)}
-            style={{ transform: `scale3d(1, ${barTwoScale}, 1)` }}
-          />
-          <div
-            {...stylex.props(styles.bar)}
-            style={{ transform: `scale3d(1, ${barThreeScale}, 1)` }}
-          />
+          <div {...stylex.props(styles.bar)} />
+          <div {...stylex.props(styles.bar, styles.barSecond)} />
+          <div {...stylex.props(styles.bar, styles.barThird)} />
         </div>
       );
     }
 
     return <Icon name="play" />;
-  }, [isPaused, hovered, step]);
+  }, [isPaused, hovered]);
 
   return (
     <button
       type="button"
-      {...stylex.props(styles.playingIndicator)}
       onClick={() => player.playPause()}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       tabIndex={0}
       data-museeks-action
+      {...stylex.props(styles.playingIndicator)}
     >
       {icon}
     </button>
   );
 }
+
+const barAnimation = stylex.keyframes({
+  '0%': { transform: 'scale3d(1, 0, 1)' },
+  '50%': { transform: 'scale3d(1, 1, 1)' },
+  '100%': { transform: 'scale3d(1, 0, 1)' },
+});
 
 const styles = stylex.create({
   playingIndicator: {
@@ -99,10 +72,16 @@ const styles = stylex.create({
     width: '2px',
     alignItems: 'baseline',
     backgroundColor: 'currentcolor',
+    animationName: barAnimation,
+    animationDuration: '1s',
+    animationTimingFunction: 'ease-in-out',
+    animationIterationCount: 'infinite',
     transformOrigin: 'bottom',
-    transition: 'transform 180ms ease-in-out',
   },
-  barSpaced: {
-    marginRight: '1px',
+  barSecond: {
+    animationDelay: '0.55s',
+  },
+  barThird: {
+    animationDelay: '0.25s',
   },
 });
