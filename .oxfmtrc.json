@@ -10,6 +10,7 @@
       }
     }
   ],
+  "experimentalSortPackageJson": false,
   "experimentalSortImports": {
     "newlinesBetween": true,
     "partitionByComment": true,

@@ -1,17 +1,18 @@
 {
   "name": "museeks",
+  "productName": "Museeks",
   "version": "0.23.4",
   "description": "A simple, clean, and cross-platform music player.",
+  "type": "module",
   "bugs": {
     "url": "https://github.com/martpie/museeks/issues"
   },
-  "license": "MIT",
   "author": "Pierre de la Martinière <pierre.de.la.martiniere@gmail.com>",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/martpie/museeks"
   },
-  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -29,6 +30,9 @@
     "package:checksums": "bash scripts/checksum.sh",
     "clippy": "cargo clippy --manifest-path src-tauri/Cargo.toml",
     "postinstall": "simple-git-hooks"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "npm run gen:translations && git add src/translations"
   },
   "dependencies": {
     "@dnd-kit/core": "6.3.1",
@@ -89,10 +93,6 @@
     "vitest": "4.0.18",
     "vitest-browser-react": "2.0.5"
   },
-  "simple-git-hooks": {
-    "pre-commit": "npm run gen:translations && git add src/translations"
-  },
-  "productName": "Museeks",
   "trustedDependencies": [
     "@parcel/watcher",
     "esbuild",
