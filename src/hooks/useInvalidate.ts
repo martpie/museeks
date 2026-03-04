@@ -35,18 +35,17 @@ type Callback = (...args: AnyArgs) => Promise<void>;
  * Helper hook to easily-wrap async mutations to reload routes data once its
  * callback is executed.
  */
-export function useInvalidateCallback<T extends Callback>(callback: T): T {
+export function useInvalidateCallback<T extends Callback>(
+  callback: T,
+): (...args: Parameters<T>) => Promise<void> {
   const invalidate = useInvalidate();
 
   return useCallback(
     async (...args: Parameters<T>) => {
-      try {
-        await callback(...args);
-        await invalidate();
-      } catch (error) {
-        logAndNotifyError(error);
-      }
+      await callback(...args)
+        .catch(logAndNotifyError)
+        .finally(invalidate);
     },
     [callback, invalidate],
-  ) as T;
+  );
 }
