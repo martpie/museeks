@@ -1,4 +1,5 @@
 import { useLingui } from '@lingui/react/macro';
+import * as stylex from '@stylexjs/stylex';
 import {
   Link,
   type RegisteredRouter,
@@ -14,8 +15,6 @@ import {
 import { useCallback, useState } from 'react';
 
 import { logAndNotifyError } from '../lib/utils';
-
-import styles from './SideNavLink.module.css';
 
 // *sigh* https://tanstack.com/router/latest/docs/framework/react/guide/type-utilities#type-checking-link-options-with-validatelinkoptions
 interface Props<
@@ -120,26 +119,61 @@ export default function SideNavLink(props: Props): React.ReactNode {
   if (renamed) {
     return (
       <input
-        className={`${styles.sideNavLink} ${styles.sideNavLinkInput}`}
         type="text"
         defaultValue={label}
         onKeyDown={keyDown}
         onBlur={onBlur}
         onFocus={onFocus}
         ref={(ref) => ref?.focus()}
+        {...stylex.props(styles.sideNavLink, styles.sideNavLinkInput)}
       />
     );
   }
 
   return (
     <Link
-      className={styles.sideNavLink}
-      activeProps={{ className: styles.isActive }}
       onContextMenu={onContextMenu}
       draggable={false}
       {...linkOptions}
+      activeProps={stylex.props(styles.isActive)}
+      {...stylex.props(styles.sideNavLink)}
     >
       {label}
     </Link>
   );
 }
+
+const styles = stylex.create({
+  sideNavLink: {
+    display: 'block',
+    flexShrink: 0,
+    width: '100%',
+    lineHeight: 1,
+    fontSize: '1rem',
+    color: 'var(--text)',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    cursor: 'pointer',
+    paddingBlock: '8px',
+    paddingInline: '12px',
+    textDecoration: 'none',
+    backgroundColor: {
+      default: 'transparent',
+      ':hover': 'var(--sidebar-item-active-bg)',
+    },
+  },
+  isActive: {
+    outline: 'none',
+    zIndex: 10,
+    backgroundColor: 'var(--active-item-bg)',
+    color: 'var(--active-item-color)',
+  },
+  sideNavLinkInput: {
+    appearance: 'none',
+    borderWidth: 0,
+    background: 'transparent',
+    backgroundColor: 'var(--sidebar-item-active-bg)',
+    height: '28px' /* Problem with inputs? */,
+  },
+});

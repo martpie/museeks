@@ -1,18 +1,17 @@
 import { useLingui } from '@lingui/react/macro';
+import * as stylex from '@stylexjs/stylex';
 
 import ButtonIcon from '../elements/ButtonIcon';
 import { usePlayerState } from '../hooks/usePlayer';
 import player from '../lib/player';
 import VolumeControl from './VolumeControl';
 
-import styles from './PlayerControls.module.css';
-
 export default function PlayerControls() {
   const isPaused = usePlayerState((state) => state.isPaused);
   const { t } = useLingui();
 
   return (
-    <div className={styles.playerControls}>
+    <div {...stylex.props(styles.playerControls)}>
       <ButtonIcon
         icon="skipBack"
         iconSize={16}
@@ -38,3 +37,12 @@ export default function PlayerControls() {
     </div>
   );
 }
+
+const styles = stylex.create({
+  playerControls: {
+    display: 'flex',
+    alignItems: 'center',
+    position: 'relative',
+    gap: '12px',
+  },
+});

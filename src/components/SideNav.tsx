@@ -6,8 +6,6 @@ import Flexbox from '../elements/Flexbox';
 import { stripAccents } from '../lib/utils-library';
 import type { SideNavLinkProps } from './SideNavLink';
 
-import styles from './SideNav.module.css';
-
 type Props = {
   children: Array<React.ReactElement<SideNavLinkProps>>;
   title: string;
@@ -25,17 +23,17 @@ export default function SideNav(props: Props) {
   }, [props.children]);
 
   return (
-    <div className={styles.nav} data-museeks-list>
-      <Flexbox gap={8} align="center" xstyle={otherStyles.header}>
-        <h4 className={styles.title}>{props.title}</h4>
-        <div className={styles.actions}>{props.actions}</div>
+    <div {...stylex.props(styles.nav)} data-museeks-list>
+      <Flexbox gap={8} align="center" xstyle={styles.header}>
+        <h4 {...stylex.props(styles.title)}>{props.title}</h4>
+        <div {...stylex.props(styles.actions)}>{props.actions}</div>
       </Flexbox>
-      <div className={styles.content}>
+      <div {...stylex.props(styles.content)}>
         {Object.entries(groupedChildren).map(([letter, children]) => {
           return (
             <React.Fragment key={letter}>
-              <div className={styles.letter}>{letter}</div>
-              <div className={styles.items}>{children}</div>
+              <div {...stylex.props(styles.letter)}>{letter}</div>
+              <div {...stylex.props(styles.items)}>{children}</div>
             </React.Fragment>
           );
         })}
@@ -44,11 +42,57 @@ export default function SideNav(props: Props) {
   );
 }
 
-const otherStyles = stylex.create({
+const styles = stylex.create({
+  nav: {
+    display: 'flex',
+    flexFlow: 'column',
+    flexShrink: 0,
+    width: '220px',
+    borderRightWidth: '1px',
+    borderRightStyle: 'solid',
+    borderRightColor: 'var(--border-color)',
+    backgroundColor: 'var(--sidebar-bg)',
+    maxHeight: '100%',
+    overflowY: 'auto',
+    position: 'relative',
+    top: 0,
+  },
   header: {
     zIndex: 10,
     position: 'sticky',
     top: 0,
     backgroundColor: 'var(--sidebar-bg)',
+  },
+  actions: {
+    alignItems: 'stretch',
+    marginRight: '8px',
+  },
+  title: {
+    marginBlock: '10px',
+    marginInline: '12px',
+    fontSize: '0.875rem',
+    fontWeight: 'bold',
+    color: 'var(--text-muted)',
+    flex: '1',
+  },
+  content: {
+    flex: '1 1 auto',
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  letter: {
+    display: 'block',
+    paddingBlock: '8px',
+    paddingInline: '12px',
+    textTransform: 'uppercase',
+    fontWeight: 'bolder',
+    position: 'sticky',
+    top: '32px',
+    backgroundColor: 'var(--sidebar-bg)',
+    color: 'var(--text-muted)',
+  },
+  items: {
+    display: 'block',
+    marginBottom: '12px',
   },
 });

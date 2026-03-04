@@ -1,11 +1,11 @@
+import * as stylex from '@stylexjs/stylex';
+
 import type { Track } from '../generated/typings';
 import { usePlayerState } from '../hooks/usePlayer';
 import ButtonRepeat from './ButtonRepeat';
 import ButtonShuffle from './ButtonShuffle';
 import Cover from './Cover';
 import PlayingBarInfos from './PlayingBarInfo';
-
-import styles from './PlayingBar.module.css';
 
 type Props = {
   trackPlaying: Track;
@@ -17,8 +17,8 @@ export default function PlayingBar(props: Props) {
   const trackPlaying = props.trackPlaying;
 
   return (
-    <div className={styles.playingBar}>
-      <div className={styles.playingBarCover}>
+    <div {...stylex.props(styles.playingBar)}>
+      <div {...stylex.props(styles.playingBarCover)}>
         <Cover track={trackPlaying} noHorizontalBorder iconSize={16} />
       </div>
       <PlayingBarInfos
@@ -26,10 +26,42 @@ export default function PlayingBar(props: Props) {
         shuffle={shuffle}
         repeat={repeat}
       />
-      <div className={styles.playerOptions}>
+      <div {...stylex.props(styles.playerOptions)}>
         <ButtonRepeat />
         <ButtonShuffle />
       </div>
     </div>
   );
 }
+
+const styles = stylex.create({
+  playingBar: {
+    display: 'flex',
+    alignItems: 'center',
+    textAlign: 'center',
+    height: '100%',
+    backgroundColor: 'var(--header-bg-softer)',
+    borderRightWidth: '1px',
+    borderRightStyle: 'solid',
+    borderRightColor: 'var(--border-color-softer)',
+    borderBlockWidth: '0',
+    borderInlineWidth: '1px',
+    flex: '1 1 auto',
+    minWidth: 0,
+  },
+  playingBarCover: {
+    flexShrink: 0,
+    height: '100%',
+    aspectRatio: '1',
+    overflow: 'hidden',
+    boxSizing: 'content-box',
+    fontSize: '28px',
+  },
+  playerOptions: {
+    flexShrink: 0,
+    display: 'flex',
+    alignItems: 'center',
+    flexDirection: 'column',
+    marginRight: '8px',
+  },
+});

@@ -7,37 +7,28 @@ type Props = {
   sideNav?: React.ReactElement<typeof SideNav>;
   layout?: 'centered';
   hasPadding?: boolean;
-  className?: string;
+  xstyle?: stylex.CompiledStyles;
 };
 
 /**
  * Default View to be used by all route components
  */
 export default function View(props: Props) {
-  const viewClassName = stylex.props(
-    styles.view,
-    props.sideNav && styles.viewWithSideNav,
-    props.layout === 'centered' && styles.centered,
-  ).className;
-
-  const contentClassName = joinClassNames(
-    stylex.props(props.hasPadding && styles.hasPadding).className,
-    props.className,
-  );
-
-  const viewAndContentClassName = joinClassNames(
-    viewClassName,
-    contentClassName,
-  );
-
   if (props.sideNav) {
     return (
-      <div className={viewClassName}>
+      <div
+        {...stylex.props(
+          styles.view,
+          styles.viewWithSideNav,
+          props.layout === 'centered' && styles.centered,
+        )}
+      >
         {props.sideNav}
         <div
-          className={joinClassNames(
-            contentClassName,
-            stylex.props(styles.viewContent).className,
+          {...stylex.props(
+            styles.viewContent,
+            props.hasPadding && styles.hasPadding,
+            props.xstyle,
           )}
         >
           {props.children}
@@ -48,7 +39,14 @@ export default function View(props: Props) {
 
   if (props.layout === 'centered') {
     return (
-      <div className={viewAndContentClassName}>
+      <div
+        {...stylex.props(
+          styles.view,
+          styles.centered,
+          props.hasPadding && styles.hasPadding,
+          props.xstyle,
+        )}
+      >
         <div {...stylex.props(styles.centeredViewContent)}>
           {props.children}
         </div>
@@ -56,11 +54,17 @@ export default function View(props: Props) {
     );
   }
 
-  return <div className={viewAndContentClassName}>{props.children}</div>;
-}
-
-function joinClassNames(...classNames: Array<string | undefined>) {
-  return classNames.filter(Boolean).join(' ');
+  return (
+    <div
+      {...stylex.props(
+        styles.view,
+        props.hasPadding && styles.hasPadding,
+        props.xstyle,
+      )}
+    >
+      {props.children}
+    </div>
+  );
 }
 
 const styles = stylex.create({

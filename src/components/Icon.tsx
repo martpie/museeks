@@ -1,5 +1,5 @@
+import * as stylex from '@stylexjs/stylex';
 import { error } from '@tauri-apps/plugin-log';
-import cx from 'classnames';
 
 import chevronDown from '../assets/icons/chevron-down.svg?react';
 import chevronUp from '../assets/icons/chevron-up.svg?react';
@@ -22,8 +22,6 @@ import volumeLow from '../assets/icons/volume-low.svg?react';
 import volumeMedium from '../assets/icons/volume-medium.svg?react';
 import volumeMute from '../assets/icons/volume-mute.svg?react';
 import volumeOff from '../assets/icons/volume-off.svg?react';
-
-import styles from './Icon.module.css';
 
 const icons: Record<
   string,
@@ -59,7 +57,7 @@ type Props = {
   name: IconName;
   color?: string;
   size?: IconSize;
-  className?: string;
+  xstyle?: stylex.CompiledStyles;
 };
 
 export default function Icon(props: Props) {
@@ -70,10 +68,10 @@ export default function Icon(props: Props) {
     error(`Icon "${name}" not found.`);
     return (
       <span
-        className={styles.icon}
         style={{
-          width: `${size}px`,
+          color: props.color,
         }}
+        {...stylex.props(styles.icon, stylesBySize[size], props.xstyle)}
       >
         ?
       </span>
@@ -82,11 +80,41 @@ export default function Icon(props: Props) {
 
   return (
     <IconImpl
-      className={cx(styles.icon, props.className)}
       style={{
-        width: `${size}px`,
         color: props.color,
       }}
+      {...stylex.props(styles.icon, stylesBySize[size], props.xstyle)}
     />
   );
 }
+
+const styles = stylex.create({
+  icon: {
+    display: 'inline-block',
+    textAlign: 'center',
+    aspectRatio: '1',
+    fill: 'currentColor',
+    lineHeight: 1,
+  },
+});
+
+const stylesBySize = stylex.create({
+  12: {
+    width: '12px',
+  },
+  16: {
+    width: '16px',
+  },
+  20: {
+    width: '20px',
+  },
+  24: {
+    width: '24px',
+  },
+  28: {
+    width: '28px',
+  },
+  36: {
+    width: '36px',
+  },
+});

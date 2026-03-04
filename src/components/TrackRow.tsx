@@ -1,13 +1,10 @@
 import { useSortable } from '@dnd-kit/sortable';
-import cx from 'classnames';
+import * as stylex from '@stylexjs/stylex';
 import type React from 'react';
 
 import type { Track } from '../generated/typings';
 import useFormattedDuration from '../hooks/useFormattedDuration';
 import PlayingIndicator from './PlayingIndicator';
-
-import cellStyles from './TrackListHeader.module.css';
-import styles from './TrackRow.module.css';
 
 export type TrackRowEvents = {
   onTrackSelect: (
@@ -25,6 +22,7 @@ export type TrackRowEvents = {
 
 type Props = {
   selected: boolean;
+  hasSelectedAbove?: boolean;
   track: Track;
   index: number;
   isPlaying?: boolean;
@@ -64,20 +62,9 @@ export default function TrackRow(props: Props) {
     },
   });
 
-  const trackClasses = cx(styles.track, {
-    [styles.selected]: selected,
-    [styles.even]: index % 2 === 0,
-    [styles.isDragging]: isDragging,
-    [styles.isOver]: isOver,
-    [styles.isAbove]: isOver && overIndex < activeIndex,
-    [styles.isBelow]: isOver && overIndex > activeIndex,
-    [styles.simplified]: props.simplified,
-  });
-
   return (
     // oxlint-disable-next-line jsx_a11y/click-events-have-key-events - given by ...listeners
     <li
-      className={trackClasses}
       onDoubleClick={() => onPlaybackStart(track.id)}
       onMouseDown={(e) => onTrackSelect(e, track.id, index)}
       onClick={(e) => onTrackSelect(e, track.id, index)}
@@ -93,25 +80,41 @@ export default function TrackRow(props: Props) {
       data-testid={`track-row-${track.id}`}
       aria-disabled="false"
       role="option" // technically already given by attributes, but that'll make the linter happy
+      {...stylex.props(
+        styles.track,
+        index % 2 === 0 && styles.even,
+        selected && styles.selected,
+        selected && props.hasSelectedAbove && styles.selectedAfterSelected,
+        isDragging && styles.isDragging,
+        isOver && !isDragging && styles.isOver,
+        isOver && overIndex < activeIndex && styles.isAbove,
+        isOver && overIndex > activeIndex && styles.isBelow,
+      )}
     >
-      <div className={`${styles.cell} ${cellStyles.cellTrackPlaying}`}>
+      <div {...stylex.props(styles.cell, cellStyles.cellTrackPlaying)}>
         {props.isPlaying ? <PlayingIndicator /> : null}
       </div>
-      <div className={`${styles.cell} ${cellStyles.cellTrack}`}>
+      <div {...stylex.props(styles.cell, cellStyles.cellTrack)}>
         {track.title}
       </div>
-      <div className={`${styles.cell} ${cellStyles.cellDuration}`}>
+      <div
+        {...stylex.props(
+          styles.cell,
+          cellStyles.cellDuration,
+          props.simplified === true && styles.lastCellInSimplified,
+        )}
+      >
         {duration}
       </div>
       {props.simplified !== true && (
         <>
-          <div className={`${styles.cell} ${cellStyles.cellArtist}`}>
+          <div {...stylex.props(styles.cell, cellStyles.cellArtist)}>
             {track.artists.join(', ')}
           </div>
-          <div className={`${styles.cell} ${cellStyles.cellAlbum}`}>
+          <div {...stylex.props(styles.cell, cellStyles.cellAlbum)}>
             {track.album}
           </div>
-          <div className={`${styles.cell} ${cellStyles.cellGenre}`}>
+          <div {...stylex.props(styles.cell, cellStyles.cellGenre)}>
             {track.genres.join(', ')}
           </div>
         </>
@@ -119,3 +122,92 @@ export default function TrackRow(props: Props) {
     </li>
   );
 }
+
+const styles = stylex.create({
+  cell: {
+    borderLeftWidth: '1px',
+    borderLeftStyle: 'solid',
+    borderLeftColor: 'transparent',
+    paddingRight: '4px',
+    paddingLeft: '4px',
+    cursor: 'default',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    lineHeight: '24px',
+  },
+  track: {
+    position: 'relative',
+    display: 'flex',
+    outline: 'none',
+    borderTopWidth: '1px',
+    borderTopStyle: 'solid',
+    borderTopColor: 'transparent',
+    borderBottomWidth: '1px',
+    borderBottomStyle: 'solid',
+    borderBottomColor: 'transparent',
+    backgroundColor: 'var(--tracks-bg-even)',
+    alignItems: 'center',
+  },
+  even: {
+    backgroundColor: 'var(--tracks-bg-odd)',
+  },
+  selected: {
+    backgroundColor: 'var(--active-item-bg)',
+    color: 'var(--active-item-color)',
+  },
+  selectedAfterSelected: {
+    borderTopColor: 'rgba(255 255 255 / 0.2)',
+  },
+  isDragging: {
+    opacity: 0.5,
+  },
+  isOver: {
+    '::after': {
+      pointerEvents: 'none',
+      position: 'absolute',
+      zIndex: 1,
+      display: 'block',
+      width: '100%',
+      content: '""',
+      height: '2px',
+      backgroundColor: 'var(--main-color)',
+    },
+  },
+  isAbove: {
+    '::after': {
+      top: '-1px',
+    },
+  },
+  isBelow: {
+    '::after': {
+      bottom: '-1px',
+    },
+  },
+  lastCellInSimplified: {
+    textAlign: 'right',
+    paddingRight: '8px',
+  },
+});
+
+const cellStyles = stylex.create({
+  cellTrackPlaying: {
+    width: '30px',
+  },
+  cellTrack: {
+    flex: '1',
+  },
+  cellDuration: {
+    width: '7%',
+    minWidth: '70px',
+  },
+  cellArtist: {
+    width: '20%',
+  },
+  cellAlbum: {
+    width: '20%',
+  },
+  cellGenre: {
+    width: '20%',
+  },
+});

@@ -1,5 +1,5 @@
 import { useLingui } from '@lingui/react/macro';
-import cx from 'classnames';
+import * as stylex from '@stylexjs/stylex';
 import { HoverCard, Slider } from 'radix-ui';
 import { useCallback } from 'react';
 
@@ -8,8 +8,6 @@ import { usePlayerState } from '../hooks/usePlayer';
 import player from '../lib/player';
 import { stopPropagation } from '../lib/utils-events';
 import type { IconName } from './Icon';
-
-import styles from './VolumeControl.module.css';
 
 // Volume easing - http://www.dr-lex.be/info-stuff/volumecontrols.html#about
 const SMOOTHING_FACTOR = 2.5;
@@ -37,13 +35,9 @@ export default function VolumeControl() {
     player.setVolume(smoothVolume); // Debounced save happens in player
   }, []);
 
-  const sliderClasses = cx(styles.sliderRoot, {
-    [styles.faded]: muted,
-  });
-
   return (
     <HoverCard.Root openDelay={0} closeDelay={0}>
-      <div className={styles.volumeControlContainer}>
+      <div {...stylex.props(styles.volumeControlContainer)}>
         <HoverCard.Trigger asChild>
           <ButtonIcon
             title={t`Volume`}
@@ -53,26 +47,26 @@ export default function VolumeControl() {
           />
         </HoverCard.Trigger>
         <HoverCard.Content
-          className={styles.volumeControl}
           side="right"
           sideOffset={8}
+          {...stylex.props(styles.volumeControl)}
         >
           <Slider.Root
-            className={sliderClasses}
             value={[unsmoothifyVolume(volume)]}
             onKeyDown={stopPropagation}
             onValueChange={setPlayerVolume}
             min={0}
             max={1}
             step={0.01}
+            {...stylex.props(styles.sliderRoot, muted && styles.faded)}
           >
-            <Slider.Track className={styles.sliderTrack}>
-              <Slider.Range className={styles.sliderRange} />
+            <Slider.Track {...stylex.props(styles.sliderTrack)}>
+              <Slider.Range {...stylex.props(styles.sliderRange)} />
             </Slider.Track>
             <Slider.Thumb
-              className={styles.sliderThumb}
               aria-label={t`Volume`}
               data-museeks-action
+              {...stylex.props(styles.sliderThumb)}
             />
           </Slider.Root>
         </HoverCard.Content>
@@ -80,3 +74,62 @@ export default function VolumeControl() {
     </HoverCard.Root>
   );
 }
+
+const styles = stylex.create({
+  volumeControlContainer: {
+    position: 'relative',
+    marginLeft: '4px',
+    paddingBlock: '0',
+    paddingInline: '4px',
+    lineHeight: 1,
+  },
+  volumeControl: {
+    backgroundColor: 'var(--header-bg)',
+    paddingBlock: '10px',
+    paddingInline: '12px',
+    pointerEvents: 'none',
+    borderWidth: '1px',
+    borderStyle: 'solid',
+    borderColor: 'var(--border-color)',
+  },
+  sliderRoot: {
+    position: 'relative',
+    display: 'flex',
+    alignItems: 'center',
+    userSelect: 'none',
+    touchAction: 'none',
+    width: '90px',
+    height: '10px',
+    borderRadius: 'var(--border-radius)',
+  },
+  sliderTrack: {
+    backgroundColor: 'var(--slider-bg)',
+    position: 'relative',
+    flexGrow: 1,
+    borderRadius: '9999px',
+    height: '4px',
+  },
+  sliderRange: {
+    position: 'absolute',
+    height: '100%',
+    backgroundColor: 'var(--main-color)',
+    borderRadius: 'var(--border-radius)',
+  },
+  sliderThumb: {
+    display: 'block',
+    width: '10px',
+    height: '10px',
+    backgroundColor: 'white',
+    borderRadius: '50%',
+    outline: {
+      ':active': 'none',
+    },
+    boxShadow: {
+      default: '0 0 0 1px var(--border-color)',
+      ':active': '0 0 0 2px var(--main-color)',
+    },
+  },
+  faded: {
+    opacity: 0.6,
+  },
+});

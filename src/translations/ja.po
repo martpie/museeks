@@ -21,49 +21,49 @@ msgstr "リピート"
 msgid "Shuffle"
 msgstr "シャッフル"
 
-#: src/components/Cover.tsx:34
+#: src/components/Cover.tsx:35
 msgid "Album cover"
 msgstr "アルバムカバー"
 
-#: src/components/DropzoneImport.tsx:53
+#: src/components/DropzoneImport.tsx:51
 msgid "{skippedItemsCount, plural, one {# invalid item ignored} other {# invalid items ignored}}"
 msgstr "{skippedItemsCount, plural, one {# 個の無効なアイテムが無視されました} other {# 個の無効なアイテムが無視されました}}"
 
 #. placeholder {0}: folders.length
-#: src/components/DropzoneImport.tsx:64
+#: src/components/DropzoneImport.tsx:62
 msgid "{0, plural, one {# folder added to the library} other {# folders added to the library}}"
 msgstr "{0, plural, one {# 個のフォルダーがライブラリに追加されました} other {# 個のフォルダーがライブラリに追加されました}}"
 
-#: src/components/DropzoneImport.tsx:96
+#: src/components/DropzoneImport.tsx:92
 msgid "Add music to the library"
 msgstr "ライブラリに音楽を追加"
 
-#: src/components/DropzoneImport.tsx:97
+#: src/components/DropzoneImport.tsx:93
 msgid "Drop folders anywhere"
 msgstr "フォルダーをどこにでもドロップしてください"
 
-#: src/components/Footer.tsx:22
+#: src/components/Footer.tsx:20
 #: src/routes/settings.tsx:42
 msgid "Library"
 msgstr "ライブラリ"
 
-#: src/components/Footer.tsx:32
+#: src/components/Footer.tsx:30
 #: src/routes/artists.tsx:52
 #: src/routes/settings.ui.tsx:147
 msgid "Artists"
 msgstr "アーティスト"
 
-#: src/components/Footer.tsx:42
+#: src/components/Footer.tsx:40
 #: src/routes/playlists.tsx:165
 #: src/routes/settings.ui.tsx:150
 msgid "Playlists"
 msgstr "プレイリスト"
 
-#: src/components/Footer.tsx:52
+#: src/components/Footer.tsx:50
 msgid "Settings"
 msgstr "設定"
 
-#: src/components/Footer.tsx:84
+#: src/components/Footer.tsx:83
 msgid "scanning tracks..."
 msgstr "トラックをスキャン中..."
 
@@ -88,149 +88,149 @@ msgstr "<0>アプリを再読み込み</0>してみてください、"
 msgid "or if it happens again, please <0>report an issue</0>."
 msgstr "また同じことが起こった場合は、<0>問題を報告してください</0>。"
 
-#: src/components/Header.tsx:35
+#: src/components/Header.tsx:48
 msgid "Queue"
 msgstr "キュー"
 
-#: src/components/PlayerControls.tsx:19
+#: src/components/PlayerControls.tsx:18
 msgid "Previous"
 msgstr "前へ"
 
-#: src/components/PlayerControls.tsx:26
+#: src/components/PlayerControls.tsx:25
 msgid "Play"
 msgstr "再生"
 
-#: src/components/PlayerControls.tsx:26
+#: src/components/PlayerControls.tsx:25
 msgid "Pause"
 msgstr "一時停止"
 
-#: src/components/PlayerControls.tsx:33
+#: src/components/PlayerControls.tsx:32
 msgid "Next"
 msgstr "次へ"
 
-#: src/components/QueueEmpty.tsx:8
+#: src/components/QueueEmpty.tsx:7
 msgid "Queue is empty"
 msgstr "キューは空です"
 
-#: src/components/QueueList.tsx:80
+#: src/components/QueueList.tsx:79
 msgid "clear queue"
 msgstr "キューをクリア"
 
-#: src/components/QueueList.tsx:106
+#: src/components/QueueList.tsx:105
 msgid "see more"
 msgstr "もっと見る"
 
-#: src/components/Search.tsx:44
+#: src/components/Search.tsx:43
 msgid "search..."
 msgstr "検索..."
 
-#: src/components/SideNavLink.tsx:62
+#: src/components/SideNavLink.tsx:61
 msgid "Rename"
 msgstr "名前を変更"
 
-#: src/components/TrackList.tsx:237
+#: src/components/TrackList.tsx:236
 msgid "Create new playlist..."
 msgstr "新しいプレイリストを作成..."
 
-#: src/components/TrackList.tsx:240
+#: src/components/TrackList.tsx:239
 #: src/routes/playlists.tsx:63
 msgid "New playlist"
 msgstr "新しいプレイリスト"
 
-#: src/components/TrackList.tsx:253
+#: src/components/TrackList.tsx:252
 msgid "No playlists"
 msgstr "プレイリストがありません"
 
 #. placeholder {0}: selectedTracks.size
 #. placeholder {1}: playlist.name
-#: src/components/TrackList.tsx:268
+#: src/components/TrackList.tsx:267
 msgid "{0} track(s) were added to \"{1}\""
 msgstr "{0} 曲が「{1}」に追加されました"
 
-#: src/components/TrackList.tsx:285
+#: src/components/TrackList.tsx:284
 msgid "{selectedCount, plural, one {# track selected} other {# tracks selected}}"
 msgstr "{selectedCount, plural, one {# 曲が選択されています} other {# 曲が選択されています}}"
 
-#: src/components/TrackList.tsx:297
+#: src/components/TrackList.tsx:296
 msgid "Add to queue"
 msgstr "キューに追加"
 
-#: src/components/TrackList.tsx:305
+#: src/components/TrackList.tsx:304
 msgid "Play next"
 msgstr "次に再生"
 
-#: src/components/TrackList.tsx:317
+#: src/components/TrackList.tsx:316
 msgid "Add to playlist"
 msgstr "プレイリストに追加"
 
-#: src/components/TrackList.tsx:327
+#: src/components/TrackList.tsx:326
 msgid "Search for \"{item}\""
 msgstr "「{item}」を検索"
 
-#: src/components/TrackList.tsx:340
+#: src/components/TrackList.tsx:339
 msgid "Copy \"{item}\""
 msgstr "「{item}」をコピー"
 
-#: src/components/TrackList.tsx:363
+#: src/components/TrackList.tsx:362
 msgid "Edit track"
 msgstr "トラックを編集"
 
-#: src/components/TrackList.tsx:373
+#: src/components/TrackList.tsx:372
 msgid "Show in file manager"
 msgstr "ファイルマネージャーで表示"
 
-#: src/components/TrackList.tsx:379
+#: src/components/TrackList.tsx:378
 msgid "Remove from library"
 msgstr "ライブラリから削除"
 
 #. placeholder {0}: selectedTracks.size
-#: src/components/TrackList.tsx:382
+#: src/components/TrackList.tsx:381
 msgid "Are you sure you want to remove {0} track(s) from your library?"
 msgstr "ライブラリから {0} 曲を削除してもよろしいですか？"
 
-#: src/components/TrackList.tsx:384
+#: src/components/TrackList.tsx:383
 msgid "Remove tracks"
 msgstr "トラックを削除"
 
-#: src/components/TrackList.tsx:386
+#: src/components/TrackList.tsx:385
 #: src/routes/settings.library.tsx:99
 #: src/routes/settings.library.tsx:144
 #: src/routes/tracks.$trackID.tsx:246
 msgid "Cancel"
 msgstr "キャンセル"
 
-#: src/components/TrackList.tsx:387
+#: src/components/TrackList.tsx:386
 #: src/routes/settings.library.tsx:62
 msgid "Remove"
 msgstr "削除"
 
 #. placeholder {0}: props.count
 #. placeholder {0}: tracks.length
-#: src/components/TrackListGrouped.tsx:103
+#: src/components/TrackListGrouped.tsx:105
 #: src/components/TrackListStatus.tsx:11
 msgid "{0, plural, one {# track} other {# tracks}}"
 msgstr "{0, plural, one {# 曲} other {# 曲}}"
 
-#: src/components/TrackListHeader.tsx:47
+#: src/components/TrackListHeader.tsx:46
 #: src/routes/tracks.$trackID.tsx:87
 msgid "Title"
 msgstr "タイトル"
 
-#: src/components/TrackListHeader.tsx:54
+#: src/components/TrackListHeader.tsx:53
 #: src/routes/tracks.$trackID.tsx:230
 msgid "Duration"
 msgstr "再生時間"
 
-#: src/components/TrackListHeader.tsx:61
+#: src/components/TrackListHeader.tsx:60
 msgid "Artist"
 msgstr "アーティスト"
 
-#: src/components/TrackListHeader.tsx:68
+#: src/components/TrackListHeader.tsx:67
 #: src/routes/tracks.$trackID.tsx:98
 msgid "Album"
 msgstr "アルバム"
 
-#: src/components/TrackListHeader.tsx:75
+#: src/components/TrackListHeader.tsx:74
 #: src/routes/tracks.$trackID.tsx:138
 msgid "Genre"
 msgstr "ジャンル"
@@ -260,8 +260,8 @@ msgstr "<0>ここから音楽を追加</0>できます"
 msgid "Your search returned no results"
 msgstr "検索結果が見つかりませんでした"
 
-#: src/components/VolumeControl.tsx:49
-#: src/components/VolumeControl.tsx:74
+#: src/components/VolumeControl.tsx:43
+#: src/components/VolumeControl.tsx:67
 msgid "Volume"
 msgstr "音量"
 

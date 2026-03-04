@@ -1,4 +1,5 @@
 import { Plural } from '@lingui/react/macro';
+import * as stylex from '@stylexjs/stylex';
 import { useImperativeHandle, useRef } from 'react';
 
 import Scrollable from '../elements/Scrollable';
@@ -9,8 +10,6 @@ import usePlayingTrackID from '../hooks/usePlayingTrackID';
 import type { TrackListVirtualizer } from '../types/museeks';
 import Cover from './Cover';
 import TrackRow, { type TrackRowEvents } from './TrackRow';
-
-import styles from './TrackListGrouped.module.css';
 
 /** ----------------------------------------------------------------------------
  * Group-based layout for TrackList:
@@ -89,12 +88,15 @@ function TrackListGroup(props: TrackListGroupProps) {
   }
 
   return (
-    <div className={styles.group} data-track-group={encodeURIComponent(label)}>
-      <aside className={styles.aside}>
+    <div
+      {...stylex.props(styles.group)}
+      data-track-group={encodeURIComponent(label)}
+    >
+      <aside {...stylex.props(styles.aside)}>
         {/** Instead of the first one, maybe get the first track within the album to hold a cover? */}
         <Cover track={tracks[0]} iconSize={36} />
-        <h3 className={styles.label}>{label}</h3>
-        <div className={styles.metadata}>
+        <h3 {...stylex.props(styles.label)}>{label}</h3>
+        <div {...stylex.props(styles.metadata)}>
           <div>
             {year}
             {genres.length > 0 && <span> - {genres.join(', ')}</span>}
@@ -105,7 +107,7 @@ function TrackListGroup(props: TrackListGroupProps) {
           </div>
         </div>
       </aside>
-      <ul className={styles.rows}>
+      <ul {...stylex.props(styles.rows)}>
         {tracks.map((track, index) => {
           return (
             <TrackRow
@@ -118,6 +120,9 @@ function TrackListGroup(props: TrackListGroupProps) {
               onContextMenu={onContextMenu}
               onPlaybackStart={onPlaybackStart}
               draggable={false}
+              hasSelectedAbove={
+                index > 0 && selectedTracks.has(tracks[index - 1].id)
+              }
               simplified={true}
               style={{ height: `${rowHeight}px` }} // Figure out virtualization for grouped stuff
             />
@@ -127,3 +132,41 @@ function TrackListGroup(props: TrackListGroupProps) {
     </div>
   );
 }
+
+const styles = stylex.create({
+  group: {
+    display: 'flex',
+    gap: '24px',
+    padding: '24px',
+    alignItems: 'flex-start',
+    position: 'relative',
+  },
+  aside: {
+    width: {
+      default: '160px',
+      '@media (min-width: 1024px)': '240px',
+    },
+    position: 'sticky',
+    top: '24px',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '8px',
+  },
+  label: {
+    fontSize: '1.4rem',
+    fontWeight: 'bold',
+    margin: 0,
+  },
+  metadata: {
+    color: 'var(--text-muted)',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '4px',
+  },
+  rows: {
+    flexGrow: 1,
+    listStyle: 'none',
+    padding: 0,
+    margin: 0,
+  },
+});
