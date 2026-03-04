@@ -1,7 +1,7 @@
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import * as stylex from '@stylexjs/stylex';
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 
 import type { Track } from '../generated/typings';
 import player from '../lib/player';
@@ -15,7 +15,6 @@ type Props = {
 
 export default function QueueListItem(props: Props) {
   const { track } = props;
-  const [hovered, setHovered] = useState(false);
 
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({
@@ -43,14 +42,13 @@ export default function QueueListItem(props: Props) {
       {...stylex.props(
         styles.queueItem,
         props.index > 0 && styles.queueItemWithTopBorder,
+        stylex.defaultMarker(),
       )}
       {...attributes}
       // DnD props for re-ordering
       ref={setNodeRef}
       style={itemStyle}
       onDoubleClick={play}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
       {...listeners}
     >
       <div {...stylex.props(styles.queueItemCover)}>
@@ -64,10 +62,7 @@ export default function QueueListItem(props: Props) {
       </div>
       <button
         type="button"
-        {...stylex.props(
-          styles.queueItemRemove,
-          hovered && styles.queueItemRemoveVisible,
-        )}
+        {...stylex.props(styles.queueItemRemove)}
         onClick={remove}
       >
         &times;
@@ -119,12 +114,7 @@ const styles = stylex.create({
     fontSize: '0.875rem',
   },
   queueItemRemove: {
-    color: {
-      default: 'var(--text)',
-      ':hover': 'var(--text)',
-      ':focus': 'var(--text)',
-      ':active': 'var(--text)',
-    },
+    color: 'var(--text-color)',
     borderStyle: 'none',
     backgroundColor: 'transparent',
     width: '25px',
@@ -132,15 +122,11 @@ const styles = stylex.create({
     lineHeight: '10px',
     padding: '3px',
     marginRight: '5px',
-    visibility: 'hidden',
-    fontSize: '14px',
-    textDecoration: {
-      ':hover': 'none',
-      ':focus': 'none',
-      ':active': 'none',
+    visibility: {
+      default: 'hidden',
+      [stylex.when.ancestor(':hover')]: 'visible',
     },
-  },
-  queueItemRemoveVisible: {
-    visibility: 'visible',
+    fontSize: '14px',
+    textDecoration: 'none',
   },
 });

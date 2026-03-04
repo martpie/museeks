@@ -16,7 +16,7 @@ export default function CheckboxSetting(props: Props) {
   const id = useId();
 
   return (
-    <div>
+    <Flexbox direction="vertical" gap={0}>
       <Flexbox gap={8} align="center">
         <input
           id={id}
@@ -33,7 +33,7 @@ export default function CheckboxSetting(props: Props) {
         </Setting.Label>
       </Flexbox>
       <Setting.Description>{description}</Setting.Description>
-    </div>
+    </Flexbox>
   );
 }
 
@@ -47,9 +47,6 @@ const styles = stylex.create({
     borderColor: 'var(--border-color-softer)',
     borderRadius: 'var(--border-radius)',
     backgroundColor: 'var(--checkbox-bg)',
-    boxShadow: {
-      ':focus': '0 0 0 3px var(--border-color)',
-    },
     '::after': {
       content: '""',
       visibility: 'hidden',

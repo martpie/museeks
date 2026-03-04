@@ -49,7 +49,7 @@ export default function VolumeControl() {
         <HoverCard.Content
           side="right"
           sideOffset={8}
-          {...stylex.props(styles.volumeControl)}
+          {...stylex.props(styles.volumeHoverCard)}
         >
           <Slider.Root
             value={[unsmoothifyVolume(volume)]}
@@ -83,7 +83,7 @@ const styles = stylex.create({
     paddingInline: '4px',
     lineHeight: 1,
   },
-  volumeControl: {
+  volumeHoverCard: {
     backgroundColor: 'var(--header-bg)',
     paddingBlock: '10px',
     paddingInline: '12px',
@@ -91,6 +91,7 @@ const styles = stylex.create({
     borderWidth: '1px',
     borderStyle: 'solid',
     borderColor: 'var(--border-color)',
+    zIndex: 1,
   },
   sliderRoot: {
     position: 'relative',
