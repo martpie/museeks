@@ -21,7 +21,10 @@ export default function CheckboxSetting(props: Props) {
         <input
           id={id}
           type="checkbox"
-          {...stylex.props(styles.checkboxInput)}
+          {...stylex.props(
+            styles.checkboxInput,
+            props.value && styles.checkboxChecked,
+          )}
           onChange={(e) => props.onChange(e.currentTarget.checked)}
           checked={props.value}
         />
@@ -41,15 +44,9 @@ const styles = stylex.create({
     appearance: 'none',
     borderWidth: '1px',
     borderStyle: 'solid',
-    borderColor: {
-      default: 'var(--border-color-softer)',
-      ':checked': 'var(--button-border)',
-    },
+    borderColor: 'var(--border-color-softer)',
     borderRadius: 'var(--border-radius)',
-    backgroundColor: {
-      default: 'var(--checkbox-bg)',
-      ':checked': 'var(--main-color)',
-    },
+    backgroundColor: 'var(--checkbox-bg)',
     boxShadow: {
       ':focus': '0 0 0 3px var(--border-color)',
     },
@@ -61,15 +58,14 @@ const styles = stylex.create({
       boxShadow: 'inset 1em 1em var(--form-control-color)',
       backgroundColor: 'white',
     },
-    visibility: {
-      ':checked::after': 'visible',
-    },
-    clipPath: {
-      ':checked::after':
-        'polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 79% 0%, 43% 62%)',
-    },
-    transform: {
-      ':checked::after': 'scale(0.7) rotate(10deg)',
+  },
+  checkboxChecked: {
+    borderColor: 'var(--button-border)',
+    backgroundColor: 'var(--main-color)',
+    '::after': {
+      visibility: 'visible',
+      clipPath: 'polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 79% 0%, 43% 62%)',
+      transform: 'scale(0.7) rotate(10deg)',
     },
   },
 });
