@@ -1,9 +1,9 @@
+import * as stylex from '@stylexjs/stylex';
 import {
   type RegisteredRouter,
   Link as RouterLink,
   type ValidateLinkOptions,
 } from '@tanstack/react-router';
-import * as stylex from '@stylexjs/stylex';
 
 interface LinkProps<
   TRouter extends RegisteredRouter = RegisteredRouter,

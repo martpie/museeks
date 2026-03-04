@@ -1,4 +1,5 @@
 import { Trans, useLingui } from '@lingui/react/macro';
+import * as stylex from '@stylexjs/stylex';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
 import type React from 'react';
 import { useCallback, useState } from 'react';
@@ -13,8 +14,6 @@ import useInvalidate from '../hooks/useInvalidate';
 import DatabaseBridge from '../lib/bridge-database';
 import { useLibraryAPI } from '../stores/useLibraryStore';
 import type { TrackMutation } from '../types/museeks';
-
-import styles from './tracks.$trackID.module.css';
 
 // We assume no artist or genre has a comma in its name (fingers crossed)
 const DELIMITER = ',';
@@ -79,7 +78,7 @@ function ViewTrackDetails() {
 
   return (
     <View hasPadding layout="centered">
-      <form className={styles.detailsForm} onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} {...stylex.props(styles.detailsForm)}>
         <h2>
           <Trans>Edit "{track.title}"</Trans>
         </h2>
@@ -242,7 +241,7 @@ function ViewTrackDetails() {
             value={track.path}
           />
         </Setting.Section>
-        <div className={styles.detailsActions}>
+        <div {...stylex.props(styles.detailsActions)}>
           <Button type="button" onClick={handleCancel}>
             <Trans>Cancel</Trans>
           </Button>
@@ -269,3 +268,16 @@ function parseNullableNumber(str: string): number | null {
 
   return Number(str);
 }
+
+const styles = stylex.create({
+  detailsForm: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  detailsActions: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    gap: '8px',
+    marginBottom: '16px',
+  },
+});

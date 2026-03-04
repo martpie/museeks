@@ -1,6 +1,6 @@
+import * as stylex from '@stylexjs/stylex';
 import { Link } from '@tanstack/react-router';
 import type React from 'react';
-import * as stylex from '@stylexjs/stylex';
 
 interface WrapProps {
   children: React.ReactNode;
