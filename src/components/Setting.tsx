@@ -151,7 +151,7 @@ const styles = stylex.create({
     fontWeight: 'bold',
   },
   settingLabelNoMargin: {
-    margin: 0,
+    marginBottom: 0,
   },
   settingSelect: {
     appearance: 'none',
