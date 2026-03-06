@@ -93,6 +93,9 @@ const styles = stylex.create({
     overflow: 'hidden',
   },
   viewContent: {
-    flex: '1',
+    flexGrow: 1,
+    flexShrink: 1,
+    flexBasis: 'auto',
+    minWidth: 0,
   },
 });

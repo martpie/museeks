@@ -105,9 +105,9 @@ export default function TrackRow(props: Props) {
         {props.isPlaying ? <PlayingIndicator /> : null}
       </div>
       <div {...stylex.props(cellStyles.cell, cellStyles.title)}>
-        {track.title}
+        <span {...stylex.props(cellStyles.titleText)}>{track.title}</span>
         {props.showArtistInTitle === true && track.artists.length > 0 && (
-          <span {...stylex.props(trackStyles.artistInTitle)}>
+          <span {...stylex.props(cellStyles.artistInTitle)}>
             {'— '}
             {track.artists.join(', ')}
           </span>
@@ -152,6 +152,7 @@ const trackStyles = stylex.create({
     borderBottomColor: 'transparent',
     backgroundColor: 'var(--tracks-bg-even)',
     alignItems: 'center',
+    maxWidth: '100%',
   },
   trackEvenRow: {
     backgroundColor: 'var(--tracks-bg-odd)',
@@ -188,11 +189,6 @@ const trackStyles = stylex.create({
       bottom: '-1px',
     },
   },
-  artistInTitle: {
-    color: 'var(--text-muted)',
-    fontSize: '0.85em',
-    marginLeft: '4px',
-  },
 });
 
 const cellStyles = stylex.create({
@@ -210,24 +206,48 @@ const cellStyles = stylex.create({
   },
   trackPlaying: {
     width: '30px',
+    flexShrink: 0,
   },
   title: {
-    flex: '1',
+    flexGrow: 1,
+    flexShrink: 1,
+    flexBasis: 'auto',
+    minWidth: 0,
     display: 'flex',
     alignItems: 'baseline',
+    gap: '4px',
+  },
+  titleText: {
+    minWidth: 0,
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+  },
+  artistInTitle: {
+    color: 'var(--text-muted)',
+    fontSize: '0.85em',
+    flexShrink: 1,
+    minWidth: 0,
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
   },
   duration: {
     width: '7%',
     minWidth: '70px',
+    flexShrink: 0,
   },
   artist: {
     width: '20%',
+    flexShrink: 0,
   },
   album: {
     width: '20%',
+    flexShrink: 0,
   },
   genre: {
     width: '20%',
+    flexShrink: 0,
   },
   rightAligned: {
     textAlign: 'right',
