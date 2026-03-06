@@ -156,6 +156,7 @@ const styles = stylex.create({
     display: 'flex',
     flexDirection: 'column',
     gap: '8px',
+    flexShrink: 0,
   },
   label: {
     fontSize: '1.4rem',
@@ -170,6 +171,9 @@ const styles = stylex.create({
   },
   rows: {
     flexGrow: 1,
+    flexShrink: 1,
+    flexBasis: 'auto',
+    minWidth: 0,
     listStyle: 'none',
     padding: 0,
     margin: 0,
