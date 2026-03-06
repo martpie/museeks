@@ -41,6 +41,16 @@ export function goToPlayingTrack(
       });
       break;
     }
+    case 'compilations': {
+      void navigate({
+        to: '/artists/presets/compilations',
+        replace: true,
+        search: {
+          jump_to_playing_track: true,
+        },
+      });
+      break;
+    }
     case 'file_associations': {
       // do-nothing, eventually, show items in finder?
       break;
