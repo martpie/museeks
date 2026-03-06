@@ -1,0 +1,1 @@
+ALTER TABLE tracks ADD COLUMN is_compilation INTEGER NOT NULL DEFAULT 0;

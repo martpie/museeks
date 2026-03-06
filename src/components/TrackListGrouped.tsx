@@ -23,10 +23,11 @@ type Props = {
   selectedTracks: Set<string>;
   initialOffset: number;
   rowHeight: number;
+  showArtistInTitle?: boolean;
 } & TrackRowEvents;
 
 export default function TrackListGroupedLayout(props: Props) {
-  const { ref, trackGroups, rowHeight, ...rest } = props;
+  const { ref, trackGroups, rowHeight, showArtistInTitle, ...rest } = props;
   const tracks = useAllTracks(trackGroups);
 
   const innerScrollableRef = useRef<HTMLDivElement>(null);
@@ -57,6 +58,7 @@ export default function TrackListGroupedLayout(props: Props) {
             key={tracksGroup.label}
             tracksGroup={tracksGroup}
             rowHeight={rowHeight}
+            showArtistInTitle={showArtistInTitle}
             {...rest}
           />
         );
@@ -69,12 +71,14 @@ type TrackListGroupProps = {
   tracksGroup: TrackGroup;
   selectedTracks: Set<string>;
   rowHeight: number;
+  showArtistInTitle?: boolean;
 } & TrackRowEvents;
 
 function TrackListGroup(props: TrackListGroupProps) {
   const {
     selectedTracks,
     rowHeight,
+    showArtistInTitle,
     onTrackSelect,
     onContextMenu,
     onPlaybackStart,
@@ -124,6 +128,7 @@ function TrackListGroup(props: TrackListGroupProps) {
                 index > 0 && selectedTracks.has(tracks[index - 1].id)
               }
               simplified={true}
+              showArtistInTitle={showArtistInTitle}
               style={{ height: `${rowHeight}px` }} // Figure out virtualization for grouped stuff
             />
           );

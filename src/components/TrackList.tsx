@@ -60,6 +60,7 @@ interface TrackListDefaultLayoutProps extends TrackListProps {
 interface TrackListGroupedLayoutProps extends TrackListProps {
   layout: 'grouped';
   data: Array<TrackGroup>;
+  showArtistInTitle?: boolean;
 }
 
 type Props = TrackListDefaultLayoutProps | TrackListGroupedLayoutProps;
@@ -79,6 +80,8 @@ export default function TrackList(props: Props) {
     playlists,
     extraContextMenu,
   } = props;
+
+  const showArtistInTitle = layout === 'grouped' && props.showArtistInTitle;
 
   // We need to flatten the list of tracks for some operations
   const tracks: Array<Track> = useMemo(() => {
@@ -447,6 +450,7 @@ export default function TrackList(props: Props) {
           rowHeight={rowHeight}
           selectedTracks={selectedTracks}
           initialOffset={getScrollPosition()}
+          showArtistInTitle={showArtistInTitle || undefined}
           onTrackSelect={onTrackSelect}
           onContextMenu={onContextMenu}
           onPlaybackStart={onPlaybackStart}
