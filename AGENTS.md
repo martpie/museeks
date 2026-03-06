@@ -33,6 +33,7 @@ Museeks is a music player desktop app built on top of Tauri. It focuses on clean
 bun ci                        # Install dependencies
 bun run tauri dev             # Start dev (Vite + Tauri with hot reload)
 bun run tauri build           # Build distributable binaries for the current platform
+bun run build                 # Front-end code build only
 bun run test:format           # Check formatting (Oxfmt)
 bun run test:format:fix       # Auto-fix formatting (Oxfmt)
 bun run test:lint             # Lint (Oxlint), also type-checks TypeScript
@@ -89,6 +90,7 @@ src-tauri/               # Rust/Tauri backend
 - Default Rust code lives in `src-tauri/src/libs`.
 - Migrations: prefer `DEFAULT` values over backfills when adding columns — users will rescan their library.
 - Never edit existing migration `.sql` files — they are frozen.
+- When adding new Tauri commands, don't forget to add them to `build.rs`, and allow them in `capabilities/main.json`.
 
 **UI:**
 
@@ -96,6 +98,7 @@ src-tauri/               # Rust/Tauri backend
 - `src/elements` are business-agnostic UI primitives. `src/components` and `src/routes` hold business logic.
 - Prefer URL state over Zustand global state unless persistence is required.
 - TypeScript types generated from Rust live in `src/generated` and should be committed — regenerate via `gen:types`.
+- After editing the configuration of a route, regenerating the route-tree must be done via the `build` script.
 
 ## Agent Operations Rules
 
