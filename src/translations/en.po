@@ -261,7 +261,7 @@ msgid "Your search returned no results"
 msgstr "Your search returned no results"
 
 #: src/components/VolumeControl.tsx:43
-#: src/components/VolumeControl.tsx:67
+#: src/components/VolumeControl.tsx:68
 msgid "Volume"
 msgstr "Volume"
 

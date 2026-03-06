@@ -36,41 +36,41 @@ export default function VolumeControl() {
   }, []);
 
   return (
-    <HoverCard.Root openDelay={0} closeDelay={0}>
-      <div {...stylex.props(styles.volumeControlContainer)}>
-        <HoverCard.Trigger asChild>
+    <HoverCard.Root openDelay={0} closeDelay={150}>
+      <HoverCard.Trigger asChild>
+        <div {...stylex.props(styles.volumeControlContainer)}>
           <ButtonIcon
             title={t`Volume`}
             onClick={() => player.toggleMute()}
             icon={getVolumeIcon(unsmoothifyVolume(volume), muted)}
             iconSize={16}
           />
-        </HoverCard.Trigger>
-        <HoverCard.Content
-          side="right"
-          sideOffset={8}
-          {...stylex.props(styles.volumeHoverCard)}
+        </div>
+      </HoverCard.Trigger>
+      <HoverCard.Content
+        side="right"
+        sideOffset={8}
+        {...stylex.props(styles.volumeHoverCard)}
+      >
+        <Slider.Root
+          value={[unsmoothifyVolume(volume)]}
+          onKeyDown={stopPropagation}
+          onValueChange={setPlayerVolume}
+          min={0}
+          max={1}
+          step={0.01}
+          {...stylex.props(styles.sliderRoot, muted && styles.faded)}
         >
-          <Slider.Root
-            value={[unsmoothifyVolume(volume)]}
-            onKeyDown={stopPropagation}
-            onValueChange={setPlayerVolume}
-            min={0}
-            max={1}
-            step={0.01}
-            {...stylex.props(styles.sliderRoot, muted && styles.faded)}
-          >
-            <Slider.Track {...stylex.props(styles.sliderTrack)}>
-              <Slider.Range {...stylex.props(styles.sliderRange)} />
-            </Slider.Track>
-            <Slider.Thumb
-              aria-label={t`Volume`}
-              data-museeks-action
-              {...stylex.props(styles.sliderThumb)}
-            />
-          </Slider.Root>
-        </HoverCard.Content>
-      </div>
+          <Slider.Track {...stylex.props(styles.sliderTrack)}>
+            <Slider.Range {...stylex.props(styles.sliderRange)} />
+          </Slider.Track>
+          <Slider.Thumb
+            aria-label={t`Volume`}
+            data-museeks-action
+            {...stylex.props(styles.sliderThumb)}
+          />
+        </Slider.Root>
+      </HoverCard.Content>
     </HoverCard.Root>
   );
 }
@@ -87,7 +87,6 @@ const styles = stylex.create({
     backgroundColor: 'var(--header-bg)',
     paddingBlock: '10px',
     paddingInline: '12px',
-    pointerEvents: 'none',
     borderWidth: '1px',
     borderStyle: 'solid',
     borderColor: 'var(--border-color)',
