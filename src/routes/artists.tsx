@@ -62,7 +62,7 @@ function ViewArtists() {
       sideNav={
         <SideNav
           title={t`Artists`}
-          topContent={
+          bottomContent={
             hasCompilations && (
               <SideNavLink
                 key="compilations"
