@@ -134,7 +134,8 @@ impl DB {
                 track_no = ?,
                 track_of = ?,
                 disk_no = ?,
-                disk_of = ?
+                disk_of = ?,
+                is_compilation = ?
             WHERE id = ?
             "#,
         )
@@ -150,6 +151,7 @@ impl DB {
         .bind(track.track_of)
         .bind(track.disk_no)
         .bind(track.disk_of)
+        .bind(track.is_compilation)
         .bind(&track.id)
         .execute(&mut self.connection)
         .await?;
@@ -184,8 +186,8 @@ impl DB {
                 r#"
                 INSERT INTO tracks (
                     id, path, title, album, album_artist, artists, genres, year,
-                    duration, track_no, track_of, disk_no, disk_of
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    duration, track_no, track_of, disk_no, disk_of, is_compilation
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 "#,
             )
             .bind(&track.id)
@@ -201,6 +203,7 @@ impl DB {
             .bind(track.track_of)
             .bind(track.disk_no)
             .bind(track.disk_of)
+            .bind(track.is_compilation)
             .execute(&mut self.connection)
             .await?;
         }
@@ -220,12 +223,11 @@ impl DB {
     }
 
     /**
-     * Get the list of artist registered in the database.
-     * Only fetches the first artist for each row.
+     * Get the list of artists registered in the database, excluding compilation tracks.
      */
     pub async fn get_artists(&mut self) -> AnyResult<Vec<String>> {
         let result: Vec<String> = sqlx::query_scalar(
-            "SELECT DISTINCT album_artist FROM tracks ORDER BY album_artist COLLATE NOCASE;",
+            "SELECT DISTINCT album_artist FROM tracks WHERE is_compilation = 0 ORDER BY album_artist COLLATE NOCASE;",
         )
         .fetch_all(&mut self.connection)
         .await?;
@@ -234,12 +236,23 @@ impl DB {
     }
 
     /**
-     * Get the list of artist registered in the database.
-     * Only fetches the first artist for each row.
+     * Returns true if any tracks are flagged as compilations.
+     */
+    pub async fn has_compilations(&mut self) -> AnyResult<bool> {
+        let result: bool =
+            sqlx::query_scalar("SELECT EXISTS(SELECT 1 FROM tracks WHERE is_compilation = 1)")
+                .fetch_one(&mut self.connection)
+                .await?;
+
+        Ok(result)
+    }
+
+    /**
+     * Get all tracks for a given artist, excluding compilation tracks.
      */
     pub async fn get_artist_tracks(&mut self, artist: String) -> AnyResult<Vec<TrackGroup>> {
         let tracks = sqlx::query_as::<_, Track>(
-            "SELECT * FROM tracks WHERE album_artist = ? ORDER BY album, disk_no, track_no",
+            "SELECT * FROM tracks WHERE album_artist = ? AND is_compilation = 0 ORDER BY album, disk_no, track_no",
         )
         .bind(&artist)
         .fetch_all(&mut self.connection)
@@ -271,6 +284,43 @@ impl DB {
         // tracks can have different years. If no year is provided, put the group
         // at the end, as it's probably a library management issue, and we want
         // clean lists!
+        track_groups.sort_by_key(|group| group.year.unwrap_or(u16::MAX));
+
+        Ok(track_groups)
+    }
+
+    /**
+     * Get all compilation albums, grouped by album name, sorted by year.
+     */
+    pub async fn get_compilation_albums(&mut self) -> AnyResult<Vec<TrackGroup>> {
+        let tracks = sqlx::query_as::<_, Track>(
+            "SELECT * FROM tracks WHERE is_compilation = 1 ORDER BY album, disk_no, track_no",
+        )
+        .fetch_all(&mut self.connection)
+        .await?;
+
+        let mut groups: IndexMap<String, Vec<Track>> = IndexMap::new();
+
+        for item in tracks {
+            groups.entry(item.album.clone()).or_default().push(item);
+        }
+
+        let mut track_groups = groups
+            .into_iter()
+            .map(|(album, tracks)| TrackGroup {
+                label: album,
+                genres: tracks
+                    .iter()
+                    .flat_map(|s| &s.genres)
+                    .cloned()
+                    .unique()
+                    .collect(),
+                duration: tracks.iter().map(|t| t.duration).sum(),
+                year: tracks.first().and_then(|t| t.year),
+                tracks,
+            })
+            .collect::<Vec<TrackGroup>>();
+
         track_groups.sort_by_key(|group| group.year.unwrap_or(u16::MAX));
 
         Ok(track_groups)

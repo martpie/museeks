@@ -3,7 +3,7 @@ import {
   createFileRoute,
   Outlet,
   redirect,
-  useMatch,
+  useLocation,
 } from '@tanstack/react-router';
 
 import SideNav from '../components/SideNav';
@@ -15,26 +15,37 @@ import player from '../lib/player';
 
 export const Route = createFileRoute('/artists')({
   component: ViewArtists,
-  beforeLoad: async ({ params }) => {
-    const artists = await DatabaseBridge.getAllArtists();
-    const queueOrigin = player.getQueueOrigin();
+  beforeLoad: async ({ location }) => {
+    const [artists, hasCompilations] = await Promise.all([
+      DatabaseBridge.getAllArtists(),
+      DatabaseBridge.hasCompilations(),
+    ]);
 
-    if (!('artistID' in params) && artists.length > 0) {
-      // If there is a playing Playlist, redirect to it
-      if (queueOrigin?.type === 'artist') {
+    // Only redirect when landing on /artists with no child route selected
+    if (location.pathname === '/artists') {
+      const queueOrigin = player.getQueueOrigin();
+
+      // If there is a playing artist, redirect to it
+      if (queueOrigin?.type === 'artist' && artists.length > 0) {
         throw redirect({
           to: '/artists/$artistID',
           params: { artistID: queueOrigin.artistID },
         });
       }
 
-      throw redirect({
-        to: '/artists/$artistID',
-        params: { artistID: artists[0] },
-      });
+      if (artists.length > 0) {
+        throw redirect({
+          to: '/artists/$artistID',
+          params: { artistID: artists[0] },
+        });
+      }
+
+      if (hasCompilations) {
+        throw redirect({ to: '/artists/presets/compilations' });
+      }
     }
 
-    return { artists };
+    return { artists, hasCompilations };
   },
   loader: async ({ context }) => {
     return context;
@@ -42,14 +53,26 @@ export const Route = createFileRoute('/artists')({
 });
 
 function ViewArtists() {
-  const { artists } = Route.useLoaderData();
-  const match = useMatch({ from: '/artists/$artistID', shouldThrow: false });
+  const { artists, hasCompilations } = Route.useLoaderData();
+  const { pathname } = useLocation();
   const { t } = useLingui();
 
   return (
     <View
       sideNav={
-        <SideNav title={t`Artists`}>
+        <SideNav
+          title={t`Artists`}
+          topContent={
+            hasCompilations && (
+              <SideNavLink
+                key="compilations"
+                id="compilations"
+                label={t`Compilations`}
+                linkOptions={{ to: '/artists/presets/compilations' }}
+              />
+            )
+          }
+        >
           {artists.map((artist) => (
             <SideNavLink
               key={artist}
@@ -64,7 +87,11 @@ function ViewArtists() {
         </SideNav>
       }
     >
-      {match ? <Outlet /> : <TrackListStates isLoading={false} tracks={[]} />}
+      {pathname !== '/artists' ? (
+        <Outlet />
+      ) : (
+        <TrackListStates isLoading={false} tracks={[]} />
+      )}
     </View>
   );
 }

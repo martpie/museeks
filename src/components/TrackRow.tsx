@@ -28,6 +28,7 @@ type Props = {
   isPlaying?: boolean;
   draggable?: boolean;
   simplified?: boolean;
+  showArtistInTitle?: boolean;
   style?: React.CSSProperties;
 } & TrackRowEvents;
 
@@ -105,6 +106,12 @@ export default function TrackRow(props: Props) {
       </div>
       <div {...stylex.props(cellStyles.cell, cellStyles.title)}>
         {track.title}
+        {props.showArtistInTitle === true && track.artists.length > 0 && (
+          <span {...stylex.props(trackStyles.artistInTitle)}>
+            {'— '}
+            {track.artists.join(', ')}
+          </span>
+        )}
       </div>
       <div
         {...stylex.props(
@@ -181,6 +188,11 @@ const trackStyles = stylex.create({
       bottom: '-1px',
     },
   },
+  artistInTitle: {
+    color: 'var(--text-muted)',
+    fontSize: '0.85em',
+    marginLeft: '4px',
+  },
 });
 
 const cellStyles = stylex.create({
@@ -201,6 +213,8 @@ const cellStyles = stylex.create({
   },
   title: {
     flex: '1',
+    display: 'flex',
+    alignItems: 'baseline',
   },
   duration: {
     width: '7%',

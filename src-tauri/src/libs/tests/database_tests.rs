@@ -24,6 +24,7 @@ fn sample_track_1() -> Track {
         track_of: Some(10),
         disk_no: Some(1),
         disk_of: Some(1),
+        is_compilation: false,
     }
 }
 
@@ -42,6 +43,7 @@ fn sample_track_2() -> Track {
         track_of: None,
         disk_no: None,
         disk_of: None,
+        is_compilation: false,
     }
 }
 
@@ -60,6 +62,7 @@ fn sample_track_3() -> Track {
         track_of: Some(12),
         disk_no: Some(1),
         disk_of: Some(2),
+        is_compilation: false,
     }
 }
 
@@ -128,6 +131,7 @@ async fn test_tracks_db() {
             track_of: None,
             disk_no: None,
             disk_of: None,
+            is_compilation: false,
         }]
     );
 

@@ -22,6 +22,7 @@ const MOCK_TRACKS: Array<Track> = [
     track_of: 1,
     genres: ['rock', 'blues'],
     path: '/whiskey-blues.mp3',
+    is_compilation: false,
   },
   {
     id: '1',
@@ -37,6 +38,7 @@ const MOCK_TRACKS: Array<Track> = [
     track_of: 2,
     genres: ['blues'],
     path: '/majestic-blues.mp3',
+    is_compilation: false,
   },
   {
     id: '2',
@@ -52,6 +54,7 @@ const MOCK_TRACKS: Array<Track> = [
     track_of: 2,
     genres: ['blues'],
     path: '/romantic-blues.mp3',
+    is_compilation: false,
   },
 ];
 
@@ -94,6 +97,14 @@ class DatabaseBridge implements DatabaseBridgeInterface {
   }
 
   async getArtistTracks(_artist: string): Promise<Array<TrackGroup>> {
+    return [];
+  }
+
+  async hasCompilations(): Promise<boolean> {
+    return false;
+  }
+
+  async getCompilationAlbums(): Promise<Array<TrackGroup>> {
     return [];
   }
 

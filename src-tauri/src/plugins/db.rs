@@ -326,6 +326,16 @@ async fn get_artist_tracks(
 }
 
 #[tauri::command]
+async fn get_compilation_albums(db_state: State<'_, DBState>) -> AnyResult<Vec<TrackGroup>> {
+    db_state.get_lock().await.get_compilation_albums().await
+}
+
+#[tauri::command]
+async fn has_compilations(db_state: State<'_, DBState>) -> AnyResult<bool> {
+    db_state.get_lock().await.has_compilations().await
+}
+
+#[tauri::command]
 async fn get_all_playlists(db_state: State<'_, DBState>) -> AnyResult<Vec<Playlist>> {
     db_state.get_lock().await.get_all_playlists().await
 }
@@ -456,6 +466,8 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
             update_track,
             get_artists,
             get_artist_tracks,
+            get_compilation_albums,
+            has_compilations,
             get_all_playlists,
             get_playlist,
             get_playlist,

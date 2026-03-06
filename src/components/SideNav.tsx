@@ -10,6 +10,7 @@ type Props = {
   children: Array<React.ReactElement<SideNavLinkProps>>;
   title: string;
   actions?: React.ReactNode;
+  topContent?: React.ReactNode;
 };
 
 export default function SideNav(props: Props) {
@@ -29,6 +30,7 @@ export default function SideNav(props: Props) {
         <div {...stylex.props(styles.actions)}>{props.actions}</div>
       </Flexbox>
       <div {...stylex.props(styles.content)}>
+        {props.topContent}
         {Object.entries(groupedChildren).map(([letter, children]) => {
           return (
             <React.Fragment key={letter}>

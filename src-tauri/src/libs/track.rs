@@ -35,6 +35,7 @@ pub struct Track {
     pub track_of: Option<u32>,
     pub disk_no: Option<u32>,
     pub disk_of: Option<u32>,
+    pub is_compilation: bool,
 }
 
 /**
@@ -94,6 +95,10 @@ pub fn get_track_from_file(path: &PathBuf) -> AnyResult<Track> {
 
             let id = get_track_id_for_path(path)?;
 
+            let is_compilation = tag
+                .get_string(ItemKey::FlagCompilation)
+                .map_or(false, |v| v == "1" || v.eq_ignore_ascii_case("true"));
+
             Ok(Track {
                 id,
                 path: path.to_string_lossy().into_owned(),
@@ -125,6 +130,7 @@ pub fn get_track_from_file(path: &PathBuf) -> AnyResult<Track> {
                 track_of: tag.track_total(),
                 disk_no: tag.disk(),
                 disk_of: tag.disk_total(),
+                is_compilation,
             })
         }
         Err(err) => {
