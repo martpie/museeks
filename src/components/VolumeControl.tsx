@@ -75,6 +75,16 @@ export default function VolumeControl() {
   );
 }
 
+const fadeIn = stylex.keyframes({
+  from: { opacity: 0 },
+  to: { opacity: 1 },
+});
+
+const fadeOut = stylex.keyframes({
+  from: { opacity: 1 },
+  to: { opacity: 0 },
+});
+
 const styles = stylex.create({
   volumeControlContainer: {
     position: 'relative',
@@ -91,6 +101,13 @@ const styles = stylex.create({
     borderStyle: 'solid',
     borderColor: 'var(--border-color)',
     zIndex: 1,
+    animationDuration: '150ms',
+    animationTimingFunction: 'ease-out',
+    animationFillMode: 'forwards',
+    animationName: {
+      ':is([data-state="open"])': fadeIn,
+      ':is([data-state="closed"])': fadeOut,
+    },
   },
   sliderRoot: {
     position: 'relative',
