@@ -195,7 +195,7 @@ msgstr "トラックを削除"
 #: src/components/TrackList.tsx:388
 #: src/routes/settings.library.tsx:99
 #: src/routes/settings.library.tsx:144
-#: src/routes/tracks.$trackID.tsx:257
+#: src/routes/tracks.$trackID.tsx:258
 msgid "Cancel"
 msgstr "キャンセル"
 
@@ -217,7 +217,7 @@ msgid "Title"
 msgstr "タイトル"
 
 #: src/components/TrackListHeader.tsx:53
-#: src/routes/tracks.$trackID.tsx:241
+#: src/routes/tracks.$trackID.tsx:242
 msgid "Duration"
 msgstr "再生時間"
 
@@ -575,15 +575,19 @@ msgstr "ディスク番号"
 msgid "Compilation"
 msgstr ""
 
-#: src/routes/tracks.$trackID.tsx:249
+#: src/routes/tracks.$trackID.tsx:233
+msgid "Group this track with other tracks from the same compilation, regardless of the artist names."
+msgstr ""
+
+#: src/routes/tracks.$trackID.tsx:250
 msgid "Path"
 msgstr "パス"
 
-#: src/routes/tracks.$trackID.tsx:260
+#: src/routes/tracks.$trackID.tsx:261
 msgid "Save"
 msgstr "保存"
 
-#: src/routes/tracks.$trackID.tsx:265
+#: src/routes/tracks.$trackID.tsx:266
 msgid "Clicking \"save\" will only update the library data, but will not save it to the original file."
 msgstr "「保存」をクリックするとライブラリデータのみが更新され、元のファイルには保存されません。"
 
