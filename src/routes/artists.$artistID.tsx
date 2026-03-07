@@ -1,17 +1,16 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 
 import TrackList from '../components/TrackList';
 import TrackListStates from '../components/TrackListStates';
 import { useFilteredTrackGroup } from '../hooks/useFilteredTracks';
+import useFocusedAlbum, {
+  validateFocusedAlbumSearch,
+} from '../hooks/useFocusedAlbum';
 import useGlobalTrackListStatus from '../hooks/useGlobalTrackListStatus';
 import ConfigBridge from '../lib/bridge-config';
 import DatabaseBridge from '../lib/bridge-database';
 import type { QueueOrigin } from '../types/museeks';
-
-type Search = {
-  focused_album?: string;
-};
 
 export const Route = createFileRoute('/artists/$artistID')({
   component: ViewArtistDetails,
@@ -28,20 +27,7 @@ export const Route = createFileRoute('/artists/$artistID')({
       tracksDensity,
     };
   },
-  validateSearch: (search): Search => {
-    const album =
-      typeof search?.focused_album === 'string'
-        ? search.focused_album
-        : undefined;
-
-    if (album) {
-      return {
-        focused_album: album,
-      };
-    }
-
-    return {};
-  },
+  validateSearch: validateFocusedAlbumSearch,
 });
 
 export default function ViewArtistDetails() {
@@ -54,20 +40,7 @@ export default function ViewArtistDetails() {
     return { type: 'artist', artistID } satisfies QueueOrigin;
   }, [artistID]);
 
-  // Scroll to the album if specified in the search params
-  // Not super react-idiotmatic, but I'd rather have it here, to have all the
-  // business logic in a single place
-  const focusedAlbum = Route.useSearch().focused_album;
-
-  useEffect(() => {
-    if (focusedAlbum) {
-      const element = document.querySelector(
-        `[data-track-group="${encodeURIComponent(focusedAlbum)}"]`,
-      );
-
-      element?.scrollIntoView({ behavior: 'instant', block: 'start' });
-    }
-  }, [focusedAlbum]);
+  useFocusedAlbum(Route.useSearch().focused_album);
 
   return (
     <TrackListStates isLoading={false} tracks={content}>

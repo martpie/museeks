@@ -195,7 +195,7 @@ msgstr "移除音轨"
 #: src/components/TrackList.tsx:388
 #: src/routes/settings.library.tsx:99
 #: src/routes/settings.library.tsx:144
-#: src/routes/tracks.$trackID.tsx:246
+#: src/routes/tracks.$trackID.tsx:257
 msgid "Cancel"
 msgstr "取消"
 
@@ -212,12 +212,12 @@ msgid "{0, plural, one {# track} other {# tracks}}"
 msgstr "{0, plural, one {# 首音轨} other {# 首音轨}}"
 
 #: src/components/TrackListHeader.tsx:46
-#: src/routes/tracks.$trackID.tsx:87
+#: src/routes/tracks.$trackID.tsx:89
 msgid "Title"
 msgstr "标题"
 
 #: src/components/TrackListHeader.tsx:53
-#: src/routes/tracks.$trackID.tsx:230
+#: src/routes/tracks.$trackID.tsx:241
 msgid "Duration"
 msgstr "时长"
 
@@ -226,12 +226,12 @@ msgid "Artist"
 msgstr "艺术家"
 
 #: src/components/TrackListHeader.tsx:67
-#: src/routes/tracks.$trackID.tsx:98
+#: src/routes/tracks.$trackID.tsx:100
 msgid "Album"
 msgstr "专辑"
 
 #: src/components/TrackListHeader.tsx:74
-#: src/routes/tracks.$trackID.tsx:138
+#: src/routes/tracks.$trackID.tsx:140
 msgid "Genre"
 msgstr "流派"
 
@@ -534,52 +534,56 @@ msgid "Dark"
 msgstr "深色"
 
 #. placeholder {0}: track.title
-#: src/routes/tracks.$trackID.tsx:83
+#: src/routes/tracks.$trackID.tsx:85
 msgid "Edit \"{0}\""
 msgstr "编辑 \"{0}\""
 
-#: src/routes/tracks.$trackID.tsx:109
+#: src/routes/tracks.$trackID.tsx:111
 msgid "Album Artist"
 msgstr "专辑艺术家"
 
-#: src/routes/tracks.$trackID.tsx:123
+#: src/routes/tracks.$trackID.tsx:125
 msgid "Track Artists"
 msgstr "音轨艺术家"
 
-#: src/routes/tracks.$trackID.tsx:124
+#: src/routes/tracks.$trackID.tsx:126
 msgid "You can add multiple artists with commas"
 msgstr "您可以用逗号添加多个艺术家"
 
-#: src/routes/tracks.$trackID.tsx:139
+#: src/routes/tracks.$trackID.tsx:141
 msgid "You can add multiple genres with commas"
 msgstr "您可以用逗号添加多个流派"
 
-#: src/routes/tracks.$trackID.tsx:153
+#: src/routes/tracks.$trackID.tsx:155
 msgid "Year"
 msgstr "年份"
 
-#: src/routes/tracks.$trackID.tsx:167
+#: src/routes/tracks.$trackID.tsx:169
 msgid "Track Nº"
 msgstr "音轨编号"
 
-#: src/routes/tracks.$trackID.tsx:181
-#: src/routes/tracks.$trackID.tsx:213
+#: src/routes/tracks.$trackID.tsx:183
+#: src/routes/tracks.$trackID.tsx:215
 msgid "Of"
 msgstr "共"
 
-#: src/routes/tracks.$trackID.tsx:199
+#: src/routes/tracks.$trackID.tsx:201
 msgid "Disk Nº"
 msgstr "磁盘编号"
 
-#: src/routes/tracks.$trackID.tsx:238
+#: src/routes/tracks.$trackID.tsx:232
+msgid "Compilation"
+msgstr ""
+
+#: src/routes/tracks.$trackID.tsx:249
 msgid "Path"
 msgstr "路径"
 
-#: src/routes/tracks.$trackID.tsx:249
+#: src/routes/tracks.$trackID.tsx:260
 msgid "Save"
 msgstr "保存"
 
-#: src/routes/tracks.$trackID.tsx:254
+#: src/routes/tracks.$trackID.tsx:265
 msgid "Clicking \"save\" will only update the library data, but will not save it to the original file."
 msgstr "点击\"保存\"只会更新音乐库数据，但不会保存到原始文件。"
 

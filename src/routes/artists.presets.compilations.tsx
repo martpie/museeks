@@ -4,6 +4,9 @@ import { useMemo } from 'react';
 import TrackList from '../components/TrackList';
 import TrackListStates from '../components/TrackListStates';
 import { useFilteredTrackGroup } from '../hooks/useFilteredTracks';
+import useFocusedAlbum, {
+  validateFocusedAlbumSearch,
+} from '../hooks/useFocusedAlbum';
 import useGlobalTrackListStatus from '../hooks/useGlobalTrackListStatus';
 import ConfigBridge from '../lib/bridge-config';
 import DatabaseBridge from '../lib/bridge-database';
@@ -11,6 +14,7 @@ import type { QueueOrigin } from '../types/museeks';
 
 export const Route = createFileRoute('/artists/presets/compilations')({
   component: ViewCompilations,
+  validateSearch: validateFocusedAlbumSearch,
   loader: async () => {
     const [albums, playlists, tracksDensity] = await Promise.all([
       DatabaseBridge.getCompilationAlbums(),
@@ -34,6 +38,8 @@ export default function ViewCompilations() {
   const queueOrigin = useMemo(() => {
     return { type: 'compilations' } satisfies QueueOrigin;
   }, []);
+
+  useFocusedAlbum(Route.useSearch().focused_album);
 
   return (
     <TrackListStates isLoading={false} tracks={content}>
