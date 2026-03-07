@@ -22,9 +22,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: oven-sh/setup-bun@v2
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
         with:
-          bun-version: 1
+          node-version-file: '.nvmrc'
+          cache: 'pnpm'
 
       - uses: actions-rust-lang/setup-rust-toolchain@v1
 
@@ -34,31 +37,31 @@ jobs:
           sudo apt-get install -y libgtk-3-dev libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf
 
       - name: Install UI dependencies
-        run: bun ci
+        run: pnpm install --frozen-lockfile
 
       - name: Install Playwright dependencies
-        run: npx playwright install chromium --with-deps
+        run: pnpm exec playwright install chromium --with-deps
 
       - name: 'Test: Format'
-        run: 'bun run test:format'
+        run: 'pnpm test:format'
 
       - name: 'Test: Lint'
-        run: 'bun run test:lint'
+        run: 'pnpm test:lint'
 
       - name: 'Test: Unit'
-        run: 'bun run test:unit'
+        run: 'pnpm test:unit'
 
       - name: 'Test: E2E'
-        run: 'bun run test:ui'
+        run: 'pnpm test:ui'
 
       - name: 'Generate translations'
-        run: bun run gen:translations
+        run: pnpm gen:translations
 
       - name: Build application
-        run: bun run build
+        run: pnpm build
 
       - name: 'Test: Rust (+ Generate Types)'
-        run: bun run gen:types
+        run: pnpm gen:types
 
       # Check one of the command above did not generate any unexpected artifacts
       # (like types generation)
@@ -96,9 +99,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: oven-sh/setup-bun@v2
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
         with:
-          bun-version: 1
+          node-version-file: '.nvmrc'
+          cache: 'pnpm'
 
       - name: Install Rust stable
         uses: dtolnay/rust-toolchain@stable
@@ -121,7 +127,7 @@ jobs:
           flatpak install flathub -y org.flatpak.Builder
 
       - name: Install frontend dependencies
-        run: bun ci
+        run: pnpm install --frozen-lockfile
 
       - uses: tauri-apps/tauri-action@v0
         env:

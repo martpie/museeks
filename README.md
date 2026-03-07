@@ -83,7 +83,7 @@ Museeks is built upon:
 So you will need to install the following dependencies:
 
 - [Tauri requirements](https://v2.tauri.app/start/prerequisites/) for `rust`
-- [`Bun.sh`](https://bun.sh)
+- [`fnm`](https://github.com/Schniz/fnm) (Node version manager)
 
 Then you can:
 
@@ -91,17 +91,24 @@ Then you can:
 - `git clone git@github.com:<username>/museeks.git`
 - `cd museeks`
 
+After cloning, set up Node and the package manager:
+
+```sh
+fnm use          # installs and switches to the Node version from .nvmrc
+corepack enable  # enables pnpm via corepack (ships with Node)
+```
+
 ### Development Mode
 
-- `bun ci`
-- `bun run tauri dev`
+- `pnpm install`
+- `pnpm tauri dev`
 
 This will launch Museeks in dev mode. Hot reload will work out-of-the-box, so when you update a `.js` file, the UI will automatically update. When you edit a `.rs` file, Museeks will automatically rebuild.
 
 ### Package Binaries
 
-- `bun ci`
-- `bun run tauri build`
+- `pnpm install`
+- `pnpm tauri build`
 
 Tauri does not support cross-platform binaries, so the command will only generate binaries for your current platform (macOS, Linux, or Windows).
 
@@ -110,7 +117,7 @@ Tauri does not support cross-platform binaries, so the command will only generat
 - Follow the steps from the "Setup" and "Development Mode" sections
 - Go to `src/translations/languages.ts`
 - Add your language information to the list
-- Run `bun run gen:translations`
+- Run `pnpm gen:translations`
 - This will create a new file `<your_language_code>.po` in the same folder
 - Fill in the translations from the created `.po` file
 - Open a Pull Request

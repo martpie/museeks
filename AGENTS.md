@@ -18,7 +18,8 @@ Museeks is a music player desktop app built on top of Tauri. It focuses on clean
   - Formatting: Oxfmt
   - Unit tests: Vitest
   - E2E tests: [Vitest Browser Mode](https://vitest.dev/guide/browser/) (w/ Playwright)
-  - Infra Runtime: Bun (not Node.js!)
+  - Node version manager: fnm (reads `.nvmrc`)
+  - Package manager: pnpm (enforced via corepack)
   - Bundler: Vite
 
 - **Backend**
@@ -30,22 +31,22 @@ Museeks is a music player desktop app built on top of Tauri. It focuses on clean
 ## Development Commands
 
 ```bash
-bun ci                        # Install dependencies
-bun run tauri dev             # Start dev (Vite + Tauri with hot reload)
-bun run tauri build           # Build distributable binaries for the current platform
-bun run build                 # Front-end code build only
-bun run test:format           # Check formatting (Oxfmt)
-bun run test:format:fix       # Auto-fix formatting (Oxfmt)
-bun run test:lint             # Lint (Oxlint), also type-checks TypeScript
-bun run test:unit             # Run unit tests (Vitest)
-bun run test:ui               # E2E tests (Vitest Browser + Playwright)
+pnpm install                  # Install dependencies
+pnpm tauri dev                # Start dev (Vite + Tauri with hot reload)
+pnpm tauri build              # Build distributable binaries for the current platform
+pnpm build                    # Front-end code build only
+pnpm test:format              # Check formatting (Oxfmt)
+pnpm test:format:fix          # Auto-fix formatting (Oxfmt)
+pnpm test:lint                # Lint (Oxlint), also type-checks TypeScript
+pnpm test:unit                # Run unit tests (Vitest)
+pnpm test:ui                  # E2E tests (Vitest Browser + Playwright)
 
 # Code Generation
-bun run gen:types             # Generate TS types from Rust (ts-rs)
-bun run gen:translations      # Extract i18n strings to .po files
+pnpm gen:types                # Generate TS types from Rust (ts-rs)
+pnpm gen:translations         # Extract i18n strings to .po files
 
 # Rust
-bun run clippy                # Rust linting
+pnpm clippy                   # Rust linting
 ```
 
 ## Project Structure
@@ -82,7 +83,6 @@ src-tauri/               # Rust/Tauri backend
 - Optimize for readability and cognitive load, not LoC count or cleverness, unless it's performance-sensitive.
 - Keep logic co-located: prefer one file per business concern over spreading it across many.
 - Prefer atomic commits.
-- Bun is purely infra (dev, build, scripts) — there is no server-side JavaScript.
 
 **Backend:**
 
@@ -101,9 +101,9 @@ src-tauri/               # Rust/Tauri backend
 
 ## Agent Operations Rules
 
-- After UI edits: ensure `bun run test:lint` (covers linting + type-check) and `bun run test:format` (formatting) pass.
+- After UI edits: ensure `pnpm test:lint` (covers linting + type-check) and `pnpm test:format` (formatting) pass.
 - After Rust edits: ensure `cargo test` in `src-tauri` passes. Clippy is a bonus.
-- After modifying a Rust struct exposed via `ts-rs`: run `bun run gen:types` and commit the output.
+- After modifying a Rust struct exposed via `ts-rs`: run `pnpm gen:types` and commit the output.
 - After editing the configuration of a route, regenerating the route-tree must be done via the `build` script.
 - Never manually edit `src/generated` — always regenerate.
 - Don't fix pre-existing issues unrelated to the current task.
