@@ -1,13 +1,12 @@
 {
-  "$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
   "productName": "Museeks",
   "mainBinaryName": "museeks",
   "version": "0.23.4",
   "identifier": "io.museeks.app",
   "build": {
-    "beforeDevCommand": "bun run dev",
+    "beforeDevCommand": "npm run dev",
     "devUrl": "http://localhost:1420",
-    "beforeBuildCommand": "bun run build",
+    "beforeBuildCommand": "npm run build",
     "frontendDist": "../dist"
   },
   "app": {

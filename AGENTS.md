@@ -30,22 +30,22 @@ Museeks is a music player desktop app built on top of Tauri. It focuses on clean
 ## Development Commands
 
 ```bash
-bun ci                        # Install dependencies
-bun run tauri dev             # Start dev (Vite + Tauri with hot reload)
-bun run tauri build           # Build distributable binaries for the current platform
-bun run build                 # Front-end code build only
-bun run test:format           # Check formatting (Oxfmt)
-bun run test:format:fix       # Auto-fix formatting (Oxfmt)
-bun run test:lint             # Lint (Oxlint), also type-checks TypeScript
-bun run test:unit             # Run unit tests (Vitest)
-bun run test:ui               # E2E tests (Vitest Browser + Playwright)
+npm ci                        # Install dependencies
+npm run tauri dev             # Start dev (Vite + Tauri with hot reload)
+npm run tauri build           # Build distributable binaries for the current platform
+npm run build                 # Front-end code build only
+npm run test:format           # Check formatting (Oxfmt)
+npm run test:format:fix       # Auto-fix formatting (Oxfmt)
+npm run test:lint             # Lint (Oxlint), also type-checks TypeScript
+npm run test:unit             # Run unit tests (Vitest)
+npm run test:ui               # E2E tests (Vitest Browser + Playwright)
 
 # Code Generation
-bun run gen:types             # Generate TS types from Rust (ts-rs)
-bun run gen:translations      # Extract i18n strings to .po files
+npm run gen:types             # Generate TS types from Rust (ts-rs)
+npm run gen:translations      # Extract i18n strings to .po files
 
 # Rust
-bun run clippy                # Rust linting
+npm run clippy                # Rust linting
 ```
 
 ## Project Structure
@@ -101,9 +101,9 @@ src-tauri/               # Rust/Tauri backend
 
 ## Agent Operations Rules
 
-- After UI edits: ensure `bun run test:lint` (covers linting + type-check) and `bun run test:format` (formatting) pass.
+- After UI edits: ensure `npm run test:lint` (covers linting + type-check) and `npm run test:format` (formatting) pass.
 - After Rust edits: ensure `cargo test` in `src-tauri` passes. Clippy is a bonus.
-- After modifying a Rust struct exposed via `ts-rs`: run `bun run gen:types` and commit the output.
+- After modifying a Rust struct exposed via `ts-rs`: run `npm run gen:types` and commit the output.
 - After editing the configuration of a route, regenerating the route-tree must be done via the `build` script.
 - Never manually edit `src/generated` — always regenerate.
 - Don't fix pre-existing issues unrelated to the current task.
