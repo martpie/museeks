@@ -230,6 +230,7 @@ function ViewTrackDetails() {
         <Setting.Section>
           <SettingCheckbox
             title={t`Compilation`}
+            description={t`Group this track with other tracks from the same compilation, regardless of the artist names.`}
             value={formData.is_compilation}
             onChange={(value) => {
               setFormData({ ...formData, is_compilation: value });

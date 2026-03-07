@@ -195,7 +195,7 @@ msgstr "Remove tracks"
 #: src/components/TrackList.tsx:388
 #: src/routes/settings.library.tsx:99
 #: src/routes/settings.library.tsx:144
-#: src/routes/tracks.$trackID.tsx:257
+#: src/routes/tracks.$trackID.tsx:258
 msgid "Cancel"
 msgstr "Cancel"
 
@@ -217,7 +217,7 @@ msgid "Title"
 msgstr "Title"
 
 #: src/components/TrackListHeader.tsx:53
-#: src/routes/tracks.$trackID.tsx:241
+#: src/routes/tracks.$trackID.tsx:242
 msgid "Duration"
 msgstr "Duration"
 
@@ -575,15 +575,19 @@ msgstr "Disk Nº"
 msgid "Compilation"
 msgstr "Compilation"
 
-#: src/routes/tracks.$trackID.tsx:249
+#: src/routes/tracks.$trackID.tsx:233
+msgid "Group this track with other tracks from the same compilation, regardless of the artist names."
+msgstr "Group this track with other tracks from the same compilation, regardless of the artist names."
+
+#: src/routes/tracks.$trackID.tsx:250
 msgid "Path"
 msgstr "Path"
 
-#: src/routes/tracks.$trackID.tsx:260
+#: src/routes/tracks.$trackID.tsx:261
 msgid "Save"
 msgstr "Save"
 
-#: src/routes/tracks.$trackID.tsx:265
+#: src/routes/tracks.$trackID.tsx:266
 msgid "Clicking \"save\" will only update the library data, but will not save it to the original file."
 msgstr "Clicking \"save\" will only update the library data, but will not save it to the original file."
 
