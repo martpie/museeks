@@ -1,7 +1,7 @@
 import * as stylex from '@stylexjs/stylex';
 
 export default function Separator() {
-  return <hr {...stylex.props(styles.separator)} />;
+  return <hr sx={styles.separator} />;
 }
 
 const styles = stylex.create({

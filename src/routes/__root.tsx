@@ -58,10 +58,7 @@ function ViewRoot() {
   }, [location]);
 
   return (
-    <div
-      {...stylex.props(styles.root)}
-      data-museeks-os={window.__MUSEEKS_PLATFORM}
-    >
+    <div sx={styles.root} data-museeks-os={window.__MUSEEKS_PLATFORM}>
       {/** Bunch of global event handlers */}
       <IPCNavigationEvents />
       <IPCPlayerEvents />
@@ -72,7 +69,7 @@ function ViewRoot() {
 
       {/** The actual app */}
       <Header />
-      <main {...stylex.props(styles.mainContent)}>
+      <main sx={styles.mainContent}>
         <Outlet />
       </main>
       <Footer />

@@ -9,10 +9,7 @@ type Props = {
 
 export function Section(props: Props) {
   return (
-    <section
-      data-testid={props['data-testid']}
-      {...stylex.props(styles.settingSection)}
-    >
+    <section data-testid={props['data-testid']} sx={styles.settingSection}>
       {props.children}
     </section>
   );
@@ -20,10 +17,7 @@ export function Section(props: Props) {
 
 export function Description(props: Props) {
   return (
-    <p
-      data-testid={props['data-testid']}
-      {...stylex.props(styles.settingDescription)}
-    >
+    <p data-testid={props['data-testid']} sx={styles.settingDescription}>
       {props.children}
     </p>
   );
@@ -41,10 +35,7 @@ export function Label(
     <label
       htmlFor={htmlFor}
       {...restProps}
-      {...stylex.props(
-        styles.settingLabel,
-        noMargin && styles.settingLabelNoMargin,
-      )}
+      sx={[styles.settingLabel, noMargin && styles.settingLabelNoMargin]}
     >
       {children}
     </label>
@@ -53,10 +44,7 @@ export function Label(
 
 export function Title(props: Props) {
   return (
-    <h3
-      data-testid={props['data-testid']}
-      {...stylex.props(styles.settingTitle)}
-    >
+    <h3 data-testid={props['data-testid']} sx={styles.settingTitle}>
       {props.children}
     </h3>
   );
@@ -80,7 +68,7 @@ export function Input(
         id={id}
         autoComplete="off"
         {...otherProps}
-        {...stylex.props(styles.settingInput)}
+        sx={styles.settingInput}
       />
       {description != null && <Description>{description}</Description>}
     </div>
@@ -88,7 +76,7 @@ export function Input(
 }
 
 export function ErrorMessage(props: Props) {
-  return <p {...stylex.props(styles.settingError)}>{props.children}</p>;
+  return <p sx={styles.settingError}>{props.children}</p>;
 }
 
 export function Select(
@@ -100,7 +88,7 @@ export function Select(
   return (
     <div>
       <Label htmlFor={id}>{label}</Label>
-      <select id={id} {...otherProps} {...stylex.props(styles.settingSelect)}>
+      <select id={id} {...otherProps} sx={styles.settingSelect}>
         {props.children}
       </select>
       {description != null && <Description>{description}</Description>}
@@ -121,7 +109,7 @@ export function ColorSelector(
         id={id}
         type="color"
         {...otherProps}
-        {...stylex.props(styles.settingInput, styles.settingColorInput)}
+        sx={[styles.settingInput, styles.settingColorInput]}
       />
       {description != null && <Description>{description}</Description>}
     </div>

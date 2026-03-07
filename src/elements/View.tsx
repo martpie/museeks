@@ -7,7 +7,7 @@ type Props = {
   sideNav?: React.ReactElement<typeof SideNav>;
   layout?: 'centered';
   hasPadding?: boolean;
-  xstyle?: stylex.CompiledStyles;
+  sx?: stylex.CompiledStyles;
 };
 
 /**
@@ -17,19 +17,19 @@ export default function View(props: Props) {
   if (props.sideNav) {
     return (
       <div
-        {...stylex.props(
+        sx={[
           styles.view,
           styles.viewWithSideNav,
           props.layout === 'centered' && styles.centered,
-        )}
+        ]}
       >
         {props.sideNav}
         <div
-          {...stylex.props(
+          sx={[
             styles.viewContent,
             props.hasPadding && styles.hasPadding,
-            props.xstyle,
-          )}
+            props.sx,
+          ]}
         >
           {props.children}
         </div>
@@ -40,28 +40,20 @@ export default function View(props: Props) {
   if (props.layout === 'centered') {
     return (
       <div
-        {...stylex.props(
+        sx={[
           styles.view,
           styles.centered,
           props.hasPadding && styles.hasPadding,
-          props.xstyle,
-        )}
+          props.sx,
+        ]}
       >
-        <div {...stylex.props(styles.centeredViewContent)}>
-          {props.children}
-        </div>
+        <div sx={styles.centeredViewContent}>{props.children}</div>
       </div>
     );
   }
 
   return (
-    <div
-      {...stylex.props(
-        styles.view,
-        props.hasPadding && styles.hasPadding,
-        props.xstyle,
-      )}
-    >
+    <div sx={[styles.view, props.hasPadding && styles.hasPadding, props.sx]}>
       {props.children}
     </div>
   );

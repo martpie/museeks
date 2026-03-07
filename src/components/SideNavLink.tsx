@@ -125,7 +125,7 @@ export default function SideNavLink(props: Props): React.ReactNode {
         onBlur={onBlur}
         onFocus={onFocus}
         ref={(ref) => ref?.focus()}
-        {...stylex.props(styles.sideNavLink, styles.sideNavLinkInput)}
+        sx={[styles.sideNavLink, styles.sideNavLinkInput]}
       />
     );
   }
@@ -136,7 +136,7 @@ export default function SideNavLink(props: Props): React.ReactNode {
       draggable={false}
       {...linkOptions}
       activeProps={stylex.props(styles.isActive)}
-      {...stylex.props(styles.sideNavLink)}
+      sx={styles.sideNavLink}
     >
       {label}
     </Link>

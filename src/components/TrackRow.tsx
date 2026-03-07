@@ -89,7 +89,7 @@ export default function TrackRow(props: Props) {
       aria-selected={selected}
       role="option" // technically already given by attributes, but that'll make the linter happy
       // styles
-      {...stylex.props(
+      sx={[
         trackStyles.track,
         isEvenRow && trackStyles.trackEvenRow,
         selected && trackStyles.trackSelected,
@@ -98,39 +98,37 @@ export default function TrackRow(props: Props) {
         isDropIndicatorVisible && trackStyles.isDraggedOver,
         isDropAbove && trackStyles.isDraggedOverAbove,
         isDropBelow && trackStyles.isDraggedOverBelow,
-      )}
+      ]}
       style={props.style}
     >
-      <div {...stylex.props(cellStyles.cell, cellStyles.trackPlaying)}>
+      <div sx={[cellStyles.cell, cellStyles.trackPlaying]}>
         {props.isPlaying ? <PlayingIndicator /> : null}
       </div>
-      <div {...stylex.props(cellStyles.cell, cellStyles.title)}>
-        <span {...stylex.props(cellStyles.titleText)}>{track.title}</span>
+      <div sx={[cellStyles.cell, cellStyles.title]}>
+        <span sx={cellStyles.titleText}>{track.title}</span>
         {props.showArtistInTitle === true && track.artists.length > 0 && (
-          <span {...stylex.props(cellStyles.artistInTitle)}>
+          <span sx={cellStyles.artistInTitle}>
             {'— '}
             {track.artists.join(', ')}
           </span>
         )}
       </div>
       <div
-        {...stylex.props(
+        sx={[
           cellStyles.cell,
           cellStyles.duration,
           props.simplified === true && cellStyles.rightAligned,
-        )}
+        ]}
       >
         {duration}
       </div>
       {props.simplified !== true && (
         <>
-          <div {...stylex.props(cellStyles.cell, cellStyles.artist)}>
+          <div sx={[cellStyles.cell, cellStyles.artist]}>
             {track.artists.join(', ')}
           </div>
-          <div {...stylex.props(cellStyles.cell, cellStyles.album)}>
-            {track.album}
-          </div>
-          <div {...stylex.props(cellStyles.cell, cellStyles.genre)}>
+          <div sx={[cellStyles.cell, cellStyles.album]}>{track.album}</div>
+          <div sx={[cellStyles.cell, cellStyles.genre]}>
             {track.genres.join(', ')}
           </div>
         </>

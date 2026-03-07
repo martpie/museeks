@@ -3,7 +3,7 @@ import * as stylex from '@stylexjs/stylex';
 type Props = {
   gap?: keyof typeof gapVariants;
   children: React.ReactNode;
-  xstyle?: stylex.CompiledStyles;
+  sx?: stylex.CompiledStyles;
   direction?: keyof typeof directionVariants;
   align?: keyof typeof alignVariants;
 };
@@ -11,13 +11,13 @@ type Props = {
 export default function Flexbox(props: Props) {
   return (
     <div
-      {...stylex.props(
+      sx={[
         styles.flexbox,
         directionVariants[props.direction ?? 'horizontal'],
         gapVariants[props.gap ?? 0],
         props.align ? alignVariants[props.align] : null,
-        props.xstyle,
-      )}
+        props.sx,
+      ]}
     >
       {props.children}
     </div>

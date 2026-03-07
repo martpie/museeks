@@ -5,7 +5,7 @@ type Props = {
 };
 
 export default function List(props: Props) {
-  return <dl {...stylex.props(styles.list)}>{props.children}</dl>;
+  return <dl sx={styles.list}>{props.children}</dl>;
 }
 
 type ListItemProps = {
@@ -16,8 +16,8 @@ type ListItemProps = {
 List.Item = function ListItem(props: ListItemProps) {
   return (
     <>
-      <dt {...stylex.props(styles.label)}>{props.label}</dt>
-      <dd {...stylex.props(styles.content)}>{props.content}</dd>
+      <dt sx={styles.label}>{props.label}</dt>
+      <dd sx={styles.content}>{props.content}</dd>
     </>
   );
 };

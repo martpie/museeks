@@ -39,38 +39,38 @@ export default function TrackListHeader(props: Props) {
   const { t } = useLingui();
 
   return (
-    <div {...stylex.props(styles.trackListHeader)}>
-      <TrackListHeaderCell xstyle={styles.cellTrackPlaying} title="&nbsp;" />
+    <div sx={styles.trackListHeader}>
+      <TrackListHeaderCell sx={styles.cellTrackPlaying} title="&nbsp;" />
       <TrackListHeaderCell
-        xstyle={styles.cellTrack}
+        sx={styles.cellTrack}
         title={t`Title`}
         sortBy={enableSort ? 'Title' : null}
         icon={getIcon(enableSort, sortBy, sortOrder, 'Title')}
         data-testid="tracklist-header-title"
       />
       <TrackListHeaderCell
-        xstyle={styles.cellDuration}
+        sx={styles.cellDuration}
         title={t`Duration`}
         sortBy={enableSort ? 'Duration' : null}
         icon={getIcon(enableSort, sortBy, sortOrder, 'Duration')}
         data-testid="tracklist-header-duration"
       />
       <TrackListHeaderCell
-        xstyle={styles.cellArtist}
+        sx={styles.cellArtist}
         title={t`Artist`}
         sortBy={enableSort ? 'Artist' : null}
         icon={getIcon(enableSort, sortBy, sortOrder, 'Artist')}
         data-testid="tracklist-header-artist"
       />
       <TrackListHeaderCell
-        xstyle={styles.cellAlbum}
+        sx={styles.cellAlbum}
         title={t`Album`}
         sortBy={enableSort ? 'Album' : null}
         icon={getIcon(enableSort, sortBy, sortOrder, 'Album')}
         data-testid="tracklist-header-album"
       />
       <TrackListHeaderCell
-        xstyle={styles.cellGenre}
+        sx={styles.cellGenre}
         title={t`Genre`}
         sortBy={enableSort ? 'Genre' : null}
         icon={getIcon(enableSort, sortBy, sortOrder, 'Genre')}

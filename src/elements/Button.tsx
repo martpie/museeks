@@ -13,12 +13,12 @@ export default function Button(props: Props) {
     <button
       type="button"
       {...rest}
-      {...stylex.props(
+      sx={[
         styles.button,
         relevancy === 'danger' && styles.danger,
         bSize === 'small' && styles.small,
         block && styles.block,
-      )}
+      ]}
     >
       {props.children}
     </button>

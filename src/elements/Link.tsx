@@ -34,11 +34,11 @@ export default function Link(props: LinkProps | ButtonProps): React.ReactNode {
       <RouterLink
         {...props.linkOptions}
         draggable={false}
-        {...stylex.props(
+        sx={[
           styles.link,
           props.inheritColor === true && styles.inheritColor,
           props.notBold === true && styles.notBold,
-        )}
+        ]}
       >
         {props.children}
       </RouterLink>
@@ -49,11 +49,11 @@ export default function Link(props: LinkProps | ButtonProps): React.ReactNode {
     <button
       onClick={props.onClick}
       type="button"
-      {...stylex.props(
+      sx={[
         styles.link,
         props.inheritColor === true && styles.inheritColor,
         props.notBold === true && styles.notBold,
-      )}
+      ]}
     >
       {props.children}
     </button>

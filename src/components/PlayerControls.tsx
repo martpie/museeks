@@ -11,7 +11,7 @@ export default function PlayerControls() {
   const { t } = useLingui();
 
   return (
-    <div {...stylex.props(styles.playerControls)}>
+    <div sx={styles.playerControls}>
       <ButtonIcon
         icon="skipBack"
         iconSize={16}

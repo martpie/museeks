@@ -24,24 +24,24 @@ export default function SideNav(props: Props) {
   }, [props.children]);
 
   return (
-    <div {...stylex.props(styles.nav)} data-museeks-list>
-      <Flexbox gap={8} align="center" xstyle={styles.header}>
-        <h4 {...stylex.props(styles.title)}>{props.title}</h4>
-        <div {...stylex.props(styles.actions)}>{props.actions}</div>
+    <div sx={styles.nav} data-museeks-list>
+      <Flexbox gap={8} align="center" sx={styles.header}>
+        <h4 sx={styles.title}>{props.title}</h4>
+        <div sx={styles.actions}>{props.actions}</div>
       </Flexbox>
-      <div {...stylex.props(styles.content)}>
+      <div sx={styles.content}>
         {Object.entries(groupedChildren).map(([letter, children]) => {
           return (
             <React.Fragment key={letter}>
-              <div {...stylex.props(styles.letter)}>{letter}</div>
-              <div {...stylex.props(styles.items)}>{children}</div>
+              <div sx={styles.letter}>{letter}</div>
+              <div sx={styles.items}>{children}</div>
             </React.Fragment>
           );
         })}
         {props.bottomContent && (
           <>
             {/** should probably be a prop */}
-            <div {...stylex.props(styles.letter)}>#</div>
+            <div sx={styles.letter}>#</div>
             {props.bottomContent}
           </>
         )}

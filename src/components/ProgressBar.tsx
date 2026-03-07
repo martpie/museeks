@@ -7,9 +7,9 @@ type Props = {
 
 export default function ProgressBar(props: Props) {
   return (
-    <Progress.Root {...stylex.props(styles.progress)} value={props.progress}>
+    <Progress.Root sx={styles.progress} value={props.progress}>
       <Progress.Indicator
-        {...stylex.props(styles.progressBar)}
+        sx={styles.progressBar}
         style={{ width: `${props.progress}%` }}
       />
     </Progress.Root>

@@ -36,10 +36,10 @@ export default function Search() {
   };
 
   return (
-    <div {...stylex.props(styles.searchContainer)}>
+    <div sx={styles.searchContainer}>
       <input
         type="text"
-        {...stylex.props(styles.searchInput)}
+        sx={styles.searchInput}
         placeholder={t`search...`}
         value={search}
         onChange={onChange}
@@ -52,7 +52,7 @@ export default function Search() {
       {search.length > 0 && (
         <button
           type="button"
-          {...stylex.props(styles.searchClear)}
+          sx={styles.searchClear}
           onClick={onClear}
           data-museeks-action
           data-testid="library-search-clear"

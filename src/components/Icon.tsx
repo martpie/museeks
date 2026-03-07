@@ -57,7 +57,7 @@ type Props = {
   name: IconName;
   color?: string;
   size?: IconSize;
-  xstyle?: stylex.CompiledStyles;
+  sx?: stylex.CompiledStyles;
 };
 
 export default function Icon(props: Props) {
@@ -71,7 +71,7 @@ export default function Icon(props: Props) {
         style={{
           color: props.color,
         }}
-        {...stylex.props(styles.icon, stylesBySize[size], props.xstyle)}
+        sx={[styles.icon, stylesBySize[size], props.sx]}
       >
         ?
       </span>
@@ -83,7 +83,7 @@ export default function Icon(props: Props) {
       style={{
         color: props.color,
       }}
-      {...stylex.props(styles.icon, stylesBySize[size], props.xstyle)}
+      sx={[styles.icon, stylesBySize[size], props.sx]}
     />
   );
 }

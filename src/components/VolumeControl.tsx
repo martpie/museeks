@@ -38,7 +38,7 @@ export default function VolumeControl() {
   return (
     <HoverCard.Root openDelay={0} closeDelay={150}>
       <HoverCard.Trigger asChild>
-        <div {...stylex.props(styles.volumeControlContainer)}>
+        <div sx={styles.volumeControlContainer}>
           <ButtonIcon
             title={t`Volume`}
             onClick={() => player.toggleMute()}
@@ -50,7 +50,7 @@ export default function VolumeControl() {
       <HoverCard.Content
         side="right"
         sideOffset={8}
-        {...stylex.props(styles.volumeHoverCard)}
+        sx={styles.volumeHoverCard}
       >
         <Slider.Root
           value={[unsmoothifyVolume(volume)]}
@@ -59,15 +59,15 @@ export default function VolumeControl() {
           min={0}
           max={1}
           step={0.01}
-          {...stylex.props(styles.sliderRoot, muted && styles.faded)}
+          sx={[styles.sliderRoot, muted && styles.faded]}
         >
-          <Slider.Track {...stylex.props(styles.sliderTrack)}>
-            <Slider.Range {...stylex.props(styles.sliderRange)} />
+          <Slider.Track sx={styles.sliderTrack}>
+            <Slider.Range sx={styles.sliderRange} />
           </Slider.Track>
           <Slider.Thumb
             aria-label={t`Volume`}
             data-museeks-action
-            {...stylex.props(styles.sliderThumb)}
+            sx={styles.sliderThumb}
           />
         </Slider.Root>
       </HoverCard.Content>

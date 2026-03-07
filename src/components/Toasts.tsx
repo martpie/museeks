@@ -6,7 +6,7 @@ import useToastsStore from '../stores/useToastsStore';
 export default function Toasts() {
   const toasts = useToastsStore((state) => state.toasts);
   return (
-    <div {...stylex.props(styles.toasts)}>
+    <div sx={styles.toasts}>
       {toasts.map((toast) => (
         <ToastItem type={toast.type} content={toast.content} key={toast._id} />
       ))}

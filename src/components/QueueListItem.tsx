@@ -39,11 +39,11 @@ export default function QueueListItem(props: Props) {
 
   return (
     <li
-      {...stylex.props(
+      sx={[
         styles.queueItem,
         props.index > 0 && styles.queueItemWithTopBorder,
         stylex.defaultMarker(),
-      )}
+      ]}
       {...attributes}
       // DnD props for re-ordering
       ref={setNodeRef}
@@ -51,20 +51,16 @@ export default function QueueListItem(props: Props) {
       onDoubleClick={play}
       {...listeners}
     >
-      <div {...stylex.props(styles.queueItemCover)}>
+      <div sx={styles.queueItemCover}>
         <Cover track={track} iconSize={12} />
       </div>
-      <div {...stylex.props(styles.queueItemInfo)}>
-        <div {...stylex.props(styles.queueItemInfoTitle)}>{track.title}</div>
-        <div {...stylex.props(styles.queueItemInfoOtherInfos)}>
+      <div sx={styles.queueItemInfo}>
+        <div sx={styles.queueItemInfoTitle}>{track.title}</div>
+        <div sx={styles.queueItemInfoOtherInfos}>
           <span>{track.artists.join(', ')}</span> - <span>{track.album}</span>
         </div>
       </div>
-      <button
-        type="button"
-        {...stylex.props(styles.queueItemRemove)}
-        onClick={remove}
-      >
+      <button type="button" sx={styles.queueItemRemove} onClick={remove}>
         &times;
       </button>
     </li>

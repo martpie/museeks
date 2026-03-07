@@ -71,15 +71,15 @@ export default function QueueList(props: Props) {
       modifiers={DND_MODIFIERS}
       sensors={sensors}
     >
-      <div {...stylex.props(styles.queueHeader)}>
-        <div {...stylex.props(styles.queueHeaderInfos)}>
+      <div sx={styles.queueHeader}>
+        <div sx={styles.queueHeaderInfos}>
           <TrackListStatus {...status} />
         </div>
         <Button bSize="small" onClick={() => player.clearQueue()}>
           <Trans>clear queue</Trans>
         </Button>
       </div>
-      <ul {...stylex.props(styles.queueContent)}>
+      <ul sx={styles.queueContent}>
         <SortableContext
           items={shownQueue}
           strategy={verticalListSortingStrategy}

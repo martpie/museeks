@@ -34,11 +34,11 @@ msgstr "{skippedItemsCount, plural, one {# élément invalide ignoré} other {# 
 msgid "{0, plural, one {# folder added to the library} other {# folders added to the library}}"
 msgstr "{0, plural, one {# dossier ajouté à la bibliothèque} other {# dossiers ajoutés à la bibliothèque}}"
 
-#: src/components/DropzoneImport.tsx:92
+#: src/components/DropzoneImport.tsx:90
 msgid "Add music to the library"
 msgstr "Ajouter de la musique à la bibliothèque"
 
-#: src/components/DropzoneImport.tsx:93
+#: src/components/DropzoneImport.tsx:91
 msgid "Drop folders anywhere"
 msgstr "Déposer des dossiers n'importe où"
 
@@ -206,7 +206,7 @@ msgstr "Retirer"
 
 #. placeholder {0}: props.count
 #. placeholder {0}: tracks.length
-#: src/components/TrackListGrouped.tsx:109
+#: src/components/TrackListGrouped.tsx:106
 #: src/components/TrackListStatus.tsx:11
 msgid "{0, plural, one {# track} other {# tracks}}"
 msgstr "{0, plural, one {# piste} other {# pistes}}"

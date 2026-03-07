@@ -55,14 +55,14 @@ export default function TrackProgress(props: Props) {
       step={1}
       value={[elapsed]}
       onValueChange={jumpAudioTo}
-      {...stylex.props(styles.trackRoot)}
+      sx={styles.trackRoot}
       onMouseMoveCapture={showTooltip}
       onMouseLeave={hideTooltip}
     >
-      <Slider.Track {...stylex.props(styles.trackProgress)}>
-        <Slider.Range {...stylex.props(styles.trackRange)} />
+      <Slider.Track sx={styles.trackProgress}>
+        <Slider.Range sx={styles.trackRange} />
         <div
-          {...stylex.props(styles.progressTooltip)}
+          sx={styles.progressTooltip}
           style={{
             left: `${tooltipX}%`,
             display: tooltipX == null ? 'none' : 'block',

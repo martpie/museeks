@@ -11,11 +11,7 @@ type Props = {
 export default function ToastItem(props: Props) {
   const { type, content } = props;
 
-  return (
-    <div {...stylex.props(styles.toast, typeVariantsStyles[type])}>
-      {content}
-    </div>
-  );
+  return <div sx={[styles.toast, typeVariantsStyles[type]]}>{content}</div>;
 }
 
 const styles = stylex.create({

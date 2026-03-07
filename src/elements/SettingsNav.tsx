@@ -10,7 +10,7 @@ interface WrapProps {
  * Wrapper for navigation
  */
 export function SettingsNav(props: WrapProps) {
-  return <nav {...stylex.props(styles.nav)}>{props.children}</nav>;
+  return <nav sx={styles.nav}>{props.children}</nav>;
 }
 
 interface LinkProps {
@@ -25,7 +25,7 @@ export function SettingsNavLink(props: LinkProps) {
   return (
     <Link
       to={props.to}
-      {...stylex.props(styles.navLink)}
+      sx={styles.navLink}
       draggable={false}
       data-testid={`settings-nav-link${props.to}`}
     >

@@ -119,7 +119,7 @@ export default function TrackListDefault(props: Props) {
         <ul
           role="listbox"
           aria-multiselectable="true"
-          {...stylex.props(styles.rows)}
+          sx={styles.rows}
           style={{
             height: `${virtualizer.getTotalSize()}px`,
           }}

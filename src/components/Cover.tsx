@@ -19,15 +19,15 @@ export default function Cover(props: Props) {
   return (
     <AspectRatio.Root ratio={1}>
       <div
-        {...stylex.props(
+        sx={[
           styles.cover,
           coverPath != null && styles.noBorder,
           coverPath == null &&
             props.noHorizontalBorder &&
             styles.noHorizontalBorder,
-        )}
+        ]}
       >
-        <div {...stylex.props(styles.note)}>
+        <div sx={styles.note}>
           <Icon name="musicalNotes" size={props.iconSize} />
         </div>
         <img
@@ -35,7 +35,7 @@ export default function Cover(props: Props) {
           alt={t`Album cover`}
           draggable={false}
           aria-hidden={coverPath === null}
-          {...stylex.props(styles.image, coverPath != null && styles.visible)}
+          sx={[styles.image, coverPath != null && styles.visible]}
         />
       </div>
     </AspectRatio.Root>

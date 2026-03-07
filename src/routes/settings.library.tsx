@@ -51,14 +51,14 @@ function ViewSettingsLibrary() {
           </Setting.Description>
         )}
         {libraryFolders.length > 0 && (
-          <ul {...stylex.props(styles.libraryFolders)}>
+          <ul sx={styles.libraryFolders}>
             {config.library_folders.map((folder) => {
               return (
                 <li key={folder}>
                   <Flexbox align="center">
                     <button
                       type="button"
-                      {...stylex.props(styles.libraryFoldersRemove)}
+                      sx={styles.libraryFoldersRemove}
                       title={t`Remove`}
                       data-museeks-action
                       onClick={() =>

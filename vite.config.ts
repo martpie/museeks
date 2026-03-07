@@ -11,6 +11,7 @@ export const VITE_PLUGINS: PluginOption[] = [
   stylex.vite({
     useCSSLayers: false, // bigger bundles, but less conflicts with global styles
     propertyValidationMode: 'throw',
+    sxPropName: 'sx',
   }),
   react({
     babel: {

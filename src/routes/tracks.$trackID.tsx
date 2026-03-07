@@ -80,7 +80,7 @@ function ViewTrackDetails() {
 
   return (
     <View hasPadding layout="centered">
-      <form onSubmit={handleSubmit} {...stylex.props(styles.detailsForm)}>
+      <form onSubmit={handleSubmit} sx={styles.detailsForm}>
         <h2>
           <Trans>Edit "{track.title}"</Trans>
         </h2>
@@ -253,7 +253,7 @@ function ViewTrackDetails() {
             value={track.path}
           />
         </Setting.Section>
-        <div {...stylex.props(styles.detailsActions)}>
+        <div sx={styles.detailsActions}>
           <Button type="button" onClick={handleCancel}>
             <Trans>Cancel</Trans>
           </Button>

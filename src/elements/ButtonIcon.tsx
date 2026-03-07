@@ -18,13 +18,13 @@ export default function ButtonIcon(props: Props) {
       onClick={onClick}
       data-museeks-action
       {...rest}
-      {...stylex.props(styles.buttonIcon)}
+      sx={styles.buttonIcon}
     >
       <Icon
         name={icon}
         size={iconSize}
         color={isActive ? 'var(--main-color)' : undefined}
-        {...stylex.props(styles.icon)}
+        sx={styles.icon}
       />
     </button>
   );

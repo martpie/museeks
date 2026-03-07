@@ -422,11 +422,7 @@ export default function TrackList(props: Props) {
     tracksDensity === 'compact' ? ROW_HEIGHT_COMPACT : ROW_HEIGHT;
 
   return (
-    <div
-      {...stylex.props(styles.trackList)}
-      data-museeks-list
-      data-testid="track-list"
-    >
+    <div sx={styles.trackList} data-museeks-list data-testid="track-list">
       <Keybinding onKey={onKeyEvent} preventInputConflict />
       {layout === 'default' && (
         <TrackListDefault

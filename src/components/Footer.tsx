@@ -11,16 +11,16 @@ export default function Footer() {
   const { t } = useLingui();
 
   return (
-    <footer {...stylex.props(styles.footer)}>
-      <div {...stylex.props(styles.footerNavigation)}>
-        <div {...stylex.props(styles.footerNavigationLinkgroup)}>
+    <footer sx={styles.footer}>
+      <div sx={styles.footerNavigation}>
+        <div sx={styles.footerNavigationLinkgroup}>
           <Link
             to="/library"
             activeProps={stylex.props(styles.footerNavigationLinkIsActive)}
             title={t`Library`}
             draggable={false}
             data-testid="footer-library-link"
-            {...stylex.props(styles.footerNavigationLink)}
+            sx={styles.footerNavigationLink}
           >
             <Icon name="musicalNotes" size={16} />
           </Link>
@@ -30,7 +30,7 @@ export default function Footer() {
             title={t`Artists`}
             draggable={false}
             data-testid="footer-artists-link"
-            {...stylex.props(styles.footerNavigationLink)}
+            sx={styles.footerNavigationLink}
           >
             <Icon name="microphone" size={16} />
           </Link>
@@ -40,7 +40,7 @@ export default function Footer() {
             title={t`Playlists`}
             draggable={false}
             data-testid="footer-playlists-link"
-            {...stylex.props(styles.footerNavigationLink)}
+            sx={styles.footerNavigationLink}
           >
             <Icon name="playlist" size={16} />
           </Link>
@@ -50,13 +50,13 @@ export default function Footer() {
             title={t`Settings`}
             draggable={false}
             data-testid="footer-settings-link"
-            {...stylex.props(styles.footerNavigationLink)}
+            sx={styles.footerNavigationLink}
           >
             <Icon name="settings" size={16} />
           </Link>
         </div>
       </div>
-      <div {...stylex.props(styles.footerStatus)}>
+      <div sx={styles.footerStatus}>
         <Status />
       </div>
     </footer>
@@ -77,8 +77,8 @@ function Status() {
     const progress = total > 0 ? Math.round((current / total) * 100) : 100;
 
     return (
-      <div {...stylex.props(styles.footerLibraryRefresh)}>
-        <div {...stylex.props(styles.footerLibraryRefreshProgress)}>
+      <div sx={styles.footerLibraryRefresh}>
+        <div sx={styles.footerLibraryRefreshProgress}>
           {isScanning ? (
             t`scanning tracks...`
           ) : (
@@ -86,7 +86,7 @@ function Status() {
           )}
         </div>
         {total > 0 && (
-          <div {...stylex.props(styles.footerLibraryRefreshCount)}>
+          <div sx={styles.footerLibraryRefreshCount}>
             {current} / {total}
           </div>
         )}

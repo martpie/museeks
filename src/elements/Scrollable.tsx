@@ -7,7 +7,7 @@ type Props = {
 
 export default function Scrollable(props: Props) {
   return (
-    <div {...stylex.props(styles.scrollable)} ref={props.ref}>
+    <div sx={styles.scrollable} ref={props.ref}>
       {props.children}
     </div>
   );

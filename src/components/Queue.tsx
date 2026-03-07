@@ -29,7 +29,7 @@ export default function Queue(props: Props) {
     content = <QueueList queue={queue} queueCursor={queueCursor} />;
   }
 
-  return <div {...stylex.props(styles.queue)}>{content}</div>;
+  return <div sx={styles.queue}>{content}</div>;
 }
 
 const styles = stylex.create({

@@ -3,7 +3,7 @@ import * as stylex from '@stylexjs/stylex';
 
 export default function QueueEmpty() {
   return (
-    <div {...stylex.props(styles.queueEmpty)}>
+    <div sx={styles.queueEmpty}>
       <Trans>Queue is empty</Trans>
     </div>
   );

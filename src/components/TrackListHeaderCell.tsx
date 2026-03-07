@@ -7,14 +7,14 @@ import Icon, { type IconName } from './Icon';
 
 type Props = {
   title: string;
-  xstyle?: stylex.CompiledStyles;
+  sx?: stylex.CompiledStyles;
   sortBy?: SortBy | null;
   icon?: IconName | null;
   'data-testid'?: string;
 };
 
 export default function TrackListHeaderCell(props: Props) {
-  const { sortBy, xstyle, title, icon } = props;
+  const { sortBy, sx, title, icon } = props;
   const libraryAPI = useLibraryAPI();
 
   const sort = useCallback(() => {
@@ -25,9 +25,9 @@ export default function TrackListHeaderCell(props: Props) {
 
   const content = (
     <React.Fragment>
-      <div {...stylex.props(styles.name)}>{title}</div>
+      <div sx={styles.name}>{title}</div>
       {icon && (
-        <div {...stylex.props(styles.icon)}>
+        <div sx={styles.icon}>
           <Icon name={icon} size={12} />
         </div>
       )}
@@ -40,11 +40,7 @@ export default function TrackListHeaderCell(props: Props) {
       disabled={sortBy === null}
       onClick={sort}
       data-testid={props['data-testid']}
-      {...stylex.props(
-        styles.trackCellHeader,
-        sortBy && styles.sortable,
-        xstyle,
-      )}
+      sx={[styles.trackCellHeader, sortBy && styles.sortable, sx]}
     >
       {content}
     </button>

@@ -86,10 +86,8 @@ export default function DropzoneImport() {
   }, [libraryAPI, toastsAPI, invalidate]);
 
   return (
-    <div {...stylex.props(styles.dropzone, isShown && styles.shown)}>
-      <div
-        {...stylex.props(styles.dropzoneTitle)}
-      >{t`Add music to the library`}</div>
+    <div sx={[styles.dropzone, isShown && styles.shown]}>
+      <div sx={styles.dropzoneTitle}>{t`Add music to the library`}</div>
       <span>{t`Drop folders anywhere`}</span>
     </div>
   );

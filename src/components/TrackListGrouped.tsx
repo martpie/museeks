@@ -92,15 +92,12 @@ function TrackListGroup(props: TrackListGroupProps) {
   }
 
   return (
-    <div
-      {...stylex.props(styles.group)}
-      data-track-group={encodeURIComponent(label)}
-    >
-      <aside {...stylex.props(styles.aside)}>
+    <div sx={styles.group} data-track-group={encodeURIComponent(label)}>
+      <aside sx={styles.aside}>
         {/** Instead of the first one, maybe get the first track within the album to hold a cover? */}
         <Cover track={tracks[0]} iconSize={36} />
-        <h3 {...stylex.props(styles.label)}>{label}</h3>
-        <div {...stylex.props(styles.metadata)}>
+        <h3 sx={styles.label}>{label}</h3>
+        <div sx={styles.metadata}>
           <div>
             {year}
             {genres.length > 0 && <span> - {genres.join(', ')}</span>}
@@ -111,7 +108,7 @@ function TrackListGroup(props: TrackListGroupProps) {
           </div>
         </div>
       </aside>
-      <ul {...stylex.props(styles.rows)}>
+      <ul sx={styles.rows}>
         {tracks.map((track, index) => {
           return (
             <TrackRow

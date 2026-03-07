@@ -19,28 +19,28 @@ export default function Header() {
 
   return (
     <header
-      {...stylex.props(
+      sx={[
         styles.header,
         (platform === 'windows' || platform === 'linux') &&
           styles.headerBorderTop,
-      )}
+      ]}
       data-tauri-drag-region
     >
       <div
-        {...stylex.props(
+        sx={[
           styles.headerMainControls,
           platform === 'macos' && styles.headerMainControlsMacos,
-        )}
+        ]}
         data-tauri-drag-region
       >
         <PlayerControls />
       </div>
-      <div {...stylex.props(styles.headerPlayingBar)} data-tauri-drag-region>
+      <div sx={styles.headerPlayingBar} data-tauri-drag-region>
         {trackPlaying != null && (
           <>
             <PlayingBar trackPlaying={trackPlaying} />
             <Popover.Root>
-              <div {...stylex.props(styles.queue)}>
+              <div sx={styles.queue}>
                 <Popover.Trigger asChild>
                   <ButtonIcon
                     icon="list"
@@ -56,7 +56,7 @@ export default function Header() {
                   side="bottom"
                   align="end"
                   avoidCollisions={false}
-                  {...stylex.props(styles.queueContainer)}
+                  sx={styles.queueContainer}
                 >
                   <Queue queue={queue} queueCursor={queueCursor} />
                 </Popover.Content>
@@ -65,7 +65,7 @@ export default function Header() {
           </>
         )}
       </div>
-      <div {...stylex.props(styles.headerSearch)} data-tauri-drag-region>
+      <div sx={styles.headerSearch} data-tauri-drag-region>
         <Search />
       </div>
     </header>

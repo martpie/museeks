@@ -21,10 +21,7 @@ export default function CheckboxSetting(props: Props) {
         <input
           id={id}
           type="checkbox"
-          {...stylex.props(
-            styles.checkboxInput,
-            props.value && styles.checkboxChecked,
-          )}
+          sx={[styles.checkboxInput, props.value && styles.checkboxChecked]}
           onChange={(e) => props.onChange(e.currentTarget.checked)}
           checked={props.value}
         />

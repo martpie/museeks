@@ -16,10 +16,10 @@ export default function TrackPlayingIndicator() {
       }
 
       return (
-        <div {...stylex.props(styles.animation)}>
-          <div {...stylex.props(styles.bar)} />
-          <div {...stylex.props(styles.bar, styles.barSecond)} />
-          <div {...stylex.props(styles.bar, styles.barThird)} />
+        <div sx={styles.animation}>
+          <div sx={styles.bar} />
+          <div sx={[styles.bar, styles.barSecond]} />
+          <div sx={[styles.bar, styles.barThird]} />
         </div>
       );
     }
@@ -35,7 +35,7 @@ export default function TrackPlayingIndicator() {
       onMouseLeave={() => setHovered(false)}
       tabIndex={0}
       data-museeks-action
-      {...stylex.props(styles.playingIndicator)}
+      sx={styles.playingIndicator}
     >
       {icon}
     </button>

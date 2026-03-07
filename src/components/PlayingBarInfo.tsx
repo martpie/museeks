@@ -21,21 +21,18 @@ export default function PlayingBarInfo(props: Props) {
   );
 
   return (
-    <div {...stylex.props(styles.playingBarInfo)} data-tauri-drag-region>
-      <div {...stylex.props(styles.playingBarInfoMetas)}>
-        <div {...stylex.props(styles.duration)}>{formattedProgress}</div>
+    <div sx={styles.playingBarInfo} data-tauri-drag-region>
+      <div sx={styles.playingBarInfoMetas}>
+        <div sx={styles.duration}>{formattedProgress}</div>
 
-        <div {...stylex.props(styles.metas)}>
+        <div sx={styles.metas}>
           <div
-            {...stylex.props(styles.metadata, styles.metadataTitle)}
+            sx={[styles.metadata, styles.metadataTitle]}
             data-testid="playing-track-title"
           >
             <strong>{trackPlaying.title}</strong>
           </div>
-          <div
-            {...stylex.props(styles.metadata)}
-            data-testid="playing-track-artist-album"
-          >
+          <div sx={styles.metadata} data-testid="playing-track-artist-album">
             <Link
               inheritColor
               notBold
@@ -75,7 +72,7 @@ export default function PlayingBarInfo(props: Props) {
           </div>
         </div>
 
-        <div {...stylex.props(styles.duration)}>{formattedDuration}</div>
+        <div sx={styles.duration}>{formattedDuration}</div>
       </div>
       <TrackProgress trackPlaying={trackPlaying} />
     </div>

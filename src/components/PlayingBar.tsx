@@ -17,8 +17,8 @@ export default function PlayingBar(props: Props) {
   const trackPlaying = props.trackPlaying;
 
   return (
-    <div {...stylex.props(styles.playingBar)}>
-      <div {...stylex.props(styles.playingBarCover)}>
+    <div sx={styles.playingBar}>
+      <div sx={styles.playingBarCover}>
         <Cover track={trackPlaying} noHorizontalBorder iconSize={16} />
       </div>
       <PlayingBarInfos
@@ -26,7 +26,7 @@ export default function PlayingBar(props: Props) {
         shuffle={shuffle}
         repeat={repeat}
       />
-      <div {...stylex.props(styles.playerOptions)}>
+      <div sx={styles.playerOptions}>
         <ButtonRepeat />
         <ButtonShuffle />
       </div>
