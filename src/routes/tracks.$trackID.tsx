@@ -5,6 +5,7 @@ import type React from 'react';
 import { useCallback, useState } from 'react';
 
 import * as Setting from '../components/Setting';
+import SettingCheckbox from '../components/SettingCheckbox';
 import Button from '../elements/Button';
 import Flexbox from '../elements/Flexbox';
 import Separator from '../elements/Separator';
@@ -53,6 +54,7 @@ function ViewTrackDetails() {
     track_of: track.track_of ?? null,
     disk_no: track.disk_no ?? null,
     disk_of: track.disk_of ?? null,
+    is_compilation: track.is_compilation,
   });
 
   const libraryAPI = useLibraryAPI();
@@ -224,6 +226,15 @@ function ViewTrackDetails() {
               }}
             />
           </Flexbox>
+        </Setting.Section>
+        <Setting.Section>
+          <SettingCheckbox
+            title={t`Compilation`}
+            value={formData.is_compilation}
+            onChange={(value) => {
+              setFormData({ ...formData, is_compilation: value });
+            }}
+          />
         </Setting.Section>
         <Setting.Section>
           <Setting.Input

@@ -39,12 +39,17 @@ export default function PlayingBarInfo(props: Props) {
             <Link
               inheritColor
               notBold
-              linkOptions={{
-                to: '/artists/$artistID',
-                params: {
-                  artistID: trackPlaying.album_artist,
-                },
-              }}
+              linkOptions={
+                trackPlaying.is_compilation
+                  ? {
+                      to: '/artists/presets/compilations',
+                      search: { focused_album: trackPlaying.album },
+                    }
+                  : {
+                      to: '/artists/$artistID',
+                      params: { artistID: trackPlaying.album_artist },
+                    }
+              }
             >
               {trackPlaying.artists.join(', ')}
             </Link>
@@ -52,15 +57,18 @@ export default function PlayingBarInfo(props: Props) {
             <Link
               inheritColor
               notBold
-              linkOptions={{
-                to: '/artists/$artistID',
-                params: {
-                  artistID: trackPlaying.album_artist,
-                },
-                search: {
-                  focused_album: trackPlaying.album,
-                },
-              }}
+              linkOptions={
+                trackPlaying.is_compilation
+                  ? {
+                      to: '/artists/presets/compilations',
+                      search: { focused_album: trackPlaying.album },
+                    }
+                  : {
+                      to: '/artists/$artistID',
+                      params: { artistID: trackPlaying.album_artist },
+                      search: { focused_album: trackPlaying.album },
+                    }
+              }
             >
               {trackPlaying.album}
             </Link>

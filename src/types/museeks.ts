@@ -59,6 +59,7 @@ export type TrackMutation = Pick<
   | 'track_of'
   | 'disk_no'
   | 'disk_of'
+  | 'is_compilation'
 >;
 
 /**
