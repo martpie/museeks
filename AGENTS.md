@@ -94,17 +94,17 @@ src-tauri/               # Rust/Tauri backend
 
 **UI:**
 
-- Never call `invoke` directly from React components — use or extend the `bridge-*.ts` helpers in `src/lib`.
+- Never call `invoke` directly from React components — extend the `bridge-*.ts` helpers in `src/lib` (or re-use the same pattern).
 - `src/elements` are business-agnostic UI primitives. `src/components` and `src/routes` hold business logic.
 - Prefer URL state over Zustand global state unless persistence is required.
 - TypeScript types generated from Rust live in `src/generated` and should be committed — regenerate via `gen:types`.
-- After editing the configuration of a route, regenerating the route-tree must be done via the `build` script.
 
 ## Agent Operations Rules
 
-- After UI edits: run `bun run test:lint` (covers linting + type-check) and `bun run test:format` (formatting).
-- After Rust edits: run `cargo test` in `src-tauri`. Clippy is a bonus.
+- After UI edits: ensure `bun run test:lint` (covers linting + type-check) and `bun run test:format` (formatting) pass.
+- After Rust edits: ensure `cargo test` in `src-tauri` passes. Clippy is a bonus.
 - After modifying a Rust struct exposed via `ts-rs`: run `bun run gen:types` and commit the output.
+- After editing the configuration of a route, regenerating the route-tree must be done via the `build` script.
 - Never manually edit `src/generated` — always regenerate.
 - Don't fix pre-existing issues unrelated to the current task.
 - When uncertain, read nearby file patterns first, then ask.
