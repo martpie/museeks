@@ -35,17 +35,17 @@ export const VITE_PLUGINS: PluginOption[] = [
 export default defineConfig({
   plugins: VITE_PLUGINS,
 
-  // LightningCSS
+  build: {
+    target: ['edge115', 'chrome115', 'safari13'],
+    cssMinify: 'lightningcss',
+  },
   css: {
     transformer: 'lightningcss',
     lightningcss: {
       targets: browserslistToTargets(
-        browserslist(['last 3 Chrome versions', 'safari >= 13']),
+        browserslist(['edge >=115', 'chrome >=115', 'safari >=13']),
       ),
     },
-  },
-  build: {
-    cssMinify: 'lightningcss',
   },
 
   // Vite options tailored for Tauri development and only applied in `tauri dev` or `tauri build`

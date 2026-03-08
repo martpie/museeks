@@ -64,7 +64,7 @@ export const app = (
   </React.StrictMode>
 );
 
-async function createRoot() {
+(async function createRoot() {
   // don't auto-execute this for E2E tests, as the test is responsible for
   // rendering the app
   if (import.meta.env.MODE === 'test') {
@@ -82,8 +82,8 @@ async function createRoot() {
     const root = ReactDOM.createRoot(wrap);
     root.render(app);
   } else {
-    document.body.innerHTML = '<div style="text-align: center;">x_x</div>';
+    throw new Error('Failed to find root element');
   }
-}
-
-await createRoot();
+})().catch((err) => {
+  document.body.innerHTML = `<div style="text-align: center;">x_x + ${err}</div>`;
+});
