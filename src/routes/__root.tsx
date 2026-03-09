@@ -1,3 +1,4 @@
+import { useLingui } from '@lingui/react/macro';
 import * as stylex from '@stylexjs/stylex';
 import { createRootRoute, Outlet, useLocation } from '@tanstack/react-router';
 import { info } from '@tauri-apps/plugin-log';
@@ -5,13 +6,13 @@ import { useEffect } from 'react';
 
 import AppEvents from '../components/AppEvents';
 import DropzoneImport from '../components/DropzoneImport';
-import Footer from '../components/Footer';
 import { ErrorView, NotFoundView } from '../components/GlobalErrors';
 import GlobalKeyBindings from '../components/GlobalKeyBindings';
 import Header from '../components/Header';
 import IPCNavigationEvents from '../components/IPCNavigationEvents';
 import IPCPlayerEvents from '../components/IPCPlayerEvents';
 import LibraryEvents from '../components/LibraryEvents';
+import Navigation from '../components/Navigation';
 import PlayerEvents from '../components/PlayerEvents';
 import Toasts from '../components/Toasts';
 import useInvalidate from '../hooks/useInvalidate';
@@ -44,6 +45,7 @@ export const Route = createRootRoute({
 
 function ViewRoot() {
   const invalidate = useInvalidate();
+  const { t } = useLingui();
 
   useEffect(() => {
     // If the app imported tracks, we need to refresh route data, but it seems invalidate is not super stable
@@ -72,10 +74,13 @@ function ViewRoot() {
 
       {/** The actual app */}
       <Header />
-      <main {...stylex.props(styles.mainContent)}>
+      <Navigation />
+      <main
+        aria-label={t`Application main content`}
+        {...stylex.props(styles.mainContent)}
+      >
         <Outlet />
       </main>
-      <Footer />
 
       {/** Out-of-the-flow UI bits */}
       <Toasts />
@@ -91,6 +96,7 @@ const styles = stylex.create({
     height: '100%',
   },
   mainContent: {
+    order: 1,
     width: '100%',
     flex: '1 1 auto',
     position: 'relative',

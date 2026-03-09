@@ -19,6 +19,7 @@ export default function Header() {
 
   return (
     <header
+      aria-label={t`Header`}
       {...stylex.props(
         styles.header,
         (platform === 'windows' || platform === 'linux') &&

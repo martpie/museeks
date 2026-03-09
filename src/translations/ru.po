@@ -42,31 +42,6 @@ msgstr "Добавить музыку в библиотеку"
 msgid "Drop folders anywhere"
 msgstr "Отпустите папки в любом месте"
 
-#: src/components/Footer.tsx:20
-#: src/routes/settings.tsx:42
-msgid "Library"
-msgstr "Библиотека"
-
-#: src/components/Footer.tsx:30
-#: src/routes/artists.tsx:64
-#: src/routes/settings.ui.tsx:147
-msgid "Artists"
-msgstr "Исполнители"
-
-#: src/components/Footer.tsx:40
-#: src/routes/playlists.tsx:165
-#: src/routes/settings.ui.tsx:150
-msgid "Playlists"
-msgstr "Плейлисты"
-
-#: src/components/Footer.tsx:50
-msgid "Settings"
-msgstr "Настройки"
-
-#: src/components/Footer.tsx:83
-msgid "scanning tracks..."
-msgstr "сканирование треков..."
-
 #: src/components/GlobalErrors.tsx:33
 msgid "Something wrong happened: {errorMessage}"
 msgstr "Случилось что-то не то: {errorMessage}"
@@ -88,9 +63,42 @@ msgstr "Попробуйте <0>перезагрузить приложение<
 msgid "or if it happens again, please <0>report an issue</0>."
 msgstr "Если это случится снова, пожалуйста, <0>заявите об ошибке</0>."
 
-#: src/components/Header.tsx:48
+#: src/components/Header.tsx:22
+msgid "Header"
+msgstr ""
+
+#: src/components/Header.tsx:49
 msgid "Queue"
 msgstr "Очередь"
+
+#: src/components/Navigation.tsx:14
+msgid "Main navigation"
+msgstr ""
+
+#: src/components/Navigation.tsx:20
+#: src/routes/settings.tsx:42
+msgid "Library"
+msgstr "Библиотека"
+
+#: src/components/Navigation.tsx:30
+#: src/routes/artists.tsx:64
+#: src/routes/settings.ui.tsx:147
+msgid "Artists"
+msgstr "Исполнители"
+
+#: src/components/Navigation.tsx:40
+#: src/routes/playlists.tsx:165
+#: src/routes/settings.ui.tsx:150
+msgid "Playlists"
+msgstr "Плейлисты"
+
+#: src/components/Navigation.tsx:50
+msgid "Settings"
+msgstr "Настройки"
+
+#: src/components/Navigation.tsx:83
+msgid "scanning tracks..."
+msgstr "сканирование треков..."
 
 #: src/components/PlayerControls.tsx:18
 msgid "Previous"
@@ -124,7 +132,7 @@ msgstr "показать ещё"
 msgid "search..."
 msgstr "поиск..."
 
-#: src/components/SideNavLink.tsx:61
+#: src/components/SideNavLink.tsx:62
 msgid "Rename"
 msgstr "Переименовать"
 
@@ -264,6 +272,10 @@ msgstr "Ваш поиск не принёс результатов"
 #: src/components/VolumeControl.tsx:68
 msgid "Volume"
 msgstr "Громкость"
+
+#: src/routes/__root.tsx:79
+msgid "Application main content"
+msgstr ""
 
 #: src/routes/artists.tsx:70
 msgid "Compilations"
