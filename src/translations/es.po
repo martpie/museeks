@@ -124,7 +124,7 @@ msgstr "ver más"
 msgid "search..."
 msgstr "buscar..."
 
-#: src/components/SideNavLink.tsx:61
+#: src/components/SideNavLink.tsx:62
 msgid "Rename"
 msgstr "Renombrar"
 

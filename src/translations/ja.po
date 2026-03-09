@@ -124,7 +124,7 @@ msgstr "もっと見る"
 msgid "search..."
 msgstr "検索..."
 
-#: src/components/SideNavLink.tsx:61
+#: src/components/SideNavLink.tsx:62
 msgid "Rename"
 msgstr "名前を変更"
 
