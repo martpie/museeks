@@ -462,7 +462,6 @@ export default function TrackList(props: Props) {
 
 const styles = stylex.create({
   trackList: {
-    outline: 'none',
     display: 'flex',
     flexDirection: 'column',
     flex: '1 1 auto',

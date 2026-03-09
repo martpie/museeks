@@ -143,7 +143,6 @@ const trackStyles = stylex.create({
   track: {
     position: 'relative',
     display: 'flex',
-    outline: 'none',
     borderTopWidth: '1px',
     borderTopStyle: 'solid',
     borderTopColor: 'transparent',

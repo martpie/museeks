@@ -89,6 +89,7 @@ const styles = stylex.create({
   searchClear: {
     position: 'absolute',
     right: '4px',
+    zIndex: 1,
     fontSize: '15px',
     color: 'var(--text)',
     cursor: 'pointer',

@@ -138,9 +138,6 @@ const styles = stylex.create({
     height: '10px',
     backgroundColor: 'white',
     borderRadius: '50%',
-    outline: {
-      ':active': 'none',
-    },
     boxShadow: {
       default: '0 0 0 1px var(--border-color)',
       ':active': '0 0 0 2px var(--main-color)',
