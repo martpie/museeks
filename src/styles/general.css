@@ -36,6 +36,7 @@ body {
   font-weight: 500;
 }
 
+/** Global focus styles */
 :focus:not(:focus-visible) {
   outline: none;
 }
@@ -45,7 +46,7 @@ body {
   outline-offset: 1px;
   border-radius: calc(
     var(--border-radius) + 1px
-  ); /* componsate radius on elements */
+  ); /* compensate radius on elements */
   z-index: 1;
 }
 
@@ -76,8 +77,8 @@ strong {
   }
 }
 
-/* Generic class to controll the active state of some element that get
- * de-emphasized, but still visibe, in case the focus is not on the list.
+/* Generic class to control the active state of some element that get
+ * de-emphasized, but still visible, in case the focus is not on the list.
  */
 [data-museeks-list]:focus-within {
   --active-item-bg: var(--main-color);

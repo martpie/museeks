@@ -138,7 +138,6 @@ export default function SideNavLink(props: Props): React.ReactNode {
           onContextMenu={onContextMenu}
           draggable={false}
           {...linkOptions}
-          activeProps={stylex.props(styles.isActive)}
           {...stylex.props(styles.sideNavLink)}
         >
           {label}
@@ -166,12 +165,8 @@ const styles = stylex.create({
     backgroundColor: {
       default: 'transparent',
       ':hover': 'var(--sidebar-item-active-bg)',
+      '[data-status="active"]': 'var(--active-item-bg)',
     },
-  },
-  isActive: {
-    zIndex: 10,
-    backgroundColor: 'var(--active-item-bg)',
-    color: 'var(--active-item-color)',
   },
   sideNavLinkInput: {
     appearance: 'none',
