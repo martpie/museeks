@@ -62,7 +62,7 @@
     "radix-ui": "1.4.3",
     "react": "19.2.4",
     "react-dom": "19.2.4",
-    "react-keybinding-component": "2.2.0",
+    "react-keybinding-component": "2.3.1",
     "semver": "7.7.4",
     "zustand": "5.0.11"
   },
