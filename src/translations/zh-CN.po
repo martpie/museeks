@@ -71,32 +71,36 @@ msgstr ""
 msgid "Queue"
 msgstr "播放队列"
 
-#: src/components/Navigation.tsx:14
+#: src/components/Navigation.tsx:19
 msgid "Main navigation"
 msgstr ""
 
-#: src/components/Navigation.tsx:20
+#: src/components/Navigation.tsx:26
 #: src/routes/settings.tsx:42
 msgid "Library"
 msgstr "音乐库"
 
-#: src/components/Navigation.tsx:30
+#: src/components/Navigation.tsx:39
 #: src/routes/artists.tsx:64
 #: src/routes/settings.ui.tsx:147
 msgid "Artists"
 msgstr "艺术家"
 
-#: src/components/Navigation.tsx:40
+#: src/components/Navigation.tsx:52
 #: src/routes/playlists.tsx:165
 #: src/routes/settings.ui.tsx:150
 msgid "Playlists"
 msgstr "播放列表"
 
-#: src/components/Navigation.tsx:50
+#: src/components/Navigation.tsx:65
 msgid "Settings"
 msgstr "设置"
 
-#: src/components/Navigation.tsx:83
+#: src/components/Navigation.tsx:77
+msgid "Library status"
+msgstr ""
+
+#: src/components/Navigation.tsx:101
 msgid "scanning tracks..."
 msgstr "正在扫描音轨..."
 
@@ -136,78 +140,78 @@ msgstr "搜索..."
 msgid "Rename"
 msgstr "重命名"
 
-#: src/components/TrackList.tsx:239
+#: src/components/TrackList.tsx:246
 msgid "Create new playlist..."
 msgstr "创建新播放列表..."
 
-#: src/components/TrackList.tsx:242
+#: src/components/TrackList.tsx:249
 #: src/routes/playlists.tsx:63
 msgid "New playlist"
 msgstr "新播放列表"
 
-#: src/components/TrackList.tsx:255
+#: src/components/TrackList.tsx:262
 msgid "No playlists"
 msgstr "没有播放列表"
 
 #. placeholder {0}: selectedTracks.size
 #. placeholder {1}: playlist.name
-#: src/components/TrackList.tsx:270
+#: src/components/TrackList.tsx:277
 msgid "{0} track(s) were added to \"{1}\""
 msgstr "{0} 首音轨已添加到 \"{1}\""
 
-#: src/components/TrackList.tsx:287
+#: src/components/TrackList.tsx:294
 msgid "{selectedCount, plural, one {# track selected} other {# tracks selected}}"
 msgstr "{selectedCount, plural, one {# 首音轨已选择} other {# 首音轨已选择}}"
 
-#: src/components/TrackList.tsx:299
+#: src/components/TrackList.tsx:306
 msgid "Add to queue"
 msgstr "添加到队列"
 
-#: src/components/TrackList.tsx:307
+#: src/components/TrackList.tsx:314
 msgid "Play next"
 msgstr "下一个播放"
 
-#: src/components/TrackList.tsx:319
+#: src/components/TrackList.tsx:326
 msgid "Add to playlist"
 msgstr "添加到播放列表"
 
-#: src/components/TrackList.tsx:329
+#: src/components/TrackList.tsx:336
 msgid "Search for \"{item}\""
 msgstr "搜索 \"{item}\""
 
-#: src/components/TrackList.tsx:342
+#: src/components/TrackList.tsx:349
 msgid "Copy \"{item}\""
 msgstr "复制 \"{item}\""
 
-#: src/components/TrackList.tsx:365
+#: src/components/TrackList.tsx:372
 msgid "Edit track"
 msgstr "编辑音轨"
 
-#: src/components/TrackList.tsx:375
+#: src/components/TrackList.tsx:382
 msgid "Show in file manager"
 msgstr "在文件管理器中显示"
 
-#: src/components/TrackList.tsx:381
+#: src/components/TrackList.tsx:388
 msgid "Remove from library"
 msgstr "从音乐库中移除"
 
 #. placeholder {0}: selectedTracks.size
-#: src/components/TrackList.tsx:384
+#: src/components/TrackList.tsx:391
 msgid "Are you sure you want to remove {0} track(s) from your library?"
 msgstr "您确定要从音乐库中移除 {0} 首音轨吗？"
 
-#: src/components/TrackList.tsx:386
+#: src/components/TrackList.tsx:393
 msgid "Remove tracks"
 msgstr "移除音轨"
 
-#: src/components/TrackList.tsx:388
+#: src/components/TrackList.tsx:395
 #: src/routes/settings.library.tsx:99
 #: src/routes/settings.library.tsx:144
 #: src/routes/tracks.$trackID.tsx:258
 msgid "Cancel"
 msgstr "取消"
 
-#: src/components/TrackList.tsx:389
+#: src/components/TrackList.tsx:396
 #: src/routes/settings.library.tsx:62
 msgid "Remove"
 msgstr "移除"

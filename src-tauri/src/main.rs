@@ -10,9 +10,9 @@ use log::{LevelFilter, info};
 use plugins::config::{ConfigManager, get_storage_dir};
 use std::env;
 use tauri::{Manager, WebviewUrl, WebviewWindowBuilder};
-use tauri_plugin_prevent_default::Flags;
 use tauri_plugin_log::fern::colors::ColoredLevelConfig;
 use tauri_plugin_log::{Target, TargetKind};
+use tauri_plugin_prevent_default::Flags;
 use tauri_plugin_window_state::StateFlags;
 
 /**
