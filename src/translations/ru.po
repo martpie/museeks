@@ -124,7 +124,7 @@ msgstr "показать ещё"
 msgid "search..."
 msgstr "поиск..."
 
-#: src/components/SideNavLink.tsx:61
+#: src/components/SideNavLink.tsx:62
 msgid "Rename"
 msgstr "Переименовать"
 
