@@ -12,6 +12,7 @@ import {
   PredefinedMenuItem,
   type PredefinedMenuItemOptions,
 } from '@tauri-apps/api/menu';
+import { NavigationMenu } from 'radix-ui';
 import { useCallback, useState } from 'react';
 
 import { logAndNotifyError } from '../lib/utils';
@@ -131,15 +132,19 @@ export default function SideNavLink(props: Props): React.ReactNode {
   }
 
   return (
-    <Link
-      onContextMenu={onContextMenu}
-      draggable={false}
-      {...linkOptions}
-      activeProps={stylex.props(styles.isActive)}
-      {...stylex.props(styles.sideNavLink)}
-    >
-      {label}
-    </Link>
+    <NavigationMenu.Item>
+      <NavigationMenu.Link asChild>
+        <Link
+          onContextMenu={onContextMenu}
+          draggable={false}
+          {...linkOptions}
+          activeProps={stylex.props(styles.isActive)}
+          {...stylex.props(styles.sideNavLink)}
+        >
+          {label}
+        </Link>
+      </NavigationMenu.Link>
+    </NavigationMenu.Item>
   );
 }
 
