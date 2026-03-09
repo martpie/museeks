@@ -10,6 +10,7 @@ use log::{LevelFilter, info};
 use plugins::config::{ConfigManager, get_storage_dir};
 use std::env;
 use tauri::{Manager, WebviewUrl, WebviewWindowBuilder};
+use tauri_plugin_prevent_default::Flags;
 use tauri_plugin_log::fern::colors::ColoredLevelConfig;
 use tauri_plugin_log::{Target, TargetKind};
 use tauri_plugin_window_state::StateFlags;
@@ -82,7 +83,11 @@ fn main() {
         .plugin(tauri_plugin_fs::init())
         .plugin(tauri_plugin_opener::init())
         .plugin(tauri_plugin_os::init())
-        .plugin(tauri_plugin_prevent_default::init())
+        .plugin(
+            tauri_plugin_prevent_default::Builder::new()
+                .with_flags(Flags::all().difference(Flags::FOCUS_MOVE))
+                .build(),
+        )
         .plugin(tauri_plugin_notification::init())
         .plugin(tauri_plugin_shell::init())
         .plugin(
