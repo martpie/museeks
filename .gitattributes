@@ -1,0 +1,5 @@
+# Normalize line endings
+* text=lf
+
+# Force LF for files where consistent checksums matter
+*.sql text eol=lf
