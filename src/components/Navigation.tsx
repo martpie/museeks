@@ -7,11 +7,11 @@ import Icon from './Icon';
 import ProgressBar from './ProgressBar';
 import TrackListStatus from './TrackListStatus';
 
-export default function Footer() {
+export default function Navigation() {
   const { t } = useLingui();
 
   return (
-    <footer {...stylex.props(styles.footer)}>
+    <nav aria-label={t`Main navigation`} {...stylex.props(styles.footer)}>
       <div {...stylex.props(styles.footerNavigation)}>
         <div {...stylex.props(styles.footerNavigationLinkgroup)}>
           <Link
@@ -59,7 +59,7 @@ export default function Footer() {
       <div {...stylex.props(styles.footerStatus)}>
         <Status />
       </div>
-    </footer>
+    </nav>
   );
 }
 
@@ -103,6 +103,7 @@ function Status() {
 
 const styles = stylex.create({
   footer: {
+    order: 2,
     backgroundColor: 'var(--footer-bg)',
     borderTopWidth: '1px',
     borderTopStyle: 'solid',

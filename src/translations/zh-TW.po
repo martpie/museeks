@@ -42,31 +42,6 @@ msgstr "新增音樂到音樂庫"
 msgid "Drop folders anywhere"
 msgstr "將資料夾拖放到任意位置"
 
-#: src/components/Footer.tsx:20
-#: src/routes/settings.tsx:42
-msgid "Library"
-msgstr "音樂庫"
-
-#: src/components/Footer.tsx:30
-#: src/routes/artists.tsx:64
-#: src/routes/settings.ui.tsx:147
-msgid "Artists"
-msgstr "藝術家"
-
-#: src/components/Footer.tsx:40
-#: src/routes/playlists.tsx:165
-#: src/routes/settings.ui.tsx:150
-msgid "Playlists"
-msgstr "播放清單"
-
-#: src/components/Footer.tsx:50
-msgid "Settings"
-msgstr "設定"
-
-#: src/components/Footer.tsx:83
-msgid "scanning tracks..."
-msgstr "正在掃描音軌..."
-
 #: src/components/GlobalErrors.tsx:33
 msgid "Something wrong happened: {errorMessage}"
 msgstr "發生了錯誤：{errorMessage}"
@@ -88,9 +63,42 @@ msgstr "嘗試 <0>重新載入應用程式</0>，"
 msgid "or if it happens again, please <0>report an issue</0>."
 msgstr "如果再次發生，請<0>回報問題</0>。"
 
-#: src/components/Header.tsx:48
+#: src/components/Header.tsx:22
+msgid "Header"
+msgstr ""
+
+#: src/components/Header.tsx:49
 msgid "Queue"
 msgstr "播放佇列"
+
+#: src/components/Navigation.tsx:14
+msgid "Main navigation"
+msgstr ""
+
+#: src/components/Navigation.tsx:20
+#: src/routes/settings.tsx:42
+msgid "Library"
+msgstr "音樂庫"
+
+#: src/components/Navigation.tsx:30
+#: src/routes/artists.tsx:64
+#: src/routes/settings.ui.tsx:147
+msgid "Artists"
+msgstr "藝術家"
+
+#: src/components/Navigation.tsx:40
+#: src/routes/playlists.tsx:165
+#: src/routes/settings.ui.tsx:150
+msgid "Playlists"
+msgstr "播放清單"
+
+#: src/components/Navigation.tsx:50
+msgid "Settings"
+msgstr "設定"
+
+#: src/components/Navigation.tsx:83
+msgid "scanning tracks..."
+msgstr "正在掃描音軌..."
 
 #: src/components/PlayerControls.tsx:18
 msgid "Previous"
@@ -124,7 +132,7 @@ msgstr "檢視更多"
 msgid "search..."
 msgstr "搜尋..."
 
-#: src/components/SideNavLink.tsx:61
+#: src/components/SideNavLink.tsx:62
 msgid "Rename"
 msgstr "重新命名"
 
@@ -264,6 +272,10 @@ msgstr "您的搜尋沒有找到結果"
 #: src/components/VolumeControl.tsx:68
 msgid "Volume"
 msgstr "音量"
+
+#: src/routes/__root.tsx:79
+msgid "Application main content"
+msgstr ""
 
 #: src/routes/artists.tsx:70
 msgid "Compilations"
