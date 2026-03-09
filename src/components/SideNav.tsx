@@ -1,5 +1,6 @@
 import * as stylex from '@stylexjs/stylex';
 import { groupBy } from 'lodash-es';
+import { NavigationMenu } from 'radix-ui';
 import React, { useMemo } from 'react';
 
 import Flexbox from '../elements/Flexbox';
@@ -29,23 +30,25 @@ export default function SideNav(props: Props) {
         <h4 {...stylex.props(styles.title)}>{props.title}</h4>
         <div {...stylex.props(styles.actions)}>{props.actions}</div>
       </Flexbox>
-      <div {...stylex.props(styles.content)}>
-        {Object.entries(groupedChildren).map(([letter, children]) => {
-          return (
-            <React.Fragment key={letter}>
-              <div {...stylex.props(styles.letter)}>{letter}</div>
-              <div {...stylex.props(styles.items)}>{children}</div>
-            </React.Fragment>
-          );
-        })}
-        {props.bottomContent && (
-          <>
-            {/** should probably be a prop */}
-            <div {...stylex.props(styles.letter)}>#</div>
-            {props.bottomContent}
-          </>
-        )}
-      </div>
+      <NavigationMenu.Root orientation="vertical">
+        <NavigationMenu.List {...stylex.props(styles.content)}>
+          {Object.entries(groupedChildren).map(([letter, children]) => {
+            return (
+              <React.Fragment key={letter}>
+                <div {...stylex.props(styles.letter)}>{letter}</div>
+                <div {...stylex.props(styles.items)}>{children}</div>
+              </React.Fragment>
+            );
+          })}
+          {props.bottomContent && (
+            <>
+              {/** should probably be a prop */}
+              <div {...stylex.props(styles.letter)}>#</div>
+              {props.bottomContent}
+            </>
+          )}
+        </NavigationMenu.List>
+      </NavigationMenu.Root>
     </div>
   );
 }
@@ -87,6 +90,9 @@ const styles = stylex.create({
     flex: '1 1 auto',
     display: 'flex',
     flexDirection: 'column',
+    listStyle: 'none',
+    padding: 0,
+    margin: 0,
   },
   letter: {
     display: 'block',
