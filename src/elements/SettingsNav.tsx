@@ -1,5 +1,6 @@
 import * as stylex from '@stylexjs/stylex';
 import { Link } from '@tanstack/react-router';
+import { NavigationMenu } from 'radix-ui';
 import type React from 'react';
 
 interface WrapProps {
@@ -10,7 +11,13 @@ interface WrapProps {
  * Wrapper for navigation
  */
 export function SettingsNav(props: WrapProps) {
-  return <nav {...stylex.props(styles.nav)}>{props.children}</nav>;
+  return (
+    <NavigationMenu.Root orientation="vertical">
+      <NavigationMenu.List {...stylex.props(styles.nav)}>
+        {props.children}
+      </NavigationMenu.List>
+    </NavigationMenu.Root>
+  );
 }
 
 interface LinkProps {
@@ -23,14 +30,18 @@ interface LinkProps {
  */
 export function SettingsNavLink(props: LinkProps) {
   return (
-    <Link
-      to={props.to}
-      {...stylex.props(styles.navLink)}
-      draggable={false}
-      data-testid={`settings-nav-link${props.to}`}
-    >
-      {props.children}
-    </Link>
+    <NavigationMenu.Item>
+      <NavigationMenu.Link asChild>
+        <Link
+          to={props.to}
+          {...stylex.props(styles.navLink)}
+          draggable={false}
+          data-testid={`settings-nav-link${props.to}`}
+        >
+          {props.children}
+        </Link>
+      </NavigationMenu.Link>
+    </NavigationMenu.Item>
   );
 }
 
@@ -39,6 +50,9 @@ const styles = stylex.create({
     display: 'flex',
     flexDirection: 'column',
     gap: '32px',
+    listStyle: 'none',
+    margin: 0,
+    padding: 0,
   },
   navLink: {
     display: 'inline-block',
