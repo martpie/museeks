@@ -164,7 +164,6 @@ const styles = stylex.create({
     },
   },
   isActive: {
-    outline: 'none',
     zIndex: 10,
     backgroundColor: 'var(--active-item-bg)',
     color: 'var(--active-item-color)',

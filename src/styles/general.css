@@ -36,12 +36,17 @@ body {
   font-weight: 500;
 }
 
-button {
+:focus:not(:focus-visible) {
   outline: none;
 }
 
-input {
-  outline: none;
+:focus-visible {
+  outline: 2px solid var(--main-color);
+  outline-offset: 1px;
+  border-radius: calc(
+    var(--border-radius) + 1px
+  ); /* componsate radius on elements */
+  z-index: 1;
 }
 
 p {

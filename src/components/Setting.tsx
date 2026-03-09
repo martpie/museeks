@@ -168,9 +168,6 @@ const styles = stylex.create({
     padding: '8px',
     width: '100%',
     fontSize: '1rem',
-    outline: {
-      ':focus': 'none',
-    },
     opacity: {
       ':disabled': 0.6,
     },
@@ -193,9 +190,6 @@ const styles = stylex.create({
     padding: '8px',
     width: '100%',
     fontSize: '1rem',
-    outline: {
-      ':focus': 'none',
-    },
     opacity: {
       ':disabled': 0.6,
     },
