@@ -163,10 +163,6 @@ export default function TrackList(props: Props) {
   const onKeyEvent = useCallback(
     (event: KeyboardEvent) => {
       // Prevent this from happening when the focus is outside of the track list
-      if (!containerRef.current?.contains(document.activeElement)) {
-        return;
-      }
-
       const firstSelectedTrackIndex = tracks.findIndex((track) =>
         selectedTracks.has(track.id),
       );
@@ -435,7 +431,11 @@ export default function TrackList(props: Props) {
       data-museeks-list
       data-testid="track-list"
     >
-      <Keybinding onKey={onKeyEvent} preventInputConflict />
+      <Keybinding
+        target={containerRef}
+        onKey={onKeyEvent}
+        preventInputConflict
+      />
       {layout === 'default' && (
         <TrackListDefault
           ref={scrollableRef}
