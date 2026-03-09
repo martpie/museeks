@@ -1,6 +1,7 @@
 import { useLingui } from '@lingui/react/macro';
 import * as stylex from '@stylexjs/stylex';
 import { Link } from '@tanstack/react-router';
+import { NavigationMenu } from 'radix-ui';
 
 import useLibraryStore from '../stores/useLibraryStore';
 import Icon from './Icon';
@@ -11,55 +12,72 @@ export default function Navigation() {
   const { t } = useLingui();
 
   return (
-    <nav aria-label={t`Main navigation`} {...stylex.props(styles.footer)}>
-      <div {...stylex.props(styles.footerNavigation)}>
-        <div {...stylex.props(styles.footerNavigationLinkgroup)}>
-          <Link
-            to="/library"
-            activeProps={stylex.props(styles.footerNavigationLinkIsActive)}
-            title={t`Library`}
-            draggable={false}
-            data-testid="footer-library-link"
-            {...stylex.props(styles.footerNavigationLink)}
-          >
-            <Icon name="musicalNotes" size={16} />
-          </Link>
-          <Link
-            to="/artists"
-            activeProps={stylex.props(styles.footerNavigationLinkIsActive)}
-            title={t`Artists`}
-            draggable={false}
-            data-testid="footer-artists-link"
-            {...stylex.props(styles.footerNavigationLink)}
-          >
-            <Icon name="microphone" size={16} />
-          </Link>
-          <Link
-            to="/playlists"
-            activeProps={stylex.props(styles.footerNavigationLinkIsActive)}
-            title={t`Playlists`}
-            draggable={false}
-            data-testid="footer-playlists-link"
-            {...stylex.props(styles.footerNavigationLink)}
-          >
-            <Icon name="playlist" size={16} />
-          </Link>
-          <Link
-            to="/settings"
-            activeProps={stylex.props(styles.footerNavigationLinkIsActive)}
-            title={t`Settings`}
-            draggable={false}
-            data-testid="footer-settings-link"
-            {...stylex.props(styles.footerNavigationLink)}
-          >
-            <Icon name="settings" size={16} />
-          </Link>
-        </div>
+    <div {...stylex.props(styles.navigation)}>
+      <div {...stylex.props(styles.viewLinksContainer)}>
+        <NavigationMenu.Root
+          orientation="horizontal"
+          aria-label={t`Main navigation`}
+        >
+          <NavigationMenu.List {...stylex.props(styles.viewLinks)}>
+            <NavigationMenu.Item {...stylex.props(styles.navigationItem)}>
+              <NavigationMenu.Link asChild>
+                <Link
+                  to="/library"
+                  title={t`Library`}
+                  draggable={false}
+                  data-testid="footer-library-link"
+                  {...stylex.props(styles.navigationLink)}
+                >
+                  <Icon name="musicalNotes" size={16} />
+                </Link>
+              </NavigationMenu.Link>
+            </NavigationMenu.Item>
+            <NavigationMenu.Item {...stylex.props(styles.navigationItem)}>
+              <NavigationMenu.Link asChild>
+                <Link
+                  to="/artists"
+                  title={t`Artists`}
+                  draggable={false}
+                  data-testid="footer-artists-link"
+                  {...stylex.props(styles.navigationLink)}
+                >
+                  <Icon name="microphone" size={16} />
+                </Link>
+              </NavigationMenu.Link>
+            </NavigationMenu.Item>
+            <NavigationMenu.Item {...stylex.props(styles.navigationItem)}>
+              <NavigationMenu.Link asChild>
+                <Link
+                  to="/playlists"
+                  title={t`Playlists`}
+                  draggable={false}
+                  data-testid="footer-playlists-link"
+                  {...stylex.props(styles.navigationLink)}
+                >
+                  <Icon name="playlist" size={16} />
+                </Link>
+              </NavigationMenu.Link>
+            </NavigationMenu.Item>
+            <NavigationMenu.Item {...stylex.props(styles.navigationItem)}>
+              <NavigationMenu.Link asChild>
+                <Link
+                  to="/settings"
+                  title={t`Settings`}
+                  draggable={false}
+                  data-testid="footer-settings-link"
+                  {...stylex.props(styles.navigationLink)}
+                >
+                  <Icon name="settings" size={16} />
+                </Link>
+              </NavigationMenu.Link>
+            </NavigationMenu.Item>
+          </NavigationMenu.List>
+        </NavigationMenu.Root>
       </div>
-      <div {...stylex.props(styles.footerStatus)}>
+      <div {...stylex.props(styles.status)} aria-label={t`Library status`}>
         <Status />
       </div>
-    </nav>
+    </div>
   );
 }
 
@@ -77,8 +95,8 @@ function Status() {
     const progress = total > 0 ? Math.round((current / total) * 100) : 100;
 
     return (
-      <div {...stylex.props(styles.footerLibraryRefresh)}>
-        <div {...stylex.props(styles.footerLibraryRefreshProgress)}>
+      <div {...stylex.props(styles.statusLibraryRefresh)}>
+        <div {...stylex.props(styles.statusLibraryRefreshProgress)}>
           {isScanning ? (
             t`scanning tracks...`
           ) : (
@@ -86,7 +104,7 @@ function Status() {
           )}
         </div>
         {total > 0 && (
-          <div {...stylex.props(styles.footerLibraryRefreshCount)}>
+          <div {...stylex.props(styles.statusLibraryRefreshCount)}>
             {current} / {total}
           </div>
         )}
@@ -102,7 +120,7 @@ function Status() {
 }
 
 const styles = stylex.create({
-  footer: {
+  navigation: {
     order: 2,
     backgroundColor: 'var(--footer-bg)',
     borderTopWidth: '1px',
@@ -114,25 +132,35 @@ const styles = stylex.create({
     display: 'flex',
     alignItems: 'stretch',
   },
-  footerNavigation: {
+  viewLinksContainer: {
     display: 'flex',
     alignItems: 'stretch',
     width: '30%',
   },
-  footerNavigationLinkgroup: {
+  viewLinks: {
     display: 'flex',
     alignItems: 'stretch',
+    listStyle: 'none',
+    padding: 0,
+    margin: 0,
   },
-  footerNavigationLink: {
+  navigationItem: {
     borderWidth: '1px',
     borderStyle: 'solid',
     borderColor: 'var(--border-color)',
     borderBlockWidth: '0',
     borderInlineWidth: '1px',
+    marginLeft: {
+      default: '-1px',
+      ':first-child': '0',
+    },
+  },
+  navigationLink: {
     color: {
       default: 'inherit',
       ':hover': 'inherit',
       ':focus': 'inherit',
+      '[data-status="active"]': 'var(--main-color)',
     },
     paddingBlock: '8px',
     paddingInline: '12px',
@@ -142,20 +170,13 @@ const styles = stylex.create({
     justifyContent: 'center',
     backgroundColor: {
       ':active': 'var(--footer-nav-bg-color-active)',
+      '[data-status="active"]': 'var(--footer-nav-bg-color-active)',
     },
     zIndex: {
       ':active': 1,
     },
-    marginLeft: {
-      default: '-1px',
-      ':first-child': '0',
-    },
   },
-  footerNavigationLinkIsActive: {
-    backgroundColor: 'var(--footer-nav-bg-color-active)',
-    color: 'var(--main-color)',
-  },
-  footerStatus: {
+  status: {
     width: '40%',
     textAlign: 'center',
     fontSize: '12px',
@@ -165,16 +186,16 @@ const styles = stylex.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  footerLibraryRefresh: {
+  statusLibraryRefresh: {
     display: 'flex',
     flex: '1',
     alignItems: 'center',
   },
-  footerLibraryRefreshProgress: {
+  statusLibraryRefreshProgress: {
     flex: '1',
     marginRight: '10px',
   },
-  footerLibraryRefreshCount: {
+  statusLibraryRefreshCount: {
     fontVariantNumeric: 'tabular-nums',
   },
 });

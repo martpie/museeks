@@ -104,6 +104,8 @@ export default function TrackList(props: Props) {
   const searchParams = useSearch({ from: '__root__' });
   const shouldJumpToPlayingTrack = searchParams.jump_to_playing_track === true;
 
+  const containerRef = useRef<HTMLDivElement>(null);
+
   // Scrollable element for the virtual list + virtualizer
   // TODO: should be colocated with the child component
   const scrollableRef = useRef<TrackListVirtualizer>(null);
@@ -160,6 +162,11 @@ export default function TrackList(props: Props) {
    */
   const onKeyEvent = useCallback(
     (event: KeyboardEvent) => {
+      // Prevent this from happening when the focus is outside of the track list
+      if (!containerRef.current?.contains(document.activeElement)) {
+        return;
+      }
+
       const firstSelectedTrackIndex = tracks.findIndex((track) =>
         selectedTracks.has(track.id),
       );
@@ -423,6 +430,7 @@ export default function TrackList(props: Props) {
 
   return (
     <div
+      ref={containerRef}
       {...stylex.props(styles.trackList)}
       data-museeks-list
       data-testid="track-list"
