@@ -63,11 +63,11 @@ msgstr "Intenta <0>recargar la aplicación</0>,"
 msgid "or if it happens again, please <0>report an issue</0>."
 msgstr "o si vuelve a ocurrir, por favor <0>reporta un problema</0>."
 
-#: src/components/Header.tsx:22
+#: src/components/Header.tsx:24
 msgid "Header"
 msgstr ""
 
-#: src/components/Header.tsx:51
+#: src/components/Header.tsx:53
 msgid "Queue"
 msgstr "Cola"
 

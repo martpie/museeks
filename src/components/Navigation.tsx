@@ -106,14 +106,12 @@ function Status() {
           {isScanning ? (
             t`scanning tracks...`
           ) : (
-            <ProgressBar progress={progress} />
+            <ProgressBar
+              progress={progress}
+              label={total > 0 ? `${current} / ${total}` : ''}
+            />
           )}
         </div>
-        {total > 0 && (
-          <div {...stylex.props(styles.statusLibraryRefreshCount)}>
-            {current} / {total}
-          </div>
-        )}
       </div>
     );
   }
@@ -199,9 +197,5 @@ const styles = stylex.create({
   },
   statusLibraryRefreshProgress: {
     flex: '1',
-    marginRight: '10px',
-  },
-  statusLibraryRefreshCount: {
-    fontVariantNumeric: 'tabular-nums',
   },
 });
