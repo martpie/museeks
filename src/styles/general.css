@@ -49,7 +49,7 @@ body {
     var(--border-radius) + var(--focus-offset)
   ); /* compensate radius on elements */
   position: relative;
-  z-index: 9999 !important;
+  z-index: 5 !important;
 }
 
 p {
