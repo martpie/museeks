@@ -223,26 +223,26 @@ msgstr "Удалить"
 msgid "{0, plural, one {# track} other {# tracks}}"
 msgstr "{0, plural, one {# трек} few {# трека} many {# треков}}"
 
-#: src/components/TrackListHeader.tsx:46
+#: src/components/TrackListHeader.tsx:50
 #: src/routes/tracks.$trackID.tsx:89
 msgid "Title"
 msgstr "Заголовок"
 
-#: src/components/TrackListHeader.tsx:53
+#: src/components/TrackListHeader.tsx:57
 #: src/routes/tracks.$trackID.tsx:242
 msgid "Duration"
 msgstr "Длительность"
 
-#: src/components/TrackListHeader.tsx:60
+#: src/components/TrackListHeader.tsx:64
 msgid "Artist"
 msgstr "Исполнитель"
 
-#: src/components/TrackListHeader.tsx:67
+#: src/components/TrackListHeader.tsx:71
 #: src/routes/tracks.$trackID.tsx:100
 msgid "Album"
 msgstr "Альбом"
 
-#: src/components/TrackListHeader.tsx:74
+#: src/components/TrackListHeader.tsx:78
 #: src/routes/tracks.$trackID.tsx:140
 msgid "Genre"
 msgstr "Жанр"
