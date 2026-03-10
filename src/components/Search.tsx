@@ -95,7 +95,7 @@ const styles = stylex.create({
   clear: {
     position: 'absolute',
     right: '4px',
-    zIndex: 1,
+    zIndex: 10, // to be above the input, even when focused
     fontSize: '15px',
     color: 'var(--text)',
     cursor: 'pointer',
