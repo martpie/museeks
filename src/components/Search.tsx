@@ -36,10 +36,9 @@ export default function Search() {
   };
 
   return (
-    <div {...stylex.props(styles.searchContainer)}>
+    <div {...stylex.props(styles.container)}>
       <input
         type="text"
-        {...stylex.props(styles.searchInput)}
         placeholder={t`search...`}
         value={search}
         onChange={onChange}
@@ -48,11 +47,15 @@ export default function Search() {
         spellCheck={false}
         ref={inputRef}
         data-testid="library-search"
+        {...stylex.props(
+          styles.input,
+          search.length > 0 && styles.inputNotEmpty,
+        )}
       />
       {search.length > 0 && (
         <button
           type="button"
-          {...stylex.props(styles.searchClear)}
+          {...stylex.props(styles.clear)}
           onClick={onClear}
           data-museeks-action
           data-testid="library-search-clear"
@@ -66,13 +69,13 @@ export default function Search() {
 }
 
 const styles = stylex.create({
-  searchContainer: {
+  container: {
     position: 'relative',
     maxWidth: '180px',
     display: 'flex',
     alignItems: 'center',
   },
-  searchInput: {
+  input: {
     display: 'block',
     fontSize: 'inherit',
     width: '100%',
@@ -86,7 +89,10 @@ const styles = stylex.create({
     borderRadius: 'var(--border-radius)',
     lineHeight: '16px',
   },
-  searchClear: {
+  inputNotEmpty: {
+    borderBottomColor: 'var(--main-color)',
+  },
+  clear: {
     position: 'absolute',
     right: '4px',
     zIndex: 1,

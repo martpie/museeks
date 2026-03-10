@@ -132,7 +132,7 @@ msgstr "limpiar cola"
 msgid "see more"
 msgstr "ver más"
 
-#: src/components/Search.tsx:43
+#: src/components/Search.tsx:42
 msgid "search..."
 msgstr "buscar..."
 

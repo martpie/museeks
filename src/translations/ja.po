@@ -132,7 +132,7 @@ msgstr "キューをクリア"
 msgid "see more"
 msgstr "もっと見る"
 
-#: src/components/Search.tsx:43
+#: src/components/Search.tsx:42
 msgid "search..."
 msgstr "検索..."
 

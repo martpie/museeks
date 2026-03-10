@@ -132,7 +132,7 @@ msgstr "очистить очередь"
 msgid "see more"
 msgstr "показать ещё"
 
-#: src/components/Search.tsx:43
+#: src/components/Search.tsx:42
 msgid "search..."
 msgstr "поиск..."
 
