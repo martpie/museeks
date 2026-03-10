@@ -132,7 +132,7 @@ msgstr "清空佇列"
 msgid "see more"
 msgstr "檢視更多"
 
-#: src/components/Search.tsx:43
+#: src/components/Search.tsx:42
 msgid "search..."
 msgstr "搜尋..."
 

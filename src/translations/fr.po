@@ -132,7 +132,7 @@ msgstr "vider la file d'attente"
 msgid "see more"
 msgstr "voir plus"
 
-#: src/components/Search.tsx:43
+#: src/components/Search.tsx:42
 msgid "search..."
 msgstr "rechercher..."
 
