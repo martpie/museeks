@@ -1,6 +1,7 @@
 import { Popover } from '@base-ui/react/popover';
 import { useLingui } from '@lingui/react/macro';
 import * as stylex from '@stylexjs/stylex';
+import { useRef } from 'react';
 
 import ButtonIcon from '../elements/ButtonIcon';
 import { usePlayerState } from '../hooks/usePlayer';
@@ -16,6 +17,7 @@ export default function Header() {
   const trackPlaying = usePlayingTrack();
   const { t } = useLingui();
   const platform = window.__MUSEEKS_PLATFORM;
+  const queueAnchorRef = useRef<HTMLDivElement>(null);
 
   return (
     <header
@@ -41,7 +43,7 @@ export default function Header() {
           <>
             <PlayingBar trackPlaying={trackPlaying} />
             <Popover.Root>
-              <div {...stylex.props(styles.queue)}>
+              <div ref={queueAnchorRef} {...stylex.props(styles.queue)}>
                 <Popover.Trigger
                   render={(triggerProps) => (
                     <ButtonIcon
@@ -55,7 +57,12 @@ export default function Header() {
                 />
               </div>
               <Popover.Portal>
-                <Popover.Positioner side="bottom" align="end">
+                <Popover.Positioner
+                  side="bottom"
+                  alignOffset={-16}
+                  align="end"
+                  anchor={queueAnchorRef}
+                >
                   <Popover.Popup {...stylex.props(styles.queueContainer)}>
                     <Queue queue={queue} queueCursor={queueCursor} />
                   </Popover.Popup>
