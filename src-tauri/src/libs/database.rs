@@ -227,7 +227,12 @@ impl DB {
      */
     pub async fn get_artists(&mut self) -> AnyResult<Vec<String>> {
         let result: Vec<String> = sqlx::query_scalar(
-            "SELECT DISTINCT album_artist FROM tracks WHERE is_compilation = 0 ORDER BY album_artist COLLATE NOCASE;",
+            "SELECT DISTINCT album_artist
+             FROM tracks
+             WHERE is_compilation = 0
+             ORDER BY
+               CASE WHEN upper(substr(album_artist, 1, 1)) BETWEEN 'A' AND 'Z' THEN 0 ELSE 1 END,
+               album_artist COLLATE NOCASE;",
         )
         .fetch_all(&mut self.connection)
         .await?;

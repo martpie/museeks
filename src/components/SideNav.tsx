@@ -17,9 +17,13 @@ type Props = {
 export default function SideNav(props: Props) {
   // Let's group the children by first character
   const groupedChildren = useMemo(() => {
-    const groups = groupBy(props.children, (child) =>
-      stripAccents(child.props.label[0].toUpperCase()),
-    );
+    const groups = groupBy(props.children, (child) => {
+      const stripped = stripAccents(child.props.label[0]).toUpperCase();
+      const code = stripped.charCodeAt(0);
+
+      // Group under # if the first character is not a letter
+      return code >= 65 && code <= 90 ? stripped : '#';
+    });
 
     return groups;
   }, [props.children]);
@@ -43,7 +47,7 @@ export default function SideNav(props: Props) {
           {props.bottomContent && (
             <>
               {/** should probably be a prop */}
-              <div {...stylex.props(styles.letter)}>#</div>
+              <div {...stylex.props(styles.letter)}>///</div>
               {props.bottomContent}
             </>
           )}
