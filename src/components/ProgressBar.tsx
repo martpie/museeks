@@ -3,6 +3,7 @@ import * as stylex from '@stylexjs/stylex';
 
 type Props = {
   progress?: number;
+  label: string;
 };
 
 export default function ProgressBar(props: Props) {
@@ -17,6 +18,9 @@ export default function ProgressBar(props: Props) {
           style={{ width: `${props.progress ?? 0}%` }}
         />
       </Progress.Track>
+      <Progress.Label {...stylex.props(styles.progressLabel)}>
+        {props.label}
+      </Progress.Label>
     </Progress.Root>
   );
 }
@@ -24,9 +28,12 @@ export default function ProgressBar(props: Props) {
 const styles = stylex.create({
   progress: {
     flex: '1',
-    display: 'block',
+    display: 'flex',
+    gap: '12px',
+    alignItems: 'center',
   },
   progressTrack: {
+    flexGrow: 1,
     height: '6px',
     backgroundColor: 'var(--progress-bg)',
   },
@@ -34,5 +41,11 @@ const styles = stylex.create({
     height: '6px',
     backgroundColor: 'var(--main-color)',
     transition: 'width 0.2s ease-in-out',
+  },
+  progressLabel: {
+    flexShrink: 0,
+    fontSize: '12px',
+    color: 'var(--text-color)',
+    fontVariantNumeric: 'tabular-nums',
   },
 });
