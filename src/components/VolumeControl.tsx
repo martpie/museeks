@@ -1,6 +1,7 @@
+import { Popover } from '@base-ui/react/popover';
+import { Slider } from '@base-ui/react/slider';
 import { useLingui } from '@lingui/react/macro';
 import * as stylex from '@stylexjs/stylex';
-import { HoverCard, Slider } from 'radix-ui';
 import { useCallback } from 'react';
 
 import ButtonIcon from '../elements/ButtonIcon';
@@ -29,49 +30,60 @@ export default function VolumeControl() {
   const muted = usePlayerState((state) => state.muted);
   const { t } = useLingui();
 
-  const setPlayerVolume = useCallback((values: number[]) => {
-    const [value] = values;
+  const setPlayerVolume = useCallback((value: number) => {
     const smoothVolume = smoothifyVolume(value);
     player.setVolume(smoothVolume); // Debounced save happens in player
   }, []);
 
   return (
-    <HoverCard.Root openDelay={0} closeDelay={150}>
-      <HoverCard.Trigger asChild>
-        <div {...stylex.props(styles.volumeControlContainer)}>
-          <ButtonIcon
-            title={t`Volume`}
-            onClick={() => player.toggleMute()}
-            icon={getVolumeIcon(unsmoothifyVolume(volume), muted)}
-            iconSize={16}
-          />
-        </div>
-      </HoverCard.Trigger>
-      <HoverCard.Content
-        side="right"
-        sideOffset={8}
-        {...stylex.props(styles.volumeHoverCard)}
-      >
-        <Slider.Root
-          value={[unsmoothifyVolume(volume)]}
-          onKeyDown={stopPropagation}
-          onValueChange={setPlayerVolume}
-          min={0}
-          max={1}
-          step={0.01}
-          {...stylex.props(styles.sliderRoot, muted && styles.faded)}
-        >
-          <Slider.Track {...stylex.props(styles.sliderTrack)}>
-            <Slider.Range {...stylex.props(styles.sliderRange)} />
-          </Slider.Track>
-          <Slider.Thumb
-            aria-label={t`Volume`}
-            data-museeks-action
-            {...stylex.props(styles.sliderThumb)}
-          />
-        </Slider.Root>
-      </HoverCard.Content>
-    </HoverCard.Root>
+    <Popover.Root>
+      <Popover.Trigger
+        openOnHover
+        delay={0}
+        closeDelay={150}
+        nativeButton={false}
+        render={(triggerProps) => (
+          <div
+            {...triggerProps}
+            {...stylex.props(styles.volumeControlContainer)}
+          >
+            <ButtonIcon
+              title={t`Volume`}
+              onClick={() => player.toggleMute()}
+              icon={getVolumeIcon(unsmoothifyVolume(volume), muted)}
+              iconSize={16}
+            />
+          </div>
+        )}
+      />
+      <Popover.Portal>
+        <Popover.Positioner side="right" sideOffset={8}>
+          <Popover.Popup {...stylex.props(styles.volumeHoverCard)}>
+            <Slider.Root
+              value={unsmoothifyVolume(volume)}
+              onKeyDown={stopPropagation}
+              onValueChange={setPlayerVolume}
+              min={0}
+              max={1}
+              step={0.01}
+            >
+              <Slider.Control
+                {...stylex.props(styles.sliderRoot, muted && styles.faded)}
+              >
+                <Slider.Track {...stylex.props(styles.sliderTrack)}>
+                  <Slider.Indicator {...stylex.props(styles.sliderRange)} />
+                </Slider.Track>
+                <Slider.Thumb
+                  aria-label={t`Volume`}
+                  data-museeks-action
+                  {...stylex.props(styles.sliderThumb)}
+                />
+              </Slider.Control>
+            </Slider.Root>
+          </Popover.Popup>
+        </Popover.Positioner>
+      </Popover.Portal>
+    </Popover.Root>
   );
 }
 
@@ -105,8 +117,8 @@ const styles = stylex.create({
     animationTimingFunction: 'ease-out',
     animationFillMode: 'forwards',
     animationName: {
-      ':is([data-state="open"])': fadeIn,
-      ':is([data-state="closed"])': fadeOut,
+      ':is([data-open])': fadeIn,
+      ':is([data-ending-style])': fadeOut,
     },
   },
   sliderRoot: {

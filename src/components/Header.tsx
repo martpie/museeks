@@ -1,6 +1,6 @@
+import { Popover } from '@base-ui/react/popover';
 import { useLingui } from '@lingui/react/macro';
 import * as stylex from '@stylexjs/stylex';
-import { Popover } from 'radix-ui';
 
 import ButtonIcon from '../elements/ButtonIcon';
 import { usePlayerState } from '../hooks/usePlayer';
@@ -42,25 +42,24 @@ export default function Header() {
             <PlayingBar trackPlaying={trackPlaying} />
             <Popover.Root>
               <div {...stylex.props(styles.queue)}>
-                <Popover.Trigger asChild>
-                  <ButtonIcon
-                    icon="list"
-                    iconSize={20}
-                    title={t`Queue`}
-                    data-tauri-drag-region
-                  />
-                </Popover.Trigger>
+                <Popover.Trigger
+                  render={(triggerProps) => (
+                    <ButtonIcon
+                      {...triggerProps}
+                      icon="list"
+                      iconSize={20}
+                      title={t`Queue`}
+                      data-tauri-drag-region
+                    />
+                  )}
+                />
               </div>
-              <Popover.Anchor />
               <Popover.Portal>
-                <Popover.Content
-                  side="bottom"
-                  align="end"
-                  avoidCollisions={false}
-                  {...stylex.props(styles.queueContainer)}
-                >
-                  <Queue queue={queue} queueCursor={queueCursor} />
-                </Popover.Content>
+                <Popover.Positioner side="bottom" align="end">
+                  <Popover.Popup {...stylex.props(styles.queueContainer)}>
+                    <Queue queue={queue} queueCursor={queueCursor} />
+                  </Popover.Popup>
+                </Popover.Positioner>
               </Popover.Portal>
             </Popover.Root>
           </>
@@ -129,7 +128,7 @@ const styles = stylex.create({
   queueContainer: {
     zIndex: 1000,
     display: {
-      ':is([data-state="open"])': 'block',
+      ':is([data-open])': 'block',
     },
   },
 });

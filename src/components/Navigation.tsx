@@ -1,7 +1,7 @@
+import { NavigationMenu } from '@base-ui/react/navigation-menu';
 import { useLingui } from '@lingui/react/macro';
 import * as stylex from '@stylexjs/stylex';
 import { Link } from '@tanstack/react-router';
-import { NavigationMenu } from 'radix-ui';
 
 import useLibraryStore from '../stores/useLibraryStore';
 import Icon from './Icon';
@@ -20,56 +20,68 @@ export default function Navigation() {
         >
           <NavigationMenu.List {...stylex.props(styles.viewLinks)}>
             <NavigationMenu.Item {...stylex.props(styles.navigationItem)}>
-              <NavigationMenu.Link asChild>
-                <Link
-                  to="/library"
-                  title={t`Library`}
-                  draggable={false}
-                  data-testid="footer-library-link"
-                  {...stylex.props(styles.navigationLink)}
-                >
-                  <Icon name="musicalNotes" size={16} />
-                </Link>
-              </NavigationMenu.Link>
+              <NavigationMenu.Link
+                render={(renderProps) => (
+                  <Link
+                    {...renderProps}
+                    to="/library"
+                    title={t`Library`}
+                    draggable={false}
+                    data-testid="footer-library-link"
+                    {...stylex.props(styles.navigationLink)}
+                  >
+                    <Icon name="musicalNotes" size={16} />
+                  </Link>
+                )}
+              />
             </NavigationMenu.Item>
             <NavigationMenu.Item {...stylex.props(styles.navigationItem)}>
-              <NavigationMenu.Link asChild>
-                <Link
-                  to="/artists"
-                  title={t`Artists`}
-                  draggable={false}
-                  data-testid="footer-artists-link"
-                  {...stylex.props(styles.navigationLink)}
-                >
-                  <Icon name="microphone" size={16} />
-                </Link>
-              </NavigationMenu.Link>
+              <NavigationMenu.Link
+                render={(renderProps) => (
+                  <Link
+                    {...renderProps}
+                    to="/artists"
+                    title={t`Artists`}
+                    draggable={false}
+                    data-testid="footer-artists-link"
+                    {...stylex.props(styles.navigationLink)}
+                  >
+                    <Icon name="microphone" size={16} />
+                  </Link>
+                )}
+              />
             </NavigationMenu.Item>
             <NavigationMenu.Item {...stylex.props(styles.navigationItem)}>
-              <NavigationMenu.Link asChild>
-                <Link
-                  to="/playlists"
-                  title={t`Playlists`}
-                  draggable={false}
-                  data-testid="footer-playlists-link"
-                  {...stylex.props(styles.navigationLink)}
-                >
-                  <Icon name="playlist" size={16} />
-                </Link>
-              </NavigationMenu.Link>
+              <NavigationMenu.Link
+                render={(renderProps) => (
+                  <Link
+                    {...renderProps}
+                    to="/playlists"
+                    title={t`Playlists`}
+                    draggable={false}
+                    data-testid="footer-playlists-link"
+                    {...stylex.props(styles.navigationLink)}
+                  >
+                    <Icon name="playlist" size={16} />
+                  </Link>
+                )}
+              />
             </NavigationMenu.Item>
             <NavigationMenu.Item {...stylex.props(styles.navigationItem)}>
-              <NavigationMenu.Link asChild>
-                <Link
-                  to="/settings"
-                  title={t`Settings`}
-                  draggable={false}
-                  data-testid="footer-settings-link"
-                  {...stylex.props(styles.navigationLink)}
-                >
-                  <Icon name="settings" size={16} />
-                </Link>
-              </NavigationMenu.Link>
+              <NavigationMenu.Link
+                render={(renderProps) => (
+                  <Link
+                    {...renderProps}
+                    to="/settings"
+                    title={t`Settings`}
+                    draggable={false}
+                    data-testid="footer-settings-link"
+                    {...stylex.props(styles.navigationLink)}
+                  >
+                    <Icon name="settings" size={16} />
+                  </Link>
+                )}
+              />
             </NavigationMenu.Item>
           </NavigationMenu.List>
         </NavigationMenu.Root>
