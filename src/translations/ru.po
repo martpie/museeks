@@ -21,7 +21,7 @@ msgstr "Повтор"
 msgid "Shuffle"
 msgstr "Шафл"
 
-#: src/components/Cover.tsx:35
+#: src/components/Cover.tsx:34
 msgid "Album cover"
 msgstr "Обложка альбома"
 
@@ -67,7 +67,7 @@ msgstr "Если это случится снова, пожалуйста, <0>з
 msgid "Header"
 msgstr ""
 
-#: src/components/Header.tsx:49
+#: src/components/Header.tsx:51
 msgid "Queue"
 msgstr "Очередь"
 
@@ -75,32 +75,32 @@ msgstr "Очередь"
 msgid "Main navigation"
 msgstr ""
 
-#: src/components/Navigation.tsx:26
+#: src/components/Navigation.tsx:28
 #: src/routes/settings.tsx:42
 msgid "Library"
 msgstr "Библиотека"
 
-#: src/components/Navigation.tsx:39
+#: src/components/Navigation.tsx:44
 #: src/routes/artists.tsx:64
 #: src/routes/settings.ui.tsx:147
 msgid "Artists"
 msgstr "Исполнители"
 
-#: src/components/Navigation.tsx:52
+#: src/components/Navigation.tsx:60
 #: src/routes/playlists.tsx:165
 #: src/routes/settings.ui.tsx:150
 msgid "Playlists"
 msgstr "Плейлисты"
 
-#: src/components/Navigation.tsx:65
+#: src/components/Navigation.tsx:76
 msgid "Settings"
 msgstr "Настройки"
 
-#: src/components/Navigation.tsx:77
+#: src/components/Navigation.tsx:89
 msgid "Library status"
 msgstr ""
 
-#: src/components/Navigation.tsx:101
+#: src/components/Navigation.tsx:113
 msgid "scanning tracks..."
 msgstr "сканирование треков..."
 
@@ -272,8 +272,8 @@ msgstr "вы можете добавить <0>вашу музыку здесь</
 msgid "Your search returned no results"
 msgstr "Ваш поиск не принёс результатов"
 
-#: src/components/VolumeControl.tsx:43
-#: src/components/VolumeControl.tsx:68
+#: src/components/VolumeControl.tsx:51
+#: src/components/VolumeControl.tsx:77
 msgid "Volume"
 msgstr "Громкость"
 

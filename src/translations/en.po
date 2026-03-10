@@ -21,7 +21,7 @@ msgstr "Repeat"
 msgid "Shuffle"
 msgstr "Shuffle"
 
-#: src/components/Cover.tsx:35
+#: src/components/Cover.tsx:34
 msgid "Album cover"
 msgstr "Album cover"
 
@@ -67,7 +67,7 @@ msgstr "or if it happens again, please <0>report an issue</0>."
 msgid "Header"
 msgstr "Header"
 
-#: src/components/Header.tsx:49
+#: src/components/Header.tsx:51
 msgid "Queue"
 msgstr "Queue"
 
@@ -75,32 +75,32 @@ msgstr "Queue"
 msgid "Main navigation"
 msgstr "Main navigation"
 
-#: src/components/Navigation.tsx:26
+#: src/components/Navigation.tsx:28
 #: src/routes/settings.tsx:42
 msgid "Library"
 msgstr "Library"
 
-#: src/components/Navigation.tsx:39
+#: src/components/Navigation.tsx:44
 #: src/routes/artists.tsx:64
 #: src/routes/settings.ui.tsx:147
 msgid "Artists"
 msgstr "Artists"
 
-#: src/components/Navigation.tsx:52
+#: src/components/Navigation.tsx:60
 #: src/routes/playlists.tsx:165
 #: src/routes/settings.ui.tsx:150
 msgid "Playlists"
 msgstr "Playlists"
 
-#: src/components/Navigation.tsx:65
+#: src/components/Navigation.tsx:76
 msgid "Settings"
 msgstr "Settings"
 
-#: src/components/Navigation.tsx:77
+#: src/components/Navigation.tsx:89
 msgid "Library status"
 msgstr "Library status"
 
-#: src/components/Navigation.tsx:101
+#: src/components/Navigation.tsx:113
 msgid "scanning tracks..."
 msgstr "scanning tracks..."
 
@@ -272,8 +272,8 @@ msgstr "you can <0>add your music here</0>"
 msgid "Your search returned no results"
 msgstr "Your search returned no results"
 
-#: src/components/VolumeControl.tsx:43
-#: src/components/VolumeControl.tsx:68
+#: src/components/VolumeControl.tsx:51
+#: src/components/VolumeControl.tsx:77
 msgid "Volume"
 msgstr "Volume"
 

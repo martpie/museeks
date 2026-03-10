@@ -21,7 +21,7 @@ msgstr "重複"
 msgid "Shuffle"
 msgstr "隨機播放"
 
-#: src/components/Cover.tsx:35
+#: src/components/Cover.tsx:34
 msgid "Album cover"
 msgstr "專輯封面"
 
@@ -67,7 +67,7 @@ msgstr "如果再次發生，請<0>回報問題</0>。"
 msgid "Header"
 msgstr ""
 
-#: src/components/Header.tsx:49
+#: src/components/Header.tsx:51
 msgid "Queue"
 msgstr "播放佇列"
 
@@ -75,32 +75,32 @@ msgstr "播放佇列"
 msgid "Main navigation"
 msgstr ""
 
-#: src/components/Navigation.tsx:26
+#: src/components/Navigation.tsx:28
 #: src/routes/settings.tsx:42
 msgid "Library"
 msgstr "音樂庫"
 
-#: src/components/Navigation.tsx:39
+#: src/components/Navigation.tsx:44
 #: src/routes/artists.tsx:64
 #: src/routes/settings.ui.tsx:147
 msgid "Artists"
 msgstr "藝術家"
 
-#: src/components/Navigation.tsx:52
+#: src/components/Navigation.tsx:60
 #: src/routes/playlists.tsx:165
 #: src/routes/settings.ui.tsx:150
 msgid "Playlists"
 msgstr "播放清單"
 
-#: src/components/Navigation.tsx:65
+#: src/components/Navigation.tsx:76
 msgid "Settings"
 msgstr "設定"
 
-#: src/components/Navigation.tsx:77
+#: src/components/Navigation.tsx:89
 msgid "Library status"
 msgstr ""
 
-#: src/components/Navigation.tsx:101
+#: src/components/Navigation.tsx:113
 msgid "scanning tracks..."
 msgstr "正在掃描音軌..."
 
@@ -272,8 +272,8 @@ msgstr "您可以<0>在這裡新增音樂</0>"
 msgid "Your search returned no results"
 msgstr "您的搜尋沒有找到結果"
 
-#: src/components/VolumeControl.tsx:43
-#: src/components/VolumeControl.tsx:68
+#: src/components/VolumeControl.tsx:51
+#: src/components/VolumeControl.tsx:77
 msgid "Volume"
 msgstr "音量"
 

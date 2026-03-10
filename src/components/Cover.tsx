@@ -1,6 +1,5 @@
 import { useLingui } from '@lingui/react/macro';
 import * as stylex from '@stylexjs/stylex';
-import { AspectRatio } from 'radix-ui';
 
 import type { Track } from '../generated/typings';
 import useCover from '../hooks/useCover';
@@ -17,7 +16,7 @@ export default function Cover(props: Props) {
   const { t } = useLingui();
 
   return (
-    <AspectRatio.Root ratio={1}>
+    <div {...stylex.props(styles.aspectRatio)}>
       <div
         {...stylex.props(
           styles.cover,
@@ -38,11 +37,14 @@ export default function Cover(props: Props) {
           {...stylex.props(styles.image, coverPath != null && styles.visible)}
         />
       </div>
-    </AspectRatio.Root>
+    </div>
   );
 }
 
 const styles = stylex.create({
+  aspectRatio: {
+    aspectRatio: '1',
+  },
   cover: {
     objectFit: 'cover',
     width: '100%',
