@@ -71,36 +71,36 @@ msgstr ""
 msgid "Queue"
 msgstr "Cola"
 
-#: src/components/Navigation.tsx:19
+#: src/components/Navigation.tsx:49
 msgid "Main navigation"
 msgstr ""
 
-#: src/components/Navigation.tsx:28
+#: src/components/Navigation.tsx:54
 #: src/routes/settings.tsx:42
 msgid "Library"
 msgstr "Biblioteca"
 
-#: src/components/Navigation.tsx:44
+#: src/components/Navigation.tsx:61
 #: src/routes/artists.tsx:64
 #: src/routes/settings.ui.tsx:147
 msgid "Artists"
 msgstr "Artistas"
 
-#: src/components/Navigation.tsx:60
+#: src/components/Navigation.tsx:68
 #: src/routes/playlists.tsx:165
 #: src/routes/settings.ui.tsx:150
 msgid "Playlists"
 msgstr "Listas de reproducción"
 
-#: src/components/Navigation.tsx:76
+#: src/components/Navigation.tsx:75
 msgid "Settings"
 msgstr "Configuración"
 
-#: src/components/Navigation.tsx:89
+#: src/components/Navigation.tsx:83
 msgid "Library status"
 msgstr ""
 
-#: src/components/Navigation.tsx:113
+#: src/components/Navigation.tsx:107
 msgid "scanning tracks..."
 msgstr "escaneando pistas..."
 
