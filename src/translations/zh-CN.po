@@ -223,26 +223,26 @@ msgstr "移除"
 msgid "{0, plural, one {# track} other {# tracks}}"
 msgstr "{0, plural, one {# 首音轨} other {# 首音轨}}"
 
-#: src/components/TrackListHeader.tsx:46
+#: src/components/TrackListHeader.tsx:50
 #: src/routes/tracks.$trackID.tsx:89
 msgid "Title"
 msgstr "标题"
 
-#: src/components/TrackListHeader.tsx:53
+#: src/components/TrackListHeader.tsx:57
 #: src/routes/tracks.$trackID.tsx:242
 msgid "Duration"
 msgstr "时长"
 
-#: src/components/TrackListHeader.tsx:60
+#: src/components/TrackListHeader.tsx:64
 msgid "Artist"
 msgstr "艺术家"
 
-#: src/components/TrackListHeader.tsx:67
+#: src/components/TrackListHeader.tsx:71
 #: src/routes/tracks.$trackID.tsx:100
 msgid "Album"
 msgstr "专辑"
 
-#: src/components/TrackListHeader.tsx:74
+#: src/components/TrackListHeader.tsx:78
 #: src/routes/tracks.$trackID.tsx:140
 msgid "Genre"
 msgstr "流派"

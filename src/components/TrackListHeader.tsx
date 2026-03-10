@@ -40,7 +40,11 @@ export default function TrackListHeader(props: Props) {
 
   return (
     <div {...stylex.props(styles.trackListHeader)}>
-      <TrackListHeaderCell xstyle={styles.cellTrackPlaying} title="&nbsp;" />
+      <TrackListHeaderCell
+        xstyle={styles.cellTrackPlaying}
+        title="&nbsp;"
+        sortBy={null}
+      />
       <TrackListHeaderCell
         xstyle={styles.cellTrack}
         title={t`Title`}

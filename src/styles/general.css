@@ -42,12 +42,14 @@ body {
 }
 
 :focus-visible {
-  outline: 2px solid var(--main-color);
-  outline-offset: 1px;
+  --focus-offset: 1px;
+  outline: 2px solid color-mix(in srgb, var(--main-color) 80%, white);
+  outline-offset: var(--focus-offset);
   border-radius: calc(
-    var(--border-radius) + 1px
+    var(--border-radius) + var(--focus-offset)
   ); /* compensate radius on elements */
-  z-index: 1;
+  position: relative;
+  z-index: 9999 !important;
 }
 
 p {
