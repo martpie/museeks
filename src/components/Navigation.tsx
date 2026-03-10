@@ -2,11 +2,41 @@ import { NavigationMenu } from '@base-ui/react/navigation-menu';
 import { useLingui } from '@lingui/react/macro';
 import * as stylex from '@stylexjs/stylex';
 import { Link } from '@tanstack/react-router';
+import type { LinkProps } from '@tanstack/react-router';
+import type { ReactNode } from 'react';
 
 import useLibraryStore from '../stores/useLibraryStore';
 import Icon from './Icon';
 import ProgressBar from './ProgressBar';
 import TrackListStatus from './TrackListStatus';
+
+type NavItemProps = {
+  to: LinkProps['to'];
+  title: string;
+  'data-testid': string;
+  children: ReactNode;
+};
+
+function NavItem({ to, title, 'data-testid': testId, children }: NavItemProps) {
+  return (
+    <NavigationMenu.Item {...stylex.props(styles.navigationItem)}>
+      <NavigationMenu.Link
+        render={(renderProps) => (
+          <Link
+            {...renderProps}
+            to={to}
+            title={title}
+            draggable={false}
+            data-testid={testId}
+            {...stylex.props(styles.navigationLink)}
+          >
+            {children}
+          </Link>
+        )}
+      />
+    </NavigationMenu.Item>
+  );
+}
 
 export default function Navigation() {
   const { t } = useLingui();
@@ -19,70 +49,34 @@ export default function Navigation() {
           aria-label={t`Main navigation`}
         >
           <NavigationMenu.List {...stylex.props(styles.viewLinks)}>
-            <NavigationMenu.Item {...stylex.props(styles.navigationItem)}>
-              <NavigationMenu.Link
-                render={(renderProps) => (
-                  <Link
-                    {...renderProps}
-                    to="/library"
-                    title={t`Library`}
-                    draggable={false}
-                    data-testid="footer-library-link"
-                    {...stylex.props(styles.navigationLink)}
-                  >
-                    <Icon name="musicalNotes" size={16} />
-                  </Link>
-                )}
-              />
-            </NavigationMenu.Item>
-            <NavigationMenu.Item {...stylex.props(styles.navigationItem)}>
-              <NavigationMenu.Link
-                render={(renderProps) => (
-                  <Link
-                    {...renderProps}
-                    to="/artists"
-                    title={t`Artists`}
-                    draggable={false}
-                    data-testid="footer-artists-link"
-                    {...stylex.props(styles.navigationLink)}
-                  >
-                    <Icon name="microphone" size={16} />
-                  </Link>
-                )}
-              />
-            </NavigationMenu.Item>
-            <NavigationMenu.Item {...stylex.props(styles.navigationItem)}>
-              <NavigationMenu.Link
-                render={(renderProps) => (
-                  <Link
-                    {...renderProps}
-                    to="/playlists"
-                    title={t`Playlists`}
-                    draggable={false}
-                    data-testid="footer-playlists-link"
-                    {...stylex.props(styles.navigationLink)}
-                  >
-                    <Icon name="playlist" size={16} />
-                  </Link>
-                )}
-              />
-            </NavigationMenu.Item>
-            <NavigationMenu.Item {...stylex.props(styles.navigationItem)}>
-              <NavigationMenu.Link
-                render={(renderProps) => (
-                  <Link
-                    {...renderProps}
-                    to="/settings"
-                    title={t`Settings`}
-                    draggable={false}
-                    data-testid="footer-settings-link"
-                    {...stylex.props(styles.navigationLink)}
-                  >
-                    <Icon name="settings" size={16} />
-                  </Link>
-                )}
-              />
-            </NavigationMenu.Item>
+            <NavItem
+              to="/library"
+              title={t`Library`}
+              data-testid="footer-library-link"
+            >
+              <Icon name="musicalNotes" size={16} />
+            </NavItem>
+            <NavItem
+              to="/artists"
+              title={t`Artists`}
+              data-testid="footer-artists-link"
+            >
+              <Icon name="microphone" size={16} />
+            </NavItem>
+            <NavItem
+              to="/playlists"
+              title={t`Playlists`}
+              data-testid="footer-playlists-link"
+            >
+              <Icon name="playlist" size={16} />
+            </NavItem>
+            <NavItem
+              to="/settings"
+              title={t`Settings`}
+              data-testid="footer-settings-link"
+            >
+              <Icon name="settings" size={16} />
+            </NavItem>
           </NavigationMenu.List>
         </NavigationMenu.Root>
       </div>
