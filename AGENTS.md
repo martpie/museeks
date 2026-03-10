@@ -10,7 +10,7 @@ Museeks is a music player desktop app built on top of Tauri. It focuses on clean
   - Types: TypeScript (strict)
   - UI Library: React.js 19
   - Routing: TanStack Router (file-based)
-  - Accessibility: Radix UI
+  - Accessibility: Base UI
   - Global State Management: Zustand
   - Styling: [StyleX](https://stylexjs.com/docs/learn)
   - Localization/i18n: [Lingui.js](https://lingui.dev/introduction)

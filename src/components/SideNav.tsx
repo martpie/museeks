@@ -1,6 +1,6 @@
+import { NavigationMenu } from '@base-ui/react/navigation-menu';
 import * as stylex from '@stylexjs/stylex';
 import { groupBy } from 'lodash-es';
-import { NavigationMenu } from 'radix-ui';
 import React, { useMemo } from 'react';
 
 import Flexbox from '../elements/Flexbox';

@@ -1,6 +1,6 @@
+import { NavigationMenu } from '@base-ui/react/navigation-menu';
 import * as stylex from '@stylexjs/stylex';
 import { Link } from '@tanstack/react-router';
-import { NavigationMenu } from 'radix-ui';
 import type React from 'react';
 
 interface WrapProps {
@@ -31,16 +31,19 @@ interface LinkProps {
 export function SettingsNavLink(props: LinkProps) {
   return (
     <NavigationMenu.Item>
-      <NavigationMenu.Link asChild>
-        <Link
-          to={props.to}
-          {...stylex.props(styles.navLink)}
-          draggable={false}
-          data-testid={`settings-nav-link${props.to}`}
-        >
-          {props.children}
-        </Link>
-      </NavigationMenu.Link>
+      <NavigationMenu.Link
+        render={(renderProps) => (
+          <Link
+            {...renderProps}
+            to={props.to}
+            {...stylex.props(styles.navLink)}
+            draggable={false}
+            data-testid={`settings-nav-link${props.to}`}
+          >
+            {props.children}
+          </Link>
+        )}
+      />
     </NavigationMenu.Item>
   );
 }

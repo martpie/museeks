@@ -1,5 +1,5 @@
+import { Slider } from '@base-ui/react/slider';
 import * as stylex from '@stylexjs/stylex';
-import { Slider } from 'radix-ui';
 import { useCallback, useState } from 'react';
 
 import type { Track } from '../generated/typings';
@@ -16,9 +16,8 @@ export default function TrackProgress(props: Props) {
 
   const elapsed = usePlayingTrackCurrentTime();
 
-  const jumpAudioTo = useCallback((values: number[]) => {
-    const [to] = values;
-    player.setCurrentTime(to);
+  const jumpAudioTo = useCallback((value: number) => {
+    player.setCurrentTime(value);
   }, []);
 
   const [tooltipTargetTime, setTooltipTargetTime] = useState<null | number>(
@@ -53,25 +52,28 @@ export default function TrackProgress(props: Props) {
       min={0}
       max={trackPlaying.duration}
       step={1}
-      value={[elapsed]}
+      value={elapsed}
       onValueChange={jumpAudioTo}
-      {...stylex.props(styles.trackRoot)}
-      onMouseMoveCapture={showTooltip}
-      onMouseLeave={hideTooltip}
     >
-      <Slider.Track {...stylex.props(styles.trackProgress)}>
-        <Slider.Range {...stylex.props(styles.trackRange)} />
-        <div
-          {...stylex.props(styles.progressTooltip)}
-          style={{
-            left: `${tooltipX}%`,
-            display: tooltipX == null ? 'none' : 'block',
-          }}
-        >
-          {tooltipContent}
-        </div>
-      </Slider.Track>
-      <Slider.Thumb />
+      <Slider.Control
+        {...stylex.props(styles.trackRoot)}
+        onMouseMoveCapture={showTooltip}
+        onMouseLeave={hideTooltip}
+      >
+        <Slider.Track {...stylex.props(styles.trackProgress)}>
+          <Slider.Indicator {...stylex.props(styles.trackRange)} />
+          <div
+            {...stylex.props(styles.progressTooltip)}
+            style={{
+              left: `${tooltipX}%`,
+              display: tooltipX == null ? 'none' : 'block',
+            }}
+          >
+            {tooltipContent}
+          </div>
+        </Slider.Track>
+        <Slider.Thumb />
+      </Slider.Control>
     </Slider.Root>
   );
 }
