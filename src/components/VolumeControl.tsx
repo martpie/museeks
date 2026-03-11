@@ -32,6 +32,7 @@ export default function VolumeControl() {
 
   const setPlayerVolume = useCallback((value: number) => {
     const smoothVolume = smoothifyVolume(value);
+    void player.unmute();
     player.setVolume(smoothVolume); // Debounced save happens in player
   }, []);
 
@@ -41,19 +42,14 @@ export default function VolumeControl() {
         openOnHover
         delay={0}
         closeDelay={150}
-        nativeButton={false}
         render={(triggerProps) => (
-          <div
+          <ButtonIcon
+            title={t`Volume`}
+            icon={getVolumeIcon(unsmoothifyVolume(volume), muted)}
+            iconSize={16}
+            xstyle={styles.volumeControlContainer}
             {...triggerProps}
-            {...stylex.props(styles.volumeControlContainer)}
-          >
-            <ButtonIcon
-              title={t`Volume`}
-              onClick={() => player.toggleMute()}
-              icon={getVolumeIcon(unsmoothifyVolume(volume), muted)}
-              iconSize={16}
-            />
-          </div>
+          />
         )}
       />
       <Popover.Portal>
@@ -61,6 +57,7 @@ export default function VolumeControl() {
           <Popover.Popup {...stylex.props(styles.volumeHoverCard)}>
             <Slider.Root
               value={unsmoothifyVolume(volume)}
+              // prevent <- / -> keybinding conflicts with player seekbar when volume slider is focused
               onKeyDown={stopPropagation}
               onValueChange={setPlayerVolume}
               min={0}
@@ -150,9 +147,10 @@ const styles = stylex.create({
     height: '10px',
     backgroundColor: 'white',
     borderRadius: '50%',
-    boxShadow: {
-      default: '0 0 0 1px var(--border-color)',
-      ':active': '0 0 0 2px var(--main-color)',
+    outline: {
+      default: '1px var(--border-color)',
+      ':has(:focus-visible)': '2px solid var(--main-color)',
+      ':active': '2px solid var(--main-color)',
     },
   },
   faded: {
