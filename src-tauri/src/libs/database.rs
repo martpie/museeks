@@ -145,7 +145,9 @@ impl DB {
                 track_of = ?,
                 disk_no = ?,
                 disk_of = ?,
-                is_compilation = ?
+                is_compilation = ?,
+                artist_sort = ?,
+                album_sort = ?
             WHERE id = ?
             "#,
         )
@@ -162,6 +164,8 @@ impl DB {
         .bind(track.disk_no)
         .bind(track.disk_of)
         .bind(track.is_compilation)
+        .bind(&track.artist_sort)
+        .bind(&track.album_sort)
         .bind(&track.id)
         .execute(&mut self.connection)
         .await?;
@@ -197,8 +201,9 @@ impl DB {
                 r#"
                 INSERT INTO tracks (
                     id, path, title, album, album_artist, artists, genres, year,
-                    duration, track_no, track_of, disk_no, disk_of, is_compilation
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    duration, track_no, track_of, disk_no, disk_of, is_compilation,
+                    artist_sort, album_sort
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 "#,
             )
             .bind(&track.id)
@@ -215,6 +220,8 @@ impl DB {
             .bind(track.disk_no)
             .bind(track.disk_of)
             .bind(track.is_compilation)
+            .bind(&track.artist_sort)
+            .bind(&track.album_sort)
             .execute(&mut *tx)
             .await?;
         }
@@ -280,8 +287,8 @@ impl DB {
              FROM tracks
              WHERE is_compilation = 0
              ORDER BY
-               CASE WHEN upper(substr(album_artist, 1, 1)) BETWEEN 'A' AND 'Z' THEN 0 ELSE 1 END,
-               album_artist COLLATE NOCASE;",
+               CASE WHEN upper(substr(COALESCE(artist_sort, album_artist), 1, 1)) BETWEEN 'A' AND 'Z' THEN 0 ELSE 1 END,
+               COALESCE(artist_sort, album_artist) COLLATE NOCASE;",
         )
         .fetch_all(&mut self.connection)
         .await?;
@@ -306,7 +313,7 @@ impl DB {
      */
     pub async fn get_artist_tracks(&mut self, artist: String) -> AnyResult<Vec<TrackGroup>> {
         let tracks = sqlx::query_as::<_, Track>(
-            "SELECT * FROM tracks WHERE album_artist = ? AND is_compilation = 0 ORDER BY album, disk_no, track_no",
+            "SELECT * FROM tracks WHERE album_artist = ? AND is_compilation = 0 ORDER BY COALESCE(album_sort, album) COLLATE NOCASE, disk_no, track_no",
         )
         .bind(&artist)
         .fetch_all(&mut self.connection)
@@ -348,7 +355,7 @@ impl DB {
      */
     pub async fn get_compilation_albums(&mut self) -> AnyResult<Vec<TrackGroup>> {
         let tracks = sqlx::query_as::<_, Track>(
-            "SELECT * FROM tracks WHERE is_compilation = 1 ORDER BY album, disk_no, track_no",
+            "SELECT * FROM tracks WHERE is_compilation = 1 ORDER BY COALESCE(album_sort, album) COLLATE NOCASE, disk_no, track_no",
         )
         .fetch_all(&mut self.connection)
         .await?;
