@@ -2,7 +2,7 @@ import { Trans, useLingui } from '@lingui/react/macro';
 import * as stylex from '@stylexjs/stylex';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
 import type React from 'react';
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 
 import * as Setting from '../components/Setting';
 import SettingCheckbox from '../components/SettingCheckbox';
@@ -60,23 +60,17 @@ function ViewTrackDetails() {
   const libraryAPI = useLibraryAPI();
   const router = useRouter();
 
-  const handleSubmit = useCallback(
-    async (e: React.FormEvent<HTMLFormElement>) => {
-      e.preventDefault();
-      await libraryAPI.updateTrackMetadata(track.id, formData);
-      await invalidate();
-      router.history.back();
-    },
-    [track, formData, router, libraryAPI, invalidate],
-  );
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    await libraryAPI.updateTrackMetadata(track.id, formData);
+    await invalidate();
+    router.history.back();
+  };
 
-  const handleCancel = useCallback(
-    (e: React.MouseEvent<HTMLButtonElement>) => {
-      e.preventDefault();
-      router.history.back();
-    },
-    [router],
-  );
+  const handleCancel = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    router.history.back();
+  };
 
   return (
     <View hasPadding layout="centered">

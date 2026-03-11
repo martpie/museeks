@@ -1,5 +1,3 @@
-import { useMemo } from 'react';
-
 /**
  * Parse an int to a more readable string
  */
@@ -29,9 +27,5 @@ export function parseDuration(maybe_duration: number | null): string {
 export default function useFormattedDuration(duration: number | null): string {
   const durationAsSeconds = duration !== null ? Math.trunc(duration) : null;
 
-  const display = useMemo(() => {
-    return parseDuration(durationAsSeconds);
-  }, [durationAsSeconds]);
-
-  return display;
+  return parseDuration(durationAsSeconds);
 }

@@ -2,7 +2,6 @@ import { Popover } from '@base-ui/react/popover';
 import { Slider } from '@base-ui/react/slider';
 import { useLingui } from '@lingui/react/macro';
 import * as stylex from '@stylexjs/stylex';
-import { useCallback } from 'react';
 
 import ButtonIcon from '../elements/ButtonIcon';
 import { usePlayerState } from '../hooks/usePlayer';
@@ -30,11 +29,11 @@ export default function VolumeControl() {
   const muted = usePlayerState((state) => state.muted);
   const { t } = useLingui();
 
-  const setPlayerVolume = useCallback((value: number) => {
+  const setPlayerVolume = (value: number) => {
     const smoothVolume = smoothifyVolume(value);
     void player.unmute();
     player.setVolume(smoothVolume); // Debounced save happens in player
-  }, []);
+  };
 
   return (
     <Popover.Root>

@@ -2,7 +2,6 @@ import { Trans, useLingui } from '@lingui/react/macro';
 import * as stylex from '@stylexjs/stylex';
 import { createFileRoute, useLoaderData } from '@tanstack/react-router';
 import { ask, open } from '@tauri-apps/plugin-dialog';
-import { useCallback } from 'react';
 
 import * as Setting from '../components/Setting';
 import CheckboxSetting from '../components/SettingCheckbox';
@@ -25,7 +24,7 @@ function ViewSettingsLibrary() {
   const invalidate = useInvalidate();
   const { t } = useLingui();
 
-  const addLibraryFolders = useCallback(async () => {
+  const addLibraryFolders = async () => {
     const paths = await open({
       directory: true,
       multiple: true,
@@ -37,7 +36,7 @@ function ViewSettingsLibrary() {
 
     await libraryAPI.addLibraryFolders(paths);
     await invalidate();
-  }, [libraryAPI, invalidate]);
+  };
 
   return (
     <>

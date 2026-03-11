@@ -1,6 +1,6 @@
 import { useNavigate } from '@tanstack/react-router';
 import { getCurrentWindow } from '@tauri-apps/api/window';
-import { useCallback, useEffect } from 'react';
+import { useEffect } from 'react';
 import Keybinding from 'react-keybinding-component';
 
 import { usePlayerState } from '../hooks/usePlayer';
@@ -16,21 +16,21 @@ export default function IPCNavigationEvents() {
   const queueOrigin = usePlayerState((state) => state.queueOrigin);
 
   // Navigation handlers
-  const goToLibrary = useCallback(() => {
+  const goToLibrary = () => {
     void navigate({ to: '/library' });
-  }, [navigate]);
+  };
 
-  const goToPlaylists = useCallback(() => {
+  const goToPlaylists = () => {
     void navigate({ to: '/playlists' });
-  }, [navigate]);
+  };
 
-  const goToSettings = useCallback(() => {
+  const goToSettings = () => {
     void navigate({ to: '/settings/library' });
-  }, [navigate]);
+  };
 
-  const goToPlayingTrackOnEvent = useCallback(() => {
+  const goToPlayingTrackOnEvent = () => {
     goToPlayingTrack(queueOrigin, navigate);
-  }, [queueOrigin, navigate]);
+  };
 
   // Listen to IPC events for navigation
   useEffect(() => {
@@ -56,43 +56,40 @@ export default function IPCNavigationEvents() {
   // On Windows, accelerators don't work https://github.com/tauri-apps/tauri/issues/6981
   // On Linux, accelerators don't work if the window menu is hidden
   // So we need to leverage a semi-global keybinding for those in the meantime ._.
-  const onKey = useCallback(
-    async (e: KeyboardEvent) => {
-      // Prevent double navigation for cases we know work well
-      if (window.__MUSEEKS_PLATFORM === 'macos') {
-        return;
-      }
+  const onKey = async (e: KeyboardEvent) => {
+    // Prevent double navigation for cases we know work well
+    if (window.__MUSEEKS_PLATFORM === 'macos') {
+      return;
+    }
 
-      if (!isCtrlKey(e)) {
-        return;
-      }
+    if (!isCtrlKey(e)) {
+      return;
+    }
 
-      switch (e.key) {
-        case 'l': {
-          goToLibrary();
-          break;
-        }
-        case 'p': {
-          goToPlaylists();
-          break;
-        }
-        case ',': {
-          goToSettings();
-          break;
-        }
-        case 't': {
-          goToPlayingTrackOnEvent();
-          break;
-        }
+    switch (e.key) {
+      case 'l': {
+        goToLibrary();
+        break;
       }
+      case 'p': {
+        goToPlaylists();
+        break;
+      }
+      case ',': {
+        goToSettings();
+        break;
+      }
+      case 't': {
+        goToPlayingTrackOnEvent();
+        break;
+      }
+    }
 
-      switch (e.key) {
-        default:
-          break;
-      }
-    },
-    [goToLibrary, goToPlaylists, goToSettings, goToPlayingTrackOnEvent],
-  );
+    switch (e.key) {
+      default:
+        break;
+    }
+  };
 
   return <Keybinding onKey={onKey} preventInputConflict />;
 }

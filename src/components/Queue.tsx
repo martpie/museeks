@@ -1,6 +1,5 @@
 import * as stylex from '@stylexjs/stylex';
 import type React from 'react';
-import { useMemo } from 'react';
 
 import type { Track } from '../generated/typings';
 import QueueEmpty from './QueueEmpty';
@@ -15,13 +14,8 @@ export default function Queue(props: Props) {
   const { queue, queueCursor } = props;
   let content: React.ReactNode;
 
-  const isQueueEmpty = useMemo(() => {
-    if (queueCursor == null) {
-      return null;
-    }
-
-    return queue.slice(queueCursor + 1).length === 0;
-  }, [queue, queueCursor]);
+  const isQueueEmpty =
+    queueCursor == null ? null : queue.slice(queueCursor + 1).length === 0;
 
   if (isQueueEmpty || queueCursor == null) {
     content = <QueueEmpty />;

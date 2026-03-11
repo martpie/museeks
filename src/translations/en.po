@@ -82,13 +82,13 @@ msgstr "Library"
 
 #: src/components/Navigation.tsx:61
 #: src/routes/artists.tsx:64
-#: src/routes/settings.ui.tsx:147
+#: src/routes/settings.ui.tsx:142
 msgid "Artists"
 msgstr "Artists"
 
 #: src/components/Navigation.tsx:68
-#: src/routes/playlists.tsx:165
-#: src/routes/settings.ui.tsx:150
+#: src/routes/playlists.tsx:158
+#: src/routes/settings.ui.tsx:145
 msgid "Playlists"
 msgstr "Playlists"
 
@@ -124,95 +124,95 @@ msgstr "Next"
 msgid "Queue is empty"
 msgstr "Queue is empty"
 
-#: src/components/QueueList.tsx:79
+#: src/components/QueueList.tsx:76
 msgid "clear queue"
 msgstr "clear queue"
 
-#: src/components/QueueList.tsx:105
+#: src/components/QueueList.tsx:102
 msgid "see more"
 msgstr "see more"
 
-#: src/components/Search.tsx:42
+#: src/components/Search.tsx:37
 msgid "search..."
 msgstr "search..."
 
-#: src/components/SideNavLink.tsx:62
+#: src/components/SideNavLink.tsx:63
 msgid "Rename"
 msgstr "Rename"
 
-#: src/components/TrackList.tsx:242
+#: src/components/TrackList.tsx:233
 msgid "Create new playlist..."
 msgstr "Create new playlist..."
 
-#: src/components/TrackList.tsx:245
-#: src/routes/playlists.tsx:63
+#: src/components/TrackList.tsx:236
+#: src/routes/playlists.tsx:62
 msgid "New playlist"
 msgstr "New playlist"
 
-#: src/components/TrackList.tsx:258
+#: src/components/TrackList.tsx:249
 msgid "No playlists"
 msgstr "No playlists"
 
 #. placeholder {0}: selectedTracks.size
 #. placeholder {1}: playlist.name
-#: src/components/TrackList.tsx:273
+#: src/components/TrackList.tsx:264
 msgid "{0} track(s) were added to \"{1}\""
 msgstr "{0} track(s) were added to \"{1}\""
 
-#: src/components/TrackList.tsx:290
+#: src/components/TrackList.tsx:281
 msgid "{selectedCount, plural, one {# track selected} other {# tracks selected}}"
 msgstr "{selectedCount, plural, one {# track selected} other {# tracks selected}}"
 
-#: src/components/TrackList.tsx:302
+#: src/components/TrackList.tsx:293
 msgid "Add to queue"
 msgstr "Add to queue"
 
-#: src/components/TrackList.tsx:310
+#: src/components/TrackList.tsx:301
 msgid "Play next"
 msgstr "Play next"
 
-#: src/components/TrackList.tsx:322
+#: src/components/TrackList.tsx:313
 msgid "Add to playlist"
 msgstr "Add to playlist"
 
-#: src/components/TrackList.tsx:332
+#: src/components/TrackList.tsx:323
 msgid "Search for \"{item}\""
 msgstr "Search for \"{item}\""
 
-#: src/components/TrackList.tsx:345
+#: src/components/TrackList.tsx:336
 msgid "Copy \"{item}\""
 msgstr "Copy \"{item}\""
 
-#: src/components/TrackList.tsx:368
+#: src/components/TrackList.tsx:359
 msgid "Edit track"
 msgstr "Edit track"
 
-#: src/components/TrackList.tsx:378
+#: src/components/TrackList.tsx:369
 msgid "Show in file manager"
 msgstr "Show in file manager"
 
-#: src/components/TrackList.tsx:384
+#: src/components/TrackList.tsx:375
 msgid "Remove from library"
 msgstr "Remove from library"
 
 #. placeholder {0}: selectedTracks.size
-#: src/components/TrackList.tsx:387
+#: src/components/TrackList.tsx:378
 msgid "Are you sure you want to remove {0} track(s) from your library?"
 msgstr "Are you sure you want to remove {0} track(s) from your library?"
 
-#: src/components/TrackList.tsx:389
+#: src/components/TrackList.tsx:380
 msgid "Remove tracks"
 msgstr "Remove tracks"
 
-#: src/components/TrackList.tsx:391
-#: src/routes/settings.library.tsx:99
-#: src/routes/settings.library.tsx:144
-#: src/routes/tracks.$trackID.tsx:258
+#: src/components/TrackList.tsx:382
+#: src/routes/settings.library.tsx:98
+#: src/routes/settings.library.tsx:143
+#: src/routes/tracks.$trackID.tsx:252
 msgid "Cancel"
 msgstr "Cancel"
 
-#: src/components/TrackList.tsx:392
-#: src/routes/settings.library.tsx:62
+#: src/components/TrackList.tsx:383
+#: src/routes/settings.library.tsx:61
 msgid "Remove"
 msgstr "Remove"
 
@@ -224,12 +224,12 @@ msgid "{0, plural, one {# track} other {# tracks}}"
 msgstr "{0, plural, one {# track} other {# tracks}}"
 
 #: src/components/TrackListHeader.tsx:50
-#: src/routes/tracks.$trackID.tsx:89
+#: src/routes/tracks.$trackID.tsx:83
 msgid "Title"
 msgstr "Title"
 
 #: src/components/TrackListHeader.tsx:57
-#: src/routes/tracks.$trackID.tsx:242
+#: src/routes/tracks.$trackID.tsx:236
 msgid "Duration"
 msgstr "Duration"
 
@@ -238,12 +238,12 @@ msgid "Artist"
 msgstr "Artist"
 
 #: src/components/TrackListHeader.tsx:71
-#: src/routes/tracks.$trackID.tsx:100
+#: src/routes/tracks.$trackID.tsx:94
 msgid "Album"
 msgstr "Album"
 
 #: src/components/TrackListHeader.tsx:78
-#: src/routes/tracks.$trackID.tsx:140
+#: src/routes/tracks.$trackID.tsx:134
 msgid "Genre"
 msgstr "Genre"
 
@@ -268,12 +268,12 @@ msgid "you can <0>add your music here</0>"
 msgstr "you can <0>add your music here</0>"
 
 #: src/components/TrackListStates.tsx:69
-#: src/routes/playlists.$playlistID.tsx:108
+#: src/routes/playlists.$playlistID.tsx:97
 msgid "Your search returned no results"
 msgstr "Your search returned no results"
 
-#: src/components/VolumeControl.tsx:47
-#: src/components/VolumeControl.tsx:74
+#: src/components/VolumeControl.tsx:46
+#: src/components/VolumeControl.tsx:73
 msgid "Volume"
 msgstr "Volume"
 
@@ -285,45 +285,45 @@ msgstr "Application main content"
 msgid "Compilations"
 msgstr "Compilations"
 
-#: src/routes/playlists.$playlistID.tsx:76
+#: src/routes/playlists.$playlistID.tsx:69
 msgid "Remove from playlist"
 msgstr "Remove from playlist"
 
-#: src/routes/playlists.$playlistID.tsx:92
-#: src/routes/playlists.$playlistID.tsx:119
+#: src/routes/playlists.$playlistID.tsx:81
+#: src/routes/playlists.$playlistID.tsx:108
 msgid "Empty playlist"
 msgstr "Empty playlist"
 
-#: src/routes/playlists.$playlistID.tsx:95
-#: src/routes/playlists.$playlistID.tsx:122
+#: src/routes/playlists.$playlistID.tsx:84
+#: src/routes/playlists.$playlistID.tsx:111
 msgid "You can add tracks from the <0>library view</0>"
 msgstr "You can add tracks from the <0>library view</0>"
 
-#: src/routes/playlists.tsx:93
+#: src/routes/playlists.tsx:87
 msgid "Delete"
 msgstr "Delete"
 
-#: src/routes/playlists.tsx:102
+#: src/routes/playlists.tsx:96
 msgid "Duplicate"
 msgstr "Duplicate"
 
-#: src/routes/playlists.tsx:110
+#: src/routes/playlists.tsx:104
 msgid "Export"
 msgstr "Export"
 
-#: src/routes/playlists.tsx:140
+#: src/routes/playlists.tsx:133
 msgid "You haven't created any playlist yet"
 msgstr "You haven't created any playlist yet"
 
-#: src/routes/playlists.tsx:144
+#: src/routes/playlists.tsx:137
 msgid "create one now"
 msgstr "create one now"
 
-#: src/routes/playlists.tsx:153
+#: src/routes/playlists.tsx:146
 msgid "No playlist selected"
 msgstr "No playlist selected"
 
-#: src/routes/playlists.tsx:170
+#: src/routes/playlists.tsx:163
 msgid "New Playlist"
 msgstr "New Playlist"
 
@@ -387,73 +387,73 @@ msgstr "Follow playing track"
 msgid "Automatically follow the currently playing track (only when the app is not focused)"
 msgstr "Automatically follow the currently playing track (only when the app is not focused)"
 
-#: src/routes/settings.library.tsx:46
+#: src/routes/settings.library.tsx:45
 msgid "Files"
 msgstr "Files"
 
-#: src/routes/settings.library.tsx:50
+#: src/routes/settings.library.tsx:49
 msgid "There are no folders in your library."
 msgstr "There are no folders in your library."
 
-#: src/routes/settings.library.tsx:82
+#: src/routes/settings.library.tsx:81
 msgid "Add folder"
 msgstr "Add folder"
 
-#: src/routes/settings.library.tsx:89
+#: src/routes/settings.library.tsx:88
 msgid "Scan"
 msgstr "Scan"
 
-#: src/routes/settings.library.tsx:95
+#: src/routes/settings.library.tsx:94
 msgid "All track data will be updated from the base files, but your original files won't be modified. Any Museeks-specific edits you may have done will be reset."
 msgstr "All track data will be updated from the base files, but your original files won't be modified. Any Museeks-specific edits you may have done will be reset."
 
-#: src/routes/settings.library.tsx:97
+#: src/routes/settings.library.tsx:96
 msgid "Refresh all tracks?"
 msgstr "Refresh all tracks?"
 
-#: src/routes/settings.library.tsx:100
-#: src/routes/settings.library.tsx:110
+#: src/routes/settings.library.tsx:99
+#: src/routes/settings.library.tsx:109
 msgid "Refresh"
 msgstr "Refresh"
 
-#: src/routes/settings.library.tsx:108
+#: src/routes/settings.library.tsx:107
 msgid "Force the refresh of all tracks tags"
 msgstr "Force the refresh of all tracks tags"
 
-#: src/routes/settings.library.tsx:114
+#: src/routes/settings.library.tsx:113
 msgid "<0>.m3u</0> files will also be imported as playlists."
 msgstr "<0>.m3u</0> files will also be imported as playlists."
 
-#: src/routes/settings.library.tsx:121
+#: src/routes/settings.library.tsx:120
 msgid "Automatically refresh library on startup"
 msgstr "Automatically refresh library on startup"
 
-#: src/routes/settings.library.tsx:128
+#: src/routes/settings.library.tsx:127
 msgid "Danger zone"
 msgstr "Danger zone"
 
-#: src/routes/settings.library.tsx:131
+#: src/routes/settings.library.tsx:130
 msgid "Delete all tracks and playlists from Museeks."
 msgstr "Delete all tracks and playlists from Museeks."
 
-#: src/routes/settings.library.tsx:136
+#: src/routes/settings.library.tsx:135
 msgid "Fully reset the library"
 msgstr "Fully reset the library"
 
-#: src/routes/settings.library.tsx:140
+#: src/routes/settings.library.tsx:139
 msgid "All your tracks and playlists will be deleted from Museeks."
 msgstr "All your tracks and playlists will be deleted from Museeks."
 
-#: src/routes/settings.library.tsx:142
+#: src/routes/settings.library.tsx:141
 msgid "Reset library?"
 msgstr "Reset library?"
 
-#: src/routes/settings.library.tsx:145
-#: src/routes/settings.ui.tsx:77
+#: src/routes/settings.library.tsx:144
+#: src/routes/settings.ui.tsx:72
 msgid "Reset"
 msgstr "Reset"
 
-#: src/routes/settings.library.tsx:154
+#: src/routes/settings.library.tsx:153
 msgid "Reset library"
 msgstr "Reset library"
 
@@ -469,141 +469,141 @@ msgstr "Interface"
 msgid "About"
 msgstr "About"
 
-#: src/routes/settings.ui.tsx:44
+#: src/routes/settings.ui.tsx:39
 msgid "Theme"
 msgstr "Theme"
 
-#: src/routes/settings.ui.tsx:45
+#: src/routes/settings.ui.tsx:40
 msgid "Change the appearance of the interface"
 msgstr "Change the appearance of the interface"
 
-#: src/routes/settings.ui.tsx:53
+#: src/routes/settings.ui.tsx:48
 msgid "System (default)"
 msgstr "System (default)"
 
-#: src/routes/settings.ui.tsx:65
+#: src/routes/settings.ui.tsx:60
 msgid "Accent color"
 msgstr "Accent color"
 
-#: src/routes/settings.ui.tsx:88
+#: src/routes/settings.ui.tsx:83
 msgid "Language"
 msgstr "Language"
 
-#: src/routes/settings.ui.tsx:113
+#: src/routes/settings.ui.tsx:108
 msgid "Tracks density"
 msgstr "Tracks density"
 
-#: src/routes/settings.ui.tsx:114
+#: src/routes/settings.ui.tsx:109
 msgid "Change the tracks spacing"
 msgstr "Change the tracks spacing"
 
-#: src/routes/settings.ui.tsx:125
+#: src/routes/settings.ui.tsx:120
 msgid "Normal (default)"
 msgstr "Normal (default)"
 
-#: src/routes/settings.ui.tsx:128
+#: src/routes/settings.ui.tsx:123
 msgid "Compact"
 msgstr "Compact"
 
-#: src/routes/settings.ui.tsx:134
+#: src/routes/settings.ui.tsx:129
 msgid "Default view"
 msgstr "Default view"
 
-#: src/routes/settings.ui.tsx:136
+#: src/routes/settings.ui.tsx:131
 msgid "Change the default view when starting the application"
 msgstr "Change the default view when starting the application"
 
-#: src/routes/settings.ui.tsx:144
+#: src/routes/settings.ui.tsx:139
 msgid "Library (default)"
 msgstr "Library (default)"
 
-#: src/routes/settings.ui.tsx:156
+#: src/routes/settings.ui.tsx:151
 msgid "Display Notifications"
 msgstr "Display Notifications"
 
-#: src/routes/settings.ui.tsx:157
+#: src/routes/settings.ui.tsx:152
 msgid "Send notifications when the playing track changes"
 msgstr "Send notifications when the playing track changes"
 
-#: src/routes/settings.ui.tsx:166
+#: src/routes/settings.ui.tsx:161
 msgid "Sleep mode blocker"
 msgstr "Sleep mode blocker"
 
-#: src/routes/settings.ui.tsx:167
+#: src/routes/settings.ui.tsx:162
 msgid "Prevent the computer from going into sleep mode when playing"
 msgstr "Prevent the computer from going into sleep mode when playing"
 
-#: src/routes/settings.ui.tsx:177
+#: src/routes/settings.ui.tsx:172
 msgid "[Beta] Wayland compatibility enhancements"
 msgstr "[Beta] Wayland compatibility enhancements"
 
-#: src/routes/settings.ui.tsx:178
+#: src/routes/settings.ui.tsx:173
 msgid "If you face issues using Wayland, try out this option"
 msgstr "If you face issues using Wayland, try out this option"
 
-#: src/routes/settings.ui.tsx:201
+#: src/routes/settings.ui.tsx:196
 msgid "Light"
 msgstr "Light"
 
-#: src/routes/settings.ui.tsx:203
+#: src/routes/settings.ui.tsx:198
 msgid "Dark"
 msgstr "Dark"
 
 #. placeholder {0}: track.title
-#: src/routes/tracks.$trackID.tsx:85
+#: src/routes/tracks.$trackID.tsx:79
 msgid "Edit \"{0}\""
 msgstr "Edit \"{0}\""
 
-#: src/routes/tracks.$trackID.tsx:111
+#: src/routes/tracks.$trackID.tsx:105
 msgid "Album Artist"
 msgstr "Album Artist"
 
-#: src/routes/tracks.$trackID.tsx:125
+#: src/routes/tracks.$trackID.tsx:119
 msgid "Track Artists"
 msgstr "Track Artists"
 
-#: src/routes/tracks.$trackID.tsx:126
+#: src/routes/tracks.$trackID.tsx:120
 msgid "You can add multiple artists with commas"
 msgstr "You can add multiple artists with commas"
 
-#: src/routes/tracks.$trackID.tsx:141
+#: src/routes/tracks.$trackID.tsx:135
 msgid "You can add multiple genres with commas"
 msgstr "You can add multiple genres with commas"
 
-#: src/routes/tracks.$trackID.tsx:155
+#: src/routes/tracks.$trackID.tsx:149
 msgid "Year"
 msgstr "Year"
 
-#: src/routes/tracks.$trackID.tsx:169
+#: src/routes/tracks.$trackID.tsx:163
 msgid "Track Nº"
 msgstr "Track Nº"
 
-#: src/routes/tracks.$trackID.tsx:183
-#: src/routes/tracks.$trackID.tsx:215
+#: src/routes/tracks.$trackID.tsx:177
+#: src/routes/tracks.$trackID.tsx:209
 msgid "Of"
 msgstr "Of"
 
-#: src/routes/tracks.$trackID.tsx:201
+#: src/routes/tracks.$trackID.tsx:195
 msgid "Disk Nº"
 msgstr "Disk Nº"
 
-#: src/routes/tracks.$trackID.tsx:232
+#: src/routes/tracks.$trackID.tsx:226
 msgid "Compilation"
 msgstr "Compilation"
 
-#: src/routes/tracks.$trackID.tsx:233
+#: src/routes/tracks.$trackID.tsx:227
 msgid "Group this track with other tracks from the same compilation, regardless of the artist names."
 msgstr "Group this track with other tracks from the same compilation, regardless of the artist names."
 
-#: src/routes/tracks.$trackID.tsx:250
+#: src/routes/tracks.$trackID.tsx:244
 msgid "Path"
 msgstr "Path"
 
-#: src/routes/tracks.$trackID.tsx:261
+#: src/routes/tracks.$trackID.tsx:255
 msgid "Save"
 msgstr "Save"
 
-#: src/routes/tracks.$trackID.tsx:266
+#: src/routes/tracks.$trackID.tsx:260
 msgid "Clicking \"save\" will only update the library data, but will not save it to the original file."
 msgstr "Clicking \"save\" will only update the library data, but will not save it to the original file."
 

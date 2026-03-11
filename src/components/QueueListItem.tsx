@@ -1,7 +1,6 @@
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import * as stylex from '@stylexjs/stylex';
-import { useCallback } from 'react';
 
 import type { Track } from '../generated/typings';
 import player from '../lib/player';
@@ -29,13 +28,13 @@ export default function QueueListItem(props: Props) {
     transition,
   };
 
-  const remove = useCallback(() => {
+  const remove = () => {
     player.removeFromQueue(props.index);
-  }, [props.index]);
+  };
 
-  const play = useCallback(async () => {
+  const play = async () => {
     await player.startFromQueue(props.queueCursor + props.index + 1);
-  }, [props.index, props.queueCursor]);
+  };
 
   return (
     <li

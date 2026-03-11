@@ -1,5 +1,4 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { useMemo } from 'react';
 
 import TrackList from '../components/TrackList';
 import TrackListStates from '../components/TrackListStates';
@@ -36,9 +35,7 @@ export default function ViewArtistDetails() {
   const content = useFilteredTrackGroup(albums);
   useGlobalTrackListStatus(content);
 
-  const queueOrigin = useMemo(() => {
-    return { type: 'artist', artistID } satisfies QueueOrigin;
-  }, [artistID]);
+  const queueOrigin = { type: 'artist', artistID } satisfies QueueOrigin;
 
   useFocusedAlbum(Route.useSearch().focused_album);
 

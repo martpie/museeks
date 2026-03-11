@@ -13,7 +13,7 @@ import {
   PredefinedMenuItem,
   type PredefinedMenuItemOptions,
 } from '@tauri-apps/api/menu';
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 
 import { logAndNotifyError } from '../lib/utils';
 
@@ -39,83 +39,76 @@ export default function SideNavLink(props: Props): React.ReactNode {
   const { label, id, onRename, contextMenuItems, linkOptions } = props;
   const [renamed, setRenamed] = useState(false);
 
-  const onContextMenu: React.MouseEventHandler<HTMLAnchorElement> = useCallback(
-    async (event) => {
-      if (!onRename && !contextMenuItems) {
-        return;
+  const onContextMenu: React.MouseEventHandler<HTMLAnchorElement> = async (
+    event,
+  ) => {
+    if (!onRename && !contextMenuItems) {
+      return;
+    }
+
+    event.preventDefault();
+
+    const itemsBuilder = contextMenuItems ?? [];
+
+    const menuItemsBuilders = itemsBuilder.map((item) => {
+      if ('item' in item) {
+        return PredefinedMenuItem.new(item);
       }
 
-      event.preventDefault();
+      return MenuItem.new(item);
+    });
 
-      const itemsBuilder = contextMenuItems ?? [];
+    const items = await Promise.all([
+      MenuItem.new({
+        text: t`Rename`,
+        action: () => {
+          setRenamed(true);
+        },
+      }),
+      ...menuItemsBuilders,
+    ]);
 
-      const menuItemsBuilders = itemsBuilder.map((item) => {
-        if ('item' in item) {
-          return PredefinedMenuItem.new(item);
-        }
+    const menu = await Menu.new({
+      items,
+    });
 
-        return MenuItem.new(item);
-      });
+    await menu.popup().catch(logAndNotifyError);
+  };
 
-      const items = await Promise.all([
-        MenuItem.new({
-          text: t`Rename`,
-          action: () => {
-            setRenamed(true);
-          },
-        }),
-        ...menuItemsBuilders,
-      ]);
+  const keyDown: React.KeyboardEventHandler<HTMLInputElement> = async (e) => {
+    e.persist();
 
-      const menu = await Menu.new({
-        items,
-      });
-
-      await menu.popup().catch(logAndNotifyError);
-    },
-    [onRename, contextMenuItems, t],
-  );
-
-  const keyDown: React.KeyboardEventHandler<HTMLInputElement> = useCallback(
-    async (e) => {
-      e.persist();
-
-      switch (e.nativeEvent.code) {
-        case 'Enter': {
-          // Enter
-          if (renamed && e.currentTarget && onRename) {
-            onRename(id, e.currentTarget.value);
-            setRenamed(false);
-          }
-          break;
-        }
-        case 'Escape': {
-          // Escape
+    switch (e.nativeEvent.code) {
+      case 'Enter': {
+        // Enter
+        if (renamed && e.currentTarget && onRename) {
+          onRename(id, e.currentTarget.value);
           setRenamed(false);
-          break;
         }
-        default: {
-          break;
-        }
+        break;
       }
-    },
-    [onRename, id, renamed],
-  );
-
-  const onBlur = useCallback(
-    async (e: React.FocusEvent<HTMLInputElement>) => {
-      if (renamed && onRename) {
-        onRename(id, e.currentTarget.value);
+      case 'Escape': {
+        // Escape
+        setRenamed(false);
+        break;
       }
+      default: {
+        break;
+      }
+    }
+  };
 
-      setRenamed(false);
-    },
-    [onRename, id, renamed],
-  );
+  const onBlur = async (e: React.FocusEvent<HTMLInputElement>) => {
+    if (renamed && onRename) {
+      onRename(id, e.currentTarget.value);
+    }
 
-  const onFocus = useCallback((e: React.FocusEvent<HTMLInputElement>) => {
+    setRenamed(false);
+  };
+
+  const onFocus = (e: React.FocusEvent<HTMLInputElement>) => {
     e.currentTarget.select();
-  }, []);
+  };
 
   if (renamed) {
     return (

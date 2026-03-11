@@ -10,7 +10,6 @@ import type {
   MenuItemOptions,
   PredefinedMenuItemOptions,
 } from '@tauri-apps/api/menu';
-import { useCallback, useMemo } from 'react';
 
 import SideNav from '../components/SideNav';
 import SideNavLink from '../components/SideNavLink';
@@ -58,7 +57,7 @@ function ViewPlaylists() {
   const invalidate = useInvalidate();
   const navigate = useNavigate();
 
-  const createPlaylist = useCallback(async () => {
+  const createPlaylist = async () => {
     // TODO: 'new playlist 1', 'new playlist 2' ...
     const playlist = await PlaylistsAPI.create(t`New playlist`, [], false);
 
@@ -69,26 +68,21 @@ function ViewPlaylists() {
         params: { playlistID: playlist.id },
       });
     }
-  }, [navigate, invalidate, t]);
+  };
 
-  const renamePlaylist = useCallback(
-    async (playlistID: string, name: string) => {
-      await PlaylistsAPI.rename(playlistID, name);
-      await invalidate();
-    },
-    [invalidate],
-  );
+  const renamePlaylist = async (playlistID: string, name: string) => {
+    await PlaylistsAPI.rename(playlistID, name);
+    await invalidate();
+  };
 
   const childPlaylistMatch = useMatch({
     from: '/playlists/$playlistID',
     shouldThrow: false,
   });
 
-  const sideNavItems = useMemo(() => {
-    return playlists.map((playlist) => {
-      const contextMenuItems: Array<
-        MenuItemOptions | PredefinedMenuItemOptions
-      > = [
+  const sideNavItems = playlists.map((playlist) => {
+    const contextMenuItems: Array<MenuItemOptions | PredefinedMenuItemOptions> =
+      [
         {
           text: t`Delete`,
           action: async () => {
@@ -114,21 +108,20 @@ function ViewPlaylists() {
         },
       ];
 
-      return (
-        <SideNavLink
-          key={playlist.id}
-          label={playlist.name}
-          id={playlist.id}
-          linkOptions={{
-            to: '/playlists/$playlistID',
-            params: { playlistID: playlist.id },
-          }}
-          onRename={renamePlaylist}
-          contextMenuItems={contextMenuItems}
-        />
-      );
-    });
-  }, [playlists, renamePlaylist, invalidate, t]);
+    return (
+      <SideNavLink
+        key={playlist.id}
+        label={playlist.name}
+        id={playlist.id}
+        linkOptions={{
+          to: '/playlists/$playlistID',
+          params: { playlistID: playlist.id },
+        }}
+        onRename={renamePlaylist}
+        contextMenuItems={contextMenuItems}
+      />
+    );
+  });
 
   // Empty and List states
   let playlistContent: React.ReactNode;

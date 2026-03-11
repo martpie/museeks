@@ -1,4 +1,3 @@
-import { useCallback } from 'react';
 import Keybinding from 'react-keybinding-component';
 
 import SettingsBridge from '../lib/bridge-settings';
@@ -10,7 +9,7 @@ import player from '../lib/player';
 function GlobalKeyBindings() {
   // App shortcuts (not using global shortcuts API to avoid conflicts
   // with other applications)
-  const onKey = useCallback(async (e: KeyboardEvent) => {
+  const onKey = async (e: KeyboardEvent) => {
     switch (e.key) {
       case ' ':
         e.preventDefault();
@@ -33,7 +32,7 @@ function GlobalKeyBindings() {
       default:
         break;
     }
-  }, []);
+  };
 
   return <Keybinding onKey={onKey} preventInputConflict />;
 }
