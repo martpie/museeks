@@ -23,6 +23,8 @@ const MOCK_TRACKS: Array<Track> = [
     genres: ['rock', 'blues'],
     path: '/whiskey-blues.mp3',
     is_compilation: false,
+    artist_sort: null,
+    album_sort: null,
   },
   {
     id: '1',
@@ -39,6 +41,8 @@ const MOCK_TRACKS: Array<Track> = [
     genres: ['blues'],
     path: '/majestic-blues.mp3',
     is_compilation: false,
+    artist_sort: null,
+    album_sort: null,
   },
   {
     id: '2',
@@ -55,6 +59,8 @@ const MOCK_TRACKS: Array<Track> = [
     genres: ['blues'],
     path: '/romantic-blues.mp3',
     is_compilation: false,
+    artist_sort: null,
+    album_sort: null,
   },
 ];
 

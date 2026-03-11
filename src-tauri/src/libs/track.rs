@@ -36,6 +36,8 @@ pub struct Track {
     pub disk_no: Option<u32>,
     pub disk_of: Option<u32>,
     pub is_compilation: bool,
+    pub artist_sort: Option<String>,
+    pub album_sort: Option<String>,
 }
 
 /**
@@ -99,6 +101,16 @@ pub fn get_track_from_file(path: &PathBuf) -> AnyResult<Track> {
                 .get_string(ItemKey::FlagCompilation)
                 .map_or(false, |v| v == "1" || v.eq_ignore_ascii_case("true"));
 
+            let artist_sort = tag
+                .get_string(ItemKey::AlbumArtistSortOrder)
+                .filter(|s| !s.is_empty())
+                .map(ToString::to_string);
+
+            let album_sort = tag
+                .get_string(ItemKey::AlbumTitleSortOrder)
+                .filter(|s| !s.is_empty())
+                .map(ToString::to_string);
+
             Ok(Track {
                 id,
                 path: path.to_string_lossy().into_owned(),
@@ -131,6 +143,8 @@ pub fn get_track_from_file(path: &PathBuf) -> AnyResult<Track> {
                 disk_no: tag.disk(),
                 disk_of: tag.disk_total(),
                 is_compilation,
+                artist_sort,
+                album_sort,
             })
         }
         Err(err) => {
