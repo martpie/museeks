@@ -272,8 +272,8 @@ msgstr "您可以<0>在这里添加音乐</0>"
 msgid "Your search returned no results"
 msgstr "您的搜索没有返回结果"
 
-#: src/components/VolumeControl.tsx:51
-#: src/components/VolumeControl.tsx:77
+#: src/components/VolumeControl.tsx:47
+#: src/components/VolumeControl.tsx:74
 msgid "Volume"
 msgstr "音量"
 

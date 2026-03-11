@@ -7,10 +7,11 @@ type Props = React.ComponentPropsWithRef<'button'> & {
   icon: IconName;
   iconSize?: IconSize;
   isActive?: boolean;
+  xstyle?: stylex.CompiledStyles;
 };
 
 export default function ButtonIcon(props: Props) {
-  const { onClick, icon, iconSize, isActive, ref, ...rest } = props;
+  const { onClick, icon, iconSize, isActive, ref, xstyle, ...rest } = props;
   return (
     <button
       ref={ref}
@@ -18,7 +19,7 @@ export default function ButtonIcon(props: Props) {
       onClick={onClick}
       data-museeks-action
       {...rest}
-      {...stylex.props(styles.buttonIcon)}
+      {...stylex.props(styles.buttonIcon, xstyle)}
     >
       <Icon
         name={icon}
