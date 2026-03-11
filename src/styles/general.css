@@ -1,6 +1,7 @@
 /* Colors (default theme) */
 :root {
   --main-color: hsl(208, 77%, 59%);
+  --focus-color: color-mix(in srgb, var(--main-color) 80%, white);
   --link-color: var(--main-color);
   --bold: 600;
 }
@@ -43,7 +44,7 @@ body {
 
 :focus-visible {
   --focus-offset: 1px;
-  outline: 2px solid color-mix(in srgb, var(--main-color) 80%, white);
+  outline: 2px solid var(--focus-color);
   outline-offset: var(--focus-offset);
   border-radius: calc(
     var(--border-radius) + var(--focus-offset)
