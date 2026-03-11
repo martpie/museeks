@@ -149,8 +149,8 @@ const styles = stylex.create({
     borderRadius: '50%',
     outline: {
       default: '1px var(--border-color)',
-      ':has(:focus-visible)': '2px solid var(--main-color)',
-      ':active': '2px solid var(--main-color)',
+      ':has(:focus-visible)': '2px solid var(--focus-color)',
+      ':active': '2px solid var(--focus-color)',
     },
   },
   faded: {

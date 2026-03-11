@@ -87,6 +87,9 @@ const styles = stylex.create({
     touchAction: 'none',
     height: '7px',
     transform: 'translateY(4px)',
+    outline: {
+      ':has(:focus-visible)': '2px solid var(--focus-color)',
+    },
   },
   trackProgress: {
     display: 'block',
