@@ -7,7 +7,7 @@ import {
 import * as stylex from '@stylexjs/stylex';
 import { useVirtualizer } from '@tanstack/react-virtual';
 import type React from 'react';
-import { useCallback, useId, useImperativeHandle, useRef } from 'react';
+import { useId, useImperativeHandle, useRef } from 'react';
 
 import Scrollable from '../elements/Scrollable';
 import type { Track } from '../generated/typings';
@@ -80,30 +80,27 @@ export default function TrackListDefault(props: Props) {
   const sensors = useDndSensors();
   const dndId = useId();
 
-  const onDragEnd = useCallback(
-    (event: DragEndEvent) => {
-      const {
-        active, // dragged item
-        over, // on which item it was dropped
-      } = event;
+  const onDragEnd = (event: DragEndEvent) => {
+    const {
+      active, // dragged item
+      over, // on which item it was dropped
+    } = event;
 
-      // The item was dropped either nowhere, or on the same item
-      if (over == null || active.id === over.id || !onReorder) {
-        return;
-      }
+    // The item was dropped either nowhere, or on the same item
+    if (over == null || active.id === over.id || !onReorder) {
+      return;
+    }
 
-      const activeIndex = tracks.findIndex((track) => track.id === active.id);
-      const overIndex = tracks.findIndex((track) => track.id === over.id);
+    const activeIndex = tracks.findIndex((track) => track.id === active.id);
+    const overIndex = tracks.findIndex((track) => track.id === over.id);
 
-      const newTracks = [...tracks];
+    const newTracks = [...tracks];
 
-      const movedTrack = newTracks.splice(activeIndex, 1)[0]; // Remove active track
-      newTracks.splice(overIndex, 0, movedTrack); // Move it to where the user dropped it
+    const movedTrack = newTracks.splice(activeIndex, 1)[0]; // Remove active track
+    newTracks.splice(overIndex, 0, movedTrack); // Move it to where the user dropped it
 
-      onReorder(newTracks);
-    },
-    [onReorder, tracks],
-  );
+    onReorder(newTracks);
+  };
 
   return (
     <DndContext

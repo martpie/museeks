@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect } from 'react';
 
 import type { Track, TrackGroup } from '../generated/typings';
 import { useLibraryAPI } from '../stores/useLibraryStore';
@@ -32,14 +32,10 @@ export function useTrackListStatus(
 ): TrackListStatusInfo {
   const allTracks = useAllTracks(tracks);
 
-  return useMemo(() => {
-    const duration = allTracks
-      .map((d) => d.duration)
-      .reduce((a, b) => a + b, 0);
+  const duration = allTracks.map((d) => d.duration).reduce((a, b) => a + b, 0);
 
-    return {
-      count: allTracks.length,
-      duration,
-    };
-  }, [allTracks]);
+  return {
+    count: allTracks.length,
+    duration,
+  };
 }

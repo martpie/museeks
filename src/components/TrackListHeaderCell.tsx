@@ -1,5 +1,5 @@
 import * as stylex from '@stylexjs/stylex';
-import React, { useCallback } from 'react';
+import React from 'react';
 
 import type { SortBy } from '../generated/typings';
 import { useLibraryAPI } from '../stores/useLibraryStore';
@@ -17,11 +17,11 @@ export default function TrackListHeaderCell(props: Props) {
   const { sortBy, xstyle, title, icon } = props;
   const libraryAPI = useLibraryAPI();
 
-  const sort = useCallback(() => {
+  const sort = () => {
     if (sortBy) {
       libraryAPI.sort(sortBy);
     }
-  }, [libraryAPI, sortBy]);
+  };
 
   const content = (
     <React.Fragment>

@@ -3,7 +3,6 @@ import { Trans, useLingui } from '@lingui/react/macro';
 import { createFileRoute, useLoaderData } from '@tanstack/react-router';
 import { relaunch } from '@tauri-apps/plugin-process';
 import { debounce } from 'lodash-es';
-import { useMemo } from 'react';
 
 import * as Setting from '../components/Setting';
 import CheckboxSetting from '../components/SettingCheckbox';
@@ -29,13 +28,9 @@ function ViewSettingsUI() {
 
   const invalidate = useInvalidate();
 
-  const setUIMainColorThrottled = useMemo(() => {
-    return debounce((value: string) => {
-      SettingsAPI.setUIMainColor(value)
-        .then(invalidate)
-        .catch(logAndNotifyError);
-    }, 250);
-  }, [invalidate]);
+  const setUIMainColorThrottled = debounce((value: string) => {
+    SettingsAPI.setUIMainColor(value).then(invalidate).catch(logAndNotifyError);
+  }, 250);
 
   return (
     <>

@@ -1,7 +1,7 @@
 import { useLingui } from '@lingui/react/macro';
 import * as stylex from '@stylexjs/stylex';
 import type React from 'react';
-import { useCallback, useRef } from 'react';
+import { useRef } from 'react';
 import Keybinding from 'react-keybinding-component';
 
 import { isCtrlKey } from '../lib/utils-events';
@@ -13,18 +13,13 @@ export default function Search() {
   const inputRef = useRef<HTMLInputElement>(null);
   const { t } = useLingui();
 
-  const onClear = useCallback(() => libraryAPI.search(''), [libraryAPI]);
-  const onChange = useCallback<React.ChangeEventHandler<HTMLInputElement>>(
-    (event) => {
-      libraryAPI.search(event.currentTarget.value);
-    },
-    [libraryAPI],
-  );
+  const onClear = () => libraryAPI.search('');
+  const onChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
+    libraryAPI.search(event.currentTarget.value);
+  };
 
-  const onFocus = useCallback<React.FocusEventHandler<HTMLInputElement>>(
-    (e) => e.currentTarget.select(),
-    [],
-  );
+  const onFocus: React.FocusEventHandler<HTMLInputElement> = (e) =>
+    e.currentTarget.select();
 
   // ctrl/cmf+f shortcut
   const onKey = (e: KeyboardEvent) => {

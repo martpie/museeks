@@ -1,6 +1,5 @@
 import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from '@tanstack/react-router';
-import { useCallback } from 'react';
 
 import { logAndNotifyError } from '../lib/utils';
 
@@ -14,7 +13,7 @@ export default function useInvalidate() {
   const queryClient = useQueryClient();
   const router = useRouter();
 
-  return useCallback(async () => {
+  return async () => {
     //  Need to call mutate with undefined to make sure stale-while-revalidate is
     // reset (otherwise, we'd see a "no tracks in the library" instead of "loading")
     const queryInvalidator = queryClient.invalidateQueries({
@@ -26,7 +25,7 @@ export default function useInvalidate() {
     const routerInvalidator = router.invalidate();
 
     return Promise.allSettled([queryInvalidator, routerInvalidator]);
-  }, [queryClient, router]);
+  };
 }
 
 type AnyArgs = any[];
@@ -41,12 +40,9 @@ export function useInvalidateCallback<T extends Callback>(
 ): (...args: Parameters<T>) => Promise<void> {
   const invalidate = useInvalidate();
 
-  return useCallback(
-    async (...args: Parameters<T>) => {
-      await callback(...args)
-        .catch(logAndNotifyError)
-        .finally(invalidate);
-    },
-    [callback, invalidate],
-  );
+  return async (...args: Parameters<T>) => {
+    await callback(...args)
+      .catch(logAndNotifyError)
+      .finally(invalidate);
+  };
 }

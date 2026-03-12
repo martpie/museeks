@@ -1,5 +1,5 @@
 import * as stylex from '@stylexjs/stylex';
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 
 import { usePlayerState } from '../hooks/usePlayer';
 import player from '../lib/player';
@@ -9,23 +9,17 @@ export default function TrackPlayingIndicator() {
   const [hovered, setHovered] = useState(false);
   const isPaused = usePlayerState((state) => state.isPaused);
 
-  const icon = useMemo(() => {
-    if (!isPaused) {
-      if (hovered) {
-        return <Icon name="pause" size={12} />;
-      }
-
-      return (
-        <div {...stylex.props(styles.animation)}>
-          <div {...stylex.props(styles.bar)} />
-          <div {...stylex.props(styles.bar, styles.barSecond)} />
-          <div {...stylex.props(styles.bar, styles.barThird)} />
-        </div>
-      );
-    }
-
-    return <Icon name="play" />;
-  }, [isPaused, hovered]);
+  const icon = isPaused ? (
+    <Icon name="play" />
+  ) : hovered ? (
+    <Icon name="pause" size={12} />
+  ) : (
+    <div {...stylex.props(styles.animation)}>
+      <div {...stylex.props(styles.bar)} />
+      <div {...stylex.props(styles.bar, styles.barSecond)} />
+      <div {...stylex.props(styles.bar, styles.barThird)} />
+    </div>
+  );
 
   return (
     <button

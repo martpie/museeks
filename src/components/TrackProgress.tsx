@@ -1,6 +1,6 @@
 import { Slider } from '@base-ui/react/slider';
 import * as stylex from '@stylexjs/stylex';
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 
 import type { Track } from '../generated/typings';
 import useFormattedDuration from '../hooks/useFormattedDuration';
@@ -16,34 +16,31 @@ export default function TrackProgress(props: Props) {
 
   const elapsed = usePlayingTrackCurrentTime();
 
-  const jumpAudioTo = useCallback((value: number) => {
+  const jumpAudioTo = (value: number) => {
     player.setCurrentTime(value);
-  }, []);
+  };
 
   const [tooltipTargetTime, setTooltipTargetTime] = useState<null | number>(
     null,
   );
   const [tooltipX, setTooltipX] = useState<null | number>(null);
 
-  const showTooltip = useCallback(
-    (e: React.MouseEvent<HTMLElement>) => {
-      const { offsetX } = e.nativeEvent;
-      const barWidth = e.currentTarget.offsetWidth;
+  const showTooltip = (e: React.MouseEvent<HTMLElement>) => {
+    const { offsetX } = e.nativeEvent;
+    const barWidth = e.currentTarget.offsetWidth;
 
-      const percent = (offsetX / barWidth) * 100;
+    const percent = (offsetX / barWidth) * 100;
 
-      const time = (percent * trackPlaying.duration) / 100;
+    const time = (percent * trackPlaying.duration) / 100;
 
-      setTooltipTargetTime(time);
-      setTooltipX(percent);
-    },
-    [trackPlaying],
-  );
+    setTooltipTargetTime(time);
+    setTooltipX(percent);
+  };
 
-  const hideTooltip = useCallback(() => {
+  const hideTooltip = () => {
     setTooltipTargetTime(null);
     setTooltipX(null);
-  }, []);
+  };
 
   const tooltipContent = useFormattedDuration(tooltipTargetTime);
 

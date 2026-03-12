@@ -1,5 +1,3 @@
-import { useMemo } from 'react';
-
 import type {
   SortBy,
   SortOrder,
@@ -24,21 +22,19 @@ export default function useFilteredTracks(
 ): Array<Track> {
   const search = useLibraryStore((state) => stripAccents(state.search));
 
-  return useMemo(() => {
-    // 1. Raw List
-    let searchedTracks: Track[] = filterTracks(tracks, search);
+  // 1. Raw List
+  let searchedTracks: Track[] = filterTracks(tracks, search);
 
-    if (sortBy && sortOrder) {
-      // sorting being a costly operation, do it after filtering, ignore it if not needed
-      searchedTracks = sortTracks(
-        searchedTracks,
-        getSortOrder(sortBy),
-        sortOrder,
-      );
-    }
+  if (sortBy && sortOrder) {
+    // sorting being a costly operation, do it after filtering, ignore it if not needed
+    searchedTracks = sortTracks(
+      searchedTracks,
+      getSortOrder(sortBy),
+      sortOrder,
+    );
+  }
 
-    return searchedTracks;
-  }, [tracks, search, sortBy, sortOrder]);
+  return searchedTracks;
 }
 
 /**
@@ -53,24 +49,22 @@ export function useFilteredTrackGroup(
 ): TrackGroup[] {
   const search = useLibraryStore((state) => stripAccents(state.search));
 
-  return useMemo(() => {
-    let searchedGroups: TrackGroup[] = tracks.map((group) => {
+  let searchedGroups: TrackGroup[] = tracks.map((group) => {
+    return {
+      ...group,
+      tracks: filterTracks(group.tracks, search),
+    };
+  });
+
+  if (sortBy && sortOrder) {
+    // sorting being a costly operation, do it after filtering, ignore it if not needed
+    searchedGroups = searchedGroups.map((group) => {
       return {
         ...group,
-        tracks: filterTracks(group.tracks, search),
+        tracks: sortTracks(group.tracks, getSortOrder(sortBy), sortOrder),
       };
     });
+  }
 
-    if (sortBy && sortOrder) {
-      // sorting being a costly operation, do it after filtering, ignore it if not needed
-      searchedGroups = searchedGroups.map((group) => {
-        return {
-          ...group,
-          tracks: sortTracks(group.tracks, getSortOrder(sortBy), sortOrder),
-        };
-      });
-    }
-
-    return searchedGroups.filter((group) => group.tracks.length > 0);
-  }, [tracks, search, sortBy, sortOrder]);
+  return searchedGroups.filter((group) => group.tracks.length > 0);
 }

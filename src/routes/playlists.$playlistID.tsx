@@ -4,7 +4,6 @@ import {
   redirect,
   useLoaderData,
 } from '@tanstack/react-router';
-import { useCallback, useMemo } from 'react';
 
 import TrackList from '../components/TrackList';
 import Link from '../elements/Link';
@@ -56,34 +55,24 @@ function ViewPlaylistDetails() {
   const filteredTracks = useFilteredTracks(playlistTracks);
   useGlobalTrackListStatus(filteredTracks);
 
-  const queueOrigin = useMemo(() => {
-    return { type: 'playlist', playlistID } satisfies QueueOrigin;
-  }, [playlistID]);
+  const queueOrigin = { type: 'playlist', playlistID } satisfies QueueOrigin;
 
-  const onReorder = useCallback(
-    async (tracks: Track[]) => {
-      if (playlistID != null) {
-        await PlaylistsAPI.reorderTracks(playlistID, tracks);
+  const onReorder = async (tracks: Track[]) => {
+    if (playlistID != null) {
+      await PlaylistsAPI.reorderTracks(playlistID, tracks);
+      await invalidate();
+    }
+  };
+
+  const extraContextMenu = [
+    {
+      label: t`Remove from playlist`,
+      action: async (selectedTracks: Set<string>) => {
+        await PlaylistsAPI.removeTracks(playlistID, Array.from(selectedTracks));
         await invalidate();
-      }
-    },
-    [invalidate, playlistID],
-  );
-
-  const extraContextMenu = useMemo(() => {
-    return [
-      {
-        label: t`Remove from playlist`,
-        action: async (selectedTracks: Set<string>) => {
-          await PlaylistsAPI.removeTracks(
-            playlistID,
-            Array.from(selectedTracks),
-          );
-          await invalidate();
-        },
       },
-    ];
-  }, [playlistID, invalidate, t]);
+    },
+  ];
 
   if (playlistTracks.length === 0) {
     return (

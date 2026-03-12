@@ -6,7 +6,7 @@ import {
 } from '@dnd-kit/sortable';
 import { Trans } from '@lingui/react/macro';
 import * as stylex from '@stylexjs/stylex';
-import { useCallback, useId, useState } from 'react';
+import { useId, useState } from 'react';
 
 import Button from '../elements/Button';
 import type { Track } from '../generated/typings';
@@ -39,30 +39,27 @@ export default function QueueList(props: Props) {
   const sensors = useDndSensors();
   const dndId = useId();
 
-  const onDragEnd = useCallback(
-    (event: DragEndEvent) => {
-      const {
-        active, // dragged item
-        over, // on which item it was dropped
-      } = event;
+  const onDragEnd = (event: DragEndEvent) => {
+    const {
+      active, // dragged item
+      over, // on which item it was dropped
+    } = event;
 
-      // The item was dropped either nowhere, or on the same item
-      if (over == null || active.id === over.id) {
-        return;
-      }
+    // The item was dropped either nowhere, or on the same item
+    if (over == null || active.id === over.id) {
+      return;
+    }
 
-      const activeIndex = queue.findIndex((track) => track.id === active.id);
-      const overIndex = queue.findIndex((track) => track.id === over.id);
+    const activeIndex = queue.findIndex((track) => track.id === active.id);
+    const overIndex = queue.findIndex((track) => track.id === over.id);
 
-      const newQueue = [...queue];
+    const newQueue = [...queue];
 
-      const movedTrack = newQueue.splice(activeIndex, 1)[0]; // Remove active track
-      newQueue.splice(overIndex, 0, movedTrack); // Move it to where the user dropped it
+    const movedTrack = newQueue.splice(activeIndex, 1)[0]; // Remove active track
+    newQueue.splice(overIndex, 0, movedTrack); // Move it to where the user dropped it
 
-      player.setQueue(newQueue);
-    },
-    [queue],
-  );
+    player.setQueue(newQueue);
+  };
 
   return (
     <DndContext
