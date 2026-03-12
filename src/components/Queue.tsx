@@ -34,16 +34,15 @@ export default function Queue(props: Props) {
 
 const styles = stylex.create({
   queue: {
-    width: '300px',
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100%',
     backgroundColor: 'var(--queue-bg)',
-    borderWidth: '1px',
-    borderStyle: 'solid',
-    borderColor: 'var(--border-color)',
-    borderRadius: 'var(--border-radius)',
-    textOverflow: 'ellipsis',
+    borderLeftWidth: '1px',
+    borderLeftStyle: 'solid',
+    borderLeftColor: 'var(--border-color)',
     overflowX: 'hidden',
     fontSize: '12px',
-    boxShadow: '0 5px 3px -5px rgba(0 0 0 0.5)',
     textAlign: 'left',
   },
 });

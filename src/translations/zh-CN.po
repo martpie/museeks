@@ -63,11 +63,12 @@ msgstr "尝试 <0>重新加载应用程序</0>，"
 msgid "or if it happens again, please <0>report an issue</0>."
 msgstr "如果再次发生，请<0>报告问题</0>。"
 
-#: src/components/Header.tsx:24
+#: src/components/Header.tsx:22
 msgid "Header"
 msgstr ""
 
-#: src/components/Header.tsx:53
+#: src/components/Header.tsx:51
+#: src/components/Header.tsx:61
 msgid "Queue"
 msgstr "播放队列"
 

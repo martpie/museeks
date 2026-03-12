@@ -128,7 +128,7 @@ const styles = stylex.create({
     paddingBottom: '1px',
   },
   queueContent: {
-    maxHeight: '300px',
+    flex: 1,
     overflow: 'auto',
     listStyle: 'none',
     padding: 0,
