@@ -1,7 +1,8 @@
 import { lingui } from '@lingui/vite-plugin';
+import babel from '@rolldown/plugin-babel';
 import stylex from '@stylexjs/unplugin';
 import { tanstackRouter } from '@tanstack/router-plugin/vite';
-import react from '@vitejs/plugin-react';
+import react, { reactCompilerPreset } from '@vitejs/plugin-react';
 import browserslist from 'browserslist';
 import { browserslistToTargets } from 'lightningcss';
 import { defineConfig, type PluginOption } from 'vite';
@@ -12,18 +13,28 @@ export const VITE_PLUGINS: PluginOption[] = [
     useCSSLayers: true,
     propertyValidationMode: 'throw',
   }),
-  react({
-    babel: {
-      plugins: [
-        '@lingui/babel-plugin-lingui-macro',
-        'babel-plugin-react-compiler',
-      ],
-      parserOpts: {
-        plugins: ['decorators'],
-      },
+  react(),
+  babel({
+    presets: [reactCompilerPreset],
+    plugins: [],
+    // plugins: ['@lingui/babel-plugin-lingui-macro'],
+    parserOpts: {
+      plugins: ['decorators'],
     },
+    // wat
+    assumptions: undefined,
+    auxiliaryCommentAfter: undefined,
+    auxiliaryCommentBefore: undefined,
+    comments: undefined,
+    compact: undefined,
+    cwd: undefined,
+    generatorOpts: undefined,
+    retainLines: undefined,
+    shouldPrintComment: undefined,
+    targets: undefined,
+    wrapPluginVisitorMethod: undefined,
   }),
-  lingui(),
+  // lingui(),
   tanstackRouter({
     target: 'react',
     generatedRouteTree: './src/generated/route-tree.ts',
@@ -42,9 +53,9 @@ export default defineConfig({
   css: {
     transformer: 'lightningcss',
     lightningcss: {
-      targets: browserslistToTargets(
-        browserslist(['edge >=115', 'chrome >=115', 'safari >=13']),
-      ),
+      // targets: browserslistToTargets(
+      //   browserslist(['edge >=115', 'chrome >=115', 'safari >=13']),
+      // ),
     },
   },
 
