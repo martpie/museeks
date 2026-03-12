@@ -19,7 +19,7 @@ export default function ButtonIcon(props: Props) {
       onClick={onClick}
       data-museeks-action
       {...rest}
-      {...stylex.props(styles.buttonIcon, xstyle)}
+      {...stylex.props(styles.button, xstyle)}
     >
       <Icon
         name={icon}
@@ -32,7 +32,7 @@ export default function ButtonIcon(props: Props) {
 }
 
 const styles = stylex.create({
-  buttonIcon: {
+  button: {
     backgroundColor: 'transparent',
     borderStyle: 'none',
     borderWidth: '0',

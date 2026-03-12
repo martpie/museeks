@@ -1,13 +1,13 @@
 import * as stylex from '@stylexjs/stylex';
 
 type Props = {
-  relevancy?: 'danger';
-  bSize?: 'small';
+  relevancy?: keyof typeof relevancyVariants;
+  bSize?: keyof typeof sizeVariants;
   block?: boolean;
 } & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
 export default function Button(props: Props) {
-  const { relevancy, bSize, block, ...rest } = props;
+  const { relevancy = 'default', bSize = 'default', block, ...rest } = props;
 
   return (
     <button
@@ -15,8 +15,8 @@ export default function Button(props: Props) {
       {...rest}
       {...stylex.props(
         styles.button,
-        relevancy === 'danger' && styles.danger,
-        bSize === 'small' && styles.small,
+        relevancyVariants[relevancy],
+        sizeVariants[bSize],
         block && styles.block,
       )}
     >
@@ -27,10 +27,6 @@ export default function Button(props: Props) {
 
 const styles = stylex.create({
   button: {
-    backgroundColor: 'var(--button-bg)',
-    color: 'var(--button-color)',
-    paddingBlock: '6px',
-    paddingInline: '8px',
     borderRadius: 'var(--border-radius)',
     borderStyle: 'solid',
     borderWidth: '1px',
@@ -42,17 +38,31 @@ const styles = stylex.create({
       ':disabled': 0.5,
     },
   },
+  block: {
+    display: 'block',
+    width: '100%',
+  },
+});
+
+const relevancyVariants = stylex.create({
+  default: {
+    backgroundColor: 'var(--button-bg)',
+    color: 'var(--button-color)',
+  },
   danger: {
     color: 'white',
     backgroundColor: '#b63333',
   },
+});
+
+const sizeVariants = stylex.create({
+  default: {
+    paddingBlock: '6px',
+    paddingInline: '8px',
+  },
   small: {
-    fontSize: '10px',
     paddingBlock: '1px',
     paddingInline: '5px',
-  },
-  block: {
-    display: 'block',
-    width: '100%',
+    fontSize: '10px',
   },
 });

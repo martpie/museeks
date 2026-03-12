@@ -4,7 +4,7 @@ type Props = {
   children: React.ReactNode;
 };
 
-export default function List(props: Props) {
+export default function DefinitionList(props: Props) {
   return <dl {...stylex.props(styles.list)}>{props.children}</dl>;
 }
 
@@ -13,7 +13,7 @@ type ListItemProps = {
   content: string;
 };
 
-List.Item = function ListItem(props: ListItemProps) {
+DefinitionList.Item = function DefinitionListItem(props: ListItemProps) {
   return (
     <>
       <dt {...stylex.props(styles.label)}>{props.label}</dt>
