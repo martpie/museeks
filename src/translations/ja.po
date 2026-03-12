@@ -63,11 +63,12 @@ msgstr "<0>アプリを再読み込み</0>してみてください、"
 msgid "or if it happens again, please <0>report an issue</0>."
 msgstr "また同じことが起こった場合は、<0>問題を報告してください</0>。"
 
-#: src/components/Header.tsx:24
+#: src/components/Header.tsx:22
 msgid "Header"
 msgstr ""
 
-#: src/components/Header.tsx:53
+#: src/components/Header.tsx:51
+#: src/components/Header.tsx:61
 msgid "Queue"
 msgstr "キュー"
 
