@@ -9,7 +9,7 @@ import svgr from 'vite-plugin-svgr';
 
 export const VITE_PLUGINS: PluginOption[] = [
   stylex.vite({
-    useCSSLayers: false, // bigger bundles, but less conflicts with global styles
+    useCSSLayers: true,
     propertyValidationMode: 'throw',
   }),
   react({
