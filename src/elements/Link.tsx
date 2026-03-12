@@ -12,14 +12,14 @@ interface LinkProps<
   linkOptions: ValidateLinkOptions<TRouter, TOptions>;
   children: React.ReactNode;
   inheritColor?: boolean;
-  notBold?: boolean;
+  type?: keyof typeof typeVariants;
 }
 
 interface ButtonProps {
   onClick: () => void;
   children: React.ReactNode;
   inheritColor?: boolean;
-  notBold?: boolean;
+  type?: keyof typeof typeVariants;
 }
 
 /**
@@ -29,32 +29,24 @@ export default function Link<TRouter extends RegisteredRouter, TOptions>(
   props: LinkProps<TRouter, TOptions> | ButtonProps,
 ): React.ReactNode;
 export default function Link(props: LinkProps | ButtonProps): React.ReactNode {
+  const type = props.type ?? 'bold';
+
+  const appliedStyles = stylex.props(
+    styles.link,
+    props.inheritColor === true && styles.inheritColor,
+    typeVariants[type],
+  );
+
   if ('linkOptions' in props) {
     return (
-      <RouterLink
-        {...props.linkOptions}
-        draggable={false}
-        {...stylex.props(
-          styles.link,
-          props.inheritColor === true && styles.inheritColor,
-          props.notBold === true && styles.notBold,
-        )}
-      >
+      <RouterLink draggable={false} {...props.linkOptions} {...appliedStyles}>
         {props.children}
       </RouterLink>
     );
   }
 
   return (
-    <button
-      onClick={props.onClick}
-      type="button"
-      {...stylex.props(
-        styles.link,
-        props.inheritColor === true && styles.inheritColor,
-        props.notBold === true && styles.notBold,
-      )}
-    >
+    <button onClick={props.onClick} type="button" {...appliedStyles}>
       {props.children}
     </button>
   );
@@ -80,7 +72,13 @@ const styles = stylex.create({
   inheritColor: {
     color: 'inherit',
   },
-  notBold: {
+});
+
+const typeVariants = stylex.create({
+  normal: {
     fontWeight: 'normal',
+  },
+  bold: {
+    fontWeight: 600,
   },
 });

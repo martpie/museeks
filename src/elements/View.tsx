@@ -5,7 +5,7 @@ import type SideNav from '../components/SideNav';
 type Props = {
   children: React.ReactNode;
   sideNav?: React.ReactElement<typeof SideNav>;
-  layout?: 'centered';
+  layout?: keyof typeof layoutVariants;
   hasPadding?: boolean;
   xstyle?: stylex.CompiledStyles;
 };
@@ -14,13 +14,16 @@ type Props = {
  * Default View to be used by all route components
  */
 export default function View(props: Props) {
+  const { layout = 'full-width' } = props;
+
+  // Playlists or Artists pages
   if (props.sideNav) {
     return (
       <div
         {...stylex.props(
           styles.view,
           styles.viewWithSideNav,
-          props.layout === 'centered' && styles.centered,
+          layoutVariants[layout],
         )}
       >
         {props.sideNav}
@@ -37,32 +40,21 @@ export default function View(props: Props) {
     );
   }
 
-  if (props.layout === 'centered') {
-    return (
-      <div
-        {...stylex.props(
-          styles.view,
-          styles.centered,
-          props.hasPadding && styles.hasPadding,
-          props.xstyle,
-        )}
-      >
-        <div {...stylex.props(styles.centeredViewContent)}>
-          {props.children}
-        </div>
-      </div>
-    );
-  }
-
+  // Library or Settings pages
   return (
     <div
       {...stylex.props(
         styles.view,
+        layoutVariants[layout],
         props.hasPadding && styles.hasPadding,
         props.xstyle,
       )}
     >
-      {props.children}
+      {layout === 'centered' ? (
+        <div {...stylex.props(styles.centeredContent)}>{props.children}</div>
+      ) : (
+        props.children
+      )}
     </div>
   );
 }
@@ -76,13 +68,7 @@ const styles = stylex.create({
     overflow: 'auto',
     position: 'relative',
   },
-  centered: {
-    display: 'grid',
-    gridTemplateColumns: '350px',
-    justifyContent: 'center',
-    scrollbarGutter: 'stable',
-  },
-  centeredViewContent: {
+  centeredContent: {
     position: 'relative',
   },
   hasPadding: {
@@ -97,5 +83,15 @@ const styles = stylex.create({
     flexShrink: 1,
     flexBasis: 'auto',
     minWidth: 0,
+  },
+});
+
+const layoutVariants = stylex.create({
+  'full-width': {},
+  centered: {
+    display: 'grid',
+    gridTemplateColumns: '350px',
+    justifyContent: 'center',
+    scrollbarGutter: 'stable',
   },
 });

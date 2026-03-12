@@ -4,11 +4,11 @@ import { createFileRoute, useLoaderData } from '@tanstack/react-router';
 import * as Setting from '../components/Setting';
 import CheckboxSetting from '../components/SettingCheckbox';
 import Button from '../elements/Button';
+import DefinitionList from '../elements/DefinitionList';
 import ExternalButton from '../elements/ExternalButton';
 import ExternalLink from '../elements/ExternalLink';
 import Flexbox from '../elements/Flexbox';
 import Heart from '../elements/Heart';
-import List from '../elements/List';
 import useInvalidate, { useInvalidateCallback } from '../hooks/useInvalidate';
 import { logAndNotifyError } from '../lib/utils';
 import SettingsAPI from '../stores/SettingsAPI';
@@ -84,15 +84,15 @@ function ViewSettingsAbout() {
         <Setting.Description>
           <Trans>Translations:</Trans>
         </Setting.Description>
-        <List>
+        <DefinitionList>
           {NON_DEFAULT_LANGUAGES.map((language) => (
-            <List.Item
+            <DefinitionList.Item
               key={language.code}
               label={`${language.label}:`}
               content={language.contributors.join(', ')}
             />
           ))}
-        </List>
+        </DefinitionList>
       </Setting.Section>
       <Setting.Section>
         <Setting.Title>

@@ -34,11 +34,11 @@ export function SettingsNavLink(props: LinkProps) {
       <NavigationMenu.Link
         render={(renderProps) => (
           <Link
-            {...renderProps}
             to={props.to}
-            {...stylex.props(styles.navLink)}
             draggable={false}
             data-testid={`settings-nav-link${props.to}`}
+            {...renderProps}
+            {...stylex.props(styles.link)}
           >
             {props.children}
           </Link>
@@ -57,7 +57,7 @@ const styles = stylex.create({
     margin: 0,
     padding: 0,
   },
-  navLink: {
+  link: {
     display: 'inline-block',
     fontWeight: 'bold',
     textDecoration: 'none',
