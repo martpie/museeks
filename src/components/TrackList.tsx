@@ -168,6 +168,11 @@ export default function TrackList(props: Props) {
       );
 
       if (event.key === 'Enter') {
+        // Let interactive elements (e.g. header sort buttons) handle Enter natively
+        const target = event.target as HTMLElement;
+        if (target.closest('button, a, [role="button"]') !== null) {
+          return;
+        }
         event.preventDefault();
         // Start playback at first select track location
         if (firstSelectedTrackIndex !== -1) {
