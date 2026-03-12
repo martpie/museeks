@@ -38,7 +38,7 @@ export default function PlayingBarInfo(props: Props) {
           >
             <Link
               inheritColor
-              notBold
+              type="normal"
               linkOptions={
                 trackPlaying.is_compilation
                   ? {
@@ -56,7 +56,7 @@ export default function PlayingBarInfo(props: Props) {
             &nbsp;—&nbsp;
             <Link
               inheritColor
-              notBold
+              type="normal"
               linkOptions={
                 trackPlaying.is_compilation
                   ? {

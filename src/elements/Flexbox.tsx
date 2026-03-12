@@ -9,12 +9,14 @@ type Props = {
 };
 
 export default function Flexbox(props: Props) {
+  const { direction = 'horizontal' } = props;
+
   return (
     <div
       {...stylex.props(
         styles.flexbox,
-        directionVariants[props.direction ?? 'horizontal'],
-        gapVariants[props.gap ?? 0],
+        directionVariants[direction],
+        props.gap !== undefined ? gapVariants[props.gap] : null,
         props.align ? alignVariants[props.align] : null,
         props.xstyle,
       )}
@@ -23,8 +25,6 @@ export default function Flexbox(props: Props) {
     </div>
   );
 }
-
-// -----------------------------------------------------------------------------
 
 const styles = stylex.create({
   flexbox: {

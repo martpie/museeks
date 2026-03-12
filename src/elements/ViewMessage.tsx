@@ -10,7 +10,7 @@ type Props = {
  */
 export function Notice(props: Props) {
   return (
-    <div {...stylex.props(styles.fullMessage)} data-testid="view-message">
+    <div {...stylex.props(styles.title)} data-testid="view-message">
       {props.children}
     </div>
   );
@@ -20,11 +20,11 @@ export function Notice(props: Props) {
  * Sub-message of a ViewMessage, useful to add more contextual information
  */
 export function Sub(props: Props) {
-  return <div {...stylex.props(styles.subMessage)}>{props.children}</div>;
+  return <div {...stylex.props(styles.subtitle)}>{props.children}</div>;
 }
 
 const styles = stylex.create({
-  fullMessage: {
+  title: {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
@@ -34,7 +34,7 @@ const styles = stylex.create({
     margin: 'auto',
     textAlign: 'center',
   },
-  subMessage: {
+  subtitle: {
     fontSize: '70%',
     lineHeight: 1.8,
   },
