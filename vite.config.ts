@@ -5,8 +5,12 @@ import { tanstackRouter } from '@tanstack/router-plugin/vite';
 import react /*, { reactCompilerPreset } */ from '@vitejs/plugin-react';
 import browserslist from 'browserslist';
 import { browserslistToTargets } from 'lightningcss';
-import { defineConfig, type PluginOption } from 'vite';
 import svgr from 'vite-plugin-svgr';
+import { defineConfig, type PluginOption } from 'vite-plus';
+
+const CSS_TARGETS = browserslistToTargets(
+  browserslist(['edge >=115', 'chrome >=115', 'safari >=13']),
+);
 
 // Workaround for decorators: https://vite.dev/guide/migration#javascript-transforms-by-oxc
 // Blocked by https://github.com/oxc-project/oxc/issues/9170
@@ -28,6 +32,13 @@ export const VITE_PLUGINS: PluginOption[] = [
   stylex.vite({
     useCSSLayers: true,
     propertyValidationMode: 'throw',
+    // Stylex is not well integrated in the Vite CSS pipeline
+    // https://github.com/facebook/stylex/issues/1378
+    // @ts-ignore something wrong with StyleX options
+    lightningcssOptions: {
+      minify: true,
+      targets: CSS_TARGETS,
+    },
   }),
   react(),
   lingui(),
@@ -56,9 +67,7 @@ export default defineConfig({
   css: {
     transformer: 'lightningcss',
     lightningcss: {
-      targets: browserslistToTargets(
-        browserslist(['edge >=115', 'chrome >=115', 'safari >=13']),
-      ),
+      targets: CSS_TARGETS,
     },
   },
 
@@ -78,6 +87,91 @@ export default defineConfig({
         '**/.flatpak-builder/**',
         '**/.tanstack/**',
       ],
+    },
+  },
+
+  // Vite+ config
+  fmt: {
+    printWidth: 80,
+    singleQuote: true,
+    overrides: [
+      {
+        files: ['*.css'],
+        options: {
+          singleQuote: false,
+        },
+      },
+    ],
+    experimentalSortPackageJson: false,
+    experimentalSortImports: {
+      newlinesBetween: true,
+      partitionByComment: true,
+      groups: [
+        ['value-builtin', 'type-builtin'],
+        ['value-external', 'value-internal', 'type-external', 'type-internal'],
+        [
+          'value-parent',
+          'value-sibling',
+          'value-index',
+          'type-parent',
+          'type-sibling',
+          'type-index',
+        ],
+        ['style'],
+      ],
+    },
+    ignorePatterns: [
+      '**/node_modules',
+      '**/dist',
+      '**/src/generated/**/*.ts',
+      '**/src-tauri/target/**/*',
+      '**/src-tauri/gen/**/*',
+    ],
+  },
+  lint: {
+    plugins: [
+      'eslint',
+      'typescript',
+      'unicorn',
+      'react',
+      'react-perf',
+      'oxc',
+      'import',
+      'jsx-a11y',
+      'promise',
+      'vitest',
+    ],
+    jsPlugins: ['@stylexjs/eslint-plugin'],
+    ignorePatterns: [
+      '**/node_modules',
+      '**/dist',
+      '**/src/generated/**/*.ts',
+      '**/src-tauri/target/**/*',
+      '**/src-tauri/gen/**/*',
+    ],
+    rules: {
+      'typescript/no-floating-promises': [
+        'warn',
+        {
+          allowForKnownSafeCalls: [
+            {
+              from: 'package',
+              name: ['trace', 'debug', 'info', 'warn', 'error'],
+              package: '@tauri-apps/plugin-log',
+            },
+          ],
+        },
+      ],
+      '@stylexjs/valid-styles': 'error',
+      '@stylexjs/no-unused': 'error',
+      '@stylexjs/valid-shorthands': 'error',
+      '@stylexjs/enforce-extension': 'error',
+      '@stylexjs/no-legacy-contextual-styles': 'error',
+      '@stylexjs/sort-keys': 'off',
+    },
+    options: {
+      typeAware: true,
+      typeCheck: true,
     },
   },
 });
