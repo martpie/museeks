@@ -166,24 +166,21 @@ class DatabaseBridge implements DatabaseBridgeInterface {
 export default new DatabaseBridge();
 
 /**
- * Helpers to compute the time it takes to
+ * Helpers to compute the time it takes to execute a DatabaseBridge method.
  */
-function LogExecutionTime(
-  // oxlint-disable-next-line typescript/no-explicit-any -- decorator target type is intentionally unconstrained
-  _target: any,
-  propertyKey: string,
-  descriptor: PropertyDescriptor,
+function LogExecutionTime<This, Args extends unknown[], Return>(
+  originalMethod: (this: This, ...args: Args) => Promise<Return>,
+  context: ClassMethodDecoratorContext<
+    This,
+    (this: This, ...args: Args) => Promise<Return>
+  >,
 ) {
-  const originalMethod = descriptor.value;
-
-  // oxlint-disable-next-line typescript/no-explicit-any -- preserve decorated method signature passthrough
-  descriptor.value = async function (...args: any[]) {
+  return async function Decorator(this: This, ...args: Args): Promise<Return> {
     const startTime = Date.now();
     const result = await originalMethod.apply(this, args);
-    const endTime = Date.now();
-    info(`[DatabaseBridge] ${propertyKey} (${endTime - startTime}ms)`);
+    info(
+      `[DatabaseBridge] ${String(context.name)} (${Date.now() - startTime}ms)`,
+    );
     return result;
   };
-
-  return descriptor;
 }

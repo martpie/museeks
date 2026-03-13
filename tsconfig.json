@@ -24,9 +24,6 @@
     "noUncheckedIndexedAccess": false /* would be cool, but it does not play well with CSS modules */,
     "noPropertyAccessFromIndexSignature": false /* bad */,
 
-    /* Experimental */
-    "experimentalDecorators": true,
-
     /* Plugins */
     "plugins": [{ "name": "typescript-plugin-css-modules" }]
   },
