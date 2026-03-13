@@ -1,34 +1,48 @@
 import { lingui } from '@lingui/vite-plugin';
+import babel from '@rolldown/plugin-babel';
 import stylex from '@stylexjs/unplugin';
 import { tanstackRouter } from '@tanstack/router-plugin/vite';
-import react from '@vitejs/plugin-react';
+import react /*, { reactCompilerPreset } */ from '@vitejs/plugin-react';
 import browserslist from 'browserslist';
 import { browserslistToTargets } from 'lightningcss';
 import { defineConfig, type PluginOption } from 'vite';
 import svgr from 'vite-plugin-svgr';
+
+// Workaround for decorators: https://vite.dev/guide/migration#javascript-transforms-by-oxc
+// Blocked by https://github.com/oxc-project/oxc/issues/9170
+function decoratorPreset(options: Record<string, unknown>) {
+  return {
+    preset: () => ({
+      plugins: [['@babel/plugin-proposal-decorators', options]],
+    }),
+    rolldown: {
+      // Only run this transform if the file contains a decorator.
+      filter: {
+        code: '@',
+      },
+    },
+  };
+}
 
 export const VITE_PLUGINS: PluginOption[] = [
   stylex.vite({
     useCSSLayers: true,
     propertyValidationMode: 'throw',
   }),
-  react({
-    babel: {
-      plugins: [
-        '@lingui/babel-plugin-lingui-macro',
-        'babel-plugin-react-compiler',
-      ],
-      parserOpts: {
-        plugins: ['decorators'],
-      },
-    },
-  }),
+  react(),
   lingui(),
   tanstackRouter({
     target: 'react',
     generatedRouteTree: './src/generated/route-tree.ts',
   }),
   svgr(),
+  babel({
+    presets: [
+      // reactCompilerPreset(),
+      decoratorPreset({ version: '2023-11' }),
+    ],
+    plugins: ['@lingui/babel-plugin-lingui-macro'],
+  }),
 ];
 
 // https://vitejs.dev/config/
