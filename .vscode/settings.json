@@ -1,13 +1,12 @@
 {
-  // oxfmt
+  // vite+ (linting and formatting)
   "editor.codeActionsOnSave": {
     "source.fixAll.oxc": "always"
   },
-  "oxc.typeAware": true,
-  // oxfmt
-  "oxc.fmt.configPath": ".oxfmtrc.json",
   "editor.defaultFormatter": "oxc.oxc-vscode",
   "editor.formatOnSave": true,
+  "editor.formatOnSaveMode": "file",
+  "oxc.typeAware": true,
   // others
   "files.watcherExclude": {
     "**/.git/objects/**": true,

@@ -14,25 +14,19 @@
     "url": "https://github.com/martpie/museeks"
   },
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview",
+    "dev": "vp dev",
+    "build": "vp build",
+    "preview": "vp preview",
     "tauri": "tauri",
     "gen:types": "bash scripts/gen.sh",
     "gen:translations": "lingui extract --clean --overwrite",
     "test:typings": "tsc --noEmit --project ./tsconfig.json",
-    "test:unit": "vitest run --project unit",
-    "test:ui": "vitest run --project e2e",
-    "test:ui:watch": "vitest watch --project e2e",
-    "test:lint": "oxlint --type-aware --type-check",
-    "test:format": "oxfmt --check",
-    "test:format:fix": "oxfmt",
     "package:checksums": "bash scripts/checksum.sh",
     "clippy": "cargo clippy --manifest-path src-tauri/Cargo.toml",
     "postinstall": "simple-git-hooks"
   },
   "simple-git-hooks": {
-    "pre-commit": "npm run gen:translations && git add src/translations"
+    "pre-commit": "vp run gen:translations && git add src/translations"
   },
   "dependencies": {
     "@base-ui/react": "1.3.0",
@@ -43,9 +37,9 @@
     "@lingui/core": "5.9.3",
     "@lingui/react": "5.9.3",
     "@stylexjs/stylex": "0.18.1",
-    "@tanstack/react-query": "5.90.21",
-    "@tanstack/react-router": "1.166.7",
-    "@tanstack/react-virtual": "3.13.22",
+    "@tanstack/react-query": "5.91.0",
+    "@tanstack/react-router": "1.167.4",
+    "@tanstack/react-virtual": "3.13.23",
     "@tauri-apps/api": "2.10.1",
     "@tauri-apps/plugin-clipboard-manager": "2.3.2",
     "@tauri-apps/plugin-dialog": "2.6.0",
@@ -58,59 +52,48 @@
     "browserslist": "4.28.1",
     "eventemitter3": "5.0.4",
     "lodash-es": "4.17.23",
-    "nanoid": "5.1.6",
+    "nanoid": "5.1.7",
     "normalize.css": "8.0.1",
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "react-keybinding-component": "2.3.1",
     "semver": "7.7.4",
-    "zustand": "5.0.11"
+    "zustand": "5.0.12"
   },
   "devDependencies": {
     "@babel/plugin-proposal-decorators": "7.29.0",
     "@lingui/babel-plugin-lingui-macro": "5.9.3",
     "@lingui/cli": "5.9.3",
     "@lingui/vite-plugin": "5.9.3",
-    "@rolldown/plugin-babel": "0.2.1",
+    "@rolldown/plugin-babel": "0.2.2",
     "@stylexjs/eslint-plugin": "0.18.1",
     "@stylexjs/unplugin": "0.18.1",
-    "@tanstack/router-plugin": "1.166.7",
+    "@tanstack/router-plugin": "1.166.13",
     "@tauri-apps/cli": "2.10.1",
-    "@types/babel__core": "7.20.5",
     "@types/lodash-es": "4.17.12",
     "@types/node": "25.5.0",
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
     "@types/semver": "7.7.1",
     "@vitejs/plugin-react": "6.0.1",
-    "@vitest/browser-playwright": "4.1.0",
     "lightningcss": "1.32.0",
-    "oxfmt": "0.40.0",
-    "oxlint": "1.55.0",
-    "oxlint-tsgolint": "0.16.0",
     "playwright": "1.58.2",
     "simple-git-hooks": "2.13.1",
-    "vite": "8.0.0",
+    "vite": "npm:@voidzero-dev/vite-plus-core@0.1.12",
     "vite-plugin-svgr": "4.5.0",
-    "vitest": "4.1.0",
+    "vite-plus": "0.1.12",
+    "vitest": "npm:@voidzero-dev/vite-plus-test@0.1.12",
     "vitest-browser-react": "2.1.0"
   },
-  "trustedDependencies": [
-    "esbuild",
-    "oxfmt",
-    "oxlint"
-  ],
-  "devEngines": {
-    "runtime": {
-      "name": "node",
-      "version": ">=22 <25",
-      "onFail": "warn"
+  "packageManager": "pnpm@10.32.1",
+  "pnpm": {
+    "overrides": {
+      "vite": "npm:@voidzero-dev/vite-plus-core@0.1.12",
+      "vitest": "npm:@voidzero-dev/vite-plus-test@0.1.12"
     },
-    "packageManager": {
-      "name": "npm",
-      "version": ">=10 <12",
-      "onFail": "warn"
-    }
-  },
-  "packageManager": "npm@11.11.1"
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "simple-git-hooks"
+    ]
+  }
 }

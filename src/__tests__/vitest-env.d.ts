@@ -1,1 +1,1 @@
-/// <reference types="vitest/browser" />
+/// <reference types="vite-plus/test/browser" />
