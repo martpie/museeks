@@ -3,6 +3,7 @@
     "oxc.oxc-vscode",
     "tauri-apps.tauri-vscode",
     "rust-lang.rust-analyzer",
-    "yash-singh.stylex"
+    "yash-singh.stylex",
+    "blazejkustra.react-compiler-marker"
   ]
 }

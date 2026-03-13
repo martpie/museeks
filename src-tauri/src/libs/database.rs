@@ -125,8 +125,11 @@ impl DB {
             UPDATE tracks SET
                 path = ?,
                 title = ?,
+                title_sort = ?,
                 album = ?,
+                album_sort = ?,
                 album_artist = ?,
+                album_artist_sort = ?,
                 artists = ?,
                 genres = ?,
                 year = ?,
@@ -141,8 +144,11 @@ impl DB {
         )
         .bind(&track.path)
         .bind(&track.title)
+        .bind(track.title_sort.as_deref())
         .bind(&track.album)
+        .bind(track.album_sort.as_deref())
         .bind(&track.album_artist)
+        .bind(track.album_artist_sort.as_deref())
         .bind(json!(&track.artists))
         .bind(json!(&track.genres))
         .bind(track.year)
@@ -185,16 +191,36 @@ impl DB {
             sqlx::query(
                 r#"
                 INSERT INTO tracks (
-                    id, path, title, album, album_artist, artists, genres, year,
-                    duration, track_no, track_of, disk_no, disk_of, is_compilation
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    id,
+                    path,
+                    title,
+                    title_sort,
+                    album,
+                    album_sort,
+                    album_artist,
+                    album_artist_sort,
+                    artists,
+                    genres,
+                    year,
+                    duration,
+                    track_no,
+                    track_of,
+                    disk_no,
+                    disk_of,
+                    is_compilation
+                ) VALUES (
+                    ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
+                )
                 "#,
             )
             .bind(&track.id)
             .bind(&track.path)
             .bind(&track.title)
+            .bind(track.title_sort.as_deref())
             .bind(&track.album)
+            .bind(track.album_sort.as_deref())
             .bind(&track.album_artist)
+            .bind(track.album_artist_sort.as_deref())
             .bind(json!(&track.artists))
             .bind(json!(&track.genres))
             .bind(track.year) // Use i64 for SQL compatibility

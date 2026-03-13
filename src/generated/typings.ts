@@ -29,7 +29,7 @@ export type SortOrder = "Asc" | "Dsc";
  * Track
  * represent a single track, id and path should be unique
  */
-export type Track = { id: string, path: string, title: string, album: string, album_artist: string, artists: Array<string>, genres: Array<string>, year: number | null, duration: number, track_no: number | null, track_of: number | null, disk_no: number | null, disk_of: number | null, is_compilation: boolean, };
+export type Track = { id: string, path: string, title: string, title_sort: string | null, album: string, album_sort: string | null, album_artist: string, album_artist_sort: string | null, artists: Array<string>, genres: Array<string>, year: number | null, duration: number, track_no: number | null, track_of: number | null, disk_no: number | null, disk_of: number | null, is_compilation: boolean, };
 
 /**
  * Represents a group of tracks, grouped by "something", lib artist name, or

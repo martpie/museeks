@@ -22,11 +22,16 @@ use crate::libs::utils::is_file_valid;
 pub struct Track {
     pub id: String,
     pub path: String, // must be unique, ideally, a PathBuf
+    // Fields used for display
     pub title: String,
+    pub title_sort: Option<String>,
     pub album: String,
+    pub album_sort: Option<String>,
     pub album_artist: String,
+    pub album_artist_sort: Option<String>,
     #[sqlx(json)]
     pub artists: Vec<String>, // JSON
+    // Other Metadata
     #[sqlx(json)]
     pub genres: Vec<String>, // JSON
     pub year: Option<u16>,
@@ -99,25 +104,47 @@ pub fn get_track_from_file(path: &PathBuf) -> AnyResult<Track> {
                 .get_string(ItemKey::FlagCompilation)
                 .map_or(false, |v| v == "1" || v.eq_ignore_ascii_case("true"));
 
+            let title = tag
+                .get_string(ItemKey::TrackTitle)
+                .filter(|s| !s.trim().is_empty())
+                .map(ToString::to_string)
+                .unwrap_or_else(|| {
+                    path.file_name()
+                        .and_then(|f| f.to_str())
+                        .unwrap_or("Unknown")
+                        .to_string()
+                });
+
+            let album = tag
+                .get_string(ItemKey::AlbumTitle)
+                .filter(|s| !s.trim().is_empty())
+                .map(ToString::to_string)
+                .unwrap_or_else(|| "Unknown".to_string());
+
+            let title_sort = tag
+                .get_string(ItemKey::TrackTitleSortOrder)
+                .filter(|s| !s.trim().is_empty())
+                .map(ToString::to_string);
+
+            let album_sort = tag
+                .get_string(ItemKey::AlbumTitleSortOrder)
+                .filter(|s| !s.trim().is_empty())
+                .map(ToString::to_string);
+
+            let album_artist_sort = tag
+                .get_string(ItemKey::AlbumArtistSortOrder)
+                .filter(|s| !s.trim().is_empty())
+                .map(ToString::to_string);
+
             Ok(Track {
                 id,
                 path: path.to_string_lossy().into_owned(),
-                title: tag
-                    .get_string(ItemKey::TrackTitle)
-                    .filter(|s| !s.is_empty())
-                    .map(ToString::to_string)
-                    .unwrap_or_else(|| {
-                        path.file_name()
-                            .and_then(|f| f.to_str())
-                            .unwrap_or("Unknown")
-                            .to_string()
-                    }),
-                album: tag
-                    .get_string(ItemKey::AlbumTitle)
-                    .filter(|s| !s.is_empty())
-                    .map(ToString::to_string)
-                    .unwrap_or_else(|| "Unknown".to_string()),
+                title,
+                title_sort,
+                album,
+                album_sort,
                 album_artist,
+                album_artist_sort,
                 artists,
                 genres: tag
                     .get_strings(ItemKey::Genre)
