@@ -1,7 +1,7 @@
 import os from 'node:os';
 
-import { playwright } from '@vitest/browser-playwright';
-import { defineConfig } from 'vitest/config';
+import { defineConfig } from 'vite-plus';
+import { playwright } from 'vite-plus/test/browser-playwright';
 
 import { VITE_PLUGINS } from './vite.config';
 

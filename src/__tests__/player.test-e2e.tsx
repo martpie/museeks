@@ -1,5 +1,5 @@
-import { expect, test } from 'vitest';
-import { page } from 'vitest/browser';
+import { expect, test } from 'vite-plus/test';
+import { page } from 'vite-plus/test/browser';
 
 import { beforeEachSetup } from './test-helpers';
 

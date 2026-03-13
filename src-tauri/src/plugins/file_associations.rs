@@ -14,7 +14,7 @@ use tauri::plugin::{Builder, TauriPlugin};
  * On macOS, they are passed via the RunEvent::Opened event, as a list of URLs
  *
  * Test on windows dev mode with:
- * npm run tauri dev -- -- "G:\Mon Drive\Music\Air\Love 2\03 So Light Is Her Footfall.mp3" "G:\Mon Drive\Music\Air\Love 2\08 Night Hunter.mp3"
+ * vp run tauri dev -- -- "G:\Mon Drive\Music\Air\Love 2\03 So Light Is Her Footfall.mp3" "G:\Mon Drive\Music\Air\Love 2\08 Night Hunter.mp3"
  * (replace by your own files)
  */
 use tauri::{AppHandle, Emitter, Manager, Runtime};
