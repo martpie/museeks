@@ -2,7 +2,7 @@ use std::path::PathBuf;
 use tauri::Emitter;
 use tauri::image::Image;
 use tauri::{
-    Manager, Runtime,
+    Manager, Runtime, State,
     menu::{AboutMetadataBuilder, MenuBuilder, MenuId, MenuItemBuilder, SubmenuBuilder},
     plugin::{Builder, TauriPlugin},
 };
@@ -10,32 +10,72 @@ use tauri_plugin_opener::OpenerExt;
 
 use crate::libs::error::AnyResult;
 use crate::libs::events::IPCEvent;
+use crate::plugins::config::ConfigManager;
 
 #[tauri::command]
-pub async fn toggle<R: Runtime>(window: tauri::Window<R>) -> AnyResult<()> {
+pub async fn toggle<R: Runtime>(
+    window: tauri::Window<R>,
+    config_manager: State<'_, ConfigManager>,
+) -> AnyResult<()> {
     // On macOS, the menu is global, and thus does not need to be toggled
     #[cfg(not(target_os = "macos"))]
     {
         match window.is_menu_visible() {
             Ok(true) => {
                 window.hide_menu()?;
+                config_manager.set_menu_bar_visible(false)?;
             }
             Ok(false) => {
                 window.show_menu()?;
+                config_manager.set_menu_bar_visible(true)?;
             }
             _ => (),
         }
     }
 
     #[cfg(target_os = "macos")]
-    drop(window); // Suppress warning about unused variable.
+    {
+        drop(window); // Suppress warning about unused variable.
+        drop(config_manager);
+    }
+
+    Ok(())
+}
+
+/// Apply the persisted menu visibility from config. Called by the frontend
+/// on startup so that the menu state is enforced after all plugins (including
+/// window-state) have finished initialising.
+#[tauri::command]
+pub async fn apply_menu_visibility<R: Runtime>(
+    window: tauri::Window<R>,
+    config_manager: State<'_, ConfigManager>,
+) -> AnyResult<()> {
+    #[cfg(not(target_os = "macos"))]
+    {
+        let visible = config_manager
+            .get()
+            .map(|c| c.menu_bar_visible)
+            .unwrap_or(false);
+
+        if visible {
+            window.show_menu()?;
+        } else {
+            window.hide_menu()?;
+        }
+    }
+
+    #[cfg(target_os = "macos")]
+    {
+        drop(window);
+        drop(config_manager);
+    }
 
     Ok(())
 }
 
 pub fn init<R: Runtime>() -> TauriPlugin<R> {
     Builder::new("app-menu")
-        .invoke_handler(tauri::generate_handler![toggle])
+        .invoke_handler(tauri::generate_handler![toggle, apply_menu_visibility])
         .on_window_ready(|window| {
             let app_handle = window.app_handle();
 

@@ -15,6 +15,13 @@ const SettingsBridge = {
   },
 
   /**
+   * Apply persisted menu visibility from config on startup
+   */
+  async applyMenuVisibility(): Promise<void> {
+    return invoke('plugin:app-menu|apply_menu_visibility');
+  },
+
+  /**
    * Set default view on startup
    */
   async setDefaultView(defaultView: string): Promise<void> {
