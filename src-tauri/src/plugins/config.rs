@@ -77,6 +77,8 @@ pub struct Config {
     pub notifications: bool,
     pub track_view_density: TrackViewDensity,
     pub wayland_compat: bool,
+    #[serde(default)]
+    pub menu_bar_visible: bool,
 }
 
 pub const SYSTEM_THEME: &str = "__system";
@@ -107,6 +109,7 @@ impl Default for Config {
             notifications: false,
             track_view_density: TrackViewDensity::Normal,
             wayland_compat: false,
+            menu_bar_visible: false,
         }
     }
 }
@@ -146,6 +149,13 @@ impl ConfigManager {
     pub fn set_sleepblocker(&self, sleepblocker: bool) -> AnyResult<()> {
         let mut writer = self.data.write().map_err(config_err)?;
         writer.sleepblocker = sleepblocker;
+        std::mem::drop(writer);
+        self.save()
+    }
+
+    pub fn set_menu_bar_visible(&self, visible: bool) -> AnyResult<()> {
+        let mut writer = self.data.write().map_err(config_err)?;
+        writer.menu_bar_visible = visible;
         std::mem::drop(writer);
         self.save()
     }

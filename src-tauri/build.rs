@@ -5,7 +5,7 @@ fn main() {
             .codegen(tauri_build::CodegenContext::new())
             .plugin(
                 "app-menu",
-                tauri_build::InlinedPlugin::new().commands(&["toggle"]),
+                tauri_build::InlinedPlugin::new().commands(&["toggle", "apply_menu_visibility"]),
             )
             .plugin(
                 "config",
