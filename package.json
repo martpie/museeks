@@ -111,5 +111,6 @@
       "version": ">=10 <12",
       "onFail": "warn"
     }
-  }
+  },
+  "packageManager": "npm@11.11.1"
 }
