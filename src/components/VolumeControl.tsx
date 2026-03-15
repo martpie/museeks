@@ -8,14 +8,8 @@ import ButtonIcon from '../elements/ButtonIcon';
 import { usePlayerState } from '../hooks/usePlayer';
 import player from '../lib/player';
 import { stopPropagation } from '../lib/utils-events';
+import { smoothifyVolume, unsmoothifyVolume } from '../lib/utils-player';
 import type { IconName } from './Icon';
-
-// Volume easing - http://www.dr-lex.be/info-stuff/volumecontrols.html#about
-const SMOOTHING_FACTOR = 2.5;
-
-const smoothifyVolume = (value: number): number => value ** SMOOTHING_FACTOR;
-const unsmoothifyVolume = (value: number): number =>
-  value ** (1.0 / SMOOTHING_FACTOR);
 
 const getVolumeIcon = (volume: number, muted: boolean): IconName => {
   if (muted) return 'volumeMute';

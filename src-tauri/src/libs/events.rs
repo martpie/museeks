@@ -13,6 +13,12 @@ pub enum IPCEvent<'a> {
     PlaybackPrevious,
     PlaybackNext,
     PlaybackStart,
+    // MPRIS-related playback events
+    PlaybackSeekTo,
+    PlaybackSeekBy,
+    PlaybackSetVolume,
+    PlaybackSetShuffle,
+    PlaybackSetRepeat,
     // Scan-related events
     LibraryScanProgress,
     // Menu-related events
