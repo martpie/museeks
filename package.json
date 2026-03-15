@@ -14,25 +14,19 @@
     "url": "https://github.com/martpie/museeks"
   },
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview",
+    "dev": "vp dev",
+    "build": "vp build",
+    "preview": "vp preview",
     "tauri": "tauri",
     "gen:types": "bash scripts/gen.sh",
     "gen:translations": "lingui extract --clean --overwrite",
     "test:typings": "tsc --noEmit --project ./tsconfig.json",
-    "test:unit": "vitest run --project unit",
-    "test:ui": "vitest run --project e2e",
-    "test:ui:watch": "vitest watch --project e2e",
-    "test:lint": "oxlint --type-aware --type-check",
-    "test:format": "oxfmt --check",
-    "test:format:fix": "oxfmt",
     "package:checksums": "bash scripts/checksum.sh",
     "clippy": "cargo clippy --manifest-path src-tauri/Cargo.toml",
     "postinstall": "simple-git-hooks"
   },
   "simple-git-hooks": {
-    "pre-commit": "npm run gen:translations && git add src/translations"
+    "pre-commit": "vp run gen:translations && git add src/translations"
   },
   "dependencies": {
     "@base-ui/react": "1.3.0",
@@ -83,34 +77,24 @@
     "@types/react-dom": "19.2.3",
     "@types/semver": "7.7.1",
     "@vitejs/plugin-react": "6.0.1",
-    "@vitest/browser-playwright": "4.1.0",
     "lightningcss": "1.32.0",
-    "oxfmt": "0.40.0",
-    "oxlint": "1.55.0",
-    "oxlint-tsgolint": "0.16.0",
     "playwright": "1.58.2",
     "simple-git-hooks": "2.13.1",
-    "vite": "8.0.0",
+    "vite": "npm:@voidzero-dev/vite-plus-core@latest",
     "vite-plugin-svgr": "4.5.0",
-    "vitest": "4.1.0",
+    "vite-plus": "latest",
+    "vitest": "npm:@voidzero-dev/vite-plus-test@latest",
     "vitest-browser-react": "2.1.0"
   },
-  "trustedDependencies": [
-    "esbuild",
-    "oxfmt",
-    "oxlint"
-  ],
-  "devEngines": {
-    "runtime": {
-      "name": "node",
-      "version": ">=22 <25",
-      "onFail": "warn"
+  "packageManager": "pnpm@10.32.1",
+  "pnpm": {
+    "overrides": {
+      "vite": "npm:@voidzero-dev/vite-plus-core@latest",
+      "vitest": "npm:@voidzero-dev/vite-plus-test@latest"
     },
-    "packageManager": {
-      "name": "npm",
-      "version": ">=10 <12",
-      "onFail": "warn"
-    }
-  },
-  "packageManager": "npm@11.11.1"
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "simple-git-hooks"
+    ]
+  }
 }

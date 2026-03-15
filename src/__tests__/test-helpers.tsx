@@ -1,5 +1,5 @@
 import { i18n } from '@lingui/core';
-import { beforeEach, vi } from 'vitest';
+import { beforeEach, vi } from 'vite-plus/test';
 import { render } from 'vitest-browser-react';
 
 import { MOCK_CONFIG } from '../lib/__mocks__/bridge-config.ts';

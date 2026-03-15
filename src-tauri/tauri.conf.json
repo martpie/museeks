@@ -5,9 +5,9 @@
   "version": "0.23.4",
   "identifier": "io.museeks.app",
   "build": {
-    "beforeDevCommand": "npm run dev",
+    "beforeDevCommand": "vp run dev",
     "devUrl": "http://localhost:1420",
-    "beforeBuildCommand": "npm run build",
+    "beforeBuildCommand": "vp run build",
     "frontendDist": "../dist"
   },
   "app": {
