@@ -21,6 +21,7 @@ export const MOCK_CONFIG: Config = {
   notifications: false,
   track_view_density: 'normal',
   wayland_compat: false,
+  menu_bar_visible: false,
 };
 
 /**
