@@ -117,10 +117,10 @@ async fn scan_library<R: Runtime>(
     // Remove files that are already in the DB (speedup scan + prevent duplicate errors)
     if !refresh {
         let existing_paths = db
-            .get_all_tracks()
+            .get_all_track_paths()
             .await?
-            .iter()
-            .map(move |track| PathBuf::from(track.path.to_owned()))
+            .into_iter()
+            .map(PathBuf::from)
             .collect::<HashSet<_>>();
 
         info!(
@@ -138,37 +138,32 @@ async fn scan_library<R: Runtime>(
 
     // Setup progress tracking for the UI
     let progress = Arc::new(AtomicUsize::new(1));
-    let total = Arc::new(AtomicUsize::new(track_paths.len()));
+    let total = track_paths.len();
 
     webview_window
         .emit(
             IPCEvent::LibraryScanProgress.as_ref(),
-            ScanProgress {
-                current: 0,
-                total: track_paths.len(),
-            },
+            ScanProgress { current: 0, total },
         )
         .unwrap();
 
     // Let's get all tracks ID3
-    info!("Importing ID3 tags from {} files", track_paths.len());
+    info!("Importing ID3 tags from {} files", total);
     let scan_logger = TimeLogger::new("Scanned all id3 tags".into());
 
     let tracks = track_paths
         .par_iter()
         .map(|path| -> AnyResult<Track> {
-            // let counter = processed.clone();
-            let p_current = progress.clone().fetch_add(1, Ordering::SeqCst);
-            let p_total = total.clone().load(Ordering::SeqCst);
+            let p_current = progress.fetch_add(1, Ordering::SeqCst);
 
-            if p_current % 200 == 0 || p_current == p_total {
+            if p_current % 200 == 0 || p_current == total {
                 info!("Processing tracks {:?}/{:?}", p_current, total);
                 webview_window
                     .emit(
                         IPCEvent::LibraryScanProgress.as_ref(),
                         ScanProgress {
                             current: p_current,
-                            total: p_total,
+                            total,
                         },
                     )
                     .unwrap();
@@ -176,8 +171,6 @@ async fn scan_library<R: Runtime>(
 
             get_track_from_file(path)
         })
-        .collect::<Vec<_>>()
-        .into_iter()
         .filter_map(Result::ok)
         .collect::<Vec<Track>>();
 

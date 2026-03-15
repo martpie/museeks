@@ -1,7 +1,7 @@
 use indexmap::IndexMap;
 use itertools::Itertools;
 use serde_json::json;
-use sqlx::SqliteConnection;
+use sqlx::{Connection, SqliteConnection};
 use std::path::PathBuf;
 
 use super::error::AnyResult;
@@ -53,6 +53,16 @@ pub struct DB {
 }
 
 impl DB {
+    /**
+     * Get only the file paths of all tracks in the database (cheaper than get_all_tracks)
+     */
+    pub async fn get_all_track_paths(&mut self) -> AnyResult<Vec<String>> {
+        let paths = sqlx::query_scalar("SELECT path FROM tracks")
+            .fetch_all(&mut self.connection)
+            .await?;
+        Ok(paths)
+    }
+
     /**
      * Get all the tracks (and their content) from the database
      */
@@ -180,7 +190,8 @@ impl DB {
      * unique key (like track.path)
      */
     pub async fn insert_tracks(&mut self, tracks: Vec<Track>) -> AnyResult<()> {
-        // Weirdly, this is fast enough with SQLite, no need to create transactions
+        let mut tx = self.connection.begin().await?;
+
         for track in tracks {
             sqlx::query(
                 r#"
@@ -197,17 +208,18 @@ impl DB {
             .bind(&track.album_artist)
             .bind(json!(&track.artists))
             .bind(json!(&track.genres))
-            .bind(track.year) // Use i64 for SQL compatibility
+            .bind(track.year)
             .bind(track.duration)
             .bind(track.track_no)
             .bind(track.track_of)
             .bind(track.disk_no)
             .bind(track.disk_of)
             .bind(track.is_compilation)
-            .execute(&mut self.connection)
+            .execute(&mut *tx)
             .await?;
         }
 
+        tx.commit().await?;
         Ok(())
     }
 
@@ -215,10 +227,47 @@ impl DB {
      * Update a list of tracks in the database by just overriding everything
      */
     pub async fn update_tracks(&mut self, tracks: Vec<Track>) -> AnyResult<()> {
+        let mut tx = self.connection.begin().await?;
+
         for track in tracks {
-            self.update_track(track).await?;
+            sqlx::query(
+                r#"
+                UPDATE tracks SET
+                    path = ?,
+                    title = ?,
+                    album = ?,
+                    album_artist = ?,
+                    artists = ?,
+                    genres = ?,
+                    year = ?,
+                    duration = ?,
+                    track_no = ?,
+                    track_of = ?,
+                    disk_no = ?,
+                    disk_of = ?,
+                    is_compilation = ?
+                WHERE id = ?
+                "#,
+            )
+            .bind(&track.path)
+            .bind(&track.title)
+            .bind(&track.album)
+            .bind(&track.album_artist)
+            .bind(json!(&track.artists))
+            .bind(json!(&track.genres))
+            .bind(track.year)
+            .bind(track.duration)
+            .bind(track.track_no)
+            .bind(track.track_of)
+            .bind(track.disk_no)
+            .bind(track.disk_of)
+            .bind(track.is_compilation)
+            .bind(&track.id)
+            .execute(&mut *tx)
+            .await?;
         }
 
+        tx.commit().await?;
         Ok(())
     }
 
