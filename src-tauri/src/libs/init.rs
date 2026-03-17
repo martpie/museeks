@@ -26,11 +26,14 @@ pub fn init() -> AnyResult<ConfigManager> {
     let existing_config = manager.toml::<Config>();
 
     let config = match existing_config {
-        Ok(config) => ConfigManager::new(manager, config),
+        Ok(config) => {
+            // Backfill any missing keys populated by serde defaults.
+            manager.save_toml(&config).unwrap();
+
+            ConfigManager::new(manager, config)
+        }
         Err(_) => {
             // The config does not exist, so let's instantiate it with defaults
-            // Potential issue: if the config is extended, the defaults will be
-            // reloaded
             let default_config = Config::default();
             manager.save_toml(&default_config).unwrap();
 
