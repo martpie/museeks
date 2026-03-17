@@ -12,7 +12,6 @@
   box-sizing: border-box;
 }
 
-/* Global styles */
 html {
   font-size: 12px;
   user-select: none;
@@ -30,11 +29,6 @@ body {
   user-select: none;
   height: 100%;
   overflow: hidden;
-}
-
-[data-museeks-os="linux"],
-[data-museeks-os="macos"] {
-  font-weight: 500;
 }
 
 /** Global focus styles */
@@ -57,41 +51,36 @@ p {
   line-height: 1.3;
 }
 
-strong {
-  font-weight: var(--bold);
-}
-
 /* App wrapper */
 #wrap {
   height: 100vh;
   isolation: isolate;
 }
 
-/* Generic class that can be used on call-to-actions to show the interactibility of an element */
-[data-museeks-action] {
-  transition: transform 0.1s ease-in-out;
+/**
+ * Museeks specific data-attributes to apply some easily reusable styles across the app.
+ */
 
-  &:hover {
-    transform: scale(1.2);
-  }
-
-  &:active {
-    transform: scale(1);
-  }
+[data-museeks-os="linux"],
+[data-museeks-os="macos"] {
+  font-weight: 500;
 }
 
-/* Generic class to control the active state of some element that get
- * de-emphasized, but still visible, in case the focus is not on the list.
- */
+/* For call-to-actions to show the interactibility of an element */
+[data-museeks-action] {
+  transition: transform 0.1s ease-in-out;
+}
+
+[data-museeks-action]:hover {
+  transform: scale(1.2);
+}
+
+[data-museeks-action]:active {
+  transform: scale(1);
+}
+
+/* Active state of some elements that get de-emphasized, is not focused */
 [data-museeks-list]:focus-within {
   --active-item-bg: var(--main-color);
   --active-item-color: white;
-}
-
-/* Various CSS utils to reset styles */
-.reset {
-  border: 0;
-  background-color: inherit;
-  border-radius: 0;
-  color: inherit;
 }

@@ -26,12 +26,12 @@ export default function PlayingBarInfo(props: Props) {
         <div {...stylex.props(styles.duration)}>{formattedProgress}</div>
 
         <div {...stylex.props(styles.metas)}>
-          <div
+          <strong
             {...stylex.props(styles.metadata, styles.metadataTitle)}
             data-testid="playing-track-title"
           >
-            <strong>{trackPlaying.title}</strong>
-          </div>
+            {trackPlaying.title}
+          </strong>
           <div
             {...stylex.props(styles.metadata)}
             data-testid="playing-track-artist-album"
@@ -110,6 +110,7 @@ const styles = stylex.create({
     textAlign: 'center',
   },
   metadataTitle: {
+    fontWeight: 'var(--bold)',
     marginBottom: '2px',
   },
   metadata: {
