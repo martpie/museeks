@@ -82,13 +82,13 @@ msgstr "Biblioteca"
 
 #: src/components/Navigation.tsx:61
 #: src/routes/artists.tsx:64
-#: src/routes/settings.ui.tsx:147
+#: src/routes/settings.ui.tsx:163
 msgid "Artists"
 msgstr "Artistas"
 
 #: src/components/Navigation.tsx:68
 #: src/routes/playlists.tsx:165
-#: src/routes/settings.ui.tsx:150
+#: src/routes/settings.ui.tsx:166
 msgid "Playlists"
 msgstr "Listas de reproducción"
 
@@ -490,62 +490,70 @@ msgid "Language"
 msgstr "Idioma"
 
 #: src/routes/settings.ui.tsx:113
+msgid "Zoom level"
+msgstr ""
+
+#: src/routes/settings.ui.tsx:114
+msgid "Scale the interface size (for example 1, 1.1, or 1.25)"
+msgstr ""
+
+#: src/routes/settings.ui.tsx:129
 msgid "Tracks density"
 msgstr "Densidad de pistas"
 
-#: src/routes/settings.ui.tsx:114
+#: src/routes/settings.ui.tsx:130
 msgid "Change the tracks spacing"
 msgstr "Cambiar el espaciado de las pistas"
 
-#: src/routes/settings.ui.tsx:125
+#: src/routes/settings.ui.tsx:141
 msgid "Normal (default)"
 msgstr "Normal (por defecto)"
 
-#: src/routes/settings.ui.tsx:128
+#: src/routes/settings.ui.tsx:144
 msgid "Compact"
 msgstr "Compacto"
 
-#: src/routes/settings.ui.tsx:134
+#: src/routes/settings.ui.tsx:150
 msgid "Default view"
 msgstr "Vista por defecto"
 
-#: src/routes/settings.ui.tsx:136
+#: src/routes/settings.ui.tsx:152
 msgid "Change the default view when starting the application"
 msgstr "Cambiar la vista por defecto al iniciar la aplicación"
 
-#: src/routes/settings.ui.tsx:144
+#: src/routes/settings.ui.tsx:160
 msgid "Library (default)"
 msgstr "Biblioteca (por defecto)"
 
-#: src/routes/settings.ui.tsx:156
+#: src/routes/settings.ui.tsx:172
 msgid "Display Notifications"
 msgstr "Mostrar Notificaciones"
 
-#: src/routes/settings.ui.tsx:157
+#: src/routes/settings.ui.tsx:173
 msgid "Send notifications when the playing track changes"
 msgstr "Enviar notificaciones cuando cambie la pista"
 
-#: src/routes/settings.ui.tsx:166
+#: src/routes/settings.ui.tsx:182
 msgid "Sleep mode blocker"
 msgstr "Bloqueador de suspensión"
 
-#: src/routes/settings.ui.tsx:167
+#: src/routes/settings.ui.tsx:183
 msgid "Prevent the computer from going into sleep mode when playing"
 msgstr "Evitar que el equipo se suspenda mientras reproduce"
 
-#: src/routes/settings.ui.tsx:177
+#: src/routes/settings.ui.tsx:193
 msgid "[Beta] Wayland compatibility enhancements"
 msgstr "[Beta] Mejoras de compatibilidad con Wayland"
 
-#: src/routes/settings.ui.tsx:178
+#: src/routes/settings.ui.tsx:194
 msgid "If you face issues using Wayland, try out this option"
 msgstr "Si tienes problemas usando Wayland, prueba esta opción"
 
-#: src/routes/settings.ui.tsx:201
+#: src/routes/settings.ui.tsx:217
 msgid "Light"
 msgstr "Claro"
 
-#: src/routes/settings.ui.tsx:203
+#: src/routes/settings.ui.tsx:219
 msgid "Dark"
 msgstr "Oscuro"
 
@@ -612,11 +620,11 @@ msgid "The playlist \"{name}\" was created"
 msgstr "La lista \"{name}\" fue creada"
 
 #. placeholder {0}: newRelease.tag_name
-#: src/stores/SettingsAPI.ts:167
+#: src/stores/SettingsAPI.ts:176
 msgid "Museeks {0} is available, check https://museeks.io!"
 msgstr "Museeks {0} está disponible, ¡comprueba https://museeks.io!"
 
-#: src/stores/SettingsAPI.ts:169
+#: src/stores/SettingsAPI.ts:178
 msgid "Museeks {currentVersion} is the latest version available."
 msgstr "Museeks {currentVersion} es la última versión disponible."
 

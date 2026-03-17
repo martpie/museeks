@@ -27,7 +27,7 @@ function ViewSettingsAudio() {
           value={config.audio_playback_rate ?? ''}
           onChange={(e) =>
             player
-              .setPlaybackRate(Number.parseFloat(e.currentTarget.value))
+              .setPlaybackRate(e.currentTarget.valueAsNumber)
               .then(invalidate)
               .catch(logAndNotifyError)
           }

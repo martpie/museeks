@@ -100,7 +100,7 @@ export function Select(
   return (
     <div>
       <Label htmlFor={id}>{label}</Label>
-      <select id={id} {...otherProps} {...stylex.props(styles.settingSelect)}>
+      <select id={id} {...otherProps} {...stylex.props(styles.settingInput)}>
         {props.children}
       </select>
       {description != null && <Description>{description}</Description>}
@@ -153,31 +153,12 @@ const styles = stylex.create({
   settingLabelNoMargin: {
     marginBottom: 0,
   },
-  settingSelect: {
-    appearance: 'none',
-    display: 'block',
-    backgroundColor: 'var(--input-bg)',
-    color: 'var(--input-color)',
-    borderWidth: '1px',
-    borderStyle: 'solid',
-    borderColor: {
-      default: 'var(--border-color-softer)',
-      ':focus': 'var(--main-color)',
-    },
-    borderRadius: 'var(--border-radius)',
-    padding: '8px',
-    width: '100%',
-    fontSize: '1rem',
-    opacity: {
-      ':disabled': 0.6,
-    },
-    cursor: {
-      ':disabled': 'not-allowed',
-    },
-  },
   settingInput: {
+    boxSizing: 'border-box',
+    height: '32px',
     appearance: 'none',
     display: 'block',
+    lineHeight: 1,
     backgroundColor: 'var(--input-bg)',
     color: 'var(--input-color)',
     borderWidth: '1px',

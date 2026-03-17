@@ -7,6 +7,7 @@
   "editor.formatOnSave": true,
   "editor.formatOnSaveMode": "file",
   "oxc.typeAware": true,
+  "oxc.configPath": "vite.config.ts",
   // others
   "files.watcherExclude": {
     "**/.git/objects/**": true,
