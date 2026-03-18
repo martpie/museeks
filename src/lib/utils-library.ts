@@ -83,10 +83,10 @@ export const removeRedundantFolders = (paths: Array<string>): Array<string> => {
  * Sort utilities
  * -------------------------------------------------------------------------- */
 
-// For perforances reasons, otherwise _.orderBy will perform weird checks
+// For performance reasons, otherwise _.orderBy will perform weird checks
 // that are far more resource/time impactful
 const ARTIST = (t: Track): string =>
-  stripAccents(t.artists.toString().toLowerCase());
+  stripAccents(t.album_artist_sort.toString().toLowerCase());
 const GENRE = (t: Track): string =>
   stripAccents(t.genres.toString().toLowerCase());
 const ALBUM = (t: Track): string => stripAccents(t.album.toLowerCase());

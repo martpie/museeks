@@ -176,7 +176,7 @@ msgstr ""
 msgid "Clear search"
 msgstr ""
 
-#: src/components/SideNavLink.tsx:62
+#: src/components/SideNavLink.tsx:63
 msgid "Rename"
 msgstr "名前を変更"
 
@@ -247,7 +247,7 @@ msgstr "トラックを削除"
 #: src/components/TrackList.tsx:392
 #: src/routes/settings.library.tsx:100
 #: src/routes/settings.library.tsx:145
-#: src/routes/tracks.$trackID.tsx:257
+#: src/routes/tracks.$trackID.tsx:272
 msgid "Cancel"
 msgstr "キャンセル"
 
@@ -273,12 +273,12 @@ msgid "Track list sorting options"
 msgstr ""
 
 #: src/components/TrackListHeader.tsx:26
-#: src/routes/tracks.$trackID.tsx:88
+#: src/routes/tracks.$trackID.tsx:89
 msgid "Title"
 msgstr "タイトル"
 
 #: src/components/TrackListHeader.tsx:31
-#: src/routes/tracks.$trackID.tsx:241
+#: src/routes/tracks.$trackID.tsx:256
 msgid "Duration"
 msgstr "再生時間"
 
@@ -287,12 +287,12 @@ msgid "Artist"
 msgstr "アーティスト"
 
 #: src/components/TrackListHeader.tsx:41
-#: src/routes/tracks.$trackID.tsx:99
+#: src/routes/tracks.$trackID.tsx:100
 msgid "Album"
 msgstr "アルバム"
 
 #: src/components/TrackListHeader.tsx:46
-#: src/routes/tracks.$trackID.tsx:139
+#: src/routes/tracks.$trackID.tsx:154
 msgid "Genre"
 msgstr "ジャンル"
 
@@ -599,59 +599,63 @@ msgid "Dark"
 msgstr "ダーク"
 
 #. placeholder {0}: track.title
-#: src/routes/tracks.$trackID.tsx:84
+#: src/routes/tracks.$trackID.tsx:85
 msgid "Edit \"{0}\""
 msgstr "「{0}」を編集"
 
-#: src/routes/tracks.$trackID.tsx:110
+#: src/routes/tracks.$trackID.tsx:111
 msgid "Album Artist"
 msgstr "アルバムアーティスト"
 
-#: src/routes/tracks.$trackID.tsx:124
+#: src/routes/tracks.$trackID.tsx:125
+msgid "Sort as"
+msgstr ""
+
+#: src/routes/tracks.$trackID.tsx:139
 msgid "Track Artists"
 msgstr "トラックアーティスト"
 
-#: src/routes/tracks.$trackID.tsx:125
+#: src/routes/tracks.$trackID.tsx:140
 msgid "You can add multiple artists with commas"
 msgstr "カンマで区切って複数のアーティストを追加できます"
 
-#: src/routes/tracks.$trackID.tsx:140
+#: src/routes/tracks.$trackID.tsx:155
 msgid "You can add multiple genres with commas"
 msgstr "カンマで区切って複数のジャンルを追加できます"
 
-#: src/routes/tracks.$trackID.tsx:154
+#: src/routes/tracks.$trackID.tsx:169
 msgid "Year"
 msgstr "年"
 
-#: src/routes/tracks.$trackID.tsx:168
+#: src/routes/tracks.$trackID.tsx:183
 msgid "Track Nº"
 msgstr "トラック番号"
 
-#: src/routes/tracks.$trackID.tsx:182
-#: src/routes/tracks.$trackID.tsx:214
+#: src/routes/tracks.$trackID.tsx:197
+#: src/routes/tracks.$trackID.tsx:229
 msgid "Of"
 msgstr "/"
 
-#: src/routes/tracks.$trackID.tsx:200
+#: src/routes/tracks.$trackID.tsx:215
 msgid "Disk Nº"
 msgstr "ディスク番号"
 
-#: src/routes/tracks.$trackID.tsx:231
+#: src/routes/tracks.$trackID.tsx:246
 msgid "Compilation"
 msgstr ""
 
-#: src/routes/tracks.$trackID.tsx:232
+#: src/routes/tracks.$trackID.tsx:247
 msgid "Group this track with other tracks from the same compilation, regardless of the artist names."
 msgstr ""
 
-#: src/routes/tracks.$trackID.tsx:249
+#: src/routes/tracks.$trackID.tsx:264
 msgid "Path"
 msgstr "パス"
 
-#: src/routes/tracks.$trackID.tsx:260
+#: src/routes/tracks.$trackID.tsx:275
 msgid "Save"
 msgstr "保存"
 
-#: src/routes/tracks.$trackID.tsx:265
+#: src/routes/tracks.$trackID.tsx:280
 msgid "Clicking \"save\" will only update the library data, but will not save it to the original file."
 msgstr "「保存」をクリックするとライブラリデータのみが更新され、元のファイルには保存されません。"
