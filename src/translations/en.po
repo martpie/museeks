@@ -176,7 +176,7 @@ msgstr "Search library"
 msgid "Clear search"
 msgstr "Clear search"
 
-#: src/components/SideNavLink.tsx:62
+#: src/components/SideNavLink.tsx:63
 msgid "Rename"
 msgstr "Rename"
 
