@@ -37,8 +37,8 @@
     "@lingui/core": "5.9.3",
     "@lingui/react": "5.9.3",
     "@stylexjs/stylex": "0.18.1",
-    "@tanstack/react-query": "5.91.0",
-    "@tanstack/react-router": "1.167.4",
+    "@tanstack/react-query": "5.91.2",
+    "@tanstack/react-router": "1.168.1",
     "@tanstack/react-virtual": "3.13.23",
     "@tauri-apps/api": "2.10.1",
     "@tauri-apps/plugin-clipboard-manager": "2.3.2",
@@ -68,7 +68,7 @@
     "@rolldown/plugin-babel": "0.2.2",
     "@stylexjs/eslint-plugin": "0.18.1",
     "@stylexjs/unplugin": "0.18.1",
-    "@tanstack/router-plugin": "1.166.13",
+    "@tanstack/router-plugin": "1.167.1",
     "@tauri-apps/cli": "2.10.1",
     "@types/lodash-es": "4.17.12",
     "@types/node": "25.5.0",
@@ -79,17 +79,17 @@
     "lightningcss": "1.32.0",
     "playwright": "1.58.2",
     "simple-git-hooks": "2.13.1",
-    "vite": "npm:@voidzero-dev/vite-plus-core@0.1.12",
+    "vite": "npm:@voidzero-dev/vite-plus-core@0.1.13",
     "vite-plugin-svgr": "4.5.0",
-    "vite-plus": "0.1.12",
-    "vitest": "npm:@voidzero-dev/vite-plus-test@0.1.12",
+    "vite-plus": "0.1.13",
+    "vitest": "npm:@voidzero-dev/vite-plus-test@0.1.13",
     "vitest-browser-react": "2.1.0"
   },
   "packageManager": "pnpm@10.32.1",
   "pnpm": {
     "overrides": {
-      "vite": "npm:@voidzero-dev/vite-plus-core@0.1.12",
-      "vitest": "npm:@voidzero-dev/vite-plus-test@0.1.12"
+      "vite": "npm:@voidzero-dev/vite-plus-core@0.1.13",
+      "vitest": "npm:@voidzero-dev/vite-plus-test@0.1.13"
     },
     "onlyBuiltDependencies": [
       "esbuild",
