@@ -8,16 +8,27 @@ type Props = React.ComponentPropsWithRef<'button'> & {
   iconSize?: IconSize;
   isActive?: boolean;
   xstyle?: stylex.CompiledStyles;
+  'data-testid'?: string;
 };
 
 export default function ButtonIcon(props: Props) {
-  const { onClick, icon, iconSize, isActive, ref, xstyle, ...rest } = props;
+  const {
+    onClick,
+    icon,
+    iconSize,
+    isActive,
+    ref,
+    xstyle,
+    'data-testid': testId,
+    ...rest
+  } = props;
   return (
     <button
       ref={ref}
       type="button"
       onClick={onClick}
       data-museeks-action
+      data-testid={testId}
       {...rest}
       {...stylex.props(styles.button, xstyle)}
     >

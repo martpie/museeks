@@ -87,7 +87,7 @@ msgid "Artists"
 msgstr "藝術家"
 
 #: src/components/Navigation.tsx:68
-#: src/routes/playlists.tsx:165
+#: src/routes/playlists.tsx:168
 #: src/routes/settings.ui.tsx:150
 msgid "Playlists"
 msgstr "播放清單"
@@ -315,15 +315,15 @@ msgstr "匯出"
 msgid "You haven't created any playlist yet"
 msgstr "您還沒有建立任何播放清單"
 
-#: src/routes/playlists.tsx:144
+#: src/routes/playlists.tsx:147
 msgid "create one now"
 msgstr "現在建立一個"
 
-#: src/routes/playlists.tsx:153
+#: src/routes/playlists.tsx:156
 msgid "No playlist selected"
 msgstr "未選擇播放清單"
 
-#: src/routes/playlists.tsx:170
+#: src/routes/playlists.tsx:173
 msgid "New Playlist"
 msgstr "新播放清單"
 

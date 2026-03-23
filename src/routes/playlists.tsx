@@ -140,7 +140,10 @@ function ViewPlaylists() {
           <Trans>You haven{"'"}t created any playlist yet</Trans>
         </p>
         <ViewMessage.Sub>
-          <Link onClick={createPlaylist}>
+          <Link
+            onClick={createPlaylist}
+            data-testid="create-playlist-call-to-action"
+          >
             <Trans>create one now</Trans>
           </Link>
         </ViewMessage.Sub>
@@ -168,6 +171,7 @@ function ViewPlaylists() {
               icon="plus"
               onClick={createPlaylist}
               title={t`New Playlist`}
+              data-testid="playlist-new-button"
             />
           }
         >

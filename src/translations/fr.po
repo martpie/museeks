@@ -87,7 +87,7 @@ msgid "Artists"
 msgstr "Artistes"
 
 #: src/components/Navigation.tsx:68
-#: src/routes/playlists.tsx:165
+#: src/routes/playlists.tsx:168
 #: src/routes/settings.ui.tsx:150
 msgid "Playlists"
 msgstr "Playlists"
@@ -315,15 +315,15 @@ msgstr "Exporter"
 msgid "You haven't created any playlist yet"
 msgstr "Vous n'avez pas encore créé de playlist"
 
-#: src/routes/playlists.tsx:144
+#: src/routes/playlists.tsx:147
 msgid "create one now"
 msgstr "créez-en une maintenant"
 
-#: src/routes/playlists.tsx:153
+#: src/routes/playlists.tsx:156
 msgid "No playlist selected"
 msgstr "Aucune playlist sélectionnée"
 
-#: src/routes/playlists.tsx:170
+#: src/routes/playlists.tsx:173
 msgid "New Playlist"
 msgstr "Nouvelle Playlist"
 

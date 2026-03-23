@@ -13,6 +13,7 @@ interface LinkProps<
   children: React.ReactNode;
   inheritColor?: boolean;
   type?: keyof typeof typeVariants;
+  'data-testid'?: string;
 }
 
 interface ButtonProps {
@@ -20,6 +21,7 @@ interface ButtonProps {
   children: React.ReactNode;
   inheritColor?: boolean;
   type?: keyof typeof typeVariants;
+  'data-testid'?: string;
 }
 
 /**
@@ -31,22 +33,25 @@ export default function Link<TRouter extends RegisteredRouter, TOptions>(
 export default function Link(props: LinkProps | ButtonProps): React.ReactNode {
   const type = props.type ?? 'bold';
 
-  const appliedStyles = stylex.props(
-    styles.link,
-    props.inheritColor === true && styles.inheritColor,
-    typeVariants[type],
-  );
+  const commonProps = {
+    dataTestID: props['data-testid'],
+    ...stylex.props(
+      styles.link,
+      props.inheritColor === true && styles.inheritColor,
+      typeVariants[type],
+    ),
+  };
 
   if ('linkOptions' in props) {
     return (
-      <RouterLink draggable={false} {...props.linkOptions} {...appliedStyles}>
+      <RouterLink draggable={false} {...props.linkOptions} {...commonProps}>
         {props.children}
       </RouterLink>
     );
   }
 
   return (
-    <button onClick={props.onClick} type="button" {...appliedStyles}>
+    <button onClick={props.onClick} type="button" {...commonProps}>
       {props.children}
     </button>
   );
