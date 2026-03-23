@@ -1,15 +1,13 @@
 import { expect, test } from 'vite-plus/test';
 import { page, userEvent } from 'vite-plus/test/browser';
 
-import { beforeEachSetup } from './test-helpers';
+import { beforeEachSetup, goToLibrary, scanLibrary } from './test-helpers';
 
 beforeEachSetup();
 
 test('The library tab should display all tracks', async () => {
-  // Fake the import of tracks
-  await page.getByTestId('footer-settings-link').click();
-  await page.getByTestId('scan-library-button').click();
-  await page.getByTestId('footer-library-link').click();
+  await scanLibrary();
+  await goToLibrary();
 
   // Ensure we have the 3 test-tracks, but no more
   await expect.element(page.getByTestId('track-row-0')).toBeInTheDocument();
@@ -29,10 +27,8 @@ test('The library tab should display all tracks', async () => {
 });
 
 test('Tracks should selectable via click + modifiers', async () => {
-  // Fake the import of tracks
-  await page.getByTestId('footer-settings-link').click();
-  await page.getByTestId('scan-library-button').click();
-  await page.getByTestId('footer-library-link').click();
+  await scanLibrary();
+  await goToLibrary();
 
   const firstTrack = page.getByTestId(/track-row-/).first();
   const secondTrack = page.getByTestId(/track-row-/).nth(1);
@@ -72,10 +68,8 @@ test('Tracks should selectable via click + modifiers', async () => {
 });
 
 test('Tracks should be selectable via keyboard only (after a single selection)', async () => {
-  // Fake the import of tracks
-  await page.getByTestId('footer-settings-link').click();
-  await page.getByTestId('scan-library-button').click();
-  await page.getByTestId('footer-library-link').click();
+  await scanLibrary();
+  await goToLibrary();
 
   const firstTrack = page.getByTestId(/track-row-/).first();
   const secondTrack = page.getByTestId(/track-row-/).nth(1);
@@ -131,10 +125,8 @@ test('Tracks should be selectable via keyboard only (after a single selection)',
 });
 
 test('Search should filter tracks in the library', async () => {
-  // Fake the import of tracks
-  await page.getByTestId('footer-settings-link').click();
-  await page.getByTestId('scan-library-button').click();
-  await page.getByTestId('footer-library-link').click();
+  await scanLibrary();
+  await goToLibrary();
 
   const search = page.getByTestId('library-search');
   const searchClear = page.getByTestId('library-search-clear');
@@ -174,10 +166,8 @@ test('Search should filter tracks in the library', async () => {
 });
 
 test('Column headers should sort tracks in the library', async () => {
-  // Fake the import of tracks
-  await page.getByTestId('footer-settings-link').click();
-  await page.getByTestId('scan-library-button').click();
-  await page.getByTestId('footer-library-link').click();
+  await scanLibrary();
+  await goToLibrary();
 
   const firstTrack = page.getByTestId(/track-row-/).first();
   const secondTrack = page.getByTestId(/track-row-/).nth(1);

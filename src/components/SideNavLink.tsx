@@ -126,10 +126,21 @@ export default function SideNavLink(props: Props): React.ReactNode {
         onBlur={onBlur}
         onFocus={onFocus}
         ref={(ref) => ref?.focus()}
+        data-testid="playlist-rename-input"
         {...stylex.props(styles.sideNavLink, styles.sideNavLinkInput)}
       />
     );
   }
+
+  const onDoubleClick = useCallback(
+    (e: React.MouseEvent) => {
+      if (onRename) {
+        e.preventDefault();
+        setRenamed(true);
+      }
+    },
+    [onRename],
+  );
 
   return (
     <NavigationMenu.Item>
@@ -138,6 +149,7 @@ export default function SideNavLink(props: Props): React.ReactNode {
           <Link
             {...renderProps}
             onContextMenu={onContextMenu}
+            onDoubleClick={onDoubleClick}
             draggable={false}
             {...linkOptions}
             {...stylex.props(styles.sideNavLink)}

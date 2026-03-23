@@ -39,7 +39,12 @@ export default function SideNav(props: Props) {
           {Object.entries(groupedChildren).map(([letter, children]) => {
             return (
               <React.Fragment key={letter}>
-                <div {...stylex.props(styles.letter)}>{letter}</div>
+                <div
+                  {...stylex.props(styles.letter)}
+                  data-testid="sidenav-letter-group"
+                >
+                  {letter}
+                </div>
                 <div {...stylex.props(styles.items)}>{children}</div>
               </React.Fragment>
             );

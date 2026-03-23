@@ -1,7 +1,7 @@
 import { expect, test } from 'vite-plus/test';
 import { page } from 'vite-plus/test/browser';
 
-import { beforeEachSetup } from './test-helpers';
+import { beforeEachSetup, goToLibrary, scanLibrary } from './test-helpers';
 
 beforeEachSetup();
 
@@ -14,10 +14,8 @@ test('Double click on a track should play it and display its metadata', async ()
     .element(page.getByTestId('playercontrol-pause'))
     .not.toBeInTheDocument();
 
-  // Fake the import of tracks
-  await page.getByTestId('footer-settings-link').click();
-  await page.getByTestId('scan-library-button').click();
-  await page.getByTestId('footer-library-link').click();
+  await scanLibrary();
+  await goToLibrary();
 
   // Double-clicking on a track should start the player
   await page.getByTestId('track-row-0').dblClick();

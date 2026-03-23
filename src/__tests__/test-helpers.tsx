@@ -1,5 +1,33 @@
 import { i18n } from '@lingui/core';
 import { beforeEach, vi } from 'vite-plus/test';
+import { page } from 'vite-plus/test/browser';
+
+// ---------------------------------------------------------------------------
+// Navigation helpers
+// ---------------------------------------------------------------------------
+
+export async function goToLibrary() {
+  await page.getByTestId('footer-library-link').click();
+}
+
+export async function goToPlaylists() {
+  await page.getByTestId('footer-playlists-link').click();
+}
+
+export async function goToSettings() {
+  await page.getByTestId('footer-settings-link').click();
+}
+
+// ---------------------------------------------------------------------------
+// Library helpers
+// ---------------------------------------------------------------------------
+
+/** Triggers a library scan using the mock tracks */
+export async function scanLibrary() {
+  await goToSettings();
+  await page.getByTestId('scan-library-button').click();
+}
+
 import { render } from 'vitest-browser-react';
 
 import { MOCK_CONFIG } from '../lib/__mocks__/bridge-config.ts';

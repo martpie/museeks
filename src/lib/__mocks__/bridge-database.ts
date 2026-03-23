@@ -61,6 +61,9 @@ const MOCK_TRACKS: Array<Track> = [
 // Weirdly, when using a class property, accessing it is extremely slow. No idea why. May be a webkit issue.
 let tracks: Array<Track> = [];
 
+let playlists: Array<Playlist> = [];
+let nextPlaylistId = 0;
+
 class DatabaseBridge implements DatabaseBridgeInterface {
   async getAllTracks(): Promise<Array<Track>> {
     return tracks;
@@ -83,6 +86,8 @@ class DatabaseBridge implements DatabaseBridgeInterface {
     _refresh = false,
   ): Promise<ScanResult> {
     tracks = MOCK_TRACKS;
+    playlists = [];
+    nextPlaylistId = 0;
 
     return {
       playlist_count: 0,
@@ -109,39 +114,49 @@ class DatabaseBridge implements DatabaseBridgeInterface {
   }
 
   async getAllPlaylists(): Promise<Array<Playlist>> {
-    return [];
+    return playlists;
   }
 
-  async getPlaylist(_id: string): Promise<Playlist> {
-    return {
-      id: '0',
-      name: 'test playlist',
-      tracks: [],
+  async getPlaylist(id: string): Promise<Playlist> {
+    const playlist = playlists.find((p) => p.id === id);
+    if (!playlist) throw 'Playlist not found';
+    return playlist;
+  }
+
+  async createPlaylist(name: string, ids: Array<string>): Promise<Playlist> {
+    const playlist: Playlist = {
+      id: String(nextPlaylistId++),
+      name,
+      tracks: ids,
       import_path: null,
     };
+    playlists.push(playlist);
+    return playlist;
   }
 
-  async createPlaylist(_name: string, _ids: Array<string>): Promise<Playlist> {
-    return this.getPlaylist('0');
-  }
-
-  async renamePlaylist(_id: string, _name: string): Promise<Playlist> {
-    return this.getPlaylist('0');
+  async renamePlaylist(id: string, name: string): Promise<Playlist> {
+    const playlist = playlists.find((p) => p.id === id);
+    if (!playlist) throw 'Playlist not found';
+    playlist.name = name;
+    return playlist;
   }
 
   async setPlaylistTracks(
-    _id: string,
-    _tracks: Array<string>,
+    id: string,
+    trackIDs: Array<string>,
   ): Promise<Playlist> {
-    return this.getPlaylist('0');
+    const playlist = playlists.find((p) => p.id === id);
+    if (!playlist) throw 'Playlist not found';
+    playlist.tracks = trackIDs;
+    return playlist;
   }
 
   async exportPlaylist(_id: string): Promise<void> {
     return;
   }
 
-  async deletePlaylist(_id: string): Promise<void> {
-    return;
+  async deletePlaylist(id: string): Promise<void> {
+    playlists = playlists.filter((p) => p.id !== id);
   }
 
   async reset(): Promise<string | null> {
