@@ -21,7 +21,10 @@ test('The language selector should update the UI', async () => {
     .getByRole('combobox', { name: 'Language' })
     .selectOptions('Français (French)');
 
-  await getMainNavigation().getByRole('link', { name: 'Bibliothèque' }).click();
+  await page
+    .getByRole('navigation', { name: 'Navigation principale' })
+    .getByRole('link', { name: 'Bibliothèque' })
+    .click();
   await expect
     .element(viewMessage)
     .toHaveTextContent(

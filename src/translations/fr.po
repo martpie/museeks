@@ -65,7 +65,7 @@ msgstr "ou si cela se reproduit, veuillez <0>signaler un problème</0>."
 
 #: src/components/Header.tsx:24
 msgid "Header"
-msgstr ""
+msgstr "En-tête"
 
 #: src/components/Header.tsx:53
 msgid "Queue"
@@ -73,7 +73,7 @@ msgstr "File d'attente"
 
 #: src/components/Navigation.tsx:48
 msgid "Main navigation"
-msgstr ""
+msgstr "Navigation principale"
 
 #: src/components/Navigation.tsx:51
 #: src/routes/settings.tsx:42
@@ -98,7 +98,7 @@ msgstr "Paramètres"
 
 #: src/components/Navigation.tsx:66
 msgid "Library status"
-msgstr ""
+msgstr "Statut de la bibliothèque"
 
 #: src/components/Navigation.tsx:90
 msgid "scanning tracks..."
@@ -138,11 +138,11 @@ msgstr "rechercher..."
 
 #: src/components/Search.tsx:49
 msgid "Search library"
-msgstr ""
+msgstr "Rechercher dans la bibliothèque"
 
 #: src/components/Search.tsx:61
 msgid "Clear search"
-msgstr ""
+msgstr "Effacer la recherche"
 
 #: src/components/SideNavLink.tsx:62
 msgid "Rename"
@@ -227,7 +227,7 @@ msgstr "Retirer"
 #: src/components/TrackListDefault.tsx:125
 #: src/components/TrackListGrouped.tsx:58
 msgid "Track list"
-msgstr ""
+msgstr "Liste des pistes"
 
 #. placeholder {0}: props.count
 #. placeholder {0}: tracks.length
@@ -238,7 +238,7 @@ msgstr "{0, plural, one {# piste} other {# pistes}}"
 
 #: src/components/TrackListHeader.tsx:45
 msgid "Track list sorting options"
-msgstr ""
+msgstr "Options de tri de la liste des pistes"
 
 #: src/components/TrackListHeader.tsx:54
 #: src/routes/tracks.$trackID.tsx:89
@@ -296,7 +296,7 @@ msgstr "Volume"
 
 #: src/routes/__root.tsx:79
 msgid "Application main content"
-msgstr ""
+msgstr "Contenu principal de l'application"
 
 #: src/routes/artists.tsx:70
 msgid "Compilations"
