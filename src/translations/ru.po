@@ -71,36 +71,36 @@ msgstr ""
 msgid "Queue"
 msgstr "Очередь"
 
-#: src/components/Navigation.tsx:49
+#: src/components/Navigation.tsx:48
 msgid "Main navigation"
 msgstr ""
 
-#: src/components/Navigation.tsx:54
+#: src/components/Navigation.tsx:51
 #: src/routes/settings.tsx:42
 msgid "Library"
 msgstr "Библиотека"
 
-#: src/components/Navigation.tsx:61
+#: src/components/Navigation.tsx:54
 #: src/routes/artists.tsx:64
-#: src/routes/settings.ui.tsx:147
+#: src/routes/settings.ui.tsx:146
 msgid "Artists"
 msgstr "Исполнители"
 
-#: src/components/Navigation.tsx:68
+#: src/components/Navigation.tsx:57
 #: src/routes/playlists.tsx:165
-#: src/routes/settings.ui.tsx:150
+#: src/routes/settings.ui.tsx:149
 msgid "Playlists"
 msgstr "Плейлисты"
 
-#: src/components/Navigation.tsx:75
+#: src/components/Navigation.tsx:60
 msgid "Settings"
 msgstr "Настройки"
 
-#: src/components/Navigation.tsx:83
+#: src/components/Navigation.tsx:66
 msgid "Library status"
 msgstr ""
 
-#: src/components/Navigation.tsx:107
+#: src/components/Navigation.tsx:90
 msgid "scanning tracks..."
 msgstr "сканирование треков..."
 
@@ -108,15 +108,15 @@ msgstr "сканирование треков..."
 msgid "Previous"
 msgstr "Предыдущий"
 
-#: src/components/PlayerControls.tsx:25
+#: src/components/PlayerControls.tsx:24
 msgid "Play"
 msgstr "Плей"
 
-#: src/components/PlayerControls.tsx:25
+#: src/components/PlayerControls.tsx:24
 msgid "Pause"
 msgstr "Пауза"
 
-#: src/components/PlayerControls.tsx:32
+#: src/components/PlayerControls.tsx:30
 msgid "Next"
 msgstr "Следующий"
 
@@ -135,6 +135,14 @@ msgstr "показать ещё"
 #: src/components/Search.tsx:42
 msgid "search..."
 msgstr "поиск..."
+
+#: src/components/Search.tsx:49
+msgid "Search library"
+msgstr ""
+
+#: src/components/Search.tsx:61
+msgid "Clear search"
+msgstr ""
 
 #: src/components/SideNavLink.tsx:62
 msgid "Rename"
@@ -205,8 +213,8 @@ msgid "Remove tracks"
 msgstr "Удалить треки"
 
 #: src/components/TrackList.tsx:396
-#: src/routes/settings.library.tsx:99
-#: src/routes/settings.library.tsx:144
+#: src/routes/settings.library.tsx:98
+#: src/routes/settings.library.tsx:143
 #: src/routes/tracks.$trackID.tsx:258
 msgid "Cancel"
 msgstr "Отмена"
@@ -216,28 +224,37 @@ msgstr "Отмена"
 msgid "Remove"
 msgstr "Удалить"
 
+#: src/components/TrackListDefault.tsx:125
+#: src/components/TrackListGrouped.tsx:58
+msgid "Track list"
+msgstr ""
+
 #. placeholder {0}: props.count
 #. placeholder {0}: tracks.length
-#: src/components/TrackListGrouped.tsx:109
+#: src/components/TrackListGrouped.tsx:115
 #: src/components/TrackListStatus.tsx:11
 msgid "{0, plural, one {# track} other {# tracks}}"
 msgstr "{0, plural, one {# трек} few {# трека} many {# треков}}"
 
-#: src/components/TrackListHeader.tsx:50
+#: src/components/TrackListHeader.tsx:45
+msgid "Track list sorting options"
+msgstr ""
+
+#: src/components/TrackListHeader.tsx:54
 #: src/routes/tracks.$trackID.tsx:89
 msgid "Title"
 msgstr "Заголовок"
 
-#: src/components/TrackListHeader.tsx:57
+#: src/components/TrackListHeader.tsx:60
 #: src/routes/tracks.$trackID.tsx:242
 msgid "Duration"
 msgstr "Длительность"
 
-#: src/components/TrackListHeader.tsx:64
+#: src/components/TrackListHeader.tsx:66
 msgid "Artist"
 msgstr "Исполнитель"
 
-#: src/components/TrackListHeader.tsx:71
+#: src/components/TrackListHeader.tsx:72
 #: src/routes/tracks.$trackID.tsx:100
 msgid "Album"
 msgstr "Альбом"
@@ -399,61 +416,61 @@ msgstr "В вашей библиотеке нет папок."
 msgid "Add folder"
 msgstr "Добавить папку"
 
-#: src/routes/settings.library.tsx:89
+#: src/routes/settings.library.tsx:88
 msgid "Scan"
 msgstr "Сканировать"
 
-#: src/routes/settings.library.tsx:95
+#: src/routes/settings.library.tsx:94
 msgid "All track data will be updated from the base files, but your original files won't be modified. Any Museeks-specific edits you may have done will be reset."
 msgstr "Вся информация о треках будет обновлена из исходных файлов, но ваши исходные файлы не будут изменены. Все внесённые вами изменения, касающиеся Museeks, будут сброшены."
 
-#: src/routes/settings.library.tsx:97
+#: src/routes/settings.library.tsx:96
 msgid "Refresh all tracks?"
 msgstr "Обновить все треки?"
 
-#: src/routes/settings.library.tsx:100
-#: src/routes/settings.library.tsx:110
+#: src/routes/settings.library.tsx:99
+#: src/routes/settings.library.tsx:109
 msgid "Refresh"
 msgstr "Обновить"
 
-#: src/routes/settings.library.tsx:108
+#: src/routes/settings.library.tsx:107
 msgid "Force the refresh of all tracks tags"
 msgstr "Принудительное обновление тэгов всех треков"
 
-#: src/routes/settings.library.tsx:114
+#: src/routes/settings.library.tsx:113
 msgid "<0>.m3u</0> files will also be imported as playlists."
 msgstr "Файлы <0>.m3u</0> будут дополнительно импортированы как плейлисты."
 
-#: src/routes/settings.library.tsx:121
+#: src/routes/settings.library.tsx:120
 msgid "Automatically refresh library on startup"
 msgstr "Автоматически обновлять библиотеку при запуске"
 
-#: src/routes/settings.library.tsx:128
+#: src/routes/settings.library.tsx:127
 msgid "Danger zone"
 msgstr "Опасная зона"
 
-#: src/routes/settings.library.tsx:131
+#: src/routes/settings.library.tsx:130
 msgid "Delete all tracks and playlists from Museeks."
 msgstr "Удалить все треки и плейлисты из Museeks."
 
-#: src/routes/settings.library.tsx:136
+#: src/routes/settings.library.tsx:135
 msgid "Fully reset the library"
 msgstr "Полный сброс библиотеки"
 
-#: src/routes/settings.library.tsx:140
+#: src/routes/settings.library.tsx:139
 msgid "All your tracks and playlists will be deleted from Museeks."
 msgstr "Все ваши треки и плейлисты будут удалены из Museeks."
 
-#: src/routes/settings.library.tsx:142
+#: src/routes/settings.library.tsx:141
 msgid "Reset library?"
 msgstr "Сбросить библиотеку?"
 
-#: src/routes/settings.library.tsx:145
+#: src/routes/settings.library.tsx:144
 #: src/routes/settings.ui.tsx:77
 msgid "Reset"
 msgstr "Сбросить"
 
-#: src/routes/settings.library.tsx:154
+#: src/routes/settings.library.tsx:153
 msgid "Reset library"
 msgstr "Сбросить библиотеку"
 
@@ -489,63 +506,63 @@ msgstr "Цвет акцента"
 msgid "Language"
 msgstr "Язык"
 
-#: src/routes/settings.ui.tsx:113
+#: src/routes/settings.ui.tsx:112
 msgid "Tracks density"
 msgstr "Плотность треков"
 
-#: src/routes/settings.ui.tsx:114
+#: src/routes/settings.ui.tsx:113
 msgid "Change the tracks spacing"
 msgstr "Изменить расстояние между треками"
 
-#: src/routes/settings.ui.tsx:125
+#: src/routes/settings.ui.tsx:124
 msgid "Normal (default)"
 msgstr "Номральная (по умолчанию)"
 
-#: src/routes/settings.ui.tsx:128
+#: src/routes/settings.ui.tsx:127
 msgid "Compact"
 msgstr "Компатная"
 
-#: src/routes/settings.ui.tsx:134
+#: src/routes/settings.ui.tsx:133
 msgid "Default view"
 msgstr "Представление по умолчанию"
 
-#: src/routes/settings.ui.tsx:136
+#: src/routes/settings.ui.tsx:135
 msgid "Change the default view when starting the application"
 msgstr "Изменить представление по умолчанию при запуске приложения"
 
-#: src/routes/settings.ui.tsx:144
+#: src/routes/settings.ui.tsx:143
 msgid "Library (default)"
 msgstr "Библиотека (по умолчанию)"
 
-#: src/routes/settings.ui.tsx:156
+#: src/routes/settings.ui.tsx:155
 msgid "Display Notifications"
 msgstr "Отображать уведомления"
 
-#: src/routes/settings.ui.tsx:157
+#: src/routes/settings.ui.tsx:156
 msgid "Send notifications when the playing track changes"
 msgstr "Посылать уведомления при смене проигрываемого трека"
 
-#: src/routes/settings.ui.tsx:166
+#: src/routes/settings.ui.tsx:165
 msgid "Sleep mode blocker"
 msgstr "Блокировать режим сна"
 
-#: src/routes/settings.ui.tsx:167
+#: src/routes/settings.ui.tsx:166
 msgid "Prevent the computer from going into sleep mode when playing"
 msgstr "Предпятствовать переходу компьютера в режим сна во время проигрывания"
 
-#: src/routes/settings.ui.tsx:177
+#: src/routes/settings.ui.tsx:176
 msgid "[Beta] Wayland compatibility enhancements"
 msgstr "[Beta] Улучшения совместимости с Wayland"
 
-#: src/routes/settings.ui.tsx:178
+#: src/routes/settings.ui.tsx:177
 msgid "If you face issues using Wayland, try out this option"
 msgstr "Если у вас возникли проблемы с Wayland, попробуйте эту опцию"
 
-#: src/routes/settings.ui.tsx:201
+#: src/routes/settings.ui.tsx:200
 msgid "Light"
 msgstr "Светлая"
 
-#: src/routes/settings.ui.tsx:203
+#: src/routes/settings.ui.tsx:202
 msgid "Dark"
 msgstr "Тёмная"
 

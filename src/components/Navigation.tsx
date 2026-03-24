@@ -13,11 +13,10 @@ import TrackListStatus from './TrackListStatus';
 type NavItemProps = {
   to: LinkProps['to'];
   title: string;
-  'data-testid': string;
   children: ReactNode;
 };
 
-function NavItem({ to, title, 'data-testid': testId, children }: NavItemProps) {
+function NavItem({ to, title, children }: NavItemProps) {
   return (
     <NavigationMenu.Item {...stylex.props(styles.navigationItem)}>
       <NavigationMenu.Link
@@ -26,8 +25,8 @@ function NavItem({ to, title, 'data-testid': testId, children }: NavItemProps) {
             {...renderProps}
             to={to}
             title={title}
+            aria-label={title}
             draggable={false}
-            data-testid={testId}
             {...stylex.props(styles.navigationLink)}
           >
             {children}
@@ -49,32 +48,16 @@ export default function Navigation() {
           aria-label={t`Main navigation`}
         >
           <NavigationMenu.List {...stylex.props(styles.viewLinks)}>
-            <NavItem
-              to="/library"
-              title={t`Library`}
-              data-testid="footer-library-link"
-            >
+            <NavItem to="/library" title={t`Library`}>
               <Icon name="musicalNotes" size={16} />
             </NavItem>
-            <NavItem
-              to="/artists"
-              title={t`Artists`}
-              data-testid="footer-artists-link"
-            >
+            <NavItem to="/artists" title={t`Artists`}>
               <Icon name="microphone" size={16} />
             </NavItem>
-            <NavItem
-              to="/playlists"
-              title={t`Playlists`}
-              data-testid="footer-playlists-link"
-            >
+            <NavItem to="/playlists" title={t`Playlists`}>
               <Icon name="playlist" size={16} />
             </NavItem>
-            <NavItem
-              to="/settings"
-              title={t`Settings`}
-              data-testid="footer-settings-link"
-            >
+            <NavItem to="/settings" title={t`Settings`}>
               <Icon name="settings" size={16} />
             </NavItem>
           </NavigationMenu.List>

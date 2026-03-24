@@ -79,7 +79,6 @@ export default function TrackRow(props: Props) {
       onContextMenu={(e) => onContextMenu(e, track.id, index)}
       data-is-playing={props.isPlaying === true}
       data-track-id={track.id}
-      data-testid={`track-row-${track.id}`}
       // dnd-related props:
       ref={setNodeRef}
       {...listeners}

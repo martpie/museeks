@@ -4,29 +4,16 @@ import { useId } from 'react';
 
 type Props = {
   children: React.ReactNode;
-  'data-testid'?: string;
 };
 
 export function Section(props: Props) {
   return (
-    <section
-      data-testid={props['data-testid']}
-      {...stylex.props(styles.settingSection)}
-    >
-      {props.children}
-    </section>
+    <section {...stylex.props(styles.settingSection)}>{props.children}</section>
   );
 }
 
 export function Description(props: Props) {
-  return (
-    <p
-      data-testid={props['data-testid']}
-      {...stylex.props(styles.settingDescription)}
-    >
-      {props.children}
-    </p>
-  );
+  return <p {...stylex.props(styles.settingDescription)}>{props.children}</p>;
 }
 
 export function Label(
@@ -52,14 +39,7 @@ export function Label(
 }
 
 export function Title(props: Props) {
-  return (
-    <h3
-      data-testid={props['data-testid']}
-      {...stylex.props(styles.settingTitle)}
-    >
-      {props.children}
-    </h3>
-  );
+  return <h3 {...stylex.props(styles.settingTitle)}>{props.children}</h3>;
 }
 
 export type InputProps = {

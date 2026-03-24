@@ -84,7 +84,6 @@ function ViewSettingsLibrary() {
           <Button
             disabled={isLibraryRefreshing || libraryFolders.length === 0}
             onClick={useInvalidateCallback(() => libraryAPI.scan())}
-            data-testid="scan-library-button"
           >
             <Trans>Scan</Trans>
           </Button>

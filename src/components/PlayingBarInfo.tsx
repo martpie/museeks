@@ -26,16 +26,10 @@ export default function PlayingBarInfo(props: Props) {
         <div {...stylex.props(styles.duration)}>{formattedProgress}</div>
 
         <div {...stylex.props(styles.metas)}>
-          <strong
-            {...stylex.props(styles.metadata, styles.metadataTitle)}
-            data-testid="playing-track-title"
-          >
+          <strong {...stylex.props(styles.metadata, styles.metadataTitle)}>
             {trackPlaying.title}
           </strong>
-          <div
-            {...stylex.props(styles.metadata)}
-            data-testid="playing-track-artist-album"
-          >
+          <div {...stylex.props(styles.metadata)}>
             <Link
               inheritColor
               type="normal"

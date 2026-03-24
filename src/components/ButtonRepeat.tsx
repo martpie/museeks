@@ -15,7 +15,7 @@ export default function ButtonRepeat() {
   return (
     // This should be a checkbox for accessibility
     <ButtonIcon
-      title={t`Repeat`}
+      label={t`Repeat`}
       icon={repeat === 'One' ? 'repeatOne' : 'repeat'}
       iconSize={20}
       onClick={() => player.toggleRepeat()}

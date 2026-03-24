@@ -50,7 +50,7 @@ export default function Header() {
                       {...triggerProps}
                       icon="list"
                       iconSize={20}
-                      title={t`Queue`}
+                      label={t`Queue`}
                       data-tauri-drag-region
                     />
                   )}

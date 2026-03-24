@@ -71,36 +71,36 @@ msgstr ""
 msgid "Queue"
 msgstr "播放佇列"
 
-#: src/components/Navigation.tsx:49
+#: src/components/Navigation.tsx:48
 msgid "Main navigation"
 msgstr ""
 
-#: src/components/Navigation.tsx:54
+#: src/components/Navigation.tsx:51
 #: src/routes/settings.tsx:42
 msgid "Library"
 msgstr "音樂庫"
 
-#: src/components/Navigation.tsx:61
+#: src/components/Navigation.tsx:54
 #: src/routes/artists.tsx:64
-#: src/routes/settings.ui.tsx:147
+#: src/routes/settings.ui.tsx:146
 msgid "Artists"
 msgstr "藝術家"
 
-#: src/components/Navigation.tsx:68
+#: src/components/Navigation.tsx:57
 #: src/routes/playlists.tsx:165
-#: src/routes/settings.ui.tsx:150
+#: src/routes/settings.ui.tsx:149
 msgid "Playlists"
 msgstr "播放清單"
 
-#: src/components/Navigation.tsx:75
+#: src/components/Navigation.tsx:60
 msgid "Settings"
 msgstr "設定"
 
-#: src/components/Navigation.tsx:83
+#: src/components/Navigation.tsx:66
 msgid "Library status"
 msgstr ""
 
-#: src/components/Navigation.tsx:107
+#: src/components/Navigation.tsx:90
 msgid "scanning tracks..."
 msgstr "正在掃描音軌..."
 
@@ -108,15 +108,15 @@ msgstr "正在掃描音軌..."
 msgid "Previous"
 msgstr "上一首"
 
-#: src/components/PlayerControls.tsx:25
+#: src/components/PlayerControls.tsx:24
 msgid "Play"
 msgstr "播放"
 
-#: src/components/PlayerControls.tsx:25
+#: src/components/PlayerControls.tsx:24
 msgid "Pause"
 msgstr "暫停"
 
-#: src/components/PlayerControls.tsx:32
+#: src/components/PlayerControls.tsx:30
 msgid "Next"
 msgstr "下一首"
 
@@ -135,6 +135,14 @@ msgstr "檢視更多"
 #: src/components/Search.tsx:42
 msgid "search..."
 msgstr "搜尋..."
+
+#: src/components/Search.tsx:49
+msgid "Search library"
+msgstr ""
+
+#: src/components/Search.tsx:61
+msgid "Clear search"
+msgstr ""
 
 #: src/components/SideNavLink.tsx:62
 msgid "Rename"
@@ -205,8 +213,8 @@ msgid "Remove tracks"
 msgstr "移除音軌"
 
 #: src/components/TrackList.tsx:396
-#: src/routes/settings.library.tsx:99
-#: src/routes/settings.library.tsx:144
+#: src/routes/settings.library.tsx:98
+#: src/routes/settings.library.tsx:143
 #: src/routes/tracks.$trackID.tsx:258
 msgid "Cancel"
 msgstr "取消"
@@ -216,28 +224,37 @@ msgstr "取消"
 msgid "Remove"
 msgstr "移除"
 
+#: src/components/TrackListDefault.tsx:125
+#: src/components/TrackListGrouped.tsx:58
+msgid "Track list"
+msgstr ""
+
 #. placeholder {0}: props.count
 #. placeholder {0}: tracks.length
-#: src/components/TrackListGrouped.tsx:109
+#: src/components/TrackListGrouped.tsx:115
 #: src/components/TrackListStatus.tsx:11
 msgid "{0, plural, one {# track} other {# tracks}}"
 msgstr "{0, plural, one {# 首音軌} other {# 首音軌}}"
 
-#: src/components/TrackListHeader.tsx:50
+#: src/components/TrackListHeader.tsx:45
+msgid "Track list sorting options"
+msgstr ""
+
+#: src/components/TrackListHeader.tsx:54
 #: src/routes/tracks.$trackID.tsx:89
 msgid "Title"
 msgstr "標題"
 
-#: src/components/TrackListHeader.tsx:57
+#: src/components/TrackListHeader.tsx:60
 #: src/routes/tracks.$trackID.tsx:242
 msgid "Duration"
 msgstr "時長"
 
-#: src/components/TrackListHeader.tsx:64
+#: src/components/TrackListHeader.tsx:66
 msgid "Artist"
 msgstr "藝術家"
 
-#: src/components/TrackListHeader.tsx:71
+#: src/components/TrackListHeader.tsx:72
 #: src/routes/tracks.$trackID.tsx:100
 msgid "Album"
 msgstr "專輯"
@@ -399,61 +416,61 @@ msgstr "您的音樂庫中沒有資料夾。"
 msgid "Add folder"
 msgstr "新增資料夾"
 
-#: src/routes/settings.library.tsx:89
+#: src/routes/settings.library.tsx:88
 msgid "Scan"
 msgstr "掃描"
 
-#: src/routes/settings.library.tsx:95
+#: src/routes/settings.library.tsx:94
 msgid "All track data will be updated from the base files, but your original files won't be modified. Any Museeks-specific edits you may have done will be reset."
 msgstr "所有音軌資料將從基礎檔案更新，但您的原始檔案不會被修改。您可能做過的任何 Museeks 特定編輯將被重設。"
 
-#: src/routes/settings.library.tsx:97
+#: src/routes/settings.library.tsx:96
 msgid "Refresh all tracks?"
 msgstr "重新整理所有音軌？"
 
-#: src/routes/settings.library.tsx:100
-#: src/routes/settings.library.tsx:110
+#: src/routes/settings.library.tsx:99
+#: src/routes/settings.library.tsx:109
 msgid "Refresh"
 msgstr "重新整理"
 
-#: src/routes/settings.library.tsx:108
+#: src/routes/settings.library.tsx:107
 msgid "Force the refresh of all tracks tags"
 msgstr "強制重新整理所有音軌標籤"
 
-#: src/routes/settings.library.tsx:114
+#: src/routes/settings.library.tsx:113
 msgid "<0>.m3u</0> files will also be imported as playlists."
 msgstr "<0>.m3u</0> 檔案也將作為播放清單匯入。"
 
-#: src/routes/settings.library.tsx:121
+#: src/routes/settings.library.tsx:120
 msgid "Automatically refresh library on startup"
 msgstr "啟動時自動重新整理音樂庫"
 
-#: src/routes/settings.library.tsx:128
+#: src/routes/settings.library.tsx:127
 msgid "Danger zone"
 msgstr "危險區域"
 
-#: src/routes/settings.library.tsx:131
+#: src/routes/settings.library.tsx:130
 msgid "Delete all tracks and playlists from Museeks."
 msgstr "從 Museeks 中刪除所有音軌和播放清單。"
 
-#: src/routes/settings.library.tsx:136
+#: src/routes/settings.library.tsx:135
 msgid "Fully reset the library"
 msgstr "完全重設音樂庫"
 
-#: src/routes/settings.library.tsx:140
+#: src/routes/settings.library.tsx:139
 msgid "All your tracks and playlists will be deleted from Museeks."
 msgstr "您的所有音軌和播放清單將從 Museeks 中刪除。"
 
-#: src/routes/settings.library.tsx:142
+#: src/routes/settings.library.tsx:141
 msgid "Reset library?"
 msgstr "重設音樂庫？"
 
-#: src/routes/settings.library.tsx:145
+#: src/routes/settings.library.tsx:144
 #: src/routes/settings.ui.tsx:77
 msgid "Reset"
 msgstr "重設"
 
-#: src/routes/settings.library.tsx:154
+#: src/routes/settings.library.tsx:153
 msgid "Reset library"
 msgstr "重設音樂庫"
 
@@ -489,63 +506,63 @@ msgstr "強調色"
 msgid "Language"
 msgstr "語言"
 
-#: src/routes/settings.ui.tsx:113
+#: src/routes/settings.ui.tsx:112
 msgid "Tracks density"
 msgstr "音軌密度"
 
-#: src/routes/settings.ui.tsx:114
+#: src/routes/settings.ui.tsx:113
 msgid "Change the tracks spacing"
 msgstr "變更音軌間距"
 
-#: src/routes/settings.ui.tsx:125
+#: src/routes/settings.ui.tsx:124
 msgid "Normal (default)"
 msgstr "正常（預設）"
 
-#: src/routes/settings.ui.tsx:128
+#: src/routes/settings.ui.tsx:127
 msgid "Compact"
 msgstr "緊湊"
 
-#: src/routes/settings.ui.tsx:134
+#: src/routes/settings.ui.tsx:133
 msgid "Default view"
 msgstr "預設檢視"
 
-#: src/routes/settings.ui.tsx:136
+#: src/routes/settings.ui.tsx:135
 msgid "Change the default view when starting the application"
 msgstr "變更啟動應用程式時的預設檢視"
 
-#: src/routes/settings.ui.tsx:144
+#: src/routes/settings.ui.tsx:143
 msgid "Library (default)"
 msgstr "音樂庫（預設）"
 
-#: src/routes/settings.ui.tsx:156
+#: src/routes/settings.ui.tsx:155
 msgid "Display Notifications"
 msgstr "顯示通知"
 
-#: src/routes/settings.ui.tsx:157
+#: src/routes/settings.ui.tsx:156
 msgid "Send notifications when the playing track changes"
 msgstr "播放音軌變更時發送通知"
 
-#: src/routes/settings.ui.tsx:166
+#: src/routes/settings.ui.tsx:165
 msgid "Sleep mode blocker"
 msgstr "睡眠模式阻止器"
 
-#: src/routes/settings.ui.tsx:167
+#: src/routes/settings.ui.tsx:166
 msgid "Prevent the computer from going into sleep mode when playing"
 msgstr "播放時防止電腦進入睡眠模式"
 
-#: src/routes/settings.ui.tsx:177
+#: src/routes/settings.ui.tsx:176
 msgid "[Beta] Wayland compatibility enhancements"
 msgstr "[測試版] Wayland 相容性強化"
 
-#: src/routes/settings.ui.tsx:178
+#: src/routes/settings.ui.tsx:177
 msgid "If you face issues using Wayland, try out this option"
 msgstr "如果您在使用 Wayland 時遇到問題，請嘗試此選項"
 
-#: src/routes/settings.ui.tsx:201
+#: src/routes/settings.ui.tsx:200
 msgid "Light"
 msgstr "淺色"
 
-#: src/routes/settings.ui.tsx:203
+#: src/routes/settings.ui.tsx:202
 msgid "Dark"
 msgstr "深色"
 
