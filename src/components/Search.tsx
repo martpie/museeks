@@ -46,7 +46,7 @@ export default function Search() {
         onMouseUp={(e) => e.preventDefault()}
         spellCheck={false}
         ref={inputRef}
-        data-testid="library-search"
+        aria-label={t`Search library`}
         {...stylex.props(
           styles.input,
           search.length > 0 && styles.inputNotEmpty,
@@ -58,7 +58,7 @@ export default function Search() {
           {...stylex.props(styles.clear)}
           onClick={onClear}
           data-museeks-action
-          data-testid="library-search-clear"
+          aria-label={t`Clear search`}
         >
           &times;
         </button>

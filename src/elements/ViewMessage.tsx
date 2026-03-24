@@ -10,7 +10,7 @@ type Props = {
  */
 export function Notice(props: Props) {
   return (
-    <div {...stylex.props(styles.title)} data-testid="view-message">
+    <div {...stylex.props(styles.title)} role="status">
       {props.children}
     </div>
   );

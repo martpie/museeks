@@ -434,7 +434,6 @@ export default function TrackList(props: Props) {
       ref={containerRef}
       {...stylex.props(styles.trackList)}
       data-museeks-list
-      data-testid="track-list"
     >
       <Keybinding
         target={containerRef}

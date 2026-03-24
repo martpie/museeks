@@ -44,7 +44,7 @@ export default function VolumeControl() {
         closeDelay={150}
         render={(triggerProps) => (
           <ButtonIcon
-            title={t`Volume`}
+            label={t`Volume`}
             icon={getVolumeIcon(unsmoothifyVolume(volume), muted)}
             iconSize={16}
             xstyle={styles.volumeControlContainer}

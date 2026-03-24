@@ -92,7 +92,6 @@ function ViewSettingsUI() {
               .then(invalidate)
               .catch(logAndNotifyError);
           }}
-          data-testid="language-selector"
         >
           <option value={DEFAULT_LANGUAGE.code}>
             {DEFAULT_LANGUAGE.label}
