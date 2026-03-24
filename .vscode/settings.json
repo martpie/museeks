@@ -1,5 +1,5 @@
 {
-  // vite+ (linting and formatting)
+  // vite+
   "editor.codeActionsOnSave": {
     "source.fixAll.oxc": "always"
   },
@@ -7,6 +7,8 @@
   "editor.formatOnSave": true,
   "editor.formatOnSaveMode": "file",
   "oxc.typeAware": true,
+  "oxc.configPath": "vite.config.ts",
+  "vitest.shellType": "terminal",
   // others
   "files.watcherExclude": {
     "**/.git/objects/**": true,

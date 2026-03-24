@@ -126,11 +126,11 @@ fn main() {
             // TODO: Windows drag-n-drop on windows does not work :|
             // https://github.com/tauri-apps/wry/issues/904
             #[cfg(target_os = "windows")]
-            window_builder.disable_drag_drop_handler().build()?;
+            let window = window_builder.disable_drag_drop_handler().build()?;
 
             // On macOS, we hide the native frame and use overlay controls as they're nicer
             #[cfg(target_os = "macos")]
-            window_builder
+            let window = window_builder
                 .hidden_title(true)
                 .title_bar_style(tauri::TitleBarStyle::Overlay)
                 .traffic_light_position(tauri::Position::Logical(tauri::LogicalPosition {
@@ -142,7 +142,10 @@ fn main() {
                 .build()?;
 
             #[cfg(target_os = "linux")]
-            window_builder.build()?;
+            let window = window_builder.build()?;
+
+            // Should probably be on the builder, but the API is not there yet
+            window.set_zoom(conf.ui_zoom_level)?;
 
             info!("Main window built");
 

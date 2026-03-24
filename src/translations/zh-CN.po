@@ -82,13 +82,13 @@ msgstr "音乐库"
 
 #: src/components/Navigation.tsx:61
 #: src/routes/artists.tsx:64
-#: src/routes/settings.ui.tsx:147
+#: src/routes/settings.ui.tsx:163
 msgid "Artists"
 msgstr "艺术家"
 
 #: src/components/Navigation.tsx:68
 #: src/routes/playlists.tsx:165
-#: src/routes/settings.ui.tsx:150
+#: src/routes/settings.ui.tsx:166
 msgid "Playlists"
 msgstr "播放列表"
 
@@ -490,62 +490,70 @@ msgid "Language"
 msgstr "语言"
 
 #: src/routes/settings.ui.tsx:113
+msgid "Zoom level"
+msgstr ""
+
+#: src/routes/settings.ui.tsx:114
+msgid "Scale the interface size (for example 1, 1.1, or 1.25)"
+msgstr ""
+
+#: src/routes/settings.ui.tsx:129
 msgid "Tracks density"
 msgstr "音轨密度"
 
-#: src/routes/settings.ui.tsx:114
+#: src/routes/settings.ui.tsx:130
 msgid "Change the tracks spacing"
 msgstr "更改音轨间距"
 
-#: src/routes/settings.ui.tsx:125
+#: src/routes/settings.ui.tsx:141
 msgid "Normal (default)"
 msgstr "正常（默认）"
 
-#: src/routes/settings.ui.tsx:128
+#: src/routes/settings.ui.tsx:144
 msgid "Compact"
 msgstr "紧凑"
 
-#: src/routes/settings.ui.tsx:134
+#: src/routes/settings.ui.tsx:150
 msgid "Default view"
 msgstr "默认视图"
 
-#: src/routes/settings.ui.tsx:136
+#: src/routes/settings.ui.tsx:152
 msgid "Change the default view when starting the application"
 msgstr "更改启动应用程序时的默认视图"
 
-#: src/routes/settings.ui.tsx:144
+#: src/routes/settings.ui.tsx:160
 msgid "Library (default)"
 msgstr "音乐库（默认）"
 
-#: src/routes/settings.ui.tsx:156
+#: src/routes/settings.ui.tsx:172
 msgid "Display Notifications"
 msgstr "显示通知"
 
-#: src/routes/settings.ui.tsx:157
+#: src/routes/settings.ui.tsx:173
 msgid "Send notifications when the playing track changes"
 msgstr "播放音轨更改时发送通知"
 
-#: src/routes/settings.ui.tsx:166
+#: src/routes/settings.ui.tsx:182
 msgid "Sleep mode blocker"
 msgstr "睡眠模式阻止器"
 
-#: src/routes/settings.ui.tsx:167
+#: src/routes/settings.ui.tsx:183
 msgid "Prevent the computer from going into sleep mode when playing"
 msgstr "播放时防止计算机进入睡眠模式"
 
-#: src/routes/settings.ui.tsx:177
+#: src/routes/settings.ui.tsx:193
 msgid "[Beta] Wayland compatibility enhancements"
 msgstr "[测试版] Wayland 兼容性增强"
 
-#: src/routes/settings.ui.tsx:178
+#: src/routes/settings.ui.tsx:194
 msgid "If you face issues using Wayland, try out this option"
 msgstr "如果您在使用 Wayland 时遇到问题，请尝试此选项"
 
-#: src/routes/settings.ui.tsx:201
+#: src/routes/settings.ui.tsx:217
 msgid "Light"
 msgstr "浅色"
 
-#: src/routes/settings.ui.tsx:203
+#: src/routes/settings.ui.tsx:219
 msgid "Dark"
 msgstr "深色"
 
@@ -612,11 +620,11 @@ msgid "The playlist \"{name}\" was created"
 msgstr "播放列表 \"{name}\" 已创建"
 
 #. placeholder {0}: newRelease.tag_name
-#: src/stores/SettingsAPI.ts:167
+#: src/stores/SettingsAPI.ts:176
 msgid "Museeks {0} is available, check https://museeks.io!"
 msgstr "Museeks {0} 可用，请查看 https://museeks.io！"
 
-#: src/stores/SettingsAPI.ts:169
+#: src/stores/SettingsAPI.ts:178
 msgid "Museeks {currentVersion} is the latest version available."
 msgstr "Museeks {currentVersion} 是可用的最新版本。"
 

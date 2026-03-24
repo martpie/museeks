@@ -3,7 +3,7 @@ import { Trans, useLingui } from '@lingui/react/macro';
 import { createFileRoute, useLoaderData } from '@tanstack/react-router';
 import { relaunch } from '@tauri-apps/plugin-process';
 import { debounce } from 'lodash-es';
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import * as Setting from '../components/Setting';
 import CheckboxSetting from '../components/SettingCheckbox';
@@ -107,6 +107,22 @@ function ViewSettingsUI() {
             );
           })}
         </Setting.Select>
+      </Setting.Section>
+      <Setting.Section>
+        <Setting.Input
+          label={t`Zoom level`}
+          description={t`Scale the interface size (for example 1, 1.1, or 1.25)`}
+          type="number"
+          step={0.05}
+          min={0.5}
+          max={3}
+          value={config.ui_zoom_level}
+          onChange={(e) => {
+            SettingsAPI.setUIZoomLevel(e.currentTarget.valueAsNumber)
+              .then(invalidate)
+              .catch(logAndNotifyError);
+          }}
+        />
       </Setting.Section>
       <Setting.Section>
         <Setting.Select

@@ -1,5 +1,6 @@
 import { t } from '@lingui/core/macro';
 import { getVersion } from '@tauri-apps/api/app';
+import { getCurrentWebview } from '@tauri-apps/api/webview';
 import { getCurrentWindow } from '@tauri-apps/api/window';
 import { info } from '@tauri-apps/plugin-log';
 import * as semver from 'semver';
@@ -126,6 +127,14 @@ const applyUIMainColorToUI = (mainColor: Config['ui_accent_color']) => {
   document.documentElement.style.setProperty('--main-color', mainColor);
 };
 
+const setUIZoomLevel = async (zoomLevel: number): Promise<void> => {
+  await getCurrentWebview().setZoom(zoomLevel);
+  await ConfigBridge.set(
+    'ui_zoom_level' as keyof Config,
+    zoomLevel as Config[keyof Config],
+  );
+};
+
 /**
  * Check if a new release is available
  */
@@ -226,6 +235,7 @@ const SettingsAPI = {
   applyThemeToUI,
   setUIMainColor,
   applyUIMainColorToUI,
+  setUIZoomLevel,
   setTracksDensity,
   checkForUpdate,
   toggleLibraryAutorefresh,
