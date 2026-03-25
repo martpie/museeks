@@ -3,8 +3,8 @@ import { t } from '@lingui/core/macro';
 import type { Playlist, Track } from '../generated/typings';
 import DatabaseBridge from '../lib/bridge-database';
 import player from '../lib/player';
+import toastManager from '../lib/toast-manager';
 import { logAndNotifyError } from '../lib/utils';
-import useToastsStore from './useToastsStore';
 
 /**
  * Start playing playlist (on double click)
@@ -31,9 +31,10 @@ async function create(
     const playlist = await DatabaseBridge.createPlaylist(name, trackIDs);
 
     if (!silent) {
-      useToastsStore
-        .getState()
-        .api.add('success', t`The playlist "${name}" was created`);
+      toastManager.add({
+        title: t`The playlist "${name}" was created`,
+        type: 'success',
+      });
     }
 
     return playlist;

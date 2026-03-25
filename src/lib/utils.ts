@@ -1,6 +1,6 @@
 import * as logger from '@tauri-apps/plugin-log';
 
-import useToastsStore from '../stores/useToastsStore';
+import toastManager from './toast-manager';
 
 /**
  * Friendly logging for caught errors
@@ -27,6 +27,6 @@ export function logAndNotifyError(
   }
 
   if (silent === false) {
-    useToastsStore.getState().api.add('danger', message);
+    toastManager.add({ title: message, type: 'danger' });
   }
 }
