@@ -3,11 +3,11 @@ import { t } from '@lingui/core/macro';
 import ConfigBridge from '../lib/bridge-config';
 import DatabaseBridge from '../lib/bridge-database';
 import player from '../lib/player';
+import toastManager from '../lib/toast-manager';
 import { logAndNotifyError } from '../lib/utils';
 import { removeRedundantFolders } from '../lib/utils-library';
 import type { API, TrackListStatusInfo, TrackMutation } from '../types/museeks';
 import { createStore } from './store-helpers';
-import useToastsStore from './useToastsStore';
 
 type LibraryState = API<{
   search: string;
@@ -68,17 +68,15 @@ const useLibraryStore = createStore<LibraryState>((set) => ({
             ? t`${scanResult.track_count} track(s) were refreshed.`
             : t`${scanResult.track_count} track(s) were added to the library.`;
 
-          useToastsStore.getState().api.add('success', message, 5000);
+          toastManager.add({ title: message, type: 'success', timeout: 5000 });
         }
 
         if (scanResult.playlist_count > 0) {
-          useToastsStore
-            .getState()
-            .api.add(
-              'success',
-              t`${scanResult.playlist_count} playlist(s) were added to the library.`,
-              5000,
-            );
+          toastManager.add({
+            title: t`${scanResult.playlist_count} playlist(s) were added to the library.`,
+            type: 'success',
+            timeout: 5000,
+          });
         }
       } catch (err) {
         logAndNotifyError(err);
@@ -137,7 +135,7 @@ const useLibraryStore = createStore<LibraryState>((set) => ({
       try {
         await DatabaseBridge.reset();
         await ConfigBridge.set('library_folders', []);
-        useToastsStore.getState().api.add('success', t`Library was reset`);
+        toastManager.add({ title: t`Library was reset`, type: 'success' });
       } catch (err) {
         logAndNotifyError(err);
       }

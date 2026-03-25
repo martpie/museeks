@@ -10,9 +10,9 @@ import SettingsBridge from '../lib/bridge-settings';
 import { loadTranslation } from '../lib/i18n';
 import player from '../lib/player';
 import { getTheme } from '../lib/themes';
+import toastManager from '../lib/toast-manager';
 import { logAndNotifyError } from '../lib/utils';
 import useLibraryStore from './useLibraryStore';
-import useToastsStore from './useToastsStore';
 
 export const DEFAULT_MAIN_COLOR = '#459ce7';
 
@@ -171,7 +171,7 @@ async function checkForUpdate(
     }
 
     if (message) {
-      useToastsStore.getState().api.add('success', message);
+      toastManager.add({ title: message, type: 'success' });
     }
   } catch (e) {
     logAndNotifyError(

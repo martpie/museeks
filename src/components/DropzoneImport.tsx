@@ -6,13 +6,12 @@ import { lstat } from '@tauri-apps/plugin-fs';
 import { useEffect, useState } from 'react';
 
 import useInvalidate from '../hooks/useInvalidate';
+import toastManager from '../lib/toast-manager';
 import { logAndNotifyError } from '../lib/utils';
 import { useLibraryAPI } from '../stores/useLibraryStore';
-import { useToastsAPI } from '../stores/useToastsStore';
 
 export default function DropzoneImport() {
   const libraryAPI = useLibraryAPI();
-  const toastsAPI = useToastsAPI();
   const { t } = useLingui();
 
   const [isShown, setIsShown] = useState(false);
@@ -53,7 +52,7 @@ export default function DropzoneImport() {
                 other: '# invalid items ignored',
               });
 
-              toastsAPI.add('warning', message);
+              toastManager.add({ title: message, type: 'warning' });
             }
 
             if (folders.length > 0) {
@@ -64,7 +63,7 @@ export default function DropzoneImport() {
                 other: '# folders added to the library',
               });
 
-              toastsAPI.add('success', message);
+              toastManager.add({ title: message, type: 'success' });
 
               await libraryAPI.scan();
               await invalidate();
@@ -83,7 +82,7 @@ export default function DropzoneImport() {
     return function cleanup() {
       void unlisten.then((unlisten) => (unlisten ? unlisten() : null));
     };
-  }, [libraryAPI, toastsAPI, invalidate]);
+  }, [libraryAPI, invalidate]);
 
   return (
     <div {...stylex.props(styles.dropzone, isShown && styles.shown)}>

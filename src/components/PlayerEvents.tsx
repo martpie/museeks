@@ -8,8 +8,8 @@ import ConfigBridge from '../lib/bridge-config';
 import { getCover } from '../lib/cover';
 import player from '../lib/player';
 import { goToPlayingTrack } from '../lib/queue-origin';
+import toastManager from '../lib/toast-manager';
 import { logAndNotifyError } from '../lib/utils';
-import { useToastsAPI } from '../stores/useToastsStore';
 
 const AUDIO_ERRORS = {
   aborted: 'The video playback was aborted.',
@@ -23,7 +23,6 @@ const AUDIO_ERRORS = {
  * Handle player events for notifications and error handling
  */
 function PlayerEvents() {
-  const toastsAPI = useToastsAPI();
   const queueOrigin = usePlayerState((state) => state.queueOrigin);
   const navigate = useNavigate();
 
@@ -33,16 +32,16 @@ function PlayerEvents() {
 
       switch (error.code) {
         case error.MEDIA_ERR_ABORTED:
-          toastsAPI.add('warning', AUDIO_ERRORS.aborted);
+          toastManager.add({ title: AUDIO_ERRORS.aborted, type: 'warning' });
           break;
         case error.MEDIA_ERR_DECODE:
-          toastsAPI.add('danger', AUDIO_ERRORS.corrupt);
+          toastManager.add({ title: AUDIO_ERRORS.corrupt, type: 'danger' });
           break;
         case error.MEDIA_ERR_SRC_NOT_SUPPORTED:
-          toastsAPI.add('danger', AUDIO_ERRORS.notFound);
+          toastManager.add({ title: AUDIO_ERRORS.notFound, type: 'danger' });
           break;
         default:
-          toastsAPI.add('danger', AUDIO_ERRORS.unknown);
+          toastManager.add({ title: AUDIO_ERRORS.unknown, type: 'danger' });
           break;
       }
     }
@@ -96,7 +95,7 @@ function PlayerEvents() {
       player.off('error', handleAudioError);
       player.off('ended', onTrackEnded);
     };
-  }, [toastsAPI, queueOrigin, navigate]);
+  }, [queueOrigin, navigate]);
 
   return null;
 }

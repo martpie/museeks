@@ -24,12 +24,12 @@ import {
   getScrollPosition,
   saveScrollPosition,
 } from '../lib/scroll-restoration';
+import toastManager from '../lib/toast-manager';
 import { logAndNotifyError } from '../lib/utils';
 import { isKeyWithoutModifiers } from '../lib/utils-events';
 import { listKeyboardSelect, listMouseSelect } from '../lib/utils-list';
 import PlaylistsAPI from '../stores/PlaylistsAPI';
 import { useLibraryAPI } from '../stores/useLibraryStore';
-import { useToastsAPI } from '../stores/useToastsStore';
 import type { QueueOrigin, TrackListVirtualizer } from '../types/museeks';
 import TrackListDefault from './TrackListDefault';
 import TrackListGrouped from './TrackListGrouped';
@@ -92,7 +92,6 @@ export default function TrackList(props: Props) {
 
   const trackPlayingID = usePlayingTrackID();
   const libraryAPI = useLibraryAPI();
-  const toastsAPI = useToastsAPI();
   const { t } = useLingui();
 
   const [selectedTracks, setSelectedTracks] = useState<Set<string>>(new Set());
@@ -271,10 +270,10 @@ export default function TrackList(props: Props) {
                   Array.from(selectedTracks),
                 );
 
-                toastsAPI.add(
-                  'success',
-                  t`${selectedTracks.size} track(s) were added to "${playlist.name}"`,
-                );
+                toastManager.add({
+                  title: t`${selectedTracks.size} track(s) were added to "${playlist.name}"`,
+                  type: 'success',
+                });
               },
             }),
           ),
@@ -417,7 +416,6 @@ export default function TrackList(props: Props) {
       tracks,
       navigate,
       libraryAPI,
-      toastsAPI,
       invalidate,
       extraContextMenu,
       t,

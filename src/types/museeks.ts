@@ -1,17 +1,6 @@
 import type { Track } from '../generated/typings';
 
 /**
- * Various
- */
-export interface Toast {
-  _id: string;
-  content: string;
-  type: ToastType;
-}
-
-export type ToastType = 'success' | 'danger' | 'warning';
-
-/**
  * Themes
  */
 export interface Theme {
