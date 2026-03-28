@@ -1,6 +1,7 @@
 import { useCallback } from 'react';
 import Keybinding from 'react-keybinding-component';
 
+import ConfigBridge from '../lib/bridge-config';
 import SettingsBridge from '../lib/bridge-settings';
 import player from '../lib/player';
 
@@ -27,9 +28,15 @@ function GlobalKeyBindings() {
         e.stopPropagation();
         player.setCurrentTime(player.getCurrentTime() + 10);
         break;
-      case 'Alt':
-        await SettingsBridge.toggleMenu();
+      case 'Alt': {
+        const menuVisible = await ConfigBridge.get('menu_bar_visible');
+        if (menuVisible) {
+          await SettingsBridge.hideMenu();
+        } else {
+          await SettingsBridge.showMenu();
+        }
         break;
+      }
       default:
         break;
     }

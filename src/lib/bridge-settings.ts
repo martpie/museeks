@@ -8,17 +8,17 @@ import ConfigBridge from './bridge-config';
  */
 const SettingsBridge = {
   /**
-   * Show/hide global menu
+   * Show the app menu bar
    */
-  async toggleMenu(): Promise<void> {
-    return invoke('plugin:app-menu|toggle');
+  async showMenu(): Promise<void> {
+    return invoke('plugin:app-menu|show');
   },
 
   /**
-   * Apply persisted menu visibility from config on startup
+   * Hide the app menu bar
    */
-  async applyMenuVisibility(): Promise<void> {
-    return invoke('plugin:app-menu|apply_menu_visibility');
+  async hideMenu(): Promise<void> {
+    return invoke('plugin:app-menu|hide');
   },
 
   /**

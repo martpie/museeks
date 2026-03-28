@@ -1,8 +1,9 @@
 use std::path::PathBuf;
+use std::sync::Once;
 use tauri::Emitter;
 use tauri::image::Image;
 use tauri::{
-    Manager, Runtime, State,
+    Manager, Runtime, State, WindowEvent,
     menu::{AboutMetadataBuilder, MenuBuilder, MenuId, MenuItemBuilder, SubmenuBuilder},
     plugin::{Builder, TauriPlugin},
 };
@@ -13,55 +14,35 @@ use crate::libs::events::IPCEvent;
 use crate::plugins::config::ConfigManager;
 
 #[tauri::command]
-pub async fn toggle<R: Runtime>(
+pub async fn show<R: Runtime>(
     window: tauri::Window<R>,
     config_manager: State<'_, ConfigManager>,
 ) -> AnyResult<()> {
     // On macOS, the menu is global, and thus does not need to be toggled
     #[cfg(not(target_os = "macos"))]
     {
-        match window.is_menu_visible() {
-            Ok(true) => {
-                window.hide_menu()?;
-                config_manager.set_menu_bar_visible(false)?;
-            }
-            Ok(false) => {
-                window.show_menu()?;
-                config_manager.set_menu_bar_visible(true)?;
-            }
-            _ => (),
-        }
+        window.show_menu()?;
+        config_manager.set_menu_bar_visible(true)?;
     }
 
     #[cfg(target_os = "macos")]
     {
-        drop(window); // Suppress warning about unused variable.
+        drop(window);
         drop(config_manager);
     }
 
     Ok(())
 }
 
-/// Apply the persisted menu visibility from config. Called by the frontend
-/// on startup so that the menu state is enforced after all plugins (including
-/// window-state) have finished initialising.
 #[tauri::command]
-pub async fn apply_menu_visibility<R: Runtime>(
+pub async fn hide<R: Runtime>(
     window: tauri::Window<R>,
     config_manager: State<'_, ConfigManager>,
 ) -> AnyResult<()> {
     #[cfg(not(target_os = "macos"))]
     {
-        let visible = config_manager
-            .get()
-            .map(|c| c.menu_bar_visible)
-            .unwrap_or(false);
-
-        if visible {
-            window.show_menu()?;
-        } else {
-            window.hide_menu()?;
-        }
+        window.hide_menu()?;
+        config_manager.set_menu_bar_visible(false)?;
     }
 
     #[cfg(target_os = "macos")]
@@ -75,7 +56,7 @@ pub async fn apply_menu_visibility<R: Runtime>(
 
 pub fn init<R: Runtime>() -> TauriPlugin<R> {
     Builder::new("app-menu")
-        .invoke_handler(tauri::generate_handler![toggle, apply_menu_visibility])
+        .invoke_handler(tauri::generate_handler![show, hide])
         .on_window_ready(|window| {
             let app_handle = window.app_handle();
 
@@ -261,6 +242,33 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
 
                 window.set_menu(menu).unwrap();
                 window.hide_menu().unwrap();
+
+                // On GTK, hide_menu() before the window is mapped has no visual
+                // effect (the window's .show() re-shows the menu bar via
+                // show_all()). We work around this by re-applying the persisted
+                // visibility on the first Focused event, which fires after the
+                // window is visible.
+                // See: https://github.com/tauri-apps/tao/issues/1201
+                let once = Once::new();
+                let win_clone = window.clone();
+                window.on_window_event(move |event| {
+                    if let WindowEvent::Focused(true) = event {
+                        once.call_once(|| {
+                            let config_manager: State<ConfigManager> =
+                                win_clone.app_handle().state();
+                            let menu_visible = config_manager
+                                .get()
+                                .map(|c| c.menu_bar_visible)
+                                .unwrap_or(false);
+
+                            if menu_visible {
+                                win_clone.show_menu().unwrap();
+                            } else {
+                                win_clone.hide_menu().unwrap();
+                            }
+                        });
+                    }
+                });
             }
 
             window.on_menu_event(|win, event| match event.id.as_ref() {
