@@ -69,8 +69,8 @@ fn main() {
         }))
         // Custom integrations
         .plugin(plugins::app_close::init())
-        .plugin(plugins::app_menu::init())
         .plugin(plugins::config::init(config))
+        .plugin(plugins::app_menu::init())
         .plugin(plugins::cover::init())
         .plugin(plugins::db::init())
         .plugin(plugins::debug::init())
