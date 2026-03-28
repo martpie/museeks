@@ -94,7 +94,9 @@ const styles = stylex.create({
     fontSize: '16px',
   },
   queueItemInfo: {
-    flex: '1',
+    flexGrow: 1,
+    flexShrink: 1,
+    flexBasis: '0%',
     minWidth: 0,
   },
   queueItemInfoTitle: {

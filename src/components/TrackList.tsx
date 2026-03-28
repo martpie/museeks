@@ -476,7 +476,9 @@ const styles = stylex.create({
   trackList: {
     display: 'flex',
     flexDirection: 'column',
-    flex: '1 1 auto',
+    flexGrow: 1,
+    flexShrink: 1,
+    flexBasis: 'auto',
     height: '100%',
     userSelect: 'none',
   },

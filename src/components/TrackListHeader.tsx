@@ -100,7 +100,9 @@ const styles = stylex.create({
     width: '30px',
   },
   cellTrack: {
-    flex: '1',
+    flexGrow: 1,
+    flexShrink: 1,
+    flexBasis: '0%',
   },
   cellDuration: {
     width: '7%',

@@ -113,7 +113,9 @@ const styles = stylex.create({
     borderTopWidth: '1px',
     borderTopStyle: 'solid',
     borderTopColor: 'var(--border-color)',
-    flex: '0 0 auto',
+    flexGrow: 0,
+    flexShrink: 0,
+    flexBasis: 'auto',
     paddingBlock: '0',
     paddingInline: '15px',
     display: 'flex',
@@ -175,10 +177,14 @@ const styles = stylex.create({
   },
   statusLibraryRefresh: {
     display: 'flex',
-    flex: '1',
+    flexGrow: 1,
+    flexShrink: 1,
+    flexBasis: '0%',
     alignItems: 'center',
   },
   statusLibraryRefreshProgress: {
-    flex: '1',
+    flexGrow: 1,
+    flexShrink: 1,
+    flexBasis: '0%',
   },
 });

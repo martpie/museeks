@@ -87,7 +87,9 @@ const styles = stylex.create({
     alignItems: 'center',
   },
   name: {
-    flex: '1',
+    flexGrow: 1,
+    flexShrink: 1,
+    flexBasis: '0%',
     marginBlock: '4px',
     marginInline: '0',
     paddingBlock: '0',

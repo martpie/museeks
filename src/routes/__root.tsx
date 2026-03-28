@@ -98,7 +98,9 @@ const styles = stylex.create({
   mainContent: {
     order: 1,
     width: '100%',
-    flex: '1 1 auto',
+    flexGrow: 1,
+    flexShrink: 1,
+    flexBasis: 'auto',
     position: 'relative',
     display: 'flex',
     flexDirection: 'column',

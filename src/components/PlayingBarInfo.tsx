@@ -78,7 +78,9 @@ export default function PlayingBarInfo(props: Props) {
 
 const styles = stylex.create({
   playingBarInfo: {
-    flex: '1 1 auto',
+    flexGrow: 1,
+    flexShrink: 1,
+    flexBasis: 'auto',
     minWidth: 0,
     display: 'flex',
     flexDirection: 'column',
@@ -96,7 +98,9 @@ const styles = stylex.create({
     pointerEvents: 'none',
   },
   metas: {
-    flex: '1 1 auto',
+    flexGrow: 1,
+    flexShrink: 1,
+    flexBasis: 'auto',
     whiteSpace: 'nowrap',
     textOverflow: 'ellipsis',
     overflow: 'hidden',
@@ -113,7 +117,9 @@ const styles = stylex.create({
     whiteSpace: 'nowrap',
   },
   duration: {
-    flex: '0 0 auto',
+    flexGrow: 0,
+    flexShrink: 0,
+    flexBasis: 'auto',
     fontSize: '0.875rem',
     paddingTop: 0,
     paddingBottom: 0,

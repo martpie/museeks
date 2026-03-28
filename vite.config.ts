@@ -34,7 +34,6 @@ export const VITE_PLUGINS: PluginOption[] = [
     propertyValidationMode: 'throw',
     // Stylex is not well integrated in the Vite CSS pipeline
     // https://github.com/facebook/stylex/issues/1378
-    // @ts-ignore something wrong with StyleX options
     lightningcssOptions: {
       minify: true,
       targets: CSS_TARGETS,
