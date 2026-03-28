@@ -2,7 +2,7 @@ import { lingui } from '@lingui/vite-plugin';
 import babel from '@rolldown/plugin-babel';
 import stylex from '@stylexjs/unplugin';
 import { tanstackRouter } from '@tanstack/router-plugin/vite';
-import react /*, { reactCompilerPreset } */ from '@vitejs/plugin-react';
+import react, { reactCompilerPreset } from '@vitejs/plugin-react';
 import browserslist from 'browserslist';
 import { browserslistToTargets } from 'lightningcss';
 import svgr from 'vite-plugin-svgr';
@@ -47,10 +47,7 @@ export const VITE_PLUGINS: PluginOption[] = [
   }),
   svgr(),
   babel({
-    presets: [
-      // reactCompilerPreset(),
-      decoratorPreset({ version: '2023-11' }),
-    ],
+    presets: [reactCompilerPreset(), decoratorPreset({ version: '2023-11' })],
     plugins: ['@lingui/babel-plugin-lingui-macro'],
   }),
 ];

@@ -76,6 +76,7 @@
     "@types/react-dom": "19.2.3",
     "@types/semver": "7.7.1",
     "@vitejs/plugin-react": "6.0.1",
+    "babel-plugin-react-compiler": "1.0.0",
     "lightningcss": "1.32.0",
     "playwright": "1.58.2",
     "simple-git-hooks": "2.13.1",
