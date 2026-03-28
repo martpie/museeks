@@ -22,6 +22,13 @@ const SettingsBridge = {
   },
 
   /**
+   * Show the window and apply the persisted menu bar visibility
+   */
+  async showWindow(): Promise<void> {
+    return invoke('plugin:app-menu|show_window');
+  },
+
+  /**
    * Set default view on startup
    */
   async setDefaultView(defaultView: string): Promise<void> {

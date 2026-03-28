@@ -1,9 +1,8 @@
 use std::path::PathBuf;
-use std::sync::Once;
 use tauri::Emitter;
 use tauri::image::Image;
 use tauri::{
-    Manager, Runtime, State, WindowEvent,
+    Manager, Runtime, State,
     menu::{AboutMetadataBuilder, MenuBuilder, MenuId, MenuItemBuilder, SubmenuBuilder},
     plugin::{Builder, TauriPlugin},
 };
@@ -54,9 +53,40 @@ pub async fn hide<R: Runtime>(
     Ok(())
 }
 
+/// Show the window and apply the persisted menu visibility in one call.
+/// This avoids a GTK bug where show_all() (called internally by window.show())
+/// re-shows the menu bar that was hidden in on_window_ready.
+/// See: https://github.com/tauri-apps/tao/issues/1201
+#[tauri::command]
+pub async fn show_window<R: Runtime>(
+    window: tauri::Window<R>,
+    config_manager: State<'_, ConfigManager>,
+) -> AnyResult<()> {
+    window.show()?;
+
+    #[cfg(not(target_os = "macos"))]
+    {
+        let menu_visible = config_manager
+            .get()
+            .map(|c| c.menu_bar_visible)
+            .unwrap_or(false);
+
+        if menu_visible {
+            window.show_menu()?;
+        } else {
+            window.hide_menu()?;
+        }
+    }
+
+    #[cfg(target_os = "macos")]
+    drop(config_manager);
+
+    Ok(())
+}
+
 pub fn init<R: Runtime>() -> TauriPlugin<R> {
     Builder::new("app-menu")
-        .invoke_handler(tauri::generate_handler![show, hide])
+        .invoke_handler(tauri::generate_handler![show, hide, show_window])
         .on_window_ready(|window| {
             let app_handle = window.app_handle();
 
@@ -242,33 +272,6 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
 
                 window.set_menu(menu).unwrap();
                 window.hide_menu().unwrap();
-
-                // On GTK, hide_menu() before the window is mapped has no visual
-                // effect (the window's .show() re-shows the menu bar via
-                // show_all()). We work around this by re-applying the persisted
-                // visibility on the first Focused event, which fires after the
-                // window is visible.
-                // See: https://github.com/tauri-apps/tao/issues/1201
-                let once = Once::new();
-                let win_clone = window.clone();
-                window.on_window_event(move |event| {
-                    if let WindowEvent::Focused(true) = event {
-                        once.call_once(|| {
-                            let config_manager: State<ConfigManager> =
-                                win_clone.app_handle().state();
-                            let menu_visible = config_manager
-                                .get()
-                                .map(|c| c.menu_bar_visible)
-                                .unwrap_or(false);
-
-                            if menu_visible {
-                                win_clone.show_menu().unwrap();
-                            } else {
-                                win_clone.hide_menu().unwrap();
-                            }
-                        });
-                    }
-                });
             }
 
             window.on_menu_event(|win, event| match event.id.as_ref() {

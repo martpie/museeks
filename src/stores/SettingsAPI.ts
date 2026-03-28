@@ -6,6 +6,7 @@ import * as semver from 'semver';
 
 import type { Config } from '../generated/typings';
 import ConfigBridge from '../lib/bridge-config';
+import SettingsBridge from '../lib/bridge-settings';
 import { loadTranslation } from '../lib/i18n';
 import player from '../lib/player';
 import { getTheme } from '../lib/themes';
@@ -46,8 +47,8 @@ async function init(then: () => void): Promise<void> {
   applyThemeToUI(theme);
   applyUIMainColorToUI(color);
 
-  // Show the app once everything is loaded
-  await getCurrentWindow().show();
+  // Show the app and apply persisted menu bar visibility
+  await SettingsBridge.showWindow();
   info('UI is ready!');
 
   // Non-blocking, these can be done later

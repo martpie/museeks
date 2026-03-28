@@ -629,11 +629,11 @@ msgid "The playlist \"{name}\" was created"
 msgstr "播放列表 \"{name}\" 已创建"
 
 #. placeholder {0}: newRelease.tag_name
-#: src/stores/SettingsAPI.ts:167
+#: src/stores/SettingsAPI.ts:168
 msgid "Museeks {0} is available, check https://museeks.io!"
 msgstr "Museeks {0} 可用，请查看 https://museeks.io！"
 
-#: src/stores/SettingsAPI.ts:169
+#: src/stores/SettingsAPI.ts:170
 msgid "Museeks {currentVersion} is the latest version available."
 msgstr "Museeks {currentVersion} 是可用的最新版本。"
 
