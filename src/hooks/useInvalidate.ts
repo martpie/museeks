@@ -2,6 +2,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from '@tanstack/react-router';
 import { useCallback } from 'react';
 
+import { allTracksQuery, librarySortQuery } from '../lib/queries';
 import { logAndNotifyError } from '../lib/utils';
 
 /**
@@ -15,17 +16,14 @@ export default function useInvalidate() {
   const router = useRouter();
 
   return useCallback(async () => {
-    //  Need to call mutate with undefined to make sure stale-while-revalidate is
-    // reset (otherwise, we'd see a "no tracks in the library" instead of "loading")
-    const queryInvalidator = queryClient.invalidateQueries({
-      exact: true,
-      queryKey: ['tracks', 'footer'],
-    });
-
-    // Reload the route data
-    const routerInvalidator = router.invalidate();
-
-    return Promise.allSettled([queryInvalidator, routerInvalidator]);
+    return Promise.allSettled([
+      // Invalidate queries so data is refetched and the UI shows a loading state
+      // instead of a misleading "no tracks in the library" message
+      queryClient.invalidateQueries({ queryKey: allTracksQuery.queryKey }),
+      queryClient.invalidateQueries({ queryKey: librarySortQuery.queryKey }),
+      // Reload the route data
+      router.invalidate(),
+    ]);
   }, [queryClient, router]);
 }
 

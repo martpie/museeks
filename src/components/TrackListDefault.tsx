@@ -25,10 +25,10 @@ const DND_MODIFIERS = [restrictToVerticalAxis];
  *  - Uses a Virtual List
  *  - Reorderable if needed (for playlists)
  * -------------------------------------------------------------------------- */
+
 type Props = {
   ref: React.RefObject<TrackListVirtualizer | null>;
   tracks: Track[];
-  isSortEnabled: boolean;
   reorderable?: boolean;
   selectedTracks: Set<string>;
   initialOffset: number;
@@ -40,7 +40,6 @@ export default function TrackListDefault(props: Props) {
   const {
     ref,
     tracks,
-    isSortEnabled,
     reorderable,
     selectedTracks,
     initialOffset,
@@ -116,7 +115,7 @@ export default function TrackListDefault(props: Props) {
       sensors={sensors}
     >
       <Scrollable ref={innerScrollableRef}>
-        <TrackListHeader enableSort={isSortEnabled} />
+        <TrackListHeader sortable={!reorderable} />
 
         {/* The large inner element to hold all of the items */}
         <ul

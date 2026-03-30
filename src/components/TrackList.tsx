@@ -41,7 +41,6 @@ import TrackListGrouped from './TrackListGrouped';
 type TrackListProps = {
   playlists: Playlist[];
   tracksDensity: Config['track_view_density'];
-  isSortEnabled: boolean;
   reorderable?: boolean;
   onReorder?: (tracks: Track[]) => void;
   queueOrigin: QueueOrigin;
@@ -72,7 +71,6 @@ export default function TrackList(props: Props) {
   const {
     layout,
     data,
-    isSortEnabled,
     tracksDensity,
     reorderable,
     queueOrigin,
@@ -446,7 +444,6 @@ export default function TrackList(props: Props) {
           tracks={data}
           rowHeight={rowHeight}
           selectedTracks={selectedTracks}
-          isSortEnabled={isSortEnabled}
           reorderable={reorderable}
           initialOffset={getScrollPosition()}
           onReorder={onReorder}
