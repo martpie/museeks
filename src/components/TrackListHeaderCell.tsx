@@ -1,26 +1,65 @@
 import * as stylex from '@stylexjs/stylex';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import React, { useCallback } from 'react';
 
-import type { SortBy } from '../generated/typings';
-import { useLibraryAPI } from '../stores/useLibraryStore';
-import Icon, { type IconName } from './Icon';
+import type { SortBy, SortOrder } from '../generated/typings';
+import ConfigBridge from '../lib/bridge-config';
+import { librarySortQuery } from '../lib/queries';
+import Icon from './Icon';
 
 type Props = {
   title: string;
   xstyle?: stylex.CompiledStyles;
   sortBy?: SortBy | null;
-  icon?: IconName | null;
 };
 
 export default function TrackListHeaderCell(props: Props) {
-  const { sortBy, xstyle, title, icon } = props;
-  const libraryAPI = useLibraryAPI();
+  const { sortBy, xstyle, title } = props;
+  const queryClient = useQueryClient();
 
-  const sort = useCallback(() => {
-    if (sortBy) {
-      libraryAPI.sort(sortBy);
-    }
-  }, [libraryAPI, sortBy]);
+  const { data: sort } = useQuery({
+    ...librarySortQuery,
+    enabled: sortBy != null,
+  });
+
+  const currentSortBy = sort?.sortBy;
+  const currentSortOrder = sort?.sortOrder;
+
+  const icon =
+    sortBy && currentSortBy === sortBy
+      ? currentSortOrder === 'Asc'
+        ? 'chevronUp'
+        : 'chevronDown'
+      : null;
+
+  const sortMutation = useMutation({
+    mutationFn: async (newSort: { sortBy: SortBy; sortOrder: SortOrder }) => {
+      await Promise.all([
+        ConfigBridge.set('library_sort_by', newSort.sortBy),
+        ConfigBridge.set('library_sort_order', newSort.sortOrder),
+      ]);
+    },
+    onMutate: async (newSort) => {
+      await queryClient.cancelQueries({ queryKey: librarySortQuery.queryKey });
+      const previousSort = queryClient.getQueryData<{
+        sortBy: SortBy;
+        sortOrder: SortOrder;
+      }>(librarySortQuery.queryKey);
+      queryClient.setQueryData(librarySortQuery.queryKey, newSort);
+      return { previousSort };
+    },
+  });
+
+  const handleSort = useCallback(() => {
+    if (!sortBy) return;
+    const newSortOrder: SortOrder =
+      sortBy === currentSortBy
+        ? currentSortOrder === 'Asc'
+          ? 'Dsc'
+          : 'Asc'
+        : 'Asc';
+    sortMutation.mutate({ sortBy, sortOrder: newSortOrder });
+  }, [sortBy, currentSortBy, currentSortOrder, sortMutation]);
 
   const content = (
     <React.Fragment>
@@ -37,7 +76,7 @@ export default function TrackListHeaderCell(props: Props) {
     <button
       type="button"
       disabled={sortBy === null}
-      onClick={sort}
+      onClick={handleSort}
       {...stylex.props(
         styles.trackCellHeader,
         sortBy && styles.sortable,

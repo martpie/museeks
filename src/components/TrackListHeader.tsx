@@ -1,41 +1,13 @@
 import { useLingui } from '@lingui/react/macro';
 import * as stylex from '@stylexjs/stylex';
 
-import type { SortBy, SortOrder } from '../generated/typings';
-import useLibraryStore from '../stores/useLibraryStore';
-import type { IconName } from './Icon';
 import TrackListHeaderCell from './TrackListHeaderCell';
 
-const getIcon = (
-  enableSort: boolean,
-  sortBy: SortBy,
-  sortOrder: SortOrder,
-  sortByTarget: SortBy,
-): IconName | null => {
-  if (!enableSort) {
-    return null;
-  }
-
-  if (sortBy === sortByTarget) {
-    if (sortOrder === 'Asc') {
-      return 'chevronUp';
-    }
-
-    // Must be DSC then
-    return 'chevronDown';
-  }
-
-  return null;
-};
-
 type Props = {
-  enableSort: boolean;
+  sortable?: boolean;
 };
 
-export default function TrackListHeader(props: Props) {
-  const { enableSort } = props;
-  const sortBy = useLibraryStore((state) => state.sortBy);
-  const sortOrder = useLibraryStore((state) => state.sortOrder);
+export default function TrackListHeader({ sortable = true }: Props) {
   const { t } = useLingui();
 
   return (
@@ -52,32 +24,27 @@ export default function TrackListHeader(props: Props) {
       <TrackListHeaderCell
         xstyle={styles.cellTrack}
         title={t`Title`}
-        sortBy={enableSort ? 'Title' : null}
-        icon={getIcon(enableSort, sortBy, sortOrder, 'Title')}
+        sortBy={sortable ? 'Title' : null}
       />
       <TrackListHeaderCell
         xstyle={styles.cellDuration}
         title={t`Duration`}
-        sortBy={enableSort ? 'Duration' : null}
-        icon={getIcon(enableSort, sortBy, sortOrder, 'Duration')}
+        sortBy={sortable ? 'Duration' : null}
       />
       <TrackListHeaderCell
         xstyle={styles.cellArtist}
         title={t`Artist`}
-        sortBy={enableSort ? 'Artist' : null}
-        icon={getIcon(enableSort, sortBy, sortOrder, 'Artist')}
+        sortBy={sortable ? 'Artist' : null}
       />
       <TrackListHeaderCell
         xstyle={styles.cellAlbum}
         title={t`Album`}
-        sortBy={enableSort ? 'Album' : null}
-        icon={getIcon(enableSort, sortBy, sortOrder, 'Album')}
+        sortBy={sortable ? 'Album' : null}
       />
       <TrackListHeaderCell
         xstyle={styles.cellGenre}
         title={t`Genre`}
-        sortBy={enableSort ? 'Genre' : null}
-        icon={getIcon(enableSort, sortBy, sortOrder, 'Genre')}
+        sortBy={sortable ? 'Genre' : null}
       />
     </div>
   );

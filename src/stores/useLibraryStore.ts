@@ -1,8 +1,5 @@
 import { t } from '@lingui/core/macro';
-import type { StateCreator } from 'zustand';
-import { persist } from 'zustand/middleware';
 
-import type { SortBy, SortOrder } from '../generated/typings';
 import ConfigBridge from '../lib/bridge-config';
 import DatabaseBridge from '../lib/bridge-database';
 import player from '../lib/player';
@@ -14,8 +11,6 @@ import useToastsStore from './useToastsStore';
 
 type LibraryState = API<{
   search: string;
-  sortBy: SortBy;
-  sortOrder: SortOrder;
   refreshing: boolean;
   refresh: {
     current: number;
@@ -24,7 +19,6 @@ type LibraryState = API<{
   tracksStatus: TrackListStatusInfo | null;
   api: {
     search: (value: string) => void;
-    sort: (sortBy: SortBy) => void;
     addLibraryFolders: (paths: Array<string>) => Promise<void>;
     removeLibraryFolder: (path: string) => Promise<void>;
     scan: (refresh?: boolean) => Promise<void>;
@@ -39,10 +33,8 @@ type LibraryState = API<{
   };
 }>;
 
-const useLibraryStore = createLibraryStore<LibraryState>((set, get) => ({
+const useLibraryStore = createStore<LibraryState>((set) => ({
   search: '',
-  sortBy: ConfigBridge.getInitial('library_sort_by'),
-  sortOrder: ConfigBridge.getInitial('library_sort_order'),
   refreshing: false,
   refresh: {
     current: 0,
@@ -56,31 +48,6 @@ const useLibraryStore = createLibraryStore<LibraryState>((set, get) => ({
      */
     search: async (search) => {
       set({ search });
-    },
-
-    /**
-     * Filter tracks by sort query
-     */
-    sort: async (sortBy) => {
-      const prevSortBy = get().sortBy;
-      const prevSortOrder = get().sortOrder;
-
-      let sortOrder: SortOrder;
-
-      // If same sort by, just reverse the order
-      if (sortBy === prevSortBy) {
-        sortOrder = prevSortOrder === 'Asc' ? 'Dsc' : 'Asc';
-      }
-
-      // If it's different, then we assume the user needs ASC order by default
-      else {
-        sortOrder = 'Asc';
-      }
-
-      await ConfigBridge.set('library_sort_by', sortBy);
-      await ConfigBridge.set('library_sort_order', sortOrder);
-
-      set({ sortBy, sortOrder });
     },
 
     scan: async (
@@ -223,40 +190,4 @@ export default useLibraryStore;
 
 export function useLibraryAPI() {
   return useLibraryStore((state) => state.api);
-}
-
-// -----------------------------------------------------------------------------
-// Helpers
-// -----------------------------------------------------------------------------
-
-/**
- * Special store for player
- */
-function createLibraryStore<T extends LibraryState>(store: StateCreator<T>) {
-  return createStore(
-    persist(store, {
-      name: 'museeks-library',
-      merge(persistedState, currentState) {
-        const mergedState = {
-          ...currentState,
-          // API should never be persisted
-          api: currentState.api,
-        };
-
-        if (persistedState != null && typeof persistedState === 'object') {
-          if ('refreshing' in persistedState) {
-            persistedState.refreshing = false;
-          }
-          if ('refresh' in persistedState) {
-            persistedState.refresh = {
-              current: 0,
-              total: 0,
-            };
-          }
-        }
-
-        return mergedState;
-      },
-    }),
-  );
 }

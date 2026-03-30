@@ -8,21 +8,18 @@ import useFilteredTracks from '../hooks/useFilteredTracks';
 import useGlobalTrackListStatus from '../hooks/useGlobalTrackListStatus';
 import ConfigBridge from '../lib/bridge-config';
 import DatabaseBridge from '../lib/bridge-database';
+import { allTracksQuery, librarySortQuery } from '../lib/queries';
 import queryClient from '../lib/query-client';
-import useLibraryStore from '../stores/useLibraryStore';
 import type { QueueOrigin } from '../types/museeks';
 
-const QUERY_ALL_TRACKS = 'all_tracks';
 const QUEUE_ORIGIN: QueueOrigin = { type: 'library' };
 
 export const Route = createFileRoute('/library')({
   component: ViewLibrary,
   loader: async () => {
-    const [_, playlists, tracksDensity] = await Promise.all([
-      queryClient.prefetchQuery({
-        queryKey: [QUERY_ALL_TRACKS],
-        queryFn: () => DatabaseBridge.getAllTracks(),
-      }),
+    const [_, __, playlists, tracksDensity] = await Promise.all([
+      queryClient.prefetchQuery(allTracksQuery),
+      queryClient.prefetchQuery(librarySortQuery),
       DatabaseBridge.getAllPlaylists(),
       ConfigBridge.get('track_view_density'),
     ]);
@@ -35,22 +32,20 @@ export const Route = createFileRoute('/library')({
 });
 
 function ViewLibrary() {
-  const sortBy = useLibraryStore((state) => state.sortBy);
-  const sortOrder = useLibraryStore((state) => state.sortOrder);
-
   const { playlists, tracksDensity } = Route.useLoaderData();
+
+  const { data: sort } = useQuery(librarySortQuery);
 
   // Some queries when switching routes can be expensive-ish (like getting all tracks),
   // while at the same time, the data will most of the time never change.
   // Using stale-while-revalidate libraries help us (fake-)loading this page faster
-  const { data: tracks, isLoading } = useQuery({
-    queryKey: [QUERY_ALL_TRACKS],
-    queryFn: () => DatabaseBridge.getAllTracks(),
-    refetchOnWindowFocus: false,
-    refetchOnReconnect: false,
-  });
+  const { data: tracks, isLoading } = useQuery(allTracksQuery);
 
-  const filteredTracks = useFilteredTracks(tracks ?? [], sortBy, sortOrder);
+  const filteredTracks = useFilteredTracks(
+    tracks ?? [],
+    sort?.sortBy,
+    sort?.sortOrder,
+  );
   useGlobalTrackListStatus(filteredTracks);
 
   return (
@@ -62,7 +57,6 @@ function ViewLibrary() {
           queueOrigin={QUEUE_ORIGIN}
           tracksDensity={tracksDensity}
           playlists={playlists}
-          isSortEnabled={true}
         />
       </TrackListStates>
     </View>

@@ -50,7 +50,6 @@ export default function ViewArtistDetails() {
         tracksDensity={tracksDensity}
         playlists={playlists}
         queueOrigin={queueOrigin}
-        isSortEnabled={false}
       />
     </TrackListStates>
   );

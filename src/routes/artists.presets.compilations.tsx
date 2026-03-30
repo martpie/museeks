@@ -49,7 +49,6 @@ export default function ViewCompilations() {
         tracksDensity={tracksDensity}
         playlists={playlists}
         queueOrigin={queueOrigin}
-        isSortEnabled={false}
         showArtistInTitle={true}
       />
     </TrackListStates>
