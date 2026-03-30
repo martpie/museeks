@@ -22,10 +22,7 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noUncheckedIndexedAccess": false /* would be cool, but it does not play well with CSS modules */,
-    "noPropertyAccessFromIndexSignature": false /* bad */,
-
-    /* Plugins */
-    "plugins": [{ "name": "typescript-plugin-css-modules" }]
+    "noPropertyAccessFromIndexSignature": false /* bad */
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]

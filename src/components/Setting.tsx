@@ -42,7 +42,7 @@ export function Title(props: Props) {
   return <h3 {...stylex.props(styles.settingTitle)}>{props.children}</h3>;
 }
 
-export type InputProps = {
+type InputProps = {
   label: string;
   description?: string | React.ReactNode;
 };
@@ -65,10 +65,6 @@ export function Input(
       {description != null && <Description>{description}</Description>}
     </div>
   );
-}
-
-export function ErrorMessage(props: Props) {
-  return <p {...stylex.props(styles.settingError)}>{props.children}</p>;
 }
 
 export function Select(
@@ -180,8 +176,5 @@ const styles = stylex.create({
   settingColorInput: {
     padding: 0,
     width: '80px',
-  },
-  settingError: {
-    color: 'red',
   },
 });

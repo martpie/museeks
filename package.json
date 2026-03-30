@@ -23,7 +23,8 @@
     "test:typings": "tsc --noEmit --project ./tsconfig.json",
     "package:checksums": "bash scripts/checksum.sh",
     "clippy": "cargo clippy --manifest-path src-tauri/Cargo.toml",
-    "postinstall": "simple-git-hooks"
+    "postinstall": "simple-git-hooks",
+    "knip": "knip"
   },
   "simple-git-hooks": {
     "pre-commit": "vp run gen:translations && git add src/translations"
@@ -77,9 +78,11 @@
     "@types/semver": "7.7.1",
     "@vitejs/plugin-react": "6.0.1",
     "babel-plugin-react-compiler": "1.0.0",
+    "knip": "6.1.0",
     "lightningcss": "1.32.0",
     "playwright": "1.58.2",
     "simple-git-hooks": "2.13.1",
+    "typescript": "6.0.2",
     "vite": "npm:@voidzero-dev/vite-plus-core@0.1.14",
     "vite-plugin-svgr": "5.0.0",
     "vite-plus": "0.1.14",
