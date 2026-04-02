@@ -72,9 +72,16 @@ async function addLibraryFolders(paths: Array<string>): Promise<void> {
 
 async function removeLibraryFolder(path: string): Promise<void> {
   const musicFolders = await ConfigBridge.get('library_folders');
-  const index = musicFolders.indexOf(path);
-  musicFolders.splice(index, 1);
-  await ConfigBridge.set('library_folders', musicFolders);
+  const updatedMusicFolders = musicFolders.filter(
+    (folderPath: string) => folderPath !== path,
+  );
+
+  if (updatedMusicFolders.length === musicFolders.length) {
+    // Path to remove not found: no changes to persist
+    return;
+  }
+
+  await ConfigBridge.set('library_folders', updatedMusicFolders);
 }
 
 function setRefresh(current: number, total: number): void {
