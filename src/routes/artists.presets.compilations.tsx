@@ -1,3 +1,4 @@
+import { useSuspenseQuery } from '@tanstack/react-query';
 import { createFileRoute } from '@tanstack/react-router';
 import { useMemo } from 'react';
 
@@ -8,30 +9,26 @@ import useFocusedAlbum, {
   validateFocusedAlbumSearch,
 } from '../hooks/useFocusedAlbum';
 import useGlobalTrackListStatus from '../hooks/useGlobalTrackListStatus';
-import ConfigBridge from '../lib/bridge-config';
 import DatabaseBridge from '../lib/bridge-database';
+import { configQuery } from '../lib/queries';
 import type { QueueOrigin } from '../types/museeks';
 
 export const Route = createFileRoute('/artists/presets/compilations')({
   component: ViewCompilations,
   validateSearch: validateFocusedAlbumSearch,
   loader: async () => {
-    const [albums, playlists, tracksDensity] = await Promise.all([
+    const [albums, playlists] = await Promise.all([
       DatabaseBridge.getCompilationAlbums(),
       DatabaseBridge.getAllPlaylists(),
-      ConfigBridge.get('track_view_density'),
     ]);
 
-    return {
-      albums,
-      playlists,
-      tracksDensity,
-    };
+    return { albums, playlists };
   },
 });
 
 export default function ViewCompilations() {
-  const { albums, tracksDensity, playlists } = Route.useLoaderData();
+  const { albums, playlists } = Route.useLoaderData();
+  const config = useSuspenseQuery(configQuery).data;
   const content = useFilteredTrackGroup(albums);
   useGlobalTrackListStatus(content);
 
@@ -46,7 +43,7 @@ export default function ViewCompilations() {
       <TrackList
         layout="grouped"
         data={content}
-        tracksDensity={tracksDensity}
+        tracksDensity={config.track_view_density}
         playlists={playlists}
         queueOrigin={queueOrigin}
         showArtistInTitle={true}

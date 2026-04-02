@@ -6,8 +6,6 @@ import { invoke } from '@tauri-apps/api/core';
 
 import { SettingsNav, SettingsNavLink } from '../elements/SettingsNav';
 import View from '../elements/View';
-import ConfigBridge from '../lib/bridge-config';
-
 export const Route = createFileRoute('/settings')({
   component: ViewSettings,
   beforeLoad: async ({ location }) => {
@@ -16,20 +14,13 @@ export const Route = createFileRoute('/settings')({
     }
   },
   async loader() {
-    const [configContent, version, tauriVersion, appStorageDir] =
-      await Promise.all([
-        ConfigBridge.getAll(),
-        getVersion(),
-        getTauriVersion(),
-        invoke<string>('plugin:config|get_storage_dir'),
-      ]);
+    const [version, tauriVersion, appStorageDir] = await Promise.all([
+      getVersion(),
+      getTauriVersion(),
+      invoke<string>('plugin:config|get_storage_dir'),
+    ]);
 
-    return {
-      config: configContent,
-      version,
-      tauriVersion,
-      appStorageDir,
-    };
+    return { version, tauriVersion, appStorageDir };
   },
 });
 

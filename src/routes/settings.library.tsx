@@ -1,6 +1,7 @@
 import { Trans, useLingui } from '@lingui/react/macro';
 import * as stylex from '@stylexjs/stylex';
-import { createFileRoute, useLoaderData } from '@tanstack/react-router';
+import { useSuspenseQuery } from '@tanstack/react-query';
+import { createFileRoute } from '@tanstack/react-router';
 import { ask, open } from '@tauri-apps/plugin-dialog';
 import { useCallback } from 'react';
 
@@ -9,6 +10,7 @@ import CheckboxSetting from '../components/SettingCheckbox';
 import Button from '../elements/Button';
 import Flexbox from '../elements/Flexbox';
 import useInvalidate, { useInvalidateCallback } from '../hooks/useInvalidate';
+import { configQuery } from '../lib/queries';
 import SettingsAPI from '../stores/SettingsAPI';
 import useLibraryStore, { useLibraryAPI } from '../stores/useLibraryStore';
 
@@ -17,7 +19,7 @@ export const Route = createFileRoute('/settings/library')({
 });
 
 function ViewSettingsLibrary() {
-  const { config } = useLoaderData({ from: '/settings' });
+  const config = useSuspenseQuery(configQuery).data;
   const libraryFolders = config.library_folders;
 
   const libraryAPI = useLibraryAPI();

@@ -9,19 +9,10 @@ export const allTracksQuery = {
   refetchOnReconnect: false,
 };
 
-export const librarySortQuery = {
-  queryKey: ['library_sort'],
-  queryFn: async () => {
-    const [sortBy, sortOrder] = await Promise.all([
-      ConfigBridge.get('library_sort_by'),
-      ConfigBridge.get('library_sort_order'),
-    ]);
-
-    return {
-      sortBy,
-      sortOrder,
-    };
-  },
+export const configQuery = {
+  queryKey: ['config'],
+  queryFn: () => ConfigBridge.getAll(),
+  initialData: window.__MUSEEKS_INITIAL_CONFIG,
   staleTime: Infinity,
   refetchOnWindowFocus: false,
   refetchOnReconnect: false,

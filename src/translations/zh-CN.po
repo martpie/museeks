@@ -76,19 +76,19 @@ msgid "Main navigation"
 msgstr ""
 
 #: src/components/Navigation.tsx:51
-#: src/routes/settings.tsx:42
+#: src/routes/settings.tsx:33
 msgid "Library"
 msgstr "音乐库"
 
 #: src/components/Navigation.tsx:54
 #: src/routes/artists.tsx:64
-#: src/routes/settings.ui.tsx:146
+#: src/routes/settings.ui.tsx:148
 msgid "Artists"
 msgstr "艺术家"
 
 #: src/components/Navigation.tsx:57
 #: src/routes/playlists.tsx:165
-#: src/routes/settings.ui.tsx:149
+#: src/routes/settings.ui.tsx:151
 msgid "Playlists"
 msgstr "播放列表"
 
@@ -213,14 +213,14 @@ msgid "Remove tracks"
 msgstr "移除音轨"
 
 #: src/components/TrackList.tsx:394
-#: src/routes/settings.library.tsx:98
-#: src/routes/settings.library.tsx:143
+#: src/routes/settings.library.tsx:100
+#: src/routes/settings.library.tsx:145
 #: src/routes/tracks.$trackID.tsx:258
 msgid "Cancel"
 msgstr "取消"
 
 #: src/components/TrackList.tsx:395
-#: src/routes/settings.library.tsx:62
+#: src/routes/settings.library.tsx:64
 msgid "Remove"
 msgstr "移除"
 
@@ -285,7 +285,7 @@ msgid "you can <0>add your music here</0>"
 msgstr "您可以<0>在这里添加音乐</0>"
 
 #: src/components/TrackListStates.tsx:69
-#: src/routes/playlists.$playlistID.tsx:108
+#: src/routes/playlists.$playlistID.tsx:104
 msgid "Your search returned no results"
 msgstr "您的搜索没有返回结果"
 
@@ -294,7 +294,7 @@ msgstr "您的搜索没有返回结果"
 msgid "Volume"
 msgstr "音量"
 
-#: src/routes/__root.tsx:79
+#: src/routes/__root.tsx:82
 msgid "Application main content"
 msgstr ""
 
@@ -302,17 +302,17 @@ msgstr ""
 msgid "Compilations"
 msgstr ""
 
-#: src/routes/playlists.$playlistID.tsx:76
+#: src/routes/playlists.$playlistID.tsx:72
 msgid "Remove from playlist"
 msgstr "从播放列表中移除"
 
-#: src/routes/playlists.$playlistID.tsx:92
-#: src/routes/playlists.$playlistID.tsx:119
+#: src/routes/playlists.$playlistID.tsx:88
+#: src/routes/playlists.$playlistID.tsx:115
 msgid "Empty playlist"
 msgstr "空播放列表"
 
-#: src/routes/playlists.$playlistID.tsx:95
-#: src/routes/playlists.$playlistID.tsx:122
+#: src/routes/playlists.$playlistID.tsx:91
+#: src/routes/playlists.$playlistID.tsx:118
 msgid "You can add tracks from the <0>library view</0>"
 msgstr "您可以从<0>音乐库视图</0>添加音轨"
 
@@ -344,225 +344,225 @@ msgstr "未选择播放列表"
 msgid "New Playlist"
 msgstr "新播放列表"
 
-#: src/routes/settings.about.tsx:33
+#: src/routes/settings.about.tsx:36
 msgid "About Museeks"
 msgstr "关于 Museeks"
 
-#: src/routes/settings.about.tsx:45
+#: src/routes/settings.about.tsx:48
 msgid "release notes"
 msgstr "发布说明"
 
-#: src/routes/settings.about.tsx:48
+#: src/routes/settings.about.tsx:51
 msgid "Automatically check for updates"
 msgstr "自动检查更新"
 
-#: src/routes/settings.about.tsx:60
+#: src/routes/settings.about.tsx:63
 msgid "Check for update"
 msgstr "检查更新"
 
-#: src/routes/settings.about.tsx:66
+#: src/routes/settings.about.tsx:69
 msgid "Contributors"
 msgstr "贡献者"
 
-#: src/routes/settings.about.tsx:69
+#: src/routes/settings.about.tsx:72
 msgid "Made with <0/> by Pierre de la Martinière (<1>martpie.io</1>) and a bunch of <2>great people</2>"
 msgstr "由 Pierre de la Martinière (<1>martpie.io</1>) 和一群<2>优秀的人</2>使用 <0/> 制作"
 
-#: src/routes/settings.about.tsx:85
+#: src/routes/settings.about.tsx:88
 msgid "Translations:"
 msgstr "翻译："
 
-#: src/routes/settings.about.tsx:99
+#: src/routes/settings.about.tsx:102
 msgid "Report issue / Ask for a feature"
 msgstr "报告问题 / 请求功能"
 
-#: src/routes/settings.about.tsx:102
+#: src/routes/settings.about.tsx:105
 msgid "Bugs happen. Please, do not hesitate to report them or to ask for features you would like to see, using the <0>issue tracker</0>."
 msgstr "错误时有发生。请不要犹豫使用<0>问题跟踪器</0>报告它们或请求您希望看到的功能。"
 
-#: src/routes/settings.about.tsx:117
+#: src/routes/settings.about.tsx:120
 msgid "Internals"
 msgstr "内部信息"
 
-#: src/routes/settings.about.tsx:122
+#: src/routes/settings.about.tsx:125
 msgid "Open storage directory"
 msgstr "打开存储目录"
 
-#: src/routes/settings.audio.tsx:25
+#: src/routes/settings.audio.tsx:27
 msgid "Playback rate"
 msgstr "播放速率"
 
-#: src/routes/settings.audio.tsx:26
+#: src/routes/settings.audio.tsx:28
 msgid "Increase the playback rate: a value of 2 will play your music at a 2x speed"
 msgstr "增加播放速率：值为 2 将以 2 倍速播放您的音乐"
 
-#: src/routes/settings.audio.tsx:42
+#: src/routes/settings.audio.tsx:44
 msgid "Follow playing track"
 msgstr "跟随播放音轨"
 
-#: src/routes/settings.audio.tsx:43
+#: src/routes/settings.audio.tsx:45
 msgid "Automatically follow the currently playing track (only when the app is not focused)"
 msgstr "自动跟随当前播放的音轨（仅在应用未聚焦时）"
 
-#: src/routes/settings.library.tsx:46
+#: src/routes/settings.library.tsx:48
 msgid "Files"
 msgstr "文件"
 
-#: src/routes/settings.library.tsx:50
+#: src/routes/settings.library.tsx:52
 msgid "There are no folders in your library."
 msgstr "您的音乐库中没有文件夹。"
 
-#: src/routes/settings.library.tsx:82
+#: src/routes/settings.library.tsx:84
 msgid "Add folder"
 msgstr "添加文件夹"
 
-#: src/routes/settings.library.tsx:88
+#: src/routes/settings.library.tsx:90
 msgid "Scan"
 msgstr "扫描"
 
-#: src/routes/settings.library.tsx:94
+#: src/routes/settings.library.tsx:96
 msgid "All track data will be updated from the base files, but your original files won't be modified. Any Museeks-specific edits you may have done will be reset."
 msgstr "所有音轨数据将从基础文件更新，但您的原始文件不会被修改。您可能做过的任何 Museeks 特定编辑将被重置。"
 
-#: src/routes/settings.library.tsx:96
+#: src/routes/settings.library.tsx:98
 msgid "Refresh all tracks?"
 msgstr "刷新所有音轨？"
 
-#: src/routes/settings.library.tsx:99
-#: src/routes/settings.library.tsx:109
+#: src/routes/settings.library.tsx:101
+#: src/routes/settings.library.tsx:111
 msgid "Refresh"
 msgstr "刷新"
 
-#: src/routes/settings.library.tsx:107
+#: src/routes/settings.library.tsx:109
 msgid "Force the refresh of all tracks tags"
 msgstr "强制刷新所有音轨标签"
 
-#: src/routes/settings.library.tsx:113
+#: src/routes/settings.library.tsx:115
 msgid "<0>.m3u</0> files will also be imported as playlists."
 msgstr "<0>.m3u</0> 文件也将作为播放列表导入。"
 
-#: src/routes/settings.library.tsx:120
+#: src/routes/settings.library.tsx:122
 msgid "Automatically refresh library on startup"
 msgstr "启动时自动刷新音乐库"
 
-#: src/routes/settings.library.tsx:127
+#: src/routes/settings.library.tsx:129
 msgid "Danger zone"
 msgstr "危险区域"
 
-#: src/routes/settings.library.tsx:130
+#: src/routes/settings.library.tsx:132
 msgid "Delete all tracks and playlists from Museeks."
 msgstr "从 Museeks 中删除所有音轨和播放列表。"
 
-#: src/routes/settings.library.tsx:135
+#: src/routes/settings.library.tsx:137
 msgid "Fully reset the library"
 msgstr "完全重置音乐库"
 
-#: src/routes/settings.library.tsx:139
+#: src/routes/settings.library.tsx:141
 msgid "All your tracks and playlists will be deleted from Museeks."
 msgstr "您的所有音轨和播放列表将从 Museeks 中删除。"
 
-#: src/routes/settings.library.tsx:141
+#: src/routes/settings.library.tsx:143
 msgid "Reset library?"
 msgstr "重置音乐库？"
 
-#: src/routes/settings.library.tsx:144
-#: src/routes/settings.ui.tsx:77
+#: src/routes/settings.library.tsx:146
+#: src/routes/settings.ui.tsx:79
 msgid "Reset"
 msgstr "重置"
 
-#: src/routes/settings.library.tsx:153
+#: src/routes/settings.library.tsx:155
 msgid "Reset library"
 msgstr "重置音乐库"
 
-#: src/routes/settings.tsx:45
+#: src/routes/settings.tsx:36
 msgid "Audio"
 msgstr "音频"
 
-#: src/routes/settings.tsx:48
+#: src/routes/settings.tsx:39
 msgid "Interface"
 msgstr "界面"
 
-#: src/routes/settings.tsx:51
+#: src/routes/settings.tsx:42
 msgid "About"
 msgstr "关于"
 
-#: src/routes/settings.ui.tsx:44
+#: src/routes/settings.ui.tsx:46
 msgid "Theme"
 msgstr "主题"
 
-#: src/routes/settings.ui.tsx:45
+#: src/routes/settings.ui.tsx:47
 msgid "Change the appearance of the interface"
 msgstr "更改界面的外观"
 
-#: src/routes/settings.ui.tsx:53
+#: src/routes/settings.ui.tsx:55
 msgid "System (default)"
 msgstr "系统（默认）"
 
-#: src/routes/settings.ui.tsx:65
+#: src/routes/settings.ui.tsx:67
 msgid "Accent color"
 msgstr "强调色"
 
-#: src/routes/settings.ui.tsx:88
+#: src/routes/settings.ui.tsx:90
 msgid "Language"
 msgstr "语言"
 
-#: src/routes/settings.ui.tsx:112
+#: src/routes/settings.ui.tsx:114
 msgid "Tracks density"
 msgstr "音轨密度"
 
-#: src/routes/settings.ui.tsx:113
+#: src/routes/settings.ui.tsx:115
 msgid "Change the tracks spacing"
 msgstr "更改音轨间距"
 
-#: src/routes/settings.ui.tsx:124
+#: src/routes/settings.ui.tsx:126
 msgid "Normal (default)"
 msgstr "正常（默认）"
 
-#: src/routes/settings.ui.tsx:127
+#: src/routes/settings.ui.tsx:129
 msgid "Compact"
 msgstr "紧凑"
 
-#: src/routes/settings.ui.tsx:133
+#: src/routes/settings.ui.tsx:135
 msgid "Default view"
 msgstr "默认视图"
 
-#: src/routes/settings.ui.tsx:135
+#: src/routes/settings.ui.tsx:137
 msgid "Change the default view when starting the application"
 msgstr "更改启动应用程序时的默认视图"
 
-#: src/routes/settings.ui.tsx:143
+#: src/routes/settings.ui.tsx:145
 msgid "Library (default)"
 msgstr "音乐库（默认）"
 
-#: src/routes/settings.ui.tsx:155
+#: src/routes/settings.ui.tsx:157
 msgid "Display Notifications"
 msgstr "显示通知"
 
-#: src/routes/settings.ui.tsx:156
+#: src/routes/settings.ui.tsx:158
 msgid "Send notifications when the playing track changes"
 msgstr "播放音轨更改时发送通知"
 
-#: src/routes/settings.ui.tsx:165
+#: src/routes/settings.ui.tsx:167
 msgid "Sleep mode blocker"
 msgstr "睡眠模式阻止器"
 
-#: src/routes/settings.ui.tsx:166
+#: src/routes/settings.ui.tsx:168
 msgid "Prevent the computer from going into sleep mode when playing"
 msgstr "播放时防止计算机进入睡眠模式"
 
-#: src/routes/settings.ui.tsx:176
+#: src/routes/settings.ui.tsx:178
 msgid "[Beta] Wayland compatibility enhancements"
 msgstr "[测试版] Wayland 兼容性增强"
 
-#: src/routes/settings.ui.tsx:177
+#: src/routes/settings.ui.tsx:179
 msgid "If you face issues using Wayland, try out this option"
 msgstr "如果您在使用 Wayland 时遇到问题，请尝试此选项"
 
-#: src/routes/settings.ui.tsx:200
+#: src/routes/settings.ui.tsx:202
 msgid "Light"
 msgstr "浅色"
 
-#: src/routes/settings.ui.tsx:202
+#: src/routes/settings.ui.tsx:204
 msgid "Dark"
 msgstr "深色"
 

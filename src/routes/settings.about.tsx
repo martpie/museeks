@@ -1,4 +1,5 @@
 import { Trans, useLingui } from '@lingui/react/macro';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import { createFileRoute, useLoaderData } from '@tanstack/react-router';
 
 import * as Setting from '../components/Setting';
@@ -10,6 +11,7 @@ import ExternalLink from '../elements/ExternalLink';
 import Flexbox from '../elements/Flexbox';
 import Heart from '../elements/Heart';
 import useInvalidate, { useInvalidateCallback } from '../hooks/useInvalidate';
+import { configQuery } from '../lib/queries';
 import { logAndNotifyError } from '../lib/utils';
 import SettingsAPI from '../stores/SettingsAPI';
 import { NON_DEFAULT_LANGUAGES } from '../translations/languages';
@@ -19,9 +21,10 @@ export const Route = createFileRoute('/settings/about')({
 });
 
 function ViewSettingsAbout() {
-  const { config, version, tauriVersion, appStorageDir } = useLoaderData({
+  const { version, tauriVersion, appStorageDir } = useLoaderData({
     from: '/settings',
   });
+  const config = useSuspenseQuery(configQuery).data;
 
   const invalidate = useInvalidate();
   const { t } = useLingui();
