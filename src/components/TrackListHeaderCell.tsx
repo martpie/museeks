@@ -32,10 +32,10 @@ export default function TrackListHeaderCell(props: Props) {
 
   const sortMutation = useMutation({
     mutationFn: async (newSort: { sortBy: SortBy; sortOrder: SortOrder }) => {
-      await Promise.all([
-        ConfigBridge.set('library_sort_by', newSort.sortBy),
-        ConfigBridge.set('library_sort_order', newSort.sortOrder),
-      ]);
+      await ConfigBridge.multiSet({
+        library_sort_by: newSort.sortBy,
+        library_sort_order: newSort.sortOrder,
+      });
     },
     onMutate: async (newSort) => {
       await queryClient.cancelQueries({ queryKey: configQuery.queryKey });
