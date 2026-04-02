@@ -16,6 +16,8 @@ import Navigation from '../components/Navigation';
 import PlayerEvents from '../components/PlayerEvents';
 import Toasts from '../components/Toasts';
 import useInvalidate from '../hooks/useInvalidate';
+import { configQuery } from '../lib/queries';
+import queryClient from '../lib/query-client';
 import { logAndNotifyError } from '../lib/utils';
 import SettingsAPI from '../stores/SettingsAPI';
 
@@ -27,6 +29,7 @@ export const Route = createRootRoute({
   component: ViewRoot,
   errorComponent: ErrorView,
   notFoundComponent: NotFoundView,
+  loader: () => queryClient.ensureQueryData(configQuery),
   validateSearch: (search): Search => {
     // Why circumvolutions here? If the key is defined, it will be added to the
     // fragment of the URL (after the #), which will prevent the default_view

@@ -1,6 +1,7 @@
 import { t as tMacro } from '@lingui/core/macro';
 import { Trans, useLingui } from '@lingui/react/macro';
-import { createFileRoute, useLoaderData } from '@tanstack/react-router';
+import { useSuspenseQuery } from '@tanstack/react-query';
+import { createFileRoute } from '@tanstack/react-router';
 import { relaunch } from '@tauri-apps/plugin-process';
 import { debounce } from 'lodash-es';
 import { useMemo } from 'react';
@@ -11,6 +12,7 @@ import Button from '../elements/Button';
 import type { Config, DefaultView } from '../generated/typings';
 import useInvalidate, { useInvalidateCallback } from '../hooks/useInvalidate';
 import SettingsBridge from '../lib/bridge-settings';
+import { configQuery } from '../lib/queries';
 import { themes } from '../lib/themes';
 import { logAndNotifyError } from '../lib/utils';
 import SettingsAPI, { DEFAULT_MAIN_COLOR } from '../stores/SettingsAPI';
@@ -24,7 +26,7 @@ export const Route = createFileRoute('/settings/ui')({
 });
 
 function ViewSettingsUI() {
-  const { config } = useLoaderData({ from: '/settings' });
+  const config = useSuspenseQuery(configQuery).data;
   const { t } = useLingui();
 
   const invalidate = useInvalidate();

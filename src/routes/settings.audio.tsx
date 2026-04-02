@@ -1,10 +1,12 @@
 import { useLingui } from '@lingui/react/macro';
-import { createFileRoute, useLoaderData } from '@tanstack/react-router';
+import { useSuspenseQuery } from '@tanstack/react-query';
+import { createFileRoute } from '@tanstack/react-router';
 
 import * as Setting from '../components/Setting';
 import CheckboxSetting from '../components/SettingCheckbox';
 import useInvalidate, { useInvalidateCallback } from '../hooks/useInvalidate';
 import player from '../lib/player';
+import { configQuery } from '../lib/queries';
 import { logAndNotifyError } from '../lib/utils';
 import SettingsAPI from '../stores/SettingsAPI';
 
@@ -13,7 +15,7 @@ export const Route = createFileRoute('/settings/audio')({
 });
 
 function ViewSettingsAudio() {
-  const { config } = useLoaderData({ from: '/settings' });
+  const config = useSuspenseQuery(configQuery).data;
 
   const invalidate = useInvalidate();
   const { t } = useLingui();

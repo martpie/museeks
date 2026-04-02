@@ -1,4 +1,5 @@
 import { Trans, useLingui } from '@lingui/react/macro';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import {
   createFileRoute,
   redirect,
@@ -13,8 +14,8 @@ import type { Track } from '../generated/typings';
 import useFilteredTracks from '../hooks/useFilteredTracks';
 import useGlobalTrackListStatus from '../hooks/useGlobalTrackListStatus';
 import useInvalidate from '../hooks/useInvalidate';
-import ConfigBridge from '../lib/bridge-config';
 import DatabaseBridge from '../lib/bridge-database';
+import { configQuery } from '../lib/queries';
 import PlaylistsAPI from '../stores/PlaylistsAPI';
 import useLibraryStore from '../stores/useLibraryStore';
 import type { QueueOrigin } from '../types/museeks';
@@ -24,16 +25,9 @@ export const Route = createFileRoute('/playlists/$playlistID')({
   loader: async ({ params }) => {
     try {
       const playlist = await DatabaseBridge.getPlaylist(params.playlistID);
+      const playlistTracks = await DatabaseBridge.getTracks(playlist.tracks);
 
-      const [playlistTracks, tracksDensity] = await Promise.all([
-        DatabaseBridge.getTracks(playlist.tracks),
-        ConfigBridge.get('track_view_density'),
-      ]);
-
-      return {
-        playlistTracks,
-        tracksDensity,
-      };
+      return { playlistTracks };
     } catch (err) {
       if (err === 'Playlist not found') {
         throw redirect({ to: '/playlists' });
@@ -45,9 +39,11 @@ export const Route = createFileRoute('/playlists/$playlistID')({
 });
 
 function ViewPlaylistDetails() {
-  const { playlistTracks, tracksDensity } = Route.useLoaderData();
+  const { playlistTracks } = Route.useLoaderData();
   const { playlists } = useLoaderData({ from: '/playlists' });
   const { playlistID } = Route.useParams();
+  const config = useSuspenseQuery(configQuery).data;
+
   const { t } = useLingui();
 
   const invalidate = useInvalidate();
@@ -132,7 +128,7 @@ function ViewPlaylistDetails() {
     <TrackList
       layout="default"
       data={filteredTracks}
-      tracksDensity={tracksDensity}
+      tracksDensity={config.track_view_density}
       playlists={playlists}
       queueOrigin={queueOrigin}
       onReorder={onReorder}

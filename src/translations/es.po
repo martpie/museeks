@@ -76,19 +76,19 @@ msgid "Main navigation"
 msgstr ""
 
 #: src/components/Navigation.tsx:51
-#: src/routes/settings.tsx:42
+#: src/routes/settings.tsx:33
 msgid "Library"
 msgstr "Biblioteca"
 
 #: src/components/Navigation.tsx:54
 #: src/routes/artists.tsx:64
-#: src/routes/settings.ui.tsx:146
+#: src/routes/settings.ui.tsx:148
 msgid "Artists"
 msgstr "Artistas"
 
 #: src/components/Navigation.tsx:57
 #: src/routes/playlists.tsx:165
-#: src/routes/settings.ui.tsx:149
+#: src/routes/settings.ui.tsx:151
 msgid "Playlists"
 msgstr "Listas de reproducción"
 
@@ -213,14 +213,14 @@ msgid "Remove tracks"
 msgstr "Eliminar pistas"
 
 #: src/components/TrackList.tsx:394
-#: src/routes/settings.library.tsx:98
-#: src/routes/settings.library.tsx:143
+#: src/routes/settings.library.tsx:100
+#: src/routes/settings.library.tsx:145
 #: src/routes/tracks.$trackID.tsx:258
 msgid "Cancel"
 msgstr "Cancelar"
 
 #: src/components/TrackList.tsx:395
-#: src/routes/settings.library.tsx:62
+#: src/routes/settings.library.tsx:64
 msgid "Remove"
 msgstr "Eliminar"
 
@@ -285,7 +285,7 @@ msgid "you can <0>add your music here</0>"
 msgstr "puedes <0>añadir tu música aquí</0>"
 
 #: src/components/TrackListStates.tsx:69
-#: src/routes/playlists.$playlistID.tsx:108
+#: src/routes/playlists.$playlistID.tsx:104
 msgid "Your search returned no results"
 msgstr "Tu búsqueda no arrojó resultados"
 
@@ -294,7 +294,7 @@ msgstr "Tu búsqueda no arrojó resultados"
 msgid "Volume"
 msgstr "Volumen"
 
-#: src/routes/__root.tsx:79
+#: src/routes/__root.tsx:82
 msgid "Application main content"
 msgstr ""
 
@@ -302,17 +302,17 @@ msgstr ""
 msgid "Compilations"
 msgstr ""
 
-#: src/routes/playlists.$playlistID.tsx:76
+#: src/routes/playlists.$playlistID.tsx:72
 msgid "Remove from playlist"
 msgstr "Eliminar de la lista"
 
-#: src/routes/playlists.$playlistID.tsx:92
-#: src/routes/playlists.$playlistID.tsx:119
+#: src/routes/playlists.$playlistID.tsx:88
+#: src/routes/playlists.$playlistID.tsx:115
 msgid "Empty playlist"
 msgstr "Lista vacía"
 
-#: src/routes/playlists.$playlistID.tsx:95
-#: src/routes/playlists.$playlistID.tsx:122
+#: src/routes/playlists.$playlistID.tsx:91
+#: src/routes/playlists.$playlistID.tsx:118
 msgid "You can add tracks from the <0>library view</0>"
 msgstr "Puedes añadir pistas desde la <0>vista de biblioteca</0>"
 
@@ -344,225 +344,225 @@ msgstr "Ninguna lista seleccionada"
 msgid "New Playlist"
 msgstr "Nueva Lista"
 
-#: src/routes/settings.about.tsx:33
+#: src/routes/settings.about.tsx:36
 msgid "About Museeks"
 msgstr "Acerca de Museeks"
 
-#: src/routes/settings.about.tsx:45
+#: src/routes/settings.about.tsx:48
 msgid "release notes"
 msgstr "notas de la versión"
 
-#: src/routes/settings.about.tsx:48
+#: src/routes/settings.about.tsx:51
 msgid "Automatically check for updates"
 msgstr "Buscar actualizaciones automáticamente"
 
-#: src/routes/settings.about.tsx:60
+#: src/routes/settings.about.tsx:63
 msgid "Check for update"
 msgstr "Buscar actualización"
 
-#: src/routes/settings.about.tsx:66
+#: src/routes/settings.about.tsx:69
 msgid "Contributors"
 msgstr "Colaboradores"
 
-#: src/routes/settings.about.tsx:69
+#: src/routes/settings.about.tsx:72
 msgid "Made with <0/> by Pierre de la Martinière (<1>martpie.io</1>) and a bunch of <2>great people</2>"
 msgstr "Hecho con <0/> por Pierre de la Martinière (<1>martpie.io</1>) y un montón de <2>gente genial</2>"
 
-#: src/routes/settings.about.tsx:85
+#: src/routes/settings.about.tsx:88
 msgid "Translations:"
 msgstr "Traducciones:"
 
-#: src/routes/settings.about.tsx:99
+#: src/routes/settings.about.tsx:102
 msgid "Report issue / Ask for a feature"
 msgstr "Reportar error / Pedir una función"
 
-#: src/routes/settings.about.tsx:102
+#: src/routes/settings.about.tsx:105
 msgid "Bugs happen. Please, do not hesitate to report them or to ask for features you would like to see, using the <0>issue tracker</0>."
 msgstr "Los errores ocurren. Por favor, no dudes en reportarlos o pedir funciones que te gustaría ver, usando el <0>gestor de incidencias</0>."
 
-#: src/routes/settings.about.tsx:117
+#: src/routes/settings.about.tsx:120
 msgid "Internals"
 msgstr "Internos"
 
-#: src/routes/settings.about.tsx:122
+#: src/routes/settings.about.tsx:125
 msgid "Open storage directory"
 msgstr "Abrir carpeta de almacenamiento"
 
-#: src/routes/settings.audio.tsx:25
+#: src/routes/settings.audio.tsx:27
 msgid "Playback rate"
 msgstr "Velocidad de reproducción"
 
-#: src/routes/settings.audio.tsx:26
+#: src/routes/settings.audio.tsx:28
 msgid "Increase the playback rate: a value of 2 will play your music at a 2x speed"
 msgstr "Aumentar la velocidad: un valor de 2 reproducirá tu música al doble de velocidad"
 
-#: src/routes/settings.audio.tsx:42
+#: src/routes/settings.audio.tsx:44
 msgid "Follow playing track"
 msgstr "Seguir pista en reproducción"
 
-#: src/routes/settings.audio.tsx:43
+#: src/routes/settings.audio.tsx:45
 msgid "Automatically follow the currently playing track (only when the app is not focused)"
 msgstr "Seguir automáticamente la pista actual (solo cuando la app no está en foco)"
 
-#: src/routes/settings.library.tsx:46
+#: src/routes/settings.library.tsx:48
 msgid "Files"
 msgstr "Archivos"
 
-#: src/routes/settings.library.tsx:50
+#: src/routes/settings.library.tsx:52
 msgid "There are no folders in your library."
 msgstr "No hay carpetas en tu biblioteca."
 
-#: src/routes/settings.library.tsx:82
+#: src/routes/settings.library.tsx:84
 msgid "Add folder"
 msgstr "Añadir carpeta"
 
-#: src/routes/settings.library.tsx:88
+#: src/routes/settings.library.tsx:90
 msgid "Scan"
 msgstr "Escanear"
 
-#: src/routes/settings.library.tsx:94
+#: src/routes/settings.library.tsx:96
 msgid "All track data will be updated from the base files, but your original files won't be modified. Any Museeks-specific edits you may have done will be reset."
 msgstr "Todos los datos de las pistas se actualizarán desde los archivos base, pero tus archivos originales no serán modificados. Cualquier edición específica de Museeks se perderá."
 
-#: src/routes/settings.library.tsx:96
+#: src/routes/settings.library.tsx:98
 msgid "Refresh all tracks?"
 msgstr "¿Actualizar todas las pistas?"
 
-#: src/routes/settings.library.tsx:99
-#: src/routes/settings.library.tsx:109
+#: src/routes/settings.library.tsx:101
+#: src/routes/settings.library.tsx:111
 msgid "Refresh"
 msgstr "Actualizar"
 
-#: src/routes/settings.library.tsx:107
+#: src/routes/settings.library.tsx:109
 msgid "Force the refresh of all tracks tags"
 msgstr "Forzar la actualización de etiquetas de todas las pistas"
 
-#: src/routes/settings.library.tsx:113
+#: src/routes/settings.library.tsx:115
 msgid "<0>.m3u</0> files will also be imported as playlists."
 msgstr "Archivos <0>.m3u</0> también serán importados como listas."
 
-#: src/routes/settings.library.tsx:120
+#: src/routes/settings.library.tsx:122
 msgid "Automatically refresh library on startup"
 msgstr "Actualizar biblioteca automáticamente al iniciar"
 
-#: src/routes/settings.library.tsx:127
+#: src/routes/settings.library.tsx:129
 msgid "Danger zone"
 msgstr "Zona de peligro"
 
-#: src/routes/settings.library.tsx:130
+#: src/routes/settings.library.tsx:132
 msgid "Delete all tracks and playlists from Museeks."
 msgstr "Eliminar todas las pistas y listas de Museeks."
 
-#: src/routes/settings.library.tsx:135
+#: src/routes/settings.library.tsx:137
 msgid "Fully reset the library"
 msgstr "Reiniciar totalmente la biblioteca"
 
-#: src/routes/settings.library.tsx:139
+#: src/routes/settings.library.tsx:141
 msgid "All your tracks and playlists will be deleted from Museeks."
 msgstr "Todas tus pistas y listas serán eliminadas de Museeks."
 
-#: src/routes/settings.library.tsx:141
+#: src/routes/settings.library.tsx:143
 msgid "Reset library?"
 msgstr "¿Reiniciar biblioteca?"
 
-#: src/routes/settings.library.tsx:144
-#: src/routes/settings.ui.tsx:77
+#: src/routes/settings.library.tsx:146
+#: src/routes/settings.ui.tsx:79
 msgid "Reset"
 msgstr "Reiniciar"
 
-#: src/routes/settings.library.tsx:153
+#: src/routes/settings.library.tsx:155
 msgid "Reset library"
 msgstr "Reiniciar biblioteca"
 
-#: src/routes/settings.tsx:45
+#: src/routes/settings.tsx:36
 msgid "Audio"
 msgstr "Audio"
 
-#: src/routes/settings.tsx:48
+#: src/routes/settings.tsx:39
 msgid "Interface"
 msgstr "Interfaz"
 
-#: src/routes/settings.tsx:51
+#: src/routes/settings.tsx:42
 msgid "About"
 msgstr "Acerca de"
 
-#: src/routes/settings.ui.tsx:44
+#: src/routes/settings.ui.tsx:46
 msgid "Theme"
 msgstr "Tema"
 
-#: src/routes/settings.ui.tsx:45
+#: src/routes/settings.ui.tsx:47
 msgid "Change the appearance of the interface"
 msgstr "Cambiar la apariencia de la interfaz"
 
-#: src/routes/settings.ui.tsx:53
+#: src/routes/settings.ui.tsx:55
 msgid "System (default)"
 msgstr "Sistema (por defecto)"
 
-#: src/routes/settings.ui.tsx:65
+#: src/routes/settings.ui.tsx:67
 msgid "Accent color"
 msgstr "Color de énfasis"
 
-#: src/routes/settings.ui.tsx:88
+#: src/routes/settings.ui.tsx:90
 msgid "Language"
 msgstr "Idioma"
 
-#: src/routes/settings.ui.tsx:112
+#: src/routes/settings.ui.tsx:114
 msgid "Tracks density"
 msgstr "Densidad de pistas"
 
-#: src/routes/settings.ui.tsx:113
+#: src/routes/settings.ui.tsx:115
 msgid "Change the tracks spacing"
 msgstr "Cambiar el espaciado de las pistas"
 
-#: src/routes/settings.ui.tsx:124
+#: src/routes/settings.ui.tsx:126
 msgid "Normal (default)"
 msgstr "Normal (por defecto)"
 
-#: src/routes/settings.ui.tsx:127
+#: src/routes/settings.ui.tsx:129
 msgid "Compact"
 msgstr "Compacto"
 
-#: src/routes/settings.ui.tsx:133
+#: src/routes/settings.ui.tsx:135
 msgid "Default view"
 msgstr "Vista por defecto"
 
-#: src/routes/settings.ui.tsx:135
+#: src/routes/settings.ui.tsx:137
 msgid "Change the default view when starting the application"
 msgstr "Cambiar la vista por defecto al iniciar la aplicación"
 
-#: src/routes/settings.ui.tsx:143
+#: src/routes/settings.ui.tsx:145
 msgid "Library (default)"
 msgstr "Biblioteca (por defecto)"
 
-#: src/routes/settings.ui.tsx:155
+#: src/routes/settings.ui.tsx:157
 msgid "Display Notifications"
 msgstr "Mostrar Notificaciones"
 
-#: src/routes/settings.ui.tsx:156
+#: src/routes/settings.ui.tsx:158
 msgid "Send notifications when the playing track changes"
 msgstr "Enviar notificaciones cuando cambie la pista"
 
-#: src/routes/settings.ui.tsx:165
+#: src/routes/settings.ui.tsx:167
 msgid "Sleep mode blocker"
 msgstr "Bloqueador de suspensión"
 
-#: src/routes/settings.ui.tsx:166
+#: src/routes/settings.ui.tsx:168
 msgid "Prevent the computer from going into sleep mode when playing"
 msgstr "Evitar que el equipo se suspenda mientras reproduce"
 
-#: src/routes/settings.ui.tsx:176
+#: src/routes/settings.ui.tsx:178
 msgid "[Beta] Wayland compatibility enhancements"
 msgstr "[Beta] Mejoras de compatibilidad con Wayland"
 
-#: src/routes/settings.ui.tsx:177
+#: src/routes/settings.ui.tsx:179
 msgid "If you face issues using Wayland, try out this option"
 msgstr "Si tienes problemas usando Wayland, prueba esta opción"
 
-#: src/routes/settings.ui.tsx:200
+#: src/routes/settings.ui.tsx:202
 msgid "Light"
 msgstr "Claro"
 
-#: src/routes/settings.ui.tsx:202
+#: src/routes/settings.ui.tsx:204
 msgid "Dark"
 msgstr "Oscuro"
 

@@ -1,10 +1,14 @@
 import * as stylex from '@stylexjs/stylex';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import {
+  useMutation,
+  useQueryClient,
+  useSuspenseQuery,
+} from '@tanstack/react-query';
 import React, { useCallback } from 'react';
 
-import type { SortBy, SortOrder } from '../generated/typings';
+import type { Config, SortBy, SortOrder } from '../generated/typings';
 import ConfigBridge from '../lib/bridge-config';
-import { librarySortQuery } from '../lib/queries';
+import { configQuery } from '../lib/queries';
 import Icon from './Icon';
 
 type Props = {
@@ -17,17 +21,11 @@ export default function TrackListHeaderCell(props: Props) {
   const { sortBy, xstyle, title } = props;
   const queryClient = useQueryClient();
 
-  const { data: sort } = useQuery({
-    ...librarySortQuery,
-    enabled: sortBy != null,
-  });
-
-  const currentSortBy = sort?.sortBy;
-  const currentSortOrder = sort?.sortOrder;
+  const config = useSuspenseQuery(configQuery).data;
 
   const icon =
-    sortBy && currentSortBy === sortBy
-      ? currentSortOrder === 'Asc'
+    sortBy && config.library_sort_by === sortBy
+      ? config.library_sort_order === 'Asc'
         ? 'chevronUp'
         : 'chevronDown'
       : null;
@@ -40,26 +38,29 @@ export default function TrackListHeaderCell(props: Props) {
       ]);
     },
     onMutate: async (newSort) => {
-      await queryClient.cancelQueries({ queryKey: librarySortQuery.queryKey });
-      const previousSort = queryClient.getQueryData<{
-        sortBy: SortBy;
-        sortOrder: SortOrder;
-      }>(librarySortQuery.queryKey);
-      queryClient.setQueryData(librarySortQuery.queryKey, newSort);
-      return { previousSort };
+      await queryClient.cancelQueries({ queryKey: configQuery.queryKey });
+      const previousConfig = queryClient.getQueryData<Config>(
+        configQuery.queryKey,
+      );
+      queryClient.setQueryData(configQuery.queryKey, {
+        ...previousConfig,
+        library_sort_by: newSort.sortBy,
+        library_sort_order: newSort.sortOrder,
+      });
+      return { previousConfig };
     },
   });
 
   const handleSort = useCallback(() => {
     if (!sortBy) return;
     const newSortOrder: SortOrder =
-      sortBy === currentSortBy
-        ? currentSortOrder === 'Asc'
+      sortBy === config.library_sort_by
+        ? config.library_sort_order === 'Asc'
           ? 'Dsc'
           : 'Asc'
         : 'Asc';
     sortMutation.mutate({ sortBy, sortOrder: newSortOrder });
-  }, [sortBy, currentSortBy, currentSortOrder, sortMutation]);
+  }, [sortBy, config.library_sort_by, config.library_sort_order, sortMutation]);
 
   const content = (
     <React.Fragment>
