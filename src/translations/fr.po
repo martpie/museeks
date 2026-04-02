@@ -28,7 +28,7 @@ msgstr "{0} piste(s) ont été ajoutée(s) à la bibliothèque."
 msgid "{0} playlist(s) were added to the library."
 msgstr "{0} playlist(s) ont été ajoutée(s) à la bibliothèque."
 
-#: src/api/LibraryAPI.ts:99
+#: src/api/LibraryAPI.ts:106
 msgid "Library was reset"
 msgstr "La bibliothèque a été réinitialisée"
 

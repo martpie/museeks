@@ -28,7 +28,7 @@ msgstr "{0} трек(ов) добавлено в библиотеку."
 msgid "{0} playlist(s) were added to the library."
 msgstr "{0} плейлист(ов) добавлено в библиотеку."
 
-#: src/api/LibraryAPI.ts:99
+#: src/api/LibraryAPI.ts:106
 msgid "Library was reset"
 msgstr "Библиотека сброшена"
 

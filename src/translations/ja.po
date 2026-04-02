@@ -28,7 +28,7 @@ msgstr "{0} 曲がライブラリに追加されました。"
 msgid "{0} playlist(s) were added to the library."
 msgstr "{0} 個のプレイリストがライブラリに追加されました。"
 
-#: src/api/LibraryAPI.ts:99
+#: src/api/LibraryAPI.ts:106
 msgid "Library was reset"
 msgstr "ライブラリがリセットされました"
 

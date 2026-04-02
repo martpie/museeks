@@ -28,7 +28,7 @@ msgstr "{0} 首音轨已添加到音乐库。"
 msgid "{0} playlist(s) were added to the library."
 msgstr "{0} 个播放列表已添加到音乐库。"
 
-#: src/api/LibraryAPI.ts:99
+#: src/api/LibraryAPI.ts:106
 msgid "Library was reset"
 msgstr "音乐库已重置"
 
