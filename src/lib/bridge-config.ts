@@ -41,6 +41,20 @@ const ConfigBridge = {
 
     return;
   },
+
+  async multiSet(updates: Partial<Config>): Promise<void> {
+    const config = await this.getAll();
+
+    try {
+      await invoke('plugin:config|set_config', {
+        config: { ...config, ...updates },
+      });
+    } catch (err) {
+      logAndNotifyError(err);
+    }
+
+    return;
+  },
 };
 
 export default ConfigBridge;
