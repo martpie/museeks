@@ -5,14 +5,15 @@ import { createFileRoute } from '@tanstack/react-router';
 import { ask, open } from '@tauri-apps/plugin-dialog';
 import { useCallback } from 'react';
 
+import LibraryAPI from '../api/LibraryAPI';
+import SettingsAPI from '../api/SettingsAPI';
 import * as Setting from '../components/Setting';
 import CheckboxSetting from '../components/SettingCheckbox';
 import Button from '../elements/Button';
 import Flexbox from '../elements/Flexbox';
 import useInvalidate, { useInvalidateCallback } from '../hooks/useInvalidate';
 import { configQuery } from '../lib/queries';
-import SettingsAPI from '../stores/SettingsAPI';
-import useLibraryStore, { useLibraryAPI } from '../stores/useLibraryStore';
+import useLibraryStore from '../lib/store';
 
 export const Route = createFileRoute('/settings/library')({
   component: ViewSettingsLibrary,
@@ -22,7 +23,6 @@ function ViewSettingsLibrary() {
   const config = useSuspenseQuery(configQuery).data;
   const libraryFolders = config.library_folders;
 
-  const libraryAPI = useLibraryAPI();
   const isLibraryRefreshing = useLibraryStore((state) => state.refreshing);
   const invalidate = useInvalidate();
   const { t } = useLingui();
@@ -37,9 +37,9 @@ function ViewSettingsLibrary() {
       return;
     }
 
-    await libraryAPI.addLibraryFolders(paths);
+    await LibraryAPI.addLibraryFolders(paths);
     await invalidate();
-  }, [libraryAPI, invalidate]);
+  }, [invalidate]);
 
   return (
     <>
@@ -64,7 +64,7 @@ function ViewSettingsLibrary() {
                       title={t`Remove`}
                       data-museeks-action
                       onClick={() =>
-                        libraryAPI.removeLibraryFolder(folder).then(invalidate)
+                        LibraryAPI.removeLibraryFolder(folder).then(invalidate)
                       }
                     >
                       &times;
@@ -85,7 +85,7 @@ function ViewSettingsLibrary() {
           </Button>
           <Button
             disabled={isLibraryRefreshing || libraryFolders.length === 0}
-            onClick={useInvalidateCallback(() => libraryAPI.scan())}
+            onClick={useInvalidateCallback(() => LibraryAPI.scan())}
           >
             <Trans>Scan</Trans>
           </Button>
@@ -103,7 +103,7 @@ function ViewSettingsLibrary() {
               );
 
               if (confirm) {
-                await libraryAPI.scan(true);
+                await LibraryAPI.scan(true);
               }
             })}
             title={t`Force the refresh of all tracks tags`}
@@ -148,7 +148,7 @@ function ViewSettingsLibrary() {
               );
 
               if (confirm) {
-                await libraryAPI.reset();
+                await LibraryAPI.reset();
               }
             })}
           >

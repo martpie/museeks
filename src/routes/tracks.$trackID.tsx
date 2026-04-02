@@ -4,6 +4,7 @@ import { createFileRoute, useRouter } from '@tanstack/react-router';
 import type React from 'react';
 import { useCallback, useState } from 'react';
 
+import LibraryAPI from '../api/LibraryAPI';
 import * as Setting from '../components/Setting';
 import SettingCheckbox from '../components/SettingCheckbox';
 import Button from '../elements/Button';
@@ -13,7 +14,6 @@ import View from '../elements/View';
 import { parseDuration } from '../hooks/useFormattedDuration';
 import useInvalidate from '../hooks/useInvalidate';
 import DatabaseBridge from '../lib/bridge-database';
-import { useLibraryAPI } from '../stores/useLibraryStore';
 import type { TrackMutation } from '../types/museeks';
 
 // We assume no artist or genre has a comma in its name (fingers crossed)
@@ -57,17 +57,16 @@ function ViewTrackDetails() {
     is_compilation: track.is_compilation,
   });
 
-  const libraryAPI = useLibraryAPI();
   const router = useRouter();
 
   const handleSubmit = useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
-      await libraryAPI.updateTrackMetadata(track.id, formData);
+      await LibraryAPI.updateTrackMetadata(track.id, formData);
       await invalidate();
       router.history.back();
     },
-    [track, formData, router, libraryAPI, invalidate],
+    [track, formData, router, invalidate],
   );
 
   const handleCancel = useCallback(

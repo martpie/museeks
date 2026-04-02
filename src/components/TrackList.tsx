@@ -15,6 +15,8 @@ import type React from 'react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Keybinding from 'react-keybinding-component';
 
+import LibraryAPI from '../api/LibraryAPI';
+import PlaylistsAPI from '../api/PlaylistsAPI';
 import type { Config, Playlist, Track, TrackGroup } from '../generated/typings';
 import useInvalidate from '../hooks/useInvalidate';
 import usePlayingTrackID from '../hooks/usePlayingTrackID';
@@ -28,8 +30,6 @@ import toastManager from '../lib/toast-manager';
 import { logAndNotifyError } from '../lib/utils';
 import { isKeyWithoutModifiers } from '../lib/utils-events';
 import { listKeyboardSelect, listMouseSelect } from '../lib/utils-list';
-import PlaylistsAPI from '../stores/PlaylistsAPI';
-import { useLibraryAPI } from '../stores/useLibraryStore';
 import type { QueueOrigin, TrackListVirtualizer } from '../types/museeks';
 import TrackListDefault from './TrackListDefault';
 import TrackListGrouped from './TrackListGrouped';
@@ -91,7 +91,6 @@ export default function TrackList(props: Props) {
   }, [data, layout]);
 
   const trackPlayingID = usePlayingTrackID();
-  const libraryAPI = useLibraryAPI();
   const { t } = useLingui();
 
   const [selectedTracks, setSelectedTracks] = useState<Set<string>>(new Set());
@@ -333,7 +332,7 @@ export default function TrackList(props: Props) {
           MenuItem.new({
             text: t`Search for "${item}"`,
             action: () => {
-              libraryAPI.search(item);
+              LibraryAPI.search(item);
             },
           }),
         ),
@@ -396,7 +395,7 @@ export default function TrackList(props: Props) {
             );
 
             if (confirm) {
-              await libraryAPI.remove(Array.from(selectedTracks));
+              await LibraryAPI.removeTracks(Array.from(selectedTracks));
               await invalidate();
             }
           },
@@ -415,7 +414,6 @@ export default function TrackList(props: Props) {
       selectedTracks,
       tracks,
       navigate,
-      libraryAPI,
       invalidate,
       extraContextMenu,
       t,
