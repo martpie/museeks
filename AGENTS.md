@@ -104,6 +104,7 @@ src-tauri/               # Rust/Tauri backend
 - After editing the configuration of a route, regenerating the route-tree must be done via the `vp build` script.
 - Never manually edit `src/generated` — always regenerate.
 - Don't fix pre-existing issues unrelated to the current task.
+- Don't try to run `tsc` for checking typescript typings, it should be done via `vp check` instead.
 - When uncertain, read nearby file patterns first, then ask.
 
 <!--VITE PLUS START-->
