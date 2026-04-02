@@ -26,16 +26,10 @@ export default function PlayingBarInfo(props: Props) {
         <div {...stylex.props(styles.duration)}>{formattedProgress}</div>
 
         <div {...stylex.props(styles.metas)}>
-          <div
-            {...stylex.props(styles.metadata, styles.metadataTitle)}
-            data-testid="playing-track-title"
-          >
-            <strong>{trackPlaying.title}</strong>
-          </div>
-          <div
-            {...stylex.props(styles.metadata)}
-            data-testid="playing-track-artist-album"
-          >
+          <strong {...stylex.props(styles.metadata, styles.metadataTitle)}>
+            {trackPlaying.title}
+          </strong>
+          <div {...stylex.props(styles.metadata)}>
             <Link
               inheritColor
               type="normal"
@@ -84,7 +78,9 @@ export default function PlayingBarInfo(props: Props) {
 
 const styles = stylex.create({
   playingBarInfo: {
-    flex: '1 1 auto',
+    flexGrow: 1,
+    flexShrink: 1,
+    flexBasis: 'auto',
     minWidth: 0,
     display: 'flex',
     flexDirection: 'column',
@@ -102,7 +98,9 @@ const styles = stylex.create({
     pointerEvents: 'none',
   },
   metas: {
-    flex: '1 1 auto',
+    flexGrow: 1,
+    flexShrink: 1,
+    flexBasis: 'auto',
     whiteSpace: 'nowrap',
     textOverflow: 'ellipsis',
     overflow: 'hidden',
@@ -110,6 +108,7 @@ const styles = stylex.create({
     textAlign: 'center',
   },
   metadataTitle: {
+    fontWeight: 'var(--bold)',
     marginBottom: '2px',
   },
   metadata: {
@@ -118,7 +117,9 @@ const styles = stylex.create({
     whiteSpace: 'nowrap',
   },
   duration: {
-    flex: '0 0 auto',
+    flexGrow: 0,
+    flexShrink: 0,
+    flexBasis: 'auto',
     fontSize: '0.875rem',
     paddingTop: 0,
     paddingBottom: 0,

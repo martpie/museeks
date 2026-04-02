@@ -167,7 +167,7 @@ function ViewPlaylists() {
             <ButtonIcon
               icon="plus"
               onClick={createPlaylist}
-              title={t`New Playlist`}
+              label={t`New Playlist`}
             />
           }
         >

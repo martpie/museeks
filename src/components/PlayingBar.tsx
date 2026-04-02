@@ -46,7 +46,9 @@ const styles = stylex.create({
     borderRightColor: 'var(--border-color-softer)',
     borderBlockWidth: '0',
     borderInlineWidth: '1px',
-    flex: '1 1 auto',
+    flexGrow: 1,
+    flexShrink: 1,
+    flexBasis: 'auto',
     minWidth: 0,
   },
   playingBarCover: {

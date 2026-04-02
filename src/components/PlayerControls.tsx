@@ -15,23 +15,20 @@ export default function PlayerControls() {
       <ButtonIcon
         icon="skipBack"
         iconSize={16}
-        title={t`Previous`}
+        label={t`Previous`}
         onClick={() => player.previous()}
-        data-testid="playercontrol-skipback"
       />
       <ButtonIcon
         icon={isPaused ? 'play' : 'pause'}
         iconSize={28}
-        title={isPaused ? t`Play` : t`Pause`}
+        label={isPaused ? t`Play` : t`Pause`}
         onClick={() => player.playPause()}
-        data-testid={isPaused ? 'playercontrol-play' : 'playercontrol-pause'}
       />
       <ButtonIcon
         icon="skipForward"
         iconSize={16}
-        title={t`Next`}
+        label={t`Next`}
         onClick={() => player.next()}
-        data-testid="playercontrol-skipforward"
       />
       <VolumeControl />
     </div>

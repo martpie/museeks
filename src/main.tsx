@@ -25,7 +25,7 @@ import queryClient from './lib/query-client';
 |--------------------------------------------------------------------------
 */
 import 'normalize.css/normalize.css';
-import './styles/general.css';
+import './global.css';
 
 /*
 |--------------------------------------------------------------------------

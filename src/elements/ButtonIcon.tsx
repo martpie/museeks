@@ -4,6 +4,7 @@ import type React from 'react';
 import Icon, { type IconName, type IconSize } from '../components/Icon';
 
 type Props = React.ComponentPropsWithRef<'button'> & {
+  label: string;
   icon: IconName;
   iconSize?: IconSize;
   isActive?: boolean;
@@ -11,12 +12,15 @@ type Props = React.ComponentPropsWithRef<'button'> & {
 };
 
 export default function ButtonIcon(props: Props) {
-  const { onClick, icon, iconSize, isActive, ref, xstyle, ...rest } = props;
+  const { label, onClick, icon, iconSize, isActive, ref, xstyle, ...rest } =
+    props;
   return (
     <button
       ref={ref}
       type="button"
       onClick={onClick}
+      aria-label={label}
+      title={label}
       data-museeks-action
       {...rest}
       {...stylex.props(styles.button, xstyle)}

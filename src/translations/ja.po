@@ -71,36 +71,36 @@ msgstr ""
 msgid "Queue"
 msgstr "キュー"
 
-#: src/components/Navigation.tsx:49
+#: src/components/Navigation.tsx:48
 msgid "Main navigation"
 msgstr ""
 
-#: src/components/Navigation.tsx:54
+#: src/components/Navigation.tsx:51
 #: src/routes/settings.tsx:42
 msgid "Library"
 msgstr "ライブラリ"
 
-#: src/components/Navigation.tsx:61
+#: src/components/Navigation.tsx:54
 #: src/routes/artists.tsx:64
-#: src/routes/settings.ui.tsx:147
+#: src/routes/settings.ui.tsx:146
 msgid "Artists"
 msgstr "アーティスト"
 
-#: src/components/Navigation.tsx:68
+#: src/components/Navigation.tsx:57
 #: src/routes/playlists.tsx:165
-#: src/routes/settings.ui.tsx:150
+#: src/routes/settings.ui.tsx:149
 msgid "Playlists"
 msgstr "プレイリスト"
 
-#: src/components/Navigation.tsx:75
+#: src/components/Navigation.tsx:60
 msgid "Settings"
 msgstr "設定"
 
-#: src/components/Navigation.tsx:83
+#: src/components/Navigation.tsx:66
 msgid "Library status"
 msgstr ""
 
-#: src/components/Navigation.tsx:107
+#: src/components/Navigation.tsx:90
 msgid "scanning tracks..."
 msgstr "トラックをスキャン中..."
 
@@ -108,15 +108,15 @@ msgstr "トラックをスキャン中..."
 msgid "Previous"
 msgstr "前へ"
 
-#: src/components/PlayerControls.tsx:25
+#: src/components/PlayerControls.tsx:24
 msgid "Play"
 msgstr "再生"
 
-#: src/components/PlayerControls.tsx:25
+#: src/components/PlayerControls.tsx:24
 msgid "Pause"
 msgstr "一時停止"
 
-#: src/components/PlayerControls.tsx:32
+#: src/components/PlayerControls.tsx:30
 msgid "Next"
 msgstr "次へ"
 
@@ -135,6 +135,14 @@ msgstr "もっと見る"
 #: src/components/Search.tsx:42
 msgid "search..."
 msgstr "検索..."
+
+#: src/components/Search.tsx:49
+msgid "Search library"
+msgstr ""
+
+#: src/components/Search.tsx:61
+msgid "Clear search"
+msgstr ""
 
 #: src/components/SideNavLink.tsx:62
 msgid "Rename"
@@ -205,8 +213,8 @@ msgid "Remove tracks"
 msgstr "トラックを削除"
 
 #: src/components/TrackList.tsx:396
-#: src/routes/settings.library.tsx:99
-#: src/routes/settings.library.tsx:144
+#: src/routes/settings.library.tsx:98
+#: src/routes/settings.library.tsx:143
 #: src/routes/tracks.$trackID.tsx:258
 msgid "Cancel"
 msgstr "キャンセル"
@@ -216,28 +224,37 @@ msgstr "キャンセル"
 msgid "Remove"
 msgstr "削除"
 
+#: src/components/TrackListDefault.tsx:125
+#: src/components/TrackListGrouped.tsx:58
+msgid "Track list"
+msgstr ""
+
 #. placeholder {0}: props.count
 #. placeholder {0}: tracks.length
-#: src/components/TrackListGrouped.tsx:109
+#: src/components/TrackListGrouped.tsx:115
 #: src/components/TrackListStatus.tsx:11
 msgid "{0, plural, one {# track} other {# tracks}}"
 msgstr "{0, plural, one {# 曲} other {# 曲}}"
 
-#: src/components/TrackListHeader.tsx:50
+#: src/components/TrackListHeader.tsx:45
+msgid "Track list sorting options"
+msgstr ""
+
+#: src/components/TrackListHeader.tsx:54
 #: src/routes/tracks.$trackID.tsx:89
 msgid "Title"
 msgstr "タイトル"
 
-#: src/components/TrackListHeader.tsx:57
+#: src/components/TrackListHeader.tsx:60
 #: src/routes/tracks.$trackID.tsx:242
 msgid "Duration"
 msgstr "再生時間"
 
-#: src/components/TrackListHeader.tsx:64
+#: src/components/TrackListHeader.tsx:66
 msgid "Artist"
 msgstr "アーティスト"
 
-#: src/components/TrackListHeader.tsx:71
+#: src/components/TrackListHeader.tsx:72
 #: src/routes/tracks.$trackID.tsx:100
 msgid "Album"
 msgstr "アルバム"
@@ -399,61 +416,61 @@ msgstr "ライブラリにフォルダーがありません。"
 msgid "Add folder"
 msgstr "フォルダーを追加"
 
-#: src/routes/settings.library.tsx:89
+#: src/routes/settings.library.tsx:88
 msgid "Scan"
 msgstr "スキャン"
 
-#: src/routes/settings.library.tsx:95
+#: src/routes/settings.library.tsx:94
 msgid "All track data will be updated from the base files, but your original files won't be modified. Any Museeks-specific edits you may have done will be reset."
 msgstr "すべてのトラックデータがベースファイルから更新されますが、元のファイルは変更されません。Museeks固有の編集は全てリセットされます。"
 
-#: src/routes/settings.library.tsx:97
+#: src/routes/settings.library.tsx:96
 msgid "Refresh all tracks?"
 msgstr "すべてのトラックを更新しますか？"
 
-#: src/routes/settings.library.tsx:100
-#: src/routes/settings.library.tsx:110
+#: src/routes/settings.library.tsx:99
+#: src/routes/settings.library.tsx:109
 msgid "Refresh"
 msgstr "更新"
 
-#: src/routes/settings.library.tsx:108
+#: src/routes/settings.library.tsx:107
 msgid "Force the refresh of all tracks tags"
 msgstr "すべてのトラックタグを強制的に更新"
 
-#: src/routes/settings.library.tsx:114
+#: src/routes/settings.library.tsx:113
 msgid "<0>.m3u</0> files will also be imported as playlists."
 msgstr "<0>.m3u</0> ファイルもプレイリストとしてインポートされます。"
 
-#: src/routes/settings.library.tsx:121
+#: src/routes/settings.library.tsx:120
 msgid "Automatically refresh library on startup"
 msgstr "起動時にライブラリを自動的に更新"
 
-#: src/routes/settings.library.tsx:128
+#: src/routes/settings.library.tsx:127
 msgid "Danger zone"
 msgstr "危険ゾーン"
 
-#: src/routes/settings.library.tsx:131
+#: src/routes/settings.library.tsx:130
 msgid "Delete all tracks and playlists from Museeks."
 msgstr "Museeks からすべてのトラックとプレイリストを削除します。"
 
-#: src/routes/settings.library.tsx:136
+#: src/routes/settings.library.tsx:135
 msgid "Fully reset the library"
 msgstr "ライブラリを完全にリセット"
 
-#: src/routes/settings.library.tsx:140
+#: src/routes/settings.library.tsx:139
 msgid "All your tracks and playlists will be deleted from Museeks."
 msgstr "すべてのトラックとプレイリストが Museeks から削除されます。"
 
-#: src/routes/settings.library.tsx:142
+#: src/routes/settings.library.tsx:141
 msgid "Reset library?"
 msgstr "ライブラリをリセットしますか？"
 
-#: src/routes/settings.library.tsx:145
+#: src/routes/settings.library.tsx:144
 #: src/routes/settings.ui.tsx:77
 msgid "Reset"
 msgstr "リセット"
 
-#: src/routes/settings.library.tsx:154
+#: src/routes/settings.library.tsx:153
 msgid "Reset library"
 msgstr "ライブラリをリセット"
 
@@ -489,63 +506,63 @@ msgstr "アクセントカラー"
 msgid "Language"
 msgstr "言語"
 
-#: src/routes/settings.ui.tsx:113
+#: src/routes/settings.ui.tsx:112
 msgid "Tracks density"
 msgstr "トラック密度"
 
-#: src/routes/settings.ui.tsx:114
+#: src/routes/settings.ui.tsx:113
 msgid "Change the tracks spacing"
 msgstr "トラックの間隔を変更"
 
-#: src/routes/settings.ui.tsx:125
+#: src/routes/settings.ui.tsx:124
 msgid "Normal (default)"
 msgstr "標準（デフォルト）"
 
-#: src/routes/settings.ui.tsx:128
+#: src/routes/settings.ui.tsx:127
 msgid "Compact"
 msgstr "コンパクト"
 
-#: src/routes/settings.ui.tsx:134
+#: src/routes/settings.ui.tsx:133
 msgid "Default view"
 msgstr "デフォルトビュー"
 
-#: src/routes/settings.ui.tsx:136
+#: src/routes/settings.ui.tsx:135
 msgid "Change the default view when starting the application"
 msgstr "アプリケーション起動時のデフォルトビューを変更"
 
-#: src/routes/settings.ui.tsx:144
+#: src/routes/settings.ui.tsx:143
 msgid "Library (default)"
 msgstr "ライブラリ（デフォルト）"
 
-#: src/routes/settings.ui.tsx:156
+#: src/routes/settings.ui.tsx:155
 msgid "Display Notifications"
 msgstr "通知を表示"
 
-#: src/routes/settings.ui.tsx:157
+#: src/routes/settings.ui.tsx:156
 msgid "Send notifications when the playing track changes"
 msgstr "再生中のトラックが変更された時に通知を送信"
 
-#: src/routes/settings.ui.tsx:166
+#: src/routes/settings.ui.tsx:165
 msgid "Sleep mode blocker"
 msgstr "スリープモード防止"
 
-#: src/routes/settings.ui.tsx:167
+#: src/routes/settings.ui.tsx:166
 msgid "Prevent the computer from going into sleep mode when playing"
 msgstr "再生中にコンピューターがスリープモードに入るのを防ぐ"
 
-#: src/routes/settings.ui.tsx:177
+#: src/routes/settings.ui.tsx:176
 msgid "[Beta] Wayland compatibility enhancements"
 msgstr "[ベータ] Wayland互換性強化"
 
-#: src/routes/settings.ui.tsx:178
+#: src/routes/settings.ui.tsx:177
 msgid "If you face issues using Wayland, try out this option"
 msgstr "Waylandの使用で問題が発生した場合は、このオプションをお試しください"
 
-#: src/routes/settings.ui.tsx:201
+#: src/routes/settings.ui.tsx:200
 msgid "Light"
 msgstr "ライト"
 
-#: src/routes/settings.ui.tsx:203
+#: src/routes/settings.ui.tsx:202
 msgid "Dark"
 msgstr "ダーク"
 

@@ -4,6 +4,7 @@ import {
   SortableContext,
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
+import { useLingui } from '@lingui/react/macro';
 import * as stylex from '@stylexjs/stylex';
 import { useVirtualizer } from '@tanstack/react-virtual';
 import type React from 'react';
@@ -49,6 +50,8 @@ export default function TrackListDefault(props: Props) {
     onContextMenu,
     onPlaybackStart,
   } = props;
+
+  const { t } = useLingui();
 
   const trackPlayingID = usePlayingTrackID();
   const innerScrollableRef = useRef<HTMLDivElement>(null);
@@ -119,6 +122,7 @@ export default function TrackListDefault(props: Props) {
         <ul
           role="listbox"
           aria-multiselectable="true"
+          aria-label={t`Track list`}
           {...stylex.props(styles.rows)}
           style={{
             height: `${virtualizer.getTotalSize()}px`,

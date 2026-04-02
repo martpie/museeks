@@ -27,7 +27,9 @@ export default function ProgressBar(props: Props) {
 
 const styles = stylex.create({
   progress: {
-    flex: '1',
+    flexGrow: 1,
+    flexShrink: 1,
+    flexBasis: '0%',
     display: 'flex',
     gap: '12px',
     alignItems: 'center',

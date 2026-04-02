@@ -1,65 +1,66 @@
-import { expect, test } from 'vitest';
-import { page } from 'vitest/browser';
+import { expect, test } from 'vite-plus/test';
+import { page } from 'vite-plus/test/browser';
 
-import { beforeEachSetup } from './test-helpers';
+import {
+  beforeEachSetup,
+  getTrackByName,
+  setupScannedLibrary,
+} from './e2e-helpers';
 
 beforeEachSetup();
 
 test('Double click on a track should play it and display its metadata', async () => {
   // By default, the player is paused
   await expect
-    .element(page.getByTestId('playercontrol-play'))
+    .element(page.getByRole('button', { name: 'Play' }))
     .toBeInTheDocument();
   await expect
-    .element(page.getByTestId('playercontrol-pause'))
+    .element(page.getByRole('button', { name: 'Pause' }))
     .not.toBeInTheDocument();
 
-  // Fake the import of tracks
-  await page.getByTestId('footer-settings-link').click();
-  await page.getByTestId('scan-library-button').click();
-  await page.getByTestId('footer-library-link').click();
+  await setupScannedLibrary();
 
   // Double-clicking on a track should start the player
-  await page.getByTestId('track-row-0').dblClick();
+  await getTrackByName(/Whiskey Blues/).dblClick();
 
   await expect
-    .element(page.getByTestId('playercontrol-play'))
+    .element(page.getByRole('button', { name: 'Play' }))
     .not.toBeInTheDocument();
   await expect
-    .element(page.getByTestId('playercontrol-pause'))
+    .element(page.getByRole('button', { name: 'Pause' }))
     .toBeInTheDocument();
 
   // Check the track info is there
   await expect
-    .element(page.getByTestId('playing-track-title'))
-    .toHaveTextContent('Whiskey Blues');
+    .element(page.getByRole('banner').getByText('Whiskey Blues'))
+    .toBeVisible();
   await expect
-    .element(page.getByTestId('playing-track-artist-album'))
+    .element(page.getByRole('banner'))
     .toHaveTextContent('Captain_Sleepy — Another Album');
 
   // Click on another one
-  await page.getByTestId('track-row-2').dblClick();
+  await getTrackByName(/Romantic Blues/).dblClick();
   await expect
-    .element(page.getByTestId('playercontrol-play'))
+    .element(page.getByRole('button', { name: 'Play' }))
     .not.toBeInTheDocument();
   await expect
-    .element(page.getByTestId('playercontrol-pause'))
+    .element(page.getByRole('button', { name: 'Pause' }))
     .toBeInTheDocument();
 
   // Check the new track info is there
   await expect
-    .element(page.getByTestId('playing-track-title'))
-    .toHaveTextContent('Romantic Blues');
+    .element(page.getByRole('banner').getByText('Romantic Blues'))
+    .toBeVisible();
   await expect
-    .element(page.getByTestId('playing-track-artist-album'))
+    .element(page.getByRole('banner'))
     .toHaveTextContent('Jean-Paul-V — Pixabay');
 
   // Pause
-  await page.getByTestId('playercontrol-pause').click();
+  await page.getByRole('button', { name: 'Pause' }).click();
   await expect
-    .element(page.getByTestId('playercontrol-play'))
+    .element(page.getByRole('button', { name: 'Play' }))
     .toBeInTheDocument();
   await expect
-    .element(page.getByTestId('playercontrol-pause'))
+    .element(page.getByRole('button', { name: 'Pause' }))
     .not.toBeInTheDocument();
 });

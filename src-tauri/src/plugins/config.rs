@@ -55,6 +55,7 @@ pub enum TrackViewDensity {
 
 #[derive(Serialize, Deserialize, Debug, Clone, TS)]
 #[ts(export, export_to = "../../src/generated/typings.ts")]
+#[serde(default)]
 pub struct Config {
     pub language: String,
     pub theme: String,
@@ -82,8 +83,8 @@ pub struct Config {
 
 pub const SYSTEM_THEME: &str = "__system";
 
-impl Config {
-    pub fn default() -> Self {
+impl Default for Config {
+    fn default() -> Self {
         Config {
             language: "en".to_owned(),
             theme: SYSTEM_THEME.to_owned(),

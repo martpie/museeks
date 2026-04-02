@@ -434,7 +434,6 @@ export default function TrackList(props: Props) {
       ref={containerRef}
       {...stylex.props(styles.trackList)}
       data-museeks-list
-      data-testid="track-list"
     >
       <Keybinding
         target={containerRef}
@@ -477,7 +476,9 @@ const styles = stylex.create({
   trackList: {
     display: 'flex',
     flexDirection: 'column',
-    flex: '1 1 auto',
+    flexGrow: 1,
+    flexShrink: 1,
+    flexBasis: 'auto',
     height: '100%',
     userSelect: 'none',
   },

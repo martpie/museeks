@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-export type FocusedAlbumSearch = {
+type FocusedAlbumSearch = {
   focused_album?: string;
 };
 

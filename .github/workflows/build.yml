@@ -20,45 +20,39 @@ jobs:
     runs-on: ubuntu-24.04
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
-      - uses: actions/setup-node@v4
+      - uses: voidzero-dev/setup-vp@v1
         with:
           node-version-file: .node-version
+          run-install: true
+          cache: true
 
-      - uses: actions-rust-lang/setup-rust-toolchain@v1
+      - name: Install Rust stable
+        uses: dtolnay/rust-toolchain@stable
 
       - name: Install native dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y libgtk-3-dev libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf
 
-      - name: Install UI dependencies
-        run: npm ci
-
       - name: Install Playwright dependencies
-        run: npx playwright install chromium --with-deps
+        run: vp exec playwright install chromium --with-deps
 
-      - name: 'Test: Format'
-        run: 'npm run test:format'
+      - name: 'Check: Format/Lint/Types'
+        run: 'vp check'
 
-      - name: 'Test: Lint'
-        run: 'npm run test:lint'
-
-      - name: 'Test: Unit'
-        run: 'npm run test:unit'
-
-      - name: 'Test: E2E'
-        run: 'npm run test:ui'
-
-      - name: 'Generate translations'
-        run: npm run gen:translations
+      - name: 'Test: Unit + E2E'
+        run: 'vp test'
 
       - name: Build application
-        run: npm run build
+        run: vp build
+
+      - name: 'Generate translations'
+        run: vp run gen:translations
 
       - name: 'Test: Rust (+ Generate Types)'
-        run: npm run gen:types
+        run: vp run gen:types
 
       # Check one of the command above did not generate any unexpected artifacts
       # (like types generation)
@@ -75,6 +69,8 @@ jobs:
   # https://docs.github.com/en/free-pro-team@latest/actions/reference/specifications-for-github-hosted-runners
 
   binaries:
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.owner.login == github.repository_owner
+
     needs: qa
 
     permissions:
@@ -94,11 +90,13 @@ jobs:
 
     runs-on: ${{ matrix.platform }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
-      - uses: actions/setup-node@v4
+      - uses: voidzero-dev/setup-vp@v1
         with:
           node-version-file: .node-version
+          run-install: true
+          cache: true
 
       - name: Install Rust stable
         uses: dtolnay/rust-toolchain@stable
@@ -120,9 +118,6 @@ jobs:
           flatpak install -y flathub org.gnome.Platform//48 org.gnome.Sdk//48
           flatpak install flathub -y org.flatpak.Builder
 
-      - name: Install frontend dependencies
-        run: npm ci
-
       - uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -134,6 +129,7 @@ jobs:
           APPLE_ID: ${{ secrets.APPLE_ID }}
           APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
         with:
+          tauriScript: vp run tauri
           includeUpdaterJson: false
           # compile a universal binary for intel + apple sillicon
           args: ${{ matrix.platform == 'macos-14' && '--target universal-apple-darwin' || '' }}

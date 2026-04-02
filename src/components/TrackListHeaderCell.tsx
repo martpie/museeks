@@ -10,7 +10,6 @@ type Props = {
   xstyle?: stylex.CompiledStyles;
   sortBy?: SortBy | null;
   icon?: IconName | null;
-  'data-testid'?: string;
 };
 
 export default function TrackListHeaderCell(props: Props) {
@@ -39,7 +38,6 @@ export default function TrackListHeaderCell(props: Props) {
       type="button"
       disabled={sortBy === null}
       onClick={sort}
-      data-testid={props['data-testid']}
       {...stylex.props(
         styles.trackCellHeader,
         sortBy && styles.sortable,
@@ -89,7 +87,9 @@ const styles = stylex.create({
     alignItems: 'center',
   },
   name: {
-    flex: '1',
+    flexGrow: 1,
+    flexShrink: 1,
+    flexBasis: '0%',
     marginBlock: '4px',
     marginInline: '0',
     paddingBlock: '0',

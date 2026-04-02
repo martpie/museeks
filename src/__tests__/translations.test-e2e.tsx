@@ -1,12 +1,12 @@
-import { expect, test } from 'vitest';
-import { page } from 'vitest/browser';
+import { expect, test } from 'vite-plus/test';
+import { page } from 'vite-plus/test/browser';
 
-import { beforeEachSetup } from './test-helpers';
+import { beforeEachSetup, getMainNavigation } from './e2e-helpers';
 
 beforeEachSetup();
 
 test('The language selector should update the UI', async () => {
-  const viewMessage = page.getByTestId('view-message');
+  const viewMessage = page.getByRole('status');
 
   await expect.element(viewMessage).toBeVisible();
   await expect
@@ -15,13 +15,16 @@ test('The language selector should update the UI', async () => {
       'There is no music in your libraryyou can add your music here',
     );
 
-  await page.getByTestId('footer-settings-link').click();
-  await page.getByTestId('settings-nav-link/settings/ui').click();
+  await getMainNavigation().getByRole('link', { name: 'Settings' }).click();
+  await page.getByRole('link', { name: 'Interface' }).click();
   await page
-    .getByTestId('language-selector')
+    .getByRole('combobox', { name: 'Language' })
     .selectOptions('Français (French)');
 
-  await page.getByTestId('footer-library-link').click();
+  await page
+    .getByRole('navigation', { name: 'Navigation principale' })
+    .getByRole('link', { name: 'Bibliothèque' })
+    .click();
   await expect
     .element(viewMessage)
     .toHaveTextContent(

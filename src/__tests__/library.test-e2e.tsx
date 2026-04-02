@@ -1,42 +1,36 @@
-import { expect, test } from 'vitest';
-import { page, userEvent } from 'vitest/browser';
+import { expect, test } from 'vite-plus/test';
+import { page, userEvent } from 'vite-plus/test/browser';
 
-import { beforeEachSetup } from './test-helpers';
+import {
+  beforeEachSetup,
+  getSortButton,
+  getTrackAt,
+  getTrackByName,
+  setupScannedLibrary,
+} from './e2e-helpers';
 
 beforeEachSetup();
 
 test('The library tab should display all tracks', async () => {
-  // Fake the import of tracks
-  await page.getByTestId('footer-settings-link').click();
-  await page.getByTestId('scan-library-button').click();
-  await page.getByTestId('footer-library-link').click();
+  await setupScannedLibrary();
 
   // Ensure we have the 3 test-tracks, but no more
-  await expect.element(page.getByTestId('track-row-0')).toBeInTheDocument();
-  await expect.element(page.getByTestId('track-row-1')).toBeInTheDocument();
-  await expect.element(page.getByTestId('track-row-2')).toBeInTheDocument();
-  await expect.element(page.getByTestId('track-row-3')).not.toBeInTheDocument();
+  await expect.element(getTrackAt(0)).toBeInTheDocument();
+  await expect.element(getTrackAt(1)).toBeInTheDocument();
+  await expect.element(getTrackAt(2)).toBeInTheDocument();
+  await expect.element(getTrackAt(3)).not.toBeInTheDocument();
 
-  await expect
-    .element(page.getByTestId('track-row-0'))
-    .toHaveAttribute('aria-selected', 'false');
-  await expect
-    .element(page.getByTestId('track-row-1'))
-    .toHaveAttribute('aria-selected', 'false');
-  await expect
-    .element(page.getByTestId('track-row-2'))
-    .toHaveAttribute('aria-selected', 'false');
+  await expect.element(getTrackAt(0)).toHaveAttribute('aria-selected', 'false');
+  await expect.element(getTrackAt(1)).toHaveAttribute('aria-selected', 'false');
+  await expect.element(getTrackAt(2)).toHaveAttribute('aria-selected', 'false');
 });
 
 test('Tracks should selectable via click + modifiers', async () => {
-  // Fake the import of tracks
-  await page.getByTestId('footer-settings-link').click();
-  await page.getByTestId('scan-library-button').click();
-  await page.getByTestId('footer-library-link').click();
+  await setupScannedLibrary();
 
-  const firstTrack = page.getByTestId(/track-row-/).first();
-  const secondTrack = page.getByTestId(/track-row-/).nth(1);
-  const thirdTrack = page.getByTestId(/track-row-/).nth(2);
+  const firstTrack = getTrackAt(0);
+  const secondTrack = getTrackAt(1);
+  const thirdTrack = getTrackAt(2);
 
   // Click on a track should select it
   await secondTrack.click();
@@ -72,14 +66,15 @@ test('Tracks should selectable via click + modifiers', async () => {
 });
 
 test('Tracks should be selectable via keyboard only (after a single selection)', async () => {
-  // Fake the import of tracks
-  await page.getByTestId('footer-settings-link').click();
-  await page.getByTestId('scan-library-button').click();
-  await page.getByTestId('footer-library-link').click();
+  await setupScannedLibrary();
 
-  const firstTrack = page.getByTestId(/track-row-/).first();
-  const secondTrack = page.getByTestId(/track-row-/).nth(1);
-  const thirdTrack = page.getByTestId(/track-row-/).nth(2);
+  const firstTrack = getTrackAt(0);
+  const secondTrack = getTrackAt(1);
+  const thirdTrack = getTrackAt(2);
+
+  await expect.element(firstTrack).toHaveTextContent('Whiskey Blues');
+  await expect.element(secondTrack).toHaveTextContent('Majestic Blues');
+  await expect.element(thirdTrack).toHaveTextContent('Romantic Blues');
 
   await firstTrack.click();
   await expect.element(firstTrack).toHaveAttribute('aria-selected', 'true');
@@ -131,57 +126,53 @@ test('Tracks should be selectable via keyboard only (after a single selection)',
 });
 
 test('Search should filter tracks in the library', async () => {
-  // Fake the import of tracks
-  await page.getByTestId('footer-settings-link').click();
-  await page.getByTestId('scan-library-button').click();
-  await page.getByTestId('footer-library-link').click();
+  await setupScannedLibrary();
 
-  const search = page.getByTestId('library-search');
-  const searchClear = page.getByTestId('library-search-clear');
+  const search = page.getByRole('textbox', { name: 'Search library' });
+  const searchClear = page.getByRole('button', { name: 'Clear search' });
 
   // Searching by a common word should display all tracks
   await search.fill('Blues');
-  await expect.element(page.getByTestId('track-row-0')).toBeInTheDocument();
-  await expect.element(page.getByTestId('track-row-1')).toBeInTheDocument();
-  await expect.element(page.getByTestId('track-row-2')).toBeInTheDocument();
+  await expect.element(getTrackAt(0)).toBeInTheDocument();
+  await expect.element(getTrackAt(1)).toBeInTheDocument();
+  await expect.element(getTrackAt(2)).toBeInTheDocument();
 
   // Searching by a specific word should display only the matching tracks,
   // regardless of accents and cases
   await search.fill('pixAbày');
-  await expect.element(page.getByTestId('track-row-0')).not.toBeInTheDocument();
-  await expect.element(page.getByTestId('track-row-1')).toBeInTheDocument();
-  await expect.element(page.getByTestId('track-row-2')).toBeInTheDocument();
+  await expect.element(getTrackByName(/Whiskey Blues/)).not.toBeInTheDocument();
+  await expect.element(getTrackByName(/Majestic Blues/)).toBeInTheDocument();
+  await expect.element(getTrackByName(/Romantic Blues/)).toBeInTheDocument();
 
   await search.fill('hisk');
-  await expect.element(page.getByTestId('track-row-0')).toBeInTheDocument();
-  await expect.element(page.getByTestId('track-row-1')).not.toBeInTheDocument();
-  await expect.element(page.getByTestId('track-row-2')).not.toBeInTheDocument();
+  await expect.element(getTrackByName(/Whiskey Blues/)).toBeInTheDocument();
+  await expect
+    .element(getTrackByName(/Majestic Blues/))
+    .not.toBeInTheDocument();
+  await expect
+    .element(getTrackByName(/Romantic Blues/))
+    .not.toBeInTheDocument();
 
   // Searching by an unknown word should display no tracks and a warning
   await search.fill('Something that does not exist');
-  await expect.element(page.getByTestId('track-row-0')).not.toBeInTheDocument();
-  await expect.element(page.getByTestId('track-row-1')).not.toBeInTheDocument();
-  await expect.element(page.getByTestId('track-row-2')).not.toBeInTheDocument();
+  await expect.element(getTrackAt(0)).not.toBeInTheDocument();
   await expect
-    .element(page.getByTestId('view-message'))
+    .element(page.getByRole('status'))
     .toHaveTextContent('Your search returned no results');
 
   // Clicking the search clear button should clear the search
   await searchClear.click();
-  await expect.element(page.getByTestId('track-row-0')).toBeInTheDocument();
-  await expect.element(page.getByTestId('track-row-1')).toBeInTheDocument();
-  await expect.element(page.getByTestId('track-row-2')).toBeInTheDocument();
+  await expect.element(getTrackAt(0)).toBeInTheDocument();
+  await expect.element(getTrackAt(1)).toBeInTheDocument();
+  await expect.element(getTrackAt(2)).toBeInTheDocument();
 });
 
 test('Column headers should sort tracks in the library', async () => {
-  // Fake the import of tracks
-  await page.getByTestId('footer-settings-link').click();
-  await page.getByTestId('scan-library-button').click();
-  await page.getByTestId('footer-library-link').click();
+  await setupScannedLibrary();
 
-  const firstTrack = page.getByTestId(/track-row-/).first();
-  const secondTrack = page.getByTestId(/track-row-/).nth(1);
-  const thirdTrack = page.getByTestId(/track-row-/).nth(2);
+  const firstTrack = getTrackAt(0);
+  const secondTrack = getTrackAt(1);
+  const thirdTrack = getTrackAt(2);
 
   const track0content =
     'Whiskey Blues05:00Captain_SleepyAnother Albumrock, blues';
@@ -194,19 +185,19 @@ test('Column headers should sort tracks in the library', async () => {
   await expect.element(thirdTrack).toHaveTextContent(track2content);
 
   // Clicking on the title header should change the sorting to Descending by Artist name
-  await page.getByTestId('tracklist-header-artist').click();
+  await getSortButton('Artist').click();
   await expect.element(firstTrack).toHaveTextContent(track2content);
   await expect.element(secondTrack).toHaveTextContent(track1content);
   await expect.element(thirdTrack).toHaveTextContent(track0content);
 
   // Clicking again should change the sorting back to Ascending by Artist name
-  await page.getByTestId('tracklist-header-artist').click();
+  await getSortButton('Artist').click();
   await expect.element(firstTrack).toHaveTextContent(track0content);
   await expect.element(secondTrack).toHaveTextContent(track1content);
   await expect.element(thirdTrack).toHaveTextContent(track2content);
 
   // Let's sort by title as well
-  await page.getByTestId('tracklist-header-title').click();
+  await getSortButton('Title').click();
   await expect.element(firstTrack).toHaveTextContent(track1content);
   await expect.element(secondTrack).toHaveTextContent(track2content);
   await expect.element(thirdTrack).toHaveTextContent(track0content);

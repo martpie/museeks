@@ -1,4 +1,6 @@
+use lofty::config::ParseOptions;
 use lofty::file::{AudioFile, TaggedFileExt};
+use lofty::probe::Probe;
 use lofty::tag::{Accessor, ItemKey};
 use log::warn;
 use rayon::iter::IntoParallelRefIterator;
@@ -57,7 +59,10 @@ pub struct TrackGroup {
  * file
  */
 pub fn get_track_from_file(path: &PathBuf) -> AnyResult<Track> {
-    match lofty::read_from_path(path) {
+    match Probe::open(path)
+        .map_err(lofty::error::LoftyError::from)
+        .and_then(|p| p.options(ParseOptions::new().read_cover_art(false)).read())
+    {
         Ok(tagged_file) => {
             let tag = tagged_file.primary_tag().ok_or_else(|| {
                 warn!("No tags found for file {:?}", path);

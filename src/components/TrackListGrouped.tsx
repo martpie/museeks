@@ -1,4 +1,4 @@
-import { Plural } from '@lingui/react/macro';
+import { Plural, useLingui } from '@lingui/react/macro';
 import * as stylex from '@stylexjs/stylex';
 import { useImperativeHandle, useRef } from 'react';
 
@@ -28,6 +28,8 @@ type Props = {
 
 export default function TrackListGroupedLayout(props: Props) {
   const { ref, trackGroups, rowHeight, showArtistInTitle, ...rest } = props;
+  const { t } = useLingui();
+
   const tracks = useAllTracks(trackGroups);
 
   const innerScrollableRef = useRef<HTMLDivElement>(null);
@@ -50,7 +52,12 @@ export default function TrackListGroupedLayout(props: Props) {
   }, [tracks]);
 
   return (
-    <Scrollable ref={innerScrollableRef}>
+    <Scrollable
+      ref={innerScrollableRef}
+      role="listbox"
+      aria-label={t`Track list`}
+      aria-multiselectable="true"
+    >
       {trackGroups.map((tracksGroup) => {
         return (
           <TrackListGroup
@@ -84,7 +91,6 @@ function TrackListGroup(props: TrackListGroupProps) {
     onPlaybackStart,
   } = props;
   const { tracks, label, year, genres, duration } = props.tracksGroup;
-
   const trackPlayingID = usePlayingTrackID();
 
   if (tracks.length === 0) {

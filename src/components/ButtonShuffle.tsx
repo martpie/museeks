@@ -9,7 +9,7 @@ export default function ButtonShuffle() {
 
   return (
     <ButtonIcon
-      title={t`Shuffle`}
+      label={t`Shuffle`}
       onClick={() => player.toggleShuffle()}
       icon={'shuffle'}
       iconSize={20}

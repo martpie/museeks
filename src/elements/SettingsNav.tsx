@@ -36,7 +36,6 @@ export function SettingsNavLink(props: LinkProps) {
           <Link
             to={props.to}
             draggable={false}
-            data-testid={`settings-nav-link${props.to}`}
             {...renderProps}
             {...stylex.props(styles.link)}
           >
