@@ -3,7 +3,7 @@ import { Trans } from '@lingui/react/macro';
 import Link from '../elements/Link';
 import * as ViewMessage from '../elements/ViewMessage';
 import type { Track, TrackGroup } from '../generated/typings';
-import useLibraryStore from '../stores/useLibraryStore';
+import useLibraryStore from '../lib/store';
 
 type Props = {
   isLoading: boolean;

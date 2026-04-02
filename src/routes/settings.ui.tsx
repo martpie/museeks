@@ -6,6 +6,7 @@ import { relaunch } from '@tauri-apps/plugin-process';
 import { debounce } from 'lodash-es';
 import { useMemo } from 'react';
 
+import SettingsAPI, { DEFAULT_MAIN_COLOR } from '../api/SettingsAPI';
 import * as Setting from '../components/Setting';
 import CheckboxSetting from '../components/SettingCheckbox';
 import Button from '../elements/Button';
@@ -15,7 +16,6 @@ import SettingsBridge from '../lib/bridge-settings';
 import { configQuery } from '../lib/queries';
 import { themes } from '../lib/themes';
 import { logAndNotifyError } from '../lib/utils';
-import SettingsAPI, { DEFAULT_MAIN_COLOR } from '../stores/SettingsAPI';
 import {
   DEFAULT_LANGUAGE,
   NON_DEFAULT_LANGUAGES,

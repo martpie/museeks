@@ -13,6 +13,38 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
+#. placeholder {0}: scanResult.track_count
+#: src/api/LibraryAPI.ts:37
+msgid "{0} track(s) were refreshed."
+msgstr "{0} track(s) were refreshed."
+
+#. placeholder {0}: scanResult.track_count
+#: src/api/LibraryAPI.ts:38
+msgid "{0} track(s) were added to the library."
+msgstr "{0} track(s) were added to the library."
+
+#. placeholder {0}: scanResult.playlist_count
+#: src/api/LibraryAPI.ts:45
+msgid "{0} playlist(s) were added to the library."
+msgstr "{0} playlist(s) were added to the library."
+
+#: src/api/LibraryAPI.ts:99
+msgid "Library was reset"
+msgstr "Library was reset"
+
+#: src/api/PlaylistsAPI.ts:35
+msgid "The playlist \"{name}\" was created"
+msgstr "The playlist \"{name}\" was created"
+
+#. placeholder {0}: newRelease.tag_name
+#: src/api/SettingsAPI.ts:168
+msgid "Museeks {0} is available, check https://museeks.io!"
+msgstr "Museeks {0} is available, check https://museeks.io!"
+
+#: src/api/SettingsAPI.ts:170
+msgid "Museeks {currentVersion} is the latest version available."
+msgstr "Museeks {currentVersion} is the latest version available."
+
 #: src/components/ButtonRepeat.tsx:18
 msgid "Repeat"
 msgstr "Repeat"
@@ -25,20 +57,20 @@ msgstr "Shuffle"
 msgid "Album cover"
 msgstr "Album cover"
 
-#: src/components/DropzoneImport.tsx:50
+#: src/components/DropzoneImport.tsx:49
 msgid "{skippedItemsCount, plural, one {# invalid item ignored} other {# invalid items ignored}}"
 msgstr "{skippedItemsCount, plural, one {# invalid item ignored} other {# invalid items ignored}}"
 
 #. placeholder {0}: folders.length
-#: src/components/DropzoneImport.tsx:61
+#: src/components/DropzoneImport.tsx:60
 msgid "{0, plural, one {# folder added to the library} other {# folders added to the library}}"
 msgstr "{0, plural, one {# folder added to the library} other {# folders added to the library}}"
 
-#: src/components/DropzoneImport.tsx:91
+#: src/components/DropzoneImport.tsx:90
 msgid "Add music to the library"
 msgstr "Add music to the library"
 
-#: src/components/DropzoneImport.tsx:92
+#: src/components/DropzoneImport.tsx:91
 msgid "Drop folders anywhere"
 msgstr "Drop folders anywhere"
 
@@ -148,78 +180,78 @@ msgstr "Clear search"
 msgid "Rename"
 msgstr "Rename"
 
-#: src/components/TrackList.tsx:244
+#: src/components/TrackList.tsx:243
 msgid "Create new playlist..."
 msgstr "Create new playlist..."
 
-#: src/components/TrackList.tsx:247
+#: src/components/TrackList.tsx:246
 #: src/routes/playlists.tsx:63
 msgid "New playlist"
 msgstr "New playlist"
 
-#: src/components/TrackList.tsx:260
+#: src/components/TrackList.tsx:259
 msgid "No playlists"
 msgstr "No playlists"
 
 #. placeholder {0}: selectedTracks.size
 #. placeholder {1}: playlist.name
-#: src/components/TrackList.tsx:274
+#: src/components/TrackList.tsx:273
 msgid "{0} track(s) were added to \"{1}\""
 msgstr "{0} track(s) were added to \"{1}\""
 
-#: src/components/TrackList.tsx:292
+#: src/components/TrackList.tsx:291
 msgid "{selectedCount, plural, one {# track selected} other {# tracks selected}}"
 msgstr "{selectedCount, plural, one {# track selected} other {# tracks selected}}"
 
-#: src/components/TrackList.tsx:304
+#: src/components/TrackList.tsx:303
 msgid "Add to queue"
 msgstr "Add to queue"
 
-#: src/components/TrackList.tsx:312
+#: src/components/TrackList.tsx:311
 msgid "Play next"
 msgstr "Play next"
 
-#: src/components/TrackList.tsx:324
+#: src/components/TrackList.tsx:323
 msgid "Add to playlist"
 msgstr "Add to playlist"
 
-#: src/components/TrackList.tsx:334
+#: src/components/TrackList.tsx:333
 msgid "Search for \"{item}\""
 msgstr "Search for \"{item}\""
 
-#: src/components/TrackList.tsx:347
+#: src/components/TrackList.tsx:346
 msgid "Copy \"{item}\""
 msgstr "Copy \"{item}\""
 
-#: src/components/TrackList.tsx:370
+#: src/components/TrackList.tsx:369
 msgid "Edit track"
 msgstr "Edit track"
 
-#: src/components/TrackList.tsx:380
+#: src/components/TrackList.tsx:379
 msgid "Show in file manager"
 msgstr "Show in file manager"
 
-#: src/components/TrackList.tsx:386
+#: src/components/TrackList.tsx:385
 msgid "Remove from library"
 msgstr "Remove from library"
 
 #. placeholder {0}: selectedTracks.size
-#: src/components/TrackList.tsx:389
+#: src/components/TrackList.tsx:388
 msgid "Are you sure you want to remove {0} track(s) from your library?"
 msgstr "Are you sure you want to remove {0} track(s) from your library?"
 
-#: src/components/TrackList.tsx:391
+#: src/components/TrackList.tsx:390
 msgid "Remove tracks"
 msgstr "Remove tracks"
 
-#: src/components/TrackList.tsx:393
+#: src/components/TrackList.tsx:392
 #: src/routes/settings.library.tsx:100
 #: src/routes/settings.library.tsx:145
-#: src/routes/tracks.$trackID.tsx:258
+#: src/routes/tracks.$trackID.tsx:257
 msgid "Cancel"
 msgstr "Cancel"
 
-#: src/components/TrackList.tsx:394
+#: src/components/TrackList.tsx:393
 #: src/routes/settings.library.tsx:64
 msgid "Remove"
 msgstr "Remove"
@@ -241,12 +273,12 @@ msgid "Track list sorting options"
 msgstr "Track list sorting options"
 
 #: src/components/TrackListHeader.tsx:26
-#: src/routes/tracks.$trackID.tsx:89
+#: src/routes/tracks.$trackID.tsx:88
 msgid "Title"
 msgstr "Title"
 
 #: src/components/TrackListHeader.tsx:31
-#: src/routes/tracks.$trackID.tsx:242
+#: src/routes/tracks.$trackID.tsx:241
 msgid "Duration"
 msgstr "Duration"
 
@@ -255,12 +287,12 @@ msgid "Artist"
 msgstr "Artist"
 
 #: src/components/TrackListHeader.tsx:41
-#: src/routes/tracks.$trackID.tsx:100
+#: src/routes/tracks.$trackID.tsx:99
 msgid "Album"
 msgstr "Album"
 
 #: src/components/TrackListHeader.tsx:46
-#: src/routes/tracks.$trackID.tsx:140
+#: src/routes/tracks.$trackID.tsx:139
 msgid "Genre"
 msgstr "Genre"
 
@@ -567,91 +599,59 @@ msgid "Dark"
 msgstr "Dark"
 
 #. placeholder {0}: track.title
-#: src/routes/tracks.$trackID.tsx:85
+#: src/routes/tracks.$trackID.tsx:84
 msgid "Edit \"{0}\""
 msgstr "Edit \"{0}\""
 
-#: src/routes/tracks.$trackID.tsx:111
+#: src/routes/tracks.$trackID.tsx:110
 msgid "Album Artist"
 msgstr "Album Artist"
 
-#: src/routes/tracks.$trackID.tsx:125
+#: src/routes/tracks.$trackID.tsx:124
 msgid "Track Artists"
 msgstr "Track Artists"
 
-#: src/routes/tracks.$trackID.tsx:126
+#: src/routes/tracks.$trackID.tsx:125
 msgid "You can add multiple artists with commas"
 msgstr "You can add multiple artists with commas"
 
-#: src/routes/tracks.$trackID.tsx:141
+#: src/routes/tracks.$trackID.tsx:140
 msgid "You can add multiple genres with commas"
 msgstr "You can add multiple genres with commas"
 
-#: src/routes/tracks.$trackID.tsx:155
+#: src/routes/tracks.$trackID.tsx:154
 msgid "Year"
 msgstr "Year"
 
-#: src/routes/tracks.$trackID.tsx:169
+#: src/routes/tracks.$trackID.tsx:168
 msgid "Track Nº"
 msgstr "Track Nº"
 
-#: src/routes/tracks.$trackID.tsx:183
-#: src/routes/tracks.$trackID.tsx:215
+#: src/routes/tracks.$trackID.tsx:182
+#: src/routes/tracks.$trackID.tsx:214
 msgid "Of"
 msgstr "Of"
 
-#: src/routes/tracks.$trackID.tsx:201
+#: src/routes/tracks.$trackID.tsx:200
 msgid "Disk Nº"
 msgstr "Disk Nº"
 
-#: src/routes/tracks.$trackID.tsx:232
+#: src/routes/tracks.$trackID.tsx:231
 msgid "Compilation"
 msgstr "Compilation"
 
-#: src/routes/tracks.$trackID.tsx:233
+#: src/routes/tracks.$trackID.tsx:232
 msgid "Group this track with other tracks from the same compilation, regardless of the artist names."
 msgstr "Group this track with other tracks from the same compilation, regardless of the artist names."
 
-#: src/routes/tracks.$trackID.tsx:250
+#: src/routes/tracks.$trackID.tsx:249
 msgid "Path"
 msgstr "Path"
 
-#: src/routes/tracks.$trackID.tsx:261
+#: src/routes/tracks.$trackID.tsx:260
 msgid "Save"
 msgstr "Save"
 
-#: src/routes/tracks.$trackID.tsx:266
+#: src/routes/tracks.$trackID.tsx:265
 msgid "Clicking \"save\" will only update the library data, but will not save it to the original file."
 msgstr "Clicking \"save\" will only update the library data, but will not save it to the original file."
-
-#: src/stores/PlaylistsAPI.ts:35
-msgid "The playlist \"{name}\" was created"
-msgstr "The playlist \"{name}\" was created"
-
-#. placeholder {0}: newRelease.tag_name
-#: src/stores/SettingsAPI.ts:168
-msgid "Museeks {0} is available, check https://museeks.io!"
-msgstr "Museeks {0} is available, check https://museeks.io!"
-
-#: src/stores/SettingsAPI.ts:170
-msgid "Museeks {currentVersion} is the latest version available."
-msgstr "Museeks {currentVersion} is the latest version available."
-
-#. placeholder {0}: scanResult.track_count
-#: src/stores/useLibraryStore.ts:68
-msgid "{0} track(s) were refreshed."
-msgstr "{0} track(s) were refreshed."
-
-#. placeholder {0}: scanResult.track_count
-#: src/stores/useLibraryStore.ts:69
-msgid "{0} track(s) were added to the library."
-msgstr "{0} track(s) were added to the library."
-
-#. placeholder {0}: scanResult.playlist_count
-#: src/stores/useLibraryStore.ts:76
-msgid "{0} playlist(s) were added to the library."
-msgstr "{0} playlist(s) were added to the library."
-
-#: src/stores/useLibraryStore.ts:138
-msgid "Library was reset"
-msgstr "Library was reset"

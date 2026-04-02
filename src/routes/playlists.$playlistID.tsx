@@ -7,6 +7,7 @@ import {
 } from '@tanstack/react-router';
 import { useCallback, useMemo } from 'react';
 
+import PlaylistsAPI from '../api/PlaylistsAPI';
 import TrackList from '../components/TrackList';
 import Link from '../elements/Link';
 import * as ViewMessage from '../elements/ViewMessage';
@@ -16,8 +17,7 @@ import useGlobalTrackListStatus from '../hooks/useGlobalTrackListStatus';
 import useInvalidate from '../hooks/useInvalidate';
 import DatabaseBridge from '../lib/bridge-database';
 import { configQuery } from '../lib/queries';
-import PlaylistsAPI from '../stores/PlaylistsAPI';
-import useLibraryStore from '../stores/useLibraryStore';
+import useLibraryStore from '../lib/store';
 import type { QueueOrigin } from '../types/museeks';
 
 export const Route = createFileRoute('/playlists/$playlistID')({

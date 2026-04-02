@@ -13,6 +13,38 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
+#. placeholder {0}: scanResult.track_count
+#: src/api/LibraryAPI.ts:37
+msgid "{0} track(s) were refreshed."
+msgstr "{0} 首音轨已刷新。"
+
+#. placeholder {0}: scanResult.track_count
+#: src/api/LibraryAPI.ts:38
+msgid "{0} track(s) were added to the library."
+msgstr "{0} 首音轨已添加到音乐库。"
+
+#. placeholder {0}: scanResult.playlist_count
+#: src/api/LibraryAPI.ts:45
+msgid "{0} playlist(s) were added to the library."
+msgstr "{0} 个播放列表已添加到音乐库。"
+
+#: src/api/LibraryAPI.ts:99
+msgid "Library was reset"
+msgstr "音乐库已重置"
+
+#: src/api/PlaylistsAPI.ts:35
+msgid "The playlist \"{name}\" was created"
+msgstr "播放列表 \"{name}\" 已创建"
+
+#. placeholder {0}: newRelease.tag_name
+#: src/api/SettingsAPI.ts:168
+msgid "Museeks {0} is available, check https://museeks.io!"
+msgstr "Museeks {0} 可用，请查看 https://museeks.io！"
+
+#: src/api/SettingsAPI.ts:170
+msgid "Museeks {currentVersion} is the latest version available."
+msgstr "Museeks {currentVersion} 是可用的最新版本。"
+
 #: src/components/ButtonRepeat.tsx:18
 msgid "Repeat"
 msgstr "重复"
@@ -25,20 +57,20 @@ msgstr "随机播放"
 msgid "Album cover"
 msgstr "专辑封面"
 
-#: src/components/DropzoneImport.tsx:50
+#: src/components/DropzoneImport.tsx:49
 msgid "{skippedItemsCount, plural, one {# invalid item ignored} other {# invalid items ignored}}"
 msgstr "{skippedItemsCount, plural, one {# 个无效项目已忽略} other {# 个无效项目已忽略}}"
 
 #. placeholder {0}: folders.length
-#: src/components/DropzoneImport.tsx:61
+#: src/components/DropzoneImport.tsx:60
 msgid "{0, plural, one {# folder added to the library} other {# folders added to the library}}"
 msgstr "{0, plural, one {# 个文件夹已添加到音乐库} other {# 个文件夹已添加到音乐库}}"
 
-#: src/components/DropzoneImport.tsx:91
+#: src/components/DropzoneImport.tsx:90
 msgid "Add music to the library"
 msgstr "添加音乐到音乐库"
 
-#: src/components/DropzoneImport.tsx:92
+#: src/components/DropzoneImport.tsx:91
 msgid "Drop folders anywhere"
 msgstr "将文件夹拖放到任意位置"
 
@@ -148,78 +180,78 @@ msgstr ""
 msgid "Rename"
 msgstr "重命名"
 
-#: src/components/TrackList.tsx:244
+#: src/components/TrackList.tsx:243
 msgid "Create new playlist..."
 msgstr "创建新播放列表..."
 
-#: src/components/TrackList.tsx:247
+#: src/components/TrackList.tsx:246
 #: src/routes/playlists.tsx:63
 msgid "New playlist"
 msgstr "新播放列表"
 
-#: src/components/TrackList.tsx:260
+#: src/components/TrackList.tsx:259
 msgid "No playlists"
 msgstr "没有播放列表"
 
 #. placeholder {0}: selectedTracks.size
 #. placeholder {1}: playlist.name
-#: src/components/TrackList.tsx:274
+#: src/components/TrackList.tsx:273
 msgid "{0} track(s) were added to \"{1}\""
 msgstr "{0} 首音轨已添加到 \"{1}\""
 
-#: src/components/TrackList.tsx:292
+#: src/components/TrackList.tsx:291
 msgid "{selectedCount, plural, one {# track selected} other {# tracks selected}}"
 msgstr "{selectedCount, plural, one {# 首音轨已选择} other {# 首音轨已选择}}"
 
-#: src/components/TrackList.tsx:304
+#: src/components/TrackList.tsx:303
 msgid "Add to queue"
 msgstr "添加到队列"
 
-#: src/components/TrackList.tsx:312
+#: src/components/TrackList.tsx:311
 msgid "Play next"
 msgstr "下一个播放"
 
-#: src/components/TrackList.tsx:324
+#: src/components/TrackList.tsx:323
 msgid "Add to playlist"
 msgstr "添加到播放列表"
 
-#: src/components/TrackList.tsx:334
+#: src/components/TrackList.tsx:333
 msgid "Search for \"{item}\""
 msgstr "搜索 \"{item}\""
 
-#: src/components/TrackList.tsx:347
+#: src/components/TrackList.tsx:346
 msgid "Copy \"{item}\""
 msgstr "复制 \"{item}\""
 
-#: src/components/TrackList.tsx:370
+#: src/components/TrackList.tsx:369
 msgid "Edit track"
 msgstr "编辑音轨"
 
-#: src/components/TrackList.tsx:380
+#: src/components/TrackList.tsx:379
 msgid "Show in file manager"
 msgstr "在文件管理器中显示"
 
-#: src/components/TrackList.tsx:386
+#: src/components/TrackList.tsx:385
 msgid "Remove from library"
 msgstr "从音乐库中移除"
 
 #. placeholder {0}: selectedTracks.size
-#: src/components/TrackList.tsx:389
+#: src/components/TrackList.tsx:388
 msgid "Are you sure you want to remove {0} track(s) from your library?"
 msgstr "您确定要从音乐库中移除 {0} 首音轨吗？"
 
-#: src/components/TrackList.tsx:391
+#: src/components/TrackList.tsx:390
 msgid "Remove tracks"
 msgstr "移除音轨"
 
-#: src/components/TrackList.tsx:393
+#: src/components/TrackList.tsx:392
 #: src/routes/settings.library.tsx:100
 #: src/routes/settings.library.tsx:145
-#: src/routes/tracks.$trackID.tsx:258
+#: src/routes/tracks.$trackID.tsx:257
 msgid "Cancel"
 msgstr "取消"
 
-#: src/components/TrackList.tsx:394
+#: src/components/TrackList.tsx:393
 #: src/routes/settings.library.tsx:64
 msgid "Remove"
 msgstr "移除"
@@ -241,12 +273,12 @@ msgid "Track list sorting options"
 msgstr ""
 
 #: src/components/TrackListHeader.tsx:26
-#: src/routes/tracks.$trackID.tsx:89
+#: src/routes/tracks.$trackID.tsx:88
 msgid "Title"
 msgstr "标题"
 
 #: src/components/TrackListHeader.tsx:31
-#: src/routes/tracks.$trackID.tsx:242
+#: src/routes/tracks.$trackID.tsx:241
 msgid "Duration"
 msgstr "时长"
 
@@ -255,12 +287,12 @@ msgid "Artist"
 msgstr "艺术家"
 
 #: src/components/TrackListHeader.tsx:41
-#: src/routes/tracks.$trackID.tsx:100
+#: src/routes/tracks.$trackID.tsx:99
 msgid "Album"
 msgstr "专辑"
 
 #: src/components/TrackListHeader.tsx:46
-#: src/routes/tracks.$trackID.tsx:140
+#: src/routes/tracks.$trackID.tsx:139
 msgid "Genre"
 msgstr "流派"
 
@@ -567,91 +599,59 @@ msgid "Dark"
 msgstr "深色"
 
 #. placeholder {0}: track.title
-#: src/routes/tracks.$trackID.tsx:85
+#: src/routes/tracks.$trackID.tsx:84
 msgid "Edit \"{0}\""
 msgstr "编辑 \"{0}\""
 
-#: src/routes/tracks.$trackID.tsx:111
+#: src/routes/tracks.$trackID.tsx:110
 msgid "Album Artist"
 msgstr "专辑艺术家"
 
-#: src/routes/tracks.$trackID.tsx:125
+#: src/routes/tracks.$trackID.tsx:124
 msgid "Track Artists"
 msgstr "音轨艺术家"
 
-#: src/routes/tracks.$trackID.tsx:126
+#: src/routes/tracks.$trackID.tsx:125
 msgid "You can add multiple artists with commas"
 msgstr "您可以用逗号添加多个艺术家"
 
-#: src/routes/tracks.$trackID.tsx:141
+#: src/routes/tracks.$trackID.tsx:140
 msgid "You can add multiple genres with commas"
 msgstr "您可以用逗号添加多个流派"
 
-#: src/routes/tracks.$trackID.tsx:155
+#: src/routes/tracks.$trackID.tsx:154
 msgid "Year"
 msgstr "年份"
 
-#: src/routes/tracks.$trackID.tsx:169
+#: src/routes/tracks.$trackID.tsx:168
 msgid "Track Nº"
 msgstr "音轨编号"
 
-#: src/routes/tracks.$trackID.tsx:183
-#: src/routes/tracks.$trackID.tsx:215
+#: src/routes/tracks.$trackID.tsx:182
+#: src/routes/tracks.$trackID.tsx:214
 msgid "Of"
 msgstr "共"
 
-#: src/routes/tracks.$trackID.tsx:201
+#: src/routes/tracks.$trackID.tsx:200
 msgid "Disk Nº"
 msgstr "磁盘编号"
 
-#: src/routes/tracks.$trackID.tsx:232
+#: src/routes/tracks.$trackID.tsx:231
 msgid "Compilation"
 msgstr ""
 
-#: src/routes/tracks.$trackID.tsx:233
+#: src/routes/tracks.$trackID.tsx:232
 msgid "Group this track with other tracks from the same compilation, regardless of the artist names."
 msgstr ""
 
-#: src/routes/tracks.$trackID.tsx:250
+#: src/routes/tracks.$trackID.tsx:249
 msgid "Path"
 msgstr "路径"
 
-#: src/routes/tracks.$trackID.tsx:261
+#: src/routes/tracks.$trackID.tsx:260
 msgid "Save"
 msgstr "保存"
 
-#: src/routes/tracks.$trackID.tsx:266
+#: src/routes/tracks.$trackID.tsx:265
 msgid "Clicking \"save\" will only update the library data, but will not save it to the original file."
 msgstr "点击\"保存\"只会更新音乐库数据，但不会保存到原始文件。"
-
-#: src/stores/PlaylistsAPI.ts:35
-msgid "The playlist \"{name}\" was created"
-msgstr "播放列表 \"{name}\" 已创建"
-
-#. placeholder {0}: newRelease.tag_name
-#: src/stores/SettingsAPI.ts:168
-msgid "Museeks {0} is available, check https://museeks.io!"
-msgstr "Museeks {0} 可用，请查看 https://museeks.io！"
-
-#: src/stores/SettingsAPI.ts:170
-msgid "Museeks {currentVersion} is the latest version available."
-msgstr "Museeks {currentVersion} 是可用的最新版本。"
-
-#. placeholder {0}: scanResult.track_count
-#: src/stores/useLibraryStore.ts:68
-msgid "{0} track(s) were refreshed."
-msgstr "{0} 首音轨已刷新。"
-
-#. placeholder {0}: scanResult.track_count
-#: src/stores/useLibraryStore.ts:69
-msgid "{0} track(s) were added to the library."
-msgstr "{0} 首音轨已添加到音乐库。"
-
-#. placeholder {0}: scanResult.playlist_count
-#: src/stores/useLibraryStore.ts:76
-msgid "{0} playlist(s) were added to the library."
-msgstr "{0} 个播放列表已添加到音乐库。"
-
-#: src/stores/useLibraryStore.ts:138
-msgid "Library was reset"
-msgstr "音乐库已重置"

@@ -2,6 +2,7 @@ import { Trans, useLingui } from '@lingui/react/macro';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { createFileRoute, useLoaderData } from '@tanstack/react-router';
 
+import SettingsAPI from '../api/SettingsAPI';
 import * as Setting from '../components/Setting';
 import CheckboxSetting from '../components/SettingCheckbox';
 import Button from '../elements/Button';
@@ -13,7 +14,6 @@ import Heart from '../elements/Heart';
 import useInvalidate, { useInvalidateCallback } from '../hooks/useInvalidate';
 import { configQuery } from '../lib/queries';
 import { logAndNotifyError } from '../lib/utils';
-import SettingsAPI from '../stores/SettingsAPI';
 import { NON_DEFAULT_LANGUAGES } from '../translations/languages';
 
 export const Route = createFileRoute('/settings/about')({

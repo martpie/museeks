@@ -5,13 +5,12 @@ import { getCurrentWindow } from '@tauri-apps/api/window';
 import { lstat } from '@tauri-apps/plugin-fs';
 import { useEffect, useState } from 'react';
 
+import LibraryAPI from '../api/LibraryAPI';
 import useInvalidate from '../hooks/useInvalidate';
 import toastManager from '../lib/toast-manager';
 import { logAndNotifyError } from '../lib/utils';
-import { useLibraryAPI } from '../stores/useLibraryStore';
 
 export default function DropzoneImport() {
-  const libraryAPI = useLibraryAPI();
   const { t } = useLingui();
 
   const [isShown, setIsShown] = useState(false);
@@ -56,7 +55,7 @@ export default function DropzoneImport() {
             }
 
             if (folders.length > 0) {
-              await libraryAPI.addLibraryFolders(folders);
+              await LibraryAPI.addLibraryFolders(folders);
 
               const message = plural(folders.length, {
                 one: '# folder added to the library',
@@ -65,7 +64,7 @@ export default function DropzoneImport() {
 
               toastManager.add({ title: message, type: 'success' });
 
-              await libraryAPI.scan();
+              await LibraryAPI.scan();
               await invalidate();
             }
           } else {
@@ -82,7 +81,7 @@ export default function DropzoneImport() {
     return function cleanup() {
       void unlisten.then((unlisten) => (unlisten ? unlisten() : null));
     };
-  }, [libraryAPI, invalidate]);
+  }, [invalidate]);
 
   return (
     <div {...stylex.props(styles.dropzone, isShown && styles.shown)}>

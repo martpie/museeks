@@ -12,6 +12,7 @@ import type {
 } from '@tauri-apps/api/menu';
 import { useCallback, useMemo } from 'react';
 
+import PlaylistsAPI from '../api/PlaylistsAPI';
 import SideNav from '../components/SideNav';
 import SideNavLink from '../components/SideNavLink';
 import ButtonIcon from '../elements/ButtonIcon';
@@ -21,7 +22,6 @@ import * as ViewMessage from '../elements/ViewMessage';
 import useInvalidate from '../hooks/useInvalidate';
 import DatabaseBridge from '../lib/bridge-database';
 import player from '../lib/player';
-import PlaylistsAPI from '../stores/PlaylistsAPI';
 
 export const Route = createFileRoute('/playlists')({
   component: ViewPlaylists,

@@ -4,6 +4,7 @@ import { createRootRoute, Outlet, useLocation } from '@tanstack/react-router';
 import { info } from '@tauri-apps/plugin-log';
 import { useEffect } from 'react';
 
+import SettingsAPI from '../api/SettingsAPI';
 import AppEvents from '../components/AppEvents';
 import DropzoneImport from '../components/DropzoneImport';
 import { ErrorView, NotFoundView } from '../components/GlobalErrors';
@@ -19,7 +20,6 @@ import useInvalidate from '../hooks/useInvalidate';
 import { configQuery } from '../lib/queries';
 import queryClient from '../lib/query-client';
 import { logAndNotifyError } from '../lib/utils';
-import SettingsAPI from '../stores/SettingsAPI';
 
 type Search = {
   jump_to_playing_track?: boolean;

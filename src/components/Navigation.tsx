@@ -5,7 +5,7 @@ import { Link } from '@tanstack/react-router';
 import type { LinkProps } from '@tanstack/react-router';
 import type { ReactNode } from 'react';
 
-import useLibraryStore from '../stores/useLibraryStore';
+import useLibraryStore from '../lib/store';
 import Icon from './Icon';
 import ProgressBar from './ProgressBar';
 import TrackListStatus from './TrackListStatus';
