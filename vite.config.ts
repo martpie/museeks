@@ -39,12 +39,13 @@ export const VITE_PLUGINS: PluginOption[] = [
       targets: CSS_TARGETS,
     },
   }),
-  react(),
   lingui(),
   tanstackRouter({
     target: 'react',
     generatedRouteTree: './src/generated/route-tree.ts',
+    autoCodeSplitting: true,
   }),
+  react(),
   svgr(),
   babel({
     presets: [reactCompilerPreset(), decoratorPreset({ version: '2023-11' })],

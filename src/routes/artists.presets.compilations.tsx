@@ -26,7 +26,7 @@ export const Route = createFileRoute('/artists/presets/compilations')({
   },
 });
 
-export default function ViewCompilations() {
+function ViewCompilations() {
   const { albums, playlists } = Route.useLoaderData();
   const config = useSuspenseQuery(configQuery).data;
   const content = useFilteredTrackGroup(albums);
