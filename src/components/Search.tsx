@@ -4,21 +4,21 @@ import type React from 'react';
 import { useCallback, useRef } from 'react';
 import Keybinding from 'react-keybinding-component';
 
+import LibraryAPI from '../api/LibraryAPI';
+import useLibraryStore from '../lib/store';
 import { isCtrlKey } from '../lib/utils-events';
-import useLibraryStore, { useLibraryAPI } from '../stores/useLibraryStore';
 
 export default function Search() {
   const search = useLibraryStore((state) => state.search);
-  const libraryAPI = useLibraryAPI();
   const inputRef = useRef<HTMLInputElement>(null);
   const { t } = useLingui();
 
-  const onClear = useCallback(() => libraryAPI.search(''), [libraryAPI]);
+  const onClear = useCallback(() => LibraryAPI.search(''), []);
   const onChange = useCallback<React.ChangeEventHandler<HTMLInputElement>>(
     (event) => {
-      libraryAPI.search(event.currentTarget.value);
+      LibraryAPI.search(event.currentTarget.value);
     },
-    [libraryAPI],
+    [],
   );
 
   const onFocus = useCallback<React.FocusEventHandler<HTMLInputElement>>(

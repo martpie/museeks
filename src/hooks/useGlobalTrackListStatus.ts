@@ -1,7 +1,7 @@
 import { useEffect, useMemo } from 'react';
 
+import LibraryAPI from '../api/LibraryAPI';
 import type { Track, TrackGroup } from '../generated/typings';
-import { useLibraryAPI } from '../stores/useLibraryStore';
 import type { TrackListStatusInfo } from '../types/museeks';
 import useAllTracks from './useAllTracks';
 
@@ -11,16 +11,15 @@ import useAllTracks from './useAllTracks';
 export default function useGlobalTrackListStatus(
   tracks: Track[] | TrackGroup[],
 ) {
-  const libraryAPI = useLibraryAPI();
   const info = useTrackListStatus(tracks);
 
   useEffect(() => {
-    libraryAPI.setTracksStatus(info);
+    LibraryAPI.setTracksStatus(info);
 
     return () => {
-      libraryAPI.setTracksStatus(undefined);
+      LibraryAPI.setTracksStatus(undefined);
     };
-  }, [info, libraryAPI]);
+  }, [info]);
 }
 
 /**

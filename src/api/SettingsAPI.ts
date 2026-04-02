@@ -12,7 +12,7 @@ import player from '../lib/player';
 import { getTheme } from '../lib/themes';
 import toastManager from '../lib/toast-manager';
 import { logAndNotifyError } from '../lib/utils';
-import useLibraryStore from './useLibraryStore';
+import LibraryAPI from './LibraryAPI';
 
 export const DEFAULT_MAIN_COLOR = '#459ce7';
 
@@ -194,7 +194,7 @@ async function checkForLibraryRefresh(): Promise<void> {
   const autorefreshEnabled = ConfigBridge.getInitial('library_autorefresh');
 
   if (autorefreshEnabled) {
-    void useLibraryStore.getState().api.scan();
+    void LibraryAPI.scan();
   }
 }
 

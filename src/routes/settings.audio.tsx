@@ -2,13 +2,13 @@ import { useLingui } from '@lingui/react/macro';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { createFileRoute } from '@tanstack/react-router';
 
+import SettingsAPI from '../api/SettingsAPI';
 import * as Setting from '../components/Setting';
 import CheckboxSetting from '../components/SettingCheckbox';
 import useInvalidate, { useInvalidateCallback } from '../hooks/useInvalidate';
 import player from '../lib/player';
 import { configQuery } from '../lib/queries';
 import { logAndNotifyError } from '../lib/utils';
-import SettingsAPI from '../stores/SettingsAPI';
 
 export const Route = createFileRoute('/settings/audio')({
   component: ViewSettingsAudio,

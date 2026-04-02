@@ -6,13 +6,13 @@ import type {
   Track,
   TrackGroup,
 } from '../generated/typings';
+import useLibraryStore from '../lib/store';
 import {
   filterTracks,
   getSortOrder,
   sortTracks,
   stripAccents,
 } from '../lib/utils-library';
-import useLibraryStore from '../stores/useLibraryStore';
 /**
  * Filter and Sort a list of tracks depending on the user preferences and search
  * IMPORTANT: can only be used ONCE per view, as it has side effects
