@@ -19,8 +19,8 @@ tauri = { version = "2.10.3", features = [
   "devtools",
 ] }
 tauri-plugin-clipboard-manager = "2.3.2"
-tauri-plugin-dialog = "2.6.0"
-tauri-plugin-fs = "2.4.5"
+tauri-plugin-dialog = "2.7.0"
+tauri-plugin-fs = "2.5.0"
 tauri-plugin-log = { version = "2.8.0", features = ["colored"] }
 tauri-plugin-notification = "2.3.3"
 tauri-plugin-opener = "2.5.3"
@@ -28,7 +28,7 @@ tauri-plugin-os = "2.3.2"
 tauri-plugin-prevent-default = "4.0.4"
 tauri-plugin-process = "2.3.1"
 tauri-plugin-shell = "2.3.5"
-tauri-plugin-single-instance = "2.4.0"
+tauri-plugin-single-instance = "2.4.1"
 tauri-plugin-window-state = "2.4.1"
 
 # non-Tauri dependencies
@@ -38,10 +38,10 @@ base64 = "0.22.1"
 dirs = "6.0.0"
 futures = "0.3.32"
 home-config = { version = "0.7.0", features = ["toml"] }
-indexmap = "2.13.0"
+indexmap = "2.13.1"
 itertools = "0.14.0"
 log = "0.4.29"
-lofty = "0.23.2"
+lofty = "0.23.3"
 m3u = "1.0.0"
 memoize = "0.6.0"
 nosleep = "0.2.1"
@@ -51,11 +51,11 @@ serde = { version = "1.0.228", features = ["derive"] }
 serde_json = "1.0.149"
 sqlx = { version = "0.8.6", features = ["sqlite", "runtime-tokio", "macros"] }
 strum = { version = "0.28.0", features = ["derive"] }
-tokio = { version = "1.50.0", features = ["full"] }
+tokio = { version = "1.51.0", features = ["full"] }
 tokio-util = { version = "0.7.18", features = ["io"] }
 thiserror = "2.0.18"
 ts-rs = "12.0.1"
-uuid = { version = "1.22.0", features = ["v3", "v4", "fast-rng"] }
+uuid = { version = "1.23.0", features = ["v3", "v4", "fast-rng"] }
 walkdir = "2.5.0"
 
 [profile.dev]
