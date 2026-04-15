@@ -6,6 +6,8 @@ import { page } from 'vitest/context';
 import { MOCK_CONFIG } from '../lib/__mocks__/bridge-config.ts';
 import { messages } from '../translations/en.po';
 
+type Whatever = () => void | Promise<void>;
+
 /**
  * E2E test setup, stubbing globals, bridges, setting up i18n and rendering the app
  */
@@ -26,16 +28,16 @@ export function beforeEachSetup() {
       },
       callbacks: new Map(),
       // mocks
-      invoke: vi.fn(),
+      invoke: vi.fn<Whatever>(),
       convertFileSrc: (path: string) => path,
-      ipc: vi.fn(),
-      postMessage: vi.fn(),
-      runCallback: vi.fn(),
-      transformCallback: vi.fn(),
-      unregisterCallback: vi.fn(),
+      ipc: vi.fn<Whatever>(),
+      postMessage: vi.fn<Whatever>(),
+      runCallback: vi.fn<Whatever>(),
+      transformCallback: vi.fn<Whatever>(),
+      unregisterCallback: vi.fn<Whatever>(),
     });
     vi.stubGlobal('__TAURI_EVENT_PLUGIN_INTERNALS__', {
-      unregisterListener: vi.fn(),
+      unregisterListener: vi.fn<Whatever>(),
     });
     vi.stubGlobal('__TAURI_OS_PLUGIN_INTERNALS__', {
       // TODO: replace that with Linux values
