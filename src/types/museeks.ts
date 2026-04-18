@@ -59,6 +59,7 @@ export type QueueOrigin =
   | { type: 'library' }
   | { type: 'playlist'; playlistID: string }
   | { type: 'artist'; artistID: string }
+  | { type: 'album'; albumID: string }
   | { type: 'compilations' }
   | { type: 'file_associations' };
 

@@ -1,6 +1,7 @@
 import * as stylex from '@stylexjs/stylex';
 import { error } from '@tauri-apps/plugin-log';
 
+import album from '../assets/icons/album.svg?react';
 import chevronDown from '../assets/icons/chevron-down.svg?react';
 import chevronUp from '../assets/icons/chevron-up.svg?react';
 import globe from '../assets/icons/globe.svg?react';
@@ -27,6 +28,7 @@ const icons: Record<
   string,
   React.FunctionComponent<React.SVGProps<SVGSVGElement>>
 > = {
+  album,
   chevronDown,
   chevronUp,
   globe,

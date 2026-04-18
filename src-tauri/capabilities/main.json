@@ -41,6 +41,8 @@
     "database:allow-remove-tracks",
     "database:allow-get-artists",
     "database:allow-get-artist-tracks",
+    "database:allow-get-all-albums",
+    "database:allow-get-album-tracks",
     "database:allow-get-compilation-albums",
     "database:allow-has-compilations",
     "database:allow-get-all-playlists",

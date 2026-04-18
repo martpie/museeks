@@ -24,10 +24,11 @@ type Props = {
   initialOffset: number;
   rowHeight: number;
   showArtistInTitle?: boolean;
+  showArtistLabel?: boolean;
 } & TrackRowEvents;
 
 export default function TrackListGroupedLayout(props: Props) {
-  const { ref, trackGroups, rowHeight, showArtistInTitle, ...rest } = props;
+  const { ref, trackGroups, rowHeight, showArtistInTitle, showArtistLabel, ...rest } = props;
   const { t } = useLingui();
 
   const tracks = useAllTracks(trackGroups);
@@ -66,6 +67,7 @@ export default function TrackListGroupedLayout(props: Props) {
             tracksGroup={tracksGroup}
             rowHeight={rowHeight}
             showArtistInTitle={showArtistInTitle}
+            showArtistLabel={showArtistLabel}
             {...rest}
           />
         );
@@ -79,6 +81,7 @@ type TrackListGroupProps = {
   selectedTracks: Set<string>;
   rowHeight: number;
   showArtistInTitle?: boolean;
+  showArtistLabel?: boolean;
 } & TrackRowEvents;
 
 function TrackListGroup(props: TrackListGroupProps) {
@@ -86,6 +89,7 @@ function TrackListGroup(props: TrackListGroupProps) {
     selectedTracks,
     rowHeight,
     showArtistInTitle,
+    showArtistLabel,
     onTrackSelect,
     onContextMenu,
     onPlaybackStart,
@@ -97,6 +101,8 @@ function TrackListGroup(props: TrackListGroupProps) {
     return null;
   }
 
+  const artistName = showArtistLabel ? (tracks[0]?.album_artist || tracks[0]?.artists[0] || null) : null;
+
   return (
     <div
       {...stylex.props(styles.group)}
@@ -106,6 +112,7 @@ function TrackListGroup(props: TrackListGroupProps) {
         {/** Instead of the first one, maybe get the first track within the album to hold a cover? */}
         <Cover track={tracks[0]} iconSize={36} />
         <h3 {...stylex.props(styles.label)}>{label}</h3>
+        {artistName && <p {...stylex.props(styles.artist)}>{artistName}</p>}
         <div {...stylex.props(styles.metadata)}>
           <div>
             {year}
@@ -168,6 +175,11 @@ const styles = stylex.create({
     fontSize: '1.4rem',
     fontWeight: 'bold',
     margin: 0,
+  },
+  artist: {
+    color: 'var(--text-muted)',
+    margin: 0,
+    fontSize: '0.95rem',
   },
   metadata: {
     color: 'var(--text-muted)',
