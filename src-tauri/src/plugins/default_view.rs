@@ -34,6 +34,7 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
                     DefaultView::Library => "/library",
                     DefaultView::Artists => "/artists",
                     DefaultView::Playlists => "/playlists",
+                    DefaultView::Albums => "/albums",
                 };
 
                 info!("Navigating to '{}'", fragment);

@@ -43,6 +43,7 @@ pub enum DefaultView {
     Library,
     Artists,
     Playlists,
+    Albums,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone, TS)]
