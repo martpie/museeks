@@ -41,7 +41,8 @@ const styles = stylex.create({
     zIndex: 1000,
     display: 'flex',
     flexDirection: 'column',
-    gap: '10px',
+    rowGap: '10px',
+    columnGap: '10px',
   },
   toast: {
     borderStyle: 'solid',

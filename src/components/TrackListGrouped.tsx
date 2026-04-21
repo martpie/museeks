@@ -147,7 +147,8 @@ function TrackListGroup(props: TrackListGroupProps) {
 const styles = stylex.create({
   group: {
     display: 'flex',
-    gap: '24px',
+    rowGap: '24px',
+    columnGap: '24px',
     padding: '24px',
     alignItems: 'flex-start',
     position: 'relative',
@@ -161,7 +162,8 @@ const styles = stylex.create({
     top: '24px',
     display: 'flex',
     flexDirection: 'column',
-    gap: '8px',
+    rowGap: '8px',
+    columnGap: '8px',
     flexShrink: 0,
   },
   label: {
@@ -173,7 +175,8 @@ const styles = stylex.create({
     color: 'var(--text-muted)',
     display: 'flex',
     flexDirection: 'column',
-    gap: '4px',
+    rowGap: '4px',
+    columnGap: '4px',
   },
   rows: {
     flexGrow: 1,

@@ -43,16 +43,20 @@ const directionVariants = stylex.create({
 
 const gapVariants = stylex.create({
   0: {
-    gap: 0,
+    rowGap: 0,
+    columnGap: 0,
   },
   4: {
-    gap: '4px',
+    rowGap: '4px',
+    columnGap: '4px',
   },
   8: {
-    gap: '8px',
+    rowGap: '8px',
+    columnGap: '8px',
   },
   16: {
-    gap: '16px',
+    rowGap: '16px',
+    columnGap: '16px',
   },
 });
 

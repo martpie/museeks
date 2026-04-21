@@ -91,7 +91,8 @@ const styles = stylex.create({
     paddingRight: '8px',
   },
   playingBarInfoMetas: {
-    gap: '4px',
+    rowGap: '4px',
+    columnGap: '4px',
     display: 'flex',
     alignItems: 'flex-end',
     justifyContent: 'center',

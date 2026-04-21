@@ -40,6 +40,7 @@ const styles = stylex.create({
     display: 'flex',
     alignItems: 'center',
     position: 'relative',
-    gap: '12px',
+    rowGap: '12px',
+    columnGap: '12px',
   },
 });

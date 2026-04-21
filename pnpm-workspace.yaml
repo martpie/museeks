@@ -1,14 +1,9 @@
 allowBuilds:
   esbuild: true
   simple-git-hooks: true
-# allowBuilds:
-#   '@parcel/watcher': true
-#   core-js: true
-#   esbuild: true
-#   sharp: true
 catalog:
   vite: npm:@voidzero-dev/vite-plus-core@latest
-  vite-plus: latest
+  vite-plus: 0.1.19
   vitest: npm:@voidzero-dev/vite-plus-test@latest
 overrides:
   vite: 'catalog:'

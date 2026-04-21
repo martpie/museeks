@@ -109,7 +109,8 @@ const styles = stylex.create({
     marginBottom: '16px',
     display: 'flex',
     flexDirection: 'column',
-    gap: '4px',
+    rowGap: '4px',
+    columnGap: '4px',
   },
   settingTitle: {
     display: 'block',

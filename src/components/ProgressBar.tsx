@@ -31,7 +31,8 @@ const styles = stylex.create({
     flexShrink: 1,
     flexBasis: '0%',
     display: 'flex',
-    gap: '12px',
+    rowGap: '12px',
+    columnGap: '12px',
     alignItems: 'center',
   },
   progressTrack: {

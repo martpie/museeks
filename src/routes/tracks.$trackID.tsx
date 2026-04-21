@@ -288,7 +288,8 @@ const styles = stylex.create({
   detailsActions: {
     display: 'flex',
     justifyContent: 'flex-end',
-    gap: '8px',
+    rowGap: '8px',
+    columnGap: '8px',
     marginBottom: '16px',
   },
 });

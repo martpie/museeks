@@ -213,7 +213,8 @@ const cellStyles = stylex.create({
     minWidth: 0,
     display: 'flex',
     alignItems: 'baseline',
-    gap: '4px',
+    rowGap: '4px',
+    columnGap: '4px',
   },
   titleText: {
     minWidth: 0,

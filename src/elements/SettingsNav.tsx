@@ -51,7 +51,8 @@ const styles = stylex.create({
   nav: {
     display: 'flex',
     flexDirection: 'column',
-    gap: '32px',
+    rowGap: '32px',
+    columnGap: '32px',
     listStyle: 'none',
     margin: 0,
     padding: 0,
