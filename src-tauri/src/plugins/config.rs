@@ -153,6 +153,7 @@ impl ConfigManager {
         self.save()
     }
 
+    #[cfg(not(target_os = "macos"))]
     pub fn set_menu_bar_visible(&self, visible: bool) -> AnyResult<()> {
         let mut writer = self.data.write().map_err(config_err)?;
         writer.menu_bar_visible = visible;
