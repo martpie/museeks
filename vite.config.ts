@@ -30,7 +30,7 @@ function decoratorPreset(options: Record<string, unknown>) {
 
 export const VITE_PLUGINS: PluginOption[] = [
   stylex.vite({
-    useCSSLayers: true,
+    useCSSLayers: false, // Ideally true, but this creates issues with global styles
     propertyValidationMode: 'throw',
     // Stylex is not well integrated in the Vite CSS pipeline
     // https://github.com/facebook/stylex/issues/1378
