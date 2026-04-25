@@ -18,11 +18,13 @@ export default function SideNav(props: Props) {
   // Let's group the children by first character
   const groupedChildren = useMemo(() => {
     const groups = groupBy(props.children, (child) => {
-      const stripped = stripAccents(child.props.label[0]).toUpperCase();
-      const code = stripped.charCodeAt(0);
+      const labelForGrouping = child.props.groupingLabel ?? child.props.label;
+      const firstChar =
+        stripAccents(labelForGrouping).toUpperCase().trim()[0] ?? '';
+      const code = firstChar.charCodeAt(0);
 
       // Group under # if the first character is not a letter
-      return code >= 65 && code <= 90 ? stripped : '#';
+      return code >= 65 && code <= 90 ? firstChar : '#';
     });
 
     return groups;

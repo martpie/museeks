@@ -24,11 +24,14 @@ use crate::libs::utils::is_file_valid;
 pub struct Track {
     pub id: String,
     pub path: String, // must be unique, ideally, a PathBuf
+    // Fields used for display
     pub title: String,
     pub album: String,
     pub album_artist: String,
+    pub album_artist_sort: String,
     #[sqlx(json)]
     pub artists: Vec<String>, // JSON
+    // Other Metadata
     #[sqlx(json)]
     pub genres: Vec<String>, // JSON
     pub year: Option<u16>,
@@ -52,6 +55,35 @@ pub struct TrackGroup {
     pub duration: u32,
     pub year: Option<u16>,
     pub tracks: Vec<Track>,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize, FromRow, TS)]
+#[ts(export, export_to = "../../src/generated/typings.ts")]
+pub struct Artist {
+    pub label: String,
+    pub sort_as: String,
+}
+
+pub(crate) fn normalize_album_artist_sort(album_artist: &str) -> String {
+    let trimmed = album_artist.trim();
+
+    let without_the = if let Some(prefix) = trimmed.get(..4) {
+        if prefix.eq_ignore_ascii_case("the ") {
+            &trimmed[4..]
+        } else {
+            trimmed
+        }
+    } else {
+        trimmed
+    };
+
+    let stripped = without_the.trim_start_matches(|c: char| !c.is_alphabetic());
+
+    if stripped.is_empty() {
+        trimmed.to_string()
+    } else {
+        stripped.to_string()
+    }
 }
 
 /**
@@ -95,8 +127,14 @@ pub fn get_track_from_file(path: &PathBuf) -> AnyResult<Track> {
                 .get_string(ItemKey::AlbumArtist)
                 .map(ToString::to_string)
                 .or_else(|| artists.first().cloned())
-                .filter(|s| !s.is_empty())
+                .filter(|s| !s.trim().is_empty())
                 .unwrap_or_else(|| "Unknown Artist".to_string());
+
+            let album_artist_sort = tag
+                .get_string(ItemKey::AlbumArtistSortOrder)
+                .filter(|s| !s.trim().is_empty())
+                .map(|s| s.trim().to_string())
+                .unwrap_or_else(|| normalize_album_artist_sort(&album_artist));
 
             let id = get_track_id_for_path(path)?;
 
@@ -104,25 +142,30 @@ pub fn get_track_from_file(path: &PathBuf) -> AnyResult<Track> {
                 .get_string(ItemKey::FlagCompilation)
                 .map_or(false, |v| v == "1" || v.eq_ignore_ascii_case("true"));
 
+            let title = tag
+                .get_string(ItemKey::TrackTitle)
+                .filter(|s| !s.trim().is_empty())
+                .map(ToString::to_string)
+                .unwrap_or_else(|| {
+                    path.file_name()
+                        .and_then(|f| f.to_str())
+                        .unwrap_or("Unknown")
+                        .to_string()
+                });
+
+            let album = tag
+                .get_string(ItemKey::AlbumTitle)
+                .filter(|s| !s.trim().is_empty())
+                .map(ToString::to_string)
+                .unwrap_or_else(|| "Unknown".to_string());
+
             Ok(Track {
                 id,
                 path: path.to_string_lossy().into_owned(),
-                title: tag
-                    .get_string(ItemKey::TrackTitle)
-                    .filter(|s| !s.is_empty())
-                    .map(ToString::to_string)
-                    .unwrap_or_else(|| {
-                        path.file_name()
-                            .and_then(|f| f.to_str())
-                            .unwrap_or("Unknown")
-                            .to_string()
-                    }),
-                album: tag
-                    .get_string(ItemKey::AlbumTitle)
-                    .filter(|s| !s.is_empty())
-                    .map(ToString::to_string)
-                    .unwrap_or_else(|| "Unknown".to_string()),
+                title,
+                album,
                 album_artist,
+                album_artist_sort,
                 artists,
                 genres: tag
                     .get_strings(ItemKey::Genre)
