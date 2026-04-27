@@ -28,7 +28,14 @@ type Props = {
 } & TrackRowEvents;
 
 export default function TrackListGroupedLayout(props: Props) {
-  const { ref, trackGroups, rowHeight, showArtistInTitle, showArtistLabel, ...rest } = props;
+  const {
+    ref,
+    trackGroups,
+    rowHeight,
+    showArtistInTitle,
+    showArtistLabel,
+    ...rest
+  } = props;
   const { t } = useLingui();
 
   const tracks = useAllTracks(trackGroups);
@@ -101,7 +108,9 @@ function TrackListGroup(props: TrackListGroupProps) {
     return null;
   }
 
-  const artistName = showArtistLabel ? (tracks[0]?.album_artist || tracks[0]?.artists[0] || null) : null;
+  const artistName = showArtistLabel
+    ? tracks[0]?.album_artist || tracks[0]?.artists[0] || null
+    : null;
 
   return (
     <div
