@@ -75,6 +75,7 @@ fn build_response(
         content_length.to_string().parse().unwrap(),
     );
     headers.insert(header::ACCEPT_RANGES, "bytes".parse().unwrap());
+    headers.insert(header::ACCESS_CONTROL_ALLOW_ORIGIN, "*".parse().unwrap());
 
     if let Some((start, end)) = range {
         headers.insert(

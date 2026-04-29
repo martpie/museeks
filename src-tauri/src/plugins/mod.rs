@@ -24,5 +24,7 @@ pub mod db;
  * Settings-related plugins
  */
 pub mod default_view;
+#[cfg(target_os = "linux")]
+pub mod mpris;
 pub mod sleepblocker;
 pub mod stream_server;
