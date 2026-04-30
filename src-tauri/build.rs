@@ -30,6 +30,8 @@ fn main() {
                     "update_track",
                     "get_artists",
                     "get_artist_tracks",
+                    "get_all_albums",
+                    "get_album_tracks",
                     "get_compilation_albums",
                     "has_compilations",
                     "get_all_playlists",

@@ -119,20 +119,26 @@ msgid "Artists"
 msgstr "Artists"
 
 #: src/components/Navigation.tsx:57
-#: src/routes/playlists.tsx:165
+#: src/routes/albums.tsx:56
 #: src/routes/settings.ui.tsx:151
+msgid "Albums"
+msgstr "Albums"
+
+#: src/components/Navigation.tsx:60
+#: src/routes/playlists.tsx:165
+#: src/routes/settings.ui.tsx:154
 msgid "Playlists"
 msgstr "Playlists"
 
-#: src/components/Navigation.tsx:60
+#: src/components/Navigation.tsx:63
 msgid "Settings"
 msgstr "Settings"
 
-#: src/components/Navigation.tsx:66
+#: src/components/Navigation.tsx:69
 msgid "Library status"
 msgstr "Library status"
 
-#: src/components/Navigation.tsx:90
+#: src/components/Navigation.tsx:93
 msgid "scanning tracks..."
 msgstr "scanning tracks..."
 
@@ -180,90 +186,90 @@ msgstr "Clear search"
 msgid "Rename"
 msgstr "Rename"
 
-#: src/components/TrackList.tsx:243
+#: src/components/TrackList.tsx:244
 msgid "Create new playlist..."
 msgstr "Create new playlist..."
 
-#: src/components/TrackList.tsx:246
+#: src/components/TrackList.tsx:247
 #: src/routes/playlists.tsx:63
 msgid "New playlist"
 msgstr "New playlist"
 
-#: src/components/TrackList.tsx:259
+#: src/components/TrackList.tsx:260
 msgid "No playlists"
 msgstr "No playlists"
 
 #. placeholder {0}: selectedTracks.size
 #. placeholder {1}: playlist.name
-#: src/components/TrackList.tsx:273
+#: src/components/TrackList.tsx:274
 msgid "{0} track(s) were added to \"{1}\""
 msgstr "{0} track(s) were added to \"{1}\""
 
-#: src/components/TrackList.tsx:291
+#: src/components/TrackList.tsx:292
 msgid "{selectedCount, plural, one {# track selected} other {# tracks selected}}"
 msgstr "{selectedCount, plural, one {# track selected} other {# tracks selected}}"
 
-#: src/components/TrackList.tsx:303
+#: src/components/TrackList.tsx:304
 msgid "Add to queue"
 msgstr "Add to queue"
 
-#: src/components/TrackList.tsx:311
+#: src/components/TrackList.tsx:312
 msgid "Play next"
 msgstr "Play next"
 
-#: src/components/TrackList.tsx:323
+#: src/components/TrackList.tsx:324
 msgid "Add to playlist"
 msgstr "Add to playlist"
 
-#: src/components/TrackList.tsx:333
+#: src/components/TrackList.tsx:334
 msgid "Search for \"{item}\""
 msgstr "Search for \"{item}\""
 
-#: src/components/TrackList.tsx:346
+#: src/components/TrackList.tsx:347
 msgid "Copy \"{item}\""
 msgstr "Copy \"{item}\""
 
-#: src/components/TrackList.tsx:369
+#: src/components/TrackList.tsx:370
 msgid "Edit track"
 msgstr "Edit track"
 
-#: src/components/TrackList.tsx:379
+#: src/components/TrackList.tsx:380
 msgid "Show in file manager"
 msgstr "Show in file manager"
 
-#: src/components/TrackList.tsx:385
+#: src/components/TrackList.tsx:386
 msgid "Remove from library"
 msgstr "Remove from library"
 
 #. placeholder {0}: selectedTracks.size
-#: src/components/TrackList.tsx:388
+#: src/components/TrackList.tsx:389
 msgid "Are you sure you want to remove {0} track(s) from your library?"
 msgstr "Are you sure you want to remove {0} track(s) from your library?"
 
-#: src/components/TrackList.tsx:390
+#: src/components/TrackList.tsx:391
 msgid "Remove tracks"
 msgstr "Remove tracks"
 
-#: src/components/TrackList.tsx:392
+#: src/components/TrackList.tsx:393
 #: src/routes/settings.library.tsx:100
 #: src/routes/settings.library.tsx:145
 #: src/routes/tracks.$trackID.tsx:257
 msgid "Cancel"
 msgstr "Cancel"
 
-#: src/components/TrackList.tsx:393
+#: src/components/TrackList.tsx:394
 #: src/routes/settings.library.tsx:64
 msgid "Remove"
 msgstr "Remove"
 
 #: src/components/TrackListDefault.tsx:124
-#: src/components/TrackListGrouped.tsx:58
+#: src/components/TrackListGrouped.tsx:59
 msgid "Track list"
 msgstr "Track list"
 
 #. placeholder {0}: props.count
 #. placeholder {0}: tracks.length
-#: src/components/TrackListGrouped.tsx:115
+#: src/components/TrackListGrouped.tsx:122
 #: src/components/TrackListStatus.tsx:11
 msgid "{0, plural, one {# track} other {# tracks}}"
 msgstr "{0, plural, one {# track} other {# tracks}}"
@@ -566,35 +572,35 @@ msgstr "Change the default view when starting the application"
 msgid "Library (default)"
 msgstr "Library (default)"
 
-#: src/routes/settings.ui.tsx:157
+#: src/routes/settings.ui.tsx:160
 msgid "Display Notifications"
 msgstr "Display Notifications"
 
-#: src/routes/settings.ui.tsx:158
+#: src/routes/settings.ui.tsx:161
 msgid "Send notifications when the playing track changes"
 msgstr "Send notifications when the playing track changes"
 
-#: src/routes/settings.ui.tsx:167
+#: src/routes/settings.ui.tsx:170
 msgid "Sleep mode blocker"
 msgstr "Sleep mode blocker"
 
-#: src/routes/settings.ui.tsx:168
+#: src/routes/settings.ui.tsx:171
 msgid "Prevent the computer from going into sleep mode when playing"
 msgstr "Prevent the computer from going into sleep mode when playing"
 
-#: src/routes/settings.ui.tsx:178
+#: src/routes/settings.ui.tsx:181
 msgid "[Beta] Wayland compatibility enhancements"
 msgstr "[Beta] Wayland compatibility enhancements"
 
-#: src/routes/settings.ui.tsx:179
+#: src/routes/settings.ui.tsx:182
 msgid "If you face issues using Wayland, try out this option"
 msgstr "If you face issues using Wayland, try out this option"
 
-#: src/routes/settings.ui.tsx:202
+#: src/routes/settings.ui.tsx:205
 msgid "Light"
 msgstr "Light"
 
-#: src/routes/settings.ui.tsx:204
+#: src/routes/settings.ui.tsx:207
 msgid "Dark"
 msgstr "Dark"
 

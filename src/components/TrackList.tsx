@@ -60,6 +60,7 @@ interface TrackListGroupedLayoutProps extends TrackListProps {
   layout: 'grouped';
   data: Array<TrackGroup>;
   showArtistInTitle?: boolean;
+  showArtistLabel?: boolean;
 }
 
 type Props = TrackListDefaultLayoutProps | TrackListGroupedLayoutProps;
@@ -459,6 +460,7 @@ export default function TrackList(props: Props) {
           onTrackSelect={onTrackSelect}
           onContextMenu={onContextMenu}
           onPlaybackStart={onPlaybackStart}
+          showArtistLabel={props.showArtistLabel}
         />
       )}
     </div>

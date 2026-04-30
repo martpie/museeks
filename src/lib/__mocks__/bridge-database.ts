@@ -100,6 +100,14 @@ class DatabaseBridge implements DatabaseBridgeInterface {
     return [];
   }
 
+  async getAllAlbums(): Promise<Array<string>> {
+    return [];
+  }
+
+  async getAlbumTracks(_album: string): Promise<Array<TrackGroup>> {
+    return [];
+  }
+
   async hasCompilations(): Promise<boolean> {
     return false;
   }
