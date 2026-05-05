@@ -1,7 +1,12 @@
 minimumReleaseAge: 360
+saveExact: true
+strictPeerDependencies: true
+updateNotifier: false
 allowBuilds:
   esbuild: true
   simple-git-hooks: true
+
+# Vite+ setup
 catalog:
   vite: npm:@voidzero-dev/vite-plus-core@latest
   vite-plus: 0.1.20
