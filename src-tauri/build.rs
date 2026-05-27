@@ -49,6 +49,18 @@ fn main() {
             .plugin(
                 "sleepblocker",
                 tauri_build::InlinedPlugin::new().commands(&["enable", "disable"]),
+            )
+            .plugin(
+                "mpris",
+                tauri_build::InlinedPlugin::new().commands(&[
+                    "update_playback_status",
+                    "update_track_metadata",
+                    "update_volume",
+                    "update_shuffle",
+                    "update_repeat",
+                    "update_position",
+                    "clear_metadata",
+                ]),
             ),
     )
     .expect("Failed to run tauri-build");

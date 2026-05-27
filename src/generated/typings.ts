@@ -4,7 +4,7 @@ export type Config = { language: string, theme: string, ui_accent_color: string 
 
 export type DefaultView = "Library" | "Artists" | "Playlists";
 
-export type IPCEvent = { "Unknown": string } | "PlaybackPlay" | "PlaybackPause" | "PlaybackStop" | "PlaybackPlayPause" | "PlaybackPrevious" | "PlaybackNext" | "PlaybackStart" | "LibraryScanProgress" | "GoToLibrary" | "GoToPlaylists" | "GoToSettings" | "JumpToPlayingTrack";
+export type IPCEvent = { "Unknown": string } | "PlaybackPlay" | "PlaybackPause" | "PlaybackStop" | "PlaybackPlayPause" | "PlaybackPrevious" | "PlaybackNext" | "PlaybackStart" | "PlaybackSeekTo" | "PlaybackSeekBy" | "PlaybackSetVolume" | "PlaybackSetShuffle" | "PlaybackSetRepeat" | "LibraryScanProgress" | "GoToLibrary" | "GoToPlaylists" | "GoToSettings" | "JumpToPlayingTrack";
 
 /** ----------------------------------------------------------------------------
  * Playlist

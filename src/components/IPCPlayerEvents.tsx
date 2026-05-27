@@ -1,8 +1,9 @@
 import { listen } from '@tauri-apps/api/event';
 import { useEffect } from 'react';
 
-import type { IPCEvent, Track } from '../generated/typings';
+import type { IPCEvent, Repeat, Track } from '../generated/typings';
 import player from '../lib/player';
+import { smoothifyVolume } from '../lib/utils-player';
 
 /**
  * Handle back-end events attempting to control the player
@@ -22,6 +23,37 @@ function IPCPlayerEvents() {
           if (payload.length > 0) {
             await player.start(payload, payload[0].id, { type: 'library' });
           }
+        },
+      ),
+      listen(
+        'PlaybackSeekTo' satisfies IPCEvent,
+        ({ payload }: { payload: number }) => {
+          player.setCurrentTime(payload);
+        },
+      ),
+      listen(
+        'PlaybackSeekBy' satisfies IPCEvent,
+        ({ payload }: { payload: number }) => {
+          player.setCurrentTime(player.getCurrentTime() + payload);
+        },
+      ),
+      listen(
+        'PlaybackSetVolume' satisfies IPCEvent,
+        ({ payload }: { payload: number }) => {
+          // Convert from perceptual MPRIS volume to audio gain (smoothed)
+          player.setVolume(smoothifyVolume(payload));
+        },
+      ),
+      listen(
+        'PlaybackSetShuffle' satisfies IPCEvent,
+        ({ payload }: { payload: boolean }) => {
+          void player.setShuffle(payload);
+        },
+      ),
+      listen(
+        'PlaybackSetRepeat' satisfies IPCEvent,
+        ({ payload }: { payload: Repeat }) => {
+          void player.setRepeat(payload);
         },
       ),
     ];

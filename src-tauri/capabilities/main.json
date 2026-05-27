@@ -53,7 +53,14 @@
     "database:allow-reset",
     "default-view:allow-set",
     "sleepblocker:allow-enable",
-    "sleepblocker:allow-disable"
+    "sleepblocker:allow-disable",
+    "mpris:allow-update-playback-status",
+    "mpris:allow-update-track-metadata",
+    "mpris:allow-update-volume",
+    "mpris:allow-update-shuffle",
+    "mpris:allow-update-repeat",
+    "mpris:allow-update-position",
+    "mpris:allow-clear-metadata"
   ],
   "platforms": ["linux", "macOS", "windows"]
 }

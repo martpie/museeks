@@ -98,6 +98,10 @@ fn main() {
                 .build(),
         );
 
+    // Native MPRIS integration for Linux
+    #[cfg(target_os = "linux")]
+    let builder = builder.plugin(plugins::mpris::init());
+
     // Experimental: local HTTP server for audio streaming
     // (WebKitGTK's asset protocol doesn't support media streaming)
     let builder = if enable_stream_server {

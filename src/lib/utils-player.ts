@@ -1,5 +1,16 @@
 import type { Track } from '../generated/typings';
 
+// Volume easing - http://www.dr-lex.be/info-stuff/volumecontrols.html#about
+const SMOOTHING_FACTOR = 2.5;
+
+/** Convert perceptual (linear slider) volume to audio gain. */
+export const smoothifyVolume = (value: number): number =>
+  value ** SMOOTHING_FACTOR;
+
+/** Convert audio gain to perceptual (linear slider) volume. */
+export const unsmoothifyVolume = (value: number): number =>
+  value ** (1.0 / SMOOTHING_FACTOR);
+
 /**
  * Shuffle an array with a Player behavior in mind:
  * the currently-playing track should remain the same,

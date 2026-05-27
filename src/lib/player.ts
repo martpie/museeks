@@ -1,13 +1,19 @@
 import { convertFileSrc } from '@tauri-apps/api/core';
+import { type as osType } from '@tauri-apps/plugin-os';
 import EventEmitter from 'eventemitter3';
 import debounce from 'lodash-es/debounce';
+import throttle from 'lodash-es/throttle';
 
 import type { Repeat, Track } from '../generated/typings';
 import type { QueueOrigin } from '../types/museeks';
 import ConfigBridge from './bridge-config';
+import MprisBridge from './bridge-mpris';
 import { getCover } from './cover';
 import { logAndNotifyError } from './utils';
 import { shuffleTracks } from './utils-player';
+import { WebAudioElement } from './web-audio-element';
+
+const isLinux = osType() === 'linux';
 
 interface PlayerOptions {
   playbackRate?: number;
@@ -56,7 +62,7 @@ export interface PlayerEvents {
  * Extends EventEmitter to notify React components of state changes.
  */
 class Player extends EventEmitter<PlayerEvents> {
-  private readonly audio: HTMLAudioElement;
+  private readonly audio: HTMLAudioElement | WebAudioElement;
 
   // Queue state
   private queue: Track[];
@@ -83,7 +89,8 @@ class Player extends EventEmitter<PlayerEvents> {
       ...options,
     };
 
-    this.audio = new Audio();
+    // On Linux, use Web Audio API so WebKitGTK's MPRIS entry stays inactive (Stopped)
+    this.audio = isLinux ? new WebAudioElement() : new Audio();
     this.queue = [];
     this.oldQueue = [];
     this.queueCursor = null;
@@ -115,6 +122,8 @@ class Player extends EventEmitter<PlayerEvents> {
     this.setQueue = this.setQueue.bind(this);
     this.toggleShuffle = this.toggleShuffle.bind(this);
     this.toggleRepeat = this.toggleRepeat.bind(this);
+    this.setShuffle = this.setShuffle.bind(this);
+    this.setRepeat = this.setRepeat.bind(this);
     this.setTrack = this.setTrack.bind(this);
     this.setCurrentTime = this.setCurrentTime.bind(this);
     this.setVolume = this.setVolume.bind(this);
@@ -130,11 +139,13 @@ class Player extends EventEmitter<PlayerEvents> {
     this.audio.addEventListener('play', () => {
       this.emit('play');
       this.emitStateChange();
+      MprisBridge.updatePlaybackStatus(true).catch(logAndNotifyError);
     });
 
     this.audio.addEventListener('pause', () => {
       this.emit('pause');
       this.emitStateChange();
+      MprisBridge.updatePlaybackStatus(false).catch(logAndNotifyError);
     });
 
     this.audio.addEventListener('ended', async () => {
@@ -151,6 +162,7 @@ class Player extends EventEmitter<PlayerEvents> {
 
     this.audio.addEventListener('timeupdate', () => {
       this.emit('timeupdate', this.audio.currentTime);
+      this.syncMprisPositionThrottled(this.audio.currentTime);
     });
 
     this.audio.addEventListener('loadstart', () => {
@@ -164,10 +176,11 @@ class Player extends EventEmitter<PlayerEvents> {
   }
 
   /**
-   * Setup MediaSession integration (for OS media controls, MPRIS, etc.)
+   * Setup MediaSession integration (for OS media controls on macOS/Windows).
+   * On Linux, native MPRIS is used instead.
    */
   private setupMediaSession() {
-    if (!('mediaSession' in navigator)) {
+    if (isLinux || !('mediaSession' in navigator)) {
       return;
     }
 
@@ -202,7 +215,7 @@ class Player extends EventEmitter<PlayerEvents> {
   }
 
   /**
-   * Sync current track metadata with MediaSession API
+   * Sync current track metadata with MediaSession API (macOS/Windows only)
    */
   private async syncMediaSession() {
     if (!('mediaSession' in navigator) || !('MediaMetadata' in globalThis)) {
@@ -282,6 +295,7 @@ class Player extends EventEmitter<PlayerEvents> {
     this.queueOrigin = null;
     this.emit('stop');
     this.emitStateChange();
+    MprisBridge.clearMetadata().catch(logAndNotifyError);
   }
 
   async playPause() {
@@ -532,6 +546,15 @@ class Player extends EventEmitter<PlayerEvents> {
     this.shuffle = nextShuffleState;
     this.emitStateChange();
     await ConfigBridge.set('audio_shuffle', nextShuffleState);
+    MprisBridge.updateShuffle(nextShuffleState).catch(logAndNotifyError);
+  }
+
+  /**
+   * Set shuffle to a specific value (used by MPRIS)
+   */
+  async setShuffle(value: boolean) {
+    if (this.shuffle === value) return;
+    await this.toggleShuffle();
   }
 
   /**
@@ -556,6 +579,18 @@ class Player extends EventEmitter<PlayerEvents> {
     this.repeat = nextRepeatState;
     this.emitStateChange();
     await ConfigBridge.set('audio_repeat', nextRepeatState);
+    MprisBridge.updateRepeat(nextRepeatState).catch(logAndNotifyError);
+  }
+
+  /**
+   * Set repeat to a specific value (used by MPRIS)
+   */
+  async setRepeat(value: Repeat) {
+    if (this.repeat === value) return;
+    this.repeat = value;
+    this.emitStateChange();
+    await ConfigBridge.set('audio_repeat', value);
+    MprisBridge.updateRepeat(value).catch(logAndNotifyError);
   }
 
   /**
@@ -588,6 +623,24 @@ class Player extends EventEmitter<PlayerEvents> {
 
     this.emit('trackChange', track);
     this.emitStateChange();
+    this.syncMprisMetadata(track).catch(logAndNotifyError);
+  }
+
+  /**
+   * Sync track metadata to native MPRIS (Linux only)
+   */
+  private async syncMprisMetadata(track: Track) {
+    const cover = await getCover(track.path);
+
+    await MprisBridge.updateTrackMetadata({
+      title: track.title,
+      artists: track.artists,
+      album: track.album,
+      durationSecs: track.duration,
+      coverPath: cover,
+      trackNo: track.track_no,
+      trackId: track.id,
+    });
   }
 
   /**
@@ -606,6 +659,7 @@ class Player extends EventEmitter<PlayerEvents> {
 
   setCurrentTime(time: number) {
     this.audio.currentTime = time;
+    MprisBridge.updatePosition(time, true).catch(logAndNotifyError);
   }
 
   getCurrentTime(): number {
@@ -616,6 +670,7 @@ class Player extends EventEmitter<PlayerEvents> {
     this.audio.volume = volume;
     this.emitStateChange();
     this.saveVolumeDebounced(volume);
+    MprisBridge.updateVolume(volume).catch(logAndNotifyError);
   }
 
   /**
@@ -624,6 +679,17 @@ class Player extends EventEmitter<PlayerEvents> {
   private readonly saveVolumeDebounced = debounce((volume: number) => {
     void ConfigBridge.set('audio_volume', volume);
   }, 500);
+
+  /**
+   * Throttled MPRIS position sync to keep the Position property accurate
+   * without excessive IPC calls
+   */
+  private readonly syncMprisPositionThrottled = throttle(
+    (positionSecs: number) => {
+      void MprisBridge.updatePosition(positionSecs);
+    },
+    1000,
+  );
 
   getVolume(): number {
     return this.audio.volume;
