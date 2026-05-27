@@ -19,6 +19,8 @@ export interface DatabaseBridgeInterface {
   ): Promise<ScanResult>;
   getAllArtists(): Promise<Array<string>>;
   getArtistTracks(artist: string): Promise<Array<TrackGroup>>;
+  getAllAlbums(): Promise<Array<string>>;
+  getAlbumTracks(album: string): Promise<Array<TrackGroup>>;
   hasCompilations(): Promise<boolean>;
   getCompilationAlbums(): Promise<Array<TrackGroup>>;
   getAllPlaylists(): Promise<Array<Playlist>>;
@@ -85,6 +87,16 @@ class DatabaseBridge implements DatabaseBridgeInterface {
   @LogExecutionTime
   async getArtistTracks(artist: string): Promise<Array<TrackGroup>> {
     return invoke('plugin:database|get_artist_tracks', { artist });
+  }
+
+  @LogExecutionTime
+  async getAllAlbums(): Promise<Array<string>> {
+    return invoke('plugin:database|get_all_albums');
+  }
+
+  @LogExecutionTime
+  async getAlbumTracks(album: string): Promise<Array<TrackGroup>> {
+    return invoke('plugin:database|get_album_tracks', { album });
   }
 
   @LogExecutionTime

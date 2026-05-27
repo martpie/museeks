@@ -54,6 +54,9 @@ export default function Navigation() {
             <NavItem to="/artists" title={t`Artists`}>
               <Icon name="microphone" size={16} />
             </NavItem>
+            <NavItem to="/albums" title={t`Albums`}>
+              <Icon name="album" size={16} />
+            </NavItem>
             <NavItem to="/playlists" title={t`Playlists`}>
               <Icon name="playlist" size={16} />
             </NavItem>

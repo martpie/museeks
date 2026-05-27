@@ -147,6 +147,9 @@ function ViewSettingsUI() {
           <option value="Artists">
             <Trans>Artists</Trans>
           </option>
+          <option value="Albums">
+            <Trans>Albums</Trans>
+          </option>
           <option value="Playlists">
             <Trans>Playlists</Trans>
           </option>

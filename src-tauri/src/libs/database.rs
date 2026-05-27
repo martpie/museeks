@@ -290,6 +290,23 @@ impl DB {
     }
 
     /**
+     * Get the list of albums registered in the database.
+     */
+    pub async fn get_all_albums(&mut self) -> AnyResult<Vec<String>> {
+        let result: Vec<String> = sqlx::query_scalar(
+            "SELECT DISTINCT album
+             FROM tracks
+             ORDER BY
+               CASE WHEN upper(substr(album, 1, 1)) BETWEEN 'A' AND 'Z' THEN 0 ELSE 1 END,
+               album COLLATE NOCASE;",
+        )
+        .fetch_all(&mut self.connection)
+        .await?;
+
+        Ok(result)
+    }
+
+    /**
      * Returns true if any tracks are flagged as compilations.
      */
     pub async fn has_compilations(&mut self) -> AnyResult<bool> {
@@ -341,6 +358,37 @@ impl DB {
         track_groups.sort_by_key(|group| group.year.unwrap_or(u16::MAX));
 
         Ok(track_groups)
+    }
+
+    /**
+     * Get all tracks for a given album.
+     */
+    pub async fn get_album_tracks(&mut self, album: String) -> AnyResult<Vec<TrackGroup>> {
+        let tracks = sqlx::query_as::<_, Track>(
+            "SELECT * FROM tracks WHERE album = ? ORDER BY disk_no, track_no",
+        )
+        .bind(&album)
+        .fetch_all(&mut self.connection)
+        .await?;
+
+        if tracks.is_empty() {
+            return Ok(Vec::new());
+        }
+
+        let track_group = TrackGroup {
+            label: album,
+            genres: tracks
+                .iter()
+                .flat_map(|s| &s.genres)
+                .cloned()
+                .unique()
+                .collect(),
+            duration: tracks.iter().map(|t| t.duration).sum(),
+            year: tracks.first().and_then(|t| t.year),
+            tracks,
+        };
+
+        Ok(vec![track_group])
     }
 
     /**
