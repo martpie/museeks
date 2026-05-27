@@ -18,7 +18,7 @@ use crate::libs::database::{DB, SUPPORTED_PLAYLISTS_EXTENSIONS, SUPPORTED_TRACKS
 use crate::libs::error::{AnyResult, MuseeksError, handle_fatal_error};
 use crate::libs::events::IPCEvent;
 use crate::libs::playlist::Playlist;
-use crate::libs::track::{Track, TrackGroup, get_track_from_file, get_track_id_for_path};
+use crate::libs::track::{Artist, Track, TrackGroup, get_track_from_file, get_track_id_for_path};
 use crate::libs::utils::{TimeLogger, scan_dirs};
 
 use super::config::get_storage_dir;
@@ -306,7 +306,7 @@ async fn remove_tracks(db_state: State<'_, DBState>, ids: Vec<String>) -> AnyRes
 }
 
 #[tauri::command]
-async fn get_artists(db_state: State<'_, DBState>) -> AnyResult<Vec<String>> {
+async fn get_artists(db_state: State<'_, DBState>) -> AnyResult<Vec<Artist>> {
     db_state.get_lock().await.get_artists().await
 }
 

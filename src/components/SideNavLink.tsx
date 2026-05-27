@@ -24,6 +24,7 @@ interface Props<
 > {
   linkOptions: ValidateLinkOptions<TRouter, TOptions>;
   label: string;
+  groupingLabel?: string;
   id: string;
   onRename?: (id: string, name: string) => void;
   contextMenuItems?: Array<MenuItemOptions | PredefinedMenuItemOptions>;

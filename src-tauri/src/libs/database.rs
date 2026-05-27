@@ -6,7 +6,7 @@ use std::path::PathBuf;
 
 use super::error::AnyResult;
 use super::playlist::Playlist;
-use super::track::{Track, TrackGroup};
+use super::track::{Artist, Track, TrackGroup};
 
 // Single source of truth for supported audio formats (extension, MIME type).
 // KEEP IN SYNC with Tauri's file associations in tauri.conf.json
@@ -137,6 +137,7 @@ impl DB {
                 title = ?,
                 album = ?,
                 album_artist = ?,
+                album_artist_sort = ?,
                 artists = ?,
                 genres = ?,
                 year = ?,
@@ -153,6 +154,7 @@ impl DB {
         .bind(&track.title)
         .bind(&track.album)
         .bind(&track.album_artist)
+        .bind(&track.album_artist_sort)
         .bind(json!(&track.artists))
         .bind(json!(&track.genres))
         .bind(track.year)
@@ -196,9 +198,24 @@ impl DB {
             sqlx::query(
                 r#"
                 INSERT INTO tracks (
-                    id, path, title, album, album_artist, artists, genres, year,
-                    duration, track_no, track_of, disk_no, disk_of, is_compilation
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    id,
+                    path,
+                    title,
+                    album,
+                    album_artist,
+                    album_artist_sort,
+                    artists,
+                    genres,
+                    year,
+                    duration,
+                    track_no,
+                    track_of,
+                    disk_no,
+                    disk_of,
+                    is_compilation
+                ) VALUES (
+                    ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
+                )
                 "#,
             )
             .bind(&track.id)
@@ -206,6 +223,7 @@ impl DB {
             .bind(&track.title)
             .bind(&track.album)
             .bind(&track.album_artist)
+            .bind(&track.album_artist_sort)
             .bind(json!(&track.artists))
             .bind(json!(&track.genres))
             .bind(track.year)
@@ -237,6 +255,7 @@ impl DB {
                     title = ?,
                     album = ?,
                     album_artist = ?,
+                    album_artist_sort = ?,
                     artists = ?,
                     genres = ?,
                     year = ?,
@@ -253,6 +272,7 @@ impl DB {
             .bind(&track.title)
             .bind(&track.album)
             .bind(&track.album_artist)
+            .bind(&track.album_artist_sort)
             .bind(json!(&track.artists))
             .bind(json!(&track.genres))
             .bind(track.year)
@@ -274,14 +294,24 @@ impl DB {
     /**
      * Get the list of artists registered in the database, excluding compilation tracks.
      */
-    pub async fn get_artists(&mut self) -> AnyResult<Vec<String>> {
-        let result: Vec<String> = sqlx::query_scalar(
-            "SELECT DISTINCT album_artist
-             FROM tracks
-             WHERE is_compilation = 0
-             ORDER BY
-               CASE WHEN upper(substr(album_artist, 1, 1)) BETWEEN 'A' AND 'Z' THEN 0 ELSE 1 END,
-               album_artist COLLATE NOCASE;",
+    pub async fn get_artists(&mut self) -> AnyResult<Vec<Artist>> {
+        let result = sqlx::query_as::<_, Artist>(
+            "SELECT
+                    album_artist AS label,
+                    min(album_artist_sort) AS sort_as
+            FROM tracks
+            WHERE is_compilation = 0
+            GROUP BY album_artist
+            ORDER BY
+                -- Keep names starting with A-Z before symbols/digits.
+                CASE
+                    WHEN upper(substr(sort_as, 1, 1)) BETWEEN 'A' AND 'Z' THEN 0
+                    ELSE 1
+                END,
+                -- Primary ordering uses the normalized sort value.
+                sort_as COLLATE NOCASE,
+                -- Tie-break on display name for deterministic output.
+                album_artist COLLATE NOCASE;",
         )
         .fetch_all(&mut self.connection)
         .await?;

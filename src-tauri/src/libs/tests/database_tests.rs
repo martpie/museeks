@@ -3,7 +3,7 @@ use sqlx::{Connection, SqliteConnection, sqlite};
 use std::path::PathBuf;
 
 use super::database::DB;
-use super::track::Track;
+use super::track::{Artist, Track};
 
 /** ----------------------------------------------------------------------------
  * Test data
@@ -15,8 +15,9 @@ fn sample_track_1() -> Track {
         path: "/music/artist1/album1/track1.mp3".to_string(),
         title: "Song One".to_string(),
         album: "Album One".to_string(),
-        album_artist: "Artist One".to_string(),
-        artists: vec!["Artist One".to_string()],
+        album_artist: "A Perfect Circle".to_string(),
+        album_artist_sort: "Perfect Circle, A".to_string(),
+        artists: vec!["A Perfect Circle".to_string()],
         genres: vec!["Pop".to_string(), "Rock".to_string()],
         year: Some(2023),
         duration: 210,
@@ -34,8 +35,9 @@ fn sample_track_2() -> Track {
         path: "/music/artist2/album2/track2.mp3".to_string(),
         title: "Song Two".to_string(),
         album: "Album Two".to_string(),
-        album_artist: "Artist Two".to_string(),
-        artists: vec!["Artist Two".to_string()],
+        album_artist: "The Beatles".to_string(),
+        album_artist_sort: "Beatles, The".to_string(),
+        artists: vec!["The Beatles".to_string()],
         genres: vec!["Jazz".to_string()],
         year: None,
         duration: 180,
@@ -53,8 +55,9 @@ fn sample_track_3() -> Track {
         path: "/music/artist3/album3/track3.mp3".to_string(),
         title: "Song Three".to_string(),
         album: "Album Three".to_string(),
-        album_artist: "Artist Three".to_string(),
-        artists: vec!["Artist Three".to_string(), "Artist Four".to_string()],
+        album_artist: "#1 Artist".to_string(),
+        album_artist_sort: "#1 Artist".to_string(),
+        artists: vec!["#1 Artist".to_string()],
         genres: vec!["Hip-Hop".to_string()],
         year: Some(2022),
         duration: 240,
@@ -63,6 +66,46 @@ fn sample_track_3() -> Track {
         disk_no: Some(1),
         disk_of: Some(2),
         is_compilation: false,
+    }
+}
+
+fn sample_track_beatles_secondary_sort() -> Track {
+    Track {
+        id: "artist-b-2".to_string(),
+        path: "/music/b2.mp3".to_string(),
+        title: "Track B2".to_string(),
+        album: "Album B".to_string(),
+        album_artist: "The Beatles".to_string(),
+        album_artist_sort: "Beatles".to_string(),
+        artists: vec!["The Beatles".to_string()],
+        genres: vec!["Rock".to_string()],
+        year: Some(2024),
+        duration: 180,
+        track_no: Some(1),
+        track_of: Some(1),
+        disk_no: Some(1),
+        disk_of: Some(1),
+        is_compilation: false,
+    }
+}
+
+fn sample_track_compilation() -> Track {
+    Track {
+        id: "artist-compilation".to_string(),
+        path: "/music/compilation.mp3".to_string(),
+        title: "Track C".to_string(),
+        album: "Compilation".to_string(),
+        album_artist: "Various Artists".to_string(),
+        album_artist_sort: "Various Artists".to_string(),
+        artists: vec!["Various Artists".to_string()],
+        genres: vec![],
+        year: Some(2024),
+        duration: 180,
+        track_no: Some(1),
+        track_of: Some(1),
+        disk_no: Some(1),
+        disk_of: Some(1),
+        is_compilation: true,
     }
 }
 
@@ -115,30 +158,54 @@ async fn test_tracks_db() {
     track_to_update.title = "Song Two Point Five".to_string();
     db.update_track(track_to_update).await.unwrap();
     tracks = db.get_tracks(&vec!["2".to_string()]).await.unwrap();
-    assert_eq!(
-        tracks,
-        vec![Track {
-            id: "2".to_string(),
-            path: "/music/artist2/album2/track2.mp3".to_string(),
-            title: "Song Two Point Five".to_string(),
-            album: "Album Two".to_string(),
-            album_artist: "Artist Two".to_string(),
-            artists: vec!["Artist Two".to_string()],
-            genres: vec!["Jazz".to_string()],
-            year: None,
-            duration: 180,
-            track_no: None,
-            track_of: None,
-            disk_no: None,
-            disk_of: None,
-            is_compilation: false,
-        }]
-    );
+    let mut expected = sample_track_2();
+    expected.title = "Song Two Point Five".to_string();
+    assert_eq!(tracks, vec![expected]);
 
     // Test deletion
     db.remove_tracks(&vec!["2".to_string()]).await.unwrap();
     all_tracks = db.get_all_tracks().await.unwrap();
     assert_eq!(all_tracks, vec![sample_track_1(), sample_track_3()]);
+}
+
+/** ----------------------------------------------------------------------------
+ * Integration Test - Artists Sorting
+ * -------------------------------------------------------------------------- */
+
+#[tokio::test]
+async fn test_get_artists_uses_sort_as_and_excludes_compilations() {
+    let mut db = get_test_db().await;
+
+    db.insert_tracks(vec![
+        sample_track_1(),
+        sample_track_2(),
+        // Duplicate display artist with a lexicographically lower sort key.
+        sample_track_beatles_secondary_sort(),
+        // Compilation artists must be excluded from get_artists.
+        sample_track_compilation(),
+        sample_track_3(),
+    ])
+    .await
+    .unwrap();
+
+    let artists: Vec<Artist> = db.get_artists().await.unwrap();
+
+    assert_eq!(artists.len(), 3);
+    assert!(
+        artists
+            .iter()
+            .all(|artist| artist.label != "Various Artists")
+    );
+
+    // Order is based on sort_as and groups symbols after A-Z labels.
+    assert_eq!(artists[0].label, "The Beatles");
+    assert_eq!(artists[0].sort_as, "Beatles");
+
+    assert_eq!(artists[1].label, "A Perfect Circle");
+    assert_eq!(artists[1].sort_as, "Perfect Circle, A");
+
+    assert_eq!(artists[2].label, "#1 Artist");
+    assert_eq!(artists[2].sort_as, "#1 Artist");
 }
 
 /** ----------------------------------------------------------------------------

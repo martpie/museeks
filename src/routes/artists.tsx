@@ -36,7 +36,7 @@ export const Route = createFileRoute('/artists')({
       if (artists.length > 0) {
         throw redirect({
           to: '/artists/$artistID',
-          params: { artistID: artists[0] },
+          params: { artistID: artists[0].label },
         });
       }
 
@@ -75,12 +75,13 @@ function ViewArtists() {
         >
           {artists.map((artist) => (
             <SideNavLink
-              key={artist}
-              id={artist}
-              label={artist}
+              key={artist.label}
+              id={artist.label}
+              label={artist.label}
+              groupingLabel={artist.sort_as}
               linkOptions={{
                 to: '/artists/$artistID',
-                params: { artistID: artist },
+                params: { artistID: artist.label },
               }}
             />
           ))}

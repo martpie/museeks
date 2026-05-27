@@ -176,7 +176,7 @@ msgstr "Rechercher dans la bibliothèque"
 msgid "Clear search"
 msgstr "Effacer la recherche"
 
-#: src/components/SideNavLink.tsx:62
+#: src/components/SideNavLink.tsx:63
 msgid "Rename"
 msgstr "Renommer"
 
@@ -247,7 +247,7 @@ msgstr "Retirer les pistes"
 #: src/components/TrackList.tsx:392
 #: src/routes/settings.library.tsx:100
 #: src/routes/settings.library.tsx:145
-#: src/routes/tracks.$trackID.tsx:257
+#: src/routes/tracks.$trackID.tsx:272
 msgid "Cancel"
 msgstr "Annuler"
 
@@ -273,12 +273,12 @@ msgid "Track list sorting options"
 msgstr "Options de tri de la liste des pistes"
 
 #: src/components/TrackListHeader.tsx:26
-#: src/routes/tracks.$trackID.tsx:88
+#: src/routes/tracks.$trackID.tsx:89
 msgid "Title"
 msgstr "Titre"
 
 #: src/components/TrackListHeader.tsx:31
-#: src/routes/tracks.$trackID.tsx:241
+#: src/routes/tracks.$trackID.tsx:256
 msgid "Duration"
 msgstr "Durée"
 
@@ -287,12 +287,12 @@ msgid "Artist"
 msgstr "Artiste"
 
 #: src/components/TrackListHeader.tsx:41
-#: src/routes/tracks.$trackID.tsx:99
+#: src/routes/tracks.$trackID.tsx:100
 msgid "Album"
 msgstr "Album"
 
 #: src/components/TrackListHeader.tsx:46
-#: src/routes/tracks.$trackID.tsx:139
+#: src/routes/tracks.$trackID.tsx:154
 msgid "Genre"
 msgstr "Genre"
 
@@ -599,59 +599,63 @@ msgid "Dark"
 msgstr "Sombre"
 
 #. placeholder {0}: track.title
-#: src/routes/tracks.$trackID.tsx:84
+#: src/routes/tracks.$trackID.tsx:85
 msgid "Edit \"{0}\""
 msgstr "Modifier \"{0}\""
 
-#: src/routes/tracks.$trackID.tsx:110
+#: src/routes/tracks.$trackID.tsx:111
 msgid "Album Artist"
 msgstr "Artiste de l'album"
 
-#: src/routes/tracks.$trackID.tsx:124
+#: src/routes/tracks.$trackID.tsx:125
+msgid "Sort as"
+msgstr ""
+
+#: src/routes/tracks.$trackID.tsx:139
 msgid "Track Artists"
 msgstr "Artistes de la piste"
 
-#: src/routes/tracks.$trackID.tsx:125
+#: src/routes/tracks.$trackID.tsx:140
 msgid "You can add multiple artists with commas"
 msgstr "Vous pouvez ajouter plusieurs artistes avec des virgules"
 
-#: src/routes/tracks.$trackID.tsx:140
+#: src/routes/tracks.$trackID.tsx:155
 msgid "You can add multiple genres with commas"
 msgstr "Vous pouvez ajouter plusieurs genres avec des virgules"
 
-#: src/routes/tracks.$trackID.tsx:154
+#: src/routes/tracks.$trackID.tsx:169
 msgid "Year"
 msgstr "Année"
 
-#: src/routes/tracks.$trackID.tsx:168
+#: src/routes/tracks.$trackID.tsx:183
 msgid "Track Nº"
 msgstr "Nº de piste"
 
-#: src/routes/tracks.$trackID.tsx:182
-#: src/routes/tracks.$trackID.tsx:214
+#: src/routes/tracks.$trackID.tsx:197
+#: src/routes/tracks.$trackID.tsx:229
 msgid "Of"
 msgstr "Sur"
 
-#: src/routes/tracks.$trackID.tsx:200
+#: src/routes/tracks.$trackID.tsx:215
 msgid "Disk Nº"
 msgstr "Nº de disque"
 
-#: src/routes/tracks.$trackID.tsx:231
+#: src/routes/tracks.$trackID.tsx:246
 msgid "Compilation"
 msgstr "Compilation"
 
-#: src/routes/tracks.$trackID.tsx:232
+#: src/routes/tracks.$trackID.tsx:247
 msgid "Group this track with other tracks from the same compilation, regardless of the artist names."
 msgstr "Groupe cette piste avec les autres pistes de la même compilation, indépendamment des noms d'artistes."
 
-#: src/routes/tracks.$trackID.tsx:249
+#: src/routes/tracks.$trackID.tsx:264
 msgid "Path"
 msgstr "Chemin du fichier"
 
-#: src/routes/tracks.$trackID.tsx:260
+#: src/routes/tracks.$trackID.tsx:275
 msgid "Save"
 msgstr "Enregistrer"
 
-#: src/routes/tracks.$trackID.tsx:265
+#: src/routes/tracks.$trackID.tsx:280
 msgid "Clicking \"save\" will only update the library data, but will not save it to the original file."
 msgstr "Cliquer sur \"enregistrer\" mettra uniquement à jour les données de la bibliothèque, mais ne les enregistrera pas dans le fichier d'origine."

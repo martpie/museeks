@@ -1,4 +1,5 @@
 import type {
+  Artist,
   Playlist,
   ScanResult,
   Track,
@@ -15,6 +16,7 @@ const MOCK_TRACKS: Array<Track> = [
     album: 'Another Album',
     duration: 300,
     album_artist: 'Captain_Sleepy',
+    album_artist_sort: 'Captain_Sleepy',
     year: 2025,
     disk_no: 1,
     disk_of: 1,
@@ -31,6 +33,7 @@ const MOCK_TRACKS: Array<Track> = [
     album: 'Pixabay',
     duration: 300,
     album_artist: 'Desicomix07',
+    album_artist_sort: 'Desicomix07',
     year: 2025,
     disk_no: 1,
     disk_of: 1,
@@ -47,6 +50,7 @@ const MOCK_TRACKS: Array<Track> = [
     album: 'Pixabay',
     duration: 300,
     album_artist: 'Jean-Paul-V',
+    album_artist_sort: 'Jean-Paul-V',
     year: 2025,
     disk_no: 1,
     disk_of: 1,
@@ -92,7 +96,7 @@ class DatabaseBridge implements DatabaseBridgeInterface {
     };
   }
 
-  async getAllArtists(): Promise<Array<string>> {
+  async getAllArtists(): Promise<Array<Artist>> {
     return [];
   }
 

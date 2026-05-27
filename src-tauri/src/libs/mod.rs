@@ -16,3 +16,7 @@ pub mod track;
 #[cfg(test)]
 #[path = "./tests/database_tests.rs"]
 mod database_tests;
+
+#[cfg(test)]
+#[path = "./tests/track_test.rs"]
+mod track_test;

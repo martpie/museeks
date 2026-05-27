@@ -48,6 +48,7 @@ function ViewTrackDetails() {
     album: track.album ?? '',
     artists: track.artists,
     album_artist: track.album_artist ?? '',
+    album_artist_sort: track.album_artist_sort ?? '',
     genres: track.genres,
     year: track.year,
     track_no: track.track_no ?? null,
@@ -115,6 +116,20 @@ function ViewTrackDetails() {
               setFormData({
                 ...formData,
                 album_artist: e.currentTarget.value,
+              });
+            }}
+          />
+        </Setting.Section>
+        <Setting.Section>
+          <Setting.Input
+            label={t`Sort as`}
+            name="album_artist_sort"
+            type="text"
+            value={formData.album_artist_sort}
+            onChange={(e) => {
+              setFormData({
+                ...formData,
+                album_artist_sort: e.currentTarget.value,
               });
             }}
           />
