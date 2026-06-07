@@ -76,6 +76,7 @@ pub struct Config {
     pub auto_update_checker: bool,
     pub notifications: bool,
     pub track_view_density: TrackViewDensity,
+    pub track_view_covers: bool,
     pub wayland_compat: bool,
     #[serde(default)]
     pub menu_bar_visible: bool,
@@ -108,6 +109,7 @@ impl Default for Config {
             auto_update_checker: true,
             notifications: false,
             track_view_density: TrackViewDensity::Normal,
+            track_view_covers: false,
             wayland_compat: false,
             menu_bar_visible: false,
         }

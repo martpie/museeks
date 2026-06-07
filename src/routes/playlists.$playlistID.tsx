@@ -129,6 +129,7 @@ function ViewPlaylistDetails() {
       layout="default"
       data={filteredTracks}
       tracksDensity={config.track_view_density}
+      showCoverThumbnails={config.track_view_covers}
       playlists={playlists}
       queueOrigin={queueOrigin}
       onReorder={onReorder}

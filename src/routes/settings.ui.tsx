@@ -131,6 +131,14 @@ function ViewSettingsUI() {
         </Setting.Select>
       </Setting.Section>
       <Setting.Section>
+        <CheckboxSetting
+          title={t`Show track covers`}
+          description={t`Display album cover thumbnails in track rows`}
+          value={config.track_view_covers}
+          onChange={useInvalidateCallback(SettingsAPI.toggleTracksCovers)}
+        />
+      </Setting.Section>
+      <Setting.Section>
         <Setting.Select
           label={t`Default view`}
           value={config.default_view}

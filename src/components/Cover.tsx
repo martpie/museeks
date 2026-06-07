@@ -8,6 +8,7 @@ import Icon, { type IconSize } from './Icon';
 type Props = {
   track: Track;
   noHorizontalBorder?: boolean;
+  decorative?: boolean;
   iconSize?: IconSize;
 };
 
@@ -31,9 +32,9 @@ export default function Cover(props: Props) {
         </div>
         <img
           src={coverPath ?? undefined}
-          alt={t`Album cover`}
+          alt={props.decorative === true ? '' : t`Album cover`}
           draggable={false}
-          aria-hidden={coverPath === null}
+          aria-hidden={props.decorative === true || coverPath === null}
           {...stylex.props(styles.image, coverPath != null && styles.visible)}
         />
       </div>

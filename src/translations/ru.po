@@ -37,11 +37,11 @@ msgid "The playlist \"{name}\" was created"
 msgstr "Создан плейлист \"{name}\""
 
 #. placeholder {0}: newRelease.tag_name
-#: src/api/SettingsAPI.ts:168
+#: src/api/SettingsAPI.ts:172
 msgid "Museeks {0} is available, check https://museeks.io!"
 msgstr "Доступна версия Museeks {0}, проверьте https://museeks.io!"
 
-#: src/api/SettingsAPI.ts:170
+#: src/api/SettingsAPI.ts:174
 msgid "Museeks {currentVersion} is the latest version available."
 msgstr "Museeks {currentVersion} является самой последней доступной версией."
 
@@ -53,7 +53,7 @@ msgstr "Повтор"
 msgid "Shuffle"
 msgstr "Шафл"
 
-#: src/components/Cover.tsx:34
+#: src/components/Cover.tsx:35
 msgid "Album cover"
 msgstr "Обложка альбома"
 
@@ -114,13 +114,13 @@ msgstr "Библиотека"
 
 #: src/components/Navigation.tsx:54
 #: src/routes/artists.tsx:64
-#: src/routes/settings.ui.tsx:148
+#: src/routes/settings.ui.tsx:156
 msgid "Artists"
 msgstr "Исполнители"
 
 #: src/components/Navigation.tsx:57
 #: src/routes/playlists.tsx:165
-#: src/routes/settings.ui.tsx:151
+#: src/routes/settings.ui.tsx:159
 msgid "Playlists"
 msgstr "Плейлисты"
 
@@ -180,83 +180,83 @@ msgstr ""
 msgid "Rename"
 msgstr "Переименовать"
 
-#: src/components/TrackList.tsx:243
+#: src/components/TrackList.tsx:247
 msgid "Create new playlist..."
 msgstr "Создать новый плейлист..."
 
-#: src/components/TrackList.tsx:246
+#: src/components/TrackList.tsx:250
 #: src/routes/playlists.tsx:63
 msgid "New playlist"
 msgstr "Новый плейлист"
 
-#: src/components/TrackList.tsx:259
+#: src/components/TrackList.tsx:263
 msgid "No playlists"
 msgstr "Плейлистов нет"
 
 #. placeholder {0}: selectedTracks.size
 #. placeholder {1}: playlist.name
-#: src/components/TrackList.tsx:273
+#: src/components/TrackList.tsx:277
 msgid "{0} track(s) were added to \"{1}\""
 msgstr "{0} трек(ов) добавлено в \"{1}\""
 
-#: src/components/TrackList.tsx:291
+#: src/components/TrackList.tsx:295
 msgid "{selectedCount, plural, one {# track selected} other {# tracks selected}}"
 msgstr "Выбран{selectedCount, plural, one { # трек} few {ы # трека} many {о # треков}}"
 
-#: src/components/TrackList.tsx:303
+#: src/components/TrackList.tsx:307
 msgid "Add to queue"
 msgstr "Добавить в очередь"
 
-#: src/components/TrackList.tsx:311
+#: src/components/TrackList.tsx:315
 msgid "Play next"
 msgstr "Играть следующим"
 
-#: src/components/TrackList.tsx:323
+#: src/components/TrackList.tsx:327
 msgid "Add to playlist"
 msgstr "Добавить в плейлист"
 
-#: src/components/TrackList.tsx:333
+#: src/components/TrackList.tsx:337
 msgid "Search for \"{item}\""
 msgstr "Искать \"{item}\""
 
-#: src/components/TrackList.tsx:346
+#: src/components/TrackList.tsx:350
 msgid "Copy \"{item}\""
 msgstr "Скопировать \"{item}\""
 
-#: src/components/TrackList.tsx:369
+#: src/components/TrackList.tsx:373
 msgid "Edit track"
 msgstr "Редактировать трек"
 
-#: src/components/TrackList.tsx:379
+#: src/components/TrackList.tsx:383
 msgid "Show in file manager"
 msgstr "Открыть в файловом менеджере"
 
-#: src/components/TrackList.tsx:385
+#: src/components/TrackList.tsx:389
 msgid "Remove from library"
 msgstr "Удалить из библиотеки"
 
 #. placeholder {0}: selectedTracks.size
-#: src/components/TrackList.tsx:388
+#: src/components/TrackList.tsx:392
 msgid "Are you sure you want to remove {0} track(s) from your library?"
 msgstr "Вы уверены, что хотите удалить {0} трек(ов) из вашей библиотеки?"
 
-#: src/components/TrackList.tsx:390
+#: src/components/TrackList.tsx:394
 msgid "Remove tracks"
 msgstr "Удалить треки"
 
-#: src/components/TrackList.tsx:392
+#: src/components/TrackList.tsx:396
 #: src/routes/settings.library.tsx:100
 #: src/routes/settings.library.tsx:145
 #: src/routes/tracks.$trackID.tsx:257
 msgid "Cancel"
 msgstr "Отмена"
 
-#: src/components/TrackList.tsx:393
+#: src/components/TrackList.tsx:397
 #: src/routes/settings.library.tsx:64
 msgid "Remove"
 msgstr "Удалить"
 
-#: src/components/TrackListDefault.tsx:124
+#: src/components/TrackListDefault.tsx:129
 #: src/components/TrackListGrouped.tsx:58
 msgid "Track list"
 msgstr ""
@@ -268,30 +268,30 @@ msgstr ""
 msgid "{0, plural, one {# track} other {# tracks}}"
 msgstr "{0, plural, one {# трек} few {# трека} many {# треков}}"
 
-#: src/components/TrackListHeader.tsx:17
+#: src/components/TrackListHeader.tsx:21
 msgid "Track list sorting options"
 msgstr ""
 
-#: src/components/TrackListHeader.tsx:26
+#: src/components/TrackListHeader.tsx:34
 #: src/routes/tracks.$trackID.tsx:88
 msgid "Title"
 msgstr "Заголовок"
 
-#: src/components/TrackListHeader.tsx:31
+#: src/components/TrackListHeader.tsx:39
 #: src/routes/tracks.$trackID.tsx:241
 msgid "Duration"
 msgstr "Длительность"
 
-#: src/components/TrackListHeader.tsx:36
+#: src/components/TrackListHeader.tsx:44
 msgid "Artist"
 msgstr "Исполнитель"
 
-#: src/components/TrackListHeader.tsx:41
+#: src/components/TrackListHeader.tsx:49
 #: src/routes/tracks.$trackID.tsx:99
 msgid "Album"
 msgstr "Альбом"
 
-#: src/components/TrackListHeader.tsx:46
+#: src/components/TrackListHeader.tsx:54
 #: src/routes/tracks.$trackID.tsx:139
 msgid "Genre"
 msgstr "Жанр"
@@ -555,46 +555,54 @@ msgid "Compact"
 msgstr "Компатная"
 
 #: src/routes/settings.ui.tsx:135
+msgid "Show track covers"
+msgstr "Показывать обложки треков"
+
+#: src/routes/settings.ui.tsx:136
+msgid "Display album cover thumbnails in track rows"
+msgstr "Показывать миниатюры обложек альбомов в строках треков"
+
+#: src/routes/settings.ui.tsx:143
 msgid "Default view"
 msgstr "Представление по умолчанию"
 
-#: src/routes/settings.ui.tsx:137
+#: src/routes/settings.ui.tsx:145
 msgid "Change the default view when starting the application"
 msgstr "Изменить представление по умолчанию при запуске приложения"
 
-#: src/routes/settings.ui.tsx:145
+#: src/routes/settings.ui.tsx:153
 msgid "Library (default)"
 msgstr "Библиотека (по умолчанию)"
 
-#: src/routes/settings.ui.tsx:157
+#: src/routes/settings.ui.tsx:165
 msgid "Display Notifications"
 msgstr "Отображать уведомления"
 
-#: src/routes/settings.ui.tsx:158
+#: src/routes/settings.ui.tsx:166
 msgid "Send notifications when the playing track changes"
 msgstr "Посылать уведомления при смене проигрываемого трека"
 
-#: src/routes/settings.ui.tsx:167
+#: src/routes/settings.ui.tsx:175
 msgid "Sleep mode blocker"
 msgstr "Блокировать режим сна"
 
-#: src/routes/settings.ui.tsx:168
+#: src/routes/settings.ui.tsx:176
 msgid "Prevent the computer from going into sleep mode when playing"
 msgstr "Предпятствовать переходу компьютера в режим сна во время проигрывания"
 
-#: src/routes/settings.ui.tsx:178
+#: src/routes/settings.ui.tsx:186
 msgid "[Beta] Wayland compatibility enhancements"
 msgstr "[Beta] Улучшения совместимости с Wayland"
 
-#: src/routes/settings.ui.tsx:179
+#: src/routes/settings.ui.tsx:187
 msgid "If you face issues using Wayland, try out this option"
 msgstr "Если у вас возникли проблемы с Wayland, попробуйте эту опцию"
 
-#: src/routes/settings.ui.tsx:202
+#: src/routes/settings.ui.tsx:210
 msgid "Light"
 msgstr "Светлая"
 
-#: src/routes/settings.ui.tsx:204
+#: src/routes/settings.ui.tsx:212
 msgid "Dark"
 msgstr "Тёмная"
 

@@ -20,6 +20,7 @@ export const MOCK_CONFIG: Config = {
   auto_update_checker: true,
   notifications: false,
   track_view_density: 'normal',
+  track_view_covers: false,
   wayland_compat: false,
   menu_bar_visible: false,
 };

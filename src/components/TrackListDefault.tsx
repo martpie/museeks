@@ -33,6 +33,7 @@ type Props = {
   selectedTracks: Set<string>;
   initialOffset: number;
   rowHeight: number;
+  showCoverThumbnails: boolean;
   onReorder?: (tracks: Track[]) => void;
 } & TrackRowEvents;
 
@@ -44,6 +45,7 @@ export default function TrackListDefault(props: Props) {
     selectedTracks,
     initialOffset,
     rowHeight,
+    showCoverThumbnails,
     onReorder,
     onTrackSelect,
     onContextMenu,
@@ -115,7 +117,10 @@ export default function TrackListDefault(props: Props) {
       sensors={sensors}
     >
       <Scrollable ref={innerScrollableRef}>
-        <TrackListHeader sortable={!reorderable} />
+        <TrackListHeader
+          sortable={!reorderable}
+          showCoverThumbnails={showCoverThumbnails}
+        />
 
         {/* The large inner element to hold all of the items */}
         <ul
@@ -140,6 +145,7 @@ export default function TrackListDefault(props: Props) {
                   selected={selectedTracks.has(track.id)}
                   track={track}
                   isPlaying={trackPlayingID === track.id}
+                  showCoverThumbnail={showCoverThumbnails}
                   index={virtualItem.index}
                   onTrackSelect={onTrackSelect}
                   onContextMenu={onContextMenu}

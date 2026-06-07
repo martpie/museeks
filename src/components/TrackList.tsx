@@ -41,6 +41,7 @@ import TrackListGrouped from './TrackListGrouped';
 type TrackListProps = {
   playlists: Playlist[];
   tracksDensity: Config['track_view_density'];
+  showCoverThumbnails: boolean;
   reorderable?: boolean;
   onReorder?: (tracks: Track[]) => void;
   queueOrigin: QueueOrigin;
@@ -66,12 +67,15 @@ type Props = TrackListDefaultLayoutProps | TrackListGroupedLayoutProps;
 
 const ROW_HEIGHT = 30;
 const ROW_HEIGHT_COMPACT = 24;
+const ROW_HEIGHT_WITH_COVERS = 52;
+const ROW_HEIGHT_COMPACT_WITH_COVERS = 44;
 
 export default function TrackList(props: Props) {
   const {
     layout,
     data,
     tracksDensity,
+    showCoverThumbnails,
     reorderable,
     queueOrigin,
     onReorder,
@@ -420,8 +424,17 @@ export default function TrackList(props: Props) {
     ],
   );
 
-  const rowHeight =
-    tracksDensity === 'compact' ? ROW_HEIGHT_COMPACT : ROW_HEIGHT;
+  // Grouped lists are not virtualized yet, so thumbnail rows stay limited to
+  // the default layout to avoid loading covers for every track at once.
+  const showCoverThumbnailsInRows = layout === 'default' && showCoverThumbnails;
+
+  const rowHeight = showCoverThumbnailsInRows
+    ? tracksDensity === 'compact'
+      ? ROW_HEIGHT_COMPACT_WITH_COVERS
+      : ROW_HEIGHT_WITH_COVERS
+    : tracksDensity === 'compact'
+      ? ROW_HEIGHT_COMPACT
+      : ROW_HEIGHT;
 
   return (
     <div
@@ -439,6 +452,7 @@ export default function TrackList(props: Props) {
           ref={scrollableRef}
           tracks={data}
           rowHeight={rowHeight}
+          showCoverThumbnails={showCoverThumbnailsInRows}
           selectedTracks={selectedTracks}
           reorderable={reorderable}
           initialOffset={getScrollPosition()}

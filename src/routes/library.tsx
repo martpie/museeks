@@ -50,6 +50,7 @@ function ViewLibrary() {
           data={filteredTracks}
           queueOrigin={QUEUE_ORIGIN}
           tracksDensity={config.track_view_density}
+          showCoverThumbnails={config.track_view_covers}
           playlists={playlists}
         />
       </TrackListStates>
