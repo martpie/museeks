@@ -117,6 +117,10 @@ async function setTracksDensity(
   await ConfigBridge.set('track_view_density', density);
 }
 
+async function toggleTracksCovers(value: boolean): Promise<void> {
+  await ConfigBridge.set('track_view_covers', value);
+}
+
 const setUIMainColor = async (
   mainColor: Config['ui_accent_color'],
 ): Promise<void> => {
@@ -228,6 +232,7 @@ const SettingsAPI = {
   setUIMainColor,
   applyUIMainColorToUI,
   setTracksDensity,
+  toggleTracksCovers,
   checkForUpdate,
   toggleLibraryAutorefresh,
   toggleAutoUpdateChecker,

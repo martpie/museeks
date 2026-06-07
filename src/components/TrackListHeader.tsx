@@ -5,9 +5,13 @@ import TrackListHeaderCell from './TrackListHeaderCell';
 
 type Props = {
   sortable?: boolean;
+  showCoverThumbnails: boolean;
 };
 
-export default function TrackListHeader({ sortable = true }: Props) {
+export default function TrackListHeader({
+  sortable = true,
+  showCoverThumbnails,
+}: Props) {
   const { t } = useLingui();
 
   return (
@@ -17,7 +21,11 @@ export default function TrackListHeader({ sortable = true }: Props) {
       aria-label={t`Track list sorting options`}
     >
       <TrackListHeaderCell
-        xstyle={styles.cellTrackPlaying}
+        xstyle={
+          showCoverThumbnails
+            ? styles.cellTrackPlayingWithCover
+            : styles.cellTrackPlaying
+        }
         title="&nbsp;"
         sortBy={null}
       />
@@ -65,6 +73,9 @@ const styles = stylex.create({
   },
   cellTrackPlaying: {
     width: '30px',
+  },
+  cellTrackPlayingWithCover: {
+    width: '56px',
   },
   cellTrack: {
     flexGrow: 1,

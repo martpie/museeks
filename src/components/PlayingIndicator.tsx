@@ -5,27 +5,46 @@ import { usePlayerState } from '../hooks/usePlayer';
 import player from '../lib/player';
 import Icon from './Icon';
 
-export default function TrackPlayingIndicator() {
+type Props = {
+  size?: 'default' | 'large';
+};
+
+export default function TrackPlayingIndicator({ size = 'default' }: Props) {
   const [hovered, setHovered] = useState(false);
   const isPaused = usePlayerState((state) => state.isPaused);
+  const isLarge = size === 'large';
 
   const icon = useMemo(() => {
     if (!isPaused) {
       if (hovered) {
-        return <Icon name="pause" size={12} />;
+        return <Icon name="pause" size={isLarge ? 16 : 12} />;
       }
 
       return (
-        <div {...stylex.props(styles.animation)}>
-          <div {...stylex.props(styles.bar)} />
-          <div {...stylex.props(styles.bar, styles.barSecond)} />
-          <div {...stylex.props(styles.bar, styles.barThird)} />
+        <div
+          {...stylex.props(styles.animation, isLarge && styles.animationLarge)}
+        >
+          <div {...stylex.props(styles.bar, isLarge && styles.barLarge)} />
+          <div
+            {...stylex.props(
+              styles.bar,
+              isLarge && styles.barLarge,
+              styles.barSecond,
+            )}
+          />
+          <div
+            {...stylex.props(
+              styles.bar,
+              isLarge && styles.barLarge,
+              styles.barThird,
+            )}
+          />
         </div>
       );
     }
 
-    return <Icon name="play" />;
-  }, [isPaused, hovered]);
+    return <Icon name="play" size={isLarge ? 16 : undefined} />;
+  }, [isPaused, hovered, isLarge]);
 
   return (
     <button
@@ -67,6 +86,10 @@ const styles = stylex.create({
     alignItems: 'flex-end',
     justifyContent: 'space-between',
   },
+  animationLarge: {
+    width: '16px',
+    height: '18px',
+  },
   bar: {
     height: '8px',
     width: '2px',
@@ -77,6 +100,10 @@ const styles = stylex.create({
     animationTimingFunction: 'ease-in-out',
     animationIterationCount: 'infinite',
     transformOrigin: 'bottom',
+  },
+  barLarge: {
+    height: '18px',
+    width: '4px',
   },
   barSecond: {
     animationDelay: '0.55s',

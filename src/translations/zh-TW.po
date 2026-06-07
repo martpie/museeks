@@ -37,11 +37,11 @@ msgid "The playlist \"{name}\" was created"
 msgstr "播放清單 \"{name}\" 已建立"
 
 #. placeholder {0}: newRelease.tag_name
-#: src/api/SettingsAPI.ts:168
+#: src/api/SettingsAPI.ts:172
 msgid "Museeks {0} is available, check https://museeks.io!"
 msgstr "Museeks {0} 可用，請查看 https://museeks.io！"
 
-#: src/api/SettingsAPI.ts:170
+#: src/api/SettingsAPI.ts:174
 msgid "Museeks {currentVersion} is the latest version available."
 msgstr "Museeks {currentVersion} 是可用的最新版本。"
 
@@ -53,7 +53,7 @@ msgstr "重複"
 msgid "Shuffle"
 msgstr "隨機播放"
 
-#: src/components/Cover.tsx:34
+#: src/components/Cover.tsx:35
 msgid "Album cover"
 msgstr "專輯封面"
 
@@ -114,13 +114,13 @@ msgstr "音樂庫"
 
 #: src/components/Navigation.tsx:54
 #: src/routes/artists.tsx:64
-#: src/routes/settings.ui.tsx:148
+#: src/routes/settings.ui.tsx:156
 msgid "Artists"
 msgstr "藝術家"
 
 #: src/components/Navigation.tsx:57
 #: src/routes/playlists.tsx:165
-#: src/routes/settings.ui.tsx:151
+#: src/routes/settings.ui.tsx:159
 msgid "Playlists"
 msgstr "播放清單"
 
@@ -180,83 +180,83 @@ msgstr ""
 msgid "Rename"
 msgstr "重新命名"
 
-#: src/components/TrackList.tsx:243
+#: src/components/TrackList.tsx:247
 msgid "Create new playlist..."
 msgstr "建立新播放清單..."
 
-#: src/components/TrackList.tsx:246
+#: src/components/TrackList.tsx:250
 #: src/routes/playlists.tsx:63
 msgid "New playlist"
 msgstr "新播放清單"
 
-#: src/components/TrackList.tsx:259
+#: src/components/TrackList.tsx:263
 msgid "No playlists"
 msgstr "沒有播放清單"
 
 #. placeholder {0}: selectedTracks.size
 #. placeholder {1}: playlist.name
-#: src/components/TrackList.tsx:273
+#: src/components/TrackList.tsx:277
 msgid "{0} track(s) were added to \"{1}\""
 msgstr "{0} 首音軌已新增到 \"{1}\""
 
-#: src/components/TrackList.tsx:291
+#: src/components/TrackList.tsx:295
 msgid "{selectedCount, plural, one {# track selected} other {# tracks selected}}"
 msgstr "{selectedCount, plural, one {# 首音軌已選擇} other {# 首音軌已選擇}}"
 
-#: src/components/TrackList.tsx:303
+#: src/components/TrackList.tsx:307
 msgid "Add to queue"
 msgstr "新增到佇列"
 
-#: src/components/TrackList.tsx:311
+#: src/components/TrackList.tsx:315
 msgid "Play next"
 msgstr "接著播放"
 
-#: src/components/TrackList.tsx:323
+#: src/components/TrackList.tsx:327
 msgid "Add to playlist"
 msgstr "新增到播放清單"
 
-#: src/components/TrackList.tsx:333
+#: src/components/TrackList.tsx:337
 msgid "Search for \"{item}\""
 msgstr "搜尋 \"{item}\""
 
-#: src/components/TrackList.tsx:346
+#: src/components/TrackList.tsx:350
 msgid "Copy \"{item}\""
 msgstr "複製 \"{item}\""
 
-#: src/components/TrackList.tsx:369
+#: src/components/TrackList.tsx:373
 msgid "Edit track"
 msgstr "編輯音軌"
 
-#: src/components/TrackList.tsx:379
+#: src/components/TrackList.tsx:383
 msgid "Show in file manager"
 msgstr "在檔案管理員中顯示"
 
-#: src/components/TrackList.tsx:385
+#: src/components/TrackList.tsx:389
 msgid "Remove from library"
 msgstr "從音樂庫中移除"
 
 #. placeholder {0}: selectedTracks.size
-#: src/components/TrackList.tsx:388
+#: src/components/TrackList.tsx:392
 msgid "Are you sure you want to remove {0} track(s) from your library?"
 msgstr "您確定要從音樂庫中移除 {0} 首音軌嗎？"
 
-#: src/components/TrackList.tsx:390
+#: src/components/TrackList.tsx:394
 msgid "Remove tracks"
 msgstr "移除音軌"
 
-#: src/components/TrackList.tsx:392
+#: src/components/TrackList.tsx:396
 #: src/routes/settings.library.tsx:100
 #: src/routes/settings.library.tsx:145
 #: src/routes/tracks.$trackID.tsx:257
 msgid "Cancel"
 msgstr "取消"
 
-#: src/components/TrackList.tsx:393
+#: src/components/TrackList.tsx:397
 #: src/routes/settings.library.tsx:64
 msgid "Remove"
 msgstr "移除"
 
-#: src/components/TrackListDefault.tsx:124
+#: src/components/TrackListDefault.tsx:129
 #: src/components/TrackListGrouped.tsx:58
 msgid "Track list"
 msgstr ""
@@ -268,30 +268,30 @@ msgstr ""
 msgid "{0, plural, one {# track} other {# tracks}}"
 msgstr "{0, plural, one {# 首音軌} other {# 首音軌}}"
 
-#: src/components/TrackListHeader.tsx:17
+#: src/components/TrackListHeader.tsx:21
 msgid "Track list sorting options"
 msgstr ""
 
-#: src/components/TrackListHeader.tsx:26
+#: src/components/TrackListHeader.tsx:34
 #: src/routes/tracks.$trackID.tsx:88
 msgid "Title"
 msgstr "標題"
 
-#: src/components/TrackListHeader.tsx:31
+#: src/components/TrackListHeader.tsx:39
 #: src/routes/tracks.$trackID.tsx:241
 msgid "Duration"
 msgstr "時長"
 
-#: src/components/TrackListHeader.tsx:36
+#: src/components/TrackListHeader.tsx:44
 msgid "Artist"
 msgstr "藝術家"
 
-#: src/components/TrackListHeader.tsx:41
+#: src/components/TrackListHeader.tsx:49
 #: src/routes/tracks.$trackID.tsx:99
 msgid "Album"
 msgstr "專輯"
 
-#: src/components/TrackListHeader.tsx:46
+#: src/components/TrackListHeader.tsx:54
 #: src/routes/tracks.$trackID.tsx:139
 msgid "Genre"
 msgstr "流派"
@@ -555,46 +555,54 @@ msgid "Compact"
 msgstr "緊湊"
 
 #: src/routes/settings.ui.tsx:135
+msgid "Show track covers"
+msgstr "顯示曲目封面"
+
+#: src/routes/settings.ui.tsx:136
+msgid "Display album cover thumbnails in track rows"
+msgstr "在曲目列中顯示專輯封面縮圖"
+
+#: src/routes/settings.ui.tsx:143
 msgid "Default view"
 msgstr "預設檢視"
 
-#: src/routes/settings.ui.tsx:137
+#: src/routes/settings.ui.tsx:145
 msgid "Change the default view when starting the application"
 msgstr "變更啟動應用程式時的預設檢視"
 
-#: src/routes/settings.ui.tsx:145
+#: src/routes/settings.ui.tsx:153
 msgid "Library (default)"
 msgstr "音樂庫（預設）"
 
-#: src/routes/settings.ui.tsx:157
+#: src/routes/settings.ui.tsx:165
 msgid "Display Notifications"
 msgstr "顯示通知"
 
-#: src/routes/settings.ui.tsx:158
+#: src/routes/settings.ui.tsx:166
 msgid "Send notifications when the playing track changes"
 msgstr "播放音軌變更時發送通知"
 
-#: src/routes/settings.ui.tsx:167
+#: src/routes/settings.ui.tsx:175
 msgid "Sleep mode blocker"
 msgstr "睡眠模式阻止器"
 
-#: src/routes/settings.ui.tsx:168
+#: src/routes/settings.ui.tsx:176
 msgid "Prevent the computer from going into sleep mode when playing"
 msgstr "播放時防止電腦進入睡眠模式"
 
-#: src/routes/settings.ui.tsx:178
+#: src/routes/settings.ui.tsx:186
 msgid "[Beta] Wayland compatibility enhancements"
 msgstr "[測試版] Wayland 相容性強化"
 
-#: src/routes/settings.ui.tsx:179
+#: src/routes/settings.ui.tsx:187
 msgid "If you face issues using Wayland, try out this option"
 msgstr "如果您在使用 Wayland 時遇到問題，請嘗試此選項"
 
-#: src/routes/settings.ui.tsx:202
+#: src/routes/settings.ui.tsx:210
 msgid "Light"
 msgstr "淺色"
 
-#: src/routes/settings.ui.tsx:204
+#: src/routes/settings.ui.tsx:212
 msgid "Dark"
 msgstr "深色"
 

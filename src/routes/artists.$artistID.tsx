@@ -45,6 +45,7 @@ export default function ViewArtistDetails() {
         layout="grouped"
         data={content}
         tracksDensity={config.track_view_density}
+        showCoverThumbnails={config.track_view_covers}
         playlists={playlists}
         queueOrigin={queueOrigin}
       />

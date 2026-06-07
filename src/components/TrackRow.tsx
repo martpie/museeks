@@ -4,6 +4,7 @@ import type React from 'react';
 
 import type { Track } from '../generated/typings';
 import useFormattedDuration from '../hooks/useFormattedDuration';
+import Cover from './Cover';
 import PlayingIndicator from './PlayingIndicator';
 
 export type TrackRowEvents = {
@@ -28,6 +29,7 @@ type Props = {
   isPlaying?: boolean;
   draggable?: boolean;
   simplified?: boolean;
+  showCoverThumbnail?: boolean;
   showArtistInTitle?: boolean;
   style?: React.CSSProperties;
 } & TrackRowEvents;
@@ -100,8 +102,24 @@ export default function TrackRow(props: Props) {
       )}
       style={props.style}
     >
-      <div {...stylex.props(cellStyles.cell, cellStyles.trackPlaying)}>
-        {props.isPlaying ? <PlayingIndicator /> : null}
+      <div
+        {...stylex.props(
+          cellStyles.cell,
+          cellStyles.trackPlaying,
+          props.showCoverThumbnail === true && cellStyles.trackCoverSlot,
+        )}
+      >
+        {props.showCoverThumbnail === true ? (
+          <div {...stylex.props(cellStyles.coverThumbnail)}>
+            {props.isPlaying ? (
+              <PlayingIndicator size="large" />
+            ) : (
+              <Cover track={track} decorative iconSize={12} />
+            )}
+          </div>
+        ) : props.isPlaying ? (
+          <PlayingIndicator />
+        ) : null}
       </div>
       <div {...stylex.props(cellStyles.cell, cellStyles.title)}>
         <span {...stylex.props(cellStyles.titleText)}>{track.title}</span>
@@ -205,6 +223,22 @@ const cellStyles = stylex.create({
   trackPlaying: {
     width: '30px',
     flexShrink: 0,
+  },
+  trackCoverSlot: {
+    width: '56px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingLeft: '8px',
+    paddingRight: '8px',
+    lineHeight: 1,
+  },
+  coverThumbnail: {
+    width: '38px',
+    aspectRatio: '1',
+    borderRadius: '4px',
+    overflow: 'hidden',
+    backgroundColor: 'var(--cover-bg)',
   },
   title: {
     flexGrow: 1,
