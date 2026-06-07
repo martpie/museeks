@@ -100,7 +100,8 @@ impl DB {
         );
 
         // Build query and bind all UUIDs twice (once for IN, once for ORDER BY CASE)
-        let mut query = sqlx::query_as::<_, Track>(&sql);
+        // AssertSqlSafe: only `?` placeholders are used; user data is bound, not interpolated
+        let mut query = sqlx::query_as::<_, Track>(sqlx::AssertSqlSafe(sql));
 
         for id in track_ids {
             query = query.bind(id); // for IN (...)
@@ -171,10 +172,15 @@ impl DB {
 
     /** Delete multiple tracks by ID */
     pub async fn remove_tracks(&mut self, track_ids: &Vec<String>) -> AnyResult<()> {
+        if track_ids.is_empty() {
+            return Ok(());
+        }
+
         let placeholders = track_ids.iter().map(|_| "?").collect::<Vec<_>>().join(", ");
         let query = format!("DELETE FROM tracks WHERE id IN ({})", placeholders);
 
-        let mut query_builder = sqlx::query(&query);
+        // AssertSqlSafe: only `?` placeholders are used; user data is bound, not interpolated
+        let mut query_builder = sqlx::query(sqlx::AssertSqlSafe(query));
 
         for id in track_ids {
             query_builder = query_builder.bind(id);
