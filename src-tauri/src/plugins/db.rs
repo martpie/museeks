@@ -58,7 +58,7 @@ async fn setup() -> AnyResult<DB> {
     info!("Run possible migrations");
 
     sqlx::migrate!("src/migrations")
-        .run_direct(&mut connection)
+        .run_direct(None, &mut connection, false)
         .await?;
 
     Ok(DB { connection })

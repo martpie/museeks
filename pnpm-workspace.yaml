@@ -1,16 +1,8 @@
-minimumReleaseAge: 360
-saveExact: true
-strictPeerDependencies: true
-updateNotifier: false
-allowBuilds:
-  esbuild: true
-  simple-git-hooks: true
-
-# Vite+ setup
 catalog:
-  vite: npm:@voidzero-dev/vite-plus-core@latest
-  vite-plus: 0.1.22
-  vitest: npm:@voidzero-dev/vite-plus-test@latest
+  vite: npm:@voidzero-dev/vite-plus-core@0.2.2
+  vitest: 4.1.9
+  vite-plus: 0.2.2
+  '@vitest/browser-playwright': 4.1.9
 overrides:
   vite: 'catalog:'
   vitest: 'catalog:'
@@ -21,3 +13,7 @@ peerDependencyRules:
   allowedVersions:
     vite: '*'
     vitest: '*'
+
+allowBuilds:
+  esbuild: true
+  simple-git-hooks: true
