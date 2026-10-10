@@ -36,7 +36,7 @@ test('Double click on a track should play it and display its metadata', async ()
     .toBeVisible();
   await expect
     .element(page.getByRole('banner'))
-    .toHaveTextContent('Captain_Sleepy — Another Album');
+    .toMatchTextContent('Captain_Sleepy — Another Album');
 
   // Click on another one
   await getTrackByName(/Romantic Blues/).dblClick();
@@ -53,7 +53,7 @@ test('Double click on a track should play it and display its metadata', async ()
     .toBeVisible();
   await expect
     .element(page.getByRole('banner'))
-    .toHaveTextContent('Jean-Paul-V — Pixabay');
+    .toMatchTextContent('Jean-Paul-V — Pixabay');
 
   // Pause
   await page.getByRole('button', { name: 'Pause' }).click();

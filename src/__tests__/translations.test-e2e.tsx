@@ -11,7 +11,7 @@ test('The language selector should update the UI', async () => {
   await expect.element(viewMessage).toBeVisible();
   await expect
     .element(viewMessage)
-    .toHaveTextContent(
+    .toMatchTextContent(
       'There is no music in your libraryyou can add your music here',
     );
 
@@ -27,7 +27,7 @@ test('The language selector should update the UI', async () => {
     .click();
   await expect
     .element(viewMessage)
-    .toHaveTextContent(
+    .toMatchTextContent(
       'Votre bibliothèque est videvous pouvez ajouter votre musique ici',
     );
 });
