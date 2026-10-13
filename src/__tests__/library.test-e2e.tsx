@@ -72,9 +72,9 @@ test('Tracks should be selectable via keyboard only (after a single selection)',
   const secondTrack = getTrackAt(1);
   const thirdTrack = getTrackAt(2);
 
-  await expect.element(firstTrack).toHaveTextContent('Whiskey Blues');
-  await expect.element(secondTrack).toHaveTextContent('Majestic Blues');
-  await expect.element(thirdTrack).toHaveTextContent('Romantic Blues');
+  await expect.element(firstTrack).toMatchTextContent('Whiskey Blues');
+  await expect.element(secondTrack).toMatchTextContent('Majestic Blues');
+  await expect.element(thirdTrack).toMatchTextContent('Romantic Blues');
 
   await firstTrack.click();
   await expect.element(firstTrack).toHaveAttribute('aria-selected', 'true');
@@ -158,7 +158,7 @@ test('Search should filter tracks in the library', async () => {
   await expect.element(getTrackAt(0)).not.toBeInTheDocument();
   await expect
     .element(page.getByRole('status'))
-    .toHaveTextContent('Your search returned no results');
+    .toMatchTextContent('Your search returned no results');
 
   // Clicking the search clear button should clear the search
   await searchClear.click();
@@ -180,25 +180,25 @@ test('Column headers should sort tracks in the library', async () => {
   const track2content = 'Romantic Blues05:00Jean-Paul-VPixabayblues';
 
   // By default, we sort by artist, album year, album name, track number, disk number
-  await expect.element(firstTrack).toHaveTextContent(track0content);
-  await expect.element(secondTrack).toHaveTextContent(track1content);
-  await expect.element(thirdTrack).toHaveTextContent(track2content);
+  await expect.element(firstTrack).toMatchTextContent(track0content);
+  await expect.element(secondTrack).toMatchTextContent(track1content);
+  await expect.element(thirdTrack).toMatchTextContent(track2content);
 
   // Clicking on the title header should change the sorting to Descending by Artist name
   await getSortButton('Artist').click();
-  await expect.element(firstTrack).toHaveTextContent(track2content);
-  await expect.element(secondTrack).toHaveTextContent(track1content);
-  await expect.element(thirdTrack).toHaveTextContent(track0content);
+  await expect.element(firstTrack).toMatchTextContent(track2content);
+  await expect.element(secondTrack).toMatchTextContent(track1content);
+  await expect.element(thirdTrack).toMatchTextContent(track0content);
 
   // Clicking again should change the sorting back to Ascending by Artist name
   await getSortButton('Artist').click();
-  await expect.element(firstTrack).toHaveTextContent(track0content);
-  await expect.element(secondTrack).toHaveTextContent(track1content);
-  await expect.element(thirdTrack).toHaveTextContent(track2content);
+  await expect.element(firstTrack).toMatchTextContent(track0content);
+  await expect.element(secondTrack).toMatchTextContent(track1content);
+  await expect.element(thirdTrack).toMatchTextContent(track2content);
 
   // Let's sort by title as well
   await getSortButton('Title').click();
-  await expect.element(firstTrack).toHaveTextContent(track1content);
-  await expect.element(secondTrack).toHaveTextContent(track2content);
-  await expect.element(thirdTrack).toHaveTextContent(track0content);
+  await expect.element(firstTrack).toMatchTextContent(track1content);
+  await expect.element(secondTrack).toMatchTextContent(track2content);
+  await expect.element(thirdTrack).toMatchTextContent(track0content);
 });

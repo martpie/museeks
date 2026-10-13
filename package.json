@@ -73,16 +73,18 @@
     "@types/react-dom": "19.2.3",
     "@types/semver": "7.7.1",
     "@vitejs/plugin-react": "6.0.2",
+    "@vitest/browser-playwright": "catalog:",
     "babel-plugin-react-compiler": "1.0.0",
     "lightningcss": "1.32.0",
     "playwright": "1.60.0",
     "simple-git-hooks": "2.13.1",
     "typescript": "6.0.3",
-    "vite": "npm:@voidzero-dev/vite-plus-core@^0.1.22",
+    "unplugin": "2.3.11",
+    "vite": "catalog:",
     "vite-plugin-svgr": "5.2.0",
     "vite-plus": "catalog:",
-    "vitest": "npm:@voidzero-dev/vite-plus-test@^0.1.22",
-    "vitest-browser-react": "2.2.0"
+    "vitest": "catalog:",
+    "vitest-browser-react": "2.3.0"
   },
   "simple-git-hooks": {
     "pre-commit": "vp run gen:translations && git add src/translations"

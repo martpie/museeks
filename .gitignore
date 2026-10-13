@@ -31,3 +31,4 @@ target
 release
 !src-tauri/release
 .tanstack
+.vitest/
