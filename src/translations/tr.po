@@ -1,0 +1,657 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-06-12 15:50+0200\n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: tr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.4.2\n"
+
+#. placeholder {0}: scanResult.track_count
+#: src/api/LibraryAPI.ts:37
+msgid "{0} track(s) were refreshed."
+msgstr "{0} parça yenilendi."
+
+#. placeholder {0}: scanResult.track_count
+#: src/api/LibraryAPI.ts:38
+msgid "{0} track(s) were added to the library."
+msgstr "{0} parça kütüphaneye eklendi."
+
+#. placeholder {0}: scanResult.playlist_count
+#: src/api/LibraryAPI.ts:45
+msgid "{0} playlist(s) were added to the library."
+msgstr "{0} çalma listesi kütüphaneye eklendi."
+
+#: src/api/LibraryAPI.ts:106
+msgid "Library was reset"
+msgstr "Kütüphane sıfırlandı"
+
+#: src/api/PlaylistsAPI.ts:35
+msgid "The playlist \"{name}\" was created"
+msgstr "\"{name}\" çalma listesi oluşturuldu"
+
+#. placeholder {0}: newRelease.tag_name
+#: src/api/SettingsAPI.ts:168
+msgid "Museeks {0} is available, check https://museeks.io!"
+msgstr "Museeks {0} indirilebilir, https://museeks.io adresini kontrol edin!"
+
+#: src/api/SettingsAPI.ts:170
+msgid "Museeks {currentVersion} is the latest version available."
+msgstr "Museeks {currentVersion} mevcut en son sürümdür."
+
+#: src/components/ButtonRepeat.tsx:18
+msgid "Repeat"
+msgstr "Tekrarla"
+
+#: src/components/ButtonShuffle.tsx:12
+msgid "Shuffle"
+msgstr "Karıştır"
+
+#: src/components/Cover.tsx:34
+msgid "Album cover"
+msgstr "Albüm kapağı"
+
+#: src/components/DropzoneImport.tsx:49
+msgid "{skippedItemsCount, plural, one {# invalid item ignored} other {# invalid items ignored}}"
+msgstr "{skippedItemsCount, plural, one {# geçersiz öge yoksayıldı} other {# geçersiz öge yoksayıldı}}"
+
+#. placeholder {0}: folders.length
+#: src/components/DropzoneImport.tsx:60
+msgid "{0, plural, one {# folder added to the library} other {# folders added to the library}}"
+msgstr "{0, plural, one {# klasör kütüphaneye eklendi} other {# klasör kütüphaneye eklendi}}"
+
+#: src/components/DropzoneImport.tsx:90
+msgid "Add music to the library"
+msgstr "Kütüphaneye müzik ekle"
+
+#: src/components/DropzoneImport.tsx:91
+msgid "Drop folders anywhere"
+msgstr "• Klasörleri herhangi bir yere sürükleyip bırakın"
+
+#: src/components/GlobalErrors.tsx:33
+msgid "Something wrong happened: {errorMessage}"
+msgstr "Bir şeyler ters gitti: {errorMessage}"
+
+#: src/components/GlobalErrors.tsx:47
+msgid "how?"
+msgstr "nasıl?"
+
+#. placeholder {0}: location.pathname
+#: src/components/GlobalErrors.tsx:50
+msgid "View not found ({0}). How did you get here?"
+msgstr "Görünüm bulunamadı ({0}). Buraya nasıl geldiniz?"
+
+#: src/components/GlobalErrors.tsx:62
+msgid "Try <0>reloading the app</0>,"
+msgstr "Uygulamayı <0>yeniden başlatmayı</0> deneyin,"
+
+#: src/components/GlobalErrors.tsx:74
+msgid "or if it happens again, please <0>report an issue</0>."
+msgstr "• veya bu durum tekrar yaşanırsa lütfen <0>bir sorun bildirin</0>."
+
+#: src/components/Header.tsx:24
+msgid "Header"
+msgstr "Başlık"
+
+#: src/components/Header.tsx:53
+msgid "Queue"
+msgstr "Sıra"
+
+#: src/components/Navigation.tsx:48
+msgid "Main navigation"
+msgstr "Ana menü"
+
+#: src/components/Navigation.tsx:51
+#: src/routes/settings.tsx:33
+msgid "Library"
+msgstr "Kütüphane"
+
+#: src/components/Navigation.tsx:54
+#: src/routes/artists.tsx:64
+#: src/routes/settings.ui.tsx:148
+msgid "Artists"
+msgstr "Sanatçılar"
+
+#: src/components/Navigation.tsx:57
+#: src/routes/playlists.tsx:165
+#: src/routes/settings.ui.tsx:151
+msgid "Playlists"
+msgstr "Çalma listeleri"
+
+#: src/components/Navigation.tsx:60
+msgid "Settings"
+msgstr "Ayarlar"
+
+#: src/components/Navigation.tsx:66
+msgid "Library status"
+msgstr "Kütüphane durumu"
+
+#: src/components/Navigation.tsx:90
+msgid "scanning tracks..."
+msgstr "parçalar taranıyor..."
+
+#: src/components/PlayerControls.tsx:18
+msgid "Previous"
+msgstr "Önceki"
+
+#: src/components/PlayerControls.tsx:24
+msgid "Play"
+msgstr "Oynat"
+
+#: src/components/PlayerControls.tsx:24
+msgid "Pause"
+msgstr "Durdur"
+
+#: src/components/PlayerControls.tsx:30
+msgid "Next"
+msgstr "Sonraki"
+
+#: src/components/QueueEmpty.tsx:7
+msgid "Queue is empty"
+msgstr "Sıra boş"
+
+#: src/components/QueueList.tsx:79
+msgid "clear queue"
+msgstr "sırayı temizle"
+
+#: src/components/QueueList.tsx:105
+msgid "see more"
+msgstr "daha fazla gör"
+
+#: src/components/Search.tsx:42
+msgid "search..."
+msgstr "ara..."
+
+#: src/components/Search.tsx:49
+msgid "Search library"
+msgstr "Kütüphanede ara"
+
+#: src/components/Search.tsx:61
+msgid "Clear search"
+msgstr "Aramayı Temizle"
+
+#: src/components/SideNavLink.tsx:62
+msgid "Rename"
+msgstr "Yeniden adlandır"
+
+#: src/components/TrackList.tsx:243
+msgid "Create new playlist..."
+msgstr "Yeni çalma listesi oluştur..."
+
+#: src/components/TrackList.tsx:246
+#: src/routes/playlists.tsx:63
+msgid "New playlist"
+msgstr "Yeni çalma listesi"
+
+#: src/components/TrackList.tsx:259
+msgid "No playlists"
+msgstr "Çalma listesi yok"
+
+#. placeholder {0}: selectedTracks.size
+#. placeholder {1}: playlist.name
+#: src/components/TrackList.tsx:273
+msgid "{0} track(s) were added to \"{1}\""
+msgstr "{0} parça \"{1}\" listesine eklendi"
+
+#: src/components/TrackList.tsx:291
+msgid "{selectedCount, plural, one {# track selected} other {# tracks selected}}"
+msgstr "{selectedCount, plural, one {# parça seçildi} other {# parça seçildi}}"
+
+#: src/components/TrackList.tsx:303
+msgid "Add to queue"
+msgstr "Sıraya ekle"
+
+#: src/components/TrackList.tsx:311
+msgid "Play next"
+msgstr "Sonrakini çal"
+
+#: src/components/TrackList.tsx:323
+msgid "Add to playlist"
+msgstr "Çalma listesine ekle"
+
+#: src/components/TrackList.tsx:333
+msgid "Search for \"{item}\""
+msgstr "\"{item}\" için ara"
+
+#: src/components/TrackList.tsx:346
+msgid "Copy \"{item}\""
+msgstr "\"{item}\" ögesini kopyala"
+
+#: src/components/TrackList.tsx:369
+msgid "Edit track"
+msgstr "Parçayı düzenle"
+
+#: src/components/TrackList.tsx:379
+msgid "Show in file manager"
+msgstr "Dosya yöneticisinde göster"
+
+#: src/components/TrackList.tsx:385
+msgid "Remove from library"
+msgstr "Kütüphaneden kaldır"
+
+#. placeholder {0}: selectedTracks.size
+#: src/components/TrackList.tsx:388
+msgid "Are you sure you want to remove {0} track(s) from your library?"
+msgstr "{0} parçayı kütüphanenizden kaldırmak istediğinize emin misiniz?"
+
+#: src/components/TrackList.tsx:390
+msgid "Remove tracks"
+msgstr "Parçaları kaldır"
+
+#: src/components/TrackList.tsx:392
+#: src/routes/settings.library.tsx:100
+#: src/routes/settings.library.tsx:145
+#: src/routes/tracks.$trackID.tsx:257
+msgid "Cancel"
+msgstr "İptal"
+
+#: src/components/TrackList.tsx:393
+#: src/routes/settings.library.tsx:64
+msgid "Remove"
+msgstr "Kaldır"
+
+#: src/components/TrackListDefault.tsx:124
+#: src/components/TrackListGrouped.tsx:58
+msgid "Track list"
+msgstr "Parça listesi"
+
+#. placeholder {0}: props.count
+#. placeholder {0}: tracks.length
+#: src/components/TrackListGrouped.tsx:115
+#: src/components/TrackListStatus.tsx:11
+msgid "{0, plural, one {# track} other {# tracks}}"
+msgstr "{0, plural, one {# parça} other {# parça}}"
+
+#: src/components/TrackListHeader.tsx:17
+msgid "Track list sorting options"
+msgstr "Parça listesi sıralama seçenekleri"
+
+#: src/components/TrackListHeader.tsx:26
+#: src/routes/tracks.$trackID.tsx:88
+msgid "Title"
+msgstr "Başlık"
+
+#: src/components/TrackListHeader.tsx:31
+#: src/routes/tracks.$trackID.tsx:241
+msgid "Duration"
+msgstr "Süre"
+
+#: src/components/TrackListHeader.tsx:36
+msgid "Artist"
+msgstr "Sanatçı"
+
+#: src/components/TrackListHeader.tsx:41
+#: src/routes/tracks.$trackID.tsx:99
+msgid "Album"
+msgstr "Albüm"
+
+#: src/components/TrackListHeader.tsx:46
+#: src/routes/tracks.$trackID.tsx:139
+msgid "Genre"
+msgstr "Tür"
+
+#: src/components/TrackListStates.tsx:25
+msgid "Loading library..."
+msgstr "Kütüphane yükleniyor..."
+
+#: src/components/TrackListStates.tsx:36
+msgid "Your library is being scanned"
+msgstr "Kütüphaneniz taranıyor"
+
+#: src/components/TrackListStates.tsx:39
+msgid "hold on..."
+msgstr "bekleyin..."
+
+#: src/components/TrackListStates.tsx:50
+msgid "There is no music in your library"
+msgstr "Kütüphanenizde müzik yok"
+
+#: src/components/TrackListStates.tsx:53
+msgid "you can <0>add your music here</0>"
+msgstr "müziğinizi <0>buraya ekleyebilirsiniz</0>"
+
+#: src/components/TrackListStates.tsx:69
+#: src/routes/playlists.$playlistID.tsx:104
+msgid "Your search returned no results"
+msgstr "Aramanızla eşleşen bir sonuç bulunamadı"
+
+#: src/components/VolumeControl.tsx:47
+#: src/components/VolumeControl.tsx:74
+msgid "Volume"
+msgstr "Ses"
+
+#: src/routes/__root.tsx:82
+msgid "Application main content"
+msgstr "Uygulamanın ana içeriği"
+
+#: src/routes/artists.tsx:70
+msgid "Compilations"
+msgstr "Derlemeler"
+
+#: src/routes/playlists.$playlistID.tsx:72
+msgid "Remove from playlist"
+msgstr "Çalma listesinden kaldır"
+
+#: src/routes/playlists.$playlistID.tsx:88
+#: src/routes/playlists.$playlistID.tsx:115
+msgid "Empty playlist"
+msgstr "Boş çalma listesi"
+
+#: src/routes/playlists.$playlistID.tsx:91
+#: src/routes/playlists.$playlistID.tsx:118
+msgid "You can add tracks from the <0>library view</0>"
+msgstr "Parçaları <0>kütüphane görünümünden</0> ekleyebilirsiniz"
+
+#: src/routes/playlists.tsx:93
+msgid "Delete"
+msgstr "Sil"
+
+#: src/routes/playlists.tsx:102
+msgid "Duplicate"
+msgstr "Kopyala"
+
+#: src/routes/playlists.tsx:110
+msgid "Export"
+msgstr "Dışa aktar"
+
+#: src/routes/playlists.tsx:140
+msgid "You haven't created any playlist yet"
+msgstr "Henüz bir çalma listesi oluşturmadınız"
+
+#: src/routes/playlists.tsx:144
+msgid "create one now"
+msgstr "şimdi bir tane oluşturun"
+
+#: src/routes/playlists.tsx:153
+msgid "No playlist selected"
+msgstr "Çalma listesi seçilmedi"
+
+#: src/routes/playlists.tsx:170
+msgid "New Playlist"
+msgstr "Yeni çalma listesi"
+
+#: src/routes/settings.about.tsx:36
+msgid "About Museeks"
+msgstr "Museeks Hakkında"
+
+#: src/routes/settings.about.tsx:48
+msgid "release notes"
+msgstr "sürüm notları"
+
+#: src/routes/settings.about.tsx:51
+msgid "Automatically check for updates"
+msgstr "Güncellemeleri otomatik kontrol et"
+
+#: src/routes/settings.about.tsx:63
+msgid "Check for update"
+msgstr "Güncellemeleri kontrol et"
+
+#: src/routes/settings.about.tsx:69
+msgid "Contributors"
+msgstr "Katkıda Bulunanlar"
+
+#: src/routes/settings.about.tsx:72
+msgid "Made with <0/> by Pierre de la Martinière (<1>martpie.io</1>) and a bunch of <2>great people</2>"
+msgstr "Pierre de la Martinière (<1>martpie.io</1>) ve bir sürü <2>harika insan</2> tarafından <0/> ile yapıldı"
+
+#: src/routes/settings.about.tsx:88
+msgid "Translations:"
+msgstr "Çeviriler:"
+
+#: src/routes/settings.about.tsx:102
+msgid "Report issue / Ask for a feature"
+msgstr "Sorun bildir / Özellik iste"
+
+#: src/routes/settings.about.tsx:105
+msgid "Bugs happen. Please, do not hesitate to report them or to ask for features you would like to see, using the <0>issue tracker</0>."
+msgstr "Hatalar olabilir. Lütfen bunları bildirmekten veya görmek istediğiniz özellikleri <0>issue tracker</0> üzerinden istemekten çekinmeyin."
+
+#: src/routes/settings.about.tsx:120
+msgid "Internals"
+msgstr "Dahili Bileşenler"
+
+#: src/routes/settings.about.tsx:125
+msgid "Open storage directory"
+msgstr "Depolama dizinini aç"
+
+#: src/routes/settings.audio.tsx:27
+msgid "Playback rate"
+msgstr "Oynatma hızı"
+
+#: src/routes/settings.audio.tsx:28
+msgid "Increase the playback rate: a value of 2 will play your music at a 2x speed"
+msgstr "Oynatma hızını artırın: 2 değeri, müziğinizi 2 kat hızda oynatır"
+
+#: src/routes/settings.audio.tsx:44
+msgid "Follow playing track"
+msgstr "Oynatılan parçayı takip et"
+
+#: src/routes/settings.audio.tsx:45
+msgid "Automatically follow the currently playing track (only when the app is not focused)"
+msgstr "Şu anda oynatılan parçayı otomatik olarak takip et (yalnızca uygulama odağını kaybettiğinde)"
+
+#: src/routes/settings.library.tsx:48
+msgid "Files"
+msgstr "Dosyalar"
+
+#: src/routes/settings.library.tsx:52
+msgid "There are no folders in your library."
+msgstr "Kütüphanenizde hiç klasör yok."
+
+#: src/routes/settings.library.tsx:84
+msgid "Add folder"
+msgstr "Klasör ekle"
+
+#: src/routes/settings.library.tsx:90
+msgid "Scan"
+msgstr "Tara"
+
+#: src/routes/settings.library.tsx:96
+msgid "All track data will be updated from the base files, but your original files won't be modified. Any Museeks-specific edits you may have done will be reset."
+msgstr "Tüm parça verileri temel dosyalardan güncellenecektir, ancak orijinal dosyalarınızda değişiklik yapılmayacaktır. Yapmış olabileceğiniz tüm Museeks  düzenlemeleri sıfırlanacaktır."
+
+#: src/routes/settings.library.tsx:98
+msgid "Refresh all tracks?"
+msgstr "Tüm parçalar yenilensin mi?"
+
+#: src/routes/settings.library.tsx:101
+#: src/routes/settings.library.tsx:111
+msgid "Refresh"
+msgstr "Yenile"
+
+#: src/routes/settings.library.tsx:109
+msgid "Force the refresh of all tracks tags"
+msgstr "Tüm parça etiketlerinin yenilenmesini zorla"
+
+#: src/routes/settings.library.tsx:115
+msgid "<0>.m3u</0> files will also be imported as playlists."
+msgstr "<0>.m3u</0> dosyaları da çalma listesi olarak içe aktarılacaktır."
+
+#: src/routes/settings.library.tsx:122
+msgid "Automatically refresh library on startup"
+msgstr "Başlangıçta kütüphaneyi otomatik olarak yenile"
+
+#: src/routes/settings.library.tsx:129
+msgid "Danger zone"
+msgstr "Tehlikeli bölge"
+
+#: src/routes/settings.library.tsx:132
+msgid "Delete all tracks and playlists from Museeks."
+msgstr "Museeks'teki tüm parçaları ve çalma listelerini sil."
+
+#: src/routes/settings.library.tsx:137
+msgid "Fully reset the library"
+msgstr "Kütüphaneyi tamamen sıfırla"
+
+#: src/routes/settings.library.tsx:141
+msgid "All your tracks and playlists will be deleted from Museeks."
+msgstr "Tüm parçalarınız ve çalma listeleriniz Museeks'ten silinecek."
+
+#: src/routes/settings.library.tsx:143
+msgid "Reset library?"
+msgstr "Kütüphane sıfırlansın mı?"
+
+#: src/routes/settings.library.tsx:146
+#: src/routes/settings.ui.tsx:79
+msgid "Reset"
+msgstr "Sıfırla"
+
+#: src/routes/settings.library.tsx:155
+msgid "Reset library"
+msgstr "Kütüphaneyi sıfırla"
+
+#: src/routes/settings.tsx:36
+msgid "Audio"
+msgstr "Ses"
+
+#: src/routes/settings.tsx:39
+msgid "Interface"
+msgstr "Arayüz"
+
+#: src/routes/settings.tsx:42
+msgid "About"
+msgstr "Hakkında"
+
+#: src/routes/settings.ui.tsx:46
+msgid "Theme"
+msgstr "Tema"
+
+#: src/routes/settings.ui.tsx:47
+msgid "Change the appearance of the interface"
+msgstr "Arayüzün görünümünü değiştir"
+
+#: src/routes/settings.ui.tsx:55
+msgid "System (default)"
+msgstr "Sistem (varsayılan)"
+
+#: src/routes/settings.ui.tsx:67
+msgid "Accent color"
+msgstr "Vurgu rengi"
+
+#: src/routes/settings.ui.tsx:90
+msgid "Language"
+msgstr "Dil"
+
+#: src/routes/settings.ui.tsx:114
+msgid "Tracks density"
+msgstr "Parça yoğunluğu"
+
+#: src/routes/settings.ui.tsx:115
+msgid "Change the tracks spacing"
+msgstr "Parça aralığını değiştir"
+
+#: src/routes/settings.ui.tsx:126
+msgid "Normal (default)"
+msgstr "Normal (varsayılan)"
+
+#: src/routes/settings.ui.tsx:129
+msgid "Compact"
+msgstr "Kompakt"
+
+#: src/routes/settings.ui.tsx:135
+msgid "Default view"
+msgstr "Varsayılan görünüm"
+
+#: src/routes/settings.ui.tsx:137
+msgid "Change the default view when starting the application"
+msgstr "Uygulama başlatılırken varsayılan görünümü değiştir"
+
+#: src/routes/settings.ui.tsx:145
+msgid "Library (default)"
+msgstr "Kütüphane (varsayılan)"
+
+#: src/routes/settings.ui.tsx:157
+msgid "Display Notifications"
+msgstr "Bildirimleri Göster"
+
+#: src/routes/settings.ui.tsx:158
+msgid "Send notifications when the playing track changes"
+msgstr "Çalan parça değiştiğinde bildirim gönder"
+
+#: src/routes/settings.ui.tsx:167
+msgid "Sleep mode blocker"
+msgstr "Uyku modu engelleyici"
+
+#: src/routes/settings.ui.tsx:168
+msgid "Prevent the computer from going into sleep mode when playing"
+msgstr "Oynatma sırasında bilgisayarın uyku moduna geçmesini önle"
+
+#: src/routes/settings.ui.tsx:178
+msgid "[Beta] Wayland compatibility enhancements"
+msgstr "[Beta] Wayland uyumluluk geliştirmeleri"
+
+#: src/routes/settings.ui.tsx:179
+msgid "If you face issues using Wayland, try out this option"
+msgstr "Wayland kullanırken sorun yaşıyorsanız bu seçeneği deneyin"
+
+#: src/routes/settings.ui.tsx:202
+msgid "Light"
+msgstr "Açık"
+
+#: src/routes/settings.ui.tsx:204
+msgid "Dark"
+msgstr "Koyu"
+
+#. placeholder {0}: track.title
+#: src/routes/tracks.$trackID.tsx:84
+msgid "Edit \"{0}\""
+msgstr "Düzenle \"{0}\""
+
+#: src/routes/tracks.$trackID.tsx:110
+msgid "Album Artist"
+msgstr "Albüm Sanatçısı"
+
+#: src/routes/tracks.$trackID.tsx:124
+msgid "Track Artists"
+msgstr "Parça Sanatçıları"
+
+#: src/routes/tracks.$trackID.tsx:125
+msgid "You can add multiple artists with commas"
+msgstr "Virgül kullanarak birden fazla sanatçı ekleyebilirsiniz"
+
+#: src/routes/tracks.$trackID.tsx:140
+msgid "You can add multiple genres with commas"
+msgstr "Virgül kullanarak birden fazla tür ekleyebilirsiniz"
+
+#: src/routes/tracks.$trackID.tsx:154
+msgid "Year"
+msgstr "Yıl"
+
+#: src/routes/tracks.$trackID.tsx:168
+msgid "Track Nº"
+msgstr "Parça No"
+
+#: src/routes/tracks.$trackID.tsx:182
+#: src/routes/tracks.$trackID.tsx:214
+msgid "Of"
+msgstr "Of"
+
+#: src/routes/tracks.$trackID.tsx:200
+msgid "Disk Nº"
+msgstr "Disk No"
+
+#: src/routes/tracks.$trackID.tsx:231
+msgid "Compilation"
+msgstr "Derleme"
+
+#: src/routes/tracks.$trackID.tsx:232
+msgid "Group this track with other tracks from the same compilation, regardless of the artist names."
+msgstr "Sanatçı adlarından bağımsız olarak, bu parçayı aynı derlemedeki diğer parçalarla gruplandır."
+
+#: src/routes/tracks.$trackID.tsx:249
+msgid "Path"
+msgstr "Dosya Yolu"
+
+#: src/routes/tracks.$trackID.tsx:260
+msgid "Save"
+msgstr "Kaydet"
+
+#: src/routes/tracks.$trackID.tsx:265
+msgid "Clicking \"save\" will only update the library data, but will not save it to the original file."
+msgstr "\"Kaydet\" butonuna tıklamak yalnızca kütüphane verilerini günceller, orijinal dosyaya kaydetmez."

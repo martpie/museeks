@@ -12,6 +12,12 @@ export const DEFAULT_LANGUAGE = {
 // 4. Profit
 export const NON_DEFAULT_LANGUAGES = [
   {
+    label: 'Türkçe',
+    englishLabel: 'Turkish',
+    code: 'tr',
+    contributors: ['berk-365'],
+  },
+  {
     label: 'Français',
     englishLabel: 'French',
     code: 'fr',
